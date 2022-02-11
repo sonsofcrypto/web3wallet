@@ -1,0 +1,603 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CA27B69B6300578FF8 /* AppDelegate.swift */; };
+		D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */; };
+		D157F7CF27B69B6300578FF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CE27B69B6300578FF8 /* ViewController.swift */; };
+		D157F7D227B69B6300578FF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D157F7D027B69B6300578FF8 /* Main.storyboard */; };
+		D157F7D427B69B6400578FF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D157F7D327B69B6400578FF8 /* Assets.xcassets */; };
+		D157F7D727B69B6400578FF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D157F7D527B69B6400578FF8 /* LaunchScreen.storyboard */; };
+		D157F7E227B69B6400578FF8 /* web3walletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7E127B69B6400578FF8 /* web3walletTests.swift */; };
+		D157F7EC27B69B6400578FF8 /* web3walletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7EB27B69B6400578FF8 /* web3walletUITests.swift */; };
+		D157F7EE27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D157F7DE27B69B6400578FF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D157F7BF27B69B6300578FF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D157F7C627B69B6300578FF8;
+			remoteInfo = web3wallet;
+		};
+		D157F7E827B69B6400578FF8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D157F7BF27B69B6300578FF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D157F7C627B69B6300578FF8;
+			remoteInfo = web3wallet;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D157F7C727B69B6300578FF8 /* web3wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = web3wallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D157F7CA27B69B6300578FF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		D157F7CE27B69B6300578FF8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D157F7D127B69B6300578FF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D157F7D327B69B6400578FF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D157F7D627B69B6400578FF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D157F7D827B69B6400578FF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D157F7DD27B69B6400578FF8 /* web3walletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = web3walletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D157F7E127B69B6400578FF8 /* web3walletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3walletTests.swift; sourceTree = "<group>"; };
+		D157F7E727B69B6400578FF8 /* web3walletUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = web3walletUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D157F7EB27B69B6400578FF8 /* web3walletUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3walletUITests.swift; sourceTree = "<group>"; };
+		D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3walletUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D157F7C427B69B6300578FF8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D157F7DA27B69B6400578FF8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D157F7E427B69B6400578FF8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D157F7BE27B69B6300578FF8 = {
+			isa = PBXGroup;
+			children = (
+				D157F7C927B69B6300578FF8 /* web3wallet */,
+				D157F7E027B69B6400578FF8 /* web3walletTests */,
+				D157F7EA27B69B6400578FF8 /* web3walletUITests */,
+				D157F7C827B69B6300578FF8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D157F7C827B69B6300578FF8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D157F7C727B69B6300578FF8 /* web3wallet.app */,
+				D157F7DD27B69B6400578FF8 /* web3walletTests.xctest */,
+				D157F7E727B69B6400578FF8 /* web3walletUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D157F7C927B69B6300578FF8 /* web3wallet */ = {
+			isa = PBXGroup;
+			children = (
+				D157F7CA27B69B6300578FF8 /* AppDelegate.swift */,
+				D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */,
+				D157F7CE27B69B6300578FF8 /* ViewController.swift */,
+				D157F7D027B69B6300578FF8 /* Main.storyboard */,
+				D157F7D327B69B6400578FF8 /* Assets.xcassets */,
+				D157F7D527B69B6400578FF8 /* LaunchScreen.storyboard */,
+				D157F7D827B69B6400578FF8 /* Info.plist */,
+			);
+			path = web3wallet;
+			sourceTree = "<group>";
+		};
+		D157F7E027B69B6400578FF8 /* web3walletTests */ = {
+			isa = PBXGroup;
+			children = (
+				D157F7E127B69B6400578FF8 /* web3walletTests.swift */,
+			);
+			path = web3walletTests;
+			sourceTree = "<group>";
+		};
+		D157F7EA27B69B6400578FF8 /* web3walletUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D157F7EB27B69B6400578FF8 /* web3walletUITests.swift */,
+				D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */,
+			);
+			path = web3walletUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D157F7C627B69B6300578FF8 /* web3wallet */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D157F7F127B69B6400578FF8 /* Build configuration list for PBXNativeTarget "web3wallet" */;
+			buildPhases = (
+				D157F7C327B69B6300578FF8 /* Sources */,
+				D157F7C427B69B6300578FF8 /* Frameworks */,
+				D157F7C527B69B6300578FF8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = web3wallet;
+			productName = web3wallet;
+			productReference = D157F7C727B69B6300578FF8 /* web3wallet.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D157F7DC27B69B6400578FF8 /* web3walletTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D157F7F427B69B6400578FF8 /* Build configuration list for PBXNativeTarget "web3walletTests" */;
+			buildPhases = (
+				D157F7D927B69B6400578FF8 /* Sources */,
+				D157F7DA27B69B6400578FF8 /* Frameworks */,
+				D157F7DB27B69B6400578FF8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D157F7DF27B69B6400578FF8 /* PBXTargetDependency */,
+			);
+			name = web3walletTests;
+			productName = web3walletTests;
+			productReference = D157F7DD27B69B6400578FF8 /* web3walletTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D157F7E627B69B6400578FF8 /* web3walletUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D157F7F727B69B6400578FF8 /* Build configuration list for PBXNativeTarget "web3walletUITests" */;
+			buildPhases = (
+				D157F7E327B69B6400578FF8 /* Sources */,
+				D157F7E427B69B6400578FF8 /* Frameworks */,
+				D157F7E527B69B6400578FF8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D157F7E927B69B6400578FF8 /* PBXTargetDependency */,
+			);
+			name = web3walletUITests;
+			productName = web3walletUITests;
+			productReference = D157F7E727B69B6400578FF8 /* web3walletUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D157F7BF27B69B6300578FF8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
+				LastUpgradeCheck = 1320;
+				TargetAttributes = {
+					D157F7C627B69B6300578FF8 = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					D157F7DC27B69B6400578FF8 = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = D157F7C627B69B6300578FF8;
+					};
+					D157F7E627B69B6400578FF8 = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = D157F7C627B69B6300578FF8;
+					};
+				};
+			};
+			buildConfigurationList = D157F7C227B69B6300578FF8 /* Build configuration list for PBXProject "web3wallet" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D157F7BE27B69B6300578FF8;
+			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D157F7C627B69B6300578FF8 /* web3wallet */,
+				D157F7DC27B69B6400578FF8 /* web3walletTests */,
+				D157F7E627B69B6400578FF8 /* web3walletUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D157F7C527B69B6300578FF8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D157F7D727B69B6400578FF8 /* LaunchScreen.storyboard in Resources */,
+				D157F7D427B69B6400578FF8 /* Assets.xcassets in Resources */,
+				D157F7D227B69B6300578FF8 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D157F7DB27B69B6400578FF8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D157F7E527B69B6400578FF8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D157F7C327B69B6300578FF8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D157F7CF27B69B6300578FF8 /* ViewController.swift in Sources */,
+				D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */,
+				D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D157F7D927B69B6400578FF8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D157F7E227B69B6400578FF8 /* web3walletTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D157F7E327B69B6400578FF8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D157F7EE27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift in Sources */,
+				D157F7EC27B69B6400578FF8 /* web3walletUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D157F7DF27B69B6400578FF8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D157F7C627B69B6300578FF8 /* web3wallet */;
+			targetProxy = D157F7DE27B69B6400578FF8 /* PBXContainerItemProxy */;
+		};
+		D157F7E927B69B6400578FF8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D157F7C627B69B6300578FF8 /* web3wallet */;
+			targetProxy = D157F7E827B69B6400578FF8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D157F7D027B69B6300578FF8 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D157F7D127B69B6300578FF8 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D157F7D527B69B6400578FF8 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D157F7D627B69B6400578FF8 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D157F7EF27B69B6400578FF8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D157F7F027B69B6400578FF8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D157F7F227B69B6400578FF8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = web3wallet/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3wallet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D157F7F327B69B6400578FF8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = web3wallet/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3wallet;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D157F7F527B69B6400578FF8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3walletTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/web3wallet.app/web3wallet";
+			};
+			name = Debug;
+		};
+		D157F7F627B69B6400578FF8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3walletTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/web3wallet.app/web3wallet";
+			};
+			name = Release;
+		};
+		D157F7F827B69B6400578FF8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3walletUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = web3wallet;
+			};
+			name = Debug;
+		};
+		D157F7F927B69B6400578FF8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3walletUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = web3wallet;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D157F7C227B69B6300578FF8 /* Build configuration list for PBXProject "web3wallet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D157F7EF27B69B6400578FF8 /* Debug */,
+				D157F7F027B69B6400578FF8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D157F7F127B69B6400578FF8 /* Build configuration list for PBXNativeTarget "web3wallet" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D157F7F227B69B6400578FF8 /* Debug */,
+				D157F7F327B69B6400578FF8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D157F7F427B69B6400578FF8 /* Build configuration list for PBXNativeTarget "web3walletTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D157F7F527B69B6400578FF8 /* Debug */,
+				D157F7F627B69B6400578FF8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D157F7F727B69B6400578FF8 /* Build configuration list for PBXNativeTarget "web3walletUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D157F7F827B69B6400578FF8 /* Debug */,
+				D157F7F927B69B6400578FF8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D157F7BF27B69B6300578FF8 /* Project object */;
+}
