@@ -4,6 +4,28 @@
 
 import Foundation
 
-class WalletsViewModel {
+enum WalletsViewModel {
+    case loading
+    case loaded(wallets: [Wallet], selectedIdx: Int)
+    case error(error: WalletsError)
+}
 
+// MARK - Wallet
+
+extension WalletsViewModel {
+
+    struct Wallet {
+        let title: String
+    }
+}
+
+// MARK: - Error
+
+extension WalletsViewModel {
+
+    struct Error {
+        let title: String
+        let body: String
+        let actions: [String]
+    }
 }

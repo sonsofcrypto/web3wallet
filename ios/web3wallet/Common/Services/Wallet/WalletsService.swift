@@ -11,9 +11,19 @@ protocol WalletsService: AnyObject {
     var activeWallet: Wallet? { get set }
 
     func loadWallets(_ handler: WalletsHandler)
-    func createNewWallet(password: String, passphrase: String?) throws -> Wallet
-    func importWallet(_ mnemonic: String, password: String, passphrase: String?) throws -> Wallet
-    func delete(_ wallet: Wallet) throws 
+
+    func createNewWallet(
+        _ password: String,
+        passphrase: String?
+    ) throws -> Wallet
+
+    func importWallet(
+        _ mnemonic: String,
+        password: String,
+        passphrase: String?
+    ) throws -> Wallet
+
+    func delete(_ wallet: Wallet) throws
 }
 
 // MARK: - DefaultWalletsService
@@ -49,17 +59,26 @@ extension DefaultWalletsService: WalletsService {
         handler(wallets)
     }
 
-    func createNewWallet(password: String, passphrase: String?) throws -> Wallet {
+    func createNewWallet(
+        _ password: String,
+        passphrase: String?
+    ) throws -> Wallet {
+
         let wallet = Wallet(
             id: wallets.last?.id ?? 0,
             name: "Default Wallet",
-            encryptedSigner: "This will be mnemonic or privite key or HD connection"
+            encryptedSigner: "This will be mnemonic or private key or HD connection"
         )
         wallets.append(wallet)
         try store.set(wallet, key: Constant.wallets)
     }
 
-    func importWallet(_ mnemonic: String, password: String, passphrase: String?) throws-> Wallet {
+    func importWallet(
+        _ mnemonic: String,
+        password: String,
+        passphrase: String?
+    ) throws-> Wallet {
+
         let wallet = Wallet(
             id: wallets.last?.id ?? 0,
             name: "Imported wallet",
