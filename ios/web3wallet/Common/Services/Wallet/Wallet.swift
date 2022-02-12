@@ -4,8 +4,13 @@
 
 import Foundation
 
-struct Mnemonic {
+struct Wallet {
 
-    let id: String
+    let id: Int
     let name: String
+    let encryptedSigner: String
 }
+
+// MARK: - Codable
+
+extension Wallet: Codable {}

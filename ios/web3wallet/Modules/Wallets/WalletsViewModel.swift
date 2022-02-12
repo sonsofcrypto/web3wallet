@@ -4,8 +4,6 @@
 
 import Foundation
 
-class MnemonicsService {
+class WalletsViewModel {
 
 }
-
-

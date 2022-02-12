@@ -4,5 +4,5 @@
 
 import Foundation
 
-class MnemonicsWireframeFactory {
+class WalletsWireframe {
 }

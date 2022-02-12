@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1A4C32CF0C59FE32073E66D0 /* MnemonicsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3226ECC6247E9092F6EF /* MnemonicsPresenter.swift */; };
-		1A4C3708C25B84EAA53D0FB6 /* Mnemonic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C376D2673983B26F249FF /* Mnemonic.swift */; };
-		1A4C39D40DEC9C42A6CF8D8A /* MnemonicsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3228507ADBCE1C99C219 /* MnemonicsViewModel.swift */; };
-		1A4C3A585C5375AE91CDA637 /* MnemonicsWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C514ACC30A0AC4707FA /* MnemonicsWireframeFactory.swift */; };
-		1A4C3C9B866507D8700399F6 /* MnemonicsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C36CAEB50425CE9839ED4 /* MnemonicsService.swift */; };
-		1A4C3D9BD9F5A146878AFF77 /* MnemonicsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DF93F3CE8FE0B35C142 /* MnemonicsWireframe.swift */; };
-		1A4C3F2AC8A8B59020F63712 /* MnemonicsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3044DC83E6A35A00DC12 /* MnemonicsInteractor.swift */; };
+		1A4C32CF0C59FE32073E66D0 /* WalletsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3226ECC6247E9092F6EF /* WalletsPresenter.swift */; };
+		1A4C3708C25B84EAA53D0FB6 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C376D2673983B26F249FF /* Wallet.swift */; };
+		1A4C39D40DEC9C42A6CF8D8A /* WalletsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3228507ADBCE1C99C219 /* WalletsViewModel.swift */; };
+		1A4C3A585C5375AE91CDA637 /* WalletsWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C514ACC30A0AC4707FA /* WalletsWireframeFactory.swift */; };
+		1A4C3C9B866507D8700399F6 /* WalletsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C36CAEB50425CE9839ED4 /* WalletsService.swift */; };
+		1A4C3D9BD9F5A146878AFF77 /* WalletsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DF93F3CE8FE0B35C142 /* WalletsWireframe.swift */; };
+		1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3B70AA1B0BC942B15671 /* Store.swift */; };
+		1A4C3F2AC8A8B59020F63712 /* WalletsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3044DC83E6A35A00DC12 /* WalletsInteractor.swift */; };
 		D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CA27B69B6300578FF8 /* AppDelegate.swift */; };
 		D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */; };
 		D157F7CF27B69B6300578FF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CE27B69B6300578FF8 /* ViewController.swift */; };
@@ -24,7 +25,7 @@
 		D157F7EC27B69B6400578FF8 /* web3walletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7EB27B69B6400578FF8 /* web3walletUITests.swift */; };
 		D157F7EE27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */; };
 		D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B06C227B6D23C008C3C62 /* GradienView.swift */; };
-		D15B06C727B72111008C3C62 /* MnemonicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B06C627B72111008C3C62 /* MnemonicsView.swift */; };
+		D15B06C727B72111008C3C62 /* WalletsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B06C627B72111008C3C62 /* WalletsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,13 +46,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1A4C3044DC83E6A35A00DC12 /* MnemonicsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicsInteractor.swift; sourceTree = "<group>"; };
-		1A4C3226ECC6247E9092F6EF /* MnemonicsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicsPresenter.swift; sourceTree = "<group>"; };
-		1A4C3228507ADBCE1C99C219 /* MnemonicsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicsViewModel.swift; sourceTree = "<group>"; };
-		1A4C36CAEB50425CE9839ED4 /* MnemonicsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicsService.swift; sourceTree = "<group>"; };
-		1A4C376D2673983B26F249FF /* Mnemonic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mnemonic.swift; sourceTree = "<group>"; };
-		1A4C3C514ACC30A0AC4707FA /* MnemonicsWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicsWireframeFactory.swift; sourceTree = "<group>"; };
-		1A4C3DF93F3CE8FE0B35C142 /* MnemonicsWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicsWireframe.swift; sourceTree = "<group>"; };
+		1A4C3044DC83E6A35A00DC12 /* WalletsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsInteractor.swift; sourceTree = "<group>"; };
+		1A4C3226ECC6247E9092F6EF /* WalletsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsPresenter.swift; sourceTree = "<group>"; };
+		1A4C3228507ADBCE1C99C219 /* WalletsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsViewModel.swift; sourceTree = "<group>"; };
+		1A4C36CAEB50425CE9839ED4 /* WalletsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsService.swift; sourceTree = "<group>"; };
+		1A4C376D2673983B26F249FF /* Wallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
+		1A4C3B70AA1B0BC942B15671 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		1A4C3C514ACC30A0AC4707FA /* WalletsWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsWireframeFactory.swift; sourceTree = "<group>"; };
+		1A4C3DF93F3CE8FE0B35C142 /* WalletsWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsWireframe.swift; sourceTree = "<group>"; };
 		D157F7C727B69B6300578FF8 /* web3wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = web3wallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D157F7CA27B69B6300578FF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,7 +68,7 @@
 		D157F7EB27B69B6400578FF8 /* web3walletUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3walletUITests.swift; sourceTree = "<group>"; };
 		D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3walletUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D15B06C227B6D23C008C3C62 /* GradienView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradienView.swift; sourceTree = "<group>"; };
-		D15B06C627B72111008C3C62 /* MnemonicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicsView.swift; sourceTree = "<group>"; };
+		D15B06C627B72111008C3C62 /* WalletsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,19 +96,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1A4C378CF260A81DDB68B039 /* Mnemonics */ = {
+		1A4C378CF260A81DDB68B039 /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
-				1A4C36CAEB50425CE9839ED4 /* MnemonicsService.swift */,
-				1A4C376D2673983B26F249FF /* Mnemonic.swift */,
+				1A4C36CAEB50425CE9839ED4 /* WalletsService.swift */,
+				1A4C376D2673983B26F249FF /* Wallet.swift */,
 			);
-			path = Mnemonics;
+			path = Wallet;
 			sourceTree = "<group>";
 		};
 		1A4C38B91F448C1E962685B3 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				1A4C378CF260A81DDB68B039 /* Mnemonics */,
+				1A4C378CF260A81DDB68B039 /* Wallet */,
+				D17AC2D527B7E674000D7C34 /* Store */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -181,25 +184,33 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		D15B06C827B7211F008C3C62 /* Mnemonics */ = {
+		D15B06C827B7211F008C3C62 /* Wallets */ = {
 			isa = PBXGroup;
 			children = (
-				D15B06C627B72111008C3C62 /* MnemonicsView.swift */,
-				1A4C3226ECC6247E9092F6EF /* MnemonicsPresenter.swift */,
-				1A4C3DF93F3CE8FE0B35C142 /* MnemonicsWireframe.swift */,
-				1A4C3C514ACC30A0AC4707FA /* MnemonicsWireframeFactory.swift */,
-				1A4C3044DC83E6A35A00DC12 /* MnemonicsInteractor.swift */,
-				1A4C3228507ADBCE1C99C219 /* MnemonicsViewModel.swift */,
+				D15B06C627B72111008C3C62 /* WalletsView.swift */,
+				1A4C3226ECC6247E9092F6EF /* WalletsPresenter.swift */,
+				1A4C3DF93F3CE8FE0B35C142 /* WalletsWireframe.swift */,
+				1A4C3C514ACC30A0AC4707FA /* WalletsWireframeFactory.swift */,
+				1A4C3044DC83E6A35A00DC12 /* WalletsInteractor.swift */,
+				1A4C3228507ADBCE1C99C219 /* WalletsViewModel.swift */,
 			);
-			path = Mnemonics;
+			path = Wallets;
 			sourceTree = "<group>";
 		};
 		D15B06C927B7214B008C3C62 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				D15B06C827B7211F008C3C62 /* Mnemonics */,
+				D15B06C827B7211F008C3C62 /* Wallets */,
 			);
 			path = Modules;
+			sourceTree = "<group>";
+		};
+		D17AC2D527B7E674000D7C34 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				1A4C3B70AA1B0BC942B15671 /* Store.swift */,
+			);
+			path = Store;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,17 +345,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				D157F7CF27B69B6300578FF8 /* ViewController.swift in Sources */,
-				D15B06C727B72111008C3C62 /* MnemonicsView.swift in Sources */,
+				D15B06C727B72111008C3C62 /* WalletsView.swift in Sources */,
 				D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */,
 				D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */,
 				D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */,
-				1A4C32CF0C59FE32073E66D0 /* MnemonicsPresenter.swift in Sources */,
-				1A4C3D9BD9F5A146878AFF77 /* MnemonicsWireframe.swift in Sources */,
-				1A4C3A585C5375AE91CDA637 /* MnemonicsWireframeFactory.swift in Sources */,
-				1A4C3F2AC8A8B59020F63712 /* MnemonicsInteractor.swift in Sources */,
-				1A4C39D40DEC9C42A6CF8D8A /* MnemonicsViewModel.swift in Sources */,
-				1A4C3C9B866507D8700399F6 /* MnemonicsService.swift in Sources */,
-				1A4C3708C25B84EAA53D0FB6 /* Mnemonic.swift in Sources */,
+				1A4C32CF0C59FE32073E66D0 /* WalletsPresenter.swift in Sources */,
+				1A4C3D9BD9F5A146878AFF77 /* WalletsWireframe.swift in Sources */,
+				1A4C3A585C5375AE91CDA637 /* WalletsWireframeFactory.swift in Sources */,
+				1A4C3F2AC8A8B59020F63712 /* WalletsInteractor.swift in Sources */,
+				1A4C39D40DEC9C42A6CF8D8A /* WalletsViewModel.swift in Sources */,
+				1A4C3C9B866507D8700399F6 /* WalletsService.swift in Sources */,
+				1A4C3708C25B84EAA53D0FB6 /* Wallet.swift in Sources */,
+				1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
