@@ -22,14 +22,22 @@ protocol WalletsPresenter {
 
 class DefaultWalletsPresenter {
 
-    private var interactor: WalletsInteractor
+    private let interactor: WalletsInteractor
+    private let wireframe: WalletsWireframe
+
     private var latestWallets: [Wallet]
 
     private weak var view: WalletsView?
 
-    init(view: WalletsView, interactor: WalletsInteractor) {
+    init(
+        view: WalletsView,
+        interactor: WalletsInteractor,
+        wireframe: WalletsWireframe
+    ) {
         self.view = view
         self.interactor = interactor
+        self.wireframe = wireframe
+        self.latestWallets = []
     }
 }
 

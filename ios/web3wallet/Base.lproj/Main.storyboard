@@ -30,7 +30,7 @@
         <!--web3wallet-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="web3wallet" id="BYZ-38-t0r" customClass="ViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WalletsViewController" title="web3wallet" id="BYZ-38-t0r" customClass="WalletsViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="GradientView" customModule="web3wallet" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -4,7 +4,7 @@
 
 import Foundation
 
-protocol WalletsInteractor {
+protocol WalletsInteractor: AnyObject {
 
     typealias WalletsHandler = ([Wallet]) -> Void
 
@@ -26,9 +26,9 @@ protocol WalletsInteractor {
     func delete(_ wallet: Wallet) throws
 }
 
-// MARK: - DefaultMnemonicsInteractor
+// MARK: - DefaultWalletsInteractor
 
-class DefaultMnemonicsInteractor {
+class DefaultWalletsInteractor {
 
     var activeWallet: Wallet? {
         get { walletsService.activeWallet }
@@ -44,7 +44,7 @@ class DefaultMnemonicsInteractor {
 
 // MARK: - MnemonicsInteractor
 
-extension DefaultMnemonicsInteractor: WalletsInteractor {
+extension DefaultWalletsInteractor: WalletsInteractor {
 
     func loadWallets(_ handler: WalletsHandler) {
         walletsService.loadWallets(handler)

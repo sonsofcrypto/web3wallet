@@ -69,8 +69,10 @@ extension DefaultWalletsService: WalletsService {
             name: "Default Wallet",
             encryptedSigner: "This will be mnemonic or private key or HD connection"
         )
+        
         wallets.append(wallet)
         try store.set(wallet, key: Constant.wallets)
+        return wallet
     }
 
     func importWallet(
@@ -84,8 +86,10 @@ extension DefaultWalletsService: WalletsService {
             name: "Imported wallet",
             encryptedSigner: mnemonic
         )
+        
         wallets.append(wallet)
         try store.set(wallets, key: Constant.wallets)
+        return wallet
     }
 
     func delete(_ wallet: Wallet) throws {

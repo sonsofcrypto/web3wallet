@@ -17,15 +17,32 @@ class WalletsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        (view as? GradientView)?.colors = [
+            UIColor(named: "gbGradientTop"),
+            UIColor(named: "gbGradientBottom")
+        ].compactMap { $0 }
+        
         presenter?.present()
     }
 }
 
-// MARK: - MnemonicsView
+// MARK: - WalletsView
 
 extension WalletsViewController: WalletsView {
 
     func update(with viewModel: WalletsViewModel) {
 
+    }
+}
+
+// MARK: - Configure UI
+
+extension WalletsViewController {
+    
+    func configureUI() {
+        (view as? GradientView)?.colors = [
+            UIColor(named: "gbGradientTop"),
+            UIColor(named: "gbGradientBottom")
+        ].compactMap { $0 }
     }
 }

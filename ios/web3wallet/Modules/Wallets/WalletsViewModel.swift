@@ -7,7 +7,7 @@ import Foundation
 enum WalletsViewModel {
     case loading
     case loaded(wallets: [Wallet], selectedIdx: Int)
-    case error(error: WalletsError)
+    case error(error: WalletsViewModel.Error)
 }
 
 // MARK - Wallet
