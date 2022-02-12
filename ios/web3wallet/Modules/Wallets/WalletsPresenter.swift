@@ -79,15 +79,34 @@ private extension DefaultWalletsPresenter {
     }
 
     func handleCreateNewWallet() {
-
+        do {
+            let wallet = try interactor.createNewWallet("1111", passphrase: nil)
+            latestWallets.append(wallet)
+            interactor.activeWallet = wallet
+            view?.update(with: viewModel(from: latestWallets, active: wallet))
+        } catch {
+            view?.update(with: viewModel(from: error))
+        }
     }
 
     func handleImportWallet() {
-
+        do {
+            let wallet = try interactor.importWallet(
+                "some menemonic",
+                password: "1111",
+                passphrase: nil
+            )
+            latestWallets.append(wallet)
+            interactor.activeWallet = wallet
+            view?.update(with: viewModel(from: latestWallets, active: wallet))
+        } catch {
+            view?.update(with: viewModel(from: error))
+        }
     }
 
     func handleConnectHardwareWallet() {
-
+        // TODO: Implement
+        print("handleConnectHardwareWallet")
     }
 }
 
@@ -106,6 +125,16 @@ private extension DefaultWalletsPresenter {
         wallets.map {
             .init(title: $0.name)
         }
+    }
+
+    func viewModel(from error: Error) -> WalletsViewModel {
+        .error(
+            error: WalletsViewModel.Error(
+                title: "Error",
+                body: error.localizedDescription,
+                actions: ["OK"]
+            )
+        )
     }
 
     func selectedIdx(_ wallets: [Wallet], active: Wallet?) -> Int {
