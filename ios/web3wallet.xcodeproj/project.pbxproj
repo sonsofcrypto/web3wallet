@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A4C32CF0C59FE32073E66D0 /* MnemonicsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3226ECC6247E9092F6EF /* MnemonicsPresenter.swift */; };
+		1A4C3708C25B84EAA53D0FB6 /* Mnemonic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C376D2673983B26F249FF /* Mnemonic.swift */; };
+		1A4C39D40DEC9C42A6CF8D8A /* MnemonicsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3228507ADBCE1C99C219 /* MnemonicsViewModel.swift */; };
+		1A4C3A585C5375AE91CDA637 /* MnemonicsWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C514ACC30A0AC4707FA /* MnemonicsWireframeFactory.swift */; };
+		1A4C3C9B866507D8700399F6 /* MnemonicsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C36CAEB50425CE9839ED4 /* MnemonicsService.swift */; };
+		1A4C3D9BD9F5A146878AFF77 /* MnemonicsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DF93F3CE8FE0B35C142 /* MnemonicsWireframe.swift */; };
+		1A4C3F2AC8A8B59020F63712 /* MnemonicsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3044DC83E6A35A00DC12 /* MnemonicsInteractor.swift */; };
 		D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CA27B69B6300578FF8 /* AppDelegate.swift */; };
 		D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */; };
 		D157F7CF27B69B6300578FF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CE27B69B6300578FF8 /* ViewController.swift */; };
@@ -16,6 +23,8 @@
 		D157F7E227B69B6400578FF8 /* web3walletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7E127B69B6400578FF8 /* web3walletTests.swift */; };
 		D157F7EC27B69B6400578FF8 /* web3walletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7EB27B69B6400578FF8 /* web3walletUITests.swift */; };
 		D157F7EE27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */; };
+		D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B06C227B6D23C008C3C62 /* GradienView.swift */; };
+		D15B06C727B72111008C3C62 /* MnemonicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B06C627B72111008C3C62 /* MnemonicsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +45,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A4C3044DC83E6A35A00DC12 /* MnemonicsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicsInteractor.swift; sourceTree = "<group>"; };
+		1A4C3226ECC6247E9092F6EF /* MnemonicsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicsPresenter.swift; sourceTree = "<group>"; };
+		1A4C3228507ADBCE1C99C219 /* MnemonicsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicsViewModel.swift; sourceTree = "<group>"; };
+		1A4C36CAEB50425CE9839ED4 /* MnemonicsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicsService.swift; sourceTree = "<group>"; };
+		1A4C376D2673983B26F249FF /* Mnemonic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mnemonic.swift; sourceTree = "<group>"; };
+		1A4C3C514ACC30A0AC4707FA /* MnemonicsWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicsWireframeFactory.swift; sourceTree = "<group>"; };
+		1A4C3DF93F3CE8FE0B35C142 /* MnemonicsWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicsWireframe.swift; sourceTree = "<group>"; };
 		D157F7C727B69B6300578FF8 /* web3wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = web3wallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D157F7CA27B69B6300578FF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +65,8 @@
 		D157F7E727B69B6400578FF8 /* web3walletUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = web3walletUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D157F7EB27B69B6400578FF8 /* web3walletUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3walletUITests.swift; sourceTree = "<group>"; };
 		D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3walletUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D15B06C227B6D23C008C3C62 /* GradienView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradienView.swift; sourceTree = "<group>"; };
+		D15B06C627B72111008C3C62 /* MnemonicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +94,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A4C378CF260A81DDB68B039 /* Mnemonics */ = {
+			isa = PBXGroup;
+			children = (
+				1A4C36CAEB50425CE9839ED4 /* MnemonicsService.swift */,
+				1A4C376D2673983B26F249FF /* Mnemonic.swift */,
+			);
+			path = Mnemonics;
+			sourceTree = "<group>";
+		};
+		1A4C38B91F448C1E962685B3 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1A4C378CF260A81DDB68B039 /* Mnemonics */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		D157F7BE27B69B6300578FF8 = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +134,8 @@
 		D157F7C927B69B6300578FF8 /* web3wallet */ = {
 			isa = PBXGroup;
 			children = (
+				D15B06C527B6D247008C3C62 /* Common */,
+				D15B06C927B7214B008C3C62 /* Modules */,
 				D157F7CA27B69B6300578FF8 /* AppDelegate.swift */,
 				D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */,
 				D157F7CE27B69B6300578FF8 /* ViewController.swift */,
@@ -125,6 +162,44 @@
 				D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */,
 			);
 			path = web3walletUITests;
+			sourceTree = "<group>";
+		};
+		D15B06C427B6D241008C3C62 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D15B06C227B6D23C008C3C62 /* GradienView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D15B06C527B6D247008C3C62 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				D15B06C427B6D241008C3C62 /* Views */,
+				1A4C38B91F448C1E962685B3 /* Services */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		D15B06C827B7211F008C3C62 /* Mnemonics */ = {
+			isa = PBXGroup;
+			children = (
+				D15B06C627B72111008C3C62 /* MnemonicsView.swift */,
+				1A4C3226ECC6247E9092F6EF /* MnemonicsPresenter.swift */,
+				1A4C3DF93F3CE8FE0B35C142 /* MnemonicsWireframe.swift */,
+				1A4C3C514ACC30A0AC4707FA /* MnemonicsWireframeFactory.swift */,
+				1A4C3044DC83E6A35A00DC12 /* MnemonicsInteractor.swift */,
+				1A4C3228507ADBCE1C99C219 /* MnemonicsViewModel.swift */,
+			);
+			path = Mnemonics;
+			sourceTree = "<group>";
+		};
+		D15B06C927B7214B008C3C62 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				D15B06C827B7211F008C3C62 /* Mnemonics */,
+			);
+			path = Modules;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,8 +334,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				D157F7CF27B69B6300578FF8 /* ViewController.swift in Sources */,
+				D15B06C727B72111008C3C62 /* MnemonicsView.swift in Sources */,
+				D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */,
 				D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */,
 				D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */,
+				1A4C32CF0C59FE32073E66D0 /* MnemonicsPresenter.swift in Sources */,
+				1A4C3D9BD9F5A146878AFF77 /* MnemonicsWireframe.swift in Sources */,
+				1A4C3A585C5375AE91CDA637 /* MnemonicsWireframeFactory.swift in Sources */,
+				1A4C3F2AC8A8B59020F63712 /* MnemonicsInteractor.swift in Sources */,
+				1A4C39D40DEC9C42A6CF8D8A /* MnemonicsViewModel.swift in Sources */,
+				1A4C3C9B866507D8700399F6 /* MnemonicsService.swift in Sources */,
+				1A4C3708C25B84EAA53D0FB6 /* Mnemonic.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

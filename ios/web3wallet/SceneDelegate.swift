@@ -1,9 +1,6 @@
-//
-//  SceneDelegate.swift
-//  web3wallet
-//
-//  Created by blockexplorer on 11/02/2022.
-//
+// Created by web3d3v on 11/02/2022.
+// Copyright (c) 2022 Sons Of Crypto.
+// SPDX-License-Identifier: MIT
 
 import UIKit
 
