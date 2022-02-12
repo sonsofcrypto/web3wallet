@@ -7,6 +7,7 @@ import UIKit
 /// Convenience `UIView` wrapper for `CAGradientLayer`. Main goal to easily show
 /// stuble shadows without having to add assets to the app. `UIView` wrapper
 /// is handy as it avoids having to deal with more cumbersome `CALayer` layout
+@IBDesignable
 class GradientView: UIView {
     
     enum Direction {
@@ -43,6 +44,16 @@ class GradientView: UIView {
         }
     }
     
+    @IBInspectable
+    var defaultTopColor: UIColor = defaultShadowColors().first! {
+        didSet { colors = [defaultTopColor, defaultBottomColor] }
+    }
+    
+    @IBInspectable
+    var defaultBottomColor: UIColor = defaultShadowColors().last! {
+        didSet { colors = [defaultTopColor, defaultBottomColor] }
+    }
+    
     override class var layerClass: AnyClass {
         return CAGradientLayer.self
     }
@@ -50,5 +61,9 @@ class GradientView: UIView {
     /// two black colors with aplha at 0 and 0.25
     class func defaultShadowColors() -> [UIColor] {
         return [UIColor.black.withAlphaComponent(0), UIColor.black.withAlphaComponent(0.25)]
+    }
+
+    override func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
     }
 }

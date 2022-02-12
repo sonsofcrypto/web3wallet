@@ -17,11 +17,7 @@ class WalletsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        (view as? GradientView)?.colors = [
-            UIColor(named: "gbGradientTop"),
-            UIColor(named: "gbGradientBottom")
-        ].compactMap { $0 }
-        
+        configureUI()
         presenter?.present()
     }
 }
@@ -40,9 +36,10 @@ extension WalletsViewController: WalletsView {
 extension WalletsViewController {
     
     func configureUI() {
+        title = Localized("wallets")
         (view as? GradientView)?.colors = [
-            UIColor(named: "gbGradientTop"),
-            UIColor(named: "gbGradientBottom")
-        ].compactMap { $0 }
+            Theme.current.background,
+            Theme.current.backgroundDark
+        ]
     }
 }

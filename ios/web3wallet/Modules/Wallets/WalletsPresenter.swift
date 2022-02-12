@@ -140,7 +140,7 @@ private extension DefaultWalletsPresenter {
             error: WalletsViewModel.Error(
                 title: "Error",
                 body: error.localizedDescription,
-                actions: ["OK"]
+                actions: [Localized("OK")]
             )
         )
     }

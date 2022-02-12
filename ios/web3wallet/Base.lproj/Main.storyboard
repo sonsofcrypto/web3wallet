@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -35,15 +36,57 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6iF-bJ-pdm">
-                                <rect key="frame" x="327" y="0.0" width="67" height="224"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Button"/>
-                            </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hyQ-ni-ASc">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="622"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5hE-y9-aoB">
+                                    <size key="itemSize" width="181" height="199"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="DqM-3n-4i5">
+                                <rect key="frame" x="16" y="638" width="382" height="224"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4i-5W-BRo" customClass="DefaultButton" customModule="web3wallet" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="64"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YxO-SU-R9J" customClass="DefaultButton" customModule="web3wallet" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="80" width="382" height="64"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a0Z-ZF-KMy" customClass="DefaultButton" customModule="web3wallet" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="160" width="382" height="64"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="hyQ-ni-ASc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="0jl-91-o9N"/>
+                            <constraint firstItem="hyQ-ni-ASc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="8fp-In-rzm"/>
+                            <constraint firstItem="DqM-3n-4i5" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="MJi-PD-FMX"/>
+                            <constraint firstItem="DqM-3n-4i5" firstAttribute="top" secondItem="hyQ-ni-ASc" secondAttribute="bottom" constant="16" id="asn-Ef-6kD"/>
+                            <constraint firstItem="hyQ-ni-ASc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="eJC-Kb-duk"/>
+                            <constraint firstItem="DqM-3n-4i5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="olL-jG-vtA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DqM-3n-4i5" secondAttribute="trailing" constant="16" id="tJM-fr-oOi"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="defaultTopColor">
+                                <color key="value" name="bgGradientTop"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="defaultBottomColor">
+                                <color key="value" name="bgGradientBottom"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <navigationItem key="navigationItem" title="web3wallet" id="HNH-q6-vGe"/>
                 </viewController>
@@ -53,6 +96,12 @@
         </scene>
     </scenes>
     <resources>
+        <namedColor name="bgGradientBottom">
+            <color red="0.075000002980232239" green="0.043000001460313797" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="bgGradientTop">
+            <color red="0.1289999932050705" green="0.11800000071525574" blue="0.23899999260902405" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

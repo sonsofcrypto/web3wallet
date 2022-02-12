@@ -8,14 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		1A4C302CC56D21A0E3CBAFF6 /* UIStoryboard+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C310A6D460422DB18D0BF /* UIStoryboard+extensions.swift */; };
+		1A4C305703196BC0B33BC401 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3342AB2F88E37CE4947A /* Theme.swift */; };
 		1A4C32CF0C59FE32073E66D0 /* WalletsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3226ECC6247E9092F6EF /* WalletsPresenter.swift */; };
+		1A4C33FF86A4E43DAA2E7AB9 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3BBAA5D729DC128BA1A7 /* UIColor+Extensions.swift */; };
 		1A4C3708C25B84EAA53D0FB6 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C376D2673983B26F249FF /* Wallet.swift */; };
+		1A4C372EC2DEA2483AD7D92E /* NSLocalizedString+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D1809D506A7AE772982 /* NSLocalizedString+extension.swift */; };
 		1A4C39D40DEC9C42A6CF8D8A /* WalletsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3228507ADBCE1C99C219 /* WalletsViewModel.swift */; };
 		1A4C3A585C5375AE91CDA637 /* WalletsWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C514ACC30A0AC4707FA /* WalletsWireframeFactory.swift */; };
+		1A4C3B49BC67AF7AA3BF0D8F /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3644A9D218CC991B2A56 /* VisualEffectView.swift */; };
+		1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */; };
 		1A4C3C9B866507D8700399F6 /* WalletsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C36CAEB50425CE9839ED4 /* WalletsService.swift */; };
 		1A4C3D9BD9F5A146878AFF77 /* WalletsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DF93F3CE8FE0B35C142 /* WalletsWireframe.swift */; };
 		1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3B70AA1B0BC942B15671 /* Store.swift */; };
+		1A4C3EB4D429242923984C76 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3378B5287B6A9BDE65CD /* DefaultButton.swift */; };
 		1A4C3F2AC8A8B59020F63712 /* WalletsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3044DC83E6A35A00DC12 /* WalletsInteractor.swift */; };
+		D14ECE3927B833E500228F90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D14ECE3827B833E500228F90 /* Localizable.strings */; };
 		D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CA27B69B6300578FF8 /* AppDelegate.swift */; };
 		D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */; };
 		D157F7CF27B69B6300578FF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CE27B69B6300578FF8 /* ViewController.swift */; };
@@ -51,11 +58,18 @@
 		1A4C310A6D460422DB18D0BF /* UIStoryboard+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+extensions.swift"; sourceTree = "<group>"; };
 		1A4C3226ECC6247E9092F6EF /* WalletsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsPresenter.swift; sourceTree = "<group>"; };
 		1A4C3228507ADBCE1C99C219 /* WalletsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsViewModel.swift; sourceTree = "<group>"; };
+		1A4C3342AB2F88E37CE4947A /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		1A4C3378B5287B6A9BDE65CD /* DefaultButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
+		1A4C3644A9D218CC991B2A56 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		1A4C36CAEB50425CE9839ED4 /* WalletsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsService.swift; sourceTree = "<group>"; };
 		1A4C376D2673983B26F249FF /* Wallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
+		1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewEffectViewiOS14.swift; sourceTree = "<group>"; };
 		1A4C3B70AA1B0BC942B15671 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		1A4C3BBAA5D729DC128BA1A7 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		1A4C3C514ACC30A0AC4707FA /* WalletsWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsWireframeFactory.swift; sourceTree = "<group>"; };
+		1A4C3D1809D506A7AE772982 /* NSLocalizedString+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLocalizedString+extension.swift"; sourceTree = "<group>"; };
 		1A4C3DF93F3CE8FE0B35C142 /* WalletsWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsWireframe.swift; sourceTree = "<group>"; };
+		D14ECE3827B833E500228F90 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		D157F7C727B69B6300578FF8 /* web3wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = web3wallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D157F7CA27B69B6300578FF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +116,8 @@
 			isa = PBXGroup;
 			children = (
 				1A4C310A6D460422DB18D0BF /* UIStoryboard+extensions.swift */,
+				1A4C3D1809D506A7AE772982 /* NSLocalizedString+extension.swift */,
+				1A4C3BBAA5D729DC128BA1A7 /* UIColor+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -122,6 +138,15 @@
 				D17AC2D527B7E674000D7C34 /* Store */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		1A4C3D0B11BD0F9527397998 /* VisualEffectView */ = {
+			isa = PBXGroup;
+			children = (
+				1A4C3644A9D218CC991B2A56 /* VisualEffectView.swift */,
+				1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */,
+			);
+			path = VisualEffectView;
 			sourceTree = "<group>";
 		};
 		D157F7BE27B69B6300578FF8 = {
@@ -155,6 +180,7 @@
 				D157F7D027B69B6300578FF8 /* Main.storyboard */,
 				D157F7D327B69B6400578FF8 /* Assets.xcassets */,
 				D157F7D527B69B6400578FF8 /* LaunchScreen.storyboard */,
+				D14ECE3827B833E500228F90 /* Localizable.strings */,
 				D157F7D827B69B6400578FF8 /* Info.plist */,
 			);
 			path = web3wallet;
@@ -181,6 +207,8 @@
 			isa = PBXGroup;
 			children = (
 				D15B06C227B6D23C008C3C62 /* GradienView.swift */,
+				1A4C3378B5287B6A9BDE65CD /* DefaultButton.swift */,
+				1A4C3D0B11BD0F9527397998 /* VisualEffectView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -191,6 +219,7 @@
 				D15B06C427B6D241008C3C62 /* Views */,
 				1A4C38B91F448C1E962685B3 /* Services */,
 				1A4C30D5AD2DC31052A09D61 /* Extensions */,
+				1A4C3342AB2F88E37CE4947A /* Theme.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -329,6 +358,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D157F7D727B69B6400578FF8 /* LaunchScreen.storyboard in Resources */,
+				D14ECE3927B833E500228F90 /* Localizable.strings in Resources */,
 				D157F7D427B69B6400578FF8 /* Assets.xcassets in Resources */,
 				D157F7D227B69B6300578FF8 /* Main.storyboard in Resources */,
 			);
@@ -369,6 +399,12 @@
 				1A4C3708C25B84EAA53D0FB6 /* Wallet.swift in Sources */,
 				1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */,
 				1A4C302CC56D21A0E3CBAFF6 /* UIStoryboard+extensions.swift in Sources */,
+				1A4C372EC2DEA2483AD7D92E /* NSLocalizedString+extension.swift in Sources */,
+				1A4C33FF86A4E43DAA2E7AB9 /* UIColor+Extensions.swift in Sources */,
+				1A4C3EB4D429242923984C76 /* DefaultButton.swift in Sources */,
+				1A4C3B49BC67AF7AA3BF0D8F /* VisualEffectView.swift in Sources */,
+				1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */,
+				1A4C305703196BC0B33BC401 /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
