@@ -58,6 +58,6 @@ extension DefaultWalletsWireframe {
         )
 
         vc.presenter = presenter
-        return UINavigationController(rootViewController: vc)
+        return NavigationController(rootViewController: vc)
     }
 }

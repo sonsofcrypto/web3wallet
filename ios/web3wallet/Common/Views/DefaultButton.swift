@@ -20,6 +20,14 @@ class DefaultButton: UIButton {
         configureUI()
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.shadowPath = UIBezierPath(
+            roundedRect: bounds,
+            cornerRadius: Constant.defaultButtonCornerRadius
+        ).cgPath
+    }
+
     override var intrinsicContentSize: CGSize {
         var size = super.intrinsicContentSize
         size.height = Constant.defaultButtonHeight
@@ -46,6 +54,7 @@ extension DefaultButton {
         titleLabel?.layer.masksToBounds = false
         titleLabel?.layer.shadowRadius = Constant.defaultShadowRadius
         titleLabel?.layer.shadowOpacity = 1
+        titleLabel?.font = Theme.current.callout
 
         configure(for: false)
     }
@@ -55,10 +64,6 @@ extension DefaultButton {
             ? Theme.current.tintPrimary
             : Theme.current.tintPrimaryLight).cgColor
         layer.shadowOpacity = highlighted ? 1 :0
-        layer.shadowPath = UIBezierPath(
-            roundedRect: bounds,
-            cornerRadius: Constant.defaultButtonCornerRadius
-        ).cgPath
     }
 }
 

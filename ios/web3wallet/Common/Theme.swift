@@ -8,6 +8,8 @@ struct Theme {
 
     static var current: Theme = Theme()
 
+    // MARK: - Colors
+
     var tintPrimary: UIColor {
         UIColor.tintPrimary
     }
@@ -31,4 +33,19 @@ struct Theme {
     var textColor: UIColor {
         UIColor.white
     }
+
+    // MARK: - Fonts
+
+    var body: UIFont {
+        UIFont.font(.gothicA1, style: .regular, size: .body)
+    }
+
+    var navTitle: UIFont {
+        UIFont.font(.nothingYouCouldDo, style: .regular, size: .custom(size: 24))
+    }
+
+    var callout: UIFont {
+        UIFont.font(.gothicA1, style: .regular, size: .callout)
+    }
 }
+

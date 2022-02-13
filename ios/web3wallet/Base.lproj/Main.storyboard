@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Navigation View Controller-->
         <scene sceneID="1MC-bY-hB6">
             <objects>
-                <navigationController id="cnO-ev-hje" sceneMemberID="viewController">
+                <navigationController id="cnO-ev-hje" customClass="NavigationViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="aZg-iz-PJC">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
