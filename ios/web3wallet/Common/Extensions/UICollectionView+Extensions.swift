@@ -1,0 +1,18 @@
+// Created by web3d3v on 13/02/2022.
+// Copyright (c) 2022 Sons Of Crypto.
+// SPDX-License-Identifier: MIT
+
+import UIKit
+
+extension UICollectionView {
+
+    func dequeue<T: UICollectionViewCell>(_: T.Type, for idxPath: IndexPath) -> T {
+        guard let cell = dequeueReusableCell(
+            withReuseIdentifier: "\(T.self)",
+            for: idxPath
+        ) as? T else {
+            fatalError("Failed to deque cell with id \(T.self)")
+        }
+        return cell
+    }
+}

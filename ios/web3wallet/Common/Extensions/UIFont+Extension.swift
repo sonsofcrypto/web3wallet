@@ -21,6 +21,10 @@ extension UIFont {
             return font
         }
 
+        if let font = UIFont(name: "\(font.rawValue)", size: size.size()) {
+            return font
+        }
+
         return UIFont.systemFont(ofSize: size.size(), weight: style.systemWeight())
     }
 

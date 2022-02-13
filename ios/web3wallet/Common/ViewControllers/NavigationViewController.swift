@@ -8,11 +8,24 @@ class NavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationBar.tintColor = Theme.current.tintPrimary
-        navigationBar.barTintColor = Theme.current.background
-        navigationBar.titleTextAttributes = [
+
+        var appearance = navigationBar.standardAppearance
+        let titleShadow = NSShadow()
+        titleShadow.shadowOffset = .zero
+        titleShadow.shadowBlurRadius = Global.shadowRadius
+        titleShadow.shadowColor = Theme.current.tintPrimary
+
+        appearance.titleTextAttributes = [
             .foregroundColor: Theme.current.tintPrimary,
             .font: Theme.current.navTitle,
+            .shadow: titleShadow
         ]
+
+        appearance.backgroundColor = Theme.current.background.withAlphaComponent(0.9)
+
+        navigationBar.standardAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
+        navigationBar.compactAppearance = appearance
+        navigationBar.compactScrollEdgeAppearance = appearance
     }
 }

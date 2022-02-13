@@ -14,11 +14,27 @@ class WalletsViewController: UIViewController {
     var presenter: WalletsPresenter!
 
     private var viewModel: WalletsViewModel?
+    
+    @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         presenter?.present()
+    }
+
+    // MARK: - Actions
+
+    @IBAction func createNewWalletAction(_ sender: Any) {
+        presenter.handle(.createNewWallet)
+    }
+    
+    @IBAction func importWalletAction(_ sender: Any) {
+        presenter.handle(.importWallet)
+    }
+    
+    @IBAction func connectHDWalletAction(_ sender: Any) {
+        presenter.handle(.connectHardwareWallet)
     }
 }
 
@@ -27,8 +43,36 @@ class WalletsViewController: UIViewController {
 extension WalletsViewController: WalletsView {
 
     func update(with viewModel: WalletsViewModel) {
-
+        self.viewModel = viewModel
+        collectionView.reloadData()
+        if let idx = viewModel.selectedIdx(), !viewModel.wallets().isEmpty {
+            collectionView.selectItem(
+                at: IndexPath(item: idx, section: 0),
+                animated: true,
+                scrollPosition: .top
+            )
+        }
     }
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension WalletsViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel?.wallets().count ?? 0
+    }
+    
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeue(WalletsCell.self, for: indexPath)
+        cell.titleLabel.text = viewModel?.wallets()[indexPath.item].title
+        return cell
+    }
+}
+
+extension WalletsViewController: UICollectionViewDelegate {
+    
 }
 
 // MARK: - Configure UI

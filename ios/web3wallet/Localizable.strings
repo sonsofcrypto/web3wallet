@@ -8,3 +8,8 @@
 "web3wallet" = "web3wallet";
 "wallets" = "wallets";
 "networks" = "networks";
+
+"wallets.tile" = "wallet";
+"wallets.createNew" = "Import wallet";
+"wallets.connectHD" = "Connect hardware wallet";
+

@@ -6,6 +6,7 @@
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -31,6 +32,7 @@
         <!--web3wallet-->
         <scene sceneID="tne-QT-ifu">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="WalletsViewController" title="web3wallet" id="BYZ-38-t0r" customClass="WalletsViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="GradientView" customModule="web3wallet" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -40,12 +42,43 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="622"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5hE-y9-aoB">
-                                    <size key="itemSize" width="181" height="199"/>
+                                    <size key="itemSize" width="181" height="68"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <cells/>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="WalletsCell" id="oYm-SG-4Bd" userLabel="WalletsCell" customClass="WalletsCell" customModule="web3wallet" customModuleProvider="target">
+                                        <rect key="frame" x="35.5" y="0.0" width="343" height="68"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="vlB-Z4-bZB">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="68"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ohs-rQ-JZw">
+                                                    <rect key="frame" x="16" y="16" width="311" height="36"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="Ohs-rQ-JZw" secondAttribute="trailing" constant="16" id="8nw-9d-gxS"/>
+                                                <constraint firstItem="Ohs-rQ-JZw" firstAttribute="top" secondItem="vlB-Z4-bZB" secondAttribute="top" constant="16" id="IaE-Av-haY"/>
+                                                <constraint firstItem="Ohs-rQ-JZw" firstAttribute="leading" secondItem="vlB-Z4-bZB" secondAttribute="leading" constant="16" id="c3A-WD-gDQ"/>
+                                                <constraint firstAttribute="bottom" secondItem="Ohs-rQ-JZw" secondAttribute="bottom" constant="16" id="sxk-eP-0T1"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="343" height="68"/>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="Ohs-rQ-JZw" id="FIi-yz-4az"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="BnQ-Nl-Gco"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="eGn-AQ-1an"/>
+                                </connections>
                             </collectionView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="DqM-3n-4i5">
                                 <rect key="frame" x="16" y="638" width="382" height="224"/>
@@ -53,17 +86,26 @@
                                     <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4i-5W-BRo" customClass="DefaultButton" customModule="web3wallet" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="64"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Create new wallet"/>
+                                        <connections>
+                                            <action selector="createNewWalletAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CGD-07-mtH"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YxO-SU-R9J" customClass="DefaultButton" customModule="web3wallet" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="80" width="382" height="64"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Import wallet"/>
+                                        <connections>
+                                            <action selector="importWalletAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aTZ-2u-g3V"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a0Z-ZF-KMy" customClass="DefaultButton" customModule="web3wallet" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="160" width="382" height="64"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Connect hardware wallet"/>
+                                        <connections>
+                                            <action selector="connectHDWalletAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Yzx-fJ-ABR"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -89,8 +131,10 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <navigationItem key="navigationItem" title="web3wallet" id="HNH-q6-vGe"/>
+                    <connections>
+                        <outlet property="collectionView" destination="hyQ-ni-ASc" id="qpZ-WZ-0Dn"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="356.52173913043481" y="123.88392857142857"/>
         </scene>

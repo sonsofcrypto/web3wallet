@@ -29,3 +29,26 @@ extension WalletsViewModel {
         let actions: [String]
     }
 }
+
+// MARK: - Utility
+
+extension WalletsViewModel {
+
+    func wallets() -> [WalletsViewModel.Wallet] {
+        switch self {
+        case let .loaded(wallets, _):
+            return wallets
+        default:
+            return []
+        }
+    }
+
+    func selectedIdx() -> Int? {
+        switch self {
+        case let .loaded(_, idx):
+            return idx
+        default:
+            return nil
+        }
+    }
+}
