@@ -18,38 +18,51 @@ class DefaultStore {
         appropriateFor: nil,
         create: true
     ).appendingPathComponent("store.json")
+    
+    private var store: [String: Any] = [:]
 }
 
 // MARK: - Store
 extension DefaultStore: Store {
 
     func set<T>(_ val: T, key: String) throws where T: Codable {
-        let data = try Data(contentsOf: url)
-        let json = try JSONSerialization.jsonObject(
-            with: data,
-            options: .fragmentsAllowed
-        )
-
-        guard var dict = json as? Dictionary<String, Decodable> else {
-            throw StoreError.failedToReadStoreData
-        }
-
-        dict[key] = val
-        let newData = try JSONSerialization.data(withJSONObject: dict)
-        try newData.write(to: url, options: .atomic)
+//        createStoreIfNeeded()
+//        let data = try Data(contentsOf: url)
+//        let json = try JSONSerialization.jsonObject(
+//            with: data,
+//            options: .fragmentsAllowed
+//        )
+//
+//        guard var dict = json as? Dictionary<String, Decodable> else {
+//            throw StoreError.failedToReadStoreData
+//        }
+//
+//        dict[key] = val
+//        let newData = try JSONSerialization.data(withJSONObject: dict)
+//        try newData.write(to: url, options: .atomic)
+        store[key] = val
     }
 
     func get<T>(_ key: String) -> T? where T: Codable {
-        guard let data = try? Data(contentsOf: url) else {
-            return nil
+//        createStoreIfNeeded()
+//        guard let data = try? Data(contentsOf: url) else {
+//            return nil
+//        }
+//
+//        let json = try? JSONSerialization.jsonObject(
+//            with: data,
+//            options: .fragmentsAllowed
+//        )
+//
+//        return (json as? [String: Decodable])?[key] as? T
+        return store[key] as? T
+    }
+
+    func createStoreIfNeeded() {
+        guard !FileManager.default.fileExists(atPath: url.path) else {
+            return
         }
-
-        let json = try? JSONSerialization.jsonObject(
-            with: data,
-            options: .fragmentsAllowed
-        )
-
-        return (json as? [String: Decodable])?[key] as? T
+        try? "{}".data(using: .utf8)!.write(to: url, options: .atomic)
     }
 }
 

@@ -93,6 +93,7 @@ private extension DefaultWalletsPresenter {
             interactor.activeWallet = wallet
             view?.update(with: viewModel(from: latestWallets, active: wallet))
         } catch {
+            print(error)
             view?.update(with: viewModel(from: error))
         }
     }
@@ -108,6 +109,7 @@ private extension DefaultWalletsPresenter {
             interactor.activeWallet = wallet
             view?.update(with: viewModel(from: latestWallets, active: wallet))
         } catch {
+            print(error)
             view?.update(with: viewModel(from: error))
         }
     }

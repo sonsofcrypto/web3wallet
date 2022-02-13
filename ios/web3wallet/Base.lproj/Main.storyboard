@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Navigation View Controller-->
+        <!--Navigation Controller-->
         <scene sceneID="1MC-bY-hB6">
             <objects>
-                <navigationController id="cnO-ev-hje" customClass="NavigationViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController id="cnO-ev-hje" customClass="NavigationController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="aZg-iz-PJC">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -38,27 +38,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hyQ-ni-ASc">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hyQ-ni-ASc">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="622"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5hE-y9-aoB">
-                                    <size key="itemSize" width="181" height="68"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="19" minimumInteritemSpacing="19" id="5hE-y9-aoB">
+                                    <size key="itemSize" width="345" height="64"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="16" minY="20" maxX="16" maxY="20"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="WalletsCell" id="oYm-SG-4Bd" userLabel="WalletsCell" customClass="WalletsCell" customModule="web3wallet" customModuleProvider="target">
-                                        <rect key="frame" x="35.5" y="0.0" width="343" height="68"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="WalletsCell" reuseIdentifier="WalletsCell" id="oYm-SG-4Bd" userLabel="WalletsCell" customClass="WalletsCell" customModule="web3wallet" customModuleProvider="target">
+                                        <rect key="frame" x="34.5" y="20" width="345" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="vlB-Z4-bZB">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="68"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="345" height="64"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ohs-rQ-JZw">
-                                                    <rect key="frame" x="16" y="16" width="311" height="36"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="1" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ohs-rQ-JZw">
+                                                    <rect key="frame" x="16" y="16" width="313" height="32"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -69,7 +69,6 @@
                                                 <constraint firstAttribute="bottom" secondItem="Ohs-rQ-JZw" secondAttribute="bottom" constant="16" id="sxk-eP-0T1"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="343" height="68"/>
                                         <connections>
                                             <outlet property="titleLabel" destination="Ohs-rQ-JZw" id="FIi-yz-4az"/>
                                         </connections>

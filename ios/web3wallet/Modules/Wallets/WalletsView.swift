@@ -46,11 +46,13 @@ extension WalletsViewController: WalletsView {
         self.viewModel = viewModel
         collectionView.reloadData()
         if let idx = viewModel.selectedIdx(), !viewModel.wallets().isEmpty {
-            collectionView.selectItem(
-                at: IndexPath(item: idx, section: 0),
-                animated: true,
-                scrollPosition: .top
-            )
+            for i in 0..<viewModel.wallets().count {
+                collectionView.selectItem(
+                    at: IndexPath(item: i, section: 0),
+                    animated: idx == i,
+                    scrollPosition: .top
+                )
+            }
         }
     }
 }
@@ -73,6 +75,13 @@ extension WalletsViewController: UICollectionViewDataSource {
 
 extension WalletsViewController: UICollectionViewDelegate {
     
+}
+
+extension WalletsViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width - 32, height: Global.cellHeight)
+    }
 }
 
 // MARK: - Configure UI
