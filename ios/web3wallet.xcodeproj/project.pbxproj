@@ -39,6 +39,9 @@
 		D11A990827B8615B00EDFDD0 /* GothicA1-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98FD27B8615B00EDFDD0 /* GothicA1-Black.ttf */; };
 		D11A990927B8615B00EDFDD0 /* GothicA1-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98FE27B8615B00EDFDD0 /* GothicA1-SemiBold.ttf */; };
 		D11A990A27B8615B00EDFDD0 /* NothingYouCouldDo-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98FF27B8615B00EDFDD0 /* NothingYouCouldDo-Regular.ttf */; };
+		D11A990F27B99D1800EDFDD0 /* AnyDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A990C27B99D1800EDFDD0 /* AnyDecodable.swift */; };
+		D11A991027B99D1800EDFDD0 /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A990D27B99D1800EDFDD0 /* AnyCodable.swift */; };
+		D11A991127B99D1800EDFDD0 /* AnyEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A990E27B99D1800EDFDD0 /* AnyEncodable.swift */; };
 		D14ECE3927B833E500228F90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D14ECE3827B833E500228F90 /* Localizable.strings */; };
 		D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CA27B69B6300578FF8 /* AppDelegate.swift */; };
 		D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */; };
@@ -103,6 +106,9 @@
 		D11A98FD27B8615B00EDFDD0 /* GothicA1-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothicA1-Black.ttf"; sourceTree = "<group>"; };
 		D11A98FE27B8615B00EDFDD0 /* GothicA1-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothicA1-SemiBold.ttf"; sourceTree = "<group>"; };
 		D11A98FF27B8615B00EDFDD0 /* NothingYouCouldDo-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NothingYouCouldDo-Regular.ttf"; sourceTree = "<group>"; };
+		D11A990C27B99D1800EDFDD0 /* AnyDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyDecodable.swift; sourceTree = "<group>"; };
+		D11A990D27B99D1800EDFDD0 /* AnyCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
+		D11A990E27B99D1800EDFDD0 /* AnyEncodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyEncodable.swift; sourceTree = "<group>"; };
 		D14ECE3827B833E500228F90 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		D157F7C727B69B6300578FF8 /* web3wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = web3wallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D157F7CA27B69B6300578FF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -219,6 +225,16 @@
 			path = Gothic_A1;
 			sourceTree = "<group>";
 		};
+		D11A990B27B99D1800EDFDD0 /* AnyCodable */ = {
+			isa = PBXGroup;
+			children = (
+				D11A990C27B99D1800EDFDD0 /* AnyDecodable.swift */,
+				D11A990D27B99D1800EDFDD0 /* AnyCodable.swift */,
+				D11A990E27B99D1800EDFDD0 /* AnyEncodable.swift */,
+			);
+			path = AnyCodable;
+			sourceTree = "<group>";
+		};
 		D157F7BE27B69B6300578FF8 = {
 			isa = PBXGroup;
 			children = (
@@ -324,6 +340,7 @@
 			isa = PBXGroup;
 			children = (
 				1A4C3B70AA1B0BC942B15671 /* Store.swift */,
+				D11A990B27B99D1800EDFDD0 /* AnyCodable */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -471,6 +488,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D11A990F27B99D1800EDFDD0 /* AnyDecodable.swift in Sources */,
+				D11A991027B99D1800EDFDD0 /* AnyCodable.swift in Sources */,
 				D157F7CF27B69B6300578FF8 /* ViewController.swift in Sources */,
 				D15B06C727B72111008C3C62 /* WalletsView.swift in Sources */,
 				D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */,
@@ -497,6 +516,7 @@
 				1A4C346BBC846E952B81C4CB /* WalletCell.swift in Sources */,
 				1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */,
 				1A4C32D43EDF7B8FC74AA68C /* UICollectionView+Extensions.swift in Sources */,
+				D11A991127B99D1800EDFDD0 /* AnyEncodable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
