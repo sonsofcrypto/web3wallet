@@ -42,7 +42,7 @@ class DefaultWalletsInteractor {
     }
 }
 
-// MARK: - MnemonicsInteractor
+// MARK: - DefaultWalletsInteractor
 
 extension DefaultWalletsInteractor: WalletsInteractor {
 
