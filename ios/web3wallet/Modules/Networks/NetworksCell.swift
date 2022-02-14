@@ -15,12 +15,10 @@ class NetworksCell: CollectionViewCell {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var explorerLabel: UILabel!
 
-        
     override func awakeFromNib() {
         super.awakeFromNib()
 
         titleLabel.applyStyle(.callout)
-        titleLabel.layer.applyShadow(Theme.current.tintSecondary)
 
         [connectionTitleLabel, statusTitleLabel, explorerTitleLabel].forEach {
             $0.applyStyle(.smallLabel)

@@ -32,15 +32,15 @@ class CollectionViewCell: UICollectionViewCell {
         configureUI()
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.applyShadowPath(bounds)
+    }
+
     private func configureUI() {
         backgroundColor = Theme.current.background
-        layer.cornerRadius = Global.cornerRadius
-        layer.borderWidth = 1
-        layer.shadowColor = Theme.current.tintPrimary.cgColor
-        layer.shadowRadius = Global.shadowRadius
-        layer.shadowOffset = .zero
-        clipsToBounds = false
-        layer.masksToBounds = false
+        layer.applyRectShadow()
+        layer.applyBorder()
         configure(for: false)
     }
 

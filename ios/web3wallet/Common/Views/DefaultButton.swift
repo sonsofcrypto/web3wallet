@@ -7,7 +7,7 @@ import UIKit
 class DefaultButton: UIButton {
 
     override var isHighlighted: Bool {
-        didSet { configure(for: isHighlighted) }
+        didSet { layer.applyHighlighted(false) }
     }
 
     override init(frame: CGRect) {
@@ -22,10 +22,7 @@ class DefaultButton: UIButton {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layer.shadowPath = UIBezierPath(
-            roundedRect: bounds,
-            cornerRadius: Constant.defaultButtonCornerRadius
-        ).cgPath
+        layer.applyShadowPath(bounds)
     }
 
     override var intrinsicContentSize: CGSize {
@@ -40,30 +37,11 @@ class DefaultButton: UIButton {
 extension DefaultButton {
 
     func configureUI() {
-        layer.cornerRadius = Constant.defaultButtonCornerRadius
-        layer.borderWidth = 1
-        layer.shadowColor = Theme.current.tintPrimary.cgColor
-        layer.shadowRadius = Constant.defaultShadowRadius
-        layer.shadowOffset = .zero
-
         backgroundColor = Theme.current.background
-        tintColor = Theme.current.textColor
-
-        titleLabel?.layer.shadowColor = Theme.current.tintSecondary.cgColor
-        titleLabel?.layer.shadowOffset = .zero
-        titleLabel?.layer.masksToBounds = false
-        titleLabel?.layer.shadowRadius = Constant.defaultShadowRadius
-        titleLabel?.layer.shadowOpacity = 1
-        titleLabel?.font = Theme.current.callout
-
-        configure(for: false)
-    }
-
-    func configure(for highlighted: Bool) {
-        layer.borderColor = (highlighted
-            ? Theme.current.tintPrimary
-            : Theme.current.tintPrimaryLight).cgColor
-        layer.shadowOpacity = highlighted ? 1 :0
+        layer.applyRectShadow()
+        layer.applyBorder()
+        layer.applyHighlighted(false)
+        titleLabel?.applyStyle(.callout)
     }
 }
 
@@ -73,7 +51,5 @@ private extension DefaultButton {
     
     enum Constant {
         static let defaultButtonHeight: CGFloat = 64
-        static let defaultButtonCornerRadius: CGFloat = 8
-        static let defaultShadowRadius: CGFloat = 4
     }
 }

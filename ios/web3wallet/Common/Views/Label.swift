@@ -17,12 +17,13 @@ extension UILabel {
         case .callout:
             font = Theme.current.callout
             textColor = Theme.current.textColor
+            layer.applyShadow(Theme.current.tintSecondary)
         case.smallLabel:
             font = Theme.current.footnote
             textColor = Theme.current.textColorSecondary
         case .smallBody:
             font = Theme.current.footnote
-            textColor = Theme.current.textColorTritiary
+            textColor = Theme.current.textColorTertiary
         }
     }
 }

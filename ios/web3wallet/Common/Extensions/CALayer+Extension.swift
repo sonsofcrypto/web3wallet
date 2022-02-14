@@ -22,15 +22,29 @@ extension CALayer {
         radius: CGFloat = Global.shadowRadius,
         cornerRadius: CGFloat = Global.cornerRadius
     ) {
+        applyShadowPath(bounds, radius: cornerRadius)
         applyShadow(color, radius: radius)
-        shadowPath = UIBezierPath(
-            roundedRect: bounds,
-            cornerRadius: cornerRadius
-        ).cgPath
     }
 
-    func applyStroke(_ color: UIColor = Theme.current.tintPrimary) {
+    func applyBorder(_ color: UIColor = Theme.current.tintPrimary) {
         borderWidth = 1
         borderColor = color.cgColor
+    }
+
+    func applyShadowPath(_ bounds: CGRect, radius: CGFloat = Global.cornerRadius) {
+        layer.shadowPath = UIBezierPath(
+            roundedRect: bounds,
+            cornerRadius: radius
+        ).cgPath
+    }
+}
+
+extension CALayer {
+
+    func applyHighlighted(_ highlighted: Bool) {
+        layer.borderColor = (highlighted
+            ? Theme.current.tintPrimary
+            : Theme.current.tintPrimaryLight).cgColor
+        layer.shadowOpacity = highlighted ? 1 :0
     }
 }

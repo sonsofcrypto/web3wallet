@@ -10,11 +10,6 @@ class WalletsCell: CollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        titleLabel.textColor = Theme.current.textColor
-        titleLabel.font = Theme.current.callout
-        titleLabel.layer.shadowColor = Theme.current.tintSecondary.cgColor
-        titleLabel.layer.shadowOffset = .zero
-        titleLabel.layer.shadowRadius = Global.shadowRadius
-        titleLabel.layer.shadowOpacity = 1
+        titleLabel.applyStyle(.callout)
     }
 }

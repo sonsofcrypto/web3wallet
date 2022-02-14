@@ -38,7 +38,7 @@ struct Theme {
         UIColor.textColorSecondary
     }
 
-    var textColorTritiary: UIColor {
+    var textColorTertiary: UIColor {
         UIColor.textColorTertiary
     }
 
