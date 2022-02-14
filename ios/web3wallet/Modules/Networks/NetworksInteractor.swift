@@ -6,17 +6,26 @@ import Foundation
 
 protocol NetworksInteractor: AnyObject {
 
+    typealias NetworksHandler = ([Network]) -> ()
+
+    var active: Network? { get set }
+
+    func availableNetworks() -> [Network]
+    func updateStatus(_ networks: [Network], handler: NetworksHandler)
 }
 
 // MARK: - DefaultNetworksInteractor
 
 class DefaultNetworksInteractor {
 
+    private var networksService: NetworksService
 
-    private var templateService: NetworksService
-
-    init(_ templateService: NetworksService) {
-        self.templateService = templateSerice
+    var active: Network? {
+        get { networksService.active }
+        set { networksService.active = newValue }
+    }
+    init(_ networksService: NetworksService) {
+        self.networksService = networksService
     }
 }
 
@@ -24,4 +33,11 @@ class DefaultNetworksInteractor {
 
 extension DefaultNetworksInteractor: NetworksInteractor {
 
+    func availableNetworks() -> [Network] {
+        networksService.availableNetworks()
+    }
+
+    func updateStatus(_ networks: [Network], handler: NetworksHandler) {
+        networksService.updateStatus(networks, handler: handler)
+    }
 }

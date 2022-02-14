@@ -5,6 +5,7 @@
 import Foundation
 
 struct Network {
+    let id: Int
     let name: String
     let url: URL?
     let connectionType: ConnectionType
@@ -18,6 +19,7 @@ extension Network {
 
     enum ConnectionType {
         case liteClient
+        case networkDefault
         case infura
         case alchyme
     }
@@ -28,9 +30,10 @@ extension Network {
 extension Network {
 
     enum Status {
-        case liteClient
-        case infura
-        case alchyme
+        case unknown
+        case connected
+        case connectedSync(pct: Float)
+        case disconnected
     }
 }
 
@@ -40,6 +43,6 @@ extension Network {
 
     enum Explorer {
         case liteClientOnly
-        case web3
+        case web2
     }
 }

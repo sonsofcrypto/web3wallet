@@ -5,8 +5,7 @@
 import Foundation
 
 enum NetworksViewModel {
-    case loading
-    case loaded(items: [Item], selectedIdx: Int)
+    case loaded(networks: [Network], selectedIdx: Int)
     case error(error: NetworksViewModel.Error)
 }
 
@@ -14,8 +13,11 @@ enum NetworksViewModel {
 
 extension NetworksViewModel {
 
-    struct Item {
-        let title: String
+    struct Network {
+        let name: String
+        let connectionType: String
+        let status: String
+        let explorer: String
     }
 }
 
@@ -34,7 +36,7 @@ extension NetworksViewModel {
 
 extension NetworksViewModel {
 
-    func items() -> [NetworksViewModel.Item] {
+    func network() -> [NetworksViewModel.Network] {
         switch self {
         case let .loaded(items, _):
             return items
