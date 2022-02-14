@@ -13,16 +13,16 @@ protocol NetworksWireframeFactory {
 
 class DefaultNetworksWireframeFactory {
 
-    private let networksService: NetworksSerivce
+    private let networksService: NetworksService
 
     private weak var window: UIWindow?
 
     init(
         window: UIWindow?,
-        networksService: NetworksSerivce
+        networksService: NetworksService
     ) {
         self.window = window
-        self.service = service
+        self.networksService = networksService
     }
 }
 
@@ -32,7 +32,7 @@ extension DefaultNetworksWireframeFactory: NetworksWireframeFactory {
 
     func makeWireframe() -> NetworksWireframe {
         DefaultNetworksWireframe(
-            interactor: DefaultNetworksInteractor(service),
+            interactor: DefaultNetworksInteractor(networksService),
             window: window
         )
     }
