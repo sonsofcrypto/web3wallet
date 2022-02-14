@@ -48,7 +48,7 @@ extension DefaultNetworksWireframe: NetworksWireframe {
 extension DefaultNetworksWireframe {
 
     private func wireUp() -> UIViewController {
-        let vc: WalletsViewController = UIStoryboard(.main).instantiate()
+        let vc: NetworksViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultNetworksPresenter(
             view: vc,
             interactor: interactor,

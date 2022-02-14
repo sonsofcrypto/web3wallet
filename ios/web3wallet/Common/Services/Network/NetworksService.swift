@@ -11,7 +11,7 @@ protocol NetworksService {
     var active: Network? { get set }
 
     func availableNetworks() -> [Network]
-    func updateStatus(_ networks: [Network], handler: NetworksHandler)
+    func updateStatus(_ networks: [Network], handler: @escaping NetworksHandler)
 }
 
 class DefaultNetworksService {
@@ -51,7 +51,7 @@ extension DefaultNetworksService: NetworksService {
         ]
     }
 
-    func updateStatus(_ networks: [Network], handler: NetworksHandler) {
+    func updateStatus(_ networks: [Network], handler: @escaping NetworksHandler) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             handler(
                 [
@@ -64,7 +64,7 @@ extension DefaultNetworksService: NetworksService {
                         explorer: .liteClientOnly
                     ),
                     Network(
-                        id: 90
+                        id: 90,
                         name: "Ethereum",
                         url: nil,
                         connectionType: .networkDefault,

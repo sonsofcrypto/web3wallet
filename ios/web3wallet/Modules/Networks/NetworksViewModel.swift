@@ -18,6 +18,7 @@ extension NetworksViewModel {
         let connectionType: String
         let status: String
         let explorer: String
+        let connected: Bool
     }
 }
 

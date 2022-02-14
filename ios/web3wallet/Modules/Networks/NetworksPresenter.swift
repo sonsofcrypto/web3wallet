@@ -52,9 +52,12 @@ extension DefaultNetworksPresenter: NetworksPresenter {
         interactor.updateStatus(
             interactor.availableNetworks(),
             handler: { [weak self] networks in
-                self?.networks = networks
-                view?.update(
-                    with: viewModel(from: networks, active: interactor.active)
+                guard let `self` = self else {
+                    return
+                }
+                self.networks = networks
+                self.view?.update(
+                    with: self.viewModel(from: networks, active: self.interactor.active)
                 )
             })
     }
@@ -88,6 +91,7 @@ private extension DefaultNetworksPresenter {
                 connectionType: formattedConnectionType($0),
                 status: formattedStatus($0),
                 explorer: formattedStatus($0)
+                connected:
             )
         }
     }
@@ -122,6 +126,15 @@ private extension DefaultNetworksPresenter {
             return "Lite client only"
         case .web2:
             return "web2"
+        }
+    }
+
+    func isConnected(_ network: Network) -> Bool {
+        switch network.status {
+        case .connected, .connectedSync:
+            return true
+        default:
+            false
         }
     }
 

@@ -37,8 +37,8 @@ extension NetworksViewController: NetworksView {
     func update(with viewModel: NetworksViewModel) {
         self.viewModel = viewModel
         collectionView.reloadData()
-        if let idx = viewModel.selectedIdx(), !viewModel.items().isEmpty {
-            for i in 0..<viewModel.items().count {
+        if let idx = viewModel.selectedIdx(), !viewModel.network().isEmpty {
+            for i in 0..<viewModel.network().count {
                 collectionView.selectItem(
                     at: IndexPath(item: i, section: 0),
                     animated: idx == i,
@@ -54,13 +54,13 @@ extension NetworksViewController: NetworksView {
 extension NetworksViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.items().count ?? 0
+        return viewModel?.network().count ?? 0
     }
     
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeue(WalletsCell.self, for: indexPath)
-        cell.titleLabel.text = viewModel?.items()[indexPath.item].title
+        let cell = collectionView.dequeue(NetworksCell.self, for: indexPath)
+        cell.update(with: viewModel?.network()[indexPath.item])
         return cell
     }
 }
@@ -72,7 +72,7 @@ extension NetworksViewController: UICollectionViewDelegate {
 extension NetworksViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 32, height: Global.cellHeight)
+        return CGSize(width: collectionView.frame.width - 32, height: Constant.cellHeight)
     }
 }
 
@@ -86,5 +86,14 @@ extension NetworksViewController {
             Theme.current.background,
             Theme.current.backgroundDark
         ]
+    }
+}
+
+// MARK: - Constants
+
+extension NetworksViewController {
+
+    enum Constant {
+        static let cellHeight: CGFloat = 115
     }
 }

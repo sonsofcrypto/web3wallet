@@ -11,7 +11,7 @@ protocol NetworksInteractor: AnyObject {
     var active: Network? { get set }
 
     func availableNetworks() -> [Network]
-    func updateStatus(_ networks: [Network], handler: NetworksHandler)
+    func updateStatus(_ networks: [Network], handler: @escaping NetworksHandler)
 }
 
 // MARK: - DefaultNetworksInteractor
@@ -37,7 +37,7 @@ extension DefaultNetworksInteractor: NetworksInteractor {
         networksService.availableNetworks()
     }
 
-    func updateStatus(_ networks: [Network], handler: NetworksHandler) {
+    func updateStatus(_ networks: [Network], handler: @escaping NetworksHandler) {
         networksService.updateStatus(networks, handler: handler)
     }
 }
