@@ -16,8 +16,8 @@ extension UILabel {
         switch style {
         case .callout:
             font = Theme.current.callout
-            textColor = Theme.current.textColor
             layer.applyShadow(Theme.current.tintSecondary)
+            textColor = Theme.current.textColor
         case.smallLabel:
             font = Theme.current.footnote
             textColor = Theme.current.textColorSecondary

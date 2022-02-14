@@ -42,7 +42,7 @@ extension DefaultStore: Store {
             return nil
         }
 
-        var json = try? decoder.decode([String: AnyCodable].self, from: data)
+        let json = try? decoder.decode([String: AnyCodable].self, from: data)
         return json?[key]?.value as? T
     }
 

@@ -9,15 +9,15 @@ class CollectionViewCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet {
             UIView.animate(withDuration: 0.1) { [weak self] in
-                self?.configure(for: self?.isSelected ?? false)
+                self?.layer.applyHighlighted(self?.isSelected ?? false)
             }
         }
     }
 
     override var isHighlighted: Bool {
         didSet {
-            UIView.animate(withDuration: 0.1) { [weak self] in
-                self?.configure(for: self?.isHighlighted ?? false)
+            UIView.animate(withDuration: 0.01) { [weak self] in
+                self?.layer.applyHighlighted(self?.isHighlighted ?? false)
             }
         }
     }

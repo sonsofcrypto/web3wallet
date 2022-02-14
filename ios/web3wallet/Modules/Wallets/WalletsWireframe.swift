@@ -22,6 +22,7 @@ class DefaultWalletsWireframe {
     private let interactor: WalletsInteractor
 
     private weak var window: UIWindow?
+    private weak var vc: UIViewController?
 
     init(
         interactor: WalletsInteractor,
@@ -38,12 +39,20 @@ extension DefaultWalletsWireframe: WalletsWireframe {
 
     func present() {
         let vc = wireUp()
+        self.vc = vc
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
     }
 
     func navigate(to destination: WalletsWireframeDestinaiton) {
-        print("navigate to \(destination)")
+        guard let vc = self.vc else {
+            return
+        }
+        DefaultNetworksWireframeFactory(
+            networksService: DefaultNetworksService()
+        )
+        .makeWireframe(vc)
+        .present()
     }
 }
 

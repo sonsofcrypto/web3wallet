@@ -9,7 +9,7 @@ class NavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var appearance = navigationBar.standardAppearance
+        let appearance = navigationBar.standardAppearance
         let titleShadow = NSShadow()
         titleShadow.shadowOffset = .zero
         titleShadow.shadowBlurRadius = Global.shadowRadius

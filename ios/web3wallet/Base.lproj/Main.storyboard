@@ -296,6 +296,9 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <navigationItem key="navigationItem" title="web3wallet" id="saj-cA-yGt"/>
+                    <connections>
+                        <outlet property="collectionView" destination="o2F-PC-Oid" id="yiK-fJ-8r8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RKe-va-vex" sceneMemberID="firstResponder"/>
             </objects>

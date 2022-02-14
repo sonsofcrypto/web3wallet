@@ -19,14 +19,14 @@ class DefaultNetworksWireframe {
 
     private let interactor: NetworksInteractor
 
-    private weak var window: UIWindow?
+    private weak var parrentVC: UIViewController?
 
     init(
         interactor: NetworksInteractor,
-        window: UIWindow?
+        parentVC: UIViewController?
     ) {
         self.interactor = interactor
-        self.window = window
+        self.parrentVC = parentVC
     }
 }
 
@@ -36,8 +36,7 @@ extension DefaultNetworksWireframe: NetworksWireframe {
 
     func present() {
         let vc = wireUp()
-        window?.rootViewController = vc
-        window?.makeKeyAndVisible()
+        parrentVC?.show(vc, sender: self)
     }
 
     func navigate(to destination: NetworksWireframeDestinaiton) {
@@ -56,6 +55,6 @@ extension DefaultNetworksWireframe {
         )
 
         vc.presenter = presenter
-        return NavigationController(rootViewController: vc)
+        return vc
     }
 }

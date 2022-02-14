@@ -32,7 +32,8 @@ extension CALayer {
     }
 
     func applyShadowPath(_ bounds: CGRect, radius: CGFloat = Global.cornerRadius) {
-        layer.shadowPath = UIBezierPath(
+        cornerRadius = radius
+        shadowPath = UIBezierPath(
             roundedRect: bounds,
             cornerRadius: radius
         ).cgPath
@@ -42,9 +43,9 @@ extension CALayer {
 extension CALayer {
 
     func applyHighlighted(_ highlighted: Bool) {
-        layer.borderColor = (highlighted
+        borderColor = (highlighted
             ? Theme.current.tintPrimary
             : Theme.current.tintPrimaryLight).cgColor
-        layer.shadowOpacity = highlighted ? 1 :0
+        shadowOpacity = highlighted ? 1 :0
     }
 }

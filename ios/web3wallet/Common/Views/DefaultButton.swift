@@ -7,7 +7,7 @@ import UIKit
 class DefaultButton: UIButton {
 
     override var isHighlighted: Bool {
-        didSet { layer.applyHighlighted(false) }
+        didSet { layer.applyHighlighted(isHighlighted) }
     }
 
     override init(frame: CGRect) {
@@ -42,6 +42,7 @@ extension DefaultButton {
         layer.applyBorder()
         layer.applyHighlighted(false)
         titleLabel?.applyStyle(.callout)
+        tintColor = Theme.current.textColor
     }
 }
 

@@ -90,8 +90,8 @@ private extension DefaultNetworksPresenter {
                 name: $0.name,
                 connectionType: formattedConnectionType($0),
                 status: formattedStatus($0),
-                explorer: formattedStatus($0)
-                connected:
+                explorer: formattedStatus($0),
+                connected: isConnected($0)
             )
         }
     }
@@ -134,7 +134,7 @@ private extension DefaultNetworksPresenter {
         case .connected, .connectedSync:
             return true
         default:
-            false
+            return false
         }
     }
 

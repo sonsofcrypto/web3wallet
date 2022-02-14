@@ -6,7 +6,7 @@ import UIKit
 
 protocol NetworksWireframeFactory {
 
-    func makeWireframe() -> NetworksWireframe
+    func makeWireframe(_ parentVC: UIViewController) -> NetworksWireframe
 }
 
 // MARK: - DefaultNetworksWireframeFactory
@@ -18,10 +18,8 @@ class DefaultNetworksWireframeFactory {
     private weak var window: UIWindow?
 
     init(
-        window: UIWindow?,
         networksService: NetworksService
     ) {
-        self.window = window
         self.networksService = networksService
     }
 }
@@ -30,10 +28,10 @@ class DefaultNetworksWireframeFactory {
 
 extension DefaultNetworksWireframeFactory: NetworksWireframeFactory {
 
-    func makeWireframe() -> NetworksWireframe {
+    func makeWireframe(_ parentVC: UIViewController) -> NetworksWireframe {
         DefaultNetworksWireframe(
             interactor: DefaultNetworksInteractor(networksService),
-            window: window
+            parentVC: parentVC
         )
     }
 }
