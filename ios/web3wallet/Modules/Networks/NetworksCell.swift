@@ -42,6 +42,7 @@ extension NetworksCell {
         titleLabel.text = viewModel?.name ?? "-"
         switchCtl.isOn = viewModel?.connected ?? false
         connectionLabel.text = viewModel?.connectionType ?? "-"
+        statusLabel.text = viewModel?.status ?? "-"
         explorerLabel.text = viewModel?.explorer ?? "-"
     }
 }

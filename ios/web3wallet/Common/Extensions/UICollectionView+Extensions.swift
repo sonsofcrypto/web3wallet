@@ -15,4 +15,12 @@ extension UICollectionView {
         }
         return cell
     }
+
+    func deselectAllExcept(_ idxPath: IndexPath, animated: Bool) {
+        (indexPathsForSelectedItems ?? [])
+            .filter { $0.item != idxPath.item && $0.section != idxPath.section }
+            .forEach { deselectItem(at: $0, animated: animated) }
+
+        selectItem(at: idxPath, animated: animated, scrollPosition: .top)
+    }
 }

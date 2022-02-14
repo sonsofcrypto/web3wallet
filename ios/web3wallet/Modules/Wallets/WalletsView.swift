@@ -46,13 +46,10 @@ extension WalletsViewController: WalletsView {
         self.viewModel = viewModel
         collectionView.reloadData()
         if let idx = viewModel.selectedIdx(), !viewModel.wallets().isEmpty {
-            for i in 0..<viewModel.wallets().count {
-                collectionView.selectItem(
-                    at: IndexPath(item: i, section: 0),
-                    animated: idx == i,
-                    scrollPosition: .top
-                )
-            }
+            collectionView.deselectAllExcept(
+                IndexPath(item: idx, section: 0),
+                animated: true
+            )
         }
     }
 }

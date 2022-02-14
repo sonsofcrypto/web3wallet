@@ -90,7 +90,7 @@ private extension DefaultNetworksPresenter {
                 name: $0.name,
                 connectionType: formattedConnectionType($0),
                 status: formattedStatus($0),
-                explorer: formattedStatus($0),
+                explorer: formattedExplorer($0),
                 connected: isConnected($0)
             )
         }
@@ -148,11 +148,11 @@ private extension DefaultNetworksPresenter {
         )
     }
 
-    func selectedIdx(_ networsk: [Network], active: Network?) -> Int {
+    func selectedIdx(_ networks: [Network], active: Network?) -> Int {
         guard let network = active else {
             return 0
         }
 
-        return networsk.firstIndex{ $0.id == network.id} ?? 0
+        return networks.firstIndex{ $0.id == network.id} ?? 0
     }
 }

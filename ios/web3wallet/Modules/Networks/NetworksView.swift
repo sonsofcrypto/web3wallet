@@ -38,13 +38,10 @@ extension NetworksViewController: NetworksView {
         self.viewModel = viewModel
         collectionView.reloadData()
         if let idx = viewModel.selectedIdx(), !viewModel.network().isEmpty {
-            for i in 0..<viewModel.network().count {
-                collectionView.selectItem(
-                    at: IndexPath(item: i, section: 0),
-                    animated: idx == i,
-                    scrollPosition: .top
-                )
-            }
+            collectionView.deselectAllExcept(
+                IndexPath(item: idx, section: 0),
+                animated: true
+            )
         }
     }
 }

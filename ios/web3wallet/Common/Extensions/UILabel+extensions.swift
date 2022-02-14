@@ -20,10 +20,10 @@ extension UILabel {
             textColor = Theme.current.textColor
         case.smallLabel:
             font = Theme.current.footnote
-            textColor = Theme.current.textColorSecondary
+            textColor = Theme.current.textColorTertiary
         case .smallBody:
             font = Theme.current.footnote
-            textColor = Theme.current.textColorTertiary
+            textColor = Theme.current.textColorSecondary
         }
     }
 }

@@ -42,7 +42,7 @@ extension DefaultNetworksService: NetworksService {
             ),
             Network(
                 id: 90,
-                name: "Ethereum",
+                name: "Solana",
                 url: nil,
                 connectionType: .networkDefault,
                 status: .unknown,
@@ -65,7 +65,7 @@ extension DefaultNetworksService: NetworksService {
                     ),
                     Network(
                         id: 90,
-                        name: "Ethereum",
+                        name: "Solana",
                         url: nil,
                         connectionType: .networkDefault,
                         status: .disconnected,
