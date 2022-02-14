@@ -10,4 +10,8 @@ extension UIColor {
     static var bgGradientBottom =  UIColor(named: "bgGradientBottom")!
     static var tintPrimary = UIColor(named: "tintPrimary")!
     static var tintSecondary = UIColor(named: "tintSecondary")!
+    static var textColor = UIColor(named: "textColor")!
+    static var textColorSecondary = UIColor(named: "textColorSecondary")!
+    static var textColorTertiary = UIColor(named: "textColorTertiary")!
+
 }

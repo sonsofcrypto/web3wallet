@@ -13,3 +13,8 @@
 "wallets.createNew" = "Import wallet";
 "wallets.connectHD" = "Connect hardware wallet";
 
+"networks.cell.connection" = "Connection:";
+"networks.cell.status" = "Status:";
+"networks.cell.explorer" = "Explorer:";
+
+

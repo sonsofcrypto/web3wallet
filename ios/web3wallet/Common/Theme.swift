@@ -31,7 +31,15 @@ struct Theme {
     }
 
     var textColor: UIColor {
-        UIColor.white
+        UIColor.textColor
+    }
+
+    var textColorSecondary: UIColor {
+        UIColor.textColorSecondary
+    }
+
+    var textColorTritiary: UIColor {
+        UIColor.textColorTertiary
     }
 
     // MARK: - Fonts
@@ -46,6 +54,10 @@ struct Theme {
 
     var callout: UIFont {
         UIFont.font(.gothicA1, style: .regular, size: .callout)
+    }
+
+    var footnote: UIFont {
+        UIFont.font(.gothicA1, style: .regular, size: .footnote)
     }
 }
 

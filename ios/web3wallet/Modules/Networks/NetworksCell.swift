@@ -18,12 +18,21 @@ class NetworksCell: CollectionViewCell {
         
     override func awakeFromNib() {
         super.awakeFromNib()
-        titleLabel.textColor = Theme.current.textColor
-        titleLabel.font = Theme.current.callout
-        titleLabel.layer.shadowColor = Theme.current.tintSecondary.cgColor
-        titleLabel.layer.shadowOffset = .zero
-        titleLabel.layer.shadowRadius = Global.shadowRadius
-        titleLabel.layer.shadowOpacity = 1
+
+        titleLabel.applyStyle(.callout)
+        titleLabel.layer.applyShadow(Theme.current.tintSecondary)
+
+        [connectionTitleLabel, statusTitleLabel, explorerTitleLabel].forEach {
+            $0.applyStyle(.smallLabel)
+        }
+
+        [connectionLabel, statusLabel, explorerLabel].forEach {
+            $0.applyStyle(.smallBody)
+        }
+
+        connectionTitleLabel.text = Localized("networks.cell.connection")
+        statusTitleLabel.text = Localized("networks.cell.status")
+        explorerTitleLabel.text = Localized("networks.cell.explorer")
     }
 }
 
@@ -37,5 +46,4 @@ extension NetworksCell {
         connectionLabel.text = viewModel?.connectionType ?? "-"
         explorerLabel.text = viewModel?.explorer ?? "-"
     }
-
 }

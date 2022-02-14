@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1A4C30116B1618C1596D9D14 /* NetworksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DAB38F681061328F3F0 /* NetworksService.swift */; };
+		1A4C301CF0BAEFBD7194FF0B /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C330512BFD12BAFED0D12 /* CALayer+Extension.swift */; };
 		1A4C302CC56D21A0E3CBAFF6 /* UIStoryboard+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C310A6D460422DB18D0BF /* UIStoryboard+extensions.swift */; };
 		1A4C305703196BC0B33BC401 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3342AB2F88E37CE4947A /* Theme.swift */; };
 		1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C300D073ABE25FC79D4A9 /* CollectionViewCell.swift */; };
@@ -26,6 +27,7 @@
 		1A4C3835FD803C3B708B409C /* Formatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3BFA6EDB1E94BEF92E59 /* Formatter+Extensions.swift */; };
 		1A4C3869B6A3E1BF415E15DB /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39FB21CCAF442F3001E6 /* Global.swift */; };
 		1A4C3885680B997E1684F34C /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C341CE810A41C93A4D896 /* Network.swift */; };
+		1A4C3946A210F5A781EAC827 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39B21512118DB853A3E3 /* Label.swift */; };
 		1A4C39D40DEC9C42A6CF8D8A /* WalletsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3228507ADBCE1C99C219 /* WalletsViewModel.swift */; };
 		1A4C3A585C5375AE91CDA637 /* WalletsWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C514ACC30A0AC4707FA /* WalletsWireframeFactory.swift */; };
 		1A4C3B07DC9AE24B00ACA337 /* NetworksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3641BA073FD0AB648C5B /* NetworksCell.swift */; };
@@ -91,6 +93,7 @@
 		1A4C310A6D460422DB18D0BF /* UIStoryboard+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+extensions.swift"; sourceTree = "<group>"; };
 		1A4C3226ECC6247E9092F6EF /* WalletsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsPresenter.swift; sourceTree = "<group>"; };
 		1A4C3228507ADBCE1C99C219 /* WalletsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsViewModel.swift; sourceTree = "<group>"; };
+		1A4C330512BFD12BAFED0D12 /* CALayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+Extension.swift"; sourceTree = "<group>"; };
 		1A4C3342AB2F88E37CE4947A /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		1A4C3378B5287B6A9BDE65CD /* DefaultButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultButton.swift; sourceTree = "<group>"; };
 		1A4C341557541950B9132370 /* UIFont+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
@@ -102,6 +105,7 @@
 		1A4C36CAEB50425CE9839ED4 /* WalletsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsService.swift; sourceTree = "<group>"; };
 		1A4C376D2673983B26F249FF /* Wallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewEffectViewiOS14.swift; sourceTree = "<group>"; };
+		1A4C39B21512118DB853A3E3 /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		1A4C39BE3243E8D9F8B4F016 /* NetworksWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksWireframeFactory.swift; sourceTree = "<group>"; };
 		1A4C39FB21CCAF442F3001E6 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		1A4C3A88F340DC56EC79C6AE /* NetworksViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksViewModel.swift; sourceTree = "<group>"; };
@@ -181,6 +185,7 @@
 				1A4C341557541950B9132370 /* UIFont+Extension.swift */,
 				1A4C3CD7A1F1A86851EC2BA5 /* UICollectionView+Extensions.swift */,
 				1A4C3BFA6EDB1E94BEF92E59 /* Formatter+Extensions.swift */,
+				1A4C330512BFD12BAFED0D12 /* CALayer+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -342,6 +347,7 @@
 				1A4C3378B5287B6A9BDE65CD /* DefaultButton.swift */,
 				1A4C3D0B11BD0F9527397998 /* VisualEffectView */,
 				1A4C300D073ABE25FC79D4A9 /* CollectionViewCell.swift */,
+				1A4C39B21512118DB853A3E3 /* Label.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -573,6 +579,8 @@
 				1A4C3885680B997E1684F34C /* Network.swift in Sources */,
 				1A4C30116B1618C1596D9D14 /* NetworksService.swift in Sources */,
 				1A4C3835FD803C3B708B409C /* Formatter+Extensions.swift in Sources */,
+				1A4C3946A210F5A781EAC827 /* Label.swift in Sources */,
+				1A4C301CF0BAEFBD7194FF0B /* CALayer+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
