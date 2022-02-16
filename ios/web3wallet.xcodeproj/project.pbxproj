@@ -29,6 +29,7 @@
 		1A4C3885680B997E1684F34C /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C341CE810A41C93A4D896 /* Network.swift */; };
 		1A4C3946A210F5A781EAC827 /* UILabel+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39B21512118DB853A3E3 /* UILabel+extensions.swift */; };
 		1A4C39D40DEC9C42A6CF8D8A /* WalletsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3228507ADBCE1C99C219 /* WalletsViewModel.swift */; };
+		1A4C39EAC9477080E80A6C07 /* EdgeCardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3178DA54CD0800157DD5 /* EdgeCardsController.swift */; };
 		1A4C3A585C5375AE91CDA637 /* WalletsWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C514ACC30A0AC4707FA /* WalletsWireframeFactory.swift */; };
 		1A4C3B07DC9AE24B00ACA337 /* NetworksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3641BA073FD0AB648C5B /* NetworksCell.swift */; };
 		1A4C3B49BC67AF7AA3BF0D8F /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3644A9D218CC991B2A56 /* VisualEffectView.swift */; };
@@ -91,6 +92,7 @@
 		1A4C304CB26AD11BACACD435 /* NetworksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksView.swift; sourceTree = "<group>"; };
 		1A4C31033FF0796595461DAD /* NetworksInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksInteractor.swift; sourceTree = "<group>"; };
 		1A4C310A6D460422DB18D0BF /* UIStoryboard+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+extensions.swift"; sourceTree = "<group>"; };
+		1A4C3178DA54CD0800157DD5 /* EdgeCardsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EdgeCardsController.swift; sourceTree = "<group>"; };
 		1A4C3226ECC6247E9092F6EF /* WalletsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsPresenter.swift; sourceTree = "<group>"; };
 		1A4C3228507ADBCE1C99C219 /* WalletsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsViewModel.swift; sourceTree = "<group>"; };
 		1A4C330512BFD12BAFED0D12 /* CALayer+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+Extension.swift"; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				1A4C3C8A8E2CDDB9F01205E5 /* NavigationViewController.swift */,
+				1A4C3178DA54CD0800157DD5 /* EdgeCardsController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -581,6 +584,7 @@
 				1A4C3835FD803C3B708B409C /* Formatter+Extensions.swift in Sources */,
 				1A4C3946A210F5A781EAC827 /* UILabel+extensions.swift in Sources */,
 				1A4C301CF0BAEFBD7194FF0B /* CALayer+Extension.swift in Sources */,
+				1A4C39EAC9477080E80A6C07 /* EdgeCardsController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
