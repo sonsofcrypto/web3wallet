@@ -4,30 +4,30 @@
 
 import Foundation
 
-enum TemplatePresenterEvent {
+enum SwapPresenterEvent {
 
 }
 
-protocol TemplatePresenter {
+protocol SwapPresenter {
 
     func present()
-    func handle(_ event: AMMsPresenterEvent)
+    func handle(_ event: SwapPresenterEvent)
 }
 
-// MARK: - DefaultTemplatePresenter
+// MARK: - DefaultSwapPresenter
 
-class DefaultTemplatePresenter {
+class DefaultSwapPresenter {
 
-    private let interactor: TemplateInteractor
-    private let wireframe: TemplatedWireframe
+    private let interactor: SwapInteractor
+    private let wireframe: SwapWireframe
 
     // private var items: [Item]
 
-    private weak var view: TemplateView?
+    private weak var view: SwapView?
 
     init(
-        view: TemplateView,
-        interactor: TemplateInteractor,
+        view: SwapView,
+        interactor: SwapInteractor,
         wireframe: SwapWireframe
     ) {
         self.view = view
@@ -37,31 +37,31 @@ class DefaultTemplatePresenter {
     }
 }
 
-// MARK: TemplatePresenter
+// MARK: SwapPresenter
 
-extension DefaultAMMsPresenter: AMMsPresenter {
+extension DefaultSwapPresenter: SwapPresenter {
 
     func present() {
         view?.update(with: .loading)
         // TODO: Interactor
     }
 
-    func handle(_ event: AMMsPresenterEvent) {
+    func handle(_ event: SwapPresenterEvent) {
 
     }
 }
 
 // MARK: - Event handling
 
-private extension DefaultAMMsPresenter {
+private extension DefaultSwapPresenter {
 
 }
 
 // MARK: - WalletsViewModel utilities
 
-private extension DefaultAMMsPresenter {
+private extension DefaultSwapPresenter {
 
-//    func viewModel(from items: [Item], active: Item?) -> TemplateViewModel {
+//    func viewModel(from items: [Item], active: Item?) -> SwapViewModel {
 //        .loaded(
 //            wallets: viewModel(from: wallets),
 //            selectedIdx: selectedIdx(wallets, active: active)

@@ -4,25 +4,25 @@
 
 import UIKit
 
-enum AMMsWireframeDestination {
+enum SwapWireframeDestination {
 
 }
 
-protocol AMMsWireframe {
+protocol SwapWireframe {
     func present()
-    func navigate(to destination: AMMsWireframeDestination)
+    func navigate(to destination: SwapWireframeDestination)
 }
 
-// MARK: - DefaultAMMsWireframe
+// MARK: - DefaultSwapWireframe
 
-class DefaultAMMsWireframe {
+class DefaultSwapWireframe {
 
-    private let interactor: AMMsInteractor
+    private let interactor: SwapInteractor
 
     private weak var window: UIWindow?
 
     init(
-        interactor: AMMsInteractor,
+        interactor: SwapInteractor,
         window: UIWindow?
     ) {
         self.interactor = interactor
@@ -30,9 +30,9 @@ class DefaultAMMsWireframe {
     }
 }
 
-// MARK: - AMMsWireframe
+// MARK: - SwapWireframe
 
-extension DefaultAMMsWireframe: AMMsWireframe {
+extension DefaultSwapWireframe: SwapWireframe {
 
     func present() {
         let vc = wireUp()
@@ -40,16 +40,16 @@ extension DefaultAMMsWireframe: AMMsWireframe {
         window?.makeKeyAndVisible()
     }
 
-    func navigate(to destination: AMMsWireframeDestination) {
+    func navigate(to destination: SwapWireframeDestination) {
         print("navigate to \(destination)")
     }
 }
 
-extension DefaultAMMsWireframe {
+extension DefaultSwapWireframe {
 
     private func wireUp() -> UIViewController {
-        let vc: AMMsViewController = UIStoryboard(.main).instantiate()
-        let presenter = DefaultAMMsPresenter(
+        let vc: SwapViewController = UIStoryboard(.main).instantiate()
+        let presenter = DefaultSwapPresenter(
             view: vc,
             interactor: interactor,
             wireframe: self
