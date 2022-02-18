@@ -4,12 +4,12 @@
 
 import UIKit
 
-protocol TemplateView: AnyObject {
+protocol AccountView: AnyObject {
 
     func update(with viewModel: AccountViewModel)
 }
 
-class TemplateViewController: UIViewController {
+class AccountViewController: UIViewController {
 
     var presenter: AccountPresenter!
 
@@ -25,14 +25,14 @@ class TemplateViewController: UIViewController {
 
     // MARK: - Actions
 
-    @IBAction func templateAction(_ sender: Any) {
+    @IBAction func AccountAction(_ sender: Any) {
 
     }
 }
 
 // MARK: - WalletsView
 
-extension TemplateViewController: TemplateView {
+extension AccountViewController: AccountView {
 
     func update(with viewModel: AccountViewModel) {
         self.viewModel = viewModel
@@ -51,7 +51,7 @@ extension TemplateViewController: TemplateView {
 
 // MARK: - UICollectionViewDataSource
 
-extension TemplateViewController: UICollectionViewDataSource {
+extension AccountViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel?.items().count ?? 0
@@ -65,11 +65,11 @@ extension TemplateViewController: UICollectionViewDataSource {
     }
 }
 
-extension TemplateViewController: UICollectionViewDelegate {
+extension AccountViewController: UICollectionViewDelegate {
     
 }
 
-extension TemplateViewController: UICollectionViewDelegateFlowLayout {
+extension AccountViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width - 32, height: Global.cellHeight)
@@ -78,7 +78,7 @@ extension TemplateViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - Configure UI
 
-extension TemplateViewController {
+extension AccountViewController {
     
     func configureUI() {
         title = Localized("wallets")

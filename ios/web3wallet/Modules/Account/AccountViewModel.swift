@@ -4,7 +4,7 @@
 
 import Foundation
 
-enum TemplateViewModel {
+enum AccountViewModel {
     case loading
     case loaded(items: [Item], selectedIdx: Int)
     case error(error: AccountViewModel.Error)

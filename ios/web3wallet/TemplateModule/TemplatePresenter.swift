@@ -39,7 +39,7 @@ class DefaultTemplatePresenter {
 
 // MARK: TemplatePresenter
 
-extension DefaultTemplatePresenter: TemplatePresenter {
+extension DefaultTemplatePresenter: AccountPresenter {
 
     func present() {
         view?.update(with: .loading)

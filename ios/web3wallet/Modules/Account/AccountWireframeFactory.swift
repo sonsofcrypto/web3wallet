@@ -4,35 +4,35 @@
 
 import UIKit
 
-protocol TemplateWireframeFactory {
+protocol AccountWireframeFactory {
 
     func makeWireframe() -> AccountWireframe
 }
 
-// MARK: - DefaultTemplateWireframeFactory
+// MARK: - DefaultAccountWireframeFactory
 
-class DefaultTemplateWireframeFactory {
+class DefaultAccountWireframeFactory {
 
-    private let service: TemplateSerivce
+    private let service: AccountService
 
     private weak var window: UIWindow?
 
     init(
         window: UIWindow?,
-        service: TemplateSerivce
+        service: AccountService
     ) {
         self.window = window
         self.service = service
     }
 }
 
-// MARK: - TemplateWireframeFactory
+// MARK: - AccountWireframeFactory
 
-extension DefaultTemplateWireframeFactory: AccountWireframeFactory {
+extension DefaultAccountWireframeFactory: AccountWireframeFactory {
 
     func makeWireframe() -> AccountWireframe {
-        DefaultTemplateWireframe(
-            interactor: DefaultTemplateInteractor(service),
+        DefaultAccountWireframe(
+            interactor: DefaultAccountInteractor(service),
             window: window
         )
     }
