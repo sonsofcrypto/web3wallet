@@ -6,7 +6,7 @@ import UIKit
 
 protocol TemplateWireframeFactory {
 
-    func makeWireframe() -> AppsWireframe
+    func makeWireframe() -> TemplateWireframe
 }
 
 // MARK: - DefaultTemplateWireframeFactory
@@ -28,9 +28,9 @@ class DefaultTemplateWireframeFactory {
 
 // MARK: - TemplateWireframeFactory
 
-extension DefaultTemplateWireframeFactory: AppsWireframeFactory {
+extension DefaultTemplateWireframeFactory: TemplateWireframeFactory {
 
-    func makeWireframe() -> AppsWireframe {
+    func makeWireframe() -> TemplateWireframe {
         DefaultTemplateWireframe(
             interactor: DefaultTemplateInteractor(service),
             window: window

@@ -32,7 +32,7 @@ class DefaultTemplateWireframe {
 
 // MARK: - TemplateWireframe
 
-extension DefaultTemplateWireframe: AppsWireframe {
+extension DefaultTemplateWireframe: TemplateWireframe {
 
     func present() {
         let vc = wireUp()
