@@ -4,7 +4,7 @@
 
 import Foundation
 
-enum TemplateViewModel {
+enum AppsViewModel {
     case loading
     case loaded(items: [Item], selectedIdx: Int)
     case error(error: AppsViewModel.Error)

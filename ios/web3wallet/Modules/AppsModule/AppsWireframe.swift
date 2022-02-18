@@ -4,25 +4,25 @@
 
 import UIKit
 
-enum TemplateWireframeDestination {
+enum AppsWireframeDestination {
 
 }
 
-protocol TemplateWireframe {
+protocol AppsWireframe {
     func present()
-    func navigate(to destination: TemplateWireframeDestination)
+    func navigate(to destination: AppsWireframeDestination)
 }
 
-// MARK: - DefaultTemplateWireframe
+// MARK: - DefaultAppsWireframe
 
-class DefaultTemplateWireframe {
+class DefaultAppsWireframe {
 
-    private let interactor: TemplateInteractor
+    private let interactor: AppsInteractor
 
     private weak var window: UIWindow?
 
     init(
-        interactor: TemplateInteractor,
+        interactor: AppsInteractor,
         window: UIWindow?
     ) {
         self.interactor = interactor
@@ -30,9 +30,9 @@ class DefaultTemplateWireframe {
     }
 }
 
-// MARK: - TemplateWireframe
+// MARK: - AppsWireframe
 
-extension DefaultTemplateWireframe: AppsWireframe {
+extension DefaultAppsWireframe: AppsWireframe {
 
     func present() {
         let vc = wireUp()
@@ -40,16 +40,16 @@ extension DefaultTemplateWireframe: AppsWireframe {
         window?.makeKeyAndVisible()
     }
 
-    func navigate(to destination: TemplateWireframeDestination) {
+    func navigate(to destination: AppsWireframeDestination) {
         print("navigate to \(destination)")
     }
 }
 
-extension DefaultTemplateWireframe {
+extension DefaultAppsWireframe {
 
     private func wireUp() -> UIViewController {
-        let vc: TemplateViewController = UIStoryboard(.main).instantiate()
-        let presenter = DefaultTemplatePresenter(
+        let vc: AppsViewController = UIStoryboard(.main).instantiate()
+        let presenter = DefaultAppsPresenter(
             view: vc,
             interactor: interactor,
             wireframe: self

@@ -4,31 +4,31 @@
 
 import Foundation
 
-enum TemplatePresenterEvent {
+enum AppsPresenterEvent {
 
 }
 
-protocol TemplatePresenter {
+protocol AppsPresenter {
 
     func present()
-    func handle(_ event: TemplatePresenterEvent)
+    func handle(_ event: AppsPresenterEvent)
 }
 
-// MARK: - DefaultTemplatePresenter
+// MARK: - DefaultAppsPresenter
 
-class DefaultTemplatePresenter {
+class DefaultAppsPresenter {
 
-    private let interactor: TemplateInteractor
+    private let interactor: AppsInteractor
     private let wireframe: AppsWireframe
 
     // private var items: [Item]
 
-    private weak var view: TemplateView?
+    private weak var view: AppsView?
 
     init(
-        view: TemplateView,
-        interactor: TemplateInteractor,
-        wireframe: NFTsWireframe
+        view: AppsView,
+        interactor: AppsInteractor,
+        wireframe: AppsWireframe
     ) {
         self.view = view
         self.interactor = interactor
@@ -37,31 +37,31 @@ class DefaultTemplatePresenter {
     }
 }
 
-// MARK: TemplatePresenter
+// MARK: AppsPresenter
 
-extension DefaultTemplatePresenter: AccountPresenter {
+extension DefaultAppsPresenter: AppsPresenter {
 
     func present() {
         view?.update(with: .loading)
         // TODO: Interactor
     }
 
-    func handle(_ event: TemplatePresenterEvent) {
+    func handle(_ event: AppsPresenterEvent) {
 
     }
 }
 
 // MARK: - Event handling
 
-private extension DefaultTemplatePresenter {
+private extension DefaultAppsPresenter {
 
 }
 
 // MARK: - WalletsViewModel utilities
 
-private extension DefaultTemplatePresenter {
+private extension DefaultAppsPresenter {
 
-//    func viewModel(from items: [Item], active: Item?) -> TemplateViewModel {
+//    func viewModel(from items: [Item], active: Item?) -> AppsViewModel {
 //        .loaded(
 //            wallets: viewModel(from: wallets),
 //            selectedIdx: selectedIdx(wallets, active: active)
