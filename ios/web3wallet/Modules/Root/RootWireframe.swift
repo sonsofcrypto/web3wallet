@@ -5,7 +5,10 @@
 import UIKit
 
 enum RootWireframeDestination {
-
+    case dashboard
+    case overview
+    case networks
+    case wallets
 }
 
 protocol RootWireframe {
@@ -18,11 +21,22 @@ protocol RootWireframe {
 class DefaultRootWireframe {
 
     private weak var window: UIWindow?
+    private weak var vc: UIViewController?
+
+    private let wallets: WalletsWireframeFactory
+    private let networks: NetworksWireframeFactory
+    private let dashboard: DashboardWireframeFactory
 
     init(
-        window: UIWindow?
+        window: UIWindow?,
+        wallets: WalletsWireframeFactory,
+        networks: NetworksWireframeFactory,
+        dashboard: DashboardWireframeFactory
     ) {
         self.window = window
+        self.wallets = wallets
+        self.networks = networks
+        self.dashboard = dashboard
     }
 }
 
@@ -32,12 +46,17 @@ extension DefaultRootWireframe: RootWireframe {
 
     func present() {
         let vc = wireUp()
+        self.vc = vc
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
     }
 
     func navigate(to destination: RootWireframeDestination) {
-        print("navigate to \(destination)")
+        guard let vc = self.vc as? EdgeCardsController else {
+            print("Unable to navigate to \(destination)")
+            return
+        }
+        vc.setDisplayMode(destination.toDisplayMode(), animated: true)
     }
 }
 
@@ -51,6 +70,24 @@ extension DefaultRootWireframe {
         )
 
         vc.presenter = presenter
-        return NavigationController(rootViewController: vc)
+        return vc
+    }
+}
+
+// MARK: - RootWireframeDestination to EdgeCardsController.DisplayMode
+
+private extension RootWireframeDestination {
+
+    func toDisplayMode() -> EdgeCardsController.DisplayMode {
+        switch self {
+        case .dashboard:
+            return .master
+        case .overview:
+            return .overview
+        case .networks:
+            return .topCard
+        case .wallets:
+            return .bottomCard
+        }
     }
 }

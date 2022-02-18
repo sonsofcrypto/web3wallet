@@ -4,14 +4,9 @@
 
 import Foundation
 
-enum RootPresenterEvent {
-
-}
-
 protocol RootPresenter {
 
     func present()
-    func handle(_ event: RootPresenterEvent)
 }
 
 // MARK: - DefaultRootPresenter
@@ -19,18 +14,24 @@ protocol RootPresenter {
 class DefaultRootPresenter {
 
     private let wireframe: RootWireframe
-
-    // private var items: [Item]
+    private let wallets: WalletsWireframe
+    private let networks: NetworksWireframe
+    private let dashboard: DashboardWireframe
 
     private weak var view: RootView?
 
     init(
         view: RootView,
-        wireframe: RootWireframe
+        wireframe: RootWireframe,
+        wallets: WalletsWireframe,
+        networks: NetworksWireframe,
+        dashboard: DashboardWireframe
     ) {
         self.view = view
         self.wireframe = wireframe
-        // self.items = []
+        self.wallets = wallets
+        self.networks = networks
+        self.dashboard = dashboard
     }
 }
 
@@ -39,28 +40,8 @@ class DefaultRootPresenter {
 extension DefaultRootPresenter: RootPresenter {
 
     func present() {
-        // TODO: Interactor
+        dashboard.present()
+        networks.present()
+        wallets.present()
     }
-
-    func handle(_ event: RootPresenterEvent) {
-
-    }
-}
-
-// MARK: - Event handling
-
-private extension DefaultRootPresenter {
-
-}
-
-// MARK: - WalletsViewModel utilities
-
-private extension DefaultRootPresenter {
-
-//    func viewModel(from items: [Item], active: Item?) -> RootViewModel {
-//        .loaded(
-//            wallets: viewModel(from: wallets),
-//            selectedIdx: selectedIdx(wallets, active: active)
-//        )
-//    }
 }

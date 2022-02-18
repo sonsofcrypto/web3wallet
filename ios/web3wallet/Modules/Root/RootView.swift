@@ -8,7 +8,7 @@ protocol RootView: AnyObject {
 
 }
 
-class RootViewController: UIViewController {
+class RootViewController: EdgeCardsController {
 
     var presenter: RootPresenter!
 
@@ -16,12 +16,6 @@ class RootViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         presenter?.present()
-    }
-
-    // MARK: - Actions
-
-    @IBAction func RootAction(_ sender: Any) {
-
     }
 }
 
@@ -36,7 +30,6 @@ extension RootViewController: RootView {
 extension RootViewController {
     
     func configureUI() {
-        title = Localized("wallets")
         (view as? GradientView)?.colors = [
             Theme.current.background,
             Theme.current.backgroundDark

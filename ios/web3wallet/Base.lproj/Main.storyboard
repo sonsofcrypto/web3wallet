@@ -27,7 +27,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uWJ-tM-U12" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-357" y="124"/>
+            <point key="canvasLocation" x="365" y="124"/>
         </scene>
         <!--web3wallet-->
         <scene sceneID="tne-QT-ifu">
@@ -135,12 +135,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="356.52173913043481" y="123.88392857142857"/>
+            <point key="canvasLocation" x="1080" y="124"/>
         </scene>
         <!--NFTsViewController-->
         <scene sceneID="2Wq-FC-Mlo">
             <objects>
-                <viewController storyboardIdentifier="NFTsViewController" id="zLC-ls-6MU" userLabel="NFTsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NFTsViewController" id="zLC-ls-6MU" userLabel="NFTsViewController" customClass="NFTsViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uw5-Ua-KRj">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -319,12 +319,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RKe-va-vex" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1066.6666666666667" y="123.88392857142857"/>
+            <point key="canvasLocation" x="1790" y="124"/>
         </scene>
         <!--DegenViewController-->
         <scene sceneID="cMN-cb-Xhn">
             <objects>
-                <viewController storyboardIdentifier="DegenViewController" id="ben-rF-FTB" userLabel="DegenViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DegenViewController" id="ben-rF-FTB" userLabel="DegenViewController" customClass="DegenViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FTF-HG-1uA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -339,7 +339,7 @@
         <!--AppsViewController-->
         <scene sceneID="em8-yx-bfm">
             <objects>
-                <viewController storyboardIdentifier="AppsViewController" id="pOP-4o-DZZ" userLabel="AppsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AppsViewController" id="pOP-4o-DZZ" userLabel="AppsViewController" customClass="AppsViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eN0-hT-iVh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -354,7 +354,7 @@
         <!--SettingsViewController-->
         <scene sceneID="8zt-BD-Lv0">
             <objects>
-                <viewController storyboardIdentifier="SettingsViewController" id="INW-E7-ubC" userLabel="SettingsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingsViewController" id="INW-E7-ubC" userLabel="SettingsViewController" customClass="SettingsViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="P2Q-Ly-f0r">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -369,7 +369,7 @@
         <!--DashboardViewController-->
         <scene sceneID="mfB-ws-kyz">
             <objects>
-                <viewController storyboardIdentifier="DashboardViewController" id="Fy0-oo-YT7" userLabel="DashboardViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DashboardViewController" id="Fy0-oo-YT7" userLabel="DashboardViewController" customClass="DashboardViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ur9-yO-zvB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -389,7 +389,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="oub-zX-OJS"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6ci-vz-aXn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -399,7 +399,7 @@
         <!--AccountViewController-->
         <scene sceneID="mCb-y6-6V3">
             <objects>
-                <viewController storyboardIdentifier="AccountViewController" id="N5q-Z9-mkX" userLabel="AccountViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AccountViewController" id="N5q-Z9-mkX" userLabel="AccountViewController" customClass="AccountViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TEc-Wo-qc2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -414,7 +414,7 @@
         <!--SwapViewController-->
         <scene sceneID="U9a-T8-Rqe">
             <objects>
-                <viewController storyboardIdentifier="SwapViewController" id="tj7-Tt-CBf" userLabel="SwapViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SwapViewController" id="tj7-Tt-CBf" userLabel="SwapViewController" customClass="SwapViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ixJ-Wc-fT7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -429,7 +429,7 @@
         <!--AMMsViewController-->
         <scene sceneID="3B0-pI-3SG">
             <objects>
-                <viewController storyboardIdentifier="AMMsViewController" id="nJZ-NW-5Ii" userLabel="AMMsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AMMsViewController" id="nJZ-NW-5Ii" userLabel="AMMsViewController" customClass="AMMsViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8cc-TU-pah">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

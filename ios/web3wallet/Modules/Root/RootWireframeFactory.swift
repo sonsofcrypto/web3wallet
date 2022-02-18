@@ -15,10 +15,20 @@ class DefaultRootWireframeFactory {
 
     private weak var window: UIWindow?
 
+    private let wallets: WalletsWireframeFactory
+    private let networks: NetworksWireframeFactory
+    private let dashboard: DashboardWireframeFactory
+
     init(
-        window: UIWindow?
+        window: UIWindow?,
+        wallets: WalletsWireframeFactory,
+        networks: NetworksWireframeFactory,
+        dashboard: DashboardWireframeFactory
     ) {
         self.window = window
+        self.wallets = wallets
+        self.networks = networks
+        self.dashboard = dashboard
     }
 }
 
@@ -27,6 +37,11 @@ class DefaultRootWireframeFactory {
 extension DefaultRootWireframeFactory: RootWireframeFactory {
 
     func makeWireframe() -> RootWireframe {
-        DefaultRootWireframe(window: window)
+        DefaultRootWireframe(
+            window: window,
+            wallets: wallets,
+            networks: networks,
+            dashboard: dashboard
+        )
     }
 }
