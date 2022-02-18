@@ -4,30 +4,30 @@
 
 import Foundation
 
-enum TemplatePresenterEvent {
+enum DashboardPresenterEvent {
 
 }
 
-protocol TemplatePresenter {
+protocol DashboardPresenter {
 
     func present()
     func handle(_ event: DashboardPresenterEvent)
 }
 
-// MARK: - DefaultTemplatePresenter
+// MARK: - DefaultDashboardPresenter
 
-class DefaultTemplatePresenter {
+class DefaultDashboardPresenter {
 
-    private let interactor: TemplateInteractor
+    private let interactor: DashboardInteractor
     private let wireframe: DashboardWireframe
 
     private var items: [Item]
 
-    private weak var view: TemplateView?
+    private weak var view: DashboardView?
 
     init(
-        view: TemplateView,
-        interactor: TemplateInteractor,
+        view: DashboardView,
+        interactor: DashboardInteractor,
         wireframe: DashboardWireframe
     ) {
         self.view = view
@@ -37,9 +37,9 @@ class DefaultTemplatePresenter {
     }
 }
 
-// MARK: TemplatePresenter
+// MARK: DashboardPresenter
 
-extension DefaultTemplatePresenter: DashboardPresenter {
+extension DefaultDashboardPresenter: DashboardPresenter {
 
     func present() {
         view?.update(with: .loading)
@@ -53,13 +53,13 @@ extension DefaultTemplatePresenter: DashboardPresenter {
 
 // MARK: - Event handling
 
-private extension DefaultTemplatePresenter {
+private extension DefaultDashboardPresenter {
 
 }
 
 // MARK: - WalletsViewModel utilities
 
-private extension DefaultTemplatePresenter {
+private extension DefaultDashboardPresenter {
 
     func viewModel(from items: [Item], active: Item?) -> DashboardViewModel {
         .loaded(

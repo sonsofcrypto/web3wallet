@@ -4,7 +4,7 @@
 
 import Foundation
 
-enum TemplateViewModel {
+enum DashboardViewModel {
     case loading
     case loaded(items: [Item], selectedIdx: Int)
     case error(error: DashboardViewModel.Error)

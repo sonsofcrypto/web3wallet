@@ -4,25 +4,25 @@
 
 import UIKit
 
-enum TemplateWireframeDestinaiton {
+enum DashboardWireframeDestinaiton {
 
 }
 
-protocol TemplateWireframe {
+protocol DashboardWireframe {
     func present()
     func navigate(to destination: DashboardWireframeDestinaiton)
 }
 
-// MARK: - DefaultTemplateWireframe
+// MARK: - DefaultDashboardWireframe
 
-class DefaultTemplateWireframe {
+class DefaultDashboardWireframe {
 
-    private let interactor: TemplateInteractor
+    private let interactor: DashboardInteractor
 
     private weak var window: UIWindow?
 
     init(
-        interactor: TemplateInteractor,
+        interactor: DashboardInteractor,
         window: UIWindow?
     ) {
         self.interactor = interactor
@@ -30,9 +30,9 @@ class DefaultTemplateWireframe {
     }
 }
 
-// MARK: - TemplateWireframe
+// MARK: - DashboardWireframe
 
-extension DefaultTemplateWireframe: DashboardWireframe {
+extension DefaultDashboardWireframe: DashboardWireframe {
 
     func present() {
         let vc = wireUp()
@@ -45,7 +45,7 @@ extension DefaultTemplateWireframe: DashboardWireframe {
     }
 }
 
-extension DefaultTemplateWireframe {
+extension DefaultDashboardWireframe {
 
     private func wireUp() -> UIViewController {
         let vc: WalletsViewController = UIStoryboard(.main).instantiate()

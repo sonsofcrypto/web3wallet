@@ -4,14 +4,14 @@
 
 import UIKit
 
-protocol TemplateWireframeFactory {
+protocol DashboardWireframeFactory {
 
     func makeWireframe() -> DashboardWireframe
 }
 
-// MARK: - DefaultTemplateWireframeFactory
+// MARK: - DefaultDashboardWireframeFactory
 
-class DefaultTemplateWireframeFactory {
+class DefaultDashboardWireframeFactory {
 
     private let service: TemplateSerivce
 
@@ -26,9 +26,9 @@ class DefaultTemplateWireframeFactory {
     }
 }
 
-// MARK: - TemplateWireframeFactory
+// MARK: - DashboardWireframeFactory
 
-extension DefaultTemplateWireframeFactory: DashboardWireframeFactory {
+extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
 
     func makeWireframe() -> DashboardWireframe {
         DefaultTemplateWireframe(

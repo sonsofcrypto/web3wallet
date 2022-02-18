@@ -4,12 +4,12 @@
 
 import UIKit
 
-protocol TemplateView: AnyObject {
+protocol DashboardView: AnyObject {
 
     func update(with viewModel: DashboardViewModel)
 }
 
-class TemplateViewController: UIViewController {
+class DashboardViewController: UIViewController {
 
     var presenter: DashboardPresenter!
 
@@ -32,7 +32,7 @@ class TemplateViewController: UIViewController {
 
 // MARK: - WalletsView
 
-extension TemplateViewController: TemplateView {
+extension DashboardViewController: DashboardView {
 
     func update(with viewModel: DashboardViewModel) {
         self.viewModel = viewModel
@@ -51,7 +51,7 @@ extension TemplateViewController: TemplateView {
 
 // MARK: - UICollectionViewDataSource
 
-extension TemplateViewController: UICollectionViewDataSource {
+extension DashboardViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel?.items().count ?? 0
@@ -65,11 +65,11 @@ extension TemplateViewController: UICollectionViewDataSource {
     }
 }
 
-extension TemplateViewController: UICollectionViewDelegate {
+extension DashboardViewController: UICollectionViewDelegate {
     
 }
 
-extension TemplateViewController: UICollectionViewDelegateFlowLayout {
+extension DashboardViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width - 32, height: Global.cellHeight)
@@ -78,7 +78,7 @@ extension TemplateViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - Configure UI
 
-extension TemplateViewController {
+extension DashboardViewController {
     
     func configureUI() {
         title = Localized("wallets")
