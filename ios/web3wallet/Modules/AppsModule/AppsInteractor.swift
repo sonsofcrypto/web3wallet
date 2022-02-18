@@ -13,10 +13,10 @@ protocol AppsInteractor: AnyObject {
 class DefaultAppsInteractor {
 
 
-    private var AppsService: AppsService
+    private var appsService: AppsService
 
-    init(_ AppsService: AppsService) {
-        self.AppsService = AppsSerice
+    init(_ appsService: AppsService) {
+        self.appsService = appsService
     }
 }
 
