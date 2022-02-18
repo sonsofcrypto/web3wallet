@@ -4,30 +4,30 @@
 
 import Foundation
 
-enum TemplatePresenterEvent {
+enum NFTsPresenterEvent {
 
 }
 
-protocol TemplatePresenter {
+protocol NFTsPresenter {
 
     func present()
-    func handle(_ event: TemplatePresenterEvent)
+    func handle(_ event: NFTsPresenterEvent)
 }
 
-// MARK: - DefaultTemplatePresenter
+// MARK: - DefaultNFTsPresenter
 
-class DefaultTemplatePresenter {
+class DefaultNFTsPresenter {
 
-    private let interactor: TemplateInteractor
-    private let wireframe: TemplatedWireframe
+    private let interactor: NFTsInteractor
+    private let wireframe: NFTsWireframe
 
     // private var items: [Item]
 
-    private weak var view: TemplateView?
+    private weak var view: NFTsView?
 
     init(
-        view: TemplateView,
-        interactor: TemplateInteractor,
+        view: NFTsView,
+        interactor: NFTsInteractor,
         wireframe: NFTsWireframe
     ) {
         self.view = view
@@ -37,31 +37,31 @@ class DefaultTemplatePresenter {
     }
 }
 
-// MARK: TemplatePresenter
+// MARK: NFTsPresenter
 
-extension DefaultTemplatePresenter: AccountPresenter {
+extension DefaultNFTsPresenter: AccountPresenter {
 
     func present() {
         view?.update(with: .loading)
         // TODO: Interactor
     }
 
-    func handle(_ event: TemplatePresenterEvent) {
+    func handle(_ event: NFTsPresenterEvent) {
 
     }
 }
 
 // MARK: - Event handling
 
-private extension DefaultTemplatePresenter {
+private extension DefaultNFTsPresenter {
 
 }
 
 // MARK: - WalletsViewModel utilities
 
-private extension DefaultTemplatePresenter {
+private extension DefaultNFTsPresenter {
 
-//    func viewModel(from items: [Item], active: Item?) -> TemplateViewModel {
+//    func viewModel(from items: [Item], active: Item?) -> NFTsViewModel {
 //        .loaded(
 //            wallets: viewModel(from: wallets),
 //            selectedIdx: selectedIdx(wallets, active: active)
