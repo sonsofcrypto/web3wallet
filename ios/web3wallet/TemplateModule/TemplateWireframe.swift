@@ -10,7 +10,7 @@ enum TemplateWireframeDestination {
 
 protocol TemplateWireframe {
     func present()
-    func navigate(to destination: TemplateWireframeDestinaiton)
+    func navigate(to destination: TemplateWireframeDestination)
 }
 
 // MARK: - DefaultTemplateWireframe
@@ -32,7 +32,7 @@ class DefaultTemplateWireframe {
 
 // MARK: - TemplateWireframe
 
-extension DefaultTemplateWireframe: AMMsWireframe {
+extension DefaultTemplateWireframe: TemplateWireframe {
 
     func present() {
         let vc = wireUp()
@@ -40,7 +40,7 @@ extension DefaultTemplateWireframe: AMMsWireframe {
         window?.makeKeyAndVisible()
     }
 
-    func navigate(to destination: TemplateWireframeDestinaiton) {
+    func navigate(to destination: TemplateWireframeDestination) {
         print("navigate to \(destination)")
     }
 }
@@ -48,8 +48,8 @@ extension DefaultTemplateWireframe: AMMsWireframe {
 extension DefaultTemplateWireframe {
 
     private func wireUp() -> UIViewController {
-        let vc: WalletsViewController = UIStoryboard(.main).instantiate()
-        let presenter = DefaultAMMsPresenter(
+        let vc: TemplateViewController = UIStoryboard(.main).instantiate()
+        let presenter = DefaultTemplatePresenter(
             view: vc,
             interactor: interactor,
             wireframe: self

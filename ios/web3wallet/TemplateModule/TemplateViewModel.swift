@@ -7,12 +7,12 @@ import Foundation
 enum TemplateViewModel {
     case loading
     case loaded(items: [Item], selectedIdx: Int)
-    case error(error: AMMsViewModel.Error)
+    case error(error: TemplateViewModel.Error)
 }
 
 // MARK - Item
 
-extension AMMsViewModel {
+extension TemplateViewModel {
 
     struct Item {
         let title: String
@@ -21,7 +21,7 @@ extension AMMsViewModel {
 
 // MARK: - Error
 
-extension AMMsViewModel {
+extension TemplateViewModel {
 
     struct Error {
         let title: String
@@ -32,9 +32,9 @@ extension AMMsViewModel {
 
 // MARK: - Utility
 
-extension AMMsViewModel {
+extension TemplateViewModel {
 
-    func items() -> [AMMsViewModel.Item] {
+    func items() -> [TemplateViewModel.Item] {
         switch self {
         case let .loaded(items, _):
             return items

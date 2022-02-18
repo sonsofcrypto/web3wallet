@@ -11,7 +11,7 @@ enum TemplatePresenterEvent {
 protocol TemplatePresenter {
 
     func present()
-    func handle(_ event: AMMsPresenterEvent)
+    func handle(_ event: TemplatePresenterEvent)
 }
 
 // MARK: - DefaultTemplatePresenter
@@ -39,27 +39,27 @@ class DefaultTemplatePresenter {
 
 // MARK: TemplatePresenter
 
-extension DefaultAMMsPresenter: AMMsPresenter {
+extension DefaultTemplatePresenter: TemplatePresenter {
 
     func present() {
         view?.update(with: .loading)
         // TODO: Interactor
     }
 
-    func handle(_ event: AMMsPresenterEvent) {
+    func handle(_ event: TemplatePresenterEvent) {
 
     }
 }
 
 // MARK: - Event handling
 
-private extension DefaultAMMsPresenter {
+private extension DefaultTemplatePresenter {
 
 }
 
 // MARK: - WalletsViewModel utilities
 
-private extension DefaultAMMsPresenter {
+private extension DefaultTemplatePresenter {
 
 //    func viewModel(from items: [Item], active: Item?) -> TemplateViewModel {
 //        .loaded(
