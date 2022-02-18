@@ -4,25 +4,25 @@
 
 import UIKit
 
-enum TemplateWireframeDestination {
+enum AMMsWireframeDestination {
 
 }
 
-protocol TemplateWireframe {
+protocol AMMsWireframe {
     func present()
-    func navigate(to destination: TemplateWireframeDestinaiton)
+    func navigate(to destination: AMMsWireframeDestination)
 }
 
-// MARK: - DefaultTemplateWireframe
+// MARK: - DefaultAMMsWireframe
 
-class DefaultTemplateWireframe {
+class DefaultAMMsWireframe {
 
-    private let interactor: TemplateInteractor
+    private let interactor: AMMsInteractor
 
     private weak var window: UIWindow?
 
     init(
-        interactor: TemplateInteractor,
+        interactor: AMMsInteractor,
         window: UIWindow?
     ) {
         self.interactor = interactor
@@ -30,9 +30,9 @@ class DefaultTemplateWireframe {
     }
 }
 
-// MARK: - TemplateWireframe
+// MARK: - AMMsWireframe
 
-extension DefaultTemplateWireframe: AMMsWireframe {
+extension DefaultAMMsWireframe: AMMsWireframe {
 
     func present() {
         let vc = wireUp()
@@ -40,15 +40,15 @@ extension DefaultTemplateWireframe: AMMsWireframe {
         window?.makeKeyAndVisible()
     }
 
-    func navigate(to destination: TemplateWireframeDestinaiton) {
+    func navigate(to destination: AMMsWireframeDestinaiton) {
         print("navigate to \(destination)")
     }
 }
 
-extension DefaultTemplateWireframe {
+extension DefaultAMMsWireframe {
 
     private func wireUp() -> UIViewController {
-        let vc: WalletsViewController = UIStoryboard(.main).instantiate()
+        let vc: AMMsViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultAMMsPresenter(
             view: vc,
             interactor: interactor,

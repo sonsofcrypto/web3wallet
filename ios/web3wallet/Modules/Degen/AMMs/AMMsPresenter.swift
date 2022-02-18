@@ -4,31 +4,31 @@
 
 import Foundation
 
-enum TemplatePresenterEvent {
+enum AMMsPresenterEvent {
 
 }
 
-protocol TemplatePresenter {
+protocol AMMsPresenter {
 
     func present()
     func handle(_ event: AMMsPresenterEvent)
 }
 
-// MARK: - DefaultTemplatePresenter
+// MARK: - DefaultAMMsPresenter
 
-class DefaultTemplatePresenter {
+class DefaultAMMsPresenter {
 
-    private let interactor: TemplateInteractor
-    private let wireframe: TemplatedWireframe
+    private let interactor: AMMsInteractor
+    private let wireframe: AMMsWireframe
 
     // private var items: [Item]
 
-    private weak var view: TemplateView?
+    private weak var view: AMMsView?
 
     init(
-        view: TemplateView,
-        interactor: TemplateInteractor,
-        wireframe: TemplateWireframe
+        view: AMMsView,
+        interactor: AMMsInteractor,
+        wireframe: AMMsWireframe
     ) {
         self.view = view
         self.interactor = interactor
@@ -37,7 +37,7 @@ class DefaultTemplatePresenter {
     }
 }
 
-// MARK: TemplatePresenter
+// MARK: AMMsPresenter
 
 extension DefaultAMMsPresenter: AMMsPresenter {
 
@@ -61,7 +61,7 @@ private extension DefaultAMMsPresenter {
 
 private extension DefaultAMMsPresenter {
 
-//    func viewModel(from items: [Item], active: Item?) -> TemplateViewModel {
+//    func viewModel(from items: [Item], active: Item?) -> AMMsViewModel {
 //        .loaded(
 //            wallets: viewModel(from: wallets),
 //            selectedIdx: selectedIdx(wallets, active: active)
