@@ -14,6 +14,7 @@
 		1A4C305703196BC0B33BC401 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3342AB2F88E37CE4947A /* Theme.swift */; };
 		1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C300D073ABE25FC79D4A9 /* CollectionViewCell.swift */; };
 		1A4C310A1CB1892911AA863A /* NetworksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C304CB26AD11BACACD435 /* NetworksView.swift */; };
+		1A4C32253B79286A98D96FE4 /* UIView+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C300AF1693AEBB5E5DD97 /* UIView+extensions.swift */; };
 		1A4C32A8305199ABB7FA4DD6 /* NetworksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A88F340DC56EC79C6AE /* NetworksViewModel.swift */; };
 		1A4C32CF0C59FE32073E66D0 /* WalletsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3226ECC6247E9092F6EF /* WalletsPresenter.swift */; };
 		1A4C32D43EDF7B8FC74AA68C /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3CD7A1F1A86851EC2BA5 /* UICollectionView+Extensions.swift */; };
@@ -94,6 +95,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A4C300AF1693AEBB5E5DD97 /* UIView+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+extensions.swift"; sourceTree = "<group>"; };
 		1A4C300D073ABE25FC79D4A9 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		1A4C3044DC83E6A35A00DC12 /* WalletsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsInteractor.swift; sourceTree = "<group>"; };
 		1A4C304CB26AD11BACACD435 /* NetworksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksView.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				1A4C3BFA6EDB1E94BEF92E59 /* Formatter+Extensions.swift */,
 				1A4C330512BFD12BAFED0D12 /* CALayer+Extension.swift */,
 				1A4C39B21512118DB853A3E3 /* UILabel+extensions.swift */,
+				1A4C300AF1693AEBB5E5DD97 /* UIView+extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -621,6 +624,7 @@
 				1A4C302D442E40BBC5FE9E3D /* DashboardWireframe.swift in Sources */,
 				1A4C3C58ECBCC69942A9138C /* DashboardInteractor.swift in Sources */,
 				1A4C37CF17F191B3AF54251B /* DashboardWireframeFactory.swift in Sources */,
+				1A4C32253B79286A98D96FE4 /* UIView+extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

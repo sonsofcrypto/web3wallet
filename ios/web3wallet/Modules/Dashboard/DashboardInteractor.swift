@@ -13,10 +13,10 @@ protocol DashboardInteractor: AnyObject {
 class DefaultDashboardInteractor {
 
 
-    private var templateService: TemplateService
+    private var walletsService: WalletsService
 
-    init(_ templateService: TemplateService) {
-        self.templateService = templateSerice
+    init(_ walletsService: WalletsService) {
+        self.walletsService = walletsService
     }
 }
 

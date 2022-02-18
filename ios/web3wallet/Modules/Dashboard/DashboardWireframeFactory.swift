@@ -13,13 +13,13 @@ protocol DashboardWireframeFactory {
 
 class DefaultDashboardWireframeFactory {
 
-    private let service: TemplateSerivce
+    private let service: WalletsService
 
     private weak var window: UIWindow?
 
     init(
         window: UIWindow?,
-        service: TemplateSerivce
+        service: WalletsService
     ) {
         self.window = window
         self.service = service
@@ -31,8 +31,8 @@ class DefaultDashboardWireframeFactory {
 extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
 
     func makeWireframe() -> DashboardWireframe {
-        DefaultTemplateWireframe(
-            interactor: DefaultTemplateInteractor(service),
+        DefaultDashboardWireframe(
+            interactor: DefaultDashboardInteractor(service),
             window: window
         )
     }

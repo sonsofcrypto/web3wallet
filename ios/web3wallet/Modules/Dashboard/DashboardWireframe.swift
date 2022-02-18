@@ -48,8 +48,8 @@ extension DefaultDashboardWireframe: DashboardWireframe {
 extension DefaultDashboardWireframe {
 
     private func wireUp() -> UIViewController {
-        let vc: WalletsViewController = UIStoryboard(.main).instantiate()
-        let presenter = DefaultTemplatePresenter(
+        let vc: DashboardViewController = UIStoryboard(.main).instantiate()
+        let presenter = DefaultDashboardPresenter(
             view: vc,
             interactor: interactor,
             wireframe: self

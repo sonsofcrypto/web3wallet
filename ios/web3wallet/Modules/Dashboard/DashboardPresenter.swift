@@ -21,8 +21,6 @@ class DefaultDashboardPresenter {
     private let interactor: DashboardInteractor
     private let wireframe: DashboardWireframe
 
-    private var items: [Item]
-
     private weak var view: DashboardView?
 
     init(
@@ -33,7 +31,6 @@ class DefaultDashboardPresenter {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
-        self.items = []
     }
 }
 
@@ -61,10 +58,10 @@ private extension DefaultDashboardPresenter {
 
 private extension DefaultDashboardPresenter {
 
-    func viewModel(from items: [Item], active: Item?) -> DashboardViewModel {
-        .loaded(
-            wallets: viewModel(from: wallets),
-            selectedIdx: selectedIdx(wallets, active: active)
-        )
-    }
+//    func viewModel(from items: [Item], active: Item?) -> DashboardViewModel {
+//        .loaded(
+//            wallets: viewModel(from: wallets),
+//            selectedIdx: selectedIdx(wallets, active: active)
+//        )
+//    }
 }
