@@ -13,13 +13,13 @@ protocol TemplateWireframeFactory {
 
 class DefaultTemplateWireframeFactory {
 
-    private let service: TemplateSerivce
+    private let service: TemplateService
 
     private weak var window: UIWindow?
 
     init(
         window: UIWindow?,
-        service: TemplateSerivce
+        service: TemplateService
     ) {
         self.window = window
         self.service = service

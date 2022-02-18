@@ -28,7 +28,7 @@ class DefaultTemplatePresenter {
     init(
         view: TemplateView,
         interactor: TemplateInteractor,
-        wireframe: SwapWireframe
+        wireframe: TemplateWireframe
     ) {
         self.view = view
         self.interactor = interactor
