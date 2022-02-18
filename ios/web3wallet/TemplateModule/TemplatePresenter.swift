@@ -28,7 +28,7 @@ class DefaultTemplatePresenter {
     init(
         view: TemplateView,
         interactor: TemplateInteractor,
-        wireframe: NFTsWireframe
+        wireframe: TemplateWireframe
     ) {
         self.view = view
         self.interactor = interactor
@@ -39,7 +39,7 @@ class DefaultTemplatePresenter {
 
 // MARK: TemplatePresenter
 
-extension DefaultTemplatePresenter: AccountPresenter {
+extension DefaultTemplatePresenter: TemplatePresenter {
 
     func present() {
         view?.update(with: .loading)
