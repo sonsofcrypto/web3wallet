@@ -11,7 +11,7 @@ protocol NFTsView: AnyObject {
 
 class NFTsViewController: UIViewController {
 
-    var presenter: AccountPresenter!
+    var presenter: NFTsPresenter!
 
     private var viewModel: AccountViewModel?
     

@@ -39,7 +39,7 @@ class DefaultNFTsPresenter {
 
 // MARK: NFTsPresenter
 
-extension DefaultNFTsPresenter: AccountPresenter {
+extension DefaultNFTsPresenter: NFTsPresenter {
 
     func present() {
         view?.update(with: .loading)

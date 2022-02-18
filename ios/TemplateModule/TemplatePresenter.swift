@@ -19,7 +19,7 @@ protocol TemplatePresenter {
 class DefaultTemplatePresenter {
 
     private let interactor: TemplateInteractor
-    private let wireframe: TemplatedWireframe
+    private let wireframe: TemplateWireframe
 
     // private var items: [Item]
 
