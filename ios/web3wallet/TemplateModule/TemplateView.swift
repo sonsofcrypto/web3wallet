@@ -6,14 +6,14 @@ import UIKit
 
 protocol TemplateView: AnyObject {
 
-    func update(with viewModel: DashboardViewModel)
+    func update(with viewModel: TemplateViewModel)
 }
 
 class TemplateViewController: UIViewController {
 
-    var presenter: DashboardPresenter!
+    var presenter: TemplatePresenter!
 
-    private var viewModel: DashboardViewModel?
+    private var viewModel: TemplateViewModel?
     
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -34,7 +34,7 @@ class TemplateViewController: UIViewController {
 
 extension TemplateViewController: TemplateView {
 
-    func update(with viewModel: DashboardViewModel) {
+    func update(with viewModel: TemplateViewModel) {
         self.viewModel = viewModel
         collectionView.reloadData()
         if let idx = viewModel.selectedIdx(), !viewModel.items().isEmpty {

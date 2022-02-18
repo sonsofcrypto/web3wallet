@@ -11,7 +11,7 @@ enum TemplatePresenterEvent {
 protocol TemplatePresenter {
 
     func present()
-    func handle(_ event: DashboardPresenterEvent)
+    func handle(_ event: TemplatePresenterEvent)
 }
 
 // MARK: - DefaultTemplatePresenter
@@ -21,7 +21,7 @@ class DefaultTemplatePresenter {
     private let interactor: TemplateInteractor
     private let wireframe: DashboardWireframe
 
-    private var items: [Item]
+    // private var items: [Item]
 
     private weak var view: TemplateView?
 
@@ -33,20 +33,20 @@ class DefaultTemplatePresenter {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
-        self.items = []
+        // self.items = []
     }
 }
 
 // MARK: TemplatePresenter
 
-extension DefaultTemplatePresenter: DashboardPresenter {
+extension DefaultTemplatePresenter: TemplatePresenter {
 
     func present() {
         view?.update(with: .loading)
         // TODO: Interactor
     }
 
-    func handle(_ event: DashboardPresenterEvent) {
+    func handle(_ event: TemplatePresenterEvent) {
 
     }
 }
@@ -61,10 +61,10 @@ private extension DefaultTemplatePresenter {
 
 private extension DefaultTemplatePresenter {
 
-    func viewModel(from items: [Item], active: Item?) -> DashboardViewModel {
-        .loaded(
-            wallets: viewModel(from: wallets),
-            selectedIdx: selectedIdx(wallets, active: active)
-        )
-    }
+//    func viewModel(from items: [Item], active: Item?) -> TemplateViewModel {
+//        .loaded(
+//            wallets: viewModel(from: wallets),
+//            selectedIdx: selectedIdx(wallets, active: active)
+//        )
+//    }
 }

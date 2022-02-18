@@ -4,13 +4,13 @@
 
 import UIKit
 
-enum TemplateWireframeDestinaiton {
+enum TemplateWireframeDestination {
 
 }
 
 protocol TemplateWireframe {
     func present()
-    func navigate(to destination: DashboardWireframeDestinaiton)
+    func navigate(to destination: TemplateWireframeDestinaiton)
 }
 
 // MARK: - DefaultTemplateWireframe
@@ -32,7 +32,7 @@ class DefaultTemplateWireframe {
 
 // MARK: - TemplateWireframe
 
-extension DefaultTemplateWireframe: DashboardWireframe {
+extension DefaultTemplateWireframe: TemplateWireframe {
 
     func present() {
         let vc = wireUp()
@@ -40,7 +40,7 @@ extension DefaultTemplateWireframe: DashboardWireframe {
         window?.makeKeyAndVisible()
     }
 
-    func navigate(to destination: DashboardWireframeDestinaiton) {
+    func navigate(to destination: TemplateWireframeDestinaiton) {
         print("navigate to \(destination)")
     }
 }

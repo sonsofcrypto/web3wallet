@@ -7,12 +7,12 @@ import Foundation
 enum TemplateViewModel {
     case loading
     case loaded(items: [Item], selectedIdx: Int)
-    case error(error: DashboardViewModel.Error)
+    case error(error: TemplateViewModel.Error)
 }
 
 // MARK - Item
 
-extension DashboardViewModel {
+extension TemplateViewModel {
 
     struct Item {
         let title: String
@@ -21,7 +21,7 @@ extension DashboardViewModel {
 
 // MARK: - Error
 
-extension DashboardViewModel {
+extension TemplateViewModel {
 
     struct Error {
         let title: String
@@ -32,9 +32,9 @@ extension DashboardViewModel {
 
 // MARK: - Utility
 
-extension DashboardViewModel {
+extension TemplateViewModel {
 
-    func items() -> [DashboardViewModel.Item] {
+    func items() -> [TemplateViewModel.Item] {
         switch self {
         case let .loaded(items, _):
             return items
