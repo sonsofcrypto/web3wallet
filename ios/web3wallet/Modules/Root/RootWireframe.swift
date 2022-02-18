@@ -66,7 +66,10 @@ extension DefaultRootWireframe {
         let vc: RootViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultRootPresenter(
             view: vc,
-            wireframe: self
+            wireframe: self,
+            wallets: wallets.makeWireframe(vc),
+            networks: networks.makeWireframe(vc),
+            dashboard: dashboard.makeWireframe(vc)
         )
 
         vc.presenter = presenter

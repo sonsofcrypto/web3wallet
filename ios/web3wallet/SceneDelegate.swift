@@ -15,9 +15,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         self.window = window
 
-        DefaultWalletsWireframeFactory(
+        let walletsService = DefaultWalletsService(store: DefaultStore())
+        let networkService = DefaultNetworksService()
+
+        DefaultRootWireframeFactory(
             window: window,
-            walletsService: DefaultWalletsService(store: DefaultStore())
+            wallets: DefaultWalletsWireframeFactory(walletsService),
+            networks: DefaultNetworksWireframeFactory(networkService),
+            dashboard: DefaultDashboardWireframeFactory(walletsService)
         )
         .makeWireframe()
         .present()

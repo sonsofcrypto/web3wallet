@@ -4,32 +4,29 @@
 
 import UIKit
 
-enum WalletsWireframeDestinaiton {
-    case walletSettings
-    case networks
-    case homeScreen
+enum WalletsWireframeDestination {
+
 }
 
 protocol WalletsWireframe {
     func present()
-    func navigate(to destination: WalletsWireframeDestinaiton)
+    func navigate(to destination: WalletsWireframeDestination)
 }
 
 // MARK: - DefaultWalletsWireframe
 
 class DefaultWalletsWireframe {
 
+    private weak var parent: UIViewController?
+
     private let interactor: WalletsInteractor
 
-    private weak var window: UIWindow?
-    private weak var vc: UIViewController?
-
     init(
-        interactor: WalletsInteractor,
-        window: UIWindow?
+        parent: UIViewController,
+        interactor: WalletsInteractor
     ) {
+        self.parent = parent
         self.interactor = interactor
-        self.window = window
     }
 }
 
@@ -39,20 +36,16 @@ extension DefaultWalletsWireframe: WalletsWireframe {
 
     func present() {
         let vc = wireUp()
-        self.vc = vc
-        window?.rootViewController = vc
-        window?.makeKeyAndVisible()
+
+        if let parent = self.parent as? EdgeCardsController {
+            parent.setBottomCard(vc: vc)
+        } else {
+            parent?.show(vc, sender: self)
+        }
     }
 
-    func navigate(to destination: WalletsWireframeDestinaiton) {
-        guard let vc = self.vc else {
-            return
-        }
-        DefaultNetworksWireframeFactory(
-            networksService: DefaultNetworksService()
-        )
-        .makeWireframe(vc)
-        .present()
+    func navigate(to destination: WalletsWireframeDestination) {
+
     }
 }
 

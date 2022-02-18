@@ -10,7 +10,7 @@ enum DegenWireframeDestination {
 
 protocol DegenWireframe {
     func present()
-    func navigate(to destination: DashboardWireframeDestinaiton)
+    func navigate(to destination: DashboardWireframeDestination)
 }
 
 // MARK: - DefaultDegenWireframe
@@ -40,7 +40,7 @@ extension DefaultDegenWireframe: DashboardWireframe {
         window?.makeKeyAndVisible()
     }
 
-    func navigate(to destination: DashboardWireframeDestinaiton) {
+    func navigate(to destination: DashboardWireframeDestination) {
         print("navigate to \(destination)")
     }
 }

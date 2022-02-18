@@ -4,29 +4,29 @@
 
 import UIKit
 
-enum DashboardWireframeDestinaiton {
+enum DashboardWireframeDestination {
 
 }
 
 protocol DashboardWireframe {
     func present()
-    func navigate(to destination: DashboardWireframeDestinaiton)
+    func navigate(to destination: DashboardWireframeDestination)
 }
 
 // MARK: - DefaultDashboardWireframe
 
 class DefaultDashboardWireframe {
 
+    private weak var parent: UIViewController?
+
     private let interactor: DashboardInteractor
 
-    private weak var window: UIWindow?
-
     init(
-        interactor: DashboardInteractor,
-        window: UIWindow?
+        parent: UIViewController,
+        interactor: DashboardInteractor
     ) {
+        self.parent = parent
         self.interactor = interactor
-        self.window = window
     }
 }
 
@@ -36,11 +36,14 @@ extension DefaultDashboardWireframe: DashboardWireframe {
 
     func present() {
         let vc = wireUp()
-        window?.rootViewController = vc
-        window?.makeKeyAndVisible()
+        if let parent = self.parent as? EdgeCardsController {
+            parent.setTopCard(vc: vc)
+        } else {
+            parent?.show(vc, sender: self)
+        }
     }
 
-    func navigate(to destination: DashboardWireframeDestinaiton) {
+    func navigate(to destination: DashboardWireframeDestination) {
         print("navigate to \(destination)")
     }
 }

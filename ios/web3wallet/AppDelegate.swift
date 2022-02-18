@@ -13,12 +13,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
 
-        DefaultWalletsWireframeFactory(
+        let walletsService = DefaultWalletsService(store: DefaultStore())
+        let networkService = DefaultNetworksService()
+
+        DefaultRootWireframeFactory(
             window: window,
-            walletsService: DefaultWalletsService(store: DefaultStore())
+            wallets: DefaultWalletsWireframeFactory(walletsService),
+            networks: DefaultNetworksWireframeFactory(networkService),
+            dashboard: DefaultDashboardWireframeFactory(walletsService)
         )
         .makeWireframe()
         .present()
+
         return true
     }
 

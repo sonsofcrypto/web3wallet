@@ -117,7 +117,6 @@ private extension DefaultWalletsPresenter {
     func handleConnectHardwareWallet() {
         // TODO: Implement
         print("handleConnectHardwareWallet")
-        wireframe.navigate(to: .networks)
     }
 }
 

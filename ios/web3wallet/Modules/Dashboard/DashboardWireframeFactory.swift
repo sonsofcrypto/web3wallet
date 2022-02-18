@@ -6,7 +6,7 @@ import UIKit
 
 protocol DashboardWireframeFactory {
 
-    func makeWireframe() -> DashboardWireframe
+    func makeWireframe(_ parent: UIViewController) -> DashboardWireframe
 }
 
 // MARK: - DefaultDashboardWireframeFactory
@@ -15,13 +15,9 @@ class DefaultDashboardWireframeFactory {
 
     private let service: WalletsService
 
-    private weak var window: UIWindow?
-
     init(
-        window: UIWindow?,
-        service: WalletsService
+        _ service: WalletsService
     ) {
-        self.window = window
         self.service = service
     }
 }
@@ -30,10 +26,10 @@ class DefaultDashboardWireframeFactory {
 
 extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
 
-    func makeWireframe() -> DashboardWireframe {
+    func makeWireframe(_ parent: UIViewController) -> DashboardWireframe {
         DefaultDashboardWireframe(
-            interactor: DefaultDashboardInteractor(service),
-            window: window
+            parent: parent,
+            interactor: DefaultDashboardInteractor(service)
         )
     }
 }

@@ -4,29 +4,29 @@
 
 import UIKit
 
-enum NetworksWireframeDestinaiton {
+enum NetworksWireframeDestination {
 
 }
 
 protocol NetworksWireframe {
     func present()
-    func navigate(to destination: NetworksWireframeDestinaiton)
+    func navigate(to destination: NetworksWireframeDestination)
 }
 
 // MARK: - DefaultNetworksWireframe
 
 class DefaultNetworksWireframe {
 
+    private weak var parent: UIViewController?
+
     private let interactor: NetworksInteractor
 
-    private weak var parrentVC: UIViewController?
-
     init(
-        interactor: NetworksInteractor,
-        parentVC: UIViewController?
+        parent: UIViewController?,
+        interactor: NetworksInteractor
     ) {
         self.interactor = interactor
-        self.parrentVC = parentVC
+        self.parent = parent
     }
 }
 
@@ -36,10 +36,14 @@ extension DefaultNetworksWireframe: NetworksWireframe {
 
     func present() {
         let vc = wireUp()
-        parrentVC?.show(vc, sender: self)
+        if let parent = self.parent as? EdgeCardsController {
+            parent.setTopCard(vc: vc)
+        } else {
+            parent?.show(vc, sender: self)
+        }
     }
 
-    func navigate(to destination: NetworksWireframeDestinaiton) {
+    func navigate(to destination: NetworksWireframeDestination) {
         print("navigate to \(destination)")
     }
 }
@@ -55,6 +59,6 @@ extension DefaultNetworksWireframe {
         )
 
         vc.presenter = presenter
-        return vc
+        return NavigationController(rootViewController: vc)
     }
 }
