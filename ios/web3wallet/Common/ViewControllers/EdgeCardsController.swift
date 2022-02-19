@@ -142,6 +142,13 @@ private extension EdgeCardsController {
         switch mode {
         case .overview:
             swipeProgress = 0.85
+            tapRecognizers.enumerated().forEach { $0.1.isEnabled = true }
+        case .master:
+            tapRecognizers.enumerated().forEach { $0.1.isEnabled = $0.0 != 0 }
+        case .topCard:
+            tapRecognizers.enumerated().forEach { $0.1.isEnabled = $0.0 != 1 }
+        case .bottomCard:
+            tapRecognizers.enumerated().forEach { $0.1.isEnabled = $0.0 != 2 }
         default:
             ()
         }
@@ -340,7 +347,7 @@ extension EdgeCardsController: UIGestureRecognizerDelegate {
             action: #selector(tapBottomCard(_:))
         )
 
-        tapRecognizers = [tapMasterCard, tapMasterCard, tapBottomCard]
+        tapRecognizers = [tapMasterCard, tapTopCard, tapBottomCard]
         tapRecognizers.forEach { $0.delegate = self }
         masterContainer.addGestureRecognizer(tapMasterCard)
         topCardContainer.addGestureRecognizer(tapTopCard)

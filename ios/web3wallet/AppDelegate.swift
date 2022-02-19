@@ -16,18 +16,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let walletsService = DefaultWalletsService(store: DefaultStore())
         let networkService = DefaultNetworksService()
 
-        DefaultWalletsWireframeFactory(walletsService)
-            .makeWireframe(nil, window: window)
-            .present()
+//        DefaultWalletsWireframeFactory(walletsService)
+//            .makeWireframe(nil, window: window)
+//            .present()
 
-//        DefaultRootWireframeFactory(
-//            window: window,
-//            wallets: DefaultWalletsWireframeFactory(walletsService),
-//            networks: DefaultNetworksWireframeFactory(networkService),
-//            dashboard: DefaultDashboardWireframeFactory(walletsService)
-//        )
-//        .makeWireframe()
-//        .present()
+        DefaultRootWireframeFactory(
+            window: window,
+            wallets: DefaultWalletsWireframeFactory(walletsService),
+            networks: DefaultNetworksWireframeFactory(networkService),
+            dashboard: DefaultDashboardWireframeFactory(walletsService)
+        )
+        .makeWireframe()
+        .present()
 
         return true
     }
