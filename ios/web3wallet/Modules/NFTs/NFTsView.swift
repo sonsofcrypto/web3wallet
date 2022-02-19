@@ -81,7 +81,7 @@ extension NFTsViewController: UICollectionViewDelegateFlowLayout {
 extension NFTsViewController {
     
     func configureUI() {
-        title = Localized("wallets")
+        title = Localized("nfts")
         (view as? GradientView)?.colors = [
             Theme.current.background,
             Theme.current.backgroundDark

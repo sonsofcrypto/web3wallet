@@ -10,6 +10,7 @@
 "networks" = "networks";
 "dashboard" = "Dashboard";
 "degen" = "Degen";
+"nfts" = "NFTs";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";

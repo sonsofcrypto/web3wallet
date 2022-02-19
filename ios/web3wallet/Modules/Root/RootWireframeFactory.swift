@@ -19,19 +19,28 @@ class DefaultRootWireframeFactory {
     private let networks: NetworksWireframeFactory
     private let dashboard: DashboardWireframeFactory
     private let degen: DegenWireframeFactory
+    private let nfts: NFTsWireframeFactory
+    private let apps: AppsWireframeFactory
+    private let settings: SettingsWireframeFactory
 
     init(
         window: UIWindow?,
         wallets: WalletsWireframeFactory,
         networks: NetworksWireframeFactory,
         dashboard: DashboardWireframeFactory,
-        degen: DegenWireframeFactory
+        degen: DegenWireframeFactory,
+        nfts: NFTsWireframeFactory,
+        apps: AppsWireframeFactory,
+        settings: SettingsWireframeFactory
     ) {
         self.window = window
         self.wallets = wallets
         self.networks = networks
         self.dashboard = dashboard
         self.degen = degen
+        self.nfts = nfts
+        self.apps = apps
+        self.settings = settings
     }
 }
 
@@ -45,7 +54,10 @@ extension DefaultRootWireframeFactory: RootWireframeFactory {
             wallets: wallets,
             networks: networks,
             dashboard: dashboard,
-            degen: degen
+            degen: degen,
+            nfts: nfts,
+            apps: apps,
+            settings: settings
         )
     }
 }

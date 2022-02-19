@@ -39,10 +39,8 @@ extension DefaultDashboardWireframe: DashboardWireframe {
         if let parent = self.parent as? EdgeCardsController {
             parent.setMaster(vc: vc)
         } else if let tabVc = self.parent as? UITabBarController {
-            tabVc.setViewControllers(
-                [vc] + (tabVc.viewControllers ?? []),
-                animated: false
-            )
+            let vcs = [vc] + (tabVc.viewControllers ?? [])
+            tabVc.setViewControllers(vcs, animated: false)
         } else {
             parent?.show(vc, sender: self)
         }

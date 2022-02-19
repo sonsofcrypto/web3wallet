@@ -17,16 +17,18 @@ protocol NFTsWireframe {
 
 class DefaultNFTsWireframe {
 
+    private weak var parent: UIViewController?
+
     private let interactor: NFTsInteractor
 
     private weak var window: UIWindow?
 
     init(
-        interactor: NFTsInteractor,
-        window: UIWindow?
+        parent: UIViewController,
+        interactor: NFTsInteractor
     ) {
+        self.parent = parent
         self.interactor = interactor
-        self.window = window
     }
 }
 
@@ -36,8 +38,14 @@ extension DefaultNFTsWireframe: NFTsWireframe {
 
     func present() {
         let vc = wireUp()
-        window?.rootViewController = vc
-        window?.makeKeyAndVisible()
+
+        if let tabVc = self.parent as? UITabBarController {
+            let vcs = (tabVc.viewControllers ?? []) + [vc]
+            tabVc.setViewControllers(vcs, animated: false)
+            return
+        }
+
+        vc.show(vc, sender: self)
     }
 
     func navigate(to destination: NFTsWireframeDestination) {
