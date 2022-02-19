@@ -28,7 +28,7 @@ extension DefaultAppsWireframeFactory: AppsWireframeFactory {
 
     func makeWireframe(_ parent: UIViewController) -> AppsWireframe {
         DefaultAppsWireframe(
-            parent: parent
+            parent: parent,
             interactor: DefaultAppsInteractor(service)
         )
     }

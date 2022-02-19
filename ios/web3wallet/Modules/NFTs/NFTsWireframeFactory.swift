@@ -30,8 +30,8 @@ extension DefaultNFTsWireframeFactory: NFTsWireframeFactory {
 
     func makeWireframe(_ parent: UIViewController) -> NFTsWireframe {
         DefaultNFTsWireframe(
-            parent: UIViewController,
-            interactor: service
+            parent: parent,
+            interactor: DefaultNFTsInteractor(service)
         )
     }
 }

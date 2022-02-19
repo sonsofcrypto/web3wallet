@@ -59,5 +59,9 @@ struct Theme {
     var footnote: UIFont {
         UIFont.font(.gothicA1, style: .regular, size: .footnote)
     }
+
+    var tabBar: UIFont {
+        UIFont.font(.gothicA1, style: .medium, size: .custom(size: 10))
+    }
 }
 

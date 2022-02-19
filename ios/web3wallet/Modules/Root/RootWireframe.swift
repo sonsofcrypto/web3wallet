@@ -76,7 +76,7 @@ extension DefaultRootWireframe {
 
     private func wireUp() -> UIViewController {
         let vc: RootViewController = UIStoryboard(.main).instantiate()
-        let tabVc = UITabBarController()
+        let tabVc = TabBarController()
 
         vc.setMaster(vc: tabVc)
 

@@ -6,7 +6,7 @@ import UIKit
 
 protocol SettingsWireframeFactory {
 
-    func makeWireframe() -> SettingsWireframe
+    func makeWireframe(_ parent: UIViewController) -> SettingsWireframe
 }
 
 // MARK: - DefaultSettingsWireframeFactory
@@ -16,7 +16,7 @@ class DefaultSettingsWireframeFactory {
     private let service: SettingsService
 
     init(
-        service: SettingsService
+        _ service: SettingsService
     ) {
         self.service = service
     }

@@ -86,5 +86,11 @@ extension DashboardViewController {
             Theme.current.background,
             Theme.current.backgroundDark
         ]
+
+        tabBarItem = UITabBarItem(
+            title: Localized("dashboard.tab.title"),
+            image: UIImage(named: "tab_icon_dashboard"),
+            tag: 0
+        )
     }
 }

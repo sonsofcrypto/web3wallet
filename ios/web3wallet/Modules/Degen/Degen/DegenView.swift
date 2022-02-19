@@ -86,5 +86,11 @@ extension DegenViewController {
             Theme.current.background,
             Theme.current.backgroundDark
         ]
+
+        tabBarItem = UITabBarItem(
+            title: title,
+            image: UIImage(named: "tab_icon_degen"),
+            tag: 1
+        )
     }
 }

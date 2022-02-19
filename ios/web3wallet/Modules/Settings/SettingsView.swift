@@ -35,17 +35,17 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController: SettingsView {
 
     func update(with viewModel: SettingsViewModel) {
-        self.viewModel = viewModel
-        collectionView.reloadData()
-        if let idx = viewModel.selectedIdx(), !viewModel.items().isEmpty {
-            for i in 0..<viewModel.items().count {
-                collectionView.selectItem(
-                    at: IndexPath(item: i, section: 0),
-                    animated: idx == i,
-                    scrollPosition: .top
-                )
-            }
-        }
+//        self.viewModel = viewModel
+//        collectionView.reloadData()
+//        if let idx = viewModel.selectedIdx(), !viewModel.items().isEmpty {
+//            for i in 0..<viewModel.items().count {
+//                collectionView.selectItem(
+//                    at: IndexPath(item: i, section: 0),
+//                    animated: idx == i,
+//                    scrollPosition: .top
+//                )
+//            }
+//        }
     }
 }
 
@@ -81,10 +81,16 @@ extension SettingsViewController: UICollectionViewDelegateFlowLayout {
 extension SettingsViewController {
     
     func configureUI() {
-        title = Localized("wallets")
+        title = Localized("settings")
         (view as? GradientView)?.colors = [
             Theme.current.background,
             Theme.current.backgroundDark
         ]
+
+        tabBarItem = UITabBarItem(
+            title: title,
+            image: UIImage(named: "tab_icon_settings"),
+            tag: 4
+        )
     }
 }

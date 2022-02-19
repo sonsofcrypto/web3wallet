@@ -22,4 +22,6 @@
 "networks.cell.status" = "Status:";
 "networks.cell.explorer" = "Explorer:";
 
+"dashboard.tab.title" = "Wallet";
+
 

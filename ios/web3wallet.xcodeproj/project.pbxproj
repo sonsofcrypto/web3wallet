@@ -50,10 +50,11 @@
 		1A4C36B0C0625697FE563291 /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C341557541950B9132370 /* UIFont+Extension.swift */; };
 		1A4C36E01D38AFB39DCA523C /* NetworksWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3AD5ED12A2AC7B3218C9 /* NetworksWireframe.swift */; };
 		1A4C36FDBCA0AA402711BE43 /* RootPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3B638AF302821340E527 /* RootPresenter.swift */; };
-		1A4C37074D8859F0DC14C905 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C8A8E2CDDB9F01205E5 /* NavigationViewController.swift */; };
+		1A4C37074D8859F0DC14C905 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */; };
 		1A4C3708C25B84EAA53D0FB6 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C376D2673983B26F249FF /* Wallet.swift */; };
 		1A4C3719F83C54CD473ECE25 /* DegenWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C32C282B76B064343657F /* DegenWireframe.swift */; };
 		1A4C372EC2DEA2483AD7D92E /* NSLocalizedString+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D1809D506A7AE772982 /* NSLocalizedString+extension.swift */; };
+		1A4C3735189D6616D915D851 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C309894247AA73F274756 /* TabBarController.swift */; };
 		1A4C3750D25F9E82456820CB /* NetworksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C37E7FEEE448ABFD2A86C /* NetworksCell.swift */; };
 		1A4C37AEF66358EA9CA0CA59 /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C388B9A42E6A279D2867F /* AccountService.swift */; };
 		1A4C37B46FEFFC9D3AC7F324 /* SwapPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3496668BD6B362FE68B4 /* SwapPresenter.swift */; };
@@ -158,6 +159,7 @@
 		1A4C3044DC83E6A35A00DC12 /* WalletsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsInteractor.swift; sourceTree = "<group>"; };
 		1A4C306F77C13B435A1FBF17 /* DashboardInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardInteractor.swift; sourceTree = "<group>"; };
 		1A4C308E7095014B9BF80912 /* AMMsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMMsCell.swift; sourceTree = "<group>"; };
+		1A4C309894247AA73F274756 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		1A4C309D73324E169A4CD1C9 /* AMMsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMMsInteractor.swift; sourceTree = "<group>"; };
 		1A4C30B09D7FCDB08590118B /* AccountPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountPresenter.swift; sourceTree = "<group>"; };
 		1A4C30B213A6E8FFA7D0D41D /* NetworksWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksWireframeFactory.swift; sourceTree = "<group>"; };
@@ -232,7 +234,7 @@
 		1A4C3BFA6EDB1E94BEF92E59 /* Formatter+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Formatter+Extensions.swift"; sourceTree = "<group>"; };
 		1A4C3C514ACC30A0AC4707FA /* WalletsWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsWireframeFactory.swift; sourceTree = "<group>"; };
 		1A4C3C7AC11249D1DE6C554C /* NFTsWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsWireframeFactory.swift; sourceTree = "<group>"; };
-		1A4C3C8A8E2CDDB9F01205E5 /* NavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
+		1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		1A4C3CD454B957F1787FE70A /* NFTsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsCell.swift; sourceTree = "<group>"; };
 		1A4C3CD7A1F1A86851EC2BA5 /* UICollectionView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extensions.swift"; sourceTree = "<group>"; };
 		1A4C3D0EF3DBE9AC06A05512 /* RootWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootWireframe.swift; sourceTree = "<group>"; };
@@ -549,8 +551,9 @@
 		1A4C3C27E8AC72B44037C9E2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				1A4C3C8A8E2CDDB9F01205E5 /* NavigationViewController.swift */,
+				1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */,
 				1A4C3178DA54CD0800157DD5 /* EdgeCardsController.swift */,
+				1A4C309894247AA73F274756 /* TabBarController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -884,7 +887,7 @@
 				1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */,
 				1A4C305703196BC0B33BC401 /* Theme.swift in Sources */,
 				1A4C36B0C0625697FE563291 /* UIFont+Extension.swift in Sources */,
-				1A4C37074D8859F0DC14C905 /* NavigationViewController.swift in Sources */,
+				1A4C37074D8859F0DC14C905 /* NavigationController.swift in Sources */,
 				1A4C3869B6A3E1BF415E15DB /* Global.swift in Sources */,
 				1A4C346BBC846E952B81C4CB /* WalletCell.swift in Sources */,
 				1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */,
@@ -969,6 +972,7 @@
 				1A4C36FDBCA0AA402711BE43 /* RootPresenter.swift in Sources */,
 				1A4C3907090271B34B3F8F4E /* RootWireframe.swift in Sources */,
 				1A4C3D05769E141EF98C06E4 /* RootWireframeFactory.swift in Sources */,
+				1A4C3735189D6616D915D851 /* TabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
