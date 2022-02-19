@@ -4,51 +4,128 @@
 
 import Foundation
 
-enum DashboardViewModel {
-    case loading
-    case loaded(items: [Item], selectedIdx: Int)
-    case error(error: DashboardViewModel.Error)
+struct DashboardViewModel {
+    let header: DashboardViewModel.Header
+    let sections: [DashboardViewModel.Section]
 }
 
-// MARK - Item
+// MARK: - Header
 
 extension DashboardViewModel {
 
-    struct Item {
-        let title: String
-    }
-}
+    struct Header {
+        let balance: String
+        let pct: String
+        let buttons: [DashboardViewModel.Header.Button]
+        let firstSection: String?
 
-// MARK: - Error
-
-extension DashboardViewModel {
-
-    struct Error {
-        let title: String
-        let body: String
-        let actions: [String]
-    }
-}
-
-// MARK: - Utility
-
-extension DashboardViewModel {
-
-    func items() -> [DashboardViewModel.Item] {
-        switch self {
-        case let .loaded(items, _):
-            return items
-        default:
-            return []
+        struct Button {
+            let title: String
+            let imageName: String
         }
     }
+}
 
-    func selectedIdx() -> Int? {
-        switch self {
-        case let .loaded(_, idx):
-            return idx
-        default:
-            return nil
-        }
+// MARK: - Section
+
+extension DashboardViewModel {
+
+    struct Section {
+        let name: String
+        let wallets: [DashboardViewModel.Wallet]
+        let nfts: [DashboardViewModel.NFT]
+    }
+}
+
+// MARK: - Wallet
+
+extension DashboardViewModel {
+
+    struct Wallet {
+        let name: String
+        let ticker: String
+        let imageName: String
+        let fiatBalance: String
+        let cryptoBalance: String
+        let pctChange: String
+        let priceUp: Bool
+//        let candles: [CandleViewModel]
+    }
+}
+
+// MARK: - NFT
+
+extension DashboardViewModel {
+
+    struct NFT {
+        let imageName: String
+    }
+}
+
+// MARK: - Mock
+
+extension DashboardViewModel {
+
+    static func mockWalletsEHT() -> [DashboardViewModel.Wallet] {
+        [
+            .init(
+                name: "Ethereum",
+                ticker: "ETH",
+                imageName: "currency_logo_eth",
+                fiatBalance: "$69,000.00",
+                cryptoBalance: "420.00 ETH",
+                pctChange: "+4.5%",
+                priceUp: true
+            ),
+            .init(
+                name: "Curve",
+                ticker: "CRV",
+                imageName: "currency_logo_crv",
+                fiatBalance: "$42,000.00",
+                cryptoBalance: "690.00 CRV",
+                pctChange: "+2.5%",
+                priceUp: true
+            )
+        ]
+    }
+
+    static func mockNFTsETH() -> [DashboardViewModel.NFT] {
+        return []
+    }
+
+    static func mockWalletsSOL() -> [DashboardViewModel.Wallet] {
+        [
+            .init(
+                name: "Solana",
+                ticker: "SOL",
+                imageName: "currency_logo_sol",
+                fiatBalance: "$69,000.00",
+                cryptoBalance: "420.00 SOL",
+                pctChange: "+12%",
+                priceUp: true
+            ),
+            .init(
+                name: "Raydium",
+                ticker: "RAY",
+                imageName: "currency_logo_ray",
+                fiatBalance: "$6,900.00",
+                cryptoBalance: "4,200.00 RAY",
+                pctChange: "+5.5%",
+                priceUp: true
+            ),
+            .init(
+                name: "Mango",
+                ticker: "MNGO",
+                imageName: "currency_logo_mngo",
+                fiatBalance: "$4,200.00",
+                cryptoBalance: "69.00 MNGO",
+                pctChange: "+5.5%",
+                priceUp: true
+            )
+        ]
+    }
+
+    static func mockNFTsSOL() -> [DashboardViewModel.NFT] {
+        return []
     }
 }

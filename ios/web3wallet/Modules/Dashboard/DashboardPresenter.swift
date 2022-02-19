@@ -5,6 +5,11 @@
 import Foundation
 
 enum DashboardPresenterEvent {
+    case receiveAction
+    case sendAction
+    case tradeAction
+    case didSelectWallet(idx: Int)
+    case didSelectNFT(idx: Int)
 
 }
 
@@ -39,8 +44,7 @@ class DefaultDashboardPresenter {
 extension DefaultDashboardPresenter: DashboardPresenter {
 
     func present() {
-        view?.update(with: .loading)
-        // TODO: Interactor
+        view?.update(with: viewModel())
     }
 
     func handle(_ event: DashboardPresenterEvent) {
@@ -58,10 +62,39 @@ private extension DefaultDashboardPresenter {
 
 private extension DefaultDashboardPresenter {
 
-//    func viewModel(from items: [Item], active: Item?) -> DashboardViewModel {
-//        .loaded(
-//            wallets: viewModel(from: wallets),
-//            selectedIdx: selectedIdx(wallets, active: active)
-//        )
-//    }
+    func viewModel() -> DashboardViewModel {
+        .init(
+            header: .init(
+                balance: "$69,420.00",
+                pct: "+4.5%",
+                buttons: [
+                    .init(
+                        title: Localized("dashboard.button.receive"),
+                        imageName: "button_receive"
+                    ),
+                    .init(
+                        title: Localized("dashboard.button.send"),
+                        imageName: "button_send"
+                    ),
+                    .init(
+                        title: Localized("dashboard.button.trade"),
+                        imageName: "button_trade"
+                    )
+                ],
+                firstSection: "Ethereum"
+            ),
+            sections: [
+                .init(
+                    name: "Ethereum",
+                    wallets: DashboardViewModel.mockWalletsEHT(),
+                    nfts: DashboardViewModel.mockNFTsETH()
+                ),
+                .init(
+                    name: "Solana",
+                    wallets: DashboardViewModel.mockWalletsSOL(),
+                    nfts: DashboardViewModel.mockNFTsSOL()
+                )
+            ]
+        )
+    }
 }

@@ -54,13 +54,13 @@ extension DegenViewController: DegenView {
 extension DegenViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.items().count ?? 0
+        return  0
     }
     
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeue(WalletsCell.self, for: indexPath)
-        cell.titleLabel.text = viewModel?.items()[indexPath.item].title
+//        cell.titleLabel.text = viewModel?.items()[indexPath.item].title
         return cell
     }
 }

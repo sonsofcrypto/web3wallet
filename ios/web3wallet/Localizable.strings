@@ -23,5 +23,7 @@
 "networks.cell.explorer" = "Explorer:";
 
 "dashboard.tab.title" = "Wallet";
-
+"dashboard.button.receive" = "Receive";
+"dashboard.button.send" = "Send";
+"dashboard.button.trade" = "Trade";
 

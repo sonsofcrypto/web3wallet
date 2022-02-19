@@ -16,6 +16,22 @@ extension UICollectionView {
         return cell
     }
 
+    func dequeue<T: UICollectionReusableView>(
+        _: T.Type,
+        for idxPath: IndexPath,
+        kind: String
+    ) -> T {
+        guard let supplementary = dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: "\(T.self)",
+            for: idxPath
+        ) as? T else {
+            fatalError("Could not deque supplementary \(T.self), \(kind)")
+        }
+        return supplementary
+    }
+
+
     func deselectAllExcept(_ idxPath: IndexPath, animated: Bool) {
         (indexPathsForSelectedItems ?? [])
             .filter { $0.item != idxPath.item && $0.section != idxPath.section }

@@ -25,8 +25,16 @@ class DashboardViewController: UIViewController {
 
     // MARK: - Actions
 
-    @IBAction func templateAction(_ sender: Any) {
+    @IBAction func receiveAction(_ sender: Any) {
+        presenter.handle(.receiveAction)
+    }
 
+    @IBAction func sendAction(_ sender: Any) {
+        presenter.handle(.sendAction)
+    }
+
+    @IBAction func tradeAction(_ sender: Any) {
+        presenter.handle(.tradeAction)
     }
 }
 
@@ -35,44 +43,92 @@ class DashboardViewController: UIViewController {
 extension DashboardViewController: DashboardView {
 
     func update(with viewModel: DashboardViewModel) {
-//        self.viewModel = viewModel
-//        collectionView.reloadData()
-//        if let idx = viewModel.selectedIdx(), !viewModel.items().isEmpty {
-//            for i in 0..<viewModel.items().count {
-//                collectionView.selectItem(
-//                    at: IndexPath(item: i, section: 0),
-//                    animated: idx == i,
-//                    scrollPosition: .top
-//                )
-//            }
-//        }
+        self.viewModel = viewModel
+        collectionView.reloadData()
     }
 }
 
 // MARK: - UICollectionViewDataSource
 
 extension DashboardViewController: UICollectionViewDataSource {
-    
+
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return viewModel?.sections.count ?? 0
+    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.items().count ?? 0
+        guard let section = viewModel?.sections[section] else {
+            return 0
+        }
+        return section.wallets.count + (section.nfts.count > 0 ? 1 : 0)
     }
     
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeue(WalletsCell.self, for: indexPath)
-        cell.titleLabel.text = viewModel?.items()[indexPath.item].title
-        return cell
+        guard let section = viewModel?.sections[indexPath.section] else {
+            fatalError("No viewModel for \(indexPath) \(collectionView)")
+        }
+
+        if indexPath.item >= section.wallets.count {
+            let cell = collectionView.dequeue(DashboardNFTsCell.self, for: indexPath)
+            cell.update(with: section.nfts)
+            return cell
+        } else {
+            let cell = collectionView.dequeue(DashboardWalletCell.self, for: indexPath)
+            cell.update(with: section.wallets[indexPath.item])
+            return cell
+        }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            switch indexPath.section {
+            case 0:
+                let supplementary = collectionView.dequeue(
+                    DashboardHeaderView.self,
+                    for: indexPath,
+                    kind: kind
+                )
+                supplementary.update(with: viewModel?.header)
+                addActions(for: supplementary)
+                return supplementary
+            default:
+                let supplementary = collectionView.dequeue(
+                    DashboardSectionHeaderView.self,
+                    for: indexPath,
+                    kind: kind
+                )
+                supplementary.update(with: viewModel?.sections[indexPath.section])
+                return supplementary
+            }
+        }
+
+        fatalError("Unexpected supplementary idxPath: \(indexPath) \(kind)")
     }
 }
 
 extension DashboardViewController: UICollectionViewDelegate {
-    
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let section = viewModel?.sections[indexPath.section]
+        if indexPath.item < section?.wallets.count ?? 0 {
+            presenter.handle(.didSelectWallet(idx: indexPath.item))
+        }
+        // TODO: implement NFT selection
+    }
 }
 
 extension DashboardViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width - 32, height: Global.cellHeight)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        CGSize(
+            width: view.bounds.width - Global.padding * 2,
+            height: section == 0 ? Constant.headerHeight : Constant.sectionHeaderHeight
+        )
     }
 }
 
@@ -92,5 +148,44 @@ extension DashboardViewController {
             image: UIImage(named: "tab_icon_dashboard"),
             tag: 0
         )
+
+        collectionView.register(
+            DashboardSectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "\(DashboardSectionHeaderView.self)"
+        )
+    }
+}
+
+// MARK: - Utilities
+
+private extension DashboardViewController {
+
+    func addActions(for supplementary: DashboardHeaderView) {
+        supplementary.receiveButton.addTarget(
+            self,
+            action: #selector(receiveAction(_:)),
+            for: .touchUpInside
+        )
+        supplementary.sendButton.addTarget(
+            self,
+            action: #selector(sendAction(_:)),
+            for: .touchUpInside
+        )
+        supplementary.tradeButton.addTarget(
+            self,
+            action: #selector(tradeAction(_:)),
+            for: .touchUpInside
+        )
+    }
+}
+
+// MARK: - Constant
+
+extension DashboardViewController {
+
+    enum Constant {
+        static  let headerHeight: CGFloat = 211
+        static  let sectionHeaderHeight: CGFloat = 59
     }
 }

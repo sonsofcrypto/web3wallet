@@ -39,7 +39,7 @@ class DefaultDegenPresenter {
 extension DefaultDegenPresenter: DashboardPresenter {
 
     func present() {
-        view?.update(with: .loading)
+//        view?.update(with: .loading)
         // TODO: Interactor
     }
 

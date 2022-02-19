@@ -54,3 +54,27 @@ private extension DefaultButton {
         static let defaultButtonHeight: CGFloat = 64
     }
 }
+
+// MARK: - LeftImageButton
+
+class LeftImageButton: DefaultButton {
+
+    var padding: CGFloat = 4
+    var titleLabelXOffset: CGFloat = -4
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        guard let imageView = self.imageView, let label = self.titleLabel else {
+            return
+        }
+
+        imageView.center.x = (imageView.bounds.width / 2) + padding
+        label.frame = CGRect(
+            x: imageView.frame.maxX + titleLabelXOffset,
+            y: 0 + padding,
+            width: bounds.width - imageView.frame.maxX - (padding * 2),
+            height: bounds.height - (padding * 2)
+        )
+    }
+}

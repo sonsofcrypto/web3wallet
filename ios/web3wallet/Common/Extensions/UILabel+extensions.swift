@@ -6,6 +6,11 @@ import UIKit
 
 extension UILabel {
 
+    convenience init(with style: UILabel.Style) {
+        self.init()
+        self.applyStyle(style)
+    }
+
     enum Style {
         case callout
         case smallLabel

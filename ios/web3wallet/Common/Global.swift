@@ -8,4 +8,5 @@ enum Global {
     static let cornerRadius: CGFloat = 8
     static let shadowRadius: CGFloat = 4
     static let cellHeight: CGFloat = 64
+    static let padding: CGFloat = 16
 }

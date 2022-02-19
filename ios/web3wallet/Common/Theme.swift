@@ -56,6 +56,14 @@ struct Theme {
         UIFont.font(.gothicA1, style: .regular, size: .callout)
     }
 
+    var mediumButton: UIFont {
+        UIFont.font(.gothicA1, style: .medium, size: .custom(size: 14))
+    }
+
+    var hugeBalance: UIFont {
+        UIFont.font(.gothicA1, style: .black, size: .custom(size: 48))
+    }
+
     var footnote: UIFont {
         UIFont.font(.gothicA1, style: .regular, size: .footnote)
     }
