@@ -8,6 +8,7 @@
 "web3wallet" = "web3wallet";
 "wallets" = "wallets";
 "networks" = "networks";
+"dashboard" = "Dashboard";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";

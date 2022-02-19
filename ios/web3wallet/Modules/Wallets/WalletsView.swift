@@ -19,6 +19,8 @@ class WalletsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionView.delegate = self
+        collectionView.dataSource = self
         configureUI()
         presenter?.present()
     }
@@ -71,7 +73,10 @@ extension WalletsViewController: UICollectionViewDataSource {
 }
 
 extension WalletsViewController: UICollectionViewDelegate {
-    
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter.handle(.didSelectWalletAt(idx: indexPath.item))
+    }
 }
 
 extension WalletsViewController: UICollectionViewDelegateFlowLayout {

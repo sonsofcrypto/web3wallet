@@ -6,7 +6,10 @@ import UIKit
 
 protocol WalletsWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController) -> WalletsWireframe
+    func makeWireframe(
+        _ parent: UIViewController?,
+        window: UIWindow?
+    ) -> WalletsWireframe
 }
 
 // MARK: - DefaultWalletsWireframeFactory
@@ -24,9 +27,13 @@ class DefaultWalletsWireframeFactory {
 
 extension DefaultWalletsWireframeFactory: WalletsWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController) -> WalletsWireframe {
+    func makeWireframe(
+        _ parent: UIViewController?,
+        window: UIWindow?
+    ) -> WalletsWireframe {
         DefaultWalletsWireframe(
             parent: parent,
+            window: window,
             interactor: DefaultWalletsInteractor(walletsService)
         )
     }

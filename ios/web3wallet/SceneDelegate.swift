@@ -18,14 +18,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let walletsService = DefaultWalletsService(store: DefaultStore())
         let networkService = DefaultNetworksService()
 
-        DefaultRootWireframeFactory(
-            window: window,
-            wallets: DefaultWalletsWireframeFactory(walletsService),
-            networks: DefaultNetworksWireframeFactory(networkService),
-            dashboard: DefaultDashboardWireframeFactory(walletsService)
-        )
-        .makeWireframe()
-        .present()
+        DefaultWalletsWireframeFactory(walletsService)
+            .makeWireframe(nil, window: window)
+            .present()
+
+//        DefaultRootWireframeFactory(
+//            window: window,
+//            wallets: DefaultWalletsWireframeFactory(walletsService),
+//            networks: DefaultNetworksWireframeFactory(networkService),
+//            dashboard: DefaultDashboardWireframeFactory(walletsService)
+//        )
+//        .makeWireframe()
+//        .present()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

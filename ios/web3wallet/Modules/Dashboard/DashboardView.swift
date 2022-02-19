@@ -35,17 +35,17 @@ class DashboardViewController: UIViewController {
 extension DashboardViewController: DashboardView {
 
     func update(with viewModel: DashboardViewModel) {
-        self.viewModel = viewModel
-        collectionView.reloadData()
-        if let idx = viewModel.selectedIdx(), !viewModel.items().isEmpty {
-            for i in 0..<viewModel.items().count {
-                collectionView.selectItem(
-                    at: IndexPath(item: i, section: 0),
-                    animated: idx == i,
-                    scrollPosition: .top
-                )
-            }
-        }
+//        self.viewModel = viewModel
+//        collectionView.reloadData()
+//        if let idx = viewModel.selectedIdx(), !viewModel.items().isEmpty {
+//            for i in 0..<viewModel.items().count {
+//                collectionView.selectItem(
+//                    at: IndexPath(item: i, section: 0),
+//                    animated: idx == i,
+//                    scrollPosition: .top
+//                )
+//            }
+//        }
     }
 }
 
@@ -81,7 +81,7 @@ extension DashboardViewController: UICollectionViewDelegateFlowLayout {
 extension DashboardViewController {
     
     func configureUI() {
-        title = Localized("wallets")
+        title = Localized("dashboard")
         (view as? GradientView)?.colors = [
             Theme.current.background,
             Theme.current.backgroundDark

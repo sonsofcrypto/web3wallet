@@ -65,7 +65,7 @@ extension DefaultWalletsService: WalletsService {
     ) throws -> Wallet {
 
         let wallet = Wallet(
-            id: wallets.last?.id ?? 0,
+            id: (wallets.last?.id ?? -1) + 1,
             name: "Default Wallet",
             encryptedSigner: "This will be mnemonic or private key or HD connection"
         )
@@ -82,7 +82,7 @@ extension DefaultWalletsService: WalletsService {
     ) throws-> Wallet {
 
         let wallet = Wallet(
-            id: wallets.last?.id ?? 0,
+            id: (wallets.last?.id ?? -1) + 1,
             name: "Imported wallet",
             encryptedSigner: mnemonic
         )

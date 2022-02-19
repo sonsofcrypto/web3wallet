@@ -341,6 +341,7 @@ extension EdgeCardsController: UIGestureRecognizerDelegate {
         )
 
         tapRecognizers = [tapMasterCard, tapMasterCard, tapBottomCard]
+        tapRecognizers.forEach { $0.delegate = self }
         masterContainer.addGestureRecognizer(tapMasterCard)
         topCardContainer.addGestureRecognizer(tapTopCard)
         bottomCardContainer.addGestureRecognizer(tapBottomCard)
@@ -355,7 +356,15 @@ extension EdgeCardsController: UIGestureRecognizerDelegate {
         panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panned(_:)))
 //        view.addGestureRecognizer(panRecognizer)
     }
+
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+    ) -> Bool {
+        return true
+    }
 }
+
 
 // MARK: - DisplayMode
 

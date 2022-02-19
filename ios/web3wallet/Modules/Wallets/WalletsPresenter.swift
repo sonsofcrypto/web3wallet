@@ -152,6 +152,6 @@ private extension DefaultWalletsPresenter {
             return 0
         }
 
-        return wallets.firstIndex{ $0.id == wallet.id} ?? 0
+        return wallets.firstIndex{ $0.id == wallet.id } ?? 0
     }
 }

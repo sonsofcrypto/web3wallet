@@ -21,7 +21,7 @@ class NavigationController: UINavigationController {
             .shadow: titleShadow
         ]
 
-        appearance.backgroundColor = Theme.current.background.withAlphaComponent(0.9)
+        appearance.backgroundColor = Theme.current.background.withAlphaComponent(1)
 
         navigationBar.standardAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance

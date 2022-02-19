@@ -37,7 +37,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
     func present() {
         let vc = wireUp()
         if let parent = self.parent as? EdgeCardsController {
-            parent.setTopCard(vc: vc)
+            parent.setMaster(vc: vc)
         } else {
             parent?.show(vc, sender: self)
         }

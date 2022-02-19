@@ -18,14 +18,17 @@ protocol WalletsWireframe {
 class DefaultWalletsWireframe {
 
     private weak var parent: UIViewController?
+    private weak var window: UIWindow?
 
     private let interactor: WalletsInteractor
 
     init(
-        parent: UIViewController,
+        parent: UIViewController?,
+        window: UIWindow?,
         interactor: WalletsInteractor
     ) {
         self.parent = parent
+        self.window = window
         self.interactor = interactor
     }
 }
@@ -36,6 +39,12 @@ extension DefaultWalletsWireframe: WalletsWireframe {
 
     func present() {
         let vc = wireUp()
+
+        if let window = self.window {
+            window.rootViewController = vc
+            window.makeKeyAndVisible()
+            return
+        }
 
         if let parent = self.parent as? EdgeCardsController {
             parent.setBottomCard(vc: vc)

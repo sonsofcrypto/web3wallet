@@ -141,11 +141,19 @@
         <scene sceneID="2Wq-FC-Mlo">
             <objects>
                 <viewController storyboardIdentifier="NFTsViewController" id="zLC-ls-6MU" userLabel="NFTsViewController" customClass="NFTsViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="uw5-Ua-KRj">
+                    <view key="view" contentMode="scaleToFill" id="uw5-Ua-KRj" customClass="GradientView" customModule="web3wallet" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="lq7-qX-vks"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="defaultTopColor">
+                                <color key="value" name="bgGradientTop"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="defaultBottomColor">
+                                <color key="value" name="bgGradientBottom"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PPr-Yn-P8L" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -325,11 +333,19 @@
         <scene sceneID="cMN-cb-Xhn">
             <objects>
                 <viewController storyboardIdentifier="DegenViewController" id="ben-rF-FTB" userLabel="DegenViewController" customClass="DegenViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="FTF-HG-1uA">
+                    <view key="view" contentMode="scaleToFill" id="FTF-HG-1uA" customClass="GradientView" customModule="web3wallet" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="Jjb-aq-oa9"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="defaultTopColor">
+                                <color key="value" name="bgGradientTop"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="defaultBottomColor">
+                                <color key="value" name="bgGradientBottom"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Di-Ae-loZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -340,11 +356,19 @@
         <scene sceneID="em8-yx-bfm">
             <objects>
                 <viewController storyboardIdentifier="AppsViewController" id="pOP-4o-DZZ" userLabel="AppsViewController" customClass="AppsViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="eN0-hT-iVh">
+                    <view key="view" contentMode="scaleToFill" id="eN0-hT-iVh" customClass="GradientView" customModule="web3wallet" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="0zM-13-pwK"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="defaultTopColor">
+                                <color key="value" name="bgGradientTop"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="defaultBottomColor">
+                                <color key="value" name="bgGradientBottom"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yuW-5B-rml" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -355,11 +379,19 @@
         <scene sceneID="8zt-BD-Lv0">
             <objects>
                 <viewController storyboardIdentifier="SettingsViewController" id="INW-E7-ubC" userLabel="SettingsViewController" customClass="SettingsViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="P2Q-Ly-f0r">
+                    <view key="view" contentMode="scaleToFill" id="P2Q-Ly-f0r" customClass="GradientView" customModule="web3wallet" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="bS8-h5-wjF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="defaultTopColor">
+                                <color key="value" name="bgGradientTop"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="defaultBottomColor">
+                                <color key="value" name="bgGradientBottom"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y59-Rx-k8t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -369,22 +401,30 @@
         <!--DashboardViewController-->
         <scene sceneID="mfB-ws-kyz">
             <objects>
-                <viewController storyboardIdentifier="DashboardViewController" id="Fy0-oo-YT7" userLabel="DashboardViewController" customClass="DashboardViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Ur9-yO-zvB">
+                <viewController restorationIdentifier="DashboardViewController" storyboardIdentifier="DashboardViewController" id="Fy0-oo-YT7" userLabel="DashboardViewController" customClass="DashboardViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ur9-yO-zvB" customClass="GradientView" customModule="web3wallet" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="SsZ-uO-yHy"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="defaultTopColor">
+                                <color key="value" name="bgGradientTop"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="defaultBottomColor">
+                                <color key="value" name="bgGradientBottom"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jgx-Bk-Bg7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="357" y="888"/>
+            <point key="canvasLocation" x="356.52173913043481" y="887.94642857142856"/>
         </scene>
         <!--RootViewController-->
         <scene sceneID="gsa-EJ-yPe">
             <objects>
-                <viewController storyboardIdentifier="RootViewController" id="bhA-K7-as1" userLabel="RootViewController" sceneMemberID="viewController">
+                <viewController restorationIdentifier="RootViewController" storyboardIdentifier="RootViewController" id="bhA-K7-as1" userLabel="RootViewController" customClass="RootViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="o6g-5v-lpe">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -445,10 +485,10 @@
     <color key="tintColor" name="tintPrimary"/>
     <resources>
         <namedColor name="bgGradientBottom">
-            <color red="0.075000002980232239" green="0.043000001460313797" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.075000002979999994" green="0.043000001459999999" blue="0.1330000013" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="bgGradientTop">
-            <color red="0.1289999932050705" green="0.11800000071525574" blue="0.23899999260902405" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.1289999932" green="0.1180000007" blue="0.23899999259999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="tintPrimary">
             <color red="0.90600001811981201" green="0.21600000560283661" blue="0.58399999141693115" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

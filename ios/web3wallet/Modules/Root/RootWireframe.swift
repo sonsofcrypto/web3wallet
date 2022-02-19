@@ -67,7 +67,7 @@ extension DefaultRootWireframe {
         let presenter = DefaultRootPresenter(
             view: vc,
             wireframe: self,
-            wallets: wallets.makeWireframe(vc),
+            wallets: wallets.makeWireframe(vc, window: nil),
             networks: networks.makeWireframe(vc),
             dashboard: dashboard.makeWireframe(vc)
         )

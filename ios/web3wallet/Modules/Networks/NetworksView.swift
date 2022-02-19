@@ -78,7 +78,7 @@ extension NetworksViewController: UICollectionViewDelegateFlowLayout {
 extension NetworksViewController {
     
     func configureUI() {
-        title = Localized("wallets")
+        title = Localized("networks")
         (view as? GradientView)?.colors = [
             Theme.current.background,
             Theme.current.backgroundDark
