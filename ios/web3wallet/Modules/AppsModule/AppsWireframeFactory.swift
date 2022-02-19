@@ -6,7 +6,7 @@ import UIKit
 
 protocol AppsWireframeFactory {
 
-    func makeWireframe() -> AppsWireframe
+    func makeWireframe(_ parent: UIViewController) -> AppsWireframe
 }
 
 // MARK: - DefaultAppsWireframeFactory
@@ -15,13 +15,9 @@ class DefaultAppsWireframeFactory {
 
     private let service: AppsService
 
-    private weak var window: UIWindow?
-
     init(
-        window: UIWindow?,
-        service: AppsService
+        _ service: AppsService
     ) {
-        self.window = window
         self.service = service
     }
 }
@@ -30,10 +26,10 @@ class DefaultAppsWireframeFactory {
 
 extension DefaultAppsWireframeFactory: AppsWireframeFactory {
 
-    func makeWireframe() -> AppsWireframe {
+    func makeWireframe(_ parent: UIViewController) -> AppsWireframe {
         DefaultAppsWireframe(
-            interactor: DefaultAppsInteractor(service),
-            window: window
+            parent: parent
+            interactor: DefaultAppsInteractor(service)
         )
     }
 }

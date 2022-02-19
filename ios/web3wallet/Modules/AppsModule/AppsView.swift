@@ -81,7 +81,7 @@ extension AppsViewController: UICollectionViewDelegateFlowLayout {
 extension AppsViewController {
     
     func configureUI() {
-        title = Localized("wallets")
+        title = Localized("settings")
         (view as? GradientView)?.colors = [
             Theme.current.background,
             Theme.current.backgroundDark

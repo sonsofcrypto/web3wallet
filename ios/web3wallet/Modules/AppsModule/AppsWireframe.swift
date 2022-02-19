@@ -17,16 +17,16 @@ protocol AppsWireframe {
 
 class DefaultAppsWireframe {
 
+    private weak var parent: UIViewController?
+
     private let interactor: AppsInteractor
 
-    private weak var window: UIWindow?
-
     init(
-        interactor: AppsInteractor,
-        window: UIWindow?
+        parent: UIViewController,
+        interactor: AppsInteractor
     ) {
+        self.parent = parent
         self.interactor = interactor
-        self.window = window
     }
 }
 
@@ -36,8 +36,14 @@ extension DefaultAppsWireframe: AppsWireframe {
 
     func present() {
         let vc = wireUp()
-        window?.rootViewController = vc
-        window?.makeKeyAndVisible()
+
+        if let tabVc = self.parent as? UITabBarController {
+            let vcs = (tabVc.viewControllers ?? []) + [vc]
+            tabVc.setViewControllers(vcs, animated: false)
+            return
+        }
+
+        vc.show(vc, sender: self)
     }
 
     func navigate(to destination: AppsWireframeDestination) {

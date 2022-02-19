@@ -11,6 +11,8 @@
 "dashboard" = "Dashboard";
 "degen" = "Degen";
 "nfts" = "NFTs";
+"apps" = "Apps";
+"settings" = "Settings";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";
