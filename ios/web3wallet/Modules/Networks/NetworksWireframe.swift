@@ -5,7 +5,7 @@
 import UIKit
 
 enum NetworksWireframeDestination {
-
+    case dashboard
 }
 
 protocol NetworksWireframe {
@@ -44,7 +44,13 @@ extension DefaultNetworksWireframe: NetworksWireframe {
     }
 
     func navigate(to destination: NetworksWireframeDestination) {
-        print("navigate to \(destination)")
+        if let parent = self.parent as? EdgeCardsController {
+            switch destination {
+            case .dashboard:
+                parent.setDisplayMode(.master, animated: true)
+            }
+        }
+        print("Failed to navigate to \(destination)")
     }
 }
 

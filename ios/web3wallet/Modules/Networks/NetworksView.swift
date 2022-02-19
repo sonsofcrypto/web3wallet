@@ -63,7 +63,10 @@ extension NetworksViewController: UICollectionViewDataSource {
 }
 
 extension NetworksViewController: UICollectionViewDelegate {
-    
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter.handle(.didSelectNetwork(idx: indexPath.item))
+    }
 }
 
 extension NetworksViewController: UICollectionViewDelegateFlowLayout {

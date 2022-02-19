@@ -5,7 +5,7 @@
 import Foundation
 
 enum NetworksPresenterEvent {
-
+    case didSelectNetwork(idx: Int)
 }
 
 protocol NetworksPresenter {
@@ -63,7 +63,10 @@ extension DefaultNetworksPresenter: NetworksPresenter {
     }
 
     func handle(_ event: NetworksPresenterEvent) {
-
+        switch event {
+        case let .didSelectNetwork:
+            wireframe.navigate(to: .dashboard)
+        }
     }
 }
 

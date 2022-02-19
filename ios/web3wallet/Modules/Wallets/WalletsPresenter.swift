@@ -79,6 +79,7 @@ private extension DefaultWalletsPresenter {
         let wallet = latestWallets[idx]
         interactor.activeWallet = wallet
         view?.update(with: viewModel(from: latestWallets, active: wallet))
+        wireframe.navigate(to: .networks)
     }
 
     func handleDidSelectErrorAction(at idx: Int) {

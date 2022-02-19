@@ -5,7 +5,7 @@
 import UIKit
 
 enum WalletsWireframeDestination {
-
+    case networks
 }
 
 protocol WalletsWireframe {
@@ -54,7 +54,13 @@ extension DefaultWalletsWireframe: WalletsWireframe {
     }
 
     func navigate(to destination: WalletsWireframeDestination) {
-
+        if let parent = self.parent as? EdgeCardsController {
+            switch destination {
+            case .networks:
+                parent.setDisplayMode(.topCard, animated: true)
+            }
+        }
+        print("Failed to navigate to \(destination)")
     }
 }
 
