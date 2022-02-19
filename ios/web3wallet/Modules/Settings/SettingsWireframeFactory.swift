@@ -15,13 +15,9 @@ class DefaultSettingsWireframeFactory {
 
     private let service: SettingsService
 
-    private weak var window: UIWindow?
-
     init(
-        window: UIWindow?,
         service: SettingsService
     ) {
-        self.window = window
         self.service = service
     }
 }
@@ -30,10 +26,10 @@ class DefaultSettingsWireframeFactory {
 
 extension DefaultSettingsWireframeFactory: SettingsWireframeFactory {
 
-    func makeWireframe() -> SettingsWireframe {
+    func makeWireframe(_ parent: UIViewController) -> SettingsWireframe {
         DefaultSettingsWireframe(
-            interactor: DefaultSettingsInteractor(service),
-            window: window
+            parent: parent,
+            interactor: DefaultSettingsInteractor(service)
         )
     }
 }

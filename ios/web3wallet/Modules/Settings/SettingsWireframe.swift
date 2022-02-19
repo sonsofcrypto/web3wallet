@@ -17,16 +17,16 @@ protocol SettingsWireframe {
 
 class DefaultSettingsWireframe {
 
+    private weak var parent: UIViewController?
+
     private let interactor: SettingsInteractor
 
-    private weak var window: UIWindow?
-
     init(
-        interactor: SettingsInteractor,
-        window: UIWindow?
+        parent: UIViewController,
+        interactor: SettingsInteractor
     ) {
+        self.parent = parent
         self.interactor = interactor
-        self.window = window
     }
 }
 
@@ -36,8 +36,14 @@ extension DefaultSettingsWireframe: SettingsWireframe {
 
     func present() {
         let vc = wireUp()
-        window?.rootViewController = vc
-        window?.makeKeyAndVisible()
+
+        if let tabVc = self.parent as? UITabBarController {
+            let vcs = (tabVc.viewControllers ?? []) + [vc]
+            tabVc.setViewControllers(vcs, animated: false)
+            return
+        }
+
+        vc.show(vc, sender: self)
     }
 
     func navigate(to destination: SettingsWireframeDestination) {
