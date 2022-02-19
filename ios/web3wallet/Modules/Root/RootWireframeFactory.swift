@@ -18,17 +18,20 @@ class DefaultRootWireframeFactory {
     private let wallets: WalletsWireframeFactory
     private let networks: NetworksWireframeFactory
     private let dashboard: DashboardWireframeFactory
+    private let degen: DegenWireframeFactory
 
     init(
         window: UIWindow?,
         wallets: WalletsWireframeFactory,
         networks: NetworksWireframeFactory,
-        dashboard: DashboardWireframeFactory
+        dashboard: DashboardWireframeFactory,
+        degen: DegenWireframeFactory
     ) {
         self.window = window
         self.wallets = wallets
         self.networks = networks
         self.dashboard = dashboard
+        self.degen = degen
     }
 }
 
@@ -41,7 +44,8 @@ extension DefaultRootWireframeFactory: RootWireframeFactory {
             window: window,
             wallets: wallets,
             networks: networks,
-            dashboard: dashboard
+            dashboard: dashboard,
+            degen: degen
         )
     }
 }

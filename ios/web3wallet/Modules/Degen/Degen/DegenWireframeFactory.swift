@@ -6,7 +6,7 @@ import UIKit
 
 protocol DegenWireframeFactory {
 
-    func makeWireframe() -> DegenWireframe
+    func makeWireframe(_ parent: UIViewController) -> DegenWireframe
 }
 
 // MARK: - DefaultDegenWireframeFactory
@@ -18,10 +18,8 @@ class DefaultDegenWireframeFactory {
     private weak var window: UIWindow?
 
     init(
-        window: UIWindow?,
-        service: DegenService
+        _ service: DegenService
     ) {
-        self.window = window
         self.service = service
     }
 }
@@ -30,10 +28,10 @@ class DefaultDegenWireframeFactory {
 
 extension DefaultDegenWireframeFactory: DegenWireframeFactory {
 
-    func makeWireframe() -> DegenWireframe {
+    func makeWireframe(_ parent: UIViewController) -> DegenWireframe {
         DefaultDegenWireframe(
-            interactor: DefaultDegenInteractor(service),
-            window: window
-        ) as! DegenWireframe
+            parent: parent,
+            interactor: DefaultDegenInteractor(service)
+        )
     }
 }

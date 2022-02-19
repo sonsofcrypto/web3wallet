@@ -9,6 +9,7 @@
 "wallets" = "wallets";
 "networks" = "networks";
 "dashboard" = "Dashboard";
+"degen" = "Degen";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";

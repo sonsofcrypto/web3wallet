@@ -26,17 +26,20 @@ class DefaultRootWireframe {
     private let wallets: WalletsWireframeFactory
     private let networks: NetworksWireframeFactory
     private let dashboard: DashboardWireframeFactory
+    private let degen: DegenWireframeFactory
 
     init(
         window: UIWindow?,
         wallets: WalletsWireframeFactory,
         networks: NetworksWireframeFactory,
-        dashboard: DashboardWireframeFactory
+        dashboard: DashboardWireframeFactory,
+        degen: DegenWireframeFactory
     ) {
         self.window = window
         self.wallets = wallets
         self.networks = networks
         self.dashboard = dashboard
+        self.degen = degen
     }
 }
 
@@ -64,12 +67,17 @@ extension DefaultRootWireframe {
 
     private func wireUp() -> UIViewController {
         let vc: RootViewController = UIStoryboard(.main).instantiate()
+        let tabVc = UITabBarController()
+
+        vc.setMaster(vc: tabVc)
+
         let presenter = DefaultRootPresenter(
             view: vc,
             wireframe: self,
             wallets: wallets.makeWireframe(vc, window: nil),
             networks: networks.makeWireframe(vc),
-            dashboard: dashboard.makeWireframe(vc)
+            dashboard: dashboard.makeWireframe(tabVc),
+            degen: degen.makeWireframe(tabVc)
         )
 
         vc.presenter = presenter

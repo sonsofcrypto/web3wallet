@@ -17,6 +17,7 @@ class DefaultRootPresenter {
     private let wallets: WalletsWireframe
     private let networks: NetworksWireframe
     private let dashboard: DashboardWireframe
+    private let degen: DegenWireframe
 
     private weak var view: RootView?
 
@@ -25,13 +26,15 @@ class DefaultRootPresenter {
         wireframe: RootWireframe,
         wallets: WalletsWireframe,
         networks: NetworksWireframe,
-        dashboard: DashboardWireframe
+        dashboard: DashboardWireframe,
+        degen: DegenWireframe
     ) {
         self.view = view
         self.wireframe = wireframe
         self.wallets = wallets
         self.networks = networks
         self.dashboard = dashboard
+        self.degen = degen
     }
 }
 
@@ -43,5 +46,6 @@ extension DefaultRootPresenter: RootPresenter {
         dashboard.present()
         networks.present()
         wallets.present()
+        degen.present()
     }
 }

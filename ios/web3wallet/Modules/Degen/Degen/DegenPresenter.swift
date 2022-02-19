@@ -19,14 +19,14 @@ protocol DegenPresenter {
 class DefaultDegenPresenter {
 
     private let interactor: DegenInteractor
-    private let wireframe: DashboardWireframe
+    private let wireframe: DegenWireframe
 
     private weak var view: DegenView?
 
     init(
         view: DegenView,
         interactor: DegenInteractor,
-        wireframe: DashboardWireframe
+        wireframe: DegenWireframe
     ) {
         self.view = view
         self.interactor = interactor

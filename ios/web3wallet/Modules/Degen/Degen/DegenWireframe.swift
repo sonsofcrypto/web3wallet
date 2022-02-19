@@ -17,27 +17,33 @@ protocol DegenWireframe {
 
 class DefaultDegenWireframe {
 
+    private weak var parent: UIViewController?
+
     private let interactor: DegenInteractor
 
-    private weak var window: UIWindow?
-
     init(
-        interactor: DegenInteractor,
-        window: UIWindow?
+        parent: UIViewController,
+        interactor: DegenInteractor
     ) {
+        self.parent = parent
         self.interactor = interactor
-        self.window = window
     }
 }
 
 // MARK: - DegenWireframe
 
-extension DefaultDegenWireframe: DashboardWireframe {
+extension DefaultDegenWireframe: DegenWireframe {
 
     func present() {
         let vc = wireUp()
-        window?.rootViewController = vc
-        window?.makeKeyAndVisible()
+        if let tabVc = self.parent as? UITabBarController {
+            tabVc.setViewControllers(
+                (tabVc.viewControllers ?? []) + [vc],
+                animated: true
+            )
+            return
+        }
+        vc.show(vc, sender: self)
     }
 
     func navigate(to destination: DashboardWireframeDestination) {

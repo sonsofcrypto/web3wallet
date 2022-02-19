@@ -49,6 +49,7 @@ extension DefaultNetworksWireframe: NetworksWireframe {
             case .dashboard:
                 parent.setDisplayMode(.master, animated: true)
             }
+            return
         }
         print("Failed to navigate to \(destination)")
     }
