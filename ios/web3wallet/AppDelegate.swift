@@ -29,6 +29,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         .makeWireframe()
         .present()
 
+        let documents = NSSearchPathForDirectoriesInDomains(
+            .documentDirectory,
+            .userDomainMask,
+            true
+        )
+
+        print(documents.last!)
+
         return true
     }
 

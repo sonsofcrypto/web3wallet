@@ -15,7 +15,7 @@ class DefaultStore {
     private lazy var decoder = JSONDecoder()
 
     private lazy var url: URL = try! FileManager.default.url(
-        for: .documentationDirectory,
+        for: .documentDirectory,
         in: .userDomainMask,
         appropriateFor: nil,
         create: true
@@ -43,6 +43,19 @@ extension DefaultStore: Store {
         }
 
         let json = try? decoder.decode([String: AnyCodable].self, from: data)
+
+        if let array = json?[key]?.value as? Array<Any> {
+            if let data = try? encoder.encode(AnyCodable(array)) {
+                return try? decoder.decode(T.self, from: data)
+            }
+        }
+
+        if let dictionary = json?[key]?.value as? Dictionary<String, Any> {
+            if let data = try? encoder.encode(AnyCodable(dictionary)) {
+                return try? decoder.decode(T.self, from: data)
+            }
+        }
+
         return json?[key]?.value as? T
     }
 

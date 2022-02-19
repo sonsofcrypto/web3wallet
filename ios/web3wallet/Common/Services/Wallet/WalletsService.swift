@@ -54,8 +54,8 @@ extension DefaultWalletsService: WalletsService {
             return
         }
 
-        wallets = store.get(Constant.wallets) ?? []
-        wallets.sort { $0.id > $1.id }
+        wallets = (store.get(Constant.wallets) ?? [])
+                .sorted(by: { $0.id < $1.id  })
         handler(wallets)
     }
 
