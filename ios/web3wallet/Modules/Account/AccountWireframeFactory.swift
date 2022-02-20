@@ -16,7 +16,7 @@ class DefaultAccountWireframeFactory {
     private let service: AccountService
 
     init(
-        service: AccountService
+        _ service: AccountService
     ) {
         self.service = service
     }

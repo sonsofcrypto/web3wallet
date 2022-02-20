@@ -5,6 +5,7 @@
 import UIKit
 
 enum DashboardWireframeDestination {
+    case wallet(wallet: Wallet)
 
 }
 
@@ -18,15 +19,19 @@ protocol DashboardWireframe {
 class DefaultDashboardWireframe {
 
     private weak var parent: UIViewController?
+    private weak var vc: UIViewController?
 
     private let interactor: DashboardInteractor
+    private let accountWireframeFactory: AccountWireframeFactory
 
     init(
         parent: UIViewController,
-        interactor: DashboardInteractor
+        interactor: DashboardInteractor,
+        accountWireframeFactory: AccountWireframeFactory
     ) {
         self.parent = parent
         self.interactor = interactor
+        self.accountWireframeFactory = accountWireframeFactory
     }
 }
 
@@ -36,6 +41,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
 
     func present() {
         let vc = wireUp()
+        self.vc = vc
         if let parent = self.parent as? EdgeCardsController {
             parent.setMaster(vc: vc)
         } else if let tabVc = self.parent as? UITabBarController {
@@ -47,7 +53,15 @@ extension DefaultDashboardWireframe: DashboardWireframe {
     }
 
     func navigate(to destination: DashboardWireframeDestination) {
-        print("navigate to \(destination)")
+        guard let vc = self.vc ?? parent else {
+            print("DefaultDashboardWireframe has no view")
+            return
+        }
+
+        switch destination {
+        case let .wallet(wallet):
+            accountWireframeFactory.makeWireframe(vc, wallet: wallet).present()
+        }
     }
 }
 

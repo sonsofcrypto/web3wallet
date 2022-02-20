@@ -21,12 +21,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let nftsService = DefaultNFTsService()
         let appsService = DefaultAppsService()
         let settingsService = DefaultSettingsService()
+        let accountService = DefaultAccountService()
 
         DefaultRootWireframeFactory(
             window: window,
             wallets: DefaultWalletsWireframeFactory(walletsService),
             networks: DefaultNetworksWireframeFactory(networkService),
-            dashboard: DefaultDashboardWireframeFactory(walletsService),
+            dashboard: DefaultDashboardWireframeFactory(
+                walletsService,
+                accountWireframeFactory: DefaultAccountWireframeFactory(
+                    accountService
+                )
+            ),
             degen: DefaultDegenWireframeFactory(
                 degenService,
                 ammsWireframeFactory: DefaultAMMsWireframeFactory(

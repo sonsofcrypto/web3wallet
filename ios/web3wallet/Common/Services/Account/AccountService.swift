@@ -16,6 +16,6 @@ class DefaultAccountService {
 
 // MARK: - AccountService
 
-extension DefaultAccountService {
+extension DefaultAccountService: AccountService {
 
 }

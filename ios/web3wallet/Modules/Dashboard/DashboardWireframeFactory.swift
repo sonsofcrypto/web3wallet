@@ -14,11 +14,14 @@ protocol DashboardWireframeFactory {
 class DefaultDashboardWireframeFactory {
 
     private let service: WalletsService
+    private let accountWireframeFactory: AccountWireframeFactory
 
     init(
-        _ service: WalletsService
+        _ service: WalletsService,
+        accountWireframeFactory: AccountWireframeFactory
     ) {
         self.service = service
+        self.accountWireframeFactory = accountWireframeFactory
     }
 }
 
@@ -29,7 +32,8 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
     func makeWireframe(_ parent: UIViewController) -> DashboardWireframe {
         DefaultDashboardWireframe(
             parent: parent,
-            interactor: DefaultDashboardInteractor(service)
+            interactor: DefaultDashboardInteractor(service),
+            accountWireframeFactory: accountWireframeFactory
         )
     }
 }
