@@ -28,7 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             degen: DefaultDegenWireframeFactory(
                 degenService,
                 ammsWireframeFactory: DefaultAMMsWireframeFactory(
-                    degenService: degenService
+                    degenService: degenService,
+                    swapWireframeFactory: DefaultSwapWireframeFactory(
+                        service: degenService
+                    )
                 )
             ),
             nfts: DefaultNFTsWireframeFactory(nftsService),

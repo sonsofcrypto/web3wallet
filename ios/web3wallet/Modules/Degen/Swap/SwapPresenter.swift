@@ -21,8 +21,6 @@ class DefaultSwapPresenter {
     private let interactor: SwapInteractor
     private let wireframe: SwapWireframe
 
-    // private var items: [Item]
-
     private weak var view: SwapView?
 
     init(
@@ -42,8 +40,7 @@ class DefaultSwapPresenter {
 extension DefaultSwapPresenter: SwapPresenter {
 
     func present() {
-        view?.update(with: .loading)
-        // TODO: Interactor
+        view?.update(with: viewModel(interactor.dapp))
     }
 
     func handle(_ event: SwapPresenterEvent) {
@@ -61,10 +58,7 @@ private extension DefaultSwapPresenter {
 
 private extension DefaultSwapPresenter {
 
-//    func viewModel(from items: [Item], active: Item?) -> SwapViewModel {
-//        .loaded(
-//            wallets: viewModel(from: wallets),
-//            selectedIdx: selectedIdx(wallets, active: active)
-//        )
-//    }
+    func viewModel(_ dapp: DApp) -> SwapViewModel {
+        SwapViewModel.mock(dapp.name)
+    }
 }

@@ -17,16 +17,20 @@ protocol AMMsWireframe {
 
 class DefaultAMMsWireframe {
 
-    private let interactor: AMMsInteractor
-
     private weak var parent: UIViewController?
+    private weak var vc: UIViewController?
+
+    private let interactor: AMMsInteractor
+    private let swapWireframeFactory: SwapWireframeFactory
 
     init(
         parent: UIViewController,
-        interactor: AMMsInteractor
+        interactor: AMMsInteractor,
+        swapWireframeFactory: SwapWireframeFactory
     ) {
         self.parent = parent
         self.interactor = interactor
+        self.swapWireframeFactory = swapWireframeFactory
     }
 }
 
@@ -36,12 +40,24 @@ extension DefaultAMMsWireframe: AMMsWireframe {
 
     func present() {
         let vc = wireUp()
+        self.vc = vc
         parent?.show(vc, sender: self)
 
     }
 
     func navigate(to destination: AMMsWireframeDestination) {
-        print("navigate to \(destination)")
+        guard let vc = self.vc else {
+            print("DefaultAMMsWireframe does not have a view")
+            return
+        }
+
+        switch destination {
+        case let .dapp(dapp):
+            swapWireframeFactory.makeWireframe(vc, dapp: dapp).present()
+
+        default:
+            fatalError("Navigation to \(destination) not implemented")
+        }
     }
 }
 

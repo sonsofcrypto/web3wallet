@@ -4,51 +4,39 @@
 
 import Foundation
 
-enum SwapViewModel {
-    case loading
-    case loaded(items: [Item], selectedIdx: Int)
-    case error(error: SwapViewModel.Error)
-}
-
-// MARK - Item
-
-extension SwapViewModel {
-
-    struct Item {
-        let title: String
-    }
-}
-
-// MARK: - Error
-
-extension SwapViewModel {
-
-    struct Error {
-        let title: String
-        let body: String
-        let actions: [String]
-    }
+struct SwapViewModel {
+    let title: String
+    let fromValueCrypto: String
+    let fromValueFiat: String
+    let fromTicker: String
+    let fromBalance: String
+    let fromCurrencyImage: String
+    let toValueCrypto: String
+    let toValueFiat: String
+    let toTicker: String
+    let toBalance: String
+    let toCurrencyImage: String
+    let rate: String
 }
 
 // MARK: - Utility
 
 extension SwapViewModel {
 
-    func items() -> [SwapViewModel.Item] {
-        switch self {
-        case let .loaded(items, _):
-            return items
-        default:
-            return []
-        }
-    }
-
-    func selectedIdx() -> Int? {
-        switch self {
-        case let .loaded(_, idx):
-            return idx
-        default:
-            return nil
-        }
+    static func mock(_ title: String) -> SwapViewModel {
+        .init(
+            title: title,
+            fromValueCrypto: "420.00",
+            fromValueFiat: "$123,000",
+            fromTicker: "ETH",
+            fromBalance: "1000",
+            fromCurrencyImage: "currency_icon_small_eth",
+            toValueCrypto: "69,000.00",
+            toValueFiat: "$123,000",
+            toTicker: "SOL",
+            toBalance: "0",
+            toCurrencyImage: "currency_icon_small_sol",
+            rate: "1 SOL = 0.000425 ETH"
+        )
     }
 }

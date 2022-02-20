@@ -17,16 +17,16 @@ protocol SwapWireframe {
 
 class DefaultSwapWireframe {
 
+    private weak var parent: UIViewController?
+
     private let interactor: SwapInteractor
 
-    private weak var window: UIWindow?
-
     init(
-        interactor: SwapInteractor,
-        window: UIWindow?
+        parent: UIViewController,
+        interactor: SwapInteractor
     ) {
+        self.parent = parent
         self.interactor = interactor
-        self.window = window
     }
 }
 
@@ -36,8 +36,7 @@ extension DefaultSwapWireframe: SwapWireframe {
 
     func present() {
         let vc = wireUp()
-        window?.rootViewController = vc
-        window?.makeKeyAndVisible()
+        parent?.show(vc, sender: self)
     }
 
     func navigate(to destination: SwapWireframeDestination) {
@@ -56,6 +55,6 @@ extension DefaultSwapWireframe {
         )
 
         vc.presenter = presenter
-        return NavigationController(rootViewController: vc)
+        return vc
     }
 }

@@ -55,7 +55,7 @@ extension DefaultAMMsPresenter: AMMsPresenter {
 private extension DefaultAMMsPresenter {
 
     func handleDidSelectDapp(at idx: Int) {
-        print("navigate to dapp", idx)
+        wireframe.navigate(to: .dapp(interactor.dapps()[idx]))
     }
 }
 

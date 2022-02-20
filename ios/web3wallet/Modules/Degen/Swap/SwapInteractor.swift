@@ -6,14 +6,20 @@ import Foundation
 
 protocol SwapInteractor: AnyObject {
 
+    var dapp: DApp { get }
 }
 
 // MARK: - DefaultSwapInteractor
 
 class DefaultSwapInteractor {
 
-    init() {
+    let dapp: DApp
 
+    private let service: DegenService
+
+    init(_ dapp: DApp, service: DegenService) {
+        self.dapp = dapp
+        self.service = service
     }
 }
 

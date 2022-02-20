@@ -6,7 +6,7 @@ import UIKit
 
 protocol SwapWireframeFactory {
 
-    func makeWireframe() -> SwapWireframe
+    func makeWireframe(_ parent: UIViewController, dapp: DApp) -> SwapWireframe
 }
 
 // MARK: - DefaultSwapWireframeFactory
@@ -15,13 +15,9 @@ class DefaultSwapWireframeFactory {
 
     private let service: DegenService
 
-    private weak var window: UIWindow?
-
     init(
-        window: UIWindow?,
         service: DegenService
     ) {
-        self.window = window
         self.service = service
     }
 }
@@ -30,10 +26,10 @@ class DefaultSwapWireframeFactory {
 
 extension DefaultSwapWireframeFactory: SwapWireframeFactory {
 
-    func makeWireframe() -> SwapWireframe {
+    func makeWireframe(_ parent: UIViewController, dapp: DApp) -> SwapWireframe {
         DefaultSwapWireframe(
-            interactor: DefaultSwapInteractor(),
-            window: window
+            parent: parent,
+            interactor: DefaultSwapInteractor(dapp, service: service)
         )
     }
 }

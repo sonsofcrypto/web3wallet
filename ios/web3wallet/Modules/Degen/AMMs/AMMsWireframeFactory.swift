@@ -14,11 +14,14 @@ protocol AMMsWireframeFactory {
 class DefaultAMMsWireframeFactory {
 
     private let degenService: DegenService
+    private let swapWireframeFactory: SwapWireframeFactory
 
     init(
-        degenService: DegenService
+        degenService: DegenService,
+        swapWireframeFactory: SwapWireframeFactory
     ) {
         self.degenService = degenService
+        self.swapWireframeFactory = swapWireframeFactory
     }
 }
 
@@ -29,7 +32,8 @@ extension DefaultAMMsWireframeFactory: AMMsWireframeFactory {
     func makeWireframe(_ parent: UIViewController) -> AMMsWireframe {
         DefaultAMMsWireframe(
             parent: parent,
-            interactor: DefaultAMMsInteractor(degenService)
+            interactor: DefaultAMMsInteractor(degenService),
+            swapWireframeFactory: swapWireframeFactory
         )
     }
 }

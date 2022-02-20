@@ -14,8 +14,6 @@ class SwapViewController: UIViewController {
     var presenter: SwapPresenter!
 
     private var viewModel: SwapViewModel?
-    
-    @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,43 +34,7 @@ extension SwapViewController: SwapView {
 
     func update(with viewModel: SwapViewModel) {
         self.viewModel = viewModel
-        collectionView.reloadData()
-        if let idx = viewModel.selectedIdx(), !viewModel.items().isEmpty {
-            for i in 0..<viewModel.items().count {
-                collectionView.selectItem(
-                    at: IndexPath(item: i, section: 0),
-                    animated: idx == i,
-                    scrollPosition: .top
-                )
-            }
-        }
-    }
-}
-
-// MARK: - UICollectionViewDataSource
-
-extension SwapViewController: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.items().count ?? 0
-    }
-    
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeue(WalletsCell.self, for: indexPath)
-        cell.titleLabel.text = viewModel?.items()[indexPath.item].title
-        return cell
-    }
-}
-
-extension SwapViewController: UICollectionViewDelegate {
-    
-}
-
-extension SwapViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 32, height: Global.cellHeight)
+        self.title = viewModel.title
     }
 }
 
@@ -81,7 +43,6 @@ extension SwapViewController: UICollectionViewDelegateFlowLayout {
 extension SwapViewController {
     
     func configureUI() {
-        title = Localized("wallets")
         (view as? GradientView)?.colors = [
             Theme.current.background,
             Theme.current.backgroundDark
