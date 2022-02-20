@@ -4,7 +4,7 @@
 
 import UIKit
 
-class AccountMarketInfoCell: UICollectionViewCell {
+class AccountMarketInfoCell: CollectionViewCell {
 
 }
 

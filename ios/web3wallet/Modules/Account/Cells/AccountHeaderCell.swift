@@ -10,7 +10,6 @@ class AccountHeaderCell: CollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
     }
 }
 

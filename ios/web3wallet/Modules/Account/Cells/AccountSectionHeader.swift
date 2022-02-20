@@ -4,6 +4,6 @@
 
 import UIKit
 
-class AccountSectionHeader: UICollectionViewCell {
+class AccountSectionHeader: UICollectionReusableView {
 
 }

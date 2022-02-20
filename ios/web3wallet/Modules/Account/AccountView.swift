@@ -49,6 +49,7 @@ extension AccountViewController: AccountView {
     func update(with viewModel: AccountViewModel) {
         self.viewModel = viewModel
         collectionView.reloadData()
+        title = viewModel.currencyName
     }
 }
 
@@ -99,13 +100,13 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
 
         switch section {
         case .header:
-            CGSize(width: width, height: Constant.headerHeight)
+            return CGSize(width: width, height: Constant.headerHeight)
         case .chart:
-            CGSize(width: width, height: Constant.chartHeight)
+            return CGSize(width: width, height: Constant.chartHeight)
         case .marketInfo:
-            CGSize(width: width, height: Constant.marketInfoHeight)
+            return CGSize(width: width, height: Constant.marketInfoHeight)
         case .transactions:
-            CGSize(width: width, height: Constant.transactionsHeight)
+            return CGSize(width: width, height: Constant.transactionsHeight)
         }
 
         return .zero
@@ -158,6 +159,10 @@ extension AccountViewController {
             Theme.current.background,
             Theme.current.backgroundDark
         ]
+
+        var insets = collectionView.contentInset
+        insets.bottom += Global.padding
+        collectionView.contentInset = insets
     }
 }
 

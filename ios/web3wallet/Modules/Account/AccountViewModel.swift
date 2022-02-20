@@ -6,11 +6,11 @@ import Foundation
 
 struct AccountViewModel {
 
+    let currencyName: String
     let header: AccountViewModel.Header
     let candles: CandlesViewModel
     let marketInfo: AccountViewModel.MarketInfo
     let transactions: [AccountViewModel.Transaction]
-
 }
 
 // MARK: - Header

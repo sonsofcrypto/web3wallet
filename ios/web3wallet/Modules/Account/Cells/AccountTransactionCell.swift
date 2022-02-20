@@ -4,7 +4,7 @@
 
 import UIKit
 
-class AccountTransactionCell: UICollectionViewCell {
+class AccountTransactionCell: CollectionViewCell {
 
 }
 

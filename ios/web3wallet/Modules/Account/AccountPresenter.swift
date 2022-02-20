@@ -61,6 +61,7 @@ private extension DefaultAccountPresenter {
 
     func viewModel(_ wallet: Wallet) -> AccountViewModel {
         .init(
+            currencyName: "Ethereum",
             header: .init(
                 balance: "4.20 ETH",
                 fiatBalance: "$6,900",
