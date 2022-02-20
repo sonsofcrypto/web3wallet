@@ -16,6 +16,7 @@ extension DashboardViewModel {
     struct Header {
         let balance: String
         let pct: String
+        let pctUp: Bool
         let buttons: [DashboardViewModel.Header.Button]
         let firstSection: String?
 

@@ -67,6 +67,7 @@ private extension DefaultDashboardPresenter {
             header: .init(
                 balance: "$69,420.00",
                 pct: "+4.5%",
+                pctUp: true,
                 buttons: [
                     .init(
                         title: Localized("dashboard.button.receive"),
