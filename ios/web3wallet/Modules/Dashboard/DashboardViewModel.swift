@@ -90,7 +90,19 @@ extension DashboardViewModel {
     }
 
     static func mockNFTsETH() -> [DashboardViewModel.NFT] {
-        return []
+        return [
+            .init(imageName: ""),
+            .init(imageName: ""),
+            .init(imageName: ""),
+            .init(imageName: ""),
+            .init(imageName: ""),
+            .init(imageName: ""),
+            .init(imageName: ""),
+            .init(imageName: ""),
+            .init(imageName: ""),
+            .init(imageName: ""),
+            .init(imageName: ""),
+        ]
     }
 
     static func mockWalletsSOL() -> [DashboardViewModel.Wallet] {

@@ -35,6 +35,13 @@ class DashboardHeaderView: UICollectionReusableView {
         (receiveButton as? LeftImageButton)?.titleLabelXOffset = 0
         firstSectionLabel.applyStyle(.callout)
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        buttonsStack.arrangedSubviews.forEach {
+            ($0 as? UIButton)?.removeAllTargets()
+        }
+    }
 }
 
 // MARK: - DashboardViewModel

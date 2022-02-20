@@ -34,7 +34,7 @@ class CollectionViewCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layer.applyShadowPath(bounds)
+        layer.applyShadowPath(bounds, radius: layer.cornerRadius)
     }
 
     private func configureUI() {

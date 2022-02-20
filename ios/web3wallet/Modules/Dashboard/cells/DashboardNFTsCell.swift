@@ -6,7 +6,10 @@ import UIKit
 
 class DashboardNFTsCell: CollectionViewCell {
 
-
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        layer.cornerRadius = Global.cornerRadius * 2
+    }
 }
 
 // MARK: - DashboardViewModel

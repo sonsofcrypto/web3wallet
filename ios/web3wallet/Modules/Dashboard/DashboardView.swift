@@ -14,6 +14,8 @@ class DashboardViewController: UIViewController {
     var presenter: DashboardPresenter!
 
     private var viewModel: DashboardViewModel?
+    private var walletCellSize: CGSize = .zero
+    private var nftsCellSize: CGSize = .zero
     
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -21,6 +23,15 @@ class DashboardViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         presenter?.present()
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        let length = (view.bounds.width - Global.padding * 2 - Constant.spacing) / 2
+        walletCellSize = CGSize(width: length, height: length)
+        nftsCellSize = CGSize(
+            width: view.bounds.width - Global.padding * 2,
+            height: length)
     }
 
     // MARK: - Actions
@@ -107,6 +118,28 @@ extension DashboardViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension DashboardViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if indexPath.item >= viewModel?.sections[indexPath.section].wallets.count ?? 0 {
+            return nftsCellSize
+        }
+
+        return walletCellSize
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        CGSize(
+            width: view.bounds.width - Global.padding * 2,
+            height: section == 0 ? Constant.headerHeight : Constant.sectionHeaderHeight
+        )
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+
 extension DashboardViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -115,20 +148,6 @@ extension DashboardViewController: UICollectionViewDelegate {
             presenter.handle(.didSelectWallet(idx: indexPath.item))
         }
         // TODO: implement NFT selection
-    }
-}
-
-extension DashboardViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 32, height: Global.cellHeight)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        CGSize(
-            width: view.bounds.width - Global.padding * 2,
-            height: section == 0 ? Constant.headerHeight : Constant.sectionHeaderHeight
-        )
     }
 }
 
@@ -185,7 +204,8 @@ private extension DashboardViewController {
 extension DashboardViewController {
 
     enum Constant {
-        static  let headerHeight: CGFloat = 211
-        static  let sectionHeaderHeight: CGFloat = 59
+        static let headerHeight: CGFloat = 211
+        static let sectionHeaderHeight: CGFloat = 59
+        static let spacing: CGFloat = 17
     }
 }

@@ -6,9 +6,13 @@ import UIKit
 
 class DashboardWalletCell: CollectionViewCell {
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        layer.cornerRadius = Global.cornerRadius * 2
+    }
 }
 
-// MAKR: - DashboardViewModel
+// MARK: - DashboardViewModel
 
 extension DashboardWalletCell {
 

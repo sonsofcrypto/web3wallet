@@ -24,6 +24,7 @@
 		1A4C32CF0C59FE32073E66D0 /* WalletsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3226ECC6247E9092F6EF /* WalletsPresenter.swift */; };
 		1A4C32D43EDF7B8FC74AA68C /* UICollectionView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3CD7A1F1A86851EC2BA5 /* UICollectionView+Extensions.swift */; };
 		1A4C32FAFAE7B74336452733 /* AMMsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3270725B54B420CDCAD0 /* AMMsView.swift */; };
+		1A4C32FE47390FD9E1A745C5 /* UIButton+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3439D8A20606BAD5B667 /* UIButton+extensions.swift */; };
 		1A4C337CA3864D32284438DC /* DegenWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3B869A93171279B2C6ED /* DegenWireframeFactory.swift */; };
 		1A4C337DA7CC49D28B99336D /* DashboardWalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A6BF41648FE8A9E60AA /* DashboardWalletCell.swift */; };
 		1A4C339BB64E9CCF1C110D40 /* NetworksPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C342AEA80F91722BA4C54 /* NetworksPresenter.swift */; };
@@ -192,6 +193,7 @@
 		1A4C341557541950B9132370 /* UIFont+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		1A4C341CE810A41C93A4D896 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		1A4C342AEA80F91722BA4C54 /* NetworksPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksPresenter.swift; sourceTree = "<group>"; };
+		1A4C3439D8A20606BAD5B667 /* UIButton+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+extensions.swift"; sourceTree = "<group>"; };
 		1A4C3488BA01A7A891884D67 /* DegenInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenInteractor.swift; sourceTree = "<group>"; };
 		1A4C348CA305DD0F6C190CAE /* SwapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapViewModel.swift; sourceTree = "<group>"; };
 		1A4C3496668BD6B362FE68B4 /* SwapPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapPresenter.swift; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 				1A4C330512BFD12BAFED0D12 /* CALayer+Extension.swift */,
 				1A4C39B21512118DB853A3E3 /* UILabel+extensions.swift */,
 				1A4C300AF1693AEBB5E5DD97 /* UIView+extensions.swift */,
+				1A4C3439D8A20606BAD5B667 /* UIButton+extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -993,6 +996,7 @@
 				1A4C39EEFEA6A4B3265F6B13 /* DashboardHeaderView.swift in Sources */,
 				1A4C3782A600997577ED88DD /* DashboardNFTsCell.swift in Sources */,
 				1A4C31AA465FCC1EF6FE6D64 /* DashboardSectionHeaderView.swift in Sources */,
+				1A4C32FE47390FD9E1A745C5 /* UIButton+extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
