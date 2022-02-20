@@ -30,7 +30,7 @@
 		1A4C337DA7CC49D28B99336D /* DashboardWalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A6BF41648FE8A9E60AA /* DashboardWalletCell.swift */; };
 		1A4C339BB64E9CCF1C110D40 /* NetworksPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C342AEA80F91722BA4C54 /* NetworksPresenter.swift */; };
 		1A4C33A130E35EBC0BC27B07 /* mock-candles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1A4C3EE3468010FE10976BEE /* mock-candles.json */; };
-		1A4C33C1A3C0AE41B3CE539A /* Swap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C351526042456A71B185F /* Swap.swift */; };
+		1A4C33C1A3C0AE41B3CE539A /* SwapInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C351526042456A71B185F /* SwapInputView.swift */; };
 		1A4C33D70F2BF31983487849 /* AppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D1FBA47E23C9207B49B /* AppsView.swift */; };
 		1A4C33EB6A7815037906E8F4 /* AppsWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E735403B7DA9910563D /* AppsWireframeFactory.swift */; };
 		1A4C33FD7390E65B4959F77F /* AppsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C32C53B06B5EA8EE01118 /* AppsViewModel.swift */; };
@@ -208,7 +208,7 @@
 		1A4C348CA305DD0F6C190CAE /* SwapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapViewModel.swift; sourceTree = "<group>"; };
 		1A4C3496668BD6B362FE68B4 /* SwapPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapPresenter.swift; sourceTree = "<group>"; };
 		1A4C34E67B135A61BE103648 /* DegenViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenViewModel.swift; sourceTree = "<group>"; };
-		1A4C351526042456A71B185F /* Swap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Swap.swift; sourceTree = "<group>"; };
+		1A4C351526042456A71B185F /* SwapInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapInputView.swift; sourceTree = "<group>"; };
 		1A4C359691FCF66942DF6CEF /* CandlesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandlesView.swift; sourceTree = "<group>"; };
 		1A4C35A00BFF35155C4AD72D /* AMMsWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMMsWireframe.swift; sourceTree = "<group>"; };
 		1A4C35A4D936F0DA1D74826B /* SettingsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsInteractor.swift; sourceTree = "<group>"; };
@@ -418,7 +418,7 @@
 		1A4C322C2F62E3A7DE84E8B8 /* Swap */ = {
 			isa = PBXGroup;
 			children = (
-				1A4C351526042456A71B185F /* Swap.swift */,
+				1A4C351526042456A71B185F /* SwapInputView.swift */,
 				1A4C3EEA2BC4491F27D629A2 /* SwapView.swift */,
 				1A4C3496668BD6B362FE68B4 /* SwapPresenter.swift */,
 				1A4C348CA305DD0F6C190CAE /* SwapViewModel.swift */,
@@ -984,7 +984,7 @@
 				1A4C386E221B453892180BFE /* AMMsWireframe.swift in Sources */,
 				1A4C38B3B9AA2A7910821782 /* AMMsInteractor.swift in Sources */,
 				1A4C3D2C7310ABD59AFAE725 /* AMMsWireframeFactory.swift in Sources */,
-				1A4C33C1A3C0AE41B3CE539A /* Swap.swift in Sources */,
+				1A4C33C1A3C0AE41B3CE539A /* SwapInputView.swift in Sources */,
 				1A4C3184F9E6B94BC857D69A /* SwapView.swift in Sources */,
 				1A4C37B46FEFFC9D3AC7F324 /* SwapPresenter.swift in Sources */,
 				1A4C348C8EAD95B167C06D3D /* SwapViewModel.swift in Sources */,

@@ -732,12 +732,80 @@
         <scene sceneID="U9a-T8-Rqe">
             <objects>
                 <viewController storyboardIdentifier="SwapViewController" id="tj7-Tt-CBf" userLabel="SwapViewController" customClass="SwapViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ixJ-Wc-fT7">
+                    <view key="view" contentMode="scaleToFill" id="ixJ-Wc-fT7" customClass="GradientView" customModule="web3wallet" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wPD-tJ-ccU">
+                                <rect key="frame" x="87" y="384" width="240" height="128"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="jug-R8-X2F">
+                                        <rect key="frame" x="-53" y="-56" width="346" height="239"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7YB-NV-Ss5" customClass="SwapInputView" customModule="web3wallet" customModuleProvider="target">
+                                                <rect key="frame" x="53" y="55" width="240" height="128"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eBE-Oo-ANn" customClass="SwapInputView" customModule="web3wallet" customModuleProvider="target">
+                                                <rect key="frame" x="53" y="55" width="240" height="128"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vz1-zQ-uA8">
+                                                <rect key="frame" x="152" y="109" width="42" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="7YB-NV-Ss5" firstAttribute="height" secondItem="eBE-Oo-ANn" secondAttribute="height" id="bzy-GH-a48"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="jug-R8-X2F" secondAttribute="bottom" constant="16" id="HJU-25-ogb"/>
+                                    <constraint firstItem="jug-R8-X2F" firstAttribute="top" secondItem="wPD-tJ-ccU" secondAttribute="top" constant="16" id="nST-09-lUN"/>
+                                    <constraint firstAttribute="height" constant="239" id="rBq-hd-YaV"/>
+                                    <constraint firstItem="jug-R8-X2F" firstAttribute="leading" secondItem="wPD-tJ-ccU" secondAttribute="leading" constant="16" id="uvz-hd-awL"/>
+                                    <constraint firstAttribute="trailing" secondItem="jug-R8-X2F" secondAttribute="trailing" constant="16" id="vQP-6C-DRs"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eEx-gZ-3cL" customClass="DefaultButton" customModule="web3wallet" customModuleProvider="target">
+                                <rect key="frame" x="173" y="432" width="67" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <connections>
+                                    <action selector="SwapAction:" destination="tj7-Tt-CBf" eventType="touchUpInside" id="f1y-GG-Cab"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="M70-mQ-Rwg"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="wPD-tJ-ccU" firstAttribute="bottom" secondItem="eEx-gZ-3cL" secondAttribute="top" constant="-16" id="0qU-9q-nLZ"/>
+                            <constraint firstItem="eEx-gZ-3cL" firstAttribute="trailing" secondItem="wPD-tJ-ccU" secondAttribute="trailing" id="6rt-sp-iTw"/>
+                            <constraint firstItem="wPD-tJ-ccU" firstAttribute="leading" secondItem="M70-mQ-Rwg" secondAttribute="leading" constant="16" id="9Le-8i-7AU"/>
+                            <constraint firstItem="wPD-tJ-ccU" firstAttribute="top" secondItem="M70-mQ-Rwg" secondAttribute="top" constant="24" id="W8R-uJ-jkK"/>
+                            <constraint firstItem="M70-mQ-Rwg" firstAttribute="trailing" secondItem="wPD-tJ-ccU" secondAttribute="trailing" constant="16" id="fzi-Qn-WOv"/>
+                            <constraint firstItem="eEx-gZ-3cL" firstAttribute="leading" secondItem="wPD-tJ-ccU" secondAttribute="leading" id="l0V-m2-jPN"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="defaultTopColor">
+                                <color key="value" name="bgGradientTop"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="defaultBottomColor">
+                                <color key="value" name="bgGradientBottom"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
+                    <connections>
+                        <outlet property="container" destination="wPD-tJ-ccU" id="FwW-XD-tIB"/>
+                        <outlet property="fromInputView" destination="7YB-NV-Ss5" id="hvU-J3-Rqa"/>
+                        <outlet property="rateLabel" destination="Vz1-zQ-uA8" id="uQX-Mw-TpO"/>
+                        <outlet property="swapButton" destination="eEx-gZ-3cL" id="L5r-3g-MVu"/>
+                        <outlet property="toInputView" destination="eBE-Oo-ANn" id="3gh-Um-tqp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sJ7-9v-eoK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -847,7 +915,7 @@
             <color red="0.075000002979999994" green="0.043000001459999999" blue="0.1330000013" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="bgGradientTop">
-            <color red="0.1289999932" green="0.1180000007" blue="0.23899999259999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.1289999932050705" green="0.11800000071525574" blue="0.23899999260902405" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="tintPrimary">
             <color red="0.90600001811981201" green="0.21600000560283661" blue="0.58399999141693115" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

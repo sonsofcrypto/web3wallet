@@ -7,6 +7,7 @@ import UIKit
 extension UIColor {
 
     static var bgGradientTop = UIColor(named: "bgGradientTop")!
+    static var bgGradientTopSecondary = UIColor(named: "bgGradientTopSecondary")!
     static var bgGradientBottom =  UIColor(named: "bgGradientBottom")!
     static var tintPrimary = UIColor(named: "tintPrimary")!
     static var tintSecondary = UIColor(named: "tintSecondary")!
