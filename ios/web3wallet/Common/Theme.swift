@@ -42,6 +42,15 @@ struct Theme {
         UIColor.textColorTertiary
     }
 
+    var red: UIColor {
+        UIColor.appRed
+    }
+
+    var green: UIColor {
+        UIColor.appGreen
+    }
+
+
     // MARK: - Fonts
 
     var body: UIFont {
@@ -56,8 +65,12 @@ struct Theme {
         UIFont.font(.gothicA1, style: .regular, size: .callout)
     }
 
+    var subhead: UIFont {
+        UIFont.font(.gothicA1, style: .regular, size: .subhead)
+    }
+
     var mediumButton: UIFont {
-        UIFont.font(.gothicA1, style: .medium, size: .custom(size: 14))
+        UIFont.font(.gothicA1, style: .medium, size: .subhead)
     }
 
     var hugeBalance: UIFont {

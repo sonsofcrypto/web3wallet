@@ -13,6 +13,7 @@ extension UILabel {
 
     enum Style {
         case callout
+        case subheadGlow
         case smallLabel
         case smallBody
     }
@@ -21,6 +22,10 @@ extension UILabel {
         switch style {
         case .callout:
             font = Theme.current.callout
+            layer.applyShadow(Theme.current.tintSecondary)
+            textColor = Theme.current.textColor
+        case .subheadGlow:
+            font = Theme.current.subhead
             layer.applyShadow(Theme.current.tintSecondary)
             textColor = Theme.current.textColor
         case.smallLabel:

@@ -13,5 +13,6 @@ extension UIColor {
     static var textColor = UIColor(named: "textColor")!
     static var textColorSecondary = UIColor(named: "textColorSecondary")!
     static var textColorTertiary = UIColor(named: "textColorTertiary")!
-
+    static var appRed = UIColor(named: "appRed")!
+    static var appGreen = UIColor(named: "appGreen")!
 }

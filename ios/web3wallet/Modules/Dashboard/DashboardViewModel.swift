@@ -71,19 +71,19 @@ extension DashboardViewModel {
             .init(
                 name: "Ethereum",
                 ticker: "ETH",
-                imageName: "currency_logo_eth",
-                fiatBalance: "$69,000.00",
+                imageName: "currency_icon_small_eth",
+                fiatBalance: "$69,000",
                 cryptoBalance: "420.00 ETH",
-                pctChange: "+4.5%",
+                pctChange: "4.5%",
                 priceUp: true
             ),
             .init(
                 name: "Curve",
                 ticker: "CRV",
-                imageName: "currency_logo_crv",
-                fiatBalance: "$42,000.00",
+                imageName: "currency_icon_small_crv",
+                fiatBalance: "$42,000",
                 cryptoBalance: "690.00 CRV",
-                pctChange: "+2.5%",
+                pctChange: "2.5%",
                 priceUp: true
             )
         ]
@@ -110,28 +110,28 @@ extension DashboardViewModel {
             .init(
                 name: "Solana",
                 ticker: "SOL",
-                imageName: "currency_logo_sol",
-                fiatBalance: "$69,000.00",
+                imageName: "currency_icon_small_sol",
+                fiatBalance: "$69,000",
                 cryptoBalance: "420.00 SOL",
-                pctChange: "+12%",
+                pctChange: "12%",
                 priceUp: true
             ),
             .init(
                 name: "Raydium",
                 ticker: "RAY",
-                imageName: "currency_logo_ray",
+                imageName: "currency_icon_small_ray",
                 fiatBalance: "$6,900.00",
-                cryptoBalance: "4,200.00 RAY",
-                pctChange: "+5.5%",
+                cryptoBalance: "4,200 RAY",
+                pctChange: "5.5%",
                 priceUp: true
             ),
             .init(
                 name: "Mango",
                 ticker: "MNGO",
-                imageName: "currency_logo_mngo",
+                imageName: "currency_icon_small_mngo",
                 fiatBalance: "$4,200.00",
-                cryptoBalance: "69.00 MNGO",
-                pctChange: "+5.5%",
+                cryptoBalance: "69 MNGO",
+                pctChange: "5.5%",
                 priceUp: true
             )
         ]
