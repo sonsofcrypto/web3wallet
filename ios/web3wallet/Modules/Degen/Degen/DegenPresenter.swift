@@ -45,8 +45,7 @@ extension DefaultDegenPresenter: DegenPresenter {
     func handle(_ event: DegenPresenterEvent) {
         switch event {
         case let .didSelectCategory(idx):
-            // TODO: Navigate to category
-            ()
+            handleDidSelectCategory(at: idx)
         }
     }
 }
@@ -55,6 +54,14 @@ extension DefaultDegenPresenter: DegenPresenter {
 
 private extension DefaultDegenPresenter {
 
+    func handleDidSelectCategory(at idx: Int) {
+        switch idx {
+        case 0:
+            wireframe.navigate(to: .amms)
+        default:
+            print("DefaultDegenPresenter unknown category index")
+        }
+    }
 }
 
 // MARK: - WalletsViewModel utilities

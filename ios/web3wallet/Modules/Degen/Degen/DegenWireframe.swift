@@ -5,12 +5,13 @@
 import UIKit
 
 enum DegenWireframeDestination {
+    case amms
 
 }
 
 protocol DegenWireframe {
     func present()
-    func navigate(to destination: DashboardWireframeDestination)
+    func navigate(to destination: DegenWireframeDestination)
 }
 
 // MARK: - DefaultDegenWireframe
@@ -18,15 +19,19 @@ protocol DegenWireframe {
 class DefaultDegenWireframe {
 
     private weak var parent: UIViewController?
+    private weak var vc: UIViewController?
 
     private let interactor: DegenInteractor
+    private let ammsWireframeFactory: AMMsWireframeFactory
 
     init(
         parent: UIViewController,
-        interactor: DegenInteractor
+        interactor: DegenInteractor,
+        ammsWireframeFactory: AMMsWireframeFactory
     ) {
         self.parent = parent
         self.interactor = interactor
+        self.ammsWireframeFactory = ammsWireframeFactory
     }
 }
 
@@ -36,6 +41,7 @@ extension DefaultDegenWireframe: DegenWireframe {
 
     func present() {
         let vc = wireUp()
+        self.vc = vc
 
         if let tabVc = self.parent as? UITabBarController {
             let vcs = (tabVc.viewControllers ?? []) + [vc]
@@ -46,8 +52,16 @@ extension DefaultDegenWireframe: DegenWireframe {
         vc.show(vc, sender: self)
     }
 
-    func navigate(to destination: DashboardWireframeDestination) {
-        print("navigate to \(destination)")
+    func navigate(to destination: DegenWireframeDestination) {
+        guard let vc = self.vc else {
+            print("DefaultDegenWireframe does not have a view")
+            return
+        }
+
+        switch destination {
+        case .amms:
+            ammsWireframeFactory.makeWireframe(vc).present()
+        }
     }
 }
 

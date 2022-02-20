@@ -36,16 +36,16 @@ extension AMMsViewController: AMMsView {
 
     func update(with viewModel: AMMsViewModel) {
         self.viewModel = viewModel
-        collectionView.reloadData()
-        if let idx = viewModel.selectedIdx(), !viewModel.items().isEmpty {
-            for i in 0..<viewModel.items().count {
-                collectionView.selectItem(
-                    at: IndexPath(item: i, section: 0),
-                    animated: idx == i,
-                    scrollPosition: .top
-                )
-            }
-        }
+//        collectionView.reloadData()
+//        if let idx = viewModel.selectedIdx(), !viewModel.items().isEmpty {
+//            for i in 0..<viewModel.items().count {
+//                collectionView.selectItem(
+//                    at: IndexPath(item: i, section: 0),
+//                    animated: idx == i,
+//                    scrollPosition: .top
+//                )
+//            }
+//        }
     }
 }
 

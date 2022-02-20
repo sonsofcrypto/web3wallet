@@ -6,7 +6,7 @@ import UIKit
 
 protocol AMMsWireframeFactory {
 
-    func makeWireframe() -> AMMsWireframe
+    func makeWireframe(_ parent: UIViewController) -> AMMsWireframe
 }
 
 // MARK: - DefaultAMMsWireframeFactory
@@ -15,13 +15,9 @@ class DefaultAMMsWireframeFactory {
 
     private let degenService: DegenService
 
-    private weak var window: UIWindow?
-
     init(
-        window: UIWindow?,
         degenService: DegenService
     ) {
-        self.window = window
         self.degenService = degenService
     }
 }
@@ -30,10 +26,10 @@ class DefaultAMMsWireframeFactory {
 
 extension DefaultAMMsWireframeFactory: AMMsWireframeFactory {
 
-    func makeWireframe() -> AMMsWireframe {
+    func makeWireframe(_ parent: UIViewController) -> AMMsWireframe {
         DefaultAMMsWireframe(
-            interactor: DefaultAMMsInteractor(degenService),
-            window: window
+            parent: parent,
+            interactor: DefaultAMMsInteractor(degenService)
         )
     }
 }

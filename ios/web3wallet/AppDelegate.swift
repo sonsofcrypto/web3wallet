@@ -25,7 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             wallets: DefaultWalletsWireframeFactory(walletsService),
             networks: DefaultNetworksWireframeFactory(networkService),
             dashboard: DefaultDashboardWireframeFactory(walletsService),
-            degen: DefaultDegenWireframeFactory(degenService),
+            degen: DefaultDegenWireframeFactory(
+                degenService,
+                ammsWireframeFactory: DefaultAMMsWireframeFactory(
+                    degenService: degenService
+                )
+            ),
             nfts: DefaultNFTsWireframeFactory(nftsService),
             apps: DefaultAppsWireframeFactory(appsService),
             settings: DefaultSettingsWireframeFactory(settingsService)

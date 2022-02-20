@@ -5,7 +5,7 @@
 import UIKit
 
 enum AMMsWireframeDestination {
-
+    case dapp(DApp)
 }
 
 protocol AMMsWireframe {
@@ -19,14 +19,14 @@ class DefaultAMMsWireframe {
 
     private let interactor: AMMsInteractor
 
-    private weak var window: UIWindow?
+    private weak var parent: UIViewController?
 
     init(
-        interactor: AMMsInteractor,
-        window: UIWindow?
+        parent: UIViewController,
+        interactor: AMMsInteractor
     ) {
+        self.parent = parent
         self.interactor = interactor
-        self.window = window
     }
 }
 
@@ -36,8 +36,8 @@ extension DefaultAMMsWireframe: AMMsWireframe {
 
     func present() {
         let vc = wireUp()
-        window?.rootViewController = vc
-        window?.makeKeyAndVisible()
+        parent?.show(vc, sender: self)
+
     }
 
     func navigate(to destination: AMMsWireframeDestination) {
@@ -56,6 +56,6 @@ extension DefaultAMMsWireframe {
         )
 
         vc.presenter = presenter
-        return NavigationController(rootViewController: vc)
+        return vc
     }
 }
