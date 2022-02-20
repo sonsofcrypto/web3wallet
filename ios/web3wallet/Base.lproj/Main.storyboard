@@ -144,8 +144,19 @@
                     <view key="view" contentMode="scaleToFill" id="uw5-Ua-KRj" customClass="GradientView" customModule="web3wallet" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_nfts" translatesAutoresizingMaskIntoConstraints="NO" id="EMA-TM-xS2">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="lq7-qX-vks"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="EMA-TM-xS2" firstAttribute="trailing" secondItem="lq7-qX-vks" secondAttribute="trailing" id="2wQ-FS-UAs"/>
+                            <constraint firstAttribute="bottom" secondItem="EMA-TM-xS2" secondAttribute="bottom" id="Hlu-K7-VfA"/>
+                            <constraint firstItem="EMA-TM-xS2" firstAttribute="top" secondItem="uw5-Ua-KRj" secondAttribute="top" id="uSp-HI-SNt"/>
+                            <constraint firstItem="EMA-TM-xS2" firstAttribute="leading" secondItem="lq7-qX-vks" secondAttribute="leading" id="yzC-wz-Qol"/>
+                        </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="defaultTopColor">
                                 <color key="value" name="bgGradientTop"/>
@@ -158,7 +169,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PPr-Yn-P8L" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1777" y="874"/>
+            <point key="canvasLocation" x="1776.8115942028987" y="873.88392857142856"/>
         </scene>
         <!--networks-->
         <scene sceneID="JRC-M4-aCL">
@@ -453,8 +464,19 @@
                     <view key="view" contentMode="scaleToFill" id="eN0-hT-iVh" customClass="GradientView" customModule="web3wallet" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_apps" translatesAutoresizingMaskIntoConstraints="NO" id="2Ew-EJ-g5O">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="0zM-13-pwK"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="2Ew-EJ-g5O" firstAttribute="top" secondItem="eN0-hT-iVh" secondAttribute="top" id="6X3-nM-FbV"/>
+                            <constraint firstAttribute="bottom" secondItem="2Ew-EJ-g5O" secondAttribute="bottom" id="mT2-Ri-0eu"/>
+                            <constraint firstItem="2Ew-EJ-g5O" firstAttribute="leading" secondItem="0zM-13-pwK" secondAttribute="leading" id="mm2-PN-WKH"/>
+                            <constraint firstItem="2Ew-EJ-g5O" firstAttribute="trailing" secondItem="0zM-13-pwK" secondAttribute="trailing" id="xBd-is-2hu"/>
+                        </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="defaultTopColor">
                                 <color key="value" name="bgGradientTop"/>
@@ -467,7 +489,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yuW-5B-rml" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2506" y="874"/>
+            <point key="canvasLocation" x="2505.7971014492755" y="873.88392857142856"/>
         </scene>
         <!--SettingsViewController-->
         <scene sceneID="8zt-BD-Lv0">
@@ -908,6 +930,8 @@
     <resources>
         <image name="arrow_cell_forward" width="9" height="15"/>
         <image name="button_receive" width="35" height="35"/>
+        <image name="placeholder_apps" width="376" height="812"/>
+        <image name="placeholder_nfts" width="375" height="812"/>
         <namedColor name="appRed">
             <color red="0.90600001811981201" green="0.21600000560283661" blue="0.58399999141693115" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
