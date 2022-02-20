@@ -6,6 +6,7 @@ import Foundation
 
 protocol DegenInteractor: AnyObject {
 
+    func categories() -> [DAppCategory]
 }
 
 // MARK: - DefaultDegenInteractor
@@ -24,4 +25,7 @@ class DefaultDegenInteractor {
 
 extension DefaultDegenInteractor: DegenInteractor {
 
+    func categories() -> [DAppCategory] {
+        degenService.categories()
+    }
 }

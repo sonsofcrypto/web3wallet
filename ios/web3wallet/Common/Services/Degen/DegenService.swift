@@ -6,6 +6,7 @@ import Foundation
 
 protocol DegenService: AnyObject {
 
+    func categories() -> [DAppCategory]
 }
 
 class DefaultDegenService {
@@ -14,4 +15,7 @@ class DefaultDegenService {
 
 extension DefaultDegenService: DegenService {
 
+    func categories() -> [DAppCategory] {
+        DAppCategory.all()
+    }
 }

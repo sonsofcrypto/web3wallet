@@ -89,6 +89,7 @@
 		1A4C3A35E90213A3B1D305C1 /* NetworksInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3795FDA4A86232F2BA21 /* NetworksInteractor.swift */; };
 		1A4C3A585C5375AE91CDA637 /* WalletsWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C514ACC30A0AC4707FA /* WalletsWireframeFactory.swift */; };
 		1A4C3A7D319E0444A98E52AD /* AMMsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3811EC67D01771B97011 /* AMMsViewModel.swift */; };
+		1A4C3AD382E8BADCBE160CBC /* DApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C375870963EEF9ECBE64B /* DApp.swift */; };
 		1A4C3AD8FA91A29BF8F75C90 /* SettingsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3142E4B087299DA8113B /* SettingsWireframe.swift */; };
 		1A4C3B15334CF0B046208C20 /* AppsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39C411BA3C3F080EB746 /* AppsInteractor.swift */; };
 		1A4C3B1D9B56685FF628A0AD /* DegenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C34077200A9E856B77DDF /* DegenService.swift */; };
@@ -109,6 +110,7 @@
 		1A4C3D4A1F1632A702FC042A /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A962E47E54F5A5779D3 /* AccountViewModel.swift */; };
 		1A4C3D827C6C472784CC40E7 /* SwapWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E963BBDDF8226B79BAD /* SwapWireframe.swift */; };
 		1A4C3D9BD9F5A146878AFF77 /* WalletsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DF93F3CE8FE0B35C142 /* WalletsWireframe.swift */; };
+		1A4C3DCFC8658400B9BCBF78 /* DegenSectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C374E321C93128CF3FB91 /* DegenSectionTitleView.swift */; };
 		1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3B70AA1B0BC942B15671 /* Store.swift */; };
 		1A4C3E0C34560AC1BF22B95E /* NFTsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C325A83A0FC4E6A5A9922 /* NFTsWireframe.swift */; };
 		1A4C3EB4D429242923984C76 /* DefaultButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3378B5287B6A9BDE65CD /* DefaultButton.swift */; };
@@ -116,6 +118,7 @@
 		1A4C3F081D1B594B9EAF4F7E /* NFTsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3CD454B957F1787FE70A /* NFTsCell.swift */; };
 		1A4C3F2AC8A8B59020F63712 /* WalletsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3044DC83E6A35A00DC12 /* WalletsInteractor.swift */; };
 		1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */; };
+		1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */; };
 		1A4C3FC333CF4459025710E5 /* NFTsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38A2039D19A2E5507CF2 /* NFTsView.swift */; };
 		D116CF2827C2531E005542AA /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D116CF2727C2531E005542AA /* Array+Extensions.swift */; };
 		D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F527B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf */; };
@@ -214,6 +217,8 @@
 		1A4C3644A9D218CC991B2A56 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		1A4C367A2B3B39204D1DD109 /* DegenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenCell.swift; sourceTree = "<group>"; };
 		1A4C36CAEB50425CE9839ED4 /* WalletsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsService.swift; sourceTree = "<group>"; };
+		1A4C374E321C93128CF3FB91 /* DegenSectionTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenSectionTitleView.swift; sourceTree = "<group>"; };
+		1A4C375870963EEF9ECBE64B /* DApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DApp.swift; sourceTree = "<group>"; };
 		1A4C376D2673983B26F249FF /* Wallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		1A4C376FCE382F2B2A126F5E /* SwapWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapWireframeFactory.swift; sourceTree = "<group>"; };
 		1A4C37840D018B26EF2993AB /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
@@ -229,6 +234,7 @@
 		1A4C38F6C66189309E695B99 /* DashboardPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardPresenter.swift; sourceTree = "<group>"; };
 		1A4C39B21512118DB853A3E3 /* UILabel+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+extensions.swift"; sourceTree = "<group>"; };
 		1A4C39C411BA3C3F080EB746 /* AppsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsInteractor.swift; sourceTree = "<group>"; };
+		1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAppCategory.swift; sourceTree = "<group>"; };
 		1A4C39FB21CCAF442F3001E6 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		1A4C3A05642605E68164E3B1 /* DashboardWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardWireframe.swift; sourceTree = "<group>"; };
 		1A4C3A08014FC9721FC2557C /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -514,6 +520,7 @@
 				1A4C32C282B76B064343657F /* DegenWireframe.swift */,
 				1A4C3488BA01A7A891884D67 /* DegenInteractor.swift */,
 				1A4C3B869A93171279B2C6ED /* DegenWireframeFactory.swift */,
+				1A4C374E321C93128CF3FB91 /* DegenSectionTitleView.swift */,
 			);
 			path = Degen;
 			sourceTree = "<group>";
@@ -560,6 +567,8 @@
 			isa = PBXGroup;
 			children = (
 				1A4C34077200A9E856B77DDF /* DegenService.swift */,
+				1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */,
+				1A4C375870963EEF9ECBE64B /* DApp.swift */,
 			);
 			path = Degen;
 			sourceTree = "<group>";
@@ -1029,6 +1038,9 @@
 				1A4C3C28443621328248F5A7 /* CandlesViewViewModel.swift in Sources */,
 				1A4C345BA6553EF429EF7494 /* String+extensions.swift in Sources */,
 				1A4C373913601300A54BB058 /* UIBarButtonItem.swift in Sources */,
+				1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */,
+				1A4C3AD382E8BADCBE160CBC /* DApp.swift in Sources */,
+				1A4C3DCFC8658400B9BCBF78 /* DegenSectionTitleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

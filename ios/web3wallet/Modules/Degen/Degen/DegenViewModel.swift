@@ -4,10 +4,9 @@
 
 import Foundation
 
-enum DegenViewModel {
-    case loading
-    case loaded(items: [Item], selectedIdx: Int)
-    case error(error: DegenViewModel.Error)
+struct DegenViewModel {
+    let sectionTitle: String
+    let items: [Item]
 }
 
 // MARK - Item
@@ -16,39 +15,51 @@ extension DegenViewModel {
 
     struct Item {
         let title: String
+        let subtitle: String
     }
 }
 
-// MARK: - Error
+// MARK: - DAppCategory
 
-extension DegenViewModel {
+extension DAppCategory {
 
-    struct Error {
-        let title: String
-        let body: String
-        let actions: [String]
-    }
-}
-
-// MARK: - Utility
-
-extension DegenViewModel {
-
-    func items() -> [DegenViewModel.Item] {
+    var title: String {
         switch self {
-        case let .loaded(items, _):
-            return items
-        default:
-            return []
+        case .amm:
+            return Localized("degen.dappCategory.title.amm")
+        case .stakeYield:
+            return Localized("degen.dappCategory.title.stakeYield")
+        case .landBorrow:
+            return Localized("degen.dappCategory.title.landBorrow")
+        case .derivative:
+            return Localized("degen.dappCategory.title.derivative")
+        case .bridge:
+            return Localized("degen.dappCategory.title.bridge")
+        case .mixer:
+            return Localized("degen.dappCategory.title.mixer")
+        case .governance:
+            return ""
         }
     }
 
-    func selectedIdx() -> Int? {
+    var subTitle: String {
+
         switch self {
-        case let .loaded(_, idx):
-            return idx
-        default:
-            return nil
+        case .amm:
+            return Localized("degen.dappCategory.subTitle.amm")
+        case .stakeYield:
+            return Localized("degen.dappCategory.subTitle.stakeYield")
+        case .landBorrow:
+            return Localized("degen.dappCategory.subTitle.landBorrow")
+        case .derivative:
+            return Localized("degen.dappCategory.subTitle.derivative")
+        case .bridge:
+            return Localized("degen.dappCategory.subTitle.bridge")
+        case .mixer:
+            return Localized("degen.dappCategory.subTitle.mixer")
+        case .governance:
+            return ""
         }
     }
+
 }

@@ -54,7 +54,7 @@ class DashboardViewController: UIViewController {
 
 }
 
-// MARK: - WalletsView
+// MARK: - DashboardView
 
 extension DashboardViewController: DashboardView {
 
@@ -192,6 +192,9 @@ extension DashboardViewController {
             action: #selector(walletConnectionSettingsAction(_:))
         )
 
+        var insets = collectionView.contentInset
+        insets.bottom += Global.padding
+        collectionView.contentInset = insets
     }
 }
 

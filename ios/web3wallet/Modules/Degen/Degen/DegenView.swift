@@ -6,15 +6,15 @@ import UIKit
 
 protocol DegenView: AnyObject {
 
-    func update(with viewModel: DashboardViewModel)
+    func update(with viewModel: DegenViewModel)
 }
 
 class DegenViewController: UIViewController {
 
-    var presenter: DashboardPresenter!
+    var presenter: DegenPresenter!
 
-    private var viewModel: DashboardViewModel?
-    
+    private var viewModel: DegenViewModel?
+
     @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
@@ -22,30 +22,15 @@ class DegenViewController: UIViewController {
         configureUI()
         presenter?.present()
     }
-
-    // MARK: - Actions
-
-    @IBAction func templateAction(_ sender: Any) {
-
-    }
 }
 
-// MARK: - WalletsView
+// MARK: - DegenView
 
 extension DegenViewController: DegenView {
 
-    func update(with viewModel: DashboardViewModel) {
-//        self.viewModel = viewModel
-//        collectionView.reloadData()
-//        if let idx = viewModel.selectedIdx(), !viewModel.items().isEmpty {
-//            for i in 0..<viewModel.items().count {
-//                collectionView.selectItem(
-//                    at: IndexPath(item: i, section: 0),
-//                    animated: idx == i,
-//                    scrollPosition: .top
-//                )
-//            }
-//        }
+    func update(with viewModel: DegenViewModel) {
+        self.viewModel = viewModel
+        collectionView.reloadData()
     }
 }
 
@@ -54,25 +39,43 @@ extension DegenViewController: DegenView {
 extension DegenViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return  0
+        return  viewModel?.items.count ?? 0
     }
-    
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeue(WalletsCell.self, for: indexPath)
-//        cell.titleLabel.text = viewModel?.items()[indexPath.item].title
+        let cell = collectionView.dequeue(DegenCell.self, for: indexPath)
+        cell.update(with: viewModel?.items[indexPath.row])
         return cell
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            let supplementary = collectionView.dequeue(
+                DegenSectionTitleView.self,
+                for: indexPath,
+                kind: kind
+            )
+            supplementary.update(with: viewModel)
+            return supplementary
+        }
+
+        fatalError("Unexpected supplementary \(kind) \(indexPath)")
     }
 }
 
-extension DegenViewController: UICollectionViewDelegate {
-    
-}
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension DegenViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width - 32, height: Global.cellHeight)
+    }
+}
+
+extension DegenViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter.handle(.didSelectCategory(idx: indexPath.item))
     }
 }
 

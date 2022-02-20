@@ -336,8 +336,44 @@
                     <view key="view" contentMode="scaleToFill" id="FTF-HG-1uA" customClass="GradientView" customModule="web3wallet" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="YGN-DG-sjl">
+                                <rect key="frame" x="87" y="384" width="240" height="128"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="NYi-tV-uYs">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DegenCell" id="ur1-YQ-YnP" customClass="DegenCell" customModule="web3wallet" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="G7F-Rn-70I">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                        <color key="backgroundColor" name="appRed"/>
+                                    </collectionViewCell>
+                                </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="DegenSectionTitleView" id="Z0G-aL-eRk" customClass="DegenSectionTitleView" customModule="web3wallet" customModuleProvider="target">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionReusableView>
+                                <connections>
+                                    <outlet property="dataSource" destination="ben-rF-FTB" id="0IT-Ni-qse"/>
+                                    <outlet property="delegate" destination="ben-rF-FTB" id="kPF-7W-J2y"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="Jjb-aq-oa9"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="YGN-DG-sjl" firstAttribute="top" secondItem="Jjb-aq-oa9" secondAttribute="top" id="At7-hM-GrN"/>
+                            <constraint firstItem="Jjb-aq-oa9" firstAttribute="trailing" secondItem="YGN-DG-sjl" secondAttribute="trailing" id="iAd-sI-Mev"/>
+                            <constraint firstItem="YGN-DG-sjl" firstAttribute="leading" secondItem="Jjb-aq-oa9" secondAttribute="leading" id="qKQ-02-Zfu"/>
+                            <constraint firstItem="Jjb-aq-oa9" firstAttribute="bottom" secondItem="YGN-DG-sjl" secondAttribute="bottom" id="ttT-NW-GmG"/>
+                        </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="defaultTopColor">
                                 <color key="value" name="bgGradientTop"/>
@@ -347,6 +383,9 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="YGN-DG-sjl" id="PGO-l1-Rt0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Di-Ae-loZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -668,6 +707,9 @@
     <color key="tintColor" name="tintPrimary"/>
     <resources>
         <image name="button_receive" width="35" height="35"/>
+        <namedColor name="appRed">
+            <color red="0.90600001811981201" green="0.21600000560283661" blue="0.58399999141693115" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="bgGradientBottom">
             <color red="0.075000002979999994" green="0.043000001459999999" blue="0.1330000013" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
