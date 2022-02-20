@@ -86,7 +86,7 @@ extension DashboardViewModel {
                 cryptoBalance: "690.00 CRV",
                 pctChange: "2.5%",
                 priceUp: true,
-                candles: CandlesViewModel.mock()
+                candles: CandlesViewModel.mock(first: false)
             )
         ]
     }
@@ -117,7 +117,7 @@ extension DashboardViewModel {
                 cryptoBalance: "420.00 SOL",
                 pctChange: "12%",
                 priceUp: true,
-                candles: CandlesViewModel.mock()
+                candles: CandlesViewModel.mock(first: false)
             ),
             .init(
                 name: "Raydium",
@@ -137,7 +137,7 @@ extension DashboardViewModel {
                 cryptoBalance: "69 MNGO",
                 pctChange: "5.5%",
                 priceUp: true,
-                candles: CandlesViewModel.mock()
+                candles: CandlesViewModel.mock(first: false)
             )
         ]
     }
