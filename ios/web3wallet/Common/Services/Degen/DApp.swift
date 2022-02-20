@@ -4,6 +4,8 @@
 
 import Foundation
 
-class DApp {
+struct DApp {
 
+    let name: String
+    let network: String
 }

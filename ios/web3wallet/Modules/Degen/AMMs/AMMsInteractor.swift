@@ -5,7 +5,7 @@
 import Foundation
 
 protocol AMMsInteractor: AnyObject {
-
+    func dapps() -> [DApp]
 }
 
 // MARK: - DefaultAMMsInteractor
@@ -24,4 +24,7 @@ class DefaultAMMsInteractor {
 
 extension DefaultAMMsInteractor: AMMsInteractor {
 
+    func dapps() -> [DApp] {
+        degenService.dapps(for: .amm)
+    }
 }

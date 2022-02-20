@@ -4,51 +4,17 @@
 
 import Foundation
 
-enum AMMsViewModel {
-    case loading
-    case loaded(items: [Item], selectedIdx: Int)
-    case error(error: AMMsViewModel.Error)
+struct AMMsViewModel {
+    let dapps: [AMMsViewModel.DApp]
 }
 
 // MARK - Item
 
 extension AMMsViewModel {
 
-    struct Item {
+    struct DApp {
         let title: String
-    }
-}
-
-// MARK: - Error
-
-extension AMMsViewModel {
-
-    struct Error {
-        let title: String
-        let body: String
-        let actions: [String]
-    }
-}
-
-// MARK: - Utility
-
-extension AMMsViewModel {
-
-    func items() -> [AMMsViewModel.Item] {
-        switch self {
-        case let .loaded(items, _):
-            return items
-        default:
-            return []
-        }
-    }
-
-    func selectedIdx() -> Int? {
-        switch self {
-        case let .loaded(_, idx):
-            return idx
-        default:
-            return nil
-        }
+        let network: String
+        let image: String
     }
 }

@@ -5,7 +5,7 @@
 import Foundation
 
 enum AMMsPresenterEvent {
-
+    case didSelectDApp(idx: Int)
 }
 
 protocol AMMsPresenter {
@@ -21,8 +21,6 @@ class DefaultAMMsPresenter {
     private let interactor: AMMsInteractor
     private let wireframe: AMMsWireframe
 
-    // private var items: [Item]
-
     private weak var view: AMMsView?
 
     init(
@@ -33,7 +31,6 @@ class DefaultAMMsPresenter {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
-        // self.items = []
     }
 }
 
@@ -42,12 +39,14 @@ class DefaultAMMsPresenter {
 extension DefaultAMMsPresenter: AMMsPresenter {
 
     func present() {
-        view?.update(with: .loading)
-        // TODO: Interactor
+        view?.update(viewModel(interactor.dapps()))
     }
 
     func handle(_ event: AMMsPresenterEvent) {
-
+        switch event {
+        case let .didSelectDApp(idx):
+            handleDidSelectDapp(at: idx)
+        }
     }
 }
 
@@ -55,16 +54,24 @@ extension DefaultAMMsPresenter: AMMsPresenter {
 
 private extension DefaultAMMsPresenter {
 
+    func handleDidSelectDapp(at idx: Int) {
+        print("navigate to dapp", idx)
+    }
 }
 
-// MARK: - WalletsViewModel utilities
+// MARK: - DefaultAMMsPresenter utilities
 
 private extension DefaultAMMsPresenter {
 
-//    func viewModel(from items: [Item], active: Item?) -> AMMsViewModel {
-//        .loaded(
-//            wallets: viewModel(from: wallets),
-//            selectedIdx: selectedIdx(wallets, active: active)
-//        )
-//    }
+    func viewModel(_ dapps: [DApp]) -> AMMsViewModel {
+        .init(
+            dapps: dapps.map {
+                .init(
+                    title: $0.name,
+                    network: $0.network,
+                    image: "dapp_icon_" + $0.name.lowercased()
+                )
+            }
+        )
+    }
 }
