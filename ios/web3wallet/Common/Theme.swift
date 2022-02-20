@@ -61,6 +61,10 @@ struct Theme {
         UIFont.font(.nothingYouCouldDo, style: .regular, size: .custom(size: 24))
     }
 
+    var title1: UIFont {
+        UIFont.font(.gothicA1, style: .bold, size: .title1)
+    }
+
     var callout: UIFont {
         UIFont.font(.gothicA1, style: .regular, size: .callout)
     }
