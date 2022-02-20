@@ -71,8 +71,7 @@ private extension DefaultAccountPresenter {
                     .init(title: Localized("receive"), imageName: "button_receive"),
                     .init(title: Localized("send"), imageName: "button_send"),
                     .init(title: Localized("trade"), imageName: "button_trade"),
-                    .init(title: Localized("more"), imageName: "button_more"),
-
+                    .init(title: Localized("more"), imageName: "button_more")
                 ]
             ),
             candles: CandlesViewModel.mock(64),

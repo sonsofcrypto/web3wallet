@@ -743,7 +743,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GvH-Te-kAS">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GvH-Te-kAS">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="LmN-1r-7u5">
@@ -759,7 +759,73 @@
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="FAl-1o-Zty">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="gVY-8h-u5q">
+                                                    <rect key="frame" x="9" y="-36" width="110" height="200"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="JHH-O7-jt6">
+                                                            <rect key="frame" x="-65" y="36" width="240" height="128"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </view>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qIL-d8-3gR">
+                                                            <rect key="frame" x="34" y="89" width="42" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpx-5q-42e">
+                                                            <rect key="frame" x="34" y="89" width="42" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="knf-vQ-raO">
+                                                            <rect key="frame" x="0.0" y="0.0" width="110" height="200"/>
+                                                            <subviews>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ew6-42-ROw" customClass="VerticalButton" customModule="web3wallet" customModuleProvider="target">
+                                                                    <rect key="frame" x="21" y="84" width="67" height="31"/>
+                                                                    <state key="normal" title="Button"/>
+                                                                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kVo-DV-srP" customClass="VerticalButton" customModule="web3wallet" customModuleProvider="target">
+                                                                    <rect key="frame" x="21" y="84" width="67" height="31"/>
+                                                                    <state key="normal" title="Button"/>
+                                                                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IxE-vS-Tpb" customClass="VerticalButton" customModule="web3wallet" customModuleProvider="target">
+                                                                    <rect key="frame" x="21" y="84" width="67" height="31"/>
+                                                                    <state key="normal" title="Button"/>
+                                                                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HKq-RR-71U" customClass="VerticalButton" customModule="web3wallet" customModuleProvider="target">
+                                                                    <rect key="frame" x="21" y="84" width="67" height="31"/>
+                                                                    <state key="normal" title="Button"/>
+                                                                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                                                </button>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="60" id="hrw-z8-CWA"/>
+                                                            </constraints>
+                                                        </stackView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="gVY-8h-u5q" firstAttribute="leading" secondItem="FAl-1o-Zty" secondAttribute="leading" id="76i-yK-6Pf"/>
+                                                <constraint firstItem="gVY-8h-u5q" firstAttribute="top" secondItem="FAl-1o-Zty" secondAttribute="top" id="eds-uS-WdZ"/>
+                                                <constraint firstAttribute="trailing" secondItem="gVY-8h-u5q" secondAttribute="trailing" id="f8n-2w-cOi"/>
+                                                <constraint firstAttribute="bottom" secondItem="gVY-8h-u5q" secondAttribute="bottom" id="nx4-Xh-iZD"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="balanceFiatLabel" destination="fpx-5q-42e" id="i1y-y9-bg7"/>
+                                            <outlet property="balanceLabel" destination="qIL-d8-3gR" id="NdW-B6-LxV"/>
+                                            <outlet property="containerStack" destination="gVY-8h-u5q" id="vGe-zb-YMr"/>
+                                            <outlet property="moreButton" destination="HKq-RR-71U" id="pS6-1W-dHX"/>
+                                            <outlet property="receiveButton" destination="Ew6-42-ROw" id="qcp-FT-ZrB"/>
+                                            <outlet property="sendButton" destination="kVo-DV-srP" id="42g-Dg-Jkb"/>
+                                            <outlet property="tradeButton" destination="IxE-vS-Tpb" id="4Ml-Ve-dWR"/>
+                                        </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AccountChartCell" id="8Ci-em-rxG" customClass="AccountChartCell" customModule="web3wallet" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>

@@ -30,11 +30,6 @@ class DefaultButton: UIButton {
         size.height = Constant.defaultButtonHeight
         return size
     }
-}
-
-// MARK: - Configure UI
-
-extension DefaultButton {
 
     func configureUI() {
         backgroundColor = Theme.current.background
@@ -116,5 +111,33 @@ class LeftRightImageButton: DefaultButton {
             width: rightImageView.frame.minX - padding * 2 - imageView.frame.maxX,
             height: bounds.height - (padding * 2)
         )
+    }
+}
+
+class VerticalButton: DefaultButton {
+
+    override func configureUI() {
+        super.configureUI()
+        titleLabel?.textAlignment = .center
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        guard let imageView = self.imageView, let label = self.titleLabel else {
+            return
+        }
+
+        imageView.center.x = bounds.width / 2
+        imageView.center.y = bounds.height * 0.3333
+
+        // TODO: Remove this hack. Itroduced coz color and font were on being
+        // set when setting from `AccountHeaderCell`
+        label.applyStyle(.smallerLabelGlow)
+
+        label.bounds.size.width = bounds.width
+        label.bounds.size.height = bounds.height * 0.3333
+        label.center.x = bounds.width / 2
+        label.center.y = bounds.height - label.bounds.height / 2 - 4
     }
 }
