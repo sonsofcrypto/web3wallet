@@ -8,6 +8,7 @@ enum DashboardPresenterEvent {
     case receiveAction
     case sendAction
     case tradeAction
+    case walletConnectionSettingsAction
     case didSelectWallet(idx: Int)
     case didSelectNFT(idx: Int)
 

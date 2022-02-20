@@ -47,6 +47,11 @@ class DashboardViewController: UIViewController {
     @IBAction func tradeAction(_ sender: Any) {
         presenter.handle(.tradeAction)
     }
+
+    @IBAction func walletConnectionSettingsAction(_ sender: Any) {
+        presenter.handle(.walletConnectionSettingsAction)
+    }
+
 }
 
 // MARK: - WalletsView
@@ -180,6 +185,13 @@ extension DashboardViewController {
         )
 
         navigationItem.rightBarButtonItem = UIBarButtonItem.glowLabel()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: UIImage(named: "arrow_back"),
+            style: .plain,
+            target: self,
+            action: #selector(walletConnectionSettingsAction(_:))
+        )
+
     }
 }
 
