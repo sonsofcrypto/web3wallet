@@ -5,7 +5,8 @@
 import UIKit
 
 class DegenSectionTitleView: UICollectionReusableView {
-
+    
+    @IBOutlet weak var label: UILabel!
 }
 
 // MARK: - DegentViewModel
@@ -13,6 +14,12 @@ class DegenSectionTitleView: UICollectionReusableView {
 extension DegenSectionTitleView {
 
     func update(with viewModel: DegenViewModel?) {
-
+        label.attributedText = NSAttributedString(
+            string: viewModel?.sectionTitle ?? "",
+            attributes: [
+                .font: Theme.current.cellDetail,
+                .foregroundColor: Theme.current.textColorTertiary,
+            ]
+        )
     }
 }

@@ -84,5 +84,10 @@ struct Theme {
     var tabBar: UIFont {
         UIFont.font(.gothicA1, style: .medium, size: .custom(size: 10))
     }
+
+    var cellDetail: UIFont {
+        UIFont.font(.gothicA1, style: .regular, size: .custom(size: 15))
+
+    }
 }
 

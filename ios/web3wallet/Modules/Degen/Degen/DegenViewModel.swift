@@ -38,7 +38,7 @@ extension DAppCategory {
         case .mixer:
             return Localized("degen.dappCategory.title.mixer")
         case .governance:
-            return ""
+            return Localized("degen.dappCategory.title.governance")
         }
     }
 
@@ -58,7 +58,7 @@ extension DAppCategory {
         case .mixer:
             return Localized("degen.dappCategory.subTitle.mixer")
         case .governance:
-            return ""
+            return Localized("degen.dappCategory.subTitle.governance")
         }
     }
 

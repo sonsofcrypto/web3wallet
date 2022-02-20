@@ -7,9 +7,13 @@ import UIKit
 class DegenCell: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subTitleLabel: UILabel!
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        titleLabel.applyStyle(.callout)
+        subTitleLabel.applyStyle(.subhead)
     }
 }
 
@@ -18,6 +22,7 @@ class DegenCell: CollectionViewCell {
 extension DegenCell {
 
     func update(with viewModel: DegenViewModel.Item?) {
-
+        titleLabel.text = viewModel?.title
+        subTitleLabel.text = viewModel?.subtitle
     }
 }

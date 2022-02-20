@@ -68,7 +68,17 @@ extension DegenViewController: UICollectionViewDataSource {
 extension DegenViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 32, height: Global.cellHeight)
+        return CGSize(
+            width: view.bounds.width - Global.padding * 2,
+            height: Constant.cellHeight
+        )
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(
+            width: view.bounds.width - Global.padding * 2,
+            height: Constant.headerHeight
+        )
     }
 }
 
@@ -95,5 +105,20 @@ extension DegenViewController {
             image: UIImage(named: "tab_icon_degen"),
             tag: 1
         )
+
+        var insets = collectionView.contentInset
+        insets.bottom += Global.padding
+        collectionView.contentInset = insets
     }
+}
+
+// MARK: - Constant
+
+private extension DegenViewController {
+
+    enum Constant {
+        static let cellHeight: CGFloat = 78
+        static let headerHeight: CGFloat = 70
+    }
+
 }
