@@ -4,51 +4,52 @@
 
 import Foundation
 
-enum AccountViewModel {
-    case loading
-    case loaded(items: [Item], selectedIdx: Int)
-    case error(error: AccountViewModel.Error)
+struct AccountViewModel {
+
+    let header: AccountViewModel.Header
+    let candles: CandlesViewModel
+    let marketInfo: AccountViewModel.MarketInfo
+    let transactions: [AccountViewModel.Transaction]
+
 }
 
-// MARK - Item
+// MARK: - Header
 
 extension AccountViewModel {
 
-    struct Item {
-        let title: String
-    }
-}
+    struct Header {
+        let balance: String
+        let fiatBalance: String
+        let pct: String
+        let pctUp: Bool
+        let buttons: [DashboardViewModel.Header.Button]
 
-// MARK: - Error
-
-extension AccountViewModel {
-
-    struct Error {
-        let title: String
-        let body: String
-        let actions: [String]
-    }
-}
-
-// MARK: - Utility
-
-extension AccountViewModel {
-
-    func items() -> [AccountViewModel.Item] {
-        switch self {
-        case let .loaded(items, _):
-            return items
-        default:
-            return []
+        struct Button {
+            let title: String
+            let imageName: String
         }
     }
+}
 
-    func selectedIdx() -> Int? {
-        switch self {
-        case let .loaded(_, idx):
-            return idx
-        default:
-            return nil
-        }
+// MARK: - MarketInfo
+
+extension AccountViewModel {
+
+    struct MarketInfo {
+        let marketCap: String
+        let price: String
+        let volume: String
+    }
+}
+
+// MARK: - Transaction
+
+extension AccountViewModel {
+
+    struct Transaction {
+        let date: String
+        let address: String
+        let amount: String
+        let isReceive: Bool
     }
 }

@@ -6,14 +6,14 @@ import UIKit
 
 protocol NFTsView: AnyObject {
 
-    func update(with viewModel: AccountViewModel)
+    func update(with viewModel: NFTsViewModel)
 }
 
 class NFTsViewController: UIViewController {
 
     var presenter: NFTsPresenter!
 
-    private var viewModel: AccountViewModel?
+    private var viewModel: NFTsViewModel?
     
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -34,7 +34,7 @@ class NFTsViewController: UIViewController {
 
 extension NFTsViewController: NFTsView {
 
-    func update(with viewModel: AccountViewModel) {
+    func update(with viewModel: NFTsViewModel) {
 //        self.viewModel = viewModel
 //        collectionView.reloadData()
 //        if let idx = viewModel.selectedIdx(), !viewModel.items().isEmpty {

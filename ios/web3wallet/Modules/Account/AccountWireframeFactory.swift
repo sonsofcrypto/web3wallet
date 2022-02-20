@@ -6,7 +6,7 @@ import UIKit
 
 protocol AccountWireframeFactory {
 
-    func makeWireframe() -> AccountWireframe
+    func makeWireframe(_ parent: UIViewController, wallet: Wallet) -> AccountWireframe
 }
 
 // MARK: - DefaultAccountWireframeFactory
@@ -15,13 +15,9 @@ class DefaultAccountWireframeFactory {
 
     private let service: AccountService
 
-    private weak var window: UIWindow?
-
     init(
-        window: UIWindow?,
         service: AccountService
     ) {
-        self.window = window
         self.service = service
     }
 }
@@ -30,10 +26,10 @@ class DefaultAccountWireframeFactory {
 
 extension DefaultAccountWireframeFactory: AccountWireframeFactory {
 
-    func makeWireframe() -> AccountWireframe {
+    func makeWireframe(_ parent: UIViewController, wallet: Wallet) -> AccountWireframe {
         DefaultAccountWireframe(
-            interactor: DefaultAccountInteractor(service),
-            window: window
+            parent: parent,
+            interactor: DefaultAccountInteractor(service, wallet: wallet)
         )
     }
 }

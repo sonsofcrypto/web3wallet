@@ -25,7 +25,19 @@ class AccountViewController: UIViewController {
 
     // MARK: - Actions
 
-    @IBAction func AccountAction(_ sender: Any) {
+    @IBAction func receiveAction(_ sender: Any) {
+
+    }
+
+    @IBAction func sendAction(_ sender: Any) {
+
+    }
+
+    @IBAction func tradeAction(_ sender: Any) {
+
+    }
+
+    @IBAction func moreAction(_ sender: Any) {
 
     }
 }
@@ -37,42 +49,102 @@ extension AccountViewController: AccountView {
     func update(with viewModel: AccountViewModel) {
         self.viewModel = viewModel
         collectionView.reloadData()
-        if let idx = viewModel.selectedIdx(), !viewModel.items().isEmpty {
-            for i in 0..<viewModel.items().count {
-                collectionView.selectItem(
-                    at: IndexPath(item: i, section: 0),
-                    animated: idx == i,
-                    scrollPosition: .top
-                )
-            }
-        }
     }
 }
 
 // MARK: - UICollectionViewDataSource
 
 extension AccountViewController: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.items().count ?? 0
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        Section.all().count
     }
-    
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        Section(rawValue: section)?.cellCount(viewModel) ?? 0
+    }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeue(WalletsCell.self, for: indexPath)
-        cell.titleLabel.text = viewModel?.items()[indexPath.item].title
-        return cell
+        switch Section(rawValue: indexPath.section)! {
+        case .header:
+            let cell = collectionView.dequeue(AccountHeaderCell.self, for: indexPath)
+            cell.update(with: viewModel?.header)
+            return cell
+        case .chart:
+            let cell = collectionView.dequeue(AccountChartCell.self, for: indexPath)
+            cell.update(with: viewModel?.candles)
+            return cell
+        case .marketInfo:
+            let cell = collectionView.dequeue(AccountMarketInfoCell.self, for: indexPath)
+            cell.update(with: viewModel?.marketInfo)
+            return cell
+        case .transactions:
+            let cell = collectionView.dequeue(AccountTransactionCell.self, for: indexPath)
+            cell.update(with: viewModel?.transactions[indexPath.item])
+            return cell
+        }
     }
 }
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension AccountViewController: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let section = Section(rawValue: indexPath.section) else {
+            return .zero
+        }
+
+        let width = view.bounds.width - Global.padding * 2
+
+        switch section {
+        case .header:
+            CGSize(width: width, height: Constant.headerHeight)
+        case .chart:
+            CGSize(width: width, height: Constant.chartHeight)
+        case .marketInfo:
+            CGSize(width: width, height: Constant.marketInfoHeight)
+        case .transactions:
+            CGSize(width: width, height: Constant.transactionsHeight)
+        }
+
+        return .zero
+    }
+}
+
+// MARK: - UICollectionViewDelegate
 
 extension AccountViewController: UICollectionViewDelegate {
     
 }
 
-extension AccountViewController: UICollectionViewDelegateFlowLayout {
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 32, height: Global.cellHeight)
+// MARK: - Section
+
+extension AccountViewController {
+
+    enum Section: Int {
+        case header = 0
+        case chart
+        case marketInfo
+        case transactions
+
+        func cellCount(_ viewModel: AccountViewModel?) -> Int {
+            guard let viewModel = viewModel else {
+                return 0
+            }
+
+            switch self {
+            case .transactions:
+                return viewModel.transactions.count
+            default:
+                return 1
+            }
+        }
+
+        static func all() -> [Section] {
+            [.header, .chart, marketInfo, transactions]
+        }
     }
 }
 
@@ -86,5 +158,18 @@ extension AccountViewController {
             Theme.current.background,
             Theme.current.backgroundDark
         ]
+    }
+}
+
+// MARK: - Constant
+
+extension AccountViewController {
+
+    enum Constant {
+        static let headerHeight: CGFloat = 187
+        static let chartHeight: CGFloat = 162
+        static let marketInfoHeight: CGFloat = 71
+        static let transactionsHeight: CGFloat = 64
+
     }
 }

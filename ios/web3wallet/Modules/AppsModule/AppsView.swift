@@ -6,14 +6,14 @@ import UIKit
 
 protocol AppsView: AnyObject {
 
-    func update(with viewModel: AccountViewModel)
+    func update(with viewModel: AppsViewModel)
 }
 
 class AppsViewController: UIViewController {
 
     var presenter: AppsPresenter!
 
-    private var viewModel: AccountViewModel?
+    private var viewModel: AppsViewModel?
     
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -34,7 +34,7 @@ class AppsViewController: UIViewController {
 
 extension AppsViewController: AppsView {
 
-    func update(with viewModel: AccountViewModel) {
+    func update(with viewModel: AppsViewModel) {
 //        self.viewModel = viewModel
 //        collectionView.reloadData()
 //        if let idx = viewModel.selectedIdx(), !viewModel.items().isEmpty {

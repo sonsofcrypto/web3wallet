@@ -17,16 +17,16 @@ protocol AccountWireframe {
 
 class DefaultAccountWireframe {
 
+    private weak var parent: UIViewController?
+
     private let interactor: AccountInteractor
 
-    private weak var window: UIWindow?
-
     init(
-        interactor: AccountInteractor,
-        window: UIWindow?
+        parent: UIViewController,
+        interactor: AccountInteractor
     ) {
+        self.parent = parent
         self.interactor = interactor
-        self.window = window
     }
 }
 
@@ -36,8 +36,7 @@ extension DefaultAccountWireframe: AccountWireframe {
 
     func present() {
         let vc = wireUp()
-        window?.rootViewController = vc
-        window?.makeKeyAndVisible()
+        parent?.show(vc, sender: self)
     }
 
     func navigate(to destination: AccountWireframeDestination) {
