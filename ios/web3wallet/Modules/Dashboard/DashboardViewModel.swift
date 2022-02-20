@@ -49,7 +49,7 @@ extension DashboardViewModel {
         let cryptoBalance: String
         let pctChange: String
         let priceUp: Bool
-//        let candles: [CandleViewModel]
+        let candles: CandlesViewModel
     }
 }
 
@@ -75,7 +75,8 @@ extension DashboardViewModel {
                 fiatBalance: "$69,000",
                 cryptoBalance: "420.00 ETH",
                 pctChange: "4.5%",
-                priceUp: true
+                priceUp: true,
+                candles: CandlesViewModel.mock()
             ),
             .init(
                 name: "Curve",
@@ -84,7 +85,8 @@ extension DashboardViewModel {
                 fiatBalance: "$42,000",
                 cryptoBalance: "690.00 CRV",
                 pctChange: "2.5%",
-                priceUp: true
+                priceUp: true,
+                candles: CandlesViewModel.mock()
             )
         ]
     }
@@ -114,7 +116,8 @@ extension DashboardViewModel {
                 fiatBalance: "$69,000",
                 cryptoBalance: "420.00 SOL",
                 pctChange: "12%",
-                priceUp: true
+                priceUp: true,
+                candles: CandlesViewModel.mock()
             ),
             .init(
                 name: "Raydium",
@@ -123,7 +126,8 @@ extension DashboardViewModel {
                 fiatBalance: "$6,900.00",
                 cryptoBalance: "4,200 RAY",
                 pctChange: "5.5%",
-                priceUp: true
+                priceUp: true,
+                candles: CandlesViewModel.mock()
             ),
             .init(
                 name: "Mango",
@@ -132,7 +136,8 @@ extension DashboardViewModel {
                 fiatBalance: "$4,200.00",
                 cryptoBalance: "69 MNGO",
                 pctChange: "5.5%",
-                priceUp: true
+                priceUp: true,
+                candles: CandlesViewModel.mock()
             )
         ]
     }

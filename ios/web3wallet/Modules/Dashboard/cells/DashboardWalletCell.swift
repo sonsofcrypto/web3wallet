@@ -12,7 +12,7 @@ class DashboardWalletCell: CollectionViewCell {
     @IBOutlet weak var currencyLabel: UILabel!
     @IBOutlet weak var fiatBalanceLabel: UILabel!
     @IBOutlet weak var pctChangeLabel: UILabel!
-    @IBOutlet weak var charView: UIView!
+    @IBOutlet weak var charView: CandlesView!
     @IBOutlet weak var cryptoBalanceLabel: UILabel!
     
     override func awakeFromNib() {
@@ -40,7 +40,7 @@ extension DashboardWalletCell {
             ? Theme.current.green
             : Theme.current.red
         pctChangeLabel.layer.shadowColor = pctChangeLabel.textColor.cgColor
-//        charView
+        charView.update(viewModel.candles)
         cryptoBalanceLabel.text = viewModel.cryptoBalance
     }
 }

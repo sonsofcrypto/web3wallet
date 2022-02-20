@@ -466,9 +466,9 @@
                                                                 </stackView>
                                                             </subviews>
                                                         </stackView>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RcU-2E-7CX" userLabel="ChartView">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RcU-2E-7CX" userLabel="ChartView" customClass="CandlesView" customModule="web3wallet" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="48" width="130" height="44.5"/>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="1000" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YlW-FL-EWW">
                                                             <rect key="frame" x="0.0" y="108.5" width="130" height="20.5"/>
