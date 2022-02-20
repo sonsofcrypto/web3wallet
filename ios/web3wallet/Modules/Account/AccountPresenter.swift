@@ -74,7 +74,7 @@ private extension DefaultAccountPresenter {
                     .init(title: Localized("more"), imageName: "button_more")
                 ]
             ),
-            candles: CandlesViewModel.mock(64, first: false),
+            candles: CandlesViewModel.mock(50, first: false),
             marketInfo: .init(
                 marketCap: "$460,432,599",
                 price: "$4200",

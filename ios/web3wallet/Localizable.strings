@@ -52,3 +52,7 @@
 "amms" = "AMMs";
 "swap" = "Swap";
 "balance:" = "Balance:";
+
+"account.marketInfo.marketCap" = "Market cap";
+"account.marketInfo.price" = "Price";
+"account.marketInfo.volume" = "24h volume";
