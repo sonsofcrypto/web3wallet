@@ -6,6 +6,7 @@ import UIKit
 
 class AccountChartCell: CollectionViewCell {
 
+    @IBOutlet weak var candlesView: CandlesView!
 }
 
 // MARK: - AccountViewModel
@@ -13,6 +14,10 @@ class AccountChartCell: CollectionViewCell {
 extension AccountChartCell {
 
     func update(with viewModel: CandlesViewModel?) {
+        guard let viewModel = viewModel else {
+            return
+        }
 
+        candlesView.update(viewModel)
     }
 }

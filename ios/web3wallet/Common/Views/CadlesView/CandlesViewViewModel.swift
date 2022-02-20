@@ -67,7 +67,7 @@ extension CandlesViewModel {
                 )
             }
             return CandlesViewModel.loaded(
-                first ? result.first(n: 34) : result.last(n: 34)
+                first ? result.first(n: count) : result.last(n: count)
             )
         } catch {
             print(error)

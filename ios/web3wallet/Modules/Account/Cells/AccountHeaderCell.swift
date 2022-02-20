@@ -32,6 +32,8 @@ class AccountHeaderCell: UICollectionViewCell {
             0,
             after: containerStack.arrangedSubviews.first ?? sendButton
         )
+        containerStack.bringSubviewToFront(balanceLabel)
+        balanceLabel.clipsToBounds = false
     }
 }
 

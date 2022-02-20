@@ -833,7 +833,22 @@
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="jPd-Yn-LdB">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ABJ-gz-6in" customClass="CandlesView" customModule="web3wallet" customModuleProvider="target">
+                                                    <rect key="frame" x="-95" y="-39" width="240" height="128"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ABJ-gz-6in" firstAttribute="leading" secondItem="jPd-Yn-LdB" secondAttribute="leading" constant="16" id="2sm-FH-NhI"/>
+                                                <constraint firstAttribute="bottom" secondItem="ABJ-gz-6in" secondAttribute="bottom" constant="16" id="6z0-K9-M8H"/>
+                                                <constraint firstAttribute="trailing" secondItem="ABJ-gz-6in" secondAttribute="trailing" constant="16" id="QP4-DK-F9i"/>
+                                                <constraint firstItem="ABJ-gz-6in" firstAttribute="top" secondItem="jPd-Yn-LdB" secondAttribute="top" constant="16" id="ucI-g9-fIz"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="candlesView" destination="ABJ-gz-6in" id="JJy-K8-aWo"/>
+                                        </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AccountMarketInfoCell" id="JF0-9d-xOm" customClass="AccountMarketInfoCell" customModule="web3wallet" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
