@@ -14,11 +14,15 @@ class DegenSectionTitleView: UICollectionReusableView {
 extension DegenSectionTitleView {
 
     func update(with viewModel: DegenViewModel?) {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 6
+
         label.attributedText = NSAttributedString(
             string: viewModel?.sectionTitle ?? "",
             attributes: [
                 .font: Theme.current.cellDetail,
                 .foregroundColor: Theme.current.textColorTertiary,
+                .paragraphStyle: paragraphStyle
             ]
         )
     }

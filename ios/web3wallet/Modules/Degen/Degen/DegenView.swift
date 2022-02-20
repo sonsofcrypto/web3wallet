@@ -122,7 +122,7 @@ private extension DegenViewController {
 
     enum Constant {
         static let cellHeight: CGFloat = 78
-        static let headerHeight: CGFloat = 70
+        static let headerHeight: CGFloat = 86
     }
 
 }
