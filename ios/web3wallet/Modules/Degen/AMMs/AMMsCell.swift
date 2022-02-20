@@ -7,14 +7,21 @@ import UIKit
 class AMMsCell: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subTitleLabel: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        titleLabel.textColor = Theme.current.textColor
-        titleLabel.font = Theme.current.callout
-        titleLabel.layer.shadowColor = Theme.current.tintSecondary.cgColor
-        titleLabel.layer.shadowOffset = .zero
-        titleLabel.layer.shadowRadius = Global.shadowRadius
-        titleLabel.layer.shadowOpacity = 1
+        titleLabel.applyStyle(.headlineGlow)
+        subTitleLabel.applyStyle(.smallerLabel)
+    }
+}
+
+extension AMMsCell {
+
+    func update(with viewModel: AMMsViewModel.DApp?) {
+        titleLabel.text = viewModel?.title
+        subTitleLabel.text = viewModel?.network
+        imageView.image = UIImage(named: viewModel?.image  ?? "")
     }
 }

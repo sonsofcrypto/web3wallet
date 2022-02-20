@@ -22,6 +22,10 @@ class NavigationController: UINavigationController {
         ]
 
         appearance.backgroundColor = Theme.current.background.withAlphaComponent(1)
+        appearance.setBackIndicatorImage(
+            UIImage(named: "arrow_back"),
+            transitionMaskImage:  nil
+        )
 
         navigationBar.standardAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance

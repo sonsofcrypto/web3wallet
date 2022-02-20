@@ -95,6 +95,8 @@ extension DegenViewController {
     
     func configureUI() {
         title = Localized("degen")
+        navigationItem.backButtonTitle = ""
+
         (view as? GradientView)?.colors = [
             Theme.current.background,
             Theme.current.backgroundDark
@@ -109,6 +111,8 @@ extension DegenViewController {
         var insets = collectionView.contentInset
         insets.bottom += Global.padding
         collectionView.contentInset = insets
+
+        navigationItem.backButtonTitle = ""
     }
 }
 

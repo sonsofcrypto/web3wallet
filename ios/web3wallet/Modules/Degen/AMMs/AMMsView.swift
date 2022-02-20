@@ -14,6 +14,7 @@ class AMMsViewController: UIViewController {
     var presenter: AMMsPresenter!
 
     private var viewModel: AMMsViewModel?
+    private var cellSize: CGSize = .zero
     
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -23,10 +24,10 @@ class AMMsViewController: UIViewController {
         presenter?.present()
     }
 
-    // MARK: - Actions
-
-    @IBAction func templateAction(_ sender: Any) {
-
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        let length = (view.bounds.width - Global.padding * 2 - Constant.spacing) / 2
+        cellSize = CGSize(width: length, height: length)
     }
 }
 
@@ -36,16 +37,7 @@ extension AMMsViewController: AMMsView {
 
     func update(with viewModel: AMMsViewModel) {
         self.viewModel = viewModel
-//        collectionView.reloadData()
-//        if let idx = viewModel.selectedIdx(), !viewModel.items().isEmpty {
-//            for i in 0..<viewModel.items().count {
-//                collectionView.selectItem(
-//                    at: IndexPath(item: i, section: 0),
-//                    animated: idx == i,
-//                    scrollPosition: .top
-//                )
-//            }
-//        }
+        collectionView.reloadData()
     }
 }
 
@@ -54,25 +46,27 @@ extension AMMsViewController: AMMsView {
 extension AMMsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.items().count ?? 0
+        return viewModel?.dapps.count ?? 0
     }
-    
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeue(WalletsCell.self, for: indexPath)
-        cell.titleLabel.text = viewModel?.items()[indexPath.item].title
+        let cell = collectionView.dequeue(AMMsCell.self, for: indexPath)
+        cell.update(with: viewModel?.dapps[indexPath.item])
         return cell
     }
-}
-
-extension AMMsViewController: UICollectionViewDelegate {
-    
 }
 
 extension AMMsViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 32, height: Global.cellHeight)
+        return cellSize
+    }
+}
+
+extension AMMsViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter.handle(.didSelectDApp(idx: indexPath.item))
     }
 }
 
@@ -81,10 +75,24 @@ extension AMMsViewController: UICollectionViewDelegateFlowLayout {
 extension AMMsViewController {
     
     func configureUI() {
-        title = Localized("wallets")
+        title = Localized("amms")
         (view as? GradientView)?.colors = [
             Theme.current.background,
             Theme.current.backgroundDark
         ]
+
+        var insets = collectionView.contentInset
+        insets.top += Global.padding
+        insets.bottom += Global.padding
+        collectionView.contentInset = insets
+    }
+}
+
+// MARK: - Constant
+
+extension AMMsViewController {
+
+    enum Constant {
+        static let spacing: CGFloat = 17
     }
 }

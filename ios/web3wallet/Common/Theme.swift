@@ -65,6 +65,10 @@ struct Theme {
         UIFont.font(.gothicA1, style: .regular, size: .callout)
     }
 
+    var headline: UIFont {
+        UIFont.font(.gothicA1, style: .regular, size: .headline)
+    }
+
     var subhead: UIFont {
         UIFont.font(.gothicA1, style: .regular, size: .subhead)
     }
@@ -79,6 +83,14 @@ struct Theme {
 
     var footnote: UIFont {
         UIFont.font(.gothicA1, style: .regular, size: .footnote)
+    }
+
+    var caption1: UIFont {
+        UIFont.font(.gothicA1, style: .regular, size: .caption1)
+    }
+
+    var caption2: UIFont {
+        UIFont.font(.gothicA1, style: .regular, size: .caption2)
     }
 
     var tabBar: UIFont {

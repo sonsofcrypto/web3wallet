@@ -39,7 +39,7 @@ class DefaultAMMsPresenter {
 extension DefaultAMMsPresenter: AMMsPresenter {
 
     func present() {
-        view?.update(viewModel(interactor.dapps()))
+        view?.update(with: viewModel(interactor.dapps()))
     }
 
     func handle(_ event: AMMsPresenterEvent) {
