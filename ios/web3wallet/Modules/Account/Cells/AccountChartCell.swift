@@ -7,6 +7,11 @@ import UIKit
 class AccountChartCell: CollectionViewCell {
 
     @IBOutlet weak var candlesView: CandlesView!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        layer.cornerRadius = Global.cornerRadius * 2
+    }
 }
 
 // MARK: - AccountViewModel

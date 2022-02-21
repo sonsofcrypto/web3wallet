@@ -20,6 +20,7 @@ class AccountTransactionCell: CollectionViewCell {
         addressLabel.applyStyle(.smallerLabel)
         addressLabel.textColor = Theme.current.textColorTertiary
         amountLabel.applyStyle(.subheadGlow)
+        layer.cornerRadius = Global.cornerRadius * 2
     }
 }
 

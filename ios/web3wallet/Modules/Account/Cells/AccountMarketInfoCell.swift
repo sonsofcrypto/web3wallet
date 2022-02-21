@@ -22,6 +22,8 @@ class AccountMarketInfoCell: CollectionViewCell {
         [marketCapValueLabel, priceValueLabel, volumeValueLabel].forEach {
             $0?.applyStyle(.subheadGlow)
         }
+
+        layer.cornerRadius = Global.cornerRadius * 2
     }
 }
 

@@ -204,7 +204,7 @@ extension AccountViewController {
 extension AccountViewController {
 
     enum Constant {
-        static let headerHeight: CGFloat = 168
+        static let headerHeight: CGFloat = 172
         static let chartHeight: CGFloat = 162
         static let marketInfoHeight: CGFloat = 71
         static let transactionsHeight: CGFloat = 64
