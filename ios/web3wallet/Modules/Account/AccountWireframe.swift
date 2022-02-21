@@ -37,7 +37,7 @@ extension DefaultAccountWireframe: AccountWireframe {
     func present() {
         let vc = wireUp()
         let topVc = (parent as? UINavigationController)?.topViewController
-        
+
         if let transitionDelegate =  topVc as? UIViewControllerTransitioningDelegate {
             vc.transitioningDelegate = transitionDelegate
         }

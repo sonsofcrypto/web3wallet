@@ -18,7 +18,7 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
     }
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return isPresenting ? 1.5 : 0.5
+        return isPresenting ? 1.0 : 0.75
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -143,12 +143,12 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
         UIView.springAnimate(
             transitionDuration(using: context),
             damping: 0.9,
+            velocity: 0.2,
             animations: {
                 fromView?.transform = CGAffineTransform(
                     translationX: 0,
                     y: UIScreen.main.bounds.size.height
                 )
-                fromView?.alpha = 0
             },
             completion: { success in
                 context.completeTransition(success)
