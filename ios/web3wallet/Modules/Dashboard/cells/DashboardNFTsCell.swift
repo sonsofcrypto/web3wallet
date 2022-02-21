@@ -16,6 +16,12 @@ class DashboardNFTsCell: CollectionViewCell {
         carousel.dataSource = self
         carousel.type = .coverFlow
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        layer.transform = CATransform3DIdentity
+        layer.removeAllAnimations()
+    }
 }
 
 // MARK: - DashboardViewModel
@@ -29,7 +35,7 @@ extension DashboardNFTsCell {
 }
 
 
-// MARK -
+// MARK - iCarouselDataSource
 
 extension DashboardNFTsCell: iCarouselDataSource {
 

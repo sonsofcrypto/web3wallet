@@ -139,6 +139,36 @@ extension DashboardViewModel {
                 pctChange: "5.5%",
                 priceUp: true,
                 candles: CandlesViewModel.mock(first: false)
+            ),
+            .init(
+                name: "Solana",
+                ticker: "SOL",
+                imageName: "currency_icon_small_sol",
+                fiatBalance: "$69,000",
+                cryptoBalance: "420.00 SOL",
+                pctChange: "12%",
+                priceUp: true,
+                candles: CandlesViewModel.mock(first: false)
+            ),
+            .init(
+                name: "Raydium",
+                ticker: "RAY",
+                imageName: "currency_icon_small_ray",
+                fiatBalance: "$6,900.00",
+                cryptoBalance: "4,200 RAY",
+                pctChange: "5.5%",
+                priceUp: true,
+                candles: CandlesViewModel.mock()
+            ),
+            .init(
+                name: "Mango",
+                ticker: "MNGO",
+                imageName: "currency_icon_small_mngo",
+                fiatBalance: "$4,200.00",
+                cryptoBalance: "69 MNGO",
+                pctChange: "5.5%",
+                priceUp: true,
+                candles: CandlesViewModel.mock(first: false)
             )
         ]
     }

@@ -16,7 +16,9 @@ class DashboardViewController: UIViewController {
     private var viewModel: DashboardViewModel?
     private var walletCellSize: CGSize = .zero
     private var nftsCellSize: CGSize = .zero
-    
+    private var previousYOffset: CGFloat = 0
+    private var lastVelocity: CGFloat = 0
+
     @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
@@ -159,6 +161,33 @@ extension DashboardViewController: UICollectionViewDelegate {
         }
         // TODO: implement NFT selection
     }
+
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard lastVelocity > 0 else {
+            return
+        }
+
+        let rotation = CATransform3DMakeRotation(-3.13 / 2, 1, 0, 0)
+        let anim = CABasicAnimation(keyPath: "transform")
+        anim.fromValue = CATransform3DScale(rotation, 0.5, 0.5, 0)
+        anim.toValue = CATransform3DIdentity
+        anim.duration = 0.3
+        anim.isRemovedOnCompletion = true
+        anim.fillMode = .both
+        anim.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        anim.beginTime = CACurrentMediaTime() + 0.05 * CGFloat(indexPath.item);
+        cell.layer.add(anim, forKey: "transform")
+    }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension DashboardViewController: UIScrollViewDelegate {
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        lastVelocity = scrollView.contentOffset.y - previousYOffset
+        previousYOffset = scrollView.contentOffset.y
+    }
 }
 
 // MARK: - Configure UI
@@ -195,6 +224,9 @@ extension DashboardViewController {
         var insets = collectionView.contentInset
         insets.bottom += Global.padding
         collectionView.contentInset = insets
+        var transform = CATransform3DIdentity
+        transform.m34 = -1.0 / 500.0
+        collectionView.layer.sublayerTransform = transform
     }
 }
 

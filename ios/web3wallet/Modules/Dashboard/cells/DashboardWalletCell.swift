@@ -25,6 +25,12 @@ class DashboardWalletCell: CollectionViewCell {
         fiatBalanceLabel.textColor = Theme.current.textColorSecondary
         cryptoBalanceLabel.applyStyle(.callout)
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        layer.transform = CATransform3DIdentity
+        layer.removeAllAnimations()
+    }
 }
 
 // MARK: - DashboardViewModel
