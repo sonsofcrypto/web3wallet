@@ -114,7 +114,7 @@ extension DegenViewController {
 
         let overScrollView = (collectionView as? CollectionView)
         overScrollView?.overScrollView.image = UIImage(named: "overscroll_degen")
-
+        overScrollView?.overScrollView.layer.transform = CATransform3DMakeTranslation(0, -100, 0)
         navigationItem.backButtonTitle = ""
     }
 }

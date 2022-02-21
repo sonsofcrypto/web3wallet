@@ -50,6 +50,12 @@ extension AccountViewController: AccountView {
         self.viewModel = viewModel
         collectionView.reloadData()
         title = viewModel.currencyName
+
+        let btnLabel = (navigationItem.rightBarButtonItem?.customView as? UILabel)
+        btnLabel?.text = viewModel.header.pct
+        btnLabel?.textColor = viewModel.header.pctUp
+            ? Theme.current.green
+            : Theme.current.red
     }
 }
 
@@ -192,6 +198,8 @@ extension AccountViewController {
             Theme.current.background,
             Theme.current.backgroundDark
         ]
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem.glowLabel()
 
         var insets = collectionView.contentInset
         insets.bottom += Global.padding

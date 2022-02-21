@@ -26,7 +26,7 @@ class CollectionView: UICollectionView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-]        overScrollView.center.x = bounds.width / 2
+        overScrollView.center.x = bounds.width / 2
         overScrollView.center.y = max(
             contentSize.height -
             adjustedContentInset.bottom +
@@ -36,7 +36,7 @@ class CollectionView: UICollectionView {
             frame.maxY
         )
 
-        print(bounds.origin.y, adjustedContentInset.top, adjustedContentInset.bottom, bounds.height ,contentSize.height)
+        // print(bounds.origin.y, adjustedContentInset.top, adjustedContentInset.bottom, bounds.height ,contentSize.height)
     }
 }
 
