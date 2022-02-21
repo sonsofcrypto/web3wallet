@@ -112,6 +112,9 @@ extension DegenViewController {
         insets.bottom += Global.padding
         collectionView.contentInset = insets
 
+        let overScrollView = (collectionView as? CollectionView)
+        overScrollView?.overScrollView.image = UIImage(named: "overscroll_degen")
+
         navigationItem.backButtonTitle = ""
     }
 }

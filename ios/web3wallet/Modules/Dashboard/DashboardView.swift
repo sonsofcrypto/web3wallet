@@ -224,9 +224,13 @@ extension DashboardViewController {
         var insets = collectionView.contentInset
         insets.bottom += Global.padding
         collectionView.contentInset = insets
+
         var transform = CATransform3DIdentity
         transform.m34 = -1.0 / 500.0
         collectionView.layer.sublayerTransform = transform
+
+        let overScrollView = (collectionView as? CollectionView)
+        overScrollView?.overScrollView.image = UIImage(named: "overscroll_pepe")
     }
 }
 
