@@ -14,17 +14,16 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
         self.targetView = targetView
         self.isPresenting = isPresenting
         super.init()
-
     }
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return isPresenting ? 1.0 : 0.75
+        return isPresenting ? 0.9 : 1
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let fromVc = transitionContext.viewController(forKey: .from)
         let toVc = transitionContext.viewController(forKey: .to)
-        let fromView = transitionContext.view(forKey: .to)
+        let fromView = transitionContext.view(forKey: .from)
         let toView = transitionContext.view(forKey: .to)
         let containerView = transitionContext.containerView
 
@@ -61,66 +60,70 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
         containerView: UIView,
         context: UIViewControllerContextTransitioning
     ) {
-        toView?.frame = containerView.bounds
 
-        let toViewContainer = UIView(frame: containerView.bounds)
-        toViewContainer.backgroundColor = .clear
-
+        let transformView = TransformView(frame: containerView.bounds)
         let snap = fromView?.snapshotView(afterScreenUpdates: false)
-        var snapTransform = CATransform3DIdentity
+        var snapScale: CGSize = .zero
+        var translation: CGPoint = .zero
 
         if let toView = toView, let fromView = fromView, let snap = snap {
+            transformView.frame = containerView.bounds
+            toView.frame = transformView.bounds
 
-            snap.center = containerView.convert(fromView.bounds.midXY, from: fromView)
-
-            let rotation = CATransform3DMakeRotation(
-                (CGFloat(Double.pi) - 0.001), 0, 1, 0
+            snapScale = CGSize(
+                width: toView.bounds.width / snap.bounds.width,
+                height: toView.bounds.height / snap.bounds.height
             )
 
-            let scale = CATransform3DMakeScale(
-                snap.bounds.width / toView.bounds.width,
-                snap.bounds.height / toView.bounds.height,
-                0
+            translation = CGPoint(
+                x: containerView.convert(fromView.bounds.midXY, from: fromView).x - toView.center.x,
+                y: containerView.convert(fromView.bounds.midXY, from: fromView).y - toView.center.y
             )
 
-            let translation = CATransform3DMakeTranslation(
-                -(snap.center.x - toView.center.x),
-                snap.center.y - toView.center.y,
-                0
+            containerView.addSubview(transformView)
+            transformView.addSubview(toView)
+            transformView.addSubview(snap)
+
+            toView.layer.zPosition = -1
+            toView.transform = CGAffineTransform(
+                scaleX: -(snap.bounds.width / toView.bounds.width),
+                y: snap.bounds.height / toView.bounds.height
             )
 
-            let snapRotation = CATransform3DMakeRotation(
-                -(CGFloat(Double.pi) - 0.001), 0, 1, 0
-            )
-
-            let snapTranslation = CATransform3DMakeTranslation(
-                toView.center.x - snap.center.x,
-                toView.center.y - snap.center.y,
-                0
-            )
-
-            snapTransform = CATransform3DConcat(snapRotation, snapTranslation)
-            toViewContainer.layer.transform = rotation
-            toView.layer.transform = CATransform3DConcat(scale, translation)
-
-            toViewContainer.addSubview(toView)
-            containerView.addSubview(toViewContainer)
-            containerView.addSubview(snap)
+            [toView, snap].forEach { $0.center = transformView.bounds.midXY }
         }
+
+        containerView.layer.sublayerTransform = TransformView.parentSublayerTransform
+        transformView.layer.transform = CATransform3DMakeTranslation(
+            translation.x,
+            translation.y,
+            0
+        )
+
+        let angle = CGFloat(-Double.pi) + 0.001
+
+        fromView?.alpha = 0.0001
 
         UIView.springAnimate(
             transitionDuration(using: context),
             damping: 0.9,
+            velocity: 0.5,
             animations: {
-                toViewContainer.layer.transform = CATransform3DIdentity
-                toView?.layer.transform = CATransform3DIdentity
-                snap?.layer.transform = snapTransform
-                snap?.layer.zPosition = -1
+                transformView.layer.transform = CATransform3DMakeRotation(angle, 0, 1, 0)
+                toView?.transform = CGAffineTransform(scaleX: -1, y: 1)
+                snap?.transform = CGAffineTransform(
+                    scaleX: snapScale.width,
+                    y: snapScale.height
+                )
             },
             completion: { success in
                 snap?.removeFromSuperview()
-                toViewContainer.removeFromSuperview()
+                transformView.removeFromSuperview()
+                fromView?.alpha = 1
                 if let toView = toView {
+                    toView.layer.zPosition = 0
+                    toView.transform = .identity
+                    toView.frame = containerView.bounds
                     containerView.addSubview(toView)
                 }
                 context.completeTransition(success)
@@ -136,21 +139,71 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
         containerView: UIView,
         context: UIViewControllerContextTransitioning
     ) {
-//        if let toView = toView ?? toVc?.view, let fromView = fromView {
-//            containerView.insertSubview(toView, belowSubview: fromView)
-//        }
+        let transformView = TransformView(frame: containerView.bounds)
+        let snap = toView?.snapshotView(afterScreenUpdates: false)
+        var snapScale: CGSize = .zero
+        var translation: CGPoint = .zero
+
+        if let toView = toView, let fromView = fromView, let snap = snap {
+            transformView.frame = containerView.bounds
+            fromView.frame = transformView.bounds
+
+            snapScale = CGSize(
+                width: toView.bounds.width / fromView.bounds.width,
+                height: toView.bounds.height / fromView.bounds.height
+            )
+
+            translation = CGPoint(
+                x: -(containerView.convert(toView.bounds.midXY, from: toView).x - fromView.center.x),
+                y: containerView.convert(toView.bounds.midXY, from: toView).y - fromView.center.y
+            )
+
+            containerView.addSubview(transformView)
+            transformView.addSubview(snap)
+            transformView.addSubview(fromView)
+
+            snap.layer.zPosition = -1
+
+            snap.transform = CGAffineTransform(
+                scaleX: -(fromView.bounds.width / snap.bounds.width),
+                y: fromView.bounds.height / snap.bounds.height
+            )
+
+            [fromView, snap].forEach { $0.center = transformView.bounds.midXY }
+        }
+
+        containerView.layer.sublayerTransform = TransformView.parentSublayerTransform
+
+        let angle = CGFloat(Double.pi)
+
+        toView?.alpha = 0.0001
 
         UIView.springAnimate(
             transitionDuration(using: context),
             damping: 0.9,
-            velocity: 0.2,
+            velocity: 0.5,
             animations: {
+                transformView.layer.transform = CATransform3DTranslate(
+                    CATransform3DMakeRotation(angle, 0, 1, 0),
+                    translation.x,
+                    translation.y,
+                    0
+                )
+                snap?.transform = CGAffineTransform(scaleX: -1, y: 1)
                 fromView?.transform = CGAffineTransform(
-                    translationX: 0,
-                    y: UIScreen.main.bounds.size.height
+                    scaleX: snapScale.width,
+                    y: snapScale.height
                 )
             },
             completion: { success in
+                snap?.removeFromSuperview()
+                transformView.removeFromSuperview()
+                toView?.alpha = 1
+//                if let toView = toView {
+//                    toView.transform = .identity
+//                    toView.frame = containerView.bounds
+//                    containerView.addSubview(toView)
+//                }
                 context.completeTransition(success)
             }
         )
@@ -159,4 +212,18 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
      func animationEnded(transitionCompleted: Bool) {
 
     }
+}
+
+class TransformView: UIView {
+
+    override class var layerClass: AnyClass {
+        return CATransformLayer.self
+    }
+
+    static let parentSublayerTransform:CATransform3D = {
+        var transform = CATransform3DIdentity
+        transform.m34 = -1.0 / 500.0
+        return transform
+    }()
+
 }

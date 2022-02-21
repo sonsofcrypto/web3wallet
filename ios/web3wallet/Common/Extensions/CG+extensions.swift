@@ -14,6 +14,6 @@ extension CGSize {
 extension CGRect {
 
     var midXY: CGPoint {
-        CGPoint(x: midX, y: midX)
+        CGPoint(x: midX, y: midY)
     }
 }
