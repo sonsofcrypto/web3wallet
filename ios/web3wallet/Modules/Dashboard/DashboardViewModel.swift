@@ -94,17 +94,17 @@ extension DashboardViewModel {
 
     static func mockNFTsETH() -> [DashboardViewModel.NFT] {
         return [
-            .init(imageName: ""),
-            .init(imageName: ""),
-            .init(imageName: ""),
-            .init(imageName: ""),
-            .init(imageName: ""),
-            .init(imageName: ""),
-            .init(imageName: ""),
-            .init(imageName: ""),
-            .init(imageName: ""),
-            .init(imageName: ""),
-            .init(imageName: ""),
+            .init(imageName: "ape"),
+            .init(imageName: "ape2"),
+            .init(imageName: "ape3"),
+            .init(imageName: "ape4"),
+            .init(imageName: "ape5"),
+            .init(imageName: "penguin"),
+            .init(imageName: "penguin2"),
+            .init(imageName: "punk"),
+            .init(imageName: "punk2"),
+            .init(imageName: "punk3"),
+            .init(imageName: "punk4")
         ]
     }
 

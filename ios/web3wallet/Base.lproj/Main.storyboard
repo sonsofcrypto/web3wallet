@@ -620,8 +620,23 @@
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="FpZ-U4-por">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="162"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V3e-tN-5Vb" customClass="iCarousel">
+                                                    <rect key="frame" x="51.5" y="17" width="240" height="128"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="V3e-tN-5Vb" firstAttribute="leading" secondItem="FpZ-U4-por" secondAttribute="leading" constant="16" id="Bmy-sq-3V4"/>
+                                                <constraint firstAttribute="trailing" secondItem="V3e-tN-5Vb" secondAttribute="trailing" constant="16" id="Go8-Xe-Wvr"/>
+                                                <constraint firstItem="V3e-tN-5Vb" firstAttribute="top" secondItem="FpZ-U4-por" secondAttribute="top" constant="16" id="cPK-3n-9o5"/>
+                                                <constraint firstAttribute="bottom" secondItem="V3e-tN-5Vb" secondAttribute="bottom" constant="16" id="s8s-Rm-qsQ"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="343" height="162"/>
+                                        <connections>
+                                            <outlet property="carousel" destination="V3e-tN-5Vb" id="Mzn-TF-U2b"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DashboardHeaderView" id="izS-01-Pf7" customClass="DashboardHeaderView" customModule="web3wallet" customModuleProvider="target">
