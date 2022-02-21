@@ -936,7 +936,48 @@
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="rjq-kY-s04">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qJG-OJ-zNv">
+                                                    <rect key="frame" x="-30" y="-75" width="110" height="200"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sno-cH-p4d">
+                                                            <rect key="frame" x="-45" y="45" width="200" height="110"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1aj-jY-Tdj">
+                                                                    <rect key="frame" x="79" y="44" width="42" height="21"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3DZ-cL-7Pm">
+                                                                    <rect key="frame" x="79" y="44" width="42" height="21"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GDi-pc-ObM">
+                                                            <rect key="frame" x="34" y="89" width="42" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="qJG-OJ-zNv" secondAttribute="bottom" constant="16" id="BI5-n5-UGB"/>
+                                                <constraint firstItem="qJG-OJ-zNv" firstAttribute="leading" secondItem="rjq-kY-s04" secondAttribute="leading" constant="16" id="IVf-cP-Wxa"/>
+                                                <constraint firstAttribute="trailing" secondItem="qJG-OJ-zNv" secondAttribute="trailing" constant="16" id="P4u-5T-N7k"/>
+                                                <constraint firstItem="qJG-OJ-zNv" firstAttribute="top" secondItem="rjq-kY-s04" secondAttribute="top" constant="16" id="oTB-zs-vxq"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="addressLabel" destination="GDi-pc-ObM" id="1ei-Fs-t8B"/>
+                                            <outlet property="amountLabel" destination="3DZ-cL-7Pm" id="IHN-WY-N34"/>
+                                            <outlet property="dateLabel" destination="1aj-jY-Tdj" id="KNB-En-8b6"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>

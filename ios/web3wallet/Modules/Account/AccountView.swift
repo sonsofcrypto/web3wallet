@@ -82,6 +82,15 @@ extension AccountViewController: UICollectionViewDataSource {
         case .transactions:
             let cell = collectionView.dequeue(AccountTransactionCell.self, for: indexPath)
             cell.update(with: viewModel?.transactions[indexPath.item])
+            if viewModel?.transactions.count == 1 {
+                cell.update(for: .single)
+            } else if indexPath.item == 0 {
+                cell.update(for: .top)
+            } else if indexPath.item == (viewModel?.transactions.count ?? 0) - 1 {
+                cell.update(for: .bottom)
+            } else {
+                cell.update(for: .middle)
+            }
             return cell
         }
     }

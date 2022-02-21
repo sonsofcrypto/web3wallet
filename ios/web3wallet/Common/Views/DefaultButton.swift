@@ -133,7 +133,7 @@ class VerticalButton: DefaultButton {
 
         // TODO: Remove this hack. Itroduced coz color and font were on being
         // set when setting from `AccountHeaderCell`
-        label.applyStyle(.smallerLabelGlow)
+        label.applyStyle(.smallestLabelGlow)
 
         label.bounds.size.width = bounds.width
         label.bounds.size.height = bounds.height * 0.3333

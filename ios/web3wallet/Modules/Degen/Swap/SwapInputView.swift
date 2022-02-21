@@ -7,9 +7,9 @@ import UIKit
 class SwapInputView: UIView {
 
     let textField = UITextField()
-    let fiatValueLabel = UILabel(with: .smallerLabel)
+    let fiatValueLabel = UILabel(with: .smallestLabel)
     let currencyButton = LeftRightImageButton()
-    let balanceLabel = UILabel(with: .smallerLabel)
+    let balanceLabel = UILabel(with: .smallestLabel)
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,7 +21,7 @@ class SwapInputView: UIView {
         textField.font = Theme.current.title1
 
         currencyButton.rightImageView.image = UIImage(named: "chevron_down")
-        currencyButton.titleLabel?.applyStyle(.smallerLabel)
+        currencyButton.titleLabel?.applyStyle(.smallestLabel)
         currencyButton.titleLabel?.layer.shadowOpacity = 0
         currencyButton.titleLabel?.textAlignment = .center
 
