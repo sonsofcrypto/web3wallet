@@ -80,6 +80,7 @@
 		1A4C3907090271B34B3F8F4E /* RootWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D0EF3DBE9AC06A05512 /* RootWireframe.swift */; };
 		1A4C39119C04EB0DE3B90F12 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A08014FC9721FC2557C /* RootView.swift */; };
 		1A4C3926E0A2F1B6A2CF3040 /* NetworksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C36211D0CAC7CD3E2B39B /* NetworksView.swift */; };
+		1A4C392C21DA6EEADCF86CD8 /* CardFlipTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C37AEF50E65C670AC67DA /* CardFlipTransition.swift */; };
 		1A4C3946A210F5A781EAC827 /* UILabel+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39B21512118DB853A3E3 /* UILabel+extensions.swift */; };
 		1A4C39A545EC7DA7D3253450 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C325D5EF4C18FCD3B1472 /* DashboardViewModel.swift */; };
 		1A4C39B2514D23D66B1540A1 /* DegenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3488BA01A7A891884D67 /* DegenInteractor.swift */; };
@@ -233,6 +234,7 @@
 		1A4C376FCE382F2B2A126F5E /* SwapWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapWireframeFactory.swift; sourceTree = "<group>"; };
 		1A4C37840D018B26EF2993AB /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		1A4C3795FDA4A86232F2BA21 /* NetworksInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksInteractor.swift; sourceTree = "<group>"; };
+		1A4C37AEF50E65C670AC67DA /* CardFlipTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFlipTransition.swift; sourceTree = "<group>"; };
 		1A4C37E7FEEE448ABFD2A86C /* NetworksCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksCell.swift; sourceTree = "<group>"; };
 		1A4C3811EC67D01771B97011 /* AMMsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMMsViewModel.swift; sourceTree = "<group>"; };
 		1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsService.swift; sourceTree = "<group>"; };
@@ -404,6 +406,7 @@
 				D116CF2727C2531E005542AA /* Array+extensions.swift */,
 				1A4C3ADE5C8CD3D3CBB36547 /* UIBarButtonItem+extensions.swift */,
 				1A4C393EC70B537D98A4CA4A /* CG+extensions.swift */,
+				1A4C37AEF50E65C670AC67DA /* CardFlipTransition.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1090,6 +1093,7 @@
 				1A4C329D37BA590D99ED3A5C /* AccountSectionHeader.swift in Sources */,
 				1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */,
 				1A4C3DB9D875750365494DD7 /* CG+extensions.swift in Sources */,
+				1A4C392C21DA6EEADCF86CD8 /* CardFlipTransition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

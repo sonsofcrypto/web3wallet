@@ -40,6 +40,10 @@ class AccountViewController: UIViewController {
     @IBAction func moreAction(_ sender: Any) {
 
     }
+
+    @IBAction func dismissAction(_ sender: Any) {
+        dismiss(animated: true)
+    }
 }
 
 // MARK: - WalletsView
@@ -200,6 +204,13 @@ extension AccountViewController {
         ]
 
         navigationItem.rightBarButtonItem = UIBarButtonItem.glowLabel()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: UIImage(named: "arrow_back"),
+            style: .plain,
+            target: self,
+            action: #selector(dismissAction(_:))
+        )
+        navigationItem.leftBarButtonItem?.tintColor  = Theme.current.tintPrimary
 
         var insets = collectionView.contentInset
         insets.bottom += Global.padding

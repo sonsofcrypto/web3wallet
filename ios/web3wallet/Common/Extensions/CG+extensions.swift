@@ -10,3 +10,10 @@ extension CGSize {
         self.init(width: length, height: length)
     }
 }
+
+extension CGRect {
+
+    var midXY: CGPoint {
+        CGPoint(x: midX, y: midX)
+    }
+}

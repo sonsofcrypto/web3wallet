@@ -18,6 +18,7 @@ class DashboardViewController: UIViewController {
     private var nftsCellSize: CGSize = .zero
     private var previousYOffset: CGFloat = 0
     private var lastVelocity: CGFloat = 0
+    private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
 
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -190,6 +191,46 @@ extension DashboardViewController: UIScrollViewDelegate {
     }
 }
 
+// MARK: - UIViewControllerTransitioningDelegate
+
+extension DashboardViewController: UIViewControllerTransitioningDelegate {
+
+    func animationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController,
+        source: UIViewController
+    ) -> UIViewControllerAnimatedTransitioning? {
+        let presentedVc = (presented as? UINavigationController)?.topViewController
+        animatedTransitioning = nil
+
+        if presentedVc?.isKind(of: AccountViewController.self) ?? false {
+            let idxPath = collectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0)
+            let cell = collectionView.cellForItem(at: idxPath)
+            animatedTransitioning = CardFlipAnimatedTransitioning(
+                targetView: cell ?? view
+            )
+        }
+
+        return animatedTransitioning
+    }
+
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let presentedVc = (dismissed as? UINavigationController)?.topViewController
+        animatedTransitioning = nil
+
+        if presentedVc?.isKind(of: AccountViewController.self) ?? false {
+            let idxPath = collectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0)
+            let cell = collectionView.cellForItem(at: idxPath)
+            animatedTransitioning = CardFlipAnimatedTransitioning(
+                targetView: cell ?? view,
+                isPresenting: false
+            )
+        }
+
+        return animatedTransitioning
+    }
+}
+
 // MARK: - Configure UI
 
 extension DashboardViewController {
@@ -220,6 +261,8 @@ extension DashboardViewController {
             target: self,
             action: #selector(walletConnectionSettingsAction(_:))
         )
+
+        transitioningDelegate = self
 
         var insets = collectionView.contentInset
         insets.bottom += Global.padding

@@ -36,7 +36,14 @@ extension DefaultAccountWireframe: AccountWireframe {
 
     func present() {
         let vc = wireUp()
-        parent?.show(vc, sender: self)
+        let topVc = (parent as? UINavigationController)?.topViewController
+        
+        if let transitionDelegate =  topVc as? UIViewControllerTransitioningDelegate {
+            vc.transitioningDelegate = transitionDelegate
+        }
+
+        vc.modalPresentationStyle = .overCurrentContext
+        topVc?.show(vc, sender: self)
     }
 
     func navigate(to destination: AccountWireframeDestination) {
