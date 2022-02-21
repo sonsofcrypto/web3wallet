@@ -94,6 +94,19 @@ extension AccountViewController: UICollectionViewDataSource {
             return cell
         }
     }
+
+    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            let supplementary = collectionView.dequeue(
+                AccountSectionHeader.self,
+                for: indexPath,
+                kind: kind
+            )
+            supplementary.label.text = Localized("account.marketInfo.transactions")
+            return supplementary
+        }
+        fatalError("Unexpected element \(kind) \(indexPath)")
+    }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -119,6 +132,17 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
         }
 
         return .zero
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        guard let section = Section(rawValue: section), section == .transactions else {
+            return .zero
+        }
+
+        return CGSize(
+            width: view.bounds.width - Global.padding * 2,
+            height: Constant.sectionHeaderHeight
+        )
     }
 }
 
@@ -184,6 +208,6 @@ extension AccountViewController {
         static let chartHeight: CGFloat = 162
         static let marketInfoHeight: CGFloat = 71
         static let transactionsHeight: CGFloat = 64
-
+        static let sectionHeaderHeight: CGFloat = 24
     }
 }

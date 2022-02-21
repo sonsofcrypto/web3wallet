@@ -56,3 +56,4 @@
 "account.marketInfo.marketCap" = "Market cap";
 "account.marketInfo.price" = "Price";
 "account.marketInfo.volume" = "24h volume";
+"account.marketInfo.transactions" = "Transactions";

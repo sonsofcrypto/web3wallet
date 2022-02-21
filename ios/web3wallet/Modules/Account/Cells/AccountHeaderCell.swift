@@ -27,7 +27,7 @@ class AccountHeaderCell: UICollectionViewCell {
         [receiveButton, sendButton, tradeButton, moreButton].forEach {
             $0?.titleLabel?.applyStyle(.smallestLabelGlow)
         }
-        containerStack.setCustomSpacing(Global.padding / 4, after: balanceLabel)
+        containerStack.setCustomSpacing(0, after: balanceLabel)
         containerStack.setCustomSpacing(
             0,
             after: containerStack.arrangedSubviews.first ?? sendButton
