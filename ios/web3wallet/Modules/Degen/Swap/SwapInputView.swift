@@ -19,6 +19,7 @@ class SwapInputView: UIView {
 
         textField.textColor = Theme.current.textColor
         textField.font = Theme.current.title1
+        textField.keyboardType = .decimalPad
 
         currencyButton.rightImageView.image = UIImage(named: "chevron_down")
         currencyButton.titleLabel?.applyStyle(.smallestLabel)

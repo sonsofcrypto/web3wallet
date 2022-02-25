@@ -29,6 +29,13 @@ class AMMsViewController: UIViewController {
         let length = (view.bounds.width - Global.padding * 2 - Constant.spacing) / 2
         cellSize = CGSize(width: length, height: length)
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        collectionView.indexPathsForSelectedItems?.forEach {
+            collectionView.deselectItem(at: $0, animated: true)
+        }
+    }
 }
 
 // MARK: - WalletsView

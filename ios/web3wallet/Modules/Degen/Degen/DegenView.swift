@@ -22,6 +22,13 @@ class DegenViewController: UIViewController {
         configureUI()
         presenter?.present()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        collectionView.indexPathsForSelectedItems?.forEach {
+            collectionView.deselectItem(at: $0, animated: true)
+        }
+    }
 }
 
 // MARK: - DegenView
