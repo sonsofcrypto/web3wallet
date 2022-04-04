@@ -149,8 +149,6 @@ private extension EdgeCardsController {
             tapRecognizers.enumerated().forEach { $0.1.isEnabled = $0.0 != 1 }
         case .bottomCard:
             tapRecognizers.enumerated().forEach { $0.1.isEnabled = $0.0 != 2 }
-        default:
-            ()
         }
         layout()
     }

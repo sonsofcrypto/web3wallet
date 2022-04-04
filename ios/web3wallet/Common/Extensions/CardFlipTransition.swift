@@ -4,7 +4,6 @@
 
 import UIKit
 
-
 class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransitioning {
 
     var targetView: UIView
