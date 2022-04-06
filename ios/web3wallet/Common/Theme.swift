@@ -50,7 +50,6 @@ struct Theme {
         UIColor.appGreen
     }
 
-
     // MARK: - Fonts
 
     var body: UIFont {
@@ -103,7 +102,5 @@ struct Theme {
 
     var cellDetail: UIFont {
         UIFont.font(.gothicA1, style: .regular, size: .custom(size: 15))
-
     }
 }
-
