@@ -152,6 +152,9 @@
 		1CCA558F27FF07470092A4D2 /* SettingsWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA558E27FF07470092A4D2 /* SettingsWireframeFactoryAssembler.swift */; };
 		1CCA559127FF07730092A4D2 /* WalletsWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA559027FF07730092A4D2 /* WalletsWireframeFactoryAssembler.swift */; };
 		1CCA559327FF07AF0092A4D2 /* RootWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA559227FF07AF0092A4D2 /* RootWireframeFactoryAssembler.swift */; };
+		1CCA559627FF0F1B0092A4D2 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA559527FF0F1B0092A4D2 /* AppTheme.swift */; };
+		1CCA559827FF0F330092A4D2 /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA559727FF0F330092A4D2 /* DefaultTheme.swift */; };
+		1CCA559A27FF11B20092A4D2 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA559927FF11B20092A4D2 /* LaunchViewController.swift */; };
 		D116CF2827C2531E005542AA /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D116CF2727C2531E005542AA /* Array+Extensions.swift */; };
 		D116CF3227C31ECC005542AA /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = D116CF3127C31ECC005542AA /* iCarousel.m */; };
 		D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F527B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf */; };
@@ -345,6 +348,9 @@
 		1CCA558E27FF07470092A4D2 /* SettingsWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1CCA559027FF07730092A4D2 /* WalletsWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1CCA559227FF07AF0092A4D2 /* RootWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1CCA559527FF0F1B0092A4D2 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		1CCA559727FF0F330092A4D2 /* DefaultTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
+		1CCA559927FF11B20092A4D2 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		D116CF2727C2531E005542AA /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		D116CF2F27C31ECC005542AA /* web3wallet-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "web3wallet-Bridging-Header.h"; sourceTree = "<group>"; };
 		D116CF3027C31ECC005542AA /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
@@ -705,6 +711,7 @@
 			isa = PBXGroup;
 			children = (
 				1A4C3178DA54CD0800157DD5 /* EdgeCardsController.swift */,
+				1CCA559927FF11B20092A4D2 /* LaunchViewController.swift */,
 				1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */,
 				1A4C309894247AA73F274756 /* TabBarController.swift */,
 				D157F7CE27B69B6300578FF8 /* ViewController.swift */,
@@ -738,6 +745,16 @@
 				1CCA557027FEDF9B0092A4D2 /* AssemblerBootstrapper.swift */,
 			);
 			name = Bootstrapper;
+			sourceTree = "<group>";
+		};
+		1CCA559427FF0EF90092A4D2 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				1CCA559527FF0F1B0092A4D2 /* AppTheme.swift */,
+				1CCA559727FF0F330092A4D2 /* DefaultTheme.swift */,
+				1A4C3342AB2F88E37CE4947A /* Theme.swift */,
+			);
+			path = Theme;
 			sourceTree = "<group>";
 		};
 		D116CF2927C31C42005542AA /* iCarousel */ = {
@@ -859,11 +876,11 @@
 			children = (
 				1A4C39FB21CCAF442F3001E6 /* Global.swift */,
 				1CCA555F27FED3150092A4D2 /* ServiceDirectory.swift */,
-				1A4C3342AB2F88E37CE4947A /* Theme.swift */,
 				1CCA555A27FE1B9E0092A4D2 /* Assembler */,
 				1CCA556327FED3DA0092A4D2 /* Bootstrapper */,
 				1A4C30D5AD2DC31052A09D61 /* Extensions */,
 				1A4C38B91F448C1E962685B3 /* Services */,
+				1CCA559427FF0EF90092A4D2 /* Theme */,
 				1A4C3C27E8AC72B44037C9E2 /* ViewControllers */,
 				D15B06C427B6D241008C3C62 /* Views */,
 			);
@@ -1060,6 +1077,7 @@
 				D11A991027B99D1800EDFDD0 /* AnyCodable.swift in Sources */,
 				1CCA556D27FEDEF80092A4D2 /* AccountServiceAssembler.swift in Sources */,
 				1CCA557D27FF04620092A4D2 /* WalletsServiceAssembler.swift in Sources */,
+				1CCA559627FF0F1B0092A4D2 /* AppTheme.swift in Sources */,
 				1CCA557727FF03900092A4D2 /* NFTsServiceAssembler.swift in Sources */,
 				D157F7CF27B69B6300578FF8 /* ViewController.swift in Sources */,
 				D15B06C727B72111008C3C62 /* WalletsView.swift in Sources */,
@@ -1076,6 +1094,7 @@
 				1A4C39D40DEC9C42A6CF8D8A /* WalletsViewModel.swift in Sources */,
 				1A4C3C9B866507D8700399F6 /* WalletsService.swift in Sources */,
 				1A4C3708C25B84EAA53D0FB6 /* Wallet.swift in Sources */,
+				1CCA559827FF0F330092A4D2 /* DefaultTheme.swift in Sources */,
 				1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */,
 				1CCA555E27FE1C0B0092A4D2 /* Assember.swift in Sources */,
 				1CCA558927FF06A30092A4D2 /* SwapWireframeFactoryAssembler.swift in Sources */,
@@ -1140,6 +1159,7 @@
 				1A4C37B46FEFFC9D3AC7F324 /* SwapPresenter.swift in Sources */,
 				1CCA557527FF03490092A4D2 /* NetworksServiceAssembler.swift in Sources */,
 				1A4C348C8EAD95B167C06D3D /* SwapViewModel.swift in Sources */,
+				1CCA559A27FF11B20092A4D2 /* LaunchViewController.swift in Sources */,
 				1A4C3D827C6C472784CC40E7 /* SwapWireframe.swift in Sources */,
 				1A4C3419FE99A77CEE441A56 /* SwapInteractor.swift in Sources */,
 				1A4C386D56D3F49C906315ED /* SwapWireframeFactory.swift in Sources */,

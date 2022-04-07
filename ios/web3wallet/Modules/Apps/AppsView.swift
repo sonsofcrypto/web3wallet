@@ -84,8 +84,8 @@ extension AppsViewController {
     func configureUI() {
         title = Localized("apps")
         (view as? GradientView)?.colors = [
-            Theme.current.background,
-            Theme.current.backgroundDark
+            AppTheme.current.colors.background,
+            AppTheme.current.colors.backgroundDark
         ]
 
         tabBarItem = UITabBarItem(

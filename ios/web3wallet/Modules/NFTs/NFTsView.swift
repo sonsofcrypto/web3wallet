@@ -84,8 +84,8 @@ extension NFTsViewController {
     func configureUI() {
         title = Localized("nfts")
         (view as? GradientView)?.colors = [
-            Theme.current.background,
-            Theme.current.backgroundDark
+            AppTheme.current.colors.background,
+            AppTheme.current.colors.backgroundDark
         ]
 
         tabBarItem = UITabBarItem(

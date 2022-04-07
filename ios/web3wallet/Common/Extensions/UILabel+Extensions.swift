@@ -27,39 +27,39 @@ extension UILabel {
     func applyStyle(_ style: Style) {
         switch style {
         case .headlineGlow:
-            font = Theme.current.headline
-            layer.applyShadow(Theme.current.tintSecondary)
-            textColor = Theme.current.textColor
+            font = AppTheme.current.fonts.headline
+            layer.applyShadow(AppTheme.current.colors.tintSecondary)
+            textColor = AppTheme.current.colors.textColor
         case .callout:
-            font = Theme.current.callout
-            layer.applyShadow(Theme.current.tintSecondary)
-            textColor = Theme.current.textColor
+            font = AppTheme.current.fonts.callout
+            layer.applyShadow(AppTheme.current.colors.tintSecondary)
+            textColor = AppTheme.current.colors.textColor
         case .subhead:
-            font = Theme.current.subhead
-            textColor = Theme.current.textColorSecondary
+            font = AppTheme.current.fonts.subhead
+            textColor = AppTheme.current.colors.textColorSecondary
         case .subheadGlow:
-            font = Theme.current.subhead
-            layer.applyShadow(Theme.current.tintSecondary)
-            textColor = Theme.current.textColor
+            font = AppTheme.current.fonts.subhead
+            layer.applyShadow(AppTheme.current.colors.tintSecondary)
+            textColor = AppTheme.current.colors.textColor
         case.smallLabel:
-            font = Theme.current.footnote
-            textColor = Theme.current.textColorTertiary
+            font = AppTheme.current.fonts.footnote
+            textColor = AppTheme.current.colors.textColorTertiary
         case.smallerLabel:
             font = UIFont.font(.gothicA1, style: .medium, size: .caption1)
-            textColor = Theme.current.textColorSecondary
+            textColor = AppTheme.current.colors.textColorSecondary
         case.smallestLabel:
             font = UIFont.font(.gothicA1, style: .medium, size: .caption2)
-            textColor = Theme.current.textColorTertiary
+            textColor = AppTheme.current.colors.textColorTertiary
         case.smallestLabelGlow:
             layer.applyShadow(
-                Theme.current.tintSecondary,
+                AppTheme.current.colors.tintSecondary,
                 radius: Global.shadowRadius / 2
             )
-            font = Theme.current.caption2
-            textColor = Theme.current.tintSecondary
+            font = AppTheme.current.fonts.caption2
+            textColor = AppTheme.current.colors.tintSecondary
         case .smallBody:
-            font = Theme.current.footnote
-            textColor = Theme.current.textColorSecondary
+            font = AppTheme.current.fonts.footnote
+            textColor = AppTheme.current.colors.textColorSecondary
         }
     }
 }

@@ -3,14 +3,21 @@
 // SPDX-License-Identifier: MIT
 //
 
-import UIKit
+struct DefaultTheme: Theme {
 
-struct Theme {
+    var colors: Colors {
+        
+        DefaultColors()
+    }
+    
+    var fonts: Fonts {
+        
+        DefaultFonts()
+    }
+}
 
-    static var current: Theme = Theme()
-
-    // MARK: - Colors
-
+struct DefaultColors: Colors {
+    
     var tintPrimary: UIColor {
         UIColor.tintPrimary
     }
@@ -50,9 +57,10 @@ struct Theme {
     var green: UIColor {
         UIColor.appGreen
     }
+}
 
-    // MARK: - Fonts
-
+struct DefaultFonts: Fonts {
+    
     var body: UIFont {
         UIFont.font(.gothicA1, style: .regular, size: .body)
     }

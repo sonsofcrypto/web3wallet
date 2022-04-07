@@ -19,7 +19,7 @@ class AccountTransactionCell: CollectionViewCell {
         super.awakeFromNib()
         dateLabel.applyStyle(.smallerLabel)
         addressLabel.applyStyle(.smallerLabel)
-        addressLabel.textColor = Theme.current.textColorTertiary
+        addressLabel.textColor = AppTheme.current.colors.textColorTertiary
         amountLabel.applyStyle(.subheadGlow)
         layer.cornerRadius = Global.cornerRadius * 2
     }
@@ -64,8 +64,8 @@ extension AccountTransactionCell {
         amountLabel.text = viewModel?.amount
         addressLabel.text = viewModel?.address
         amountLabel.textColor = (viewModel?.isReceive ?? false)
-            ? Theme.current.green
-            : Theme.current.red
+            ? AppTheme.current.colors.green
+            : AppTheme.current.colors.red
         amountLabel.layer.shadowColor = amountLabel.textColor.cgColor
     }
 }

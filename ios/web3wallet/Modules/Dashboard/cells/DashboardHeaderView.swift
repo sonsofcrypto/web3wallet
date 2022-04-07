@@ -21,15 +21,15 @@ class DashboardHeaderView: UICollectionReusableView {
     }
 
     private func configureUI() {
-        balance.textColor = Theme.current.textColor
-        balance.font = Theme.current.hugeBalance
+        balance.textColor = AppTheme.current.colors.textColor
+        balance.font = AppTheme.current.fonts.hugeBalance
         containerStack.setCustomSpacing(
             Constant.sectionTitleOffset,
             after: buttonsStack
         )
         buttonsStack.arrangedSubviews.forEach {
-            ($0 as? UIButton)?.tintColor = Theme.current.tintSecondary
-            ($0 as? UIButton)?.titleLabel?.font = Theme.current.mediumButton
+            ($0 as? UIButton)?.tintColor = AppTheme.current.colors.tintSecondary
+            ($0 as? UIButton)?.titleLabel?.font = AppTheme.current.fonts.mediumButton
             ($0 as? UIButton)?.layer.cornerRadius = Global.cornerRadius / 2
             ($0 as? UIButton)?.titleLabel?.textAlignment = .center
         }

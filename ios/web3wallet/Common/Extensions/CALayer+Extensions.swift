@@ -8,7 +8,7 @@ import UIKit
 extension CALayer {
 
     func applyShadow(
-        _ color: UIColor = Theme.current.tintPrimary,
+        _ color: UIColor = AppTheme.current.colors.tintPrimary,
         radius: CGFloat = Global.shadowRadius
     ) {
         shadowColor = color.cgColor
@@ -19,7 +19,7 @@ extension CALayer {
     }
 
     func applyRectShadow(
-        _ color: UIColor = Theme.current.tintPrimary,
+        _ color: UIColor = AppTheme.current.colors.tintPrimary,
         radius: CGFloat = Global.shadowRadius,
         cornerRadius: CGFloat = Global.cornerRadius
     ) {
@@ -27,7 +27,7 @@ extension CALayer {
         applyShadow(color, radius: radius)
     }
 
-    func applyBorder(_ color: UIColor = Theme.current.tintPrimary) {
+    func applyBorder(_ color: UIColor = AppTheme.current.colors.tintPrimary) {
         borderWidth = 1
         borderColor = color.cgColor
     }
@@ -45,8 +45,8 @@ extension CALayer {
 
     func applyHighlighted(_ highlighted: Bool) {
         borderColor = (highlighted
-            ? Theme.current.tintPrimary
-            : Theme.current.tintPrimaryLight).cgColor
+            ? AppTheme.current.colors.tintPrimary
+            : AppTheme.current.colors.tintPrimaryLight).cgColor
         shadowOpacity = highlighted ? 1 :0
     }
 }

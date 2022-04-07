@@ -21,8 +21,8 @@ extension DegenSectionTitleView {
         label.attributedText = NSAttributedString(
             string: viewModel?.sectionTitle ?? "",
             attributes: [
-                .font: Theme.current.cellDetail,
-                .foregroundColor: Theme.current.textColorTertiary,
+                .font: AppTheme.current.fonts.cellDetail,
+                .foregroundColor: AppTheme.current.colors.textColorTertiary,
                 .paragraphStyle: paragraphStyle
             ]
         )

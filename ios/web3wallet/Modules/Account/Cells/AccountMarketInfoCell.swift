@@ -18,7 +18,7 @@ class AccountMarketInfoCell: CollectionViewCell {
         super.awakeFromNib()
         [marketCapTitleLabel, priceTitleLabel, volumeTitleLabel].forEach {
             $0?.applyStyle(.smallLabel)
-            $0?.textColor = Theme.current.textColorSecondary
+            $0?.textColor = AppTheme.current.colors.textColorSecondary
         }
         [marketCapValueLabel, priceValueLabel, volumeValueLabel].forEach {
             $0?.applyStyle(.subheadGlow)
