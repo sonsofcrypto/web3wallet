@@ -5,17 +5,13 @@
 
 import Foundation
 
-protocol AppsService {
+protocol AppsService: AnyObject {
 
 }
 
-// MARK: - DefaultAppsService
-
-class DefaultAppsService {
+final class DefaultAppsService {
 
 }
-
-// MARK: - AppsService
 
 extension DefaultAppsService: AppsService {
 

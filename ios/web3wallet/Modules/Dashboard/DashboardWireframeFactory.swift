@@ -10,23 +10,19 @@ protocol DashboardWireframeFactory {
     func makeWireframe(_ parent: UIViewController) -> DashboardWireframe
 }
 
-// MARK: - DefaultDashboardWireframeFactory
-
-class DefaultDashboardWireframeFactory {
+final class DefaultDashboardWireframeFactory {
 
     private let service: WalletsService
     private let accountWireframeFactory: AccountWireframeFactory
 
     init(
-        _ service: WalletsService,
+        service: WalletsService,
         accountWireframeFactory: AccountWireframeFactory
     ) {
         self.service = service
         self.accountWireframeFactory = accountWireframeFactory
     }
 }
-
-// MARK: - DashboardWireframeFactory
 
 extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
 

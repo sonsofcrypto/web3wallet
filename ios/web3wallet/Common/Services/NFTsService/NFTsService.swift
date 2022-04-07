@@ -9,13 +9,9 @@ protocol NFTsService: AnyObject {
 
 }
 
-// MARK: - DefaultNFTsService
-
-class DefaultNFTsService {
+final class DefaultNFTsService {
 
 }
-
-// MARK: - NFTsService
 
 extension DefaultNFTsService: NFTsService {
 

@@ -5,12 +5,12 @@
 
 import Foundation
 
-protocol Store {
+protocol Store: AnyObject {
     func set<T>(_ val: T, key: String) throws where T: Codable
     func get<T>(_ key: String) -> T? where T: Codable
 }
 
-class DefaultStore {
+final class DefaultStore {
 
     private lazy var encoder = JSONEncoder()
     private lazy var decoder = JSONDecoder()
@@ -23,7 +23,6 @@ class DefaultStore {
     ).appendingPathComponent("store.json")
 }
 
-// MARK: - Store
 extension DefaultStore: Store {
 
     func set<T>(_ val: T, key: String) throws where T: Codable {

@@ -27,9 +27,7 @@ protocol WalletsService: AnyObject {
     func delete(_ wallet: Wallet) throws
 }
 
-// MARK: - DefaultWalletsService
-
-class DefaultWalletsService {
+final class DefaultWalletsService {
 
     var activeWallet: Wallet? {
         get { store.get(Constant.activeWallet) }
@@ -44,8 +42,6 @@ class DefaultWalletsService {
         self.wallets = []
     }
 }
-
-// MARK: - Wallets Service
 
 extension DefaultWalletsService: WalletsService {
 
@@ -98,8 +94,6 @@ extension DefaultWalletsService: WalletsService {
         try store.set(wallets, key: Constant.wallets)
     }
 }
-
-// MARK: - Constant
 
 private extension DefaultWalletsService {
 

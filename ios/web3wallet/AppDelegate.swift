@@ -19,40 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = window
         
         MainBootstrapper().boot()
-
-        let walletsService = DefaultWalletsService(store: DefaultStore())
-        let networkService = DefaultNetworksService()
-        let degenService = DefaultDegenService()
-        let nftsService = DefaultNFTsService()
-        let appsService = DefaultAppsService()
-        let settingsService = DefaultSettingsService()
-        let accountService = DefaultAccountService()
-
-        DefaultRootWireframeFactory(
-            window: window,
-            wallets: DefaultWalletsWireframeFactory(walletsService),
-            networks: DefaultNetworksWireframeFactory(networkService),
-            dashboard: DefaultDashboardWireframeFactory(
-                walletsService,
-                accountWireframeFactory: DefaultAccountWireframeFactory(
-                    accountService
-                )
-            ),
-            degen: DefaultDegenWireframeFactory(
-                degenService,
-                ammsWireframeFactory: DefaultAMMsWireframeFactory(
-                    degenService: degenService,
-                    swapWireframeFactory: DefaultSwapWireframeFactory(
-                        service: degenService
-                    )
-                )
-            ),
-            nfts: DefaultNFTsWireframeFactory(nftsService),
-            apps: DefaultAppsWireframeFactory(appsService),
-            settings: DefaultSettingsWireframeFactory(settingsService)
-        )
-        .makeWireframe()
-        .present()
+        
+        let rootWireframe: RootWireframeFactory = ServiceDirectory.assembler.resolve()
+        rootWireframe.makeWireframe(with: window).present()
 
 #if DEBUG
         let documents = NSSearchPathForDirectoriesInDomains(

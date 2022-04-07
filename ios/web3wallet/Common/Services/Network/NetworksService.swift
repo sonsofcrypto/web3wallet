@@ -15,9 +15,9 @@ protocol NetworksService {
     func updateStatus(_ networks: [Network], handler: @escaping NetworksHandler)
 }
 
-class DefaultNetworksService {
+final class DefaultNetworksService {
 
-    var active: Network? = Network(
+    var active: Network? = .init(
         id: 60,
         name: "Ethereum",
         url: nil,
@@ -26,8 +26,6 @@ class DefaultNetworksService {
         explorer: .liteClientOnly
     )
 }
-
-// MARK: - NetworksService
 
 extension DefaultNetworksService: NetworksService {
 

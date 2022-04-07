@@ -10,20 +10,16 @@ protocol AppsWireframeFactory {
     func makeWireframe(_ parent: UIViewController) -> AppsWireframe
 }
 
-// MARK: - DefaultAppsWireframeFactory
-
-class DefaultAppsWireframeFactory {
+final class DefaultAppsWireframeFactory {
 
     private let service: AppsService
 
     init(
-        _ service: AppsService
+        service: AppsService
     ) {
         self.service = service
     }
 }
-
-// MARK: - AppsWireframeFactory
 
 extension DefaultAppsWireframeFactory: AppsWireframeFactory {
 

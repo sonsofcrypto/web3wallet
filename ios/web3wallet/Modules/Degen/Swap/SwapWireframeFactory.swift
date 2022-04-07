@@ -10,9 +10,7 @@ protocol SwapWireframeFactory {
     func makeWireframe(_ parent: UIViewController, dapp: DApp) -> SwapWireframe
 }
 
-// MARK: - DefaultSwapWireframeFactory
-
-class DefaultSwapWireframeFactory {
+final class DefaultSwapWireframeFactory {
 
     private let service: DegenService
 
@@ -22,8 +20,6 @@ class DefaultSwapWireframeFactory {
         self.service = service
     }
 }
-
-// MARK: - SwapWireframeFactory
 
 extension DefaultSwapWireframeFactory: SwapWireframeFactory {
 

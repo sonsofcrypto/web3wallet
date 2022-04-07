@@ -10,22 +10,18 @@ protocol NFTsWireframeFactory {
     func makeWireframe(_ parent: UIViewController) -> NFTsWireframe
 }
 
-// MARK: - DefaultNFTsWireframeFactory
-
-class DefaultNFTsWireframeFactory {
+final class DefaultNFTsWireframeFactory {
 
     private let service: NFTsService
 
     private weak var window: UIWindow?
 
     init(
-        _ service: NFTsService
+        service: NFTsService
     ) {
         self.service = service
     }
 }
-
-// MARK: - NFTsWireframeFactory
 
 extension DefaultNFTsWireframeFactory: NFTsWireframeFactory {
 

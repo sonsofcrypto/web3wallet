@@ -7,14 +7,12 @@ import UIKit
 
 protocol RootWireframeFactory {
 
-    func makeWireframe() -> RootWireframe
+    func makeWireframe(
+        with window: UIWindow?
+    ) -> RootWireframe
 }
 
-// MARK: - DefaultRootWireframeFactory
-
-class DefaultRootWireframeFactory {
-
-    private weak var window: UIWindow?
+final class DefaultRootWireframeFactory {
 
     private let wallets: WalletsWireframeFactory
     private let networks: NetworksWireframeFactory
@@ -25,7 +23,6 @@ class DefaultRootWireframeFactory {
     private let settings: SettingsWireframeFactory
 
     init(
-        window: UIWindow?,
         wallets: WalletsWireframeFactory,
         networks: NetworksWireframeFactory,
         dashboard: DashboardWireframeFactory,
@@ -34,7 +31,7 @@ class DefaultRootWireframeFactory {
         apps: AppsWireframeFactory,
         settings: SettingsWireframeFactory
     ) {
-        self.window = window
+
         self.wallets = wallets
         self.networks = networks
         self.dashboard = dashboard
@@ -45,11 +42,12 @@ class DefaultRootWireframeFactory {
     }
 }
 
-// MARK: - RootWireframeFactory
-
 extension DefaultRootWireframeFactory: RootWireframeFactory {
 
-    func makeWireframe() -> RootWireframe {
+    func makeWireframe(
+        with window: UIWindow?
+    ) -> RootWireframe {
+        
         DefaultRootWireframe(
             window: window,
             wallets: wallets,

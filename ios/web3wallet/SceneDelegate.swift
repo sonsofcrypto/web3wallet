@@ -9,53 +9,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+    func scene(
+        _ scene: UIScene,
+        willConnectTo session: UISceneSession,
+        options connectionOptions: UIScene.ConnectionOptions
+    ) {
+        
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
         self.window = window
 
-        let walletsService = DefaultWalletsService(store: DefaultStore())
-        let networkService = DefaultNetworksService()
-        let degenService = DefaultDegenService()
-        let nftsService = DefaultNFTsService()
-        let appsService = DefaultAppsService()
-        let settingsService = DefaultSettingsService()
-        let accountService = DefaultAccountService()
-
-        DefaultRootWireframeFactory(
-            window: window,
-            wallets: DefaultWalletsWireframeFactory(walletsService),
-            networks: DefaultNetworksWireframeFactory(networkService),
-            dashboard: DefaultDashboardWireframeFactory(
-                walletsService,
-                accountWireframeFactory: DefaultAccountWireframeFactory(
-                    accountService
-                )
-            ),
-            degen: DefaultDegenWireframeFactory(
-                degenService,
-                ammsWireframeFactory: DefaultAMMsWireframeFactory(
-                    degenService: degenService,
-                    swapWireframeFactory: DefaultSwapWireframeFactory(
-                        service: degenService
-                    )
-                )
-            ),
-            nfts: DefaultNFTsWireframeFactory(nftsService),
-            apps: DefaultAppsWireframeFactory(appsService),
-            settings: DefaultSettingsWireframeFactory(settingsService)
-        )
-        .makeWireframe()
-        .present()
-
-        let documents = NSSearchPathForDirectoriesInDomains(
-            .documentDirectory,
-            .userDomainMask,
-            true
-        )
-
+        MainBootstrapper().boot()
+        
+        let rootWireframe: RootWireframeFactory = ServiceDirectory.assembler.resolve()
+        rootWireframe.makeWireframe(with: window).present()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -86,6 +54,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
 }
-

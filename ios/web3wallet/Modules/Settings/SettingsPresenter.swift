@@ -22,8 +22,6 @@ class DefaultSettingsPresenter {
     private let interactor: SettingsInteractor
     private let wireframe: SettingsWireframe
 
-    // private var items: [Item]
-
     private weak var view: SettingsView?
 
     init(
@@ -34,7 +32,6 @@ class DefaultSettingsPresenter {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
-        // self.items = []
     }
 }
 

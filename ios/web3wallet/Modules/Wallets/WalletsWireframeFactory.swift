@@ -13,18 +13,16 @@ protocol WalletsWireframeFactory {
     ) -> WalletsWireframe
 }
 
-// MARK: - DefaultWalletsWireframeFactory
-
-class DefaultWalletsWireframeFactory {
+final class DefaultWalletsWireframeFactory {
 
     private let walletsService: WalletsService
 
-    init(_ walletsService: WalletsService) {
+    init(
+        walletsService: WalletsService
+    ) {
         self.walletsService = walletsService
     }
 }
-
-// MARK: - WalletsWireframeFactory
 
 extension DefaultWalletsWireframeFactory: WalletsWireframeFactory {
 

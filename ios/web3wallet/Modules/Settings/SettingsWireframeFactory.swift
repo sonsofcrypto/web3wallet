@@ -10,20 +10,16 @@ protocol SettingsWireframeFactory {
     func makeWireframe(_ parent: UIViewController) -> SettingsWireframe
 }
 
-// MARK: - DefaultSettingsWireframeFactory
-
-class DefaultSettingsWireframeFactory {
+final class DefaultSettingsWireframeFactory {
 
     private let service: SettingsService
 
     init(
-        _ service: SettingsService
+        service: SettingsService
     ) {
         self.service = service
     }
 }
-
-// MARK: - SettingsWireframeFactory
 
 extension DefaultSettingsWireframeFactory: SettingsWireframeFactory {
 

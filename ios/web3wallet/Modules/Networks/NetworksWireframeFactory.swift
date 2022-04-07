@@ -10,18 +10,16 @@ protocol NetworksWireframeFactory {
     func makeWireframe(_ parent: UIViewController) -> NetworksWireframe
 }
 
-// MARK: - DefaultNetworksWireframeFactory
-
-class DefaultNetworksWireframeFactory {
+final class DefaultNetworksWireframeFactory {
 
     private let networksService: NetworksService
 
-    init(_ networksService: NetworksService) {
+    init(
+        networksService: NetworksService
+    ) {
         self.networksService = networksService
     }
 }
-
-// MARK: - NetworksWireframeFactory
 
 extension DefaultNetworksWireframeFactory: NetworksWireframeFactory {
 

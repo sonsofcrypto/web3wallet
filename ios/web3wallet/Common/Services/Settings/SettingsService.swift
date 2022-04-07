@@ -9,13 +9,9 @@ protocol SettingsService: AnyObject {
 
 }
 
-// MARK: - DefaultSettingsService
-
-class DefaultSettingsService {
+final class DefaultSettingsService {
 
 }
-
-// MARK: - SettingsService
 
 extension DefaultSettingsService: SettingsService {
 

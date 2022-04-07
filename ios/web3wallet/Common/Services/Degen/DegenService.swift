@@ -11,17 +11,19 @@ protocol DegenService: AnyObject {
     func dapps(for category: DAppCategory) -> [DApp]
 }
 
-class DefaultDegenService {
+final class DefaultDegenService {
 
 }
 
 extension DefaultDegenService: DegenService {
 
     func categories() -> [DAppCategory] {
+        
         DAppCategory.all()
     }
 
     func dapps(for category: DAppCategory) -> [DApp] {
+        
         switch category {
         case .amm:
             return [

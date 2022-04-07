@@ -99,7 +99,7 @@
 		1A4C3B37A19807994E4E1D08 /* NetworksWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C30B213A6E8FFA7D0D41D /* NetworksWireframeFactory.swift */; };
 		1A4C3B478F3654BE3ECEC0DA /* DashboardPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38F6C66189309E695B99 /* DashboardPresenter.swift */; };
 		1A4C3B49BC67AF7AA3BF0D8F /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3644A9D218CC991B2A56 /* VisualEffectView.swift */; };
-		1A4C3B6D2DFADBE2EF71F3A5 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DED61DB8FC18EFD5B0B /* Settings.swift */; };
+		1A4C3B6D2DFADBE2EF71F3A5 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DED61DB8FC18EFD5B0B /* SettingsService.swift */; };
 		1A4C3BB851D9D2E9DD472284 /* NFTsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3EB46866FC10CA58C6F8 /* NFTsViewModel.swift */; };
 		1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */; };
 		1A4C3C28443621328248F5A7 /* CandlesViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C344022DBA2423C0F15F6 /* CandlesViewViewModel.swift */; };
@@ -132,6 +132,26 @@
 		1CCA556027FED3150092A4D2 /* ServiceDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA555F27FED3150092A4D2 /* ServiceDirectory.swift */; };
 		1CCA556227FED3820092A4D2 /* Bootstrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA556127FED3820092A4D2 /* Bootstrapper.swift */; };
 		1CCA556527FED3EE0092A4D2 /* MainBootstrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA556427FED3EE0092A4D2 /* MainBootstrapper.swift */; };
+		1CCA556D27FEDEF80092A4D2 /* AccountServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA556C27FEDEF80092A4D2 /* AccountServiceAssembler.swift */; };
+		1CCA556F27FEDF620092A4D2 /* AppsServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA556E27FEDF620092A4D2 /* AppsServiceAssembler.swift */; };
+		1CCA557127FEDF9B0092A4D2 /* AssemblerBootstrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA557027FEDF9B0092A4D2 /* AssemblerBootstrapper.swift */; };
+		1CCA557327FF02FF0092A4D2 /* DegenServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA557227FF02FF0092A4D2 /* DegenServiceAssembler.swift */; };
+		1CCA557527FF03490092A4D2 /* NetworksServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA557427FF03490092A4D2 /* NetworksServiceAssembler.swift */; };
+		1CCA557727FF03900092A4D2 /* NFTsServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA557627FF03900092A4D2 /* NFTsServiceAssembler.swift */; };
+		1CCA557927FF03C50092A4D2 /* SettingsServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA557827FF03C50092A4D2 /* SettingsServiceAssembler.swift */; };
+		1CCA557B27FF043E0092A4D2 /* StoreAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA557A27FF043E0092A4D2 /* StoreAssembler.swift */; };
+		1CCA557D27FF04620092A4D2 /* WalletsServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA557C27FF04620092A4D2 /* WalletsServiceAssembler.swift */; };
+		1CCA557F27FF04FA0092A4D2 /* AccountWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA557E27FF04FA0092A4D2 /* AccountWireframeFactoryAssembler.swift */; };
+		1CCA558127FF055B0092A4D2 /* AppsWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA558027FF055B0092A4D2 /* AppsWireframeFactoryAssembler.swift */; };
+		1CCA558327FF05920092A4D2 /* DashboardWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA558227FF05920092A4D2 /* DashboardWireframeFactoryAssembler.swift */; };
+		1CCA558527FF05CB0092A4D2 /* AMMsWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA558427FF05CB0092A4D2 /* AMMsWireframeFactoryAssembler.swift */; };
+		1CCA558727FF06680092A4D2 /* DegenWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA558627FF06680092A4D2 /* DegenWireframeFactoryAssembler.swift */; };
+		1CCA558927FF06A30092A4D2 /* SwapWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA558827FF06A30092A4D2 /* SwapWireframeFactoryAssembler.swift */; };
+		1CCA558B27FF06CF0092A4D2 /* NetworksWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA558A27FF06CF0092A4D2 /* NetworksWireframeFactoryAssembler.swift */; };
+		1CCA558D27FF070C0092A4D2 /* NFTsWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA558C27FF070C0092A4D2 /* NFTsWireframeFactoryAssembler.swift */; };
+		1CCA558F27FF07470092A4D2 /* SettingsWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA558E27FF07470092A4D2 /* SettingsWireframeFactoryAssembler.swift */; };
+		1CCA559127FF07730092A4D2 /* WalletsWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA559027FF07730092A4D2 /* WalletsWireframeFactoryAssembler.swift */; };
+		1CCA559327FF07AF0092A4D2 /* RootWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA559227FF07AF0092A4D2 /* RootWireframeFactoryAssembler.swift */; };
 		D116CF2827C2531E005542AA /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D116CF2727C2531E005542AA /* Array+Extensions.swift */; };
 		D116CF3227C31ECC005542AA /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = D116CF3127C31ECC005542AA /* iCarousel.m */; };
 		D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F527B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf */; };
@@ -283,7 +303,7 @@
 		1A4C3D1FBA47E23C9207B49B /* AppsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsView.swift; sourceTree = "<group>"; };
 		1A4C3D9896E7F3F3E51A9F29 /* DegenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenView.swift; sourceTree = "<group>"; };
 		1A4C3DAB38F681061328F3F0 /* NetworksService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksService.swift; sourceTree = "<group>"; };
-		1A4C3DED61DB8FC18EFD5B0B /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		1A4C3DED61DB8FC18EFD5B0B /* SettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
 		1A4C3DF2370620D3B04E431A /* RootWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootWireframeFactory.swift; sourceTree = "<group>"; };
 		1A4C3DF58C2B32C6B6C096F8 /* AccountTransactionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountTransactionCell.swift; sourceTree = "<group>"; };
 		1A4C3DF93F3CE8FE0B35C142 /* WalletsWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsWireframe.swift; sourceTree = "<group>"; };
@@ -305,6 +325,26 @@
 		1CCA555F27FED3150092A4D2 /* ServiceDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDirectory.swift; sourceTree = "<group>"; };
 		1CCA556127FED3820092A4D2 /* Bootstrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bootstrapper.swift; sourceTree = "<group>"; };
 		1CCA556427FED3EE0092A4D2 /* MainBootstrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBootstrapper.swift; sourceTree = "<group>"; };
+		1CCA556C27FEDEF80092A4D2 /* AccountServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountServiceAssembler.swift; sourceTree = "<group>"; };
+		1CCA556E27FEDF620092A4D2 /* AppsServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsServiceAssembler.swift; sourceTree = "<group>"; };
+		1CCA557027FEDF9B0092A4D2 /* AssemblerBootstrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblerBootstrapper.swift; sourceTree = "<group>"; };
+		1CCA557227FF02FF0092A4D2 /* DegenServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DegenServiceAssembler.swift; sourceTree = "<group>"; };
+		1CCA557427FF03490092A4D2 /* NetworksServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksServiceAssembler.swift; sourceTree = "<group>"; };
+		1CCA557627FF03900092A4D2 /* NFTsServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTsServiceAssembler.swift; sourceTree = "<group>"; };
+		1CCA557827FF03C50092A4D2 /* SettingsServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceAssembler.swift; sourceTree = "<group>"; };
+		1CCA557A27FF043E0092A4D2 /* StoreAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreAssembler.swift; sourceTree = "<group>"; };
+		1CCA557C27FF04620092A4D2 /* WalletsServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsServiceAssembler.swift; sourceTree = "<group>"; };
+		1CCA557E27FF04FA0092A4D2 /* AccountWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1CCA558027FF055B0092A4D2 /* AppsWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1CCA558227FF05920092A4D2 /* DashboardWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1CCA558427FF05CB0092A4D2 /* AMMsWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMMsWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1CCA558627FF06680092A4D2 /* DegenWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DegenWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1CCA558827FF06A30092A4D2 /* SwapWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1CCA558A27FF06CF0092A4D2 /* NetworksWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1CCA558C27FF070C0092A4D2 /* NFTsWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTsWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1CCA558E27FF07470092A4D2 /* SettingsWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1CCA559027FF07730092A4D2 /* WalletsWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1CCA559227FF07AF0092A4D2 /* RootWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		D116CF2727C2531E005542AA /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		D116CF2F27C31ECC005542AA /* web3wallet-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "web3wallet-Bridging-Header.h"; sourceTree = "<group>"; };
 		D116CF3027C31ECC005542AA /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
@@ -380,12 +420,13 @@
 		1A4C30349A9657E321920184 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				1A4C3DED61DB8FC18EFD5B0B /* Settings.swift */,
+				1A4C3DED61DB8FC18EFD5B0B /* SettingsService.swift */,
+				1CCA557827FF03C50092A4D2 /* SettingsServiceAssembler.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		1A4C3044D77C00C8FF94BEA1 /* AppsModule */ = {
+		1A4C3044D77C00C8FF94BEA1 /* Apps */ = {
 			isa = PBXGroup;
 			children = (
 				1A4C3228A51AE19D8D21760A /* AppsCell.swift */,
@@ -395,8 +436,9 @@
 				1A4C32C53B06B5EA8EE01118 /* AppsViewModel.swift */,
 				1A4C331E828DAA4D2E628435 /* AppsWireframe.swift */,
 				1A4C3E735403B7DA9910563D /* AppsWireframeFactory.swift */,
+				1CCA558027FF055B0092A4D2 /* AppsWireframeFactoryAssembler.swift */,
 			);
-			path = AppsModule;
+			path = Apps;
 			sourceTree = "<group>";
 		};
 		1A4C30D5AD2DC31052A09D61 /* Extensions */ = {
@@ -431,6 +473,7 @@
 				1A4C3EB46866FC10CA58C6F8 /* NFTsViewModel.swift */,
 				1A4C325A83A0FC4E6A5A9922 /* NFTsWireframe.swift */,
 				1A4C3C7AC11249D1DE6C554C /* NFTsWireframeFactory.swift */,
+				1CCA558C27FF070C0092A4D2 /* NFTsWireframeFactoryAssembler.swift */,
 			);
 			path = NFTs;
 			sourceTree = "<group>";
@@ -467,6 +510,7 @@
 				1A4C348CA305DD0F6C190CAE /* SwapViewModel.swift */,
 				1A4C3E963BBDDF8226B79BAD /* SwapWireframe.swift */,
 				1A4C376FCE382F2B2A126F5E /* SwapWireframeFactory.swift */,
+				1CCA558827FF06A30092A4D2 /* SwapWireframeFactoryAssembler.swift */,
 			);
 			path = Swap;
 			sourceTree = "<group>";
@@ -480,6 +524,7 @@
 				1A4C3A962E47E54F5A5779D3 /* AccountViewModel.swift */,
 				1A4C3ABEEF88DD643AF4D7AD /* AccountWireframe.swift */,
 				1A4C3ABC7FAC24D9539B1BDA /* AccountWireframeFactory.swift */,
+				1CCA557E27FF04FA0092A4D2 /* AccountWireframeFactoryAssembler.swift */,
 				1A4C316E60B8C1E6DD9E5623 /* Cells */,
 			);
 			path = Account;
@@ -495,6 +540,7 @@
 				1A4C3811EC67D01771B97011 /* AMMsViewModel.swift */,
 				1A4C35A00BFF35155C4AD72D /* AMMsWireframe.swift */,
 				1A4C3A93ADEAA6317E2F1134 /* AMMsWireframeFactory.swift */,
+				1CCA558427FF05CB0092A4D2 /* AMMsWireframeFactoryAssembler.swift */,
 			);
 			path = AMMs;
 			sourceTree = "<group>";
@@ -506,6 +552,7 @@
 				1A4C3A08014FC9721FC2557C /* RootView.swift */,
 				1A4C3D0EF3DBE9AC06A05512 /* RootWireframe.swift */,
 				1A4C3DF2370620D3B04E431A /* RootWireframeFactory.swift */,
+				1CCA559227FF07AF0092A4D2 /* RootWireframeFactoryAssembler.swift */,
 			);
 			path = Root;
 			sourceTree = "<group>";
@@ -515,6 +562,7 @@
 			children = (
 				1A4C341CE810A41C93A4D896 /* Network.swift */,
 				1A4C3DAB38F681061328F3F0 /* NetworksService.swift */,
+				1CCA557427FF03490092A4D2 /* NetworksServiceAssembler.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -523,6 +571,7 @@
 			isa = PBXGroup;
 			children = (
 				1A4C388B9A42E6A279D2867F /* AccountService.swift */,
+				1CCA556C27FEDEF80092A4D2 /* AccountServiceAssembler.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -531,6 +580,7 @@
 			isa = PBXGroup;
 			children = (
 				1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */,
+				1CCA557627FF03900092A4D2 /* NFTsServiceAssembler.swift */,
 			);
 			path = NFTsService;
 			sourceTree = "<group>";
@@ -539,6 +589,7 @@
 			isa = PBXGroup;
 			children = (
 				1A4C3228790C1569B37F5179 /* AppsService.swift */,
+				1CCA556E27FEDF620092A4D2 /* AppsServiceAssembler.swift */,
 			);
 			path = Apps;
 			sourceTree = "<group>";
@@ -548,6 +599,7 @@
 			children = (
 				1A4C376D2673983B26F249FF /* Wallet.swift */,
 				1A4C36CAEB50425CE9839ED4 /* WalletsService.swift */,
+				1CCA557C27FF04620092A4D2 /* WalletsServiceAssembler.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -563,6 +615,7 @@
 				1A4C34E67B135A61BE103648 /* DegenViewModel.swift */,
 				1A4C32C282B76B064343657F /* DegenWireframe.swift */,
 				1A4C3B869A93171279B2C6ED /* DegenWireframeFactory.swift */,
+				1CCA558627FF06680092A4D2 /* DegenWireframeFactoryAssembler.swift */,
 			);
 			path = Degen;
 			sourceTree = "<group>";
@@ -577,6 +630,7 @@
 				1A4C3831549FBA4F68E7224D /* NetworksViewModel.swift */,
 				1A4C3AD5ED12A2AC7B3218C9 /* NetworksWireframe.swift */,
 				1A4C30B213A6E8FFA7D0D41D /* NetworksWireframeFactory.swift */,
+				1CCA558A27FF06CF0092A4D2 /* NetworksWireframeFactoryAssembler.swift */,
 			);
 			path = Networks;
 			sourceTree = "<group>";
@@ -600,6 +654,7 @@
 				1A4C325D5EF4C18FCD3B1472 /* DashboardViewModel.swift */,
 				1A4C3A05642605E68164E3B1 /* DashboardWireframe.swift */,
 				1A4C3B92FA152550A06D3D31 /* DashboardWireframeFactory.swift */,
+				1CCA558227FF05920092A4D2 /* DashboardWireframeFactoryAssembler.swift */,
 				1A4C303225414E70D52A40F3 /* cells */,
 			);
 			path = Dashboard;
@@ -611,6 +666,7 @@
 				1A4C375870963EEF9ECBE64B /* DApp.swift */,
 				1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */,
 				1A4C34077200A9E856B77DDF /* DegenService.swift */,
+				1CCA557227FF02FF0092A4D2 /* DegenServiceAssembler.swift */,
 			);
 			path = Degen;
 			sourceTree = "<group>";
@@ -640,6 +696,7 @@
 				1A4C3412895BFFD5EB8F167E /* SettingsViewModel.swift */,
 				1A4C3142E4B087299DA8113B /* SettingsWireframe.swift */,
 				1A4C3152690E35122D56F0C6 /* SettingsWireframeFactory.swift */,
+				1CCA558E27FF07470092A4D2 /* SettingsWireframeFactoryAssembler.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -678,6 +735,7 @@
 			children = (
 				1CCA556127FED3820092A4D2 /* Bootstrapper.swift */,
 				1CCA556427FED3EE0092A4D2 /* MainBootstrapper.swift */,
+				1CCA557027FEDF9B0092A4D2 /* AssemblerBootstrapper.swift */,
 			);
 			name = Bootstrapper;
 			sourceTree = "<group>";
@@ -822,6 +880,7 @@
 				1A4C3228507ADBCE1C99C219 /* WalletsViewModel.swift */,
 				1A4C3DF93F3CE8FE0B35C142 /* WalletsWireframe.swift */,
 				1A4C3C514ACC30A0AC4707FA /* WalletsWireframeFactory.swift */,
+				1CCA559027FF07730092A4D2 /* WalletsWireframeFactoryAssembler.swift */,
 			);
 			path = Wallets;
 			sourceTree = "<group>";
@@ -830,7 +889,7 @@
 			isa = PBXGroup;
 			children = (
 				1A4C329381A12BF85B2C9F38 /* Account */,
-				1A4C3044D77C00C8FF94BEA1 /* AppsModule */,
+				1A4C3044D77C00C8FF94BEA1 /* Apps */,
 				1A4C3850AF2505DA23170977 /* Dashboard */,
 				1A4C315D92E8F10E17F45F5D /* Degen */,
 				1A4C3823E11D18DC3C0029DD /* Networks */,
@@ -846,6 +905,7 @@
 			isa = PBXGroup;
 			children = (
 				1A4C3B70AA1B0BC942B15671 /* Store.swift */,
+				1CCA557A27FF043E0092A4D2 /* StoreAssembler.swift */,
 				D11A990B27B99D1800EDFDD0 /* AnyCodable */,
 			);
 			path = Store;
@@ -998,9 +1058,14 @@
 			files = (
 				D11A990F27B99D1800EDFDD0 /* AnyDecodable.swift in Sources */,
 				D11A991027B99D1800EDFDD0 /* AnyCodable.swift in Sources */,
+				1CCA556D27FEDEF80092A4D2 /* AccountServiceAssembler.swift in Sources */,
+				1CCA557D27FF04620092A4D2 /* WalletsServiceAssembler.swift in Sources */,
+				1CCA557727FF03900092A4D2 /* NFTsServiceAssembler.swift in Sources */,
 				D157F7CF27B69B6300578FF8 /* ViewController.swift in Sources */,
 				D15B06C727B72111008C3C62 /* WalletsView.swift in Sources */,
+				1CCA557B27FF043E0092A4D2 /* StoreAssembler.swift in Sources */,
 				D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */,
+				1CCA557327FF02FF0092A4D2 /* DegenServiceAssembler.swift in Sources */,
 				D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */,
 				D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */,
 				1A4C32CF0C59FE32073E66D0 /* WalletsPresenter.swift in Sources */,
@@ -1013,6 +1078,7 @@
 				1A4C3708C25B84EAA53D0FB6 /* Wallet.swift in Sources */,
 				1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */,
 				1CCA555E27FE1C0B0092A4D2 /* Assember.swift in Sources */,
+				1CCA558927FF06A30092A4D2 /* SwapWireframeFactoryAssembler.swift in Sources */,
 				1A4C302CC56D21A0E3CBAFF6 /* UIStoryboard+Extensions.swift in Sources */,
 				1A4C372EC2DEA2483AD7D92E /* NSLocalizedString+Extensions.swift in Sources */,
 				1A4C33FF86A4E43DAA2E7AB9 /* UIColor+Extensions.swift in Sources */,
@@ -1045,15 +1111,21 @@
 				1A4C34F0ADC2C388D42148BA /* DegenView.swift in Sources */,
 				1A4C355E7008E07B2A6A148C /* DegenPresenter.swift in Sources */,
 				1A4C3A30CFE0E04885B8A474 /* DegenViewModel.swift in Sources */,
+				1CCA557F27FF04FA0092A4D2 /* AccountWireframeFactoryAssembler.swift in Sources */,
+				1CCA559127FF07730092A4D2 /* WalletsWireframeFactoryAssembler.swift in Sources */,
+				1CCA558527FF05CB0092A4D2 /* AMMsWireframeFactoryAssembler.swift in Sources */,
 				1A4C3719F83C54CD473ECE25 /* DegenWireframe.swift in Sources */,
 				1A4C39B2514D23D66B1540A1 /* DegenInteractor.swift in Sources */,
 				1A4C337CA3864D32284438DC /* DegenWireframeFactory.swift in Sources */,
+				1CCA557927FF03C50092A4D2 /* SettingsServiceAssembler.swift in Sources */,
 				1A4C3750D25F9E82456820CB /* NetworksCell.swift in Sources */,
 				1A4C3A35E90213A3B1D305C1 /* NetworksInteractor.swift in Sources */,
 				1A4C339BB64E9CCF1C110D40 /* NetworksPresenter.swift in Sources */,
 				1A4C3926E0A2F1B6A2CF3040 /* NetworksView.swift in Sources */,
+				1CCA558327FF05920092A4D2 /* DashboardWireframeFactoryAssembler.swift in Sources */,
 				1A4C37D58E15F7110354E35B /* NetworksViewModel.swift in Sources */,
 				1A4C36E01D38AFB39DCA523C /* NetworksWireframe.swift in Sources */,
+				1CCA558D27FF070C0092A4D2 /* NFTsWireframeFactoryAssembler.swift in Sources */,
 				1A4C3B37A19807994E4E1D08 /* NetworksWireframeFactory.swift in Sources */,
 				1A4C31F15B77B2DFA1AFCBB6 /* AMMsCell.swift in Sources */,
 				1A4C32FAFAE7B74336452733 /* AMMsView.swift in Sources */,
@@ -1066,6 +1138,7 @@
 				1A4C33C1A3C0AE41B3CE539A /* SwapInputView.swift in Sources */,
 				1A4C3184F9E6B94BC857D69A /* SwapView.swift in Sources */,
 				1A4C37B46FEFFC9D3AC7F324 /* SwapPresenter.swift in Sources */,
+				1CCA557527FF03490092A4D2 /* NetworksServiceAssembler.swift in Sources */,
 				1A4C348C8EAD95B167C06D3D /* SwapViewModel.swift in Sources */,
 				1A4C3D827C6C472784CC40E7 /* SwapWireframe.swift in Sources */,
 				1A4C3419FE99A77CEE441A56 /* SwapInteractor.swift in Sources */,
@@ -1075,8 +1148,11 @@
 				1A4C3D4A1F1632A702FC042A /* AccountViewModel.swift in Sources */,
 				1A4C30F2703A5F58B8DA3D1F /* AccountWireframe.swift in Sources */,
 				D116CF3227C31ECC005542AA /* iCarousel.m in Sources */,
+				1CCA556F27FEDF620092A4D2 /* AppsServiceAssembler.swift in Sources */,
 				1A4C3161ADC31E07777F61F0 /* AccountInteractor.swift in Sources */,
+				1CCA557127FEDF9B0092A4D2 /* AssemblerBootstrapper.swift in Sources */,
 				1A4C349387A48AB7AD7C24A9 /* AccountWireframeFactory.swift in Sources */,
+				1CCA558127FF055B0092A4D2 /* AppsWireframeFactoryAssembler.swift in Sources */,
 				1A4C37AEF66358EA9CA0CA59 /* AccountService.swift in Sources */,
 				1A4C3F081D1B594B9EAF4F7E /* NFTsCell.swift in Sources */,
 				1A4C3FC333CF4459025710E5 /* NFTsView.swift in Sources */,
@@ -1088,13 +1164,16 @@
 				1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */,
 				1A4C30B7111436DB2D3D9E5D /* AppsCell.swift in Sources */,
 				1CCA555C27FE1BDD0092A4D2 /* DefaultAssembler.swift in Sources */,
+				1CCA559327FF07AF0092A4D2 /* RootWireframeFactoryAssembler.swift in Sources */,
 				1A4C33D70F2BF31983487849 /* AppsView.swift in Sources */,
+				1CCA558727FF06680092A4D2 /* DegenWireframeFactoryAssembler.swift in Sources */,
 				1A4C36856556A9416071D218 /* AppsPresenter.swift in Sources */,
 				1A4C33FD7390E65B4959F77F /* AppsViewModel.swift in Sources */,
 				1A4C3CAD628F53A5AC474755 /* AppsWireframe.swift in Sources */,
 				1A4C3B15334CF0B046208C20 /* AppsInteractor.swift in Sources */,
 				1A4C33EB6A7815037906E8F4 /* AppsWireframeFactory.swift in Sources */,
 				1A4C3CF20692E06134002287 /* SettingsCell.swift in Sources */,
+				1CCA558F27FF07470092A4D2 /* SettingsWireframeFactoryAssembler.swift in Sources */,
 				1A4C346D269BABDAF0CC248E /* SettingsView.swift in Sources */,
 				1A4C32481161FADBE235A231 /* SettingsPresenter.swift in Sources */,
 				1A4C356A6C7A1C66A75728D8 /* SettingsViewModel.swift in Sources */,
@@ -1102,7 +1181,8 @@
 				1A4C3F03560BB09F68E7AC30 /* SettingsInteractor.swift in Sources */,
 				D116CF2827C2531E005542AA /* Array+Extensions.swift in Sources */,
 				1A4C35978A62DC3638CBFD05 /* SettingsWireframeFactory.swift in Sources */,
-				1A4C3B6D2DFADBE2EF71F3A5 /* Settings.swift in Sources */,
+				1CCA558B27FF06CF0092A4D2 /* NetworksWireframeFactoryAssembler.swift in Sources */,
+				1A4C3B6D2DFADBE2EF71F3A5 /* SettingsService.swift in Sources */,
 				1A4C34ABFF1DD20804DED956 /* AppsService.swift in Sources */,
 				1A4C39119C04EB0DE3B90F12 /* RootView.swift in Sources */,
 				1A4C36FDBCA0AA402711BE43 /* RootPresenter.swift in Sources */,

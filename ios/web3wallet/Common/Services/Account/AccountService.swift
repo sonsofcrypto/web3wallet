@@ -9,13 +9,9 @@ protocol AccountService: AnyObject {
 
 }
 
-// MARK: - DefaultAccountService
-
-class DefaultAccountService {
+final class DefaultAccountService {
 
 }
-
-// MARK: - AccountService
 
 extension DefaultAccountService: AccountService {
 

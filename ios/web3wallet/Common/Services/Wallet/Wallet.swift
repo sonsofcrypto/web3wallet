@@ -12,6 +12,4 @@ struct Wallet {
     let encryptedSigner: String
 }
 
-// MARK: - Codable
-
 extension Wallet: Codable {}
