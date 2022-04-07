@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dapp_icon_uniswap" translatesAutoresizingMaskIntoConstraints="NO" id="2W9-Zi-MqK">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch-image" translatesAutoresizingMaskIntoConstraints="NO" id="2W9-Zi-MqK">
                                 <rect key="frame" x="80" y="321" width="254" height="254"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="2W9-Zi-MqK" secondAttribute="height" multiplier="1:1" id="iwb-Qe-Yea"/>
@@ -39,7 +39,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="dapp_icon_uniswap" width="96" height="96"/>
+        <image name="launch-image" width="246" height="246"/>
         <namedColor name="bgGradientTop">
             <color red="0.1289999932050705" green="0.11800000071525574" blue="0.23899999260902405" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
