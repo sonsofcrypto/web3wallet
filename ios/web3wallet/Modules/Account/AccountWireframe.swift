@@ -14,9 +14,7 @@ protocol AccountWireframe {
     func navigate(to destination: AccountWireframeDestination)
 }
 
-// MARK: - DefaultAccountWireframe
-
-class DefaultAccountWireframe {
+final class DefaultAccountWireframe {
 
     private weak var parent: UIViewController?
 
@@ -31,11 +29,10 @@ class DefaultAccountWireframe {
     }
 }
 
-// MARK: - AccountWireframe
-
 extension DefaultAccountWireframe: AccountWireframe {
 
     func present() {
+        
         let vc = wireUp()
         let topVc = (parent as? UINavigationController)?.topViewController
 
@@ -48,14 +45,17 @@ extension DefaultAccountWireframe: AccountWireframe {
     }
 
     func navigate(to destination: AccountWireframeDestination) {
+        
         print("navigate to \(destination)")
     }
 }
 
-extension DefaultAccountWireframe {
+private extension DefaultAccountWireframe {
 
-    private func wireUp() -> UIViewController {
+    func wireUp() -> UIViewController {
+        
         let vc: AccountViewController = UIStoryboard(.main).instantiate()
+        
         let presenter = DefaultAccountPresenter(
             view: vc,
             interactor: interactor,
@@ -63,6 +63,7 @@ extension DefaultAccountWireframe {
         )
 
         vc.presenter = presenter
+        
         return NavigationController(rootViewController: vc)
     }
 }

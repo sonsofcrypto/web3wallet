@@ -15,14 +15,10 @@ protocol AccountPresenter {
     func handle(_ event: AccountPresenterEvent)
 }
 
-// MARK: - DefaultAccountPresenter
-
-class DefaultAccountPresenter {
+final class DefaultAccountPresenter {
 
     private let interactor: AccountInteractor
     private let wireframe: AccountWireframe
-
-    // private var items: [Item]
 
     private weak var view: AccountView?
 
@@ -37,8 +33,6 @@ class DefaultAccountPresenter {
     }
 }
 
-// MARK: AccountPresenter
-
 extension DefaultAccountPresenter: AccountPresenter {
 
     func present() {
@@ -50,13 +44,9 @@ extension DefaultAccountPresenter: AccountPresenter {
     }
 }
 
-// MARK: - Event handling
-
 private extension DefaultAccountPresenter {
 
 }
-
-// MARK: - WalletsViewModel utilities
 
 private extension DefaultAccountPresenter {
 

@@ -10,8 +10,6 @@ protocol AccountWireframeFactory {
     func makeWireframe(_ parent: UIViewController, wallet: Wallet) -> AccountWireframe
 }
 
-// MARK: - DefaultAccountWireframeFactory
-
 final class DefaultAccountWireframeFactory {
 
     private let service: AccountService
@@ -22,8 +20,6 @@ final class DefaultAccountWireframeFactory {
         self.service = service
     }
 }
-
-// MARK: - AccountWireframeFactory
 
 extension DefaultAccountWireframeFactory: AccountWireframeFactory {
 

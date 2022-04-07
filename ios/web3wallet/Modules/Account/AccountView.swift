@@ -10,7 +10,7 @@ protocol AccountView: AnyObject {
     func update(with viewModel: AccountViewModel)
 }
 
-class AccountViewController: UIViewController {
+final class AccountViewController: UIViewController {
 
     var presenter: AccountPresenter!
 
@@ -19,12 +19,33 @@ class AccountViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         configureUI()
         presenter?.present()
     }
+}
 
-    // MARK: - Actions
+extension AccountViewController: AccountView {
+
+    func update(with viewModel: AccountViewModel) {
+        
+        self.viewModel = viewModel
+        
+        title = viewModel.currencyName
+        collectionView.reloadData()
+
+        let btnLabel = (navigationItem.rightBarButtonItem?.customView as? UILabel)
+        btnLabel?.text = viewModel.header.pct
+        btnLabel?.textColor = viewModel.header.pctUp
+            ? Theme.current.green
+            : Theme.current.red
+    }
+}
+
+// MARK: - IBActions
+
+extension AccountViewController {
 
     @IBAction func receiveAction(_ sender: Any) {
 
@@ -44,23 +65,6 @@ class AccountViewController: UIViewController {
 
     @IBAction func dismissAction(_ sender: Any) {
         dismiss(animated: true)
-    }
-}
-
-// MARK: - WalletsView
-
-extension AccountViewController: AccountView {
-
-    func update(with viewModel: AccountViewModel) {
-        self.viewModel = viewModel
-        collectionView.reloadData()
-        title = viewModel.currencyName
-
-        let btnLabel = (navigationItem.rightBarButtonItem?.customView as? UILabel)
-        btnLabel?.text = viewModel.header.pct
-        btnLabel?.textColor = viewModel.header.pctUp
-            ? Theme.current.green
-            : Theme.current.red
     }
 }
 
@@ -169,12 +173,14 @@ extension AccountViewController: UICollectionViewDelegate {
 extension AccountViewController {
 
     enum Section: Int {
+        
         case header = 0
         case chart
         case marketInfo
         case transactions
 
         func cellCount(_ viewModel: AccountViewModel?) -> Int {
+            
             guard let viewModel = viewModel else {
                 return 0
             }
@@ -224,6 +230,7 @@ extension AccountViewController {
 extension AccountViewController {
 
     enum Constant {
+        
         static let headerHeight: CGFloat = 172
         static let chartHeight: CGFloat = 162
         static let marketInfoHeight: CGFloat = 71

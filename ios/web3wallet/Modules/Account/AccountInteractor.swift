@@ -10,20 +10,19 @@ protocol AccountInteractor: AnyObject {
     var wallet: Wallet { get }
 }
 
-// MARK: - DefaultAccountInteractor
-
-class DefaultAccountInteractor {
+final class DefaultAccountInteractor {
 
     private(set) var wallet: Wallet
     private var accountService: AccountService
 
-    init(_ accountService: AccountService, wallet: Wallet) {
+    init(
+        _ accountService: AccountService,
+        wallet: Wallet
+    ) {
         self.accountService = accountService
         self.wallet = wallet
     }
 }
-
-// MARK: - DefaultAccountInteractor
 
 extension DefaultAccountInteractor: AccountInteractor {
 
