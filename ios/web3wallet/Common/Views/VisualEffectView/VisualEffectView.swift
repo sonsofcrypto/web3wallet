@@ -1,9 +1,6 @@
 //
-//  VisualEffectView.swift
-//  VisualEffectView
-//
-//  Created by Lasha Efremidze on 5/26/16.
-//  Copyright © 2016 Lasha Efremidze. All rights reserved.
+// Copyright (c) 2022 Sons Of Crypto.
+// SPDX-License-Identifier: MIT
 //
 
 import UIKit

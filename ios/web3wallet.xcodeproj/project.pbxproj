@@ -127,6 +127,11 @@
 		1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */; };
 		1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */; };
 		1A4C3FC333CF4459025710E5 /* NFTsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38A2039D19A2E5507CF2 /* NFTsView.swift */; };
+		1CCA555C27FE1BDD0092A4D2 /* DefaultAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA555B27FE1BDD0092A4D2 /* DefaultAssembler.swift */; };
+		1CCA555E27FE1C0B0092A4D2 /* Assember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA555D27FE1C0B0092A4D2 /* Assember.swift */; };
+		1CCA556027FED3150092A4D2 /* ServiceDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA555F27FED3150092A4D2 /* ServiceDirectory.swift */; };
+		1CCA556227FED3820092A4D2 /* Bootstrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA556127FED3820092A4D2 /* Bootstrapper.swift */; };
+		1CCA556527FED3EE0092A4D2 /* MainBootstrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCA556427FED3EE0092A4D2 /* MainBootstrapper.swift */; };
 		D116CF2827C2531E005542AA /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D116CF2727C2531E005542AA /* Array+Extensions.swift */; };
 		D116CF3227C31ECC005542AA /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = D116CF3127C31ECC005542AA /* iCarousel.m */; };
 		D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F527B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf */; };
@@ -295,6 +300,11 @@
 		1A4C3F186997145E252EBB2E /* NFTsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsInteractor.swift; sourceTree = "<group>"; };
 		1A4C3F3F7A4502698FF8F63E /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		1A4C3FA66092D38533F635F3 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		1CCA555B27FE1BDD0092A4D2 /* DefaultAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAssembler.swift; sourceTree = "<group>"; };
+		1CCA555D27FE1C0B0092A4D2 /* Assember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assember.swift; sourceTree = "<group>"; };
+		1CCA555F27FED3150092A4D2 /* ServiceDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDirectory.swift; sourceTree = "<group>"; };
+		1CCA556127FED3820092A4D2 /* Bootstrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bootstrapper.swift; sourceTree = "<group>"; };
+		1CCA556427FED3EE0092A4D2 /* MainBootstrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBootstrapper.swift; sourceTree = "<group>"; };
 		D116CF2727C2531E005542AA /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		D116CF2F27C31ECC005542AA /* web3wallet-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "web3wallet-Bridging-Header.h"; sourceTree = "<group>"; };
 		D116CF3027C31ECC005542AA /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
@@ -654,6 +664,24 @@
 			path = VisualEffectView;
 			sourceTree = "<group>";
 		};
+		1CCA555A27FE1B9E0092A4D2 /* Assembler */ = {
+			isa = PBXGroup;
+			children = (
+				1CCA555D27FE1C0B0092A4D2 /* Assember.swift */,
+				1CCA555B27FE1BDD0092A4D2 /* DefaultAssembler.swift */,
+			);
+			path = Assembler;
+			sourceTree = "<group>";
+		};
+		1CCA556327FED3DA0092A4D2 /* Bootstrapper */ = {
+			isa = PBXGroup;
+			children = (
+				1CCA556127FED3820092A4D2 /* Bootstrapper.swift */,
+				1CCA556427FED3EE0092A4D2 /* MainBootstrapper.swift */,
+			);
+			name = Bootstrapper;
+			sourceTree = "<group>";
+		};
 		D116CF2927C31C42005542AA /* iCarousel */ = {
 			isa = PBXGroup;
 			children = (
@@ -772,7 +800,10 @@
 			isa = PBXGroup;
 			children = (
 				1A4C39FB21CCAF442F3001E6 /* Global.swift */,
+				1CCA555F27FED3150092A4D2 /* ServiceDirectory.swift */,
 				1A4C3342AB2F88E37CE4947A /* Theme.swift */,
+				1CCA555A27FE1B9E0092A4D2 /* Assembler */,
+				1CCA556327FED3DA0092A4D2 /* Bootstrapper */,
 				1A4C30D5AD2DC31052A09D61 /* Extensions */,
 				1A4C38B91F448C1E962685B3 /* Services */,
 				1A4C3C27E8AC72B44037C9E2 /* ViewControllers */,
@@ -974,12 +1005,14 @@
 				D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */,
 				1A4C32CF0C59FE32073E66D0 /* WalletsPresenter.swift in Sources */,
 				1A4C3D9BD9F5A146878AFF77 /* WalletsWireframe.swift in Sources */,
+				1CCA556227FED3820092A4D2 /* Bootstrapper.swift in Sources */,
 				1A4C3A585C5375AE91CDA637 /* WalletsWireframeFactory.swift in Sources */,
 				1A4C3F2AC8A8B59020F63712 /* WalletsInteractor.swift in Sources */,
 				1A4C39D40DEC9C42A6CF8D8A /* WalletsViewModel.swift in Sources */,
 				1A4C3C9B866507D8700399F6 /* WalletsService.swift in Sources */,
 				1A4C3708C25B84EAA53D0FB6 /* Wallet.swift in Sources */,
 				1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */,
+				1CCA555E27FE1C0B0092A4D2 /* Assember.swift in Sources */,
 				1A4C302CC56D21A0E3CBAFF6 /* UIStoryboard+Extensions.swift in Sources */,
 				1A4C372EC2DEA2483AD7D92E /* NSLocalizedString+Extensions.swift in Sources */,
 				1A4C33FF86A4E43DAA2E7AB9 /* UIColor+Extensions.swift in Sources */,
@@ -1027,6 +1060,7 @@
 				1A4C3C57B341513B1AA26C06 /* AMMsPresenter.swift in Sources */,
 				1A4C3A7D319E0444A98E52AD /* AMMsViewModel.swift in Sources */,
 				1A4C386E221B453892180BFE /* AMMsWireframe.swift in Sources */,
+				1CCA556027FED3150092A4D2 /* ServiceDirectory.swift in Sources */,
 				1A4C38B3B9AA2A7910821782 /* AMMsInteractor.swift in Sources */,
 				1A4C3D2C7310ABD59AFAE725 /* AMMsWireframeFactory.swift in Sources */,
 				1A4C33C1A3C0AE41B3CE539A /* SwapInputView.swift in Sources */,
@@ -1053,6 +1087,7 @@
 				1A4C3551BCCFEFA7BF378CD5 /* NFTsWireframeFactory.swift in Sources */,
 				1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */,
 				1A4C30B7111436DB2D3D9E5D /* AppsCell.swift in Sources */,
+				1CCA555C27FE1BDD0092A4D2 /* DefaultAssembler.swift in Sources */,
 				1A4C33D70F2BF31983487849 /* AppsView.swift in Sources */,
 				1A4C36856556A9416071D218 /* AppsPresenter.swift in Sources */,
 				1A4C33FD7390E65B4959F77F /* AppsViewModel.swift in Sources */,
@@ -1094,6 +1129,7 @@
 				1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */,
 				1A4C3DB9D875750365494DD7 /* CG+Extensions.swift in Sources */,
 				1A4C392C21DA6EEADCF86CD8 /* CardFlipTransition.swift in Sources */,
+				1CCA556527FED3EE0092A4D2 /* MainBootstrapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

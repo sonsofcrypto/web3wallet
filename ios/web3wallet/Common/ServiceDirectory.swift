@@ -3,10 +3,7 @@
 // SPDX-License-Identifier: MIT
 //
 
-import Foundation
-
-struct DApp {
-
-    let name: String
-    let network: String
+struct ServiceDirectory {
+    
+    static var assembler: Assembler!
 }

@@ -1,6 +1,7 @@
-// Created by web3d3v on 11/02/2022.
+//
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
+//
 
 import UIKit
 
@@ -9,9 +10,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+        
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
+        
+        MainBootstrapper().boot()
 
         let walletsService = DefaultWalletsService(store: DefaultStore())
         let networkService = DefaultNetworksService()
@@ -47,13 +54,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         .makeWireframe()
         .present()
 
+#if DEBUG
         let documents = NSSearchPathForDirectoriesInDomains(
             .documentDirectory,
             .userDomainMask,
             true
         )
-
         print(documents.last!)
+#endif
 
         return true
     }
@@ -71,7 +79,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-
-
 }
-

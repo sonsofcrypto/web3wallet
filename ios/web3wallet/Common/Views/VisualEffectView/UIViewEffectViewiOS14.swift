@@ -1,8 +1,6 @@
 //
-//  UIViewEffectViewiOS14.swift
-//  VisualEffectView
-//
-//  Created by Lasha Efremidze on 9/14/20.
+// Copyright (c) 2022 Sons Of Crypto.
+// SPDX-License-Identifier: MIT
 //
 
 import UIKit
