@@ -143,6 +143,8 @@
 		D11A990F27B99D1800EDFDD0 /* AnyDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A990C27B99D1800EDFDD0 /* AnyDecodable.swift */; };
 		D11A991027B99D1800EDFDD0 /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A990D27B99D1800EDFDD0 /* AnyCodable.swift */; };
 		D11A991127B99D1800EDFDD0 /* AnyEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A990E27B99D1800EDFDD0 /* AnyEncodable.swift */; };
+		D11B7E632800DFAF00F40488 /* web3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D11B7E602800DE1D00F40488 /* web3.framework */; };
+		D11B7E952800E82300F40488 /* WordLists in Resources */ = {isa = PBXBuildFile; fileRef = D11B7E942800E82300F40488 /* WordLists */; };
 		D14ECE3927B833E500228F90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D14ECE3827B833E500228F90 /* Localizable.strings */; };
 		D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CA27B69B6300578FF8 /* AppDelegate.swift */; };
 		D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */; };
@@ -158,6 +160,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		D11B7E5F2800DE1D00F40488 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D11B7E492800DE1D00F40488 /* web3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D11B7E292800D5C500F40488;
+			remoteInfo = web3;
+		};
+		D11B7E612800DE1D00F40488 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D11B7E492800DE1D00F40488 /* web3.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D11B7E332800D5C600F40488;
+			remoteInfo = web3Tests;
+		};
+		D11B7E662800E00B00F40488 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D11B7E492800DE1D00F40488 /* web3.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D11B7E282800D5C500F40488;
+			remoteInfo = web3;
+		};
 		D157F7DE27B69B6400578FF8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D157F7BF27B69B6300578FF8 /* Project object */;
@@ -313,6 +336,22 @@
 		D11A990C27B99D1800EDFDD0 /* AnyDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyDecodable.swift; sourceTree = "<group>"; };
 		D11A990D27B99D1800EDFDD0 /* AnyCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
 		D11A990E27B99D1800EDFDD0 /* AnyEncodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyEncodable.swift; sourceTree = "<group>"; };
+		D11B7E492800DE1D00F40488 /* web3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = web3.xcodeproj; sourceTree = "<group>"; };
+		D11B7E4D2800DE1D00F40488 /* czech.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = czech.txt; sourceTree = "<group>"; };
+		D11B7E4E2800DE1D00F40488 /* chinese_traditional.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = chinese_traditional.txt; sourceTree = "<group>"; };
+		D11B7E4F2800DE1D00F40488 /* japanese.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = japanese.txt; sourceTree = "<group>"; };
+		D11B7E502800DE1D00F40488 /* french.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = french.txt; sourceTree = "<group>"; };
+		D11B7E512800DE1D00F40488 /* chinese_simplified.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = chinese_simplified.txt; sourceTree = "<group>"; };
+		D11B7E522800DE1D00F40488 /* english.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = english.txt; sourceTree = "<group>"; };
+		D11B7E532800DE1D00F40488 /* spanish.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = spanish.txt; sourceTree = "<group>"; };
+		D11B7E542800DE1D00F40488 /* italian.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = italian.txt; sourceTree = "<group>"; };
+		D11B7E552800DE1D00F40488 /* portuguese.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = portuguese.txt; sourceTree = "<group>"; };
+		D11B7E562800DE1D00F40488 /* korean.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = korean.txt; sourceTree = "<group>"; };
+		D11B7E582800DE1D00F40488 /* greeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = greeter.swift; sourceTree = "<group>"; };
+		D11B7E592800DE1D00F40488 /* web3.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = web3.docc; sourceTree = "<group>"; };
+		D11B7E5A2800DE1D00F40488 /* web3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = web3.h; sourceTree = "<group>"; };
+		D11B7E5C2800DE1D00F40488 /* web3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3Tests.swift; sourceTree = "<group>"; };
+		D11B7E942800E82300F40488 /* WordLists */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WordLists; sourceTree = "<group>"; };
 		D14ECE3827B833E500228F90 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		D157F7C727B69B6300578FF8 /* web3wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = web3wallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D157F7CA27B69B6300578FF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -336,6 +375,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D11B7E632800DFAF00F40488 /* web3.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -699,6 +739,70 @@
 			path = AnyCodable;
 			sourceTree = "<group>";
 		};
+		D11B7E472800DE1C00F40488 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D11B7E482800DE1D00F40488 /* swift */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D11B7E482800DE1D00F40488 /* swift */ = {
+			isa = PBXGroup;
+			children = (
+				D11B7E492800DE1D00F40488 /* web3.xcodeproj */,
+				D11B7E4C2800DE1D00F40488 /* wordLists */,
+				D11B7E572800DE1D00F40488 /* web3 */,
+				D11B7E5B2800DE1D00F40488 /* web3Tests */,
+			);
+			name = swift;
+			path = ../web3lib/swift;
+			sourceTree = "<group>";
+		};
+		D11B7E4A2800DE1D00F40488 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D11B7E602800DE1D00F40488 /* web3.framework */,
+				D11B7E622800DE1D00F40488 /* web3Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D11B7E4C2800DE1D00F40488 /* wordLists */ = {
+			isa = PBXGroup;
+			children = (
+				D11B7E4D2800DE1D00F40488 /* czech.txt */,
+				D11B7E4E2800DE1D00F40488 /* chinese_traditional.txt */,
+				D11B7E4F2800DE1D00F40488 /* japanese.txt */,
+				D11B7E502800DE1D00F40488 /* french.txt */,
+				D11B7E512800DE1D00F40488 /* chinese_simplified.txt */,
+				D11B7E522800DE1D00F40488 /* english.txt */,
+				D11B7E532800DE1D00F40488 /* spanish.txt */,
+				D11B7E542800DE1D00F40488 /* italian.txt */,
+				D11B7E552800DE1D00F40488 /* portuguese.txt */,
+				D11B7E562800DE1D00F40488 /* korean.txt */,
+			);
+			path = wordLists;
+			sourceTree = "<group>";
+		};
+		D11B7E572800DE1D00F40488 /* web3 */ = {
+			isa = PBXGroup;
+			children = (
+				D11B7E582800DE1D00F40488 /* greeter.swift */,
+				D11B7E592800DE1D00F40488 /* web3.docc */,
+				D11B7E5A2800DE1D00F40488 /* web3.h */,
+			);
+			path = web3;
+			sourceTree = "<group>";
+		};
+		D11B7E5B2800DE1D00F40488 /* web3Tests */ = {
+			isa = PBXGroup;
+			children = (
+				D11B7E5C2800DE1D00F40488 /* web3Tests.swift */,
+			);
+			path = web3Tests;
+			sourceTree = "<group>";
+		};
 		D157F7BE27B69B6300578FF8 = {
 			isa = PBXGroup;
 			children = (
@@ -706,6 +810,7 @@
 				D157F7E027B69B6400578FF8 /* web3walletTests */,
 				D157F7EA27B69B6400578FF8 /* web3walletUITests */,
 				D157F7C827B69B6300578FF8 /* Products */,
+				D11B7E472800DE1C00F40488 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -733,6 +838,7 @@
 				D11A98F327B8615B00EDFDD0 /* Fonts */,
 				D14ECE3827B833E500228F90 /* Localizable.strings */,
 				D157F7D827B69B6400578FF8 /* Info.plist */,
+				D11B7E942800E82300F40488 /* WordLists */,
 			);
 			path = web3wallet;
 			sourceTree = "<group>";
@@ -834,6 +940,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D11B7E672800E00B00F40488 /* PBXTargetDependency */,
 			);
 			name = web3wallet;
 			productName = web3wallet;
@@ -911,6 +1018,12 @@
 			mainGroup = D157F7BE27B69B6300578FF8;
 			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = D11B7E4A2800DE1D00F40488 /* Products */;
+					ProjectRef = D11B7E492800DE1D00F40488 /* web3.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				D157F7C627B69B6300578FF8 /* web3wallet */,
@@ -919,6 +1032,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		D11B7E602800DE1D00F40488 /* web3.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = web3.framework;
+			remoteRef = D11B7E5F2800DE1D00F40488 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D11B7E622800DE1D00F40488 /* web3Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = web3Tests.xctest;
+			remoteRef = D11B7E612800DE1D00F40488 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D157F7C527B69B6300578FF8 /* Resources */ = {
@@ -931,6 +1061,7 @@
 				D11A990627B8615B00EDFDD0 /* OFL.txt in Resources */,
 				D11A990427B8615B00EDFDD0 /* GothicA1-Bold.ttf in Resources */,
 				D157F7D727B69B6400578FF8 /* LaunchScreen.storyboard in Resources */,
+				D11B7E952800E82300F40488 /* WordLists in Resources */,
 				D11A990227B8615B00EDFDD0 /* GothicA1-Light.ttf in Resources */,
 				D11A990727B8615B00EDFDD0 /* GothicA1-Medium.ttf in Resources */,
 				D14ECE3927B833E500228F90 /* Localizable.strings in Resources */,
@@ -1117,6 +1248,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		D11B7E672800E00B00F40488 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = web3;
+			targetProxy = D11B7E662800E00B00F40488 /* PBXContainerItemProxy */;
+		};
 		D157F7DF27B69B6400578FF8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D157F7C627B69B6300578FF8 /* web3wallet */;
@@ -1200,7 +1336,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1255,7 +1391,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1271,8 +1407,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5K4DT22LXR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = web3wallet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1301,8 +1439,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5K4DT22LXR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = web3wallet/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
