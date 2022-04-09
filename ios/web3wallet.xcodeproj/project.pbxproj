@@ -143,8 +143,9 @@
 		D11A990F27B99D1800EDFDD0 /* AnyDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A990C27B99D1800EDFDD0 /* AnyDecodable.swift */; };
 		D11A991027B99D1800EDFDD0 /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A990D27B99D1800EDFDD0 /* AnyCodable.swift */; };
 		D11A991127B99D1800EDFDD0 /* AnyEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A990E27B99D1800EDFDD0 /* AnyEncodable.swift */; };
-		D11B7E632800DFAF00F40488 /* web3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D11B7E602800DE1D00F40488 /* web3.framework */; };
 		D11B7E952800E82300F40488 /* WordLists in Resources */ = {isa = PBXBuildFile; fileRef = D11B7E942800E82300F40488 /* WordLists */; };
+		D11B7E972801F13400F40488 /* web3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D11B7E602800DE1D00F40488 /* web3.framework */; };
+		D11B7E982801F13400F40488 /* web3.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D11B7E602800DE1D00F40488 /* web3.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D14ECE3927B833E500228F90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D14ECE3827B833E500228F90 /* Localizable.strings */; };
 		D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CA27B69B6300578FF8 /* AppDelegate.swift */; };
 		D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */; };
@@ -196,6 +197,20 @@
 			remoteInfo = web3wallet;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D11B7E992801F13400F40488 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D11B7E982801F13400F40488 /* web3.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1A4C300AF1693AEBB5E5DD97 /* UIView+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+extensions.swift"; sourceTree = "<group>"; };
@@ -375,7 +390,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D11B7E632800DFAF00F40488 /* web3.framework in Frameworks */,
+				D11B7E972801F13400F40488 /* web3.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -936,6 +951,7 @@
 				D157F7C327B69B6300578FF8 /* Sources */,
 				D157F7C427B69B6300578FF8 /* Frameworks */,
 				D157F7C527B69B6300578FF8 /* Resources */,
+				D11B7E992801F13400F40488 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

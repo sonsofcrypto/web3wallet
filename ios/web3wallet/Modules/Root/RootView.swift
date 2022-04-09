@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3
 
 protocol RootView: AnyObject {
 
@@ -16,6 +17,7 @@ class RootViewController: EdgeCardsController {
         super.viewDidLoad()
         configureUI()
         presenter?.present()
+        web3.connectionTest()
     }
 }
 
