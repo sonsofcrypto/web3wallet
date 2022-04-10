@@ -14,9 +14,10 @@ class WalletsViewController: UIViewController {
     var presenter: WalletsPresenter!
 
     private var viewModel: WalletsViewModel?
-    
-    @IBOutlet weak var collectionView: UICollectionView!
 
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var logoContainer: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
