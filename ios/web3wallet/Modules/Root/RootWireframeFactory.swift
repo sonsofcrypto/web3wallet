@@ -15,7 +15,8 @@ class DefaultRootWireframeFactory {
 
     private weak var window: UIWindow?
 
-    private let wallets: KeyStoreWireframeFactory
+    private let keyStoreService: KeyStoreService
+    private let keyStore: KeyStoreWireframeFactory
     private let networks: NetworksWireframeFactory
     private let dashboard: DashboardWireframeFactory
     private let degen: DegenWireframeFactory
@@ -25,7 +26,8 @@ class DefaultRootWireframeFactory {
 
     init(
         window: UIWindow?,
-        wallets: KeyStoreWireframeFactory,
+        keyStoreService: KeyStoreService,
+        keyStore: KeyStoreWireframeFactory,
         networks: NetworksWireframeFactory,
         dashboard: DashboardWireframeFactory,
         degen: DegenWireframeFactory,
@@ -34,7 +36,8 @@ class DefaultRootWireframeFactory {
         settings: SettingsWireframeFactory
     ) {
         self.window = window
-        self.wallets = wallets
+        self.keyStoreService = keyStoreService
+        self.keyStore = keyStore
         self.networks = networks
         self.dashboard = dashboard
         self.degen = degen
@@ -51,7 +54,8 @@ extension DefaultRootWireframeFactory: RootWireframeFactory {
     func makeWireframe() -> RootWireframe {
         DefaultRootWireframe(
             window: window,
-            wallets: wallets,
+            keyStoreService: keyStoreService,
+            keyStore: keyStore,
             networks: networks,
             dashboard: dashboard,
             degen: degen,

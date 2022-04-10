@@ -145,7 +145,7 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <navigationItem key="navigationItem" title="web3wallet" id="HNH-q6-vGe"/>
+                    <navigationItem key="navigationItem" title="wallets" id="HNH-q6-vGe"/>
                     <connections>
                         <outlet property="collectionView" destination="hyQ-ni-ASc" id="qpZ-WZ-0Dn"/>
                         <outlet property="logoContainer" destination="qHS-1N-7Oz" id="Wcl-Re-Lc4"/>
@@ -349,7 +349,7 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <navigationItem key="navigationItem" title="web3wallet" id="saj-cA-yGt"/>
+                    <navigationItem key="navigationItem" title="networks" id="saj-cA-yGt"/>
                     <connections>
                         <outlet property="collectionView" destination="o2F-PC-Oid" id="yiK-fJ-8r8"/>
                     </connections>

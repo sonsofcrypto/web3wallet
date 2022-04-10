@@ -125,11 +125,11 @@ class EdgeCardsController: UIViewController {
     }
 
     @objc func tapTopCard(_ recognizer: UITapGestureRecognizer?) {
-        setDisplayMode(.topCard, animated: true)
+        setDisplayMode(.overviewTopCard, animated: true)
     }
 
     @objc func tapBottomCard(_ recognizer: UITapGestureRecognizer?) {
-        setDisplayMode(.bottomCard, animated: true)
+        setDisplayMode(.overviewBottomCard, animated: true)
     }
 }
 
@@ -145,9 +145,9 @@ private extension EdgeCardsController {
             tapRecognizers.enumerated().forEach { $0.1.isEnabled = true }
         case .master:
             tapRecognizers.enumerated().forEach { $0.1.isEnabled = $0.0 != 0 }
-        case .topCard:
+        case .overviewTopCard:
             tapRecognizers.enumerated().forEach { $0.1.isEnabled = $0.0 != 1 }
-        case .bottomCard:
+        case .overviewBottomCard:
             tapRecognizers.enumerated().forEach { $0.1.isEnabled = $0.0 != 2 }
         default:
             ()
@@ -158,7 +158,7 @@ private extension EdgeCardsController {
     private func layout() {
         containers.forEach {
             $0.bounds = view.bounds
-            if [topCardContainer, bottomCardContainer].contains($0) {
+            if [topCardContainer, bottomCardContainer].contains($0) && !swipingToMode.isFullScreen() {
                 var bounds = view.bounds
                 bounds.size.width = view.bounds.width * 0.95
                 $0.bounds = bounds
@@ -171,12 +171,17 @@ private extension EdgeCardsController {
         switch swipingToMode {
         case .overview:
             layoutToOverview()
-        case .bottomCard:
-            layoutToBottom()
-        case .topCard:
-            layoutToTop()
+        case .overviewBottomCard:
+            layoutToOverviewBottom()
+        case .overviewTopCard:
+            layoutToOverviewTop()
         case .master:
             layoutToMaster()
+        case .topCard:
+            layoutToTop()
+        case .bottomCard:
+            layoutToBottom()
+
         }
     }
 
@@ -200,26 +205,26 @@ private extension EdgeCardsController {
                 .concatenating(CGAffineTransform(translationX: transX, y: 0))
     }
 
-    func layoutToBottom() {
+    func layoutToOverviewBottom() {
         masterContainer.transform = CGAffineTransform(
-            translationX: 0.85 * view.bounds.width,
+            translationX: 0.945 * view.bounds.width,
             y: 0
         )
 
         topCardContainer.transform = CGAffineTransform(scaleX: 0.975, y: 0.975)
-                .concatenating(CGAffineTransform(translationX:  view.bounds.width * 0.75, y: 0))
+                .concatenating(CGAffineTransform(translationX:  view.bounds.width * 0.89, y: 0))
 
         bottomCardContainer.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
     }
 
-    func layoutToTop() {
+    func layoutToOverviewTop() {
         masterContainer.transform = CGAffineTransform(
-            translationX: 0.85 * view.bounds.width,
+            translationX: 0.945 * view.bounds.width,
             y: 0
         )
 
         topCardContainer.transform = CGAffineTransform(scaleX: 0.975, y: 0.975)
-                .concatenating(CGAffineTransform(translationX:  view.bounds.width * 0.1, y: 0))
+                .concatenating(CGAffineTransform(translationX:  view.bounds.width * 0.055, y: 0))
 
         bottomCardContainer.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
     }
@@ -228,6 +233,23 @@ private extension EdgeCardsController {
         containers.forEach {
             $0.transform = .identity
             applyShadows($0, mode: .master)
+        }
+    }
+
+    func layoutToTop() {
+        containers.forEach {
+            $0.transform = .identity
+            applyShadows($0, mode: .topCard)
+        }
+        let transform = CGAffineTransform(translationX: view.bounds.width, y: 0)
+        masterContainer.transform = transform
+    }
+
+    func layoutToBottom() {
+        let transform = CGAffineTransform(translationX: view.bounds.width, y: 0)
+        containers.forEach {
+            $0.transform = $0 == bottomCardContainer ? .identity : transform
+            applyShadows($0, mode: .bottomCard)
         }
     }
 
@@ -382,10 +404,12 @@ extension EdgeCardsController {
         case overview
         case topCard
         case bottomCard
+        case overviewTopCard
+        case overviewBottomCard
 
         func isFullScreen() -> Bool {
             switch self {
-            case .master: return true
+            case .master, .topCard, .bottomCard: return true
             default: return false
             }
         }

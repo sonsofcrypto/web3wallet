@@ -46,6 +46,7 @@ class DefaultKeyStoreService {
     init(store: Store) {
         self.store = store
         self.wallets = []
+        load { items in () }
     }
 }
 
@@ -54,7 +55,7 @@ class DefaultKeyStoreService {
 extension DefaultKeyStoreService: KeyStoreService {
 
     func isEmpty() -> Bool {
-        true
+        wallets.isEmpty
     }
 
     func keyStoreItem(at idx: Int) -> KeyStoreItem? {

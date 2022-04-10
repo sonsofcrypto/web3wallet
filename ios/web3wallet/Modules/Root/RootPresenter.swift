@@ -14,7 +14,8 @@ protocol RootPresenter {
 class DefaultRootPresenter {
 
     private let wireframe: RootWireframe
-    private let wallets: KeyStoreWireframe
+    private let keyStoreService: KeyStoreService
+    private let keyStore: KeyStoreWireframe
     private let networks: NetworksWireframe
     private let dashboard: DashboardWireframe
     private let degen: DegenWireframe
@@ -27,7 +28,8 @@ class DefaultRootPresenter {
     init(
         view: RootView,
         wireframe: RootWireframe,
-        wallets: KeyStoreWireframe,
+        keyStoreService: KeyStoreService,
+        keyStore: KeyStoreWireframe,
         networks: NetworksWireframe,
         dashboard: DashboardWireframe,
         degen: DegenWireframe,
@@ -37,7 +39,8 @@ class DefaultRootPresenter {
     ) {
         self.view = view
         self.wireframe = wireframe
-        self.wallets = wallets
+        self.keyStoreService = keyStoreService
+        self.keyStore = keyStore
         self.networks = networks
         self.dashboard = dashboard
         self.degen = degen
@@ -54,10 +57,14 @@ extension DefaultRootPresenter: RootPresenter {
     func present() {
         dashboard.present()
         networks.present()
-        wallets.present()
+        keyStore.present()
         degen.present()
         nfts.present()
         apps.present()
         settings.present()
+        wireframe.navigate(
+            to: keyStoreService.isEmpty() ? .keyStore : .dashboard,
+            animated: false
+        )
     }
 }

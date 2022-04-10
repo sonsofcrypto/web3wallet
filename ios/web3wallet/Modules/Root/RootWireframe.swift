@@ -6,14 +6,16 @@ import UIKit
 
 enum RootWireframeDestination {
     case dashboard
-    case overview
     case networks
-    case wallets
+    case keyStore
+    case overview
+    case overViewNetworks
+    case overViewKeyStore
 }
 
 protocol RootWireframe {
     func present()
-    func navigate(to destination: RootWireframeDestination)
+    func navigate(to destination: RootWireframeDestination, animated: Bool)
 }
 
 // MARK: - DefaultRootWireframe
@@ -23,7 +25,8 @@ class DefaultRootWireframe {
     private weak var window: UIWindow?
     private weak var vc: UIViewController?
 
-    private let wallets: KeyStoreWireframeFactory
+    private let keyStoreService: KeyStoreService
+    private let keyStore: KeyStoreWireframeFactory
     private let networks: NetworksWireframeFactory
     private let dashboard: DashboardWireframeFactory
     private let degen: DegenWireframeFactory
@@ -33,7 +36,8 @@ class DefaultRootWireframe {
 
     init(
         window: UIWindow?,
-        wallets: KeyStoreWireframeFactory,
+        keyStoreService: KeyStoreService,
+        keyStore: KeyStoreWireframeFactory,
         networks: NetworksWireframeFactory,
         dashboard: DashboardWireframeFactory,
         degen: DegenWireframeFactory,
@@ -42,7 +46,8 @@ class DefaultRootWireframe {
         settings: SettingsWireframeFactory
     ) {
         self.window = window
-        self.wallets = wallets
+        self.keyStoreService = keyStoreService
+        self.keyStore = keyStore
         self.networks = networks
         self.dashboard = dashboard
         self.degen = degen
@@ -63,12 +68,12 @@ extension DefaultRootWireframe: RootWireframe {
         window?.makeKeyAndVisible()
     }
 
-    func navigate(to destination: RootWireframeDestination) {
+    func navigate(to destination: RootWireframeDestination, animated: Bool) {
         guard let vc = self.vc as? EdgeCardsController else {
             print("Unable to navigate to \(destination)")
             return
         }
-        vc.setDisplayMode(destination.toDisplayMode(), animated: true)
+        vc.setDisplayMode(destination.toDisplayMode(), animated: animated)
     }
 }
 
@@ -83,7 +88,8 @@ extension DefaultRootWireframe {
         let presenter = DefaultRootPresenter(
             view: vc,
             wireframe: self,
-            wallets: wallets.makeWireframe(vc, window: nil),
+            keyStoreService: keyStoreService,
+            keyStore: keyStore.makeWireframe(vc, window: nil),
             networks: networks.makeWireframe(vc),
             dashboard: dashboard.makeWireframe(tabVc),
             degen: degen.makeWireframe(tabVc),
@@ -108,8 +114,12 @@ private extension RootWireframeDestination {
         case .overview:
             return .overview
         case .networks:
+            return .topCard
+        case .keyStore:
+            return .bottomCard
+        case .overViewNetworks:
             return .overviewTopCard
-        case .wallets:
+        case .overViewKeyStore:
             return .overviewBottomCard
         }
     }
