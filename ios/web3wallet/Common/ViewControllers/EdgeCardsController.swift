@@ -107,6 +107,7 @@ class EdgeCardsController: UIViewController {
                 },
                 completion: { _ in
                     self.displayMode = self.swipingToMode
+                    self.setupRecognizers(for: self.swipingToMode)
                     self.swipeProgress = 0
                 }
             )
@@ -139,6 +140,11 @@ private extension EdgeCardsController {
 
     func setupForDisplayMode(_ mode: DisplayMode) {
         (swipingToMode, displayMode) = (mode, mode)
+        setupRecognizers(for: mode)
+        layout()
+    }
+
+    func setupRecognizers(for mode: DisplayMode) {
         switch mode {
         case .overview:
             swipeProgress = 0.85
@@ -152,10 +158,9 @@ private extension EdgeCardsController {
         default:
             ()
         }
-        layout()
     }
 
-    private func layout() {
+    func layout() {
         containers.forEach {
             $0.bounds = view.bounds
             if [topCardContainer, bottomCardContainer].contains($0) && !swipingToMode.isFullScreen() {
@@ -167,7 +172,6 @@ private extension EdgeCardsController {
             $0.subviews.first?.bounds = $0.bounds
             applyShadows($0)
         }
-
         switch swipingToMode {
         case .overview:
             layoutToOverview()
