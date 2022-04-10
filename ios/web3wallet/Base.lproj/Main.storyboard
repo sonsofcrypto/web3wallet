@@ -32,7 +32,7 @@
         <!--web3wallet-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="WalletsViewController" title="web3wallet" id="BYZ-38-t0r" customClass="WalletsViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="KeyStoreViewController" title="web3wallet" id="BYZ-38-t0r" customClass="KeyStoreViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="GradientView" customModule="web3wallet" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -60,7 +60,7 @@
                                     <inset key="sectionInset" minX="16" minY="20" maxX="16" maxY="20"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="WalletsCell" reuseIdentifier="WalletsCell" id="oYm-SG-4Bd" userLabel="WalletsCell" customClass="WalletsCell" customModule="web3wallet" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="KeyStoreCell" reuseIdentifier="WalletsCell" id="oYm-SG-4Bd" userLabel="WalletsCell" customClass="KeyStoreCell" customModule="web3wallet" customModuleProvider="target">
                                         <rect key="frame" x="35.5" y="20" width="343" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="vlB-Z4-bZB">

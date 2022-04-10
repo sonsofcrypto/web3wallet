@@ -59,7 +59,7 @@ private extension DefaultAccountPresenter {
 
 private extension DefaultAccountPresenter {
 
-    func viewModel(_ wallet: Wallet) -> AccountViewModel {
+    func viewModel(_ wallet: KeyStoreItem) -> AccountViewModel {
         .init(
             currencyName: "Ethereum",
             header: .init(

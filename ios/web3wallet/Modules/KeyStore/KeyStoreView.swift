@@ -4,16 +4,16 @@
 
 import UIKit
 
-protocol WalletsView: AnyObject {
+protocol KeyStoreView: AnyObject {
 
-    func update(with viewModel: WalletsViewModel)
+    func update(with viewModel: KeyStoreViewModel)
 }
 
-class WalletsViewController: UIViewController {
+class KeyStoreViewController: UIViewController {
 
-    var presenter: WalletsPresenter!
+    var presenter: KeyStorePresenter!
 
-    private var viewModel: WalletsViewModel?
+    private var viewModel: KeyStoreViewModel?
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var logoContainer: UIView!
@@ -41,11 +41,11 @@ class WalletsViewController: UIViewController {
     }
 }
 
-// MARK: - WalletsView
+// MARK: - KeyStoreView
 
-extension WalletsViewController: WalletsView {
+extension KeyStoreViewController: KeyStoreView {
 
-    func update(with viewModel: WalletsViewModel) {
+    func update(with viewModel: KeyStoreViewModel) {
         self.viewModel = viewModel
         collectionView.reloadData()
         if let idx = viewModel.selectedIdx(), !viewModel.wallets().isEmpty {
@@ -59,7 +59,7 @@ extension WalletsViewController: WalletsView {
 
 // MARK: - UICollectionViewDataSource
 
-extension WalletsViewController: UICollectionViewDataSource {
+extension KeyStoreViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel?.wallets().count ?? 0
@@ -67,20 +67,20 @@ extension WalletsViewController: UICollectionViewDataSource {
     
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeue(WalletsCell.self, for: indexPath)
+        let cell = collectionView.dequeue(KeyStoreCell.self, for: indexPath)
         cell.titleLabel.text = viewModel?.wallets()[indexPath.item].title
         return cell
     }
 }
 
-extension WalletsViewController: UICollectionViewDelegate {
+extension KeyStoreViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         presenter.handle(.didSelectWalletAt(idx: indexPath.item))
     }
 }
 
-extension WalletsViewController: UICollectionViewDelegateFlowLayout {
+extension KeyStoreViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width - 32, height: Global.cellHeight)
@@ -89,7 +89,7 @@ extension WalletsViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - Configure UI
 
-extension WalletsViewController {
+extension KeyStoreViewController {
     
     func configureUI() {
         title = Localized("wallets")

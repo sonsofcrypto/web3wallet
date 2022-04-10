@@ -13,9 +13,9 @@ protocol DashboardInteractor: AnyObject {
 class DefaultDashboardInteractor {
 
 
-    private var walletsService: WalletsService
+    private var walletsService: KeyStoreService
 
-    init(_ walletsService: WalletsService) {
+    init(_ walletsService: KeyStoreService) {
         self.walletsService = walletsService
     }
 }

@@ -4,37 +4,37 @@
 
 import UIKit
 
-protocol WalletsWireframeFactory {
+protocol KeyStoreWireframeFactory {
 
     func makeWireframe(
         _ parent: UIViewController?,
         window: UIWindow?
-    ) -> WalletsWireframe
+    ) -> KeyStoreWireframe
 }
 
-// MARK: - DefaultWalletsWireframeFactory
+// MARK: - DefaultKeyStoreWireframeFactory
 
-class DefaultWalletsWireframeFactory {
+class DefaultKeyStoreWireframeFactory {
 
-    private let walletsService: WalletsService
+    private let walletsService: KeyStoreService
 
-    init(_ walletsService: WalletsService) {
+    init(_ walletsService: KeyStoreService) {
         self.walletsService = walletsService
     }
 }
 
 // MARK: - WalletsWireframeFactory
 
-extension DefaultWalletsWireframeFactory: WalletsWireframeFactory {
+extension DefaultKeyStoreWireframeFactory: KeyStoreWireframeFactory {
 
     func makeWireframe(
         _ parent: UIViewController?,
         window: UIWindow?
-    ) -> WalletsWireframe {
-        DefaultWalletsWireframe(
+    ) -> KeyStoreWireframe {
+        DefaultKeyStoreWireframe(
             parent: parent,
             window: window,
-            interactor: DefaultWalletsInteractor(walletsService)
+            interactor: DefaultKeyStoreInteractor(walletsService)
         )
     }
 }

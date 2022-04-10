@@ -4,7 +4,7 @@
 
 import Foundation
 
-enum WalletsPresenterEvent {
+enum KeyStorePresenterEvent {
     case didSelectWalletAt(idx: Int)
     case didSelectErrorActionAt(idx: Int)
     case createNewWallet
@@ -12,27 +12,27 @@ enum WalletsPresenterEvent {
     case connectHardwareWallet
 }
 
-protocol WalletsPresenter {
+protocol KeyStorePresenter {
 
     func present()
-    func handle(_ event: WalletsPresenterEvent)
+    func handle(_ event: KeyStorePresenterEvent)
 }
 
-// MARK: - DefaultWalletsPresenter
+// MARK: - DefaultKeyStorePresenter
 
-class DefaultWalletsPresenter {
+class DefaultKeyStorePresenter {
 
-    private let interactor: WalletsInteractor
-    private let wireframe: WalletsWireframe
+    private let interactor: KeyStoreInteractor
+    private let wireframe: KeyStoreWireframe
 
-    private var latestWallets: [Wallet]
+    private var latestWallets: [KeyStoreItem]
 
-    private weak var view: WalletsView?
+    private weak var view: KeyStoreView?
 
     init(
-        view: WalletsView,
-        interactor: WalletsInteractor,
-        wireframe: WalletsWireframe
+        view: KeyStoreView,
+        interactor: KeyStoreInteractor,
+        wireframe: KeyStoreWireframe
     ) {
         self.view = view
         self.interactor = interactor
@@ -43,7 +43,7 @@ class DefaultWalletsPresenter {
 
 // MARK: WalletsPresenter
 
-extension DefaultWalletsPresenter: WalletsPresenter {
+extension DefaultKeyStorePresenter: KeyStorePresenter {
 
     func present() {
         view?.update(with: .loading)
@@ -55,7 +55,7 @@ extension DefaultWalletsPresenter: WalletsPresenter {
         }
     }
 
-    func handle(_ event: WalletsPresenterEvent) {
+    func handle(_ event: KeyStorePresenterEvent) {
         switch event {
         case let .didSelectWalletAt(idx):
             handleDidSelectWallet(at: idx)
@@ -73,7 +73,7 @@ extension DefaultWalletsPresenter: WalletsPresenter {
 
 // MARK: - Event handling
 
-private extension DefaultWalletsPresenter {
+private extension DefaultKeyStorePresenter {
 
     func handleDidSelectWallet(at idx: Int) {
         let wallet = latestWallets[idx]
@@ -123,24 +123,24 @@ private extension DefaultWalletsPresenter {
 
 // MARK: - WalletsViewModel utilities
 
-private extension DefaultWalletsPresenter {
+private extension DefaultKeyStorePresenter {
 
-    func viewModel(from wallets: [Wallet], active: Wallet?) -> WalletsViewModel {
+    func viewModel(from wallets: [KeyStoreItem], active: KeyStoreItem?) -> KeyStoreViewModel {
         .loaded(
             wallets: viewModel(from: wallets),
             selectedIdx: selectedIdx(wallets, active: active)
         )
     }
 
-    func viewModel(from wallets: [Wallet]) -> [WalletsViewModel.Wallet] {
+    func viewModel(from wallets: [KeyStoreItem]) -> [KeyStoreViewModel.Wallet] {
         wallets.map {
             .init(title: $0.name)
         }
     }
 
-    func viewModel(from error: Error) -> WalletsViewModel {
+    func viewModel(from error: Error) -> KeyStoreViewModel {
         .error(
-            error: WalletsViewModel.Error(
+            error: KeyStoreViewModel.Error(
                 title: "Error",
                 body: error.localizedDescription,
                 actions: [Localized("OK")]
@@ -148,11 +148,11 @@ private extension DefaultWalletsPresenter {
         )
     }
 
-    func selectedIdx(_ wallets: [Wallet], active: Wallet?) -> Int {
+    func selectedIdx(_ wallets: [KeyStoreItem], active: KeyStoreItem?) -> Int {
         guard let wallet = active else {
             return 0
         }
 
-        return wallets.firstIndex{ $0.id == wallet.id } ?? 0
+        return wallets.firstIndex{ $0.uuid == wallet.uuid } ?? 0
     }
 }

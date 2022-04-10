@@ -14,7 +14,7 @@ protocol RootPresenter {
 class DefaultRootPresenter {
 
     private let wireframe: RootWireframe
-    private let wallets: WalletsWireframe
+    private let wallets: KeyStoreWireframe
     private let networks: NetworksWireframe
     private let dashboard: DashboardWireframe
     private let degen: DegenWireframe
@@ -27,7 +27,7 @@ class DefaultRootPresenter {
     init(
         view: RootView,
         wireframe: RootWireframe,
-        wallets: WalletsWireframe,
+        wallets: KeyStoreWireframe,
         networks: NetworksWireframe,
         dashboard: DashboardWireframe,
         degen: DegenWireframe,

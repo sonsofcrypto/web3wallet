@@ -4,28 +4,28 @@
 
 import UIKit
 
-enum WalletsWireframeDestination {
+enum KeyStoreWireframeDestination {
     case networks
 }
 
-protocol WalletsWireframe {
+protocol KeyStoreWireframe {
     func present()
-    func navigate(to destination: WalletsWireframeDestination)
+    func navigate(to destination: KeyStoreWireframeDestination)
 }
 
-// MARK: - DefaultWalletsWireframe
+// MARK: - DefaultKeyStoreWireframe
 
-class DefaultWalletsWireframe {
+class DefaultKeyStoreWireframe {
 
     private weak var parent: UIViewController?
     private weak var window: UIWindow?
 
-    private let interactor: WalletsInteractor
+    private let interactor: KeyStoreInteractor
 
     init(
         parent: UIViewController?,
         window: UIWindow?,
-        interactor: WalletsInteractor
+        interactor: KeyStoreInteractor
     ) {
         self.parent = parent
         self.window = window
@@ -33,9 +33,9 @@ class DefaultWalletsWireframe {
     }
 }
 
-// MARK: - WalletsWireframe
+// MARK: - KeyStoreWireframe
 
-extension DefaultWalletsWireframe: WalletsWireframe {
+extension DefaultKeyStoreWireframe: KeyStoreWireframe {
 
     func present() {
         let vc = wireUp()
@@ -53,7 +53,7 @@ extension DefaultWalletsWireframe: WalletsWireframe {
         }
     }
 
-    func navigate(to destination: WalletsWireframeDestination) {
+    func navigate(to destination: KeyStoreWireframeDestination) {
         if let parent = self.parent as? EdgeCardsController {
             switch destination {
             case .networks:
@@ -64,11 +64,11 @@ extension DefaultWalletsWireframe: WalletsWireframe {
     }
 }
 
-extension DefaultWalletsWireframe {
+extension DefaultKeyStoreWireframe {
 
     private func wireUp() -> UIViewController {
-        let vc: WalletsViewController = UIStoryboard(.main).instantiate()
-        let presenter = DefaultWalletsPresenter(
+        let vc: KeyStoreViewController = UIStoryboard(.main).instantiate()
+        let presenter = DefaultKeyStorePresenter(
             view: vc,
             interactor: interactor,
             wireframe: self

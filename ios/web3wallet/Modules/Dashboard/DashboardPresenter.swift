@@ -51,8 +51,8 @@ extension DefaultDashboardPresenter: DashboardPresenter {
     func handle(_ event: DashboardPresenterEvent) {
         switch event {
         case let .didSelectWallet(idx):
-            let wallet = Wallet(id: 0, name: "ETH", encryptedSigner: "")
-            wireframe.navigate(to: .wallet(wallet: wallet))
+            let keyStoreItem = KeyStoreItem.rand()
+            wireframe.navigate(to: .wallet(wallet: keyStoreItem))
         default:
             print("Handle \(event)")
         }

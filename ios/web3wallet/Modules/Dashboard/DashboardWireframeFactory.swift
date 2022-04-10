@@ -13,11 +13,11 @@ protocol DashboardWireframeFactory {
 
 class DefaultDashboardWireframeFactory {
 
-    private let service: WalletsService
+    private let service: KeyStoreService
     private let accountWireframeFactory: AccountWireframeFactory
 
     init(
-        _ service: WalletsService,
+        _ service: KeyStoreService,
         accountWireframeFactory: AccountWireframeFactory
     ) {
         self.service = service

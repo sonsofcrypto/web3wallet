@@ -15,7 +15,7 @@ class DefaultRootWireframeFactory {
 
     private weak var window: UIWindow?
 
-    private let wallets: WalletsWireframeFactory
+    private let wallets: KeyStoreWireframeFactory
     private let networks: NetworksWireframeFactory
     private let dashboard: DashboardWireframeFactory
     private let degen: DegenWireframeFactory
@@ -25,7 +25,7 @@ class DefaultRootWireframeFactory {
 
     init(
         window: UIWindow?,
-        wallets: WalletsWireframeFactory,
+        wallets: KeyStoreWireframeFactory,
         networks: NetworksWireframeFactory,
         dashboard: DashboardWireframeFactory,
         degen: DegenWireframeFactory,

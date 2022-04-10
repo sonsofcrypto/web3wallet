@@ -59,7 +59,7 @@ extension AppsViewController: UICollectionViewDataSource {
     
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeue(WalletsCell.self, for: indexPath)
+        let cell = collectionView.dequeue(KeyStoreCell.self, for: indexPath)
         cell.titleLabel.text = viewModel?.items()[indexPath.item].title
         return cell
     }

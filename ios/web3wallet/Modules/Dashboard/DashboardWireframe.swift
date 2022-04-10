@@ -5,7 +5,7 @@
 import UIKit
 
 enum DashboardWireframeDestination {
-    case wallet(wallet: Wallet)
+    case wallet(wallet: KeyStoreItem)
 
 }
 

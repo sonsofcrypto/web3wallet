@@ -21,3 +21,12 @@ extension Array {
         return Array(self[count - n..<count])
     }
 }
+
+// MARK: - Safe
+
+extension Array {
+
+    subscript (safe idx: Index) -> Element? {
+        return indices.contains(where: { idx == $0} ) ? self[idx] : nil
+    }
+}

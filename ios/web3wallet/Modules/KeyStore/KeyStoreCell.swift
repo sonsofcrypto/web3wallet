@@ -4,7 +4,7 @@
 
 import UIKit
 
-class WalletsCell: CollectionViewCell {
+class KeyStoreCell: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
 

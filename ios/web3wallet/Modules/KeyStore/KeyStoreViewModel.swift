@@ -4,15 +4,15 @@
 
 import Foundation
 
-enum WalletsViewModel {
+enum KeyStoreViewModel {
     case loading
     case loaded(wallets: [Wallet], selectedIdx: Int)
-    case error(error: WalletsViewModel.Error)
+    case error(error: KeyStoreViewModel.Error)
 }
 
 // MARK - Wallet
 
-extension WalletsViewModel {
+extension KeyStoreViewModel {
 
     struct Wallet {
         let title: String
@@ -21,7 +21,7 @@ extension WalletsViewModel {
 
 // MARK: - Error
 
-extension WalletsViewModel {
+extension KeyStoreViewModel {
 
     struct Error {
         let title: String
@@ -32,9 +32,9 @@ extension WalletsViewModel {
 
 // MARK: - Utility
 
-extension WalletsViewModel {
+extension KeyStoreViewModel {
 
-    func wallets() -> [WalletsViewModel.Wallet] {
+    func wallets() -> [KeyStoreViewModel.Wallet] {
         switch self {
         case let .loaded(wallets, _):
             return wallets

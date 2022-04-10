@@ -6,17 +6,17 @@ import Foundation
 
 protocol AccountInteractor: AnyObject {
 
-    var wallet: Wallet { get }
+    var wallet: KeyStoreItem { get }
 }
 
 // MARK: - DefaultAccountInteractor
 
 class DefaultAccountInteractor {
 
-    private(set) var wallet: Wallet
+    private(set) var wallet: KeyStoreItem
     private var accountService: AccountService
 
-    init(_ accountService: AccountService, wallet: Wallet) {
+    init(_ accountService: AccountService, wallet: KeyStoreItem) {
         self.accountService = accountService
         self.wallet = wallet
     }

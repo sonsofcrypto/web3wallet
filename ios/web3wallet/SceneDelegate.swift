@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         self.window = window
 
-        let walletsService = DefaultWalletsService(store: DefaultStore())
+        let walletsService = DefaultKeyStoreService(store: DefaultStore())
         let networkService = DefaultNetworksService()
         let degenService = DefaultDegenService()
         let nftsService = DefaultNFTsService()
@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         DefaultRootWireframeFactory(
             window: window,
-            wallets: DefaultWalletsWireframeFactory(walletsService),
+            wallets: DefaultKeyStoreWireframeFactory(walletsService),
             networks: DefaultNetworksWireframeFactory(networkService),
             dashboard: DefaultDashboardWireframeFactory(
                 walletsService,
