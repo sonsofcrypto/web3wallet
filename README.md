@@ -13,4 +13,43 @@ git submodule update --init --recursive
 - currently `web3lib` have to build manually instuctions [here](https://github.com/sonsofcrypto/web3lib). This will soon be automated. 
 
 
+## TODO: MVP 1.0 4 weeks
+
+- [] w1 Key Store
+	- [] Web3lib integration
+	- [] bip39
+	- [] bip44
+	- [] KeyStore
+		- [] Create
+		- [] Import
+		- [] Update settings
+		- [] List
+	- [] Import private key
+	- [] Handle multiple accounts from from same mnemonic
+	- [] Connect harware wallet
+	- [] Create multisig
+- [] w2 Connection to networks
+	- [] RPC APIs
+	- [] Run light client
+	- [] Pocket network
+	- [] Infura
+	- [] Alchyme
+- [] w3 Homescreen
+- [] w4 Send / Recieve
+
+## TODO(web3dgn):
+- [] Under construction wireframe
+- [] Add theme option to settings
+	- [] Theme picker module
+- [] Add swipe to delete to wallets scree
+- [] Add under construction with animation
+
+## TODO(design4.crypto):
+- [] Redesign enter PIN / Pass / Salt
+
+## MVP 2.0 4 weeks
+- [] Additional networks support
+- [] As many integrations as posible
+- [] Stuff left out from MVP 1.0
+
 For more info [sonsOfCrypto.com](https://sonsofcrypto.com/)
