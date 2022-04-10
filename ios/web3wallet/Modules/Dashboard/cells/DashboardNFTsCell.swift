@@ -29,8 +29,12 @@ class DashboardNFTsCell: CollectionViewCell {
 extension DashboardNFTsCell {
 
     func update(with viewModel: [DashboardViewModel.NFT]) {
+        let prevCount = carousel.numberOfItems
         self.viewModel = viewModel
         carousel.reloadData()
+        if prevCount == 0 {
+            carousel.scrollToItem(at: carousel.numberOfItems / 2, animated: false)
+        }
     }
 }
 
