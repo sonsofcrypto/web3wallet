@@ -224,7 +224,7 @@ private extension EdgeCardsController {
         )
 
         topCardContainer.transform = CGAffineTransform(scaleX: 0.975, y: 0.975)
-                .concatenating(CGAffineTransform(translationX:  view.bounds.width * 0.055, y: 0))
+                .concatenating(CGAffineTransform(translationX:  view.bounds.width * 0.025, y: 0))
 
         bottomCardContainer.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
     }

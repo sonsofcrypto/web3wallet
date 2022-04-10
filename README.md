@@ -15,7 +15,7 @@ git submodule update --init --recursive
 
 ## TODO: MVP 1.0 4 weeks
 
-- [] w1 Key Store
+- [] w1 Key Store and associated UI (create, restore bip39, bip44, bip32)
 	- [] Web3lib integration
 	- [] bip39
 	- [] bip44
@@ -29,8 +29,10 @@ git submodule update --init --recursive
 	- [] Connect harware wallet
 	- [] Create multisig
 
-
-	- [] Layout for topCard
+## UI tasks: 
+	- [x] Layout for topCard
+	- [] Fix tapping on home screen
+	- [] Fix end of swipe gesture to left from home screen
 	- [] Swiping on bottom card
 	- [] Swiping on top card
 	- [] Swiping on overview
@@ -45,7 +47,7 @@ git submodule update --init --recursive
 	- [] Create sheet view for buttons
 	- [] Animate buttons on appear if wallets is empty
 	- [] Create password VC
-	
+
 - [] w2 Connection to networks
 	- [] RPC APIs
 	- [] Run light client
