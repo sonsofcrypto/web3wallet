@@ -57,7 +57,7 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
         if let parent = self.parent as? EdgeCardsController {
             switch destination {
             case .networks:
-                parent.setDisplayMode(.topCard, animated: true)
+                parent.setDisplayMode(.overviewTopCard, animated: true)
             }
         }
         print("Failed to navigate to \(destination)")

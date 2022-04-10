@@ -17,6 +17,16 @@ class DegenViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
 
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        configureNavAndTabBarItem()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configureNavAndTabBarItem()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -101,19 +111,12 @@ extension DegenViewController: UICollectionViewDelegate {
 extension DegenViewController {
     
     func configureUI() {
-        title = Localized("degen")
         navigationItem.backButtonTitle = ""
 
         (view as? GradientView)?.colors = [
             Theme.current.background,
             Theme.current.backgroundDark
         ]
-
-        tabBarItem = UITabBarItem(
-            title: title,
-            image: UIImage(named: "tab_icon_degen"),
-            tag: 1
-        )
 
         var insets = collectionView.contentInset
         insets.bottom += Global.padding
@@ -123,6 +126,15 @@ extension DegenViewController {
         overScrollView?.overScrollView.image = UIImage(named: "overscroll_degen")
         overScrollView?.overScrollView.layer.transform = CATransform3DMakeTranslation(0, -100, 0)
         navigationItem.backButtonTitle = ""
+    }
+
+    func configureNavAndTabBarItem() {
+        title = Localized("degen")
+        tabBarItem = UITabBarItem(
+            title: title,
+            image: UIImage(named: "tab_icon_degen"),
+            tag: 1
+        )
     }
 }
 

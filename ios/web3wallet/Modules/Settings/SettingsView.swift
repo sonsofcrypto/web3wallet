@@ -17,6 +17,15 @@ class SettingsViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
 
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configureNavAndTabBarItem()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -78,15 +87,17 @@ extension SettingsViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - Configure UI
 
-extension SettingsViewController {
+private extension SettingsViewController {
     
     func configureUI() {
-        title = Localized("settings")
         (view as? GradientView)?.colors = [
             Theme.current.background,
             Theme.current.backgroundDark
         ]
+    }
 
+    func configureNavAndTabBarItem() {
+        title = Localized("settings")
         tabBarItem = UITabBarItem(
             title: title,
             image: UIImage(named: "tab_icon_settings"),

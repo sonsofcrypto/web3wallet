@@ -108,9 +108,9 @@ private extension RootWireframeDestination {
         case .overview:
             return .overview
         case .networks:
-            return .topCard
+            return .overviewTopCard
         case .wallets:
-            return .bottomCard
+            return .overviewBottomCard
         }
     }
 }

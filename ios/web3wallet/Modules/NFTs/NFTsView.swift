@@ -17,6 +17,16 @@ class NFTsViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
 
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        configureNavAndTabBarItem()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configureNavAndTabBarItem()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -78,15 +88,17 @@ extension NFTsViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - Configure UI
 
-extension NFTsViewController {
+private extension NFTsViewController {
     
     func configureUI() {
-        title = Localized("nfts")
         (view as? GradientView)?.colors = [
             Theme.current.background,
             Theme.current.backgroundDark
         ]
+    }
 
+    func configureNavAndTabBarItem() {
+        title = Localized("nfts")
         tabBarItem = UITabBarItem(
             title: title,
             image: UIImage(named: "tab_icon_nfts"),
