@@ -31,7 +31,7 @@ git submodule update --init --recursive
 
 ## UI tasks: 
 	- [x] Layout for topCard
-	- [] Fix tapping on home screen
+	- [x] Fix tapping on home screen
 	- [] Fix end of swipe gesture to left from home screen
 	- [] Swiping on bottom card
 	- [] Swiping on top card
@@ -47,6 +47,7 @@ git submodule update --init --recursive
 	- [] Create sheet view for buttons
 	- [] Animate buttons on appear if wallets is empty
 	- [] Create password VC
+	- [] Play haptics when swipe starts
 
 - [] w2 Connection to networks
 	- [] RPC APIs

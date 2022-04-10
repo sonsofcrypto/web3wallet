@@ -98,16 +98,18 @@ class EdgeCardsController: UIViewController {
             swipeProgress = translation.x / view.bounds.width
             layout()
         case .ended, .failed:
+            let progress = recognizer.velocity(in: view).x >= 0 ? 0.85 : 0
+            let duration = progress == 0 ? 0.2 : 0.5
             UIView.springAnimate(
                 0.5,
                 velocity: recognizer.velocity(in: view).x / view.bounds.width,
                 animations: {
-                    self.swipeProgress = 0.85
+                    self.swipeProgress = progress
                     self.layout()
                 },
                 completion: { _ in
-                    self.displayMode = self.swipingToMode
-                    self.setupRecognizers(for: self.swipingToMode)
+                    self.displayMode = progress != 0 ? self.swipingToMode : .master
+                    self.setupRecognizers(for: self.displayMode)
                     self.swipeProgress = 0
                 }
             )
