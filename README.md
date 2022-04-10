@@ -28,6 +28,24 @@ git submodule update --init --recursive
 	- [] Handle multiple accounts from from same mnemonic
 	- [] Connect harware wallet
 	- [] Create multisig
+
+
+	- [] Layout for topCard
+	- [] Swiping on bottom card
+	- [] Swiping on top card
+	- [] Swiping on overview
+	- [] Create wallet VC
+	- [] Animate to home screen after creating wallet
+	- [] Create wallet to transition
+	- [] Create wallet from transition
+	- [] Add setting to cell 
+	- [] Add edit / settings mode
+	- [] Add restore VC
+	- [] Aninate neon logo on apprearif empty
+	- [] Create sheet view for buttons
+	- [] Animate buttons on appear if wallets is empty
+	- [] Create password VC
+	
 - [] w2 Connection to networks
 	- [] RPC APIs
 	- [] Run light client
@@ -41,6 +59,7 @@ git submodule update --init --recursive
 - [] Under construction wireframe
 - [] Add theme option to settings
 	- [] Theme picker module
+- [] Tab bar icons are not showing until first tap on the tab. Dont know why
 - [] Add swipe to delete to wallets scree
 - [] Add under construction with animation
 
