@@ -46,7 +46,7 @@ class DefaultKeyStorePresenter {
 extension DefaultKeyStorePresenter: KeyStorePresenter {
 
     func present() {
-        view?.update(with: .loading)
+        view?.update(with: .loading(isEmpty: interactor.isEmpty))
         interactor.loadWallets { [weak self] wallets in
             self?.latestWallets = wallets
             self?.view?.update(
@@ -128,11 +128,12 @@ private extension DefaultKeyStorePresenter {
     func viewModel(from wallets: [KeyStoreItem], active: KeyStoreItem?) -> KeyStoreViewModel {
         .loaded(
             wallets: viewModel(from: wallets),
-            selectedIdx: selectedIdx(wallets, active: active)
+            selectedIdx: selectedIdx(wallets, active: active),
+            isEmpty: wallets.isEmpty
         )
     }
 
-    func viewModel(from wallets: [KeyStoreItem]) -> [KeyStoreViewModel.Wallet] {
+    func viewModel(from wallets: [KeyStoreItem]) -> [KeyStoreViewModel.KeyStoreItem] {
         wallets.map {
             .init(title: $0.name)
         }
@@ -144,7 +145,8 @@ private extension DefaultKeyStorePresenter {
                 title: "Error",
                 body: error.localizedDescription,
                 actions: [Localized("OK")]
-            )
+            ),
+            isEmpty: interactor.isEmpty
         )
     }
 

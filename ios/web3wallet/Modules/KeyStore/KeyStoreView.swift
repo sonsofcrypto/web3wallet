@@ -48,6 +48,7 @@ extension KeyStoreViewController: KeyStoreView {
     func update(with viewModel: KeyStoreViewModel) {
         self.viewModel = viewModel
         collectionView.reloadData()
+        logoContainer.isHidden = !viewModel.isEmpty()
         if let idx = viewModel.selectedIdx(), !viewModel.wallets().isEmpty {
             collectionView.deselectAllExcept(
                 IndexPath(item: idx, section: 0),

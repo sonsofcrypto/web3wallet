@@ -5,16 +5,16 @@
 import Foundation
 
 enum KeyStoreViewModel {
-    case loading
-    case loaded(wallets: [Wallet], selectedIdx: Int)
-    case error(error: KeyStoreViewModel.Error)
+    case loading(isEmpty: Bool)
+    case loaded(wallets: [KeyStoreItem], selectedIdx: Int, isEmpty: Bool)
+    case error(error: KeyStoreViewModel.Error, isEmpty: Bool)
 }
 
 // MARK - Wallet
 
 extension KeyStoreViewModel {
 
-    struct Wallet {
+    struct KeyStoreItem {
         let title: String
     }
 }
@@ -34,9 +34,9 @@ extension KeyStoreViewModel {
 
 extension KeyStoreViewModel {
 
-    func wallets() -> [KeyStoreViewModel.Wallet] {
+    func wallets() -> [KeyStoreViewModel.KeyStoreItem] {
         switch self {
-        case let .loaded(wallets, _):
+        case let .loaded(wallets, _, _):
             return wallets
         default:
             return []
@@ -45,10 +45,21 @@ extension KeyStoreViewModel {
 
     func selectedIdx() -> Int? {
         switch self {
-        case let .loaded(_, idx):
+        case let .loaded(_, idx, _):
             return idx
         default:
             return nil
+        }
+    }
+
+    func isEmpty() -> Bool {
+        switch self {
+        case let .loading(isEmpty):
+            return isEmpty
+        case let .loaded(_, _, isEmpty):
+            return isEmpty
+        case let .error(_, isEmpty):
+            return isEmpty
         }
     }
 }

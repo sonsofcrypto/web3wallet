@@ -10,6 +10,8 @@ protocol KeyStoreInteractor: AnyObject {
 
     var activeWallet: KeyStoreItem? { get set }
 
+    var isEmpty: Bool { get }
+
     func loadWallets(_ handler: KeyStoreItemHandler)
 
     func keyStoreItem(at idx: Int) -> KeyStoreItem?
@@ -35,6 +37,10 @@ class DefaultKeyStoreInteractor {
     var activeWallet: KeyStoreItem? {
         get { keyStoreService.selectedKeyStoreItem }
         set { keyStoreService.selectedKeyStoreItem = newValue }
+    }
+
+    var isEmpty: Bool {
+        keyStoreService.isEmpty()
     }
 
     private var keyStoreService: KeyStoreService
