@@ -119,9 +119,40 @@ class EdgeCardsController: UIViewController {
     }
 
     @objc func panned(_ recognizer: UIPanGestureRecognizer) {
-
+        switch recognizer.state {
+        case .began:
+            let velocityX = recognizer.velocity(in: view).x
+            print("=== begun velocity", velocityX, displayMode)
+            if velocityX >= 0 {
+                swipingToMode = .overviewBottomCard
+            } else {
+                swipingToMode = .overview
+            }
+            swipeProgress = 0
+            // TODO: Play haptics
+        case .changed:
+            let translation = recognizer.translation(in: view)
+            swipeProgress = translation.x / view.bounds.width
+            print("=== progress", swipeProgress)
+            layout()
+        case .ended, .failed:
+            swipeProgress = recognizer.velocity(in: view).x >= 0 ? 0.85 : 0
+            let duration = swipeProgress == 0 ? 0.2 : 0.5
+            let mode = swipeProgress > 0 ? swipingToMode : displayMode
+            UIView.springAnimate(
+                0.5,
+                velocity: recognizer.velocity(in: view).x / view.bounds.width,
+                animations: {
+                    self.setupForDisplayMode(mode)
+                },
+                completion: { _ in
+                    self.setupForDisplayMode(mode)
+                }
+            )
+        default:
+            ()
+        }
     }
-
 
     @objc func tapMaster(_ recognizer: UITapGestureRecognizer?) {
         setDisplayMode(.master, animated: true)
@@ -153,13 +184,14 @@ private extension EdgeCardsController {
             tapRecognizers.enumerated().forEach { $0.1.isEnabled = true }
         case .master:
             tapRecognizers.enumerated().forEach { $0.1.isEnabled = $0.0 != 0 }
-        case .overviewTopCard:
+        case .overviewTopCard, .topCard:
             tapRecognizers.enumerated().forEach { $0.1.isEnabled = $0.0 != 1 }
-        case .overviewBottomCard:
+        case .overviewBottomCard, .bottomCard:
             tapRecognizers.enumerated().forEach { $0.1.isEnabled = $0.0 != 2 }
         default:
             ()
         }
+        panRecognizer.isEnabled = mode != .master
     }
 
     func layout() {
@@ -389,6 +421,7 @@ extension EdgeCardsController: UIGestureRecognizerDelegate {
         view.addGestureRecognizer(edgeRecognizer)
 
         panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panned(_:)))
+        panRecognizer.isEnabled = false
 //        view.addGestureRecognizer(panRecognizer)
     }
 

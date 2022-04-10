@@ -32,10 +32,7 @@ git submodule update --init --recursive
 ## UI tasks: 
 	- [x] Layout for topCard
 	- [x] Fix tapping on home screen
-	- [] Fix end of swipe gesture to left from home screen
-	- [] Swiping on bottom card
-	- [] Swiping on top card
-	- [] Swiping on overview
+	- [x] Fix end of swipe gesture to left from home screen
 	- [] Create wallet VC
 	- [] Animate to home screen after creating wallet
 	- [] Create wallet to transition
@@ -43,6 +40,9 @@ git submodule update --init --recursive
 	- [] Add setting to cell 
 	- [] Add edit / settings mode
 	- [] Add restore VC
+	- [] Swiping on overview (Either go to bottom or master)
+	- [] Swiping on top card (Either go to bottom or master)
+	- [] Swiping on bottom card (Either go to network)
 	- [] Aninate neon logo on apprearif empty
 	- [] Create sheet view for buttons
 	- [] Animate buttons on appear if wallets is empty
