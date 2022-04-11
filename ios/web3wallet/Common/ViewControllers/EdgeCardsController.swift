@@ -81,7 +81,9 @@ class EdgeCardsController: UIViewController {
         }
 
         UIView.springAnimate(
-            damping: mode.isFullScreen() ? 0.9 : 0.8,
+            damping: mode.isFullScreen()
+                ? Constant.displayModeLongAnim
+                : Constant.displayModeShortAnim,
             animations: { self.setupForDisplayMode(mode) }
         )
     }
@@ -111,10 +113,9 @@ class EdgeCardsController: UIViewController {
         case .ended, .failed:
             let velocityX = recognizer.velocity(in: view).x
             let revert = didChangeSign(start: initVelocityX, end: velocityX)
-            let duration = revert ? 0.15 : 0.5
+            let duration = revert ? Constant.shortAnim : Constant.longAnim
             let mode = revert ? oppositeDirectionMode : swipingToMode
             swipeProgress = 1 * velocitySignMltp
-            setupRecognizers(for: mode)
             UIView.springAnimate(
                 duration,
                 velocity: recognizer.velocity(in: view).x / view.bounds.width,
@@ -151,7 +152,7 @@ private extension EdgeCardsController {
 
     func setupForDisplayMode(_ mode: DisplayMode) {
         (swipingToMode, displayMode) = (mode, mode)
-        setupSwipeForFinalPosition(mode)
+        setupToFromSwipeForFinalPosition(mode)
         setupRecognizers(for: mode)
         layout()
     }
@@ -159,10 +160,10 @@ private extension EdgeCardsController {
     func layout() {
         containers.forEach {
            ($0.bounds, $0.center) = (view.bounds, view.bounds.midXY)
-            let isMaster = ![topCardContainer, bottomCardContainer].contains($0)
-            let isFullScreen = swipingToMode == .bottomCard || swipingToMode == .topCard
-            if !isMaster && !isFullScreen {
-                $0.bounds.size.width = view.bounds.width * 0.95
+
+            if [topCardContainer, bottomCardContainer].contains($0)
+               && !displayMode.isNonMasterFullScreen() {
+                $0.bounds.size.width = view.bounds.width * Constant.contScl
                 $0.center = $0.bounds.midXY
             }
 
@@ -186,15 +187,15 @@ private extension EdgeCardsController {
         switch mode {
         case .overview:
             if velocityX >= 0 {
-                (swipeFromMaster, swipeToMaster) = (0.85, 0.945)
-                (swipeFromTop, swipeToTop) = (0.5, 0.89)
+                (swipeFromMaster, swipeToMaster) = (CT.mstrOv, CT.mstrMax)
+                (swipeFromTop, swipeToTop) = (CT.topOv, CT.topMax)
                 (swipeFromBottom, swipeToBottom) = (0, 0)
                 swipingToMode = .overviewBottomCard
                 oppositeDirectionMode = .master
                 velocitySignMltp = 1
             } else {
-                (swipeFromMaster, swipeToMaster) = (0.85, 0.945)
-                (swipeFromTop, swipeToTop) = (0.5, 0.025)
+                (swipeFromMaster, swipeToMaster) = (CT.mstrOv, CT.mstrMax)
+                (swipeFromTop, swipeToTop) = (CT.topOv, CT.topMin)
                 (swipeFromBottom, swipeToBottom) = (0, 0)
                 swipingToMode = .overviewTopCard
                 oppositeDirectionMode = .overviewBottomCard
@@ -202,15 +203,15 @@ private extension EdgeCardsController {
             }
         case .overviewTopCard:
             if velocityX >= 0 {
-                (swipeFromMaster, swipeToMaster) = (0.945, 0.945)
-                (swipeFromTop, swipeToTop) = (0.025, 0.89)
+                (swipeFromMaster, swipeToMaster) = (CT.mstrMax, CT.mstrMax)
+                (swipeFromTop, swipeToTop) = (CT.topMin, CT.topMax)
                 (swipeFromBottom, swipeToBottom) = (0, 0)
                 swipingToMode = .overviewBottomCard
                 oppositeDirectionMode = .overviewTopCard
                 velocitySignMltp = 1
             } else {
-                (swipeFromMaster, swipeToMaster) = (0.945, 0)
-                (swipeFromTop, swipeToTop) = (0.025, 0)
+                (swipeFromMaster, swipeToMaster) = (CT.mstrMax, 0)
+                (swipeFromTop, swipeToTop) = (CT.topMin, 0)
                 (swipeFromBottom, swipeToBottom) = (0, 0)
                 swipingToMode = .master
                 oppositeDirectionMode = .overviewTopCard
@@ -218,15 +219,15 @@ private extension EdgeCardsController {
             }
         case .overviewBottomCard:
             if velocityX >= 0 {
-                (swipeFromMaster, swipeToMaster) = (0.945, 0.945)
-                (swipeFromTop, swipeToTop) = (0.89, 0.89)
+                (swipeFromMaster, swipeToMaster) = (CT.mstrMax, CT.mstrMax)
+                (swipeFromTop, swipeToTop) = (CT.topMax, CT.topMax)
                 (swipeFromBottom, swipeToBottom) = (0, 0)
                 velocitySignMltp = -1
                 swipingToMode = .overviewBottomCard
                 oppositeDirectionMode = .overviewTopCard
             } else {
-                (swipeFromMaster, swipeToMaster) = (0.945, 0.945)
-                (swipeFromTop, swipeToTop) = (0.945, 0.025)
+                (swipeFromMaster, swipeToMaster) = (CT.mstrMax, CT.mstrMax)
+                (swipeFromTop, swipeToTop) = (CT.topMax, CT.topMin)
                 (swipeFromBottom, swipeToBottom) = (0, 0)
                 velocitySignMltp = -1
                 swipingToMode = .overviewTopCard
@@ -234,8 +235,8 @@ private extension EdgeCardsController {
             }
         case .master:
             if velocityX >= 0 {
-                (swipeFromMaster, swipeToMaster) = (0, 0.945)
-                (swipeFromTop, swipeToTop) = (0, 0.5)
+                (swipeFromMaster, swipeToMaster) = (0, CT.mstrMax)
+                (swipeFromTop, swipeToTop) = (0, CT.topOv)
                 (swipeFromBottom, swipeToBottom) = (0, 0)
                 velocitySignMltp = 1
                 swipingToMode = .overview
@@ -254,21 +255,21 @@ private extension EdgeCardsController {
         }
     }
 
-    func setupSwipeForFinalPosition(_ mode: DisplayMode) {
+    func setupToFromSwipeForFinalPosition(_ mode: DisplayMode) {
         velocitySignMltp = 1
         swipeProgress = 1
         switch mode {
         case .overview:
-            (swipeFromMaster, swipeToMaster) = (0.85, 0.85)
-            (swipeFromTop, swipeToTop) = (0.5, 0.5)
+            (swipeFromMaster, swipeToMaster) = (CT.mstrOv, CT.mstrOv)
+            (swipeFromTop, swipeToTop) = (CT.topOv, CT.topOv)
             (swipeFromBottom, swipeToBottom) = (0, 0)
         case .overviewTopCard:
-            (swipeFromMaster, swipeToMaster) = (0.85, 0.945)
-            (swipeFromTop, swipeToTop) = (0.5, 0.025)
+            (swipeFromMaster, swipeToMaster) = (CT.mstrMax, CT.mstrMax)
+            (swipeFromTop, swipeToTop) = (CT.topMin, CT.topMin)
             (swipeFromBottom, swipeToBottom) = (0, 0)
         case .overviewBottomCard:
-            (swipeFromMaster, swipeToMaster) = (0.945, 0.945)
-            (swipeFromTop, swipeToTop) = (0.89, 0.89)
+            (swipeFromMaster, swipeToMaster) = (CT.mstrMax, CT.mstrMax)
+            (swipeFromTop, swipeToTop) = (CT.topMax, CT.topMax)
             (swipeFromBottom, swipeToBottom) = (0, 0)
         default:
             (swipeFromMaster, swipeToMaster) = (0, 0)
@@ -281,12 +282,10 @@ private extension EdgeCardsController {
         let pct = swipeProgress * velocitySignMltp
         let width = view.bounds.width
         var mltp = pctVal(from: swipeFromMaster, to: swipeToMaster, pct: pct)
-        masterContainer.transform = CGAffineTransform(
-            translationX: mltp * width,
-            y: 0
-        )
-        view.backgroundColor = .black
-        var (ts, bs) = (0.975, 0.95)
+        var transX = mltp * width
+        masterContainer.transform = CGAffineTransform(translationX: transX, y: 0)
+
+        var (ts, bs) = (Constant.cardScl, Constant.contScl)
         if sizeChangingTransition() {
             let prog = swipingToMode == .master ? 1 - pct : pct
             ts = pctVal(from: 1, to: ts, pct: prog)
@@ -294,30 +293,24 @@ private extension EdgeCardsController {
         }
 
         mltp = pctVal(from: swipeFromTop, to: swipeToTop, pct: pct)
+        transX =  width * mltp - (1 - ts) / 2  * width
         topCardContainer.transform = CGAffineTransform(scaleX: ts, y: ts)
-            .concatenating(
-                CGAffineTransform(translationX:  width * mltp - (1 - ts) / 2  * width, y: 0)
-            )
+            .concatenating(CGAffineTransform(translationX: transX, y: 0))
 
+        transX =  -(1 - bs) / 2 * width
         bottomCardContainer.transform = CGAffineTransform(scaleX: bs, y: bs)
-            .concatenating(
-                CGAffineTransform(translationX: -(1 - bs) / 2 * width, y: 0)
-            )
+            .concatenating(CGAffineTransform(translationX: transX, y: 0))
     }
 
     func layoutToMaster() {
         layoutToOverview()
         if abs(swipeProgress) == 1 {
-            containers.forEach {
-                $0.transform = .identity
-            }
+            containers.forEach { $0.transform = .identity }
         }
     }
 
     func layoutToTop() {
-        containers.forEach {
-            $0.transform = .identity
-        }
+        containers.forEach { $0.transform = .identity}
         let transform = CGAffineTransform(translationX: view.bounds.width, y: 0)
         masterContainer.transform = transform
     }
@@ -365,8 +358,9 @@ private extension EdgeCardsController {
             cornerRadius: container.layer.cornerRadius
         ).cgPath
 
-        container.subviews.first?.layer.masksToBounds = true
-        container.subviews.first?.layer.cornerRadius = container.layer.cornerRadius
+        let firstSubView = container.subviews.first
+        firstSubView?.layer.masksToBounds = true
+        firstSubView?.layer.cornerRadius = container.layer.cornerRadius
     }
 
 }
@@ -465,7 +459,10 @@ extension EdgeCardsController: UIGestureRecognizerDelegate {
         edgeRecognizer.edges = .left
         view.addGestureRecognizer(edgeRecognizer)
 
-        panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panned(_:)))
+        panRecognizer = UIPanGestureRecognizer(
+            target: self,
+            action: #selector(panned(_:))
+        )
         panRecognizer.isEnabled = false
         view.addGestureRecognizer(panRecognizer)
     }
@@ -513,6 +510,13 @@ extension EdgeCardsController {
             default: return false
             }
         }
+
+        func isNonMasterFullScreen() -> Bool {
+            switch self {
+            case .topCard, .bottomCard: return true
+            default: return false
+            }
+        }
     }
 }
 
@@ -551,5 +555,19 @@ private extension EdgeCardsController {
         static let cornerRadius: CGFloat = 28
         static let shadowRadius: CGFloat = 8
         static let shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
+        static let shortAnim: TimeInterval = 0.15
+        static let longAnim: TimeInterval = 0.4
+        static let cardScl: CGFloat = 0.975
+        static let contScl: CGFloat = 0.95
+        static let displayModeShortAnim: TimeInterval = 0.8
+        static let displayModeLongAnim: TimeInterval = 0.8
+    }
+
+    enum CT {
+        static let mstrMax: CGFloat = 0.945
+        static let mstrOv: CGFloat = 0.85
+        static let topMax: CGFloat = 0.89
+        static let topMin: CGFloat = 0.025
+        static let topOv: CGFloat = 0.5
     }
 }

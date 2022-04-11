@@ -9,8 +9,8 @@ extension UIView {
     class func springAnimate(
         _ duration: TimeInterval = 0.5,
         delay: TimeInterval = 0,
-        damping: CGFloat = 0.8,
-        velocity: CGFloat = 0.98,
+        damping: CGFloat = 0.85,
+        velocity: CGFloat = 0.95,
         options: UIView.AnimationOptions = [
             .allowUserInteraction,
             .allowAnimatedContent,
