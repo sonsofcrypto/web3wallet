@@ -10,8 +10,12 @@ extension UIView {
         _ duration: TimeInterval = 0.5,
         delay: TimeInterval = 0,
         damping: CGFloat = 0.8,
-        velocity: CGFloat = 1,
-        options: UIView.AnimationOptions = [],
+        velocity: CGFloat = 0.98,
+        options: UIView.AnimationOptions = [
+            .allowUserInteraction,
+            .allowAnimatedContent,
+            .beginFromCurrentState
+        ],
         animations: @escaping () -> Void,
         completion: ((Bool) -> Void)? = nil
     ) {

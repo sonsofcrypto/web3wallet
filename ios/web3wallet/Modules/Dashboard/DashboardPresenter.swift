@@ -53,6 +53,8 @@ extension DefaultDashboardPresenter: DashboardPresenter {
         case let .didSelectWallet(idx):
             let keyStoreItem = KeyStoreItem.rand()
             wireframe.navigate(to: .wallet(wallet: keyStoreItem))
+        case .walletConnectionSettingsAction:
+            wireframe.navigate(to: .keyStoreNetworkSettings)
         default:
             print("Handle \(event)")
         }

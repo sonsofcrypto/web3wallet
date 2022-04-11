@@ -10,7 +10,9 @@ class EdgeCardsController: UIViewController {
     private(set) var topCard: UIViewController?
     private(set) var bottomCard: UIViewController?
     
-    private(set) var displayMode: DisplayMode = .master
+    private(set) var displayMode: DisplayMode = .master {
+        didSet { print( "=== displayMode", displayMode) }
+    }
 
     var cardNavigationEnabled: Bool = true
 
@@ -22,7 +24,16 @@ class EdgeCardsController: UIViewController {
     }
 
     private var swipingToMode: DisplayMode = .overview
-    private var swipeProgress: CGFloat = 0
+    private var oppositeDirectionMode: DisplayMode = .master
+    private var initVelocityX: CGFloat = 0
+    private var velocitySignMltp: CGFloat = 1
+    private var swipeProgress: CGFloat = 1
+    private var swipeFromMaster: CGFloat = 1
+    private var swipeToMaster: CGFloat = 1
+    private var swipeFromTop: CGFloat = 1
+    private var swipeToTop: CGFloat = 1
+    private var swipeFromBottom: CGFloat = 1
+    private var swipeToBottom: CGFloat = 1
     private var tapRecognizers: [UITapGestureRecognizer] = []
     private var panRecognizer: UIPanGestureRecognizer!
     private var edgeRecognizer: UIScreenEdgePanGestureRecognizer!
@@ -88,70 +99,45 @@ class EdgeCardsController: UIViewController {
     }
 
     @objc func edgePanned(_ recognizer: UIScreenEdgePanGestureRecognizer) {
-        switch recognizer.state {
-        case .began:
-            swipingToMode = .overview
-            swipeProgress = 0
-            // TODO: Play haptics
-        case .changed:
-            let translation = recognizer.translation(in: view)
-            swipeProgress = translation.x / view.bounds.width
-            layout()
-        case .ended, .failed:
-            let progress = recognizer.velocity(in: view).x >= 0 ? 0.85 : 0
-            let duration = progress == 0 ? 0.2 : 0.5
-            UIView.springAnimate(
-                0.5,
-                velocity: recognizer.velocity(in: view).x / view.bounds.width,
-                animations: {
-                    self.swipeProgress = progress
-                    self.layout()
-                },
-                completion: { _ in
-                    self.displayMode = progress != 0 ? self.swipingToMode : .master
-                    self.setupRecognizers(for: self.displayMode)
-                    self.swipeProgress = 0
-                }
-            )
-        default:
-            ()
-        }
+        panned(recognizer)
     }
 
     @objc func panned(_ recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
         case .began:
             let velocityX = recognizer.velocity(in: view).x
-            print("=== begun velocity", velocityX, displayMode)
-            if velocityX >= 0 {
-                swipingToMode = .overviewBottomCard
-            } else {
-                swipingToMode = .overview
-            }
+            initVelocityX = velocityX
+            setupSwipeToFroms(displayMode, velocityX: velocityX)
             swipeProgress = 0
-            // TODO: Play haptics
         case .changed:
+            let velocityX = recognizer.velocity(in: view).x
             let translation = recognizer.translation(in: view)
             swipeProgress = translation.x / view.bounds.width
-            print("=== progress", swipeProgress)
             layout()
         case .ended, .failed:
-            swipeProgress = recognizer.velocity(in: view).x >= 0 ? 0.85 : 0
-            let duration = swipeProgress == 0 ? 0.2 : 0.5
-            let mode = swipeProgress > 0 ? swipingToMode : displayMode
+            let velocityX = recognizer.velocity(in: view).x
+            let revert = didChangeSign(start: initVelocityX, end: velocityX)
+            let duration = revert ? 0.15 : 0.5
+            let mode = revert ? oppositeDirectionMode : swipingToMode
+            swipeProgress = 1 * velocitySignMltp
+            print("=== ending to mode", mode)
             UIView.springAnimate(
-                0.5,
+                duration,
                 velocity: recognizer.velocity(in: view).x / view.bounds.width,
-                animations: {
-                    self.setupForDisplayMode(mode)
-                },
-                completion: { _ in
-                    self.setupForDisplayMode(mode)
-                }
+                animations: { self.setupForDisplayMode(mode)},
+                completion: { _ in self.setupForDisplayMode(mode) }
             )
+
         default:
             ()
         }
+    }
+
+    func didChangeSign(start: CGFloat, end: CGFloat) -> Bool {
+        if (start >= 0 && end >= 0) || (start < 0 && end < 0) {
+            return false
+        }
+        return true
     }
 
     @objc func tapMaster(_ recognizer: UITapGestureRecognizer?) {
@@ -173,25 +159,9 @@ private extension EdgeCardsController {
 
     func setupForDisplayMode(_ mode: DisplayMode) {
         (swipingToMode, displayMode) = (mode, mode)
+        setupSwipeForFinalPosition(mode)
         setupRecognizers(for: mode)
         layout()
-    }
-
-    func setupRecognizers(for mode: DisplayMode) {
-        switch mode {
-        case .overview:
-            swipeProgress = 0.85
-            tapRecognizers.enumerated().forEach { $0.1.isEnabled = true }
-        case .master:
-            tapRecognizers.enumerated().forEach { $0.1.isEnabled = $0.0 != 0 }
-        case .overviewTopCard, .topCard:
-            tapRecognizers.enumerated().forEach { $0.1.isEnabled = $0.0 != 1 }
-        case .overviewBottomCard, .bottomCard:
-            tapRecognizers.enumerated().forEach { $0.1.isEnabled = $0.0 != 2 }
-        default:
-            ()
-        }
-        panRecognizer.isEnabled = mode != .master
     }
 
     func layout() {
@@ -223,61 +193,163 @@ private extension EdgeCardsController {
         }
     }
 
-    private func layoutToOverview() {
-        let pct = swipeProgress
-        masterContainer.transform = CGAffineTransform(
-            translationX: max(0, view.bounds.width * pct),
-            y: 0
-        )
+    func setupSwipeToFroms(_ mode: DisplayMode, velocityX: CGFloat) {
+        switch mode {
+        case .overview:
+            if velocityX >= 0 {
+                (swipeFromMaster, swipeToMaster) = (0.85, 0.945)
+                (swipeFromTop, swipeToTop) = (0.5, 0.89)
+                (swipeFromBottom, swipeToBottom) = (0, 0)
+                swipingToMode = .overviewBottomCard
+                oppositeDirectionMode = .master
+                velocitySignMltp = 1
+            } else {
+                (swipeFromMaster, swipeToMaster) = (0.85, 0.945)
+                (swipeFromTop, swipeToTop) = (0.5, 0.025)
+                (swipeFromBottom, swipeToBottom) = (0, 0)
+                swipingToMode = .overviewTopCard
+                oppositeDirectionMode = .overviewBottomCard
+                velocitySignMltp = -1
+            }
+        case .overviewTopCard:
+            if velocityX >= 0 {
+                (swipeFromMaster, swipeToMaster) = (0.945, 0.945)
+                (swipeFromTop, swipeToTop) = (0.025, 0.89)
+                (swipeFromBottom, swipeToBottom) = (0, 0)
+                swipingToMode = .overviewBottomCard
+                oppositeDirectionMode = .overviewTopCard
+                velocitySignMltp = 1
+            } else {
+                (swipeFromMaster, swipeToMaster) = (0.945, 0)
+                (swipeFromTop, swipeToTop) = (0.025, 0)
+                (swipeFromBottom, swipeToBottom) = (0, 0)
+                swipingToMode = .master
+                oppositeDirectionMode = .overviewTopCard
+                velocitySignMltp = -1
+            }
+        case .overviewBottomCard:
+            if velocityX >= 0 {
+                (swipeFromMaster, swipeToMaster) = (0.945, 0.945)
+                (swipeFromTop, swipeToTop) = (0.89, 0.89)
+                (swipeFromBottom, swipeToBottom) = (0, 0)
+                velocitySignMltp = -1
+                swipingToMode = .overviewBottomCard
+                oppositeDirectionMode = .overviewTopCard
+            } else {
+                (swipeFromMaster, swipeToMaster) = (0.945, 0.945)
+                (swipeFromTop, swipeToTop) = (0.945, 0.025)
+                (swipeFromBottom, swipeToBottom) = (0, 0)
+                velocitySignMltp = -1
+                swipingToMode = .overviewTopCard
+                oppositeDirectionMode = .overviewBottomCard
+            }
+        case .master:
+            if velocityX >= 0 {
+                (swipeFromMaster, swipeToMaster) = (0, 0.945)
+                (swipeFromTop, swipeToTop) = (0, 0.5)
+                (swipeFromBottom, swipeToBottom) = (0, 0)
+                velocitySignMltp = 1
+                swipingToMode = .overview
+                oppositeDirectionMode = .master
+            } else {
+                (swipeFromMaster, swipeToMaster) = (0, 0)
+                (swipeFromTop, swipeToTop) = (0, 0)
+                (swipeFromBottom, swipeToBottom) = (0, 0)
+                swipingToMode = .master
+                oppositeDirectionMode = .overview
+            }
+        default:
+            (swipeFromMaster, swipeToMaster) = (0, 0)
+            (swipeFromTop, swipeToTop) = (0, 0)
+            (swipeFromBottom, swipeToBottom) = (0, 0)
+        }
+    }
 
-        var transX = view.bounds.width * 0.5 * pct
-        var transS = 1 - 0.025 * pct
+    func setupSwipeForFinalPosition(_ mode: DisplayMode) {
+        velocitySignMltp = 1
+        swipeProgress = 1
+        switch mode {
+        case .overview:
+            (swipeFromMaster, swipeToMaster) = (0.85, 0.85)
+            (swipeFromTop, swipeToTop) = (0.5, 0.5)
+            (swipeFromBottom, swipeToBottom) = (0, 0)
+        case .overviewTopCard:
+            (swipeFromMaster, swipeToMaster) = (0.85, 0.945)
+            (swipeFromTop, swipeToTop) = (0.5, 0.025)
+            (swipeFromBottom, swipeToBottom) = (0, 0)
+        case .overviewBottomCard:
+            (swipeFromMaster, swipeToMaster) = (0.945, 0.945)
+            (swipeFromTop, swipeToTop) = (0.89, 0.89)
+            (swipeFromBottom, swipeToBottom) = (0, 0)
+        default:
+            (swipeFromMaster, swipeToMaster) = (0, 0)
+            (swipeFromTop, swipeToTop) = (0, 0)
+            (swipeFromBottom, swipeToBottom) = (0, 0)
+        }
+    }
 
-        topCardContainer.transform = CGAffineTransform(scaleX: transS, y: transS)
-                .concatenating(CGAffineTransform(translationX: transX, y: 0))
-
-        transX = view.bounds.width * max(0, 0.5 * pct - 0.85)
-        transS = 1 - 0.05 * pct
-
-        bottomCardContainer.transform = CGAffineTransform(scaleX: transS, y: transS)
-                .concatenating(CGAffineTransform(translationX: transX, y: 0))
+    func layoutToOverview() {
+        layoutToOverviewBottom()
+//        let pct = swipeProgress
+//        masterContainer.transform = CGAffineTransform(
+//            translationX: max(0, view.bounds.width * pct),
+//            y: 0
+//        )
+//
+//        var transX = view.bounds.width * 0.5 * pct
+//        var transS = 1 - 0.025 * pct
+//
+//        topCardContainer.transform = CGAffineTransform(scaleX: transS, y: transS)
+//            .concatenating(CGAffineTransform(translationX: transX, y: 0))
+//
+//        transX = view.bounds.width * max(0, 0.5 * pct - 0.85)
+//        transS = 1 - 0.05 * pct
+//
+//        bottomCardContainer.transform = CGAffineTransform(scaleX: transS, y: transS)
+//            .concatenating(CGAffineTransform(translationX: transX, y: 0))
     }
 
     func layoutToOverviewBottom() {
+        let pct = swipeProgress * velocitySignMltp
+        let width = view.bounds.width
+        var mltp = pctVal(from: swipeFromMaster, to: swipeToMaster, pct: pct)
         masterContainer.transform = CGAffineTransform(
-            translationX: 0.945 * view.bounds.width,
+            translationX: mltp * width,
             y: 0
         )
 
-        topCardContainer.transform = CGAffineTransform(scaleX: 0.975, y: 0.975)
-                .concatenating(CGAffineTransform(translationX:  view.bounds.width * 0.89, y: 0))
+        var (ts, bs) = (0.975, 0.95)
+        if sizeChangingTransition() {
+            let prog = swipingToMode == .master ? 1 - pct : pct
+            ts = pctVal(from: 1, to: 0.975, pct: prog)
+            bs = pctVal(from: 1, to: 0.975, pct: prog)
+        }
 
-        bottomCardContainer.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        mltp = pctVal(from: swipeFromTop, to: swipeToTop, pct: pct)
+        topCardContainer.transform = CGAffineTransform(scaleX: ts, y: ts)
+            .concatenating(CGAffineTransform(translationX:  width * mltp, y: 0))
+
+        bottomCardContainer.transform = CGAffineTransform(scaleX: bs, y: bs)
     }
 
     func layoutToOverviewTop() {
-        masterContainer.transform = CGAffineTransform(
-            translationX: 0.945 * view.bounds.width,
-            y: 0
-        )
-
-        topCardContainer.transform = CGAffineTransform(scaleX: 0.975, y: 0.975)
-                .concatenating(CGAffineTransform(translationX:  view.bounds.width * 0.025, y: 0))
-
-        bottomCardContainer.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        layoutToOverviewBottom()
     }
 
     func layoutToMaster() {
-        containers.forEach {
-            $0.transform = .identity
-            applyShadows($0, mode: .master)
-        }
+        layoutToOverviewBottom()
+//        if swipeProgress == 1 {
+//            containers.forEach {
+//                $0.transform = .identity
+//                applyShadows($0)
+//            }
+//        }
     }
 
     func layoutToTop() {
         containers.forEach {
             $0.transform = .identity
-            applyShadows($0, mode: .topCard)
+            applyShadows($0)
         }
         let transform = CGAffineTransform(translationX: view.bounds.width, y: 0)
         masterContainer.transform = transform
@@ -287,31 +359,31 @@ private extension EdgeCardsController {
         let transform = CGAffineTransform(translationX: view.bounds.width, y: 0)
         containers.forEach {
             $0.transform = $0 == bottomCardContainer ? .identity : transform
-            applyShadows($0, mode: .bottomCard)
+            applyShadows($0)
         }
     }
 
     func applyShadows(_ container: UIView) {
-        if swipeProgress == 0 || swipeProgress > 0.2 {
-            applyShadows(container, mode: swipingToMode)
-        } else {
-            let progress = swipingToMode.isFullScreen()
-                ? 1 / swipeProgress
-                : swipeProgress
+        guard sizeChangingTransition() else {
             applyShadows(
                 container,
-                radius: Constant.cornerRadius * progress * 5,
-                opacity: Float(progress * 5)
+                radius: displayMode.isFullScreen() ? 0 : Constant.cornerRadius,
+                opacity: displayMode.isFullScreen() ? 0 : 1
             )
+//            print("Constant", )
+            return
         }
-    }
 
-    private func applyShadows(_ container: UIView, mode: DisplayMode) {
+        let progress = swipingToMode.isFullScreen()
+            ? 1 / abs(swipeProgress * 5)
+            : swipeProgress * 5
+
         applyShadows(
             container,
-            radius: mode.isFullScreen() ? 0 : Constant.cornerRadius,
-            opacity: mode.isFullScreen() ? 0 : 1
+            radius: Constant.cornerRadius * min(1, progress),
+            opacity: Float(min(1, progress))
         )
+
     }
 
     private func applyShadows(
@@ -387,6 +459,15 @@ private extension EdgeCardsController {
         fromVc?.view.removeFromSuperview()
         fromVc?.removeFromParent()
     }
+
+    func sizeChangingTransition() -> Bool {
+        (swipingToMode == .master && displayMode != .master) ||
+        (swipingToMode == .overview && displayMode != .overview)
+    }
+
+    func pctVal(from: CGFloat, to: CGFloat, pct: CGFloat) -> CGFloat {
+        (to - from) * pct + from
+    }
 }
 
 // MARK: - Recognizers
@@ -422,7 +503,23 @@ extension EdgeCardsController: UIGestureRecognizerDelegate {
 
         panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panned(_:)))
         panRecognizer.isEnabled = false
-//        view.addGestureRecognizer(panRecognizer)
+        view.addGestureRecognizer(panRecognizer)
+    }
+
+    func setupRecognizers(for mode: DisplayMode) {
+        switch mode {
+        case .overview:
+            tapRecognizers.enumerated().forEach { $0.1.isEnabled = true }
+        case .master:
+            tapRecognizers.enumerated().forEach { $0.1.isEnabled = $0.0 != 0 }
+        case .overviewTopCard, .topCard:
+            tapRecognizers.enumerated().forEach { $0.1.isEnabled = $0.0 != 1 }
+        case .overviewBottomCard, .bottomCard:
+            tapRecognizers.enumerated().forEach { $0.1.isEnabled = $0.0 != 2 }
+        default:
+            ()
+        }
+        panRecognizer.isEnabled = mode != .master
     }
 
     func gestureRecognizer(
