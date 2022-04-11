@@ -7,8 +7,8 @@ import Foundation
 enum KeyStorePresenterEvent {
     case didSelectWalletAt(idx: Int)
     case didSelectErrorActionAt(idx: Int)
-    case createNewWallet
-    case importWallet
+    case newMnemonic
+    case importMnemonic
     case connectHardwareWallet
 }
 
@@ -61,9 +61,9 @@ extension DefaultKeyStorePresenter: KeyStorePresenter {
             handleDidSelectWallet(at: idx)
         case let .didSelectErrorActionAt(idx: idx):
             handleDidSelectErrorAction(at: idx)
-        case .createNewWallet:
-            handleCreateNewWallet()
-        case .importWallet:
+        case .newMnemonic:
+            handleNewMnemonic()
+        case .importMnemonic:
             handleImportWallet()
         case .connectHardwareWallet:
             handleConnectHardwareWallet()
@@ -87,16 +87,8 @@ private extension DefaultKeyStorePresenter {
         view?.update(with: viewModel(from: latestWallets, active: active))
     }
 
-    func handleCreateNewWallet() {
-        do {
-            let wallet = try interactor.createNewWallet("1111", passphrase: nil)
-            latestWallets.append(wallet)
-            interactor.activeWallet = wallet
-            view?.update(with: viewModel(from: latestWallets, active: wallet))
-        } catch {
-            print(error)
-            view?.update(with: viewModel(from: error))
-        }
+    func handleNewMnemonic() {
+        wireframe.navigate(to: .newMnemonic)
     }
 
     func handleImportWallet() {

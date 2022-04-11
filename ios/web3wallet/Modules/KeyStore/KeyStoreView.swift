@@ -43,11 +43,11 @@ class KeyStoreViewController: UIViewController {
     // MARK: - Actions
 
     @IBAction func createNewWalletAction(_ sender: Any) {
-        presenter.handle(.createNewWallet)
+        presenter.handle(.newMnemonic)
     }
     
     @IBAction func importWalletAction(_ sender: Any) {
-        presenter.handle(.importWallet)
+        presenter.handle(.importMnemonic)
     }
     
     @IBAction func connectHDWalletAction(_ sender: Any) {

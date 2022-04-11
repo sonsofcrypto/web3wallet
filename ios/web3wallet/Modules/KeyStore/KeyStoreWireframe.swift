@@ -6,6 +6,7 @@ import UIKit
 
 enum KeyStoreWireframeDestination {
     case networks
+    case newMnemonic
 }
 
 protocol KeyStoreWireframe {
@@ -19,17 +20,21 @@ class DefaultKeyStoreWireframe {
 
     private weak var parent: UIViewController?
     private weak var window: UIWindow?
+    private weak var vc: UIViewController?
 
     private let interactor: KeyStoreInteractor
+    private let newMnemonic: NewMnemonicWireframeFactory
 
     init(
         parent: UIViewController?,
         window: UIWindow?,
-        interactor: KeyStoreInteractor
+        interactor: KeyStoreInteractor,
+        newMnemonic: NewMnemonicWireframeFactory
     ) {
         self.parent = parent
         self.window = window
         self.interactor = interactor
+        self.newMnemonic = newMnemonic
     }
 }
 
@@ -39,6 +44,7 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
 
     func present() {
         let vc = wireUp()
+        self.vc = vc
 
         if let window = self.window {
             window.rootViewController = vc
@@ -58,9 +64,14 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
             switch destination {
             case .networks:
                 parent.setDisplayMode(.overviewTopCard, animated: true)
+            case .newMnemonic:
+                newMnemonic
+                    .makeWireframe(self.vc)
+                    .present()
             }
+        } else {
+            print("Failed to navigate to \(destination)")
         }
-        print("Failed to navigate to \(destination)")
     }
 }
 

@@ -17,9 +17,14 @@ protocol KeyStoreWireframeFactory {
 class DefaultKeyStoreWireframeFactory {
 
     private let walletsService: KeyStoreService
+    private let newMnemonic: NewMnemonicWireframeFactory
 
-    init(_ walletsService: KeyStoreService) {
+    init(
+        _ walletsService: KeyStoreService,
+        newMnemonic: NewMnemonicWireframeFactory
+    ) {
         self.walletsService = walletsService
+        self.newMnemonic = newMnemonic
     }
 }
 
@@ -34,7 +39,8 @@ extension DefaultKeyStoreWireframeFactory: KeyStoreWireframeFactory {
         DefaultKeyStoreWireframe(
             parent: parent,
             window: window,
-            interactor: DefaultKeyStoreInteractor(walletsService)
+            interactor: DefaultKeyStoreInteractor(walletsService),
+            newMnemonic: newMnemonic
         )
     }
 }

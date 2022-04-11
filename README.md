@@ -32,7 +32,7 @@ git submodule update --init --recursive
 	- [x] Layout for topCard
 	- [x] Fix tapping on home screen
 	- [x] Fix end of swipe gesture to left from home screen
-	- [] Create wallet VC
+	- [x] Create wallet VC
 	- [] Animate to home screen after creating wallet
 	- [] Create wallet to transition
 	- [] Create wallet from transition
