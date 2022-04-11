@@ -14,8 +14,7 @@ git submodule update --init --recursive
 
 
 ## TODO: MVP 1.0 4 weeks
-
-- [] w1 Key Store and associated UI (create, restore bip39, bip44, bip32)
+	- [] w1 Key Store and associated UI (create, restore bip39, bip44, bip32)
 	- [] Web3lib integration
 	- [] bip39
 	- [] bip44
@@ -49,29 +48,29 @@ git submodule update --init --recursive
 	- [] Create password VC
 	- [] Play haptics when swipe starts
 
-- [] w2 Connection to networks
-	- [] RPC APIs
-	- [] Run light client
-	- [] Pocket network
-	- [] Infura
-	- [] Alchyme
-- [] w3 Homescreen
-- [] w4 Send / Recieve
+	- [] w2 Connection to networks
+		- [] RPC APIs
+		- [] Run light client
+		- [] Pocket network
+		- [] Infura
+		- [] Alchyme
+	- [] w3 Homescreen
+	- [] w4 Send / Recieve
 
 ## TODO(web3dgn):
-- [] Under construction wireframe
-- [] Add theme option to settings
-	- [] Theme picker module
-- [] Tab bar icons are not showing until first tap on the tab. Dont know why
-- [] Add swipe to delete to wallets scree
-- [] Add under construction with animation
+	- [] Under construction wireframe
+	- [] Add theme option to settings
+		- [] Theme picker module
+	- [] Tab bar icons are not showing until first tap on the tab. Dont know why
+	- [] Add swipe to delete to wallets scree
+	- [] Add under construction with animation
 
 ## TODO(design4.crypto):
-- [] Redesign enter PIN / Pass / Salt
+	- [] Redesign enter PIN / Pass / Salt
 
 ## MVP 2.0 4 weeks
-- [] Additional networks support
-- [] As many integrations as posible
-- [] Stuff left out from MVP 1.0
+	- [] Additional networks support
+	- [] As many integrations as posible
+	- [] Stuff left out from MVP 1.0
 
 For more info [sonsOfCrypto.com](https://sonsofcrypto.com/)
