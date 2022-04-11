@@ -15,8 +15,8 @@ git submodule update --init --recursive
 
 ## TODO: MVP 1.0 4 weeks
 	- [] w1 Key Store and associated UI (create, restore bip39, bip44, bip32)
-	- [] Web3lib integration
-	- [] bip39
+	- [x] Web3lib integration
+	- [x] bip39
 	- [] bip44
 	- [] KeyStore
 		- [] Create
@@ -39,9 +39,11 @@ git submodule update --init --recursive
 	- [] Add setting to cell 
 	- [] Add edit / settings mode
 	- [] Add restore VC
-	- [] Swiping on overview (Either go to bottom or master)
-	- [] Swiping on top card (Either go to bottom or master)
-	- [] Swiping on bottom card (Either go to network)
+	- [x] Swiping on overview (Either go to bottom or master)
+	- [x] Swiping on top card (Either go to bottom or master)
+	- [x] Swiping on bottom card (Either go to network)
+	- [x] Animate scale and coreners only for to and from master transitions
+	- [ ] Bug `EdgeCardsViewController` after transition, there small window (0.25s) when taps are registered
 	- [] Aninate neon logo on apprearif empty
 	- [] Create sheet view for buttons
 	- [] Animate buttons on appear if wallets is empty

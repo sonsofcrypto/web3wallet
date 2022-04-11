@@ -14,6 +14,7 @@ class KeyStoreViewController: UIViewController {
     var presenter: KeyStorePresenter!
 
     private var viewModel: KeyStoreViewModel?
+    private var prevViewSize: CGSize = .zero
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var logoContainer: UIView!
@@ -24,6 +25,19 @@ class KeyStoreViewController: UIViewController {
         collectionView.dataSource = self
         configureUI()
         presenter?.present()
+        prevViewSize = view.bounds.size
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if view.bounds.size != prevViewSize {
+            collectionView.collectionViewLayout.invalidateLayout()
+            prevViewSize = view.bounds.size
+        }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
 
     // MARK: - Actions
@@ -84,7 +98,10 @@ extension KeyStoreViewController: UICollectionViewDelegate {
 extension KeyStoreViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 32, height: Global.cellHeight)
+        return CGSize(
+            width: view.bounds.width - Global.padding * 2,
+            height: Global.cellHeight
+        )
     }
 }
 

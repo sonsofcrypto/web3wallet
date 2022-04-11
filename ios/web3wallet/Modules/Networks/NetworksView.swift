@@ -14,13 +14,23 @@ class NetworksViewController: UIViewController {
     var presenter: NetworksPresenter!
 
     private var viewModel: NetworksViewModel?
-    
+    private var prevViewSize: CGSize = .zero
+
     @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         presenter?.present()
+        prevViewSize = view.bounds.size
+    }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if view.bounds.size != prevViewSize {
+            collectionView.collectionViewLayout.invalidateLayout()
+            prevViewSize = view.bounds.size
+        }
     }
 
     // MARK: - Actions
@@ -72,7 +82,10 @@ extension NetworksViewController: UICollectionViewDelegate {
 extension NetworksViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 32, height: Constant.cellHeight)
+        return CGSize(
+            width: view.bounds.width - Global.padding * 2,
+            height: Constant.cellHeight
+        )
     }
 }
 

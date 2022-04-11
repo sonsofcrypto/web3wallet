@@ -10,9 +10,7 @@ class EdgeCardsController: UIViewController {
     private(set) var topCard: UIViewController?
     private(set) var bottomCard: UIViewController?
     
-    private(set) var displayMode: DisplayMode = .master {
-        didSet { print( "=== displayMode", displayMode) }
-    }
+    private(set) var displayMode: DisplayMode = .master
 
     var cardNavigationEnabled: Bool = true
 
@@ -89,14 +87,10 @@ class EdgeCardsController: UIViewController {
     }
 
     override func viewWillLayoutSubviews() {
+        layout()
         super.viewWillLayoutSubviews()
-        layout()
     }
-    
-    override func viewDidLayoutSubviews() {
-        layout()
-        super.viewDidLayoutSubviews()
-    }
+
 
     @objc func edgePanned(_ recognizer: UIScreenEdgePanGestureRecognizer) {
         panned(recognizer)
@@ -120,14 +114,12 @@ class EdgeCardsController: UIViewController {
             let duration = revert ? 0.15 : 0.5
             let mode = revert ? oppositeDirectionMode : swipingToMode
             swipeProgress = 1 * velocitySignMltp
-            print("=== ending to mode", mode)
+            setupRecognizers(for: mode)
             UIView.springAnimate(
                 duration,
                 velocity: recognizer.velocity(in: view).x / view.bounds.width,
-                animations: { self.setupForDisplayMode(mode)},
-                completion: { _ in self.setupForDisplayMode(mode) }
+                animations: { self.setupForDisplayMode(mode)}
             )
-
         default:
             ()
         }
@@ -166,30 +158,27 @@ private extension EdgeCardsController {
 
     func layout() {
         containers.forEach {
-            $0.bounds = view.bounds
-            if [topCardContainer, bottomCardContainer].contains($0) && !swipingToMode.isFullScreen() {
-                var bounds = view.bounds
-                bounds.size.width = view.bounds.width * 0.95
-                $0.bounds = bounds
-                $0.center.x = bounds.width / 2
+           ($0.bounds, $0.center) = (view.bounds, view.bounds.midXY)
+            let isMaster = ![topCardContainer, bottomCardContainer].contains($0)
+            let isFullScreen = swipingToMode == .bottomCard || swipingToMode == .topCard
+            if !isMaster && !isFullScreen {
+                $0.bounds.size.width = view.bounds.width * 0.95
+                $0.center = $0.bounds.midXY
             }
+
             $0.subviews.first?.bounds = $0.bounds
+            $0.subviews.first?.center = $0.bounds.midXY
             applyShadows($0)
         }
         switch swipingToMode {
-        case .overview:
+        case .overview, .overviewTopCard, .overviewBottomCard:
             layoutToOverview()
-        case .overviewBottomCard:
-            layoutToOverviewBottom()
-        case .overviewTopCard:
-            layoutToOverviewTop()
         case .master:
             layoutToMaster()
         case .topCard:
             layoutToTop()
         case .bottomCard:
             layoutToBottom()
-
         }
     }
 
@@ -289,27 +278,6 @@ private extension EdgeCardsController {
     }
 
     func layoutToOverview() {
-        layoutToOverviewBottom()
-//        let pct = swipeProgress
-//        masterContainer.transform = CGAffineTransform(
-//            translationX: max(0, view.bounds.width * pct),
-//            y: 0
-//        )
-//
-//        var transX = view.bounds.width * 0.5 * pct
-//        var transS = 1 - 0.025 * pct
-//
-//        topCardContainer.transform = CGAffineTransform(scaleX: transS, y: transS)
-//            .concatenating(CGAffineTransform(translationX: transX, y: 0))
-//
-//        transX = view.bounds.width * max(0, 0.5 * pct - 0.85)
-//        transS = 1 - 0.05 * pct
-//
-//        bottomCardContainer.transform = CGAffineTransform(scaleX: transS, y: transS)
-//            .concatenating(CGAffineTransform(translationX: transX, y: 0))
-    }
-
-    func layoutToOverviewBottom() {
         let pct = swipeProgress * velocitySignMltp
         let width = view.bounds.width
         var mltp = pctVal(from: swipeFromMaster, to: swipeToMaster, pct: pct)
@@ -317,39 +285,38 @@ private extension EdgeCardsController {
             translationX: mltp * width,
             y: 0
         )
-
+        view.backgroundColor = .black
         var (ts, bs) = (0.975, 0.95)
         if sizeChangingTransition() {
             let prog = swipingToMode == .master ? 1 - pct : pct
-            ts = pctVal(from: 1, to: 0.975, pct: prog)
-            bs = pctVal(from: 1, to: 0.975, pct: prog)
+            ts = pctVal(from: 1, to: ts, pct: prog)
+            bs = pctVal(from: 1, to: bs, pct: prog)
         }
 
         mltp = pctVal(from: swipeFromTop, to: swipeToTop, pct: pct)
         topCardContainer.transform = CGAffineTransform(scaleX: ts, y: ts)
-            .concatenating(CGAffineTransform(translationX:  width * mltp, y: 0))
+            .concatenating(
+                CGAffineTransform(translationX:  width * mltp - (1 - ts) / 2  * width, y: 0)
+            )
 
         bottomCardContainer.transform = CGAffineTransform(scaleX: bs, y: bs)
-    }
-
-    func layoutToOverviewTop() {
-        layoutToOverviewBottom()
+            .concatenating(
+                CGAffineTransform(translationX: -(1 - bs) / 2 * width, y: 0)
+            )
     }
 
     func layoutToMaster() {
-        layoutToOverviewBottom()
-//        if swipeProgress == 1 {
-//            containers.forEach {
-//                $0.transform = .identity
-//                applyShadows($0)
-//            }
-//        }
+        layoutToOverview()
+        if abs(swipeProgress) == 1 {
+            containers.forEach {
+                $0.transform = .identity
+            }
+        }
     }
 
     func layoutToTop() {
         containers.forEach {
             $0.transform = .identity
-            applyShadows($0)
         }
         let transform = CGAffineTransform(translationX: view.bounds.width, y: 0)
         masterContainer.transform = transform
@@ -359,7 +326,6 @@ private extension EdgeCardsController {
         let transform = CGAffineTransform(translationX: view.bounds.width, y: 0)
         containers.forEach {
             $0.transform = $0 == bottomCardContainer ? .identity : transform
-            applyShadows($0)
         }
     }
 
@@ -370,7 +336,6 @@ private extension EdgeCardsController {
                 radius: displayMode.isFullScreen() ? 0 : Constant.cornerRadius,
                 opacity: displayMode.isFullScreen() ? 0 : 1
             )
-//            print("Constant", )
             return
         }
 
@@ -383,7 +348,6 @@ private extension EdgeCardsController {
             radius: Constant.cornerRadius * min(1, progress),
             opacity: Float(min(1, progress))
         )
-
     }
 
     private func applyShadows(
