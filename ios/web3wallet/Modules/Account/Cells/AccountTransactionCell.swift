@@ -10,10 +10,6 @@ class AccountTransactionCell: CollectionViewCell {
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
 
-    var cornerStyle: Style = .single {
-        didSet { update(for: cornerStyle) }
-    }
-
     override func awakeFromNib() {
         super.awakeFromNib()
         dateLabel.applyStyle(.smallerLabel)
@@ -21,36 +17,6 @@ class AccountTransactionCell: CollectionViewCell {
         addressLabel.textColor = Theme.current.textColorTertiary
         amountLabel.applyStyle(.subheadGlow)
         layer.cornerRadius = Global.cornerRadius * 2
-    }
-}
-
-// MARK: - Style
-
-extension AccountTransactionCell {
-
-    enum Style {
-        case top
-        case bottom
-        case middle
-        case single
-    }
-
-    func update(for style: AccountTransactionCell.Style) {
-        switch style {
-        case .top:
-            layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        case .bottom:
-            layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        case .middle:
-            layer.maskedCorners = []
-        case .single:
-            layer.maskedCorners = [
-                .layerMinXMinYCorner,
-                .layerMaxXMinYCorner,
-                .layerMinXMaxYCorner,
-                .layerMaxXMaxYCorner
-            ]
-        }
     }
 }
 

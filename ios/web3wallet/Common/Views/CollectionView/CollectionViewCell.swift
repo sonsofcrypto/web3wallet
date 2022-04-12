@@ -6,6 +6,10 @@ import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
 
+    var cornerStyle: Style = .single {
+        didSet { update(for: cornerStyle) }
+    }
+
     override var isSelected: Bool {
         didSet {
             UIView.animate(withDuration: 0.1) { [weak self] in
@@ -50,5 +54,35 @@ class CollectionViewCell: UICollectionViewCell {
             ? Theme.current.tintPrimary
             : Theme.current.tintPrimaryLight
         ).cgColor
+    }
+}
+
+// MARK: - Style
+
+extension CollectionViewCell {
+
+    enum Style {
+        case top
+        case bottom
+        case middle
+        case single
+    }
+
+    func update(for style: CollectionViewCell.Style) {
+        switch style {
+        case .top:
+            layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        case .bottom:
+            layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        case .middle:
+            layer.maskedCorners = []
+        case .single:
+            layer.maskedCorners = [
+                .layerMinXMinYCorner,
+                .layerMaxXMinYCorner,
+                .layerMinXMaxYCorner,
+                .layerMaxXMaxYCorner
+            ]
+        }
     }
 }

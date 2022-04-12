@@ -57,17 +57,33 @@ extension NewMnemonicViewController: UICollectionViewDataSource {
         guard let viewModel = viewModel?.item(at: indexPath) else {
             fatalError("Wrong number of items in section \(indexPath)")
         }
+        let cell = cell(cv: collectionView, viewModel: viewModel, idxPath: indexPath)
+        if indexPath.section == 1 {
 
+            (cell as? CollectionViewCell)?.cornerStyle = .middle
+
+            if indexPath.item == 0 {
+                (cell as? CollectionViewCell)?.cornerStyle = .top
+            }
+
+            if indexPath.item == (self.viewModel?.sectionsItems[safe: 1]?.count ?? 0) - 1 {
+                (cell as? CollectionViewCell)?.cornerStyle = .bottom
+            }
+        }
+        return cell
+    }
+
+    func cell(cv: UICollectionView, viewModel: NewMnemonicViewModel.Item, idxPath: IndexPath) -> UICollectionViewCell {
         switch viewModel {
 
         case let .mnemonic(mnemonic):
-            return collectionView.dequeue(NewMnemonicCell.self, for: indexPath)
-                .update(with: mnemonic)
+            return collectionView.dequeue(NewMnemonicCell.self, for: idxPath)
+                    .update(with: mnemonic)
 
         case let .name(name):
             return collectionView.dequeue(
                 CollectionViewTextInputCell.self,
-                for: indexPath
+                for: idxPath
             ).update(
                 with: name,
                 textChangeHandler: { value in self.nameDidChange(value) }
@@ -76,15 +92,13 @@ extension NewMnemonicViewController: UICollectionViewDataSource {
         case let .onOffSwitch(title, onOff):
             return collectionView.dequeue(
                 CollectionViewSwitchCell.self,
-                for: indexPath
+                for: idxPath
             ).update(
                 with: title,
                 onOff: onOff,
                 handler: { value in self.iCloudBackupDidChange(value) }
             )
         }
-
-        fatalError("Not handled \(indexPath)")
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -142,7 +156,7 @@ extension NewMnemonicViewController: UICollectionViewDelegateFlowLayout {
         case let .mnemonic(mnemonic):
             return CGSize(width: width, height: Constant.mnemonicCellHeight)
         default:
-            return CGSize(width: width, height: Global.cellHeight)
+            return CGSize(width: width, height: Constant.cellHeight)
         }
     }
 
@@ -178,7 +192,6 @@ extension NewMnemonicViewController {
             Theme.current.background,
             Theme.current.backgroundDark
         ]
-
     }
 }
 
