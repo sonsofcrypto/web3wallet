@@ -4,7 +4,7 @@
 
 import UIKit
 
-class DefaultButton: UIButton {
+class Button: UIButton {
 
     override var isHighlighted: Bool {
         didSet { layer.applyHighlighted(isHighlighted) }
@@ -43,7 +43,7 @@ class DefaultButton: UIButton {
 
 // MARK: - Constants
 
-private extension DefaultButton {
+private extension Button {
     
     enum Constant {
         static let defaultButtonHeight: CGFloat = 64
@@ -52,7 +52,7 @@ private extension DefaultButton {
 
 // MARK: - LeftImageButton
 
-class LeftImageButton: DefaultButton {
+class LeftImageButton: Button {
 
     var padding: CGFloat = 4
     var titleLabelXOffset: CGFloat = -4
@@ -76,7 +76,7 @@ class LeftImageButton: DefaultButton {
 
 // MARK: - LeftImageButton
 
-class LeftRightImageButton: DefaultButton {
+class LeftRightImageButton: Button {
 
     var padding: CGFloat = 4
     var titleLabelXOffset: CGFloat = 0
@@ -114,7 +114,7 @@ class LeftRightImageButton: DefaultButton {
     }
 }
 
-class VerticalButton: DefaultButton {
+class VerticalButton: Button {
 
     override func configureUI() {
         super.configureUI()

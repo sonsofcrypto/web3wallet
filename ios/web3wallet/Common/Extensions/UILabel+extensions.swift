@@ -16,6 +16,7 @@ extension UILabel {
         case callout
         case subhead
         case subheadGlow
+        case bodyGlow
         case smallLabel
         case smallerLabel
         case smallestLabel
@@ -38,6 +39,10 @@ extension UILabel {
             textColor = Theme.current.textColorSecondary
         case .subheadGlow:
             font = Theme.current.subhead
+            layer.applyShadow(Theme.current.tintSecondary)
+            textColor = Theme.current.textColor
+        case .bodyGlow:
+            font = Theme.current.body
             layer.applyShadow(Theme.current.tintSecondary)
             textColor = Theme.current.textColor
         case.smallLabel:

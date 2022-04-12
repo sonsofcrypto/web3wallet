@@ -94,7 +94,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="DqM-3n-4i5">
                                 <rect key="frame" x="16" y="638" width="382" height="224"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4i-5W-BRo" customClass="DefaultButton" customModule="web3wallet" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4i-5W-BRo" customClass="Button" customModule="web3wallet" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="64"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Create new wallet"/>
@@ -102,7 +102,7 @@
                                             <action selector="createNewWalletAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CGD-07-mtH"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YxO-SU-R9J" customClass="DefaultButton" customModule="web3wallet" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YxO-SU-R9J" customClass="Button" customModule="web3wallet" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="80" width="382" height="64"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Import wallet"/>
@@ -110,7 +110,7 @@
                                             <action selector="importWalletAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aTZ-2u-g3V"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a0Z-ZF-KMy" customClass="DefaultButton" customModule="web3wallet" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a0Z-ZF-KMy" customClass="Button" customModule="web3wallet" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="160" width="382" height="64"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Connect hardware wallet"/>
@@ -269,9 +269,47 @@
                                             <outlet property="textView" destination="SHP-R6-hmv" id="dmB-my-Tyo"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewTextInputCell" id="Y8a-y8-ZaN" customClass="CollectionViewTextInputCell" customModule="web3wallet" customModuleProvider="target">
+                                        <rect key="frame" x="35.5" y="165" width="343" height="46"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="V7C-Da-a5K">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="46"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="yIX-dA-XoF">
+                                                    <rect key="frame" x="16" y="0.0" width="311" height="46"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sjr-Ib-hKM">
+                                                            <rect key="frame" x="0.0" y="13" width="139.5" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5Ba-cf-fza" customClass="TextField" customModule="web3wallet" customModuleProvider="target">
+                                                            <rect key="frame" x="139.5" y="6" width="171.5" height="34"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <textInputTraits key="textInputTraits"/>
+                                                        </textField>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="yIX-dA-XoF" secondAttribute="bottom" id="19z-4D-Tju"/>
+                                                <constraint firstItem="yIX-dA-XoF" firstAttribute="top" secondItem="V7C-Da-a5K" secondAttribute="top" id="Ir9-bP-vTr"/>
+                                                <constraint firstItem="5Ba-cf-fza" firstAttribute="width" secondItem="V7C-Da-a5K" secondAttribute="width" multiplier="0.5" id="Tpc-3S-FMg"/>
+                                                <constraint firstItem="yIX-dA-XoF" firstAttribute="leading" secondItem="V7C-Da-a5K" secondAttribute="leading" constant="16" id="hG4-Cq-cVe"/>
+                                                <constraint firstAttribute="trailing" secondItem="yIX-dA-XoF" secondAttribute="trailing" constant="16" id="r1x-Bt-0Wz"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="343" height="46"/>
+                                        <connections>
+                                            <outlet property="textField" destination="5Ba-cf-fza" id="Scm-Qx-1a4"/>
+                                            <outlet property="titleLabel" destination="Sjr-Ib-hKM" id="wWe-Vp-CUc"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewSectionLabelFooter" id="IXR-Cx-j6h" customClass="CollectionViewSectionLabelFooter" customModule="web3wallet" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="173" width="414" height="50"/>
+                                    <rect key="frame" x="0.0" y="219" width="414" height="50"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dpB-F4-2Pq">
@@ -299,7 +337,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="M4Q-rk-eWG">
                                 <rect key="frame" x="16" y="798" width="382" height="64"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lII-AR-ver" customClass="DefaultButton" customModule="web3wallet" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lII-AR-ver" customClass="Button" customModule="web3wallet" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="64"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Next"/>
@@ -1093,7 +1131,7 @@
                                     <constraint firstAttribute="trailing" secondItem="jug-R8-X2F" secondAttribute="trailing" constant="16" id="vQP-6C-DRs"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eEx-gZ-3cL" customClass="DefaultButton" customModule="web3wallet" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eEx-gZ-3cL" customClass="Button" customModule="web3wallet" customModuleProvider="target">
                                 <rect key="frame" x="16" y="323" width="382" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
@@ -1354,7 +1392,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="DcT-pq-MXn">
                                 <rect key="frame" x="16" y="798" width="382" height="64"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E8i-Mo-lm0" customClass="DefaultButton" customModule="web3wallet" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E8i-Mo-lm0" customClass="Button" customModule="web3wallet" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="64"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Next"/>

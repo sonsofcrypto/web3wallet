@@ -43,9 +43,13 @@ extension NewMnemonicViewController: NewMnemonicView {
 // MARK: - UICollectionViewDataSource
 
 extension NewMnemonicViewController: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return viewModel?.sectionsItems.count ?? 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel?.sectionsItems[safe: section]?.count ?? 0
     }
     
 
@@ -56,9 +60,13 @@ extension NewMnemonicViewController: UICollectionViewDataSource {
 
         switch viewModel {
         case let .mnemonic(mnemonic):
-            let cell = collectionView.dequeue(NewMnemonicCell.self, for: indexPath)
-            cell.update(with: mnemonic)
-            return cell
+            return collectionView.dequeue(NewMnemonicCell.self, for: indexPath)
+                .update(with: mnemonic)
+        case let .name(name):
+            return collectionView.dequeue(
+                CollectionViewTextInputCell.self,
+                for: indexPath
+            ).update(with: name)
         }
 
         fatalError("Not handled \(indexPath)")
@@ -93,10 +101,18 @@ extension NewMnemonicViewController: UICollectionViewDelegate {
 extension NewMnemonicViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(
-            width: collectionView.frame.width - Global.padding * 2,
-            height: Constant.mnemonicCellHeight
-        )
+        let width = view.bounds.width - Global.padding * 2
+
+        guard let viewModel = viewModel?.item(at: indexPath) else {
+            return CGSize(width: width, height: Global.cellHeight)
+        }
+
+        switch viewModel {
+        case let .mnemonic(mnemonic):
+            return CGSize(width: width, height: Constant.mnemonicCellHeight)
+        default:
+            return CGSize(width: width, height: Global.cellHeight)
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -104,15 +120,6 @@ extension NewMnemonicViewController: UICollectionViewDelegateFlowLayout {
             return .zero
         }
 
-//        switch hearder {
-//        case .attrStr:
-//            return CGSize(
-//                width: view.bounds.width - Global.padding * 2,
-//                height: Constant.mnemonicFooterHeight
-//            )
-//        default:
-//            return .zero
-//        }
         return .zero
     }
 
@@ -149,6 +156,8 @@ extension NewMnemonicViewController {
 
     enum Constant {
         static let mnemonicCellHeight: CGFloat = 110
+        static let cellHeight: CGFloat = 46
         static let footerHeight: CGFloat = 52
+
     }
 }

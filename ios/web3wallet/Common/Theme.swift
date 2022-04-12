@@ -103,7 +103,29 @@ struct Theme {
 
     var cellDetail: UIFont {
         UIFont.font(.gothicA1, style: .regular, size: .custom(size: 15))
+    }
 
+    func bodyTextAttributes() -> [NSAttributedString.Key : Any] {
+        [
+            .font: Theme.current.body,
+            .foregroundColor: Theme.current.textColor,
+            .shadow: textShadow()
+        ]
+    }
+
+    func placeholderTextAttributes() -> [NSAttributedString.Key : Any] {
+        [
+            .font: Theme.current.subhead,
+            .foregroundColor: Theme.current.textColorTertiary,
+        ]
+    }
+
+    func textShadow(_ tint: UIColor = Theme.current.tintSecondary ) -> NSShadow {
+        let shadow = NSShadow()
+        shadow.shadowOffset = .zero
+        shadow.shadowBlurRadius = Global.shadowRadius
+        shadow.shadowColor = tint
+        return shadow
     }
 }
 

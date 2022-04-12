@@ -32,12 +32,17 @@ class CollectionViewCell: UICollectionViewCell {
         configureUI()
     }
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        configureUI()
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.applyShadowPath(bounds, radius: layer.cornerRadius)
     }
 
-    private func configureUI() {
+    func configureUI() {
         backgroundColor = Theme.current.background
         layer.applyRectShadow()
         layer.applyBorder()

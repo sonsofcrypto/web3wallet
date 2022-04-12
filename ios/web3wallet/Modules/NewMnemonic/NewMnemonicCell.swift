@@ -8,15 +8,7 @@ class NewMnemonicCell: CollectionViewCell {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var overlay: UIVisualEffectView!
     @IBOutlet weak var overlayLabel: UILabel!
-    
-    private lazy var textShadow: NSShadow = {
-        let shadow = NSShadow()
-        shadow.shadowOffset = .zero
-        shadow.shadowBlurRadius = Global.shadowRadius
-        shadow.shadowColor = Theme.current.tintSecondary
-        return shadow
-    }()
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         configure()
@@ -30,16 +22,13 @@ class NewMnemonicCell: CollectionViewCell {
         overlayLabel.applyStyle(.headlineGlow)
     }
 
-    func update(with viewModel: NewMnemonicViewModel.Mnemonic?) {
+    func update(with viewModel: NewMnemonicViewModel.Mnemonic?) -> NewMnemonicCell {
         guard let viewModel = viewModel else {
-            return
+            return self
         }
 
-        let attrs: [NSAttributedString.Key : Any] = [
-            .font: Theme.current.headline,
-            .foregroundColor: Theme.current.textColor,
-            .shadow: textShadow
-        ]
+        var attrs = Theme.current.bodyTextAttributes()
+        attrs[.font] = Theme.current.headline
 
         textView.attributedText = NSAttributedString(
             string: viewModel.value ?? "",
@@ -50,5 +39,6 @@ class NewMnemonicCell: CollectionViewCell {
 
         overlay.isHidden = viewModel.type != .editHidden
         textView.isEditable = viewModel.type == .importing
+        return self
     }
 }

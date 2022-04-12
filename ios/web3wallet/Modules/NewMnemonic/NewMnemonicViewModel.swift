@@ -33,6 +33,7 @@ extension NewMnemonicViewModel {
 
     enum Item {
         case mnemonic(mnemonic: Mnemonic)
+        case name(name: Name)
     }
 
     enum Header {
@@ -60,5 +61,16 @@ extension NewMnemonicViewModel {
             case editHidden
             case editShown
         }
+    }
+}
+
+// MARK: - Name
+
+extension NewMnemonicViewModel {
+
+    struct Name {
+        let title: String
+        let value: String
+        let placeHolder: String
     }
 }

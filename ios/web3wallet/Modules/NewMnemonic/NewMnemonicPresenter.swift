@@ -68,14 +68,24 @@ private extension DefaultNewMnemonicPresenter {
                     NewMnemonicViewModel.Item.mnemonic(
                         mnemonic: .init(value: keyStoreItem.mnemonic, type: .new)
                     )
+                ],
+                [
+                    NewMnemonicViewModel.Item.name(
+                        name: .init(
+                            title: Localized("newMnemonic.name.title"),
+                            value: "", //keyStoreItem.name,
+                            placeHolder: Localized("newMnemonic.name.placeholder")
+                        )
+                    )
                 ]
             ],
-            headers: [.none],
+            headers: [.none, .none],
             footers: [
                 .attrStr(
                     text: Localized("newMnemonic.footer"),
                     highlightWords: Constant.mnemonicHighlightWords
-                )
+                ),
+                .none
             ]
         )
     }
