@@ -11,13 +11,8 @@ class CollectionViewTextInputCell: CollectionViewCell {
 
     var textChangeHandler: ((String)->Void)?
 
-    override func configureUI() {
-        super.configureUI()
-
-        guard let titleLabel = titleLabel else {
-            return
-        }
-
+    override func awakeFromNib() {
+        super.awakeFromNib()
         titleLabel.applyStyle(.bodyGlow)
         textField.delegate = self
     }
@@ -42,7 +37,10 @@ extension CollectionViewTextInputCell: UITextFieldDelegate {
 
 extension CollectionViewTextInputCell {
 
-    func update(with viewModel: NewMnemonicViewModel.Name) -> CollectionViewTextInputCell {
+    func update(
+        with viewModel: NewMnemonicViewModel.Name,
+        textChangeHandler: ((String)->Void)? = nil
+    ) -> CollectionViewTextInputCell {
         titleLabel.text = viewModel.title
         textField.text = viewModel.value
 

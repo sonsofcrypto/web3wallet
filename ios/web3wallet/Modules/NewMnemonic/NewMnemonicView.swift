@@ -59,17 +59,29 @@ extension NewMnemonicViewController: UICollectionViewDataSource {
         }
 
         switch viewModel {
+
         case let .mnemonic(mnemonic):
             return collectionView.dequeue(NewMnemonicCell.self, for: indexPath)
                 .update(with: mnemonic)
+
         case let .name(name):
-            let cell = collectionView.dequeue(
+            return collectionView.dequeue(
                 CollectionViewTextInputCell.self,
                 for: indexPath
+            ).update(
+                with: name,
+                textChangeHandler: { value in self.nameDidChange(value) }
             )
-            cell.update(with: name)
-            cell.textChangeHandler = { value in self.nameDidChange(value) }
-            return cell
+
+        case let .onOffSwitch(title, onOff):
+            return collectionView.dequeue(
+                CollectionViewSwitchCell.self,
+                for: indexPath
+            ).update(
+                with: title,
+                onOff: onOff,
+                handler: { value in self.iCloudBackupDidChange(value) }
+            )
         }
 
         fatalError("Not handled \(indexPath)")
@@ -77,30 +89,43 @@ extension NewMnemonicViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
+
         case UICollectionView.elementKindSectionHeader:
             fatalError("Handle header \(kind) \(indexPath)")
+
         case UICollectionView.elementKindSectionFooter:
             guard let viewModel = viewModel?.footer(at: indexPath.section) else {
                 fatalError("Failed to handle \(kind) \(indexPath)")
             }
+
             let footer = collectionView.dequeue(
                 CollectionViewSectionLabelFooter.self,
                 for: indexPath,
                 kind: kind
             )
+
             footer.update(with: viewModel)
             return footer
+
         default:
             ()
         }
         fatalError("Failed to handle \(kind) \(indexPath)")
+    }
+
+    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        return false
     }
 }
 
 extension NewMnemonicViewController: UICollectionViewDelegate {
 
     func nameDidChange(_ name: String) {
+        presenter.handle(.didChangeName(name: name))
+    }
 
+    func iCloudBackupDidChange(_ onOff: Bool) {
+        presenter.handle(.didChangeICouldBackup(onOff: onOff))
     }
 }
 
@@ -148,11 +173,12 @@ extension NewMnemonicViewController: UICollectionViewDelegateFlowLayout {
 extension NewMnemonicViewController {
     
     func configureUI() {
-        title = Localized("wallets")
+        title = Localized("newMnemonic.title")
         (view as? GradientView)?.colors = [
             Theme.current.background,
             Theme.current.backgroundDark
         ]
+
     }
 }
 

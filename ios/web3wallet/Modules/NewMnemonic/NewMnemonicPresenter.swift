@@ -6,7 +6,7 @@ import Foundation
 
 enum NewMnemonicPresenterEvent {
     case didChangeName(name: String)
-
+    case didChangeICouldBackup(onOff: Bool)
 }
 
 protocol NewMnemonicPresenter {
@@ -35,7 +35,6 @@ class DefaultNewMnemonicPresenter {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
-        // self.items = []
     }
 }
 
@@ -52,6 +51,8 @@ extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
         switch event {
         case let .didChangeName(name):
             keyStoreItem.name = name
+        case let .didChangeICouldBackup(onOff):
+            keyStoreItem.iCouldBackup = onOff
         }
     }
 }
@@ -78,9 +79,13 @@ private extension DefaultNewMnemonicPresenter {
                     NewMnemonicViewModel.Item.name(
                         name: .init(
                             title: Localized("newMnemonic.name.title"),
-                            value: "", //keyStoreItem.name,
+                            value: keyStoreItem.name,
                             placeHolder: Localized("newMnemonic.name.placeholder")
                         )
+                    ),
+                    NewMnemonicViewModel.Item.onOffSwitch(
+                        title: Localized("newMnemonic.iCould.title"),
+                        onOff: keyStoreItem.iCouldBackup
                     )
                 ]
             ],

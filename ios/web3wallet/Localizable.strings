@@ -58,9 +58,12 @@
 "account.marketInfo.volume" = "24h volume";
 "account.marketInfo.transactions" = "Transactions";
 
+"newMnemonic.title" = "Create new wallet";
 "newMnemonic.tapToReveal" = "Tap to reveal mnemonic";
 "newMnemonic.footer" = "Write down mnemonic above. Never share it with anyone. All of the accounts/wallets are derived from it. If lost crypto is unrecoverable";
 "newMnemonic.footerHighlightWord0" = "Never";
 "newMnemonic.footerHighlightWord1" = "unrecoverable";
 "newMnemonic.name.title" = "Name wallet";
 "newMnemonic.name.placeholder" = "Default wallet";
+"newMnemonic.iCould.title" = "Backup in iCloud";
+

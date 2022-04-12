@@ -7,9 +7,10 @@ import Foundation
 struct KeyStoreItem {
     let uuid: UUID
     var name: String
-    let sortOrder: Int
+    var sortOrder: Int
+    var iCouldBackup: Bool
     let creationDate: Date
-    let modification: Date
+    var modification: Date
     let encryptedSigner: String
     let mnemonic: String
 }
@@ -25,8 +26,9 @@ extension KeyStoreItem {
     static func rand() -> KeyStoreItem {
         return KeyStoreItem(
             uuid: UUID(),
-            name: "ETH",
+            name: "",
             sortOrder: 0,
+            iCouldBackup: true,
             creationDate: Date(),
             modification: Date(),
             encryptedSigner: "",

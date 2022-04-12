@@ -34,6 +34,7 @@ extension NewMnemonicViewModel {
     enum Item {
         case mnemonic(mnemonic: Mnemonic)
         case name(name: Name)
+        case onOffSwitch(title: String, onOff: Bool)
     }
 
     enum Header {

@@ -307,9 +307,44 @@
                                             <outlet property="titleLabel" destination="Sjr-Ib-hKM" id="wWe-Vp-CUc"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewSwitchCell" id="kNg-js-am7" customClass="CollectionViewSwitchCell" customModule="web3wallet" customModuleProvider="target">
+                                        <rect key="frame" x="35.5" y="211" width="343" height="46"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="jj7-g7-dyu">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="46"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="WRC-lc-UeZ">
+                                                    <rect key="frame" x="16" y="0.0" width="311" height="46"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BVM-uO-xbM">
+                                                            <rect key="frame" x="0.0" y="13" width="262" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S7i-J4-ywg" customClass="OnOffSwitch" customModule="web3wallet" customModuleProvider="target">
+                                                            <rect key="frame" x="262" y="7.5" width="51" height="31"/>
+                                                        </switch>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="WRC-lc-UeZ" firstAttribute="leading" secondItem="jj7-g7-dyu" secondAttribute="leading" constant="16" id="7ES-NP-74Q"/>
+                                                <constraint firstItem="WRC-lc-UeZ" firstAttribute="top" secondItem="jj7-g7-dyu" secondAttribute="top" id="J2P-wg-9zd"/>
+                                                <constraint firstAttribute="bottom" secondItem="WRC-lc-UeZ" secondAttribute="bottom" id="Nt2-Vr-f2x"/>
+                                                <constraint firstAttribute="trailing" secondItem="WRC-lc-UeZ" secondAttribute="trailing" constant="16" id="pmv-yC-XaY"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="343" height="46"/>
+                                        <connections>
+                                            <outlet property="onOffSwitch" destination="S7i-J4-ywg" id="MQT-rn-kKA"/>
+                                            <outlet property="titleLabel" destination="BVM-uO-xbM" id="4jh-Te-L31"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewSectionLabelFooter" id="IXR-Cx-j6h" customClass="CollectionViewSectionLabelFooter" customModule="web3wallet" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="219" width="414" height="50"/>
+                                    <rect key="frame" x="0.0" y="265" width="414" height="50"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dpB-F4-2Pq">

@@ -49,6 +49,7 @@ git submodule update --init --recursive
 	- [] Create sheet view for buttons
 	- [] Animate buttons on appear if wallets is empty
 	- [] Create password VC
+	- [] Copy menmonic on tap
 	- [] Play haptics when swipe starts
 
 	- [] w2 Connection to networks
