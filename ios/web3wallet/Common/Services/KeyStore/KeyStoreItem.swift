@@ -6,7 +6,7 @@ import Foundation
 
 struct KeyStoreItem {
     let uuid: UUID
-    let name: String
+    var name: String
     let sortOrder: Int
     let creationDate: Date
     let modification: Date

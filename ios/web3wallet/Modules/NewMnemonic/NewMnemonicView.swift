@@ -63,10 +63,13 @@ extension NewMnemonicViewController: UICollectionViewDataSource {
             return collectionView.dequeue(NewMnemonicCell.self, for: indexPath)
                 .update(with: mnemonic)
         case let .name(name):
-            return collectionView.dequeue(
+            let cell = collectionView.dequeue(
                 CollectionViewTextInputCell.self,
                 for: indexPath
-            ).update(with: name)
+            )
+            cell.update(with: name)
+            cell.textChangeHandler = { value in self.nameDidChange(value) }
+            return cell
         }
 
         fatalError("Not handled \(indexPath)")
@@ -95,7 +98,10 @@ extension NewMnemonicViewController: UICollectionViewDataSource {
 }
 
 extension NewMnemonicViewController: UICollectionViewDelegate {
-    
+
+    func nameDidChange(_ name: String) {
+
+    }
 }
 
 extension NewMnemonicViewController: UICollectionViewDelegateFlowLayout {

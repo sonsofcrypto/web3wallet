@@ -9,12 +9,32 @@ class CollectionViewTextInputCell: CollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
 
+    var textChangeHandler: ((String)->Void)?
+
     override func configureUI() {
         super.configureUI()
+
         guard let titleLabel = titleLabel else {
             return
         }
+
         titleLabel.applyStyle(.bodyGlow)
+        textField.delegate = self
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension CollectionViewTextInputCell: UITextFieldDelegate {
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textChangeHandler?(textField.text ?? "")
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        textChangeHandler?(textField.text ?? "")
+        return false
     }
 }
 
@@ -25,6 +45,7 @@ extension CollectionViewTextInputCell {
     func update(with viewModel: NewMnemonicViewModel.Name) -> CollectionViewTextInputCell {
         titleLabel.text = viewModel.title
         textField.text = viewModel.value
+
         textField.attributedPlaceholder = NSAttributedString(
             string: viewModel.placeHolder,
             attributes: Theme.current.placeholderTextAttributes()

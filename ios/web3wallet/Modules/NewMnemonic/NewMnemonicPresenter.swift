@@ -5,6 +5,7 @@
 import Foundation
 
 enum NewMnemonicPresenterEvent {
+    case didChangeName(name: String)
 
 }
 
@@ -21,9 +22,10 @@ class DefaultNewMnemonicPresenter {
     private let interactor: NewMnemonicInteractor
     private let wireframe: NewMnemonicWireframe
 
-    // private var items: [Item]
+    private lazy var keyStoreItem: KeyStoreItem = KeyStoreItem.rand()
 
     private weak var view: NewMnemonicView?
+
 
     init(
         view: NewMnemonicView,
@@ -42,12 +44,15 @@ class DefaultNewMnemonicPresenter {
 extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
 
     func present() {
-        view?.update(with: viewModel(from: KeyStoreItem.rand()))
+        view?.update(with: viewModel(from: keyStoreItem))
         // TODO: Interactor
     }
 
     func handle(_ event: NewMnemonicPresenterEvent) {
-
+        switch event {
+        case let .didChangeName(name):
+            keyStoreItem.name = name
+        }
     }
 }
 
