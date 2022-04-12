@@ -4,51 +4,61 @@
 
 import Foundation
 
-enum NewMnemonicViewModel {
-    case loading
-    case loaded(items: [Item], selectedIdx: Int)
-    case error(error: AppsViewModel.Error)
+struct NewMnemonicViewModel {
+    var sectionsItems: [[Item]]
+    var headers: [Header]
+    var footers: [Footer]
 }
 
-// MARK - Item
+// MARK: - Access utilities
 
 extension NewMnemonicViewModel {
 
-    struct Item {
-        let title: String
+    func item(at idxPath: IndexPath) -> NewMnemonicViewModel.Item? {
+        sectionsItems[safe: idxPath.section]?[safe: idxPath.item]
+    }
+
+    func header(at idx: Int) -> NewMnemonicViewModel.Header {
+        headers[idx]
+    }
+
+    func footer(at idx: Int) -> NewMnemonicViewModel.Footer {
+        footers[idx]
     }
 }
 
-// MARK: - Error
+// MARK: - Item
 
 extension NewMnemonicViewModel {
 
-    struct Error {
-        let title: String
-        let body: String
-        let actions: [String]
+    enum Item {
+        case mnemonic(mnemonic: Mnemonic)
+    }
+
+    enum Header {
+        case none
+        case header(text: AttributedString)
+    }
+
+    enum Footer {
+        case none
+        case attrStr(text: String, highlightWords: [String])
     }
 }
 
-// MARK: - Utility
+// MARK: - MnemonicType
 
 extension NewMnemonicViewModel {
 
-    func items() -> [NewMnemonicViewModel.Item] {
-        switch self {
-        case let .loaded(items, _):
-            return items
-        default:
-            return []
-        }
-    }
+    struct Mnemonic {
+        let value: String
+        let type: MnemonicType
 
-    func selectedIdx() -> Int? {
-        switch self {
-        case let .loaded(_, idx):
-            return idx
-        default:
-            return nil
+        enum MnemonicType {
+            case new
+            case importing
+            case editHidden
+            case editShown
         }
     }
 }

@@ -42,7 +42,7 @@ class DefaultNewMnemonicPresenter {
 extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
 
     func present() {
-        view?.update(with: .loading)
+        view?.update(with: viewModel(from: KeyStoreItem.rand()))
         // TODO: Interactor
     }
 
@@ -61,10 +61,34 @@ private extension DefaultNewMnemonicPresenter {
 
 private extension DefaultNewMnemonicPresenter {
 
-//    func viewModel(from items: [Item], active: Item?) -> TemplateViewModel {
-//        .loaded(
-//            wallets: viewModel(from: wallets),
-//            selectedIdx: selectedIdx(wallets, active: active)
-//        )
-//    }
+    func viewModel(from keyStoreItem: KeyStoreItem) -> NewMnemonicViewModel {
+        .init(
+            sectionsItems: [
+                [
+                    NewMnemonicViewModel.Item.mnemonic(
+                        mnemonic: .init(value: keyStoreItem.mnemonic, type: .new)
+                    )
+                ]
+            ],
+            headers: [.none],
+            footers: [
+                .attrStr(
+                    text: Localized("newMnemonic.footer"),
+                    highlightWords: Constant.mnemonicHighlightWords
+                )
+            ]
+        )
+    }
+}
+
+// MARK: - Constant
+
+private extension DefaultNewMnemonicPresenter {
+
+    enum Constant {
+        static let mnemonicHighlightWords: [String] = [
+            Localized("newMnemonic.footerHighlightWord0"),
+            Localized("newMnemonic.footerHighlightWord1"),
+        ]
+    }
 }

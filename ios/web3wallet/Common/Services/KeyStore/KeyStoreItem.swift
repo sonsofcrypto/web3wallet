@@ -11,6 +11,7 @@ struct KeyStoreItem {
     let creationDate: Date
     let modification: Date
     let encryptedSigner: String
+    let mnemonic: String
 }
 
 // MARK: - Codable
@@ -28,7 +29,8 @@ extension KeyStoreItem {
             sortOrder: 0,
             creationDate: Date(),
             modification: Date(),
-            encryptedSigner: ""
+            encryptedSigner: "",
+            mnemonic: "strategy edge trash series dad tiny couch since witness box unveil timber"
         )
     }
 }

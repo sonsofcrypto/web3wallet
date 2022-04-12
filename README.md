@@ -23,6 +23,7 @@ git submodule update --init --recursive
 		- [] Import
 		- [] Update settings
 		- [] List
+	- [] Add support for 24 word mnemonics (option to select & text to scale down when entering)
 	- [] Import private key
 	- [] Handle multiple accounts from from same mnemonic
 	- [] Connect harware wallet

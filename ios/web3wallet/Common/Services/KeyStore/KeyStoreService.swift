@@ -84,7 +84,8 @@ extension DefaultKeyStoreService: KeyStoreService {
             sortOrder: (wallets.last?.sortOrder ?? -1) + 1,
             creationDate: Date(),
             modification: Date(),
-            encryptedSigner: "This will be mnemonic or private key or HD connection"
+            encryptedSigner: "This will be mnemonic or private key or HD connection",
+            mnemonic: "strategy edge trash series dad tiny couch since witness box unveil timber"
         )
 
         wallets.append(keyStoreItem)
@@ -104,7 +105,8 @@ extension DefaultKeyStoreService: KeyStoreService {
             sortOrder: (wallets.last?.sortOrder ?? -1) + 1,
             creationDate: Date(),
             modification: Date(),
-            encryptedSigner: mnemonic
+            encryptedSigner: mnemonic,
+            mnemonic: mnemonic
         )
         
         wallets.append(wallet)
