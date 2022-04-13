@@ -27,6 +27,25 @@ class ButtonsSheetView: UIView {
         configureUI()
     }
 
+    enum Constant {
+        static let defaultBounds: CGRect = .init(x: 0, y: 0, width: 320, height: 480)
+        static let closeHeight: CGFloat = 256
+        static let openHeight: CGFloat = 416
+    }
+
+    override func layoutSubviews() {
+        let sBounds = superview?.bounds ?? Constant.defaultBounds
+        self.frame = CGRect(
+            x: 0,
+            y: sBounds.maxY - Constant.closeHeight - collectionView.contentOffset.y,
+            width: sBounds.width,
+            height: Constant.closeHeight + collectionView.contentOffset.y
+        )
+        backgroundView.frame = bounds
+        backgroundOverlay.frame = backgroundView.bounds
+        super.layoutSubviews()
+    }
+
     func openAction(_ sender: Any?) {
         delegate?.buttonSheetViewDidTapOpen(self)
     }
@@ -43,7 +62,7 @@ class ButtonsSheetView: UIView {
 
 // MARK: - UICollectionViewDataSource
 
-extension ButtonsSheetView: UICollectionViewDataSource {
+extension ButtonsSheetView: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel?.buttons.count ?? 0
@@ -52,9 +71,16 @@ extension ButtonsSheetView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let button = viewModel?.buttons[indexPath.item]
         return collectionView.dequeue(ButtonsSheetViewCell.self, for: indexPath)
-                .update(with: button)
+            .update(with: button)
     }
-    
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(
+            width: bounds.width - Global.padding * 2,
+            height: Global.cellHeight
+        )
+    }
+
 }
 
 // MARK: - UICollectionViewDelegate
@@ -62,11 +88,12 @@ extension ButtonsSheetView: UICollectionViewDataSource {
 extension ButtonsSheetView: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("buttons sheet did select", indexPath)
         delegate?.buttonSheetView(self, didSelectButtonAt: indexPath.item)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        setNeedsLayout()
+        print("=== content offset", collectionView.contentOffset)
         delegate?.buttonSheetView(self, didScroll: collectionView)
     }
 }
@@ -74,7 +101,7 @@ extension ButtonsSheetView: UICollectionViewDelegate {
 private extension ButtonsSheetView {
 
     func configureUI() {
-        backgroundOverlay.backgroundColor = Theme.current.background.withAlpha(0.75)
+        backgroundOverlay.backgroundColor = Theme.current.background.withAlpha(0.5)
     }
 
 }

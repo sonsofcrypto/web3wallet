@@ -24,6 +24,7 @@ class KeyStoreViewController: UIViewController {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
+        buttonsSheetView.delegate = self
         configureUI()
         presenter?.present()
         prevViewSize = view.bounds.size

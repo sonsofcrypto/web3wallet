@@ -114,35 +114,34 @@
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fg6-vF-oBb">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="256"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="16" minimumInteritemSpacing="16" id="09g-q3-y7K">
-                                            <size key="itemSize" width="414" height="64"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="16" minimumInteritemSpacing="16" id="09g-q3-y7K">
+                                            <size key="itemSize" width="320" height="64"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                             <inset key="sectionInset" minX="16" minY="16" maxX="16" maxY="16"/>
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ButtonsSheetViewCell" id="akE-GW-lLT" customClass="ButtonsSheetViewCell" customModule="web3wallet" customModuleProvider="target">
-                                                <rect key="frame" x="16" y="16" width="382" height="64"/>
+                                                <rect key="frame" x="47" y="16" width="320" height="64"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="2xO-PD-m37">
-                                                    <rect key="frame" x="0.0" y="0.0" width="382" height="64"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nva-tD-Uma">
-                                                            <rect key="frame" x="16" y="16" width="350" height="32"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nva-tD-Uma">
+                                                            <rect key="frame" x="16" y="16" width="288" height="32"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="Nva-tD-Uma" secondAttribute="trailing" constant="16" id="HJ9-xS-6tW"/>
-                                                        <constraint firstItem="Nva-tD-Uma" firstAttribute="top" secondItem="2xO-PD-m37" secondAttribute="top" constant="16" id="bTV-ct-Xrd"/>
-                                                        <constraint firstItem="Nva-tD-Uma" firstAttribute="leading" secondItem="2xO-PD-m37" secondAttribute="leading" constant="16" id="hwA-O9-1Jv"/>
-                                                        <constraint firstAttribute="bottom" secondItem="Nva-tD-Uma" secondAttribute="bottom" constant="16" id="vfG-az-9pw"/>
-                                                    </constraints>
-                                                </collectionViewCellContentView>
-                                                <size key="customSize" width="382" height="64"/>
+                                                </view>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="Nva-tD-Uma" secondAttribute="trailing" constant="16" id="HJ9-xS-6tW"/>
+                                                    <constraint firstItem="Nva-tD-Uma" firstAttribute="top" secondItem="akE-GW-lLT" secondAttribute="top" constant="16" id="bTV-ct-Xrd"/>
+                                                    <constraint firstItem="Nva-tD-Uma" firstAttribute="leading" secondItem="akE-GW-lLT" secondAttribute="leading" constant="16" id="hwA-O9-1Jv"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Nva-tD-Uma" secondAttribute="bottom" constant="16" id="vfG-az-9pw"/>
+                                                </constraints>
                                                 <connections>
                                                     <outlet property="titleLabel" destination="Nva-tD-Uma" id="4S0-hy-hDz"/>
                                                 </connections>

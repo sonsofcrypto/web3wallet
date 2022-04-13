@@ -7,6 +7,11 @@ import UIKit
 class ButtonsSheetViewCell: CollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        titleLabel.applyStyle(.bodyGlow)
+    }
 }
 
 // MARK: - ButtonsSheetViewModel
