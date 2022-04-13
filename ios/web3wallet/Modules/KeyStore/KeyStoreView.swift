@@ -90,6 +90,7 @@ extension KeyStoreViewController: UICollectionViewDataSource {
             return collectionView.dequeue(ButtonsSheetViewCell.self, for: indexPath)
                     .update(with: button)
         }
+
         let cell = collectionView.dequeue(KeyStoreCell.self, for: indexPath)
         cell.titleLabel.text = viewModel?.items[indexPath.item].title
         return cell
@@ -158,6 +159,7 @@ extension KeyStoreViewController {
             - Global.cellHeight * 4
             - Global.padding * 6
             + 2
+        print("=== configuring insets", view.bounds, inset)
         buttonsCollectionView.contentInset.top = inset
     }
 

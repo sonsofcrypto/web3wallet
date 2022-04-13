@@ -25,6 +25,7 @@ class CollectionViewSegmentWithTextAndSwitchCell: CollectionViewCell {
 
     func configureUI() {
         titleLabel.applyStyle(.bodyGlow)
+        switchLabel.applyStyle(.bodyGlow)
         textField.delegate = self
         onOffSwitch.addTarget(
             self,
