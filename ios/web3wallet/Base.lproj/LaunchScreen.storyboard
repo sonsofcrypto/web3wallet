@@ -1,32 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8mA-zU-BJW">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="EHf-IW-A2E">
+        <!--Navigation Controller-->
+        <scene sceneID="dD6-0f-paG">
             <objects>
-                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                <navigationController id="8mA-zU-BJW" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="xJy-xi-3tu">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" name="bgGradientTop"/>
+                        <navigationBarAppearance key="standardAppearance" backgroundEffect="systemMaterialDark">
+                            <color key="backgroundColor" name="bgGradientTop"/>
+                        </navigationBarAppearance>
+                        <navigationBarAppearance key="compactAppearance" backgroundEffect="systemMaterialDark">
+                            <color key="backgroundColor" name="bgGradientTop"/>
+                        </navigationBarAppearance>
+                        <navigationBarAppearance key="scrollEdgeAppearance" backgroundEffect="systemMaterialDark">
+                            <color key="backgroundColor" name="bgGradientTop"/>
+                        </navigationBarAppearance>
+                        <navigationBarAppearance key="compactScrollEdgeAppearance" backgroundEffect="systemMaterialDark">
+                            <color key="backgroundColor" name="bgGradientTop"/>
+                        </navigationBarAppearance>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="0Lv-So-D3u" kind="relationship" relationship="rootViewController" id="i9K-fr-ieU"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rna-ya-U3X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="365" y="124"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="9Ut-6m-B1k">
+            <objects>
+                <viewController id="0Lv-So-D3u" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="acE-tl-cWu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradient" translatesAutoresizingMaskIntoConstraints="NO" id="UrD-TU-RJC">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="pGI-bo-rl8"/>
+                        <color key="backgroundColor" name="bgGradientTop"/>
+                        <constraints>
+                            <constraint firstItem="UrD-TU-RJC" firstAttribute="leading" secondItem="acE-tl-cWu" secondAttribute="leading" id="GAN-mh-qjp"/>
+                            <constraint firstAttribute="trailing" secondItem="UrD-TU-RJC" secondAttribute="trailing" id="XNe-Au-5sC"/>
+                            <constraint firstItem="UrD-TU-RJC" firstAttribute="top" secondItem="acE-tl-cWu" secondAttribute="top" id="ncW-R2-pdC"/>
+                            <constraint firstAttribute="bottom" secondItem="UrD-TU-RJC" secondAttribute="bottom" id="yh8-ei-htf"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="3yD-eR-7C8"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0UH-Xi-x4l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="1048" y="124"/>
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="gradient" width="414" height="896"/>
+        <namedColor name="bgGradientTop">
+            <color red="0.12941176470588234" green="0.11764705882352941" blue="0.23921568627450979" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
