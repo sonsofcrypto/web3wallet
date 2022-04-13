@@ -16,6 +16,7 @@ class KeyStoreViewController: UIViewController {
     private var viewModel: KeyStoreViewModel?
     private var prevViewSize: CGSize = .zero
     private var firstAppear: Bool = true
+    private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var logoContainer: UIView!
@@ -249,4 +250,45 @@ extension KeyStoreViewController {
             self?.updateButtonsView()
         }
     }
+}
+
+// MARK: - UIViewControllerTransitioningDelegate
+
+extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
+
+    func animationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController,
+        source: UIViewController
+    ) -> UIViewControllerAnimatedTransitioning? {
+        let presentedVc = (presented as? UINavigationController)?.topViewController
+        animatedTransitioning = nil
+
+        if presentedVc?.isKind(of: NewMnemonicViewController.self) ?? false {
+            let idxPath = buttonsCollectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0)
+            let cell = buttonsCollectionView.cellForItem(at: idxPath)
+            animatedTransitioning = CellMorphTransition(
+                targetView: cell ?? view
+            )
+        }
+
+        return animatedTransitioning
+    }
+
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let presentedVc = (dismissed as? UINavigationController)?.topViewController
+        animatedTransitioning = nil
+
+        if presentedVc?.isKind(of: NewMnemonicViewController.self) ?? false {
+            let idxPath = buttonsCollectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0)
+            let cell = buttonsCollectionView.cellForItem(at: idxPath)
+            animatedTransitioning = CardFlipAnimatedTransitioning(
+                targetView: cell ?? view,
+                isPresenting: false
+            )
+        }
+
+        return animatedTransitioning
+    }
+
 }

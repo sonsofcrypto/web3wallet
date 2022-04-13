@@ -37,8 +37,17 @@ extension DefaultNewMnemonicWireframe: NewMnemonicWireframe {
 
     func present() {
         let vc = wireUp()
+
+        let topVc = (parent as? UINavigationController)?.topViewController
+
+        if let transitionDelegate =  topVc as? UIViewControllerTransitioningDelegate {
+            vc.transitioningDelegate = transitionDelegate
+        }
+
+        vc.modalPresentationStyle = .overCurrentContext
+
         self.vc = vc
-        parent?.show(vc, sender: self)
+        topVc?.show(vc, sender: self)
     }
 
     func navigate(to destination: NewMnemonicWireframeDestination) {

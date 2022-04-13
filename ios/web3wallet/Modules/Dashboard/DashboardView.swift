@@ -214,7 +214,7 @@ extension DashboardViewController: UIViewControllerTransitioningDelegate {
         return animatedTransitioning
     }
 
-    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let presentedVc = (dismissed as? UINavigationController)?.topViewController
         animatedTransitioning = nil
 

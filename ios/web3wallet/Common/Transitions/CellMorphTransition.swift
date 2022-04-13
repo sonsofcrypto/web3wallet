@@ -1,11 +1,10 @@
-// Created by web3d3v on 21/02/2022.
+// Created by web3d3v on 13/04/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import UIKit
 
-
-class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransitioning {
+class CellMorphTransition : NSObject, UIViewControllerAnimatedTransitioning {
 
     var targetView: UIView
     var isPresenting: Bool
@@ -199,31 +198,12 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
                 snap?.removeFromSuperview()
                 transformView.removeFromSuperview()
                 toView?.alpha = 1
-//                if let toView = toView {
-//                    toView.transform = .identity
-//                    toView.frame = containerView.bounds
-//                    containerView.addSubview(toView)
-//                }
                 context.completeTransition(success)
             }
         )
     }
 
-     func animationEnded(transitionCompleted: Bool) {
+    func animationEnded(transitionCompleted: Bool) {
 
     }
-}
-
-class TransformView: UIView {
-
-    override class var layerClass: AnyClass {
-        return CATransformLayer.self
-    }
-
-    static let parentSublayerTransform:CATransform3D = {
-        var transform = CATransform3DIdentity
-        transform.m34 = -1.0 / 500.0
-        return transform
-    }()
-
 }
