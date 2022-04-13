@@ -19,6 +19,7 @@ class KeyStoreViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var logoContainer: UIView!
+    @IBOutlet weak var logoView: UIImageView!
     @IBOutlet weak var buttonsCollectionView: UICollectionView!
     @IBOutlet weak var buttonBackgroundView: UIVisualEffectView!
     
@@ -43,7 +44,7 @@ class KeyStoreViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        animateButtonsIntro()
+        animateIntro()
         collectionView.indexPathsForSelectedItems?.forEach {
             collectionView.deselectItem(at: $0, animated: true)
         }
@@ -208,6 +209,30 @@ extension KeyStoreViewController {
         }
     }
 
+    func animateIntro() {
+        guard viewModel?.isEmpty ?? false else {
+            animateButtonsIntro()
+            return
+        }
+
+        (logoContainer.alpha, logoView.alpha) = (0, 0)
+
+        UIView.springAnimate(
+            0.7,
+            damping: 0.01,
+            velocity: 0.8,
+            animations: {
+                self.logoView.alpha = 1
+            }
+        )
+
+        UIView.animate(withDuration: 1) {
+            self.logoContainer.alpha = 1
+        }
+
+        animateButtonsIntro()
+    }
+
     func animateButtonsIntro() {
         guard firstAppear && viewModel?.isEmpty ?? true else {
             return
@@ -220,7 +245,7 @@ extension KeyStoreViewController {
             animated: false
         )
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             self?.updateButtonsView()
         }
     }

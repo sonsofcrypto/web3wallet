@@ -37,7 +37,7 @@ git submodule update --init --recursive
 	- [ ] Implement custom layout for separators
 	- [x] Add opening funtionality for salt
 	- [ ] Add inset for keybord and scroll to fiedl when keyboard comes up
-	- [ ] Aninate neon logo on apprearif empty
+	- [x] Aninate neon logo on apprearif empty
 	- [x] Create sheet view for buttons
 	- [ ] Animate to home screen after creating wallet
 	- [ ] Create wallet to transition
