@@ -42,6 +42,8 @@ extension ButtonSheetViewModel {
             Button(title: Localized("keyStore.newMnemonic"), type: .newMnemonic),
             Button(title: Localized("keyStore.importMnemonic"), type: .importMnemonic),
             Button(title: Localized("keyStore.moreOption"), type: .moreOption),
+            Button(title: Localized("keyStore.importPrivateKey"), type: .importPrivateKey),
+            Button(title: Localized("keyStore.createMultiSig"), type: .createMultiSig)
         ]
     }
 

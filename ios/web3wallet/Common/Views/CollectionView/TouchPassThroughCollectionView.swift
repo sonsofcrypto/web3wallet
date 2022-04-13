@@ -7,7 +7,7 @@ import UIKit
 class TouchPassThroughCollectionView: UICollectionView {
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        if point.y >= contentInset.top {
+        if point.y >= 0 {
             return super.hitTest(point, with: event)
         }
         return nil

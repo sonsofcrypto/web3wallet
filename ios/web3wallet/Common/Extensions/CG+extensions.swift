@@ -13,6 +13,10 @@ extension CGSize {
 
 extension CGRect {
 
+    var minXminY: CGPoint {
+        CGPoint(x: minX, y: minY)
+    }
+
     var midXY: CGPoint {
         CGPoint(x: midX, y: midY)
     }

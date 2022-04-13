@@ -18,13 +18,13 @@ class KeyStoreViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var logoContainer: UIView!
-    @IBOutlet weak var buttonsSheetView: ButtonsSheetView!
+    @IBOutlet weak var buttonsCollectionView: UICollectionView!
+    @IBOutlet weak var buttonBackgroundView: UIVisualEffectView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-        buttonsSheetView.delegate = self
         configureUI()
         presenter?.present()
         prevViewSize = view.bounds.size
@@ -35,11 +35,16 @@ class KeyStoreViewController: UIViewController {
         if view.bounds.size != prevViewSize {
             collectionView.collectionViewLayout.invalidateLayout()
             prevViewSize = view.bounds.size
+            configureInsets()
+            layoutButtonsBackground()
         }
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        collectionView.indexPathsForSelectedItems?.forEach {
+            collectionView.deselectItem(at: $0, animated: true)
+        }
     }
 }
 
@@ -48,10 +53,14 @@ class KeyStoreViewController: UIViewController {
 extension KeyStoreViewController: KeyStoreView {
 
     func update(with viewModel: KeyStoreViewModel) {
+        let isExpanded = self.viewModel?.buttons.isExpanded
+        let btnsNeedsUpdate = isExpanded != viewModel.buttons.isExpanded
         self.viewModel = viewModel
-        buttonsSheetView.update(with: viewModel.buttons)
+        btnsNeedsUpdate ? updateButtonsView() : ()
+
         collectionView.reloadData()
         logoContainer.isHidden = !viewModel.isEmpty
+
         if let idx = viewModel.selectedIdx, !viewModel.items.isEmpty {
             collectionView.deselectAllExcept(
                 IndexPath(item: idx, section: 0),
@@ -66,11 +75,19 @@ extension KeyStoreViewController: KeyStoreView {
 extension KeyStoreViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == buttonsCollectionView {
+            return viewModel?.buttons.buttons.count ?? 0
+        }
         return viewModel?.items.count ?? 0
     }
     
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == buttonsCollectionView {
+            let button = viewModel?.buttons.buttons[indexPath.item]
+            return collectionView.dequeue(ButtonsSheetViewCell.self, for: indexPath)
+                    .update(with: button)
+        }
         let cell = collectionView.dequeue(KeyStoreCell.self, for: indexPath)
         cell.titleLabel.text = viewModel?.items[indexPath.item].title
         return cell
@@ -80,7 +97,29 @@ extension KeyStoreViewController: UICollectionViewDataSource {
 extension KeyStoreViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == buttonsCollectionView {
+            presenter.handle(.didSelectButtonAt(idx: indexPath.item))
+            return
+        }
         presenter.handle(.didSelectKeyStoreItemtAt(idx: indexPath.item))
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard scrollView == buttonsCollectionView else {
+            return
+        }
+
+        layoutButtonsBackground()
+
+        guard scrollView.isDragging else {
+            return
+        }
+
+        presenter.handle(
+            .didChangeButtonsState(
+                open: buttonsCollectionView.visibleCells.count > 4
+            )
+        )
     }
 }
 
@@ -94,36 +133,73 @@ extension KeyStoreViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: - ButtonsSheetViewDelegate
-
-extension KeyStoreViewController: ButtonsSheetViewDelegate {
-
-    func buttonSheetView(_ bsv: ButtonsSheetView, didSelectButtonAt idx: Int) {
-        presenter.handle(.didSelectButtonAt(idx: idx))
-    }
-
-    func buttonSheetViewDidTapOpen(_ bsv: ButtonsSheetView) {
-        presenter.handle(.didChangeButtonsState(open: true))
-    }
-
-    func buttonSheetView(_ bsv: ButtonsSheetView, didScroll cv: UICollectionView) {
-        //
-    }
-
-    func buttonSheetViewDidTapClose(_ bsv: ButtonsSheetView) {
-        presenter.handle(.didChangeButtonsState(open: false))
-    }
-}
-
 // MARK: - Configure UI
 
 extension KeyStoreViewController {
     
     func configureUI() {
         title = Localized("wallets")
+        configureInsets()
+        buttonBackgroundView.layer.cornerRadius = Global.cornerRadius * 2
+        buttonBackgroundView.layer.maskedCorners = [
+            .layerMaxXMinYCorner,
+            .layerMinXMinYCorner
+        ]
         (view as? GradientView)?.colors = [
             Theme.current.background,
             Theme.current.backgroundDark
         ]
+    }
+
+    func configureInsets() {
+        let inset = view.bounds.inset(by: view.safeAreaInsets).height
+            - Global.cellHeight * 4
+            - Global.padding * 6
+        buttonsCollectionView.contentInset.top = inset
+    }
+
+    func layoutButtonsBackground() {
+        guard let topCell = buttonsCollectionView.visibleCells
+                .sorted(by: { $0.frame.minY < $1.frame.minY })
+                .first else {
+            buttonBackgroundView.frame = .zero
+            return
+        }
+
+        let top = topCell.convert(topCell.bounds.minXminY, to: view)
+        buttonBackgroundView.frame = CGRect(
+            x: 0,
+            y: top.y - Global.padding * 2,
+            width: view.bounds.width,
+            height: view.bounds.height - top.y + Global.padding * 2
+        )
+
+        if let cv = buttonsCollectionView {
+            let alpha = (cv.contentInset.top + cv.contentOffset.y) / 100
+            buttonBackgroundView.alpha = min(1, max(0, alpha))
+        }
+    }
+
+    func updateButtonsView() {
+        buttonsCollectionView.reloadData()
+        let expanded = viewModel?.buttons.isExpanded ?? false
+
+        guard let cv = buttonsCollectionView,
+              !buttonsCollectionView.isDragging else {
+            return
+        }
+
+        if expanded {
+            let y = cv.bounds.height - cv.contentSize.height - Global.padding * 2
+            buttonsCollectionView.setContentOffset(
+                CGPoint(x: 0, y: -y),
+                animated: true
+            )
+        } else {
+            buttonsCollectionView.setContentOffset(
+                CGPoint(x: 0, y: -buttonsCollectionView.contentInset.top),
+                animated: true
+            )
+        }
     }
 }

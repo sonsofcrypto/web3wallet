@@ -93,7 +93,6 @@ extension ButtonsSheetView: UICollectionViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         setNeedsLayout()
-        print("=== content offset", collectionView.contentOffset)
         delegate?.buttonSheetView(self, didScroll: collectionView)
     }
 }

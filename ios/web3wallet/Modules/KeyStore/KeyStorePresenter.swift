@@ -105,6 +105,10 @@ private extension DefaultKeyStorePresenter {
     }
 
     func handleDidChangeButtonsState(_ open: Bool) {
+        guard buttonsViewModel.isExpanded != open else {
+            return
+        }
+
         buttonsViewModel = .init(
             buttons: open
                 ? ButtonSheetViewModel.expandedButtons()

@@ -34,23 +34,28 @@ git submodule update --init --recursive
 	- [x] Fix tapping on home screen
 	- [x] Fix end of swipe gesture to left from home screen
 	- [x] Create wallet VC
-	- [] Animate to home screen after creating wallet
-	- [] Create wallet to transition
-	- [] Create wallet from transition
-	- [] Add setting to cell 
-	- [] Add edit / settings mode
-	- [] Add restore VC
+	- [ ] Implement custom layout for separators
+	- [x] Add opening funtionality for salt
+	- [ ] Add inset for keybord and scroll to fiedl when keyboard comes up
+	- [ ] Aninate neon logo on apprearif empty
+	- [x] Create sheet view for buttons
+	- [ ] Animate to home screen after creating wallet
+	- [ ] Create wallet to transition
+	- [ ] Create wallet from transition
+	- [ ] Add setting to cell 
+	- [ ] Add edit / settings mode
+	- [ ] Add restore VC
 	- [x] Swiping on overview (Either go to bottom or master)
 	- [x] Swiping on top card (Either go to bottom or master)
 	- [x] Swiping on bottom card (Either go to network)
 	- [x] Animate scale and coreners only for to and from master transitions
+	- [ ] Fix buttons layout in edgecards
 	- [ ] Bug `EdgeCardsViewController` after transition, there small window (0.25s) when taps are registered
-	- [] Aninate neon logo on apprearif empty
-	- [] Create sheet view for buttons
-	- [] Animate buttons on appear if wallets is empty
-	- [] Create password VC
-	- [] Copy menmonic on tap
-	- [] Play haptics when swipe starts
+	- [ ] Animate buttons on appear if wallets is empty
+	- [ ] Create password VC
+	- [ ] Copy menmonic on tap
+	- [ ] Play haptics when swipe starts
+	
 
 	- [] w2 Connection to networks
 		- [] RPC APIs
