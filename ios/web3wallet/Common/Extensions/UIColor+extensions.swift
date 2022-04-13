@@ -17,3 +17,11 @@ extension UIColor {
     static var appRed = UIColor(named: "appRed")!
     static var appGreen = UIColor(named: "appGreen")!
 }
+
+extension UIColor {
+
+    func withAlpha(_ alpha: CGFloat) -> UIColor {
+        withAlphaComponent(alpha)
+    }
+
+}

@@ -8,7 +8,7 @@ protocol KeyStoreInteractor: AnyObject {
 
     typealias KeyStoreItemHandler = ([KeyStoreItem]) -> Void
 
-    var activeWallet: KeyStoreItem? { get set }
+    var activeKeyStoreItem: KeyStoreItem? { get set }
 
     var isEmpty: Bool { get }
 
@@ -34,7 +34,7 @@ protocol KeyStoreInteractor: AnyObject {
 
 class DefaultKeyStoreInteractor {
 
-    var activeWallet: KeyStoreItem? {
+    var activeKeyStoreItem: KeyStoreItem? {
         get { keyStoreService.selectedKeyStoreItem }
         set { keyStoreService.selectedKeyStoreItem = newValue }
     }

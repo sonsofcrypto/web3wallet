@@ -5,11 +5,10 @@
 import Foundation
 
 enum KeyStorePresenterEvent {
-    case didSelectWalletAt(idx: Int)
+    case didSelectKeyStoreItemtAt(idx: Int)
     case didSelectErrorActionAt(idx: Int)
-    case newMnemonic
-    case importMnemonic
-    case connectHardwareWallet
+    case didSelectButtonAt(idx: Int)
+    case didChangeButtonsState(open: Bool)
 }
 
 protocol KeyStorePresenter {
@@ -25,7 +24,11 @@ class DefaultKeyStorePresenter {
     private let interactor: KeyStoreInteractor
     private let wireframe: KeyStoreWireframe
 
-    private var latestWallets: [KeyStoreItem]
+    private var latestItems: [KeyStoreItem]
+    private var buttonsViewModel: ButtonSheetViewModel = .init(
+        buttons: ButtonSheetViewModel.compactButtons(),
+        isExpanded: false
+    )
 
     private weak var view: KeyStoreView?
 
@@ -37,7 +40,7 @@ class DefaultKeyStorePresenter {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
-        self.latestWallets = []
+        self.latestItems = []
     }
 }
 
@@ -46,27 +49,25 @@ class DefaultKeyStorePresenter {
 extension DefaultKeyStorePresenter: KeyStorePresenter {
 
     func present() {
-        view?.update(with: .loading(isEmpty: interactor.isEmpty))
+        view?.update(with: viewModel(.loading))
         interactor.loadWallets { [weak self] wallets in
-            self?.latestWallets = wallets
+            self?.latestItems = wallets
             self?.view?.update(
-                with: viewModel(from: wallets, active: interactor.activeWallet)
+                with: viewModel()
             )
         }
     }
 
     func handle(_ event: KeyStorePresenterEvent) {
         switch event {
-        case let .didSelectWalletAt(idx):
-            handleDidSelectWallet(at: idx)
+        case let .didSelectKeyStoreItemtAt(idx):
+            handleDidSelectItem(at: idx)
         case let .didSelectErrorActionAt(idx: idx):
             handleDidSelectErrorAction(at: idx)
-        case .newMnemonic:
-            handleNewMnemonic()
-        case .importMnemonic:
-            handleImportWallet()
-        case .connectHardwareWallet:
-            handleConnectHardwareWallet()
+        case let .didSelectButtonAt(idx):
+            handleButtonAction(at: idx)
+        case let .didChangeButtonsState(open):
+            handleDidChangeButtonsState(open)
         }
     }
 }
@@ -75,41 +76,43 @@ extension DefaultKeyStorePresenter: KeyStorePresenter {
 
 private extension DefaultKeyStorePresenter {
 
-    func handleDidSelectWallet(at idx: Int) {
-        let wallet = latestWallets[idx]
-        interactor.activeWallet = wallet
-        view?.update(with: viewModel(from: latestWallets, active: wallet))
+    func handleDidSelectItem(at idx: Int) {
+        let wallet = latestItems[idx]
+        interactor.activeKeyStoreItem = wallet
+        view?.update(with: viewModel())
         wireframe.navigate(to: .networks)
     }
 
     func handleDidSelectErrorAction(at idx: Int) {
-        let active = interactor.activeWallet
-        view?.update(with: viewModel(from: latestWallets, active: active))
+        view?.update(with: viewModel())
     }
 
-    func handleNewMnemonic() {
-        wireframe.navigate(to: .newMnemonic)
-    }
-
-    func handleImportWallet() {
-        do {
-            let wallet = try interactor.importWallet(
-                "some menemonic",
-                password: "1111",
-                passphrase: nil
-            )
-            latestWallets.append(wallet)
-            interactor.activeWallet = wallet
-            view?.update(with: viewModel(from: latestWallets, active: wallet))
-        } catch {
-            print(error)
-            view?.update(with: viewModel(from: error))
+    func handleButtonAction(at idx: Int) {
+        switch buttonsViewModel.buttons[idx].type {
+        case .newMnemonic:
+            wireframe.navigate(to: .newMnemonic)
+        case .importMnemonic:
+            wireframe.navigate(to: .newMnemonic)
+        case .moreOption:
+            handleDidChangeButtonsState(true)
+        case .connectHardwareWallet:
+            wireframe.navigate(to: .connectHardwareWaller)
+        case .importPrivateKey:
+            wireframe.navigate(to: .importPrivateKey)
+        case .createMultiSig:
+            wireframe.navigate(to: .createMultisig)
         }
     }
 
-    func handleConnectHardwareWallet() {
-        // TODO: Implement
-        print("handleConnectHardwareWallet")
+    func handleDidChangeButtonsState(_ open: Bool) {
+        buttonsViewModel = .init(
+            buttons: open
+                ? ButtonSheetViewModel.expandedButtons()
+                : ButtonSheetViewModel.compactButtons()
+            ,
+            isExpanded: open
+        )
+        view?.update(with: viewModel())
     }
 }
 
@@ -117,36 +120,26 @@ private extension DefaultKeyStorePresenter {
 
 private extension DefaultKeyStorePresenter {
 
-    func viewModel(from wallets: [KeyStoreItem], active: KeyStoreItem?) -> KeyStoreViewModel {
-        .loaded(
-            wallets: viewModel(from: wallets),
-            selectedIdx: selectedIdx(wallets, active: active),
-            isEmpty: wallets.isEmpty
+    func viewModel(_ state: KeyStoreViewModel.State = .loaded) -> KeyStoreViewModel {
+        let active = interactor.activeKeyStoreItem
+        return .init(
+            isEmpty: interactor.isEmpty,
+            state: state,
+            items: latestItems.map { KeyStoreViewModel.KeyStoreItem(title: $0.name) },
+            selectedIdx: latestItems.firstIndex(where: { $0.uuid == active?.uuid }),
+            buttons: buttonsViewModel
         )
-    }
-
-    func viewModel(from wallets: [KeyStoreItem]) -> [KeyStoreViewModel.KeyStoreItem] {
-        wallets.map {
-            .init(title: $0.name)
-        }
     }
 
     func viewModel(from error: Error) -> KeyStoreViewModel {
-        .error(
-            error: KeyStoreViewModel.Error(
-                title: "Error",
-                body: error.localizedDescription,
-                actions: [Localized("OK")]
-            ),
-            isEmpty: interactor.isEmpty
+        return viewModel(
+            .error(
+                error: KeyStoreViewModel.Error(
+                    title: "Error",
+                    body: error.localizedDescription,
+                    actions: [Localized("OK")]
+                )
+            )
         )
-    }
-
-    func selectedIdx(_ wallets: [KeyStoreItem], active: KeyStoreItem?) -> Int {
-        guard let wallet = active else {
-            return 0
-        }
-
-        return wallets.firstIndex{ $0.uuid == wallet.uuid } ?? 0
     }
 }

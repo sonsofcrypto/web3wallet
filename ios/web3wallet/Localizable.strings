@@ -58,6 +58,13 @@
 "account.marketInfo.volume" = "24h volume";
 "account.marketInfo.transactions" = "Transactions";
 
+"keyStore.newMnemonic" = "Create new wallet";
+"keyStore.importMnemonic" = "Import wallet";
+"keyStore.moreOption" = "More options";
+"keyStore.connectHardwareWallet" = "Connect hardware wallet";
+"keyStore.importPrivateKey" = "Import private key";
+"keyStore.createMultiSig" = "Create multisig wallet";
+
 "newMnemonic.title" = "Create new wallet";
 "newMnemonic.tapToReveal" = "Tap to reveal mnemonic";
 "newMnemonic.footer" = "Write down mnemonic above. Never share it with anyone. All of the accounts/wallets are derived from it. If lost crypto is unrecoverable";

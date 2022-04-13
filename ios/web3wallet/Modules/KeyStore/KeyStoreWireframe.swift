@@ -6,7 +6,12 @@ import UIKit
 
 enum KeyStoreWireframeDestination {
     case networks
+    case dashBoard
     case newMnemonic
+    case importMnemonic
+    case connectHardwareWaller
+    case importPrivateKey
+    case createMultisig
 }
 
 protocol KeyStoreWireframe {
@@ -60,17 +65,17 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
     }
 
     func navigate(to destination: KeyStoreWireframeDestination) {
-        if let parent = self.parent as? EdgeCardsController {
-            switch destination {
-            case .networks:
-                parent.setDisplayMode(.overviewTopCard, animated: true)
-            case .newMnemonic:
-                newMnemonic
-                    .makeWireframe(self.vc)
-                    .present()
-            }
-        } else {
-            print("Failed to navigate to \(destination)")
+        let edgeVc = parent as? EdgeCardsController
+        switch destination {
+        case .networks:
+            edgeVc?.setDisplayMode(.overviewTopCard, animated: true)
+        case .dashBoard:
+            edgeVc?.setDisplayMode(.master, animated: true)
+        case .newMnemonic:
+            newMnemonic.makeWireframe(self.vc).present()
+        default:
+            print("Navigate to", destination)
+
         }
     }
 }

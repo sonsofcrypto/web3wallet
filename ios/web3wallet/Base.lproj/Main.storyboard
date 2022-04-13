@@ -91,49 +91,93 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="eGn-AQ-1an"/>
                                 </connections>
                             </collectionView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="DqM-3n-4i5">
-                                <rect key="frame" x="16" y="638" width="382" height="224"/>
+                            <view contentMode="scaleToFill" id="sEH-ed-W8c" userLabel="sheet container" customClass="ButtonsSheetView" customModule="web3wallet" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="640" width="414" height="256"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4i-5W-BRo" customClass="Button" customModule="web3wallet" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="382" height="64"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Create new wallet"/>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q54-0x-AOg">
+                                        <rect key="frame" x="87" y="64" width="240" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="dma-P8-gck">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FNk-VB-NmQ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                </view>
+                                            </subviews>
+                                        </view>
+                                        <blurEffect style="regular"/>
+                                    </visualEffectView>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fg6-vF-oBb">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="256"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="16" minimumInteritemSpacing="16" id="09g-q3-y7K">
+                                            <size key="itemSize" width="414" height="64"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="16" minY="16" maxX="16" maxY="16"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ButtonsSheetViewCell" id="akE-GW-lLT" customClass="ButtonsSheetViewCell" customModule="web3wallet" customModuleProvider="target">
+                                                <rect key="frame" x="16" y="16" width="382" height="64"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="2xO-PD-m37">
+                                                    <rect key="frame" x="0.0" y="0.0" width="382" height="64"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nva-tD-Uma">
+                                                            <rect key="frame" x="16" y="16" width="350" height="32"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="Nva-tD-Uma" secondAttribute="trailing" constant="16" id="HJ9-xS-6tW"/>
+                                                        <constraint firstItem="Nva-tD-Uma" firstAttribute="top" secondItem="2xO-PD-m37" secondAttribute="top" constant="16" id="bTV-ct-Xrd"/>
+                                                        <constraint firstItem="Nva-tD-Uma" firstAttribute="leading" secondItem="2xO-PD-m37" secondAttribute="leading" constant="16" id="hwA-O9-1Jv"/>
+                                                        <constraint firstAttribute="bottom" secondItem="Nva-tD-Uma" secondAttribute="bottom" constant="16" id="vfG-az-9pw"/>
+                                                    </constraints>
+                                                </collectionViewCellContentView>
+                                                <size key="customSize" width="382" height="64"/>
+                                                <connections>
+                                                    <outlet property="titleLabel" destination="Nva-tD-Uma" id="4S0-hy-hDz"/>
+                                                </connections>
+                                            </collectionViewCell>
+                                        </cells>
                                         <connections>
-                                            <action selector="createNewWalletAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CGD-07-mtH"/>
+                                            <outlet property="dataSource" destination="sEH-ed-W8c" id="zKV-wb-wmi"/>
+                                            <outlet property="delegate" destination="sEH-ed-W8c" id="y7J-5m-9dF"/>
                                         </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YxO-SU-R9J" customClass="Button" customModule="web3wallet" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="80" width="382" height="64"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Import wallet"/>
-                                        <connections>
-                                            <action selector="importWalletAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aTZ-2u-g3V"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a0Z-ZF-KMy" customClass="Button" customModule="web3wallet" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="160" width="382" height="64"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="Connect hardware wallet"/>
-                                        <connections>
-                                            <action selector="connectHDWalletAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Yzx-fJ-ABR"/>
-                                        </connections>
-                                    </button>
+                                    </collectionView>
                                 </subviews>
-                            </stackView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="fg6-vF-oBb" firstAttribute="top" secondItem="sEH-ed-W8c" secondAttribute="top" id="FKn-W1-x2Y"/>
+                                    <constraint firstItem="fg6-vF-oBb" firstAttribute="leading" secondItem="sEH-ed-W8c" secondAttribute="leading" id="NhY-ak-Bq9"/>
+                                    <constraint firstAttribute="bottom" secondItem="fg6-vF-oBb" secondAttribute="bottom" id="SNi-J7-UmP"/>
+                                    <constraint firstAttribute="trailing" secondItem="fg6-vF-oBb" secondAttribute="trailing" id="VUi-ub-Gcz"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="backgroundOverlay" destination="FNk-VB-NmQ" id="H8m-4A-Dsx"/>
+                                    <outlet property="backgroundView" destination="Q54-0x-AOg" id="f9n-4S-Bc3"/>
+                                    <outlet property="collectionView" destination="fg6-vF-oBb" id="DBJ-9a-yvs"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="hyQ-ni-ASc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="0jl-91-o9N"/>
-                            <constraint firstItem="DqM-3n-4i5" firstAttribute="top" secondItem="qHS-1N-7Oz" secondAttribute="bottom" constant="16" id="2Hh-k8-cqc"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="hyQ-ni-ASc" secondAttribute="bottom" constant="240" id="7UP-Zu-MhV"/>
                             <constraint firstItem="hyQ-ni-ASc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="8fp-In-rzm"/>
                             <constraint firstItem="qHS-1N-7Oz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="CkL-XI-LhO"/>
                             <constraint firstItem="qHS-1N-7Oz" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="JkH-R6-ab5"/>
-                            <constraint firstItem="DqM-3n-4i5" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="MJi-PD-FMX"/>
-                            <constraint firstItem="DqM-3n-4i5" firstAttribute="top" secondItem="hyQ-ni-ASc" secondAttribute="bottom" constant="16" id="asn-Ef-6kD"/>
                             <constraint firstItem="hyQ-ni-ASc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="eJC-Kb-duk"/>
-                            <constraint firstItem="DqM-3n-4i5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="olL-jG-vtA"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DqM-3n-4i5" secondAttribute="trailing" constant="16" id="tJM-fr-oOi"/>
+                            <constraint firstItem="sEH-ed-W8c" firstAttribute="top" secondItem="qHS-1N-7Oz" secondAttribute="bottom" constant="18" id="pNC-iR-TKA"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qHS-1N-7Oz" secondAttribute="trailing" constant="16" id="wVk-2G-j6J"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
@@ -147,13 +191,14 @@
                     </view>
                     <navigationItem key="navigationItem" title="wallets" id="HNH-q6-vGe"/>
                     <connections>
+                        <outlet property="buttonsSheetView" destination="sEH-ed-W8c" id="zkI-Ts-1Yh"/>
                         <outlet property="collectionView" destination="hyQ-ni-ASc" id="qpZ-WZ-0Dn"/>
                         <outlet property="logoContainer" destination="qHS-1N-7Oz" id="Wcl-Re-Lc4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1080" y="124"/>
+            <point key="canvasLocation" x="1079.7101449275362" y="123.88392857142857"/>
         </scene>
         <!--NFTsViewController-->
         <scene sceneID="2Wq-FC-Mlo">

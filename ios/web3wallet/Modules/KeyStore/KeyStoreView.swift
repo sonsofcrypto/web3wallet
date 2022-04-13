@@ -18,6 +18,7 @@ class KeyStoreViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var logoContainer: UIView!
+    @IBOutlet weak var buttonsSheetView: ButtonsSheetView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,20 +40,6 @@ class KeyStoreViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-
-    // MARK: - Actions
-
-    @IBAction func createNewWalletAction(_ sender: Any) {
-        presenter.handle(.newMnemonic)
-    }
-    
-    @IBAction func importWalletAction(_ sender: Any) {
-        presenter.handle(.importMnemonic)
-    }
-    
-    @IBAction func connectHDWalletAction(_ sender: Any) {
-        presenter.handle(.connectHardwareWallet)
-    }
 }
 
 // MARK: - KeyStoreView
@@ -61,9 +48,10 @@ extension KeyStoreViewController: KeyStoreView {
 
     func update(with viewModel: KeyStoreViewModel) {
         self.viewModel = viewModel
+        buttonsSheetView.update(with: viewModel.buttons)
         collectionView.reloadData()
-        logoContainer.isHidden = !viewModel.isEmpty()
-        if let idx = viewModel.selectedIdx(), !viewModel.wallets().isEmpty {
+        logoContainer.isHidden = !viewModel.isEmpty
+        if let idx = viewModel.selectedIdx, !viewModel.items.isEmpty {
             collectionView.deselectAllExcept(
                 IndexPath(item: idx, section: 0),
                 animated: true
@@ -77,13 +65,13 @@ extension KeyStoreViewController: KeyStoreView {
 extension KeyStoreViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.wallets().count ?? 0
+        return viewModel?.items.count ?? 0
     }
     
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeue(KeyStoreCell.self, for: indexPath)
-        cell.titleLabel.text = viewModel?.wallets()[indexPath.item].title
+        cell.titleLabel.text = viewModel?.items[indexPath.item].title
         return cell
     }
 }
@@ -91,7 +79,7 @@ extension KeyStoreViewController: UICollectionViewDataSource {
 extension KeyStoreViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presenter.handle(.didSelectWalletAt(idx: indexPath.item))
+        presenter.handle(.didSelectKeyStoreItemtAt(idx: indexPath.item))
     }
 }
 
@@ -102,6 +90,27 @@ extension KeyStoreViewController: UICollectionViewDelegateFlowLayout {
             width: view.bounds.width - Global.padding * 2,
             height: Global.cellHeight
         )
+    }
+}
+
+// MARK: - ButtonsSheetViewDelegate
+
+extension KeyStoreViewController: ButtonsSheetViewDelegate {
+
+    func buttonSheetView(_ bsv: ButtonsSheetView, didSelectButtonAt idx: Int) {
+        presenter.handle(.didSelectButtonAt(idx: idx))
+    }
+
+    func buttonSheetViewDidTapOpen(_ bsv: ButtonsSheetView) {
+        presenter.handle(.didChangeButtonsState(open: true))
+    }
+
+    func buttonSheetView(_ bsv: ButtonsSheetView, didScroll cv: UICollectionView) {
+        //
+    }
+
+    func buttonSheetViewDidTapClose(_ bsv: ButtonsSheetView) {
+        presenter.handle(.didChangeButtonsState(open: false))
     }
 }
 
