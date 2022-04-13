@@ -15,6 +15,7 @@ class KeyStoreViewController: UIViewController {
 
     private var viewModel: KeyStoreViewModel?
     private var prevViewSize: CGSize = .zero
+    private var firstAppear: Bool = true
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var logoContainer: UIView!
@@ -42,6 +43,7 @@ class KeyStoreViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        animateButtonsIntro()
         collectionView.indexPathsForSelectedItems?.forEach {
             collectionView.deselectItem(at: $0, animated: true)
         }
@@ -152,9 +154,10 @@ extension KeyStoreViewController {
     }
 
     func configureInsets() {
-        let inset = view.bounds.inset(by: view.safeAreaInsets).height
+        let inset = view.bounds.height
             - Global.cellHeight * 4
             - Global.padding * 6
+            + 2
         buttonsCollectionView.contentInset.top = inset
     }
 
@@ -200,6 +203,23 @@ extension KeyStoreViewController {
                 CGPoint(x: 0, y: -buttonsCollectionView.contentInset.top),
                 animated: true
             )
+        }
+    }
+
+    func animateButtonsIntro() {
+        guard firstAppear && viewModel?.isEmpty ?? true else {
+            return
+        }
+
+        firstAppear = false
+
+        buttonsCollectionView.setContentOffset(
+            CGPoint(x: 0, y: -view.bounds.height),
+            animated: false
+        )
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            self?.updateButtonsView()
         }
     }
 }
