@@ -24,6 +24,7 @@
 		1A4C32253B79286A98D96FE4 /* UIView+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C300AF1693AEBB5E5DD97 /* UIView+extensions.swift */; };
 		1A4C32481161FADBE235A231 /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3EB64DCA0D9104342F0C /* SettingsPresenter.swift */; };
 		1A4C329D37BA590D99ED3A5C /* AccountSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3114D1ECD9B2A75BCD96 /* AccountSectionHeader.swift */; };
+		1A4C32C95088080680260BD6 /* CollectionViewSegmentWithTextAndSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C30BC614DE35A99D3A781 /* CollectionViewSegmentWithTextAndSwitchCell.swift */; };
 		1A4C32CF0C59FE32073E66D0 /* KeyStorePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3226ECC6247E9092F6EF /* KeyStorePresenter.swift */; };
 		1A4C32D43EDF7B8FC74AA68C /* UICollectionView+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3CD7A1F1A86851EC2BA5 /* UICollectionView+extensions.swift */; };
 		1A4C32FAFAE7B74336452733 /* AMMsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3270725B54B420CDCAD0 /* AMMsView.swift */; };
@@ -130,6 +131,7 @@
 		1A4C3F081D1B594B9EAF4F7E /* NFTsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3CD454B957F1787FE70A /* NFTsCell.swift */; };
 		1A4C3F2AC8A8B59020F63712 /* KeyStoreInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3044DC83E6A35A00DC12 /* KeyStoreInteractor.swift */; };
 		1A4C3F3B50559576A91700B7 /* CollectionViewTextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3197D56E5BD363126FBA /* CollectionViewTextInputCell.swift */; };
+		1A4C3F71ED826BCCF12C9DF1 /* CollectionViewSwitchTextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A15CDDE6C7239483474 /* CollectionViewSwitchTextInputCell.swift */; };
 		1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */; };
 		1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */; };
 		1A4C3FC333CF4459025710E5 /* NFTsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38A2039D19A2E5507CF2 /* NFTsView.swift */; };
@@ -236,6 +238,7 @@
 		1A4C309D73324E169A4CD1C9 /* AMMsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMMsInteractor.swift; sourceTree = "<group>"; };
 		1A4C30B09D7FCDB08590118B /* AccountPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountPresenter.swift; sourceTree = "<group>"; };
 		1A4C30B213A6E8FFA7D0D41D /* NetworksWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksWireframeFactory.swift; sourceTree = "<group>"; };
+		1A4C30BC614DE35A99D3A781 /* CollectionViewSegmentWithTextAndSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewSegmentWithTextAndSwitchCell.swift; sourceTree = "<group>"; };
 		1A4C310A6D460422DB18D0BF /* UIStoryboard+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+extensions.swift"; sourceTree = "<group>"; };
 		1A4C3114D1ECD9B2A75BCD96 /* AccountSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSectionHeader.swift; sourceTree = "<group>"; };
 		1A4C3142E4B087299DA8113B /* SettingsWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsWireframe.swift; sourceTree = "<group>"; };
@@ -306,6 +309,7 @@
 		1A4C39FB21CCAF442F3001E6 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		1A4C3A05642605E68164E3B1 /* DashboardWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardWireframe.swift; sourceTree = "<group>"; };
 		1A4C3A08014FC9721FC2557C /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		1A4C3A15CDDE6C7239483474 /* CollectionViewSwitchTextInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewSwitchTextInputCell.swift; sourceTree = "<group>"; };
 		1A4C3A1643AAB35AA35FED36 /* AMMsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMMsPresenter.swift; sourceTree = "<group>"; };
 		1A4C3A6BF41648FE8A9E60AA /* DashboardWalletCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardWalletCell.swift; sourceTree = "<group>"; };
 		1A4C3A93ADEAA6317E2F1134 /* AMMsWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMMsWireframeFactory.swift; sourceTree = "<group>"; };
@@ -992,6 +996,8 @@
 				1A4C31A1B60496E59ABF568A /* CollectionViewSectionLabelFooter.swift */,
 				1A4C3197D56E5BD363126FBA /* CollectionViewTextInputCell.swift */,
 				1A4C34D0D6A40418A679AF6F /* CollectionViewSwitchCell.swift */,
+				1A4C3A15CDDE6C7239483474 /* CollectionViewSwitchTextInputCell.swift */,
+				1A4C30BC614DE35A99D3A781 /* CollectionViewSegmentWithTextAndSwitchCell.swift */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
@@ -1309,6 +1315,8 @@
 				1A4C3B697503D478741295DB /* TextField.swift in Sources */,
 				1A4C3469AE463198FCE284E2 /* CollectionViewSwitchCell.swift in Sources */,
 				1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */,
+				1A4C3F71ED826BCCF12C9DF1 /* CollectionViewSwitchTextInputCell.swift in Sources */,
+				1A4C32C95088080680260BD6 /* CollectionViewSegmentWithTextAndSwitchCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

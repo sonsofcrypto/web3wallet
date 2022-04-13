@@ -7,6 +7,12 @@ import Foundation
 enum NewMnemonicPresenterEvent {
     case didChangeName(name: String)
     case didChangeICouldBackup(onOff: Bool)
+    case saltSwitchDidChange(onOff: Bool)
+    case didChangeSalt(salt: String)
+    case saltLearnMoreAction
+    case passTypeDidChange(idx: Int)
+    case passwordDidChange(text: String)
+    case allowFaceIdDidChange(onOff: Bool)
 }
 
 protocol NewMnemonicPresenter {
@@ -25,7 +31,6 @@ class DefaultNewMnemonicPresenter {
     private lazy var keyStoreItem: KeyStoreItem = KeyStoreItem.rand()
 
     private weak var view: NewMnemonicView?
-
 
     init(
         view: NewMnemonicView,
@@ -53,6 +58,22 @@ extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
             keyStoreItem.name = name
         case let .didChangeICouldBackup(onOff):
             keyStoreItem.iCouldBackup = onOff
+        case let .saltSwitchDidChange(onOff):
+            keyStoreItem.saltMnemonic = onOff
+            view?.update(with: viewModel(from: keyStoreItem))
+        case let .didChangeSalt(salt):
+            keyStoreItem.mnemonicSalt = salt
+        case .saltLearnMoreAction:
+            wireframe.navigate(to: .learnMoreSalt)
+        case let .passTypeDidChange(idx):
+            if let passType = KeyStoreItem.PasswordType(rawValue: idx) {
+                keyStoreItem.passwordType = passType
+            }
+            view?.update(with: viewModel(from: keyStoreItem))
+        case let .passwordDidChange(text):
+            keyStoreItem.password = text
+        case let .allowFaceIdDidChange(onOff):
+            keyStoreItem.allowPswdUnlockWithFaceId = onOff
         }
     }
 }
@@ -80,12 +101,36 @@ private extension DefaultNewMnemonicPresenter {
                         name: .init(
                             title: Localized("newMnemonic.name.title"),
                             value: keyStoreItem.name,
-                            placeHolder: Localized("newMnemonic.name.placeholder")
+                            placeholder: Localized("newMnemonic.name.placeholder")
                         )
                     ),
-                    NewMnemonicViewModel.Item.onOffSwitch(
+                    NewMnemonicViewModel.Item.switch(
                         title: Localized("newMnemonic.iCould.title"),
                         onOff: keyStoreItem.iCouldBackup
+                    ),
+                    NewMnemonicViewModel.Item.switchWithTextInput(
+                        switchWithTextInput: .init(
+                            title: Localized("newMnemonic.salt.title"),
+                            onOff: keyStoreItem.saltMnemonic,
+                            text: keyStoreItem.mnemonicSalt,
+                            placeholder: Localized("newMnemonic.salt.placeholder"),
+                            description: Localized("newMnemonic.salt.description"),
+                            descriptionHighlightedWords: [
+                                Localized("newMnemonic.salt.descriptionHighlight")
+                            ]
+                        )
+                    ),
+                    NewMnemonicViewModel.Item.segmentWithTextAndSwitchInput(
+                        segmentWithTextAndSwitchInput: .init(
+                            title: Localized("newMnemonic.passType.title"),
+                            segmentOptions: KeyStoreItem.PasswordType.allCases
+                                    .map { $0.localizedDescription },
+                            selectedSegment: keyStoreItem.passwordType.rawValue,
+                            password: keyStoreItem.password,
+                            placeholder: Localized("newMnemonic.passType.placeholder"),
+                            onOffTitle: Localized("newMnemonic.passType.allowFaceId"),
+                            onOff: keyStoreItem.allowPswdUnlockWithFaceId
+                        )
                     )
                 ]
             ],

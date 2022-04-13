@@ -5,7 +5,7 @@
 import UIKit
 
 enum NewMnemonicWireframeDestination {
-
+    case learnMoreSalt
 }
 
 protocol NewMnemonicWireframe {
@@ -42,7 +42,12 @@ extension DefaultNewMnemonicWireframe: NewMnemonicWireframe {
     }
 
     func navigate(to destination: NewMnemonicWireframeDestination) {
-        print("navigate to \(destination)")
+        switch destination {
+        case .learnMoreSalt:
+            UIApplication.shared.open(Constant.saltExplanationURL)
+        default:
+            print("navigate to \(destination)")
+        }
     }
 }
 
@@ -60,3 +65,16 @@ extension DefaultNewMnemonicWireframe {
         return NavigationController(rootViewController: vc)
     }
 }
+
+// MARK: - Constant
+
+extension DefaultNewMnemonicWireframe {
+
+    enum Constant {
+
+        static let saltExplanationURL = URL(
+            string: "https://www.youtube.com/watch?v=XqB5xA62gLw"
+        )!
+    }
+}
+

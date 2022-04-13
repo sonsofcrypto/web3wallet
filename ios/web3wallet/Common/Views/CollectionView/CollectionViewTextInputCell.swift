@@ -44,10 +44,8 @@ extension CollectionViewTextInputCell {
         titleLabel.text = viewModel.title
         textField.text = viewModel.value
 
-        textField.attributedPlaceholder = NSAttributedString(
-            string: viewModel.placeHolder,
-            attributes: Theme.current.placeholderTextAttributes()
-        )
+        (textField as? TextField)?.placeholderAttrText = viewModel.placeholder
+
         return self
     }
 }

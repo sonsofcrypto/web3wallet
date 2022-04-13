@@ -5,7 +5,9 @@
 import UIKit
 
 class TextField: UITextField {
-    
+
+    var defaultPlaceholderAttributes = Theme.current.placeholderTextAttributes()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -14,6 +16,16 @@ class TextField: UITextField {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         configure()
+    }
+
+    var placeholderAttrText: String? {
+        get { attributedPlaceholder?.string }
+        set {
+            attributedPlaceholder = NSAttributedString(
+                string: newValue ?? "",
+                attributes: defaultPlaceholderAttributes
+            )
+        }
     }
     
     func configure() {

@@ -14,7 +14,8 @@ class NewMnemonicViewController: UIViewController {
     var presenter: NewMnemonicPresenter!
 
     private var viewModel: NewMnemonicViewModel?
-    
+    private var didAppear: Bool = false
+
     @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
@@ -23,10 +24,9 @@ class NewMnemonicViewController: UIViewController {
         presenter?.present()
     }
 
-    // MARK: - Actions
-
-    @IBAction func templateAction(_ sender: Any) {
-
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        didAppear = true
     }
 }
 
@@ -36,7 +36,9 @@ extension NewMnemonicViewController: NewMnemonicView {
 
     func update(with viewModel: NewMnemonicViewModel) {
         self.viewModel = viewModel
-        collectionView.reloadData()
+        didAppear
+            ? collectionView.performBatchUpdates({})
+            : collectionView.reloadData()
     }
 }
 
@@ -89,7 +91,7 @@ extension NewMnemonicViewController: UICollectionViewDataSource {
                 textChangeHandler: { value in self.nameDidChange(value) }
             )
 
-        case let .onOffSwitch(title, onOff):
+        case let .switch(title, onOff):
             return collectionView.dequeue(
                 CollectionViewSwitchCell.self,
                 for: idxPath
@@ -97,6 +99,26 @@ extension NewMnemonicViewController: UICollectionViewDataSource {
                 with: title,
                 onOff: onOff,
                 handler: { value in self.iCloudBackupDidChange(value) }
+            )
+        case let .switchWithTextInput(switchWithTextInput):
+            return collectionView.dequeue(
+                CollectionViewSwitchTextInputCell.self,
+                for: idxPath
+            ).update(
+                with: switchWithTextInput,
+                switchAction: { onOff in self.saltSwitchDidChange(onOff) },
+                textChangeHandler: { text in self.saltTextDidChange(text) },
+                descriptionAction: { self.saltLearnMoreAction() }
+            )
+        case let .segmentWithTextAndSwitchInput(segmentWithTextAndSwitchInput):
+            return collectionView.dequeue(
+                CollectionViewSegmentWithTextAndSwitchCell.self,
+                for: idxPath
+            ).update(
+                with: segmentWithTextAndSwitchInput,
+                selectSegmentAction: { idx in self.passTypeDidChange(idx) },
+                textChangeHandler: { text in self.passwordDidChange(text) },
+                switchHandler: { onOff in self.allowFaceIdDidChange(onOff) }
             )
         }
     }
@@ -141,6 +163,31 @@ extension NewMnemonicViewController: UICollectionViewDelegate {
     func iCloudBackupDidChange(_ onOff: Bool) {
         presenter.handle(.didChangeICouldBackup(onOff: onOff))
     }
+
+    func saltSwitchDidChange(_ onOff: Bool) {
+        presenter.handle(.saltSwitchDidChange(onOff: onOff))
+    }
+
+    func saltTextDidChange(_ text: String) {
+        presenter.handle(.didChangeSalt(salt: text))
+    }
+
+    func saltLearnMoreAction() {
+        presenter.handle(.saltLearnMoreAction)
+    }
+
+    func passTypeDidChange(_ idx: Int) {
+        presenter.handle(.passTypeDidChange(idx: idx))
+
+    }
+
+    func passwordDidChange(_ text: String) {
+        presenter.handle(.passwordDidChange(text: text))
+    }
+
+    func allowFaceIdDidChange(_ onOff: Bool) {
+        presenter.handle(.allowFaceIdDidChange(onOff: onOff))
+    }
 }
 
 extension NewMnemonicViewController: UICollectionViewDelegateFlowLayout {
@@ -155,6 +202,20 @@ extension NewMnemonicViewController: UICollectionViewDelegateFlowLayout {
         switch viewModel {
         case let .mnemonic(mnemonic):
             return CGSize(width: width, height: Constant.mnemonicCellHeight)
+        case let .switchWithTextInput(switchWithTextInput):
+            return CGSize(
+                width: width,
+                height: switchWithTextInput.onOff
+                    ? Constant.cellSaltOpenHeight
+                    : Constant.cellHeight
+            )
+        case let .segmentWithTextAndSwitchInput(segmentWithTextAndSwitchInput):
+            return CGSize(
+                width: width,
+                height: segmentWithTextAndSwitchInput.selectedSegment != 2
+                    ? Constant.cellPassOpenHeight
+                    : Constant.cellHeight
+            )
         default:
             return CGSize(width: width, height: Constant.cellHeight)
         }
@@ -202,7 +263,8 @@ extension NewMnemonicViewController {
     enum Constant {
         static let mnemonicCellHeight: CGFloat = 110
         static let cellHeight: CGFloat = 46
-        static let footerHeight: CGFloat = 52
-
+        static let cellSaltOpenHeight: CGFloat = 142
+        static let cellPassOpenHeight: CGFloat = 147
+        static let footerHeight: CGFloat = 64
     }
 }

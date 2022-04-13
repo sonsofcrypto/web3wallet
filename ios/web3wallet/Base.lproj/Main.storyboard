@@ -342,9 +342,136 @@
                                             <outlet property="titleLabel" destination="BVM-uO-xbM" id="4jh-Te-L31"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewSwitchTextInputCell" id="NMJ-lG-uDe" customClass="CollectionViewSwitchTextInputCell" customModule="web3wallet" customModuleProvider="target">
+                                        <rect key="frame" x="35.5" y="257" width="343" height="142"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="V7N-7v-ca7">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="142"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qSa-3I-e35">
+                                                    <rect key="frame" x="16" y="0.0" width="311" height="116.5"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="CDx-mL-7LL">
+                                                            <rect key="frame" x="0.0" y="0.0" width="311" height="46"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cYB-Zg-SsD">
+                                                                    <rect key="frame" x="0.0" y="13" width="254" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="du7-yy-p5d" customClass="OnOffSwitch" customModule="web3wallet" customModuleProvider="target">
+                                                                    <rect key="frame" x="262" y="7.5" width="51" height="31"/>
+                                                                </switch>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="46" id="fyY-6y-DTW"/>
+                                                            </constraints>
+                                                        </stackView>
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AbO-u5-Zrb" customClass="TextField" customModule="web3wallet" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="54" width="311" height="34"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                        </textField>
+                                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="226" verticalHuggingPriority="226" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lxg-oZ-eII">
+                                                            <rect key="frame" x="0.0" y="96" width="311" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="qSa-3I-e35" firstAttribute="leading" secondItem="V7N-7v-ca7" secondAttribute="leading" constant="16" id="NRY-KD-dpI"/>
+                                                <constraint firstAttribute="trailing" secondItem="qSa-3I-e35" secondAttribute="trailing" constant="16" id="atn-FX-YAW"/>
+                                                <constraint firstItem="qSa-3I-e35" firstAttribute="top" secondItem="V7N-7v-ca7" secondAttribute="top" id="mxT-lN-021"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="343" height="142"/>
+                                        <connections>
+                                            <outlet property="descriptionLabel" destination="lxg-oZ-eII" id="xeE-jj-UuY"/>
+                                            <outlet property="hStack" destination="CDx-mL-7LL" id="tBN-v8-L64"/>
+                                            <outlet property="onOffSwitch" destination="du7-yy-p5d" id="Jy4-aY-VPg"/>
+                                            <outlet property="textField" destination="AbO-u5-Zrb" id="gzG-DH-lln"/>
+                                            <outlet property="titleLabel" destination="cYB-Zg-SsD" id="GHn-cF-9PU"/>
+                                            <outlet property="vStack" destination="qSa-3I-e35" id="EZb-13-isT"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewSegmentWithTextAndSwitchCell" id="kE3-8C-aQh" customClass="CollectionViewSegmentWithTextAndSwitchCell" customModule="web3wallet" customModuleProvider="target">
+                                        <rect key="frame" x="35.5" y="399" width="343" height="142"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TYa-f0-Jf7">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="142"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="4Cn-cd-b1H">
+                                                    <rect key="frame" x="16" y="0.0" width="311" height="127"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="XNK-w1-0HL">
+                                                            <rect key="frame" x="0.0" y="0.0" width="311" height="46"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tgJ-Nw-cUb">
+                                                                    <rect key="frame" x="0.0" y="13" width="41.5" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="V1f-ZZ-4wA">
+                                                                    <rect key="frame" x="49.5" y="7.5" width="261.5" height="32"/>
+                                                                    <segments>
+                                                                        <segment title="First"/>
+                                                                        <segment title="Second"/>
+                                                                    </segments>
+                                                                </segmentedControl>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="46" id="hAi-2j-4D6"/>
+                                                            </constraints>
+                                                        </stackView>
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bso-cd-qBw" customClass="TextField" customModule="web3wallet" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="54" width="311" height="34"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                                        </textField>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JNZ-K9-kBb">
+                                                            <rect key="frame" x="0.0" y="96" width="311" height="31"/>
+                                                            <subviews>
+                                                                <label opaque="NO" contentMode="left" horizontalHuggingPriority="226" verticalHuggingPriority="226" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aS4-vr-fXZ">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="262" height="31"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ick-Et-K2s" customClass="OnOffSwitch" customModule="web3wallet" customModuleProvider="target">
+                                                                    <rect key="frame" x="262" y="0.0" width="51" height="31"/>
+                                                                </switch>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="4Cn-cd-b1H" firstAttribute="top" secondItem="TYa-f0-Jf7" secondAttribute="top" id="0F3-fh-caj"/>
+                                                <constraint firstItem="4Cn-cd-b1H" firstAttribute="leading" secondItem="TYa-f0-Jf7" secondAttribute="leading" constant="16" id="fSb-Cx-Uxr"/>
+                                                <constraint firstAttribute="trailing" secondItem="4Cn-cd-b1H" secondAttribute="trailing" constant="16" id="k9R-GL-gNp"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="343" height="142"/>
+                                        <connections>
+                                            <outlet property="hStack" destination="XNK-w1-0HL" id="Tmu-M7-K5J"/>
+                                            <outlet property="onOffSwitch" destination="Ick-Et-K2s" id="kQ7-Xp-JIL"/>
+                                            <outlet property="segmentControl" destination="V1f-ZZ-4wA" id="Q3g-c6-tvv"/>
+                                            <outlet property="switchLabel" destination="aS4-vr-fXZ" id="zJo-B9-Mdr"/>
+                                            <outlet property="textField" destination="bso-cd-qBw" id="zkY-Ho-7ua"/>
+                                            <outlet property="titleLabel" destination="tgJ-Nw-cUb" id="SNN-dl-N0I"/>
+                                            <outlet property="vStack" destination="4Cn-cd-b1H" id="CuV-aj-uMr"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionViewSectionLabelFooter" id="IXR-Cx-j6h" customClass="CollectionViewSectionLabelFooter" customModule="web3wallet" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="265" width="414" height="50"/>
+                                    <rect key="frame" x="0.0" y="549" width="414" height="50"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dpB-F4-2Pq">

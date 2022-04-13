@@ -66,4 +66,16 @@
 "newMnemonic.name.title" = "Name wallet";
 "newMnemonic.name.placeholder" = "Default wallet";
 "newMnemonic.iCould.title" = "Backup in iCloud";
+"newMnemonic.salt.title" = "Salt mnemonic";
+"newMnemonic.salt.placeholder" = "Enter password";
+"newMnemonic.salt.description" = "Adding salt to mnemonic increases security but decrees portability. Learn more";
+"newMnemonic.salt.descriptionHighlight" = "Learn more";
+"newMnemonic.passType.title" = "Pass type";
+"newMnemonic.passType.pin" = "Pin";
+"newMnemonic.passType.password" = "Password";
+"newMnemonic.passType.faceId" = "Face ID";
+"newMnemonic.passType.touchId" = "Touch ID";
+"newMnemonic.passType.placeholder" = "Enter password";
+"newMnemonic.passType.allowFaceId" = "Allow unlock with FaceID";
+
 

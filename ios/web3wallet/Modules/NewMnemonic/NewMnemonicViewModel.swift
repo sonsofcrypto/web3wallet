@@ -34,7 +34,9 @@ extension NewMnemonicViewModel {
     enum Item {
         case mnemonic(mnemonic: Mnemonic)
         case name(name: Name)
-        case onOffSwitch(title: String, onOff: Bool)
+        case `switch`(title: String, onOff: Bool)
+        case switchWithTextInput(switchWithTextInput: SwitchWithTextInput)
+        case segmentWithTextAndSwitchInput(segmentWithTextAndSwitchInput: SegmentWithTextAndSwitchInput)
     }
 
     enum Header {
@@ -48,7 +50,7 @@ extension NewMnemonicViewModel {
     }
 }
 
-// MARK: - MnemonicType
+// MARK: - Mnemonic
 
 extension NewMnemonicViewModel {
 
@@ -72,6 +74,35 @@ extension NewMnemonicViewModel {
     struct Name {
         let title: String
         let value: String
-        let placeHolder: String
+        let placeholder: String
+    }
+}
+
+// MARK: - SwitchWithTextInput
+
+extension NewMnemonicViewModel {
+
+    struct SwitchWithTextInput {
+        let title: String
+        let onOff: Bool
+        let text: String
+        let placeholder: String
+        let description: String
+        let descriptionHighlightedWords: [String]
+    }
+}
+
+// MARK: - SwitchWithTextInput
+
+extension NewMnemonicViewModel {
+
+    struct SegmentWithTextAndSwitchInput {
+        let title: String
+        let segmentOptions: [String]
+        let selectedSegment: Int
+        let password: String
+        let placeholder: String
+        let onOffTitle: String
+        let onOff: Bool
     }
 }

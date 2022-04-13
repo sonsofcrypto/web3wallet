@@ -9,10 +9,37 @@ struct KeyStoreItem {
     var name: String
     var sortOrder: Int
     var iCouldBackup: Bool
+    var saltMnemonic: Bool
+    var mnemonicSalt: String
+    var passwordType: PasswordType
+    var password: String
+    var allowPswdUnlockWithFaceId: Bool
     let creationDate: Date
     var modification: Date
     let encryptedSigner: String
     let mnemonic: String
+}
+
+// MARK: - PasswordType
+
+extension KeyStoreItem {
+
+    enum PasswordType: Int, Codable, CaseIterable {
+        case pin
+        case password
+        case bio
+
+        var localizedDescription: String {
+            switch self {
+            case .pin:
+                return Localized("newMnemonic.passType.pin")
+            case .password:
+                return Localized("newMnemonic.passType.password")
+            case .bio:
+                return Localized("newMnemonic.passType.faceId")
+            }
+        }
+    }
 }
 
 // MARK: - Codable
@@ -29,6 +56,11 @@ extension KeyStoreItem {
             name: "",
             sortOrder: 0,
             iCouldBackup: true,
+            saltMnemonic: false,
+            mnemonicSalt: "",
+            passwordType: .bio,
+            password: "",
+            allowPswdUnlockWithFaceId: true,
             creationDate: Date(),
             modification: Date(),
             encryptedSigner: "",

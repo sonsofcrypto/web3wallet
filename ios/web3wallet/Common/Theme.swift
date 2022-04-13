@@ -105,7 +105,7 @@ struct Theme {
         UIFont.font(.gothicA1, style: .regular, size: .custom(size: 15))
     }
 
-    func bodyTextAttributes() -> [NSAttributedString.Key : Any] {
+    func bodyTextAttributes() -> [NSAttributedString.Key: Any] {
         [
             .font: Theme.current.body,
             .foregroundColor: Theme.current.textColor,
@@ -113,10 +113,21 @@ struct Theme {
         ]
     }
 
-    func placeholderTextAttributes() -> [NSAttributedString.Key : Any] {
+    func placeholderTextAttributes() -> [NSAttributedString.Key: Any] {
         [
             .font: Theme.current.subhead,
             .foregroundColor: Theme.current.textColorTertiary,
+        ]
+    }
+
+    func sectionFooterTextAttributes() -> [NSAttributedString.Key: Any] {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 6
+
+        return [
+            .font: Theme.current.cellDetail,
+            .foregroundColor: Theme.current.textColorTertiary,
+            .paragraphStyle: paragraphStyle
         ]
     }
 
