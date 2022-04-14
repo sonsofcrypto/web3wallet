@@ -44,6 +44,15 @@ extension SettingsViewModel.Item {
             return title
         }
     }
+
+    func isSelected() -> Bool {
+        switch self {
+        case let .selectableOption(_, selected):
+            return selected
+        default:
+            return false
+        }
+    }
 }
 
 // MARK: - Utilities
@@ -52,5 +61,20 @@ extension SettingsViewModel {
 
     func item(at idxPath: IndexPath) -> SettingsViewModel.Item {
         sections[idxPath.section].items[idxPath.item]
+    }
+
+    func selectedIdxPaths() -> [IndexPath] {
+        var idxPaths = [IndexPath]()
+
+        for section in 0..<sections.count {
+            for idx in 0..<sections[section].items.count {
+                let idxPath = IndexPath(item: idx, section: section)
+                if item(at: idxPath).isSelected() {
+                    idxPaths.append(idxPath)
+                }
+            }
+        }
+
+        return idxPaths
     }
 }

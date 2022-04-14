@@ -17,11 +17,6 @@ class SettingsCell: CollectionViewCell {
         titleLabel.layer.shadowRadius = Global.shadowRadius
         titleLabel.layer.shadowOpacity = 1
     }
-}
-
-// MARK: - SettingsViewModel
-
-extension SettingsCell {
 
     func update(with viewModel: SettingsViewModel.Item?) -> SettingsCell {
         titleLabel.text = viewModel?.title() ?? ""

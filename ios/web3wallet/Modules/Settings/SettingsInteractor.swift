@@ -106,6 +106,25 @@ extension DefaultSettingsInteractor: SettingsInteractor {
         case .theme:
             settingsService.theme = Setting.ThemeTypeOptions.allCases[idx]
         }
+
+        reloadItems(for: setting)
+    }
+
+    func reloadItems(for setting: Setting) {
+        var reloadIdx = 0
+        for (idx, item) in items.enumerated() {
+            switch item {
+            case let .group(items, title):
+                if title == setting.rawValue {
+                   reloadIdx = idx
+                }
+            default:
+                // TODO: Handle cases where group is not settings value container
+                ()
+            }
+        }
+
+        items[reloadIdx] = settingsItem(for: setting)[0]
     }
 
     func handleActionIfPossible(_ action: SettingsItem.ActionType) -> Bool {

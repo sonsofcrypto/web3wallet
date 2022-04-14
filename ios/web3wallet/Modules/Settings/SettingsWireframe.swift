@@ -49,7 +49,7 @@ extension DefaultSettingsWireframe: SettingsWireframe {
             tabVc.setViewControllers(vcs, animated: false)
             return
         }
-        print("showing", parent)
+
         parent?.show(vc, sender: self)
     }
 
@@ -59,8 +59,7 @@ extension DefaultSettingsWireframe: SettingsWireframe {
             guard let vc = self.vc else {
                 return
             }
-            print(vc)
-            print((vc as? UINavigationController)?.topViewController ?? vc)
+
             settingsWireframeFactory.makeWireframe(
                 (vc as? UINavigationController)?.topViewController ?? vc,
                 title: title ?? Localized("settings"),

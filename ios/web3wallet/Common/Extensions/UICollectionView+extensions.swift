@@ -32,11 +32,17 @@ extension UICollectionView {
     }
 
 
-    func deselectAllExcept(_ idxPath: IndexPath, animated: Bool) {
+    func deselectAllExcept(_ idxPaths: [IndexPath]? = nil, animated: Bool = true) {
         (indexPathsForSelectedItems ?? [])
-            .filter { $0.item != idxPath.item && $0.section != idxPath.section }
+            .filter { !(idxPaths ?? []).contains($0) }
             .forEach { deselectItem(at: $0, animated: animated) }
 
-        selectItem(at: idxPath, animated: animated, scrollPosition: .top)
+        (idxPaths ?? []).forEach {
+            selectItem(at: $0, animated: animated, scrollPosition: .top)
+        }
+    }
+
+    func deselectAllExcept(_ idxPath: IndexPath, animated: Bool = true) {
+        deselectAllExcept([idxPath], animated: animated)
     }
 }

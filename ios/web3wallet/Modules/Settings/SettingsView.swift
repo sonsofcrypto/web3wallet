@@ -31,6 +31,12 @@ class SettingsViewController: UIViewController {
         configureUI()
         presenter?.present()
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        collectionView.deselectAllExcept(viewModel?.selectedIdxPaths())
+
+    }
 }
 
 // MARK: - WalletsView
@@ -40,6 +46,7 @@ extension SettingsViewController: SettingsView {
     func update(with viewModel: SettingsViewModel) {
         self.viewModel = viewModel
         collectionView.reloadData()
+        collectionView.deselectAllExcept(viewModel.selectedIdxPaths())
     }
 }
 
@@ -54,12 +61,25 @@ extension SettingsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel?.sections[section].items.count ?? 0
     }
-    
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeue(SettingsCell.self, for: indexPath)
-            .update(with: viewModel?.item(at: indexPath))
+        guard let viewModel = viewModel?.item(at: indexPath) else {
+            fatalError("Missing viewModel \(indexPath)")
+        }
+
+        switch viewModel {
+        case .selectableOption:
+            return collectionView.dequeue(SettingsListSelectCell.self, for: indexPath)
+                .update(with: viewModel)
+        case .action:
+            return collectionView.dequeue(SettingsActionCell.self, for: indexPath)
+                .update(with: viewModel)
+        default:
+            return collectionView.dequeue(SettingsCell.self, for: indexPath)
+                .update(with: viewModel)
+        }
     }
+
 }
 
 extension SettingsViewController: UICollectionViewDelegate {
