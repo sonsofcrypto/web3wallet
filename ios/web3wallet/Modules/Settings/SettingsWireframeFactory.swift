@@ -14,11 +14,14 @@ protocol SettingsWireframeFactory {
 class DefaultSettingsWireframeFactory {
 
     private let service: SettingsService
+    private let keyStoreService: KeyStoreService
 
     init(
-        _ service: SettingsService
+        _ service: SettingsService,
+        keyStoreService: KeyStoreService
     ) {
         self.service = service
+        self.keyStoreService = keyStoreService
     }
 }
 
@@ -29,7 +32,10 @@ extension DefaultSettingsWireframeFactory: SettingsWireframeFactory {
     func makeWireframe(_ parent: UIViewController) -> SettingsWireframe {
         DefaultSettingsWireframe(
             parent: parent,
-            interactor: DefaultSettingsInteractor(service)
+            interactor: DefaultSettingsInteractor(
+                service,
+                keyStoreService: keyStoreService
+            )
         )
     }
 }

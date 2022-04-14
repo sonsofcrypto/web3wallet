@@ -5,7 +5,7 @@
 import Foundation
 
 enum SettingsPresenterEvent {
-
+    case didSelectItemAt(idx: Int)
 }
 
 protocol SettingsPresenter {
@@ -21,7 +21,8 @@ class DefaultSettingsPresenter {
     private let interactor: SettingsInteractor
     private let wireframe: SettingsWireframe
 
-    // private var items: [Item]
+    private var items: [Setting] = []
+    private var currViewModel: SettingsViewModel = .init(items: [])
 
     private weak var view: SettingsView?
 
@@ -33,7 +34,6 @@ class DefaultSettingsPresenter {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
-        // self.items = []
     }
 }
 
@@ -42,12 +42,15 @@ class DefaultSettingsPresenter {
 extension DefaultSettingsPresenter: SettingsPresenter {
 
     func present() {
-        view?.update(with: .loading)
-        // TODO: Interactor
+        self.items = interactor.settings()
+        view?.update(with: viewModel())
     }
 
     func handle(_ event: SettingsPresenterEvent) {
-
+        switch event {
+        case let .didSelectItemAt(idx):
+            handleDidSelectItem(at: idx)
+        }
     }
 }
 
@@ -55,16 +58,42 @@ extension DefaultSettingsPresenter: SettingsPresenter {
 
 private extension DefaultSettingsPresenter {
 
+    func handleDidSelectItem(at idx: Int) {
+        switch currViewModel.items[idx].type {
+        case .setting:
+            wireframe.navigate(to: .settingOptions(setting: items[idx]))
+        case .action:
+            try? interactor.resetKeyStore()
+            fatalError("Killing up on purpose after keystore reset")
+        }
+    }
 }
 
 // MARK: - WalletsViewModel utilities
 
 private extension DefaultSettingsPresenter {
 
-//    func viewModel(from items: [Item], active: Item?) -> SettingsViewModel {
-//        .loaded(
-//            wallets: viewModel(from: wallets),
-//            selectedIdx: selectedIdx(wallets, active: active)
-//        )
-//    }
+    func updateView(with viewModel: SettingsViewModel) {
+        self.currViewModel = viewModel
+        view?.update(with: viewModel)
+    }
+
+    func viewModel() -> SettingsViewModel {
+        .init(
+            items: items.map {
+                .init(
+                    title: $0.rawValue,
+                    type: .setting,
+                    selectedValue: interactor.currentValue(for: $0)
+                )
+            } + [
+                .init(
+                    title: "Reset all data",
+                    type: .action,
+                    selectedValue: nil
+                )
+            ]
+        )
+
+    }
 }

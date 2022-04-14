@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let degenService = DefaultDegenService()
         let nftsService = DefaultNFTsService()
         let appsService = DefaultAppsService()
-        let settingsService = DefaultSettingsService()
+        let settingsService = DefaultSettingsService(UserDefaults.standard)
         let accountService = DefaultAccountService()
 
         DefaultRootWireframeFactory(
@@ -46,7 +46,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ),
             nfts: DefaultNFTsWireframeFactory(nftsService),
             apps: DefaultAppsWireframeFactory(appsService),
-            settings: DefaultSettingsWireframeFactory(settingsService)
+            settings: DefaultSettingsWireframeFactory(
+                settingsService,
+                keyStoreService: keyStoreService
+            )
         )
         .makeWireframe()
         .present()

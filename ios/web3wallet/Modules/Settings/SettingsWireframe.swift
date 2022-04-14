@@ -5,7 +5,7 @@
 import UIKit
 
 enum SettingsWireframeDestination {
-
+    case settingOptions(setting: Setting)
 }
 
 protocol SettingsWireframe {

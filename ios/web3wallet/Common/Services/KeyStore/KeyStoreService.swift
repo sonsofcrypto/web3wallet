@@ -29,6 +29,8 @@ protocol KeyStoreService: AnyObject {
     ) throws -> KeyStoreItem
 
     func delete(_ wallet: KeyStoreItem) throws
+
+    func reset() throws
 }
 
 // MARK: - DefaultKeyStoreService
@@ -41,11 +43,11 @@ class DefaultKeyStoreService {
     }
 
     private var store: Store
-    private var wallets: [KeyStoreItem]
+    private var keyStoreItems: [KeyStoreItem]
 
     init(store: Store) {
         self.store = store
-        self.wallets = []
+        self.keyStoreItems = []
         load { items in () }
     }
 }
@@ -55,22 +57,22 @@ class DefaultKeyStoreService {
 extension DefaultKeyStoreService: KeyStoreService {
 
     func isEmpty() -> Bool {
-        wallets.isEmpty
+        keyStoreItems.isEmpty
     }
 
     func keyStoreItem(at idx: Int) -> KeyStoreItem? {
-        wallets[safe: idx]
+        keyStoreItems[safe: idx]
     }
 
     func load(_ handler: KeyStoreHandler) {
-        guard wallets.isEmpty else {
-            handler(wallets)
+        guard keyStoreItems.isEmpty else {
+            handler(keyStoreItems)
             return
         }
 
-        wallets = (store.get(Constant.wallets) ?? [])
+        keyStoreItems = (store.get(Constant.wallets) ?? [])
             .sorted(by: { $0.sortOrder < $1.sortOrder })
-        handler(wallets)
+        handler(keyStoreItems)
     }
 
     func createNewItem(
@@ -81,7 +83,7 @@ extension DefaultKeyStoreService: KeyStoreService {
         let keyStoreItem = KeyStoreItem(
             uuid: UUID(),
             name: "Default Wallet",
-            sortOrder: (wallets.last?.sortOrder ?? -1) + 1,
+            sortOrder: (keyStoreItems.last?.sortOrder ?? -1) + 1,
             iCouldBackup: true,
             saltMnemonic: false,
             mnemonicSalt: "",
@@ -94,7 +96,7 @@ extension DefaultKeyStoreService: KeyStoreService {
             mnemonic: "strategy edge trash series dad tiny couch since witness box unveil timber"
         )
 
-        wallets.append(keyStoreItem)
+        keyStoreItems.append(keyStoreItem)
         try store.set(keyStoreItem, key: Constant.wallets)
         return keyStoreItem
     }
@@ -108,7 +110,7 @@ extension DefaultKeyStoreService: KeyStoreService {
         let wallet = KeyStoreItem(
             uuid: UUID(),
             name: "Imported wallet",
-            sortOrder: (wallets.last?.sortOrder ?? -1) + 1,
+            sortOrder: (keyStoreItems.last?.sortOrder ?? -1) + 1,
             iCouldBackup: true,
             saltMnemonic: false,
             mnemonicSalt: "",
@@ -121,14 +123,18 @@ extension DefaultKeyStoreService: KeyStoreService {
             mnemonic: mnemonic
         )
         
-        wallets.append(wallet)
-        try store.set(wallets, key: Constant.wallets)
+        keyStoreItems.append(wallet)
+        try store.set(keyStoreItems, key: Constant.wallets)
         return wallet
     }
 
-    func delete(_ wallet: KeyStoreItem) throws {
-        wallets.removeAll(where: { $0.uuid == wallet.uuid })
-        try store.set(wallets, key: Constant.wallets)
+    func delete(_ keyStoreItem: KeyStoreItem) throws {
+        keyStoreItems.removeAll(where: { $0.uuid == keyStoreItem.uuid })
+        try store.set(keyStoreItems, key: Constant.wallets)
+    }
+
+    func reset() throws {
+        keyStoreItems.forEach { try? delete($0)  }
     }
 }
 

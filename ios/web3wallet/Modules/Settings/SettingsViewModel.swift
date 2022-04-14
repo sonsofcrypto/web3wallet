@@ -4,10 +4,8 @@
 
 import Foundation
 
-enum SettingsViewModel {
-    case loading
-    case loaded(items: [Item], selectedIdx: Int)
-    case error(error: SettingsViewModel.Error)
+struct SettingsViewModel {
+    let items: [SettingsViewModel.Item]
 }
 
 // MARK - Item
@@ -16,39 +14,26 @@ extension SettingsViewModel {
 
     struct Item {
         let title: String
+        let type: ItemType
+        let selectedValue: String?
     }
 }
 
-// MARK: - Error
+// MARK: - Item type
 
-extension SettingsViewModel {
+extension SettingsViewModel.Item {
 
-    struct Error {
-        let title: String
-        let body: String
-        let actions: [String]
+    enum ItemType {
+        case setting
+        case action
     }
 }
 
-// MARK: - Utility
+// MARK: - Action type
 
-extension SettingsViewModel {
+extension SettingsViewModel.Item.ItemType {
 
-    func items() -> [SettingsViewModel.Item] {
-        switch self {
-        case let .loaded(items, _):
-            return items
-        default:
-            return []
-        }
-    }
-
-    func selectedIdx() -> Int? {
-        switch self {
-        case let .loaded(_, idx):
-            return idx
-        default:
-            return nil
-        }
+    enum ItemType {
+        case resetStore
     }
 }

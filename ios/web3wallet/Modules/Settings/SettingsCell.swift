@@ -18,3 +18,14 @@ class SettingsCell: CollectionViewCell {
         titleLabel.layer.shadowOpacity = 1
     }
 }
+
+// MARK: - SettingsViewModel
+
+extension SettingsCell {
+
+    func update(with viewModel: SettingsViewModel.Item?) -> SettingsCell {
+        titleLabel.text = viewModel?.title ?? ""
+
+        return self
+    }
+}

@@ -31,12 +31,6 @@ class SettingsViewController: UIViewController {
         configureUI()
         presenter?.present()
     }
-
-    // MARK: - Actions
-
-    @IBAction func SettingsAction(_ sender: Any) {
-
-    }
 }
 
 // MARK: - WalletsView
@@ -44,17 +38,8 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController: SettingsView {
 
     func update(with viewModel: SettingsViewModel) {
-//        self.viewModel = viewModel
-//        collectionView.reloadData()
-//        if let idx = viewModel.selectedIdx(), !viewModel.items().isEmpty {
-//            for i in 0..<viewModel.items().count {
-//                collectionView.selectItem(
-//                    at: IndexPath(item: i, section: 0),
-//                    animated: idx == i,
-//                    scrollPosition: .top
-//                )
-//            }
-//        }
+        self.viewModel = viewModel
+        collectionView.reloadData()
     }
 }
 
@@ -63,19 +48,21 @@ extension SettingsViewController: SettingsView {
 extension SettingsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.items().count ?? 0
+        return viewModel?.items.count ?? 0
     }
     
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeue(KeyStoreCell.self, for: indexPath)
-        cell.titleLabel.text = viewModel?.items()[indexPath.item].title
-        return cell
+        return collectionView.dequeue(SettingsCell.self, for: indexPath)
+            .update(with: viewModel?.items[indexPath.item])
     }
 }
 
 extension SettingsViewController: UICollectionViewDelegate {
-    
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter.handle(.didSelectItemAt(idx: indexPath.item))
+    }
 }
 
 extension SettingsViewController: UICollectionViewDelegateFlowLayout {
