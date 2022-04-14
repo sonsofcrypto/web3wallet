@@ -46,9 +46,8 @@ class KeyStoreViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         animateIntro()
-        collectionView.indexPathsForSelectedItems?.forEach {
-            collectionView.deselectItem(at: $0, animated: true)
-        }
+        collectionView.deselectAllExcept()
+        buttonsCollectionView.deselectAllExcept()
     }
 }
 
@@ -289,6 +288,22 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
         }
 
         return animatedTransitioning
+    }
+
+    func targetView() -> UIView? {
+        guard let targetView = viewModel?.targetView else {
+            return nil
+        }
+
+        switch targetView {
+        case let .keyStoreItemAt(idx):
+            return collectionView.cellForItem(at: IndexPath(item: idx, section: 0))
+        case let .buttonAt(idx):
+            return buttonsCollectionView.cellForItem(at: IndexPath(item: idx, section: 0))
+        case .none:
+            return nil
+        }
+
     }
 
 }

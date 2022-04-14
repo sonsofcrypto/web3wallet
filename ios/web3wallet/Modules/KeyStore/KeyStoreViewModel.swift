@@ -10,6 +10,7 @@ struct KeyStoreViewModel {
     let items: [KeyStoreItem]
     let selectedIdx: Int?
     let buttons: ButtonSheetViewModel
+    let targetView: TransitionTargetView
 }
 
 // MARK - State
@@ -38,5 +39,16 @@ extension KeyStoreViewModel {
         let title: String
         let body: String
         let actions: [String]
+    }
+}
+
+// MARK: - TransitionTargetView
+
+extension KeyStoreViewModel {
+
+    enum TransitionTargetView {
+        case keyStoreItemAt(idx: Int)
+        case buttonAt(idx: Int)
+        case none
     }
 }

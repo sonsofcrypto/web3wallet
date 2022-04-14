@@ -90,9 +90,13 @@ extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
             interactor.update(keyStoreItem)
             switch context.mode {
             case .update:
-                context.didCreteKeyStoreItemHandler?(keyStoreItem)
+                if let handler = context.didUpdateKeyStoreItemHandler {
+                    handler(keyStoreItem)
+                }
             default:
-                context.didUpdateKeyStoreItemHandler?(keyStoreItem)
+                if let handler = context.didCreteKeyStoreItemHandler {
+                    handler(keyStoreItem)
+                }
             }
             view?.dismiss(animated: true, completion: {})
         case let .didSelectDismiss:

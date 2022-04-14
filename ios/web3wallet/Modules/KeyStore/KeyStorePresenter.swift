@@ -25,6 +25,7 @@ class DefaultKeyStorePresenter {
     private let interactor: KeyStoreInteractor
     private let wireframe: KeyStoreWireframe
 
+    private var targetView: KeyStoreViewModel.TransitionTargetView = .none
     private var buttonsViewModel: ButtonSheetViewModel = .init(
         buttons: ButtonSheetViewModel.compactButtons(),
         isExpanded: false
@@ -88,6 +89,7 @@ private extension DefaultKeyStorePresenter {
     }
 
     func handleDidSelectAccessory(at idx: Int) {
+        targetView = .buttonAt(idx: idx)
         let item = interactor.keyStoreItems[idx]
         wireframe.navigate(to: .keyStoreItem(item: item) { [weak self] item in
             self?.handleDidUpdateNewKeyStoreItem(item)
@@ -99,6 +101,8 @@ private extension DefaultKeyStorePresenter {
     }
 
     func handleButtonAction(at idx: Int) {
+        targetView = .buttonAt(idx: idx)
+
         switch buttonsViewModel.buttons[idx].type {
         case .newMnemonic:
             wireframe.navigate(to: .newMnemonic { [weak self] keyStoreItem in
@@ -135,10 +139,28 @@ private extension DefaultKeyStorePresenter {
     }
 
     func handleDidCreateNewKeyStoreItem(_ keyStoreItem: KeyStoreItem) {
+        interactor.selectedKeyStoreItem = keyStoreItem
+        if let idx = interactor.index(of: keyStoreItem) {
+            targetView = .keyStoreItemAt(idx: idx)
+        }
         view?.update(with: viewModel())
+        // Start target view for dismiss when navigating to create / import / edit
+        // Handle animation type based on settings store
+        // Handle animating logo to 0 in viewController only based on current value
+        if interactor.keyStoreItems.count == 1 {
+            handleFirstSeedCreation(keyStoreItem)
+        }
+        targetView = .none
     }
 
     func handleDidUpdateNewKeyStoreItem(_ keyStoreItem: KeyStoreItem) {
+        if let idx = interactor.index(of: keyStoreItem) {
+            targetView = .keyStoreItemAt(idx: idx)
+        }
+        view?.update(with: viewModel())
+    }
+
+    func handleFirstSeedCreation(_ keyStoreItem: KeyStoreItem) {
 
     }
 }
@@ -158,7 +180,8 @@ private extension DefaultKeyStorePresenter {
             selectedIdx: interactor.keyStoreItems.firstIndex(
                 where: { $0.uuid == active?.uuid }
             ),
-            buttons: buttonsViewModel
+            buttons: buttonsViewModel,
+            targetView: .none
         )
     }
 
