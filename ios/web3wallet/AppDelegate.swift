@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DefaultRootWireframeFactory(
             window: window,
             keyStoreService: keyStoreService,
+            settingsService: settingsService,
             keyStore: DefaultKeyStoreWireframeFactory(
                 keyStoreService,
                 newMnemonic: DefaultNewMnemonicWireframeFactory(keyStoreService)

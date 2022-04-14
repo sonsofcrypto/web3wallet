@@ -26,6 +26,7 @@ class DefaultRootWireframe {
     private weak var vc: UIViewController?
 
     private let keyStoreService: KeyStoreService
+    private let settingsService: SettingsService
     private let keyStore: KeyStoreWireframeFactory
     private let networks: NetworksWireframeFactory
     private let dashboard: DashboardWireframeFactory
@@ -37,6 +38,7 @@ class DefaultRootWireframe {
     init(
         window: UIWindow?,
         keyStoreService: KeyStoreService,
+        settingsService: SettingsService,
         keyStore: KeyStoreWireframeFactory,
         networks: NetworksWireframeFactory,
         dashboard: DashboardWireframeFactory,
@@ -47,6 +49,7 @@ class DefaultRootWireframe {
     ) {
         self.window = window
         self.keyStoreService = keyStoreService
+        self.settingsService = settingsService
         self.keyStore = keyStore
         self.networks = networks
         self.dashboard = dashboard
@@ -95,7 +98,15 @@ extension DefaultRootWireframe {
             degen: degen.makeWireframe(tabVc),
             nfts: nfts.makeWireframe(tabVc),
             apps: apps.makeWireframe(tabVc),
-            settings: settings.makeWireframe(tabVc)
+            settings: settings.makeWireframe(
+                tabVc,
+                title: "",
+                settings: [],
+                settingsWireframeFactory: DefaultSettingsWireframeFactory(
+                    settingsService,
+                    keyStoreService: keyStoreService
+                )
+            )
         )
 
         vc.presenter = presenter

@@ -58,17 +58,26 @@ extension DefaultSettingsPresenter: SettingsPresenter {
 private extension DefaultSettingsPresenter {
 
     func handleDidSelectItem(at idxPath: IndexPath) {
-//        switch currViewModel.items[idx].type {
-//        case .setting:
-//            wireframe.navigate(to: .settingOptions(setting: items[idx]))
-//        case .action:
-//            try? interactor.resetKeyStore()
-//            fatalError("Killing up on purpose after keystore reset")
-//        }
+        switch item(at: idxPath) {
+        case let .group(items, title):
+            wireframe.navigate(to: .settings(settings: items, title: title))
+        case let .setting(setting):
+            let items = interactor.settingsItem(for: setting)
+            let title = Localized(setting.rawValue)
+            wireframe.navigate(to: .settings(settings: items, title: title))
+        case let .selectableOption(setting, optIdx, _, _):
+            interactor.didSelectSettingOption(at: optIdx, forSetting: setting)
+            items = interactor.items
+            updateView(with: viewModel())
+        case let .action(actionType):
+            if !interactor.handleActionIfPossible(actionType) {
+                print("handle", actionType)
+            }
+        }
     }
 }
 
-// MARK: - WalletsViewModel utilities
+// MARK: - SettingsViewModel utilities
 
 private extension DefaultSettingsPresenter {
 
@@ -109,6 +118,16 @@ private extension DefaultSettingsPresenter {
             return title
         default:
             return nil
+        }
+    }
+
+    func item(at idxPath: IndexPath) -> SettingsItem {
+        let section = items[idxPath.section]
+        switch items[idxPath.section] {
+        case let .group(items, _):
+            return items[idxPath.item]
+        default:
+            return items[idxPath.item]
         }
     }
 }

@@ -39,7 +39,6 @@ extension SettingsViewController: SettingsView {
 
     func update(with viewModel: SettingsViewModel) {
         self.viewModel = viewModel
-        print("updating", viewModel.sections.count)
         collectionView.reloadData()
     }
 }

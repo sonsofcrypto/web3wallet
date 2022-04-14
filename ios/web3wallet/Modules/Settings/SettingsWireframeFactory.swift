@@ -6,7 +6,12 @@ import UIKit
 
 protocol SettingsWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController) -> SettingsWireframe
+    func makeWireframe(
+        _ parent: UIViewController,
+        title: String,
+        settings: [SettingsItem],
+        settingsWireframeFactory: SettingsWireframeFactory
+    ) -> SettingsWireframe
 }
 
 // MARK: - DefaultSettingsWireframeFactory
@@ -29,13 +34,21 @@ class DefaultSettingsWireframeFactory {
 
 extension DefaultSettingsWireframeFactory: SettingsWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController) -> SettingsWireframe {
+    func makeWireframe(
+        _ parent: UIViewController,
+        title: String,
+        settings: [SettingsItem],
+        settingsWireframeFactory: SettingsWireframeFactory
+    ) -> SettingsWireframe {
         DefaultSettingsWireframe(
             parent: parent,
             interactor: DefaultSettingsInteractor(
                 service,
-                keyStoreService: keyStoreService
-            )
+                keyStoreService: keyStoreService,
+                title: title,
+                settings: settings
+            ),
+            settingsWireframeFactory: settingsWireframeFactory
         )
     }
 }

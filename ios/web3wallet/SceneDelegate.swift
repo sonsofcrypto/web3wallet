@@ -26,6 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         DefaultRootWireframeFactory(
             window: window,
             keyStoreService: keyStoreService,
+            settingsService: settingsService,
             keyStore: DefaultKeyStoreWireframeFactory(
                 keyStoreService,
                 newMnemonic: DefaultNewMnemonicWireframeFactory(keyStoreService)

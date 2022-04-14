@@ -5,7 +5,7 @@
 import UIKit
 
 enum SettingsWireframeDestination {
-    case settingOptions(setting: Setting)
+    case settings(settings: [SettingsItem], title: String?)
 }
 
 protocol SettingsWireframe {
@@ -18,15 +18,19 @@ protocol SettingsWireframe {
 class DefaultSettingsWireframe {
 
     private weak var parent: UIViewController?
+    private weak var vc: UIViewController?
 
     private let interactor: SettingsInteractor
+    private let settingsWireframeFactory: SettingsWireframeFactory
 
     init(
         parent: UIViewController,
-        interactor: SettingsInteractor
+        interactor: SettingsInteractor,
+        settingsWireframeFactory: SettingsWireframeFactory
     ) {
         self.parent = parent
         self.interactor = interactor
+        self.settingsWireframeFactory = settingsWireframeFactory
     }
 }
 
@@ -36,18 +40,34 @@ extension DefaultSettingsWireframe: SettingsWireframe {
 
     func present() {
         let vc = wireUp()
+        self.vc = vc
 
         if let tabVc = self.parent as? UITabBarController {
-            let vcs = (tabVc.viewControllers ?? []) + [vc]
+            let navVc = NavigationController(rootViewController:vc)
+            let vcs = (tabVc.viewControllers ?? []) + [navVc]
+            self.vc = navVc
             tabVc.setViewControllers(vcs, animated: false)
             return
         }
-
-        vc.show(vc, sender: self)
+        print("showing", parent)
+        parent?.show(vc, sender: self)
     }
 
     func navigate(to destination: SettingsWireframeDestination) {
-        print("navigate to \(destination)")
+        switch destination {
+        case let .settings(settings, title):
+            guard let vc = self.vc else {
+                return
+            }
+            print(vc)
+            print((vc as? UINavigationController)?.topViewController ?? vc)
+            settingsWireframeFactory.makeWireframe(
+                (vc as? UINavigationController)?.topViewController ?? vc,
+                title: title ?? Localized("settings"),
+                settings: settings,
+                settingsWireframeFactory: settingsWireframeFactory
+            ).present()
+        }
     }
 }
 
@@ -62,6 +82,6 @@ extension DefaultSettingsWireframe {
         )
 
         vc.presenter = presenter
-        return NavigationController(rootViewController: vc)
+        return vc
     }
 }

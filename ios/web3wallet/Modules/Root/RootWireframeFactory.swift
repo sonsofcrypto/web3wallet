@@ -16,6 +16,7 @@ class DefaultRootWireframeFactory {
     private weak var window: UIWindow?
 
     private let keyStoreService: KeyStoreService
+    private let settingsService: SettingsService
     private let keyStore: KeyStoreWireframeFactory
     private let networks: NetworksWireframeFactory
     private let dashboard: DashboardWireframeFactory
@@ -27,6 +28,7 @@ class DefaultRootWireframeFactory {
     init(
         window: UIWindow?,
         keyStoreService: KeyStoreService,
+        settingsService: SettingsService,
         keyStore: KeyStoreWireframeFactory,
         networks: NetworksWireframeFactory,
         dashboard: DashboardWireframeFactory,
@@ -37,6 +39,7 @@ class DefaultRootWireframeFactory {
     ) {
         self.window = window
         self.keyStoreService = keyStoreService
+        self.settingsService = settingsService
         self.keyStore = keyStore
         self.networks = networks
         self.dashboard = dashboard
@@ -55,6 +58,7 @@ extension DefaultRootWireframeFactory: RootWireframeFactory {
         DefaultRootWireframe(
             window: window,
             keyStoreService: keyStoreService,
+            settingsService: settingsService,
             keyStore: keyStore,
             networks: networks,
             dashboard: dashboard,

@@ -32,8 +32,10 @@ class DefaultSettingsInteractor {
     ) {
         self.settingsService = settingsService
         self.keyStoreService = keyStoreService
-        self.title = title
-        self.items = settings
+        self.title = title.isEmpty ? "settings" : title
+        self.items = settings.isEmpty
+            ? DefaultSettingsInteractor.rootSettings()
+            : settings
     }
 
     static func rootSettings() -> [SettingsItem] {
@@ -97,7 +99,13 @@ extension DefaultSettingsInteractor: SettingsInteractor {
     }
 
     func didSelectSettingOption(at idx: Int, forSetting setting: Setting) {
-        // TODO: Switch setting
+        switch setting {
+        case .createWalletTransitionType:
+            let val = Setting.CreateWalletTransitionTypeOptions.allCases[idx]
+            settingsService.createWalletTransitionType = val
+        case .theme:
+            settingsService.theme = Setting.ThemeTypeOptions.allCases[idx]
+        }
     }
 
     func handleActionIfPossible(_ action: SettingsItem.ActionType) -> Bool {
