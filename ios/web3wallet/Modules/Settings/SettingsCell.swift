@@ -24,7 +24,7 @@ class SettingsCell: CollectionViewCell {
 extension SettingsCell {
 
     func update(with viewModel: SettingsViewModel.Item?) -> SettingsCell {
-        titleLabel.text = viewModel?.title ?? ""
+        titleLabel.text = viewModel?.title() ?? ""
 
         return self
     }

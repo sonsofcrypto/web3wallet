@@ -39,6 +39,7 @@ extension SettingsViewController: SettingsView {
 
     func update(with viewModel: SettingsViewModel) {
         self.viewModel = viewModel
+        print("updating", viewModel.sections.count)
         collectionView.reloadData()
     }
 }
@@ -46,29 +47,33 @@ extension SettingsViewController: SettingsView {
 // MARK: - UICollectionViewDataSource
 
 extension SettingsViewController: UICollectionViewDataSource {
-    
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return viewModel?.sections.count ?? 0
+    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.items.count ?? 0
+        return viewModel?.sections[section].items.count ?? 0
     }
     
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         return collectionView.dequeue(SettingsCell.self, for: indexPath)
-            .update(with: viewModel?.items[indexPath.item])
+            .update(with: viewModel?.item(at: indexPath))
     }
 }
 
 extension SettingsViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presenter.handle(.didSelectItemAt(idx: indexPath.item))
+        presenter.handle(.didSelectItemAt(idxPath: indexPath))
     }
 }
 
 extension SettingsViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 32, height: Global.cellHeight)
+        return CGSize(width: collectionView.frame.width - 32, height: Global.cellHeightSmall)
     }
 }
 

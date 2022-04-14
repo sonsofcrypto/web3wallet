@@ -6,8 +6,8 @@ import Foundation
 
 enum Setting: String, CaseIterable {
 
-    case createWalletTransitionType = "New seed transition type"
-    case theme = "Theme"
+    case createWalletTransitionType = "setting.newSeedTransitionType"
+    case theme = "setting.theme"
 }
 
 // MARK: - createWalletTransitionType
@@ -26,7 +26,7 @@ extension Setting {
 extension Setting {
 
     enum ThemeTypeOptions: String, CaseIterable, Codable, Equatable {
-        case primary = "Default"
-        case alternative = "Alternative"
+        case primary = "setting.theme.default"
+        case alternative = "setting.theme.alt"
     }
 }

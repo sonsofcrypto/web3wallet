@@ -63,7 +63,7 @@ extension DefaultRootPresenter: RootPresenter {
         apps.present()
         settings.present()
         wireframe.navigate(
-            to: keyStoreService.isEmpty() ? .keyStore : .dashboard,
+            to: keyStoreService.isEmpty() ? .dashboard : .dashboard,
             animated: false
         )
     }

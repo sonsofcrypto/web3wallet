@@ -41,6 +41,7 @@ git submodule update --init --recursive
 	- [x] Create sheet view for buttons
 	- [ ] Animate to home screen after creating wallet
 	- [ ] Create wallet to transition
+		- Custom for dismiss, via delegage to parent
 	- [ ] Create wallet from transition
 	- [ ] Add setting to cell 
 	- [ ] Add edit / settings mode
@@ -55,7 +56,7 @@ git submodule update --init --recursive
 	- [ ] Create password VC
 	- [ ] Copy menmonic on tap
 	- [ ] Play haptics when swipe starts
-	
+	- [ ] Interactive gesture for dismisg card flip
 
 	- [] w2 Connection to networks
 		- [] RPC APIs

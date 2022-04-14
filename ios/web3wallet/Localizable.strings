@@ -85,4 +85,8 @@
 "newMnemonic.passType.placeholder" = "Enter password";
 "newMnemonic.passType.allowFaceId" = "Allow unlock with FaceID";
 
-
+"setting.action.resetKeyStore" = "Reset keystore";
+"setting.theme" = "Theme";
+"setting.theme.default" = "Default";
+"setting.theme.alt" = "Alternative";
+"setting.newSeedTransitionType" = "New seed transition type";

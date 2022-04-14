@@ -6,13 +6,12 @@ import Foundation
 
 protocol SettingsInteractor: AnyObject {
 
-    var createWalletTransitionType: Setting.CreateWalletTransitionTypeOptions { get set }
-    var theme: Setting.ThemeTypeOptions { get set }
+    var title: String { get }
+    var items: [SettingsItem] { get }
 
-    func currentValue(for setting: Setting) -> String
-    func settings() -> [Setting]
-
-    func resetKeyStore()
+    func settingsItem(for setting: Setting) -> [SettingsItem]
+    func didSelectSettingOption(at idx: Int, forSetting setting: Setting)
+    func handleActionIfPossible(_ action: SettingsItem.ActionType) -> Bool
 }
 
 // MARK: - DefaultSettingsInteractor
@@ -22,12 +21,37 @@ class DefaultSettingsInteractor {
     private var settingsService: SettingsService
     private var keyStoreService: KeyStoreService
 
+    private(set) var title: String
+    private(set) var items: [SettingsItem]
+
     init(
         _ settingsService: SettingsService,
-        keyStoreService: KeyStoreService
+        keyStoreService: KeyStoreService,
+        title: String = "settings",
+        settings: [SettingsItem] = DefaultSettingsInteractor.rootSettings()
     ) {
         self.settingsService = settingsService
         self.keyStoreService = keyStoreService
+        self.title = title
+        self.items = settings
+    }
+
+    static func rootSettings() -> [SettingsItem] {
+        [
+            .group(
+                items: [
+                    .setting(setting: .createWalletTransitionType),
+                    .setting(setting: .theme)
+                ],
+                title: "settings"
+            ),
+            .group(
+                items: [
+                    .action(type: .resetKeyStore)
+                ],
+                title: "Actions"
+            )
+        ]
     }
 }
 
@@ -35,30 +59,55 @@ class DefaultSettingsInteractor {
 
 extension DefaultSettingsInteractor: SettingsInteractor {
 
-    var createWalletTransitionType: Setting.CreateWalletTransitionTypeOptions {
-        get { settingsService.createWalletTransitionType }
-        set { settingsService.createWalletTransitionType = newValue }
-    }
-
-    var theme: Setting.ThemeTypeOptions {
-        get { settingsService.theme }
-        set { settingsService.theme = newValue }
-    }
-
-    func currentValue(for setting: Setting) -> String {
+    func settingsItem(for setting: Setting) -> [SettingsItem] {
         switch setting {
         case .createWalletTransitionType:
-            return "\(createWalletTransitionType)"
+            let idx = Setting.CreateWalletTransitionTypeOptions.allCases.firstIndex(
+                of: settingsService.createWalletTransitionType
+            )
+            return [
+                .group(
+                    items: Setting.CreateWalletTransitionTypeOptions.allCases.enumerated().map {
+                        SettingsItem.selectableOption(
+                            setting: setting,
+                            optIdx: $0.0,
+                            optTitle: "\($0.1)",
+                            selected: idx == $0.0
+                        )
+                    },
+                    title: setting.rawValue
+                )
+            ]
         case .theme:
-            return theme.rawValue
+            let idx = Setting.ThemeTypeOptions.allCases.firstIndex(of: settingsService.theme)
+            return [
+                .group(
+                    items: Setting.ThemeTypeOptions.allCases.enumerated().map {
+                        SettingsItem.selectableOption(
+                            setting: setting,
+                            optIdx: $0.0,
+                            optTitle: Localized($0.1.rawValue),
+                            selected: idx == $0.0
+                        )
+                    },
+                    title: setting.rawValue
+                )
+            ]
         }
     }
 
-    func settings() -> [Setting] {
-        settingsService.settings()
+    func didSelectSettingOption(at idx: Int, forSetting setting: Setting) {
+        // TODO: Switch setting
     }
 
-    func resetKeyStore() {
-        try? keyStoreService.reset()
+    func handleActionIfPossible(_ action: SettingsItem.ActionType) -> Bool {
+        switch action {
+        case .resetKeyStore:
+            try? keyStoreService.reset()
+            fatalError("Killing app after keyStore reset")
+            return true
+        default:
+            return false
+        }
     }
 }

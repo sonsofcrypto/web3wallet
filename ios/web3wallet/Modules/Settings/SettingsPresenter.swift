@@ -5,7 +5,7 @@
 import Foundation
 
 enum SettingsPresenterEvent {
-    case didSelectItemAt(idx: Int)
+    case didSelectItemAt(idxPath: IndexPath)
 }
 
 protocol SettingsPresenter {
@@ -21,8 +21,7 @@ class DefaultSettingsPresenter {
     private let interactor: SettingsInteractor
     private let wireframe: SettingsWireframe
 
-    private var items: [Setting] = []
-    private var currViewModel: SettingsViewModel = .init(items: [])
+    private var items: [SettingsItem] = []
 
     private weak var view: SettingsView?
 
@@ -42,14 +41,14 @@ class DefaultSettingsPresenter {
 extension DefaultSettingsPresenter: SettingsPresenter {
 
     func present() {
-        self.items = interactor.settings()
-        view?.update(with: viewModel())
+        items = interactor.items
+        updateView(with: viewModel())
     }
 
     func handle(_ event: SettingsPresenterEvent) {
         switch event {
-        case let .didSelectItemAt(idx):
-            handleDidSelectItem(at: idx)
+        case let .didSelectItemAt(idxPath):
+            handleDidSelectItem(at: idxPath)
         }
     }
 }
@@ -58,14 +57,14 @@ extension DefaultSettingsPresenter: SettingsPresenter {
 
 private extension DefaultSettingsPresenter {
 
-    func handleDidSelectItem(at idx: Int) {
-        switch currViewModel.items[idx].type {
-        case .setting:
-            wireframe.navigate(to: .settingOptions(setting: items[idx]))
-        case .action:
-            try? interactor.resetKeyStore()
-            fatalError("Killing up on purpose after keystore reset")
-        }
+    func handleDidSelectItem(at idxPath: IndexPath) {
+//        switch currViewModel.items[idx].type {
+//        case .setting:
+//            wireframe.navigate(to: .settingOptions(setting: items[idx]))
+//        case .action:
+//            try? interactor.resetKeyStore()
+//            fatalError("Killing up on purpose after keystore reset")
+//        }
     }
 }
 
@@ -74,26 +73,42 @@ private extension DefaultSettingsPresenter {
 private extension DefaultSettingsPresenter {
 
     func updateView(with viewModel: SettingsViewModel) {
-        self.currViewModel = viewModel
         view?.update(with: viewModel)
     }
 
     func viewModel() -> SettingsViewModel {
-        .init(
-            items: items.map {
+        return .init(
+            title: Localized("settings"),
+            sections: items.map { topLevelItem in
                 .init(
-                    title: $0.rawValue,
-                    type: .setting,
-                    selectedValue: interactor.currentValue(for: $0)
+                    title: self.firstItemTitle(topLevelItem),
+                    items: topLevelItem.isGroup()
+                        ? topLevelItem.items().map { self.viewModel(for: $0) }
+                        : [self.viewModel(for: topLevelItem)]
                 )
-            } + [
-                .init(
-                    title: "Reset all data",
-                    type: .action,
-                    selectedValue: nil
-                )
-            ]
+            }
         )
+    }
 
+    func viewModel(for item: SettingsItem) -> SettingsViewModel.Item {
+        switch item {
+            case let .group(items, title):
+                return .setting(title: Localized(title))
+            case let .setting(setting):
+                return .setting(title: Localized(setting.rawValue))
+            case let .selectableOption(setting, optIdx, optTitle, selected):
+                return .selectableOption(title: Localized(optTitle), selected: selected)
+            case let .action(actionType):
+                return .action(title: Localized(actionType.rawValue))
+        }
+    }
+
+    func firstItemTitle(_ item: SettingsItem) -> String? {
+        switch item {
+        case let .group(_, title):
+            return title
+        default:
+            return nil
+        }
     }
 }
