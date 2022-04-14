@@ -6,6 +6,7 @@ import Foundation
 
 enum KeyStorePresenterEvent {
     case didSelectKeyStoreItemtAt(idx: Int)
+    case didSelectAccessory(idx: Int)
     case didSelectErrorActionAt(idx: Int)
     case didSelectButtonAt(idx: Int)
     case didChangeButtonsState(open: Bool)
@@ -50,11 +51,9 @@ extension DefaultKeyStorePresenter: KeyStorePresenter {
 
     func present() {
         view?.update(with: viewModel(.loading))
-        interactor.loadWallets { [weak self] wallets in
-            self?.latestItems = wallets
-            self?.view?.update(
-                with: viewModel()
-            )
+        interactor.load { [weak self] items in
+            self?.latestItems = items
+            self?.view?.update(with: viewModel())
         }
     }
 
@@ -62,6 +61,8 @@ extension DefaultKeyStorePresenter: KeyStorePresenter {
         switch event {
         case let .didSelectKeyStoreItemtAt(idx):
             handleDidSelectItem(at: idx)
+        case let .didSelectAccessory(idx):
+            handleDidSelectAccessory(at: idx)
         case let .didSelectErrorActionAt(idx: idx):
             handleDidSelectErrorAction(at: idx)
         case let .didSelectButtonAt(idx):
@@ -77,10 +78,17 @@ extension DefaultKeyStorePresenter: KeyStorePresenter {
 private extension DefaultKeyStorePresenter {
 
     func handleDidSelectItem(at idx: Int) {
-        let wallet = latestItems[idx]
-        interactor.activeKeyStoreItem = wallet
+        let keyStoreItem = latestItems[idx]
+        interactor.selectedKeyStoreItem = keyStoreItem
         view?.update(with: viewModel())
         wireframe.navigate(to: .networks)
+    }
+
+    func handleDidSelectAccessory(at idx: Int) {
+        let item = latestItems[idx]
+        wireframe.navigate(to: .keyStoreItem(item: item) { [weak self] item in
+            self?.handleDidUpdateNewKeyStoreItem(item)
+        })
     }
 
     func handleDidSelectErrorAction(at idx: Int) {
@@ -90,9 +98,13 @@ private extension DefaultKeyStorePresenter {
     func handleButtonAction(at idx: Int) {
         switch buttonsViewModel.buttons[idx].type {
         case .newMnemonic:
-            wireframe.navigate(to: .newMnemonic)
+            wireframe.navigate(to: .newMnemonic { [weak self] keyStoreItem in
+                self?.handleDidCreateNewKeyStoreItem(keyStoreItem)
+            })
         case .importMnemonic:
-            wireframe.navigate(to: .newMnemonic)
+            wireframe.navigate(to: .importMnemonic { [weak self] item in
+                self?.handleDidCreateNewKeyStoreItem(item)
+            })
         case .moreOption:
             handleDidChangeButtonsState(true)
         case .connectHardwareWallet:
@@ -118,6 +130,14 @@ private extension DefaultKeyStorePresenter {
         )
         view?.update(with: viewModel())
     }
+
+    func handleDidCreateNewKeyStoreItem(_ keyStoreItem: KeyStoreItem) {
+
+    }
+
+    func handleDidUpdateNewKeyStoreItem(_ keyStoreItem: KeyStoreItem) {
+
+    }
 }
 
 // MARK: - WalletsViewModel utilities
@@ -125,9 +145,9 @@ private extension DefaultKeyStorePresenter {
 private extension DefaultKeyStorePresenter {
 
     func viewModel(_ state: KeyStoreViewModel.State = .loaded) -> KeyStoreViewModel {
-        let active = interactor.activeKeyStoreItem
+        let active = interactor.selectedKeyStoreItem
         return .init(
-            isEmpty: interactor.isEmpty,
+            isEmpty: interactor.isEmpty(),
             state: state,
             items: latestItems.map { KeyStoreViewModel.KeyStoreItem(title: $0.name) },
             selectedIdx: latestItems.firstIndex(where: { $0.uuid == active?.uuid }),

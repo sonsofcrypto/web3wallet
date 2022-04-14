@@ -5,10 +5,14 @@
 import UIKit
 
 enum KeyStoreWireframeDestination {
+
+    typealias KeyStoreItemHandler = (KeyStoreItem)->Void
+
     case networks
     case dashBoard
-    case newMnemonic
-    case importMnemonic
+    case keyStoreItem(item: KeyStoreItem, handler: KeyStoreItemHandler)
+    case newMnemonic(handler: KeyStoreItemHandler)
+    case importMnemonic(handler: KeyStoreItemHandler)
     case connectHardwareWaller
     case importPrivateKey
     case createMultisig
@@ -71,8 +75,19 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
             edgeVc?.setDisplayMode(.overviewTopCard, animated: true)
         case .dashBoard:
             edgeVc?.setDisplayMode(.master, animated: true)
-        case .newMnemonic:
-            newMnemonic.makeWireframe(self.vc).present()
+        case let .newMnemonic(handler):
+            let context = NewMnemonicContext(mode: .new, createHandler: handler)
+            newMnemonic.makeWireframe(vc, context: context).present()
+        case let .importMnemonic(handler):
+            let context = NewMnemonicContext(mode: .restore, createHandler: handler)
+            newMnemonic.makeWireframe(vc, context: context).present()
+        case let .keyStoreItem(keyStoreItem, handler):
+            let context = NewMnemonicContext(
+                mode: .update(keyStoreItem: keyStoreItem),
+                createHandler: nil,
+                updateHandler: handler
+            )
+            newMnemonic.makeWireframe(vc, context: context).present()
         default:
             print("Navigate to", destination)
 

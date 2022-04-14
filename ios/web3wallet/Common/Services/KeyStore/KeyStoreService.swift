@@ -10,27 +10,23 @@ protocol KeyStoreService: AnyObject {
 
     var selectedKeyStoreItem: KeyStoreItem? { get set }
 
-    func isEmpty() -> Bool
-
-    func load(_ handler: KeyStoreHandler)
+    /// Generates new `KeyStoreItem` but does not save it to `KeyStore`
+    func generateNewKeyStoreItem() -> KeyStoreItem
 
     /// returns nil if items are not loaded yet
     func keyStoreItem(at idx: Int) -> KeyStoreItem?
 
-    func createNewItem(
-        _ password: String,
-        passphrase: String?
-    ) throws -> KeyStoreItem
+    func add(_ keyStoreItem: KeyStoreItem) throws
 
-    func importMnemonic(
-        _ mnemonic: String,
-        password: String,
-        passphrase: String?
-    ) throws -> KeyStoreItem
-
-    func delete(_ wallet: KeyStoreItem) throws
+    func delete(_ keyStoreItem: KeyStoreItem) throws
 
     func reset() throws
+
+    /// Checks if any data is present in `KeyStore`, returns correct value
+    /// event before `load(_:)` is called
+    func isEmpty() -> Bool
+
+    func load(_ handler: KeyStoreHandler)
 }
 
 // MARK: - DefaultKeyStoreService
@@ -38,8 +34,8 @@ protocol KeyStoreService: AnyObject {
 class DefaultKeyStoreService {
 
     var selectedKeyStoreItem: KeyStoreItem? {
-        get { store.get(Constant.activeWallet) }
-        set { try? store.set(newValue, key: Constant.activeWallet) }
+        get { store.get(Constant.activeKeyStoreItem) }
+        set { try? store.set(newValue, key: Constant.activeKeyStoreItem) }
     }
 
     private var store: Store
@@ -56,12 +52,30 @@ class DefaultKeyStoreService {
 
 extension DefaultKeyStoreService: KeyStoreService {
 
-    func isEmpty() -> Bool {
-        keyStoreItems.isEmpty
+    func generateNewKeyStoreItem() -> KeyStoreItem {
+        KeyStoreItem.rand()
     }
 
     func keyStoreItem(at idx: Int) -> KeyStoreItem? {
         keyStoreItems[safe: idx]
+    }
+
+    func add(_ keyStoreItem: KeyStoreItem) throws {
+        keyStoreItems.append(keyStoreItem)
+        try store.set(keyStoreItems, key: Constant.keyStoreItems)
+    }
+
+    func delete(_ keyStoreItem: KeyStoreItem) throws {
+        keyStoreItems.removeAll(where: { $0.uuid == keyStoreItem.uuid })
+        try store.set(keyStoreItems, key: Constant.keyStoreItems)
+    }
+
+    func reset() throws {
+        keyStoreItems.forEach { try? delete($0)  }
+    }
+
+    func isEmpty() -> Bool {
+        keyStoreItems.isEmpty
     }
 
     func load(_ handler: KeyStoreHandler) {
@@ -70,71 +84,9 @@ extension DefaultKeyStoreService: KeyStoreService {
             return
         }
 
-        keyStoreItems = (store.get(Constant.wallets) ?? [])
+        keyStoreItems = (store.get(Constant.keyStoreItems) ?? [])
             .sorted(by: { $0.sortOrder < $1.sortOrder })
         handler(keyStoreItems)
-    }
-
-    func createNewItem(
-        _ password: String,
-        passphrase: String?
-    ) throws -> KeyStoreItem {
-
-        let keyStoreItem = KeyStoreItem(
-            uuid: UUID(),
-            name: "Default Wallet",
-            sortOrder: (keyStoreItems.last?.sortOrder ?? -1) + 1,
-            iCouldBackup: true,
-            saltMnemonic: false,
-            mnemonicSalt: "",
-            passwordType: .pin,
-            password: "",
-            allowPswdUnlockWithFaceId: true,
-            creationDate: Date(),
-            modification: Date(),
-            encryptedSigner: "This will be mnemonic or private key or HD connection",
-            mnemonic: "strategy edge trash series dad tiny couch since witness box unveil timber"
-        )
-
-        keyStoreItems.append(keyStoreItem)
-        try store.set(keyStoreItem, key: Constant.wallets)
-        return keyStoreItem
-    }
-
-    func importMnemonic(
-        _ mnemonic: String,
-        password: String,
-        passphrase: String?
-    ) throws-> KeyStoreItem {
-
-        let wallet = KeyStoreItem(
-            uuid: UUID(),
-            name: "Imported wallet",
-            sortOrder: (keyStoreItems.last?.sortOrder ?? -1) + 1,
-            iCouldBackup: true,
-            saltMnemonic: false,
-            mnemonicSalt: "",
-            passwordType: .pin,
-            password: "",
-            allowPswdUnlockWithFaceId: true,
-            creationDate: Date(),
-            modification: Date(),
-            encryptedSigner: mnemonic,
-            mnemonic: mnemonic
-        )
-        
-        keyStoreItems.append(wallet)
-        try store.set(keyStoreItems, key: Constant.wallets)
-        return wallet
-    }
-
-    func delete(_ keyStoreItem: KeyStoreItem) throws {
-        keyStoreItems.removeAll(where: { $0.uuid == keyStoreItem.uuid })
-        try store.set(keyStoreItems, key: Constant.wallets)
-    }
-
-    func reset() throws {
-        keyStoreItems.forEach { try? delete($0)  }
     }
 }
 
@@ -143,7 +95,7 @@ extension DefaultKeyStoreService: KeyStoreService {
 private extension DefaultKeyStoreService {
 
     enum Constant {
-        static let wallets = "walletsKey"
-        static let activeWallet = "activeWalletKey"
+        static let keyStoreItems = "keyStoreItemsKey"
+        static let activeKeyStoreItem = "activeKeyStoreItemKey"
     }
 }

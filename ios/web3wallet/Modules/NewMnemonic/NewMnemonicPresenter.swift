@@ -13,6 +13,8 @@ enum NewMnemonicPresenterEvent {
     case passTypeDidChange(idx: Int)
     case passwordDidChange(text: String)
     case allowFaceIdDidChange(onOff: Bool)
+    case didSelectCta
+    case didSelectDismiss
 }
 
 protocol NewMnemonicPresenter {
@@ -25,14 +27,16 @@ protocol NewMnemonicPresenter {
 
 class DefaultNewMnemonicPresenter {
 
+    private let context: NewMnemonicContext
     private let interactor: NewMnemonicInteractor
     private let wireframe: NewMnemonicWireframe
 
-    private lazy var keyStoreItem: KeyStoreItem = KeyStoreItem.rand()
+    private lazy var keyStoreItem: KeyStoreItem = KeyStoreItem.blank()
 
     private weak var view: NewMnemonicView?
 
     init(
+        context: NewMnemonicContext,
         view: NewMnemonicView,
         interactor: NewMnemonicInteractor,
         wireframe: NewMnemonicWireframe
@@ -40,6 +44,7 @@ class DefaultNewMnemonicPresenter {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
+        self.context = context
     }
 }
 
@@ -48,8 +53,15 @@ class DefaultNewMnemonicPresenter {
 extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
 
     func present() {
+        switch context.mode {
+        case .new:
+             keyStoreItem = interactor.generateNewKeyStoreItem()
+        case let .update(item):
+            keyStoreItem = item
+        case .restore:
+            keyStoreItem = KeyStoreItem.blank()
+        }
         view?.update(with: viewModel(from: keyStoreItem))
-        // TODO: Interactor
     }
 
     func handle(_ event: NewMnemonicPresenterEvent) {
@@ -74,14 +86,18 @@ extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
             keyStoreItem.password = text
         case let .allowFaceIdDidChange(onOff):
             keyStoreItem.allowPswdUnlockWithFaceId = onOff
+        case let .didSelectCta:
+            interactor.update(keyStoreItem)
+            switch context.mode {
+            case .update:
+                context.didCreteKeyStoreItemHandler?(keyStoreItem)
+            default:
+                context.didUpdateKeyStoreItemHandler?(keyStoreItem)
+            }
+        case let .didSelectDismiss:
+            view?.dismiss(animated: true, completion: {})
         }
     }
-}
-
-// MARK: - Event handling
-
-private extension DefaultNewMnemonicPresenter {
-
 }
 
 // MARK: - WalletsViewModel utilities
@@ -91,48 +107,8 @@ private extension DefaultNewMnemonicPresenter {
     func viewModel(from keyStoreItem: KeyStoreItem) -> NewMnemonicViewModel {
         .init(
             sectionsItems: [
-                [
-                    NewMnemonicViewModel.Item.mnemonic(
-                        mnemonic: .init(value: keyStoreItem.mnemonic, type: .new)
-                    )
-                ],
-                [
-                    NewMnemonicViewModel.Item.name(
-                        name: .init(
-                            title: Localized("newMnemonic.name.title"),
-                            value: keyStoreItem.name,
-                            placeholder: Localized("newMnemonic.name.placeholder")
-                        )
-                    ),
-                    NewMnemonicViewModel.Item.switch(
-                        title: Localized("newMnemonic.iCould.title"),
-                        onOff: keyStoreItem.iCouldBackup
-                    ),
-                    NewMnemonicViewModel.Item.switchWithTextInput(
-                        switchWithTextInput: .init(
-                            title: Localized("newMnemonic.salt.title"),
-                            onOff: keyStoreItem.saltMnemonic,
-                            text: keyStoreItem.mnemonicSalt,
-                            placeholder: Localized("newMnemonic.salt.placeholder"),
-                            description: Localized("newMnemonic.salt.description"),
-                            descriptionHighlightedWords: [
-                                Localized("newMnemonic.salt.descriptionHighlight")
-                            ]
-                        )
-                    ),
-                    NewMnemonicViewModel.Item.segmentWithTextAndSwitchInput(
-                        segmentWithTextAndSwitchInput: .init(
-                            title: Localized("newMnemonic.passType.title"),
-                            segmentOptions: KeyStoreItem.PasswordType.allCases
-                                    .map { $0.localizedDescription },
-                            selectedSegment: keyStoreItem.passwordType.rawValue,
-                            password: keyStoreItem.password,
-                            placeholder: Localized("newMnemonic.passType.placeholder"),
-                            onOffTitle: Localized("newMnemonic.passType.allowFaceId"),
-                            onOff: keyStoreItem.allowPswdUnlockWithFaceId
-                        )
-                    )
-                ]
+                mnemonicSectionItems(),
+                optionsSectionItems()
             ],
             headers: [.none, .none],
             footers: [
@@ -144,6 +120,55 @@ private extension DefaultNewMnemonicPresenter {
             ]
         )
     }
+
+    func mnemonicSectionItems() -> [NewMnemonicViewModel.Item] {
+        [
+            NewMnemonicViewModel.Item.mnemonic(
+                mnemonic: .init(value: keyStoreItem.mnemonic, type: .new)
+            )
+        ]
+    }
+
+    func optionsSectionItems() -> [NewMnemonicViewModel.Item] {
+        [
+            NewMnemonicViewModel.Item.name(
+                name: .init(
+                    title: Localized("newMnemonic.name.title"),
+                    value: keyStoreItem.name,
+                    placeholder: Localized("newMnemonic.name.placeholder")
+                )
+            ),
+            NewMnemonicViewModel.Item.switch(
+                title: Localized("newMnemonic.iCould.title"),
+                onOff: keyStoreItem.iCouldBackup
+            ),
+            NewMnemonicViewModel.Item.switchWithTextInput(
+                switchWithTextInput: .init(
+                    title: Localized("newMnemonic.salt.title"),
+                    onOff: keyStoreItem.saltMnemonic,
+                    text: keyStoreItem.mnemonicSalt,
+                    placeholder: Localized("newMnemonic.salt.placeholder"),
+                    description: Localized("newMnemonic.salt.description"),
+                    descriptionHighlightedWords: [
+                        Localized("newMnemonic.salt.descriptionHighlight")
+                    ]
+                )
+            ),
+            NewMnemonicViewModel.Item.segmentWithTextAndSwitchInput(
+                segmentWithTextAndSwitchInput: .init(
+                    title: Localized("newMnemonic.passType.title"),
+                    segmentOptions: KeyStoreItem.PasswordType.allCases
+                            .map { $0.localizedDescription },
+                    selectedSegment: keyStoreItem.passwordType.rawValue,
+                    password: keyStoreItem.password,
+                    placeholder: Localized("newMnemonic.passType.placeholder"),
+                    onOffTitle: Localized("newMnemonic.passType.allowFaceId"),
+                    onOff: keyStoreItem.allowPswdUnlockWithFaceId
+                )
+            )
+        ]
+    }
+
 }
 
 // MARK: - Constant

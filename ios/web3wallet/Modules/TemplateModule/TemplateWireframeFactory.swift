@@ -32,7 +32,7 @@ extension DefaultTemplateWireframeFactory: TemplateWireframeFactory {
 
     func makeWireframe() -> TemplateWireframe {
         DefaultTemplateWireframe(
-            interactor: DefaultTemplateInteractor(service),
+            interactor: DefaultNewMnemonicInteractor(service),
             window: window
         )
     }

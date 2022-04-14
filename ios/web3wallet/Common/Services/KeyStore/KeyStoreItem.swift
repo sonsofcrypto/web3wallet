@@ -67,4 +67,22 @@ extension KeyStoreItem {
             mnemonic: "strategy edge trash series dad tiny couch since witness box unveil timber"
         )
     }
+
+    static func blank() -> KeyStoreItem {
+        return KeyStoreItem(
+            uuid: UUID(),
+            name: "",
+            sortOrder: 0,
+            iCouldBackup: true,
+            saltMnemonic: false,
+            mnemonicSalt: "",
+            passwordType: .bio,
+            password: "",
+            allowPswdUnlockWithFaceId: true,
+            creationDate: Date(),
+            modification: Date(),
+            encryptedSigner: "",
+            mnemonic: ""
+        )
+    }
 }

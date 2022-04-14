@@ -6,22 +6,42 @@ import Foundation
 
 protocol NewMnemonicInteractor: AnyObject {
 
+    /// Generates new `KeyStoreItem` but does not save it to `KeyStore`
+    func generateNewKeyStoreItem() -> KeyStoreItem
+
+    /// Updates existing one or stores new one if not present
+    func update(_ keyStoreItem: KeyStoreItem) -> KeyStoreItem
+
+    func delete(_ keyStoreItem: KeyStoreItem)
 }
 
 // MARK: - DefaultTemplateInteractor
 
-class DefaultTemplateInteractor {
+class DefaultNewMnemonicInteractor {
 
 
-    private var templateService: KeyStoreService
+    private var keyStoreService: KeyStoreService
 
     init(_ keyStoreService: KeyStoreService) {
-        self.templateService = keyStoreService
+        self.keyStoreService = keyStoreService
     }
 }
 
 // MARK: - DefaultTemplateInteractor
 
-extension DefaultTemplateInteractor: NewMnemonicInteractor {
+extension DefaultNewMnemonicInteractor: NewMnemonicInteractor {
 
+    func generateNewKeyStoreItem() -> KeyStoreItem {
+        keyStoreService.generateNewKeyStoreItem()
+    }
+
+    func update(_ keyStoreItem: KeyStoreItem) -> KeyStoreItem {
+        try? keyStoreService.delete(keyStoreItem)
+        try? keyStoreService.add(keyStoreItem)
+        return keyStoreItem
+    }
+
+    func delete(_ keyStoreItem: KeyStoreItem) {
+        try? keyStoreService.delete(keyStoreItem)
+    }
 }

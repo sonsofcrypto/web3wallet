@@ -6,41 +6,36 @@ import Foundation
 
 protocol KeyStoreInteractor: AnyObject {
 
-    typealias KeyStoreItemHandler = ([KeyStoreItem]) -> Void
+    typealias KeyStoreHandler = ([KeyStoreItem]) -> Void
 
-    var activeKeyStoreItem: KeyStoreItem? { get set }
+    var selectedKeyStoreItem: KeyStoreItem? { get set }
 
-    var isEmpty: Bool { get }
+    /// Generates new `KeyStoreItem` but does not save it to `KeyStore`
+    func generateNewKeyStoreItem() -> KeyStoreItem
 
-    func loadWallets(_ handler: KeyStoreItemHandler)
-
+    /// returns nil if items are not loaded yet
     func keyStoreItem(at idx: Int) -> KeyStoreItem?
 
-    func createNewWallet(
-        _ password: String,
-        passphrase: String?
-    ) throws -> KeyStoreItem
+    func add(_ keyStoreItem: KeyStoreItem) throws
 
-    func importWallet(
-        _ mnemonic: String,
-        password: String,
-        passphrase: String?
-    ) throws -> KeyStoreItem
+    func delete(_ keyStoreItem: KeyStoreItem) throws
 
-    func delete(_ wallet: KeyStoreItem) throws
+    func reset() throws
+
+    /// Checks if any data is present in `KeyStore`, returns correct value
+    /// event before `load(_:)` is called
+    func isEmpty() -> Bool
+
+    func load(_ handler: KeyStoreHandler)
 }
 
 // MARK: - DefaultKeyStoreInteractor
 
 class DefaultKeyStoreInteractor {
 
-    var activeKeyStoreItem: KeyStoreItem? {
+    var selectedKeyStoreItem: KeyStoreItem? {
         get { keyStoreService.selectedKeyStoreItem }
         set { keyStoreService.selectedKeyStoreItem = newValue }
-    }
-
-    var isEmpty: Bool {
-        keyStoreService.isEmpty()
     }
 
     private var keyStoreService: KeyStoreService
@@ -54,36 +49,31 @@ class DefaultKeyStoreInteractor {
 
 extension DefaultKeyStoreInteractor: KeyStoreInteractor {
 
-    func loadWallets(_ handler: KeyStoreItemHandler) {
-        keyStoreService.load(handler)
+    func generateNewKeyStoreItem() -> KeyStoreItem {
+        keyStoreService.generateNewKeyStoreItem()
     }
 
     func keyStoreItem(at idx: Int) -> KeyStoreItem? {
         keyStoreService.keyStoreItem(at: idx)
     }
 
-    func createNewWallet(
-        _ password: String,
-        passphrase: String?
-    ) throws -> KeyStoreItem {
-
-        try keyStoreService.createNewItem(password, passphrase: passphrase)
+    func add(_ keyStoreItem: KeyStoreItem) throws {
+        try keyStoreService.add(keyStoreItem)
     }
 
-    func importWallet(
-        _ mnemonic: String,
-        password: String,
-        passphrase: String?
-    ) throws -> KeyStoreItem {
-
-        try keyStoreService.importMnemonic(
-            mnemonic,
-            password: password,
-            passphrase: passphrase
-        )
+    func delete(_ keyStoreItem: KeyStoreItem) throws {
+        try keyStoreService.delete(keyStoreItem)
     }
 
-    func delete(_ wallet: KeyStoreItem) throws {
-        try keyStoreService.delete(wallet)
+    func reset() throws {
+        try keyStoreService.reset()
+    }
+
+    func isEmpty() -> Bool {
+        keyStoreService.isEmpty()
+    }
+
+    func load(_ handler: KeyStoreHandler) {
+        keyStoreService.load(handler)
     }
 }

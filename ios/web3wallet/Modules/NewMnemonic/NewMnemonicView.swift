@@ -7,6 +7,7 @@ import UIKit
 protocol NewMnemonicView: AnyObject {
 
     func update(with viewModel: NewMnemonicViewModel)
+    func dismiss(animated flag: Bool, completion: (() -> Void)?)
 }
 
 class NewMnemonicViewController: UIViewController {
@@ -27,6 +28,14 @@ class NewMnemonicViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         didAppear = true
+    }
+    
+    @IBAction func ctaAction(_ sender: Any) {
+        presenter.handle(.didSelectCta)
+    }
+
+    @IBAction func dismissAction(_ sender: Any?) {
+        presenter.handle(.didSelectDismiss)
     }
 }
 
@@ -258,13 +267,9 @@ extension NewMnemonicViewController {
             image: UIImage(named: "arrow_back"),
             style: .plain,
             target: self,
-            action: #selector(dismissNe)
+            action: #selector(dismissAction(_:))
         )
         navigationItem.leftBarButtonItem?.tintColor = Theme.current.tintPrimary
-    }
-
-    @objc func dismissNe() {
-        self.dismiss(animated: true)
     }
 }
 

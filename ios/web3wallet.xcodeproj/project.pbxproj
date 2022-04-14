@@ -133,6 +133,7 @@
 		1A4C3D9BD9F5A146878AFF77 /* KeyStoreWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DF93F3CE8FE0B35C142 /* KeyStoreWireframe.swift */; };
 		1A4C3DB9D875750365494DD7 /* CG+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C393EC70B537D98A4CA4A /* CG+extensions.swift */; };
 		1A4C3DCFC8658400B9BCBF78 /* DegenSectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C374E321C93128CF3FB91 /* DegenSectionTitleView.swift */; };
+		1A4C3DDA43811C13E1BC9823 /* NewMnemonicContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3112A7F3F912F46C9D62 /* NewMnemonicContext.swift */; };
 		1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3B70AA1B0BC942B15671 /* Store.swift */; };
 		1A4C3DF45C45C609B1F976B7 /* AccountTransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DF58C2B32C6B6C096F8 /* AccountTransactionCell.swift */; };
 		1A4C3E0C34560AC1BF22B95E /* NFTsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C325A83A0FC4E6A5A9922 /* NFTsWireframe.swift */; };
@@ -251,6 +252,7 @@
 		1A4C30B213A6E8FFA7D0D41D /* NetworksWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksWireframeFactory.swift; sourceTree = "<group>"; };
 		1A4C30BC614DE35A99D3A781 /* CollectionViewSegmentWithTextAndSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewSegmentWithTextAndSwitchCell.swift; sourceTree = "<group>"; };
 		1A4C310A6D460422DB18D0BF /* UIStoryboard+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+extensions.swift"; sourceTree = "<group>"; };
+		1A4C3112A7F3F912F46C9D62 /* NewMnemonicContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMnemonicContext.swift; sourceTree = "<group>"; };
 		1A4C3114D1ECD9B2A75BCD96 /* AccountSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountSectionHeader.swift; sourceTree = "<group>"; };
 		1A4C31252FD6ED07E9E9E2B6 /* ButtonsSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsSheetView.swift; sourceTree = "<group>"; };
 		1A4C3142E4B087299DA8113B /* SettingsWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsWireframe.swift; sourceTree = "<group>"; };
@@ -1037,6 +1039,7 @@
 				D1F160062804C96100DEF239 /* NewMnemonicViewModel.swift */,
 				D1F160072804C96100DEF239 /* NewMnemonicWireframe.swift */,
 				1A4C33B65A547253CB05BD43 /* NewMnemonicSettingCell.swift */,
+				1A4C3112A7F3F912F46C9D62 /* NewMnemonicContext.swift */,
 			);
 			path = NewMnemonic;
 			sourceTree = "<group>";
@@ -1381,6 +1384,7 @@
 				1A4C35B22F98D604D37A324F /* SettingsCell.swift in Sources */,
 				1A4C39C447DAE89615B354E6 /* SettingsListSelectCell.swift in Sources */,
 				1A4C392FA145A1DD2AB7050D /* SettingsActionCell.swift in Sources */,
+				1A4C3DDA43811C13E1BC9823 /* NewMnemonicContext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,7 +6,10 @@ import UIKit
 
 protocol NewMnemonicWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController?) -> NewMnemonicWireframe
+    func makeWireframe(
+        _ parent: UIViewController?,
+        context: NewMnemonicContext
+    ) -> NewMnemonicWireframe
 }
 
 // MARK: - DefaultNewMnemonicWireframeFactory
@@ -24,10 +27,14 @@ class DefaultNewMnemonicWireframeFactory {
 
 extension DefaultNewMnemonicWireframeFactory: NewMnemonicWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController?) -> NewMnemonicWireframe {
+    func makeWireframe(
+        _ parent: UIViewController?,
+        context: NewMnemonicContext
+    ) -> NewMnemonicWireframe {
         DefaultNewMnemonicWireframe(
             parent: parent,
-            interactor: DefaultTemplateInteractor(service)
+            interactor: DefaultNewMnemonicInteractor(service),
+            context: context
         )
     }
 }

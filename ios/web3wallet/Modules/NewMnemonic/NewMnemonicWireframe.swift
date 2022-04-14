@@ -18,16 +18,19 @@ protocol NewMnemonicWireframe {
 class DefaultNewMnemonicWireframe {
 
     private let interactor: NewMnemonicInteractor
+    private let context: NewMnemonicContext
 
     private weak var parent: UIViewController?
     private weak var vc: UIViewController?
 
     init(
         parent: UIViewController?,
-        interactor: NewMnemonicInteractor
+        interactor: NewMnemonicInteractor,
+        context: NewMnemonicContext
     ) {
         self.interactor = interactor
         self.parent = parent
+        self.context = context
     }
 }
 
@@ -65,6 +68,7 @@ extension DefaultNewMnemonicWireframe {
     private func wireUp() -> UIViewController {
         let vc: NewMnemonicViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultNewMnemonicPresenter(
+            context: context,
             view: vc,
             interactor: interactor,
             wireframe: self

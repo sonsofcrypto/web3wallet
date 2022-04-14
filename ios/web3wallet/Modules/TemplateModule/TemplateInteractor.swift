@@ -22,6 +22,6 @@ class DefaultTemplateInteractor {
 
 // MARK: - DefaultTemplateInteractor
 
-extension DefaultTemplateInteractor: TemplateInteractor {
+extension DefaultNewMnemonicInteractor: TemplateInteractor {
 
 }

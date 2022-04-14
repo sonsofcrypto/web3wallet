@@ -537,7 +537,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Next"/>
                                         <connections>
-                                            <action selector="templateAction:" destination="Rza-4a-dCf" eventType="touchUpInside" id="YgE-2U-Aqf"/>
+                                            <action selector="ctaAction:" destination="Rza-4a-dCf" eventType="touchUpInside" id="wIW-uh-8hw"/>
                                         </connections>
                                     </button>
                                 </subviews>
