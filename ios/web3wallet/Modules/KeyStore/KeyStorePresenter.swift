@@ -25,7 +25,6 @@ class DefaultKeyStorePresenter {
     private let interactor: KeyStoreInteractor
     private let wireframe: KeyStoreWireframe
 
-    private var latestItems: [KeyStoreItem]
     private var buttonsViewModel: ButtonSheetViewModel = .init(
         buttons: ButtonSheetViewModel.compactButtons(),
         isExpanded: false
@@ -41,7 +40,10 @@ class DefaultKeyStorePresenter {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
-        self.latestItems = []
+    }
+
+    func updateView() {
+        view?.update(with: viewModel())
     }
 }
 
@@ -52,8 +54,9 @@ extension DefaultKeyStorePresenter: KeyStorePresenter {
     func present() {
         view?.update(with: viewModel(.loading))
         interactor.load { [weak self] items in
-            self?.latestItems = items
-            self?.view?.update(with: viewModel())
+            DispatchQueue.main.async {
+                self?.updateView()
+            }
         }
     }
 
@@ -78,14 +81,14 @@ extension DefaultKeyStorePresenter: KeyStorePresenter {
 private extension DefaultKeyStorePresenter {
 
     func handleDidSelectItem(at idx: Int) {
-        let keyStoreItem = latestItems[idx]
+        let keyStoreItem = interactor.keyStoreItems[idx]
         interactor.selectedKeyStoreItem = keyStoreItem
         view?.update(with: viewModel())
         wireframe.navigate(to: .networks)
     }
 
     func handleDidSelectAccessory(at idx: Int) {
-        let item = latestItems[idx]
+        let item = interactor.keyStoreItems[idx]
         wireframe.navigate(to: .keyStoreItem(item: item) { [weak self] item in
             self?.handleDidUpdateNewKeyStoreItem(item)
         })
@@ -132,7 +135,7 @@ private extension DefaultKeyStorePresenter {
     }
 
     func handleDidCreateNewKeyStoreItem(_ keyStoreItem: KeyStoreItem) {
-
+        view?.update(with: viewModel())
     }
 
     func handleDidUpdateNewKeyStoreItem(_ keyStoreItem: KeyStoreItem) {
@@ -149,8 +152,12 @@ private extension DefaultKeyStorePresenter {
         return .init(
             isEmpty: interactor.isEmpty(),
             state: state,
-            items: latestItems.map { KeyStoreViewModel.KeyStoreItem(title: $0.name) },
-            selectedIdx: latestItems.firstIndex(where: { $0.uuid == active?.uuid }),
+            items: interactor.keyStoreItems.map {
+                KeyStoreViewModel.KeyStoreItem(title: $0.name)
+            },
+            selectedIdx: interactor.keyStoreItems.firstIndex(
+                where: { $0.uuid == active?.uuid }
+            ),
             buttons: buttonsViewModel
         )
     }

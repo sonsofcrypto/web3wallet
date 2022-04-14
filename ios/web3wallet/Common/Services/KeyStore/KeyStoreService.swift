@@ -10,6 +10,8 @@ protocol KeyStoreService: AnyObject {
 
     var selectedKeyStoreItem: KeyStoreItem? { get set }
 
+    func latestItems() -> [KeyStoreItem]
+
     /// Generates new `KeyStoreItem` but does not save it to `KeyStore`
     func generateNewKeyStoreItem() -> KeyStoreItem
 
@@ -51,6 +53,10 @@ class DefaultKeyStoreService {
 // MARK: - KeyStoreService
 
 extension DefaultKeyStoreService: KeyStoreService {
+
+    func latestItems() -> [KeyStoreItem] {
+        return keyStoreItems
+    }
 
     func generateNewKeyStoreItem() -> KeyStoreItem {
         KeyStoreItem.rand()

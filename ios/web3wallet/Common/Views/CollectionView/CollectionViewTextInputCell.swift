@@ -43,9 +43,8 @@ extension CollectionViewTextInputCell {
     ) -> CollectionViewTextInputCell {
         titleLabel.text = viewModel.title
         textField.text = viewModel.value
-
         (textField as? TextField)?.placeholderAttrText = viewModel.placeholder
-
+        self.textChangeHandler = textChangeHandler
         return self
     }
 }

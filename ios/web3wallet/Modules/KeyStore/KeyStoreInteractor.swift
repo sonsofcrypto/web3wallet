@@ -10,6 +10,8 @@ protocol KeyStoreInteractor: AnyObject {
 
     var selectedKeyStoreItem: KeyStoreItem? { get set }
 
+    var keyStoreItems: [KeyStoreItem] { get }
+
     /// Generates new `KeyStoreItem` but does not save it to `KeyStore`
     func generateNewKeyStoreItem() -> KeyStoreItem
 
@@ -36,6 +38,10 @@ class DefaultKeyStoreInteractor {
     var selectedKeyStoreItem: KeyStoreItem? {
         get { keyStoreService.selectedKeyStoreItem }
         set { keyStoreService.selectedKeyStoreItem = newValue }
+    }
+
+    var keyStoreItems: [KeyStoreItem] {
+        get { keyStoreService.latestItems() }
     }
 
     private var keyStoreService: KeyStoreService

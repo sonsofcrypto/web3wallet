@@ -94,6 +94,7 @@ extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
             default:
                 context.didUpdateKeyStoreItemHandler?(keyStoreItem)
             }
+            view?.dismiss(animated: true, completion: {})
         case let .didSelectDismiss:
             view?.dismiss(animated: true, completion: {})
         }
