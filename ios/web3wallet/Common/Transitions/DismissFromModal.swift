@@ -4,7 +4,7 @@
 
 import UIKit
 
-class CellMorphTransition : NSObject, UIViewControllerAnimatedTransitioning {
+class DismissFromModal: NSObject, UIViewControllerAnimatedTransitioning {
 
     var targetView: UIView
     var isPresenting: Bool
@@ -25,10 +25,6 @@ class CellMorphTransition : NSObject, UIViewControllerAnimatedTransitioning {
         let fromView = transitionContext.view(forKey: .from)
         let toView = transitionContext.view(forKey: .to)
         let containerView = transitionContext.containerView
-
-        var transform = CATransform3DIdentity
-        transform.m34 = -1.0 / 500.0
-        containerView.layer.sublayerTransform = transform
 
         if isPresenting {
             animatePresenting(
@@ -60,71 +56,56 @@ class CellMorphTransition : NSObject, UIViewControllerAnimatedTransitioning {
         context: UIViewControllerContextTransitioning
     ) {
 
-        let transformView = TransformView(frame: containerView.bounds)
-        let snap = fromView?.snapshotView(afterScreenUpdates: false)
-        var snapScale: CGSize = .zero
-        var translation: CGPoint = .zero
+        toView?.frame = containerView.bounds
 
-        if let toView = toView, let fromView = fromView, let snap = snap {
-            transformView.frame = containerView.bounds
-            toView.frame = transformView.bounds
+        print("=== from", fromView)
 
-            snapScale = CGSize(
-                width: toView.bounds.width / snap.bounds.width,
-                height: toView.bounds.height / snap.bounds.height
-            )
+        let fromSnap = fromView?.snapshotView(afterScreenUpdates: false)
+        let toSnap = toView?.snapshotView(afterScreenUpdates: true)
+        let snapContainer = UIView(frame: .zero)
+        snapContainer.clipsToBounds = true
+        snapContainer.contentMode = .top
+        snapContainer.layer.cornerRadius = Global.cornerRadius
+        fromSnap?.contentMode = .top
+        toSnap?.contentMode = .top
 
-            translation = CGPoint(
-                x: containerView.convert(fromView.bounds.midXY, from: fromView).x - toView.center.x,
-                y: containerView.convert(fromView.bounds.midXY, from: fromView).y - toView.center.y
-            )
+        if let fromSnap = fromSnap, let toSnap = toSnap, let fromView = fromView {
+            containerView.addSubview(fromSnap)
+            containerView.addSubview(snapContainer)
 
-            containerView.addSubview(transformView)
-            transformView.addSubview(toView)
-            transformView.addSubview(snap)
-
-            toView.layer.zPosition = -1
-            toView.transform = CGAffineTransform(
-                scaleX: -(snap.bounds.width / toView.bounds.width),
-                y: snap.bounds.height / toView.bounds.height
-            )
-
-            [toView, snap].forEach { $0.center = transformView.bounds.midXY }
+            fromSnap.frame = fromView.convert(fromView.bounds, to: containerView)
+            snapContainer.frame = fromSnap.frame
+            toSnap.frame = snapContainer.bounds
+            snapContainer.addSubview(toSnap)
         }
 
-        containerView.layer.sublayerTransform = TransformView.parentSublayerTransform
-        transformView.layer.transform = CATransform3DMakeTranslation(
-            translation.x,
-            translation.y,
-            0
+        fromView?.alpha = 0
+
+        UIView.springAnimate(
+            transitionDuration(using: context) / 4,
+            animations: { snapContainer.alpha = 1 }
         )
-
-        let angle = CGFloat(-Double.pi) + 0.001
-
-        fromView?.alpha = 0.0001
 
         UIView.springAnimate(
             transitionDuration(using: context),
             damping: 0.9,
             velocity: 0.5,
             animations: {
-                transformView.layer.transform = CATransform3DMakeRotation(angle, 0, 1, 0)
-                toView?.transform = CGAffineTransform(scaleX: -1, y: 1)
-                snap?.transform = CGAffineTransform(
-                    scaleX: snapScale.width,
-                    y: snapScale.height
-                )
+                fromSnap?.frame = containerView.bounds
+                snapContainer.frame = containerView.bounds
+                toSnap?.frame = snapContainer.bounds
+                snapContainer.layer.cornerRadius = 0
             },
             completion: { success in
-                snap?.removeFromSuperview()
-                transformView.removeFromSuperview()
+                fromSnap?.removeFromSuperview()
+                toSnap?.removeFromSuperview()
+                snapContainer.removeFromSuperview()
                 fromView?.alpha = 1
+
                 if let toView = toView {
-                    toView.layer.zPosition = 0
-                    toView.transform = .identity
-                    toView.frame = containerView.bounds
                     containerView.addSubview(toView)
                 }
+
                 context.completeTransition(success)
             }
         )

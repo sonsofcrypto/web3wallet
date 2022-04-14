@@ -253,6 +253,18 @@ extension NewMnemonicViewController {
             Theme.current.background,
             Theme.current.backgroundDark
         ]
+
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: UIImage(named: "arrow_back"),
+            style: .plain,
+            target: self,
+            action: #selector(dismissNe)
+        )
+        navigationItem.leftBarButtonItem?.tintColor = Theme.current.tintPrimary
+    }
+
+    @objc func dismissNe() {
+        self.dismiss(animated: true)
     }
 }
 

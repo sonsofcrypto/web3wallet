@@ -16,7 +16,7 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
     }
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return isPresenting ? 0.9 : 1
+        return isPresenting ? 0.7 : 0.9
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {

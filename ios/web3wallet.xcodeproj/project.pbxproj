@@ -70,7 +70,7 @@
 		1A4C372EC2DEA2483AD7D92E /* NSLocalizedString+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D1809D506A7AE772982 /* NSLocalizedString+extension.swift */; };
 		1A4C3735189D6616D915D851 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C309894247AA73F274756 /* TabBarController.swift */; };
 		1A4C373913601300A54BB058 /* UIBarButtonItem+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3ADE5C8CD3D3CBB36547 /* UIBarButtonItem+extensions.swift */; };
-		1A4C373BF33DAF794F261056 /* CellMorphTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3649032759624C3E2734 /* CellMorphTransition.swift */; };
+		1A4C373BF33DAF794F261056 /* DismissFromModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3649032759624C3E2734 /* DismissFromModal.swift */; };
 		1A4C3750D25F9E82456820CB /* NetworksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C37E7FEEE448ABFD2A86C /* NetworksCell.swift */; };
 		1A4C3782A600997577ED88DD /* DashboardNFTsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3404214F8018CDD4F6C4 /* DashboardNFTsCell.swift */; };
 		1A4C37AEF66358EA9CA0CA59 /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C388B9A42E6A279D2867F /* AccountService.swift */; };
@@ -292,7 +292,7 @@
 		1A4C35DB40974617FD65E0A1 /* DashboardSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardSectionHeaderView.swift; sourceTree = "<group>"; };
 		1A4C36211D0CAC7CD3E2B39B /* NetworksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksView.swift; sourceTree = "<group>"; };
 		1A4C3644A9D218CC991B2A56 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
-		1A4C3649032759624C3E2734 /* CellMorphTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellMorphTransition.swift; sourceTree = "<group>"; };
+		1A4C3649032759624C3E2734 /* DismissFromModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissFromModal.swift; sourceTree = "<group>"; };
 		1A4C367A2B3B39204D1DD109 /* DegenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenCell.swift; sourceTree = "<group>"; };
 		1A4C36CAEB50425CE9839ED4 /* KeyStoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreService.swift; sourceTree = "<group>"; };
 		1A4C374E321C93128CF3FB91 /* DegenSectionTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenSectionTitleView.swift; sourceTree = "<group>"; };
@@ -667,7 +667,7 @@
 			isa = PBXGroup;
 			children = (
 				1A4C3E976CBAB0A97E8AF408 /* CardFlipTransition.swift */,
-				1A4C3649032759624C3E2734 /* CellMorphTransition.swift */,
+				1A4C3649032759624C3E2734 /* DismissFromModal.swift */,
 				1A4C3F5900131CEDA6520958 /* TransformView.swift */,
 			);
 			path = Transitions;
@@ -1355,7 +1355,7 @@
 				1A4C38AA44CEF1BEF824434A /* ButtonsSheetViewCell.swift in Sources */,
 				1A4C370634B11B400C5C4356 /* TouchPassThroughCollectionView.swift in Sources */,
 				1A4C303A23D7DA2A37B292C1 /* CardFlipTransition.swift in Sources */,
-				1A4C373BF33DAF794F261056 /* CellMorphTransition.swift in Sources */,
+				1A4C373BF33DAF794F261056 /* DismissFromModal.swift in Sources */,
 				1A4C3B81B628EF4EDC8F7177 /* TransformView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

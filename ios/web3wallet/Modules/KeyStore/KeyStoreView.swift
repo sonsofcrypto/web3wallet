@@ -267,7 +267,7 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
         if presentedVc?.isKind(of: NewMnemonicViewController.self) ?? false {
             let idxPath = buttonsCollectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0)
             let cell = buttonsCollectionView.cellForItem(at: idxPath)
-            animatedTransitioning = CellMorphTransition(
+            animatedTransitioning = CardFlipAnimatedTransitioning(
                 targetView: cell ?? view
             )
         }
