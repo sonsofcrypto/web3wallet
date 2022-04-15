@@ -46,7 +46,7 @@ class KeyStoreViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         animateIntro()
-        collectionView.deselectAllExcept()
+        collectionView.deselectAllExcept(selectedIdxPaths())
         buttonsCollectionView.deselectAllExcept()
     }
 }
@@ -58,18 +58,16 @@ extension KeyStoreViewController: KeyStoreView {
     func update(with viewModel: KeyStoreViewModel) {
         let isExpanded = self.viewModel?.buttons.isExpanded
         let btnsNeedsUpdate = isExpanded != viewModel.buttons.isExpanded
+
         self.viewModel = viewModel
         btnsNeedsUpdate ? updateButtonsView() : ()
-
         collectionView.reloadData()
-        logoContainer.isHidden = !viewModel.isEmpty
-
-        if let idx = viewModel.selectedIdx, !viewModel.items.isEmpty {
-            collectionView.deselectAllExcept(
-                IndexPath(item: idx, section: 0),
-                animated: true
-            )
-        }
+        updateLogo(viewModel)
+        buttonsCollectionView.deselectAllExcept()
+        collectionView.deselectAllExcept(
+            selectedIdxPaths(),
+            animated: presentedViewController == nil
+        )
     }
 }
 
@@ -217,20 +215,31 @@ extension KeyStoreViewController {
 
         (logoContainer.alpha, logoView.alpha) = (0, 0)
 
-        UIView.springAnimate(
-            0.7,
-            damping: 0.01,
-            velocity: 0.8,
-            animations: {
-                self.logoView.alpha = 1
-            }
-        )
+        UIView.springAnimate(0.7, damping: 0.01, velocity: 0.8, animations: {
+            self.logoView.alpha = 1
+        })
 
         UIView.animate(withDuration: 1) {
             self.logoContainer.alpha = 1
         }
 
         animateButtonsIntro()
+    }
+
+    func updateLogo(_ viewModel: KeyStoreViewModel) {
+        // First keyStore added. Animate logo to hidded
+        if !logoContainer.isHidden && !viewModel.isEmpty {
+            UIView.springAnimate(0.7, delay: 0.3, damping: 0.01, velocity: 0.8, animations: {
+                self.logoView.alpha = 0
+            })
+
+            UIView.animate(withDuration: 0.6, delay: 0.3) {
+                self.logoContainer.alpha = 0
+            }
+            return
+        }
+
+        logoContainer.isHidden = !viewModel.isEmpty
     }
 
     func animateButtonsIntro() {
@@ -249,6 +258,14 @@ extension KeyStoreViewController {
             self?.updateButtonsView()
         }
     }
+
+    func selectedIdxPaths() -> [IndexPath] {
+        guard let viewModel = viewModel else {
+            return []
+        }
+
+        return viewModel.selectedIdxs.map { IndexPath(item: $0, section: 0) }
+    }
 }
 
 // MARK: - UIViewControllerTransitioningDelegate
@@ -264,10 +281,8 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
         animatedTransitioning = nil
 
         if presentedVc?.isKind(of: NewMnemonicViewController.self) ?? false {
-            let idxPath = buttonsCollectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0)
-            let cell = buttonsCollectionView.cellForItem(at: idxPath)
             animatedTransitioning = CardFlipAnimatedTransitioning(
-                targetView: cell ?? view
+                targetView: targetView() ?? view
             )
         }
 
@@ -279,10 +294,8 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
         animatedTransitioning = nil
 
         if presentedVc?.isKind(of: NewMnemonicViewController.self) ?? false {
-            let idxPath = buttonsCollectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0)
-            let cell = buttonsCollectionView.cellForItem(at: idxPath)
             animatedTransitioning = CardFlipAnimatedTransitioning(
-                targetView: cell ?? view,
+                targetView: targetView() ?? view,
                 isPresenting: false
             )
         }
@@ -303,7 +316,6 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
         case .none:
             return nil
         }
-
     }
 
 }

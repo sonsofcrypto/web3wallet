@@ -131,7 +131,7 @@ extension DefaultSettingsInteractor: SettingsInteractor {
         switch action {
         case .resetKeyStore:
             try? keyStoreService.reset()
-            fatalError("Killing app after keyStore reset")
+//            fatalError("Killing app after keyStore reset")
             return true
         default:
             return false

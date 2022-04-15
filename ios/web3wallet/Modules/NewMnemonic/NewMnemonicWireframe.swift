@@ -47,7 +47,7 @@ extension DefaultNewMnemonicWireframe: NewMnemonicWireframe {
             vc.transitioningDelegate = transitionDelegate
         }
 
-        vc.modalPresentationStyle = .custom
+        vc.modalPresentationStyle = .overCurrentContext
 
         self.vc = vc
         topVc?.show(vc, sender: self)

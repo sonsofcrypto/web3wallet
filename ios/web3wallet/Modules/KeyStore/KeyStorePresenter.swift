@@ -90,6 +90,7 @@ private extension DefaultKeyStorePresenter {
 
     func handleDidSelectAccessory(at idx: Int) {
         targetView = .buttonAt(idx: idx)
+        updateView()
         let item = interactor.keyStoreItems[idx]
         wireframe.navigate(to: .keyStoreItem(item: item) { [weak self] item in
             self?.handleDidUpdateNewKeyStoreItem(item)
@@ -102,6 +103,7 @@ private extension DefaultKeyStorePresenter {
 
     func handleButtonAction(at idx: Int) {
         targetView = .buttonAt(idx: idx)
+        updateView()
 
         switch buttonsViewModel.buttons[idx].type {
         case .newMnemonic:
@@ -140,16 +142,20 @@ private extension DefaultKeyStorePresenter {
 
     func handleDidCreateNewKeyStoreItem(_ keyStoreItem: KeyStoreItem) {
         interactor.selectedKeyStoreItem = keyStoreItem
+
         if let idx = interactor.index(of: keyStoreItem) {
             targetView = .keyStoreItemAt(idx: idx)
         }
-        view?.update(with: viewModel())
-        // Start target view for dismiss when navigating to create / import / edit
-        // Handle animation type based on settings store
-        // Handle animating logo to 0 in viewController only based on current value
+
+        updateView()
+
         if interactor.keyStoreItems.count == 1 {
-            handleFirstSeedCreation(keyStoreItem)
+            // HACK: -
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) { [weak self] in
+                self?.wireframe.navigate(to: .dashBoard)
+            }
         }
+
         targetView = .none
     }
 
@@ -177,11 +183,10 @@ private extension DefaultKeyStorePresenter {
             items: interactor.keyStoreItems.map {
                 KeyStoreViewModel.KeyStoreItem(title: $0.name)
             },
-            selectedIdx: interactor.keyStoreItems.firstIndex(
-                where: { $0.uuid == active?.uuid }
-            ),
+            selectedIdxs: [interactor.index(of: interactor.selectedKeyStoreItem)]
+                .compactMap{  $0 },
             buttons: buttonsViewModel,
-            targetView: .none
+            targetView: targetView
         )
     }
 

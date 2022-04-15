@@ -8,7 +8,7 @@ struct KeyStoreViewModel {
     let isEmpty: Bool
     let state: State
     let items: [KeyStoreItem]
-    let selectedIdx: Int?
+    let selectedIdxs: [Int]
     let buttons: ButtonSheetViewModel
     let targetView: TransitionTargetView
 }

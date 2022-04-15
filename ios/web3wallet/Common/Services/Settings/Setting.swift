@@ -17,7 +17,7 @@ extension Setting {
     enum CreateWalletTransitionTypeOptions: Int, CaseIterable, Codable, Equatable {
         case cardFlip
         case dismissCardFlip
-        case dismissMorph
+        case sheet
     }
 }
 

@@ -98,7 +98,13 @@ extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
                     handler(keyStoreItem)
                 }
             }
-            view?.dismiss(animated: true, completion: {})
+
+            // NOTE: Dispatching on next run loop so that presenting controller
+            // collectionView has time to reload and does not break custom
+            // dismiss animation
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.view?.dismiss(animated: true, completion: {})
+            }
         case let .didSelectDismiss:
             view?.dismiss(animated: true, completion: {})
         }

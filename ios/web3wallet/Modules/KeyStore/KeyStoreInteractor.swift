@@ -18,7 +18,7 @@ protocol KeyStoreInteractor: AnyObject {
     /// returns nil if items are not loaded yet
     func keyStoreItem(at idx: Int) -> KeyStoreItem?
 
-    func index(of keyStoreItem: KeyStoreItem) -> Int?
+    func index(of keyStoreItem: KeyStoreItem?) -> Int?
 
     func add(_ keyStoreItem: KeyStoreItem) throws
 
@@ -65,7 +65,10 @@ extension DefaultKeyStoreInteractor: KeyStoreInteractor {
         keyStoreService.keyStoreItem(at: idx)
     }
 
-    func index(of keyStoreItem: KeyStoreItem) -> Int? {
+    func index(of keyStoreItem: KeyStoreItem?) -> Int? {
+        guard let keyStoreItem = keyStoreItem else {
+            return nil
+        }
         return keyStoreItems.firstIndex(where: { $0.uuid == keyStoreItem.uuid })
     }
 

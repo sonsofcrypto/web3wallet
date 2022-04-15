@@ -30,33 +30,27 @@ git submodule update --init --recursive
 	- [] Create multisig
 
 ## UI tasks: 
-	- [x] Layout for topCard
-	- [x] Fix tapping on home screen
-	- [x] Fix end of swipe gesture to left from home screen
-	- [x] Create wallet VC
-	- [ ] Implement custom layout for separators
-	- [x] Add opening funtionality for salt
-	- [ ] Add inset for keybord and scroll to fiedl when keyboard comes up
-	- [x] Aninate neon logo on apprearif empty
-	- [x] Create sheet view for buttons
-	- [ ] Animate to home screen after creating wallet
-	- [ ] Create wallet to transition
-		- Custom for dismiss, via delegage to parent
-	- [ ] Create wallet from transition
+	- [ ] Presentation sheet, dismiss flip
+	- [ ] Make first animation to dashboard slower for 2 taps flow
 	- [ ] Add setting to cell 
+	- [ ] Inset KeyStore collection view
+	- [ ] Show button sheet bg when to many keystore items
+	- [ ] Copy menmonic on tap
 	- [ ] Add edit / settings mode
-	- [ ] Add restore VC
-	- [x] Swiping on overview (Either go to bottom or master)
-	- [x] Swiping on top card (Either go to bottom or master)
-	- [x] Swiping on bottom card (Either go to network)
-	- [x] Animate scale and coreners only for to and from master transitions
+	- [ ] Add import mode
+	- [ ] Cta to have correct tilte for each mode
+	- [ ] Implement one tap setup
+	- [ ] One tap launch
+	- [ ] One tap switch wallet netwrok button
+	- [ ] One swipe hin anim (only show it until user uses one)
+	- [ ] Implemnet voldemort
+	- [ ] Add inset for keybord and scroll to fiedl when keyboard comes up
+	- [ ] Interactive gesture for dismisg card flip
+ 	- [ ] Implement custom layout for separators
 	- [ ] Fix buttons layout in edgecards
 	- [ ] Bug `EdgeCardsViewController` after transition, there small window (0.25s) when taps are registered
-	- [ ] Animate buttons on appear if wallets is empty
-	- [ ] Create password VC
-	- [ ] Copy menmonic on tap
 	- [ ] Play haptics when swipe starts
-	- [ ] Interactive gesture for dismisg card flip
+	- [ ] Create password VC
 
 	- [] w2 Connection to networks
 		- [] RPC APIs
@@ -69,11 +63,8 @@ git submodule update --init --recursive
 
 ## TODO(web3dgn):
 	- [] Under construction wireframe
-	- [] Add theme option to settings
-		- [] Theme picker module
-	- [] Tab bar icons are not showing until first tap on the tab. Dont know why
-	- [] Add swipe to delete to wallets scree
 	- [] Add under construction with animation
+	- [] Add swipe to delete to wallets scree
 
 ## TODO(design4.crypto):
 	- [] Redesign enter PIN / Pass / Salt
