@@ -10,6 +10,7 @@ enum KeyStoreWireframeDestination {
 
     case networks
     case dashBoard
+    case dashBoardOnboarding
     case keyStoreItem(item: KeyStoreItem, handler: KeyStoreItemHandler)
     case newMnemonic(handler: KeyStoreItemHandler)
     case importMnemonic(handler: KeyStoreItemHandler)
@@ -78,6 +79,8 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
             edgeVc?.setDisplayMode(.overviewTopCard, animated: true)
         case .dashBoard:
             edgeVc?.setDisplayMode(.master, animated: true)
+        case .dashBoardOnboarding:
+            edgeVc?.setDisplayMode(.masterOnboardAnim, animated: true)
         case let .newMnemonic(handler):
             let context = NewMnemonicContext(mode: .new, createHandler: handler)
             newMnemonic.makeWireframe(vc, context: context).present()

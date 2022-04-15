@@ -36,10 +36,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qHS-1N-7Oz" userLabel="logoContainer">
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qHS-1N-7Oz" userLabel="logoContainer">
                                 <rect key="frame" x="16" y="104" width="382" height="518"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="neon_logo" translatesAutoresizingMaskIntoConstraints="NO" id="LGz-3I-TeW">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="neon_logo" translatesAutoresizingMaskIntoConstraints="NO" id="LGz-3I-TeW">
                                         <rect key="frame" x="41.5" y="109.5" width="299" height="299"/>
                                     </imageView>
                                 </subviews>

@@ -153,8 +153,8 @@ private extension DefaultKeyStorePresenter {
         if interactor.keyStoreItems.count == 1 {
             // HACK: This is non ideal, but since we dont have `viewDidAppear`
             // simply animate to dashboard after first wallet was created
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) { [weak self] in
-                 self?.wireframe.navigate(to: .dashBoard)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) { [weak self] in
+                 self?.wireframe.navigate(to: .dashBoardOnboarding)
             }
         }
 

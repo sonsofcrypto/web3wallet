@@ -334,9 +334,10 @@ extension KeyStoreViewController {
     func animateIntro() {
         guard viewModel?.isEmpty ?? false else {
             animateButtonsIntro()
+            logoContainer.alpha = 1
             return
         }
-
+        
         (logoContainer.alpha, logoView.alpha) = (0, 0)
         animateButtonsIntro()
 
@@ -358,7 +359,7 @@ extension KeyStoreViewController {
         setButtonsSheetMode(.hidden, animated: false)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
-            self?.setButtonsSheetMode(.compact, animated: false)
+            self?.setButtonsSheetMode(.compact, animated: true)
         }
     }
 }

@@ -30,23 +30,20 @@ git submodule update --init --recursive
 	- [] Create multisig
 
 ## UI tasks: 
-	- [ ] Make first animation to dashboard slower for 2 taps flow
-	- [x] Show button sheet bg when to many keystore items
-	- [x] Copy menmonic on tap
+	- [x] Make first animation to dashboard slower for 2 taps flow
 	- [ ] Add edit / settings mode
 	- [ ] Add import mode
-	- [ ] Cta to have correct tilte for each mode
 	- [ ] One tap launch
 	- [ ] One tap switch wallet netwrok button
 	- [ ] One swipe edge anim (only show it until user uses one)
 	- [ ] Implemnet voldemort
 	- [ ] Add inset for keybord and scroll to fiedl when keyboard comes up
  	- [ ] Implement custom layout for separators
-	- [ ] Bug `EdgeCardsViewController` after transition, there small window (0.25s) when taps are registered
+	- [x] Bug `EdgeCardsViewController` after transition, there small window (0.25s) when taps are registered
 	- [ ] Interactive gesture for dismisg card flip
-	- [x] Fix buttons layout in edgecards
 	- [ ] Create password VC
 	- [ ] Play haptics when swipe starts
+	- [ ] Remove debug print from `KeyStoreView`
 
 	- [] w2 Connection to networks
 		- [] RPC APIs

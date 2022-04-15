@@ -75,6 +75,11 @@ class EdgeCardsController: UIViewController {
     }
 
     func setDisplayMode(_ mode: DisplayMode, animated: Bool = false) {
+        guard mode != .masterOnboardAnim else {
+            onboardAnimToMaster()
+            return
+        }
+
         guard animated else {
             setupForDisplayMode(mode)
             return
@@ -87,12 +92,6 @@ class EdgeCardsController: UIViewController {
             animations: { self.setupForDisplayMode(mode) }
         )
     }
-
-    override func viewWillLayoutSubviews() {
-        layout()
-        super.viewWillLayoutSubviews()
-    }
-
 
     @objc func edgePanned(_ recognizer: UIScreenEdgePanGestureRecognizer) {
         panned(recognizer)
@@ -180,6 +179,8 @@ private extension EdgeCardsController {
             layoutToTop()
         case .bottomCard:
             layoutToBottom()
+        case .masterOnboardAnim:
+            layoutToMasterOnboardAnim()
         }
     }
 
@@ -322,6 +323,13 @@ private extension EdgeCardsController {
         }
     }
 
+    func layoutToMasterOnboardAnim() {
+        let transform = CGAffineTransform(translationX: view.bounds.width, y: 0)
+        containers.forEach {
+            $0.transform = $0 == bottomCardContainer ? .identity : transform
+        }
+    }
+
     func applyShadows(_ container: UIView) {
         guard sizeChangingTransition() else {
             applyShadows(
@@ -342,6 +350,7 @@ private extension EdgeCardsController {
             opacity: Float(min(1, progress))
         )
     }
+
 
     private func applyShadows(
         _ container: UIView,
@@ -420,11 +429,43 @@ private extension EdgeCardsController {
 
     func sizeChangingTransition() -> Bool {
         (swipingToMode == .master && displayMode != .master) ||
-        (swipingToMode == .overview && displayMode != .overview)
+        (swipingToMode == .overview && displayMode != .overview) ||
+        displayMode == .masterOnboardAnim
     }
 
     func pctVal(from: CGFloat, to: CGFloat, pct: CGFloat) -> CGFloat {
         (to - from) * pct + from
+    }
+}
+
+// MARK: - On-boarding animations
+
+extension EdgeCardsController {
+
+    func onboardAnimToMaster(_ handler: (()->Void)? = nil) {
+        [masterContainer, topCardContainer].forEach {
+            $0.transform = .init(translationX: view.bounds.width, y: 0)
+            applyShadows($0, radius: Constant.cornerRadius, opacity: 1)
+        }
+
+        UIView.springAnimate(1, damping: 0.9, velocity: 0.5, animations: {
+            self.topCardContainer.transform = .identity
+            self.applyShadows(self.topCardContainer, radius: 0, opacity: 1)
+            self.applyShadows(self.bottomCardContainer, radius: Constant.cornerRadius, opacity: 1)
+            self.bottomCardContainer.transform = .init(scaleX: 0.975, y: 0.975)
+                .concatenating(.init(translationX: -50, y: 0))
+        })
+
+        UIView.springAnimate(1, delay: 0.05, damping: 0.9, velocity: 0.5,
+            animations: {
+                self.masterContainer.transform = .identity
+                self.applyShadows(self.masterContainer, radius: 0, opacity: 1)
+            },
+            completion: { _ in
+                self.setDisplayMode(.master, animated: false)
+                handler?()
+            }
+        )
     }
 }
 
@@ -503,6 +544,7 @@ extension EdgeCardsController {
         case bottomCard
         case overviewTopCard
         case overviewBottomCard
+        case masterOnboardAnim
 
         func isFullScreen() -> Bool {
             switch self {

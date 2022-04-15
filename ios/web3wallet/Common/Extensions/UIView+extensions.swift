@@ -14,7 +14,7 @@ extension UIView {
         options: UIView.AnimationOptions = [
             .allowUserInteraction,
             .allowAnimatedContent,
-            .beginFromCurrentState
+            .beginFromCurrentState,
         ],
         animations: @escaping () -> Void,
         completion: ((Bool) -> Void)? = nil
@@ -24,6 +24,7 @@ extension UIView {
             delay: delay,
             usingSpringWithDamping: damping,
             initialSpringVelocity: velocity,
+            options: options,
             animations: animations,
             completion: completion
         )
