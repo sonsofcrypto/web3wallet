@@ -8,6 +8,7 @@ struct NewMnemonicViewModel {
     var sectionsItems: [[Item]]
     var headers: [Header]
     var footers: [Footer]
+    var cta: String
 }
 
 // MARK: - Access utilities

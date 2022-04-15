@@ -583,6 +583,7 @@
                     <navigationItem key="navigationItem" title="networks" id="saj-cA-yGt"/>
                     <connections>
                         <outlet property="collectionView" destination="o2F-PC-Oid" id="yiK-fJ-8r8"/>
+                        <outlet property="ctaButton" destination="lII-AR-ver" id="dnn-48-Rjl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RKe-va-vex" sceneMemberID="firstResponder"/>

@@ -18,7 +18,8 @@ class NewMnemonicViewController: UIViewController {
     private var didAppear: Bool = false
 
     @IBOutlet weak var collectionView: UICollectionView!
-
+    @IBOutlet weak var ctaButton: Button!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -45,6 +46,7 @@ extension NewMnemonicViewController: NewMnemonicView {
 
     func update(with viewModel: NewMnemonicViewModel) {
         self.viewModel = viewModel
+        ctaButton.setTitle(viewModel.cta, for: .normal)
         didAppear
             ? collectionView.performBatchUpdates({})
             : collectionView.reloadData()

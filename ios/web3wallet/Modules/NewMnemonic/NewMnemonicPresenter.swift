@@ -134,7 +134,17 @@ private extension DefaultNewMnemonicPresenter {
                     highlightWords: Constant.mnemonicHighlightWords
                 ),
                 .none
-            ]
+            ],
+            cta: {
+                switch self.context.mode {
+                case .new:
+                    return Localized("newMnemonic.cta.new")
+                case .update:
+                    return Localized("newMnemonic.cta.update")
+                case .restore:
+                    return Localized("newMnemonic.cta.import")
+                }
+            }()
         )
     }
 

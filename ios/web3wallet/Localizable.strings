@@ -85,6 +85,9 @@
 "newMnemonic.passType.placeholder" = "Enter password";
 "newMnemonic.passType.allowFaceId" = "Allow unlock with FaceID";
 "newMnemonic.pasteboard" = "Mnemonic copied to pasteboard";
+"newMnemonic.cta.new" = "Create new wallet";
+"newMnemonic.cta.update" = "Update";
+"newMnemonic.cta.import" = "Import";
 
 "setting.action.resetKeyStore" = "Reset keystore";
 "setting.theme" = "Theme";
