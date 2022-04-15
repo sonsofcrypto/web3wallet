@@ -106,7 +106,7 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
         UIView.springAnimate(
             transitionDuration(using: context),
             damping: 0.9,
-            velocity: 0.5,
+            velocity: 0.6,
             animations: {
                 transformView.layer.transform = CATransform3DMakeRotation(angle, 0, 1, 0)
                 toView?.transform = CGAffineTransform(scaleX: -1, y: 1)
@@ -180,7 +180,7 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
         UIView.springAnimate(
             transitionDuration(using: context),
             damping: 0.9,
-            velocity: 0.5,
+            velocity: 0.6,
             animations: {
                 transformView.layer.transform = CATransform3DTranslate(
                     CATransform3DMakeRotation(angle, 0, 1, 0),

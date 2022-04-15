@@ -7,9 +7,16 @@ import UIKit
 class KeyStoreCell: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
-
+    @IBOutlet weak var accessoryButton: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         titleLabel.applyStyle(.callout)
+        accessoryButton.tintColor = Theme.current.textColorTertiary
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        accessoryButton.removeAllTargets()
     }
 }

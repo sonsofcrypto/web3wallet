@@ -7,6 +7,7 @@ import UIKit
 protocol KeyStoreView: AnyObject {
 
     func update(with viewModel: KeyStoreViewModel)
+    func updateTargetView(_ targetView: KeyStoreViewModel.TransitionTargetView)
 }
 
 class KeyStoreViewController: UIViewController {
@@ -16,6 +17,7 @@ class KeyStoreViewController: UIViewController {
     private var viewModel: KeyStoreViewModel?
     private var prevViewSize: CGSize = .zero
     private var firstAppear: Bool = true
+    private var transitionTargetView: KeyStoreViewModel.TransitionTargetView = .none
     private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -60,6 +62,7 @@ extension KeyStoreViewController: KeyStoreView {
         let btnsNeedsUpdate = isExpanded != viewModel.buttons.isExpanded
 
         self.viewModel = viewModel
+        updateTargetView(viewModel.targetView)
         btnsNeedsUpdate ? updateButtonsView() : ()
         collectionView.reloadData()
         updateLogo(viewModel)
@@ -68,6 +71,10 @@ extension KeyStoreViewController: KeyStoreView {
             selectedIdxPaths(),
             animated: presentedViewController == nil
         )
+    }
+
+    func updateTargetView(_ targetView: KeyStoreViewModel.TransitionTargetView) {
+        transitionTargetView = targetView
     }
 }
 
@@ -92,6 +99,13 @@ extension KeyStoreViewController: UICollectionViewDataSource {
 
         let cell = collectionView.dequeue(KeyStoreCell.self, for: indexPath)
         cell.titleLabel.text = viewModel?.items[indexPath.item].title
+        cell.accessoryButton.tag = indexPath.item
+        cell.accessoryButton.addTarget(
+            self,
+            action: #selector(accessoryAction(_:)),
+            for: .touchUpInside
+        )
+
         return cell
     }
 }
@@ -104,6 +118,10 @@ extension KeyStoreViewController: UICollectionViewDelegate {
             return
         }
         presenter.handle(.didSelectKeyStoreItemtAt(idx: indexPath.item))
+    }
+
+    @objc func accessoryAction(_ sender: UIButton) {
+        presenter.handle(.didSelectAccessory(idx: sender.tag))
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -312,11 +330,7 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
     }
 
     func targetView() -> UIView? {
-        guard let targetView = viewModel?.targetView else {
-            return nil
-        }
-
-        switch targetView {
+        switch transitionTargetView {
         case let .keyStoreItemAt(idx):
             return collectionView.cellForItem(at: IndexPath(item: idx, section: 0))
         case let .buttonAt(idx):

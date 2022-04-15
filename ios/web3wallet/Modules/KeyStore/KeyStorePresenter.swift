@@ -92,8 +92,8 @@ private extension DefaultKeyStorePresenter {
     }
 
     func handleDidSelectAccessory(at idx: Int) {
-        targetView = .buttonAt(idx: idx)
-        updateView()
+        targetView = .keyStoreItemAt(idx: idx)
+        view?.updateTargetView(targetView)
         let item = interactor.keyStoreItems[idx]
         wireframe.navigate(to: .keyStoreItem(item: item) { [weak self] item in
             self?.handleDidUpdateNewKeyStoreItem(item)
@@ -106,7 +106,7 @@ private extension DefaultKeyStorePresenter {
 
     func handleButtonAction(at idx: Int) {
         targetView = .buttonAt(idx: idx)
-        updateView()
+        view?.updateTargetView(targetView)
 
         switch buttonsViewModel.buttons[idx].type {
         case .newMnemonic:

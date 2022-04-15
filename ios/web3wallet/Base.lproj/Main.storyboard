@@ -67,21 +67,39 @@
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="64"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="1" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ohs-rQ-JZw">
-                                                    <rect key="frame" x="16" y="16" width="311" height="32"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="e1h-3q-Owm">
+                                                    <rect key="frame" x="16" y="0.0" width="311" height="64"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="1" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ohs-rQ-JZw">
+                                                            <rect key="frame" x="0.0" y="22" width="234" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="400" verticalHuggingPriority="400" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ia-Pg-j9W" customClass="Button" customModule="web3wallet" customModuleProvider="target">
+                                                            <rect key="frame" x="250" y="14" width="36" height="36"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="5ia-Pg-j9W" secondAttribute="height" id="5Hq-sq-gIH"/>
+                                                                <constraint firstAttribute="width" constant="36" id="mnF-c2-4eQ"/>
+                                                            </constraints>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="plain" image="settings"/>
+                                                        </button>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="500" verticalHuggingPriority="500" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="arrow_cell_forward" translatesAutoresizingMaskIntoConstraints="NO" id="W35-97-LYE">
+                                                            <rect key="frame" x="302" y="24.5" width="9" height="15"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="Ohs-rQ-JZw" secondAttribute="trailing" constant="16" id="8nw-9d-gxS"/>
-                                                <constraint firstItem="Ohs-rQ-JZw" firstAttribute="top" secondItem="vlB-Z4-bZB" secondAttribute="top" constant="16" id="IaE-Av-haY"/>
-                                                <constraint firstItem="Ohs-rQ-JZw" firstAttribute="leading" secondItem="vlB-Z4-bZB" secondAttribute="leading" constant="16" id="c3A-WD-gDQ"/>
-                                                <constraint firstAttribute="bottom" secondItem="Ohs-rQ-JZw" secondAttribute="bottom" constant="16" id="sxk-eP-0T1"/>
+                                                <constraint firstItem="e1h-3q-Owm" firstAttribute="leading" secondItem="vlB-Z4-bZB" secondAttribute="leading" constant="16" id="0p7-cE-HJM"/>
+                                                <constraint firstItem="e1h-3q-Owm" firstAttribute="top" secondItem="vlB-Z4-bZB" secondAttribute="top" id="BwK-rs-17Z"/>
+                                                <constraint firstAttribute="bottom" secondItem="e1h-3q-Owm" secondAttribute="bottom" id="hdK-X9-u0Z"/>
+                                                <constraint firstAttribute="trailing" secondItem="e1h-3q-Owm" secondAttribute="trailing" constant="16" id="kcU-7v-QhH"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
+                                            <outlet property="accessoryButton" destination="5ia-Pg-j9W" id="6BA-zK-pkC"/>
                                             <outlet property="titleLabel" destination="Ohs-rQ-JZw" id="FIi-yz-4az"/>
                                         </connections>
                                     </collectionViewCell>
@@ -321,7 +339,7 @@
                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="9" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="5Ba-cf-fza" customClass="TextField" customModule="web3wallet" customModuleProvider="target">
                                                             <rect key="frame" x="139.5" y="6" width="171.5" height="34"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                            <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" textContentType="name"/>
                                                         </textField>
                                                     </subviews>
                                                 </stackView>
@@ -1761,6 +1779,7 @@
         <image name="neon_logo" width="299" height="299"/>
         <image name="placeholder_apps" width="376" height="812"/>
         <image name="placeholder_nfts" width="375" height="812"/>
+        <image name="settings" width="17" height="17"/>
         <namedColor name="appRed">
             <color red="0.90600001811981201" green="0.21600000560283661" blue="0.58399999141693115" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
