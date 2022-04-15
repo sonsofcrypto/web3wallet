@@ -178,6 +178,9 @@ extension KeyStoreViewController {
             + 2
         print("=== configuring insets", view.bounds, inset)
         buttonsCollectionView.contentInset.top = inset
+        collectionView.contentInset.bottom = view.bounds.height
+            - Global.cellHeight
+            - inset
     }
 
     func layoutButtonsBackground() {

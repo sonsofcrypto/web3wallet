@@ -30,10 +30,9 @@ git submodule update --init --recursive
 	- [] Create multisig
 
 ## UI tasks: 
-	- [ ] Presentation sheet, dismiss flip
 	- [ ] Make first animation to dashboard slower for 2 taps flow
-	- [ ] Add setting to cell 
-	- [ ] Inset KeyStore collection view
+	- [x] Add setting to cell 
+	- [x] Inset KeyStore collection view
 	- [ ] Show button sheet bg when to many keystore items
 	- [ ] Copy menmonic on tap
 	- [ ] Add edit / settings mode

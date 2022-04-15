@@ -51,7 +51,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hyQ-ni-ASc">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="622"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="19" minimumInteritemSpacing="19" id="5hE-y9-aoB">
                                     <size key="itemSize" width="343" height="64"/>
@@ -172,7 +172,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="hyQ-ni-ASc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="0jl-91-o9N"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="hyQ-ni-ASc" secondAttribute="bottom" constant="240" id="7UP-Zu-MhV"/>
+                            <constraint firstAttribute="bottom" secondItem="hyQ-ni-ASc" secondAttribute="bottom" id="7UP-Zu-MhV"/>
                             <constraint firstItem="fg6-vF-oBb" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="85U-Lw-qg2"/>
                             <constraint firstItem="hyQ-ni-ASc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="8fp-In-rzm"/>
                             <constraint firstItem="qHS-1N-7Oz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="CkL-XI-LhO"/>
