@@ -60,8 +60,8 @@ class KeyStoreViewController: UIViewController {
         super.viewDidLayoutSubviews()
         if needsLayoutUI {
             configureInsets()
-            layoutButtonsBackground()
             setButtonsSheetMode(viewModel?.buttons.sheetMode, animated: false)
+            layoutButtonsBackground()
             needsLayoutUI = false
         }
         debugPrint("viewDidLayoutSubviews")
@@ -91,6 +91,8 @@ class KeyStoreViewController: UIViewController {
         print("view bounds", view.bounds)
         print("view safeAreaInsets", view.safeAreaInsets)
         print("view alignmentRectInsets", view.alignmentRectInsets)
+        print("cv contentInset", collectionView.contentInset)
+        print("cv contentSize", collectionView.contentSize)
         print("bcv bounds", buttonsCollectionView.bounds)
         print("bcv contentSize", buttonsCollectionView.contentSize)
         print("bcv contentOffset", buttonsCollectionView.contentOffset)
@@ -168,6 +170,10 @@ extension KeyStoreViewController: UICollectionViewDelegate {
 
     @objc func accessoryAction(_ sender: UIButton) {
         presenter.handle(.didSelectAccessory(idx: sender.tag))
+    }
+
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        layoutButtonsBackground()
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -271,7 +277,7 @@ extension KeyStoreViewController {
             + 2
         buttonsCollectionView.contentInset.top = inset
         collectionView.contentInset.bottom = view.bounds.height
-            - Global.cellHeight - Global.padding - inset
+            - Global.cellHeight - inset
     }
 
     func layoutButtonsBackground() {
@@ -291,7 +297,11 @@ extension KeyStoreViewController {
         )
 
         if let cv = buttonsCollectionView {
-            let alpha = (cv.contentInset.top + cv.contentOffset.y) / 100
+            let contentHeight = collectionView.contentSize.height
+            var alpha = (cv.contentInset.top + cv.contentOffset.y) / 100
+            if contentHeight + view.safeAreaInsets.top  > -cv.contentOffset.y {
+                alpha = 1
+            }
             buttonBackgroundView.alpha = min(1, max(0, alpha))
         }
     }

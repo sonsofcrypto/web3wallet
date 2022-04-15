@@ -31,7 +31,7 @@ git submodule update --init --recursive
 
 ## UI tasks: 
 	- [ ] Make first animation to dashboard slower for 2 taps flow
-	- [ ] Show button sheet bg when to many keystore items
+	- [x] Show button sheet bg when to many keystore items
 	- [x] Copy menmonic on tap
 	- [ ] Add edit / settings mode
 	- [ ] Add import mode
