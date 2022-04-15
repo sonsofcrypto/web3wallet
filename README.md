@@ -31,25 +31,22 @@ git submodule update --init --recursive
 
 ## UI tasks: 
 	- [ ] Make first animation to dashboard slower for 2 taps flow
-	- [x] Add setting to cell 
-	- [x] Inset KeyStore collection view
 	- [ ] Show button sheet bg when to many keystore items
 	- [ ] Copy menmonic on tap
 	- [ ] Add edit / settings mode
 	- [ ] Add import mode
 	- [ ] Cta to have correct tilte for each mode
-	- [ ] Implement one tap setup
 	- [ ] One tap launch
 	- [ ] One tap switch wallet netwrok button
-	- [ ] One swipe hin anim (only show it until user uses one)
+	- [ ] One swipe edge anim (only show it until user uses one)
 	- [ ] Implemnet voldemort
 	- [ ] Add inset for keybord and scroll to fiedl when keyboard comes up
-	- [ ] Interactive gesture for dismisg card flip
  	- [ ] Implement custom layout for separators
-	- [ ] Fix buttons layout in edgecards
 	- [ ] Bug `EdgeCardsViewController` after transition, there small window (0.25s) when taps are registered
-	- [ ] Play haptics when swipe starts
+	- [ ] Interactive gesture for dismisg card flip
+	- [ ] Fix buttons layout in edgecards
 	- [ ] Create password VC
+	- [ ] Play haptics when swipe starts
 
 	- [] w2 Connection to networks
 		- [] RPC APIs
