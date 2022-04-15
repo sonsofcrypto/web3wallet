@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import UniformTypeIdentifiers
 
 enum NewMnemonicPresenterEvent {
     case didChangeName(name: String)
@@ -13,6 +14,7 @@ enum NewMnemonicPresenterEvent {
     case passTypeDidChange(idx: Int)
     case passwordDidChange(text: String)
     case allowFaceIdDidChange(onOff: Bool)
+    case didTapMnemonic
     case didSelectCta
     case didSelectDismiss
 }
@@ -86,7 +88,11 @@ extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
             keyStoreItem.password = text
         case let .allowFaceIdDidChange(onOff):
             keyStoreItem.allowPswdUnlockWithFaceId = onOff
-        case let .didSelectCta:
+        case .didTapMnemonic:
+            let pasteBoard = UIPasteboard.general.setItems(
+                [[UTType.utf8PlainText.identifier: keyStoreItem.mnemonic]],
+                options: [.expirationDate: Date().addingTimeInterval(30.0)])
+        case .didSelectCta:
             interactor.update(keyStoreItem)
             switch context.mode {
             case .update:

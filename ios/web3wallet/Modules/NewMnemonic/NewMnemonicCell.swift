@@ -31,7 +31,7 @@ class NewMnemonicCell: CollectionViewCell {
         attrs[.font] = Theme.current.headline
 
         textView.attributedText = NSAttributedString(
-            string: viewModel.value ?? "",
+            string: viewModel.value,
             attributes: attrs
         )
 
@@ -40,5 +40,37 @@ class NewMnemonicCell: CollectionViewCell {
         overlay.isHidden = viewModel.type != .editHidden
         textView.isEditable = viewModel.type == .importing
         return self
+    }
+}
+
+// MARK: - Animation
+
+extension NewMnemonicCell {
+
+    func animateCopiedToPasteboard() {
+        let prevText = overlayLabel.text
+        let prevHidden = overlay.isHidden
+        let prevAlpha = overlay.alpha
+
+        overlay.alpha = 0
+        overlay.isHidden = false
+        overlayLabel.text = Localized("newMnemonic.pasteboard")
+
+        UIView.animate(
+            withDuration: 0.2,
+            animations: { self.overlay.alpha = 1},
+            completion: { _ in
+                UIView.animate(
+                    withDuration: 0.2,
+                    delay: 0.5,
+                    animations: { self.overlay.alpha = 0 },
+                    completion: { _ in
+                        self.overlayLabel.text = prevText
+                        self.overlay.isHidden = prevHidden
+                        self.overlay.alpha = prevAlpha
+                    }
+                )
+            }
+        )
     }
 }

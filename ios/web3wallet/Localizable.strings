@@ -84,6 +84,7 @@
 "newMnemonic.passType.touchId" = "Touch ID";
 "newMnemonic.passType.placeholder" = "Enter password";
 "newMnemonic.passType.allowFaceId" = "Allow unlock with FaceID";
+"newMnemonic.pasteboard" = "Mnemonic copied to pasteboard";
 
 "setting.action.resetKeyStore" = "Reset keystore";
 "setting.theme" = "Theme";

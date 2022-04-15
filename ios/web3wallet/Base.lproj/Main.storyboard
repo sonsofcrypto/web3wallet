@@ -15,7 +15,6 @@
             <objects>
                 <navigationController id="cnO-ev-hje" customClass="NavigationController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="aZg-iz-PJC">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <navigationBarAppearance key="scrollEdgeAppearance">
                             <color key="backgroundColor" red="0.12941176470588234" green="0.11764705882352941" blue="0.23921568627450979" alpha="0.75061118197278898" colorSpace="custom" customColorSpace="sRGB"/>
@@ -240,10 +239,10 @@
             </objects>
             <point key="canvasLocation" x="1776.8115942028987" y="873.88392857142856"/>
         </scene>
-        <!--networks-->
+        <!--Mnemonic-->
         <scene sceneID="JRC-M4-aCL">
             <objects>
-                <viewController storyboardIdentifier="NewMnemonicViewController" title="networks" id="Rza-4a-dCf" customClass="NewMnemonicViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewMnemonicViewController" title="Mnemonic" id="Rza-4a-dCf" customClass="NewMnemonicViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wSx-bk-MJZ" customClass="GradientView" customModule="web3wallet" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -265,7 +264,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="149"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SHP-R6-hmv">
+                                                <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SHP-R6-hmv">
                                                     <rect key="frame" x="16" y="16" width="311" height="117"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <color key="textColor" systemColor="labelColor"/>
@@ -1641,7 +1640,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="SettingsCell" reuseIdentifier="SettingsCell" id="cCr-ai-rSY" userLabel="SettingsCell" customClass="SettingsCell" customModule="web3wallet" customModuleProvider="target">
-                                        <rect key="frame" x="35.5" y="150" width="343" height="46"/>
+                                        <rect key="frame" x="35.5" y="20" width="343" height="46"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="JeE-NT-l52">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="46"/>
@@ -1708,7 +1707,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="SettingsActionCell" reuseIdentifier="SettingsActionCell" id="qk2-Rx-RbE" userLabel="SettingsActionCell" customClass="SettingsActionCell" customModule="web3wallet" customModuleProvider="target">
-                                        <rect key="frame" x="35.5" y="20" width="343" height="46"/>
+                                        <rect key="frame" x="35.5" y="150" width="343" height="46"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Yfb-cD-McM">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="46"/>

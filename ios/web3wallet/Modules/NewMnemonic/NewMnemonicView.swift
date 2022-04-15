@@ -157,13 +157,18 @@ extension NewMnemonicViewController: UICollectionViewDataSource {
         }
         fatalError("Failed to handle \(kind) \(indexPath)")
     }
-
-    func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
 }
 
 extension NewMnemonicViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        if indexPath.item == 0 {
+            presenter.handle(.didTapMnemonic)
+            let cell = collectionView.cellForItem(at: IndexPath(item:0, section: 0))
+            (cell as? NewMnemonicCell)?.animateCopiedToPasteboard()
+        }
+        return false
+    }
 
     func nameDidChange(_ name: String) {
         presenter.handle(.didChangeName(name: name))
