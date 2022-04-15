@@ -15,11 +15,11 @@ class KeyStoreViewController: UIViewController {
     var presenter: KeyStorePresenter!
 
     private var viewModel: KeyStoreViewModel?
-    private var prevViewSize: CGSize = .zero
-    private var didChangeBounds: Bool = false
-    private var firstAppear: Bool = true
     private var transitionTargetView: KeyStoreViewModel.TransitionTargetView = .none
     private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
+    private var prevViewSize: CGSize = .zero
+    private var needsLayoutUI: Bool = false
+    private var firstAppear: Bool = true
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var logoContainer: UIView!
@@ -51,18 +51,18 @@ class KeyStoreViewController: UIViewController {
             collectionView.collectionViewLayout.invalidateLayout()
             buttonsCollectionView.collectionViewLayout.invalidateLayout()
             prevViewSize = view.bounds.size
-            didChangeBounds = true
+            needsLayoutUI = true
         }
         debugPrint("viewWillLayoutSubviews")
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if didChangeBounds {
+        if needsLayoutUI {
             configureInsets()
             layoutButtonsBackground()
-            updateButtonsView(false)
-            didChangeBounds = false
+            setButtonsSheetMode(viewModel?.buttons.sheetMode, animated: false)
+            needsLayoutUI = false
         }
         debugPrint("viewDidLayoutSubviews")
     }
@@ -79,11 +79,12 @@ class KeyStoreViewController: UIViewController {
         super.viewSafeAreaInsetsDidChange()
         collectionView.collectionViewLayout.invalidateLayout()
         buttonsCollectionView.collectionViewLayout.invalidateLayout()
-        didChangeBounds = true
+        needsLayoutUI = true
         debugPrint("viewSafeAreaInsetsDidChange")
     }
 
     func debugPrint(_ msg: String? = nil) {
+        return;
         if let msg = msg {
             print(msg)
         }
@@ -104,14 +105,13 @@ class KeyStoreViewController: UIViewController {
 extension KeyStoreViewController: KeyStoreView {
 
     func update(with viewModel: KeyStoreViewModel) {
-        let isExpanded = self.viewModel?.buttons.isExpanded
-        let btnsNeedsUpdate = isExpanded != viewModel.buttons.isExpanded
-
+        self.viewModel?.buttons.sheetMode != viewModel.buttons.sheetMode
+            ? setButtonsSheetMode(viewModel.buttons.sheetMode)
+            : ()
         self.viewModel = viewModel
-        updateTargetView(viewModel.targetView)
-        btnsNeedsUpdate ? updateButtonsView() : ()
         collectionView.reloadData()
         updateLogo(viewModel)
+        updateTargetView(viewModel.targetView)
         buttonsCollectionView.deselectAllExcept()
         collectionView.deselectAllExcept(
             selectedIdxPaths(),
@@ -172,21 +172,7 @@ extension KeyStoreViewController: UICollectionViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         debugPrint("scrollViewDidScroll")
-        guard scrollView == buttonsCollectionView else {
-            return
-        }
-
-        layoutButtonsBackground()
-
-        guard scrollView.isDragging else {
-            return
-        }
-
-        presenter.handle(
-            .didChangeButtonsState(
-                open: buttonsCollectionView.visibleCells.count > 4
-            )
-        )
+        updateSheetModeIfNeeded(scrollView)
     }
 }
 
@@ -216,6 +202,65 @@ extension KeyStoreViewController {
             Theme.current.background,
             Theme.current.backgroundDark
         ]
+    }
+
+    func updateLogo(_ viewModel: KeyStoreViewModel) {
+        // NOTE: For first keyStore added, we animate logo to hidden
+        if !logoContainer.isHidden && !viewModel.isEmpty {
+            UIView.springAnimate(0.7, delay: 0.3, damping: 0.01, velocity: 0.8, animations: {
+                self.logoView.alpha = 0
+            })
+
+            UIView.animate(withDuration: 0.6, delay: 0.3) {
+                self.logoContainer.alpha = 0
+            }
+            return
+        }
+
+        logoContainer.isHidden = !viewModel.isEmpty
+    }
+
+    func selectedIdxPaths() -> [IndexPath] {
+        guard let viewModel = viewModel else {
+            return []
+        }
+
+        return viewModel.selectedIdxs.map { IndexPath(item: $0, section: 0) }
+    }
+}
+
+// MARK: - ButtonsSheet handling
+
+extension KeyStoreViewController {
+
+    func setButtonsSheetMode(
+        _ mode: ButtonSheetViewModel.SheetMode? = .compact,
+        animated: Bool = true
+    ) {
+        buttonsCollectionView.reloadData()
+
+        guard let mode = mode, let cv = buttonsCollectionView, !cv.isDragging else {
+            return
+        }
+
+        switch mode {
+        case .hidden:
+            buttonsCollectionView.setContentOffset(
+                CGPoint(x: 0, y: -view.bounds.height),
+                animated: false
+            )
+        case .compact:
+            buttonsCollectionView.setContentOffset(
+                CGPoint(x: 0, y: -cv.contentInset.top - cv.safeAreaInsets.top),
+                animated: animated
+            )
+        case .expanded:
+            let y = view.bounds.height - cv.contentSize.height - cv.safeAreaInsets.bottom
+            buttonsCollectionView.setContentOffset(
+                CGPoint(x: 0, y: -y),
+                animated: animated
+            )
+        }
     }
 
     func configureInsets() {
@@ -251,28 +296,30 @@ extension KeyStoreViewController {
         }
     }
 
-    func updateButtonsView(_ animated: Bool = true) {
-        buttonsCollectionView.reloadData()
-        let expanded = viewModel?.buttons.isExpanded ?? false
-
-        guard let cv = buttonsCollectionView,
-              !buttonsCollectionView.isDragging else {
+    func updateSheetModeIfNeeded(_ scrollView: UIScrollView) {
+        guard scrollView == buttonsCollectionView else {
             return
         }
 
-        if expanded {
-            let y = view.bounds.height - cv.contentSize.height - cv.safeAreaInsets.bottom
-            buttonsCollectionView.setContentOffset(
-                CGPoint(x: 0, y: -y),
-                animated: animated
-            )
-        } else {
-            buttonsCollectionView.setContentOffset(
-                CGPoint(x: 0, y: -cv.contentInset.top - cv.safeAreaInsets.top),
-                animated: animated
-            )
+        layoutButtonsBackground()
+
+        guard scrollView.isDragging else {
+            return
         }
+
+        let cellCount = buttonsCollectionView.visibleCells.count
+
+        presenter.handle(
+            .didChangeButtonsSheetMode(
+                sheetMode: cellCount > 4 ? .expanded : .compact
+            )
+        )
     }
+}
+
+// MARK: - Into animations
+
+extension KeyStoreViewController {
 
     func animateIntro() {
         guard viewModel?.isEmpty ?? false else {
@@ -281,6 +328,7 @@ extension KeyStoreViewController {
         }
 
         (logoContainer.alpha, logoView.alpha) = (0, 0)
+        animateButtonsIntro()
 
         UIView.springAnimate(0.7, damping: 0.01, velocity: 0.8, animations: {
             self.logoView.alpha = 1
@@ -289,24 +337,6 @@ extension KeyStoreViewController {
         UIView.animate(withDuration: 1) {
             self.logoContainer.alpha = 1
         }
-
-        animateButtonsIntro()
-    }
-
-    func updateLogo(_ viewModel: KeyStoreViewModel) {
-        // First keyStore added. Animate logo to hidded
-        if !logoContainer.isHidden && !viewModel.isEmpty {
-            UIView.springAnimate(0.7, delay: 0.3, damping: 0.01, velocity: 0.8, animations: {
-                self.logoView.alpha = 0
-            })
-
-            UIView.animate(withDuration: 0.6, delay: 0.3) {
-                self.logoContainer.alpha = 0
-            }
-            return
-        }
-
-        logoContainer.isHidden = !viewModel.isEmpty
     }
 
     func animateButtonsIntro() {
@@ -315,23 +345,11 @@ extension KeyStoreViewController {
         }
 
         firstAppear = false
-
-        buttonsCollectionView.setContentOffset(
-            CGPoint(x: 0, y: -view.bounds.height),
-            animated: false
-        )
+        setButtonsSheetMode(.hidden, animated: false)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
-            self?.updateButtonsView()
+            self?.setButtonsSheetMode(.compact, animated: false)
         }
-    }
-
-    func selectedIdxPaths() -> [IndexPath] {
-        guard let viewModel = viewModel else {
-            return []
-        }
-
-        return viewModel.selectedIdxs.map { IndexPath(item: $0, section: 0) }
     }
 }
 

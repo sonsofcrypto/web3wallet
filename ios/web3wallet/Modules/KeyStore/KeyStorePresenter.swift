@@ -9,7 +9,7 @@ enum KeyStorePresenterEvent {
     case didSelectAccessory(idx: Int)
     case didSelectErrorActionAt(idx: Int)
     case didSelectButtonAt(idx: Int)
-    case didChangeButtonsState(open: Bool)
+    case didChangeButtonsSheetMode(sheetMode: ButtonSheetViewModel.SheetMode)
 }
 
 protocol KeyStorePresenter {
@@ -29,7 +29,7 @@ class DefaultKeyStorePresenter {
     private var targetView: KeyStoreViewModel.TransitionTargetView = .none
     private var buttonsViewModel: ButtonSheetViewModel = .init(
         buttons: ButtonSheetViewModel.compactButtons(),
-        isExpanded: false
+        sheetMode: .compact
     )
 
     private weak var view: KeyStoreView?
@@ -74,8 +74,8 @@ extension DefaultKeyStorePresenter: KeyStorePresenter {
             handleDidSelectErrorAction(at: idx)
         case let .didSelectButtonAt(idx):
             handleButtonAction(at: idx)
-        case let .didChangeButtonsState(open):
-            handleDidChangeButtonsState(open)
+        case let .didChangeButtonsSheetMode(mode):
+            handleDidChangeButtonsState(mode)
         }
     }
 }
@@ -110,21 +110,15 @@ private extension DefaultKeyStorePresenter {
 
         switch buttonsViewModel.buttons[idx].type {
         case .newMnemonic:
-            buttonsViewModel = .init(
-                buttons: ButtonSheetViewModel.expandedButtons(),
-                isExpanded: true
-            )
-            updateView()
-
-//            wireframe.navigate(to: .newMnemonic { [weak self] keyStoreItem in
-//                self?.handleDidCreateNewKeyStoreItem(keyStoreItem)
-//            })
+            wireframe.navigate(to: .newMnemonic { [weak self] keyStoreItem in
+                self?.handleDidCreateNewKeyStoreItem(keyStoreItem)
+            })
         case .importMnemonic:
             wireframe.navigate(to: .importMnemonic { [weak self] item in
                 self?.handleDidCreateNewKeyStoreItem(item)
             })
         case .moreOption:
-            handleDidChangeButtonsState(true)
+            handleDidChangeButtonsState(.expanded)
         case .connectHardwareWallet:
             wireframe.navigate(to: .connectHardwareWaller)
         case .importPrivateKey:
@@ -134,19 +128,18 @@ private extension DefaultKeyStorePresenter {
         }
     }
 
-    func handleDidChangeButtonsState(_ open: Bool) {
-        guard buttonsViewModel.isExpanded != open else {
+    func handleDidChangeButtonsState(_ sheetMode: ButtonSheetViewModel.SheetMode) {
+        guard buttonsViewModel.sheetMode != sheetMode else {
             return
         }
 
         buttonsViewModel = .init(
-            buttons: open
-                ? ButtonSheetViewModel.expandedButtons()
-                : ButtonSheetViewModel.compactButtons()
-            ,
-            isExpanded: open
+            buttons: sheetMode.isCompact()
+                ? ButtonSheetViewModel.compactButtons()
+                : ButtonSheetViewModel.expandedButtons(),
+            sheetMode: sheetMode
         )
-        view?.update(with: viewModel())
+        updateView()
     }
 
     func handleDidCreateNewKeyStoreItem(_ keyStoreItem: KeyStoreItem) {

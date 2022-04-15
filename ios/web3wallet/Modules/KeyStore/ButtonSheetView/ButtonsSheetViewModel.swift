@@ -6,7 +6,7 @@ import Foundation
 
 struct ButtonSheetViewModel: Equatable {
     let buttons: [Button]
-    let isExpanded: Bool
+    let sheetMode: SheetMode
 }
 
 // MARK: - ButtonType
@@ -67,5 +67,9 @@ extension ButtonSheetViewModel {
         case hidden
         case compact
         case expanded
+
+        func isCompact() -> Bool {
+            return self != .expanded
+        }
     }
 }
