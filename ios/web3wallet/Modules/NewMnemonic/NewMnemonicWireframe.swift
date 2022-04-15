@@ -19,6 +19,7 @@ class DefaultNewMnemonicWireframe {
 
     private let interactor: NewMnemonicInteractor
     private let context: NewMnemonicContext
+    private let settingsService: SettingsService
 
     private weak var parent: UIViewController?
     private weak var vc: UIViewController?
@@ -26,11 +27,13 @@ class DefaultNewMnemonicWireframe {
     init(
         parent: UIViewController?,
         interactor: NewMnemonicInteractor,
-        context: NewMnemonicContext
+        context: NewMnemonicContext,
+        settingsService: SettingsService
     ) {
         self.interactor = interactor
         self.parent = parent
         self.context = context
+        self.settingsService = settingsService
     }
 }
 
@@ -47,7 +50,12 @@ extension DefaultNewMnemonicWireframe: NewMnemonicWireframe {
             vc.transitioningDelegate = transitionDelegate
         }
 
-        vc.modalPresentationStyle = .overCurrentContext
+        switch settingsService.createWalletTransitionType {
+        case .cardFlip:
+            vc.modalPresentationStyle = .overCurrentContext
+        case .sheet:
+            vc.modalPresentationStyle = .automatic
+        }
 
         self.vc = vc
         topVc?.show(vc, sender: self)

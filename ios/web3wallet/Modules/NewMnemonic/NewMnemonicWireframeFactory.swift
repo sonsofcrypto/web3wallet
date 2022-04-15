@@ -17,9 +17,14 @@ protocol NewMnemonicWireframeFactory {
 class DefaultNewMnemonicWireframeFactory {
 
     private let service: KeyStoreService
+    private let settingsService: SettingsService
 
-    init(_ service: KeyStoreService) {
+    init(
+        _ service: KeyStoreService,
+        settingsService: SettingsService
+    ) {
         self.service = service
+        self.settingsService = settingsService
     }
 }
 
@@ -34,7 +39,8 @@ extension DefaultNewMnemonicWireframeFactory: NewMnemonicWireframeFactory {
         DefaultNewMnemonicWireframe(
             parent: parent,
             interactor: DefaultNewMnemonicInteractor(service),
-            context: context
+            context: context,
+            settingsService: settingsService
         )
     }
 }

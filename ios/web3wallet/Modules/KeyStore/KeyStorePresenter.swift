@@ -24,6 +24,7 @@ class DefaultKeyStorePresenter {
 
     private let interactor: KeyStoreInteractor
     private let wireframe: KeyStoreWireframe
+    private let settingsService: SettingsService
 
     private var targetView: KeyStoreViewModel.TransitionTargetView = .none
     private var buttonsViewModel: ButtonSheetViewModel = .init(
@@ -36,11 +37,13 @@ class DefaultKeyStorePresenter {
     init(
         view: KeyStoreView,
         interactor: KeyStoreInteractor,
-        wireframe: KeyStoreWireframe
+        wireframe: KeyStoreWireframe,
+        settingsService: SettingsService
     ) {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
+        self.settingsService = settingsService
     }
 
     func updateView() {
@@ -150,9 +153,10 @@ private extension DefaultKeyStorePresenter {
         updateView()
 
         if interactor.keyStoreItems.count == 1 {
-            // HACK: -
+            // HACK: This is non ideal, but since we dont have `viewDidAppear`
+            // simply animate to dashboard after first wallet was created
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) { [weak self] in
-                self?.wireframe.navigate(to: .dashBoard)
+                // self?.wireframe.navigate(to: .dashBoard)
             }
         }
 
@@ -186,7 +190,10 @@ private extension DefaultKeyStorePresenter {
             selectedIdxs: [interactor.index(of: interactor.selectedKeyStoreItem)]
                 .compactMap{  $0 },
             buttons: buttonsViewModel,
-            targetView: targetView
+            targetView: targetView,
+            transitionStyle: KeyStoreViewModel.TransitionStyle.style(
+                from: settingsService.createWalletTransitionType
+            )
         )
     }
 

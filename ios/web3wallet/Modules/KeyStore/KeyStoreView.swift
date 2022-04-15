@@ -277,6 +277,10 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
         presenting: UIViewController,
         source: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
+        guard viewModel?.transitionStyle == .flip else {
+            return nil
+        }
+
         let presentedVc = (presented as? UINavigationController)?.topViewController
         animatedTransitioning = nil
 
@@ -290,6 +294,10 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
     }
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        guard viewModel?.transitionStyle == .flip else {
+            return nil
+        }
+
         let presentedVc = (dismissed as? UINavigationController)?.topViewController
         animatedTransitioning = nil
 

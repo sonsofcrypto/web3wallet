@@ -29,7 +29,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             settingsService: settingsService,
             keyStore: DefaultKeyStoreWireframeFactory(
                 keyStoreService,
-                newMnemonic: DefaultNewMnemonicWireframeFactory(keyStoreService)
+                settingsService: settingsService,
+                newMnemonic: DefaultNewMnemonicWireframeFactory(
+                    keyStoreService,
+                    settingsService: settingsService
+                )
             ),
             networks: DefaultNetworksWireframeFactory(networkService),
             dashboard: DefaultDashboardWireframeFactory(

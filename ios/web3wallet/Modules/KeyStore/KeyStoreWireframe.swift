@@ -33,17 +33,20 @@ class DefaultKeyStoreWireframe {
 
     private let interactor: KeyStoreInteractor
     private let newMnemonic: NewMnemonicWireframeFactory
+    private let settingsService: SettingsService
 
     init(
         parent: UIViewController?,
         window: UIWindow?,
         interactor: KeyStoreInteractor,
-        newMnemonic: NewMnemonicWireframeFactory
+        newMnemonic: NewMnemonicWireframeFactory,
+        settingsService: SettingsService
     ) {
         self.parent = parent
         self.window = window
         self.interactor = interactor
         self.newMnemonic = newMnemonic
+        self.settingsService = settingsService
     }
 }
 
@@ -102,7 +105,8 @@ extension DefaultKeyStoreWireframe {
         let presenter = DefaultKeyStorePresenter(
             view: vc,
             interactor: interactor,
-            wireframe: self
+            wireframe: self,
+            settingsService: settingsService
         )
 
         vc.presenter = presenter

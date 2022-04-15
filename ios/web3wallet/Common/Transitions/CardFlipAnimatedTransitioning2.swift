@@ -1,10 +1,10 @@
-// Created by web3d3v on 13/04/2022.
+// Created by web3d3v on 21/02/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import UIKit
 
-class DismissFromModal: NSObject, UIViewControllerAnimatedTransitioning {
+class CardFlipAnimatedTransitioning2 : NSObject, UIViewControllerAnimatedTransitioning {
 
     var targetView: UIView
     var isPresenting: Bool
@@ -16,7 +16,7 @@ class DismissFromModal: NSObject, UIViewControllerAnimatedTransitioning {
     }
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return isPresenting ? 0.9 : 1
+        return isPresenting ? 0.7 : 0.9
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -25,6 +25,10 @@ class DismissFromModal: NSObject, UIViewControllerAnimatedTransitioning {
         let fromView = transitionContext.view(forKey: .from)
         let toView = transitionContext.view(forKey: .to)
         let containerView = transitionContext.containerView
+
+        var transform = CATransform3DIdentity
+        transform.m34 = -1.0 / 500.0
+        containerView.layer.sublayerTransform = transform
 
         if isPresenting {
             animatePresenting(
@@ -56,56 +60,71 @@ class DismissFromModal: NSObject, UIViewControllerAnimatedTransitioning {
         context: UIViewControllerContextTransitioning
     ) {
 
-        toView?.frame = containerView.bounds
+        let transformView = TransformView(frame: containerView.bounds)
+        let snap = fromView?.snapshotView(afterScreenUpdates: false)
+        var snapScale: CGSize = .zero
+        var translation: CGPoint = .zero
 
-        print("=== from", fromView)
+        if let toView = toView, let fromView = fromView, let snap = snap {
+            transformView.frame = containerView.bounds
+            toView.frame = transformView.bounds
 
-        let fromSnap = fromView?.snapshotView(afterScreenUpdates: false)
-        let toSnap = toView?.snapshotView(afterScreenUpdates: true)
-        let snapContainer = UIView(frame: .zero)
-        snapContainer.clipsToBounds = true
-        snapContainer.contentMode = .top
-        snapContainer.layer.cornerRadius = Global.cornerRadius
-        fromSnap?.contentMode = .top
-        toSnap?.contentMode = .top
+            snapScale = CGSize(
+                width: toView.bounds.width / snap.bounds.width,
+                height: toView.bounds.height / snap.bounds.height
+            )
 
-        if let fromSnap = fromSnap, let toSnap = toSnap, let fromView = fromView {
-            containerView.addSubview(fromSnap)
-            containerView.addSubview(snapContainer)
+            translation = CGPoint(
+                x: containerView.convert(fromView.bounds.midXY, from: fromView).x - toView.center.x,
+                y: containerView.convert(fromView.bounds.midXY, from: fromView).y - toView.center.y
+            )
 
-            fromSnap.frame = fromView.convert(fromView.bounds, to: containerView)
-            snapContainer.frame = fromSnap.frame
-            toSnap.frame = snapContainer.bounds
-            snapContainer.addSubview(toSnap)
+            containerView.addSubview(transformView)
+            transformView.addSubview(toView)
+            transformView.addSubview(snap)
+
+            toView.layer.zPosition = -1
+            toView.transform = CGAffineTransform(
+                scaleX: -(snap.bounds.width / toView.bounds.width),
+                y: snap.bounds.height / toView.bounds.height
+            )
+
+            [toView, snap].forEach { $0.center = transformView.bounds.midXY }
         }
 
-        fromView?.alpha = 0
-
-        UIView.springAnimate(
-            transitionDuration(using: context) / 4,
-            animations: { snapContainer.alpha = 1 }
+        containerView.layer.sublayerTransform = TransformView.parentSublayerTransform
+        transformView.layer.transform = CATransform3DMakeTranslation(
+            translation.x,
+            translation.y,
+            0
         )
+
+        let angle = CGFloat(-Double.pi) + 0.001
+
+        fromView?.alpha = 0.0001
 
         UIView.springAnimate(
             transitionDuration(using: context),
             damping: 0.9,
             velocity: 0.5,
             animations: {
-                fromSnap?.frame = containerView.bounds
-                snapContainer.frame = containerView.bounds
-                toSnap?.frame = snapContainer.bounds
-                snapContainer.layer.cornerRadius = 0
+                transformView.layer.transform = CATransform3DMakeRotation(angle, 0, 1, 0)
+                toView?.transform = CGAffineTransform(scaleX: -1, y: 1)
+                snap?.transform = CGAffineTransform(
+                    scaleX: snapScale.width,
+                    y: snapScale.height
+                )
             },
             completion: { success in
-                fromSnap?.removeFromSuperview()
-                toSnap?.removeFromSuperview()
-                snapContainer.removeFromSuperview()
+                snap?.removeFromSuperview()
+                transformView.removeFromSuperview()
                 fromView?.alpha = 1
-
                 if let toView = toView {
+                    toView.layer.zPosition = 0
+                    toView.transform = .identity
+                    toView.frame = containerView.bounds
                     containerView.addSubview(toView)
                 }
-
                 context.completeTransition(success)
             }
         )
