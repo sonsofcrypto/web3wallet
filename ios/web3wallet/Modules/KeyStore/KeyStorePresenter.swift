@@ -110,9 +110,15 @@ private extension DefaultKeyStorePresenter {
 
         switch buttonsViewModel.buttons[idx].type {
         case .newMnemonic:
-            wireframe.navigate(to: .newMnemonic { [weak self] keyStoreItem in
-                self?.handleDidCreateNewKeyStoreItem(keyStoreItem)
-            })
+            buttonsViewModel = .init(
+                buttons: ButtonSheetViewModel.expandedButtons(),
+                isExpanded: true
+            )
+            updateView()
+
+//            wireframe.navigate(to: .newMnemonic { [weak self] keyStoreItem in
+//                self?.handleDidCreateNewKeyStoreItem(keyStoreItem)
+//            })
         case .importMnemonic:
             wireframe.navigate(to: .importMnemonic { [weak self] item in
                 self?.handleDidCreateNewKeyStoreItem(item)
@@ -145,7 +151,6 @@ private extension DefaultKeyStorePresenter {
 
     func handleDidCreateNewKeyStoreItem(_ keyStoreItem: KeyStoreItem) {
         interactor.selectedKeyStoreItem = keyStoreItem
-
         if let idx = interactor.index(of: keyStoreItem) {
             targetView = .keyStoreItemAt(idx: idx)
         }
@@ -156,7 +161,7 @@ private extension DefaultKeyStorePresenter {
             // HACK: This is non ideal, but since we dont have `viewDidAppear`
             // simply animate to dashboard after first wallet was created
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) { [weak self] in
-                // self?.wireframe.navigate(to: .dashBoard)
+                 self?.wireframe.navigate(to: .dashBoard)
             }
         }
 

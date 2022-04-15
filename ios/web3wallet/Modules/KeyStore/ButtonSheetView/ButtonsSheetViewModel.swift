@@ -57,3 +57,15 @@ extension ButtonSheetViewModel {
         ]
     }
 }
+
+
+// MARK: - SheetMode
+
+extension ButtonSheetViewModel {
+
+    enum SheetMode {
+        case hidden
+        case compact
+        case expanded
+    }
+}

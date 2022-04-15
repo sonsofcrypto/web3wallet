@@ -44,7 +44,7 @@ git submodule update --init --recursive
  	- [ ] Implement custom layout for separators
 	- [ ] Bug `EdgeCardsViewController` after transition, there small window (0.25s) when taps are registered
 	- [ ] Interactive gesture for dismisg card flip
-	- [ ] Fix buttons layout in edgecards
+	- [x] Fix buttons layout in edgecards
 	- [ ] Create password VC
 	- [ ] Play haptics when swipe starts
 

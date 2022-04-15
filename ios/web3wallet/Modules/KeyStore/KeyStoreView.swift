@@ -16,6 +16,7 @@ class KeyStoreViewController: UIViewController {
 
     private var viewModel: KeyStoreViewModel?
     private var prevViewSize: CGSize = .zero
+    private var didChangeBounds: Bool = false
     private var firstAppear: Bool = true
     private var transitionTargetView: KeyStoreViewModel.TransitionTargetView = .none
     private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
@@ -33,23 +34,68 @@ class KeyStoreViewController: UIViewController {
         configureUI()
         presenter?.present()
         prevViewSize = view.bounds.size
+        debugPrint("viewDidLoad")
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        debugPrint("viewWillAppear")
     }
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         if view.bounds.size != prevViewSize {
+            [collectionView, buttonsCollectionView].forEach {
+                $0.frame = view.bounds
+            }
             collectionView.collectionViewLayout.invalidateLayout()
+            buttonsCollectionView.collectionViewLayout.invalidateLayout()
             prevViewSize = view.bounds.size
+            didChangeBounds = true
+        }
+        debugPrint("viewWillLayoutSubviews")
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if didChangeBounds {
             configureInsets()
             layoutButtonsBackground()
+            updateButtonsView(false)
+            didChangeBounds = false
         }
+        debugPrint("viewDidLayoutSubviews")
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        debugPrint("viewDidAppear")
         animateIntro()
         collectionView.deselectAllExcept(selectedIdxPaths())
         buttonsCollectionView.deselectAllExcept()
+    }
+
+    override func viewSafeAreaInsetsDidChange() {
+        super.viewSafeAreaInsetsDidChange()
+        collectionView.collectionViewLayout.invalidateLayout()
+        buttonsCollectionView.collectionViewLayout.invalidateLayout()
+        didChangeBounds = true
+        debugPrint("viewSafeAreaInsetsDidChange")
+    }
+
+    func debugPrint(_ msg: String? = nil) {
+        if let msg = msg {
+            print(msg)
+        }
+        print("view bounds", view.bounds)
+        print("view safeAreaInsets", view.safeAreaInsets)
+        print("view alignmentRectInsets", view.alignmentRectInsets)
+        print("bcv bounds", buttonsCollectionView.bounds)
+        print("bcv contentSize", buttonsCollectionView.contentSize)
+        print("bcv contentOffset", buttonsCollectionView.contentOffset)
+        print("bcv safeAreaInsets", buttonsCollectionView.safeAreaInsets)
+        print("bcv contentInset", buttonsCollectionView.contentInset)
+        print("=======")
     }
 }
 
@@ -125,6 +171,7 @@ extension KeyStoreViewController: UICollectionViewDelegate {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        debugPrint("scrollViewDidScroll")
         guard scrollView == buttonsCollectionView else {
             return
         }
@@ -173,14 +220,13 @@ extension KeyStoreViewController {
 
     func configureInsets() {
         let inset = view.bounds.height
-            - Global.cellHeight * 4
-            - Global.padding * 6
+            - Global.cellHeight * 3
+            - Global.padding * 4
+            - buttonsCollectionView.safeAreaInsets.top
             + 2
-        print("=== configuring insets", view.bounds, inset)
         buttonsCollectionView.contentInset.top = inset
         collectionView.contentInset.bottom = view.bounds.height
-            - Global.cellHeight
-            - inset
+            - Global.cellHeight - Global.padding - inset
     }
 
     func layoutButtonsBackground() {
@@ -205,7 +251,7 @@ extension KeyStoreViewController {
         }
     }
 
-    func updateButtonsView() {
+    func updateButtonsView(_ animated: Bool = true) {
         buttonsCollectionView.reloadData()
         let expanded = viewModel?.buttons.isExpanded ?? false
 
@@ -215,15 +261,15 @@ extension KeyStoreViewController {
         }
 
         if expanded {
-            let y = cv.bounds.height - cv.contentSize.height - Global.padding * 2
+            let y = view.bounds.height - cv.contentSize.height - cv.safeAreaInsets.bottom
             buttonsCollectionView.setContentOffset(
                 CGPoint(x: 0, y: -y),
-                animated: true
+                animated: animated
             )
         } else {
             buttonsCollectionView.setContentOffset(
-                CGPoint(x: 0, y: -buttonsCollectionView.contentInset.top),
-                animated: true
+                CGPoint(x: 0, y: -cv.contentInset.top - cv.safeAreaInsets.top),
+                animated: animated
             )
         }
     }

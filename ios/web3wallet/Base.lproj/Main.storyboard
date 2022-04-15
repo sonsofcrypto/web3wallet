@@ -126,7 +126,7 @@
                                 <blurEffect style="systemUltraThinMaterialLight"/>
                             </visualEffectView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fg6-vF-oBb" customClass="TouchPassThroughCollectionView" customModule="web3wallet" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="16" minimumInteritemSpacing="16" id="09g-q3-y7K">
                                     <size key="itemSize" width="320" height="64"/>
@@ -179,7 +179,7 @@
                             <constraint firstItem="qHS-1N-7Oz" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="JkH-R6-ab5"/>
                             <constraint firstItem="hyQ-ni-ASc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="eJC-Kb-duk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="qHS-1N-7Oz" secondAttribute="bottom" constant="240" id="gXf-Da-Dd4"/>
-                            <constraint firstItem="fg6-vF-oBb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="k3v-Kn-acF"/>
+                            <constraint firstItem="fg6-vF-oBb" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="k3v-Kn-acF"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qHS-1N-7Oz" secondAttribute="trailing" constant="16" id="wVk-2G-j6J"/>
                             <constraint firstAttribute="bottom" secondItem="fg6-vF-oBb" secondAttribute="bottom" id="yyV-Ge-V6c"/>
                         </constraints>
