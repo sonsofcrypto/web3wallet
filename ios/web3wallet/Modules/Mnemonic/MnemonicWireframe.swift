@@ -4,21 +4,21 @@
 
 import UIKit
 
-enum NewMnemonicWireframeDestination {
+enum MnemonicWireframeDestination {
     case learnMoreSalt
 }
 
-protocol NewMnemonicWireframe {
+protocol MnemonicWireframe {
     func present()
-    func navigate(to destination: NewMnemonicWireframeDestination)
+    func navigate(to destination: MnemonicWireframeDestination)
 }
 
-// MARK: - class DefaultNewMnemonicWireframe {
+// MARK: - class DefaultMnemonicWireframe {
 
-class DefaultNewMnemonicWireframe {
+class DefaultMnemonicWireframe {
 
-    private let interactor: NewMnemonicInteractor
-    private let context: NewMnemonicContext
+    private let interactor: MnemonicInteractor
+    private let context: MnemonicContext
     private let settingsService: SettingsService
 
     private weak var parent: UIViewController?
@@ -26,8 +26,8 @@ class DefaultNewMnemonicWireframe {
 
     init(
         parent: UIViewController?,
-        interactor: NewMnemonicInteractor,
-        context: NewMnemonicContext,
+        interactor: MnemonicInteractor,
+        context: MnemonicContext,
         settingsService: SettingsService
     ) {
         self.interactor = interactor
@@ -37,9 +37,9 @@ class DefaultNewMnemonicWireframe {
     }
 }
 
-// MARK: - NewMnemonicWireframe
+// MARK: - MnemonicWireframe
 
-extension DefaultNewMnemonicWireframe: NewMnemonicWireframe {
+extension DefaultMnemonicWireframe: MnemonicWireframe {
 
     func present() {
         let vc = wireUp()
@@ -61,7 +61,7 @@ extension DefaultNewMnemonicWireframe: NewMnemonicWireframe {
         topVc?.show(vc, sender: self)
     }
 
-    func navigate(to destination: NewMnemonicWireframeDestination) {
+    func navigate(to destination: MnemonicWireframeDestination) {
         switch destination {
         case .learnMoreSalt:
             UIApplication.shared.open(Constant.saltExplanationURL)
@@ -71,11 +71,11 @@ extension DefaultNewMnemonicWireframe: NewMnemonicWireframe {
     }
 }
 
-extension DefaultNewMnemonicWireframe {
+extension DefaultMnemonicWireframe {
 
     private func wireUp() -> UIViewController {
-        let vc: NewMnemonicViewController = UIStoryboard(.main).instantiate()
-        let presenter = DefaultNewMnemonicPresenter(
+        let vc: MnemonicViewController = UIStoryboard(.main).instantiate()
+        let presenter = DefaultMnemonicPresenter(
             context: context,
             view: vc,
             interactor: interactor,
@@ -89,7 +89,7 @@ extension DefaultNewMnemonicWireframe {
 
 // MARK: - Constant
 
-extension DefaultNewMnemonicWireframe {
+extension DefaultMnemonicWireframe {
 
     enum Constant {
 

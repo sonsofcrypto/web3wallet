@@ -33,14 +33,14 @@ class DefaultKeyStoreWireframe {
     private weak var vc: UIViewController?
 
     private let interactor: KeyStoreInteractor
-    private let newMnemonic: NewMnemonicWireframeFactory
+    private let newMnemonic: MnemonicWireframeFactory
     private let settingsService: SettingsService
 
     init(
         parent: UIViewController?,
         window: UIWindow?,
         interactor: KeyStoreInteractor,
-        newMnemonic: NewMnemonicWireframeFactory,
+        newMnemonic: MnemonicWireframeFactory,
         settingsService: SettingsService
     ) {
         self.parent = parent
@@ -82,13 +82,13 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
         case .dashBoardOnboarding:
             edgeVc?.setDisplayMode(.masterOnboardAnim, animated: true)
         case let .newMnemonic(handler):
-            let context = NewMnemonicContext(mode: .new, createHandler: handler)
+            let context = MnemonicContext(mode: .new, createHandler: handler)
             newMnemonic.makeWireframe(vc, context: context).present()
         case let .importMnemonic(handler):
-            let context = NewMnemonicContext(mode: .restore, createHandler: handler)
+            let context = MnemonicContext(mode: .restore, createHandler: handler)
             newMnemonic.makeWireframe(vc, context: context).present()
         case let .keyStoreItem(keyStoreItem, handler):
-            let context = NewMnemonicContext(
+            let context = MnemonicContext(
                 mode: .update(keyStoreItem: keyStoreItem),
                 createHandler: nil,
                 updateHandler: handler

@@ -11,7 +11,7 @@ class CollectionViewSectionLabelFooter: UICollectionReusableView {
 
 extension CollectionViewSectionLabelFooter {
 
-    func update(with viewModel: NewMnemonicViewModel.Footer) {
+    func update(with viewModel: MnemonicViewModel.Footer) {
         switch viewModel {
         case let .attrStr(text, highlightWords):
             let attrs = Theme.current.sectionFooterTextAttributes()

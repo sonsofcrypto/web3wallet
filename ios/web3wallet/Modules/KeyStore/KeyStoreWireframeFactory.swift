@@ -18,12 +18,12 @@ class DefaultKeyStoreWireframeFactory {
 
     private let keyStoreSerive: KeyStoreService
     private let settingsService: SettingsService
-    private let newMnemonic: NewMnemonicWireframeFactory
+    private let newMnemonic: MnemonicWireframeFactory
 
     init(
         _ walletsService: KeyStoreService,
         settingsService: SettingsService,
-        newMnemonic: NewMnemonicWireframeFactory
+        newMnemonic: MnemonicWireframeFactory
     ) {
         self.keyStoreSerive = walletsService
         self.settingsService = settingsService

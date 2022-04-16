@@ -4,7 +4,7 @@
 
 import UIKit
 
-class NewMnemonicCell: CollectionViewCell {
+class MnemonicCell: CollectionViewCell {
 
     typealias TextChangeHandler = (String) -> Void
 
@@ -15,7 +15,7 @@ class NewMnemonicCell: CollectionViewCell {
     var textChaneHandler: TextChangeHandler?
     var textEditingEndHandler: TextChangeHandler?
 
-    private var viewModel: NewMnemonicViewModel.Mnemonic? = nil
+    private var viewModel: MnemonicViewModel.Mnemonic? = nil
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,10 +37,10 @@ class NewMnemonicCell: CollectionViewCell {
     }
 
     func update(
-        with viewModel: NewMnemonicViewModel.Mnemonic?,
+        with viewModel: MnemonicViewModel.Mnemonic?,
         textChangeHandler: TextChangeHandler? = nil,
         textEditingEndHandler: TextChangeHandler? = nil
-    ) -> NewMnemonicCell {
+    ) -> MnemonicCell {
         guard let viewModel = viewModel else {
             return self
         }
@@ -63,7 +63,7 @@ class NewMnemonicCell: CollectionViewCell {
 
 // MARK: - UITextViewDelegate
 
-extension NewMnemonicCell: UITextViewDelegate {
+extension MnemonicCell: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             textChaneHandler?(textView.text)
@@ -84,7 +84,7 @@ extension NewMnemonicCell: UITextViewDelegate {
 
 // MARK: - Animation
 
-extension NewMnemonicCell {
+extension MnemonicCell {
 
     func animateCopiedToPasteboard() {
         guard viewModel?.type != .editHidden && viewModel?.type != .importing else {

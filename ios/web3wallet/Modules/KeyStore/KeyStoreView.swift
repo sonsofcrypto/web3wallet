@@ -380,7 +380,7 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
         let presentedVc = (presented as? UINavigationController)?.topViewController
         animatedTransitioning = nil
 
-        if presentedVc?.isKind(of: NewMnemonicViewController.self) ?? false {
+        if presentedVc?.isKind(of: MnemonicViewController.self) ?? false {
             animatedTransitioning = CardFlipAnimatedTransitioning(
                 targetView: targetView() ?? view
             )
@@ -397,7 +397,7 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
         let presentedVc = (dismissed as? UINavigationController)?.topViewController
         animatedTransitioning = nil
 
-        if presentedVc?.isKind(of: NewMnemonicViewController.self) ?? false {
+        if presentedVc?.isKind(of: MnemonicViewController.self) ?? false {
             animatedTransitioning = CardFlipAnimatedTransitioning(
                 targetView: targetView() ?? view,
                 isPresenting: false

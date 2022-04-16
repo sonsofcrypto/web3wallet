@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct NewMnemonicContext {
+struct MnemonicContext {
 
     typealias KeyStoreItemHandler = ((KeyStoreItem) -> Void)
 
@@ -25,7 +25,7 @@ struct NewMnemonicContext {
 
 // MARK: - Mode
 
-extension NewMnemonicContext {
+extension MnemonicContext {
 
     enum Mode {
         case new

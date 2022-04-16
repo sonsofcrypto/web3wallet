@@ -33,12 +33,12 @@ extension CollectionViewTextInputCell: UITextFieldDelegate {
     }
 }
 
-// MARK: - NewMnemonicViewModel.Name
+// MARK: - MnemonicViewModel.Name
 
 extension CollectionViewTextInputCell {
 
     func update(
-        with viewModel: NewMnemonicViewModel.Name,
+        with viewModel: MnemonicViewModel.Name,
         textChangeHandler: ((String)->Void)? = nil
     ) -> CollectionViewTextInputCell {
         titleLabel.text = viewModel.title

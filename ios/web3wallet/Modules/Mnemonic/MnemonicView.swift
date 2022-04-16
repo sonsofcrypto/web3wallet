@@ -4,17 +4,17 @@
 
 import UIKit
 
-protocol NewMnemonicView: AnyObject {
+protocol MnemonicView: AnyObject {
 
-    func update(with viewModel: NewMnemonicViewModel)
+    func update(with viewModel: MnemonicViewModel)
     func dismiss(animated flag: Bool, completion: (() -> Void)?)
 }
 
-class NewMnemonicViewController: UIViewController {
+class MnemonicViewController: UIViewController {
 
-    var presenter: NewMnemonicPresenter!
+    var presenter: MnemonicPresenter!
 
-    private var viewModel: NewMnemonicViewModel?
+    private var viewModel: MnemonicViewModel?
     private var didAppear: Bool = false
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -40,11 +40,11 @@ class NewMnemonicViewController: UIViewController {
     }
 }
 
-// MARK: - NewMnemonic
+// MARK: - Mnemonic
 
-extension NewMnemonicViewController: NewMnemonicView {
+extension MnemonicViewController: MnemonicView {
 
-    func update(with viewModel: NewMnemonicViewModel) {
+    func update(with viewModel: MnemonicViewModel) {
         let needsReload = self.needsReload(self.viewModel, viewModel: viewModel)
         self.viewModel = viewModel
 
@@ -68,7 +68,7 @@ extension NewMnemonicViewController: NewMnemonicView {
 
 // MARK: - UICollectionViewDataSource
 
-extension NewMnemonicViewController: UICollectionViewDataSource {
+extension MnemonicViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return viewModel?.sectionsItems.count ?? 0
@@ -99,11 +99,11 @@ extension NewMnemonicViewController: UICollectionViewDataSource {
         return cell
     }
 
-    func cell(cv: UICollectionView, viewModel: NewMnemonicViewModel.Item, idxPath: IndexPath) -> UICollectionViewCell {
+    func cell(cv: UICollectionView, viewModel: MnemonicViewModel.Item, idxPath: IndexPath) -> UICollectionViewCell {
         switch viewModel {
 
         case let .mnemonic(mnemonic):
-            return collectionView.dequeue(NewMnemonicCell.self, for: idxPath)
+            return collectionView.dequeue(MnemonicCell.self, for: idxPath)
                 .update(
                     with: mnemonic,
                     textChangeHandler: { [weak self] text in
@@ -182,12 +182,12 @@ extension NewMnemonicViewController: UICollectionViewDataSource {
     }
 }
 
-extension NewMnemonicViewController: UICollectionViewDelegate {
+extension MnemonicViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         if indexPath.item == 0 {
             let cell = collectionView.cellForItem(at: IndexPath(item:0, section: 0))
-            (cell as? NewMnemonicCell)?.animateCopiedToPasteboard()
+            (cell as? MnemonicCell)?.animateCopiedToPasteboard()
             presenter.handle(.didTapMnemonic)
         }
         return false
@@ -235,7 +235,7 @@ extension NewMnemonicViewController: UICollectionViewDelegate {
     }
 }
 
-extension NewMnemonicViewController: UICollectionViewDelegateFlowLayout {
+extension MnemonicViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = view.bounds.width - Global.padding * 2
@@ -290,7 +290,7 @@ extension NewMnemonicViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - Configure UI
 
-private extension NewMnemonicViewController {
+private extension MnemonicViewController {
     
     func configureUI() {
         title = Localized("newMnemonic.title")
@@ -308,14 +308,14 @@ private extension NewMnemonicViewController {
         navigationItem.leftBarButtonItem?.tintColor = Theme.current.tintPrimary
     }
 
-    func needsReload(_ preViewModel: NewMnemonicViewModel?, viewModel: NewMnemonicViewModel) -> Bool {
+    func needsReload(_ preViewModel: MnemonicViewModel?, viewModel: MnemonicViewModel) -> Bool {
         preViewModel?.sectionsItems[1].count != viewModel.sectionsItems[1].count
     }
 }
 
 // MARK: - Constants
 
-extension NewMnemonicViewController {
+extension MnemonicViewController {
 
     enum Constant {
         static let mnemonicCellHeight: CGFloat = 110

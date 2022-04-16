@@ -4,7 +4,7 @@
 
 import Foundation
 
-protocol NewMnemonicInteractor: AnyObject {
+protocol MnemonicInteractor: AnyObject {
 
     /// Generates new `KeyStoreItem` but does not save it to `KeyStore`
     func generateNewKeyStoreItem() -> KeyStoreItem
@@ -17,7 +17,7 @@ protocol NewMnemonicInteractor: AnyObject {
 
 // MARK: - DefaultTemplateInteractor
 
-class DefaultNewMnemonicInteractor {
+class DefaultMnemonicInteractor {
 
 
     private var keyStoreService: KeyStoreService
@@ -29,7 +29,7 @@ class DefaultNewMnemonicInteractor {
 
 // MARK: - DefaultTemplateInteractor
 
-extension DefaultNewMnemonicInteractor: NewMnemonicInteractor {
+extension DefaultMnemonicInteractor: MnemonicInteractor {
 
     func generateNewKeyStoreItem() -> KeyStoreItem {
         keyStoreService.generateNewKeyStoreItem()

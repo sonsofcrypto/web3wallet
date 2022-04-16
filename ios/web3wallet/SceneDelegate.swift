@@ -30,7 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             keyStore: DefaultKeyStoreWireframeFactory(
                 keyStoreService,
                 settingsService: settingsService,
-                newMnemonic: DefaultNewMnemonicWireframeFactory(
+                newMnemonic: DefaultMnemonicWireframeFactory(
                     keyStoreService,
                     settingsService: settingsService
                 )

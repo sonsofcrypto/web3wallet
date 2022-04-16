@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct NewMnemonicViewModel {
+struct MnemonicViewModel {
     var sectionsItems: [[Item]]
     var headers: [Header]
     var footers: [Footer]
@@ -13,24 +13,24 @@ struct NewMnemonicViewModel {
 
 // MARK: - Access utilities
 
-extension NewMnemonicViewModel {
+extension MnemonicViewModel {
 
-    func item(at idxPath: IndexPath) -> NewMnemonicViewModel.Item? {
+    func item(at idxPath: IndexPath) -> MnemonicViewModel.Item? {
         sectionsItems[safe: idxPath.section]?[safe: idxPath.item]
     }
 
-    func header(at idx: Int) -> NewMnemonicViewModel.Header {
+    func header(at idx: Int) -> MnemonicViewModel.Header {
         headers[idx]
     }
 
-    func footer(at idx: Int) -> NewMnemonicViewModel.Footer {
+    func footer(at idx: Int) -> MnemonicViewModel.Footer {
         footers[idx]
     }
 }
 
 // MARK: - Item
 
-extension NewMnemonicViewModel {
+extension MnemonicViewModel {
 
     enum Item {
         case mnemonic(mnemonic: Mnemonic)
@@ -53,7 +53,7 @@ extension NewMnemonicViewModel {
 
 // MARK: - Mnemonic
 
-extension NewMnemonicViewModel {
+extension MnemonicViewModel {
 
     struct Mnemonic {
         let value: String
@@ -70,7 +70,7 @@ extension NewMnemonicViewModel {
 
 // MARK: - Name
 
-extension NewMnemonicViewModel {
+extension MnemonicViewModel {
 
     struct Name {
         let title: String
@@ -81,7 +81,7 @@ extension NewMnemonicViewModel {
 
 // MARK: - SwitchWithTextInput
 
-extension NewMnemonicViewModel {
+extension MnemonicViewModel {
 
     struct SwitchWithTextInput {
         let title: String
@@ -95,7 +95,7 @@ extension NewMnemonicViewModel {
 
 // MARK: - SwitchWithTextInput
 
-extension NewMnemonicViewModel {
+extension MnemonicViewModel {
 
     struct SegmentWithTextAndSwitchInput {
         let title: String

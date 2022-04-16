@@ -30,8 +30,6 @@ git submodule update --init --recursive
 	- [] Create multisig
 
 ## UI tasks: 
-	- [ ] Add edit / settings mode
-	- [ ] Add import mode
 	- [ ] One tap launch
 	- [ ] One tap switch wallet netwrok button
 	- [ ] One swipe edge anim (only show it until user uses one)
@@ -41,6 +39,7 @@ git submodule update --init --recursive
  	- [ ] Implement custom layout for separators
  	- [ ] Fix add wallet dismiss animation when in cards mode
 	- [ ] Interactive gesture for dismisg card flip
+	- [ ] Validation UI for importing menmonic
 	- [ ] Create password VC
 	- [ ] Play haptics when swipe starts
 

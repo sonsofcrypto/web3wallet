@@ -5,7 +5,7 @@
 import Foundation
 import UniformTypeIdentifiers
 
-enum NewMnemonicPresenterEvent {
+enum MnemonicPresenterEvent {
     case didChangeName(name: String)
     case didChangeICouldBackup(onOff: Bool)
     case saltSwitchDidChange(onOff: Bool)
@@ -21,32 +21,32 @@ enum NewMnemonicPresenterEvent {
     case didSelectDismiss
 }
 
-protocol NewMnemonicPresenter {
+protocol MnemonicPresenter {
 
     func present()
-    func handle(_ event: NewMnemonicPresenterEvent)
+    func handle(_ event: MnemonicPresenterEvent)
 }
 
-// MARK: - DefaultNewMnemonicPresenter
+// MARK: - DefaultMnemonicPresenter
 
-class DefaultNewMnemonicPresenter {
+class DefaultMnemonicPresenter {
 
-    private let context: NewMnemonicContext
-    private let interactor: NewMnemonicInteractor
-    private let wireframe: NewMnemonicWireframe
+    private let context: MnemonicContext
+    private let interactor: MnemonicInteractor
+    private let wireframe: MnemonicWireframe
 
     private var mnemonicHidden: Bool = true
     private var showMnemonicOnly: Bool = false
 
     private lazy var keyStoreItem: KeyStoreItem = KeyStoreItem.blank()
 
-    private weak var view: NewMnemonicView?
+    private weak var view: MnemonicView?
 
     init(
-        context: NewMnemonicContext,
-        view: NewMnemonicView,
-        interactor: NewMnemonicInteractor,
-        wireframe: NewMnemonicWireframe
+        context: MnemonicContext,
+        view: MnemonicView,
+        interactor: MnemonicInteractor,
+        wireframe: MnemonicWireframe
     ) {
         self.view = view
         self.interactor = interactor
@@ -59,9 +59,9 @@ class DefaultNewMnemonicPresenter {
     }
 }
 
-// MARK: NewMnemonicPresenter
+// MARK: MnemonicPresenter
 
-extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
+extension DefaultMnemonicPresenter: MnemonicPresenter {
 
     func present() {
         switch context.mode {
@@ -76,7 +76,7 @@ extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
         updateView()
     }
 
-    func handle(_ event: NewMnemonicPresenterEvent) {
+    func handle(_ event: MnemonicPresenterEvent) {
         switch event {
         case let .didChangeName(name):
             keyStoreItem.name = name
@@ -140,9 +140,9 @@ extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
 
 // MARK: - WalletsViewModel utilities
 
-private extension DefaultNewMnemonicPresenter {
+private extension DefaultMnemonicPresenter {
 
-    func viewModel(from keyStoreItem: KeyStoreItem) -> NewMnemonicViewModel {
+    func viewModel(from keyStoreItem: KeyStoreItem) -> MnemonicViewModel {
         .init(
             sectionsItems: [
                 mnemonicSectionItems(),
@@ -169,9 +169,9 @@ private extension DefaultNewMnemonicPresenter {
         )
     }
 
-    func mnemonicSectionItems() -> [NewMnemonicViewModel.Item] {
+    func mnemonicSectionItems() -> [MnemonicViewModel.Item] {
         [
-            NewMnemonicViewModel.Item.mnemonic(
+            MnemonicViewModel.Item.mnemonic(
                 mnemonic: .init(
                     value: keyStoreItem.mnemonic,
                     type: {
@@ -189,20 +189,20 @@ private extension DefaultNewMnemonicPresenter {
         ]
     }
 
-    func optionsSectionItems() -> [NewMnemonicViewModel.Item] {
+    func optionsSectionItems() -> [MnemonicViewModel.Item] {
         [
-            NewMnemonicViewModel.Item.name(
+            MnemonicViewModel.Item.name(
                 name: .init(
                     title: Localized("newMnemonic.name.title"),
                     value: keyStoreItem.name,
                     placeholder: Localized("newMnemonic.name.placeholder")
                 )
             ),
-            NewMnemonicViewModel.Item.switch(
+            MnemonicViewModel.Item.switch(
                 title: Localized("newMnemonic.iCould.title"),
                 onOff: keyStoreItem.iCouldBackup
             ),
-            NewMnemonicViewModel.Item.switchWithTextInput(
+            MnemonicViewModel.Item.switchWithTextInput(
                 switchWithTextInput: .init(
                     title: Localized("newMnemonic.salt.title"),
                     onOff: keyStoreItem.saltMnemonic,
@@ -214,7 +214,7 @@ private extension DefaultNewMnemonicPresenter {
                     ]
                 )
             ),
-            NewMnemonicViewModel.Item.segmentWithTextAndSwitchInput(
+            MnemonicViewModel.Item.segmentWithTextAndSwitchInput(
                 segmentWithTextAndSwitchInput: .init(
                     title: Localized("newMnemonic.passType.title"),
                     segmentOptions: KeyStoreItem.PasswordType.allCases
@@ -233,7 +233,7 @@ private extension DefaultNewMnemonicPresenter {
 
 // MARK: - Constant
 
-private extension DefaultNewMnemonicPresenter {
+private extension DefaultMnemonicPresenter {
 
     enum Constant {
         static let mnemonicHighlightWords: [String] = [

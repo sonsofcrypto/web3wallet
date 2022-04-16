@@ -66,7 +66,7 @@ extension CollectionViewSwitchTextInputCell: UITextFieldDelegate {
 extension CollectionViewSwitchTextInputCell {
 
     func update(
-        with viewModel: NewMnemonicViewModel.SwitchWithTextInput,
+        with viewModel: MnemonicViewModel.SwitchWithTextInput,
         switchAction: ((Bool)->Void)?,
         textChangeHandler: ((String)->Void)?,
         descriptionAction: (()->Void)?

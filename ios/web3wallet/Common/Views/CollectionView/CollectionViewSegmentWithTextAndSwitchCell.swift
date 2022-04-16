@@ -68,7 +68,7 @@ extension CollectionViewSegmentWithTextAndSwitchCell: UITextFieldDelegate {
 extension CollectionViewSegmentWithTextAndSwitchCell {
 
     func update(
-        with viewModel: NewMnemonicViewModel.SegmentWithTextAndSwitchInput,
+        with viewModel: MnemonicViewModel.SegmentWithTextAndSwitchInput,
         selectSegmentAction: ((Int) -> Void)?,
         textChangeHandler: ((String)->Void)?,
         switchHandler: ((Bool)->Void)?

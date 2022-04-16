@@ -4,17 +4,17 @@
 
 import UIKit
 
-protocol NewMnemonicWireframeFactory {
+protocol MnemonicWireframeFactory {
 
     func makeWireframe(
         _ parent: UIViewController?,
-        context: NewMnemonicContext
-    ) -> NewMnemonicWireframe
+        context: MnemonicContext
+    ) -> MnemonicWireframe
 }
 
-// MARK: - DefaultNewMnemonicWireframeFactory
+// MARK: - DefaultMnemonicWireframeFactory
 
-class DefaultNewMnemonicWireframeFactory {
+class DefaultMnemonicWireframeFactory {
 
     private let service: KeyStoreService
     private let settingsService: SettingsService
@@ -28,17 +28,17 @@ class DefaultNewMnemonicWireframeFactory {
     }
 }
 
-// MARK: - NewMnemonicWireframeFactory
+// MARK: - MnemonicWireframeFactory
 
-extension DefaultNewMnemonicWireframeFactory: NewMnemonicWireframeFactory {
+extension DefaultMnemonicWireframeFactory: MnemonicWireframeFactory {
 
     func makeWireframe(
         _ parent: UIViewController?,
-        context: NewMnemonicContext
-    ) -> NewMnemonicWireframe {
-        DefaultNewMnemonicWireframe(
+        context: MnemonicContext
+    ) -> MnemonicWireframe {
+        DefaultMnemonicWireframe(
             parent: parent,
-            interactor: DefaultNewMnemonicInteractor(service),
+            interactor: DefaultMnemonicInteractor(service),
             context: context,
             settingsService: settingsService
         )
