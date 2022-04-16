@@ -31,5 +31,14 @@ extension NewMnemonicContext {
         case new
         case update(keyStoreItem: KeyStoreItem)
         case restore
+
+        func isUpdate() -> Bool {
+            switch self {
+            case .update:
+                return true
+            default:
+                return false
+            }
+        }
     }
 }

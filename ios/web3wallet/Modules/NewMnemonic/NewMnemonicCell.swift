@@ -9,6 +9,8 @@ class NewMnemonicCell: CollectionViewCell {
     @IBOutlet weak var overlay: UIVisualEffectView!
     @IBOutlet weak var overlayLabel: UILabel!
 
+    private var viewModel: NewMnemonicViewModel.Mnemonic? = nil
+
     override func awakeFromNib() {
         super.awakeFromNib()
         configure()
@@ -26,6 +28,8 @@ class NewMnemonicCell: CollectionViewCell {
         guard let viewModel = viewModel else {
             return self
         }
+
+        self.viewModel = viewModel
 
         var attrs = Theme.current.bodyTextAttributes()
         attrs[.font] = Theme.current.headline
@@ -48,6 +52,10 @@ class NewMnemonicCell: CollectionViewCell {
 extension NewMnemonicCell {
 
     func animateCopiedToPasteboard() {
+        guard viewModel?.type != .editHidden else {
+            return
+        }
+
         let prevText = overlayLabel.text
         let prevHidden = overlay.isHidden
         let prevAlpha = overlay.alpha

@@ -33,6 +33,8 @@ class DefaultNewMnemonicPresenter {
     private let interactor: NewMnemonicInteractor
     private let wireframe: NewMnemonicWireframe
 
+    private var mnemonicHidden: Bool = true
+
     private lazy var keyStoreItem: KeyStoreItem = KeyStoreItem.blank()
 
     private weak var view: NewMnemonicView?
@@ -89,6 +91,10 @@ extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
         case let .allowFaceIdDidChange(onOff):
             keyStoreItem.allowPswdUnlockWithFaceId = onOff
         case .didTapMnemonic:
+            if context.mode.isUpdate() && mnemonicHidden {
+                mnemonicHidden = false
+                view?.update(with: viewModel(from: keyStoreItem))
+            }
             let pasteBoard = UIPasteboard.general.setItems(
                 [[UTType.utf8PlainText.identifier: keyStoreItem.mnemonic]],
                 options: [.expirationDate: Date().addingTimeInterval(30.0)])
@@ -151,7 +157,19 @@ private extension DefaultNewMnemonicPresenter {
     func mnemonicSectionItems() -> [NewMnemonicViewModel.Item] {
         [
             NewMnemonicViewModel.Item.mnemonic(
-                mnemonic: .init(value: keyStoreItem.mnemonic, type: .new)
+                mnemonic: .init(
+                    value: keyStoreItem.mnemonic,
+                    type: {
+                        switch self.context.mode {
+                        case .new:
+                            return .new
+                        case .update:
+                            return mnemonicHidden ? .editHidden : .editShown
+                        case .restore:
+                            return .importing
+                        }
+                    }()
+                )
             )
         ]
     }

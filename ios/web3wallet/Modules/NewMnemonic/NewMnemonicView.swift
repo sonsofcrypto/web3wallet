@@ -47,9 +47,11 @@ extension NewMnemonicViewController: NewMnemonicView {
     func update(with viewModel: NewMnemonicViewModel) {
         self.viewModel = viewModel
         ctaButton.setTitle(viewModel.cta, for: .normal)
+        let cells = collectionView.indexPathsForVisibleItems
         didAppear
-            ? collectionView.performBatchUpdates({})
-            : collectionView.reloadData()
+            ? collectionView.performBatchUpdates(
+                { collectionView.reconfigureItems(at: cells)}
+            ) : collectionView.reloadData()
     }
 }
 
@@ -165,9 +167,9 @@ extension NewMnemonicViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         if indexPath.item == 0 {
-            presenter.handle(.didTapMnemonic)
             let cell = collectionView.cellForItem(at: IndexPath(item:0, section: 0))
             (cell as? NewMnemonicCell)?.animateCopiedToPasteboard()
+            presenter.handle(.didTapMnemonic)
         }
         return false
     }
