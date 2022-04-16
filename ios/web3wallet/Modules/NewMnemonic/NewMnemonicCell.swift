@@ -5,9 +5,15 @@
 import UIKit
 
 class NewMnemonicCell: CollectionViewCell {
+
+    typealias TextChangeHandler = (String) -> Void
+
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var overlay: UIVisualEffectView!
     @IBOutlet weak var overlayLabel: UILabel!
+
+    var textChaneHandler: TextChangeHandler?
+    var textEditingEndHandler: TextChangeHandler?
 
     private var viewModel: NewMnemonicViewModel.Mnemonic? = nil
 
@@ -17,33 +23,62 @@ class NewMnemonicCell: CollectionViewCell {
     }
 
     func configure() {
+        var attrs = Theme.current.bodyTextAttributes()
+        attrs[.font] = Theme.current.headline
+
+        textView.typingAttributes = attrs
         textView.backgroundColor = .clear
+        textView.delegate = self
+
         overlay.layer.cornerRadius = Global.cornerRadius
         overlay.clipsToBounds = true
         overlayLabel.text = Localized("newMnemonic.tapToReveal")
         overlayLabel.applyStyle(.headlineGlow)
     }
 
-    func update(with viewModel: NewMnemonicViewModel.Mnemonic?) -> NewMnemonicCell {
+    func update(
+        with viewModel: NewMnemonicViewModel.Mnemonic?,
+        textChangeHandler: TextChangeHandler? = nil,
+        textEditingEndHandler: TextChangeHandler? = nil
+    ) -> NewMnemonicCell {
         guard let viewModel = viewModel else {
             return self
         }
 
         self.viewModel = viewModel
+        self.textChaneHandler = textChangeHandler
+        self.textEditingEndHandler = textEditingEndHandler
 
-        var attrs = Theme.current.bodyTextAttributes()
-        attrs[.font] = Theme.current.headline
-
-        textView.attributedText = NSAttributedString(
-            string: viewModel.value,
-            attributes: attrs
-        )
-
-        textView.typingAttributes = attrs
-
-        overlay.isHidden = viewModel.type != .editHidden
         textView.isEditable = viewModel.type == .importing
+        textView.isUserInteractionEnabled = viewModel.type == .importing
+        overlay.isHidden = viewModel.type != .editHidden
+
+        if !textView.isFirstResponder {
+            textView.text = viewModel.value
+        }
+
         return self
+    }
+}
+
+// MARK: - UITextViewDelegate
+
+extension NewMnemonicCell: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textChaneHandler?(textView.text)
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+
+    func textViewDidChange(_ textView: UITextView) {
+        textChaneHandler?(textView.text)
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        textEditingEndHandler?(textView.text)
     }
 }
 
@@ -52,7 +87,7 @@ class NewMnemonicCell: CollectionViewCell {
 extension NewMnemonicCell {
 
     func animateCopiedToPasteboard() {
-        guard viewModel?.type != .editHidden else {
+        guard viewModel?.type != .editHidden && viewModel?.type != .importing else {
             return
         }
 

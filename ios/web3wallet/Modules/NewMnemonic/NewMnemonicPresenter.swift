@@ -15,6 +15,8 @@ enum NewMnemonicPresenterEvent {
     case passwordDidChange(text: String)
     case allowFaceIdDidChange(onOff: Bool)
     case didTapMnemonic
+    case didChangeMnemonic(text: String)
+    case didEndEditingMnemonic(text: String)
     case didSelectCta
     case didSelectDismiss
 }
@@ -34,6 +36,7 @@ class DefaultNewMnemonicPresenter {
     private let wireframe: NewMnemonicWireframe
 
     private var mnemonicHidden: Bool = true
+    private var showMnemonicOnly: Bool = false
 
     private lazy var keyStoreItem: KeyStoreItem = KeyStoreItem.blank()
 
@@ -50,6 +53,10 @@ class DefaultNewMnemonicPresenter {
         self.wireframe = wireframe
         self.context = context
     }
+
+    private func updateView() {
+        view?.update(with: viewModel(from: keyStoreItem))
+    }
 }
 
 // MARK: NewMnemonicPresenter
@@ -64,8 +71,9 @@ extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
             keyStoreItem = item
         case .restore:
             keyStoreItem = KeyStoreItem.blank()
+            showMnemonicOnly = true
         }
-        view?.update(with: viewModel(from: keyStoreItem))
+        updateView()
     }
 
     func handle(_ event: NewMnemonicPresenterEvent) {
@@ -76,7 +84,7 @@ extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
             keyStoreItem.iCouldBackup = onOff
         case let .saltSwitchDidChange(onOff):
             keyStoreItem.saltMnemonic = onOff
-            view?.update(with: viewModel(from: keyStoreItem))
+            updateView()
         case let .didChangeSalt(salt):
             keyStoreItem.mnemonicSalt = salt
         case .saltLearnMoreAction:
@@ -85,7 +93,7 @@ extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
             if let passType = KeyStoreItem.PasswordType(rawValue: idx) {
                 keyStoreItem.passwordType = passType
             }
-            view?.update(with: viewModel(from: keyStoreItem))
+            updateView()
         case let .passwordDidChange(text):
             keyStoreItem.password = text
         case let .allowFaceIdDidChange(onOff):
@@ -93,11 +101,18 @@ extension DefaultNewMnemonicPresenter: NewMnemonicPresenter {
         case .didTapMnemonic:
             if context.mode.isUpdate() && mnemonicHidden {
                 mnemonicHidden = false
-                view?.update(with: viewModel(from: keyStoreItem))
+                updateView()
             }
             let pasteBoard = UIPasteboard.general.setItems(
                 [[UTType.utf8PlainText.identifier: keyStoreItem.mnemonic]],
                 options: [.expirationDate: Date().addingTimeInterval(30.0)])
+        case let .didChangeMnemonic(text):
+            keyStoreItem.mnemonic = text
+            // TODO: - Validate and update view
+        case let .didEndEditingMnemonic(text):
+            // TODO: - Validate mnemonic
+            showMnemonicOnly = false
+            updateView()
         case .didSelectCta:
             interactor.update(keyStoreItem)
             switch context.mode {
@@ -131,7 +146,7 @@ private extension DefaultNewMnemonicPresenter {
         .init(
             sectionsItems: [
                 mnemonicSectionItems(),
-                optionsSectionItems()
+                showMnemonicOnly ? [] : optionsSectionItems()
             ],
             headers: [.none, .none],
             footers: [

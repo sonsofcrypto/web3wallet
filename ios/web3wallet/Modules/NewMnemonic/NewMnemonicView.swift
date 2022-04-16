@@ -45,13 +45,24 @@ class NewMnemonicViewController: UIViewController {
 extension NewMnemonicViewController: NewMnemonicView {
 
     func update(with viewModel: NewMnemonicViewModel) {
+        let needsReload = self.needsReload(self.viewModel, viewModel: viewModel)
         self.viewModel = viewModel
-        ctaButton.setTitle(viewModel.cta, for: .normal)
-        let cells = collectionView.indexPathsForVisibleItems
+
+        guard let cv = collectionView else {
+            return
+        }
+
+        let cells = cv.indexPathsForVisibleItems
+        let idxs = IndexSet(0..<viewModel.sectionsItems.count)
+
+        if needsReload && didAppear {
+            cv.performBatchUpdates({ cv.reloadSections(idxs) })
+            return
+        }
+
         didAppear
-            ? collectionView.performBatchUpdates(
-                { collectionView.reconfigureItems(at: cells)}
-            ) : collectionView.reloadData()
+            ? cv.performBatchUpdates({ cv.reconfigureItems(at: cells) })
+            : cv.reloadData()
     }
 }
 
@@ -93,7 +104,15 @@ extension NewMnemonicViewController: UICollectionViewDataSource {
 
         case let .mnemonic(mnemonic):
             return collectionView.dequeue(NewMnemonicCell.self, for: idxPath)
-                    .update(with: mnemonic)
+                .update(
+                    with: mnemonic,
+                    textChangeHandler: { [weak self] text in
+                        self?.nameDidChangeMnemonic(text)
+                    },
+                    textEditingEndHandler: { [weak self] text in
+                        self?.nameDidEndEditingMnemonic(text)
+                    }
+                )
 
         case let .name(name):
             return collectionView.dequeue(
@@ -172,6 +191,14 @@ extension NewMnemonicViewController: UICollectionViewDelegate {
             presenter.handle(.didTapMnemonic)
         }
         return false
+    }
+
+    func nameDidChangeMnemonic(_ text: String) {
+        presenter.handle(.didChangeMnemonic(text: text))
+    }
+
+    func nameDidEndEditingMnemonic(_ text: String) {
+        presenter.handle(.didEndEditingMnemonic(text: text))
     }
 
     func nameDidChange(_ name: String) {
@@ -263,7 +290,7 @@ extension NewMnemonicViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - Configure UI
 
-extension NewMnemonicViewController {
+private extension NewMnemonicViewController {
     
     func configureUI() {
         title = Localized("newMnemonic.title")
@@ -279,6 +306,10 @@ extension NewMnemonicViewController {
             action: #selector(dismissAction(_:))
         )
         navigationItem.leftBarButtonItem?.tintColor = Theme.current.tintPrimary
+    }
+
+    func needsReload(_ preViewModel: NewMnemonicViewModel?, viewModel: NewMnemonicViewModel) -> Bool {
+        preViewModel?.sectionsItems[1].count != viewModel.sectionsItems[1].count
     }
 }
 

@@ -49,6 +49,7 @@ class CollectionViewSwitchTextInputCell: CollectionViewCell {
 
 extension CollectionViewSwitchTextInputCell: UITextFieldDelegate {
 
+
     func textFieldDidEndEditing(_ textField: UITextField) {
         textChangeHandler?(textField.text ?? "")
     }

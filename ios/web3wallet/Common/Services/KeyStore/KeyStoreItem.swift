@@ -17,7 +17,7 @@ struct KeyStoreItem {
     let creationDate: Date
     var modification: Date
     let encryptedSigner: String
-    let mnemonic: String
+    var mnemonic: String
 }
 
 // MARK: - PasswordType
