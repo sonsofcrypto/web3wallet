@@ -51,6 +51,8 @@ extension MnemonicViewController: MnemonicView {
         guard let cv = collectionView else {
             return
         }
+        
+        ctaButton.setTitle(viewModel.cta, for: .normal)
 
         let cells = cv.indexPathsForVisibleItems
         let idxs = IndexSet(0..<viewModel.sectionsItems.count)

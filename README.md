@@ -30,10 +30,6 @@ git submodule update --init --recursive
 	- [] Create multisig
 
 ## UI tasks: 
-	- [x] One tap switch wallet netwrok button
-	- [x] One tap launch
-	- [ ] Implemnet voldemort
-
 	- [ ] Add inset for keybord and scroll to fiedl when keyboard comes up
  	- [ ] Implement custom layout for separators
  	- [ ] Fix add wallet dismiss animation when in cards mode
