@@ -6,8 +6,19 @@ import Foundation
 
 enum Setting: String, CaseIterable {
 
+    case onboardingMode = "setting.onboardingMode"
     case createWalletTransitionType = "setting.newSeedTransitionType"
     case theme = "setting.theme"
+}
+
+// MARK: - OnboardingModeOptions
+
+extension Setting {
+
+    enum OnboardingModeOptions: Int, CaseIterable, Codable, Equatable {
+        case twoTap
+        case oneTap
+    }
 }
 
 // MARK: - createWalletTransitionType

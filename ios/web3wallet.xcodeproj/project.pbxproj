@@ -66,6 +66,7 @@
 		1A4C36A193B791847D2B8EE3 /* ButtonsSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E063562A185CDDE2FB6 /* ButtonsSheetViewModel.swift */; };
 		1A4C36B0C0625697FE563291 /* UIFont+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C341557541950B9132370 /* UIFont+extension.swift */; };
 		1A4C36E01D38AFB39DCA523C /* NetworksWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3AD5ED12A2AC7B3218C9 /* NetworksWireframe.swift */; };
+		1A4C36EEA61FB60EE15ED6DD /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38D3A7CC14ADC53A0E39 /* OnboardingService.swift */; };
 		1A4C36FDBCA0AA402711BE43 /* RootPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3B638AF302821340E527 /* RootPresenter.swift */; };
 		1A4C370634B11B400C5C4356 /* TouchPassThroughCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C308C7EEAF2E80221C519 /* TouchPassThroughCollectionView.swift */; };
 		1A4C37074D8859F0DC14C905 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */; };
@@ -321,6 +322,7 @@
 		1A4C38ADF271AE15EE20A68F /* UIStackView+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+extensions.swift"; sourceTree = "<group>"; };
 		1A4C38B1678950FD61E91FAD /* AccountInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountInteractor.swift; sourceTree = "<group>"; };
 		1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewEffectViewiOS14.swift; sourceTree = "<group>"; };
+		1A4C38D3A7CC14ADC53A0E39 /* OnboardingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingService.swift; sourceTree = "<group>"; };
 		1A4C38F6C66189309E695B99 /* DashboardPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardPresenter.swift; sourceTree = "<group>"; };
 		1A4C393EC70B537D98A4CA4A /* CG+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CG+extensions.swift"; sourceTree = "<group>"; };
 		1A4C39B21512118DB853A3E3 /* UILabel+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+extensions.swift"; sourceTree = "<group>"; };
@@ -762,8 +764,17 @@
 				1A4C35A602BDFD544714CB8F /* NFTsService */,
 				1A4C30349A9657E321920184 /* Settings */,
 				1A4C35BE139AFC345B42DE7F /* Apps */,
+				1A4C39EC4A83EE79DD0F101F /* Onboarding */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		1A4C39EC4A83EE79DD0F101F /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				1A4C38D3A7CC14ADC53A0E39 /* OnboardingService.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		1A4C3C0F7E50FC6FFF5CA5A9 /* Settings */ = {
@@ -1397,6 +1408,7 @@
 				1A4C3D226B55D81E11B02870 /* AnimatedTextBarButton.swift in Sources */,
 				1A4C3128ADCDFFC40FCFA441 /* UIStackView+extensions.swift in Sources */,
 				1A4C3D469A9E8E8F890E65F5 /* AnimatedTextButton.swift in Sources */,
+				1A4C36EEA61FB60EE15ED6DD /* OnboardingService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -63,6 +63,23 @@ extension DefaultSettingsInteractor: SettingsInteractor {
 
     func settingsItem(for setting: Setting) -> [SettingsItem] {
         switch setting {
+        case .onboardingMode:
+            let idx = Setting.OnboardingModeOptions.allCases.firstIndex(
+                of: settingsService.onboardingMode
+            )
+            return [
+                .group(
+                    items: Setting.OnboardingModeOptions.allCases.enumerated().map {
+                        SettingsItem.selectableOption(
+                            setting: setting,
+                            optIdx: $0.0,
+                            optTitle: "\($0.1)",
+                            selected: idx == $0.0
+                        )
+                    },
+                    title: setting.rawValue
+                )
+            ]
         case .createWalletTransitionType:
             let idx = Setting.CreateWalletTransitionTypeOptions.allCases.firstIndex(
                 of: settingsService.createWalletTransitionType
@@ -100,6 +117,8 @@ extension DefaultSettingsInteractor: SettingsInteractor {
 
     func didSelectSettingOption(at idx: Int, forSetting setting: Setting) {
         switch setting {
+        case .onboardingMode:
+            settingsService.onboardingMode = Setting.OnboardingModeOptions.allCases[idx]
         case .createWalletTransitionType:
             let val = Setting.CreateWalletTransitionTypeOptions.allCases[idx]
             settingsService.createWalletTransitionType = val

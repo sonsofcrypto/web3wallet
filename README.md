@@ -31,7 +31,7 @@ git submodule update --init --recursive
 
 ## UI tasks: 
 	- [x] One tap switch wallet netwrok button
-	- [ ] One tap launch
+	- [x] One tap launch
 	- [ ] Implemnet voldemort
 
 	- [ ] Add inset for keybord and scroll to fiedl when keyboard comes up

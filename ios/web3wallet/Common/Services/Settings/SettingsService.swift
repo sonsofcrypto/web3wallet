@@ -6,6 +6,7 @@ import Foundation
 
 protocol SettingsService: AnyObject {
 
+    var onboardingMode: Setting.OnboardingModeOptions { get set }
     var theme: Setting.ThemeTypeOptions { get set }
     var createWalletTransitionType: Setting.CreateWalletTransitionTypeOptions { get set }
 
@@ -29,6 +30,19 @@ extension DefaultSettingsService: SettingsService {
 
     func settings() -> [Setting] {
         Setting.allCases
+    }
+
+    var onboardingMode: Setting.OnboardingModeOptions {
+        get {
+            let key = "\(Setting.onboardingMode.self)"
+            return .init(rawValue: defaults.integer(forKey: "\(key)")) ?? .twoTap
+
+        }
+        set {
+            let key = "\(Setting.onboardingMode.self)"
+            defaults.set(newValue.rawValue, forKey: key)
+            defaults.synchronize()
+        }
     }
 
     var createWalletTransitionType: Setting.CreateWalletTransitionTypeOptions {
