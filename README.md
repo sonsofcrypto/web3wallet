@@ -30,9 +30,8 @@ git submodule update --init --recursive
 	- [] Create multisig
 
 ## UI tasks: 
+	- [x] One tap switch wallet netwrok button
 	- [ ] One tap launch
-	- [ ] One tap switch wallet netwrok button
-	- [ ] One swipe edge anim (only show it until user uses one)
 	- [ ] Implemnet voldemort
 
 	- [ ] Add inset for keybord and scroll to fiedl when keyboard comes up

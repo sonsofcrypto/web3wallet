@@ -19,6 +19,7 @@
 		1A4C30B7111436DB2D3D9E5D /* AppsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3228A51AE19D8D21760A /* AppsCell.swift */; };
 		1A4C30F2703A5F58B8DA3D1F /* AccountWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3ABEEF88DD643AF4D7AD /* AccountWireframe.swift */; };
 		1A4C30F43E59DCD74BA45981 /* MnemonicSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C33B65A547253CB05BD43 /* MnemonicSettingCell.swift */; };
+		1A4C3128ADCDFFC40FCFA441 /* UIStackView+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38ADF271AE15EE20A68F /* UIStackView+extensions.swift */; };
 		1A4C3161ADC31E07777F61F0 /* AccountInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38B1678950FD61E91FAD /* AccountInteractor.swift */; };
 		1A4C3184F9E6B94BC857D69A /* SwapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3EEA2BC4491F27D629A2 /* SwapView.swift */; };
 		1A4C31AA465FCC1EF6FE6D64 /* DashboardSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C35DB40974617FD65E0A1 /* DashboardSectionHeaderView.swift */; };
@@ -127,7 +128,9 @@
 		1A4C3CAD628F53A5AC474755 /* AppsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C331E828DAA4D2E628435 /* AppsWireframe.swift */; };
 		1A4C3CED9DCF513FA0635AF8 /* AccountMarketInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E061DB981F9ABA24321 /* AccountMarketInfoCell.swift */; };
 		1A4C3D05769E141EF98C06E4 /* RootWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DF2370620D3B04E431A /* RootWireframeFactory.swift */; };
+		1A4C3D226B55D81E11B02870 /* AnimatedTextBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3F0E41801E9AE79EBDCF /* AnimatedTextBarButton.swift */; };
 		1A4C3D2C7310ABD59AFAE725 /* AMMsWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A93ADEAA6317E2F1134 /* AMMsWireframeFactory.swift */; };
+		1A4C3D469A9E8E8F890E65F5 /* AnimatedTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C382A5C3DEF8EF76CF6F3 /* AnimatedTextButton.swift */; };
 		1A4C3D4A1F1632A702FC042A /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A962E47E54F5A5779D3 /* AccountViewModel.swift */; };
 		1A4C3D827C6C472784CC40E7 /* SwapWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E963BBDDF8226B79BAD /* SwapWireframe.swift */; };
 		1A4C3D9BD9F5A146878AFF77 /* KeyStoreWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DF93F3CE8FE0B35C142 /* KeyStoreWireframe.swift */; };
@@ -311,9 +314,11 @@
 		1A4C37E7FEEE448ABFD2A86C /* NetworksCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksCell.swift; sourceTree = "<group>"; };
 		1A4C3811EC67D01771B97011 /* AMMsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMMsViewModel.swift; sourceTree = "<group>"; };
 		1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsService.swift; sourceTree = "<group>"; };
+		1A4C382A5C3DEF8EF76CF6F3 /* AnimatedTextButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedTextButton.swift; sourceTree = "<group>"; };
 		1A4C3831549FBA4F68E7224D /* NetworksViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksViewModel.swift; sourceTree = "<group>"; };
 		1A4C388B9A42E6A279D2867F /* AccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
 		1A4C38A2039D19A2E5507CF2 /* NFTsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsView.swift; sourceTree = "<group>"; };
+		1A4C38ADF271AE15EE20A68F /* UIStackView+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+extensions.swift"; sourceTree = "<group>"; };
 		1A4C38B1678950FD61E91FAD /* AccountInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountInteractor.swift; sourceTree = "<group>"; };
 		1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewEffectViewiOS14.swift; sourceTree = "<group>"; };
 		1A4C38F6C66189309E695B99 /* DashboardPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardPresenter.swift; sourceTree = "<group>"; };
@@ -373,6 +378,7 @@
 		1A4C3EDBCEBB09F678C9E934 /* DashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		1A4C3EE3468010FE10976BEE /* mock-candles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mock-candles.json"; sourceTree = "<group>"; };
 		1A4C3EEA2BC4491F27D629A2 /* SwapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapView.swift; sourceTree = "<group>"; };
+		1A4C3F0E41801E9AE79EBDCF /* AnimatedTextBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedTextBarButton.swift; sourceTree = "<group>"; };
 		1A4C3F186997145E252EBB2E /* NFTsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsInteractor.swift; sourceTree = "<group>"; };
 		1A4C3F3F7A4502698FF8F63E /* String+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
 		1A4C3F5900131CEDA6520958 /* TransformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformView.swift; sourceTree = "<group>"; };
@@ -514,6 +520,7 @@
 				D116CF2727C2531E005542AA /* Array+extensions.swift */,
 				1A4C3ADE5C8CD3D3CBB36547 /* UIBarButtonItem+extensions.swift */,
 				1A4C393EC70B537D98A4CA4A /* CG+extensions.swift */,
+				1A4C38ADF271AE15EE20A68F /* UIStackView+extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -728,6 +735,8 @@
 				1A4C306F77C13B435A1FBF17 /* DashboardInteractor.swift */,
 				1A4C3B92FA152550A06D3D31 /* DashboardWireframeFactory.swift */,
 				1A4C303225414E70D52A40F3 /* cells */,
+				1A4C3F0E41801E9AE79EBDCF /* AnimatedTextBarButton.swift */,
+				1A4C382A5C3DEF8EF76CF6F3 /* AnimatedTextButton.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -1385,6 +1394,9 @@
 				1A4C39C447DAE89615B354E6 /* SettingsListSelectCell.swift in Sources */,
 				1A4C392FA145A1DD2AB7050D /* SettingsActionCell.swift in Sources */,
 				1A4C3DDA43811C13E1BC9823 /* MnemonicContext.swift in Sources */,
+				1A4C3D226B55D81E11B02870 /* AnimatedTextBarButton.swift in Sources */,
+				1A4C3128ADCDFFC40FCFA441 /* UIStackView+extensions.swift in Sources */,
+				1A4C3D469A9E8E8F890E65F5 /* AnimatedTextButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

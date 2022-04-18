@@ -255,12 +255,17 @@ extension DashboardViewController {
         )
 
         navigationItem.rightBarButtonItem = UIBarButtonItem.glowLabel()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "arrow_back"),
-            style: .plain,
+        let btn = AnimatedTextBarButton(
+            with: [
+                "Wallet",
+                "Network"
+            ],
+            mode: .static,
             target: self,
             action: #selector(walletConnectionSettingsAction(_:))
         )
+        btn.setMode(.animating, animated: true)
+        navigationItem.leftBarButtonItem = btn
 
         transitioningDelegate = self
 

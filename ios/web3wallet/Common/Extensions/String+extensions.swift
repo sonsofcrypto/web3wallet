@@ -4,12 +4,6 @@
 
 import Foundation
 
-//
-// Created by p4rtiz4n on 21/12/2020.
-//
-
-import Foundation
-
 // MARK: - Extracting number from string
 
 extension String {
