@@ -29,6 +29,8 @@ protocol KeyStoreService: AnyObject {
     func isEmpty() -> Bool
 
     func load(_ handler: KeyStoreHandler)
+
+    func createDefaultKeyStoreItem()
 }
 
 // MARK: - DefaultKeyStoreService
@@ -93,6 +95,12 @@ extension DefaultKeyStoreService: KeyStoreService {
         keyStoreItems = (store.get(Constant.keyStoreItems) ?? [])
             .sorted(by: { $0.sortOrder < $1.sortOrder })
         handler(keyStoreItems)
+    }
+
+    func createDefaultKeyStoreItem() {
+        var item = generateNewKeyStoreItem()
+        item.name = "web3wallet"
+        try? add(item)
     }
 }
 

@@ -15,13 +15,16 @@ class DefaultDashboardWireframeFactory {
 
     private let service: KeyStoreService
     private let accountWireframeFactory: AccountWireframeFactory
+    private let onboardingService: OnboardingService
 
     init(
         _ service: KeyStoreService,
-        accountWireframeFactory: AccountWireframeFactory
+        accountWireframeFactory: AccountWireframeFactory,
+        onboardingService: OnboardingService
     ) {
         self.service = service
         self.accountWireframeFactory = accountWireframeFactory
+        self.onboardingService = onboardingService
     }
 }
 
@@ -33,7 +36,8 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
         DefaultDashboardWireframe(
             parent: parent,
             interactor: DefaultDashboardInteractor(service),
-            accountWireframeFactory: accountWireframeFactory
+            accountWireframeFactory: accountWireframeFactory,
+            onboardingService: onboardingService
         )
     }
 }

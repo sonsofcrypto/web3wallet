@@ -24,15 +24,18 @@ class DefaultDashboardWireframe {
 
     private let interactor: DashboardInteractor
     private let accountWireframeFactory: AccountWireframeFactory
+    private let onboardingService: OnboardingService
 
     init(
         parent: UIViewController,
         interactor: DashboardInteractor,
-        accountWireframeFactory: AccountWireframeFactory
+        accountWireframeFactory: AccountWireframeFactory,
+        onboardingService: OnboardingService
     ) {
         self.parent = parent
         self.interactor = interactor
         self.accountWireframeFactory = accountWireframeFactory
+        self.onboardingService = onboardingService
     }
 }
 
@@ -75,7 +78,8 @@ extension DefaultDashboardWireframe {
         let presenter = DefaultDashboardPresenter(
             view: vc,
             interactor: interactor,
-            wireframe: self
+            wireframe: self,
+            onboardingService: onboardingService
         )
 
         vc.presenter = presenter

@@ -16,6 +16,8 @@ class AnimatedTextButton: UIButton {
     private var text: [String] = []
     private var isAnimating: Bool = false
 
+    private(set) var mode: Mode = .hidden
+
     convenience init(
         with text: [String],
         mode: Mode,
@@ -49,12 +51,16 @@ class AnimatedTextButton: UIButton {
     func setMode(_ mode: Mode, animated: Bool = true) {
         switch mode {
         case .hidden:
+            vStack.alpha = 0
+            leadingConstraint.constant = Constant.leadingInset /  2
             isAnimating = false
-            ()
         case .static:
+            vStack.alpha = 1
+            leadingConstraint.constant = Constant.leadingInset
             isAnimating = false
-            ()
         case .animating:
+            vStack.alpha = 1
+            leadingConstraint.constant = Constant.leadingInset
             guard !isAnimating else {
                 return
             }
@@ -62,6 +68,8 @@ class AnimatedTextButton: UIButton {
             isAnimating = true
             animate()
         }
+
+        self.mode = mode
     }
 }
 
@@ -86,7 +94,7 @@ private extension AnimatedTextButton {
 
         let leadingConstraint = hStack.leadingAnchor.constraint(
             equalTo: leadingAnchor,
-            constant: -14
+            constant: Constant.leadingInset
         )
 
         self.leadingConstraint = leadingConstraint
@@ -103,6 +111,7 @@ private extension AnimatedTextButton {
 
         self.hStack = hStack
         self.vStack = vStack
+        self.iconImageView = iconImageView
     }
 
     func makeTextLabel() -> UILabel {
@@ -134,7 +143,7 @@ extension AnimatedTextButton {
 extension AnimatedTextButton {
 
     func animate() {
-        let views = [imageView] + vStack.arrangedSubviews
+        let views = [iconImageView] + vStack.arrangedSubviews
         for (idx, view) in views.enumerated() {
             view?.alpha = 0
             view?.transform = CGAffineTransform(translationX: 100, y: 0)
@@ -174,5 +183,14 @@ extension AnimatedTextButton {
                 }
             )
         }
+    }
+}
+
+// MARK: - Constant
+
+extension AnimatedTextButton {
+
+    enum Constant {
+        static let leadingInset: CGFloat = -14
     }
 }

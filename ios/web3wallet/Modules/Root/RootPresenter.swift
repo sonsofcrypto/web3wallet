@@ -14,6 +14,7 @@ protocol RootPresenter {
 class DefaultRootPresenter {
 
     private let wireframe: RootWireframe
+    private let onboardingService: OnboardingService
     private let keyStoreService: KeyStoreService
     private let keyStore: KeyStoreWireframe
     private let networks: NetworksWireframe
@@ -28,6 +29,7 @@ class DefaultRootPresenter {
     init(
         view: RootView,
         wireframe: RootWireframe,
+        onboardingService: OnboardingService,
         keyStoreService: KeyStoreService,
         keyStore: KeyStoreWireframe,
         networks: NetworksWireframe,
@@ -39,6 +41,7 @@ class DefaultRootPresenter {
     ) {
         self.view = view
         self.wireframe = wireframe
+        self.onboardingService = onboardingService
         self.keyStoreService = keyStoreService
         self.keyStore = keyStore
         self.networks = networks
@@ -55,6 +58,10 @@ class DefaultRootPresenter {
 extension DefaultRootPresenter: RootPresenter {
 
     func present() {
+        if onboardingService.shouldCreateWalletAtFirstLaunch()
+           && keyStoreService.isEmpty() {
+            keyStoreService.createDefaultKeyStoreItem()
+        }
         dashboard.present()
         networks.present()
         keyStore.present()

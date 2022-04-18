@@ -4,6 +4,13 @@
 
 import UIKit
 
+protocol EdgeCardsControllerDelegate: AnyObject {
+    func edgeCardsController(
+        vc: EdgeCardsController,
+        didChangeTo mode: EdgeCardsController.DisplayMode
+    )
+}
+
 class EdgeCardsController: UIViewController {
 
     private(set) var master: UIViewController?
@@ -13,6 +20,8 @@ class EdgeCardsController: UIViewController {
     private(set) var displayMode: DisplayMode = .master
 
     var cardNavigationEnabled: Bool = true
+
+    weak var delegate: EdgeCardsControllerDelegate?
 
     private var masterContainer: UIView = .init()
     private var topCardContainer: UIView = .init()
@@ -82,6 +91,7 @@ class EdgeCardsController: UIViewController {
 
         guard animated else {
             setupForDisplayMode(mode)
+            delegate?.edgeCardsController(vc: self, didChangeTo: mode)
             return
         }
 
@@ -89,7 +99,10 @@ class EdgeCardsController: UIViewController {
             damping: mode.isFullScreen()
                 ? Constant.displayModeLongAnim
                 : Constant.displayModeShortAnim,
-            animations: { self.setupForDisplayMode(mode) }
+            animations: {
+                self.setupForDisplayMode(mode)
+                self.delegate?.edgeCardsController(vc: self, didChangeTo: mode)
+            }
         )
     }
 

@@ -64,6 +64,13 @@ extension DashboardViewController: DashboardView {
     func update(with viewModel: DashboardViewModel) {
         self.viewModel = viewModel
         collectionView.reloadData()
+        if let btn = navigationItem.leftBarButtonItem as? AnimatedTextBarButton {
+            let nonAnimMode: AnimatedTextButton.Mode = btn.mode == .animating ? .static : .hidden
+            btn.setMode(
+                viewModel.shouldAnimateCardSwitcher ? .animating :  nonAnimMode,
+                animated: true
+            )
+        }
         let pctLabel = navigationItem.rightBarButtonItem?.customView as? UILabel
         pctLabel?.text = viewModel.header.pct
         pctLabel?.textColor = viewModel.header.pctUp
@@ -264,7 +271,7 @@ extension DashboardViewController {
             target: self,
             action: #selector(walletConnectionSettingsAction(_:))
         )
-        btn.setMode(.animating, animated: true)
+        btn.setMode(.hidden, animated: true)
         navigationItem.leftBarButtonItem = btn
 
         transitioningDelegate = self
@@ -279,6 +286,20 @@ extension DashboardViewController {
 
         let overScrollView = (collectionView as? CollectionView)
         overScrollView?.overScrollView.image = UIImage(named: "overscroll_pepe")
+
+        edgeCardsController?.delegate = self
+    }
+}
+
+// MARK: -
+
+extension DashboardViewController: EdgeCardsControllerDelegate {
+
+    func edgeCardsController(
+        vc: EdgeCardsController,
+        didChangeTo mode: EdgeCardsController.DisplayMode
+    ) {
+        presenter.handle(.didInteractWithCardSwitcher)
     }
 }
 

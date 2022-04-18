@@ -8,6 +8,10 @@ class AnimatedTextBarButton: UIBarButtonItem {
 
     @IBOutlet weak var button: AnimatedTextButton!
 
+    var mode: AnimatedTextButton.Mode {
+        button.mode
+    }
+
     convenience init(
         with text: [String],
         mode: AnimatedTextButton.Mode,

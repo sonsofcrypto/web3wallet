@@ -20,9 +20,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let appsService = DefaultAppsService()
         let settingsService = DefaultSettingsService(UserDefaults.standard)
         let accountService = DefaultAccountService()
+        let onboardingService = DefaultOnboardingService(
+            settingsService,
+            defaults: UserDefaults.standard
+        )
+
 
         DefaultRootWireframeFactory(
             window: window,
+            onboardingService: onboardingService,
             keyStoreService: keyStoreService,
             settingsService: settingsService,
             keyStore: DefaultKeyStoreWireframeFactory(
@@ -38,7 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 keyStoreService,
                 accountWireframeFactory: DefaultAccountWireframeFactory(
                     accountService
-                )
+                ),
+                onboardingService: onboardingService
             ),
             degen: DefaultDegenWireframeFactory(
                 degenService,

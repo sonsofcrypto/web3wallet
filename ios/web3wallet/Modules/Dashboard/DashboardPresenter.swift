@@ -11,6 +11,7 @@ enum DashboardPresenterEvent {
     case walletConnectionSettingsAction
     case didSelectWallet(idx: Int)
     case didSelectNFT(idx: Int)
+    case didInteractWithCardSwitcher
 
 }
 
@@ -26,17 +27,20 @@ class DefaultDashboardPresenter {
 
     private let interactor: DashboardInteractor
     private let wireframe: DashboardWireframe
+    private let onboardingService: OnboardingService
 
     private weak var view: DashboardView?
 
     init(
         view: DashboardView,
         interactor: DashboardInteractor,
-        wireframe: DashboardWireframe
+        wireframe: DashboardWireframe,
+        onboardingService: OnboardingService
     ) {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
+        self.onboardingService = onboardingService
     }
 }
 
@@ -55,6 +59,9 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             wireframe.navigate(to: .wallet(wallet: keyStoreItem))
         case .walletConnectionSettingsAction:
             wireframe.navigate(to: .keyStoreNetworkSettings)
+        case .didInteractWithCardSwitcher:
+            onboardingService.markDidInteractCardSwitcher()
+            view?.update(with: viewModel())
         default:
             print("Handle \(event)")
         }
@@ -73,6 +80,7 @@ private extension DefaultDashboardPresenter {
 
     func viewModel() -> DashboardViewModel {
         .init(
+            shouldAnimateCardSwitcher: onboardingService.shouldShowOnboardingButton(),
             header: .init(
                 balance: "$69,420.00",
                 pct: "+4.5%",

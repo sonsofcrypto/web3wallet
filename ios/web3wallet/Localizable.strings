@@ -94,3 +94,4 @@
 "setting.theme.default" = "Default";
 "setting.theme.alt" = "Alternative";
 "setting.newSeedTransitionType" = "New seed transition type";
+"setting.onboardingMode" = "Onboarding mode";

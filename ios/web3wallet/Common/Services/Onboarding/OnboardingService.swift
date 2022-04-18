@@ -13,7 +13,7 @@ protocol OnboardingService: AnyObject {
 
 // MARK: - DefaultOnboardingService
 
-class DefaultOnboardService {
+class DefaultOnboardingService {
 
     let settings: SettingsService
     let defaults: UserDefaults
@@ -29,7 +29,7 @@ class DefaultOnboardService {
 
 // MARK: - OnboardingService
 
-extension DefaultOnboardService {
+extension DefaultOnboardingService: OnboardingService {
 
     func shouldCreateWalletAtFirstLaunch() -> Bool {
         return settings.onboardingMode == .oneTap
@@ -41,7 +41,7 @@ extension DefaultOnboardService {
     }
 
     func markDidInteractCardSwitcher() {
-        guard settings.onboardingMode == .twoTap else {
+        guard settings.onboardingMode == .oneTap else {
             return
         }
 
@@ -51,7 +51,7 @@ extension DefaultOnboardService {
 
 // MARK: - Constant
 
-private extension DefaultOnboardService {
+private extension DefaultOnboardingService {
 
     enum Constant {
         static let didInteractCardSwitcher = "didInteractCardSwitcherKey"

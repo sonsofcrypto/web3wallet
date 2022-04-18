@@ -42,6 +42,7 @@ class DefaultSettingsInteractor {
         [
             .group(
                 items: [
+                    .setting(setting: .onboardingMode),
                     .setting(setting: .createWalletTransitionType),
                     .setting(setting: .theme)
                 ],

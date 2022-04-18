@@ -15,6 +15,7 @@ class DefaultRootWireframeFactory {
 
     private weak var window: UIWindow?
 
+    private let onboardingService: OnboardingService
     private let keyStoreService: KeyStoreService
     private let settingsService: SettingsService
     private let keyStore: KeyStoreWireframeFactory
@@ -27,6 +28,7 @@ class DefaultRootWireframeFactory {
 
     init(
         window: UIWindow?,
+        onboardingService: OnboardingService,
         keyStoreService: KeyStoreService,
         settingsService: SettingsService,
         keyStore: KeyStoreWireframeFactory,
@@ -38,6 +40,7 @@ class DefaultRootWireframeFactory {
         settings: SettingsWireframeFactory
     ) {
         self.window = window
+        self.onboardingService = onboardingService
         self.keyStoreService = keyStoreService
         self.settingsService = settingsService
         self.keyStore = keyStore
@@ -57,6 +60,7 @@ extension DefaultRootWireframeFactory: RootWireframeFactory {
     func makeWireframe() -> RootWireframe {
         DefaultRootWireframe(
             window: window,
+            onboardingService: onboardingService,
             keyStoreService: keyStoreService,
             settingsService: settingsService,
             keyStore: keyStore,
