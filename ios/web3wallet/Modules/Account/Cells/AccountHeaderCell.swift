@@ -16,8 +16,8 @@ class AccountHeaderCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        balanceLabel.textColor = Theme.current.textColor
-        balanceLabel.font = Theme.current.hugeBalance
+        balanceLabel.textColor = ThemeOld.current.textColor
+        balanceLabel.font = ThemeOld.current.hugeBalance
         balanceFiatLabel.applyStyle(.subhead)
         balanceFiatLabel.font = UIFont.font(
             .gothicA1,

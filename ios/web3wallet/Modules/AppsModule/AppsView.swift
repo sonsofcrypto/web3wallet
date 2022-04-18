@@ -91,8 +91,8 @@ extension AppsViewController {
     
     func configureUI() {
         (view as? GradientView)?.colors = [
-            Theme.current.background,
-            Theme.current.backgroundDark
+            ThemeOld.current.background,
+            ThemeOld.current.backgroundDark
         ]
     }
 

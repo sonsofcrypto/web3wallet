@@ -12,7 +12,7 @@
 		1A4C302CC56D21A0E3CBAFF6 /* UIStoryboard+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C310A6D460422DB18D0BF /* UIStoryboard+extensions.swift */; };
 		1A4C302D442E40BBC5FE9E3D /* DashboardWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A05642605E68164E3B1 /* DashboardWireframe.swift */; };
 		1A4C303A23D7DA2A37B292C1 /* CardFlipTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E976CBAB0A97E8AF408 /* CardFlipTransition.swift */; };
-		1A4C305703196BC0B33BC401 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3342AB2F88E37CE4947A /* Theme.swift */; };
+		1A4C305703196BC0B33BC401 /* ThemeOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3342AB2F88E37CE4947A /* ThemeOld.swift */; };
 		1A4C30689E34BDB5B726CE77 /* ButtonsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C31252FD6ED07E9E9E2B6 /* ButtonsSheetView.swift */; };
 		1A4C308B6FA11A032039F086 /* CandlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C359691FCF66942DF6CEF /* CandlesView.swift */; };
 		1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C300D073ABE25FC79D4A9 /* CollectionViewCell.swift */; };
@@ -181,6 +181,8 @@
 		D157F7EE27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */; };
 		D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B06C227B6D23C008C3C62 /* GradienView.swift */; };
 		D15B06C727B72111008C3C62 /* KeyStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B06C627B72111008C3C62 /* KeyStoreView.swift */; };
+		D1BF2684280D7FC300DE9A0B /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF2680280D7FC200DE9A0B /* DefaultTheme.swift */; };
+		D1BF2685280D7FC300DE9A0B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF2681280D7FC200DE9A0B /* Theme.swift */; };
 		D1F160092804C96100DEF239 /* MnemonicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F160012804C96100DEF239 /* MnemonicView.swift */; };
 		D1F1600A2804C96100DEF239 /* MnemonicInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F160022804C96100DEF239 /* MnemonicInteractor.swift */; };
 		D1F1600B2804C96100DEF239 /* MnemonicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F160032804C96100DEF239 /* MnemonicCell.swift */; };
@@ -278,7 +280,7 @@
 		1A4C32E2801DC02927558192 /* SettingsListSelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsListSelectCell.swift; sourceTree = "<group>"; };
 		1A4C330512BFD12BAFED0D12 /* CALayer+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+extension.swift"; sourceTree = "<group>"; };
 		1A4C331E828DAA4D2E628435 /* AppsWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsWireframe.swift; sourceTree = "<group>"; };
-		1A4C3342AB2F88E37CE4947A /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		1A4C3342AB2F88E37CE4947A /* ThemeOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeOld.swift; sourceTree = "<group>"; };
 		1A4C3378B5287B6A9BDE65CD /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		1A4C33A7E924C453F503448F /* AppsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsPresenter.swift; sourceTree = "<group>"; };
 		1A4C33B65A547253CB05BD43 /* MnemonicSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicSettingCell.swift; sourceTree = "<group>"; };
@@ -436,6 +438,8 @@
 		D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3walletUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D15B06C227B6D23C008C3C62 /* GradienView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradienView.swift; sourceTree = "<group>"; };
 		D15B06C627B72111008C3C62 /* KeyStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreView.swift; sourceTree = "<group>"; };
+		D1BF2680280D7FC200DE9A0B /* DefaultTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
+		D1BF2681280D7FC200DE9A0B /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		D1F160012804C96100DEF239 /* MnemonicView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicView.swift; sourceTree = "<group>"; };
 		D1F160022804C96100DEF239 /* MnemonicInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicInteractor.swift; sourceTree = "<group>"; };
 		D1F160032804C96100DEF239 /* MnemonicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicCell.swift; sourceTree = "<group>"; };
@@ -1000,8 +1004,9 @@
 				1A4C38B91F448C1E962685B3 /* Services */,
 				1A4C3C27E8AC72B44037C9E2 /* ViewControllers */,
 				D15B06C427B6D241008C3C62 /* Views */,
-				1A4C3342AB2F88E37CE4947A /* Theme.swift */,
+				1A4C3342AB2F88E37CE4947A /* ThemeOld.swift */,
 				1A4C39FB21CCAF442F3001E6 /* Global.swift */,
+				D1BF267E280D7FC200DE9A0B /* Theme */,
 				1A4C37A412F5D0AF12CB3719 /* Transitions */,
 			);
 			path = Common;
@@ -1046,6 +1051,15 @@
 				D11A990B27B99D1800EDFDD0 /* AnyCodable */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		D1BF267E280D7FC200DE9A0B /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				D1BF2680280D7FC200DE9A0B /* DefaultTheme.swift */,
+				D1BF2681280D7FC200DE9A0B /* Theme.swift */,
+			);
+			path = Theme;
 			sourceTree = "<group>";
 		};
 		D1F160002804C96100DEF239 /* Mnemonic */ = {
@@ -1271,7 +1285,7 @@
 				1A4C3EB4D429242923984C76 /* Button.swift in Sources */,
 				1A4C3B49BC67AF7AA3BF0D8F /* VisualEffectView.swift in Sources */,
 				1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */,
-				1A4C305703196BC0B33BC401 /* Theme.swift in Sources */,
+				1A4C305703196BC0B33BC401 /* ThemeOld.swift in Sources */,
 				1A4C36B0C0625697FE563291 /* UIFont+extension.swift in Sources */,
 				1A4C37074D8859F0DC14C905 /* NavigationController.swift in Sources */,
 				1A4C3869B6A3E1BF415E15DB /* Global.swift in Sources */,
@@ -1333,6 +1347,7 @@
 				1A4C3F081D1B594B9EAF4F7E /* NFTsCell.swift in Sources */,
 				1A4C3FC333CF4459025710E5 /* NFTsView.swift in Sources */,
 				1A4C366BA9A6BDC929E984C1 /* NFTsPresenter.swift in Sources */,
+				D1BF2684280D7FC300DE9A0B /* DefaultTheme.swift in Sources */,
 				1A4C3BB851D9D2E9DD472284 /* NFTsViewModel.swift in Sources */,
 				1A4C3E0C34560AC1BF22B95E /* NFTsWireframe.swift in Sources */,
 				1A4C3814E1E3BDF50E96D8C5 /* NFTsInteractor.swift in Sources */,
@@ -1383,6 +1398,7 @@
 				D1F1600E2804C96100DEF239 /* MnemonicViewModel.swift in Sources */,
 				1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */,
 				1A4C3DB9D875750365494DD7 /* CG+extensions.swift in Sources */,
+				D1BF2685280D7FC300DE9A0B /* Theme.swift in Sources */,
 				D1F1600C2804C96100DEF239 /* MnemonicPresenter.swift in Sources */,
 				1A4C30F43E59DCD74BA45981 /* MnemonicSettingCell.swift in Sources */,
 				1A4C39C49AEF7D7C5D4E8CE6 /* CollectionViewSectionLabelFooter.swift in Sources */,

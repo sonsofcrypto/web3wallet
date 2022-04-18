@@ -10,9 +10,9 @@ class TemplateCell: CollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        titleLabel.textColor = Theme.current.textColor
-        titleLabel.font = Theme.current.callout
-        titleLabel.layer.shadowColor = Theme.current.tintSecondary.cgColor
+        titleLabel.textColor = ThemeOld.current.textColor
+        titleLabel.font = ThemeOld.current.callout
+        titleLabel.layer.shadowColor = ThemeOld.current.tintSecondary.cgColor
         titleLabel.layer.shadowOffset = .zero
         titleLabel.layer.shadowRadius = Global.shadowRadius
         titleLabel.layer.shadowOpacity = 1

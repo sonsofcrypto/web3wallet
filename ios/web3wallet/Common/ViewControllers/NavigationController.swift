@@ -13,15 +13,15 @@ class NavigationController: UINavigationController {
         let titleShadow = NSShadow()
         titleShadow.shadowOffset = .zero
         titleShadow.shadowBlurRadius = Global.shadowRadius
-        titleShadow.shadowColor = Theme.current.tintPrimary
+        titleShadow.shadowColor = ThemeOld.current.tintPrimary
 
         appearance.titleTextAttributes = [
-            .foregroundColor: Theme.current.tintPrimary,
-            .font: Theme.current.navTitle,
+            .foregroundColor: ThemeOld.current.tintPrimary,
+            .font: ThemeOld.current.navTitle,
             .shadow: titleShadow
         ]
 
-        appearance.backgroundColor = Theme.current.background.withAlphaComponent(1)
+        appearance.backgroundColor = ThemeOld.current.background.withAlphaComponent(1)
         appearance.setBackIndicatorImage(
             UIImage(named: "arrow_back"),
             transitionMaskImage:  nil

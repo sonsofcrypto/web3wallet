@@ -295,8 +295,8 @@ private extension MnemonicViewController {
     func configureUI() {
         title = Localized("newMnemonic.title")
         (view as? GradientView)?.colors = [
-            Theme.current.background,
-            Theme.current.backgroundDark
+            ThemeOld.current.background,
+            ThemeOld.current.backgroundDark
         ]
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -305,7 +305,7 @@ private extension MnemonicViewController {
             target: self,
             action: #selector(dismissAction(_:))
         )
-        navigationItem.leftBarButtonItem?.tintColor = Theme.current.tintPrimary
+        navigationItem.leftBarButtonItem?.tintColor = ThemeOld.current.tintPrimary
     }
 
     func needsReload(_ preViewModel: MnemonicViewModel?, viewModel: MnemonicViewModel) -> Bool {

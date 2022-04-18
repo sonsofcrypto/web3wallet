@@ -22,7 +22,7 @@ class DashboardWalletCell: CollectionViewCell {
         currencyLabel.applyStyle(.callout)
         pctChangeLabel.applyStyle(.callout)
         [fiatBalanceLabel, pctChangeLabel].forEach { $0.applyStyle(.smallLabel) }
-        fiatBalanceLabel.textColor = Theme.current.textColorSecondary
+        fiatBalanceLabel.textColor = ThemeOld.current.textColorSecondary
         cryptoBalanceLabel.applyStyle(.callout)
     }
 
@@ -43,8 +43,8 @@ extension DashboardWalletCell {
         fiatBalanceLabel.text = viewModel.fiatBalance
         pctChangeLabel.text = viewModel.pctChange
         pctChangeLabel.textColor = viewModel.priceUp
-            ? Theme.current.green
-            : Theme.current.red
+            ? ThemeOld.current.green
+            : ThemeOld.current.red
         pctChangeLabel.layer.shadowColor = pctChangeLabel.textColor.cgColor
         charView.update(viewModel.candles)
         cryptoBalanceLabel.text = viewModel.cryptoBalance

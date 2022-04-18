@@ -14,10 +14,10 @@ extension CollectionViewSectionLabelFooter {
     func update(with viewModel: MnemonicViewModel.Footer) {
         switch viewModel {
         case let .attrStr(text, highlightWords):
-            let attrs = Theme.current.sectionFooterTextAttributes()
+            let attrs = ThemeOld.current.sectionFooterTextAttributes()
             let hlAttrs: [NSAttributedString.Key : Any] = [
-                .font: Theme.current.cellDetail,
-                .foregroundColor: Theme.current.tintPrimary,
+                .font: ThemeOld.current.cellDetail,
+                .foregroundColor: ThemeOld.current.tintPrimary,
             ]
             let attrStr = NSMutableAttributedString(
                 string: text,

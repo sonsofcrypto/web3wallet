@@ -96,8 +96,8 @@ extension NetworksViewController {
     func configureUI() {
         title = Localized("networks")
         (view as? GradientView)?.colors = [
-            Theme.current.background,
-            Theme.current.backgroundDark
+            ThemeOld.current.background,
+            ThemeOld.current.backgroundDark
         ]
     }
 }

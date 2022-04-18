@@ -4,9 +4,9 @@
 
 import UIKit
 
-struct Theme {
+struct ThemeOld {
 
-    static var current: Theme = Theme()
+    static var current: ThemeOld = ThemeOld()
 
     // MARK: - Colors
 
@@ -107,16 +107,16 @@ struct Theme {
 
     func bodyTextAttributes() -> [NSAttributedString.Key: Any] {
         [
-            .font: Theme.current.body,
-            .foregroundColor: Theme.current.textColor,
+            .font: ThemeOld.current.body,
+            .foregroundColor: ThemeOld.current.textColor,
             .shadow: textShadow()
         ]
     }
 
     func placeholderTextAttributes() -> [NSAttributedString.Key: Any] {
         [
-            .font: Theme.current.subhead,
-            .foregroundColor: Theme.current.textColorTertiary,
+            .font: ThemeOld.current.subhead,
+            .foregroundColor: ThemeOld.current.textColorTertiary,
         ]
     }
 
@@ -125,13 +125,13 @@ struct Theme {
         paragraphStyle.lineSpacing = 6
 
         return [
-            .font: Theme.current.cellDetail,
-            .foregroundColor: Theme.current.textColorTertiary,
+            .font: ThemeOld.current.cellDetail,
+            .foregroundColor: ThemeOld.current.textColorTertiary,
             .paragraphStyle: paragraphStyle
         ]
     }
 
-    func textShadow(_ tint: UIColor = Theme.current.tintSecondary ) -> NSShadow {
+    func textShadow(_ tint: UIColor = ThemeOld.current.tintSecondary ) -> NSShadow {
         let shadow = NSShadow()
         shadow.shadowOffset = .zero
         shadow.shadowBlurRadius = Global.shadowRadius

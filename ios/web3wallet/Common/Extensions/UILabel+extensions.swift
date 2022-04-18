@@ -27,43 +27,43 @@ extension UILabel {
     func applyStyle(_ style: Style) {
         switch style {
         case .headlineGlow:
-            font = Theme.current.headline
-            layer.applyShadow(Theme.current.tintSecondary)
-            textColor = Theme.current.textColor
+            font = ThemeOld.current.headline
+            layer.applyShadow(ThemeOld.current.tintSecondary)
+            textColor = ThemeOld.current.textColor
         case .callout:
-            font = Theme.current.callout
-            layer.applyShadow(Theme.current.tintSecondary)
-            textColor = Theme.current.textColor
+            font = ThemeOld.current.callout
+            layer.applyShadow(ThemeOld.current.tintSecondary)
+            textColor = ThemeOld.current.textColor
         case .subhead:
-            font = Theme.current.subhead
-            textColor = Theme.current.textColorSecondary
+            font = ThemeOld.current.subhead
+            textColor = ThemeOld.current.textColorSecondary
         case .subheadGlow:
-            font = Theme.current.subhead
-            layer.applyShadow(Theme.current.tintSecondary)
-            textColor = Theme.current.textColor
+            font = ThemeOld.current.subhead
+            layer.applyShadow(ThemeOld.current.tintSecondary)
+            textColor = ThemeOld.current.textColor
         case .bodyGlow:
-            font = Theme.current.body
-            layer.applyShadow(Theme.current.tintSecondary)
-            textColor = Theme.current.textColor
+            font = ThemeOld.current.body
+            layer.applyShadow(ThemeOld.current.tintSecondary)
+            textColor = ThemeOld.current.textColor
         case.smallLabel:
-            font = Theme.current.footnote
-            textColor = Theme.current.textColorTertiary
+            font = ThemeOld.current.footnote
+            textColor = ThemeOld.current.textColorTertiary
         case.smallerLabel:
             font = UIFont.font(.gothicA1, style: .medium, size: .caption1)
-            textColor = Theme.current.textColorSecondary
+            textColor = ThemeOld.current.textColorSecondary
         case.smallestLabel:
             font = UIFont.font(.gothicA1, style: .medium, size: .caption2)
-            textColor = Theme.current.textColorTertiary
+            textColor = ThemeOld.current.textColorTertiary
         case.smallestLabelGlow:
             layer.applyShadow(
-                Theme.current.tintSecondary,
+                ThemeOld.current.tintSecondary,
                 radius: Global.shadowRadius / 2
             )
-            font = Theme.current.caption2
-            textColor = Theme.current.tintSecondary
+            font = ThemeOld.current.caption2
+            textColor = ThemeOld.current.tintSecondary
         case .smallBody:
-            font = Theme.current.footnote
-            textColor = Theme.current.textColorSecondary
+            font = ThemeOld.current.footnote
+            textColor = ThemeOld.current.textColorSecondary
         }
     }
 }

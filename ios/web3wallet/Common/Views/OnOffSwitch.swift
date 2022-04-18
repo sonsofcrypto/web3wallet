@@ -7,11 +7,11 @@ import UIKit
 class OnOffSwitch: UISwitch {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        onTintColor = Theme.current.tintPrimary
+        onTintColor = ThemeOld.current.tintPrimary
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        onTintColor = Theme.current.tintPrimary
+        onTintColor = ThemeOld.current.tintPrimary
     }
 }
