@@ -117,9 +117,9 @@ private extension AnimatedTextButton {
     func makeTextLabel() -> UILabel {
         let label = UILabel()
         label.font = UIFont.font(.gothicA1, style: .medium, size: .caption2)
-        label.textColor = ThemeOld.current.tintPrimary
+        label.textColor = Theme.color.tint
         label.layer.applyShadow(
-            ThemeOld.current.tintPrimary,
+            Theme.color.tint,
             radius: Global.shadowRadius
         )
         vStack.addArrangedSubview(label)

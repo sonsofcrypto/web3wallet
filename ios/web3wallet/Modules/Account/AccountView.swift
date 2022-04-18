@@ -58,8 +58,8 @@ extension AccountViewController: AccountView {
         let btnLabel = (navigationItem.rightBarButtonItem?.customView as? UILabel)
         btnLabel?.text = viewModel.header.pct
         btnLabel?.textColor = viewModel.header.pctUp
-            ? ThemeOld.current.green
-            : ThemeOld.current.red
+            ? Theme.color.green
+            : Theme.color.red
     }
 }
 
@@ -199,8 +199,8 @@ extension AccountViewController {
     func configureUI() {
         title = Localized("wallets")
         (view as? GradientView)?.colors = [
-            ThemeOld.current.background,
-            ThemeOld.current.backgroundDark
+            Theme.color.background,
+            Theme.color.backgroundDark
         ]
 
         navigationItem.rightBarButtonItem = UIBarButtonItem.glowLabel()
@@ -210,7 +210,7 @@ extension AccountViewController {
             target: self,
             action: #selector(dismissAction(_:))
         )
-        navigationItem.leftBarButtonItem?.tintColor  = ThemeOld.current.tintPrimary
+        navigationItem.leftBarButtonItem?.tintColor  = Theme.color.tint
 
         var insets = collectionView.contentInset
         insets.bottom += Global.padding

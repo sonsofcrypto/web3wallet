@@ -74,8 +74,8 @@ extension DashboardViewController: DashboardView {
         let pctLabel = navigationItem.rightBarButtonItem?.customView as? UILabel
         pctLabel?.text = viewModel.header.pct
         pctLabel?.textColor = viewModel.header.pctUp
-            ? ThemeOld.current.green
-            : ThemeOld.current.red
+            ? Theme.color.green
+            : Theme.color.red
     }
 }
 
@@ -245,8 +245,8 @@ extension DashboardViewController {
     func configureUI() {
         title = Localized("dashboard")
         (view as? GradientView)?.colors = [
-            ThemeOld.current.background,
-            ThemeOld.current.backgroundDark
+            Theme.color.background,
+            Theme.color.backgroundDark
         ]
 
         tabBarItem = UITabBarItem(

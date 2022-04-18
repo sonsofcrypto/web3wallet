@@ -79,11 +79,11 @@ extension CollectionViewSwitchTextInputCell {
 
         let attrStr = NSMutableAttributedString(
             string: viewModel.description,
-            attributes: ThemeOld.current.sectionFooterTextAttributes()
+            attributes: Theme.attributes.sectionFooter()
         )
 
-        var hlAttrs  = ThemeOld.current.sectionFooterTextAttributes()
-        hlAttrs[.foregroundColor] = ThemeOld.current.tintPrimary
+        var hlAttrs  = Theme.attributes.sectionFooter()
+        hlAttrs[.foregroundColor] = Theme.color.tint
 
         viewModel.descriptionHighlightedWords.forEach {
             let range = NSString(string: viewModel.description).range(of: $0)

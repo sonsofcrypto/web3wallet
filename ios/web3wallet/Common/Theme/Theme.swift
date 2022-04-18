@@ -14,14 +14,14 @@ protocol ThemeProvider {
 
 protocol ThemeColor {
 
-    var tintPrimary: UIColor { get }
-    var tintPrimaryLight: UIColor { get }
+    var tint: UIColor { get }
+    var tintLight: UIColor { get }
     var tintSecondary: UIColor { get }
     var background: UIColor { get }
     var backgroundDark: UIColor { get }
-    var textColor: UIColor { get }
-    var textColorSecondary: UIColor { get }
-    var textColorTertiary: UIColor { get }
+    var text: UIColor { get }
+    var textSecondary: UIColor { get }
+    var textTertiary: UIColor { get }
     var red: UIColor { get }
     var green: UIColor { get }
 }
@@ -44,25 +44,29 @@ protocol ThemeFont {
 
 protocol ThemeAttributes {
 
-    func bodyTextAttributes() -> [NSAttributedString.Key: Any]
-    func placeholderTextAttributes() -> [NSAttributedString.Key: Any]
-    func sectionFooterTextAttributes() -> [NSAttributedString.Key: Any]
-    func textShadow(_ tint: UIColor = ThemeOld.current.tintSecondary ) -> NSShadow
+    func body() -> [NSAttributedString.Key: Any]
+    func placeholder() -> [NSAttributedString.Key: Any]
+    func sectionFooter() -> [NSAttributedString.Key: Any]
+    func textShadow(_ tint: UIColor) -> NSShadow
 }
 
 struct Theme: ThemeProvider {
 
     static var current: ThemeProvider = DefaultTheme()
-
-    private(set) var color: ThemeColor {
+    
+    var color: ThemeColor = Theme.current.color
+    var font: ThemeFont = Theme.current.font
+    var attributes: ThemeAttributes = Theme.current.attributes
+    
+    static var color: ThemeColor {
         Theme.current.color
     }
 
-    private(set) var font: ThemeFont {
+    static var font: ThemeFont {
         Theme.current.font
     }
 
-    private(set) var attributes: ThemeAttributes {
+    static var attributes: ThemeAttributes {
         Theme.current.attributes
     }
 }

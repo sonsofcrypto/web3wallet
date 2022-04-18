@@ -92,8 +92,8 @@ private extension NFTsViewController {
     
     func configureUI() {
         (view as? GradientView)?.colors = [
-            ThemeOld.current.background,
-            ThemeOld.current.backgroundDark
+            Theme.color.background,
+            Theme.color.backgroundDark
         ]
     }
 

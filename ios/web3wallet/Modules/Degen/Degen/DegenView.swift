@@ -114,8 +114,8 @@ extension DegenViewController {
         navigationItem.backButtonTitle = ""
 
         (view as? GradientView)?.colors = [
-            ThemeOld.current.background,
-            ThemeOld.current.backgroundDark
+            Theme.color.background,
+            Theme.color.backgroundDark
         ]
 
         var insets = collectionView.contentInset

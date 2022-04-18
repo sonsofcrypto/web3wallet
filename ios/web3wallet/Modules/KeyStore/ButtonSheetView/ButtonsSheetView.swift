@@ -100,7 +100,7 @@ extension ButtonsSheetView: UICollectionViewDelegate {
 private extension ButtonsSheetView {
 
     func configureUI() {
-        backgroundOverlay.backgroundColor = ThemeOld.current.background.withAlpha(0.5)
+        backgroundOverlay.backgroundColor = Theme.color.background.withAlpha(0.5)
     }
 
 }

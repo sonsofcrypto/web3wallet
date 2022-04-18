@@ -9,7 +9,7 @@ struct DefaultTheme: ThemeProvider {
 
     private(set) var color: ThemeColor = DefaultTheme.Color()
     private(set) var font: ThemeFont = DefaultTheme.Font()
-    private(set) var attributes: ThemeFont = DefaultTheme.Attributes()
+    private(set) var attributes: ThemeAttributes = DefaultTheme.Attributes()
 }
 
 // MARK: - Color
@@ -18,11 +18,11 @@ extension DefaultTheme {
 
     struct Color: ThemeColor {
 
-        var tintPrimary: UIColor {
+        var tint: UIColor {
             UIColor.tintPrimary
         }
 
-        var tintPrimaryLight: UIColor {
+        var tintLight: UIColor {
             UIColor.tintPrimary.withAlphaComponent(0.25)
         }
 
@@ -38,15 +38,15 @@ extension DefaultTheme {
             UIColor.bgGradientBottom
         }
 
-        var textColor: UIColor {
+        var text: UIColor {
             UIColor.textColor
         }
 
-        var textColorSecondary: UIColor {
+        var textSecondary: UIColor {
             UIColor.textColorSecondary
         }
 
-        var textColorTertiary: UIColor {
+        var textTertiary: UIColor {
             UIColor.textColorTertiary
         }
 
@@ -123,35 +123,35 @@ extension DefaultTheme {
 
 extension DefaultTheme {
 
-    struct Attributes {
+    struct Attributes: ThemeAttributes {
 
-        func bodyTextAttributes() -> [NSAttributedString.Key: Any] {
+        func body() -> [NSAttributedString.Key: Any] {
             [
-                .font: ThemeOld.current.body,
-                .foregroundColor: ThemeOld.current.textColor,
-                .shadow: textShadow()
+                .font: Theme.font.body,
+                .foregroundColor: Theme.color.text,
+                .shadow: textShadow(Theme.current.color.tintSecondary)
             ]
         }
 
-        func placeholderTextAttributes() -> [NSAttributedString.Key: Any] {
+        func placeholder() -> [NSAttributedString.Key: Any] {
             [
-                .font: ThemeOld.current.subhead,
-                .foregroundColor: ThemeOld.current.textColorTertiary,
+                .font: Theme.font.subhead,
+                .foregroundColor: Theme.color.textTertiary,
             ]
         }
 
-        func sectionFooterTextAttributes() -> [NSAttributedString.Key: Any] {
+        func sectionFooter() -> [NSAttributedString.Key: Any] {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = 6
 
             return [
-                .font: ThemeOld.current.cellDetail,
-                .foregroundColor: ThemeOld.current.textColorTertiary,
+                .font: Theme.font.cellDetail,
+                .foregroundColor: Theme.color.textTertiary,
                 .paragraphStyle: paragraphStyle
             ]
         }
 
-        func textShadow(_ tint: UIColor = ThemeOld.current.tintSecondary ) -> NSShadow {
+        func textShadow(_ tint: UIColor) -> NSShadow {
             let shadow = NSShadow()
             shadow.shadowOffset = .zero
             shadow.shadowBlurRadius = Global.shadowRadius

@@ -17,8 +17,8 @@ class SwapInputView: UIView {
         layer.cornerRadius = Global.cornerRadius
         layer.masksToBounds = true
 
-        textField.textColor = ThemeOld.current.textColor
-        textField.font = ThemeOld.current.title1
+        textField.textColor = Theme.color.text
+        textField.font = Theme.font.title1
         textField.keyboardType = .decimalPad
 
         currencyButton.rightImageView.image = UIImage(named: "chevron_down")
@@ -27,7 +27,7 @@ class SwapInputView: UIView {
         currencyButton.titleLabel?.textAlignment = .center
 
         [fiatValueLabel, balanceLabel].forEach {
-            $0.textColor = ThemeOld.current.textColorSecondary
+            $0.textColor = Theme.color.textSecondary
         }
 
         [currencyButton, balanceLabel].forEach {

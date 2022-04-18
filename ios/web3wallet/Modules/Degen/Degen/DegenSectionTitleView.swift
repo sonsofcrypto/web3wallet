@@ -19,7 +19,7 @@ extension DegenSectionTitleView {
 
         label.attributedText = NSAttributedString(
             string: viewModel?.sectionTitle ?? "",
-            attributes: ThemeOld.current.sectionFooterTextAttributes()
+            attributes: Theme.attributes.sectionFooter()
         )
     }
 }

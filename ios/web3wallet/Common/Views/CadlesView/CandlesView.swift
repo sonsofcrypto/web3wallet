@@ -137,7 +137,7 @@ private extension CandlesView {
 
             let (close, open) = (candle.close, candle.open)
             let isGreen = candle.close >= candle.open
-            let color: UIColor = isGreen ? ThemeOld.current.green : ThemeOld.current.red
+            let color: UIColor = isGreen ? Theme.color.green : Theme.color.red
             let bodyHigh = isGreen ? close : open
             let bodyLength = isGreen ? close - open : open - close
             let yRatio = bounds.height / (high - low)
