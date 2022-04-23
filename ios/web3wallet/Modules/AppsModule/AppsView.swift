@@ -9,7 +9,7 @@ protocol AppsView: AnyObject {
     func update(with viewModel: AppsViewModel)
 }
 
-class AppsViewController: UIViewController {
+class AppsViewController: BaseViewController {
 
     var presenter: AppsPresenter!
 

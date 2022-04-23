@@ -9,11 +9,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+        
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
-
-        let keyChainService = DefaultKeyChainService()
+        
+        let keyStoreService = DefaultKeyStoreService(store: DefaultStore())
         let networkService = DefaultNetworksService()
         let degenService = DefaultDegenService()
         let nftsService = DefaultNFTsService()
@@ -24,10 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             settingsService,
             defaults: UserDefaults.standard
         )
-        let keyStoreService = DefaultKeyStoreService(
-            store: DefaultStore(),
-            keyChainService: keyChainService
-        )
+
 
         DefaultRootWireframeFactory(
             window: window,

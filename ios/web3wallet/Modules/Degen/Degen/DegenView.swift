@@ -9,7 +9,7 @@ protocol DegenView: AnyObject {
     func update(with viewModel: DegenViewModel)
 }
 
-class DegenViewController: UIViewController {
+class DegenViewController: BaseViewController {
 
     var presenter: DegenPresenter!
 

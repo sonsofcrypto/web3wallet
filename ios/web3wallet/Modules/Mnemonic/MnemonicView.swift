@@ -10,7 +10,7 @@ protocol MnemonicView: AnyObject {
     func dismiss(animated flag: Bool, completion: (() -> Void)?)
 }
 
-class MnemonicViewController: UIViewController {
+class MnemonicViewController: BaseViewController {
 
     var presenter: MnemonicPresenter!
 
