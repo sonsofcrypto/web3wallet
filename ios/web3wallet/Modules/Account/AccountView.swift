@@ -9,7 +9,7 @@ protocol AccountView: AnyObject {
     func update(with viewModel: AccountViewModel)
 }
 
-class AccountViewController: UIViewController {
+class AccountViewController: BaseViewController {
 
     var presenter: AccountPresenter!
 

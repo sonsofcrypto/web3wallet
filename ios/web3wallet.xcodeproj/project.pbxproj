@@ -150,6 +150,7 @@
 		1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */; };
 		1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */; };
 		1A4C3FC333CF4459025710E5 /* NFTsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38A2039D19A2E5507CF2 /* NFTsView.swift */; };
+		1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46D92813DE4800F6C40B /* BaseViewController.swift */; };
 		D116CF2827C2531E005542AA /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D116CF2727C2531E005542AA /* Array+extensions.swift */; };
 		D116CF3227C31ECC005542AA /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = D116CF3127C31ECC005542AA /* iCarousel.m */; };
 		D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F527B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf */; };
@@ -386,6 +387,7 @@
 		1A4C3F5900131CEDA6520958 /* TransformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformView.swift; sourceTree = "<group>"; };
 		1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnOffSwitch.swift; sourceTree = "<group>"; };
 		1A4C3FA66092D38533F635F3 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		1C9B46D92813DE4800F6C40B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		D116CF2727C2531E005542AA /* Array+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extensions.swift"; sourceTree = "<group>"; };
 		D116CF2F27C31ECC005542AA /* web3wallet-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "web3wallet-Bridging-Header.h"; sourceTree = "<group>"; };
 		D116CF3027C31ECC005542AA /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
@@ -795,8 +797,9 @@
 		1A4C3C27E8AC72B44037C9E2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */,
+				1C9B46D92813DE4800F6C40B /* BaseViewController.swift */,
 				1A4C3178DA54CD0800157DD5 /* EdgeCardsController.swift */,
+				1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */,
 				1A4C309894247AA73F274756 /* TabBarController.swift */,
 			);
 			path = ViewControllers;
@@ -1295,6 +1298,7 @@
 				1A4C3B1D9B56685FF628A0AD /* DegenService.swift in Sources */,
 				1A4C3540A51F853CCA68885B /* DegenCell.swift in Sources */,
 				1A4C34F0ADC2C388D42148BA /* DegenView.swift in Sources */,
+				1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */,
 				1A4C355E7008E07B2A6A148C /* DegenPresenter.swift in Sources */,
 				1A4C3A30CFE0E04885B8A474 /* DegenViewModel.swift in Sources */,
 				1A4C3719F83C54CD473ECE25 /* DegenWireframe.swift in Sources */,

@@ -9,7 +9,7 @@ protocol DashboardView: AnyObject {
     func update(with viewModel: DashboardViewModel)
 }
 
-class DashboardViewController: UIViewController {
+class DashboardViewController: BaseViewController {
 
     var presenter: DashboardPresenter!
 

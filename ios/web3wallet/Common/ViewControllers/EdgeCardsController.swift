@@ -11,7 +11,7 @@ protocol EdgeCardsControllerDelegate: AnyObject {
     )
 }
 
-class EdgeCardsController: UIViewController {
+class EdgeCardsController: BaseViewController {
 
     private(set) var master: UIViewController?
     private(set) var topCard: UIViewController?

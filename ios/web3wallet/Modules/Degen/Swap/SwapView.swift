@@ -9,7 +9,7 @@ protocol SwapView: AnyObject {
     func update(with viewModel: SwapViewModel)
 }
 
-class SwapViewController: UIViewController {
+class SwapViewController: BaseViewController {
 
     @IBOutlet weak var container: UIView!
     @IBOutlet weak var fromInputView: SwapInputView!

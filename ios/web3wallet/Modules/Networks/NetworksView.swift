@@ -9,7 +9,7 @@ protocol NetworksView: AnyObject {
     func update(with viewModel: NetworksViewModel)
 }
 
-class NetworksViewController: UIViewController {
+class NetworksViewController: BaseViewController {
 
     var presenter: NetworksPresenter!
 
