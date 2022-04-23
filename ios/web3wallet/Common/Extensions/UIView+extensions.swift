@@ -30,3 +30,37 @@ extension UIView {
         )
     }
 }
+
+extension UIView {
+    
+    class func vSpace(
+        height: CGFloat = 16
+    ) -> UIView {
+        
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.addConstraints(
+            [
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: height))
+            ]
+        )
+        
+        return view
+    }
+    
+    class func dividerLine(
+        backgorundColor: UIColor = Theme.current.red,
+        height: CGFloat = 1
+    ) -> UIView {
+        
+        let view = UIView()
+        view.backgroundColor = backgorundColor
+        view.addConstraints(
+            [
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: height))
+            ]
+        )
+        
+        return view
+    }
+}

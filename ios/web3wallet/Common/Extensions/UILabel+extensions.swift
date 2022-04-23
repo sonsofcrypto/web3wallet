@@ -12,6 +12,7 @@ extension UILabel {
     }
 
     enum Style {
+        case navTitle
         case headlineGlow
         case callout
         case subhead
@@ -26,6 +27,9 @@ extension UILabel {
 
     func applyStyle(_ style: Style) {
         switch style {
+        case .navTitle:
+            font = Theme.current.navTitle
+            textColor = Theme.current.tintPrimary
         case .headlineGlow:
             font = Theme.font.headline
             layer.applyShadow(Theme.color.tintSecondary)
