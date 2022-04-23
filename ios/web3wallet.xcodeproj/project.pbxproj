@@ -105,6 +105,7 @@
 		1A4C39EEFEA6A4B3265F6B13 /* DashboardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C30949FD84F7C8504D081 /* DashboardHeaderView.swift */; };
 		1A4C3A1288CD2259782890A2 /* AccountChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C33DC42CC7C1EA5D259B5 /* AccountChartCell.swift */; };
 		1A4C3A30CFE0E04885B8A474 /* DegenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C34E67B135A61BE103648 /* DegenViewModel.swift */; };
+		1A4C3A31772BC5F4E63252F6 /* CryptoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3202CB94375AA40C561A /* CryptoUtils.swift */; };
 		1A4C3A35E90213A3B1D305C1 /* NetworksInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3795FDA4A86232F2BA21 /* NetworksInteractor.swift */; };
 		1A4C3A585C5375AE91CDA637 /* KeyStoreWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C514ACC30A0AC4707FA /* KeyStoreWireframeFactory.swift */; };
 		1A4C3A7D319E0444A98E52AD /* AMMsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3811EC67D01771B97011 /* AMMsViewModel.swift */; };
@@ -180,6 +181,10 @@
 		D157F7EE27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */; };
 		D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B06C227B6D23C008C3C62 /* GradienView.swift */; };
 		D15B06C727B72111008C3C62 /* KeyStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B06C627B72111008C3C62 /* KeyStoreView.swift */; };
+		D1966C3C281468C300550332 /* Web3SecretStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1966C3B281468C300550332 /* Web3SecretStorageTests.swift */; };
+		D1966C3E2814789600550332 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1966C3D2814789600550332 /* Data+Extension.swift */; };
+		D1966C4028147CDE00550332 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1966C3D2814789600550332 /* Data+Extension.swift */; };
+		D1966C41281487C500550332 /* CryptoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3202CB94375AA40C561A /* CryptoUtils.swift */; };
 		D1BF2684280D7FC300DE9A0B /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF2680280D7FC200DE9A0B /* DefaultTheme.swift */; };
 		D1BF2685280D7FC300DE9A0B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF2681280D7FC200DE9A0B /* Theme.swift */; };
 		D1F160092804C96100DEF239 /* MnemonicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F160012804C96100DEF239 /* MnemonicView.swift */; };
@@ -244,6 +249,7 @@
 		1A4C317BB445643CDEAB4690 /* SwapInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapInteractor.swift; sourceTree = "<group>"; };
 		1A4C3197D56E5BD363126FBA /* CollectionViewTextInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewTextInputCell.swift; sourceTree = "<group>"; };
 		1A4C31A1B60496E59ABF568A /* CollectionViewSectionLabelFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewSectionLabelFooter.swift; sourceTree = "<group>"; };
+		1A4C3202CB94375AA40C561A /* CryptoUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoUtils.swift; sourceTree = "<group>"; };
 		1A4C3226ECC6247E9092F6EF /* KeyStorePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStorePresenter.swift; sourceTree = "<group>"; };
 		1A4C3228507ADBCE1C99C219 /* KeyStoreViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreViewModel.swift; sourceTree = "<group>"; };
 		1A4C3228790C1569B37F5179 /* AppsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsService.swift; sourceTree = "<group>"; };
@@ -401,6 +407,8 @@
 		D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3walletUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D15B06C227B6D23C008C3C62 /* GradienView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradienView.swift; sourceTree = "<group>"; };
 		D15B06C627B72111008C3C62 /* KeyStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreView.swift; sourceTree = "<group>"; };
+		D1966C3B281468C300550332 /* Web3SecretStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3SecretStorageTests.swift; sourceTree = "<group>"; };
+		D1966C3D2814789600550332 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		D1BF2680280D7FC200DE9A0B /* DefaultTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
 		D1BF2681280D7FC200DE9A0B /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		D1F160012804C96100DEF239 /* MnemonicView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicView.swift; sourceTree = "<group>"; };
@@ -489,6 +497,7 @@
 				1A4C3ADE5C8CD3D3CBB36547 /* UIBarButtonItem+extensions.swift */,
 				1A4C393EC70B537D98A4CA4A /* CG+extensions.swift */,
 				1A4C38ADF271AE15EE20A68F /* UIStackView+extensions.swift */,
+				D1966C3D2814789600550332 /* Data+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -884,6 +893,7 @@
 			isa = PBXGroup;
 			children = (
 				D157F7E127B69B6400578FF8 /* web3walletTests.swift */,
+				D1966C3B281468C300550332 /* Web3SecretStorageTests.swift */,
 			);
 			path = web3walletTests;
 			sourceTree = "<group>";
@@ -922,6 +932,7 @@
 				1A4C39FB21CCAF442F3001E6 /* Global.swift */,
 				D1BF267E280D7FC200DE9A0B /* Theme */,
 				1A4C37A412F5D0AF12CB3719 /* Transitions */,
+				1A4C3202CB94375AA40C561A /* CryptoUtils.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1227,6 +1238,7 @@
 				1A4C364C187388D6D51133C2 /* AccountView.swift in Sources */,
 				1A4C347CFEC64C025C0ED6CC /* AccountPresenter.swift in Sources */,
 				D1F1600D2804C96100DEF239 /* MnemonicWireframeFactory.swift in Sources */,
+				D1966C3E2814789600550332 /* Data+Extension.swift in Sources */,
 				1A4C3D4A1F1632A702FC042A /* AccountViewModel.swift in Sources */,
 				1A4C30F2703A5F58B8DA3D1F /* AccountWireframe.swift in Sources */,
 				D116CF3227C31ECC005542AA /* iCarousel.m in Sources */,
@@ -1316,6 +1328,7 @@
 				1A4C36EEA61FB60EE15ED6DD /* OnboardingService.swift in Sources */,
 				1A4C3AA848F53293E1A32353 /* Bip44SecretStorage.swift in Sources */,
 				1A4C3F175B65F553F0F5E86D /* Web3SecretStorage.swift in Sources */,
+				1A4C3A31772BC5F4E63252F6 /* CryptoUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1323,7 +1336,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1966C3C281468C300550332 /* Web3SecretStorageTests.swift in Sources */,
 				D157F7E227B69B6400578FF8 /* web3walletTests.swift in Sources */,
+				D1966C41281487C500550332 /* CryptoUtils.swift in Sources */,
+				D1966C4028147CDE00550332 /* Data+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
