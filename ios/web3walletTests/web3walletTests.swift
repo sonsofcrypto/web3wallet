@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: MIT
 
 import XCTest
-@testable import web3wallet
 
 class web3walletTests: XCTestCase {
 

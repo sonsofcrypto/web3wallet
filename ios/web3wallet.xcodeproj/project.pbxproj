@@ -108,6 +108,7 @@
 		1A4C3A35E90213A3B1D305C1 /* NetworksInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3795FDA4A86232F2BA21 /* NetworksInteractor.swift */; };
 		1A4C3A585C5375AE91CDA637 /* KeyStoreWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C514ACC30A0AC4707FA /* KeyStoreWireframeFactory.swift */; };
 		1A4C3A7D319E0444A98E52AD /* AMMsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3811EC67D01771B97011 /* AMMsViewModel.swift */; };
+		1A4C3AA848F53293E1A32353 /* Bip44SecretStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3720C28C187C4C796224 /* Bip44SecretStorage.swift */; };
 		1A4C3AD382E8BADCBE160CBC /* DApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C375870963EEF9ECBE64B /* DApp.swift */; };
 		1A4C3AD8FA91A29BF8F75C90 /* SettingsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3142E4B087299DA8113B /* SettingsWireframe.swift */; };
 		1A4C3B15334CF0B046208C20 /* AppsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39C411BA3C3F080EB746 /* AppsInteractor.swift */; };
@@ -143,6 +144,7 @@
 		1A4C3EB4D429242923984C76 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3378B5287B6A9BDE65CD /* Button.swift */; };
 		1A4C3F03560BB09F68E7AC30 /* SettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C35A4D936F0DA1D74826B /* SettingsInteractor.swift */; };
 		1A4C3F081D1B594B9EAF4F7E /* NFTsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3CD454B957F1787FE70A /* NFTsCell.swift */; };
+		1A4C3F175B65F553F0F5E86D /* Web3SecretStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D2A7A195294A4542553 /* Web3SecretStorage.swift */; };
 		1A4C3F2AC8A8B59020F63712 /* KeyStoreInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3044DC83E6A35A00DC12 /* KeyStoreInteractor.swift */; };
 		1A4C3F3B50559576A91700B7 /* CollectionViewTextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3197D56E5BD363126FBA /* CollectionViewTextInputCell.swift */; };
 		1A4C3F71ED826BCCF12C9DF1 /* CollectionViewSwitchTextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A15CDDE6C7239483474 /* CollectionViewSwitchTextInputCell.swift */; };
@@ -166,8 +168,6 @@
 		D11A991027B99D1800EDFDD0 /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A990D27B99D1800EDFDD0 /* AnyCodable.swift */; };
 		D11A991127B99D1800EDFDD0 /* AnyEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A990E27B99D1800EDFDD0 /* AnyEncodable.swift */; };
 		D11B7E952800E82300F40488 /* WordLists in Resources */ = {isa = PBXBuildFile; fileRef = D11B7E942800E82300F40488 /* WordLists */; };
-		D11B7E972801F13400F40488 /* web3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D11B7E602800DE1D00F40488 /* web3.framework */; };
-		D11B7E982801F13400F40488 /* web3.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D11B7E602800DE1D00F40488 /* web3.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D14ECE3927B833E500228F90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D14ECE3827B833E500228F90 /* Localizable.strings */; };
 		D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CA27B69B6300578FF8 /* AppDelegate.swift */; };
 		D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */; };
@@ -192,27 +192,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D11B7E5F2800DE1D00F40488 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D11B7E492800DE1D00F40488 /* web3.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D11B7E292800D5C500F40488;
-			remoteInfo = web3;
-		};
-		D11B7E612800DE1D00F40488 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D11B7E492800DE1D00F40488 /* web3.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D11B7E332800D5C600F40488;
-			remoteInfo = web3Tests;
-		};
-		D11B7E662800E00B00F40488 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D11B7E492800DE1D00F40488 /* web3.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D11B7E282800D5C500F40488;
-			remoteInfo = web3;
-		};
 		D157F7DE27B69B6400578FF8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D157F7BF27B69B6300578FF8 /* Project object */;
@@ -236,7 +215,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D11B7E982801F13400F40488 /* web3.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -307,6 +285,7 @@
 		1A4C367A2B3B39204D1DD109 /* DegenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenCell.swift; sourceTree = "<group>"; };
 		1A4C36CAEB50425CE9839ED4 /* KeyStoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreService.swift; sourceTree = "<group>"; };
 		1A4C36F2ECB853D732BDA9A0 /* SettingsActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsActionCell.swift; sourceTree = "<group>"; };
+		1A4C3720C28C187C4C796224 /* Bip44SecretStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bip44SecretStorage.swift; sourceTree = "<group>"; };
 		1A4C374E321C93128CF3FB91 /* DegenSectionTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenSectionTitleView.swift; sourceTree = "<group>"; };
 		1A4C375870963EEF9ECBE64B /* DApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DApp.swift; sourceTree = "<group>"; };
 		1A4C376D2673983B26F249FF /* KeyStoreItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreItem.swift; sourceTree = "<group>"; };
@@ -360,6 +339,7 @@
 		1A4C3D0EF3DBE9AC06A05512 /* RootWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootWireframe.swift; sourceTree = "<group>"; };
 		1A4C3D1809D506A7AE772982 /* NSLocalizedString+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLocalizedString+extension.swift"; sourceTree = "<group>"; };
 		1A4C3D1FBA47E23C9207B49B /* AppsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsView.swift; sourceTree = "<group>"; };
+		1A4C3D2A7A195294A4542553 /* Web3SecretStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Web3SecretStorage.swift; sourceTree = "<group>"; };
 		1A4C3D40E32D58F958911B60 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		1A4C3D9896E7F3F3E51A9F29 /* DegenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenView.swift; sourceTree = "<group>"; };
 		1A4C3DAB38F681061328F3F0 /* NetworksService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksService.swift; sourceTree = "<group>"; };
@@ -404,21 +384,6 @@
 		D11A990C27B99D1800EDFDD0 /* AnyDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyDecodable.swift; sourceTree = "<group>"; };
 		D11A990D27B99D1800EDFDD0 /* AnyCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyCodable.swift; sourceTree = "<group>"; };
 		D11A990E27B99D1800EDFDD0 /* AnyEncodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyEncodable.swift; sourceTree = "<group>"; };
-		D11B7E492800DE1D00F40488 /* web3.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = web3.xcodeproj; sourceTree = "<group>"; };
-		D11B7E4D2800DE1D00F40488 /* czech.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = czech.txt; sourceTree = "<group>"; };
-		D11B7E4E2800DE1D00F40488 /* chinese_traditional.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = chinese_traditional.txt; sourceTree = "<group>"; };
-		D11B7E4F2800DE1D00F40488 /* japanese.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = japanese.txt; sourceTree = "<group>"; };
-		D11B7E502800DE1D00F40488 /* french.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = french.txt; sourceTree = "<group>"; };
-		D11B7E512800DE1D00F40488 /* chinese_simplified.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = chinese_simplified.txt; sourceTree = "<group>"; };
-		D11B7E522800DE1D00F40488 /* english.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = english.txt; sourceTree = "<group>"; };
-		D11B7E532800DE1D00F40488 /* spanish.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = spanish.txt; sourceTree = "<group>"; };
-		D11B7E542800DE1D00F40488 /* italian.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = italian.txt; sourceTree = "<group>"; };
-		D11B7E552800DE1D00F40488 /* portuguese.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = portuguese.txt; sourceTree = "<group>"; };
-		D11B7E562800DE1D00F40488 /* korean.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = korean.txt; sourceTree = "<group>"; };
-		D11B7E582800DE1D00F40488 /* greeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = greeter.swift; sourceTree = "<group>"; };
-		D11B7E592800DE1D00F40488 /* web3.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = web3.docc; sourceTree = "<group>"; };
-		D11B7E5A2800DE1D00F40488 /* web3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = web3.h; sourceTree = "<group>"; };
-		D11B7E5C2800DE1D00F40488 /* web3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3Tests.swift; sourceTree = "<group>"; };
 		D11B7E942800E82300F40488 /* WordLists */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WordLists; sourceTree = "<group>"; };
 		D14ECE3827B833E500228F90 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		D157F7C727B69B6300578FF8 /* web3wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = web3wallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -452,7 +417,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D11B7E972801F13400F40488 /* web3.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,6 +543,15 @@
 			path = Swap;
 			sourceTree = "<group>";
 		};
+		1A4C327FE95D7B850AC1C2E5 /* web3SecretStorage */ = {
+			isa = PBXGroup;
+			children = (
+				1A4C3720C28C187C4C796224 /* Bip44SecretStorage.swift */,
+				1A4C3D2A7A195294A4542553 /* Web3SecretStorage.swift */,
+			);
+			path = web3SecretStorage;
+			sourceTree = "<group>";
+		};
 		1A4C329381A12BF85B2C9F38 /* Account */ = {
 			isa = PBXGroup;
 			children = (
@@ -666,6 +639,7 @@
 			children = (
 				1A4C36CAEB50425CE9839ED4 /* KeyStoreService.swift */,
 				1A4C376D2673983B26F249FF /* KeyStoreItem.swift */,
+				1A4C327FE95D7B850AC1C2E5 /* web3SecretStorage */,
 			);
 			path = KeyStore;
 			sourceTree = "<group>";
@@ -862,65 +836,8 @@
 		D11B7E472800DE1C00F40488 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D11B7E482800DE1D00F40488 /* swift */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D11B7E482800DE1D00F40488 /* swift */ = {
-			isa = PBXGroup;
-			children = (
-				D11B7E492800DE1D00F40488 /* web3.xcodeproj */,
-				D11B7E4C2800DE1D00F40488 /* wordLists */,
-				D11B7E572800DE1D00F40488 /* web3 */,
-				D11B7E5B2800DE1D00F40488 /* web3Tests */,
-			);
-			name = swift;
-			path = ../web3lib/swift;
-			sourceTree = "<group>";
-		};
-		D11B7E4A2800DE1D00F40488 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D11B7E602800DE1D00F40488 /* web3.framework */,
-				D11B7E622800DE1D00F40488 /* web3Tests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		D11B7E4C2800DE1D00F40488 /* wordLists */ = {
-			isa = PBXGroup;
-			children = (
-				D11B7E4D2800DE1D00F40488 /* czech.txt */,
-				D11B7E4E2800DE1D00F40488 /* chinese_traditional.txt */,
-				D11B7E4F2800DE1D00F40488 /* japanese.txt */,
-				D11B7E502800DE1D00F40488 /* french.txt */,
-				D11B7E512800DE1D00F40488 /* chinese_simplified.txt */,
-				D11B7E522800DE1D00F40488 /* english.txt */,
-				D11B7E532800DE1D00F40488 /* spanish.txt */,
-				D11B7E542800DE1D00F40488 /* italian.txt */,
-				D11B7E552800DE1D00F40488 /* portuguese.txt */,
-				D11B7E562800DE1D00F40488 /* korean.txt */,
-			);
-			path = wordLists;
-			sourceTree = "<group>";
-		};
-		D11B7E572800DE1D00F40488 /* web3 */ = {
-			isa = PBXGroup;
-			children = (
-				D11B7E582800DE1D00F40488 /* greeter.swift */,
-				D11B7E592800DE1D00F40488 /* web3.docc */,
-				D11B7E5A2800DE1D00F40488 /* web3.h */,
-			);
-			path = web3;
-			sourceTree = "<group>";
-		};
-		D11B7E5B2800DE1D00F40488 /* web3Tests */ = {
-			isa = PBXGroup;
-			children = (
-				D11B7E5C2800DE1D00F40488 /* web3Tests.swift */,
-			);
-			path = web3Tests;
 			sourceTree = "<group>";
 		};
 		D157F7BE27B69B6300578FF8 = {
@@ -1105,7 +1022,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D11B7E672800E00B00F40488 /* PBXTargetDependency */,
 			);
 			name = web3wallet;
 			productName = web3wallet;
@@ -1183,12 +1099,6 @@
 			mainGroup = D157F7BE27B69B6300578FF8;
 			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = D11B7E4A2800DE1D00F40488 /* Products */;
-					ProjectRef = D11B7E492800DE1D00F40488 /* web3.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				D157F7C627B69B6300578FF8 /* web3wallet */,
@@ -1197,23 +1107,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		D11B7E602800DE1D00F40488 /* web3.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = web3.framework;
-			remoteRef = D11B7E5F2800DE1D00F40488 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D11B7E622800DE1D00F40488 /* web3Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = web3Tests.xctest;
-			remoteRef = D11B7E612800DE1D00F40488 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D157F7C527B69B6300578FF8 /* Resources */ = {
@@ -1421,6 +1314,8 @@
 				1A4C3128ADCDFFC40FCFA441 /* UIStackView+extensions.swift in Sources */,
 				1A4C3D469A9E8E8F890E65F5 /* AnimatedTextButton.swift in Sources */,
 				1A4C36EEA61FB60EE15ED6DD /* OnboardingService.swift in Sources */,
+				1A4C3AA848F53293E1A32353 /* Bip44SecretStorage.swift in Sources */,
+				1A4C3F175B65F553F0F5E86D /* Web3SecretStorage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1444,11 +1339,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D11B7E672800E00B00F40488 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = web3;
-			targetProxy = D11B7E662800E00B00F40488 /* PBXContainerItemProxy */;
-		};
 		D157F7DF27B69B6400578FF8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D157F7C627B69B6300578FF8 /* web3wallet */;
