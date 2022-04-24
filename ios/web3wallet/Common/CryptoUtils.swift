@@ -9,9 +9,24 @@ enum CryptoError: Error {
     case cryptoError(msg: String)
 }
 
+enum CryptOp  {
+    case encrypt
+    case decrypt
+    
+    func ccOp() -> CCOperation {
+        switch self {
+        case .encrypt:
+            return CCOperation(kCCEncrypt)
+        case .decrypt:
+            return CCOperation(kCCDecrypt)
+        }
+    }
+}
+
+
 // MARK: - aesCTR
 
-func aesCTR(key: Data, data: Data, iv: Data) throws -> Data {
+func aesCTR(key: Data, data: Data, iv: Data, op: CryptOp = .encrypt) throws -> Data {
     var cryptor: CCCryptorRef! = nil
     var status: CCCryptorStatus = 0;
     let ivBytes = NSData(data: iv).bytes
@@ -19,7 +34,7 @@ func aesCTR(key: Data, data: Data, iv: Data) throws -> Data {
     let dataBytes = NSData(data: data).bytes
 
     status = CCCryptorCreateWithMode(
-        CCOperation(kCCEncrypt),
+        op.ccOp(),
         CCMode(kCCModeCTR),
         CCAlgorithm(kCCAlgorithmAES),
         CCPadding(ccNoPadding),
@@ -116,15 +131,27 @@ func pbkdf2(_ password: String, salt: Data, length: Int, rounds: Int) -> Data? {
 
 extension Data {
 
-    static func secRandom(_ count: Int) throws -> Data {
-        var bytes = Data(count: count)
-        let status = SecRandomCopyBytes(kSecRandomDefault, count, &bytes)
+    typealias UMBPtr = UnsafeMutableRawBufferPointer
 
-        if status == errSecSuccess {
-            return bytes
+    static func secRandom(_ count: Int) throws -> Data {
+        var data = Data(count: count)
+        let status = data.withUnsafeMutableBytes { (bytes: UMBPtr) -> Int32 in
+            guard let addr = bytes.baseAddress else {
+                return -1
+            }
+
+            return SecRandomCopyBytes(
+                kSecRandomDefault,
+                count,
+                addr
+            )
         }
 
-        throw SecRandDataError.failedSecRand
+        guard status == errSecSuccess else {
+            throw SecRandDataError.failedSecRand
+        }
+
+        return data
     }
 
     enum SecRandDataError: Error {

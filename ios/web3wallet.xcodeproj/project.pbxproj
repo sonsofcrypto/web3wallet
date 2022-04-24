@@ -185,6 +185,12 @@
 		D1966C3E2814789600550332 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1966C3D2814789600550332 /* Data+Extension.swift */; };
 		D1966C4028147CDE00550332 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1966C3D2814789600550332 /* Data+Extension.swift */; };
 		D1966C41281487C500550332 /* CryptoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3202CB94375AA40C561A /* CryptoUtils.swift */; };
+		D19A20B428157D7E008A84CD /* KeccakTiny in Frameworks */ = {isa = PBXBuildFile; productRef = D19A20B328157D7E008A84CD /* KeccakTiny */; };
+		D19A20B628157D7E008A84CD /* Sha3Tiny in Frameworks */ = {isa = PBXBuildFile; productRef = D19A20B528157D7E008A84CD /* Sha3Tiny */; };
+		D19A20B828157D7E008A84CD /* SwiftKeccak in Frameworks */ = {isa = PBXBuildFile; productRef = D19A20B728157D7E008A84CD /* SwiftKeccak */; };
+		D19A20B928158663008A84CD /* Web3SecretStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D2A7A195294A4542553 /* Web3SecretStorage.swift */; };
+		D19A20BA28158665008A84CD /* Bip44SecretStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3720C28C187C4C796224 /* Bip44SecretStorage.swift */; };
+		D19A20BB2815B1FD008A84CD /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3F3F7A4502698FF8F63E /* String+extensions.swift */; };
 		D1BF2684280D7FC300DE9A0B /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF2680280D7FC200DE9A0B /* DefaultTheme.swift */; };
 		D1BF2685280D7FC300DE9A0B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF2681280D7FC200DE9A0B /* Theme.swift */; };
 		D1F160092804C96100DEF239 /* MnemonicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F160012804C96100DEF239 /* MnemonicView.swift */; };
@@ -425,6 +431,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D19A20B428157D7E008A84CD /* KeccakTiny in Frameworks */,
+				D19A20B828157D7E008A84CD /* SwiftKeccak in Frameworks */,
+				D19A20B628157D7E008A84CD /* Sha3Tiny in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1035,6 +1044,11 @@
 			dependencies = (
 			);
 			name = web3wallet;
+			packageProductDependencies = (
+				D19A20B328157D7E008A84CD /* KeccakTiny */,
+				D19A20B528157D7E008A84CD /* Sha3Tiny */,
+				D19A20B728157D7E008A84CD /* SwiftKeccak */,
+			);
 			productName = web3wallet;
 			productReference = D157F7C727B69B6300578FF8 /* web3wallet.app */;
 			productType = "com.apple.product-type.application";
@@ -1108,6 +1122,9 @@
 				Base,
 			);
 			mainGroup = D157F7BE27B69B6300578FF8;
+			packageReferences = (
+				D19A20B228157D7E008A84CD /* XCRemoteSwiftPackageReference "SwiftKeccak" */,
+			);
 			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1337,8 +1354,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1966C3C281468C300550332 /* Web3SecretStorageTests.swift in Sources */,
+				D19A20BB2815B1FD008A84CD /* String+extensions.swift in Sources */,
 				D157F7E227B69B6400578FF8 /* web3walletTests.swift in Sources */,
 				D1966C41281487C500550332 /* CryptoUtils.swift in Sources */,
+				D19A20BA28158665008A84CD /* Bip44SecretStorage.swift in Sources */,
+				D19A20B928158663008A84CD /* Web3SecretStorage.swift in Sources */,
 				D1966C4028147CDE00550332 /* Data+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1678,6 +1698,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D19A20B228157D7E008A84CD /* XCRemoteSwiftPackageReference "SwiftKeccak" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bitflying/SwiftKeccak.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D19A20B328157D7E008A84CD /* KeccakTiny */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D19A20B228157D7E008A84CD /* XCRemoteSwiftPackageReference "SwiftKeccak" */;
+			productName = KeccakTiny;
+		};
+		D19A20B528157D7E008A84CD /* Sha3Tiny */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D19A20B228157D7E008A84CD /* XCRemoteSwiftPackageReference "SwiftKeccak" */;
+			productName = Sha3Tiny;
+		};
+		D19A20B728157D7E008A84CD /* SwiftKeccak */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D19A20B228157D7E008A84CD /* XCRemoteSwiftPackageReference "SwiftKeccak" */;
+			productName = SwiftKeccak;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D157F7BF27B69B6300578FF8 /* Project object */;
 }

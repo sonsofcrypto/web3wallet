@@ -93,3 +93,15 @@ extension Int {
             } ?? String(self)
     }
 }
+
+// MARK: - Hex
+
+extension String {
+
+    func stripHexPrefix() -> String {
+        if hasPrefix("0x") {
+            return String(self[index(startIndex, offsetBy: 2)...])
+        }
+        return self
+    }
+}
