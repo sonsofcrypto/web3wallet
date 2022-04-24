@@ -10,12 +10,20 @@ struct Web3SecretStorage: Codable {
     var id: String
     var version: Int
     var address: String?
+    var type: Web3SecretStorage.ItemType
 
-    init(crypto: Crypto, id: String, version: Int, address: String? = nil) {
+    init(
+        crypto: Crypto,
+        id: String,
+        version: Int,
+        address: String? = nil,
+        type: ItemType = .key
+    ) {
         self.crypto = crypto
         self.id = id
         self.version = version
         self.address = address
+        self.type = type
     }
 }
 
@@ -152,6 +160,16 @@ extension Web3SecretStorage.Crypto {
 
     struct CipherParams: Codable {
         var iv: String
+    }
+}
+
+// MARK: - Kind
+
+extension Web3SecretStorage {
+
+    enum ItemType: Int, Codable {
+        case key
+        case entropy
     }
 }
 

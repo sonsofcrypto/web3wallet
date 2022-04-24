@@ -99,7 +99,13 @@ func aesCTR(key: Data, data: Data, iv: Data, op: CryptOp = .encrypt) throws -> D
 
 // MARK: - PBKDF2
 
-func pbkdf2(_ password: String, salt: Data, length: Int, rounds: Int) -> Data? {
+func pbkdf2(
+    _ password: String,
+    salt: Data,
+    length: Int,
+    rounds: Int,
+    algorithm: Pbkdf2Algorithm = .hmacSHA256
+) -> Data? {
     guard let passwordData = password.data(using: .utf8) else {
         return nil
     }
@@ -114,7 +120,7 @@ func pbkdf2(_ password: String, salt: Data, length: Int, rounds: Int) -> Data? {
         passwordData.count,
         saltBytes,
         salt.count,
-        CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA256),
+        algorithm.ccAlgorithm(),
         UInt32(rounds),
         keyBytes,
         length
@@ -125,6 +131,20 @@ func pbkdf2(_ password: String, salt: Data, length: Int, rounds: Int) -> Data? {
     }
 
     return Data(derivedKey)
+}
+
+enum Pbkdf2Algorithm {
+    case hmacSHA256
+    case hmacSHA512
+
+    func ccAlgorithm() -> CCPseudoRandomAlgorithm {
+        switch self {
+        case .hmacSHA256:
+            return CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA512)
+        case .hmacSHA256:
+            return CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA256)
+        }
+    }
 }
 
 // MARK: - Cryptographically secure randomness

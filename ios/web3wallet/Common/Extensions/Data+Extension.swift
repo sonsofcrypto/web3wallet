@@ -36,8 +36,8 @@ extension Data {
 extension Data {
 
     func appending(_ data: Data) -> Data {
-        var data = Data(self)
-        data.append(data)
-        return data
+        var output = Data(self)
+        output.append(data)
+        return output
     }
 }

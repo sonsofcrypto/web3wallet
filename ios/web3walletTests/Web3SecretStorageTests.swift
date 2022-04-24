@@ -55,4 +55,18 @@ class Web3SecretStorageTests: XCTestCase {
         print(path ?? "")
         try? str?.write(toFile: path!, atomically: true, encoding: .utf8)
     }
+    
+    func testBip39() {
+        let words = [
+            "come", "tunnel", "another", "solar", "album", "boil", "negative",
+            "place", "dinosaur", "galaxy", "balcony", "clerk"
+        ]
+        let seed = "d30f19d47abba7646fccbb210dfe048c6b2cc68971440e480f55bbae3b26a7b390d4e49d0e49a7a80c8a3918511f63a1a7db704b7bff63b90b85cd5a729ba923"
+        
+        let mnemonic = Bip39(mnemonic: words)
+        assert(
+            try! mnemonic.seed().hexString() == seed,
+            "Incorrect seed"
+        )
+    }
 }
