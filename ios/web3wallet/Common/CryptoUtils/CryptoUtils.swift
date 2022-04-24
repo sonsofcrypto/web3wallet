@@ -139,7 +139,7 @@ enum Pbkdf2Algorithm {
 
     func ccAlgorithm() -> CCPseudoRandomAlgorithm {
         switch self {
-        case .hmacSHA256:
+        case .hmacSHA512:
             return CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA512)
         case .hmacSHA256:
             return CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA256)

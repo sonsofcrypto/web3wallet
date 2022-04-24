@@ -30,7 +30,7 @@ class Bip39 {
         var mnemonic = [String]()
 
         for i in 0..<(entropyChecksumStr.count / 11) {
-            guard let idx = Int(entropyChecksumStr[i*11..<i+11], radix: 2) else {
+            guard let idx = Int(entropyChecksumStr[i*11..<i*11+11], radix: 2) else {
                 throw Bip39Error.invalidWordIndex
             }
             mnemonic.append(wordList.word(at: idx))
@@ -45,6 +45,35 @@ class Bip39 {
         self.mnemonic = mnemonic
         self.salt = salt
         self.wordList = wordList
+    }
+
+    func entropy() throws -> Data {
+        let entropyChecksumStr = try mnemonic.reduce(
+            "",
+            {
+                guard let idx = wordList.index(of: $1) else {
+                    throw Bip39Error.invalidEntropy
+                }
+                var str = String(idx, radix: 2)
+                while str.count < 11 { str = "0" + str }
+                return $0 + str
+            }
+        )
+
+        let bitLength = entropyChecksumStr.count / 33 * 32
+        let entropyBitsStr = entropyChecksumStr[0..<bitLength]
+
+        var bytes = [UInt8]()
+        for i in 0..<(entropyBitsStr.count / 8) {
+        
+            guard let byte = UInt8(entropyBitsStr[i*8..<i*8+8], radix: 2) else {
+                throw Bip39Error.invalidEntropyBitsConversion
+            }
+            
+            bytes.append(byte)
+        }
+
+        return Data(bytes)
     }
 
     func seed() throws -> Data {
@@ -115,6 +144,7 @@ extension Bip39 {
         case invalidWordIndex
         case invalidMnemonic
         case invalidEntropy
+        case invalidEntropyBitsConversion
     }
 }
 
@@ -127,6 +157,11 @@ extension Bip39 {
 
         func word(at idx: Int) -> String {
             words()[idx]
+        }
+
+        func index(of word: String) -> Int? {
+            // TODO: Optimize
+            words().firstIndex(of: word)
         }
 
         func words() -> [String] {

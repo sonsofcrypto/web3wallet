@@ -69,4 +69,21 @@ class Web3SecretStorageTests: XCTestCase {
             "Incorrect seed"
         )
     }
+    
+    func testBip39Entropy() {
+        let entropy = try! Data.secRandom(16)
+        let entropyStr = entropy.hexString()
+        
+        let menemonic = try! Bip39(entropy).mnemonic
+        let derivedEntropy = try! Bip39(mnemonic: menemonic).entropy()
+
+        assert(
+            entropy == derivedEntropy,
+            String(
+                format: "Entropy does not match:\n%@\n%@",
+                entropyStr,
+                derivedEntropy.hexString()
+            )
+        )
+    }
 }
