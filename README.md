@@ -23,7 +23,8 @@ git submodule update --init --recursive
 	- [] Connect harware wallet
 	- [] Create multisig
 
-## UI tasks: 
+## UI tasks:
+	- [ ] Add bip39 validation 
 	- [ ] Add inset for keybord and scroll to fiedl when keyboard comes up
  	- [ ] Implement custom layout for separators
  	- [ ] Fix add wallet dismiss animation when in cards mode
