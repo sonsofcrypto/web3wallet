@@ -1,10 +1,10 @@
 # IDEs
 
-/ios/.idea/*
-/android/.idea/*
-/react/.idea/*
+/iosApp/.idea/*
+/androidApp/.idea/*
+/jsApp/.idea/*
 
-   
+
 # Xcode
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
@@ -96,7 +96,7 @@ fastlane/test_output
 
 
 
-   
+
 # Gradle files
 .gradle/
 build/
@@ -171,3 +171,16 @@ packages/react-devtools-inline/dist
 packages/react-devtools-shell/dist
 packages/react-devtools-timeline/dist
 
+
+
+*.iml
+.gradle
+/local.properties
+.idea
+.DS_Store
+/build
+*/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties

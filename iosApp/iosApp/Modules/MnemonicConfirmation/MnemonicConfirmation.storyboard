@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Mnemonic Confirmation View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="MnemonicConfirmationViewController" id="Y6W-OH-hqX" customClass="MnemonicConfirmationViewController" customModule="web3wallet" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc" customClass="DefaultGradientView" customModule="web3wallet" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="hjB-69-gtF">
+                                <rect key="frame" x="16" y="60" width="382" height="216.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I7k-3K-wN1">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NYb-q7-S9h">
+                                        <rect key="frame" x="0.0" y="36.5" width="382" height="100"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="M9i-Rb-GEj"/>
+                                        </constraints>
+                                        <inset key="scrollIndicatorInsets" minX="16" minY="16" maxX="16" maxY="16"/>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                    </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vtj-V4-X6d" customClass="Button" customModule="web3wallet" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="152.5" width="382" height="64"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="64" id="vhb-5x-eAU"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                        <connections>
+                                            <action selector="ctaAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Z9Y-wS-6LE"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="NYb-q7-S9h" firstAttribute="leading" secondItem="hjB-69-gtF" secondAttribute="leading" id="13l-u6-n0g"/>
+                                    <constraint firstItem="I7k-3K-wN1" firstAttribute="leading" secondItem="hjB-69-gtF" secondAttribute="leading" id="5h8-Um-N23"/>
+                                    <constraint firstAttribute="trailing" secondItem="NYb-q7-S9h" secondAttribute="trailing" id="Flf-31-kK8"/>
+                                    <constraint firstAttribute="trailing" secondItem="Vtj-V4-X6d" secondAttribute="trailing" id="dEy-DK-gwk"/>
+                                    <constraint firstItem="Vtj-V4-X6d" firstAttribute="leading" secondItem="hjB-69-gtF" secondAttribute="leading" id="nVm-bh-r9w"/>
+                                    <constraint firstAttribute="trailing" secondItem="I7k-3K-wN1" secondAttribute="trailing" id="xlN-yE-2cR"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="hjB-69-gtF" secondAttribute="trailing" constant="16" id="5ak-yg-uC9"/>
+                            <constraint firstItem="hjB-69-gtF" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" constant="16" id="C8O-jb-Nex"/>
+                            <constraint firstItem="hjB-69-gtF" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="16" id="qNL-Cl-dCb"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="button" destination="Vtj-V4-X6d" id="t7u-ex-rkd"/>
+                        <outlet property="statusLabel" destination="I7k-3K-wN1" id="18M-Gh-cGX"/>
+                        <outlet property="textView" destination="NYb-q7-S9h" id="H63-R5-Uaf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="139" y="137"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
