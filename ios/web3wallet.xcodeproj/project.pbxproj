@@ -190,7 +190,7 @@
 		D19A20B828157D7E008A84CD /* SwiftKeccak in Frameworks */ = {isa = PBXBuildFile; productRef = D19A20B728157D7E008A84CD /* SwiftKeccak */; };
 		D19A20BB2815B1FD008A84CD /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3F3F7A4502698FF8F63E /* String+extensions.swift */; };
 		D19A20BC2815CA7D008A84CD /* Bip39.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C33D3E14DE9116A15DA02 /* Bip39.swift */; };
-		D19A20BE2815F15F008A84CD /* KeyChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A20BD2815F15F008A84CD /* KeyChain.swift */; };
+		D19A20BE2815F15F008A84CD /* KeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A20BD2815F15F008A84CD /* KeyChainService.swift */; };
 		D19A20BF2815F843008A84CD /* Web3SecretStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D2A7A195294A4542553 /* Web3SecretStorage.swift */; };
 		D1BF2684280D7FC300DE9A0B /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF2680280D7FC200DE9A0B /* DefaultTheme.swift */; };
 		D1BF2685280D7FC300DE9A0B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF2681280D7FC200DE9A0B /* Theme.swift */; };
@@ -416,7 +416,7 @@
 		D15B06C627B72111008C3C62 /* KeyStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreView.swift; sourceTree = "<group>"; };
 		D1966C3B281468C300550332 /* Web3SecretStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3SecretStorageTests.swift; sourceTree = "<group>"; };
 		D1966C3D2814789600550332 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
-		D19A20BD2815F15F008A84CD /* KeyChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
+		D19A20BD2815F15F008A84CD /* KeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainService.swift; sourceTree = "<group>"; };
 		D1BF2680280D7FC200DE9A0B /* DefaultTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
 		D1BF2681280D7FC200DE9A0B /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		D1F160012804C96100DEF239 /* MnemonicView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicView.swift; sourceTree = "<group>"; };
@@ -660,7 +660,7 @@
 				1A4C36CAEB50425CE9839ED4 /* KeyStoreService.swift */,
 				1A4C376D2673983B26F249FF /* KeyStoreItem.swift */,
 				1A4C3D2A7A195294A4542553 /* Web3SecretStorage.swift */,
-				D19A20BD2815F15F008A84CD /* KeyChain.swift */,
+				D19A20BD2815F15F008A84CD /* KeyChainService.swift */,
 			);
 			path = KeyStore;
 			sourceTree = "<group>";
@@ -1126,7 +1126,7 @@
 			);
 			mainGroup = D157F7BE27B69B6300578FF8;
 			packageReferences = (
-				D19A20B228157D7E008A84CD /* XCRemoteSwiftPackageReference "SwiftKeccak" */,
+				D19A20B228157D7E008A84CD /* XCRemoteSwiftPackageReference "SwiftKeccak.git" */,
 			);
 			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
 			projectDirPath = "";
@@ -1207,7 +1207,7 @@
 				1A4C3B49BC67AF7AA3BF0D8F /* VisualEffectView.swift in Sources */,
 				1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */,
 				1A4C36B0C0625697FE563291 /* UIFont+extension.swift in Sources */,
-				D19A20BE2815F15F008A84CD /* KeyChain.swift in Sources */,
+				D19A20BE2815F15F008A84CD /* KeyChainService.swift in Sources */,
 				1A4C37074D8859F0DC14C905 /* NavigationController.swift in Sources */,
 				1A4C3869B6A3E1BF415E15DB /* Global.swift in Sources */,
 				1A4C346BBC846E952B81C4CB /* KeyStoreCell.swift in Sources */,
@@ -1704,7 +1704,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D19A20B228157D7E008A84CD /* XCRemoteSwiftPackageReference "SwiftKeccak" */ = {
+		D19A20B228157D7E008A84CD /* XCRemoteSwiftPackageReference "SwiftKeccak.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/bitflying/SwiftKeccak.git";
 			requirement = {
@@ -1717,17 +1717,17 @@
 /* Begin XCSwiftPackageProductDependency section */
 		D19A20B328157D7E008A84CD /* KeccakTiny */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D19A20B228157D7E008A84CD /* XCRemoteSwiftPackageReference "SwiftKeccak" */;
+			package = D19A20B228157D7E008A84CD /* XCRemoteSwiftPackageReference "SwiftKeccak.git" */;
 			productName = KeccakTiny;
 		};
 		D19A20B528157D7E008A84CD /* Sha3Tiny */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D19A20B228157D7E008A84CD /* XCRemoteSwiftPackageReference "SwiftKeccak" */;
+			package = D19A20B228157D7E008A84CD /* XCRemoteSwiftPackageReference "SwiftKeccak.git" */;
 			productName = Sha3Tiny;
 		};
 		D19A20B728157D7E008A84CD /* SwiftKeccak */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D19A20B228157D7E008A84CD /* XCRemoteSwiftPackageReference "SwiftKeccak" */;
+			package = D19A20B228157D7E008A84CD /* XCRemoteSwiftPackageReference "SwiftKeccak.git" */;
 			productName = SwiftKeccak;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -18,6 +18,12 @@ struct KeyStoreItem {
     var modification: Date
     let encryptedSigner: String
     var mnemonic: String
+    var secretStorage: Web3SecretStorage? = nil
+    
+    var id: String {
+        uuid.uuidString
+    }
+
 }
 
 // MARK: - PasswordType

@@ -25,6 +25,12 @@ struct Web3SecretStorage: Codable {
         self.address = address
         self.type = type
     }
+
+    func data() throws -> Data {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        return try encoder.encode(self)
+    }
 }
 
 // MARK: - Encrypt
