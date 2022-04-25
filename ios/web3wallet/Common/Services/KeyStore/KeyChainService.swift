@@ -7,15 +7,14 @@ import Security
 
 protocol KeyChainService: AnyObject {
 
-    func addItem(_ item: KeyStoreItem, sync: Bool) throws
+    func addItem(_ item: KeyStoreItem) throws
     func item(for: KeyStoreItem) throws -> Data?
-    func isSyncItem(for item: KeyStoreItem) throws -> Bool
     func removeItem(_ item: KeyStoreItem)
+    func allKeyStoreItems() throws -> [Data]
 
     func generatePassword(_ id: String, sync: Bool) throws
     func addPassword(_ password: String, id: String, sync: Bool) throws
     func password(for id: String) throws -> String?
-    func isSyncPassword(for id: String) throws -> Bool
     func removePassword(id: String)
 }
 
@@ -27,29 +26,46 @@ class DefaultKeyChainService { }
 
 extension DefaultKeyChainService: KeyChainService {
     
-    func addItem(_ item: KeyStoreItem, sync: Bool) throws {
+    func addItem(_ item: KeyStoreItem) throws {
         guard let data = try item.secretStorage?.data() else {
             throw KeyChainError.failedToEncodeSecretStorage
         }
+        let sync = item.iCloudSecretStorage
         try addItem(id: item.id, data: data, sync: sync, type: .secretStorage)
     }
 
     func item(for item: KeyStoreItem) throws -> Data? {
-        (try self.item(for: item.id, type: .secretStorage)).0
+        return try self.item(for: item.id, type: .secretStorage)
     }
 
-    func isSyncItem(for item: KeyStoreItem) throws -> Bool {
-        (try self.item(for: item.id, type: .secretStorage)).1
-    }
-    
     func removeItem(_ item: KeyStoreItem) {
         removeItem(id: item.id, type: .secretStorage)
     }
+
+    func allKeyStoreItems() throws -> [Data] {
+        let query = [
+            kSecAttrService: ItemType.secretStorage.rawValue,
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrSynchronizable: kSecAttrSynchronizableAny,
+            kSecMatchLimit: Constant.maxWalletCount,
+            kSecReturnAttributes: true,
+            kSecReturnData: true
+        ] as CFDictionary
+
+        var result: AnyObject?
+        let status = SecItemCopyMatching(query, &result)
+
+        guard status == errSecSuccess, let items = result as? [NSDictionary] else {
+            throw KeyChainError.failedToRetrieveItem
+        }
+
+        return items
+            .map { $0[kSecValueData] as? Data }
+            .compactMap { $0 }
+    }
     
     func generatePassword(_ id: String, sync: Bool) throws {
-        guard let password = String(data: try Data.secRandom(32), encoding: .utf8) else {
-            throw KeyChainError.failedToEncodePasswordToData
-        }
+        let password = (try Data.secRandom(16)).hexString()
         try addPassword(password, id: id, sync: sync)
     }
     
@@ -61,17 +77,12 @@ extension DefaultKeyChainService: KeyChainService {
     }
     
     func password(for id: String) throws -> String? {
-        let (data, _) = try item(for: id, type: .password)
-        
-        guard let data = data, let password = String(data: data, encoding: .utf8) else {
+        guard let data = try item(for: id, type: .password),
+              let password = String(data: data, encoding: .utf8) else {
             return nil
         }
 
         return password
-    }
-
-    func isSyncPassword(for id: String) throws -> Bool{
-        return (try self.item(for: id, type: .password)).1
     }
 
     func removePassword(id: String) {
@@ -118,7 +129,7 @@ extension DefaultKeyChainService {
         SecItemDelete(query as CFDictionary)
     }
 
-    func item(for id: String, type: ItemType) throws -> (Data?, Bool) {
+    func item(for id: String, type: ItemType) throws -> Data? {
         let query = [
             kSecAttrAccount: id,
             kSecAttrService: type.rawValue,
@@ -135,14 +146,7 @@ extension DefaultKeyChainService {
             throw KeyChainError.failedToRetrieveItem
         }
 
-        let data = info[kSecValueData] as? Data
-        let accessible = info[kSecAttrAccessible]
-        let synchronizable = info[kSecAttrAccessible]
-        let sync = (accessible as? Bool) == true
-            ? true
-            : synchronizable as? NSString == kSecAttrAccessibleAfterFirstUnlock
-
-        return (data, sync)
+        return info[kSecValueData] as? Data
     }
 }
 
@@ -167,4 +171,14 @@ extension DefaultKeyChainService {
         case password = "com.sonsOfCrypto.web3Wallet.password"
         case secretStorage = "com.sonsOfCrypto.web3Wallet.secreteStorage"
     }
+}
+
+// MARK: - Constant
+
+extension DefaultKeyChainService {
+
+    enum Constant {
+        static let maxWalletCount = 100000000
+    }
+
 }

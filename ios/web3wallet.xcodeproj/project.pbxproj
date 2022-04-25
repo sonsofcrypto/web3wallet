@@ -146,7 +146,7 @@
 		1A4C3EB4D429242923984C76 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3378B5287B6A9BDE65CD /* Button.swift */; };
 		1A4C3F03560BB09F68E7AC30 /* SettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C35A4D936F0DA1D74826B /* SettingsInteractor.swift */; };
 		1A4C3F081D1B594B9EAF4F7E /* NFTsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3CD454B957F1787FE70A /* NFTsCell.swift */; };
-		1A4C3F175B65F553F0F5E86D /* Web3SecretStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D2A7A195294A4542553 /* Web3SecretStorage.swift */; };
+		1A4C3F175B65F553F0F5E86D /* SecretStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D2A7A195294A4542553 /* SecretStorage.swift */; };
 		1A4C3F2AC8A8B59020F63712 /* KeyStoreInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3044DC83E6A35A00DC12 /* KeyStoreInteractor.swift */; };
 		1A4C3F3B50559576A91700B7 /* CollectionViewTextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3197D56E5BD363126FBA /* CollectionViewTextInputCell.swift */; };
 		1A4C3F71ED826BCCF12C9DF1 /* CollectionViewSwitchTextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A15CDDE6C7239483474 /* CollectionViewSwitchTextInputCell.swift */; };
@@ -182,7 +182,7 @@
 		D157F7EE27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */; };
 		D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B06C227B6D23C008C3C62 /* GradienView.swift */; };
 		D15B06C727B72111008C3C62 /* KeyStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B06C627B72111008C3C62 /* KeyStoreView.swift */; };
-		D1966C3C281468C300550332 /* Web3SecretStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1966C3B281468C300550332 /* Web3SecretStorageTests.swift */; };
+		D1966C3C281468C300550332 /* SecretStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1966C3B281468C300550332 /* SecretStorageTests.swift */; };
 		D1966C3E2814789600550332 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1966C3D2814789600550332 /* Data+Extension.swift */; };
 		D1966C4028147CDE00550332 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1966C3D2814789600550332 /* Data+Extension.swift */; };
 		D19A20B428157D7E008A84CD /* KeccakTiny in Frameworks */ = {isa = PBXBuildFile; productRef = D19A20B328157D7E008A84CD /* KeccakTiny */; };
@@ -191,7 +191,7 @@
 		D19A20BB2815B1FD008A84CD /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3F3F7A4502698FF8F63E /* String+extensions.swift */; };
 		D19A20BC2815CA7D008A84CD /* Bip39.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C33D3E14DE9116A15DA02 /* Bip39.swift */; };
 		D19A20BE2815F15F008A84CD /* KeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A20BD2815F15F008A84CD /* KeyChainService.swift */; };
-		D19A20BF2815F843008A84CD /* Web3SecretStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D2A7A195294A4542553 /* Web3SecretStorage.swift */; };
+		D19A20BF2815F843008A84CD /* SecretStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D2A7A195294A4542553 /* SecretStorage.swift */; };
 		D1BF2684280D7FC300DE9A0B /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF2680280D7FC200DE9A0B /* DefaultTheme.swift */; };
 		D1BF2685280D7FC300DE9A0B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF2681280D7FC200DE9A0B /* Theme.swift */; };
 		D1F160092804C96100DEF239 /* MnemonicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F160012804C96100DEF239 /* MnemonicView.swift */; };
@@ -351,7 +351,7 @@
 		1A4C3D0EF3DBE9AC06A05512 /* RootWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootWireframe.swift; sourceTree = "<group>"; };
 		1A4C3D1809D506A7AE772982 /* NSLocalizedString+extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLocalizedString+extension.swift"; sourceTree = "<group>"; };
 		1A4C3D1FBA47E23C9207B49B /* AppsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsView.swift; sourceTree = "<group>"; };
-		1A4C3D2A7A195294A4542553 /* Web3SecretStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Web3SecretStorage.swift; sourceTree = "<group>"; };
+		1A4C3D2A7A195294A4542553 /* SecretStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretStorage.swift; sourceTree = "<group>"; };
 		1A4C3D40E32D58F958911B60 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		1A4C3D9896E7F3F3E51A9F29 /* DegenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenView.swift; sourceTree = "<group>"; };
 		1A4C3DAB38F681061328F3F0 /* NetworksService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksService.swift; sourceTree = "<group>"; };
@@ -414,7 +414,7 @@
 		D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3walletUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D15B06C227B6D23C008C3C62 /* GradienView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradienView.swift; sourceTree = "<group>"; };
 		D15B06C627B72111008C3C62 /* KeyStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreView.swift; sourceTree = "<group>"; };
-		D1966C3B281468C300550332 /* Web3SecretStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3SecretStorageTests.swift; sourceTree = "<group>"; };
+		D1966C3B281468C300550332 /* SecretStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretStorageTests.swift; sourceTree = "<group>"; };
 		D1966C3D2814789600550332 /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		D19A20BD2815F15F008A84CD /* KeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainService.swift; sourceTree = "<group>"; };
 		D1BF2680280D7FC200DE9A0B /* DefaultTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
@@ -659,7 +659,7 @@
 			children = (
 				1A4C36CAEB50425CE9839ED4 /* KeyStoreService.swift */,
 				1A4C376D2673983B26F249FF /* KeyStoreItem.swift */,
-				1A4C3D2A7A195294A4542553 /* Web3SecretStorage.swift */,
+				1A4C3D2A7A195294A4542553 /* SecretStorage.swift */,
 				D19A20BD2815F15F008A84CD /* KeyChainService.swift */,
 			);
 			path = KeyStore;
@@ -905,7 +905,7 @@
 			isa = PBXGroup;
 			children = (
 				D157F7E127B69B6400578FF8 /* web3walletTests.swift */,
-				D1966C3B281468C300550332 /* Web3SecretStorageTests.swift */,
+				D1966C3B281468C300550332 /* SecretStorageTests.swift */,
 			);
 			path = web3walletTests;
 			sourceTree = "<group>";
@@ -1347,7 +1347,7 @@
 				1A4C3128ADCDFFC40FCFA441 /* UIStackView+extensions.swift in Sources */,
 				1A4C3D469A9E8E8F890E65F5 /* AnimatedTextButton.swift in Sources */,
 				1A4C36EEA61FB60EE15ED6DD /* OnboardingService.swift in Sources */,
-				1A4C3F175B65F553F0F5E86D /* Web3SecretStorage.swift in Sources */,
+				1A4C3F175B65F553F0F5E86D /* SecretStorage.swift in Sources */,
 				1A4C33E50A1388781E82DD29 /* CryptoUtils.swift in Sources */,
 				1A4C34B44D253D748EFB2631 /* Bip39.swift in Sources */,
 			);
@@ -1357,9 +1357,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D1966C3C281468C300550332 /* Web3SecretStorageTests.swift in Sources */,
+				D1966C3C281468C300550332 /* SecretStorageTests.swift in Sources */,
 				D19A20BB2815B1FD008A84CD /* String+extensions.swift in Sources */,
-				D19A20BF2815F843008A84CD /* Web3SecretStorage.swift in Sources */,
+				D19A20BF2815F843008A84CD /* SecretStorage.swift in Sources */,
 				D157F7E227B69B6400578FF8 /* web3walletTests.swift in Sources */,
 				D19A20BC2815CA7D008A84CD /* Bip39.swift in Sources */,
 				D1966C4028147CDE00550332 /* Data+Extension.swift in Sources */,

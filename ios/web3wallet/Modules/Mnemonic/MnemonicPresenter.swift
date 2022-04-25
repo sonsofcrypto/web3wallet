@@ -81,7 +81,7 @@ extension DefaultMnemonicPresenter: MnemonicPresenter {
         case let .didChangeName(name):
             keyStoreItem.name = name
         case let .didChangeICouldBackup(onOff):
-            keyStoreItem.iCouldBackup = onOff
+            keyStoreItem.iCloudSecretStorage = onOff
         case let .saltSwitchDidChange(onOff):
             keyStoreItem.saltMnemonic = onOff
             updateView()
@@ -97,7 +97,7 @@ extension DefaultMnemonicPresenter: MnemonicPresenter {
         case let .passwordDidChange(text):
             keyStoreItem.password = text
         case let .allowFaceIdDidChange(onOff):
-            keyStoreItem.allowPswdUnlockWithFaceId = onOff
+            keyStoreItem.passUnlockWithBio = onOff
         case .didTapMnemonic:
             if context.mode.isUpdate() && mnemonicHidden {
                 mnemonicHidden = false
@@ -200,7 +200,7 @@ private extension DefaultMnemonicPresenter {
             ),
             MnemonicViewModel.Item.switch(
                 title: Localized("newMnemonic.iCould.title"),
-                onOff: keyStoreItem.iCouldBackup
+                onOff: keyStoreItem.iCloudSecretStorage
             ),
             MnemonicViewModel.Item.switchWithTextInput(
                 switchWithTextInput: .init(
@@ -223,7 +223,7 @@ private extension DefaultMnemonicPresenter {
                     password: keyStoreItem.password,
                     placeholder: Localized("newMnemonic.passType.placeholder"),
                     onOffTitle: Localized("newMnemonic.passType.allowFaceId"),
-                    onOff: keyStoreItem.allowPswdUnlockWithFaceId
+                    onOff: keyStoreItem.passUnlockWithBio
                 )
             )
         ]

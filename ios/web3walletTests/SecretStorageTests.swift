@@ -5,7 +5,7 @@
 import XCTest
 import CommonCrypto
 
-class Web3SecretStorageTests: XCTestCase {
+class SecretStorageTests: XCTestCase {
 
 
     func testEncryptDecrypt() throws {
@@ -13,7 +13,7 @@ class Web3SecretStorageTests: XCTestCase {
         let password = "password"
         let data = String(input).data(using: .utf8)!
 
-        let secureStorage = try! Web3SecretStorage.encrypt(data, password: "password")
+        let secureStorage = try! SecretStorage.encrypt(data, password: "password")
         let decypted = try! secureStorage.decrypt(password)
         let output = String(data: decypted, encoding: .utf8)
         
@@ -35,10 +35,10 @@ class Web3SecretStorageTests: XCTestCase {
         )
     }
     
-    func testWriteWeb3SecretStorage() throws {
+    func testWriteSecretStorage() throws {
         let password = "password"
         let data = String("Let try to encrypt this ok are w").data(using: .utf8)!
-        let secureStorage = try! Web3SecretStorage.encrypt(data, password: password)
+        let secureStorage = try! SecretStorage.encrypt(data, password: password)
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         

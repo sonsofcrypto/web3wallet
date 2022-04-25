@@ -122,6 +122,8 @@ private extension Bip39 {
     }
 }
 
+
+
 // MARK: - EntropySize
 
 extension Bip39 {

@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
 
-        let keyStoreService = DefaultKeyStoreService(store: DefaultStore())
+        let keyChainService = DefaultKeyChainService()
         let networkService = DefaultNetworksService()
         let degenService = DefaultDegenService()
         let nftsService = DefaultNFTsService()
@@ -24,7 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             settingsService,
             defaults: UserDefaults.standard
         )
-
+        let keyStoreService = DefaultKeyStoreService(
+            store: DefaultStore(),
+            keyChainService: keyChainService
+        )
 
         DefaultRootWireframeFactory(
             window: window,

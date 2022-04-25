@@ -15,14 +15,8 @@ git submodule update --init --recursive
 
 ## TODO: MVP 1.0 4 weeks
 	- [] w1 Key Store and associated UI (create, restore bip39, bip44, bip32)
-	- [x] Web3lib integration
 	- [x] bip39
 	- [] bip44
-	- [] KeyStore
-		- [] Create
-		- [] Import
-		- [] Update settings
-		- [] List
 	- [] Add support for 24 word mnemonics (option to select & text to scale down when entering)
 	- [] Import private key
 	- [] Handle multiple accounts from from same mnemonic
@@ -48,11 +42,10 @@ git submodule update --init --recursive
 	- [] w4 Send / Recieve
 
 ## TODO(web3dgn):
-	- [] Under construction wireframe
-	- [] Add under construction with animation
 	- [] Add swipe to delete to wallets scree
 
 ## TODO(design4.crypto):
+	- [] NFTs
 	- [] Redesign enter PIN / Pass / Salt
 
 ## MVP 2.0 4 weeks

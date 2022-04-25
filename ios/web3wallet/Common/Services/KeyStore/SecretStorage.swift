@@ -5,25 +5,26 @@
 import Foundation
 import SwiftKeccak
 
-struct Web3SecretStorage: Codable {
-    var crypto: Web3SecretStorage.Crypto
-    var id: String
-    var version: Int
-    var address: String?
-    var type: Web3SecretStorage.ItemType
+// https://github.com/ethereum/wiki/wiki/Web3-Secret-Storage-Definition#pbkdf2-sha-256
+struct SecretStorage: Codable {
+    let crypto: SecretStorage.Crypto
+    let id: String
+    let version: Int
+    let address: String?
+    let w3wParams: W3WParams
 
     init(
         crypto: Crypto,
         id: String,
         version: Int,
         address: String? = nil,
-        type: ItemType = .key
+        w3wParams: W3WParams = .default()
     ) {
         self.crypto = crypto
         self.id = id
         self.version = version
         self.address = address
-        self.type = type
+        self.w3wParams = w3wParams
     }
 
     func data() throws -> Data {
@@ -35,7 +36,7 @@ struct Web3SecretStorage: Codable {
 
 // MARK: - Encrypt
 
-extension Web3SecretStorage {
+extension SecretStorage {
 
     static func encrypt(
         _ data: Data,
@@ -46,8 +47,9 @@ extension Web3SecretStorage {
         r: Int = 8,
         c: Int = 262144, // 1 << 18
         dkLen: Int = 32,
-        cipher: String = "aes-128-ctr"
-    ) throws -> Web3SecretStorage {
+        cipher: String = "aes-128-ctr",
+        w3wParams: W3WParams = .default()
+    ) throws -> SecretStorage {
         let id = UUID().uuidString
         let salt = try Data.secRandom(32)
         let iv = try Data.secRandom(16)
@@ -61,7 +63,7 @@ extension Web3SecretStorage {
         let tail16Byte = dKey[(dKey.count - 16)...(dKey.count - 1)]
         let cypher = try aesCTR(key: encryptionKey, data: data, iv: iv)
         let mac = keccak256(Data().appending(tail16Byte).appending(cypher))
-        return Web3SecretStorage(
+        return SecretStorage(
             crypto: .init(
                 ciphertext: cypher.hexString(),
                 cipher: cipher,
@@ -77,14 +79,15 @@ extension Web3SecretStorage {
             ),
             id: id,
             version: 3,
-            address: address
+            address: address,
+            w3wParams: w3wParams
         )
     }
 }
 
 // MARK: - Decrypt
 
-extension Web3SecretStorage {
+extension SecretStorage {
 
     func decrypt(_ password: String) throws -> Data {
 
@@ -120,7 +123,7 @@ extension Web3SecretStorage {
 
 // MARK: - Crypto
 
-extension Web3SecretStorage {
+extension SecretStorage {
 
     struct Crypto: Codable {
         var ciphertext: String
@@ -135,7 +138,7 @@ extension Web3SecretStorage {
 
 // MARK: - KdfParams
 
-extension Web3SecretStorage.Crypto {
+extension SecretStorage.Crypto {
 
     struct KdfParams: Codable {
         var n: Int?
@@ -162,16 +165,40 @@ extension Web3SecretStorage.Crypto {
 
 // MARK: - CipherParams
 
-extension Web3SecretStorage.Crypto {
+extension SecretStorage.Crypto {
 
     struct CipherParams: Codable {
         var iv: String
     }
 }
 
-// MARK: - Kind
+// MARK: - W3WParams
 
-extension Web3SecretStorage {
+extension SecretStorage {
+
+    struct W3WParams: Codable {
+
+        let name: String
+        let saltMnemonic: Bool
+        let passwordType: PasswordType
+        let passUnlockWithBio: Bool
+        let iCloudSecretStorage: Bool
+
+        static func `default`() -> W3WParams {
+            .init(
+                name: "",
+                saltMnemonic: false,
+                passwordType: .bio,
+                passUnlockWithBio: false,
+                iCloudSecretStorage: true
+            )
+        }
+    }
+}
+
+// MARK: - ItemType
+
+extension SecretStorage.W3WParams {
 
     enum ItemType: Int, Codable {
         case key
@@ -179,9 +206,31 @@ extension Web3SecretStorage {
     }
 }
 
+// MARK: - PasswordType
+
+extension SecretStorage.W3WParams {
+
+    enum PasswordType: Int, Codable, CaseIterable {
+        case pin
+        case password
+        case bio
+
+        var localizedDescription: String {
+            switch self {
+            case .pin:
+                return Localized("newMnemonic.passType.pin")
+            case .password:
+                return Localized("newMnemonic.passType.password")
+            case .bio:
+                return Localized("newMnemonic.passType.faceId")
+            }
+        }
+    }
+}
+
 // MARK: - Error
 
-extension Web3SecretStorage {
+extension SecretStorage {
 
     enum SError: Error {
         case pbkdf2FailedToDeriveKey

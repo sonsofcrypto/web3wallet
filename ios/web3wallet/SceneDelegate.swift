@@ -15,13 +15,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         self.window = window
 
-        let keyStoreService = DefaultKeyStoreService(store: DefaultStore())
+        let keyChainService = DefaultKeyChainService()
         let networkService = DefaultNetworksService()
         let degenService = DefaultDegenService()
         let nftsService = DefaultNFTsService()
         let appsService = DefaultAppsService()
         let settingsService = DefaultSettingsService(UserDefaults.standard)
         let accountService = DefaultAccountService()
+        let keyStoreService = DefaultKeyStoreService(
+            store: DefaultStore(),
+            keyChainService: keyChainService
+        )
         let onboardingService = DefaultOnboardingService(
             settingsService,
             defaults: UserDefaults.standard
