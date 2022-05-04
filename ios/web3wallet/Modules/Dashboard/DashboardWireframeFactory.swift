@@ -4,26 +4,29 @@
 
 import UIKit
 
-protocol DashboardWireframeFactory {
+protocol DashboardWireframeFactory: AnyObject {
 
     func makeWireframe(_ parent: UIViewController) -> DashboardWireframe
 }
 
 // MARK: - DefaultDashboardWireframeFactory
 
-class DefaultDashboardWireframeFactory {
+final class DefaultDashboardWireframeFactory {
 
     private let service: KeyStoreService
     private let accountWireframeFactory: AccountWireframeFactory
+    private let alertWireframeFactory: AlertWireframeFactory
     private let onboardingService: OnboardingService
 
     init(
         _ service: KeyStoreService,
         accountWireframeFactory: AccountWireframeFactory,
+        alertWireframeFactory: AlertWireframeFactory,
         onboardingService: OnboardingService
     ) {
         self.service = service
         self.accountWireframeFactory = accountWireframeFactory
+        self.alertWireframeFactory = alertWireframeFactory
         self.onboardingService = onboardingService
     }
 }
@@ -33,10 +36,12 @@ class DefaultDashboardWireframeFactory {
 extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
 
     func makeWireframe(_ parent: UIViewController) -> DashboardWireframe {
+        
         DefaultDashboardWireframe(
             parent: parent,
             interactor: DefaultDashboardInteractor(service),
             accountWireframeFactory: accountWireframeFactory,
+            alertWireframeFactory: alertWireframeFactory,
             onboardingService: onboardingService
         )
     }

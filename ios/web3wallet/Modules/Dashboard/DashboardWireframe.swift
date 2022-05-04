@@ -7,6 +7,7 @@ import UIKit
 enum DashboardWireframeDestination {
     case wallet(wallet: KeyStoreItem)
     case keyStoreNetworkSettings
+    case presentUnderConstructionAlert
 
 }
 
@@ -19,22 +20,25 @@ protocol DashboardWireframe {
 
 class DefaultDashboardWireframe {
 
-    private weak var parent: UIViewController?
-    private weak var vc: UIViewController?
+    private weak var parent: UIViewController!
+    private weak var vc: UIViewController!
 
     private let interactor: DashboardInteractor
     private let accountWireframeFactory: AccountWireframeFactory
+    private let alertWireframeFactory: AlertWireframeFactory
     private let onboardingService: OnboardingService
 
     init(
         parent: UIViewController,
         interactor: DashboardInteractor,
         accountWireframeFactory: AccountWireframeFactory,
+        alertWireframeFactory: AlertWireframeFactory,
         onboardingService: OnboardingService
     ) {
         self.parent = parent
         self.interactor = interactor
         self.accountWireframeFactory = accountWireframeFactory
+        self.alertWireframeFactory = alertWireframeFactory
         self.onboardingService = onboardingService
     }
 }
@@ -44,15 +48,20 @@ class DefaultDashboardWireframe {
 extension DefaultDashboardWireframe: DashboardWireframe {
 
     func present() {
-        let vc = wireUp()
-        self.vc = vc
-        if let parent = self.parent as? EdgeCardsController {
+        
+        vc = wireUp()
+        
+        if let parent = parent as? EdgeCardsController {
+            
             parent.setMaster(vc: vc)
-        } else if let tabVc = self.parent as? UITabBarController {
-            let vcs = [vc] + (tabVc.viewControllers ?? [])
+        
+        } else if let tabVc = parent as? UITabBarController {
+            
+            let vcs: [UIViewController] = [vc] + (tabVc.viewControllers ?? [])
             tabVc.setViewControllers(vcs, animated: false)
+            
         } else {
-            parent?.show(vc, sender: self)
+            parent.show(vc, sender: self)
         }
     }
 
@@ -63,10 +72,17 @@ extension DefaultDashboardWireframe: DashboardWireframe {
         }
 
         switch destination {
+            
         case let .wallet(wallet):
             accountWireframeFactory.makeWireframe(vc, wallet: wallet).present()
+            
         case .keyStoreNetworkSettings:
             vc.edgeCardsController?.setDisplayMode(.overview, animated: true)
+            
+        case .presentUnderConstructionAlert:
+            
+            let context = AlertContext.underConstructionAlert()
+            alertWireframeFactory.makeWireframe(parent, context: context).present()
         }
     }
 }

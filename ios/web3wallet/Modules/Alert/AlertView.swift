@@ -1,66 +1,67 @@
-// Created by web3dgn on 21/04/2022.
+// Created by web3dgn on 02/05/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import UIKit
 import WebKit
 
-extension UIViewController {
+protocol AlertView: AnyObject {
     
-    struct AlertConent {
-        
-        let title: String?
-        let media: AlertMedia?
-        let message: String?
-        let actions: [AlertAction]
-    }
-    
-    enum AlertMedia {
-        
-        case gift(named: String, size: CGSize)
-    }
-    
-    struct AlertAction {
-        
-        let title: String
-        let action: TargetActionViewModel?
-    }
+    func update(with viewModel: AlertViewModel)
 }
 
-extension UIViewController {
+final class DefaultAlertView: UIViewController {
     
-    func presentUnderConstructionAlert(
-        onOkTapped: TargetActionViewModel? = nil
+    let presenter: AlertPresenter
+
+    private var viewModel: AlertViewModel!
+    
+    init(
+        presenter: AlertPresenter
     ) {
         
-        presentAlert(
-            with: .init(
-                title: Localized("alert.underConstruction.title"),
-                media: .gift(named: "under-construction", size: .init(width: 240, height: 285)),
-                message: Localized("alert.underConstruction.message"),
-                actions: [
-                    .init(
-                        title: Localized("OK"),
-                        action: onOkTapped
-                    )
-                ]
-            )
-        )
+        self.presenter = presenter
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        
+        addDimmedBackground()
+        
+        presenter.present()
     }
 }
 
-private extension UIViewController {
+extension DefaultAlertView: AlertView {
     
-    func presentAlert(with alertContent: AlertConent) {
+    func update(with viewModel: AlertViewModel) {
         
-        let parentView: UIView = makePresentingView()
+        self.viewModel = viewModel
+        
+        presentAlert(with: viewModel)
+    }
+}
+
+private extension DefaultAlertView {
+    
+    func addDimmedBackground() {
         
         let dimmedBackground = makeDimmedBackground()
-        parentView.addSubview(dimmedBackground)
+        view.addSubview(dimmedBackground)
         dimmedBackground.addConstraints(.toEdges)
+    }
+    
+    func presentAlert(with viewModel: AlertViewModel) {
         
-        let alertView = makeAlertView(with: alertContent)
-        dimmedBackground.addSubview(alertView)
+        let alertView = makeAlertView(with: viewModel)
+        view.addSubview(alertView)
         alertView.addConstraints(
             [
                 .layout(anchor: .centerXAnchor),
@@ -69,15 +70,8 @@ private extension UIViewController {
                 .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 16)),
             ]
         )
-        
-        alertView.animateInBouncingAlert()
     }
-    
-    func makePresentingView() -> UIView {
         
-        return UIApplication.shared.rootViewController?.view ?? self.view
-    }
-    
     func makeDimmedBackground() -> UIView {
         
         let view = UIView()
@@ -90,41 +84,41 @@ private extension UIViewController {
     
     @objc func dismissView(sender: UITapGestureRecognizer) {
         
-        guard let view = sender.view else { return }
-        view.fadeOutAnimation { view.removeFromSuperview() }
+        presenter.handle(.dismiss)
     }
     
-    func makeAlertView(with alertContent: AlertConent) -> UIView {
+    func makeAlertView(with alertViewModel: AlertViewModel) -> UIView {
         
         let alertView = UIView()
         alertView.backgroundColor = UIColor.bgGradientTop
         alertView.layer.cornerRadius = 16
         alertView.layer.borderWidth = 1
-        alertView.layer.borderColor = UIColor.appRed.cgColor
-
-        let alertContent = makeAlertContent(with: alertContent)
+        alertView.layer.borderColor = UIColor.bgGradientTopSecondary.cgColor
+        
+        let alertContent = makeAlertContent(with: viewModel.context)
         alertView.addSubview(alertContent)
         alertContent.addConstraints(.toEdges)
         
         return alertView
     }
     
-    func makeAlertContent(with alertContent: AlertConent) -> UIView {
+    func makeAlertContent(with alertContext: AlertContext) -> UIView {
         
         var content = [UIView]()
         
         content.append(.vSpace(height: 24))
-        content.append(contentsOf: makeAlertTitle(with: alertContent.title))
+        content.append(UILabel())
+        content.append(contentsOf: makeAlertTitle(with: alertContext.title))
         content.append(.vSpace())
-        content.append(contentsOf: makeAlertMedia(with: alertContent.media))
+        content.append(contentsOf: makeAlertMedia(with: alertContext.media))
         content.append(.vSpace())
-        content.append(contentsOf: makeAlertMessage(with: alertContent.message))
+        content.append(contentsOf: makeAlertMessage(with: alertContext.message))
         content.append(.vSpace())
         content.append(.dividerLine())
         content.append(.vSpace())
-        content.append(contentsOf: makeAlertActions(with: alertContent.actions))
+        content.append(contentsOf: makeAlertActions(with: alertContext.actions))
         content.append(.vSpace())
-                
+        
         let stackView = VStackView(content)
         
         return stackView
@@ -151,7 +145,7 @@ private extension UIViewController {
                 .layout(anchor: .bottomAnchor)
             ]
         )
-
+        
         return [wrappingView]
     }
     
@@ -162,7 +156,7 @@ private extension UIViewController {
         let label = UILabel(with: .bodyGlow)
         label.text = message
         label.numberOfLines = 0
-
+        
         let wrappingView = UIView()
         wrappingView.backgroundColor = .clear
         wrappingView.addSubview(label)
@@ -175,11 +169,11 @@ private extension UIViewController {
                 .layout(anchor: .bottomAnchor)
             ]
         )
-
+        
         return [wrappingView]
     }
     
-    func makeAlertMedia(with media: AlertMedia?) -> [UIView] {
+    func makeAlertMedia(with media: AlertContext.Media?) -> [UIView] {
         
         guard let media = media else { return [] }
         
@@ -192,15 +186,16 @@ private extension UIViewController {
     }
     
     func makeAlertMediaGif(with gifName: String, size: CGSize) -> [UIView] {
-     
+        
         let url = Bundle.main.url(forResource: gifName, withExtension: "gif")!
         
         let webView = WKWebView()
         webView.backgroundColor = .clear
+        webView.scrollView.isScrollEnabled = false
         webView.loadFileURL(url, allowingReadAccessTo: url)
         let request = URLRequest(url: url)
         webView.load(request)
-                
+        
         let wrappingView = UIView()
         wrappingView.backgroundColor = .clear
         wrappingView.addSubview(webView)
@@ -218,7 +213,7 @@ private extension UIViewController {
         return [wrappingView]
     }
     
-    func makeAlertActions(with actions: [AlertAction]) -> [UIView] {
+    func makeAlertActions(with actions: [AlertContext.Action]) -> [UIView] {
         
         guard !actions.isEmpty else { return [] }
         
@@ -233,34 +228,14 @@ private extension UIViewController {
             if let action = item.action {
                 
                 label.add(action)
+            } else if actions.count == 1 {
+                
+                label.add(.targetAction(.init(target: self, selector: #selector(dismissView(sender:)))))
             }
-
+            
             actionViews.append(label)
         }
         
         return actionViews
-    }
-}
-
-private extension UIView {
-    
-    func animateInBouncingAlert() {
-        
-        transform = CGAffineTransform(scaleX: 0, y: 0)
-        
-        UIView.springAnimate(0.2, delay: 0.1, damping: 0.9, velocity: 0.6) {
-            self.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
-        } completion: { _ in
-            self.transform = .identity
-        }
-    }
-
-    func fadeOutAnimation(onCompletion: (() -> Void)? = nil) {
-        
-        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseOut, animations: {() -> Void in
-            self.alpha = 0.0
-        }, completion: {(finished: Bool) -> Void in
-            onCompletion?()
-        })
     }
 }
