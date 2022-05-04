@@ -12,7 +12,7 @@ enum DashboardPresenterEvent {
     case didSelectWallet(idx: Int)
     case didSelectNFT(idx: Int)
     case didInteractWithCardSwitcher
-
+    case presentUnderConstructionAlert
 }
 
 protocol DashboardPresenter {
@@ -62,6 +62,8 @@ extension DefaultDashboardPresenter: DashboardPresenter {
         case .didInteractWithCardSwitcher:
             onboardingService.markDidInteractCardSwitcher()
             view?.update(with: viewModel())
+        case .presentUnderConstructionAlert:
+            wireframe.navigate(to: .presentUnderConstructionAlert)
         default:
             print("Handle \(event)")
         }

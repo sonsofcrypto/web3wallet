@@ -29,7 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             defaults: UserDefaults.standard
         )
 
-
         DefaultRootWireframeFactory(
             window: window,
             onboardingService: onboardingService,
@@ -49,6 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 accountWireframeFactory: DefaultAccountWireframeFactory(
                     accountService
                 ),
+                alertWireframeFactory: DefaultAlertWireframeFactory(),
                 onboardingService: onboardingService
             ),
             degen: DefaultDegenWireframeFactory(

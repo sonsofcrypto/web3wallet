@@ -41,7 +41,7 @@ class DashboardViewController: BaseViewController {
 
     @IBAction func receiveAction(_ sender: Any) {
         
-        presentUnderConstructionAlert()
+        presenter.handle(.presentUnderConstructionAlert)
     }
 
     @IBAction func sendAction(_ sender: Any) {

@@ -154,7 +154,12 @@
 		1C9B46F52813FB4F00F6C40B /* UIView+LayoutConstraints+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46F42813FB4F00F6C40B /* UIView+LayoutConstraints+extensions.swift */; };
 		1C9B46F82814045D00F6C40B /* UIApplication+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46F72814045D00F6C40B /* UIApplication+extensions.swift */; };
 		1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1C9B46FA281427B800F6C40B /* under-construction.gif */; };
-		1CBFDAEF281139650054B276 /* UIViewController+CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBFDAEE281139650054B276 /* UIViewController+CustomAlert.swift */; };
+		1CA3F2D72820339200133C41 /* AlertWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3F2D62820339200133C41 /* AlertWireframe.swift */; };
+		1CA3F2D92820339700133C41 /* AlertWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3F2D82820339700133C41 /* AlertWireframeFactory.swift */; };
+		1CA3F2DB2820339B00133C41 /* AlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3F2DA2820339B00133C41 /* AlertViewModel.swift */; };
+		1CA3F2DD2820339F00133C41 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3F2DC2820339F00133C41 /* AlertView.swift */; };
+		1CA3F2DF282033BF00133C41 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3F2DE282033BF00133C41 /* AlertPresenter.swift */; };
+		1CA3F2E12820344200133C41 /* AlertContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3F2E02820344200133C41 /* AlertContext.swift */; };
 		1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */; };
 		D116CF2827C2531E005542AA /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D116CF2727C2531E005542AA /* Array+extensions.swift */; };
 		D116CF3227C31ECC005542AA /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = D116CF3127C31ECC005542AA /* iCarousel.m */; };
@@ -396,7 +401,12 @@
 		1C9B46F42813FB4F00F6C40B /* UIView+LayoutConstraints+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LayoutConstraints+extensions.swift"; sourceTree = "<group>"; };
 		1C9B46F72814045D00F6C40B /* UIApplication+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+extensions.swift"; sourceTree = "<group>"; };
 		1C9B46FA281427B800F6C40B /* under-construction.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "under-construction.gif"; sourceTree = "<group>"; };
-		1CBFDAEE281139650054B276 /* UIViewController+CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+CustomAlert.swift"; sourceTree = "<group>"; };
+		1CA3F2D62820339200133C41 /* AlertWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertWireframe.swift; sourceTree = "<group>"; };
+		1CA3F2D82820339700133C41 /* AlertWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertWireframeFactory.swift; sourceTree = "<group>"; };
+		1CA3F2DA2820339B00133C41 /* AlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewModel.swift; sourceTree = "<group>"; };
+		1CA3F2DC2820339F00133C41 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		1CA3F2DE282033BF00133C41 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
+		1CA3F2E02820344200133C41 /* AlertContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertContext.swift; sourceTree = "<group>"; };
 		1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetActionViewModel.swift; sourceTree = "<group>"; };
 		D116CF2727C2531E005542AA /* Array+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extensions.swift"; sourceTree = "<group>"; };
 		D116CF2F27C31ECC005542AA /* web3wallet-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "web3wallet-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -535,7 +545,6 @@
 				1A4C38ADF271AE15EE20A68F /* UIStackView+extensions.swift */,
 				1A4C310A6D460422DB18D0BF /* UIStoryboard+extensions.swift */,
 				1A4C300AF1693AEBB5E5DD97 /* UIView+extensions.swift */,
-				1CBFDAEE281139650054B276 /* UIViewController+CustomAlert.swift */,
 				1C9B46F72814045D00F6C40B /* UIApplication+extensions.swift */,
 				1C9B46F42813FB4F00F6C40B /* UIView+LayoutConstraints+extensions.swift */,
 			);
@@ -835,6 +844,19 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		1CA3F2D42820338000133C41 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				1CA3F2E02820344200133C41 /* AlertContext.swift */,
+				1CA3F2DE282033BF00133C41 /* AlertPresenter.swift */,
+				1CA3F2DC2820339F00133C41 /* AlertView.swift */,
+				1CA3F2DA2820339B00133C41 /* AlertViewModel.swift */,
+				1CA3F2D62820339200133C41 /* AlertWireframe.swift */,
+				1CA3F2D82820339700133C41 /* AlertWireframeFactory.swift */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
 		1CBFDAF628113D180054B276 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -1059,6 +1081,7 @@
 		D15B06C927B7214B008C3C62 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				1CA3F2D42820338000133C41 /* Alert */,
 				D1F160002804C96100DEF239 /* Mnemonic */,
 				1A4C3850AF2505DA23170977 /* Dashboard */,
 				1A4C315D92E8F10E17F45F5D /* Degen */,
@@ -1085,15 +1108,15 @@
 		D1F160002804C96100DEF239 /* Mnemonic */ = {
 			isa = PBXGroup;
 			children = (
-				D1F160012804C96100DEF239 /* MnemonicView.swift */,
-				D1F160022804C96100DEF239 /* MnemonicInteractor.swift */,
 				D1F160032804C96100DEF239 /* MnemonicCell.swift */,
+				1A4C3112A7F3F912F46C9D62 /* MnemonicContext.swift */,
+				D1F160022804C96100DEF239 /* MnemonicInteractor.swift */,
 				D1F160042804C96100DEF239 /* MnemonicPresenter.swift */,
-				D1F160052804C96100DEF239 /* MnemonicWireframeFactory.swift */,
+				1A4C33B65A547253CB05BD43 /* MnemonicSettingCell.swift */,
+				D1F160012804C96100DEF239 /* MnemonicView.swift */,
 				D1F160062804C96100DEF239 /* MnemonicViewModel.swift */,
 				D1F160072804C96100DEF239 /* MnemonicWireframe.swift */,
-				1A4C33B65A547253CB05BD43 /* MnemonicSettingCell.swift */,
-				1A4C3112A7F3F912F46C9D62 /* MnemonicContext.swift */,
+				D1F160052804C96100DEF239 /* MnemonicWireframeFactory.swift */,
 			);
 			path = Mnemonic;
 			sourceTree = "<group>";
@@ -1299,11 +1322,13 @@
 				1A4C3F2AC8A8B59020F63712 /* KeyStoreInteractor.swift in Sources */,
 				1A4C39D40DEC9C42A6CF8D8A /* KeyStoreViewModel.swift in Sources */,
 				1A4C3C9B866507D8700399F6 /* KeyStoreService.swift in Sources */,
+				1CA3F2D92820339700133C41 /* AlertWireframeFactory.swift in Sources */,
 				1A4C3708C25B84EAA53D0FB6 /* KeyStoreItem.swift in Sources */,
 				1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */,
 				1A4C302CC56D21A0E3CBAFF6 /* UIStoryboard+extensions.swift in Sources */,
 				1A4C372EC2DEA2483AD7D92E /* NSLocalizedString+extension.swift in Sources */,
 				1A4C33FF86A4E43DAA2E7AB9 /* UIColor+extensions.swift in Sources */,
+				1CA3F2D72820339200133C41 /* AlertWireframe.swift in Sources */,
 				1A4C3EB4D429242923984C76 /* Button.swift in Sources */,
 				1A4C3B49BC67AF7AA3BF0D8F /* VisualEffectView.swift in Sources */,
 				1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */,
@@ -1316,6 +1341,7 @@
 				1A4C32D43EDF7B8FC74AA68C /* UICollectionView+extensions.swift in Sources */,
 				D11A991127B99D1800EDFDD0 /* AnyEncodable.swift in Sources */,
 				1A4C3885680B997E1684F34C /* Network.swift in Sources */,
+				1CA3F2DF282033BF00133C41 /* AlertPresenter.swift in Sources */,
 				1A4C30116B1618C1596D9D14 /* NetworksService.swift in Sources */,
 				1A4C3835FD803C3B708B409C /* Formatter+extensions.swift in Sources */,
 				1A4C3946A210F5A781EAC827 /* UILabel+extensions.swift in Sources */,
@@ -1332,9 +1358,11 @@
 				1C9B46F52813FB4F00F6C40B /* UIView+LayoutConstraints+extensions.swift in Sources */,
 				1A4C3540A51F853CCA68885B /* DegenCell.swift in Sources */,
 				1A4C34F0ADC2C388D42148BA /* DegenView.swift in Sources */,
+				1CA3F2E12820344200133C41 /* AlertContext.swift in Sources */,
 				1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */,
 				1A4C355E7008E07B2A6A148C /* DegenPresenter.swift in Sources */,
 				1A4C3A30CFE0E04885B8A474 /* DegenViewModel.swift in Sources */,
+				1CA3F2DB2820339B00133C41 /* AlertViewModel.swift in Sources */,
 				1A4C3719F83C54CD473ECE25 /* DegenWireframe.swift in Sources */,
 				1A4C39B2514D23D66B1540A1 /* DegenInteractor.swift in Sources */,
 				1A4C337CA3864D32284438DC /* DegenWireframeFactory.swift in Sources */,
@@ -1378,10 +1406,10 @@
 				1A4C3551BCCFEFA7BF378CD5 /* NFTsWireframeFactory.swift in Sources */,
 				1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */,
 				1A4C30B7111436DB2D3D9E5D /* AppsCell.swift in Sources */,
+				1CA3F2DD2820339F00133C41 /* AlertView.swift in Sources */,
 				1A4C33D70F2BF31983487849 /* AppsView.swift in Sources */,
 				1A4C36856556A9416071D218 /* AppsPresenter.swift in Sources */,
 				1A4C33FD7390E65B4959F77F /* AppsViewModel.swift in Sources */,
-				1CBFDAEF281139650054B276 /* UIViewController+CustomAlert.swift in Sources */,
 				1A4C3CAD628F53A5AC474755 /* AppsWireframe.swift in Sources */,
 				1A4C3B15334CF0B046208C20 /* AppsInteractor.swift in Sources */,
 				1A4C33EB6A7815037906E8F4 /* AppsWireframeFactory.swift in Sources */,
