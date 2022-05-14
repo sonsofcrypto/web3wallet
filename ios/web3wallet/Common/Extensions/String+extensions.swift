@@ -68,29 +68,35 @@ extension String {
     }
 }
 
-// MARK: - suffix number
-
-extension Int {
-
-    var abbreviated: String {
-        let abbrev = ["K", " mil", " bil", "T", "P", "E"]
-        return abbrev.enumerated()
-            .reversed()
-            .reduce(nil as String?) { accum, tuple in
-                let factor = Double(self) / pow(10, Double(tuple.0 + 1) * 3)
-                let truncRemainder = factor.truncatingRemainder(dividingBy: 1)
-                let format = truncRemainder == 0 ? "%.0f%@" : "%.1f%@"
-
-                if let accum = accum {
-                    return accum
-                }
-
-                if factor > 1 {
-                    return String(format: format, factor, String(tuple.1))
-                }
-
-                return nil
-            } ?? String(self)
+extension String {
+    
+    func attributtedString(
+        with mainFont: UIFont,
+        and mainColour: UIColor,
+        updating keywords: [String],
+        withColour colour: UIColor,
+        andFont font: UIFont
+    ) -> NSAttributedString {
+        
+        let attributedString = NSMutableAttributedString(
+            string: self,
+            attributes: [
+                .font: mainFont,
+                .foregroundColor: mainColour
+            ]
+        )
+        keywords.forEach { keyword in
+            
+            let range = (lowercased() as NSString).range(of: keyword.lowercased())
+            attributedString.setAttributes(
+                [
+                    .foregroundColor: colour,
+                    .font: font
+                ],
+                range: range
+            )
+        }
+        return attributedString
     }
 }
 

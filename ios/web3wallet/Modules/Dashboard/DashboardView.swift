@@ -9,7 +9,7 @@ protocol DashboardView: AnyObject {
     func update(with viewModel: DashboardViewModel)
 }
 
-class DashboardViewController: BaseViewController {
+final class DashboardViewController: BaseViewController {
 
     var presenter: DashboardPresenter!
 
@@ -41,7 +41,7 @@ class DashboardViewController: BaseViewController {
 
     @IBAction func receiveAction(_ sender: Any) {
         
-        presenter.handle(.presentUnderConstructionAlert)
+        presenter.handle(.receiveAction)
     }
 
     @IBAction func sendAction(_ sender: Any) {

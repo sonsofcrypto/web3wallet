@@ -98,3 +98,7 @@
 
 "alert.underConstruction.title" = "Under construction";
 "alert.underConstruction.message" = "App is under very active development and this corner is not quite ready yet. Check back soon.";
+
+"mnemonicConfirmation.title" = "Confirm Mnemonic";
+"mnemonicConfirmation.confirm.wallet" = "Please enter the 12 word phrase you were given when you created your wallet.";
+"mnemonicConfirmation.cta" = "Confirm";

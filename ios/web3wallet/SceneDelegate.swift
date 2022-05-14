@@ -51,6 +51,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     accountService
                 ),
                 alertWireframeFactory: DefaultAlertWireframeFactory(),
+                mnemonicConfirmationWireframeFactory: DefaultMnemonicConfirmationWireframeFactory(
+                    accountService: accountService
+                ),
                 onboardingService: onboardingService
             ),
             degen: DefaultDegenWireframeFactory(

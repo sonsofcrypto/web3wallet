@@ -6,16 +6,30 @@ import Foundation
 
 protocol AccountService: AnyObject {
 
+    var mnemonicWords: [String] { get }
+    func validateMnemonic(with mnemonic: String) -> Bool
 }
 
-// MARK: - DefaultAccountService
-
-class DefaultAccountService {
+final class DefaultAccountService {
 
 }
-
-// MARK: - AccountService
 
 extension DefaultAccountService: AccountService {
+    
+    var mnemonicWords: [String] {
+        
+        [
+            "hello",
+            "this",
+            "is",
+            "a",
+            "valid",
+            "mnemonic"
+        ]
+    }
 
+    func validateMnemonic(with mnemonic: String) -> Bool {
+        
+        mnemonic == "hello this is a valid mnemonic"
+    }
 }

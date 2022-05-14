@@ -8,7 +8,7 @@ enum DashboardWireframeDestination {
     case wallet(wallet: KeyStoreItem)
     case keyStoreNetworkSettings
     case presentUnderConstructionAlert
-
+    case mnemonicConfirmation
 }
 
 protocol DashboardWireframe {
@@ -18,7 +18,7 @@ protocol DashboardWireframe {
 
 // MARK: - DefaultDashboardWireframe
 
-class DefaultDashboardWireframe {
+final class DefaultDashboardWireframe {
 
     private weak var parent: UIViewController!
     private weak var vc: UIViewController!
@@ -26,6 +26,7 @@ class DefaultDashboardWireframe {
     private let interactor: DashboardInteractor
     private let accountWireframeFactory: AccountWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
+    private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
     private let onboardingService: OnboardingService
 
     init(
@@ -33,12 +34,14 @@ class DefaultDashboardWireframe {
         interactor: DashboardInteractor,
         accountWireframeFactory: AccountWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
+        mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
         onboardingService: OnboardingService
     ) {
         self.parent = parent
         self.interactor = interactor
         self.accountWireframeFactory = accountWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
+        self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
         self.onboardingService = onboardingService
     }
 }
@@ -83,6 +86,10 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             
             let context = AlertContext.underConstructionAlert()
             alertWireframeFactory.makeWireframe(parent, context: context).present()
+            
+        case .mnemonicConfirmation:
+            
+            mnemonicConfirmationWireframeFactory.makeWireframe(parent).present()
         }
     }
 }

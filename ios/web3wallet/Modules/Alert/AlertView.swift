@@ -33,8 +33,6 @@ final class DefaultAlertView: UIViewController {
         
         super.viewDidLoad()
         
-        addDimmedBackground()
-        
         presenter.present()
     }
 }
@@ -50,14 +48,7 @@ extension DefaultAlertView: AlertView {
 }
 
 private extension DefaultAlertView {
-    
-    func addDimmedBackground() {
         
-        let dimmedBackground = makeDimmedBackground()
-        view.addSubview(dimmedBackground)
-        dimmedBackground.addConstraints(.toEdges)
-    }
-    
     func presentAlert(with viewModel: AlertViewModel) {
         
         let alertView = makeAlertView(with: viewModel)
@@ -90,10 +81,10 @@ private extension DefaultAlertView {
     func makeAlertView(with alertViewModel: AlertViewModel) -> UIView {
         
         let alertView = UIView()
-        alertView.backgroundColor = UIColor.bgGradientTop
+        alertView.backgroundColor = Theme.current.background
         alertView.layer.cornerRadius = 16
         alertView.layer.borderWidth = 1
-        alertView.layer.borderColor = UIColor.bgGradientTopSecondary.cgColor
+        alertView.layer.borderColor = Theme.current.tintPrimaryLight.cgColor
         
         let alertContent = makeAlertContent(with: viewModel.context)
         alertView.addSubview(alertContent)
@@ -107,7 +98,6 @@ private extension DefaultAlertView {
         var content = [UIView]()
         
         content.append(.vSpace(height: 24))
-        content.append(UILabel())
         content.append(contentsOf: makeAlertTitle(with: alertContext.title))
         content.append(.vSpace())
         content.append(contentsOf: makeAlertMedia(with: alertContext.media))

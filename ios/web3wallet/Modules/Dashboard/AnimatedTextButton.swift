@@ -4,7 +4,7 @@
 
 import UIKit
 
-class AnimatedTextButton: UIButton {
+final class AnimatedTextButton: UIButton {
 
     @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var iconImageView: UIImageView!
