@@ -17,6 +17,7 @@ extension UILabel {
         case callout
         case subhead
         case subheadGlow
+        case body
         case bodyGlow
         case smallLabel
         case smallerLabel
@@ -45,6 +46,12 @@ extension UILabel {
             font = Theme.font.subhead
             layer.applyShadow(Theme.color.tintSecondary)
             textColor = Theme.color.text
+            font = Theme.current.subhead
+            layer.applyShadow(Theme.current.tintSecondary)
+            textColor = Theme.current.textColor
+        case .body:
+            font = Theme.current.body
+            textColor = Theme.current.textColor
         case .bodyGlow:
             font = Theme.font.body
             layer.applyShadow(Theme.color.tintSecondary)

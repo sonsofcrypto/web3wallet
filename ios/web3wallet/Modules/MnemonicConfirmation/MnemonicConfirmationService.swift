@@ -4,7 +4,10 @@
 
 protocol MnemonicConfirmationService: AnyObject {
     
-    func findInvalidWords(in mnemonic: String?) -> [String]
+    func potentialMnemonicWords(for text: String) -> [String]
+    func findInvalidWords(in mnemonic: String?) -> [
+        MnemonicConfirmationViewModel.WordInfo
+    ]
     func isMnemonicValid(_ mnemonic: String) -> Bool
 }
 
@@ -20,11 +23,29 @@ final class DefaultMnemonicConfirmationService {
 
 extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
     
-    func findInvalidWords(in mnemonic: String?) -> [String] {
+    func potentialMnemonicWords(for mnemonic: String) -> [String] {
+        
+        if let lastCharacter = mnemonic.last, lastCharacter == " " {
+            
+            return accountService.mnemonicWords
+        }
+        
+        let words = mnemonic.split(separator: " ")
+        if let last = words.last {
+            return accountService.mnemonicWords.filter { word in
+                word.hasPrefix(last)
+            }
+        } else {
+            
+            return accountService.mnemonicWords
+        }
+    }
+    
+    func findInvalidWords(in mnemonic: String?) -> [MnemonicConfirmationViewModel.WordInfo] {
         
         guard let mnemonic = mnemonic else { return [] }
         
-        var invalidWords = [String]()
+        var wordsInfo = [MnemonicConfirmationViewModel.WordInfo]()
 
         var words = mnemonic.split(separator: " ")
         
@@ -37,13 +58,17 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
         
         // Validates that all words other than the last one (if we are still typing)
         // are valid
-        words.forEach {
+        for (index, item) in words.enumerated() {
             
-            let word = String($0)
+            let word = String(item)
             
-            if !accountService.mnemonicWords.contains(word) {
-                invalidWords.append(word)
+            var isWordValid = accountService.mnemonicWords.contains(word)
+            
+            if index > 11 {
+                isWordValid = false
             }
+            
+            wordsInfo.append(.init(word: word, isInvalid: !isWordValid))
         }
         
         // In case we have not yet typed the entire last word, we check that the start of it
@@ -54,12 +79,12 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
             accountService.mnemonicWords.forEach { word in
                 if word.hasPrefix(lastWord) { isValidPrefix = true }
             }
-            if !isValidPrefix {
-                invalidWords.append(lastWord)
-            }
+            if words.count > 11 { isValidPrefix = false }
+            
+            wordsInfo.append(.init(word: lastWord, isInvalid: !isValidPrefix))
         }
         
-        return invalidWords
+        return wordsInfo
     }
     
     func isMnemonicValid(_ mnemonic: String) -> Bool {

@@ -4,6 +4,13 @@
 
 struct MnemonicConfirmationViewModel {
     
-    let invalidWords: [String]
+    let potentialWords: [String]
+    let wordsInfo: [WordInfo]
     let isValid: Bool
+    
+    struct WordInfo {
+        
+        let word: String
+        let isInvalid: Bool
+    }
 }

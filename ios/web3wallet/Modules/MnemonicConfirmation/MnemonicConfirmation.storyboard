@@ -34,7 +34,7 @@
                                         <inset key="scrollIndicatorInsets" minX="16" minY="16" maxX="16" maxY="16"/>
                                         <color key="textColor" systemColor="labelColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vtj-V4-X6d" customClass="Button" customModule="web3wallet" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="152.5" width="382" height="64"/>

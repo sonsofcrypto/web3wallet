@@ -25,6 +25,8 @@ final class MnemonicConfirmationViewController: UIViewController {
         super.viewDidLoad()
     
         configureUI()
+        
+        presenter.present()
     }
 }
 
@@ -74,6 +76,7 @@ private extension MnemonicConfirmationViewController {
         textView.backgroundColor = Theme.current.background.withAlpha(0.8)
         textView.font = Theme.current.body
         textView.textColor = Theme.current.textColor
+        textView.inputAccessoryView = makeInputAccessoryView()
 
         button.setTitle(Localized("mnemonicConfirmation.title"), for: .normal)
         button.setTitle(Localized("mnemonicConfirmation.title"), for: .disabled)
@@ -95,66 +98,141 @@ private extension MnemonicConfirmationViewController {
     }
     
     func refreshTextView() {
-                
-        let textSplitted = splitTextByTwelveWord()
-
-        let attributedText = textView.text.attributtedString(
-            with: Theme.current.body,
-            and: Theme.current.textColor,
-            updating: viewModel.invalidWords,
-            withColour: Theme.current.red,
-            andFont: Theme.current.body
+                        
+        let attributedText = NSMutableAttributedString(
+            string: textView.text,
+            attributes: [
+                .font: Theme.current.body,
+                .foregroundColor: Theme.current.textColor
+            ]
         )
         
-        if !textSplitted.anythingAfter.isEmpty {
+        var location = 0
+        var hasInvalidWords = false
+        for wordInfo in viewModel.wordsInfo {
             
-            let range = (textSplitted.anythingAfter.lowercased() as NSString).range(
-                of: textSplitted.anythingAfter.lowercased()
-            )
+            
+            guard wordInfo.isInvalid else {
+                
+                location += wordInfo.word.count + 1
+                continue
+            }
+            
             attributedText.setAttributes(
                 [
                     .foregroundColor: Theme.current.red,
                     .font: Theme.current.body
                 ],
-                range: .init(location: textSplitted.firstTwelveWordsText.count, length: range.length)
+                range: .init(
+                    location: location,
+                    length: wordInfo.word.count
+                )
             )
+            
+            location += wordInfo.word.count + 1
+            hasInvalidWords = true
         }
         
         textView.attributedText = attributedText
         
-        let showBorder = !viewModel.invalidWords.isEmpty || !textSplitted.anythingAfter.trimmingCharacters(
-            in: .whitespacesAndNewlines
-        ).isEmpty
-        textView.layer.borderWidth = showBorder ? 2 : 0
-        textView.layer.borderColor = showBorder ? Theme.current.red.cgColor : nil
-    }
-    
-    func splitTextByTwelveWord() -> (firstTwelveWordsText: String, anythingAfter: String) {
+        textView.layer.borderWidth = hasInvalidWords ? 2 : 0
+        textView.layer.borderColor = hasInvalidWords ? Theme.current.red.cgColor : nil
         
-        let words = textView.text.split(separator: " ")
-        
-        var firstTwelveWords = [String]()
-        
-        for (index, item) in words.enumerated() {
-            
-            let word = String(item)
-            
-            if index < 12 { firstTwelveWords.append(word) }
-        }
-        
-        let firstTwelveWordsText = firstTwelveWords.joined(separator: " ")
-        let anythingAfter = textView.text.replacingOccurrences(
-            of: firstTwelveWordsText,
-            with: ""
-        )
-        return (
-            firstTwelveWordsText: firstTwelveWordsText,
-            anythingAfter: anythingAfter
-        )
+        textView.inputAccessoryView?.clearSubviews()
+        addWords(viewModel.potentialWords, to: textView.inputAccessoryView)
     }
     
     func refreshCTA() {
         
         button.isEnabled = viewModel.isValid
+    }
+}
+
+private extension MnemonicConfirmationViewController {
+    
+    func makeInputAccessoryView() -> UIView {
+        
+        let scrollView = UIScrollView(
+            frame: .init(origin: .zero, size: .init(width: view.frame.width, height: 40))
+        )
+        scrollView.backgroundColor = Theme.current.background.withAlpha(0.8)
+        addWords([], to: scrollView)
+        return scrollView
+    }
+    
+    func addWords(_ words: [String], to view: UIView?) {
+        
+        guard let view = view else { return }
+        
+        var labels = [UILabel]()
+        for (index, word) in words.enumerated() {
+            let label = UILabel(with: .body)
+            label.text = word
+            label.addConstraints(
+                [
+                    .hugging(axis: .horizontal)
+                ]
+            )
+            label.add(
+                .targetAction(.init(target: self, selector: #selector(wordSelectedFromInputView(sender:))))
+            )
+            label.tag = index
+            label.sizeToFit()
+            labels.append(label)
+        }
+        labels.append(.init())
+        
+        let height = labels.first?.frame.size.height ?? 20
+        
+        let stackView = HStackView(labels)
+        stackView.spacing = 12
+        
+        view.addSubview(stackView)
+        
+        stackView.addConstraints(
+            [
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 16)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 16)),
+                .layout(anchor: .topAnchor),
+                .layout(anchor: .bottomAnchor),
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: height))
+            ]
+        )
+    }
+    
+    @objc func wordSelectedFromInputView(sender: UITapGestureRecognizer) {
+        
+        guard let index = sender.view?.tag else { return }
+        
+        guard viewModel.potentialWords.count > index else { return }
+        
+        let word = viewModel.potentialWords[index]
+        
+        let newMnemonic = makeNewMnemonic(appendingWord: word)
+        textView.text = newMnemonic
+        presenter.handle(.mnemonicChanged(to: newMnemonic))
+    }
+    
+    func makeNewMnemonic(appendingWord word: String) -> String {
+        
+        var words = textView.text.split(separator: " ")
+        
+        if let lastCharacter = textView.text.last, lastCharacter == " " {
+            
+            return textView.text + word + " "
+        } else if let lastWord = words.last {
+            let text: String
+            if let lastCharacter = textView.text.last, lastCharacter == " " {
+                text = textView.text.replacingOccurrences(of: lastWord + " ", with: "")
+            } else {
+                
+                _ = words.removeLast()
+                text = words.joined(separator: " ")
+            }
+            return text + " " + word + " "
+        } else {
+            let afterTextSpace = textView.text.isEmpty ? "" : " "
+            return textView.text + afterTextSpace + word + " "
+        }
     }
 }

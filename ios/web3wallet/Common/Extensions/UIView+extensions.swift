@@ -33,6 +33,10 @@ extension UIView {
 
 extension UIView {
     
+    func clearSubviews() {
+        
+        subviews.forEach { $0.removeFromSuperview() }
+    }
 }
 
 extension UIView {
