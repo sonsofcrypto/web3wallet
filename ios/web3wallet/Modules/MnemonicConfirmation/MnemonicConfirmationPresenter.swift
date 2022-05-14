@@ -62,11 +62,13 @@ private extension DefaultMnemonicConfirmationPresenter {
     
     func makeViewModel(for mnemonic: String) -> MnemonicConfirmationViewModel {
         
-        let invalidWords = service.findInvalidWords(in: mnemonic)
+        let potentialWords = service.potentialMnemonicWords(for: mnemonic)
+        let wordsInfo = service.findInvalidWords(in: mnemonic)
         let isMnemonicValid = service.isMnemonicValid(mnemonic)
         
         return .init(
-            invalidWords: invalidWords,
+            potentialWords: potentialWords,
+            wordsInfo: wordsInfo,
             isValid: isMnemonicValid
         )
     }
