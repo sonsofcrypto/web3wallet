@@ -32,6 +32,7 @@ extension MnemonicConfirmationViewController {
     
     @IBAction func ctaAction(_ sender: Any) {
         
+        presenter.handle(.confirm)
     }
 }
 
@@ -126,7 +127,6 @@ private extension MnemonicConfirmationViewController {
         ).isEmpty
         textView.layer.borderWidth = showBorder ? 2 : 0
         textView.layer.borderColor = showBorder ? Theme.current.red.cgColor : nil
-
     }
     
     func splitTextByTwelveWord() -> (firstTwelveWordsText: String, anythingAfter: String) {
