@@ -94,16 +94,62 @@ private extension MnemonicConfirmationViewController {
     }
     
     func refreshTextView() {
-        
-        textView.layer.borderWidth = viewModel.invalidWords.isEmpty ? 0 : 2
-        textView.layer.borderColor = viewModel.invalidWords.isEmpty ? nil : Theme.current.red.cgColor
-        
-        textView.attributedText = textView.text.attributtedString(
+                
+        let textSplitted = splitTextByTwelveWord()
+
+        let attributedText = textView.text.attributtedString(
             with: Theme.current.body,
             and: Theme.current.textColor,
             updating: viewModel.invalidWords,
             withColour: Theme.current.red,
             andFont: Theme.current.body
+        )
+        
+        if !textSplitted.anythingAfter.isEmpty {
+            
+            let range = (textSplitted.anythingAfter.lowercased() as NSString).range(
+                of: textSplitted.anythingAfter.lowercased()
+            )
+            attributedText.setAttributes(
+                [
+                    .foregroundColor: Theme.current.red,
+                    .font: Theme.current.body
+                ],
+                range: .init(location: textSplitted.firstTwelveWordsText.count, length: range.length)
+            )
+        }
+        
+        textView.attributedText = attributedText
+        
+        let showBorder = !viewModel.invalidWords.isEmpty || !textSplitted.anythingAfter.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        ).isEmpty
+        textView.layer.borderWidth = showBorder ? 2 : 0
+        textView.layer.borderColor = showBorder ? Theme.current.red.cgColor : nil
+
+    }
+    
+    func splitTextByTwelveWord() -> (firstTwelveWordsText: String, anythingAfter: String) {
+        
+        let words = textView.text.split(separator: " ")
+        
+        var firstTwelveWords = [String]()
+        
+        for (index, item) in words.enumerated() {
+            
+            let word = String(item)
+            
+            if index < 12 { firstTwelveWords.append(word) }
+        }
+        
+        let firstTwelveWordsText = firstTwelveWords.joined(separator: " ")
+        let anythingAfter = textView.text.replacingOccurrences(
+            of: firstTwelveWordsText,
+            with: ""
+        )
+        return (
+            firstTwelveWordsText: firstTwelveWordsText,
+            anythingAfter: anythingAfter
         )
     }
     

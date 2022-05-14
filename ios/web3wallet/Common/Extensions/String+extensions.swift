@@ -76,7 +76,7 @@ extension String {
         updating keywords: [String],
         withColour colour: UIColor,
         andFont font: UIFont
-    ) -> NSAttributedString {
+    ) -> NSMutableAttributedString {
         
         let attributedString = NSMutableAttributedString(
             string: self,

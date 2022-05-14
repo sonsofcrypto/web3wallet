@@ -19,17 +19,23 @@ extension DefaultAccountService: AccountService {
     var mnemonicWords: [String] {
         
         [
-            "hello",
-            "this",
-            "is",
-            "a",
-            "valid",
-            "mnemonic"
+            "one",
+            "two",
+            "three",
+            "four",
+            "five",
+            "six",
+            "seven",
+            "eight",
+            "nine",
+            "ten",
+            "eleven",
+            "twelve"
         ]
     }
 
     func validateMnemonic(with mnemonic: String) -> Bool {
         
-        mnemonic == "hello this is a valid mnemonic"
+        mnemonic == "one two three four five six seven eight nine ten eleven twelve"
     }
 }
