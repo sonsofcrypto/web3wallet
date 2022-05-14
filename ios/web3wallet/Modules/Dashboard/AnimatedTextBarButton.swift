@@ -4,7 +4,7 @@
 
 import UIKit
 
-class AnimatedTextBarButton: UIBarButtonItem {
+final class AnimatedTextBarButton: UIBarButtonItem {
 
     @IBOutlet weak var button: AnimatedTextButton!
 

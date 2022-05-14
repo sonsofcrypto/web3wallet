@@ -33,6 +33,10 @@ extension UIView {
 
 extension UIView {
     
+}
+
+extension UIView {
+    
     class func vSpace(
         height: CGFloat = 16
     ) -> UIView {

@@ -23,7 +23,7 @@ protocol DashboardPresenter {
 
 // MARK: - DefaultDashboardPresenter
 
-class DefaultDashboardPresenter {
+final class DefaultDashboardPresenter {
 
     private let interactor: DashboardInteractor
     private let wireframe: DashboardWireframe
@@ -64,6 +64,8 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             view?.update(with: viewModel())
         case .presentUnderConstructionAlert:
             wireframe.navigate(to: .presentUnderConstructionAlert)
+        case .receiveAction:
+            wireframe.navigate(to: .mnemonicConfirmation)
         default:
             print("Handle \(event)")
         }

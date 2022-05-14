@@ -16,17 +16,20 @@ final class DefaultDashboardWireframeFactory {
     private let service: KeyStoreService
     private let accountWireframeFactory: AccountWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
+    private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
     private let onboardingService: OnboardingService
 
     init(
         _ service: KeyStoreService,
         accountWireframeFactory: AccountWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
+        mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
         onboardingService: OnboardingService
     ) {
         self.service = service
         self.accountWireframeFactory = accountWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
+        self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
         self.onboardingService = onboardingService
     }
 }
@@ -42,6 +45,7 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             interactor: DefaultDashboardInteractor(service),
             accountWireframeFactory: accountWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
+            mnemonicConfirmationWireframeFactory: mnemonicConfirmationWireframeFactory,
             onboardingService: onboardingService
         )
     }

@@ -150,6 +150,8 @@
 		1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */; };
 		1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */; };
 		1A4C3FC333CF4459025710E5 /* NFTsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38A2039D19A2E5507CF2 /* NFTsView.swift */; };
+		1C6486F3282D783A0091A12D /* DefaultGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6486F2282D783A0091A12D /* DefaultGradientView.swift */; };
+		1C6486FD282F87EB0091A12D /* Int+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6486FC282F87EB0091A12D /* Int+extensions.swift */; };
 		1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46D92813DE4800F6C40B /* BaseViewController.swift */; };
 		1C9B46F52813FB4F00F6C40B /* UIView+LayoutConstraints+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46F42813FB4F00F6C40B /* UIView+LayoutConstraints+extensions.swift */; };
 		1C9B46F82814045D00F6C40B /* UIApplication+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46F72814045D00F6C40B /* UIApplication+extensions.swift */; };
@@ -160,6 +162,13 @@
 		1CA3F2DD2820339F00133C41 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3F2DC2820339F00133C41 /* AlertView.swift */; };
 		1CA3F2DF282033BF00133C41 /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3F2DE282033BF00133C41 /* AlertPresenter.swift */; };
 		1CA3F2E12820344200133C41 /* AlertContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3F2E02820344200133C41 /* AlertContext.swift */; };
+		1CA3F2E5282D696D00133C41 /* MnemonicConfirmationWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3F2E4282D696D00133C41 /* MnemonicConfirmationWireframe.swift */; };
+		1CA3F2E7282D697400133C41 /* MnemonicConfirmationWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3F2E6282D697400133C41 /* MnemonicConfirmationWireframeFactory.swift */; };
+		1CA3F2E9282D698000133C41 /* MnemonicConfirmationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3F2E8282D698000133C41 /* MnemonicConfirmationPresenter.swift */; };
+		1CA3F2EB282D698400133C41 /* MnemonicConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3F2EA282D698400133C41 /* MnemonicConfirmationViewModel.swift */; };
+		1CA3F2ED282D698A00133C41 /* MnemonicConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3F2EC282D698A00133C41 /* MnemonicConfirmationView.swift */; };
+		1CA3F2F1282D6AC200133C41 /* MnemonicConfirmationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3F2F0282D6AC200133C41 /* MnemonicConfirmationService.swift */; };
+		1CA3F2F3282D751D00133C41 /* MnemonicConfirmation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CA3F2F2282D751D00133C41 /* MnemonicConfirmation.storyboard */; };
 		1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */; };
 		D116CF2827C2531E005542AA /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D116CF2727C2531E005542AA /* Array+extensions.swift */; };
 		D116CF3227C31ECC005542AA /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = D116CF3127C31ECC005542AA /* iCarousel.m */; };
@@ -394,6 +403,8 @@
 		1A4C3F5900131CEDA6520958 /* TransformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformView.swift; sourceTree = "<group>"; };
 		1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnOffSwitch.swift; sourceTree = "<group>"; };
 		1A4C3FA66092D38533F635F3 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		1C6486F2282D783A0091A12D /* DefaultGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGradientView.swift; sourceTree = "<group>"; };
+		1C6486FC282F87EB0091A12D /* Int+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+extensions.swift"; sourceTree = "<group>"; };
 		1C9B46D92813DE4800F6C40B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1C9B46F42813FB4F00F6C40B /* UIView+LayoutConstraints+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LayoutConstraints+extensions.swift"; sourceTree = "<group>"; };
 		1C9B46F72814045D00F6C40B /* UIApplication+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+extensions.swift"; sourceTree = "<group>"; };
@@ -404,6 +415,13 @@
 		1CA3F2DC2820339F00133C41 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		1CA3F2DE282033BF00133C41 /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		1CA3F2E02820344200133C41 /* AlertContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertContext.swift; sourceTree = "<group>"; };
+		1CA3F2E4282D696D00133C41 /* MnemonicConfirmationWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationWireframe.swift; sourceTree = "<group>"; };
+		1CA3F2E6282D697400133C41 /* MnemonicConfirmationWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationWireframeFactory.swift; sourceTree = "<group>"; };
+		1CA3F2E8282D698000133C41 /* MnemonicConfirmationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationPresenter.swift; sourceTree = "<group>"; };
+		1CA3F2EA282D698400133C41 /* MnemonicConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationViewModel.swift; sourceTree = "<group>"; };
+		1CA3F2EC282D698A00133C41 /* MnemonicConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationView.swift; sourceTree = "<group>"; };
+		1CA3F2F0282D6AC200133C41 /* MnemonicConfirmationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationService.swift; sourceTree = "<group>"; };
+		1CA3F2F2282D751D00133C41 /* MnemonicConfirmation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MnemonicConfirmation.storyboard; sourceTree = "<group>"; };
 		1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetActionViewModel.swift; sourceTree = "<group>"; };
 		D116CF2727C2531E005542AA /* Array+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extensions.swift"; sourceTree = "<group>"; };
 		D116CF2F27C31ECC005542AA /* web3wallet-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "web3wallet-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -532,6 +550,7 @@
 				1A4C3BFA6EDB1E94BEF92E59 /* Formatter+extensions.swift */,
 				1A4C3D1809D506A7AE772982 /* NSLocalizedString+extension.swift */,
 				1A4C3F3F7A4502698FF8F63E /* String+extensions.swift */,
+				1C6486FC282F87EB0091A12D /* Int+extensions.swift */,
 				1A4C3ADE5C8CD3D3CBB36547 /* UIBarButtonItem+extensions.swift */,
 				1A4C3439D8A20606BAD5B667 /* UIButton+extensions.swift */,
 				1A4C3CD7A1F1A86851EC2BA5 /* UICollectionView+extensions.swift */,
@@ -600,11 +619,11 @@
 		1A4C329381A12BF85B2C9F38 /* Account */ = {
 			isa = PBXGroup;
 			children = (
-				1A4C3EA05614AEAEC1389A4E /* AccountView.swift */,
+				1A4C38B1678950FD61E91FAD /* AccountInteractor.swift */,
 				1A4C30B09D7FCDB08590118B /* AccountPresenter.swift */,
+				1A4C3EA05614AEAEC1389A4E /* AccountView.swift */,
 				1A4C3A962E47E54F5A5779D3 /* AccountViewModel.swift */,
 				1A4C3ABEEF88DD643AF4D7AD /* AccountWireframe.swift */,
-				1A4C38B1678950FD61E91FAD /* AccountInteractor.swift */,
 				1A4C3ABC7FAC24D9539B1BDA /* AccountWireframeFactory.swift */,
 				1A4C316E60B8C1E6DD9E5623 /* Cells */,
 			);
@@ -750,15 +769,15 @@
 		1A4C3850AF2505DA23170977 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
-				1A4C3EDBCEBB09F678C9E934 /* DashboardView.swift */,
-				1A4C38F6C66189309E695B99 /* DashboardPresenter.swift */,
-				1A4C325D5EF4C18FCD3B1472 /* DashboardViewModel.swift */,
-				1A4C3A05642605E68164E3B1 /* DashboardWireframe.swift */,
-				1A4C306F77C13B435A1FBF17 /* DashboardInteractor.swift */,
-				1A4C3B92FA152550A06D3D31 /* DashboardWireframeFactory.swift */,
-				1A4C303225414E70D52A40F3 /* cells */,
 				1A4C3F0E41801E9AE79EBDCF /* AnimatedTextBarButton.swift */,
 				1A4C382A5C3DEF8EF76CF6F3 /* AnimatedTextButton.swift */,
+				1A4C306F77C13B435A1FBF17 /* DashboardInteractor.swift */,
+				1A4C38F6C66189309E695B99 /* DashboardPresenter.swift */,
+				1A4C3EDBCEBB09F678C9E934 /* DashboardView.swift */,
+				1A4C325D5EF4C18FCD3B1472 /* DashboardViewModel.swift */,
+				1A4C3A05642605E68164E3B1 /* DashboardWireframe.swift */,
+				1A4C3B92FA152550A06D3D31 /* DashboardWireframeFactory.swift */,
+				1A4C303225414E70D52A40F3 /* cells */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -851,6 +870,20 @@
 				1CA3F2D82820339700133C41 /* AlertWireframeFactory.swift */,
 			);
 			path = Alert;
+			sourceTree = "<group>";
+		};
+		1CA3F2E3282D691900133C41 /* MnemonicConfirmation */ = {
+			isa = PBXGroup;
+			children = (
+				1CA3F2F2282D751D00133C41 /* MnemonicConfirmation.storyboard */,
+				1CA3F2E8282D698000133C41 /* MnemonicConfirmationPresenter.swift */,
+				1CA3F2F0282D6AC200133C41 /* MnemonicConfirmationService.swift */,
+				1CA3F2EC282D698A00133C41 /* MnemonicConfirmationView.swift */,
+				1CA3F2EA282D698400133C41 /* MnemonicConfirmationViewModel.swift */,
+				1CA3F2E4282D696D00133C41 /* MnemonicConfirmationWireframe.swift */,
+				1CA3F2E6282D697400133C41 /* MnemonicConfirmationWireframeFactory.swift */,
+			);
+			path = MnemonicConfirmation;
 			sourceTree = "<group>";
 		};
 		1CBFDAF628113D180054B276 /* ViewModels */ = {
@@ -1034,6 +1067,7 @@
 			children = (
 				1A4C3378B5287B6A9BDE65CD /* Button.swift */,
 				D15B06C227B6D23C008C3C62 /* GradienView.swift */,
+				1C6486F2282D783A0091A12D /* DefaultGradientView.swift */,
 				1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */,
 				1A4C3DBA41AF75471C619124 /* TextField.swift */,
 				1A4C3850817DBF09BB66090A /* CadlesView */,
@@ -1077,17 +1111,18 @@
 		D15B06C927B7214B008C3C62 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				1A4C329381A12BF85B2C9F38 /* Account */,
 				1CA3F2D42820338000133C41 /* Alert */,
-				D1F160002804C96100DEF239 /* Mnemonic */,
+				1A4C3044D77C00C8FF94BEA1 /* AppsModule */,
 				1A4C3850AF2505DA23170977 /* Dashboard */,
 				1A4C315D92E8F10E17F45F5D /* Degen */,
-				1A4C3823E11D18DC3C0029DD /* Networks */,
-				1A4C329381A12BF85B2C9F38 /* Account */,
-				1A4C312F3B436BCC1E5CDDB0 /* NFTs */,
-				1A4C3044D77C00C8FF94BEA1 /* AppsModule */,
-				1A4C3C0F7E50FC6FFF5CA5A9 /* Settings */,
-				1A4C346F635A82851C21B8A8 /* Root */,
 				D15B06C827B7211F008C3C62 /* KeyStore */,
+				D1F160002804C96100DEF239 /* Mnemonic */,
+				1CA3F2E3282D691900133C41 /* MnemonicConfirmation */,
+				1A4C3823E11D18DC3C0029DD /* Networks */,
+				1A4C312F3B436BCC1E5CDDB0 /* NFTs */,
+				1A4C346F635A82851C21B8A8 /* Root */,
+				1A4C3C0F7E50FC6FFF5CA5A9 /* Settings */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -1274,6 +1309,7 @@
 				D14ECE3927B833E500228F90 /* Localizable.strings in Resources */,
 				D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */,
 				D157F7D427B69B6400578FF8 /* Assets.xcassets in Resources */,
+				1CA3F2F3282D751D00133C41 /* MnemonicConfirmation.storyboard in Resources */,
 				D11A990327B8615B00EDFDD0 /* GothicA1-Thin.ttf in Resources */,
 				D11A990927B8615B00EDFDD0 /* GothicA1-SemiBold.ttf in Resources */,
 				D157F7D227B69B6300578FF8 /* Main.storyboard in Resources */,
@@ -1306,6 +1342,7 @@
 			files = (
 				D11A990F27B99D1800EDFDD0 /* AnyDecodable.swift in Sources */,
 				D11A991027B99D1800EDFDD0 /* AnyCodable.swift in Sources */,
+				1C6486F3282D783A0091A12D /* DefaultGradientView.swift in Sources */,
 				D157F7CF27B69B6300578FF8 /* ViewController.swift in Sources */,
 				D15B06C727B72111008C3C62 /* KeyStoreView.swift in Sources */,
 				D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */,
@@ -1314,6 +1351,7 @@
 				1A4C32CF0C59FE32073E66D0 /* KeyStorePresenter.swift in Sources */,
 				1A4C3D9BD9F5A146878AFF77 /* KeyStoreWireframe.swift in Sources */,
 				1A4C3A585C5375AE91CDA637 /* KeyStoreWireframeFactory.swift in Sources */,
+				1CA3F2EB282D698400133C41 /* MnemonicConfirmationViewModel.swift in Sources */,
 				1C9B46F82814045D00F6C40B /* UIApplication+extensions.swift in Sources */,
 				1A4C3F2AC8A8B59020F63712 /* KeyStoreInteractor.swift in Sources */,
 				1A4C39D40DEC9C42A6CF8D8A /* KeyStoreViewModel.swift in Sources */,
@@ -1365,16 +1403,20 @@
 				1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */,
 				1A4C3750D25F9E82456820CB /* NetworksCell.swift in Sources */,
 				1A4C3A35E90213A3B1D305C1 /* NetworksInteractor.swift in Sources */,
+				1C6486FD282F87EB0091A12D /* Int+extensions.swift in Sources */,
 				1A4C339BB64E9CCF1C110D40 /* NetworksPresenter.swift in Sources */,
 				1A4C3926E0A2F1B6A2CF3040 /* NetworksView.swift in Sources */,
 				1A4C37D58E15F7110354E35B /* NetworksViewModel.swift in Sources */,
 				1A4C36E01D38AFB39DCA523C /* NetworksWireframe.swift in Sources */,
 				1A4C3B37A19807994E4E1D08 /* NetworksWireframeFactory.swift in Sources */,
+				1CA3F2ED282D698A00133C41 /* MnemonicConfirmationView.swift in Sources */,
 				1A4C31F15B77B2DFA1AFCBB6 /* AMMsCell.swift in Sources */,
+				1CA3F2F1282D6AC200133C41 /* MnemonicConfirmationService.swift in Sources */,
 				1A4C32FAFAE7B74336452733 /* AMMsView.swift in Sources */,
 				1A4C3C57B341513B1AA26C06 /* AMMsPresenter.swift in Sources */,
 				1A4C3A7D319E0444A98E52AD /* AMMsViewModel.swift in Sources */,
 				1A4C386E221B453892180BFE /* AMMsWireframe.swift in Sources */,
+				1CA3F2E5282D696D00133C41 /* MnemonicConfirmationWireframe.swift in Sources */,
 				1A4C38B3B9AA2A7910821782 /* AMMsInteractor.swift in Sources */,
 				1A4C3D2C7310ABD59AFAE725 /* AMMsWireframeFactory.swift in Sources */,
 				1A4C33C1A3C0AE41B3CE539A /* SwapInputView.swift in Sources */,
@@ -1391,6 +1433,7 @@
 				1A4C30F2703A5F58B8DA3D1F /* AccountWireframe.swift in Sources */,
 				D116CF3227C31ECC005542AA /* iCarousel.m in Sources */,
 				1A4C3161ADC31E07777F61F0 /* AccountInteractor.swift in Sources */,
+				1CA3F2E7282D697400133C41 /* MnemonicConfirmationWireframeFactory.swift in Sources */,
 				1A4C349387A48AB7AD7C24A9 /* AccountWireframeFactory.swift in Sources */,
 				1A4C37AEF66358EA9CA0CA59 /* AccountService.swift in Sources */,
 				1A4C3F081D1B594B9EAF4F7E /* NFTsCell.swift in Sources */,
@@ -1419,6 +1462,7 @@
 				D116CF2827C2531E005542AA /* Array+extensions.swift in Sources */,
 				1A4C35978A62DC3638CBFD05 /* SettingsWireframeFactory.swift in Sources */,
 				1A4C3B6D2DFADBE2EF71F3A5 /* SettingsService.swift in Sources */,
+				1CA3F2E9282D698000133C41 /* MnemonicConfirmationPresenter.swift in Sources */,
 				1A4C34ABFF1DD20804DED956 /* AppsService.swift in Sources */,
 				1A4C39119C04EB0DE3B90F12 /* RootView.swift in Sources */,
 				1A4C36FDBCA0AA402711BE43 /* RootPresenter.swift in Sources */,

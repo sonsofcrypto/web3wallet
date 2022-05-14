@@ -10,7 +10,7 @@ protocol DashboardInteractor: AnyObject {
 
 // MARK: - DefaultDashboardInteractor
 
-class DefaultDashboardInteractor {
+final class DefaultDashboardInteractor {
 
 
     private var walletsService: KeyStoreService
