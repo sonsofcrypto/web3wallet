@@ -28,11 +28,15 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
 
         var words = mnemonic.split(separator: " ")
         
-        if let lastCharacter = mnemonic.last, lastCharacter != " " {
+        var lastWord: String?
+        if let last = words.last, let lastCharacter = mnemonic.last, lastCharacter != " " {
             
+            lastWord = String(last)
             words = words.dropLast()
         }
         
+        // Validates that all words other than the last one (if we are still typing)
+        // are valid
         words.forEach {
             
             let word = String($0)
@@ -42,11 +46,24 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
             }
         }
         
+        // In case we have not yet typed the entire last word, we check that the start of it
+        // matches with a valid word
+        if let lastWord = lastWord {
+            
+            var isValidPrefix = false
+            accountService.mnemonicWords.forEach { word in
+                if word.hasPrefix(lastWord) { isValidPrefix = true }
+            }
+            if !isValidPrefix {
+                invalidWords.append(lastWord)
+            }
+        }
+        
         return invalidWords
     }
     
     func isMnemonicValid(_ mnemonic: String) -> Bool {
         
-        accountService.validateMnemonic(with: mnemonic)
+        accountService.validateMnemonic(with: mnemonic.trimmingCharacters(in: .whitespaces))
     }
 }
