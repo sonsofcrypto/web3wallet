@@ -78,7 +78,12 @@ private extension DefaultMnemonicConfirmationPresenter {
         let potentialWords = service.potentialMnemonicWords(
             for: prefixForPotentialwords
         )
-        let wordsInfo = service.findInvalidWords(in: mnemonic)
+        var wordsInfo = service.findInvalidWords(in: mnemonic)
+        wordsInfo = updateWordsInfo(
+            wordsInfo: wordsInfo,
+            with: prefixForPotentialwords,
+            at: selectedLocation
+        )
         let isMnemonicValid = service.isMnemonicValid(mnemonic)
         
         return .init(
@@ -116,5 +121,43 @@ private extension DefaultMnemonicConfirmationPresenter {
         }
 
         return prefix
+    }
+    
+    func updateWordsInfo(
+        wordsInfo: [MnemonicConfirmationViewModel.WordInfo],
+        with prefixForPotentialwords: String,
+        at selectedLocation: Int
+    ) -> [MnemonicConfirmationViewModel.WordInfo] {
+        
+        var updatedWords = [MnemonicConfirmationViewModel.WordInfo]()
+        
+        var location = 0
+        var wordUpdated = false
+        
+        wordsInfo.forEach {
+            
+            location += $0.word.count
+            
+            if selectedLocation <= location, !wordUpdated {
+                
+                if $0.word == prefixForPotentialwords {
+                    
+                    updatedWords.append(
+                        .init(
+                            word: $0.word,
+                            isInvalid: !service.isValidPrefix($0.word)
+                        )
+                    )
+                }
+                wordUpdated = true
+            } else {
+                
+                updatedWords.append($0)
+            }
+            
+            location += 1
+        }
+        
+        return updatedWords
     }
 }
