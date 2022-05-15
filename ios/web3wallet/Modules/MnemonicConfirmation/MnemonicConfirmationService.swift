@@ -4,7 +4,7 @@
 
 protocol MnemonicConfirmationService: AnyObject {
     
-    func potentialMnemonicWords(for text: String) -> [String]
+    func potentialMnemonicWords(for prefix: String?) -> [String]
     func findInvalidWords(in mnemonic: String?) -> [
         MnemonicConfirmationViewModel.WordInfo
     ]
@@ -23,22 +23,16 @@ final class DefaultMnemonicConfirmationService {
 
 extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
     
-    func potentialMnemonicWords(for mnemonic: String) -> [String] {
+    func potentialMnemonicWords(for prefix: String?) -> [String] {
         
-        if let lastCharacter = mnemonic.last, lastCharacter == " " {
+        guard let prefix = prefix else {
             
             return accountService.mnemonicWords
         }
         
-        let words = mnemonic.split(separator: " ")
-        if let last = words.last {
-            return accountService.mnemonicWords.filter { word in
-                word.hasPrefix(last)
-            }
-        } else {
-            
-            return accountService.mnemonicWords
-        }
+        return accountService.mnemonicWords.filter { word in
+            word.hasPrefix(prefix)
+        }        
     }
     
     func findInvalidWords(in mnemonic: String?) -> [MnemonicConfirmationViewModel.WordInfo] {
