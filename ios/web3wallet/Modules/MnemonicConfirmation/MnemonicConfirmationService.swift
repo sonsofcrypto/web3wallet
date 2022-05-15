@@ -8,6 +8,7 @@ protocol MnemonicConfirmationService: AnyObject {
     func findInvalidWords(in mnemonic: String?) -> [
         MnemonicConfirmationViewModel.WordInfo
     ]
+    func isValidPrefix(_ prefix: String) -> Bool
     func isMnemonicValid(_ mnemonic: String) -> Bool
 }
 
@@ -69,16 +70,23 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
         // matches with a valid word
         if let lastWord = lastWord {
             
-            var isValidPrefix = false
-            accountService.mnemonicWords.forEach { word in
-                if word.hasPrefix(lastWord) { isValidPrefix = true }
-            }
+            var isValidPrefix = isValidPrefix(lastWord)
+            
             if words.count > 11 { isValidPrefix = false }
             
             wordsInfo.append(.init(word: lastWord, isInvalid: !isValidPrefix))
         }
         
         return wordsInfo
+    }
+    
+    func isValidPrefix(_ prefix: String) -> Bool {
+        
+        var isValidPrefix = false
+        accountService.mnemonicWords.forEach { word in
+            if word.hasPrefix(prefix) { isValidPrefix = true }
+        }
+        return isValidPrefix
     }
     
     func isMnemonicValid(_ mnemonic: String) -> Bool {
