@@ -19,6 +19,7 @@ final class MnemonicConfirmationViewController: UIViewController {
     var presenter: MnemonicConfirmationPresenter!
     
     private var viewModel: MnemonicConfirmationViewModel!
+    private let inputAccessoryViewHeight: CGFloat = 40
         
     override func viewDidLoad() {
         
@@ -52,7 +53,12 @@ extension MnemonicConfirmationViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         
-        presenter.handle(.mnemonicChanged(to: textView.text))
+        presenter.handle(
+            .mnemonicChanged(
+                to: textView.text,
+                selectedLocation: textView.selectedRange.location
+            )
+        )
     }
 }
 
@@ -98,6 +104,8 @@ private extension MnemonicConfirmationViewController {
     }
     
     func refreshTextView() {
+        
+        let selectedRange = textView.selectedRange
                         
         let attributedText = NSMutableAttributedString(
             string: textView.text,
@@ -110,7 +118,6 @@ private extension MnemonicConfirmationViewController {
         var location = 0
         var hasInvalidWords = false
         for wordInfo in viewModel.wordsInfo {
-            
             
             guard wordInfo.isInvalid else {
                 
@@ -140,6 +147,8 @@ private extension MnemonicConfirmationViewController {
         
         textView.inputAccessoryView?.clearSubviews()
         addWords(viewModel.potentialWords, to: textView.inputAccessoryView)
+        
+        textView.selectedRange = selectedRange
     }
     
     func refreshCTA() {
@@ -153,7 +162,13 @@ private extension MnemonicConfirmationViewController {
     func makeInputAccessoryView() -> UIView {
         
         let scrollView = UIScrollView(
-            frame: .init(origin: .zero, size: .init(width: view.frame.width, height: 40))
+            frame: .init(
+                origin: .zero,
+                size: .init(
+                    width: view.frame.width,
+                    height: inputAccessoryViewHeight
+                )
+            )
         )
         scrollView.backgroundColor = Theme.current.background.withAlpha(0.8)
         addWords([], to: scrollView)
@@ -182,10 +197,8 @@ private extension MnemonicConfirmationViewController {
         }
         labels.append(.init())
         
-        let height = labels.first?.frame.size.height ?? 20
-        
         let stackView = HStackView(labels)
-        stackView.spacing = 12
+        stackView.spacing = 16
         
         view.addSubview(stackView)
         
@@ -195,7 +208,10 @@ private extension MnemonicConfirmationViewController {
                 .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 16)),
                 .layout(anchor: .topAnchor),
                 .layout(anchor: .bottomAnchor),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: height))
+                .layout(
+                    anchor: .heightAnchor,
+                    constant: .equalTo(constant: inputAccessoryViewHeight)
+                )
             ]
         )
     }
@@ -210,29 +226,57 @@ private extension MnemonicConfirmationViewController {
         
         let newMnemonic = makeNewMnemonic(appendingWord: word)
         textView.text = newMnemonic
-        presenter.handle(.mnemonicChanged(to: newMnemonic))
+        presenter.handle(
+            .mnemonicChanged(
+                to: newMnemonic,
+                selectedLocation: textView.selectedRange.location
+            )
+        )
     }
     
     func makeNewMnemonic(appendingWord word: String) -> String {
-        
-        var words = textView.text.split(separator: " ")
-        
-        if let lastCharacter = textView.text.last, lastCharacter == " " {
+
+        guard let text = textView.text, !text.isEmpty else {
+            return word + " "
+        }
+
+        if textView.selectedRange.location == text.count {
             
-            return textView.text + word + " "
-        } else if let lastWord = words.last {
-            let text: String
-            if let lastCharacter = textView.text.last, lastCharacter == " " {
-                text = textView.text.replacingOccurrences(of: lastWord + " ", with: "")
+            if let lastCharacter = text.last, lastCharacter == " " {
+                return textView.text + word + " "
+            } else {
+                var words = text.split(separator: " ")
+                _ = words.removeLast()
+                return words.joined(separator: " ") + " " + word + " "
+            }
+        }
+                
+        var newString = ""
+        var lastWordCount = 0
+        for var i in 0..<text.count {
+            
+            let character = text[text.index(text.startIndex, offsetBy: i)]
+            
+            if i == textView.selectedRange.location {
+                newString.removeLast(lastWordCount)
+                newString += word + " "
+            } else if
+                textView.selectedRange.location < i,
+                (textView.selectedRange.location + textView.selectedRange.length) >= i {
+                // ignore character
             } else {
                 
-                _ = words.removeLast()
-                text = words.joined(separator: " ")
+                newString.append(character)
             }
-            return text + " " + word + " "
-        } else {
-            let afterTextSpace = textView.text.isEmpty ? "" : " "
-            return textView.text + afterTextSpace + word + " "
+            
+            i += 1
+            lastWordCount += 1
+            
+            if character == " " {
+                lastWordCount = 0
+            }
         }
+        
+        return newString
     }
 }

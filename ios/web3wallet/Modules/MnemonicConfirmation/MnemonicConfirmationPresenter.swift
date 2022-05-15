@@ -7,7 +7,10 @@ import UniformTypeIdentifiers
 
 enum MnemonicConfirmationPresenterEvent {
     
-    case mnemonicChanged(to: String)
+    case mnemonicChanged(
+        to: String,
+        selectedLocation: Int
+    )
     case confirm
 }
 
@@ -38,7 +41,7 @@ extension DefaultMnemonicConfirmationPresenter: MnemonicConfirmationPresenter {
 
     func present() {
         
-        let viewModel = makeViewModel(for: "")
+        let viewModel = makeViewModel(for: "", selectedLocation: 0)
         view.update(with: viewModel)
     }
 
@@ -46,9 +49,12 @@ extension DefaultMnemonicConfirmationPresenter: MnemonicConfirmationPresenter {
         
         switch event {
             
-        case let .mnemonicChanged(mnemonic):
+        case let .mnemonicChanged(mnemonic, selectedLocation):
             
-            let viewModel = makeViewModel(for: mnemonic)
+            let viewModel = makeViewModel(
+                for: mnemonic,
+                selectedLocation: selectedLocation
+            )
             view.update(with: viewModel)
 
         case .confirm:
@@ -60,9 +66,18 @@ extension DefaultMnemonicConfirmationPresenter: MnemonicConfirmationPresenter {
 
 private extension DefaultMnemonicConfirmationPresenter {
     
-    func makeViewModel(for mnemonic: String) -> MnemonicConfirmationViewModel {
+    func makeViewModel(
+        for mnemonic: String,
+        selectedLocation: Int
+    ) -> MnemonicConfirmationViewModel {
         
-        let potentialWords = service.potentialMnemonicWords(for: mnemonic)
+        let prefixForPotentialwords = findPrefixForPotentialWords(
+            for: mnemonic,
+            selectedLocation: selectedLocation
+        )
+        let potentialWords = service.potentialMnemonicWords(
+            for: prefixForPotentialwords
+        )
         let wordsInfo = service.findInvalidWords(in: mnemonic)
         let isMnemonicValid = service.isMnemonicValid(mnemonic)
         
@@ -71,5 +86,35 @@ private extension DefaultMnemonicConfirmationPresenter {
             wordsInfo: wordsInfo,
             isValid: isMnemonicValid
         )
+    }
+    
+    func findPrefixForPotentialWords(
+        for mnemonic: String,
+        selectedLocation: Int
+    ) -> String {
+        
+        var prefix = ""
+        for var i in 0..<mnemonic.count {
+            
+            let character = mnemonic[
+                mnemonic.index(mnemonic.startIndex, offsetBy: i)
+            ]
+            
+            if i == selectedLocation {
+                
+                return prefix
+            }
+            
+            prefix.append(character)
+            
+            if character == " " {
+                
+                prefix = ""
+            }
+            
+            i += 1
+        }
+
+        return prefix
     }
 }
