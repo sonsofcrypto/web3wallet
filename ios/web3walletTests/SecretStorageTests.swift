@@ -5,8 +5,7 @@
 import XCTest
 import CommonCrypto
 
-class SecretStorageTests: XCTestCase {
-
+final class SecretStorageTests: XCTestCase {
 
     func testEncryptDecrypt() throws {
         let input = "Let try to encrypt this ok are w"
