@@ -19,37 +19,33 @@ protocol SettingsWireframe {
     func navigate(to destination: SettingsWireframeDestination)
 }
 
-// MARK: - DefaultSettingsWireframe
-
 final class DefaultSettingsWireframe {
 
-    private weak var parent: UIViewController?
-    private let context: SettingsWireframeContext
+    private weak var parent: UITabBarController!
     private let settingsService: SettingsService
     private let keyStoreService: KeyStoreService
     
-    private weak var vc: UIViewController?
+    private weak var navigationController: NavigationController!
 
     init(
-        parent: UIViewController,
-        context: SettingsWireframeContext,
+        parent: UITabBarController,
         settingsService: SettingsService,
         keyStoreService: KeyStoreService
     ) {
         self.parent = parent
-        self.context = context
         self.settingsService = settingsService
         self.keyStoreService = keyStoreService
     }
 }
 
-// MARK: - SettingsWireframe
-
 extension DefaultSettingsWireframe: SettingsWireframe {
 
     func present() {
         
-        present(with: context)
+        let viewController = wireUp(with: .init(title: "", settings: []))
+        let navController = makeNavigationController(with: viewController)
+        let vcs = (parent.viewControllers ?? []) + [navController]
+        parent.setViewControllers(vcs, animated: false)
     }
 
     func navigate(to destination: SettingsWireframeDestination) {
@@ -58,7 +54,7 @@ extension DefaultSettingsWireframe: SettingsWireframe {
             
         case let .settings(settings, title):
             
-            present(
+            pushSettingsVC(
                 with: .init(
                     title: title ?? Localized("settings"),
                     settings: settings
@@ -68,25 +64,34 @@ extension DefaultSettingsWireframe: SettingsWireframe {
     }
 }
 
-extension DefaultSettingsWireframe {
+private extension DefaultSettingsWireframe {
     
-    func present(with context: SettingsWireframeContext) {
+    func pushSettingsVC(with context: SettingsWireframeContext) {
         
-        let vc = wireUp(with: context)
-        self.vc = vc
-
-        if let tabVc = self.parent as? UITabBarController {
-            let navVc = NavigationController(rootViewController:vc)
-            let vcs = (tabVc.viewControllers ?? []) + [navVc]
-            self.vc = navVc
-            tabVc.setViewControllers(vcs, animated: false)
-            return
-        }
-
-        parent?.show(vc, sender: self)
+        let viewController = wireUp(with: context)
+        navigationController.show(viewController, sender: self)
+    }
+    
+    func makeNavigationController(
+        with viewController: UIViewController
+    ) -> NavigationController {
+        
+        let navigationController = NavigationController(
+            rootViewController: viewController
+        )
+        
+        navigationController.tabBarItem = UITabBarItem(
+            title: Localized("settings"),
+            image: UIImage(named: "tab_icon_settings"),
+            tag: 4
+        )
+        
+        self.navigationController = navigationController
+        
+        return navigationController
     }
 
-    private func wireUp(with context: SettingsWireframeContext) -> UIViewController {
+    func wireUp(with context: SettingsWireframeContext) -> UIViewController {
         
         let interactor = DefaultSettingsInteractor(
             settingsService,

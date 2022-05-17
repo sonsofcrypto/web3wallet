@@ -74,7 +74,7 @@ extension DefaultRootWireframe: RootWireframe {
         degenWireframeFactory.makeWireframe(tabVc).present()
         nftsWireframeFactory.makeWireframe(tabVc).present()
         appsWireframeFactory.makeWireframe(tabVc).present()
-        settingsWireframeFactory.makeWireframe(tabVc, context: nil).present()
+        settingsWireframeFactory.makeWireframe(tabVc).present()
         
         window?.rootViewController = vc
         window?.makeKeyAndVisible()

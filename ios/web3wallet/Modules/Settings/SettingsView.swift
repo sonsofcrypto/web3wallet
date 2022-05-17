@@ -23,7 +23,6 @@ final class SettingsViewController: BaseViewController {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        configureNavAndTabBarItem()
     }
 
     override func viewDidLoad() {
@@ -44,7 +43,10 @@ final class SettingsViewController: BaseViewController {
 extension SettingsViewController: SettingsView {
 
     func update(with viewModel: SettingsViewModel) {
+        
         self.viewModel = viewModel
+        
+        title = viewModel.title
         collectionView.reloadData()
         collectionView.deselectAllExcept(viewModel.selectedIdxPaths())
     }
@@ -96,23 +98,11 @@ extension SettingsViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: - Configure UI
-
 private extension SettingsViewController {
     
     func configureUI() {
-        (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
-        ]
+        
+        (view as? GradientView)?.colors = [Theme.color.background, Theme.color.backgroundDark]
     }
 
-    func configureNavAndTabBarItem() {
-        title = Localized("settings")
-        tabBarItem = UITabBarItem(
-            title: title,
-            image: UIImage(named: "tab_icon_settings"),
-            tag: 4
-        )
-    }
 }

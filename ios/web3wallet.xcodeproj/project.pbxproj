@@ -237,7 +237,6 @@
 		D14ECE3927B833E500228F90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D14ECE3827B833E500228F90 /* Localizable.strings */; };
 		D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CA27B69B6300578FF8 /* AppDelegate.swift */; };
 		D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */; };
-		D157F7CF27B69B6300578FF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CE27B69B6300578FF8 /* ViewController.swift */; };
 		D157F7D227B69B6300578FF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D157F7D027B69B6300578FF8 /* Main.storyboard */; };
 		D157F7D427B69B6400578FF8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D157F7D327B69B6400578FF8 /* Assets.xcassets */; };
 		D157F7D727B69B6400578FF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D157F7D527B69B6400578FF8 /* LaunchScreen.storyboard */; };
@@ -528,7 +527,6 @@
 		D157F7C727B69B6300578FF8 /* web3wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = web3wallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D157F7CA27B69B6300578FF8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D157F7CE27B69B6300578FF8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D157F7D127B69B6300578FF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D157F7D327B69B6400578FF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D157F7D627B69B6400578FF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -1162,7 +1160,6 @@
 				D14ECE3827B833E500228F90 /* Localizable.strings */,
 				D157F7CA27B69B6300578FF8 /* AppDelegate.swift */,
 				D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */,
-				D157F7CE27B69B6300578FF8 /* ViewController.swift */,
 				D157F7D327B69B6400578FF8 /* Assets.xcassets */,
 				D15B06C527B6D247008C3C62 /* Common */,
 				D11A98F327B8615B00EDFDD0 /* Fonts */,
@@ -1472,7 +1469,6 @@
 				D11A990F27B99D1800EDFDD0 /* AnyDecodable.swift in Sources */,
 				D11A991027B99D1800EDFDD0 /* AnyCodable.swift in Sources */,
 				1C6486F3282D783A0091A12D /* DefaultGradientView.swift in Sources */,
-				D157F7CF27B69B6300578FF8 /* ViewController.swift in Sources */,
 				D15B06C727B72111008C3C62 /* KeyStoreView.swift in Sources */,
 				D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */,
 				D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */,

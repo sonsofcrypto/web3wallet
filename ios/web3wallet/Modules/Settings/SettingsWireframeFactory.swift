@@ -7,8 +7,7 @@ import UIKit
 protocol SettingsWireframeFactory {
 
     func makeWireframe(
-        _ parent: UIViewController,
-        context: SettingsWireframeContext?
+        _ parent: UITabBarController
     ) -> SettingsWireframe
 }
 
@@ -33,13 +32,11 @@ final class DefaultSettingsWireframeFactory {
 extension DefaultSettingsWireframeFactory: SettingsWireframeFactory {
 
     func makeWireframe(
-        _ parent: UIViewController,
-        context: SettingsWireframeContext?
+        _ parent: UITabBarController
     ) -> SettingsWireframe {
         
         DefaultSettingsWireframe(
             parent: parent,
-            context: context ?? .init(title: "", settings: []),
             settingsService: settingsService,
             keyStoreService: keyStoreService
         )
