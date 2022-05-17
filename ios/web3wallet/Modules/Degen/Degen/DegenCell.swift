@@ -4,7 +4,7 @@
 
 import UIKit
 
-class DegenCell: CollectionViewCell {
+final class DegenCell: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!

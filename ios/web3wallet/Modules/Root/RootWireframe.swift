@@ -20,46 +20,42 @@ protocol RootWireframe {
 
 // MARK: - DefaultRootWireframe
 
-class DefaultRootWireframe {
+final class DefaultRootWireframe {
 
     private weak var window: UIWindow?
-    private weak var vc: UIViewController?
+    private weak var vc: UIViewController!
+    private weak var tabVc: TabBarController!
 
-    private let onboardingService: OnboardingService
+    private let keyStoreWireframeFactory: KeyStoreWireframeFactory
+    private let networksWireframeFactory: NetworksWireframeFactory
+    private let dashboardWireframeFactory: DashboardWireframeFactory
+    private let degenWireframeFactory: DegenWireframeFactory
+    private let nftsWireframeFactory: NFTsWireframeFactory
+    private let appsWireframeFactory: AppsWireframeFactory
+    private let settingsWireframeFactory: SettingsWireframeFactory
     private let keyStoreService: KeyStoreService
-    private let settingsService: SettingsService
-    private let keyStore: KeyStoreWireframeFactory
-    private let networks: NetworksWireframeFactory
-    private let dashboard: DashboardWireframeFactory
-    private let degen: DegenWireframeFactory
-    private let nfts: NFTsWireframeFactory
-    private let apps: AppsWireframeFactory
-    private let settings: SettingsWireframeFactory
 
     init(
         window: UIWindow?,
-        onboardingService: OnboardingService,
-        keyStoreService: KeyStoreService,
-        settingsService: SettingsService,
-        keyStore: KeyStoreWireframeFactory,
-        networks: NetworksWireframeFactory,
-        dashboard: DashboardWireframeFactory,
-        degen: DegenWireframeFactory,
-        nfts: NFTsWireframeFactory,
-        apps: AppsWireframeFactory,
-        settings: SettingsWireframeFactory
+        keyStoreWireframeFactory: KeyStoreWireframeFactory,
+        networksWireframeFactory: NetworksWireframeFactory,
+        dashboardWireframeFactory: DashboardWireframeFactory,
+        degenWireframeFactory: DegenWireframeFactory,
+        nftsWireframeFactory: NFTsWireframeFactory,
+        appsWireframeFactory: AppsWireframeFactory,
+        settingsWireframeFactory: SettingsWireframeFactory,
+        keyStoreService: KeyStoreService
     ) {
+        
         self.window = window
-        self.onboardingService = onboardingService
+        self.keyStoreWireframeFactory = keyStoreWireframeFactory
+        self.networksWireframeFactory = networksWireframeFactory
+        self.dashboardWireframeFactory = dashboardWireframeFactory
+        self.degenWireframeFactory = degenWireframeFactory
+        self.nftsWireframeFactory = nftsWireframeFactory
+        self.appsWireframeFactory = appsWireframeFactory
+        self.settingsWireframeFactory = settingsWireframeFactory
         self.keyStoreService = keyStoreService
-        self.settingsService = settingsService
-        self.keyStore = keyStore
-        self.networks = networks
-        self.dashboard = dashboard
-        self.degen = degen
-        self.nfts = nfts
-        self.apps = apps
-        self.settings = settings
     }
 }
 
@@ -68,13 +64,24 @@ class DefaultRootWireframe {
 extension DefaultRootWireframe: RootWireframe {
 
     func present() {
+        
         let vc = wireUp()
         self.vc = vc
+        
+        keyStoreWireframeFactory.makeWireframe(vc, window: nil).present()
+        networksWireframeFactory.makeWireframe(vc).present()
+        dashboardWireframeFactory.makeWireframe(tabVc).present()
+        degenWireframeFactory.makeWireframe(tabVc).present()
+        nftsWireframeFactory.makeWireframe(tabVc).present()
+        appsWireframeFactory.makeWireframe(tabVc).present()
+        settingsWireframeFactory.makeWireframe(tabVc, context: nil).present()
+        
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
     }
 
     func navigate(to destination: RootWireframeDestination, animated: Bool) {
+                
         guard let vc = self.vc as? EdgeCardsController else {
             print("Unable to navigate to \(destination)")
             return
@@ -86,33 +93,18 @@ extension DefaultRootWireframe: RootWireframe {
 extension DefaultRootWireframe {
 
     private func wireUp() -> UIViewController {
+        
         let vc: RootViewController = UIStoryboard(.main).instantiate()
         let tabVc = TabBarController()
-
+        self.tabVc = tabVc
+        
         vc.setMaster(vc: tabVc)
 
         let presenter = DefaultRootPresenter(
             view: vc,
             wireframe: self,
-            onboardingService: onboardingService,
-            keyStoreService: keyStoreService,
-            keyStore: keyStore.makeWireframe(vc, window: nil),
-            networks: networks.makeWireframe(vc),
-            dashboard: dashboard.makeWireframe(tabVc),
-            degen: degen.makeWireframe(tabVc),
-            nfts: nfts.makeWireframe(tabVc),
-            apps: apps.makeWireframe(tabVc),
-            settings: settings.makeWireframe(
-                tabVc,
-                title: "",
-                settings: [],
-                settingsWireframeFactory: DefaultSettingsWireframeFactory(
-                    settingsService,
-                    keyStoreService: keyStoreService
-                )
-            )
+            keyStoreService: keyStoreService
         )
-
         vc.presenter = presenter
         return vc
     }

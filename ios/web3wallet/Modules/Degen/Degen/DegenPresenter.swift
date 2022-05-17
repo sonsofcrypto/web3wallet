@@ -16,7 +16,7 @@ protocol DegenPresenter {
 
 // MARK: - DefaultDegenPresenter
 
-class DefaultDegenPresenter {
+final class DefaultDegenPresenter {
 
     private let interactor: DegenInteractor
     private let wireframe: DegenWireframe

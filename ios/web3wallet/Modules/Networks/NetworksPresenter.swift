@@ -16,7 +16,7 @@ protocol NetworksPresenter {
 
 // MARK: - DefaultNetworksPresenter
 
-class DefaultNetworksPresenter {
+final class DefaultNetworksPresenter {
 
     private let interactor: NetworksInteractor
     private let wireframe: NetworksWireframe

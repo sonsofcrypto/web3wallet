@@ -4,6 +4,12 @@
 
 import UIKit
 
+struct SettingsWireframeContext {
+    
+    let title: String
+    let settings: [SettingsItem]
+}
+
 enum SettingsWireframeDestination {
     case settings(settings: [SettingsItem], title: String?)
 }
@@ -15,22 +21,25 @@ protocol SettingsWireframe {
 
 // MARK: - DefaultSettingsWireframe
 
-class DefaultSettingsWireframe {
+final class DefaultSettingsWireframe {
 
     private weak var parent: UIViewController?
+    private let context: SettingsWireframeContext
+    private let settingsService: SettingsService
+    private let keyStoreService: KeyStoreService
+    
     private weak var vc: UIViewController?
-
-    private let interactor: SettingsInteractor
-    private let settingsWireframeFactory: SettingsWireframeFactory
 
     init(
         parent: UIViewController,
-        interactor: SettingsInteractor,
-        settingsWireframeFactory: SettingsWireframeFactory
+        context: SettingsWireframeContext,
+        settingsService: SettingsService,
+        keyStoreService: KeyStoreService
     ) {
         self.parent = parent
-        self.interactor = interactor
-        self.settingsWireframeFactory = settingsWireframeFactory
+        self.context = context
+        self.settingsService = settingsService
+        self.keyStoreService = keyStoreService
     }
 }
 
@@ -39,7 +48,31 @@ class DefaultSettingsWireframe {
 extension DefaultSettingsWireframe: SettingsWireframe {
 
     func present() {
-        let vc = wireUp()
+        
+        present(with: context)
+    }
+
+    func navigate(to destination: SettingsWireframeDestination) {
+        
+        switch destination {
+            
+        case let .settings(settings, title):
+            
+            present(
+                with: .init(
+                    title: title ?? Localized("settings"),
+                    settings: settings
+                )
+            )
+        }
+    }
+}
+
+extension DefaultSettingsWireframe {
+    
+    func present(with context: SettingsWireframeContext) {
+        
+        let vc = wireUp(with: context)
         self.vc = vc
 
         if let tabVc = self.parent as? UITabBarController {
@@ -53,26 +86,14 @@ extension DefaultSettingsWireframe: SettingsWireframe {
         parent?.show(vc, sender: self)
     }
 
-    func navigate(to destination: SettingsWireframeDestination) {
-        switch destination {
-        case let .settings(settings, title):
-            guard let vc = self.vc else {
-                return
-            }
-
-            settingsWireframeFactory.makeWireframe(
-                (vc as? UINavigationController)?.topViewController ?? vc,
-                title: title ?? Localized("settings"),
-                settings: settings,
-                settingsWireframeFactory: settingsWireframeFactory
-            ).present()
-        }
-    }
-}
-
-extension DefaultSettingsWireframe {
-
-    private func wireUp() -> UIViewController {
+    private func wireUp(with context: SettingsWireframeContext) -> UIViewController {
+        
+        let interactor = DefaultSettingsInteractor(
+            settingsService,
+            keyStoreService: keyStoreService,
+            title: context.title,
+            settings: context.settings
+        )
         let vc: SettingsViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultSettingsPresenter(
             view: vc,

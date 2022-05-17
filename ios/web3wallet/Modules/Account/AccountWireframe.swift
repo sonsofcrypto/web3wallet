@@ -13,9 +13,7 @@ protocol AccountWireframe {
     func navigate(to destination: AccountWireframeDestination)
 }
 
-// MARK: - DefaultAccountWireframe
-
-class DefaultAccountWireframe {
+final class DefaultAccountWireframe {
 
     private weak var parent: UIViewController?
 
@@ -29,8 +27,6 @@ class DefaultAccountWireframe {
         self.interactor = interactor
     }
 }
-
-// MARK: - AccountWireframe
 
 extension DefaultAccountWireframe: AccountWireframe {
 

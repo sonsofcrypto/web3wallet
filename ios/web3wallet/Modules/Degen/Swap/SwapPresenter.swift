@@ -16,7 +16,7 @@ protocol SwapPresenter {
 
 // MARK: - DefaultSwapPresenter
 
-class DefaultSwapPresenter {
+final class DefaultSwapPresenter {
 
     private let interactor: SwapInteractor
     private let wireframe: SwapWireframe

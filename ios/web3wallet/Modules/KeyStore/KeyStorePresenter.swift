@@ -20,7 +20,7 @@ protocol KeyStorePresenter {
 
 // MARK: - DefaultKeyStorePresenter
 
-class DefaultKeyStorePresenter {
+final class DefaultKeyStorePresenter {
 
     private let interactor: KeyStoreInteractor
     private let wireframe: KeyStoreWireframe

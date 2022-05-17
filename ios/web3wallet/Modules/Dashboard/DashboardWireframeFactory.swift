@@ -9,24 +9,22 @@ protocol DashboardWireframeFactory: AnyObject {
     func makeWireframe(_ parent: UIViewController) -> DashboardWireframe
 }
 
-// MARK: - DefaultDashboardWireframeFactory
-
 final class DefaultDashboardWireframeFactory {
 
-    private let service: KeyStoreService
+    private let keyStoreService: KeyStoreService
     private let accountWireframeFactory: AccountWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
     private let onboardingService: OnboardingService
 
     init(
-        _ service: KeyStoreService,
+        keyStoreService: KeyStoreService,
         accountWireframeFactory: AccountWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
         onboardingService: OnboardingService
     ) {
-        self.service = service
+        self.keyStoreService = keyStoreService
         self.accountWireframeFactory = accountWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
@@ -34,15 +32,13 @@ final class DefaultDashboardWireframeFactory {
     }
 }
 
-// MARK: - DashboardWireframeFactory
-
 extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
 
     func makeWireframe(_ parent: UIViewController) -> DashboardWireframe {
         
         DefaultDashboardWireframe(
             parent: parent,
-            interactor: DefaultDashboardInteractor(service),
+            interactor: DefaultDashboardInteractor(keyStoreService),
             accountWireframeFactory: accountWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
             mnemonicConfirmationWireframeFactory: mnemonicConfirmationWireframeFactory,

@@ -9,7 +9,7 @@ protocol AMMsView: AnyObject {
     func update(with viewModel: AMMsViewModel)
 }
 
-class AMMsViewController: BaseViewController {
+final class AMMsViewController: BaseViewController {
 
     var presenter: AMMsPresenter!
 

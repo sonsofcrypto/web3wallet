@@ -4,7 +4,7 @@
 
 import UIKit
 
-class NFTsCell: CollectionViewCell {
+final class NFTsCell: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
 

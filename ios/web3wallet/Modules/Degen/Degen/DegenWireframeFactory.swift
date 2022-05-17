@@ -9,32 +9,28 @@ protocol DegenWireframeFactory {
     func makeWireframe(_ parent: UIViewController) -> DegenWireframe
 }
 
-// MARK: - DefaultDegenWireframeFactory
+final class DefaultDegenWireframeFactory {
 
-class DefaultDegenWireframeFactory {
-
-    private let service: DegenService
+    private let degenService: DegenService
     private let ammsWireframeFactory: AMMsWireframeFactory
 
     private weak var window: UIWindow?
 
     init(
-        _ service: DegenService,
+        degenService: DegenService,
         ammsWireframeFactory: AMMsWireframeFactory
     ) {
-        self.service = service
+        self.degenService = degenService
         self.ammsWireframeFactory = ammsWireframeFactory
     }
 }
-
-// MARK: - DegenWireframeFactory
 
 extension DefaultDegenWireframeFactory: DegenWireframeFactory {
 
     func makeWireframe(_ parent: UIViewController) -> DegenWireframe {
         DefaultDegenWireframe(
             parent: parent,
-            interactor: DefaultDegenInteractor(service),
+            interactor: DefaultDegenInteractor(degenService),
             ammsWireframeFactory: ammsWireframeFactory
         )
     }

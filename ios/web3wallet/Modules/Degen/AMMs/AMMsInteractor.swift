@@ -10,8 +10,7 @@ protocol AMMsInteractor: AnyObject {
 
 // MARK: - DefaultAMMsInteractor
 
-class DefaultAMMsInteractor {
-
+final class DefaultAMMsInteractor {
 
     private var degenService: DegenService
 

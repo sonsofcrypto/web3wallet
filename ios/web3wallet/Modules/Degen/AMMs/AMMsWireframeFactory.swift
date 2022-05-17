@@ -9,9 +9,7 @@ protocol AMMsWireframeFactory {
     func makeWireframe(_ parent: UIViewController) -> AMMsWireframe
 }
 
-// MARK: - DefaultAMMsWireframeFactory
-
-class DefaultAMMsWireframeFactory {
+final class DefaultAMMsWireframeFactory {
 
     private let degenService: DegenService
     private let swapWireframeFactory: SwapWireframeFactory
@@ -24,8 +22,6 @@ class DefaultAMMsWireframeFactory {
         self.swapWireframeFactory = swapWireframeFactory
     }
 }
-
-// MARK: - AMMsWireframeFactory
 
 extension DefaultAMMsWireframeFactory: AMMsWireframeFactory {
 

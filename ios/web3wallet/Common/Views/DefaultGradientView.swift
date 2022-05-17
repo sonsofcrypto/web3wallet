@@ -24,8 +24,8 @@ private extension DefaultGradientView {
     func configureUI() {
         
         (layer as? CAGradientLayer)?.colors = [
-            Theme.current.background,
-            Theme.current.backgroundDark
+            Theme.color.background,
+            Theme.color.backgroundDark
         ]
     }
 }

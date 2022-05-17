@@ -11,7 +11,7 @@ protocol DegenInteractor: AnyObject {
 
 // MARK: - DefaultDegenInteractor
 
-class DefaultDegenInteractor {
+final class DefaultDegenInteractor {
 
 
     private var degenService: DegenService

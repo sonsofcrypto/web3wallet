@@ -11,11 +11,11 @@ protocol NetworksWireframeFactory {
 
 // MARK: - DefaultNetworksWireframeFactory
 
-class DefaultNetworksWireframeFactory {
+final class DefaultNetworksWireframeFactory {
 
     private let networksService: NetworksService
 
-    init(_ networksService: NetworksService) {
+    init(networksService: NetworksService) {
         self.networksService = networksService
     }
 }

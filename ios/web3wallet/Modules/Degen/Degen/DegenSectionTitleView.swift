@@ -4,7 +4,7 @@
 
 import UIKit
 
-class DegenSectionTitleView: UICollectionReusableView {
+final class DegenSectionTitleView: UICollectionReusableView {
     
     @IBOutlet weak var label: UILabel!
 }

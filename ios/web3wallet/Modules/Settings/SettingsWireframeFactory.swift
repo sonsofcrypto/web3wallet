@@ -8,24 +8,22 @@ protocol SettingsWireframeFactory {
 
     func makeWireframe(
         _ parent: UIViewController,
-        title: String,
-        settings: [SettingsItem],
-        settingsWireframeFactory: SettingsWireframeFactory
+        context: SettingsWireframeContext?
     ) -> SettingsWireframe
 }
 
 // MARK: - DefaultSettingsWireframeFactory
 
-class DefaultSettingsWireframeFactory {
+final class DefaultSettingsWireframeFactory {
 
-    private let service: SettingsService
+    private let settingsService: SettingsService
     private let keyStoreService: KeyStoreService
 
     init(
-        _ service: SettingsService,
+        settingsService: SettingsService,
         keyStoreService: KeyStoreService
     ) {
-        self.service = service
+        self.settingsService = settingsService
         self.keyStoreService = keyStoreService
     }
 }
@@ -36,19 +34,14 @@ extension DefaultSettingsWireframeFactory: SettingsWireframeFactory {
 
     func makeWireframe(
         _ parent: UIViewController,
-        title: String,
-        settings: [SettingsItem],
-        settingsWireframeFactory: SettingsWireframeFactory
+        context: SettingsWireframeContext?
     ) -> SettingsWireframe {
+        
         DefaultSettingsWireframe(
             parent: parent,
-            interactor: DefaultSettingsInteractor(
-                service,
-                keyStoreService: keyStoreService,
-                title: title,
-                settings: settings
-            ),
-            settingsWireframeFactory: settingsWireframeFactory
+            context: context ?? .init(title: "", settings: []),
+            settingsService: settingsService,
+            keyStoreService: keyStoreService
         )
     }
 }

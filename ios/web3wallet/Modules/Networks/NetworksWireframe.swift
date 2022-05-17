@@ -15,7 +15,7 @@ protocol NetworksWireframe {
 
 // MARK: - DefaultNetworksWireframe
 
-class DefaultNetworksWireframe {
+final class DefaultNetworksWireframe {
 
     private weak var parent: UIViewController?
 

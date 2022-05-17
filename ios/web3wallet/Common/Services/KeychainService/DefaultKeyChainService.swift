@@ -2,27 +2,7 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-import Foundation
-import Security
-
-protocol KeyChainService: AnyObject {
-
-    func addItem(_ item: KeyStoreItem) throws
-    func item(for: KeyStoreItem) throws -> Data?
-    func removeItem(_ item: KeyStoreItem)
-    func allKeyStoreItems() throws -> [Data]
-
-    func generatePassword(_ id: String, sync: Bool) throws
-    func addPassword(_ password: String, id: String, sync: Bool) throws
-    func password(for id: String) throws -> String?
-    func removePassword(id: String)
-}
-
-// MARK: - DefaultKeyChainService
-
-class DefaultKeyChainService { }
-
-// MARK: - KeyChainService
+final class DefaultKeyChainService { }
 
 extension DefaultKeyChainService: KeyChainService {
     
@@ -90,8 +70,6 @@ extension DefaultKeyChainService: KeyChainService {
     }
 }
 
-// MARK: - Utilities
-
 extension DefaultKeyChainService {
 
     func addItem(id: String, data: Data, sync: Bool, type: ItemType) throws {
@@ -150,8 +128,6 @@ extension DefaultKeyChainService {
     }
 }
 
-// MARK: - Error
-
 extension DefaultKeyChainService {
 
     enum KeyChainError: Error {
@@ -163,8 +139,6 @@ extension DefaultKeyChainService {
     }
 }
 
-// MARK: - ItemType
-
 extension DefaultKeyChainService {
 
     enum ItemType: String {
@@ -172,8 +146,6 @@ extension DefaultKeyChainService {
         case secretStorage = "com.sonsOfCrypto.web3Wallet.secreteStorage"
     }
 }
-
-// MARK: - Constant
 
 extension DefaultKeyChainService {
 

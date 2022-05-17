@@ -9,7 +9,7 @@ protocol AccountView: AnyObject {
     func update(with viewModel: AccountViewModel)
 }
 
-class AccountViewController: BaseViewController {
+final class AccountViewController: BaseViewController {
 
     var presenter: AccountPresenter!
 
@@ -22,8 +22,9 @@ class AccountViewController: BaseViewController {
         configureUI()
         presenter?.present()
     }
+}
 
-    // MARK: - Actions
+extension AccountViewController {
 
     @IBAction func receiveAction(_ sender: Any) {
 
@@ -46,8 +47,6 @@ class AccountViewController: BaseViewController {
     }
 }
 
-// MARK: - WalletsView
-
 extension AccountViewController: AccountView {
 
     func update(with viewModel: AccountViewModel) {
@@ -62,8 +61,6 @@ extension AccountViewController: AccountView {
             : Theme.color.red
     }
 }
-
-// MARK: - UICollectionViewDataSource
 
 extension AccountViewController: UICollectionViewDataSource {
 
@@ -119,8 +116,6 @@ extension AccountViewController: UICollectionViewDataSource {
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
-
 extension AccountViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -140,8 +135,6 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
         case .transactions:
             return CGSize(width: width, height: Constant.transactionsHeight)
         }
-
-        return .zero
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -156,14 +149,9 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: - UICollectionViewDelegate
-
 extension AccountViewController: UICollectionViewDelegate {
     
 }
-
-
-// MARK: - Section
 
 extension AccountViewController {
 
@@ -192,8 +180,6 @@ extension AccountViewController {
     }
 }
 
-// MARK: - Configure UI
-
 extension AccountViewController {
     
     func configureUI() {
@@ -217,8 +203,6 @@ extension AccountViewController {
         collectionView.contentInset = insets
     }
 }
-
-// MARK: - Constant
 
 extension AccountViewController {
 

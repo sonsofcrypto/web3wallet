@@ -15,7 +15,7 @@ protocol NFTsWireframe {
 
 // MARK: - DefaultNFTsWireframe
 
-class DefaultNFTsWireframe {
+final class DefaultNFTsWireframe {
 
     private weak var parent: UIViewController?
 

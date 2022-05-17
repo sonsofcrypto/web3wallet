@@ -16,7 +16,7 @@ protocol DegenWireframe {
 
 // MARK: - DefaultDegenWireframe
 
-class DefaultDegenWireframe {
+final class DefaultDegenWireframe {
 
     private weak var parent: UIViewController?
     private weak var vc: UIViewController?

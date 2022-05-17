@@ -6,50 +6,40 @@ import UIKit
 
 protocol RootWireframeFactory {
 
-    func makeWireframe() -> RootWireframe
+    func makeWireframe(in window: UIWindow?) -> RootWireframe
 }
 
 // MARK: - DefaultRootWireframeFactory
 
-class DefaultRootWireframeFactory {
+final class DefaultRootWireframeFactory {
 
-    private weak var window: UIWindow?
-
-    private let onboardingService: OnboardingService
+    private let keyStoreWireframeFactory: KeyStoreWireframeFactory
+    private let networksWireframeFactory: NetworksWireframeFactory
+    private let dashboardWireframeFactory: DashboardWireframeFactory
+    private let degenWireframeFactory: DegenWireframeFactory
+    private let nftsWireframeFactory: NFTsWireframeFactory
+    private let appsWireframeFactory: AppsWireframeFactory
+    private let settingsWireframeFactory: SettingsWireframeFactory
     private let keyStoreService: KeyStoreService
-    private let settingsService: SettingsService
-    private let keyStore: KeyStoreWireframeFactory
-    private let networks: NetworksWireframeFactory
-    private let dashboard: DashboardWireframeFactory
-    private let degen: DegenWireframeFactory
-    private let nfts: NFTsWireframeFactory
-    private let apps: AppsWireframeFactory
-    private let settings: SettingsWireframeFactory
 
     init(
-        window: UIWindow?,
-        onboardingService: OnboardingService,
-        keyStoreService: KeyStoreService,
-        settingsService: SettingsService,
-        keyStore: KeyStoreWireframeFactory,
-        networks: NetworksWireframeFactory,
-        dashboard: DashboardWireframeFactory,
-        degen: DegenWireframeFactory,
-        nfts: NFTsWireframeFactory,
-        apps: AppsWireframeFactory,
-        settings: SettingsWireframeFactory
+        keyStoreWireframeFactory: KeyStoreWireframeFactory,
+        networksWireframeFactory: NetworksWireframeFactory,
+        dashboardWireframeFactory: DashboardWireframeFactory,
+        degenWireframeFactory: DegenWireframeFactory,
+        nftsWireframeFactory: NFTsWireframeFactory,
+        appsWireframeFactory: AppsWireframeFactory,
+        settingsWireframeFactory: SettingsWireframeFactory,
+        keyStoreService: KeyStoreService
     ) {
-        self.window = window
-        self.onboardingService = onboardingService
+        self.keyStoreWireframeFactory = keyStoreWireframeFactory
+        self.networksWireframeFactory = networksWireframeFactory
+        self.dashboardWireframeFactory = dashboardWireframeFactory
+        self.degenWireframeFactory = degenWireframeFactory
+        self.nftsWireframeFactory = nftsWireframeFactory
+        self.appsWireframeFactory = appsWireframeFactory
+        self.settingsWireframeFactory = settingsWireframeFactory
         self.keyStoreService = keyStoreService
-        self.settingsService = settingsService
-        self.keyStore = keyStore
-        self.networks = networks
-        self.dashboard = dashboard
-        self.degen = degen
-        self.nfts = nfts
-        self.apps = apps
-        self.settings = settings
     }
 }
 
@@ -57,19 +47,18 @@ class DefaultRootWireframeFactory {
 
 extension DefaultRootWireframeFactory: RootWireframeFactory {
 
-    func makeWireframe() -> RootWireframe {
+    func makeWireframe(in window: UIWindow?) -> RootWireframe {
+        
         DefaultRootWireframe(
             window: window,
-            onboardingService: onboardingService,
-            keyStoreService: keyStoreService,
-            settingsService: settingsService,
-            keyStore: keyStore,
-            networks: networks,
-            dashboard: dashboard,
-            degen: degen,
-            nfts: nfts,
-            apps: apps,
-            settings: settings
+            keyStoreWireframeFactory: keyStoreWireframeFactory,
+            networksWireframeFactory: networksWireframeFactory,
+            dashboardWireframeFactory: dashboardWireframeFactory,
+            degenWireframeFactory: degenWireframeFactory,
+            nftsWireframeFactory: nftsWireframeFactory,
+            appsWireframeFactory: appsWireframeFactory,
+            settingsWireframeFactory: settingsWireframeFactory,
+            keyStoreService: keyStoreService
         )
     }
 }

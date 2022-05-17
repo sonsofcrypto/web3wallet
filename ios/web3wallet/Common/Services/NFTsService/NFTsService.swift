@@ -7,16 +7,3 @@ import Foundation
 protocol NFTsService: AnyObject {
 
 }
-
-// MARK: - DefaultNFTsService
-
-class DefaultNFTsService {
-
-}
-
-// MARK: - NFTsService
-
-extension DefaultNFTsService: NFTsService {
-
-}
-

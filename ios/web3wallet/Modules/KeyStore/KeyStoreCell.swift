@@ -4,7 +4,7 @@
 
 import UIKit
 
-class KeyStoreCell: CollectionViewCell {
+final class KeyStoreCell: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var accessoryButton: UIButton!

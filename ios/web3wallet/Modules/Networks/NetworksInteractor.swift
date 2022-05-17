@@ -16,7 +16,7 @@ protocol NetworksInteractor: AnyObject {
 
 // MARK: - DefaultNetworksInteractor
 
-class DefaultNetworksInteractor {
+final class DefaultNetworksInteractor {
 
     private var networksService: NetworksService
 

@@ -10,7 +10,7 @@ protocol KeyStoreView: AnyObject {
     func updateTargetView(_ targetView: KeyStoreViewModel.TransitionTargetView)
 }
 
-class KeyStoreViewController: BaseViewController {
+final class KeyStoreViewController: BaseViewController {
 
     var presenter: KeyStorePresenter!
 

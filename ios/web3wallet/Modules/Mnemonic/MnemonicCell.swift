@@ -4,7 +4,7 @@
 
 import UIKit
 
-class MnemonicCell: CollectionViewCell {
+final class MnemonicCell: CollectionViewCell {
 
     typealias TextChangeHandler = (String) -> Void
 

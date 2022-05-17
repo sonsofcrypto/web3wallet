@@ -8,19 +8,18 @@ protocol AppsInteractor: AnyObject {
 
 }
 
-// MARK: - DefaultAppsInteractor
-
-class DefaultAppsInteractor {
+final class DefaultAppsInteractor {
 
 
     private var appsService: AppsService
 
-    init(_ appsService: AppsService) {
+    init(
+        appsService: AppsService
+    ) {
+        
         self.appsService = appsService
     }
 }
-
-// MARK: - DefaultAppsInteractor
 
 extension DefaultAppsInteractor: AppsInteractor {
 

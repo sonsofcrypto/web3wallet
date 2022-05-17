@@ -10,7 +10,7 @@ protocol NFTsInteractor: AnyObject {
 
 // MARK: - DefaultNFTsInteractor
 
-class DefaultNFTsInteractor {
+final class DefaultNFTsInteractor {
 
 
     private var service: NFTsService

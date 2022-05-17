@@ -16,7 +16,7 @@ protocol SettingsPresenter {
 
 // MARK: - DefaultSettingsPresenter
 
-class DefaultSettingsPresenter {
+final class DefaultSettingsPresenter {
 
     private let interactor: SettingsInteractor
     private let wireframe: SettingsWireframe

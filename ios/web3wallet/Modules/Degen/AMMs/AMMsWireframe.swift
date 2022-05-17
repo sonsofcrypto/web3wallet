@@ -15,7 +15,7 @@ protocol AMMsWireframe {
 
 // MARK: - DefaultAMMsWireframe
 
-class DefaultAMMsWireframe {
+final class DefaultAMMsWireframe {
 
     private weak var parent: UIViewController?
     private weak var vc: UIViewController?

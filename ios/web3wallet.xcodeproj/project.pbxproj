@@ -155,6 +155,50 @@
 		1A4C3FC333CF4459025710E5 /* NFTsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38A2039D19A2E5507CF2 /* NFTsView.swift */; };
 		1C6486F3282D783A0091A12D /* DefaultGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6486F2282D783A0091A12D /* DefaultGradientView.swift */; };
 		1C6486FD282F87EB0091A12D /* Int+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6486FC282F87EB0091A12D /* Int+extensions.swift */; };
+		1C6487022832DB830091A12D /* DefaultAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487012832DB830091A12D /* DefaultAssembler.swift */; };
+		1C6487042832DB8B0091A12D /* Assembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487032832DB8B0091A12D /* Assembler.swift */; };
+		1C6487062832DC290091A12D /* ServiceDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487052832DC290091A12D /* ServiceDirectory.swift */; };
+		1C6487092832DC5F0091A12D /* Bootstrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487082832DC5F0091A12D /* Bootstrapper.swift */; };
+		1C64870B2832DD630091A12D /* MainBootstrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64870A2832DD630091A12D /* MainBootstrapper.swift */; };
+		1C64870D2832DD970091A12D /* AssemblerBootstrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64870C2832DD970091A12D /* AssemblerBootstrapper.swift */; };
+		1C64870F2832DDF30091A12D /* AccountWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64870E2832DDF30091A12D /* AccountWireframeFactoryAssembler.swift */; };
+		1C6487122832DE4D0091A12D /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487112832DE4D0091A12D /* ReachabilityService.swift */; };
+		1C6487142832DE560091A12D /* ReachabilityServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487132832DE560091A12D /* ReachabilityServiceAssembler.swift */; };
+		1C6487162832DEFE0091A12D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487152832DEFE0091A12D /* Reachability.swift */; };
+		1C6487182832E2720091A12D /* DefaultKeyStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487172832E2720091A12D /* DefaultKeyStoreService.swift */; };
+		1C64871B2832E3490091A12D /* KeyStoreServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64871A2832E3490091A12D /* KeyStoreServiceAssembler.swift */; };
+		1C64871E2832E3D60091A12D /* DefaultKeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64871D2832E3D60091A12D /* DefaultKeyChainService.swift */; };
+		1C6487202832E3FA0091A12D /* KeyChainServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64871F2832E3FA0091A12D /* KeyChainServiceAssembler.swift */; };
+		1C6487232832E4BA0091A12D /* DefaultDegenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487222832E4BA0091A12D /* DefaultDegenService.swift */; };
+		1C6487252832E4D40091A12D /* DegenServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487242832E4D40091A12D /* DegenServiceAssembler.swift */; };
+		1C6487272832E5150091A12D /* DefaultAppsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487262832E5150091A12D /* DefaultAppsService.swift */; };
+		1C6487292832E5330091A12D /* AppsServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487282832E5330091A12D /* AppsServiceAssembler.swift */; };
+		1C64872B2832E5570091A12D /* DefaultAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64872A2832E5570091A12D /* DefaultAccountService.swift */; };
+		1C64872D2832E5800091A12D /* AccountServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64872C2832E5800091A12D /* AccountServiceAssembler.swift */; };
+		1C6487302832E5E90091A12D /* DefaultNetworksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64872F2832E5E90091A12D /* DefaultNetworksService.swift */; };
+		1C6487322832E5F90091A12D /* NetworksServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487312832E5F90091A12D /* NetworksServiceAssembler.swift */; };
+		1C6487342832E64A0091A12D /* DefaultNFTsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487332832E64A0091A12D /* DefaultNFTsService.swift */; };
+		1C6487362832E6650091A12D /* NFTsServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487352832E6650091A12D /* NFTsServiceAssembler.swift */; };
+		1C6487382832E6BE0091A12D /* DefaultOnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487372832E6BE0091A12D /* DefaultOnboardingService.swift */; };
+		1C64873A2832E6D70091A12D /* OnboardingServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487392832E6D70091A12D /* OnboardingServiceAssembler.swift */; };
+		1C64873C2832E7640091A12D /* DefaultStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64873B2832E7640091A12D /* DefaultStore.swift */; };
+		1C64873E2832E76B0091A12D /* StoreAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64873D2832E76B0091A12D /* StoreAssembler.swift */; };
+		1C6487412832E7D10091A12D /* DefaultSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487402832E7D10091A12D /* DefaultSettingsService.swift */; };
+		1C6487432832E7EA0091A12D /* SettingsServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487422832E7EA0091A12D /* SettingsServiceAssembler.swift */; };
+		1C6487452832E9610091A12D /* AlertWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487442832E9610091A12D /* AlertWireframeFactoryAssembler.swift */; };
+		1C6487472832E98C0091A12D /* AppsWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487462832E98B0091A12D /* AppsWireframeFactoryAssembler.swift */; };
+		1C6487492832EA000091A12D /* DashboardWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487482832EA000091A12D /* DashboardWireframeFactoryAssembler.swift */; };
+		1C64874B2832EA590091A12D /* AMMsWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64874A2832EA590091A12D /* AMMsWireframeFactoryAssembler.swift */; };
+		1C64874D2832EA860091A12D /* DegenWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64874C2832EA860091A12D /* DegenWireframeFactoryAssembler.swift */; };
+		1C64874F2832EB150091A12D /* SwapWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64874E2832EB140091A12D /* SwapWireframeFactoryAssembler.swift */; };
+		1C6487512832EC860091A12D /* KeyStoreWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487502832EC860091A12D /* KeyStoreWireframeFactoryAssembler.swift */; };
+		1C6487532832ECD50091A12D /* MnemonicWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487522832ECD50091A12D /* MnemonicWireframeFactoryAssembler.swift */; };
+		1C6487552832ED400091A12D /* MnemonicConfirmationWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487542832ED400091A12D /* MnemonicConfirmationWireframeFactoryAssembler.swift */; };
+		1C6487572832ED750091A12D /* NetworksWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487562832ED750091A12D /* NetworksWireframeFactoryAssembler.swift */; };
+		1C6487592832EDC30091A12D /* NFTsWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487582832EDC30091A12D /* NFTsWireframeFactoryAssembler.swift */; };
+		1C64875B2832EE260091A12D /* SettingsWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64875A2832EE260091A12D /* SettingsWireframeFactoryAssembler.swift */; };
+		1C64875D2832EE7A0091A12D /* RootWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64875C2832EE7A0091A12D /* RootWireframeFactoryAssembler.swift */; };
+		1C64875F2832EF450091A12D /* UIBootstrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64875E2832EF450091A12D /* UIBootstrapper.swift */; };
 		1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46D92813DE4800F6C40B /* BaseViewController.swift */; };
 		1C9B46F52813FB4F00F6C40B /* UIView+LayoutConstraints+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46F42813FB4F00F6C40B /* UIView+LayoutConstraints+extensions.swift */; };
 		1C9B46F82814045D00F6C40B /* UIApplication+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46F72814045D00F6C40B /* UIApplication+extensions.swift */; };
@@ -399,6 +443,50 @@
 		1A4C3FA66092D38533F635F3 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1C6486F2282D783A0091A12D /* DefaultGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGradientView.swift; sourceTree = "<group>"; };
 		1C6486FC282F87EB0091A12D /* Int+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+extensions.swift"; sourceTree = "<group>"; };
+		1C6487012832DB830091A12D /* DefaultAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAssembler.swift; sourceTree = "<group>"; };
+		1C6487032832DB8B0091A12D /* Assembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assembler.swift; sourceTree = "<group>"; };
+		1C6487052832DC290091A12D /* ServiceDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDirectory.swift; sourceTree = "<group>"; };
+		1C6487082832DC5F0091A12D /* Bootstrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bootstrapper.swift; sourceTree = "<group>"; };
+		1C64870A2832DD630091A12D /* MainBootstrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBootstrapper.swift; sourceTree = "<group>"; };
+		1C64870C2832DD970091A12D /* AssemblerBootstrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblerBootstrapper.swift; sourceTree = "<group>"; };
+		1C64870E2832DDF30091A12D /* AccountWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C6487112832DE4D0091A12D /* ReachabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityService.swift; sourceTree = "<group>"; };
+		1C6487132832DE560091A12D /* ReachabilityServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityServiceAssembler.swift; sourceTree = "<group>"; };
+		1C6487152832DEFE0091A12D /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		1C6487172832E2720091A12D /* DefaultKeyStoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKeyStoreService.swift; sourceTree = "<group>"; };
+		1C64871A2832E3490091A12D /* KeyStoreServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreServiceAssembler.swift; sourceTree = "<group>"; };
+		1C64871D2832E3D60091A12D /* DefaultKeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKeyChainService.swift; sourceTree = "<group>"; };
+		1C64871F2832E3FA0091A12D /* KeyChainServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainServiceAssembler.swift; sourceTree = "<group>"; };
+		1C6487222832E4BA0091A12D /* DefaultDegenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDegenService.swift; sourceTree = "<group>"; };
+		1C6487242832E4D40091A12D /* DegenServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DegenServiceAssembler.swift; sourceTree = "<group>"; };
+		1C6487262832E5150091A12D /* DefaultAppsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAppsService.swift; sourceTree = "<group>"; };
+		1C6487282832E5330091A12D /* AppsServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsServiceAssembler.swift; sourceTree = "<group>"; };
+		1C64872A2832E5570091A12D /* DefaultAccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAccountService.swift; sourceTree = "<group>"; };
+		1C64872C2832E5800091A12D /* AccountServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountServiceAssembler.swift; sourceTree = "<group>"; };
+		1C64872F2832E5E90091A12D /* DefaultNetworksService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNetworksService.swift; sourceTree = "<group>"; };
+		1C6487312832E5F90091A12D /* NetworksServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksServiceAssembler.swift; sourceTree = "<group>"; };
+		1C6487332832E64A0091A12D /* DefaultNFTsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNFTsService.swift; sourceTree = "<group>"; };
+		1C6487352832E6650091A12D /* NFTsServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTsServiceAssembler.swift; sourceTree = "<group>"; };
+		1C6487372832E6BE0091A12D /* DefaultOnboardingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOnboardingService.swift; sourceTree = "<group>"; };
+		1C6487392832E6D70091A12D /* OnboardingServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingServiceAssembler.swift; sourceTree = "<group>"; };
+		1C64873B2832E7640091A12D /* DefaultStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultStore.swift; sourceTree = "<group>"; };
+		1C64873D2832E76B0091A12D /* StoreAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreAssembler.swift; sourceTree = "<group>"; };
+		1C6487402832E7D10091A12D /* DefaultSettingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSettingsService.swift; sourceTree = "<group>"; };
+		1C6487422832E7EA0091A12D /* SettingsServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceAssembler.swift; sourceTree = "<group>"; };
+		1C6487442832E9610091A12D /* AlertWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C6487462832E98B0091A12D /* AppsWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C6487482832EA000091A12D /* DashboardWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C64874A2832EA590091A12D /* AMMsWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AMMsWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C64874C2832EA860091A12D /* DegenWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DegenWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C64874E2832EB140091A12D /* SwapWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C6487502832EC860091A12D /* KeyStoreWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C6487522832ECD50091A12D /* MnemonicWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C6487542832ED400091A12D /* MnemonicConfirmationWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C6487562832ED750091A12D /* NetworksWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C6487582832EDC30091A12D /* NFTsWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTsWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C64875A2832EE260091A12D /* SettingsWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C64875C2832EE7A0091A12D /* RootWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C64875E2832EF450091A12D /* UIBootstrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBootstrapper.swift; sourceTree = "<group>"; };
 		1C9B46D92813DE4800F6C40B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1C9B46F42813FB4F00F6C40B /* UIView+LayoutConstraints+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LayoutConstraints+extensions.swift"; sourceTree = "<group>"; };
 		1C9B46F72814045D00F6C40B /* UIApplication+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+extensions.swift"; sourceTree = "<group>"; };
@@ -506,8 +594,10 @@
 		1A4C30349A9657E321920184 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				1A4C3D40E32D58F958911B60 /* Setting.swift */,
 				1A4C3DED61DB8FC18EFD5B0B /* SettingsService.swift */,
+				1C6487422832E7EA0091A12D /* SettingsServiceAssembler.swift */,
+				1C6487402832E7D10091A12D /* DefaultSettingsService.swift */,
+				1C64873F2832E7C50091A12D /* Internal */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -522,6 +612,7 @@
 				1A4C32C53B06B5EA8EE01118 /* AppsViewModel.swift */,
 				1A4C331E828DAA4D2E628435 /* AppsWireframe.swift */,
 				1A4C3E735403B7DA9910563D /* AppsWireframeFactory.swift */,
+				1C6487462832E98B0091A12D /* AppsWireframeFactoryAssembler.swift */,
 			);
 			path = AppsModule;
 			sourceTree = "<group>";
@@ -562,6 +653,7 @@
 				1A4C3EB46866FC10CA58C6F8 /* NFTsViewModel.swift */,
 				1A4C325A83A0FC4E6A5A9922 /* NFTsWireframe.swift */,
 				1A4C3C7AC11249D1DE6C554C /* NFTsWireframeFactory.swift */,
+				1C6487582832EDC30091A12D /* NFTsWireframeFactoryAssembler.swift */,
 			);
 			path = NFTs;
 			sourceTree = "<group>";
@@ -607,6 +699,7 @@
 				1A4C348CA305DD0F6C190CAE /* SwapViewModel.swift */,
 				1A4C3E963BBDDF8226B79BAD /* SwapWireframe.swift */,
 				1A4C376FCE382F2B2A126F5E /* SwapWireframeFactory.swift */,
+				1C64874E2832EB140091A12D /* SwapWireframeFactoryAssembler.swift */,
 			);
 			path = Swap;
 			sourceTree = "<group>";
@@ -620,6 +713,7 @@
 				1A4C3A962E47E54F5A5779D3 /* AccountViewModel.swift */,
 				1A4C3ABEEF88DD643AF4D7AD /* AccountWireframe.swift */,
 				1A4C3ABC7FAC24D9539B1BDA /* AccountWireframeFactory.swift */,
+				1C64870E2832DDF30091A12D /* AccountWireframeFactoryAssembler.swift */,
 				1A4C316E60B8C1E6DD9E5623 /* Cells */,
 			);
 			path = Account;
@@ -635,6 +729,7 @@
 				1A4C3811EC67D01771B97011 /* AMMsViewModel.swift */,
 				1A4C35A00BFF35155C4AD72D /* AMMsWireframe.swift */,
 				1A4C3A93ADEAA6317E2F1134 /* AMMsWireframeFactory.swift */,
+				1C64874A2832EA590091A12D /* AMMsWireframeFactoryAssembler.swift */,
 			);
 			path = AMMs;
 			sourceTree = "<group>";
@@ -656,6 +751,7 @@
 				1A4C3A08014FC9721FC2557C /* RootView.swift */,
 				1A4C3D0EF3DBE9AC06A05512 /* RootWireframe.swift */,
 				1A4C3DF2370620D3B04E431A /* RootWireframeFactory.swift */,
+				1C64875C2832EE7A0091A12D /* RootWireframeFactoryAssembler.swift */,
 			);
 			path = Root;
 			sourceTree = "<group>";
@@ -663,8 +759,10 @@
 		1A4C34890DEC8B96E5A50E6C /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				1A4C341CE810A41C93A4D896 /* Network.swift */,
+				1C64872F2832E5E90091A12D /* DefaultNetworksService.swift */,
 				1A4C3DAB38F681061328F3F0 /* NetworksService.swift */,
+				1C6487312832E5F90091A12D /* NetworksServiceAssembler.swift */,
+				1C64872E2832E5DF0091A12D /* Internal */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -673,6 +771,8 @@
 			isa = PBXGroup;
 			children = (
 				1A4C388B9A42E6A279D2867F /* AccountService.swift */,
+				1C64872C2832E5800091A12D /* AccountServiceAssembler.swift */,
+				1C64872A2832E5570091A12D /* DefaultAccountService.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -681,6 +781,8 @@
 			isa = PBXGroup;
 			children = (
 				1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */,
+				1C6487352832E6650091A12D /* NFTsServiceAssembler.swift */,
+				1C6487332832E64A0091A12D /* DefaultNFTsService.swift */,
 			);
 			path = NFTsService;
 			sourceTree = "<group>";
@@ -689,6 +791,8 @@
 			isa = PBXGroup;
 			children = (
 				1A4C3228790C1569B37F5179 /* AppsService.swift */,
+				1C6487282832E5330091A12D /* AppsServiceAssembler.swift */,
+				1C6487262832E5150091A12D /* DefaultAppsService.swift */,
 			);
 			path = Apps;
 			sourceTree = "<group>";
@@ -696,10 +800,10 @@
 		1A4C378CF260A81DDB68B039 /* KeyStore */ = {
 			isa = PBXGroup;
 			children = (
-				D19A20BD2815F15F008A84CD /* KeyChainService.swift */,
-				1A4C376D2673983B26F249FF /* KeyStoreItem.swift */,
+				1C6487172832E2720091A12D /* DefaultKeyStoreService.swift */,
 				1A4C36CAEB50425CE9839ED4 /* KeyStoreService.swift */,
-				1A4C3D2A7A195294A4542553 /* SecretStorage.swift */,
+				1C64871A2832E3490091A12D /* KeyStoreServiceAssembler.swift */,
+				1C6487192832E3290091A12D /* Internal */,
 			);
 			path = KeyStore;
 			sourceTree = "<group>";
@@ -715,6 +819,7 @@
 				1A4C34E67B135A61BE103648 /* DegenViewModel.swift */,
 				1A4C32C282B76B064343657F /* DegenWireframe.swift */,
 				1A4C3B869A93171279B2C6ED /* DegenWireframeFactory.swift */,
+				1C64874C2832EA860091A12D /* DegenWireframeFactoryAssembler.swift */,
 			);
 			path = Degen;
 			sourceTree = "<group>";
@@ -749,6 +854,7 @@
 				1A4C3831549FBA4F68E7224D /* NetworksViewModel.swift */,
 				1A4C3AD5ED12A2AC7B3218C9 /* NetworksWireframe.swift */,
 				1A4C30B213A6E8FFA7D0D41D /* NetworksWireframeFactory.swift */,
+				1C6487562832ED750091A12D /* NetworksWireframeFactoryAssembler.swift */,
 			);
 			path = Networks;
 			sourceTree = "<group>";
@@ -774,6 +880,7 @@
 				1A4C325D5EF4C18FCD3B1472 /* DashboardViewModel.swift */,
 				1A4C3A05642605E68164E3B1 /* DashboardWireframe.swift */,
 				1A4C3B92FA152550A06D3D31 /* DashboardWireframeFactory.swift */,
+				1C6487482832EA000091A12D /* DashboardWireframeFactoryAssembler.swift */,
 				1A4C303225414E70D52A40F3 /* Cells */,
 			);
 			path = Dashboard;
@@ -782,9 +889,10 @@
 		1A4C3888D4FA37BEB1285C02 /* Degen */ = {
 			isa = PBXGroup;
 			children = (
-				1A4C375870963EEF9ECBE64B /* DApp.swift */,
-				1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */,
+				1C6487222832E4BA0091A12D /* DefaultDegenService.swift */,
 				1A4C34077200A9E856B77DDF /* DegenService.swift */,
+				1C6487242832E4D40091A12D /* DegenServiceAssembler.swift */,
+				1C6487212832E47A0091A12D /* Internal */,
 			);
 			path = Degen;
 			sourceTree = "<group>";
@@ -795,10 +903,12 @@
 				1A4C34EBFC9FFA8EFBE7DCA7 /* Account */,
 				1A4C35BE139AFC345B42DE7F /* Apps */,
 				1A4C3888D4FA37BEB1285C02 /* Degen */,
+				1C64871C2832E3B90091A12D /* KeychainService */,
 				1A4C378CF260A81DDB68B039 /* KeyStore */,
 				1A4C34890DEC8B96E5A50E6C /* Network */,
 				1A4C35A602BDFD544714CB8F /* NFTsService */,
 				1A4C39EC4A83EE79DD0F101F /* Onboarding */,
+				1C6487102832DE380091A12D /* Reachability */,
 				1A4C30349A9657E321920184 /* Settings */,
 				D17AC2D527B7E674000D7C34 /* Store */,
 			);
@@ -809,6 +919,8 @@
 			isa = PBXGroup;
 			children = (
 				1A4C38D3A7CC14ADC53A0E39 /* OnboardingService.swift */,
+				1C6487392832E6D70091A12D /* OnboardingServiceAssembler.swift */,
+				1C6487372832E6BE0091A12D /* DefaultOnboardingService.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -823,6 +935,7 @@
 				1A4C3412895BFFD5EB8F167E /* SettingsViewModel.swift */,
 				1A4C3142E4B087299DA8113B /* SettingsWireframe.swift */,
 				1A4C3152690E35122D56F0C6 /* SettingsWireframeFactory.swift */,
+				1C64875A2832EE260091A12D /* SettingsWireframeFactoryAssembler.swift */,
 				1A4C37B1DA58F93F805FD46B /* Cells */,
 			);
 			path = Settings;
@@ -848,6 +961,80 @@
 			path = VisualEffectView;
 			sourceTree = "<group>";
 		};
+		1C6487002832DB440091A12D /* Assembler */ = {
+			isa = PBXGroup;
+			children = (
+				1C6487032832DB8B0091A12D /* Assembler.swift */,
+				1C6487012832DB830091A12D /* DefaultAssembler.swift */,
+			);
+			path = Assembler;
+			sourceTree = "<group>";
+		};
+		1C6487072832DC550091A12D /* Bootstrapper */ = {
+			isa = PBXGroup;
+			children = (
+				1C6487082832DC5F0091A12D /* Bootstrapper.swift */,
+				1C64875E2832EF450091A12D /* UIBootstrapper.swift */,
+				1C64870A2832DD630091A12D /* MainBootstrapper.swift */,
+				1C64870C2832DD970091A12D /* AssemblerBootstrapper.swift */,
+			);
+			path = Bootstrapper;
+			sourceTree = "<group>";
+		};
+		1C6487102832DE380091A12D /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				1C6487152832DEFE0091A12D /* Reachability.swift */,
+				1C6487112832DE4D0091A12D /* ReachabilityService.swift */,
+				1C6487132832DE560091A12D /* ReachabilityServiceAssembler.swift */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
+		1C6487192832E3290091A12D /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				1A4C376D2673983B26F249FF /* KeyStoreItem.swift */,
+				1A4C3D2A7A195294A4542553 /* SecretStorage.swift */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
+		1C64871C2832E3B90091A12D /* KeychainService */ = {
+			isa = PBXGroup;
+			children = (
+				1C64871D2832E3D60091A12D /* DefaultKeyChainService.swift */,
+				D19A20BD2815F15F008A84CD /* KeyChainService.swift */,
+				1C64871F2832E3FA0091A12D /* KeyChainServiceAssembler.swift */,
+			);
+			path = KeychainService;
+			sourceTree = "<group>";
+		};
+		1C6487212832E47A0091A12D /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				1A4C375870963EEF9ECBE64B /* DApp.swift */,
+				1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
+		1C64872E2832E5DF0091A12D /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				1A4C341CE810A41C93A4D896 /* Network.swift */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
+		1C64873F2832E7C50091A12D /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				1A4C3D40E32D58F958911B60 /* Setting.swift */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
 		1C9B46F92814279F00F6C40B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -865,6 +1052,7 @@
 				1CA3F2DA2820339B00133C41 /* AlertViewModel.swift */,
 				1CA3F2D62820339200133C41 /* AlertWireframe.swift */,
 				1CA3F2D82820339700133C41 /* AlertWireframeFactory.swift */,
+				1C6487442832E9610091A12D /* AlertWireframeFactoryAssembler.swift */,
 			);
 			path = Alert;
 			sourceTree = "<group>";
@@ -879,6 +1067,7 @@
 				1CA3F2EA282D698400133C41 /* MnemonicConfirmationViewModel.swift */,
 				1CA3F2E4282D696D00133C41 /* MnemonicConfirmationWireframe.swift */,
 				1CA3F2E6282D697400133C41 /* MnemonicConfirmationWireframeFactory.swift */,
+				1C6487542832ED400091A12D /* MnemonicConfirmationWireframeFactoryAssembler.swift */,
 			);
 			path = MnemonicConfirmation;
 			sourceTree = "<group>";
@@ -1021,6 +1210,9 @@
 			isa = PBXGroup;
 			children = (
 				1A4C39FB21CCAF442F3001E6 /* Global.swift */,
+				1C6487052832DC290091A12D /* ServiceDirectory.swift */,
+				1C6487002832DB440091A12D /* Assembler */,
+				1C6487072832DC550091A12D /* Bootstrapper */,
 				1A4C31B16EDB37329772A173 /* CryptoUtils */,
 				1A4C30D5AD2DC31052A09D61 /* Extensions */,
 				1A4C38B91F448C1E962685B3 /* Services */,
@@ -1043,6 +1235,7 @@
 				1A4C3228507ADBCE1C99C219 /* KeyStoreViewModel.swift */,
 				1A4C3DF93F3CE8FE0B35C142 /* KeyStoreWireframe.swift */,
 				1A4C3C514ACC30A0AC4707FA /* KeyStoreWireframeFactory.swift */,
+				1C6487502832EC860091A12D /* KeyStoreWireframeFactoryAssembler.swift */,
 				1A4C345EF4F185380A693B17 /* ButtonSheetView */,
 			);
 			path = KeyStore;
@@ -1071,6 +1264,8 @@
 			isa = PBXGroup;
 			children = (
 				1A4C3B70AA1B0BC942B15671 /* Store.swift */,
+				1C64873D2832E76B0091A12D /* StoreAssembler.swift */,
+				1C64873B2832E7640091A12D /* DefaultStore.swift */,
 				D11A990B27B99D1800EDFDD0 /* AnyCodable */,
 			);
 			path = Store;
@@ -1097,6 +1292,7 @@
 				D1F160062804C96100DEF239 /* MnemonicViewModel.swift */,
 				D1F160072804C96100DEF239 /* MnemonicWireframe.swift */,
 				D1F160052804C96100DEF239 /* MnemonicWireframeFactory.swift */,
+				1C6487522832ECD50091A12D /* MnemonicWireframeFactoryAssembler.swift */,
 			);
 			path = Mnemonic;
 			sourceTree = "<group>";
@@ -1288,13 +1484,16 @@
 				1C9B46F82814045D00F6C40B /* UIApplication+extensions.swift in Sources */,
 				1A4C3F2AC8A8B59020F63712 /* KeyStoreInteractor.swift in Sources */,
 				1A4C39D40DEC9C42A6CF8D8A /* KeyStoreViewModel.swift in Sources */,
+				1C6487432832E7EA0091A12D /* SettingsServiceAssembler.swift in Sources */,
 				1A4C3C9B866507D8700399F6 /* KeyStoreService.swift in Sources */,
 				1CA3F2D92820339700133C41 /* AlertWireframeFactory.swift in Sources */,
+				1C64872D2832E5800091A12D /* AccountServiceAssembler.swift in Sources */,
 				1A4C3708C25B84EAA53D0FB6 /* KeyStoreItem.swift in Sources */,
 				1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */,
 				1A4C302CC56D21A0E3CBAFF6 /* UIStoryboard+extensions.swift in Sources */,
 				1A4C372EC2DEA2483AD7D92E /* NSLocalizedString+extension.swift in Sources */,
 				1A4C33FF86A4E43DAA2E7AB9 /* UIColor+extensions.swift in Sources */,
+				1C6487042832DB8B0091A12D /* Assembler.swift in Sources */,
 				1CA3F2D72820339200133C41 /* AlertWireframe.swift in Sources */,
 				1A4C3EB4D429242923984C76 /* Button.swift in Sources */,
 				1A4C3B49BC67AF7AA3BF0D8F /* VisualEffectView.swift in Sources */,
@@ -1311,18 +1510,21 @@
 				1CA3F2DF282033BF00133C41 /* AlertPresenter.swift in Sources */,
 				1A4C30116B1618C1596D9D14 /* NetworksService.swift in Sources */,
 				1A4C3835FD803C3B708B409C /* Formatter+extensions.swift in Sources */,
+				1C6487452832E9610091A12D /* AlertWireframeFactoryAssembler.swift in Sources */,
 				1A4C3946A210F5A781EAC827 /* UILabel+extensions.swift in Sources */,
 				1A4C301CF0BAEFBD7194FF0B /* CALayer+extension.swift in Sources */,
 				1A4C39EAC9477080E80A6C07 /* EdgeCardsController.swift in Sources */,
 				1A4C37C1E42C1DF7A9CB3814 /* DashboardView.swift in Sources */,
 				1A4C3B478F3654BE3ECEC0DA /* DashboardPresenter.swift in Sources */,
 				1A4C39A545EC7DA7D3253450 /* DashboardViewModel.swift in Sources */,
+				1C6487062832DC290091A12D /* ServiceDirectory.swift in Sources */,
 				1A4C302D442E40BBC5FE9E3D /* DashboardWireframe.swift in Sources */,
 				1A4C3C58ECBCC69942A9138C /* DashboardInteractor.swift in Sources */,
 				1A4C37CF17F191B3AF54251B /* DashboardWireframeFactory.swift in Sources */,
 				1A4C32253B79286A98D96FE4 /* UIView+extensions.swift in Sources */,
 				1A4C3B1D9B56685FF628A0AD /* DegenService.swift in Sources */,
 				1C9B46F52813FB4F00F6C40B /* UIView+LayoutConstraints+extensions.swift in Sources */,
+				1C64873A2832E6D70091A12D /* OnboardingServiceAssembler.swift in Sources */,
 				1A4C3540A51F853CCA68885B /* DegenCell.swift in Sources */,
 				1A4C34F0ADC2C388D42148BA /* DegenView.swift in Sources */,
 				1CA3F2E12820344200133C41 /* AlertContext.swift in Sources */,
@@ -1335,27 +1537,44 @@
 				1A4C337CA3864D32284438DC /* DegenWireframeFactory.swift in Sources */,
 				1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */,
 				1A4C3750D25F9E82456820CB /* NetworksCell.swift in Sources */,
+				1C6487202832E3FA0091A12D /* KeyChainServiceAssembler.swift in Sources */,
 				1A4C3A35E90213A3B1D305C1 /* NetworksInteractor.swift in Sources */,
 				1C6486FD282F87EB0091A12D /* Int+extensions.swift in Sources */,
 				1A4C339BB64E9CCF1C110D40 /* NetworksPresenter.swift in Sources */,
 				1A4C3926E0A2F1B6A2CF3040 /* NetworksView.swift in Sources */,
+				1C6487342832E64A0091A12D /* DefaultNFTsService.swift in Sources */,
 				1A4C37D58E15F7110354E35B /* NetworksViewModel.swift in Sources */,
+				1C6487162832DEFE0091A12D /* Reachability.swift in Sources */,
+				1C64870B2832DD630091A12D /* MainBootstrapper.swift in Sources */,
 				1A4C36E01D38AFB39DCA523C /* NetworksWireframe.swift in Sources */,
 				1A4C3B37A19807994E4E1D08 /* NetworksWireframeFactory.swift in Sources */,
 				1CA3F2ED282D698A00133C41 /* MnemonicConfirmationView.swift in Sources */,
 				1A4C31F15B77B2DFA1AFCBB6 /* AMMsCell.swift in Sources */,
+				1C64875F2832EF450091A12D /* UIBootstrapper.swift in Sources */,
 				1CA3F2F1282D6AC200133C41 /* MnemonicConfirmationService.swift in Sources */,
+				1C64875B2832EE260091A12D /* SettingsWireframeFactoryAssembler.swift in Sources */,
+				1C64872B2832E5570091A12D /* DefaultAccountService.swift in Sources */,
 				1A4C32FAFAE7B74336452733 /* AMMsView.swift in Sources */,
+				1C64874F2832EB150091A12D /* SwapWireframeFactoryAssembler.swift in Sources */,
+				1C6487322832E5F90091A12D /* NetworksServiceAssembler.swift in Sources */,
+				1C6487382832E6BE0091A12D /* DefaultOnboardingService.swift in Sources */,
+				1C64870D2832DD970091A12D /* AssemblerBootstrapper.swift in Sources */,
 				1A4C3C57B341513B1AA26C06 /* AMMsPresenter.swift in Sources */,
+				1C6487592832EDC30091A12D /* NFTsWireframeFactoryAssembler.swift in Sources */,
 				1A4C3A7D319E0444A98E52AD /* AMMsViewModel.swift in Sources */,
 				1A4C386E221B453892180BFE /* AMMsWireframe.swift in Sources */,
 				1CA3F2E5282D696D00133C41 /* MnemonicConfirmationWireframe.swift in Sources */,
+				1C6487472832E98C0091A12D /* AppsWireframeFactoryAssembler.swift in Sources */,
+				1C6487552832ED400091A12D /* MnemonicConfirmationWireframeFactoryAssembler.swift in Sources */,
+				1C6487252832E4D40091A12D /* DegenServiceAssembler.swift in Sources */,
 				1A4C38B3B9AA2A7910821782 /* AMMsInteractor.swift in Sources */,
 				1A4C3D2C7310ABD59AFAE725 /* AMMsWireframeFactory.swift in Sources */,
 				1A4C33C1A3C0AE41B3CE539A /* SwapInputView.swift in Sources */,
 				1A4C3184F9E6B94BC857D69A /* SwapView.swift in Sources */,
 				1A4C37B46FEFFC9D3AC7F324 /* SwapPresenter.swift in Sources */,
 				1A4C348C8EAD95B167C06D3D /* SwapViewModel.swift in Sources */,
+				1C6487362832E6650091A12D /* NFTsServiceAssembler.swift in Sources */,
+				1C64871B2832E3490091A12D /* KeyStoreServiceAssembler.swift in Sources */,
 				1A4C3D827C6C472784CC40E7 /* SwapWireframe.swift in Sources */,
 				1A4C3419FE99A77CEE441A56 /* SwapInteractor.swift in Sources */,
 				1A4C386D56D3F49C906315ED /* SwapWireframeFactory.swift in Sources */,
@@ -1363,10 +1582,15 @@
 				1A4C347CFEC64C025C0ED6CC /* AccountPresenter.swift in Sources */,
 				D1F1600D2804C96100DEF239 /* MnemonicWireframeFactory.swift in Sources */,
 				D1966C3E2814789600550332 /* Data+Extension.swift in Sources */,
+				1C64874D2832EA860091A12D /* DegenWireframeFactoryAssembler.swift in Sources */,
 				1A4C3D4A1F1632A702FC042A /* AccountViewModel.swift in Sources */,
 				1A4C30F2703A5F58B8DA3D1F /* AccountWireframe.swift in Sources */,
+				1C6487512832EC860091A12D /* KeyStoreWireframeFactoryAssembler.swift in Sources */,
 				D116CF3227C31ECC005542AA /* iCarousel.m in Sources */,
+				1C6487092832DC5F0091A12D /* Bootstrapper.swift in Sources */,
+				1C6487232832E4BA0091A12D /* DefaultDegenService.swift in Sources */,
 				1A4C3161ADC31E07777F61F0 /* AccountInteractor.swift in Sources */,
+				1C6487532832ECD50091A12D /* MnemonicWireframeFactoryAssembler.swift in Sources */,
 				1CA3F2E7282D697400133C41 /* MnemonicConfirmationWireframeFactory.swift in Sources */,
 				1A4C349387A48AB7AD7C24A9 /* AccountWireframeFactory.swift in Sources */,
 				1A4C37AEF66358EA9CA0CA59 /* AccountService.swift in Sources */,
@@ -1381,6 +1605,7 @@
 				1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */,
 				1A4C30B7111436DB2D3D9E5D /* AppsCell.swift in Sources */,
 				1CA3F2DD2820339F00133C41 /* AlertView.swift in Sources */,
+				1C6487142832DE560091A12D /* ReachabilityServiceAssembler.swift in Sources */,
 				1A4C33D70F2BF31983487849 /* AppsView.swift in Sources */,
 				1A4C36856556A9416071D218 /* AppsPresenter.swift in Sources */,
 				1A4C33FD7390E65B4959F77F /* AppsViewModel.swift in Sources */,
@@ -1393,11 +1618,13 @@
 				1A4C356A6C7A1C66A75728D8 /* SettingsViewModel.swift in Sources */,
 				1A4C3AD8FA91A29BF8F75C90 /* SettingsWireframe.swift in Sources */,
 				D1F1600A2804C96100DEF239 /* MnemonicInteractor.swift in Sources */,
+				1C6487292832E5330091A12D /* AppsServiceAssembler.swift in Sources */,
 				1A4C3F03560BB09F68E7AC30 /* SettingsInteractor.swift in Sources */,
 				D116CF2827C2531E005542AA /* Array+extensions.swift in Sources */,
 				1A4C35978A62DC3638CBFD05 /* SettingsWireframeFactory.swift in Sources */,
 				1A4C3B6D2DFADBE2EF71F3A5 /* SettingsService.swift in Sources */,
 				1CA3F2E9282D698000133C41 /* MnemonicConfirmationPresenter.swift in Sources */,
+				1C6487492832EA000091A12D /* DashboardWireframeFactoryAssembler.swift in Sources */,
 				1A4C34ABFF1DD20804DED956 /* AppsService.swift in Sources */,
 				1A4C39119C04EB0DE3B90F12 /* RootView.swift in Sources */,
 				1A4C36FDBCA0AA402711BE43 /* RootPresenter.swift in Sources */,
@@ -1406,24 +1633,32 @@
 				D1F160092804C96100DEF239 /* MnemonicView.swift in Sources */,
 				1A4C3735189D6616D915D851 /* TabBarController.swift in Sources */,
 				1A4C337DA7CC49D28B99336D /* DashboardWalletCell.swift in Sources */,
+				1C64871E2832E3D60091A12D /* DefaultKeyChainService.swift in Sources */,
 				1A4C39EEFEA6A4B3265F6B13 /* DashboardHeaderView.swift in Sources */,
 				1A4C3782A600997577ED88DD /* DashboardNFTsCell.swift in Sources */,
+				1C64870F2832DDF30091A12D /* AccountWireframeFactoryAssembler.swift in Sources */,
 				1A4C31AA465FCC1EF6FE6D64 /* DashboardSectionHeaderView.swift in Sources */,
 				1A4C32FE47390FD9E1A745C5 /* UIButton+extensions.swift in Sources */,
+				1C6487182832E2720091A12D /* DefaultKeyStoreService.swift in Sources */,
 				1A4C308B6FA11A032039F086 /* CandlesView.swift in Sources */,
 				1A4C3C28443621328248F5A7 /* CandlesViewViewModel.swift in Sources */,
 				D1F1600F2804C96100DEF239 /* MnemonicWireframe.swift in Sources */,
 				1A4C345BA6553EF429EF7494 /* String+extensions.swift in Sources */,
 				1A4C373913601300A54BB058 /* UIBarButtonItem+extensions.swift in Sources */,
 				1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */,
+				1C64873C2832E7640091A12D /* DefaultStore.swift in Sources */,
 				1A4C3AD382E8BADCBE160CBC /* DApp.swift in Sources */,
 				1A4C3DCFC8658400B9BCBF78 /* DegenSectionTitleView.swift in Sources */,
+				1C6487572832ED750091A12D /* NetworksWireframeFactoryAssembler.swift in Sources */,
+				1C64875D2832EE7A0091A12D /* RootWireframeFactoryAssembler.swift in Sources */,
 				1A4C3861C7003673B5EB7004 /* AccountHeaderCell.swift in Sources */,
 				1A4C3A1288CD2259782890A2 /* AccountChartCell.swift in Sources */,
+				1C6487412832E7D10091A12D /* DefaultSettingsService.swift in Sources */,
 				1A4C3CED9DCF513FA0635AF8 /* AccountMarketInfoCell.swift in Sources */,
 				1A4C3DF45C45C609B1F976B7 /* AccountTransactionCell.swift in Sources */,
 				1A4C329D37BA590D99ED3A5C /* AccountSectionHeader.swift in Sources */,
 				D1F1600E2804C96100DEF239 /* MnemonicViewModel.swift in Sources */,
+				1C6487272832E5150091A12D /* DefaultAppsService.swift in Sources */,
 				1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */,
 				1A4C3DB9D875750365494DD7 /* CG+extensions.swift in Sources */,
 				D1BF2685280D7FC300DE9A0B /* Theme.swift in Sources */,
@@ -1433,8 +1668,10 @@
 				1A4C3F3B50559576A91700B7 /* CollectionViewTextInputCell.swift in Sources */,
 				1A4C3B697503D478741295DB /* TextField.swift in Sources */,
 				1A4C3469AE463198FCE284E2 /* CollectionViewSwitchCell.swift in Sources */,
+				1C6487122832DE4D0091A12D /* ReachabilityService.swift in Sources */,
 				1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */,
 				1A4C3F71ED826BCCF12C9DF1 /* CollectionViewSwitchTextInputCell.swift in Sources */,
+				1C6487302832E5E90091A12D /* DefaultNetworksService.swift in Sources */,
 				1A4C32C95088080680260BD6 /* CollectionViewSegmentWithTextAndSwitchCell.swift in Sources */,
 				1A4C30689E34BDB5B726CE77 /* ButtonsSheetView.swift in Sources */,
 				1A4C36A193B791847D2B8EE3 /* ButtonsSheetViewModel.swift in Sources */,
@@ -1445,6 +1682,7 @@
 				1A4C3B81B628EF4EDC8F7177 /* TransformView.swift in Sources */,
 				1A4C31E84A86A69FFC7C3E0F /* Setting.swift in Sources */,
 				1A4C3494D52663C2DB8045EB /* SettingsItem.swift in Sources */,
+				1C6487022832DB830091A12D /* DefaultAssembler.swift in Sources */,
 				1A4C35B22F98D604D37A324F /* SettingsCell.swift in Sources */,
 				1A4C39C447DAE89615B354E6 /* SettingsListSelectCell.swift in Sources */,
 				1A4C392FA145A1DD2AB7050D /* SettingsActionCell.swift in Sources */,
@@ -1455,7 +1693,9 @@
 				1A4C36EEA61FB60EE15ED6DD /* OnboardingService.swift in Sources */,
 				1A4C3F175B65F553F0F5E86D /* SecretStorage.swift in Sources */,
 				1A4C33E50A1388781E82DD29 /* CryptoUtils.swift in Sources */,
+				1C64873E2832E76B0091A12D /* StoreAssembler.swift in Sources */,
 				1A4C34B44D253D748EFB2631 /* Bip39.swift in Sources */,
+				1C64874B2832EA590091A12D /* AMMsWireframeFactoryAssembler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

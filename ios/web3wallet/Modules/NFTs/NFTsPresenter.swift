@@ -16,7 +16,7 @@ protocol NFTsPresenter {
 
 // MARK: - DefaultNFTsPresenter
 
-class DefaultNFTsPresenter {
+final class DefaultNFTsPresenter {
 
     private let interactor: NFTsInteractor
     private let wireframe: NFTsWireframe

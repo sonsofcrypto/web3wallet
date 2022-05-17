@@ -13,8 +13,6 @@ struct AccountViewModel {
     let transactions: [AccountViewModel.Transaction]
 }
 
-// MARK: - Header
-
 extension AccountViewModel {
 
     struct Header {
@@ -31,8 +29,6 @@ extension AccountViewModel {
     }
 }
 
-// MARK: - MarketInfo
-
 extension AccountViewModel {
 
     struct MarketInfo {
@@ -41,8 +37,6 @@ extension AccountViewModel {
         let volume: String
     }
 }
-
-// MARK: - Transaction
 
 extension AccountViewModel {
 

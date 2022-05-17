@@ -9,33 +9,3 @@ protocol AccountService: AnyObject {
     var mnemonicWords: [String] { get }
     func validateMnemonic(with mnemonic: String) -> Bool
 }
-
-final class DefaultAccountService {
-
-}
-
-extension DefaultAccountService: AccountService {
-    
-    var mnemonicWords: [String] {
-        
-        [
-            "one",
-            "two",
-            "three",
-            "four",
-            "five",
-            "six",
-            "seven",
-            "eight",
-            "nine",
-            "ten",
-            "eleven",
-            "twelve"
-        ]
-    }
-
-    func validateMnemonic(with mnemonic: String) -> Bool {
-        
-        mnemonic == "one two three four five six seven eight nine ten eleven twelve"
-    }
-}

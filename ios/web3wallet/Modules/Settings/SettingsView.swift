@@ -9,7 +9,7 @@ protocol SettingsView: AnyObject {
     func update(with viewModel: SettingsViewModel)
 }
 
-class SettingsViewController: BaseViewController {
+final class SettingsViewController: BaseViewController {
 
     var presenter: SettingsPresenter!
 

@@ -29,8 +29,8 @@ extension UILabel {
     func applyStyle(_ style: Style) {
         switch style {
         case .navTitle:
-            font = Theme.current.navTitle
-            textColor = Theme.current.tintPrimary
+            font = Theme.font.navTitle
+            textColor = Theme.color.tint
         case .headlineGlow:
             font = Theme.font.headline
             layer.applyShadow(Theme.color.tintSecondary)
@@ -46,12 +46,12 @@ extension UILabel {
             font = Theme.font.subhead
             layer.applyShadow(Theme.color.tintSecondary)
             textColor = Theme.color.text
-            font = Theme.current.subhead
-            layer.applyShadow(Theme.current.tintSecondary)
-            textColor = Theme.current.textColor
+            font = Theme.font.subhead
+            layer.applyShadow(Theme.color.tintSecondary)
+            textColor = Theme.color.text
         case .body:
-            font = Theme.current.body
-            textColor = Theme.current.textColor
+            font = Theme.font.body
+            textColor = Theme.color.text
         case .bodyGlow:
             font = Theme.font.body
             layer.applyShadow(Theme.color.tintSecondary)

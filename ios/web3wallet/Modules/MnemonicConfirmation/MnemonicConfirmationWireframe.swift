@@ -10,6 +10,12 @@ protocol MnemonicConfirmationWireframe {
     func navigate(to destination: MnemonicConfirmationWireframeDestination)
 }
 
+enum MnemonicConfirmationWireframeContext {
+    
+    case `import`
+    case recover
+}
+
 enum MnemonicConfirmationWireframeDestination {
     
     case dismiss

@@ -16,7 +16,7 @@ protocol SettingsInteractor: AnyObject {
 
 // MARK: - DefaultSettingsInteractor
 
-class DefaultSettingsInteractor {
+final class DefaultSettingsInteractor {
 
     private var settingsService: SettingsService
     private var keyStoreService: KeyStoreService

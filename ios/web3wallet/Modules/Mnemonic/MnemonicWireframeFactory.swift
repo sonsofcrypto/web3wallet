@@ -14,16 +14,16 @@ protocol MnemonicWireframeFactory {
 
 // MARK: - DefaultMnemonicWireframeFactory
 
-class DefaultMnemonicWireframeFactory {
+final class DefaultMnemonicWireframeFactory {
 
-    private let service: KeyStoreService
+    private let keyStoreService: KeyStoreService
     private let settingsService: SettingsService
 
     init(
-        _ service: KeyStoreService,
+        keyStoreService: KeyStoreService,
         settingsService: SettingsService
     ) {
-        self.service = service
+        self.keyStoreService = keyStoreService
         self.settingsService = settingsService
     }
 }
@@ -38,7 +38,7 @@ extension DefaultMnemonicWireframeFactory: MnemonicWireframeFactory {
     ) -> MnemonicWireframe {
         DefaultMnemonicWireframe(
             parent: parent,
-            interactor: DefaultMnemonicInteractor(service),
+            interactor: DefaultMnemonicInteractor(keyStoreService),
             context: context,
             settingsService: settingsService
         )

@@ -9,27 +9,27 @@ protocol AccountWireframeFactory {
     func makeWireframe(_ parent: UIViewController, wallet: KeyStoreItem) -> AccountWireframe
 }
 
-// MARK: - DefaultAccountWireframeFactory
+final class DefaultAccountWireframeFactory {
 
-class DefaultAccountWireframeFactory {
-
-    private let service: AccountService
+    private let accountService: AccountService
 
     init(
-        _ service: AccountService
+        accountService: AccountService
     ) {
-        self.service = service
+        self.accountService = accountService
     }
 }
-
-// MARK: - AccountWireframeFactory
 
 extension DefaultAccountWireframeFactory: AccountWireframeFactory {
 
     func makeWireframe(_ parent: UIViewController, wallet: KeyStoreItem) -> AccountWireframe {
+        
         DefaultAccountWireframe(
             parent: parent,
-            interactor: DefaultAccountInteractor(service, wallet: wallet)
+            interactor: DefaultAccountInteractor(
+                accountService: accountService,
+                wallet: wallet
+            )
         )
     }
 }

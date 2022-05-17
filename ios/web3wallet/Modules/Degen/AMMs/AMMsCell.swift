@@ -4,7 +4,7 @@
 
 import UIKit
 
-class AMMsCell: CollectionViewCell {
+final class AMMsCell: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!

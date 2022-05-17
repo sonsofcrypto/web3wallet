@@ -11,15 +11,15 @@ protocol SwapInteractor: AnyObject {
 
 // MARK: - DefaultSwapInteractor
 
-class DefaultSwapInteractor {
+final class DefaultSwapInteractor {
 
     let dapp: DApp
+    private let degenService: DegenService
 
-    private let service: DegenService
-
-    init(_ dapp: DApp, service: DegenService) {
+    init(dapp: DApp, degenService: DegenService) {
+        
         self.dapp = dapp
-        self.service = service
+        self.degenService = degenService
     }
 }
 

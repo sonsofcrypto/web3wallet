@@ -9,20 +9,20 @@ protocol AccountInteractor: AnyObject {
     var wallet: KeyStoreItem { get }
 }
 
-// MARK: - DefaultAccountInteractor
-
-class DefaultAccountInteractor {
+final class DefaultAccountInteractor {
 
     private(set) var wallet: KeyStoreItem
     private var accountService: AccountService
 
-    init(_ accountService: AccountService, wallet: KeyStoreItem) {
+    init(
+        accountService: AccountService,
+        wallet: KeyStoreItem
+    ) {
+        
         self.accountService = accountService
         self.wallet = wallet
     }
 }
-
-// MARK: - DefaultAccountInteractor
 
 extension DefaultAccountInteractor: AccountInteractor {
 

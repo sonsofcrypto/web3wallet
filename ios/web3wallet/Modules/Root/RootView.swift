@@ -8,7 +8,7 @@ protocol RootView: AnyObject {
 
 }
 
-class RootViewController: EdgeCardsController {
+final class RootViewController: EdgeCardsController {
 
     var presenter: RootPresenter!
 

@@ -16,7 +16,7 @@ protocol AMMsPresenter {
 
 // MARK: - DefaultAMMsPresenter
 
-class DefaultAMMsPresenter {
+final class DefaultAMMsPresenter {
 
     private let interactor: AMMsInteractor
     private let wireframe: AMMsWireframe

@@ -9,27 +9,27 @@ protocol AppsWireframeFactory {
     func makeWireframe(_ parent: UIViewController) -> AppsWireframe
 }
 
-// MARK: - DefaultAppsWireframeFactory
+final class DefaultAppsWireframeFactory {
 
-class DefaultAppsWireframeFactory {
-
-    private let service: AppsService
+    private let appsService: AppsService
 
     init(
-        _ service: AppsService
+        appsService: AppsService
     ) {
-        self.service = service
+        self.appsService = appsService
     }
 }
-
-// MARK: - AppsWireframeFactory
 
 extension DefaultAppsWireframeFactory: AppsWireframeFactory {
 
     func makeWireframe(_ parent: UIViewController) -> AppsWireframe {
-        DefaultAppsWireframe(
+        
+        let interactor = DefaultAppsInteractor(
+            appsService: appsService
+        )
+        return DefaultAppsWireframe(
             parent: parent,
-            interactor: DefaultAppsInteractor(service)
+            interactor: interactor
         )
     }
 }

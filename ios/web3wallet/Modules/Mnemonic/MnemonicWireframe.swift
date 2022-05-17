@@ -15,7 +15,7 @@ protocol MnemonicWireframe {
 
 // MARK: - class DefaultMnemonicWireframe {
 
-class DefaultMnemonicWireframe {
+final class DefaultMnemonicWireframe {
 
     private let interactor: MnemonicInteractor
     private let context: MnemonicContext

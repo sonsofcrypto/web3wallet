@@ -17,7 +17,7 @@ protocol MnemonicInteractor: AnyObject {
 
 // MARK: - DefaultTemplateInteractor
 
-class DefaultMnemonicInteractor {
+final class DefaultMnemonicInteractor {
 
 
     private var keyStoreService: KeyStoreService

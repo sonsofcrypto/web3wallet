@@ -7,15 +7,3 @@ import Foundation
 protocol AppsService {
 
 }
-
-// MARK: - DefaultAppsService
-
-class DefaultAppsService {
-
-}
-
-// MARK: - AppsService
-
-extension DefaultAppsService: AppsService {
-
-}

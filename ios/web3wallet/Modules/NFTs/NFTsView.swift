@@ -9,7 +9,7 @@ protocol NFTsView: AnyObject {
     func update(with viewModel: NFTsViewModel)
 }
 
-class NFTsViewController: BaseViewController {
+final class NFTsViewController: BaseViewController {
 
     var presenter: NFTsPresenter!
 

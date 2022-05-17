@@ -4,7 +4,7 @@
 
 import UIKit
 
-class SwapInputView: UIView {
+final class SwapInputView: UIView {
 
     let textField = UITextField()
     let fiatValueLabel = UILabel(with: .smallestLabel)

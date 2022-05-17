@@ -4,7 +4,7 @@
 
 import UIKit
 
-class NetworksCell: CollectionViewCell {
+final class NetworksCell: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var switchCtl: UISwitch!

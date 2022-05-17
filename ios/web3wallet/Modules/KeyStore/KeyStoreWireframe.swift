@@ -26,7 +26,7 @@ protocol KeyStoreWireframe {
 
 // MARK: - DefaultKeyStoreWireframe
 
-class DefaultKeyStoreWireframe {
+final class DefaultKeyStoreWireframe {
 
     private weak var parent: UIViewController?
     private weak var window: UIWindow?

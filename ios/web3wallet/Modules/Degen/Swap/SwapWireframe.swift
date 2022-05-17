@@ -15,7 +15,7 @@ protocol SwapWireframe {
 
 // MARK: - DefaultSwapWireframe
 
-class DefaultSwapWireframe {
+final class DefaultSwapWireframe {
 
     private weak var parent: UIViewController?
 

@@ -14,14 +14,14 @@ protocol KeyStoreWireframeFactory {
 
 // MARK: - DefaultKeyStoreWireframeFactory
 
-class DefaultKeyStoreWireframeFactory {
+final class DefaultKeyStoreWireframeFactory {
 
     private let keyStoreSerive: KeyStoreService
     private let settingsService: SettingsService
     private let newMnemonic: MnemonicWireframeFactory
 
     init(
-        _ walletsService: KeyStoreService,
+        walletsService: KeyStoreService,
         settingsService: SettingsService,
         newMnemonic: MnemonicWireframeFactory
     ) {

@@ -4,7 +4,7 @@
 
 import Foundation
 
-class MnemonicSettingCell: CollectionViewCell {
+final class MnemonicSettingCell: CollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
 

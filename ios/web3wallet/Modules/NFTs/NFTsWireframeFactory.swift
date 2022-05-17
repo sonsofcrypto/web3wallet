@@ -11,16 +11,16 @@ protocol NFTsWireframeFactory {
 
 // MARK: - DefaultNFTsWireframeFactory
 
-class DefaultNFTsWireframeFactory {
+final class DefaultNFTsWireframeFactory {
 
-    private let service: NFTsService
+    private let nftsService: NFTsService
 
     private weak var window: UIWindow?
 
     init(
-        _ service: NFTsService
+        nftsService: NFTsService
     ) {
-        self.service = service
+        self.nftsService = nftsService
     }
 }
 
@@ -31,7 +31,7 @@ extension DefaultNFTsWireframeFactory: NFTsWireframeFactory {
     func makeWireframe(_ parent: UIViewController) -> NFTsWireframe {
         DefaultNFTsWireframe(
             parent: parent,
-            interactor: DefaultNFTsInteractor(service)
+            interactor: DefaultNFTsInteractor(nftsService)
         )
     }
 }

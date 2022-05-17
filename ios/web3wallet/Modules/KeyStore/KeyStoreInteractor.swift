@@ -35,7 +35,7 @@ protocol KeyStoreInteractor: AnyObject {
 
 // MARK: - DefaultKeyStoreInteractor
 
-class DefaultKeyStoreInteractor {
+final class DefaultKeyStoreInteractor {
 
     var selectedKeyStoreItem: KeyStoreItem? {
         get { keyStoreService.selectedKeyStoreItem }

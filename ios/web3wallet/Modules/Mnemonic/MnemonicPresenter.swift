@@ -29,7 +29,7 @@ protocol MnemonicPresenter {
 
 // MARK: - DefaultMnemonicPresenter
 
-class DefaultMnemonicPresenter {
+final class DefaultMnemonicPresenter {
 
     private let context: MnemonicContext
     private let interactor: MnemonicInteractor
