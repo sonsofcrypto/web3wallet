@@ -13,39 +13,29 @@ protocol NFTsWireframe {
     func navigate(to destination: NFTsWireframeDestination)
 }
 
-// MARK: - DefaultNFTsWireframe
-
 final class DefaultNFTsWireframe {
 
-    private weak var parent: UIViewController?
+    private weak var parent: TabBarController!
+    private let nftsService: NFTsService
 
-    private let interactor: NFTsInteractor
-
-    private weak var window: UIWindow?
-
+    private weak var navigationController: NavigationController!
+    
     init(
-        parent: UIViewController,
-        interactor: NFTsInteractor
+        parent: TabBarController,
+        nftsService: NFTsService
     ) {
         self.parent = parent
-        self.interactor = interactor
+        self.nftsService = nftsService
     }
 }
-
-// MARK: - NFTsWireframe
 
 extension DefaultNFTsWireframe: NFTsWireframe {
 
     func present() {
+        
         let vc = wireUp()
-
-        if let tabVc = self.parent as? UITabBarController {
-            let vcs = (tabVc.viewControllers ?? []) + [vc]
-            tabVc.setViewControllers(vcs, animated: false)
-            return
-        }
-
-        vc.show(vc, sender: self)
+        let vcs = (parent.viewControllers ?? []) + [vc]
+        parent.setViewControllers(vcs, animated: false)
     }
 
     func navigate(to destination: NFTsWireframeDestination) {
@@ -56,6 +46,8 @@ extension DefaultNFTsWireframe: NFTsWireframe {
 extension DefaultNFTsWireframe {
 
     private func wireUp() -> UIViewController {
+        
+        let interactor = DefaultNFTsInteractor(nftsService)
         let vc: NFTsViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultNFTsPresenter(
             view: vc,
@@ -64,6 +56,15 @@ extension DefaultNFTsWireframe {
         )
 
         vc.presenter = presenter
-        return NavigationController(rootViewController: vc)
+        let navigationController = NavigationController(rootViewController: vc)
+        self.navigationController = navigationController
+        
+        navigationController.tabBarItem = UITabBarItem(
+            title: Localized("nfts"),
+            image: UIImage(named: "tab_icon_nfts"),
+            tag: 2
+        )
+
+        return navigationController
     }
 }

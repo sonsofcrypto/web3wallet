@@ -38,7 +38,7 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
         
         DefaultDashboardWireframe(
             parent: parent,
-            interactor: DefaultDashboardInteractor(keyStoreService),
+            keyStoreService: keyStoreService,
             accountWireframeFactory: accountWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
             mnemonicConfirmationWireframeFactory: mnemonicConfirmationWireframeFactory,

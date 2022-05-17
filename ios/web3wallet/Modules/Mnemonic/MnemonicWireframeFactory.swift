@@ -36,10 +36,11 @@ extension DefaultMnemonicWireframeFactory: MnemonicWireframeFactory {
         _ parent: UIViewController?,
         context: MnemonicContext
     ) -> MnemonicWireframe {
+        
         DefaultMnemonicWireframe(
             parent: parent,
-            interactor: DefaultMnemonicInteractor(keyStoreService),
             context: context,
+            keyStoreService: keyStoreService,
             settingsService: settingsService
         )
     }

@@ -99,10 +99,5 @@ private extension NFTsViewController {
 
     func configureNavAndTabBarItem() {
         title = Localized("nfts")
-        tabBarItem = UITabBarItem(
-            title: title,
-            image: UIImage(named: "tab_icon_nfts"),
-            tag: 2
-        )
     }
 }

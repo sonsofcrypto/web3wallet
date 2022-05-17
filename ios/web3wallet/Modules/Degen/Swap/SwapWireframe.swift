@@ -18,15 +18,17 @@ protocol SwapWireframe {
 final class DefaultSwapWireframe {
 
     private weak var parent: UIViewController?
-
-    private let interactor: SwapInteractor
+    private let dapp: DApp
+    private let degenService: DegenService
 
     init(
         parent: UIViewController,
-        interactor: SwapInteractor
+        dapp: DApp,
+        degenService: DegenService
     ) {
         self.parent = parent
-        self.interactor = interactor
+        self.dapp = dapp
+        self.degenService = degenService
     }
 }
 
@@ -44,9 +46,14 @@ extension DefaultSwapWireframe: SwapWireframe {
     }
 }
 
-extension DefaultSwapWireframe {
+private extension DefaultSwapWireframe {
 
-    private func wireUp() -> UIViewController {
+    func wireUp() -> UIViewController {
+        
+        let interactor = DefaultSwapInteractor(
+            dapp: dapp,
+            degenService: degenService
+        )
         let vc: SwapViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultSwapPresenter(
             view: vc,

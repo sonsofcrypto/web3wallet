@@ -5,7 +5,7 @@
 import UIKit
 
 enum AppsWireframeDestination {
-
+    
 }
 
 protocol AppsWireframe {
@@ -15,53 +15,63 @@ protocol AppsWireframe {
 
 // MARK: - DefaultAppsWireframe
 
-class DefaultAppsWireframe {
-
-    private weak var parent: UIViewController?
-
-    private let interactor: AppsInteractor
-
+final class DefaultAppsWireframe {
+    
+    private weak var parent: UITabBarController!
+    private let appsService: AppsService
+    
+    private weak var navigationController: UINavigationController!
+    
     init(
-        parent: UIViewController,
-        interactor: AppsInteractor
+        parent: UITabBarController,
+        appsService: AppsService
     ) {
         self.parent = parent
-        self.interactor = interactor
+        self.appsService = appsService
     }
 }
 
 // MARK: - AppsWireframe
 
 extension DefaultAppsWireframe: AppsWireframe {
-
+    
     func present() {
+        
         let vc = wireUp()
-
-        if let tabVc = self.parent as? UITabBarController {
-            let vcs = (tabVc.viewControllers ?? []) + [vc]
-            tabVc.setViewControllers(vcs, animated: false)
-            return
-        }
-
-        vc.show(vc, sender: self)
+        let vcs = (parent.viewControllers ?? []) + [vc]
+        parent.setViewControllers(vcs, animated: false)
     }
-
+    
     func navigate(to destination: AppsWireframeDestination) {
         print("navigate to \(destination)")
     }
 }
 
-extension DefaultAppsWireframe {
-
-    private func wireUp() -> UIViewController {
+private extension DefaultAppsWireframe {
+    
+    func wireUp() -> UIViewController {
+        
+        let interactor = DefaultAppsInteractor(
+            appsService: appsService
+        )
         let vc: AppsViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultAppsPresenter(
             view: vc,
             interactor: interactor,
             wireframe: self
         )
-
+        
         vc.presenter = presenter
-        return NavigationController(rootViewController: vc)
+        
+        let navigationController = NavigationController(rootViewController: vc)
+        self.navigationController = navigationController
+        
+        navigationController.tabBarItem = UITabBarItem(
+            title: Localized("apps"),
+            image: UIImage(named: "tab_icon_apps"),
+            tag: 3
+        )
+
+        return navigationController
     }
 }

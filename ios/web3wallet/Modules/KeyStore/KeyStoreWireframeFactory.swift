@@ -42,7 +42,7 @@ extension DefaultKeyStoreWireframeFactory: KeyStoreWireframeFactory {
         DefaultKeyStoreWireframe(
             parent: parent,
             window: window,
-            interactor: DefaultKeyStoreInteractor(keyStoreSerive),
+            keyStoreSerive: keyStoreSerive,
             newMnemonic: newMnemonic,
             settingsService: settingsService
         )

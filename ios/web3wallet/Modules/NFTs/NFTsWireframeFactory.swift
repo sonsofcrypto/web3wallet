@@ -6,7 +6,7 @@ import UIKit
 
 protocol NFTsWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController) -> NFTsWireframe
+    func makeWireframe(_ parent: TabBarController) -> NFTsWireframe
 }
 
 // MARK: - DefaultNFTsWireframeFactory
@@ -28,10 +28,10 @@ final class DefaultNFTsWireframeFactory {
 
 extension DefaultNFTsWireframeFactory: NFTsWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController) -> NFTsWireframe {
+    func makeWireframe(_ parent: TabBarController) -> NFTsWireframe {
         DefaultNFTsWireframe(
             parent: parent,
-            interactor: DefaultNFTsInteractor(nftsService)
+            nftsService: nftsService
         )
     }
 }

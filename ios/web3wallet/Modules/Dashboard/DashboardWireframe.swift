@@ -16,14 +16,12 @@ protocol DashboardWireframe {
     func navigate(to destination: DashboardWireframeDestination)
 }
 
-// MARK: - DefaultDashboardWireframe
-
 final class DefaultDashboardWireframe {
 
     private weak var parent: UIViewController!
     private weak var vc: UIViewController!
 
-    private let interactor: DashboardInteractor
+    private let keyStoreService: KeyStoreService
     private let accountWireframeFactory: AccountWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
@@ -31,22 +29,20 @@ final class DefaultDashboardWireframe {
 
     init(
         parent: UIViewController,
-        interactor: DashboardInteractor,
+        keyStoreService: KeyStoreService,
         accountWireframeFactory: AccountWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
         onboardingService: OnboardingService
     ) {
         self.parent = parent
-        self.interactor = interactor
+        self.keyStoreService = keyStoreService
         self.accountWireframeFactory = accountWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
         self.onboardingService = onboardingService
     }
 }
-
-// MARK: - DashboardWireframe
 
 extension DefaultDashboardWireframe: DashboardWireframe {
 
@@ -94,9 +90,11 @@ extension DefaultDashboardWireframe: DashboardWireframe {
     }
 }
 
-extension DefaultDashboardWireframe {
+private extension DefaultDashboardWireframe {
 
-    private func wireUp() -> UIViewController {
+    func wireUp() -> UIViewController {
+        
+        let interactor = DefaultDashboardInteractor(keyStoreService)
         let vc: DashboardViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultDashboardPresenter(
             view: vc,

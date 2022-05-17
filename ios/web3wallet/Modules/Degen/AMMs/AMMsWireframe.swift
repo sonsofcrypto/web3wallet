@@ -13,36 +13,32 @@ protocol AMMsWireframe {
     func navigate(to destination: AMMsWireframeDestination)
 }
 
-// MARK: - DefaultAMMsWireframe
-
 final class DefaultAMMsWireframe {
 
-    private weak var parent: UIViewController?
-    private weak var vc: UIViewController?
-
-    private let interactor: AMMsInteractor
+    private weak var parent: UIViewController!
+    private let degenService: DegenService
     private let swapWireframeFactory: SwapWireframeFactory
+
+    private weak var vc: UIViewController?
 
     init(
         parent: UIViewController,
-        interactor: AMMsInteractor,
+        degenService: DegenService,
         swapWireframeFactory: SwapWireframeFactory
     ) {
         self.parent = parent
-        self.interactor = interactor
+        self.degenService = degenService
         self.swapWireframeFactory = swapWireframeFactory
     }
 }
 
-// MARK: - AMMsWireframe
-
 extension DefaultAMMsWireframe: AMMsWireframe {
 
     func present() {
+        
         let vc = wireUp()
         self.vc = vc
-        parent?.show(vc, sender: self)
-
+        parent.show(vc, sender: self)
     }
 
     func navigate(to destination: AMMsWireframeDestination) {
@@ -54,9 +50,6 @@ extension DefaultAMMsWireframe: AMMsWireframe {
         switch destination {
         case let .dapp(dapp):
             swapWireframeFactory.makeWireframe(vc, dapp: dapp).present()
-
-        default:
-            fatalError("Navigation to \(destination) not implemented")
         }
     }
 }
@@ -64,6 +57,8 @@ extension DefaultAMMsWireframe: AMMsWireframe {
 extension DefaultAMMsWireframe {
 
     private func wireUp() -> UIViewController {
+        
+        let interactor = DefaultAMMsInteractor(degenService)
         let vc: AMMsViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultAMMsPresenter(
             view: vc,

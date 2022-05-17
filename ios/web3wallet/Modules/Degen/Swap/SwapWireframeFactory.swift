@@ -23,13 +23,11 @@ final class DefaultSwapWireframeFactory {
 extension DefaultSwapWireframeFactory: SwapWireframeFactory {
 
     func makeWireframe(_ parent: UIViewController, dapp: DApp) -> SwapWireframe {
-        let interactor = DefaultSwapInteractor(
+
+        DefaultSwapWireframe(
+            parent: parent,
             dapp: dapp,
             degenService: degenService
-        )
-        return DefaultSwapWireframe(
-            parent: parent,
-            interactor: interactor
         )
     }
 }

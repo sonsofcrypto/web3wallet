@@ -30,22 +30,22 @@ final class DefaultKeyStoreWireframe {
 
     private weak var parent: UIViewController?
     private weak var window: UIWindow?
-    private weak var vc: UIViewController?
-
-    private let interactor: KeyStoreInteractor
+    private let keyStoreSerive: KeyStoreService
     private let newMnemonic: MnemonicWireframeFactory
     private let settingsService: SettingsService
+
+    private weak var vc: UIViewController?
 
     init(
         parent: UIViewController?,
         window: UIWindow?,
-        interactor: KeyStoreInteractor,
+        keyStoreSerive: KeyStoreService,
         newMnemonic: MnemonicWireframeFactory,
         settingsService: SettingsService
     ) {
         self.parent = parent
         self.window = window
-        self.interactor = interactor
+        self.keyStoreSerive = keyStoreSerive
         self.newMnemonic = newMnemonic
         self.settingsService = settingsService
     }
@@ -101,9 +101,10 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
     }
 }
 
-extension DefaultKeyStoreWireframe {
+private extension DefaultKeyStoreWireframe {
 
-    private func wireUp() -> UIViewController {
+    func wireUp() -> UIViewController {
+        let interactor = DefaultKeyStoreInteractor(keyStoreSerive)
         let vc: KeyStoreViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultKeyStorePresenter(
             view: vc,

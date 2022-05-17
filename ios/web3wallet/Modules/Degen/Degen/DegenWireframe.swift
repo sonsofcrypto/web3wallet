@@ -18,19 +18,20 @@ protocol DegenWireframe {
 
 final class DefaultDegenWireframe {
 
-    private weak var parent: UIViewController?
+    private weak var parent: TabBarController!
     private weak var vc: UIViewController?
-
-    private let interactor: DegenInteractor
+    private let degenService: DegenService
     private let ammsWireframeFactory: AMMsWireframeFactory
 
+    private weak var navigationController: NavigationController!
+
     init(
-        parent: UIViewController,
-        interactor: DegenInteractor,
+        parent: TabBarController,
+        degenService: DegenService,
         ammsWireframeFactory: AMMsWireframeFactory
     ) {
         self.parent = parent
-        self.interactor = interactor
+        self.degenService = degenService
         self.ammsWireframeFactory = ammsWireframeFactory
     }
 }
@@ -40,34 +41,26 @@ final class DefaultDegenWireframe {
 extension DefaultDegenWireframe: DegenWireframe {
 
     func present() {
+        
         let vc = wireUp()
-        self.vc = vc
-
-        if let tabVc = self.parent as? UITabBarController {
-            let vcs = (tabVc.viewControllers ?? []) + [vc]
-            tabVc.setViewControllers(vcs, animated: false)
-            return
-        }
-
-        vc.show(vc, sender: self)
+        let vcs = (parent.viewControllers ?? []) + [vc]
+        parent.setViewControllers(vcs, animated: false)
     }
 
     func navigate(to destination: DegenWireframeDestination) {
-        guard let vc = self.vc else {
-            print("DefaultDegenWireframe does not have a view")
-            return
-        }
 
         switch destination {
         case .amms:
-            ammsWireframeFactory.makeWireframe(vc).present()
+            ammsWireframeFactory.makeWireframe(navigationController).present()
         }
     }
 }
 
-extension DefaultDegenWireframe {
+private extension DefaultDegenWireframe {
 
-    private func wireUp() -> UIViewController {
+    func wireUp() -> UIViewController {
+        
+        let interactor = DefaultDegenInteractor(degenService)
         let vc: DegenViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultDegenPresenter(
             view: vc,
@@ -76,6 +69,15 @@ extension DefaultDegenWireframe {
         )
 
         vc.presenter = presenter
-        return NavigationController(rootViewController: vc)
+        let navigationController = NavigationController(rootViewController: vc)
+        self.navigationController = navigationController
+        
+        navigationController.tabBarItem = UITabBarItem(
+            title: Localized("degen"),
+            image: UIImage(named: "tab_icon_degen"),
+            tag: 1
+        )
+        
+        return navigationController
     }
 }

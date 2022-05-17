@@ -17,22 +17,22 @@ protocol MnemonicWireframe {
 
 final class DefaultMnemonicWireframe {
 
-    private let interactor: MnemonicInteractor
+    private weak var parent: UIViewController!
     private let context: MnemonicContext
+    private let keyStoreService: KeyStoreService
     private let settingsService: SettingsService
 
-    private weak var parent: UIViewController?
-    private weak var vc: UIViewController?
+    private weak var vc: UIViewController!
 
     init(
         parent: UIViewController?,
-        interactor: MnemonicInteractor,
         context: MnemonicContext,
+        keyStoreService: KeyStoreService,
         settingsService: SettingsService
     ) {
-        self.interactor = interactor
         self.parent = parent
         self.context = context
+        self.keyStoreService = keyStoreService
         self.settingsService = settingsService
     }
 }
@@ -42,6 +42,7 @@ final class DefaultMnemonicWireframe {
 extension DefaultMnemonicWireframe: MnemonicWireframe {
 
     func present() {
+        
         let vc = wireUp()
 
         let topVc = (parent as? UINavigationController)?.topViewController
@@ -74,6 +75,7 @@ extension DefaultMnemonicWireframe: MnemonicWireframe {
 extension DefaultMnemonicWireframe {
 
     private func wireUp() -> UIViewController {
+        let interactor = DefaultMnemonicInteractor(keyStoreService)
         let vc: MnemonicViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultMnemonicPresenter(
             context: context,

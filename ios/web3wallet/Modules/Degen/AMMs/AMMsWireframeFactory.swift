@@ -26,9 +26,10 @@ final class DefaultAMMsWireframeFactory {
 extension DefaultAMMsWireframeFactory: AMMsWireframeFactory {
 
     func makeWireframe(_ parent: UIViewController) -> AMMsWireframe {
+        
         DefaultAMMsWireframe(
             parent: parent,
-            interactor: DefaultAMMsInteractor(degenService),
+            degenService: degenService,
             swapWireframeFactory: swapWireframeFactory
         )
     }

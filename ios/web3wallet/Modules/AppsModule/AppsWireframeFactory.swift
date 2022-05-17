@@ -6,7 +6,7 @@ import UIKit
 
 protocol AppsWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController) -> AppsWireframe
+    func makeWireframe(_ parent: UITabBarController) -> AppsWireframe
 }
 
 final class DefaultAppsWireframeFactory {
@@ -22,14 +22,11 @@ final class DefaultAppsWireframeFactory {
 
 extension DefaultAppsWireframeFactory: AppsWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController) -> AppsWireframe {
+    func makeWireframe(_ parent: UITabBarController) -> AppsWireframe {
         
-        let interactor = DefaultAppsInteractor(
-            appsService: appsService
-        )
-        return DefaultAppsWireframe(
+        DefaultAppsWireframe(
             parent: parent,
-            interactor: interactor
+            appsService: appsService
         )
     }
 }

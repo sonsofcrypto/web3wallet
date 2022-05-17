@@ -6,15 +6,13 @@ import UIKit
 
 protocol DegenWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController) -> DegenWireframe
+    func makeWireframe(_ parent: TabBarController) -> DegenWireframe
 }
 
 final class DefaultDegenWireframeFactory {
 
     private let degenService: DegenService
     private let ammsWireframeFactory: AMMsWireframeFactory
-
-    private weak var window: UIWindow?
 
     init(
         degenService: DegenService,
@@ -27,10 +25,11 @@ final class DefaultDegenWireframeFactory {
 
 extension DefaultDegenWireframeFactory: DegenWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController) -> DegenWireframe {
+    func makeWireframe(_ parent: TabBarController) -> DegenWireframe {
+        
         DefaultDegenWireframe(
             parent: parent,
-            interactor: DefaultDegenInteractor(degenService),
+            degenService: degenService,
             ammsWireframeFactory: ammsWireframeFactory
         )
     }

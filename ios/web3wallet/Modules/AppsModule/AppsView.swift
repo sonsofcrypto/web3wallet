@@ -9,7 +9,7 @@ protocol AppsView: AnyObject {
     func update(with viewModel: AppsViewModel)
 }
 
-class AppsViewController: BaseViewController {
+final class AppsViewController: BaseViewController {
 
     var presenter: AppsPresenter!
 
@@ -23,11 +23,11 @@ class AppsViewController: BaseViewController {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        configureNavAndTabBarItem()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavAndTabBarItem()
         configureUI()
         presenter?.present()
     }
@@ -98,10 +98,5 @@ extension AppsViewController {
 
     func configureNavAndTabBarItem() {
         title = Localized("apps")
-        tabBarItem = UITabBarItem(
-            title: title,
-            image: UIImage(named: "tab_icon_apps"),
-            tag: 3
-        )
     }
 }

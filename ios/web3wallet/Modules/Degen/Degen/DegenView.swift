@@ -130,11 +130,6 @@ extension DegenViewController {
 
     func configureNavAndTabBarItem() {
         title = Localized("degen")
-        tabBarItem = UITabBarItem(
-            title: title,
-            image: UIImage(named: "tab_icon_degen"),
-            tag: 1
-        )
     }
 }
 
