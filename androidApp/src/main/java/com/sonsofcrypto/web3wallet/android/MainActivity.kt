@@ -2,7 +2,7 @@ package com.sonsofcrypto.web3wallet.android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.sonsofcrypto.web3wallet.Greeting
+import com.sonsofcrypto.web3lib_bip39.Greeting
 import android.widget.TextView
 
 fun greet(): String {
