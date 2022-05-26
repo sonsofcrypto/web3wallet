@@ -1,10 +1,8 @@
-module github.com/sonsofcrypto/web3lib
+module github.com/sonsofcrypto/web3wallet/crypto
 
 go 1.17
 
 require (
-	github.com/ethereum/go-ethereum v1.10.17
-	github.com/sonsofcrypto/bip39 v0.0.0-20220406192819-44e8fe38e665
 )
 
 require (
