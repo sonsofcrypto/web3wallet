@@ -1,0 +1,473 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D11B7E2E2800D5C500F40488 /* web3.docc in Sources */ = {isa = PBXBuildFile; fileRef = D11B7E2D2800D5C500F40488 /* web3.docc */; };
+		D11B7E342800D5C600F40488 /* web3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D11B7E292800D5C500F40488 /* web3.framework */; };
+		D11B7E392800D5C600F40488 /* web3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11B7E382800D5C600F40488 /* web3Tests.swift */; };
+		D11B7E3A2800D5C600F40488 /* web3.h in Headers */ = {isa = PBXBuildFile; fileRef = D11B7E2C2800D5C500F40488 /* web3.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D11B7E442800D60600F40488 /* greeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11B7E432800D60600F40488 /* greeter.swift */; };
+		D11B7E462800D7B800F40488 /* web3lib.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D11B7E452800D7B800F40488 /* web3lib.xcframework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D11B7E352800D5C600F40488 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D11B7E202800D5C500F40488 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D11B7E282800D5C500F40488;
+			remoteInfo = web3;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D11B7E292800D5C500F40488 /* web3.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = web3.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D11B7E2C2800D5C500F40488 /* web3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = web3.h; sourceTree = "<group>"; };
+		D11B7E2D2800D5C500F40488 /* web3.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = web3.docc; sourceTree = "<group>"; };
+		D11B7E332800D5C600F40488 /* web3Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = web3Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D11B7E382800D5C600F40488 /* web3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3Tests.swift; sourceTree = "<group>"; };
+		D11B7E432800D60600F40488 /* greeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = greeter.swift; sourceTree = "<group>"; };
+		D11B7E452800D7B800F40488 /* web3lib.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = web3lib.xcframework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D11B7E262800D5C500F40488 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D11B7E462800D7B800F40488 /* web3lib.xcframework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D11B7E302800D5C600F40488 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D11B7E342800D5C600F40488 /* web3.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D11B7E1F2800D5C500F40488 = {
+			isa = PBXGroup;
+			children = (
+				D11B7E452800D7B800F40488 /* web3lib.xcframework */,
+				D11B7E2B2800D5C500F40488 /* web3 */,
+				D11B7E372800D5C600F40488 /* web3Tests */,
+				D11B7E2A2800D5C500F40488 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D11B7E2A2800D5C500F40488 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D11B7E292800D5C500F40488 /* web3.framework */,
+				D11B7E332800D5C600F40488 /* web3Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D11B7E2B2800D5C500F40488 /* web3 */ = {
+			isa = PBXGroup;
+			children = (
+				D11B7E432800D60600F40488 /* greeter.swift */,
+				D11B7E2C2800D5C500F40488 /* web3.h */,
+				D11B7E2D2800D5C500F40488 /* web3.docc */,
+			);
+			path = web3;
+			sourceTree = "<group>";
+		};
+		D11B7E372800D5C600F40488 /* web3Tests */ = {
+			isa = PBXGroup;
+			children = (
+				D11B7E382800D5C600F40488 /* web3Tests.swift */,
+			);
+			path = web3Tests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D11B7E242800D5C500F40488 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D11B7E3A2800D5C600F40488 /* web3.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D11B7E282800D5C500F40488 /* web3 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D11B7E3D2800D5C600F40488 /* Build configuration list for PBXNativeTarget "web3" */;
+			buildPhases = (
+				D11B7E242800D5C500F40488 /* Headers */,
+				D11B7E252800D5C500F40488 /* Sources */,
+				D11B7E262800D5C500F40488 /* Frameworks */,
+				D11B7E272800D5C500F40488 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = web3;
+			productName = web3;
+			productReference = D11B7E292800D5C500F40488 /* web3.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		D11B7E322800D5C600F40488 /* web3Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D11B7E402800D5C600F40488 /* Build configuration list for PBXNativeTarget "web3Tests" */;
+			buildPhases = (
+				D11B7E2F2800D5C600F40488 /* Sources */,
+				D11B7E302800D5C600F40488 /* Frameworks */,
+				D11B7E312800D5C600F40488 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D11B7E362800D5C600F40488 /* PBXTargetDependency */,
+			);
+			name = web3Tests;
+			productName = web3Tests;
+			productReference = D11B7E332800D5C600F40488 /* web3Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D11B7E202800D5C500F40488 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1330;
+				LastUpgradeCheck = 1330;
+				TargetAttributes = {
+					D11B7E282800D5C500F40488 = {
+						CreatedOnToolsVersion = 13.3;
+					};
+					D11B7E322800D5C600F40488 = {
+						CreatedOnToolsVersion = 13.3;
+					};
+				};
+			};
+			buildConfigurationList = D11B7E232800D5C500F40488 /* Build configuration list for PBXProject "web3" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D11B7E1F2800D5C500F40488;
+			productRefGroup = D11B7E2A2800D5C500F40488 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D11B7E282800D5C500F40488 /* web3 */,
+				D11B7E322800D5C600F40488 /* web3Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D11B7E272800D5C500F40488 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D11B7E312800D5C600F40488 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D11B7E252800D5C500F40488 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D11B7E442800D60600F40488 /* greeter.swift in Sources */,
+				D11B7E2E2800D5C500F40488 /* web3.docc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D11B7E2F2800D5C600F40488 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D11B7E392800D5C600F40488 /* web3Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D11B7E362800D5C600F40488 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D11B7E282800D5C500F40488 /* web3 */;
+			targetProxy = D11B7E352800D5C600F40488 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D11B7E3B2800D5C600F40488 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		D11B7E3C2800D5C600F40488 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		D11B7E3E2800D5C600F40488 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 5K4DT22LXR;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+					"$(PROJECT_DIR)/.",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D11B7E3F2800D5C600F40488 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 5K4DT22LXR;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+					"$(PROJECT_DIR)/.",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D11B7E412800D5C600F40488 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5K4DT22LXR;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D11B7E422800D5C600F40488 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5K4DT22LXR;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D11B7E232800D5C500F40488 /* Build configuration list for PBXProject "web3" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D11B7E3B2800D5C600F40488 /* Debug */,
+				D11B7E3C2800D5C600F40488 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D11B7E3D2800D5C600F40488 /* Build configuration list for PBXNativeTarget "web3" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D11B7E3E2800D5C600F40488 /* Debug */,
+				D11B7E3F2800D5C600F40488 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D11B7E402800D5C600F40488 /* Build configuration list for PBXNativeTarget "web3Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D11B7E412800D5C600F40488 /* Debug */,
+				D11B7E422800D5C600F40488 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D11B7E202800D5C500F40488 /* Project object */;
+}
