@@ -7,3 +7,8 @@ import Foundation
 func Localized(_ key: String) -> String {
     NSLocalizedString(key, comment: "")
 }
+
+func Localized(_ key: String, arg: String) -> String {
+    
+    NSLocalizedString(key, comment: "").replacingOccurrences(of: "%@", with: arg)
+}

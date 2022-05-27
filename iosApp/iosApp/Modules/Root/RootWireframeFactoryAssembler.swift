@@ -13,7 +13,7 @@ final class RootWireframeFactoryAssembler: AssemblerComponent {
                 networksWireframeFactory: resolver.resolve(),
                 dashboardWireframeFactory: resolver.resolve(),
                 degenWireframeFactory: resolver.resolve(),
-                nftsWireframeFactory: resolver.resolve(),
+                nftsDashboardWireframeFactory: resolver.resolve(),
                 appsWireframeFactory: resolver.resolve(),
                 settingsWireframeFactory: resolver.resolve(),
                 keyStoreService: resolver.resolve()

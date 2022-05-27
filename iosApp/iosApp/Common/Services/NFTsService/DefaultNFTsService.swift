@@ -7,5 +7,18 @@ final class DefaultNFTsService {
 }
 
 extension DefaultNFTsService: NFTsService {
+    
+    func yourNFTs(
+        onCompletion: (Result<[NFTItem], Error>) -> Void
+    ) {
+        
+        onCompletion(.success(Self.yourNFTs))
+    }
 
+    func yourNftsCollections(
+        onCompletion: (Result<[NFTCollection], Error>) -> Void
+    ) {
+        
+        onCompletion(.success(Self.yourNFTCollections))
+    }
 }
