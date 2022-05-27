@@ -184,3 +184,11 @@ packages/react-devtools-timeline/dist
 .externalNativeBuild
 .cxx
 local.properties
+
+crypto/iosMain
+crypto/androidMain
+crypto/jsMain
+
+web3lib_crypto/iosMain/lib
+web3lib_crypto/androidMain/lib
+web3lib_crypto/jsMain/lib

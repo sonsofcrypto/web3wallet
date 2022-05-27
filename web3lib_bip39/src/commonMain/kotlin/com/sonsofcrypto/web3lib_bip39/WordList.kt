@@ -2,33 +2,33 @@ package com.sonsofcrypto.web3lib_bip39
 
 enum class WordList {
     ENGLISH,
-    SPANISH,
-    FRENCH,
-    PORTUGUESE,
-    ITALIAN,
-    CZECH,
-    JAPANESE,
-    KOREAN,
-    CHINESE_SIMPLIFIED,
-    CHINESE_TRADITIONAL,
+//    SPANISH,
+//    FRENCH,
+//    PORTUGUESE,
+//    ITALIAN,
+//    CZECH,
+//    JAPANESE,
+//    KOREAN,
+//    CHINESE_SIMPLIFIED,
+//    CHINESE_TRADITIONAL,
 }
 
 fun WordList.words(): List<String> {
     return when (this) {
         WordList.ENGLISH -> WORDLIST_ENGLISH
-        WordList.SPANISH -> WORDLIST_SPANISH
-        WordList.FRENCH -> WORDLIST_FRENCH
-        WordList.PORTUGUESE -> WORDLIST_PORTUGUESE
-        WordList.ITALIAN -> WORDLIST_ITALIAN
-        WordList.CZECH -> WORDLIST_CZECH
-        WordList.JAPANESE -> WORDLIST_JAPANESE
-        WordList.KOREAN -> WORDLIST_KOREAN
-        WordList.CHINESE_SIMPLIFIED -> WORDLIST_CHINESE_SIMPLIFIED
-        WordList.CHINESE_TRADITIONAL -> WORDLIST_CHINESE_TRADITIONAL
+//        WordList.SPANISH -> WORDLIST_SPANISH
+//        WordList.FRENCH -> WORDLIST_FRENCH
+//        WordList.PORTUGUESE -> WORDLIST_PORTUGUESE
+//        WordList.ITALIAN -> WORDLIST_ITALIAN
+//        WordList.CZECH -> WORDLIST_CZECH
+//        WordList.JAPANESE -> WORDLIST_JAPANESE
+//        WordList.KOREAN -> WORDLIST_KOREAN
+//        WordList.CHINESE_SIMPLIFIED -> WORDLIST_CHINESE_SIMPLIFIED
+//        WordList.CHINESE_TRADITIONAL -> WORDLIST_CHINESE_TRADITIONAL
     }
 }
 
-fun WordList.word(index: Int): List<String> = words()[index]
+fun WordList.word(index: Int): String = words()[index]
 
 
 /* bip39 english words */
@@ -579,7 +579,9 @@ val WORDLIST_SPANISH: List<String> = listOf(
     "zanja", "zapato", "zarza", "zona", "zorro", "zumo", "zurdo",
 )
 
-/* bip39 spanish words */
+/**
+
+/** bip39 spanish words */
 val WORDLIST_FRENCH: List<String> = listOf(
     "abaisser", "abandon", "abdiquer", "abeille", "abolir", "aborder", "aboutir",
     "aboyer", "abrasif", "abreuver", "abriter", "abroger", "abrupt", "absence",
@@ -2610,3 +2612,4 @@ val WORDLIST_CHINESE_TRADITIONAL: List<String> = listOf(
     "巷", "餓", "禍", "丘", "玄", "溜", "曰", "邏", "彭", "嘗", "卿", "妨", "艇", "吞",
     "韋", "怨", "矮", "歇",
 )
+*/

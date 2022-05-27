@@ -28,8 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //        )
         //        print(documents.last!)
         //#endif
-        
-        print("Testing web3lib integration", Greeting().greeting())
+
+        let data = Crypto().secureRand(size: 2).data()
+        let string = String(data: data, encoding: .utf8) ?? ""
+        print("Testing web3lib integration", Greeting().greeting() + string)
         return true
     }
 

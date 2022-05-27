@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
-import java.io.File
 
 plugins {
     kotlin("multiplatform")
@@ -8,31 +7,21 @@ plugins {
 
 kotlin {
     android()
-
+    
     val xcf = XCFramework()
-
     listOf(
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "web3lib"
-            export(project(":web3lib_bip39"))
-            export(project(":web3lib_crypto"))
-            export(project(":web3lib_extensions"))
+            baseName = "web3lib_extensions"
             xcf.add(this)
         }
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                api(project(":web3lib_bip39"))
-                api(project(":web3lib_crypto"))
-                api(project(":web3lib_extensions"))
-            }
-        }
+        val commonMain by getting
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
