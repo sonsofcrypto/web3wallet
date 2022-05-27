@@ -119,11 +119,10 @@ private extension DefaultNFTsDashboardPresenter {
         }.compactMap {
             
             NFTsDashboardViewModel.Collection(
+                identifier: $0.identifier,
                 coverImage: $0.coverImage,
                 title: $0.title,
-                author: $0.author,
-                isVerifiedAccount: $0.isVerifiedAccount,
-                authorImage: $0.authorImage
+                author: $0.author
             )
         }
         

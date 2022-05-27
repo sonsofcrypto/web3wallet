@@ -18,10 +18,9 @@ extension NFTsDashboardViewModel {
     
     struct Collection {
         
+        let identifier: String
         let coverImage: String
         let title: String
         let author: String
-        let isVerifiedAccount: Bool
-        let authorImage: String
     }
 }

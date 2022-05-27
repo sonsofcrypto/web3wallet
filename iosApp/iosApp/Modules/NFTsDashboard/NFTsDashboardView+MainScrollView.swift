@@ -26,7 +26,7 @@ extension NFTsDashboardViewController {
         carousel.addConstraints(
             [
                 .layout(anchor: .topAnchor, constant: .equalTo(constant: Global.padding)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 162)),
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: nftsCollectionHeight)),
                 .layout(anchor: .widthAnchor, constant: .equalTo(constant: carouselWidth)),
                 .layout(anchor: .centerXAnchor)
             ]
@@ -37,7 +37,12 @@ extension NFTsDashboardViewController {
         self.collectionsView = collectionsView
         collectionsView.addConstraints(
             [
-                .layout(anchor: .topAnchor, constant: .equalTo(constant: 200)),
+                .layout(
+                    anchor: .topAnchor,
+                    constant: .equalTo(
+                        constant: nftsCollectionHeight + Global.padding * 2
+                    )
+                ),
                 .layout(anchor: .bottomAnchor),
                 .layout(anchor: .centerXAnchor),
                 .layout(anchor: .widthAnchor)
@@ -49,6 +54,16 @@ extension NFTsDashboardViewController {
 }
 
 private extension NFTsDashboardViewController {
+    
+    var nftsCollectionHeight: CGFloat {
+        
+        guard let viewWidth = navigationController?.view.frame.size.width else {
+            
+            return 200
+        }
+        
+        return viewWidth * 0.6
+    }
     
     var carouselWidth: CGFloat {
      

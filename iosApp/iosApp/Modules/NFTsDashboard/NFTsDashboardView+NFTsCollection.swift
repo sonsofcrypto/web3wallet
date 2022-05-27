@@ -6,6 +6,11 @@ import UIKit
 
 extension NFTsDashboardViewController {
     
+    typealias NFTCollectionItem = (
+        index: Int,
+        collection: NFTsDashboardViewModel.Collection
+    )
+    
     func makeNFTCollectionsContent() -> UIStackView {
         
         let collections = viewModel?.collections ?? []
@@ -29,24 +34,29 @@ extension NFTsDashboardViewController {
         var index = 0
         while true {
             
-            var item1: NFTsDashboardViewModel.Collection?
-            var item2: NFTsDashboardViewModel.Collection?
+            var item1: NFTCollectionItem?
+            var item2: NFTCollectionItem?
 
             if index < collections.count {
                 
-                item1 = collections[index]
+                item1 = (index: index, collection: collections[index])
                 index += 1
             }
             
             if index < collections.count {
                 
-                item2 = collections[index]
+                item2 = (index: index, collection: collections[index])
                 index += 1
             }
             
             guard let item1 = item1 else { break }
 
-            rows.append(makeNFTsCollectionRow(with: item1, and: item2))
+            rows.append(
+                makeNFTsCollectionRow(
+                    with: item1,
+                    and: item2
+                )
+            )
         }
         
         rows.append(.vSpace(height: Global.padding))
@@ -74,8 +84,8 @@ extension NFTsDashboardViewController {
 private extension NFTsDashboardViewController {
     
     func makeNFTsCollectionRow(
-        with item1: NFTsDashboardViewModel.Collection,
-        and item2: NFTsDashboardViewModel.Collection?
+        with item1: NFTCollectionItem,
+        and item2: NFTCollectionItem?
     ) -> UIView {
         
         var views = [UIView]()
@@ -90,12 +100,12 @@ private extension NFTsDashboardViewController {
     }
     
     func makePopularNFTCollectionContent(
-        with collection: NFTsDashboardViewModel.Collection
+        with item: NFTCollectionItem
     ) -> UIView {
         
         let view = UIView()
         
-        let stackView = makeVerticalStack(with: collection)
+        let stackView = makeVerticalStack(with: item.collection)
         view.addSubview(stackView)
         stackView.addConstraints(
             [
@@ -151,8 +161,22 @@ private extension NFTsDashboardViewController {
 //                )
 //            ]
 //        )
-        
+        view.tag = item.index
+        view.add(
+            .targetAction(
+                .init(target: self, selector: #selector(collectionItemSelected(_:)))
+            )
+        )
         return view
+    }
+    
+    @objc func collectionItemSelected(_ tapGesture: UITapGestureRecognizer) {
+        
+        guard let tag = tapGesture.view?.tag else { return }
+        guard let viewModel = viewModel else { return }
+        guard viewModel.collections.count > tag else { return }
+        let collection = viewModel.collections[tag]
+        print("collection selected: \(collection.title)")
     }
     
     func makeVerticalStack(

@@ -1,9 +1,6 @@
-//
-//  DefaultNFTsService+Data.swift
-//  web3wallet
-//
-//  Created by web3 on 24/05/2022.
-//
+// Created by web3d4v on 27/05/2022.
+// Copyright (c) 2022 Sons Of Crypto.
+// SPDX-License-Identifier: MIT
 
 extension DefaultNFTsService {
     
@@ -75,6 +72,55 @@ extension DefaultNFTsService {
                 .init(name: "SOUTHERN RESOURCE", value: "Whisper", info: "3% have this trait")
             ],
             image: "https://img.seadn.io/files/ee0c526768f4335501fa92bc89cf8e80.jpg?auto=format&w=600"
+        ),
+        .init(
+            identifier: "#97097",
+            collectionIdentifier: "Otherdeed for Otherside",
+            name: "#97097",
+            ethPrice: 2.367,
+            description: nil,
+            properties: [
+                .init(name: "ARTIFACT?", value: "No", info: "79% have this trait"),
+                .init(name: "CATEGORY", value: "Harsh", info: "18% have this trait"),
+                .init(name: "ENVIRONMENT", value: "Splinter", info: "5% have this trait"),
+                .init(name: "KODA?", value: "No", info: "90% have this trait"),
+                .init(name: "SEDIMENT", value: "Cosmic Dream", info: "23% have this trait")
+            ],
+            image: "https://img.seadn.io/files/e4e04f99b9d64d5629a6d49f57097152.jpg?auto=format&w=600"
+        ),
+        .init(
+            identifier: "#50315",
+            collectionIdentifier: "Otherdeed for Otherside",
+            name: "#50315",
+            ethPrice: 2.967,
+            description: nil,
+            properties: [
+                .init(name: "ARTIFACT?", value: "No", info: "79% have this trait"),
+                .init(name: "CATEGORY", value: "Volcanic", info: "15% have this trait"),
+                .init(name: "ENVIRONMENT", value: "Molten", info: "5% have this trait"),
+                .init(name: "KODA?", value: "No", info: "90% have this trait"),
+                .init(name: "SEDIMENT", value: "Infinite Expanse", info: "25% have this trait"),
+                .init(name: "SOUTHERN RESOURCE", value: "Whisper", info: "3% have this trait"),
+                .init(name: "WESTERN RESOURCE", value: "Moldium", info: "3% have this trait")
+            ],
+            image: "https://img.seadn.io/files/a4cd8c953e4979e4cf0f9729c1ae61ef.jpg?auto=format&w=600"
+        ),
+        .init(
+            identifier: "#73065",
+            collectionIdentifier: "Otherdeed for Otherside",
+            name: "#73065",
+            ethPrice: 2.817,
+            description: nil,
+            properties: [
+                .init(name: "ARTIFACT?", value: "No", info: "79% have this trait"),
+                .init(name: "CATEGORY", value: "Psychedelic", info: "9% have this trait"),
+                .init(name: "ENVIRONMENT", value: "Mallow", info: "3% have this trait"),
+                .init(name: "KODA?", value: "No", info: "90% have this trait"),
+                .init(name: "SEDIMENT", value: "Rainbow Atmos", info: "22% have this trait"),
+                .init(name: "NORTHEN RESOURCE", value: "Lumileaf", info: "3% have this trait"),
+                .init(name: "EASTERN RESOURCE", value: "Runa", info: "3% have this trait")
+            ],
+            image: "https://img.seadn.io/files/4e8d2a9aa9f08c62bf815738cac23d61.jpg?auto=format&w=600"
         ),
         .init(
             identifier: "goblintown #4768",
@@ -166,6 +212,38 @@ extension DefaultNFTsService {
                 .init(name: "TYPE", value: "Jet Black", info: "13% have this trait")
             ],
             image: "https://lh3.googleusercontent.com/-TlKWOTfpKzSkaJ6G0I0NlkZozmumRroslqCDeeN-6vQpPq2qGnAY6NM077nPmEhM01lhSvIGlCYJ_ExaVwo4w2O1PJ2KcAplw5kOg=w600"
+        ),
+        .init(
+            identifier: "Chimpers #4799",
+            collectionIdentifier: "Chimpers",
+            name: "Chimpers #4799",
+            ethPrice: 1.79,
+            description: "5,555 adventurous Chimpers inhabit the Chimpverse and they are ready to !CHIMP",
+            properties: [
+                .init(name: "BACK", value: "Fishing Rod", info: "7% have this trait"),
+                .init(name: "BACKGROUND", value: "Breezy Blue", info: "21% have this trait"),
+                .init(name: "EYES", value: "Intense", info: "9% have this trait"),
+                .init(name: "FACE EXTRA", value: "Poker Face", info: "6% have this trait"),
+                .init(name: "HEAD", value: "Pink Yukata", info: "1% have this trait"),
+                .init(name: "TYPE", value: "Jet Black", info: "13% have this trait")
+            ],
+            image: "https://lh3.googleusercontent.com/mDsLPsUjF8dvyX5-41oPFBLO0WjoGHqevseNtx0CyitVW9aCXc7EZ7kvFHBwOMWZjb9g_5zPd2rBt5iJ_Vaip-FR2WiC7UMDwloxPQk=w600"
+        ),
+        .init(
+            identifier: "Chimpers #5440",
+            collectionIdentifier: "Chimpers",
+            name: "Chimpers #5440",
+            ethPrice: 1.9,
+            description: "5,555 adventurous Chimpers inhabit the Chimpverse and they are ready to !CHIMP",
+            properties: [
+                .init(name: "BACK", value: "Guiding Lanterns", info: "7% have this trait"),
+                .init(name: "BACKGROUND", value: "Breezy Blue", info: "21% have this trait"),
+                .init(name: "EYES", value: "Hip Specs", info: "3% have this trait"),
+                .init(name: "FACE EXTRA", value: "Slurping Ramen", info: "3% have this trait"),
+                .init(name: "HEAD", value: "Tactical Flack", info: "3% have this trait"),
+                .init(name: "TYPE", value: "Charcoal Grey", info: "14% have this trait")
+            ],
+            image: "https://lh3.googleusercontent.com/vDygHcaFgqCggQiS8GzhnRgVSnVvqSIL5pTvm4qg4hxUjswujDc1o8wrdQqFiPVQUVN3ywU2bDCybMfsXjAgjYg9cB70SRiIzQJOmg=w600"
         )
     ]
     
