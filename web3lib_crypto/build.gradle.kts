@@ -40,21 +40,9 @@ kotlin {
             }
         }
         val androidTest by getting
-        val iosX64Main by getting {
-            dependencies {
-                implementation(files("./src/iosMain/libs/crypto.xcframework"))
-            }
-        }
-        val iosArm64Main by getting {
-            dependencies {
-                implementation(files("./src/iosMain/libs/crypto.xcframework"))
-            }
-        }
-        val iosSimulatorArm64Main by getting {
-            dependencies {
-                implementation(files("./src/iosMain/libs/crypto.xcframework"))
-            }
-        }
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependsOn(commonMain)
             iosX64Main.dependsOn(this)

@@ -29,9 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //        print(documents.last!)
         //#endif
 
-        let data = Crypto().secureRand(size: 2).data()
+        let data = CryptoUtils().secureRand(size: 2).data()
         let string = String(data: data, encoding: .utf8) ?? ""
-        print("Testing web3lib integration", Greeting().greeting() + string)
+        print("Testing web3lib integration", Greeting().greeting())
         return true
     }
 
