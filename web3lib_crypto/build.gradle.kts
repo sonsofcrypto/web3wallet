@@ -1,8 +1,15 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+import org.jetbrains.kotlin.ir.backend.js.compile
 
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+}
+
+repositories {
+    flatDir {
+        dirs ("./src/androidMain/")
+    }
 }
 
 kotlin {
@@ -27,11 +34,27 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(files("./src/androidMain/libs/crypto.aar"))
+            }
+        }
         val androidTest by getting
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
+        val iosX64Main by getting {
+            dependencies {
+                implementation(files("./src/iosMain/libs/crypto.xcframework"))
+            }
+        }
+        val iosArm64Main by getting {
+            dependencies {
+                implementation(files("./src/iosMain/libs/crypto.xcframework"))
+            }
+        }
+        val iosSimulatorArm64Main by getting {
+            dependencies {
+                implementation(files("./src/iosMain/libs/crypto.xcframework"))
+            }
+        }
         val iosMain by creating {
             dependsOn(commonMain)
             iosX64Main.dependsOn(this)

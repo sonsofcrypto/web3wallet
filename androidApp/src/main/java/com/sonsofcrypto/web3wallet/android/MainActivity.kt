@@ -16,6 +16,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val tv: TextView = findViewById(R.id.text_view)
-        tv.text = greet() + String(Crypto().secureRand(2)) + "wtf"
+        tv.text = greet() + String(CryptoUtils().secureRand(128)) + "wtf"
     }
 }
