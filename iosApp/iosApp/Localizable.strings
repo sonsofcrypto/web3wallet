@@ -105,3 +105,7 @@
 
 "nfts.dashboard.collection.title" = "Your NFT collections";
 "nfts.dashboard.collection.popular.author" = "Created by %@";
+
+"nft.detail.button.send" = "Send";
+"nft.detail.section.title.description" = "Description";
+"nft.detail.section.title.properties" = "Properties";

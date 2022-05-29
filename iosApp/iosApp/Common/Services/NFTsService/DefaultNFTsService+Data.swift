@@ -7,7 +7,7 @@ extension DefaultNFTsService {
     static var yourNFTs: [NFTItem] = [
         .init(
             identifier: "web3wallet NFT #235",
-            collectionIdentifier: "web3wallet NFT",
+            collectionIdentifier: "0-web3wallet NFT",
             name: "web3wallet NFT #235",
             ethPrice: 205,
             description: "For true sons of crypto who has been with us from day one! We take care of our OGs😍",
@@ -33,7 +33,7 @@ extension DefaultNFTsService {
         ),
         .init(
             identifier: "web3wallet NFT #430",
-            collectionIdentifier: "web3wallet NFT",
+            collectionIdentifier: "0-web3wallet NFT",
             name: "web3wallet NFT #430",
             ethPrice: 135,
             description: "For true sons of crypto who has been with us from day one! We take care of our OGs😍",
@@ -158,7 +158,7 @@ extension DefaultNFTsService {
         ),
         .init(
             identifier: "web3wallet NFT #1038",
-            collectionIdentifier: "web3wallet NFT",
+            collectionIdentifier: "0-web3wallet NFT",
             name: "web3wallet NFT #1038",
             ethPrice: 105,
             description: "For true sons of crypto who has been with us from day one! We take care of our OGs😍",

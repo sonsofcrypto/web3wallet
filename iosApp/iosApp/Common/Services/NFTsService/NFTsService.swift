@@ -6,6 +6,14 @@ import Foundation
 
 protocol NFTsService: AnyObject {
 
+    func nft(
+        with identifier: String,
+        onCompletion: (Result<NFTItem, Error>) -> Void
+    )
+    func collection(
+        with identifier: String,
+        onCompletion: (Result<NFTCollection, Error>) -> Void
+    )
     func yourNFTs(
         onCompletion: (Result<[NFTItem], Error>) -> Void
     )

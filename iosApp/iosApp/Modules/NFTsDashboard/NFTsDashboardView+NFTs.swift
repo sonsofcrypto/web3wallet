@@ -39,6 +39,6 @@ extension NFTsDashboardViewController: iCarouselDelegate {
     func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
         
         guard let item = viewModel?.nfts[index] else { return }
-        print("selected: \(item.identifier)")
+        presenter.handle(.viewNFT(identifier: item.identifier))
     }
 }

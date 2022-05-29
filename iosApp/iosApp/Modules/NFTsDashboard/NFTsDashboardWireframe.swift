@@ -6,6 +6,7 @@ import UIKit
 
 enum NFTsDashboardWireframeDestination {
 
+    case viewNFT(nftItem: NFTItem)
 }
 
 protocol NFTsDashboardWireframe {
@@ -16,15 +17,18 @@ protocol NFTsDashboardWireframe {
 final class DefaultNFTsDashboardWireframe {
 
     private weak var parent: TabBarController!
+    private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let nftsService: NFTsService
 
     private weak var navigationController: NavigationController!
     
     init(
         parent: TabBarController,
+        nftDetailWireframeFactory: NFTDetailWireframeFactory,
         nftsService: NFTsService
     ) {
         self.parent = parent
+        self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.nftsService = nftsService
     }
 }
@@ -49,7 +53,20 @@ extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
     }
 
     func navigate(to destination: NFTsDashboardWireframeDestination) {
-        print("navigate to \(destination)")
+        
+        switch destination {
+            
+        case let .viewNFT(nftItem):
+            
+            let coordinator = nftDetailWireframeFactory.makeWireframe(
+                parent,
+                context: .init(
+                    nftIdentifier: nftItem.identifier,
+                    nftCollectionIdentifier: nftItem.collectionIdentifier
+                )
+            )
+            coordinator.present()
+        }
     }
 }
 
