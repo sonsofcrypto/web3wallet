@@ -189,6 +189,8 @@ crypto/iosMain
 crypto/androidMain
 crypto/jsMain
 
-web3lib_crypto/iosMain/lib
-web3lib_crypto/androidMain/lib
-web3lib_crypto/jsMain/lib
+web3lib_crypto/src/iosMain/libs/
+web3lib_crypto/src/androidMain/libs/
+web3lib_crypto/src/jsMain/libs/
+
+iosApp/Frameworks/

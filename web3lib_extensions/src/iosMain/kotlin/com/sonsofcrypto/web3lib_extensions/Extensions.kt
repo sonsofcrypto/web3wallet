@@ -17,6 +17,19 @@ fun ByteArray.toData(offset: Int = 0, length: Int = size - offset): NSData {
     return NSData.create(pinned.addressOf(offset), length.toULong()) { _, _ -> pinned.unpin() }
 }
 
+fun ByteArray.from(data: NSData): ByteArray {
+    val size = data.length.toInt()
+    val bytes = ByteArray(size)
+
+    if (size > 0) {
+        bytes.usePinned { pinned ->
+            memcpy(pinned.addressOf(0), data.bytes, data.length)
+        }
+    }
+
+    return bytes
+}
+
 fun NSData.byteArray(): ByteArray {
     val size = length.toInt()
     val bytes = ByteArray(size)

@@ -5,6 +5,15 @@
 import UIKit
 import web3lib
 
+class IosCryptoPrimitivesProvider: CryptoPrimitivesProvider {
+    
+    func secureRand(size: Int32) -> KotlinByteArray {
+        let data = try! Data.secRandom(Int(size))
+        let bytes = KotlinByteArray(size: 0).from(data: data)
+        return bytes
+    }
+}
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -20,18 +29,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         MainBootstrapper(window: window).boot()
         
-        //#if DEBUG
-        //        let documents = NSSearchPathForDirectoriesInDomains(
-        //            .documentDirectory,
-        //            .userDomainMask,
-        //            true
-        //        )
-        //        print(documents.last!)
-        //#endif
+#if DEBUG
+        let documents = NSSearchPathForDirectoriesInDomains(
+            .documentDirectory,
+            .userDomainMask,
+            true
+        )
+        print(documents.last ?? "")
+#endif
 
-        let data = CryptoUtils().secureRand(size: 2).data()
-        let string = String(data: data, encoding: .utf8) ?? ""
-        print("Testing web3lib integration", Greeting().greeting())
+        Crypto.shared.setProvider(provider: IosCryptoPrimitivesProvider())
+        let bytes = Crypto.shared.secureRand(size: 16)
+        let data = bytes.data()
+        let string = String(data: data, encoding: .ascii) ?? ""
+        print("Testing web3lib integration", Greeting().greeting() + string)
         return true
     }
 

@@ -6,20 +6,14 @@ plugins {
     id("com.android.library")
 }
 
-repositories {
-    flatDir {
-        dirs ("./src/androidMain/")
-    }
-}
-
 kotlin {
     android()
     
     val xcf = XCFramework()
     listOf(
-        iosX64(),
         iosArm64(),
-        iosSimulatorArm64()
+        iosX64(),
+        iosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
             baseName = "web3lib_crypto"
