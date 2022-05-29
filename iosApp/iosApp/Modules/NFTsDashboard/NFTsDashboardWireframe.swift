@@ -6,6 +6,7 @@ import UIKit
 
 enum NFTsDashboardWireframeDestination {
 
+    case viewCollectionNFTs(collectionId: String)
     case viewNFT(nftItem: NFTItem)
 }
 
@@ -17,6 +18,7 @@ protocol NFTsDashboardWireframe {
 final class DefaultNFTsDashboardWireframe {
 
     private weak var parent: TabBarController!
+    private let nftsCollectionWireframeFactory: NFTsCollectionWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let nftsService: NFTsService
 
@@ -24,10 +26,12 @@ final class DefaultNFTsDashboardWireframe {
     
     init(
         parent: TabBarController,
+        nftsCollectionWireframeFactory: NFTsCollectionWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         nftsService: NFTsService
     ) {
         self.parent = parent
+        self.nftsCollectionWireframeFactory = nftsCollectionWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.nftsService = nftsService
     }
@@ -58,14 +62,22 @@ extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
             
         case let .viewNFT(nftItem):
             
-            let coordinator = nftDetailWireframeFactory.makeWireframe(
+            let wireframe = nftDetailWireframeFactory.makeWireframe(
                 parent,
                 context: .init(
                     nftIdentifier: nftItem.identifier,
                     nftCollectionIdentifier: nftItem.collectionIdentifier
                 )
             )
-            coordinator.present()
+            wireframe.present()
+            
+        case let .viewCollectionNFTs(collectionId):
+            
+            let wireframe = nftsCollectionWireframeFactory.makeWireframe(
+                parent,
+                context: .init(nftCollectionIdentifier: collectionId)
+            )
+            wireframe.present()
         }
     }
 }

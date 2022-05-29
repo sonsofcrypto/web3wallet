@@ -33,6 +33,6 @@ extension DefaultNFTsDashboardInteractor: NFTsDashboardInteractor {
     
     func fetchYourNFTsCollections(onCompletion: (Result<[NFTCollection], Error>) -> Void) {
         
-        service.yourNftsCollections(onCompletion: onCompletion)
+        service.yourNftCollections(onCompletion: onCompletion)
     }
 }

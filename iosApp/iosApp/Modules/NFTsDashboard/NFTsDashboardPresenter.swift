@@ -5,6 +5,7 @@
 import Foundation
 
 enum NFTsDashboardPresenterEvent {
+    case viewCollectionNFTs(collectionId: String)
     case viewNFT(identifier: String)
 }
 
@@ -55,6 +56,10 @@ extension DefaultNFTsDashboardPresenter: NFTsDashboardPresenter {
     func handle(_ event: NFTsDashboardPresenterEvent) {
 
         switch event {
+            
+        case let .viewCollectionNFTs(collectionId):
+            
+            wireframe.navigate(to: .viewCollectionNFTs(collectionId: collectionId))
         
         case let .viewNFT(identifier):
             

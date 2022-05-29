@@ -1,22 +1,22 @@
-// Created by web3d4v on 27/05/2022.
+// Created by web3d4v on 29/05/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import UIKit
 
-protocol NFTDetailView: AnyObject {
+protocol NFTsCollectionView: AnyObject {
 
-    func update(with viewModel: NFTDetailViewModel)
+    func update(with viewModel: NFTsCollectionViewModel)
 }
 
-final class NFTDetailViewController: BaseViewController {
+final class NFTsCollectionViewController: BaseViewController {
 
-    var presenter: NFTDetailPresenter!
+    var presenter: NFTsCollectionPresenter!
     
     private (set) weak var mainScrollView: UIScrollView!
     weak var scrollableContentView: UIView!
 
-    private (set) var viewModel: NFTDetailViewModel?
+    private (set) var viewModel: NFTsCollectionViewModel?
     
     init() { super.init(nibName: nil, bundle: nil) }
     
@@ -39,14 +39,14 @@ final class NFTDetailViewController: BaseViewController {
     }
 }
 
-extension NFTDetailViewController: NFTDetailView {
+extension NFTsCollectionViewController: NFTsCollectionView {
     
     @objc func refresh() {
         
         presenter.present()
     }
 
-    func update(with viewModel: NFTDetailViewModel) {
+    func update(with viewModel: NFTsCollectionViewModel) {
 
         self.viewModel = viewModel
         
@@ -57,10 +57,10 @@ extension NFTDetailViewController: NFTDetailView {
         case .loading:
             break
             
-        case let .loaded(nftItem, nftCollection):
+        case let .loaded(collection, _):
 
-            title = nftItem.name
-            refreshNFT(with: nftItem, and: nftCollection)
+            title = collection.title
+            refreshNFTs()
             
         case .error:
             break
@@ -68,14 +68,13 @@ extension NFTDetailViewController: NFTDetailView {
     }
 }
 
-private extension NFTDetailViewController {
+private extension NFTsCollectionViewController {
     
     func configureUI() {
         
         title = Localized("nfts")
         
         view = GradientView()
-        //view.addConstraints(.toEdges)
         
         (view as? GradientView)?.colors = [
             Theme.color.background,

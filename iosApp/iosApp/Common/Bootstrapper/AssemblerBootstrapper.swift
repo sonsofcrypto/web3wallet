@@ -47,6 +47,7 @@ private extension AssemblerBootstrapper {
             MnemonicConfirmationWireframeFactoryAssembler(),
             NetworksWireframeFactoryAssembler(),
             NFTsDashboardWireframeFactoryAssembler(),
+            NFTsCollectionWireframeFactoryAssembler(),
             NFTDetailWireframeFactoryAssembler(),
             RootWireframeFactoryAssembler(),
             SettingsWireframeFactoryAssembler()

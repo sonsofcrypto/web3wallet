@@ -40,7 +40,7 @@ extension NFTsDashboardViewController {
                 .layout(
                     anchor: .topAnchor,
                     constant: .equalTo(
-                        constant: nftsCollectionHeight + Global.padding * 2
+                        constant: nftsCollectionHeight + Global.padding * 3
                     )
                 ),
                 .layout(anchor: .bottomAnchor),

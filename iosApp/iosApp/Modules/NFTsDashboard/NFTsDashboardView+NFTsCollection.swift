@@ -176,7 +176,7 @@ private extension NFTsDashboardViewController {
         guard let viewModel = viewModel else { return }
         guard viewModel.collections.count > tag else { return }
         let collection = viewModel.collections[tag]
-        print("collection selected: \(collection.title)")
+        presenter.handle(.viewCollectionNFTs(collectionId: collection.identifier))
     }
     
     func makeVerticalStack(

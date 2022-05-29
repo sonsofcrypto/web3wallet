@@ -12,7 +12,7 @@ extension NFTDetailViewController {
         
         views.append(.vSpace(height: Global.padding))
         
-        let headerImage = makeHeaderImage(with: item)
+        let headerImage = makeEthPrice(with: item)
         views.append(headerImage)
         
         views.append(.vSpace(height: Global.padding))

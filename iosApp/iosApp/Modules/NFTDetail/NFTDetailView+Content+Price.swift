@@ -51,7 +51,7 @@ extension NFTDetailViewController {
                 .layout(
                     anchor: .heightAnchor,
                     constant: .equalTo(
-                        constant: 20 + Global.padding * 1.5
+                        constant: 20
                     )
                 )
             ]

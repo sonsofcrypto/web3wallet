@@ -17,7 +17,11 @@ protocol NFTsService: AnyObject {
     func yourNFTs(
         onCompletion: (Result<[NFTItem], Error>) -> Void
     )
-    func yourNftsCollections(
+    func yourNFTs(
+        forCollection collection: String,
+        onCompletion: (Result<[NFTItem], Error>) -> Void
+    )
+    func yourNftCollections(
         onCompletion: (Result<[NFTCollection], Error>) -> Void
     )
 }
@@ -28,7 +32,6 @@ struct NFTItem {
     let collectionIdentifier: String
     let name: String
     let ethPrice: Float
-    let description: String?
     let properties: [Property]
     /** URL pointing to the NFT image **/
     let image: String

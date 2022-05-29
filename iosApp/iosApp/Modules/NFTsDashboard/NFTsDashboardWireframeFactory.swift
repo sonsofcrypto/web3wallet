@@ -11,15 +11,18 @@ protocol NFTsDashboardWireframeFactory {
 
 final class DefaultNFTsDashboardWireframeFactory {
 
+    private let nftsCollectionWireframeFactory: NFTsCollectionWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let nftsService: NFTsService
 
     private weak var window: UIWindow?
 
     init(
+        nftsCollectionWireframeFactory: NFTsCollectionWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         nftsService: NFTsService
     ) {
+        self.nftsCollectionWireframeFactory = nftsCollectionWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.nftsService = nftsService
     }
@@ -31,6 +34,7 @@ extension DefaultNFTsDashboardWireframeFactory: NFTsDashboardWireframeFactory {
         
         DefaultNFTsDashboardWireframe(
             parent: parent,
+            nftsCollectionWireframeFactory: nftsCollectionWireframeFactory,
             nftDetailWireframeFactory: nftDetailWireframeFactory,
             nftsService: nftsService
         )

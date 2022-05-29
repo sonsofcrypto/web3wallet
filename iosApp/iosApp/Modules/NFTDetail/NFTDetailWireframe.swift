@@ -11,7 +11,8 @@ struct NFTDetailWireframeContext {
 }
 
 enum NFTDetailWireframeDestination {
-
+    
+    case dismiss
 }
 
 protocol NFTDetailWireframe {
@@ -20,11 +21,11 @@ protocol NFTDetailWireframe {
 }
 
 final class DefaultNFTDetailWireframe {
-
+    
     private weak var parent: UIViewController!
     private let context: NFTDetailWireframeContext
     private let nftsService: NFTsService
-
+    
     private weak var navigationController: NavigationController!
     
     init(
@@ -39,31 +40,36 @@ final class DefaultNFTDetailWireframe {
 }
 
 extension DefaultNFTDetailWireframe: NFTDetailWireframe {
-
+    
     func present() {
         
         let vc = makeViewController()
         
-        if let navigationController = parent as? NavigationController {
-            
-            self.navigationController = navigationController
-            
-            navigationController.pushViewController(vc, animated: true)
-        } else {
-
-            let navigationController = NavigationController(rootViewController: vc)
-            self.navigationController = navigationController
-            parent.present(navigationController, animated: true)
-        }
+        //        if let navigationController = parent as? NavigationController {
+        //
+        //            self.navigationController = navigationController
+        //
+        //            navigationController.pushViewController(vc, animated: true)
+        //        } else {
+        //
+        let navigationController = NavigationController(rootViewController: vc)
+        self.navigationController = navigationController
+        parent.present(navigationController, animated: true)
+        //        }
     }
-
+    
     func navigate(to destination: NFTDetailWireframeDestination) {
-        print("navigate to \(destination)")
+        
+        switch destination {
+            
+        case .dismiss:
+            parent.presentedViewController?.dismiss(animated: true)
+        }
     }
 }
 
 private extension DefaultNFTDetailWireframe {
-
+    
     func makeViewController() -> UIViewController {
         
         let view = NFTDetailViewController()

@@ -4,14 +4,12 @@
 
 extension NFTDetailViewController {
     
-    func makeDescription(with item: NFTItem) -> UIView? {
-        
-        guard let description = item.description else { return nil }
+    func makeDescription(with item: NFTCollection) -> UIView {
         
         let view = UIView()
         view.backgroundColor = .clear
             
-        let content = makeDescriptionContent(with: description)
+        let content = makeDescriptionContent(with: item.description)
         view.addSubview(content)
         content.addConstraints(.toEdges)
         

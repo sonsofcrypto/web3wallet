@@ -10,7 +10,6 @@ extension DefaultNFTsService {
             collectionIdentifier: "0-web3wallet NFT",
             name: "web3wallet NFT #235",
             ethPrice: 205,
-            description: "For true sons of crypto who has been with us from day one! We take care of our OGs😍",
             properties: [
                 .init(
                     name: "BACKGROUND SUPER RARE",
@@ -36,7 +35,6 @@ extension DefaultNFTsService {
             collectionIdentifier: "0-web3wallet NFT",
             name: "web3wallet NFT #430",
             ethPrice: 135,
-            description: "For true sons of crypto who has been with us from day one! We take care of our OGs😍",
             properties: [
                 .init(
                     name: "BACKGROUND RARE",
@@ -62,7 +60,6 @@ extension DefaultNFTsService {
             collectionIdentifier: "Otherdeed for Otherside",
             name: "#53337",
             ethPrice: 2.067,
-            description: nil,
             properties: [
                 .init(name: "ARTIFACT?", value: "No", info: "79% have this trait"),
                 .init(name: "CATEGORY", value: "Mineral", info: "12% have this trait"),
@@ -78,7 +75,6 @@ extension DefaultNFTsService {
             collectionIdentifier: "Otherdeed for Otherside",
             name: "#97097",
             ethPrice: 2.367,
-            description: nil,
             properties: [
                 .init(name: "ARTIFACT?", value: "No", info: "79% have this trait"),
                 .init(name: "CATEGORY", value: "Harsh", info: "18% have this trait"),
@@ -93,7 +89,6 @@ extension DefaultNFTsService {
             collectionIdentifier: "Otherdeed for Otherside",
             name: "#50315",
             ethPrice: 2.967,
-            description: nil,
             properties: [
                 .init(name: "ARTIFACT?", value: "No", info: "79% have this trait"),
                 .init(name: "CATEGORY", value: "Volcanic", info: "15% have this trait"),
@@ -110,7 +105,6 @@ extension DefaultNFTsService {
             collectionIdentifier: "Otherdeed for Otherside",
             name: "#73065",
             ethPrice: 2.817,
-            description: nil,
             properties: [
                 .init(name: "ARTIFACT?", value: "No", info: "79% have this trait"),
                 .init(name: "CATEGORY", value: "Psychedelic", info: "9% have this trait"),
@@ -127,7 +121,6 @@ extension DefaultNFTsService {
             collectionIdentifier: "goblintown.wtf",
             name: "goblintown #4768",
             ethPrice: 2.25,
-            description: "AAAAAAAUUUUUGGGHHHHH gobblins goblinns GOBLINNNNNNNNns wekm ta goblintown yoo sniksnakr DEJEN RATS oooooh rats are yummmz dis a NEFTEEE O GOBBLINGS on da BLOKCHIN wat? oh. crustybutt da goblinking say GEE EMMM DEDJEN RUTS an queenie saay HLLO SWEATIES ok dats all byeby",
             properties: [
                 .init(name: "BODDE", value: "Wekkum Tarbys", info: "5% have this trait"),
                 .init(name: "EERS", value: "Eirs", info: "6% have this trait"),
@@ -145,7 +138,6 @@ extension DefaultNFTsService {
             collectionIdentifier: "Bored Ape Yacht Club",
             name: "#8520",
             ethPrice: 60,
-            description: nil,
             properties: [
                 .init(name: "BACKGROUND", value: "Gray", info: "12% have this trait"),
                 .init(name: "CLOTHES", value: "Prom Dress", info: "1% have this trait"),
@@ -161,7 +153,6 @@ extension DefaultNFTsService {
             collectionIdentifier: "0-web3wallet NFT",
             name: "web3wallet NFT #1038",
             ethPrice: 105,
-            description: "For true sons of crypto who has been with us from day one! We take care of our OGs😍",
             properties: [
                 .init(
                     name: "BACKGROUND BRONZE",
@@ -187,7 +178,6 @@ extension DefaultNFTsService {
             collectionIdentifier: "Bored Ape Yacht Club",
             name: "#3368",
             ethPrice: 77.489,
-            description: "For true sons of crypto who has been with us from day one! We take care of our OGs😍",
             properties: [
                 .init(name: "BACKGROUND", value: "Orange", info: "13% have this trait"),
                 .init(name: "EYES", value: "Angry", info: "4% have this trait"),
@@ -202,7 +192,6 @@ extension DefaultNFTsService {
             collectionIdentifier: "Chimpers",
             name: "Chimpers #2501",
             ethPrice: 1.489,
-            description: "5,555 adventurous Chimpers inhabit the Chimpverse and they are ready to !CHIMP",
             properties: [
                 .init(name: "BACK", value: "Dragonslayer Blade", info: "2% have this trait"),
                 .init(name: "BACKGROUND", value: "Papaya Orange", info: "22% have this trait"),
@@ -218,7 +207,6 @@ extension DefaultNFTsService {
             collectionIdentifier: "Chimpers",
             name: "Chimpers #4799",
             ethPrice: 1.79,
-            description: "5,555 adventurous Chimpers inhabit the Chimpverse and they are ready to !CHIMP",
             properties: [
                 .init(name: "BACK", value: "Fishing Rod", info: "7% have this trait"),
                 .init(name: "BACKGROUND", value: "Breezy Blue", info: "21% have this trait"),
@@ -234,7 +222,6 @@ extension DefaultNFTsService {
             collectionIdentifier: "Chimpers",
             name: "Chimpers #5440",
             ethPrice: 1.9,
-            description: "5,555 adventurous Chimpers inhabit the Chimpverse and they are ready to !CHIMP",
             properties: [
                 .init(name: "BACK", value: "Guiding Lanterns", info: "7% have this trait"),
                 .init(name: "BACKGROUND", value: "Breezy Blue", info: "21% have this trait"),
@@ -244,6 +231,141 @@ extension DefaultNFTsService {
                 .init(name: "TYPE", value: "Charcoal Grey", info: "14% have this trait")
             ],
             image: "https://lh3.googleusercontent.com/vDygHcaFgqCggQiS8GzhnRgVSnVvqSIL5pTvm4qg4hxUjswujDc1o8wrdQqFiPVQUVN3ywU2bDCybMfsXjAgjYg9cB70SRiIzQJOmg=w600"
+        ),
+        .init(
+            identifier: "#3929",
+            collectionIdentifier: "Bored Ape Yacht Club",
+            name: "#3929",
+            ethPrice: 88.8284,
+            properties: [
+                .init(name: "BACKGROUND", value: "Purple", info: "13% have this trait"),
+                .init(name: "CLOTHES", value: "Tanktop", info: "2% have this trait"),
+                .init(name: "EARRING", value: "Silver Hoop", info: "9% have this trait"),
+                .init(name: "EYES", value: "Crazy", info: "4% have this trait"),
+                .init(name: "FUR", value: "Black", info: "12% have this trait"),
+                .init(name: "MOUTH", value: "Bored", info: "23% have this trait")
+            ],
+            image: "https://img.seadn.io/files/75ba6c7d2c438146d7fe16a15de637a6.png?auto=format&w=600"
+        ),
+        .init(
+            identifier: "#687",
+            collectionIdentifier: "Bored Ape Yacht Club",
+            name: "#687",
+            ethPrice: 89.84,
+            properties: [
+                .init(name: "BACKGROUND", value: "Aquamarine", info: "13% have this trait"),
+                .init(name: "CLOTHES", value: "Leather Jacket", info: "2% have this trait"),
+                .init(name: "EYES", value: "Bored", info: "17% have this trait"),
+                .init(name: "FUR", value: "Cream", info: "6% have this trait"),
+                .init(name: "HAT", value: "Party Hat 2", info: "1% have this trait"),
+                .init(name: "MOUTH", value: "Range", info: "3% have this trait")
+            ],
+            image: "https://img.seadn.io/files/9899601221545c51ba4a8027838917d2.png?auto=format&w=600"
+        ),
+        .init(
+            identifier: "#2901",
+            collectionIdentifier: "Bored Ape Yacht Club",
+            name: "#2901",
+            ethPrice: 90,
+            properties: [
+                .init(name: "BACKGROUND", value: "New Punk Blue", info: "12% have this trait"),
+                .init(name: "CLOTHES", value: "Puffy Vest", info: "2% have this trait"),
+                .init(name: "EYES", value: "Bored", info: "17% have this trait"),
+                .init(name: "FUR", value: "Tan", info: "6% have this trait"),
+                .init(name: "HAT", value: "Horns", info: "3% have this trait"),
+                .init(name: "MOUTH", value: "Bored Cigarette", info: "7% have this trait")
+            ],
+            image: "https://img.seadn.io/files/29c51f819d999d8552616b6c9a7e56f4.png?auto=format&w=600"
+        ),
+        .init(
+            identifier: "#7987",
+            collectionIdentifier: "Bored Ape Yacht Club",
+            name: "#7987",
+            ethPrice: 88,
+            properties: [
+                .init(name: "BACKGROUND", value: "Gray", info: "12% have this trait"),
+                .init(name: "CLOTHES", value: "Prison Jumpsuit", info: "2% have this trait"),
+                .init(name: "EYES", value: "Wide Eyed", info: "5% have this trait"),
+                .init(name: "FUR", value: "Zombie", info: "3% have this trait"),
+                .init(name: "HAT", value: "Beanie", info: "6% have this trait"),
+                .init(name: "MOUTH", value: "Jovial", info: "3% have this trait")
+            ],
+            image: "https://img.seadn.io/files/d7caf07b5b8fee893b0a7da6c2cf61e7.png?auto=format&w=600"
+        ),
+        .init(
+            identifier: "#7151",
+            collectionIdentifier: "Bored Ape Yacht Club",
+            name: "#7151",
+            ethPrice: 91,
+            properties: [
+                .init(name: "BACKGROUND", value: "Army Green", info: "12% have this trait"),
+                .init(name: "CLOTHES", value: "Work Vest", info: "2% have this trait"),
+                .init(name: "EYES", value: "Bloodshot", info: "8% have this trait"),
+                .init(name: "FUR", value: "Black", info: "12% have this trait"),
+                .init(name: "HAT", value: "Police Motorcycle", info: "1% have this trait"),
+                .init(name: "MOUTH", value: "Bored Unshaven", info: "16% have this trait")
+            ],
+            image: "https://img.seadn.io/files/2ffba2a6a7f7a6d9a1204789031f55e3.png?auto=format&w=600"
+        ),
+        .init(
+            identifier: "#1004",
+            collectionIdentifier: "Bored Ape Yacht Club",
+            name: "#1004",
+            ethPrice: 90,
+            properties: [
+                .init(name: "BACKGROUND", value: "Purple", info: "13% have this trait"),
+                .init(name: "CLOTHES", value: "Sailor Shirt", info: "3% have this trait"),
+                .init(name: "EARRING", value: "Silver Stud", info: "8% have this trait"),
+                .init(name: "EYES", value: "Wide Eyed", info: "5% have this trait"),
+                .init(name: "FUR", value: "Black", info: "12% have this trait"),
+                .init(name: "HAT", value: "Halo", info: "3% have this trait"),
+                .init(name: "MOUTH", value: "Small Grin", info: "3% have this trait")
+            ],
+            image: "https://img.seadn.io/files/66f56d7caa89cd7baadf552598e5db06.png?auto=format&w=600"
+        ),
+        .init(
+            identifier: "#3735",
+            collectionIdentifier: "Bored Ape Yacht Club",
+            name: "#3735",
+            ethPrice: 92,
+            properties: [
+                .init(name: "BACKGROUND", value: "New Punk Blue", info: "12% have this trait"),
+                .init(name: "CLOTHES", value: "Stripe Tee", info: "4% have this trait"),
+                .init(name: "EYES", value: "3d", info: "5% have this trait"),
+                .init(name: "FUR", value: "Dmt", info: "2% have this trait"),
+                .init(name: "MOUTH", value: "Bored", info: "23% have this trait")
+            ],
+            image: "https://img.seadn.io/files/3f1560bfb0bed4749d4dd73c772f1568.png?auto=format&w=600"
+        ),
+        .init(
+            identifier: "#2157",
+            collectionIdentifier: "Bored Ape Yacht Club",
+            name: "#2157",
+            ethPrice: 96,
+            properties: [
+                .init(name: "BACKGROUND", value: "Gray", info: "12% have this trait"),
+                .init(name: "CLOTHES", value: "Blue Dress", info: "0.95% have this trait"),
+                .init(name: "EYES", value: "Angry", info: "4% have this trait"),
+                .init(name: "FUR", value: "Dark Brown", info: "14% have this trait"),
+                .init(name: "HAT", value: "Spinner Hat", info: "2% have this trait"),
+                .init(name: "MOUTH", value: "Tongue Out", info: "2% have this trait")
+            ],
+            image: "https://img.seadn.io/files/d3f335f03c62b8806e67158c4c34da98.png?auto=format&w=600"
+        ),
+        .init(
+            identifier: "#648",
+            collectionIdentifier: "Bored Ape Yacht Club",
+            name: "#648",
+            ethPrice: 18800,
+            properties: [
+                .init(name: "BACKGROUND", value: "Aquamarine", info: "13% have this trait"),
+                .init(name: "CLOTHES", value: "Hip Hop", info: "0.95% have this trait"),
+                .init(name: "EYES", value: "Heart", info: "4% have this trait"),
+                .init(name: "FUR", value: "Dmt", info: "14% have this trait"),
+                .init(name: "HAT", value: "Sea Captain's Hat", info: "3% have this trait"),
+                .init(name: "MOUTH", value: "Bored Unshaven", info: "16% have this trait")
+            ],
+            image: "https://img.seadn.io/files/0ffd18a26fa50f91281fb7c3484cefb1.png?auto=format&w=600"
         )
     ]
     

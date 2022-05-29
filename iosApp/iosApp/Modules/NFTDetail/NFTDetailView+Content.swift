@@ -35,13 +35,12 @@ private extension NFTDetailViewController {
         
         vStackView.addArrangedSubview(.vSpace(height: Global.padding))
         
-        let priceView = makeEthPrice(with: item)
-        vStackView.addArrangedSubview(priceView)
+//        let priceView = makeEthPrice(with: item)
+//        vStackView.addArrangedSubview(priceView)
         
-        if let descriptionView = makeDescription(with: item) {
-            vStackView.addArrangedSubview(.vSpace(height: Global.padding))
-            vStackView.addArrangedSubview(descriptionView)
-        }
+        let descriptionView = makeDescription(with: collection)
+        vStackView.addArrangedSubview(.vSpace(height: Global.padding))
+        vStackView.addArrangedSubview(descriptionView)
 
         if let propertiesView = makeProperties(with: item) {
             vStackView.addArrangedSubview(.vSpace(height: Global.padding * 2))

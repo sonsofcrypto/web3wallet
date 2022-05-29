@@ -30,7 +30,7 @@ extension DefaultNFTsService: NFTsService {
         onCompletion: (Result<NFTCollection, Error>) -> Void
     ) {
         
-        yourNftsCollections { result in
+        yourNftCollections { result in
             switch result {
             case let .success(collections):
                 let nftCollection = collections.filter { $0.identifier == identifier }.first
@@ -48,8 +48,19 @@ extension DefaultNFTsService: NFTsService {
         
         onCompletion(.success(Self.yourNFTs))
     }
+    
+    func yourNFTs(
+        forCollection collectionId: String,
+        onCompletion: (Result<[NFTItem], Error>) -> Void
+    ) {
+        
+        let nfts = Self.yourNFTs.filter {
+            $0.collectionIdentifier == collectionId
+        }
+        onCompletion(.success(nfts))
+    }
 
-    func yourNftsCollections(
+    func yourNftCollections(
         onCompletion: (Result<[NFTCollection], Error>) -> Void
     ) {
         
