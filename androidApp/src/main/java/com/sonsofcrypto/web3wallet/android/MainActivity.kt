@@ -17,6 +17,6 @@ class MainActivity : AppCompatActivity() {
 
         val tv: TextView = findViewById(R.id.text_view)
         Crypto.setProvider(AndroidCryptoPrimitivesProvider())
-        tv.text = greet() + String(Crypto.secureRand(128)) + "wtf"
+        tv.text = greet() + String(Crypto.secureRand(128))
     }
 }

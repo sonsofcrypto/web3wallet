@@ -5,15 +5,6 @@
 import UIKit
 import web3lib
 
-class IosCryptoPrimitivesProvider: CryptoPrimitivesProvider {
-    
-    func secureRand(size: Int32) -> KotlinByteArray {
-        let data = try! Data.secRandom(Int(size))
-        let bytes = KotlinByteArray(size: 0).from(data: data)
-        return bytes
-    }
-}
-
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

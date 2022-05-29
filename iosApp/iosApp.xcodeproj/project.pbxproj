@@ -248,7 +248,6 @@
 		1CB3A23A2843E5A10092D667 /* NFTsCollectionView+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB3A2392843E5A10092D667 /* NFTsCollectionView+Shared.swift */; };
 		1CB3A23C2843E5F20092D667 /* NFTsCollectionView+NFTs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB3A23B2843E5F20092D667 /* NFTsCollectionView+NFTs.swift */; };
 		1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */; };
-		D110257928438402004527A6 /* Crypto.XCFramework in Frameworks */ = {isa = PBXBuildFile; fileRef = D110257828438402004527A6 /* Crypto.XCFramework */; };
 		D116CF2827C2531E005542AA /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D116CF2727C2531E005542AA /* Array+extensions.swift */; };
 		D116CF3227C31ECC005542AA /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = D116CF3127C31ECC005542AA /* iCarousel.m */; };
 		D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F527B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf */; };
@@ -282,6 +281,8 @@
 		D19A20BC2815CA7D008A84CD /* Bip39.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C33D3E14DE9116A15DA02 /* Bip39.swift */; };
 		D19A20BE2815F15F008A84CD /* KeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A20BD2815F15F008A84CD /* KeyChainService.swift */; };
 		D19A20BF2815F843008A84CD /* SecretStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D2A7A195294A4542553 /* SecretStorage.swift */; };
+		D1A564C12843E24700D4B7D8 /* CoreCrypto.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A564C02843E24700D4B7D8 /* CoreCrypto.xcframework */; };
+		D1A564C42843E2BE00D4B7D8 /* IosCryptoPrimitivesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A564C32843E2BE00D4B7D8 /* IosCryptoPrimitivesProvider.swift */; };
 		D1A67140283D6BAE0042A448 /* web3lib.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A6713F283D6BAE0042A448 /* web3lib.xcframework */; };
 		D1A67141283D6BAE0042A448 /* web3lib.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D1A6713F283D6BAE0042A448 /* web3lib.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D1BF2684280D7FC300DE9A0B /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF2680280D7FC200DE9A0B /* DefaultTheme.swift */; };
@@ -566,7 +567,6 @@
 		1CB3A2392843E5A10092D667 /* NFTsCollectionView+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NFTsCollectionView+Shared.swift"; sourceTree = "<group>"; };
 		1CB3A23B2843E5F20092D667 /* NFTsCollectionView+NFTs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NFTsCollectionView+NFTs.swift"; sourceTree = "<group>"; };
 		1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetActionViewModel.swift; sourceTree = "<group>"; };
-		D110257828438402004527A6 /* Crypto.XCFramework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Crypto.XCFramework; path = Frameworks/Crypto.XCFramework; sourceTree = "<group>"; };
 		D116CF2727C2531E005542AA /* Array+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extensions.swift"; sourceTree = "<group>"; };
 		D116CF2F27C31ECC005542AA /* iosApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iosApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		D116CF3027C31ECC005542AA /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
@@ -601,6 +601,8 @@
 		D15B06C627B72111008C3C62 /* KeyStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreView.swift; sourceTree = "<group>"; };
 		D1966C3B281468C300550332 /* SecretStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretStorageTests.swift; sourceTree = "<group>"; };
 		D19A20BD2815F15F008A84CD /* KeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainService.swift; sourceTree = "<group>"; };
+		D1A564C02843E24700D4B7D8 /* CoreCrypto.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CoreCrypto.xcframework; path = Frameworks/CoreCrypto.xcframework; sourceTree = "<group>"; };
+		D1A564C32843E2BE00D4B7D8 /* IosCryptoPrimitivesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosCryptoPrimitivesProvider.swift; sourceTree = "<group>"; };
 		D1A6713F283D6BAE0042A448 /* web3lib.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = web3lib.xcframework; path = ../web3lib/build/XCFrameworks/debug/web3lib.xcframework; sourceTree = "<group>"; };
 		D1BF2680280D7FC200DE9A0B /* DefaultTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
 		D1BF2681280D7FC200DE9A0B /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -624,6 +626,7 @@
 				D13D8146283D6A4B0038A6BA /* Sha3Tiny in Frameworks */,
 				1C5B603B284675B800ECBD79 /* Kingfisher in Frameworks */,
 				D110257928438402004527A6 /* Crypto.XCFramework in Frameworks */,
+				D1A564C12843E24700D4B7D8 /* CoreCrypto.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -727,6 +730,7 @@
 			isa = PBXGroup;
 			children = (
 				1A4C3E102C6A06DEC7657DD0 /* CryptoUtils.swift */,
+				D1A564C32843E2BE00D4B7D8 /* IosCryptoPrimitivesProvider.swift */,
 				1A4C33D3E14DE9116A15DA02 /* Bip39.swift */,
 			);
 			path = CryptoUtils;
@@ -1235,7 +1239,7 @@
 		D11B7E472800DE1C00F40488 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D110257828438402004527A6 /* Crypto.XCFramework */,
+				D1A564C02843E24700D4B7D8 /* CoreCrypto.xcframework */,
 				D1A6713F283D6BAE0042A448 /* web3lib.xcframework */,
 			);
 			name = Frameworks;
@@ -1731,6 +1735,7 @@
 				1CB3A1E52840D6B70092D667 /* CG+extensions.swift in Sources */,
 				1CB3A23A2843E5A10092D667 /* NFTsCollectionView+Shared.swift in Sources */,
 				1C6487092832DC5F0091A12D /* Bootstrapper.swift in Sources */,
+				D1A564C42843E2BE00D4B7D8 /* IosCryptoPrimitivesProvider.swift in Sources */,
 				1C6487232832E4BA0091A12D /* DefaultDegenService.swift in Sources */,
 				1A4C3161ADC31E07777F61F0 /* AccountInteractor.swift in Sources */,
 				1C6487532832ECD50091A12D /* MnemonicWireframeFactoryAssembler.swift in Sources */,
@@ -2034,10 +2039,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development: sonsofcrypto@protonmail.com (Z988ABPT74)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5K4DT22LXR;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
@@ -2070,10 +2076,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development: sonsofcrypto@protonmail.com (Z988ABPT74)";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5K4DT22LXR;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;

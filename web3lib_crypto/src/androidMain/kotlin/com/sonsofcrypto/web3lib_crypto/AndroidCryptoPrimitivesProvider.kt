@@ -1,10 +1,10 @@
 package com.sonsofcrypto.web3lib_crypto
 
-import crypto.*
+import coreCrypto.*
 
 class AndroidCryptoPrimitivesProvider : CryptoPrimitivesProvider {
 
     override fun secureRand(size: Int): ByteArray {
-        return crypto.Crypto.secureRand(size.toLong())
+        return coreCrypto.CoreCrypto.secureRand(size.toLong())
     }
 }

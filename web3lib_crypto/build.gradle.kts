@@ -30,7 +30,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(files("./src/androidMain/libs/crypto.aar"))
+                implementation(files("./src/androidMain/libs/CoreCrypto.aar"))
             }
         }
         val androidTest by getting
