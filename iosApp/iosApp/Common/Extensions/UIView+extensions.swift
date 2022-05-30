@@ -56,13 +56,28 @@ extension UIView {
         return view
     }
     
+    class func hSpace(
+        value: CGFloat = 16
+    ) -> UIView {
+        
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.addConstraints(
+            [
+                .layout(anchor: .widthAnchor, constant: .equalTo(constant: value))
+            ]
+        )
+        
+        return view
+    }
+    
     class func dividerLine(
-        backgorundColor: UIColor = Theme.color.red,
+        backgroundColor: UIColor = Theme.color.red,
         height: CGFloat = 1
     ) -> UIView {
         
         let view = UIView()
-        view.backgroundColor = backgorundColor
+        view.backgroundColor = backgroundColor
         view.addConstraints(
             [
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: height))
