@@ -7,6 +7,10 @@ import Foundation
 // MARK: - suffix number
 
 extension Int {
+    
+    var stringValue: String {
+        "\(self)"
+    }
 
     var abbreviated: String {
         let abbrev = ["K", " mil", " bil", "T", "P", "E"]

@@ -17,7 +17,7 @@ final class DefaultRootWireframeFactory {
     private let networksWireframeFactory: NetworksWireframeFactory
     private let dashboardWireframeFactory: DashboardWireframeFactory
     private let degenWireframeFactory: DegenWireframeFactory
-    private let nftsWireframeFactory: NFTsWireframeFactory
+    private let nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory
     private let appsWireframeFactory: AppsWireframeFactory
     private let settingsWireframeFactory: SettingsWireframeFactory
     private let keyStoreService: KeyStoreService
@@ -27,7 +27,7 @@ final class DefaultRootWireframeFactory {
         networksWireframeFactory: NetworksWireframeFactory,
         dashboardWireframeFactory: DashboardWireframeFactory,
         degenWireframeFactory: DegenWireframeFactory,
-        nftsWireframeFactory: NFTsWireframeFactory,
+        nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory,
         appsWireframeFactory: AppsWireframeFactory,
         settingsWireframeFactory: SettingsWireframeFactory,
         keyStoreService: KeyStoreService
@@ -36,7 +36,7 @@ final class DefaultRootWireframeFactory {
         self.networksWireframeFactory = networksWireframeFactory
         self.dashboardWireframeFactory = dashboardWireframeFactory
         self.degenWireframeFactory = degenWireframeFactory
-        self.nftsWireframeFactory = nftsWireframeFactory
+        self.nftsDashboardWireframeFactory = nftsDashboardWireframeFactory
         self.appsWireframeFactory = appsWireframeFactory
         self.settingsWireframeFactory = settingsWireframeFactory
         self.keyStoreService = keyStoreService
@@ -55,7 +55,7 @@ extension DefaultRootWireframeFactory: RootWireframeFactory {
             networksWireframeFactory: networksWireframeFactory,
             dashboardWireframeFactory: dashboardWireframeFactory,
             degenWireframeFactory: degenWireframeFactory,
-            nftsWireframeFactory: nftsWireframeFactory,
+            nftsDashboardWireframeFactory: nftsDashboardWireframeFactory,
             appsWireframeFactory: appsWireframeFactory,
             settingsWireframeFactory: settingsWireframeFactory,
             keyStoreService: keyStoreService

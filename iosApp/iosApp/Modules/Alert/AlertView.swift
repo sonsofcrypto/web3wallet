@@ -82,7 +82,7 @@ private extension DefaultAlertView {
         
         let alertView = UIView()
         alertView.backgroundColor = Theme.color.background
-        alertView.layer.cornerRadius = 16
+        alertView.layer.cornerRadius = Global.cornerRadius
         alertView.layer.borderWidth = 1
         alertView.layer.borderColor = Theme.color.tintLight.cgColor
         

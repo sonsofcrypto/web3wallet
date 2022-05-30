@@ -30,7 +30,7 @@ final class DefaultRootWireframe {
     private let networksWireframeFactory: NetworksWireframeFactory
     private let dashboardWireframeFactory: DashboardWireframeFactory
     private let degenWireframeFactory: DegenWireframeFactory
-    private let nftsWireframeFactory: NFTsWireframeFactory
+    private let nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory
     private let appsWireframeFactory: AppsWireframeFactory
     private let settingsWireframeFactory: SettingsWireframeFactory
     private let keyStoreService: KeyStoreService
@@ -41,7 +41,7 @@ final class DefaultRootWireframe {
         networksWireframeFactory: NetworksWireframeFactory,
         dashboardWireframeFactory: DashboardWireframeFactory,
         degenWireframeFactory: DegenWireframeFactory,
-        nftsWireframeFactory: NFTsWireframeFactory,
+        nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory,
         appsWireframeFactory: AppsWireframeFactory,
         settingsWireframeFactory: SettingsWireframeFactory,
         keyStoreService: KeyStoreService
@@ -52,7 +52,7 @@ final class DefaultRootWireframe {
         self.networksWireframeFactory = networksWireframeFactory
         self.dashboardWireframeFactory = dashboardWireframeFactory
         self.degenWireframeFactory = degenWireframeFactory
-        self.nftsWireframeFactory = nftsWireframeFactory
+        self.nftsDashboardWireframeFactory = nftsDashboardWireframeFactory
         self.appsWireframeFactory = appsWireframeFactory
         self.settingsWireframeFactory = settingsWireframeFactory
         self.keyStoreService = keyStoreService
@@ -72,7 +72,7 @@ extension DefaultRootWireframe: RootWireframe {
         networksWireframeFactory.makeWireframe(vc).present()
         dashboardWireframeFactory.makeWireframe(tabVc).present()
         degenWireframeFactory.makeWireframe(tabVc).present()
-        nftsWireframeFactory.makeWireframe(tabVc).present()
+        nftsDashboardWireframeFactory.makeWireframe(tabVc).present()
         appsWireframeFactory.makeWireframe(tabVc).present()
         settingsWireframeFactory.makeWireframe(tabVc).present()
         

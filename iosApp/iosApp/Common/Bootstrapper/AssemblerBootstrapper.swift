@@ -33,6 +33,7 @@ private extension AssemblerBootstrapper {
             ReachabilityServiceAssembler(),
             SettingsServiceAssembler(),
             StoreAssembler(),
+            CacheImageAssembler(),
             // Modules
             AccountWireframeFactoryAssembler(),
             AlertWireframeFactoryAssembler(),
@@ -45,7 +46,9 @@ private extension AssemblerBootstrapper {
             MnemonicWireframeFactoryAssembler(),
             MnemonicConfirmationWireframeFactoryAssembler(),
             NetworksWireframeFactoryAssembler(),
-            NFTsWireframeFactoryAssembler(),
+            NFTsDashboardWireframeFactoryAssembler(),
+            NFTsCollectionWireframeFactoryAssembler(),
+            NFTDetailWireframeFactoryAssembler(),
             RootWireframeFactoryAssembler(),
             SettingsWireframeFactoryAssembler()
         ]
