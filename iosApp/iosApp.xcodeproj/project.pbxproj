@@ -139,6 +139,7 @@
 		1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */; };
 		1A4C3FC333CF4459025710E5 /* NFTDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38A2039D19A2E5507CF2 /* NFTDetailView.swift */; };
 		1C5B60382843FACD00ECBD79 /* UIViewController+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B60372843FACD00ECBD79 /* UIViewController+extensions.swift */; };
+		1C5B603B284675B800ECBD79 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5B603A284675B800ECBD79 /* Kingfisher */; };
 		1C6486F3282D783A0091A12D /* DefaultGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6486F2282D783A0091A12D /* DefaultGradientView.swift */; };
 		1C6487022832DB830091A12D /* DefaultAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487012832DB830091A12D /* DefaultAssembler.swift */; };
 		1C6487042832DB8B0091A12D /* Assembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487032832DB8B0091A12D /* Assembler.swift */; };
@@ -623,6 +624,7 @@
 				D13D8148283D6A4B0038A6BA /* SwiftKeccak in Frameworks */,
 				D1A67140283D6BAE0042A448 /* web3lib.xcframework in Frameworks */,
 				D13D8146283D6A4B0038A6BA /* Sha3Tiny in Frameworks */,
+				1C5B603B284675B800ECBD79 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1452,6 +1454,7 @@
 				D13D8143283D6A4B0038A6BA /* KeccakTiny */,
 				D13D8145283D6A4B0038A6BA /* Sha3Tiny */,
 				D13D8147283D6A4B0038A6BA /* SwiftKeccak */,
+				1C5B603A284675B800ECBD79 /* Kingfisher */,
 			);
 			productName = web3wallet;
 			productReference = D157F7C727B69B6300578FF8 /* iosApp.app */;
@@ -1528,6 +1531,7 @@
 			mainGroup = D157F7BE27B69B6300578FF8;
 			packageReferences = (
 				D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak" */,
+				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
 			projectDirPath = "";
@@ -2221,6 +2225,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/bitflying/SwiftKeccak.git";
@@ -2232,6 +2244,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1C5B603A284675B800ECBD79 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		D13D8143283D6A4B0038A6BA /* KeccakTiny */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak" */;
