@@ -1,10 +1,22 @@
 package com.sonsofcrypto.web3lib_bip39
 
-class Bip39(mnemonic: List<String>, salt: String, worldList: WordList) {
+import com.sonsofcrypto.web3lib_crypto.Crypto
+import com.sonsofcrypto.web3lib_crypto.HashFn
+
+private const val PBKDF2_ITER = 2048
+private const val PBKDF2_KEYLEN = 64
+
+class Bip39(val mnemonic: List<String>, val salt: String, val worldList: WordList) {
 
     /** Seed for mnemonic */
-    fun seed(): ByteArray {
-        TODO("Implement")
+    @Throws(Exception::class) fun seed(): ByteArray {
+        return Crypto.pbkdf2(
+            mnemonic.joinToString(" ").encodeToByteArray(),
+            ("mnemonic" + salt).encodeToByteArray(),
+            PBKDF2_ITER,
+            PBKDF2_KEYLEN,
+            HashFn.SHA512
+        )
     }
 
     /** Original entropy for mnemonic */
@@ -38,20 +50,22 @@ class Bip39(mnemonic: List<String>, salt: String, worldList: WordList) {
 
     companion object {
 
-        fun from(
+        @Throws(Error::class) fun from(
             entropySize: EntropySize = EntropySize.ES128,
             salt: String = "",
             worldList: WordList = WordList.ENGLISH
         ): Bip39 {
-            TODO("Implement")
+            println("=== Throwing Failed")
+            throw Error.FailedToDeriveKeyFromMnemonic
         }
 
-        fun from(
+        @Throws(Error::class) fun from(
             entropy: ByteArray,
             salt: String = "",
             worldList: WordList = WordList.ENGLISH
         ): Bip39 {
-            TODO("Implement")
+            println("=== Throwing Invalid words")
+            throw Error.InvalidWord(2)
         }
     }
 }

@@ -21,7 +21,11 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                api(project(":web3lib_crypto"))
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))

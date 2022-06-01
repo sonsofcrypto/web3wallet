@@ -7,7 +7,7 @@ shared Kotlin `web3lib` for all of web3 needs. Creating and managing wallets,
 signing transactions, connecting to networks, interacting with smart contracts.
 
 ## Compilation instructions
-- Clone and checkout submodules `web3lib`
+- Clone and repo
 ```
 git clone https://github.com/sonsofcrypto/web3wallet.git
 ```
