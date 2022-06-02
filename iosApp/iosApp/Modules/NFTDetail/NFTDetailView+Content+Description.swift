@@ -54,10 +54,11 @@ private extension NFTDetailViewController {
         
         hStack.addArrangedSubview(.hSpace(value: Global.padding))
         
-        let label = UILabel(with: .body)
+        let label = UILabel()
         label.text = text
         label.textColor = Theme.current.color.text
         label.numberOfLines = 0
+        label.applyStyle(.body)
         hStack.addArrangedSubview(label)
 
         hStack.addArrangedSubview(.hSpace(value: Global.padding))

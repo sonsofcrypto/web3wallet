@@ -1,11 +1,9 @@
-//
-//  UIImageView+Extensions.swift
-//  web3wallet
-//
-//  Created by web3 on 24/05/2022.
-//
+// Created by web3d4v on 31/05/2022.
+// Copyright (c) 2022 Sons Of Crypto.
+// SPDX-License-Identifier: MIT
 
 import UIKit
+import Kingfisher
 
 extension UIImageView {
     
@@ -28,33 +26,8 @@ extension UIImageView {
             ]
         )
         
-        image = placeholder
-        
-        let cache: CacheImage = ServiceDirectory.assembler.resolve()
-        
-        if let image = cache.findImage(for: url) {
+        kf.setImage(with: url) { _ in
             activityIndicator.removeFromSuperview()
-            self.image = image
-            return
-        }
-        
-        DispatchQueue.global().async { [weak self] in
-            
-            if let data = try? Data(contentsOf: url) {
-                
-                if let image = UIImage(data: data) {
-                    
-                    cache.cache(image: image, at: url)
-                    
-                    DispatchQueue.main.async {
-                        
-                        activityIndicator.removeFromSuperview()
-                        self?.image = image
-                    }
-                }
-            }
         }
     }
 }
-
-

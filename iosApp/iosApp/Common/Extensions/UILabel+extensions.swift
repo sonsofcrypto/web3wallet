@@ -52,6 +52,7 @@ extension UILabel {
         case .body:
             font = Theme.font.body
             textColor = Theme.color.text
+            update(lineSpacing: 8)
         case .bodyGlow:
             font = Theme.font.body
             layer.applyShadow(Theme.color.tintSecondary)
@@ -76,5 +77,23 @@ extension UILabel {
             font = Theme.font.footnote
             textColor = Theme.color.textSecondary
         }
+    }
+}
+
+private extension UILabel {
+    
+    func update(
+        lineSpacing: CGFloat = 10
+    ) {
+        
+        let attrString = NSMutableAttributedString(string: text ?? "")
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = lineSpacing
+        attrString.addAttribute(
+            NSAttributedString.Key.paragraphStyle,
+            value: style,
+            range: NSRange(location: 0, length: attrString.length)
+        )
+        attributedText = attrString
     }
 }

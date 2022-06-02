@@ -118,19 +118,15 @@ private extension DefaultNFTsDashboardPresenter {
             return
         }
         
-        let nfts: [NFTsDashboardViewModel.NFT] = latestNFTs.sorted {
-            $0.ethPrice > $1.ethPrice
-        }.compactMap {
-            
+        let nfts: [NFTsDashboardViewModel.NFT] = latestNFTs.compactMap {
+
             NFTsDashboardViewModel.NFT(
                 identifier: $0.identifier,
                 image: $0.image
             )
         }
         
-        let collections: [NFTsDashboardViewModel.Collection] = latestCollections.sorted {
-            return $0.identifier < $1.identifier
-        }.compactMap {
+        let collections: [NFTsDashboardViewModel.Collection] = latestCollections.compactMap {
             
             NFTsDashboardViewModel.Collection(
                 identifier: $0.identifier,

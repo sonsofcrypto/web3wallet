@@ -367,7 +367,12 @@ extension DefaultNFTsService {
             ],
             image: "https://img.seadn.io/files/0ffd18a26fa50f91281fb7c3484cefb1.png?auto=format&w=600"
         )
-    ]
+    ].sorted {
+        guard $0.collectionIdentifier == $1.collectionIdentifier else {
+            return $0.collectionIdentifier < $1.collectionIdentifier
+        }
+        return $0.ethPrice > $1.ethPrice
+    }
     
     static var yourNFTCollections: [NFTCollection] = [
         .init(
@@ -415,6 +420,5 @@ extension DefaultNFTsService {
             authorImage: "https://lh3.googleusercontent.com/cb_wdEAmvry_noTfeuQzhqKpghhZWQ_sEhuGS9swM03UM8QMEVJrndu0ZRdLFgGVqEPeCUzOHGTUllxug9U3xdvt0bES6VFdkRCKPqg=s130",
             description: "AAAAAAAUUUUUGGGHHHHH gobblins goblinns GOBLINNNNNNNNns wekm ta goblintown yoo sniksnakr DEJEN RATS oooooh rats are yummmz dis a NEFTEEE O GOBBLINGS on da BLOKCHIN wat? oh. crustybutt da goblinking say GEE EMMM DEDJEN RUTS an queenie saay HLLO SWEATIES ok dats all byeby"
         )
-    ]
-    
+    ].sorted { $0.identifier < $1.identifier }
 }
