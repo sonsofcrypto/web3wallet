@@ -47,11 +47,21 @@ extension DashboardNFTsCell: iCarouselDataSource {
         viewModel.count
     }
 
-    func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
+    func carousel(
+        _ carousel: iCarousel,
+        viewForItemAt index: Int,
+        reusing view: UIView?
+    ) -> UIView {
+        
         let imageView = view as? UIImageView ?? UIImageView()
-        imageView.image = UIImage(named: viewModel[index].imageName ?? "")
-        let length = min(carousel.bounds.width, carousel.bounds.height) * 0.9
-        imageView.bounds.size = CGSize(width: length, height: length)
+        imageView.image = UIImage(
+            named: viewModel[index].imageName
+        )
+        let length = min(
+            carousel.bounds.width,
+            carousel.bounds.height
+        ) * 0.9
+        imageView.bounds.size = .init(width: length, height: length)
         imageView.backgroundColor = UIColor.bgGradientTopSecondary
         return imageView
     }

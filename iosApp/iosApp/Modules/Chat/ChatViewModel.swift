@@ -1,40 +1,35 @@
-// Created by web3d3v on 11/02/2022.
+// Created by web3d4v on 02/06/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import Foundation
 
-enum AppsViewModel {
+enum ChatViewModel {
     case loading
     case loaded(items: [Item], selectedIdx: Int)
     case error(error: AppsViewModel.Error)
 }
 
-// MARK - Item
-
-extension AppsViewModel {
+extension ChatViewModel {
 
     struct Item {
         let title: String
     }
 }
 
-// MARK: - Error
-
-extension AppsViewModel {
+extension ChatViewModel {
 
     struct Error {
+        
         let title: String
         let body: String
         let actions: [String]
     }
 }
 
-// MARK: - Utility
+extension ChatViewModel {
 
-extension AppsViewModel {
-
-    func items() -> [AppsViewModel.Item] {
+    func items() -> [ChatViewModel.Item] {
         switch self {
         case let .loaded(items, _):
             return items

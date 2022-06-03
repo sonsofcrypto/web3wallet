@@ -109,3 +109,9 @@
 "nft.detail.button.send" = "Send";
 "nft.detail.section.title.description" = "Description";
 "nft.detail.section.title.properties" = "Properties";
+
+"chat" = "Chat";
+"chat.colletion.top.cell.body" = "This are the list of upcoming apps that Web3Wallet plans to work on in the future.";
+"chat.item.web3chat" = "web3chat";
+
+

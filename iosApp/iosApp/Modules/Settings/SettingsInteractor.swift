@@ -153,8 +153,6 @@ extension DefaultSettingsInteractor: SettingsInteractor {
             try? keyStoreService.reset()
 //            fatalError("Killing app after keyStore reset")
             return true
-        default:
-            return false
         }
     }
 }

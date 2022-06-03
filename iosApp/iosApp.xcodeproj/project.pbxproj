@@ -248,6 +248,23 @@
 		1CB3A23A2843E5A10092D667 /* NFTsCollectionView+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB3A2392843E5A10092D667 /* NFTsCollectionView+Shared.swift */; };
 		1CB3A23C2843E5F20092D667 /* NFTsCollectionView+NFTs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB3A23B2843E5F20092D667 /* NFTsCollectionView+NFTs.swift */; };
 		1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */; };
+		1CE66BBA2848E5C700AB6ACA /* ChatWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BB92848E5C700AB6ACA /* ChatWireframeFactoryAssembler.swift */; };
+		1CE66BBC2848E5CC00AB6ACA /* ChatWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BBB2848E5CC00AB6ACA /* ChatWireframe.swift */; };
+		1CE66BBE2848E5D500AB6ACA /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BBD2848E5D500AB6ACA /* ChatViewModel.swift */; };
+		1CE66BC02848E5DB00AB6ACA /* ChatPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BBF2848E5DB00AB6ACA /* ChatPresenter.swift */; };
+		1CE66BC22848E5E200AB6ACA /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BC12848E5E200AB6ACA /* ChatViewController.swift */; };
+		1CE66BC52848E5F700AB6ACA /* ChatInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BC42848E5F700AB6ACA /* ChatInteractor.swift */; };
+		1CE66BC72848E62600AB6ACA /* ChatWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BC62848E62600AB6ACA /* ChatWireframeFactory.swift */; };
+		1CE66BCA2848EA9900AB6ACA /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BC92848EA9900AB6ACA /* ChatService.swift */; };
+		1CE66BCC2848EA9F00AB6ACA /* DefaultChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCB2848EA9F00AB6ACA /* DefaultChatService.swift */; };
+		1CE66BCE2848EAA600AB6ACA /* ChatServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */; };
+		1CE66BD02848EB8400AB6ACA /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CE66BCF2848EB8400AB6ACA /* Chat.storyboard */; };
+		1CE66BD22848ED4000AB6ACA /* PresentationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BD12848ED4000AB6ACA /* PresentationStyle.swift */; };
+		1CE66BD52848F06200AB6ACA /* ChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BD42848F06200AB6ACA /* ChatCollectionViewCell.swift */; };
+		1CE66BD72848F16A00AB6ACA /* UITabBarController+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BD62848F16A00AB6ACA /* UITabBarController+extensions.swift */; };
+		1CE66BD92848F24E00AB6ACA /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CE66BD82848F24E00AB6ACA /* Apps.storyboard */; };
+		1CE66BDC2848F32F00AB6ACA /* AppsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BDB2848F32F00AB6ACA /* AppsCollectionViewCell.swift */; };
+		1CE66BDE28494C5D00AB6ACA /* AppsHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BDD28494C5D00AB6ACA /* AppsHeaderCollectionViewCell.swift */; };
 		D116CF3227C31ECC005542AA /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = D116CF3127C31ECC005542AA /* iCarousel.m */; };
 		D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F527B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf */; };
 		D11A990127B8615B00EDFDD0 /* GothicA1-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F627B8615B00EDFDD0 /* GothicA1-Regular.ttf */; };
@@ -564,6 +581,23 @@
 		1CB3A2392843E5A10092D667 /* NFTsCollectionView+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NFTsCollectionView+Shared.swift"; sourceTree = "<group>"; };
 		1CB3A23B2843E5F20092D667 /* NFTsCollectionView+NFTs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NFTsCollectionView+NFTs.swift"; sourceTree = "<group>"; };
 		1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetActionViewModel.swift; sourceTree = "<group>"; };
+		1CE66BB92848E5C700AB6ACA /* ChatWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1CE66BBB2848E5CC00AB6ACA /* ChatWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWireframe.swift; sourceTree = "<group>"; };
+		1CE66BBD2848E5D500AB6ACA /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		1CE66BBF2848E5DB00AB6ACA /* ChatPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPresenter.swift; sourceTree = "<group>"; };
+		1CE66BC12848E5E200AB6ACA /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		1CE66BC42848E5F700AB6ACA /* ChatInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInteractor.swift; sourceTree = "<group>"; };
+		1CE66BC62848E62600AB6ACA /* ChatWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWireframeFactory.swift; sourceTree = "<group>"; };
+		1CE66BC92848EA9900AB6ACA /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
+		1CE66BCB2848EA9F00AB6ACA /* DefaultChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatService.swift; sourceTree = "<group>"; };
+		1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceAssembler.swift; sourceTree = "<group>"; };
+		1CE66BCF2848EB8400AB6ACA /* Chat.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
+		1CE66BD12848ED4000AB6ACA /* PresentationStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationStyle.swift; sourceTree = "<group>"; };
+		1CE66BD42848F06200AB6ACA /* ChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCollectionViewCell.swift; sourceTree = "<group>"; };
+		1CE66BD62848F16A00AB6ACA /* UITabBarController+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarController+extensions.swift"; sourceTree = "<group>"; };
+		1CE66BD82848F24E00AB6ACA /* Apps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Apps.storyboard; sourceTree = "<group>"; };
+		1CE66BDB2848F32F00AB6ACA /* AppsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsCollectionViewCell.swift; sourceTree = "<group>"; };
+		1CE66BDD28494C5D00AB6ACA /* AppsHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		D116CF2F27C31ECC005542AA /* iosApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iosApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		D116CF3027C31ECC005542AA /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		D116CF3127C31ECC005542AA /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
@@ -661,9 +695,11 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		1A4C3044D77C00C8FF94BEA1 /* AppsModule */ = {
+		1A4C3044D77C00C8FF94BEA1 /* Apps */ = {
 			isa = PBXGroup;
 			children = (
+				1CE66BDA2848F32600AB6ACA /* Cells */,
+				1CE66BD82848F24E00AB6ACA /* Apps.storyboard */,
 				1A4C3228A51AE19D8D21760A /* AppsCell.swift */,
 				1A4C39C411BA3C3F080EB746 /* AppsInteractor.swift */,
 				1A4C33A7E924C453F503448F /* AppsPresenter.swift */,
@@ -673,7 +709,7 @@
 				1A4C3E735403B7DA9910563D /* AppsWireframeFactory.swift */,
 				1C6487462832E98B0091A12D /* AppsWireframeFactoryAssembler.swift */,
 			);
-			path = AppsModule;
+			path = Apps;
 			sourceTree = "<group>";
 		};
 		1A4C312F3B436BCC1E5CDDB0 /* NFTDetail */ = {
@@ -868,6 +904,7 @@
 			children = (
 				1A4C3649032759624C3E2734 /* CardFlipAnimatedTransitioning2.swift */,
 				1A4C3E976CBAB0A97E8AF408 /* CardFlipTransition.swift */,
+				1CE66BD12848ED4000AB6ACA /* PresentationStyle.swift */,
 				1A4C3F5900131CEDA6520958 /* TransformView.swift */,
 			);
 			path = Transitions;
@@ -939,6 +976,7 @@
 		1A4C38B91F448C1E962685B3 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				1CE66BC82848EA9000AB6ACA /* Chat */,
 				1A4C34EBFC9FFA8EFBE7DCA7 /* Account */,
 				1A4C35BE139AFC345B42DE7F /* Apps */,
 				1A4C3888D4FA37BEB1285C02 /* Degen */,
@@ -1136,6 +1174,7 @@
 				1CB3A1D52840D6B70092D667 /* UIView+extensions.swift */,
 				1CB3A1D82840D6B70092D667 /* UIView+LayoutConstraints+extensions.swift */,
 				1C5B60372843FACD00ECBD79 /* UIViewController+extensions.swift */,
+				1CE66BD62848F16A00AB6ACA /* UITabBarController+extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1179,6 +1218,49 @@
 				1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		1CE66BB82848E5A100AB6ACA /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				1CE66BD32848F05C00AB6ACA /* Cells */,
+				1CE66BCF2848EB8400AB6ACA /* Chat.storyboard */,
+				1CE66BC42848E5F700AB6ACA /* ChatInteractor.swift */,
+				1CE66BBF2848E5DB00AB6ACA /* ChatPresenter.swift */,
+				1CE66BC12848E5E200AB6ACA /* ChatViewController.swift */,
+				1CE66BBD2848E5D500AB6ACA /* ChatViewModel.swift */,
+				1CE66BBB2848E5CC00AB6ACA /* ChatWireframe.swift */,
+				1CE66BC62848E62600AB6ACA /* ChatWireframeFactory.swift */,
+				1CE66BB92848E5C700AB6ACA /* ChatWireframeFactoryAssembler.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		1CE66BC82848EA9000AB6ACA /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				1CE66BC92848EA9900AB6ACA /* ChatService.swift */,
+				1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */,
+				1CE66BCB2848EA9F00AB6ACA /* DefaultChatService.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		1CE66BD32848F05C00AB6ACA /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				1CE66BD42848F06200AB6ACA /* ChatCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		1CE66BDA2848F32600AB6ACA /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				1CE66BDB2848F32F00AB6ACA /* AppsCollectionViewCell.swift */,
+				1CE66BDD28494C5D00AB6ACA /* AppsHeaderCollectionViewCell.swift */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		D116CF2927C31C42005542AA /* iCarousel */ = {
@@ -1347,15 +1429,16 @@
 			children = (
 				1A4C329381A12BF85B2C9F38 /* Account */,
 				1CA3F2D42820338000133C41 /* Alert */,
-				1A4C3044D77C00C8FF94BEA1 /* AppsModule */,
+				1A4C3044D77C00C8FF94BEA1 /* Apps */,
+				1CE66BB82848E5A100AB6ACA /* Chat */,
 				1A4C3850AF2505DA23170977 /* Dashboard */,
 				1A4C315D92E8F10E17F45F5D /* Degen */,
 				D15B06C827B7211F008C3C62 /* KeyStore */,
 				D1F160002804C96100DEF239 /* Mnemonic */,
 				1CA3F2E3282D691900133C41 /* MnemonicConfirmation */,
 				1A4C3823E11D18DC3C0029DD /* Networks */,
-				1CB3A22A2843DA570092D667 /* NFTsCollection */,
 				1A4C312F3B436BCC1E5CDDB0 /* NFTDetail */,
+				1CB3A22A2843DA570092D667 /* NFTsCollection */,
 				1CB3A1F72840D7100092D667 /* NFTsDashboard */,
 				1A4C346F635A82851C21B8A8 /* Root */,
 				1A4C3C0F7E50FC6FFF5CA5A9 /* Settings */,
@@ -1533,6 +1616,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D11A990A27B8615B00EDFDD0 /* NothingYouCouldDo-Regular.ttf in Resources */,
+				1CE66BD92848F24E00AB6ACA /* Apps.storyboard in Resources */,
 				D11A990527B8615B00EDFDD0 /* GothicA1-ExtraBold.ttf in Resources */,
 				D11A990827B8615B00EDFDD0 /* GothicA1-Black.ttf in Resources */,
 				D11A990627B8615B00EDFDD0 /* OFL.txt in Resources */,
@@ -1550,6 +1634,7 @@
 				D157F7D227B69B6300578FF8 /* Main.storyboard in Resources */,
 				D11A990127B8615B00EDFDD0 /* GothicA1-Regular.ttf in Resources */,
 				1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */,
+				1CE66BD02848EB8400AB6ACA /* Chat.storyboard in Resources */,
 				1A4C33A130E35EBC0BC27B07 /* mock-candles.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1602,10 +1687,12 @@
 				D11A991027B99D1800EDFDD0 /* AnyCodable.swift in Sources */,
 				1C6486F3282D783A0091A12D /* DefaultGradientView.swift in Sources */,
 				D15B06C727B72111008C3C62 /* KeyStoreView.swift in Sources */,
+				1CE66BBE2848E5D500AB6ACA /* ChatViewModel.swift in Sources */,
 				D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */,
 				D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */,
 				1CB3A2052840D7100092D667 /* NFTsDashboardViewModel.swift in Sources */,
 				D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */,
+				1CE66BD22848ED4000AB6ACA /* PresentationStyle.swift in Sources */,
 				1A4C32CF0C59FE32073E66D0 /* KeyStorePresenter.swift in Sources */,
 				1CB3A1E32840D6B70092D667 /* Array+extensions.swift in Sources */,
 				1A4C3D9BD9F5A146878AFF77 /* KeyStoreWireframe.swift in Sources */,
@@ -1622,6 +1709,7 @@
 				1C64872D2832E5800091A12D /* AccountServiceAssembler.swift in Sources */,
 				1A4C3708C25B84EAA53D0FB6 /* KeyStoreItem.swift in Sources */,
 				1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */,
+				1CE66BCE2848EAA600AB6ACA /* ChatServiceAssembler.swift in Sources */,
 				1C6487042832DB8B0091A12D /* Assembler.swift in Sources */,
 				1CA3F2D72820339200133C41 /* AlertWireframe.swift in Sources */,
 				1A4C3EB4D429242923984C76 /* Button.swift in Sources */,
@@ -1664,7 +1752,10 @@
 				1C6487202832E3FA0091A12D /* KeyChainServiceAssembler.swift in Sources */,
 				1A4C3A35E90213A3B1D305C1 /* NetworksInteractor.swift in Sources */,
 				1CB3A2022840D7100092D667 /* NFTsDashboardView+MainScrollView.swift in Sources */,
+				1CE66BDE28494C5D00AB6ACA /* AppsHeaderCollectionViewCell.swift in Sources */,
+				1CE66BC72848E62600AB6ACA /* ChatWireframeFactory.swift in Sources */,
 				1CB3A22528439CCD0092D667 /* NFTDetailView+Content+Properties.swift in Sources */,
+				1CE66BD72848F16A00AB6ACA /* UITabBarController+extensions.swift in Sources */,
 				1A4C339BB64E9CCF1C110D40 /* NetworksPresenter.swift in Sources */,
 				1A4C3926E0A2F1B6A2CF3040 /* NetworksView.swift in Sources */,
 				1C6487342832E64A0091A12D /* DefaultNFTsService.swift in Sources */,
@@ -1706,6 +1797,7 @@
 				1A4C3184F9E6B94BC857D69A /* SwapView.swift in Sources */,
 				1A4C37B46FEFFC9D3AC7F324 /* SwapPresenter.swift in Sources */,
 				1A4C348C8EAD95B167C06D3D /* SwapViewModel.swift in Sources */,
+				1CE66BCA2848EA9900AB6ACA /* ChatService.swift in Sources */,
 				1C6487362832E6650091A12D /* NFTsServiceAssembler.swift in Sources */,
 				1C64871B2832E3490091A12D /* KeyStoreServiceAssembler.swift in Sources */,
 				1CB3A20A2840D7100092D667 /* NFTsDashboardWireframeFactory.swift in Sources */,
@@ -1726,6 +1818,7 @@
 				1CB3A23A2843E5A10092D667 /* NFTsCollectionView+Shared.swift in Sources */,
 				1C6487092832DC5F0091A12D /* Bootstrapper.swift in Sources */,
 				1C6487232832E4BA0091A12D /* DefaultDegenService.swift in Sources */,
+				1CE66BC02848E5DB00AB6ACA /* ChatPresenter.swift in Sources */,
 				1A4C3161ADC31E07777F61F0 /* AccountInteractor.swift in Sources */,
 				1C6487532832ECD50091A12D /* MnemonicWireframeFactoryAssembler.swift in Sources */,
 				1CA3F2E7282D697400133C41 /* MnemonicConfirmationWireframeFactory.swift in Sources */,
@@ -1739,11 +1832,13 @@
 				1CB3A1E82840D6B70092D667 /* UIButton+extensions.swift in Sources */,
 				D1BF2684280D7FC300DE9A0B /* DefaultTheme.swift in Sources */,
 				1A4C3BB851D9D2E9DD472284 /* NFTDetailViewModel.swift in Sources */,
+				1CE66BBC2848E5CC00AB6ACA /* ChatWireframe.swift in Sources */,
 				1A4C3E0C34560AC1BF22B95E /* NFTDetailWireframe.swift in Sources */,
 				1CB3A1EB2840D6B70092D667 /* UIColor+extensions.swift in Sources */,
 				1CB3A1E72840D6B70092D667 /* UIImageView+Extensions.swift in Sources */,
 				1A4C3814E1E3BDF50E96D8C5 /* NFTDetailInteractor.swift in Sources */,
 				1A4C3551BCCFEFA7BF378CD5 /* NFTDetailWireframeFactory.swift in Sources */,
+				1CE66BCC2848EA9F00AB6ACA /* DefaultChatService.swift in Sources */,
 				1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */,
 				1A4C30B7111436DB2D3D9E5D /* AppsCell.swift in Sources */,
 				1CA3F2DD2820339F00133C41 /* AlertView.swift in Sources */,
@@ -1774,6 +1869,7 @@
 				1A4C39119C04EB0DE3B90F12 /* RootView.swift in Sources */,
 				1A4C36FDBCA0AA402711BE43 /* RootPresenter.swift in Sources */,
 				1A4C3907090271B34B3F8F4E /* RootWireframe.swift in Sources */,
+				1CE66BD52848F06200AB6ACA /* ChatCollectionViewCell.swift in Sources */,
 				1CB3A2032840D7100092D667 /* NFTsDashboardWireframe.swift in Sources */,
 				1A4C3D05769E141EF98C06E4 /* RootWireframeFactory.swift in Sources */,
 				D1F160092804C96100DEF239 /* MnemonicView.swift in Sources */,
@@ -1781,6 +1877,7 @@
 				1A4C3735189D6616D915D851 /* TabBarController.swift in Sources */,
 				1A4C337DA7CC49D28B99336D /* DashboardWalletCell.swift in Sources */,
 				1CB3A20F28422A910092D667 /* NFTDetailView+Shared.swift in Sources */,
+				1CE66BBA2848E5C700AB6ACA /* ChatWireframeFactoryAssembler.swift in Sources */,
 				1C64871E2832E3D60091A12D /* DefaultKeyChainService.swift in Sources */,
 				1CB3A1F42840D6B70092D667 /* UICollectionView+extensions.swift in Sources */,
 				1A4C39EEFEA6A4B3265F6B13 /* DashboardHeaderView.swift in Sources */,
@@ -1818,6 +1915,7 @@
 				1A4C3F3B50559576A91700B7 /* CollectionViewTextInputCell.swift in Sources */,
 				1A4C3B697503D478741295DB /* TextField.swift in Sources */,
 				1A4C3469AE463198FCE284E2 /* CollectionViewSwitchCell.swift in Sources */,
+				1CE66BDC2848F32F00AB6ACA /* AppsCollectionViewCell.swift in Sources */,
 				1C6487122832DE4D0091A12D /* ReachabilityService.swift in Sources */,
 				1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */,
 				1A4C3F71ED826BCCF12C9DF1 /* CollectionViewSwitchTextInputCell.swift in Sources */,
@@ -1833,6 +1931,7 @@
 				1A4C3B81B628EF4EDC8F7177 /* TransformView.swift in Sources */,
 				1A4C31E84A86A69FFC7C3E0F /* Setting.swift in Sources */,
 				1C5B60382843FACD00ECBD79 /* UIViewController+extensions.swift in Sources */,
+				1CE66BC52848E5F700AB6ACA /* ChatInteractor.swift in Sources */,
 				1A4C3494D52663C2DB8045EB /* SettingsItem.swift in Sources */,
 				1C6487022832DB830091A12D /* DefaultAssembler.swift in Sources */,
 				1A4C35B22F98D604D37A324F /* SettingsCell.swift in Sources */,
@@ -1846,6 +1945,7 @@
 				1A4C36EEA61FB60EE15ED6DD /* OnboardingService.swift in Sources */,
 				1A4C3F175B65F553F0F5E86D /* SecretStorage.swift in Sources */,
 				1A4C33E50A1388781E82DD29 /* CryptoUtils.swift in Sources */,
+				1CE66BC22848E5E200AB6ACA /* ChatViewController.swift in Sources */,
 				1C64873E2832E76B0091A12D /* StoreAssembler.swift in Sources */,
 				1A4C34B44D253D748EFB2631 /* Bip39.swift in Sources */,
 				1C64874B2832EA590091A12D /* AMMsWireframeFactoryAssembler.swift in Sources */,

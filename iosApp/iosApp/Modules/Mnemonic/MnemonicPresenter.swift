@@ -132,7 +132,7 @@ extension DefaultMnemonicPresenter: MnemonicPresenter {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                 self.view?.dismiss(animated: true, completion: {})
             }
-        case let .didSelectDismiss:
+        case .didSelectDismiss:
             view?.dismiss(animated: true, completion: {})
         }
     }
