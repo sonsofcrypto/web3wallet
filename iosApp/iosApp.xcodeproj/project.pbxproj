@@ -287,6 +287,8 @@
 		D1A67141283D6BAE0042A448 /* web3lib.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D1A6713F283D6BAE0042A448 /* web3lib.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D1BF2684280D7FC300DE9A0B /* DefaultTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF2680280D7FC200DE9A0B /* DefaultTheme.swift */; };
 		D1BF2685280D7FC300DE9A0B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF2681280D7FC200DE9A0B /* Theme.swift */; };
+		D1DC99E828497FB4009D1B5E /* StringAttributed+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DC99E728497FB4009D1B5E /* StringAttributed+Extensions.swift */; };
+		D1DC99E928497FF0009D1B5E /* NSLocalizedString+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D1809D506A7AE772982 /* NSLocalizedString+extension.swift */; };
 		D1F160092804C96100DEF239 /* MnemonicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F160012804C96100DEF239 /* MnemonicView.swift */; };
 		D1F1600A2804C96100DEF239 /* MnemonicInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F160022804C96100DEF239 /* MnemonicInteractor.swift */; };
 		D1F1600B2804C96100DEF239 /* MnemonicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F160032804C96100DEF239 /* MnemonicCell.swift */; };
@@ -606,6 +608,7 @@
 		D1A6713F283D6BAE0042A448 /* web3lib.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = web3lib.xcframework; path = ../web3lib/build/XCFrameworks/debug/web3lib.xcframework; sourceTree = "<group>"; };
 		D1BF2680280D7FC200DE9A0B /* DefaultTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultTheme.swift; sourceTree = "<group>"; };
 		D1BF2681280D7FC200DE9A0B /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		D1DC99E728497FB4009D1B5E /* StringAttributed+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringAttributed+Extensions.swift"; sourceTree = "<group>"; };
 		D1F160012804C96100DEF239 /* MnemonicView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicView.swift; sourceTree = "<group>"; };
 		D1F160022804C96100DEF239 /* MnemonicInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicInteractor.swift; sourceTree = "<group>"; };
 		D1F160032804C96100DEF239 /* MnemonicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicCell.swift; sourceTree = "<group>"; };
@@ -702,6 +705,48 @@
 				1C6487582832EDC30091A12D /* NFTDetailWireframeFactoryAssembler.swift */,
 			);
 			path = NFTDetail;
+			sourceTree = "<group>";
+		};
+		1A4C312F3B436BCC1E5CDDB0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D116CF2727C2531E005542AA /* Array+extensions.swift */,
+				1A4C330512BFD12BAFED0D12 /* CALayer+extension.swift */,
+				1A4C393EC70B537D98A4CA4A /* CG+extensions.swift */,
+				1A4C3BFA6EDB1E94BEF92E59 /* Formatter+extensions.swift */,
+				1A4C3D1809D506A7AE772982 /* NSLocalizedString+extension.swift */,
+				1A4C3F3F7A4502698FF8F63E /* String+extensions.swift */,
+				D1DC99E728497FB4009D1B5E /* StringAttributed+Extensions.swift */,
+				1C6486FC282F87EB0091A12D /* Int+extensions.swift */,
+				1A4C3ADE5C8CD3D3CBB36547 /* UIBarButtonItem+extensions.swift */,
+				1A4C3439D8A20606BAD5B667 /* UIButton+extensions.swift */,
+				1A4C3CD7A1F1A86851EC2BA5 /* UICollectionView+extensions.swift */,
+				1A4C3BBAA5D729DC128BA1A7 /* UIColor+extensions.swift */,
+				1A4C341557541950B9132370 /* UIFont+extension.swift */,
+				1A4C39B21512118DB853A3E3 /* UILabel+extensions.swift */,
+				1A4C38ADF271AE15EE20A68F /* UIStackView+extensions.swift */,
+				D1966C3D2814789600550332 /* Data+Extension.swift */,
+				1A4C310A6D460422DB18D0BF /* UIStoryboard+extensions.swift */,
+				1A4C300AF1693AEBB5E5DD97 /* UIView+extensions.swift */,
+				1C9B46F72814045D00F6C40B /* UIApplication+extensions.swift */,
+				1C9B46F42813FB4F00F6C40B /* UIView+LayoutConstraints+extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1A4C312F3B436BCC1E5CDDB0 /* NFTs */ = {
+			isa = PBXGroup;
+			children = (
+				1A4C3CD454B957F1787FE70A /* NFTsCell.swift */,
+				1A4C3F186997145E252EBB2E /* NFTsInteractor.swift */,
+				1A4C3E187671FB1882E89DB7 /* NFTsPresenter.swift */,
+				1A4C38A2039D19A2E5507CF2 /* NFTsView.swift */,
+				1A4C3EB46866FC10CA58C6F8 /* NFTsViewModel.swift */,
+				1A4C325A83A0FC4E6A5A9922 /* NFTsWireframe.swift */,
+				1A4C3C7AC11249D1DE6C554C /* NFTsWireframeFactory.swift */,
+				1C6487582832EDC30091A12D /* NFTsWireframeFactoryAssembler.swift */,
+			);
+			path = NFTs;
 			sourceTree = "<group>";
 		};
 		1A4C315D92E8F10E17F45F5D /* Degen */ = {
@@ -1739,6 +1784,7 @@
 				1C6487232832E4BA0091A12D /* DefaultDegenService.swift in Sources */,
 				1A4C3161ADC31E07777F61F0 /* AccountInteractor.swift in Sources */,
 				1C6487532832ECD50091A12D /* MnemonicWireframeFactoryAssembler.swift in Sources */,
+				D1DC99E828497FB4009D1B5E /* StringAttributed+Extensions.swift in Sources */,
 				1CA3F2E7282D697400133C41 /* MnemonicConfirmationWireframeFactory.swift in Sources */,
 				1A4C349387A48AB7AD7C24A9 /* AccountWireframeFactory.swift in Sources */,
 				1CB3A1EE2840D6B70092D667 /* Formatter+extensions.swift in Sources */,
@@ -1870,6 +1916,8 @@
 				D1966C3C281468C300550332 /* SecretStorageTests.swift in Sources */,
 				D19A20BF2815F843008A84CD /* SecretStorage.swift in Sources */,
 				D19A20BC2815CA7D008A84CD /* Bip39.swift in Sources */,
+				D1DC99E928497FF0009D1B5E /* NSLocalizedString+extension.swift in Sources */,
+				D1966C4028147CDE00550332 /* Data+Extension.swift in Sources */,
 				1A4C3DD46D1762F337905047 /* CryptoUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

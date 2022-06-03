@@ -1,11 +1,12 @@
 package com.sonsofcrypto.web3lib_bip39
 
-import com.sonsofcrypto.web3lib_crypto.Crypto
-import com.sonsofcrypto.web3lib_crypto.HashFn
+import com.sonsofcrypto.web3lib_crypto.*
+import com.sonsofcrypto.web3lib_extensions.*
 
 private const val PBKDF2_ITER = 2048
 private const val PBKDF2_KEYLEN = 64
 
+/** Encapsulates bip39 standard functions */
 class Bip39(val mnemonic: List<String>, val salt: String, val worldList: WordList) {
 
     /** Seed for mnemonic */
@@ -21,7 +22,22 @@ class Bip39(val mnemonic: List<String>, val salt: String, val worldList: WordLis
 
     /** Original entropy for mnemonic */
     fun entropy(): ByteArray {
-        TODO("Implement")
+        if (!isValidWordsSize(mnemonic.size))
+            throw Error.InvalidMnemonicSize(mnemonic.size)
+
+        val indexes = mnemonic.map { worldList.indexOf(it) }
+        val bitArray = BooleanArray(mnemonic.size * 11)
+
+        mnemonic
+            .map { worldList.indexOf(it) }
+            .withIndex()
+            .forEach { (idx, wordIdx) ->
+            for (bit in 0..10)
+                bitArray[idx * 11 + bit] = wordIdx and (1 shl (10 - bit)) != 0
+        }
+
+        return bitArray.copyOfRange(0, bitArray.size - (bitArray.size / 33))
+            .toByteArray()
     }
 
     /** Valid entropy sizes */
@@ -41,11 +57,15 @@ class Bip39(val mnemonic: List<String>, val salt: String, val worldList: WordLis
 
         constructor(cause: Throwable) : this(null, cause)
 
-        /** Failed to derive key from mnemonic */
-        object FailedToDeriveKeyFromMnemonic : Error("Failed to derive key from mnemonic")
+        /** Entropy size does not math bip39 standard */
+        data class InvalidEntropySize(val size: Int) : Error("Entropy size $size does not math bip39 standard")
 
-        /** Invalid word at index. */
-        data class InvalidWord(val index: Int) : Error("Invalid word at index $index")
+        /** Mnemonic size does not math bip39 standard */
+        data class InvalidMnemonicSize(val size: Int) : Error("Mnemonic size $size does not math bip39 standard")
+
+        /** Failed to generate cryptographically secure randomness */
+        object SecureRandomness : Error("Failed to generate cryptographically secure randomness")
+
     }
 
     companion object {
@@ -55,8 +75,13 @@ class Bip39(val mnemonic: List<String>, val salt: String, val worldList: WordLis
             salt: String = "",
             worldList: WordList = WordList.ENGLISH
         ): Bip39 {
-            println("=== Throwing Failed")
-            throw Error.FailedToDeriveKeyFromMnemonic
+            try {
+                val entropy = Crypto.secureRand(entropySize.value / 8)
+                return Bip39.from(entropy, salt, worldList)
+            } catch (e: Exception) {
+                println("Exception secureRand $e")
+                throw Error.SecureRandomness
+            }
         }
 
         @Throws(Error::class) fun from(
@@ -64,8 +89,33 @@ class Bip39(val mnemonic: List<String>, val salt: String, val worldList: WordLis
             salt: String = "",
             worldList: WordList = WordList.ENGLISH
         ): Bip39 {
-            println("=== Throwing Invalid words")
-            throw Error.InvalidWord(2)
+            if (!isValidEntropySize(entropy.size))
+                throw Error.InvalidEntropySize(entropy.size)
+
+            val hashBitArray = Crypto.sha256(entropy).toBitArray()
+            val entropyBitArray = entropy.toBitArray()
+            val checkSum = hashBitArray.copyOfRange(0, entropy.size / 4 )
+            val checkSumEntropy = entropyBitArray + checkSum
+            var words: MutableList<String> = mutableListOf()
+
+            for (i in 0 until checkSumEntropy.size / 11) {
+                var idx = 0
+                for (j in 0..10) {
+                    idx = idx shl 1
+                    if (checkSumEntropy[i * 11 + j])
+                        idx = idx or 0x01
+                }
+                words.add(worldList.word(idx))
+            }
+
+            return Bip39(words, salt, worldList)
         }
+
+        private fun isValidEntropySize(size: Int): Boolean = EntropySize.values()
+            .map { it.value / 8 }
+            .contains(size)
+
+        private fun isValidWordsSize(size: Int): Boolean = listOf(12, 15, 18, 21, 24)
+            .contains(size)
     }
 }

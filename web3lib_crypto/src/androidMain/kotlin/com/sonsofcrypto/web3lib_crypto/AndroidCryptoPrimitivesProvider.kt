@@ -5,6 +5,7 @@ import coreCrypto.*
 /** Wrapper around coreCrypto functions */
 class AndroidCryptoPrimitivesProvider : CryptoPrimitivesProvider {
 
+    @Throws(Exception::class)
     override fun secureRand(size: Int): ByteArray {
         return CoreCrypto.secureRand(size.toLong())
     }
@@ -21,9 +22,16 @@ class AndroidCryptoPrimitivesProvider : CryptoPrimitivesProvider {
         )
     }
 
+    override fun sha256(data: ByteArray): ByteArray {
+        return CoreCrypto.hash(data, hashFnInt(HashFn.SHA256))
+    }
+
+    override fun sha512(data: ByteArray): ByteArray {
+        return CoreCrypto.hash(data, hashFnInt(HashFn.SHA512))
+    }
+
     override fun keccak256(data: ByteArray): ByteArray {
         return CoreCrypto.keccak256(data)
-
     }
 
     override fun keccak512(data: ByteArray): ByteArray {

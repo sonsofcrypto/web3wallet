@@ -29,6 +29,7 @@ fun WordList.words(): List<String> {
 }
 
 fun WordList.word(index: Int): String = words()[index]
+fun WordList.indexOf(word: String): Int = words().indexOf(word) // TODO("Optimize performance")
 
 
 /* bip39 english words */

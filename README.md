@@ -41,6 +41,7 @@ $ cd coreCrypto && chmod +x build.sh && ./build.sh
 	- [ ] Fix keychain storage bug
 
 ## Backlog:
+    - [ ] Bip39 optimize performance of `WordList.indexOf`
 	- [ ] Add support for 24 word mnemonics (option to select & text to scale down when entering)
 	- [ ] Import private key
 	- [ ] Handle multiple accounts from from same mnemonic

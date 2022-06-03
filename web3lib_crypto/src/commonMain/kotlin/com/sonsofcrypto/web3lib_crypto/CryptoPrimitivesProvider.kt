@@ -5,12 +5,15 @@ enum class HashFn {
 }
 
 interface CryptoPrimitivesProvider {
+    @Throws(Exception::class)
     fun secureRand(size: Int): ByteArray
     fun pbkdf2(
         pswd: ByteArray, salt: ByteArray,
         iter: Int, keyLen: Int,
         hash: HashFn
     ): ByteArray
+    fun sha256(data: ByteArray): ByteArray
+    fun sha512(data: ByteArray): ByteArray
     fun keccak256(data: ByteArray): ByteArray
     fun keccak512(data: ByteArray): ByteArray
 }
@@ -25,6 +28,7 @@ object Crypto : CryptoPrimitivesProvider {
         }
     }
 
+    @Throws(Exception::class)
     override fun secureRand(size: Int): ByteArray {
         return sharedProvider!!.secureRand(size)
     }
@@ -35,6 +39,14 @@ object Crypto : CryptoPrimitivesProvider {
         hash: HashFn
     ): ByteArray {
         return sharedProvider!!.pbkdf2(pswd, salt, iter, keyLen, hash)
+    }
+
+    override fun sha256(data: ByteArray): ByteArray {
+        return sharedProvider!!.sha256(data)
+    }
+
+    override fun sha512(data: ByteArray): ByteArray {
+        return sharedProvider!!.sha512(data)
     }
 
     override fun keccak256(data: ByteArray): ByteArray {

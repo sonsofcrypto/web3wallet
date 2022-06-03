@@ -30,6 +30,14 @@ func HashFunc(h int) func() hash.Hash {
 	return nil
 }
 
+// Hash pass one of the hash constants from top of the file. (`HashFnSha256`,
+// `HashFnSha512`, ...) Enum not used due to `go bind` (does not support enums)
+func Hash(data []byte, hashFn int) []byte {
+	h := HashFunc(hashFn)()
+	h.Write(data)
+	return h.Sum(nil)
+}
+
 //SecureRand cryptographically secure random bytes of size or error
 func SecureRand(size int) ([]byte, error) {
 	entropy := make([]byte, size)
@@ -39,7 +47,7 @@ func SecureRand(size int) ([]byte, error) {
 	return entropy, nil
 }
 
-// Pbkdf2 pass on of the hash constants from top of the file. (`HashFnSha256`,
+// Pbkdf2 pass one of the hash constants from top of the file. (`HashFnSha256`,
 // `HashFnSha512`, ...) Enum not used due to `go bind` (does not support enums)
 func Pbkdf2(password, salt []byte, iter, keyLen, hashFn int) []byte {
 	return pbkdf2.Key(password, salt, iter, keyLen, HashFunc(hashFn))

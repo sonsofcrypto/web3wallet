@@ -8,7 +8,7 @@ import CoreCrypto
 // Wrapper around coreCrypto functions
 class IosCryptoPrimitivesProvider: CryptoPrimitivesProvider {
     
-    func secureRand(size: Int32) -> KotlinByteArray {
+    func secureRand(size: Int32) throws -> KotlinByteArray {
         var error: NSError? = nil
         
         guard let data = CoreCryptoSecureRand(Int(size), &error) else {
@@ -31,6 +31,22 @@ class IosCryptoPrimitivesProvider: CryptoPrimitivesProvider {
             fatalError("Failed CoreCryptoPbkdf2")
         }
         
+        return data.byteArray()
+    }
+
+    func sha256(data: KotlinByteArray) -> KotlinByteArray {
+        guard let data = CoreCryptoHash(data.data(), hashFnInt(.sha256)) else {
+            fatalError("Failed keccak256")
+        }
+
+        return data.byteArray()
+    }
+
+    func sha512(data: KotlinByteArray) -> KotlinByteArray {
+        guard let data = CoreCryptoHash(data.data(), hashFnInt(.sha512)) else {
+            fatalError("Failed keccak512")
+        }
+
         return data.byteArray()
     }
 
