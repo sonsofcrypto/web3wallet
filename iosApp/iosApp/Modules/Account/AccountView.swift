@@ -153,12 +153,19 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
             height: Constant.sectionHeaderHeight
         )
     }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        guard let section = Section(rawValue: section), section == .marketInfo else {
+            return 0
+        }
+
+        return Global.padding
+    }
 }
 
 extension AccountViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("=== did select", indexPath)
         guard let section = Section(rawValue: indexPath.section) else {
             return;
         }
