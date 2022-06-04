@@ -6,7 +6,11 @@ import UIKit
 
 protocol AccountWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController, wallet: KeyStoreItem) -> AccountWireframe
+    func makeWireframe(
+        _ parent: UIViewController,
+        wallet: KeyStoreItem,
+        token: Token
+    ) -> AccountWireframe
 }
 
 final class DefaultAccountWireframeFactory {
@@ -22,13 +26,18 @@ final class DefaultAccountWireframeFactory {
 
 extension DefaultAccountWireframeFactory: AccountWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController, wallet: KeyStoreItem) -> AccountWireframe {
+    func makeWireframe(
+        _ parent: UIViewController,
+        wallet: KeyStoreItem,
+        token: Token
+    ) -> AccountWireframe {
         
         DefaultAccountWireframe(
             parent: parent,
             interactor: DefaultAccountInteractor(
                 accountService: accountService,
-                wallet: wallet
+                wallet: wallet,
+                token: token
             )
         )
     }

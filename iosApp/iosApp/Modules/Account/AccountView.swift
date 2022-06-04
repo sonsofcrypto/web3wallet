@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import WebKit
 
 protocol AccountView: AnyObject {
 
@@ -83,6 +84,11 @@ extension AccountViewController: UICollectionViewDataSource {
             cell.update(with: viewModel?.candles)
             return cell
         case .marketInfo:
+            if indexPath.item == 1 {
+                let cell = collectionView.dequeue(AccountBonusCell.self, for: indexPath)
+                cell.titleLabel.text = viewModel?.bonusAction?.title ?? ""
+                return cell
+            }
             let cell = collectionView.dequeue(AccountMarketInfoCell.self, for: indexPath)
             cell.update(with: viewModel?.marketInfo)
             return cell
@@ -150,7 +156,23 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension AccountViewController: UICollectionViewDelegate {
-    
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("=== did select", indexPath)
+        guard let section = Section(rawValue: indexPath.section) else {
+            return;
+        }
+
+        if section == .marketInfo && indexPath.item == 1 {
+            // TODO: Get presenter to present bonus action view
+            let webViewController = WebViewController()
+            let url = Bundle.main.url(forResource: "cult_manifesto", withExtension: ".pdf")!
+            let navVc = NavigationController(rootViewController: webViewController)
+            webViewController.title = "Manifesto"
+            webViewController.webView.loadFileURL(url, allowingReadAccessTo: url)
+            present(navVc, animated: true)
+        }
+    }
 }
 
 extension AccountViewController {
@@ -167,6 +189,8 @@ extension AccountViewController {
             }
 
             switch self {
+            case .marketInfo:
+                return viewModel.bonusAction != nil ? 2 : 1
             case .transactions:
                 return viewModel.transactions.count
             default:

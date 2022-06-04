@@ -56,7 +56,7 @@ extension DefaultDashboardPresenter: DashboardPresenter {
         switch event {
         case let .didSelectWallet(idx):
             let keyStoreItem = KeyStoreItem.rand()
-            wireframe.navigate(to: .wallet(wallet: keyStoreItem))
+            wireframe.navigate(to: .wallet(wallet: keyStoreItem, token: token(for: idx)))
         case .walletConnectionSettingsAction:
             wireframe.navigate(to: .keyStoreNetworkSettings)
         case .didInteractWithCardSwitcher:
@@ -75,6 +75,11 @@ extension DefaultDashboardPresenter: DashboardPresenter {
 // MARK: - Event handling
 
 private extension DefaultDashboardPresenter {
+    
+    func token(for idx: Int) -> Token {
+        let tokens = interactor.tokens(for: .ethereum) + interactor.tokens(for: .solana)
+        return tokens[idx]
+    }
 
 }
 
@@ -108,12 +113,12 @@ private extension DefaultDashboardPresenter {
             sections: [
                 .init(
                     name: "Ethereum",
-                    wallets: DashboardViewModel.mockWalletsEHT(),
+                    wallets: DashboardViewModel.tokens(interactor.tokens(for: .ethereum)),
                     nfts: DashboardViewModel.mockNFTsETH()
                 ),
                 .init(
                     name: "Solana",
-                    wallets: DashboardViewModel.mockWalletsSOL(),
+                    wallets: DashboardViewModel.tokens(interactor.tokens(for: .solana)),
                     nfts: DashboardViewModel.mockNFTsSOL()
                 )
             ]

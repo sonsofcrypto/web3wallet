@@ -10,6 +10,7 @@ struct AccountViewModel {
     let header: AccountViewModel.Header
     let candles: CandlesViewModel
     let marketInfo: AccountViewModel.MarketInfo
+    let bonusAction: AccountViewModel.BonusAction?
     let transactions: [AccountViewModel.Transaction]
 }
 
@@ -35,6 +36,13 @@ extension AccountViewModel {
         let marketCap: String
         let price: String
         let volume: String
+    }
+}
+
+extension AccountViewModel {
+
+    struct BonusAction {
+        let title: String
     }
 }
 
