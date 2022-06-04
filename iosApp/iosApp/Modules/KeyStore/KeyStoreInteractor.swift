@@ -85,7 +85,7 @@ extension DefaultKeyStoreInteractor: KeyStoreInteractor {
     }
 
     func isEmpty() -> Bool {
-        keyStoreService.isEmpty()
+        keyStoreItems.isEmpty
     }
 
     func load(_ handler: KeyStoreHandler) {
