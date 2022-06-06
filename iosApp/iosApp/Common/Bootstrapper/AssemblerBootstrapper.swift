@@ -49,7 +49,9 @@ private extension AssemblerBootstrapper {
             NFTsCollectionWireframeFactoryAssembler(),
             NFTDetailWireframeFactoryAssembler(),
             RootWireframeFactoryAssembler(),
-            SettingsWireframeFactoryAssembler()
+            SettingsWireframeFactoryAssembler(),
+            CultWireframeFactoryAssembler(),
+            CultServiceAssembler()
         ]
     }
 }
