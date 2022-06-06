@@ -33,7 +33,6 @@ private extension AssemblerBootstrapper {
             ReachabilityServiceAssembler(),
             SettingsServiceAssembler(),
             StoreAssembler(),
-            CacheImageAssembler(),
             // Modules
             AccountWireframeFactoryAssembler(),
             AlertWireframeFactoryAssembler(),

@@ -20,16 +20,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         MainBootstrapper(window: window).boot()
         
-        //#if DEBUG
-        //        let documents = NSSearchPathForDirectoriesInDomains(
-        //            .documentDirectory,
-        //            .userDomainMask,
-        //            true
-        //        )
-        //        print(documents.last!)
-        //#endif
-        
-        print("Testing web3lib integration", Greeting().greeting())
+#if DEBUG
+        let documents = NSSearchPathForDirectoriesInDomains(
+            .documentDirectory,
+            .userDomainMask,
+            true
+        )
+        print(documents.last ?? "")
+#endif
+
+        Crypto.shared.setProvider(provider: IosCryptoPrimitivesProvider())
+        let bytes = try! Crypto.shared.secureRand(size: 16)
+        let data = bytes.data()
+        let string = String(data: data, encoding: .ascii) ?? ""
+        print("Testing web3lib integration", Greeting().greeting() + string)
         return true
     }
 
