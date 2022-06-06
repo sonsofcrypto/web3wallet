@@ -7,20 +7,24 @@ import Foundation
 protocol AccountInteractor: AnyObject {
 
     var wallet: KeyStoreItem { get }
+    var token: Token { get }
 }
 
 final class DefaultAccountInteractor {
 
     private(set) var wallet: KeyStoreItem
+    private(set) var token: Token
+
     private var accountService: AccountService
 
     init(
         accountService: AccountService,
-        wallet: KeyStoreItem
+        wallet: KeyStoreItem,
+        token: Token
     ) {
-        
         self.accountService = accountService
         self.wallet = wallet
+        self.token = token
     }
 }
 

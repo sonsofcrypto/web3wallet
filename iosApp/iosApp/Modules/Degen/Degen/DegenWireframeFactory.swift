@@ -13,13 +13,16 @@ final class DefaultDegenWireframeFactory {
 
     private let degenService: DegenService
     private let ammsWireframeFactory: AMMsWireframeFactory
+    private let cultProposalsWireframeFactory: CultProposalsWireframeFactory
 
     init(
         degenService: DegenService,
-        ammsWireframeFactory: AMMsWireframeFactory
+        ammsWireframeFactory: AMMsWireframeFactory,
+        cultProposalsWireframeFactory: CultProposalsWireframeFactory
     ) {
         self.degenService = degenService
         self.ammsWireframeFactory = ammsWireframeFactory
+        self.cultProposalsWireframeFactory = cultProposalsWireframeFactory
     }
 }
 
@@ -30,7 +33,8 @@ extension DefaultDegenWireframeFactory: DegenWireframeFactory {
         DefaultDegenWireframe(
             parent: parent,
             degenService: degenService,
-            ammsWireframeFactory: ammsWireframeFactory
+            ammsWireframeFactory: ammsWireframeFactory,
+            cultProposalsWireframeFactory: cultProposalsWireframeFactory
         )
     }
 }

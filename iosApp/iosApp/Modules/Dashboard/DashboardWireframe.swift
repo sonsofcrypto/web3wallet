@@ -5,7 +5,7 @@
 import UIKit
 
 enum DashboardWireframeDestination {
-    case wallet(wallet: KeyStoreItem)
+    case wallet(wallet: KeyStoreItem, token: Token)
     case keyStoreNetworkSettings
     case presentUnderConstructionAlert
     case mnemonicConfirmation
@@ -72,8 +72,8 @@ extension DefaultDashboardWireframe: DashboardWireframe {
 
         switch destination {
             
-        case let .wallet(wallet):
-            accountWireframeFactory.makeWireframe(vc, wallet: wallet).present()
+        case let .wallet(wallet, token):
+            accountWireframeFactory.makeWireframe(vc, wallet: wallet, token: token).present()
             
         case .keyStoreNetworkSettings:
             vc.edgeCardsController?.setDisplayMode(.overview, animated: true)

@@ -35,6 +35,8 @@ extension DAppCategory {
             return Localized("degen.dappCategory.title.derivative")
         case .bridge:
             return Localized("degen.dappCategory.title.bridge")
+        case .cult:
+            return Localized("degen.dappCategory.title.cult")
         case .mixer:
             return Localized("degen.dappCategory.title.mixer")
         case .governance:
@@ -55,6 +57,8 @@ extension DAppCategory {
             return Localized("degen.dappCategory.subTitle.derivative")
         case .bridge:
             return Localized("degen.dappCategory.subTitle.bridge")
+        case .cult:
+            return Localized("degen.dappCategory.subTitle.cult")
         case .mixer:
             return Localized("degen.dappCategory.subTitle.mixer")
         case .governance:

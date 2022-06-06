@@ -6,12 +6,12 @@ import Foundation
 
 protocol DashboardInteractor: AnyObject {
 
+    func tokens(for network: CryptoNetwork) -> [Token]
 }
 
 // MARK: - DefaultDashboardInteractor
 
 final class DefaultDashboardInteractor {
-
 
     private var walletsService: KeyStoreService
 
@@ -24,4 +24,70 @@ final class DefaultDashboardInteractor {
 
 extension DefaultDashboardInteractor: DashboardInteractor {
 
+    func tokens(for network: CryptoNetwork) -> [Token] {
+        switch network {
+        case .ethereum:
+            return [
+                .init(
+                    name: "Ethereum",
+                    ticker: "ETH",
+                    address: nil,
+                    network: .ethereum,
+                    iconName: "currency_icon_small_eth"
+                ),
+                .init(
+                    name: "CULT",
+                    ticker: "CULT",
+                    address: nil,
+                    network: .ethereum,
+                    iconName: "currency_icon_small_cult"
+                )
+            ]
+        case .solana:
+            return [
+                .init(
+                    name: "Solana",
+                    ticker: "SOL",
+                    address: nil,
+                    network: .solana,
+                    iconName: "currency_icon_small_sol"
+                ),
+                .init(
+                    name: "Raydium",
+                    ticker: "RAY",
+                    address: nil,
+                    network: .solana,
+                    iconName: "currency_icon_small_ray"
+                ),
+                .init(
+                    name: "Mango",
+                    ticker: "MNGO",
+                    address: nil,
+                    network: .solana,
+                    iconName: "currency_icon_small_mngo"
+                ),
+                .init(
+                    name: "Solana",
+                    ticker: "SOL",
+                    address: nil,
+                    network: .solana,
+                    iconName: "currency_icon_small_sol"
+                ),
+                .init(
+                    name: "Raydium",
+                    ticker: "RAY",
+                    address: nil,
+                    network: .solana,
+                    iconName: "currency_icon_small_ray"
+                ),
+                .init(
+                    name: "Mango",
+                    ticker: "MNGO",
+                    address: nil,
+                    network: .solana,
+                    iconName: "currency_icon_small_mngo"
+                )
+            ]
+        }
+    }
 }
