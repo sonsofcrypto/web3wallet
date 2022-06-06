@@ -39,6 +39,7 @@
 		1A4C33E50A1388781E82DD29 /* CryptoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E102C6A06DEC7657DD0 /* CryptoUtils.swift */; };
 		1A4C33EB6A7815037906E8F4 /* AppsWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E735403B7DA9910563D /* AppsWireframeFactory.swift */; };
 		1A4C33FD7390E65B4959F77F /* AppsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C32C53B06B5EA8EE01118 /* AppsViewModel.swift */; };
+		1A4C340569FD303D11EAFB2B /* CultProposalWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C348991D8EE47999F5A14 /* CultProposalWireframeFactoryAssembler.swift */; };
 		1A4C3419FE99A77CEE441A56 /* SwapInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C317BB445643CDEAB4690 /* SwapInteractor.swift */; };
 		1A4C3469AE463198FCE284E2 /* CollectionViewSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C34D0D6A40418A679AF6F /* CollectionViewSwitchCell.swift */; };
 		1A4C346BBC846E952B81C4CB /* KeyStoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3B2EA3B98315F0F10172 /* KeyStoreCell.swift */; };
@@ -120,7 +121,7 @@
 		1A4C3C1E57B1A0322641DEC5 /* NFTDetailWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C381FB8BA5EDB22E07C92 /* NFTDetailWireframeFactoryAssembler.swift */; };
 		1A4C3C28443621328248F5A7 /* CandlesViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C344022DBA2423C0F15F6 /* CandlesViewViewModel.swift */; };
 		1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C325A6875E5041A491945 /* CollectionView.swift */; };
-		1A4C3C41BF61C8363496C406 /* CultWireframeFactoryAssemler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C30718AE513343302281A /* CultWireframeFactoryAssemler.swift */; };
+		1A4C3C41BF61C8363496C406 /* CultProposalsWireframeFactoryAssemler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C30718AE513343302281A /* CultProposalsWireframeFactoryAssemler.swift */; };
 		1A4C3C57B341513B1AA26C06 /* AMMsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A1643AAB35AA35FED36 /* AMMsPresenter.swift */; };
 		1A4C3C58ECBCC69942A9138C /* DashboardInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C306F77C13B435A1FBF17 /* DashboardInteractor.swift */; };
 		1A4C3C9B866507D8700399F6 /* KeyStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C36CAEB50425CE9839ED4 /* KeyStoreService.swift */; };
@@ -292,6 +293,11 @@
 		D1A67140283D6BAE0042A448 /* web3lib.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A6713F283D6BAE0042A448 /* web3lib.xcframework */; };
 		D1A67141283D6BAE0042A448 /* web3lib.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D1A6713F283D6BAE0042A448 /* web3lib.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D1B57205284E29C400CCEF85 /* CultProposalVoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B57204284E29C400CCEF85 /* CultProposalVoteView.swift */; };
+		D1B5720E284E486500CCEF85 /* CultProposalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B57207284E486500CCEF85 /* CultProposalView.swift */; };
+		D1B57211284E486500CCEF85 /* CultProposalPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B5720A284E486500CCEF85 /* CultProposalPresenter.swift */; };
+		D1B57212284E486500CCEF85 /* CultProposalWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B5720B284E486500CCEF85 /* CultProposalWireframeFactory.swift */; };
+		D1B57213284E486500CCEF85 /* CultProposalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B5720C284E486500CCEF85 /* CultProposalViewModel.swift */; };
+		D1B57214284E486500CCEF85 /* CultProposalWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B5720D284E486500CCEF85 /* CultProposalWireframe.swift */; };
 		D1BC52F1284B49D6007E6FF4 /* AcocuntBonusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BC52F0284B49D6007E6FF4 /* AcocuntBonusCell.swift */; };
 		D1BC52FA284B57BE007E6FF4 /* CultProposalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BC52F3284B57BE007E6FF4 /* CultProposalsView.swift */; };
 		D1BC52FB284B57BE007E6FF4 /* CultProposalsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BC52F4284B57BE007E6FF4 /* CultProposalsInteractor.swift */; };
@@ -347,7 +353,7 @@
 		1A4C300D073ABE25FC79D4A9 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		1A4C3044DC83E6A35A00DC12 /* KeyStoreInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreInteractor.swift; sourceTree = "<group>"; };
 		1A4C306F77C13B435A1FBF17 /* DashboardInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardInteractor.swift; sourceTree = "<group>"; };
-		1A4C30718AE513343302281A /* CultWireframeFactoryAssemler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultWireframeFactoryAssemler.swift; sourceTree = "<group>"; };
+		1A4C30718AE513343302281A /* CultProposalsWireframeFactoryAssemler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalsWireframeFactoryAssemler.swift; sourceTree = "<group>"; };
 		1A4C308C7EEAF2E80221C519 /* TouchPassThroughCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchPassThroughCollectionView.swift; sourceTree = "<group>"; };
 		1A4C308E7095014B9BF80912 /* AMMsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMMsCell.swift; sourceTree = "<group>"; };
 		1A4C30949FD84F7C8504D081 /* DashboardHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardHeaderView.swift; sourceTree = "<group>"; };
@@ -392,6 +398,7 @@
 		1A4C342AEA80F91722BA4C54 /* NetworksPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksPresenter.swift; sourceTree = "<group>"; };
 		1A4C344022DBA2423C0F15F6 /* CandlesViewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandlesViewViewModel.swift; sourceTree = "<group>"; };
 		1A4C3488BA01A7A891884D67 /* DegenInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenInteractor.swift; sourceTree = "<group>"; };
+		1A4C348991D8EE47999F5A14 /* CultProposalWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1A4C348CA305DD0F6C190CAE /* SwapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapViewModel.swift; sourceTree = "<group>"; };
 		1A4C3496668BD6B362FE68B4 /* SwapPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapPresenter.swift; sourceTree = "<group>"; };
 		1A4C34D0D6A40418A679AF6F /* CollectionViewSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewSwitchCell.swift; sourceTree = "<group>"; };
@@ -627,6 +634,11 @@
 		D1A564C32843E2BE00D4B7D8 /* IosCryptoPrimitivesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosCryptoPrimitivesProvider.swift; sourceTree = "<group>"; };
 		D1A6713F283D6BAE0042A448 /* web3lib.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = web3lib.xcframework; path = ../web3lib/build/XCFrameworks/debug/web3lib.xcframework; sourceTree = "<group>"; };
 		D1B57204284E29C400CCEF85 /* CultProposalVoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalVoteView.swift; sourceTree = "<group>"; };
+		D1B57207284E486500CCEF85 /* CultProposalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalView.swift; sourceTree = "<group>"; };
+		D1B5720A284E486500CCEF85 /* CultProposalPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalPresenter.swift; sourceTree = "<group>"; };
+		D1B5720B284E486500CCEF85 /* CultProposalWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalWireframeFactory.swift; sourceTree = "<group>"; };
+		D1B5720C284E486500CCEF85 /* CultProposalViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalViewModel.swift; sourceTree = "<group>"; };
+		D1B5720D284E486500CCEF85 /* CultProposalWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalWireframe.swift; sourceTree = "<group>"; };
 		D1BC52F0284B49D6007E6FF4 /* AcocuntBonusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcocuntBonusCell.swift; sourceTree = "<group>"; };
 		D1BC52F3284B57BE007E6FF4 /* CultProposalsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalsView.swift; sourceTree = "<group>"; };
 		D1BC52F4284B57BE007E6FF4 /* CultProposalsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalsInteractor.swift; sourceTree = "<group>"; };
@@ -719,7 +731,7 @@
 			isa = PBXGroup;
 			children = (
 				1A4C3294E7E12E48A7FCD56F /* AMMs */,
-				D1BC52F2284B57BE007E6FF4 /* CultProposals */,
+				D1B57215284E488D00CCEF85 /* Cult */,
 				1A4C3791854718F768652287 /* Degen */,
 				1A4C322C2F62E3A7DE84E8B8 /* Swap */,
 			);
@@ -1430,6 +1442,28 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		D1B57206284E486500CCEF85 /* CultProposal */ = {
+			isa = PBXGroup;
+			children = (
+				D1B57207284E486500CCEF85 /* CultProposalView.swift */,
+				D1B5720A284E486500CCEF85 /* CultProposalPresenter.swift */,
+				D1B5720B284E486500CCEF85 /* CultProposalWireframeFactory.swift */,
+				D1B5720C284E486500CCEF85 /* CultProposalViewModel.swift */,
+				D1B5720D284E486500CCEF85 /* CultProposalWireframe.swift */,
+				1A4C348991D8EE47999F5A14 /* CultProposalWireframeFactoryAssembler.swift */,
+			);
+			path = CultProposal;
+			sourceTree = "<group>";
+		};
+		D1B57215284E488D00CCEF85 /* Cult */ = {
+			isa = PBXGroup;
+			children = (
+				D1BC52F2284B57BE007E6FF4 /* CultProposals */,
+				D1B57206284E486500CCEF85 /* CultProposal */,
+			);
+			path = Cult;
+			sourceTree = "<group>";
+		};
 		D1BC52F2284B57BE007E6FF4 /* CultProposals */ = {
 			isa = PBXGroup;
 			children = (
@@ -1440,7 +1474,7 @@
 				D1BC52F7284B57BE007E6FF4 /* CultProposalsWireframeFactory.swift */,
 				D1BC52F8284B57BE007E6FF4 /* CultProposalsViewModel.swift */,
 				D1BC52F9284B57BE007E6FF4 /* CultProposalsWireframe.swift */,
-				1A4C30718AE513343302281A /* CultWireframeFactoryAssemler.swift */,
+				1A4C30718AE513343302281A /* CultProposalsWireframeFactoryAssemler.swift */,
 			);
 			path = CultProposals;
 			sourceTree = "<group>";
@@ -1603,8 +1637,8 @@
 			);
 			mainGroup = D157F7BE27B69B6300578FF8;
 			packageReferences = (
-				D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak" */,
-				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak.git" */,
+				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
 			);
 			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
 			projectDirPath = "";
@@ -1702,6 +1736,7 @@
 				1A4C3D9BD9F5A146878AFF77 /* KeyStoreWireframe.swift in Sources */,
 				1CB3A1F22840D6B70092D667 /* Data+Extension.swift in Sources */,
 				D1BC52FC284B57BE007E6FF4 /* CultProposalCell.swift in Sources */,
+				D1B57214284E486500CCEF85 /* CultProposalWireframe.swift in Sources */,
 				1CB3A2082840D7100092D667 /* NFTsDashboardPresenter.swift in Sources */,
 				1A4C3A585C5375AE91CDA637 /* KeyStoreWireframeFactory.swift in Sources */,
 				1CA3F2EB282D698400133C41 /* MnemonicConfirmationViewModel.swift in Sources */,
@@ -1802,6 +1837,7 @@
 				1A4C3D827C6C472784CC40E7 /* SwapWireframe.swift in Sources */,
 				1A4C3419FE99A77CEE441A56 /* SwapInteractor.swift in Sources */,
 				1A4C386D56D3F49C906315ED /* SwapWireframeFactory.swift in Sources */,
+				D1B5720E284E486500CCEF85 /* CultProposalView.swift in Sources */,
 				1A4C364C187388D6D51133C2 /* AccountView.swift in Sources */,
 				1A4C347CFEC64C025C0ED6CC /* AccountPresenter.swift in Sources */,
 				D1F1600D2804C96100DEF239 /* MnemonicWireframeFactory.swift in Sources */,
@@ -1878,6 +1914,7 @@
 				1CB3A1EC2840D6B70092D667 /* UIView+LayoutConstraints+extensions.swift in Sources */,
 				1A4C3C28443621328248F5A7 /* CandlesViewViewModel.swift in Sources */,
 				D1BC52FB284B57BE007E6FF4 /* CultProposalsInteractor.swift in Sources */,
+				D1B57211284E486500CCEF85 /* CultProposalPresenter.swift in Sources */,
 				D1F1600F2804C96100DEF239 /* MnemonicWireframe.swift in Sources */,
 				1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */,
 				1C64873C2832E7640091A12D /* DefaultStore.swift in Sources */,
@@ -1890,6 +1927,7 @@
 				1A4C3A1288CD2259782890A2 /* AccountChartCell.swift in Sources */,
 				1C6487412832E7D10091A12D /* DefaultSettingsService.swift in Sources */,
 				1CB3A2072840D7100092D667 /* NFTsDashboardView+NFTsCollection.swift in Sources */,
+				D1B57212284E486500CCEF85 /* CultProposalWireframeFactory.swift in Sources */,
 				1A4C3CED9DCF513FA0635AF8 /* AccountMarketInfoCell.swift in Sources */,
 				1A4C3DF45C45C609B1F976B7 /* AccountTransactionCell.swift in Sources */,
 				1A4C329D37BA590D99ED3A5C /* AccountSectionHeader.swift in Sources */,
@@ -1925,6 +1963,7 @@
 				1A4C35B22F98D604D37A324F /* SettingsCell.swift in Sources */,
 				1CB3A1F52840D6B70092D667 /* CALayer+extension.swift in Sources */,
 				1A4C39C447DAE89615B354E6 /* SettingsListSelectCell.swift in Sources */,
+				D1B57213284E486500CCEF85 /* CultProposalViewModel.swift in Sources */,
 				1A4C392FA145A1DD2AB7050D /* SettingsActionCell.swift in Sources */,
 				1CB3A1E62840D6B70092D667 /* UIFont+extension.swift in Sources */,
 				D112391E284B2A3C00D39A0C /* StringAttributed+Extensions.swift in Sources */,
@@ -1955,8 +1994,9 @@
 				1A4C367CFF657470F7722F74 /* Currency.swift in Sources */,
 				1A4C35A9CDBB31FFE29C51D1 /* WebViewController.swift in Sources */,
 				1A4C38C98450A3C5884565AC /* CultProposal.swift in Sources */,
-				1A4C3C41BF61C8363496C406 /* CultWireframeFactoryAssemler.swift in Sources */,
+				1A4C3C41BF61C8363496C406 /* CultProposalsWireframeFactoryAssemler.swift in Sources */,
 				1A4C3E41DA2739ED48CD12F9 /* CultServiceAssembler.swift in Sources */,
+				1A4C340569FD303D11EAFB2B /* CultProposalWireframeFactoryAssembler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2317,7 +2357,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -2325,7 +2365,7 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak" */ = {
+		D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/bitflying/SwiftKeccak.git";
 			requirement = {
@@ -2338,22 +2378,22 @@
 /* Begin XCSwiftPackageProductDependency section */
 		1C5B603A284675B800ECBD79 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
 			productName = Kingfisher;
 		};
 		D13D8143283D6A4B0038A6BA /* KeccakTiny */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak" */;
+			package = D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak.git" */;
 			productName = KeccakTiny;
 		};
 		D13D8145283D6A4B0038A6BA /* Sha3Tiny */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak" */;
+			package = D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak.git" */;
 			productName = Sha3Tiny;
 		};
 		D13D8147283D6A4B0038A6BA /* SwiftKeccak */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak" */;
+			package = D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak.git" */;
 			productName = SwiftKeccak;
 		};
 /* End XCSwiftPackageProductDependency section */

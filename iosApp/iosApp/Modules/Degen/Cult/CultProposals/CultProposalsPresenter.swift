@@ -5,7 +5,7 @@
 import Foundation
 
 enum CultProposalsPresenterEvent {
-
+    case didSelectItemAt(idx: Int)
 }
 
 protocol CultProposalsPresenter {
@@ -45,7 +45,12 @@ extension DefaultCultProposalsPresenter: CultProposalsPresenter {
     }
 
     func handle(_ event: CultProposalsPresenterEvent) {
-
+        switch event {
+        case let .didSelectItemAt(idx):
+            wireframe.navigate(
+                to: .proposal(proposal: interactor.closedProposals()[idx])
+            )
+        }
     }
 }
 

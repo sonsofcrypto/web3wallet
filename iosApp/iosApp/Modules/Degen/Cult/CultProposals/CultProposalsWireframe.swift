@@ -5,7 +5,7 @@
 import UIKit
 
 enum CultProposalsWireframeDestination {
-
+    case proposal(proposal: CultProposal)
 }
 
 protocol CultProposalsWireframe {
@@ -18,16 +18,19 @@ protocol CultProposalsWireframe {
 class DefaultCultProposalsWireframe {
 
     private let interactor: CultProposalsInteractor
+    private let factory: CultProposalWireframeFactory
 
     private weak var parent: UIViewController?
     private weak var vc: UIViewController?
 
     init(
         interactor: CultProposalsInteractor,
-        parent: UIViewController
+        parent: UIViewController,
+        factory: CultProposalWireframeFactory
     ) {
         self.interactor = interactor
         self.parent = parent
+        self.factory = factory
     }
 }
 
@@ -43,6 +46,13 @@ extension DefaultCultProposalsWireframe: CultProposalsWireframe {
 
     func navigate(to destination: CultProposalsWireframeDestination) {
         print("navigate to \(destination)")
+        switch destination {
+        case let .proposal(proposal):
+            guard let vc = vc ?? parent else {
+                return
+            }
+            factory.makeWireframe(proposal, parent: vc).present()
+        }
     }
 }
 

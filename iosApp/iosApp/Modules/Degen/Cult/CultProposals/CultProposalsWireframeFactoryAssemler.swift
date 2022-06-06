@@ -4,14 +4,15 @@
 
 import Foundation
 
-final class CultWireframeFactoryAssembler: AssemblerComponent {
+final class CultProposalsWireframeFactoryAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
 
         registry.register(scope: .instance) { resolver -> CultProposalsWireframeFactory in
 
             DefaultCultProposalsWireframeFactory(
-                service: resolver.resolve()
+                service: resolver.resolve(),
+                cultProposalWireframeFactory: resolver.resolve()
             )
         }
     }

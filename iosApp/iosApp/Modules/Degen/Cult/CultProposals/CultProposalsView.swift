@@ -63,7 +63,10 @@ extension CultProposalsViewController: UICollectionViewDataSource {
 }
 
 extension CultProposalsViewController: UICollectionViewDelegate {
-    
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter.handle(.didSelectItemAt(idx: indexPath.item))
+    }
 }
 
 extension CultProposalsViewController: UICollectionViewDelegateFlowLayout {

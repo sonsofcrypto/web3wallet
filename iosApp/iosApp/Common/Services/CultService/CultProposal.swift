@@ -15,8 +15,8 @@ struct CultProposal {
     let guardianName: String
     let guardianSocial: String
     let guardianWallet: String
+
     let projectSummary: String
-    
     let whitepaper: URL?
     let socials: [URL]
     let audits: String
