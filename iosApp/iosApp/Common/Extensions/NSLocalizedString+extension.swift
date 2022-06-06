@@ -9,6 +9,5 @@ func Localized(_ key: String) -> String {
 }
 
 func Localized(_ key: String, arg: String) -> String {
-    
     NSLocalizedString(key, comment: "").replacingOccurrences(of: "%@", with: arg)
 }

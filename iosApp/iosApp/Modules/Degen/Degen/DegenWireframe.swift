@@ -6,7 +6,7 @@ import UIKit
 
 enum DegenWireframeDestination {
     case amms
-
+    case cult
 }
 
 protocol DegenWireframe {
@@ -22,17 +22,20 @@ final class DefaultDegenWireframe {
     private weak var vc: UIViewController?
     private let degenService: DegenService
     private let ammsWireframeFactory: AMMsWireframeFactory
+    private let cultProposalsWireframeFactory: CultProposalsWireframeFactory
 
     private weak var navigationController: NavigationController!
 
     init(
         parent: TabBarController,
         degenService: DegenService,
-        ammsWireframeFactory: AMMsWireframeFactory
+        ammsWireframeFactory: AMMsWireframeFactory,
+        cultProposalsWireframeFactory: CultProposalsWireframeFactory
     ) {
         self.parent = parent
         self.degenService = degenService
         self.ammsWireframeFactory = ammsWireframeFactory
+        self.cultProposalsWireframeFactory = cultProposalsWireframeFactory
     }
 }
 
@@ -52,6 +55,10 @@ extension DefaultDegenWireframe: DegenWireframe {
         switch destination {
         case .amms:
             ammsWireframeFactory.makeWireframe(navigationController).present()
+        case .cult:
+            cultProposalsWireframeFactory.makeWireframe(
+                vc ?? navigationController
+            ).present()
         }
     }
 }

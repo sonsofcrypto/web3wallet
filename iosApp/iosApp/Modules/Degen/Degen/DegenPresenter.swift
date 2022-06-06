@@ -58,8 +58,10 @@ private extension DefaultDegenPresenter {
         switch idx {
         case 0:
             wireframe.navigate(to: .amms)
+        case 5:
+            wireframe.navigate(to: .cult)
         default:
-            print("DefaultDegenPresenter unknown category index")
+            print("DefaultDegenPresenter unknown category index", idx)
         }
     }
 }
