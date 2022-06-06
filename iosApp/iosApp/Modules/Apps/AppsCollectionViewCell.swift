@@ -4,14 +4,19 @@
 
 import UIKit
 
-final class AppsCollectionViewCell: CollectionViewCell {
+final class AppsCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
-
+    
     override func awakeFromNib() {
         
         super.awakeFromNib()
-        
+
+        //layer.applyRectShadow()
+        layer.borderColor = Theme.color.tintLight.cgColor
+        layer.borderWidth = 1
+        layer.cornerRadius = Global.cornerRadius
+
         titleLabel.textColor = Theme.color.text
         titleLabel.font = Theme.font.callout
         titleLabel.layer.shadowColor = Theme.color.tintSecondary.cgColor

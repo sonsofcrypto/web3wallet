@@ -4,6 +4,7 @@
 
 enum PresentationStyle {
     
+    case embed
     case present
     case push
 }

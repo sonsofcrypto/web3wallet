@@ -13,7 +13,13 @@ enum ChatViewModel {
 extension ChatViewModel {
 
     struct Item {
-        let title: String
+        let owner: Owner
+        let message: String
+        
+        enum Owner {
+            case me
+            case other
+        }
     }
 }
 

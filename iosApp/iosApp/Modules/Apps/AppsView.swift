@@ -82,7 +82,10 @@ extension AppsViewController: UICollectionViewDataSource {
                 AppsHeaderCollectionViewCell.self,
                 for: indexPath
             )
-            cell.update(with: viewModel)
+            cell.update(
+                with: viewModel,
+                width: collectionView.frame.size.width
+            )
             return cell
         } else {
             let cell = collectionView.dequeue(

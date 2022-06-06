@@ -110,8 +110,18 @@
 "nft.detail.section.title.description" = "Description";
 "nft.detail.section.title.properties" = "Properties";
 
-"chat" = "Chat";
-"chat.colletion.top.cell.body" = "This are the list of upcoming apps that Web3Wallet plans to work on in the future.";
+"chat" = "web3chat";
+"chat.colletion.top.cell.body" = "Here is a quick demo on what the team has planned in the future. All will be web3 fully decentralised apps! 🚀🚀🚀";
 "chat.item.web3chat" = "web3chat";
 
+"chat.friend.message1" = "Hi, how can I help?";
+"chat.friend.message2" = "Sure";
+"chat.friend.message3" = "A good place to start would be to follow us at @sonsofcrypto on twitter";
+"chat.friend.message4" = "Sure, will do ser!";
+"chat.friend.message5" = "By the way, did you manage to go to the #CULT event last weekend?";
+"chat.friend.message6" = "It was sick! 😎";
+"chat.friend.message7" = "There were 3 misterious MFs around and one of them look like the new Satoshi 🧐, he nearly went wild!";
 
+"chat.me.message1" = "I would like to find out more about SonsOfCrypto";
+"chat.me.message2" = "Perfect, I will check this out";
+"chat.me.message3" = "Also, please tell SonsOfCrypto team that they rock! 🔥";

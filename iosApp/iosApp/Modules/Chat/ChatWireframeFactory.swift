@@ -7,7 +7,7 @@ import UIKit
 protocol ChatWireframeFactory {
 
     func makeWireframe(
-        presentingIn: NavigationController,
+        presentingIn: UIViewController,
         context: ChatWireframeContext
     ) -> ChatWireframe
 }
@@ -26,7 +26,7 @@ final class DefaultChatWireframeFactory {
 extension DefaultChatWireframeFactory: ChatWireframeFactory {
 
     func makeWireframe(
-        presentingIn: NavigationController,
+        presentingIn: UIViewController,
         context: ChatWireframeContext
     ) -> ChatWireframe {
         

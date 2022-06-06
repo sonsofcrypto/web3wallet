@@ -1,12 +1,12 @@
-// Created by web3d3v on 14/02/2022.
+// Created by web3d3v on 05/06/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import UIKit
 
-extension UILabel {
+extension UITextView {
 
-    convenience init(with style: UILabel.Style) {
+    convenience init(with style: Style) {
         self.init()
         self.applyStyle(style)
     }
@@ -37,7 +37,7 @@ extension UILabel {
             textColor = Theme.color.text
         case .callout:
             font = Theme.font.callout
-            layer.applyShadow(Theme.color.tintSecondary)
+            //layer.applyShadow(Theme.color.tintSecondary)
             textColor = Theme.color.text
             update(lineSpacing: 6)
         case .subhead:
@@ -51,7 +51,7 @@ extension UILabel {
             layer.applyShadow(Theme.color.tintSecondary)
             textColor = Theme.color.text
         case .body:
-            font = Theme.font.body
+            font = Theme.font.subhead
             textColor = Theme.color.text
             update(lineSpacing: 8)
         case .bodyGlow:
@@ -81,7 +81,7 @@ extension UILabel {
     }
 }
 
-private extension UILabel {
+extension UITextView {
     
     func update(
         lineSpacing: CGFloat = 10

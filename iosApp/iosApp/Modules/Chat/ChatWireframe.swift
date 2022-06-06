@@ -20,12 +20,12 @@ protocol ChatWireframe {
 
 final class DefaultChatWireframe {
     
-    private weak var presentingIn: NavigationController!
+    private weak var presentingIn: UIViewController!
     private let context: ChatWireframeContext
     private let chatService: ChatService
     
     init(
-        presentingIn: NavigationController,
+        presentingIn: UIViewController,
         context: ChatWireframeContext,
         chatService: ChatService
     ) {
@@ -43,10 +43,18 @@ extension DefaultChatWireframe: ChatWireframe {
         
         switch context.presentationStyle {
             
+        case .embed:
+            guard let tabBarController = presentingIn as? TabBarController else {
+                return
+            }
+            let vcs = tabBarController.add(viewController: vc)
+            tabBarController.setViewControllers(vcs, animated: false)
+            
         case .present:
             presentingIn.present(vc, animated: true)
             
         case .push:
+            guard let presentingIn = presentingIn as? NavigationController else { return }
             presentingIn.pushViewController(vc, animated: true)
         }
     }
@@ -65,7 +73,6 @@ private extension DefaultChatWireframe {
             chatService: chatService
         )
         let vc: ChatViewController = UIStoryboard(.chat).instantiate()
-        vc.hidesBottomBarWhenPushed = true
         let presenter = DefaultChatPresenter(
             view: vc,
             interactor: interactor,
@@ -73,6 +80,20 @@ private extension DefaultChatWireframe {
         )
         
         vc.presenter = presenter
-        return vc
+        
+        switch context.presentationStyle {
+        case .embed:
+            
+            let navigationController = NavigationController(rootViewController: vc)
+            navigationController.tabBarItem = UITabBarItem(
+                title: Localized("apps"),
+                image: UIImage(named: "tab_icon_apps"),
+                tag: 3
+            )
+            return navigationController
+        case .present, .push:
+            vc.hidesBottomBarWhenPushed = true
+            return vc
+        }
     }
 }

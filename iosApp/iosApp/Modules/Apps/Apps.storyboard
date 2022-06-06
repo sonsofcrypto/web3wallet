@@ -69,6 +69,9 @@
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="1" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="04Y-Bz-Kd2">
                                                     <rect key="frame" x="0.0" y="0.0" width="366" height="58"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="366" id="BVv-Uw-edD"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -83,6 +86,7 @@
                                         </collectionViewCellContentView>
                                         <connections>
                                             <outlet property="titleLabel" destination="04Y-Bz-Kd2" id="6jH-9N-JJP"/>
+                                            <outlet property="widthConstraint" destination="BVv-Uw-edD" id="jde-xH-ORC"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

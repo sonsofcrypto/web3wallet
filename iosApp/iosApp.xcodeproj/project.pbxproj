@@ -248,6 +248,7 @@
 		1CB3A23A2843E5A10092D667 /* NFTsCollectionView+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB3A2392843E5A10092D667 /* NFTsCollectionView+Shared.swift */; };
 		1CB3A23C2843E5F20092D667 /* NFTsCollectionView+NFTs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB3A23B2843E5F20092D667 /* NFTsCollectionView+NFTs.swift */; };
 		1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */; };
+		1CD3FE20284D5840008312DE /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD3FE1F284D5840008312DE /* FeatureFlags.swift */; };
 		1CE66BBA2848E5C700AB6ACA /* ChatWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BB92848E5C700AB6ACA /* ChatWireframeFactoryAssembler.swift */; };
 		1CE66BBC2848E5CC00AB6ACA /* ChatWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BBB2848E5CC00AB6ACA /* ChatWireframe.swift */; };
 		1CE66BBE2848E5D500AB6ACA /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BBD2848E5D500AB6ACA /* ChatViewModel.swift */; };
@@ -260,11 +261,13 @@
 		1CE66BCE2848EAA600AB6ACA /* ChatServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */; };
 		1CE66BD02848EB8400AB6ACA /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CE66BCF2848EB8400AB6ACA /* Chat.storyboard */; };
 		1CE66BD22848ED4000AB6ACA /* PresentationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BD12848ED4000AB6ACA /* PresentationStyle.swift */; };
-		1CE66BD52848F06200AB6ACA /* ChatCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BD42848F06200AB6ACA /* ChatCollectionViewCell.swift */; };
+		1CE66BD52848F06200AB6ACA /* ChatLeftCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BD42848F06200AB6ACA /* ChatLeftCollectionViewCell.swift */; };
 		1CE66BD72848F16A00AB6ACA /* UITabBarController+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BD62848F16A00AB6ACA /* UITabBarController+extensions.swift */; };
 		1CE66BD92848F24E00AB6ACA /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CE66BD82848F24E00AB6ACA /* Apps.storyboard */; };
 		1CE66BDC2848F32F00AB6ACA /* AppsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BDB2848F32F00AB6ACA /* AppsCollectionViewCell.swift */; };
 		1CE66BDE28494C5D00AB6ACA /* AppsHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BDD28494C5D00AB6ACA /* AppsHeaderCollectionViewCell.swift */; };
+		1CE66BE2284CED6A00AB6ACA /* ChatRightCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BE1284CED6A00AB6ACA /* ChatRightCollectionViewCell.swift */; };
+		1CE66BE4284CFB7600AB6ACA /* UITextView+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BE3284CFB7600AB6ACA /* UITextView+extensions.swift */; };
 		D116CF3227C31ECC005542AA /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = D116CF3127C31ECC005542AA /* iCarousel.m */; };
 		D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F527B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf */; };
 		D11A990127B8615B00EDFDD0 /* GothicA1-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D11A98F627B8615B00EDFDD0 /* GothicA1-Regular.ttf */; };
@@ -581,6 +584,7 @@
 		1CB3A2392843E5A10092D667 /* NFTsCollectionView+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NFTsCollectionView+Shared.swift"; sourceTree = "<group>"; };
 		1CB3A23B2843E5F20092D667 /* NFTsCollectionView+NFTs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NFTsCollectionView+NFTs.swift"; sourceTree = "<group>"; };
 		1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetActionViewModel.swift; sourceTree = "<group>"; };
+		1CD3FE1F284D5840008312DE /* FeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
 		1CE66BB92848E5C700AB6ACA /* ChatWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1CE66BBB2848E5CC00AB6ACA /* ChatWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWireframe.swift; sourceTree = "<group>"; };
 		1CE66BBD2848E5D500AB6ACA /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
@@ -593,11 +597,13 @@
 		1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceAssembler.swift; sourceTree = "<group>"; };
 		1CE66BCF2848EB8400AB6ACA /* Chat.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
 		1CE66BD12848ED4000AB6ACA /* PresentationStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationStyle.swift; sourceTree = "<group>"; };
-		1CE66BD42848F06200AB6ACA /* ChatCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCollectionViewCell.swift; sourceTree = "<group>"; };
+		1CE66BD42848F06200AB6ACA /* ChatLeftCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLeftCollectionViewCell.swift; sourceTree = "<group>"; };
 		1CE66BD62848F16A00AB6ACA /* UITabBarController+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarController+extensions.swift"; sourceTree = "<group>"; };
 		1CE66BD82848F24E00AB6ACA /* Apps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Apps.storyboard; sourceTree = "<group>"; };
 		1CE66BDB2848F32F00AB6ACA /* AppsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsCollectionViewCell.swift; sourceTree = "<group>"; };
 		1CE66BDD28494C5D00AB6ACA /* AppsHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
+		1CE66BE1284CED6A00AB6ACA /* ChatRightCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRightCollectionViewCell.swift; sourceTree = "<group>"; };
+		1CE66BE3284CFB7600AB6ACA /* UITextView+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+extensions.swift"; sourceTree = "<group>"; };
 		D116CF2F27C31ECC005542AA /* iosApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iosApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		D116CF3027C31ECC005542AA /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		D116CF3127C31ECC005542AA /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
@@ -1168,6 +1174,7 @@
 				1CB3A1D22840D6B70092D667 /* UIFont+extension.swift */,
 				1CB3A1D32840D6B70092D667 /* UIImageView+Extensions.swift */,
 				1CB3A1DF2840D6B70092D667 /* UILabel+extensions.swift */,
+				1CE66BE3284CFB7600AB6ACA /* UITextView+extensions.swift */,
 				1CB3A1DB2840D6B70092D667 /* UIStackView+extensions.swift */,
 				1CB3A1DC2840D6B70092D667 /* UIStoryboard+extensions.swift */,
 				1CB3A22028437C860092D667 /* UITableView+extensions.swift */,
@@ -1249,7 +1256,8 @@
 		1CE66BD32848F05C00AB6ACA /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				1CE66BD42848F06200AB6ACA /* ChatCollectionViewCell.swift */,
+				1CE66BD42848F06200AB6ACA /* ChatLeftCollectionViewCell.swift */,
+				1CE66BE1284CED6A00AB6ACA /* ChatRightCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1404,6 +1412,7 @@
 				1A4C3C27E8AC72B44037C9E2 /* ViewControllers */,
 				1CBFDAF628113D180054B276 /* ViewModels */,
 				D15B06C427B6D241008C3C62 /* Views */,
+				1CD3FE1F284D5840008312DE /* FeatureFlags.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1779,8 +1788,10 @@
 				1CB3A1F02840D6B70092D667 /* UIStoryboard+extensions.swift in Sources */,
 				1C64874F2832EB150091A12D /* SwapWireframeFactoryAssembler.swift in Sources */,
 				1C6487322832E5F90091A12D /* NetworksServiceAssembler.swift in Sources */,
+				1CE66BE4284CFB7600AB6ACA /* UITextView+extensions.swift in Sources */,
 				1C6487382832E6BE0091A12D /* DefaultOnboardingService.swift in Sources */,
 				1C64870D2832DD970091A12D /* AssemblerBootstrapper.swift in Sources */,
+				1CD3FE20284D5840008312DE /* FeatureFlags.swift in Sources */,
 				1A4C3C57B341513B1AA26C06 /* AMMsPresenter.swift in Sources */,
 				1C6487592832EDC30091A12D /* NFTDetailWireframeFactoryAssembler.swift in Sources */,
 				1A4C3A7D319E0444A98E52AD /* AMMsViewModel.swift in Sources */,
@@ -1797,6 +1808,7 @@
 				1A4C3184F9E6B94BC857D69A /* SwapView.swift in Sources */,
 				1A4C37B46FEFFC9D3AC7F324 /* SwapPresenter.swift in Sources */,
 				1A4C348C8EAD95B167C06D3D /* SwapViewModel.swift in Sources */,
+				1CE66BE2284CED6A00AB6ACA /* ChatRightCollectionViewCell.swift in Sources */,
 				1CE66BCA2848EA9900AB6ACA /* ChatService.swift in Sources */,
 				1C6487362832E6650091A12D /* NFTsServiceAssembler.swift in Sources */,
 				1C64871B2832E3490091A12D /* KeyStoreServiceAssembler.swift in Sources */,
@@ -1869,7 +1881,7 @@
 				1A4C39119C04EB0DE3B90F12 /* RootView.swift in Sources */,
 				1A4C36FDBCA0AA402711BE43 /* RootPresenter.swift in Sources */,
 				1A4C3907090271B34B3F8F4E /* RootWireframe.swift in Sources */,
-				1CE66BD52848F06200AB6ACA /* ChatCollectionViewCell.swift in Sources */,
+				1CE66BD52848F06200AB6ACA /* ChatLeftCollectionViewCell.swift in Sources */,
 				1CB3A2032840D7100092D667 /* NFTsDashboardWireframe.swift in Sources */,
 				1A4C3D05769E141EF98C06E4 /* RootWireframeFactory.swift in Sources */,
 				D1F160092804C96100DEF239 /* MnemonicView.swift in Sources */,

@@ -7,21 +7,22 @@ import UIKit
 final class AppsHeaderCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
-
+    @IBOutlet private var widthConstraint: NSLayoutConstraint!
+    
     override func awakeFromNib() {
         
         super.awakeFromNib()
         
-        titleLabel.textColor = Theme.color.text
-        titleLabel.font = Theme.font.callout
-    }
-
-    func update(with viewModel: AppsViewModel.Item?) {
-        
-        titleLabel.text = viewModel?.title
+        titleLabel.applyStyle(.callout)
     }
     
-    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-            return contentView.systemLayoutSizeFitting(CGSize(width: self.bounds.size.width, height: 1))
-        }
+    func update(
+        with viewModel: AppsViewModel.Item?,
+        width: CGFloat
+    ) {
+        
+        titleLabel.text = viewModel?.title
+        
+        widthConstraint.constant = width
+    }
 }
