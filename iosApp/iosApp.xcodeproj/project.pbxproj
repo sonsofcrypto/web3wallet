@@ -249,6 +249,7 @@
 		1CB3A23C2843E5F20092D667 /* NFTsCollectionView+NFTs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB3A23B2843E5F20092D667 /* NFTsCollectionView+NFTs.swift */; };
 		1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */; };
 		1CD3FE20284D5840008312DE /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD3FE1F284D5840008312DE /* FeatureFlags.swift */; };
+		1CD3FE342851D2A0008312DE /* UIView+Animations+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD3FE332851D2A0008312DE /* UIView+Animations+Chat.swift */; };
 		1CE66BBA2848E5C700AB6ACA /* ChatWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BB92848E5C700AB6ACA /* ChatWireframeFactoryAssembler.swift */; };
 		1CE66BBC2848E5CC00AB6ACA /* ChatWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BBB2848E5CC00AB6ACA /* ChatWireframe.swift */; };
 		1CE66BBE2848E5D500AB6ACA /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BBD2848E5D500AB6ACA /* ChatViewModel.swift */; };
@@ -585,6 +586,7 @@
 		1CB3A23B2843E5F20092D667 /* NFTsCollectionView+NFTs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NFTsCollectionView+NFTs.swift"; sourceTree = "<group>"; };
 		1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetActionViewModel.swift; sourceTree = "<group>"; };
 		1CD3FE1F284D5840008312DE /* FeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
+		1CD3FE332851D2A0008312DE /* UIView+Animations+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animations+Chat.swift"; sourceTree = "<group>"; };
 		1CE66BB92848E5C700AB6ACA /* ChatWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1CE66BBB2848E5CC00AB6ACA /* ChatWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWireframe.swift; sourceTree = "<group>"; };
 		1CE66BBD2848E5D500AB6ACA /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
@@ -1179,6 +1181,7 @@
 				1CB3A1DC2840D6B70092D667 /* UIStoryboard+extensions.swift */,
 				1CB3A22028437C860092D667 /* UITableView+extensions.swift */,
 				1CB3A1D52840D6B70092D667 /* UIView+extensions.swift */,
+				1CD3FE332851D2A0008312DE /* UIView+Animations+Chat.swift */,
 				1CB3A1D82840D6B70092D667 /* UIView+LayoutConstraints+extensions.swift */,
 				1C5B60372843FACD00ECBD79 /* UIViewController+extensions.swift */,
 				1CE66BD62848F16A00AB6ACA /* UITabBarController+extensions.swift */,
@@ -1701,6 +1704,7 @@
 				D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */,
 				1CB3A2052840D7100092D667 /* NFTsDashboardViewModel.swift in Sources */,
 				D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */,
+				1CD3FE342851D2A0008312DE /* UIView+Animations+Chat.swift in Sources */,
 				1CE66BD22848ED4000AB6ACA /* PresentationStyle.swift in Sources */,
 				1A4C32CF0C59FE32073E66D0 /* KeyStorePresenter.swift in Sources */,
 				1CB3A1E32840D6B70092D667 /* Array+extensions.swift in Sources */,

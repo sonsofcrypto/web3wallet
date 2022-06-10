@@ -15,6 +15,7 @@ extension ChatViewModel {
     struct Item {
         let owner: Owner
         let message: String
+        let isNewMessage: Bool
         
         enum Owner {
             case me

@@ -37,6 +37,11 @@ final class ChatViewController: BaseViewController {
         
         configureNavAndTabBarItem()
         configureUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        super.viewDidAppear(animated)
         
         presenter?.present()
     }
@@ -135,6 +140,7 @@ extension ChatViewController: UICollectionViewDataSource {
                 with: viewModel,
                 and: maxBubleWidth
             )
+            updateItemAsRead(at: indexPath.item)
             return cell
         } else {
             
@@ -146,6 +152,7 @@ extension ChatViewController: UICollectionViewDataSource {
                 with: viewModel,
                 and: maxBubleWidth
             )
+            updateItemAsRead(at: indexPath.item)
             return cell
         }
     }
@@ -256,5 +263,34 @@ private extension ChatViewController {
     @objc func dismissKeyboard() {
         
         inputTextView.resignFirstResponder()
+    }
+    
+    func updateItemAsRead(at index: Int) {
+        
+        guard let viewModel = viewModel else { return }
+        
+        guard case let ChatViewModel.loaded(
+            items,
+            selectedIdx
+        ) = viewModel else { return }
+        
+        guard items.count - 1 < index else { return }
+        
+        let item = items[index]
+        
+        guard item.isNewMessage else { return }
+        
+        let itemToUpdate = ChatViewModel.Item(
+            owner: item.owner,
+            message: item.message,
+            isNewMessage: false
+        )
+        var itemsUpdated = items
+        itemsUpdated[index] = itemToUpdate
+        
+        self.viewModel = .loaded(
+            items: itemsUpdated,
+            selectedIdx: selectedIdx
+        )
     }
 }

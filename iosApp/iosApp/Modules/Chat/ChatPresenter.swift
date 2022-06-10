@@ -49,19 +49,42 @@ extension DefaultChatPresenter: ChatPresenter {
         switch event {
             
         case let .send(message):
-            
-            items.append(.init(owner: .me, message: message))
+            markMessagesAsNotNew()
+            items.append(
+                .init(
+                    owner: .me,
+                    message: message,
+                    isNewMessage: true
+                )
+            )
             updateView()
             scheduleReceiveNextMessage()
             
         case let .receive(message):
-            items.append(.init(owner: .other, message: message))
+            markMessagesAsNotNew()
+            items.append(
+                .init(
+                    owner: .other,
+                    message: message,
+                    isNewMessage: true
+                )
+            )
             updateView()
         }
     }
 }
 
 private extension DefaultChatPresenter {
+    
+    func markMessagesAsNotNew() {
+        items = items.compactMap {
+            .init(
+                owner: $0.owner,
+                message: $0.message,
+                isNewMessage: false
+            )
+        }
+    }
     
     func updateView() {
         
@@ -79,7 +102,8 @@ private extension DefaultChatPresenter {
         items.append(
             .init(
                 owner: .other,
-                message: Localized("chat.friend.message1")
+                message: Localized("chat.friend.message1"),
+                isNewMessage: true
             )
         )
     }

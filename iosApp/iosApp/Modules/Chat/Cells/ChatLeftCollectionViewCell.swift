@@ -37,5 +37,10 @@ final class ChatLeftCollectionViewCell: UICollectionViewCell {
 
         messageLabel.text = viewModel?.message
         widthLayoutConstraint.constant = width
+        
+        if viewModel?.isNewMessage ?? false {
+            
+            bubbleView.animateAsIncomeMessage()
+        }
     }
 }
