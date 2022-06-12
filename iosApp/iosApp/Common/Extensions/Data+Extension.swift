@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 // MARK: - Hex string
 
@@ -39,5 +40,14 @@ extension Data {
         var output = Data(self)
         output.append(data)
         return output
+    }
+}
+
+// MARK: - Kotlin bytes array
+
+extension Data {
+
+    func byteArray() -> KotlinByteArray {
+        return ExtensionsKt.byteArray(self)
     }
 }

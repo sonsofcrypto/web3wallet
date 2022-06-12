@@ -37,7 +37,7 @@ final class DefaultAccountPresenter {
 extension DefaultAccountPresenter: AccountPresenter {
 
     func present() {
-        view?.update(with: viewModel(interactor.wallet))
+        view?.update(with: viewModel(interactor.wallet, token: interactor.token))
     }
 
     func handle(_ event: AccountPresenterEvent) {
@@ -51,11 +51,11 @@ private extension DefaultAccountPresenter {
 
 private extension DefaultAccountPresenter {
 
-    func viewModel(_ wallet: KeyStoreItem) -> AccountViewModel {
+    func viewModel(_ wallet: KeyStoreItem, token: Token) -> AccountViewModel {
         .init(
-            currencyName: "Ethereum",
+            currencyName: token.name,
             header: .init(
-                balance: "4.20 ETH",
+                balance: (token.ticker == "CULT" ? "20,000" : "4.20 ") + token.ticker,
                 fiatBalance: "$6,900",
                 pct: "+4.5%",
                 pctUp: true,
@@ -72,17 +72,18 @@ private extension DefaultAccountPresenter {
                 price: "$4200",
                 volume: "$68,234,352"
             ),
+            bonusAction: token.ticker == "CULT" ? .init(title: "Read the manifesto") : nil,
             transactions: [
                 .init(
                     date: "23 Feb 2022",
                     address: "0xcf6fa3373c3ed7e0c2f502e39be74fd4d6f054ee",
-                    amount: "+ 6.90 ETH",
+                    amount: "+ 6.90 " + token.ticker,
                     isReceive: true
                 ),
                 .init(
                     date: "14 Jan 2022",
                     address: "0xcf6fa3373c3ed7e0c2f502e39be74fd4d6f054ee",
-                    amount: "- 4.20 ETH",
+                    amount: "- 4.20 " + token.ticker,
                     isReceive: false
                 )
             ]

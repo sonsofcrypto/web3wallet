@@ -64,6 +64,26 @@ extension DashboardViewModel {
     }
 }
 
+// MARK: - Tokens accounts
+
+extension DashboardViewModel {
+
+    static func tokens(_ tokens: [Token]) -> [DashboardViewModel.Wallet] {
+        return tokens.enumerated().map {
+            .init(
+                name: $0.1.name,
+                ticker: $0.1.ticker,
+                imageName: $0.1.iconName,
+                fiatBalance: $0.0 % 2 == 0 ? "$69,000" : "$42,000",
+                cryptoBalance: ($0.0 % 2 == 0 ? "420.00" : "690.00") + " " + $0.1.ticker,
+                pctChange: $0.0 % 2 == 0 ? "4.5%" : "2.5%",
+                priceUp: true,
+                candles: CandlesViewModel.mock(first: $0.0 % 2 == 0)
+            )
+        }
+    }
+}
+
 // MARK: - Mock
 
 extension DashboardViewModel {
@@ -90,22 +110,6 @@ extension DashboardViewModel {
                 priceUp: true,
                 candles: CandlesViewModel.mock(first: false)
             )
-        ]
-    }
-
-    static func mockNFTsETH() -> [DashboardViewModel.NFT] {
-        return [
-            .init(imageName: "ape"),
-            .init(imageName: "ape2"),
-            .init(imageName: "ape3"),
-            .init(imageName: "ape4"),
-            .init(imageName: "ape5"),
-            .init(imageName: "penguin"),
-            .init(imageName: "penguin2"),
-            .init(imageName: "punk"),
-            .init(imageName: "punk2"),
-            .init(imageName: "punk3"),
-            .init(imageName: "punk4")
         ]
     }
 
@@ -171,6 +175,22 @@ extension DashboardViewModel {
                 priceUp: true,
                 candles: CandlesViewModel.mock(first: false)
             )
+        ]
+    }
+
+    static func mockNFTsETH() -> [DashboardViewModel.NFT] {
+        return [
+            .init(imageName: "ape"),
+            .init(imageName: "ape2"),
+            .init(imageName: "ape3"),
+            .init(imageName: "ape4"),
+            .init(imageName: "ape5"),
+            .init(imageName: "penguin"),
+            .init(imageName: "penguin2"),
+            .init(imageName: "punk"),
+            .init(imageName: "punk2"),
+            .init(imageName: "punk3"),
+            .init(imageName: "punk4")
         ]
     }
 

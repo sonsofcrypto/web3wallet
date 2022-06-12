@@ -10,7 +10,8 @@ final class DegenWireframeFactoryAssembler: AssemblerComponent {
             
             DefaultDegenWireframeFactory(
                 degenService: resolver.resolve(),
-                ammsWireframeFactory: resolver.resolve()
+                ammsWireframeFactory: resolver.resolve(),
+                cultProposalsWireframeFactory: resolver.resolve()
             )
         }
     }

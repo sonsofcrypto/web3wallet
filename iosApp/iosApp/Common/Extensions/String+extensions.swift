@@ -68,38 +68,6 @@ extension String {
     }
 }
 
-extension String {
-    
-    func attributtedString(
-        with mainFont: UIFont,
-        and mainColour: UIColor,
-        updating keywords: [String],
-        withColour colour: UIColor,
-        andFont font: UIFont
-    ) -> NSMutableAttributedString {
-        
-        let attributedString = NSMutableAttributedString(
-            string: self,
-            attributes: [
-                .font: mainFont,
-                .foregroundColor: mainColour
-            ]
-        )
-        keywords.forEach { keyword in
-            
-            let range = (lowercased() as NSString).range(of: keyword.lowercased())
-            attributedString.setAttributes(
-                [
-                    .foregroundColor: colour,
-                    .font: font
-                ],
-                range: range
-            )
-        }
-        return attributedString
-    }
-}
-
 // MARK: - Hex
 
 extension String {

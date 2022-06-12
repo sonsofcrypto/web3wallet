@@ -19,6 +19,8 @@ kotlin {
         it.binaries.framework {
             baseName = "web3lib"
             export(project(":web3lib_bip39"))
+            export(project(":web3lib_crypto"))
+            export(project(":web3lib_extensions"))
             xcf.add(this)
         }
     }
@@ -27,6 +29,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(project(":web3lib_bip39"))
+                api(project(":web3lib_crypto"))
+                api(project(":web3lib_extensions"))
             }
         }
         val commonTest by getting {
