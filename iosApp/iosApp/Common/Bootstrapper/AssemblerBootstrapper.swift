@@ -33,6 +33,7 @@ private extension AssemblerBootstrapper {
             ReachabilityServiceAssembler(),
             SettingsServiceAssembler(),
             StoreAssembler(),
+            ChatServiceAssembler(),
             CultServiceAssembler(),
             // Modules
             AccountWireframeFactoryAssembler(),
@@ -51,6 +52,7 @@ private extension AssemblerBootstrapper {
             NFTDetailWireframeFactoryAssembler(),
             RootWireframeFactoryAssembler(),
             SettingsWireframeFactoryAssembler(),
+            ChatWireframeFactoryAssembler(),
             CultProposalsWireframeFactoryAssembler(),
             CultProposalWireframeFactoryAssembler()
         ]

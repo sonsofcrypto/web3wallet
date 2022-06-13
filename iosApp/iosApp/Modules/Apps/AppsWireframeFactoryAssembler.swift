@@ -9,6 +9,7 @@ final class AppsWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> AppsWireframeFactory in
             
             DefaultAppsWireframeFactory(
+                chatWireframeFactory: resolver.resolve(),
                 appsService: resolver.resolve()
             )
         }

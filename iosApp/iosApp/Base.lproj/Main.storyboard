@@ -206,40 +206,6 @@
             </objects>
             <point key="canvasLocation" x="1079.7101449275362" y="123.88392857142857"/>
         </scene>
-        <!--NFTsViewController-->
-        <scene sceneID="2Wq-FC-Mlo">
-            <objects>
-                <viewController storyboardIdentifier="NFTsViewController" id="zLC-ls-6MU" userLabel="NFTsViewController" customClass="NFTsViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="uw5-Ua-KRj" customClass="GradientView" customModule="iosApp" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_nfts" translatesAutoresizingMaskIntoConstraints="NO" id="EMA-TM-xS2">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                            </imageView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="lq7-qX-vks"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="EMA-TM-xS2" firstAttribute="trailing" secondItem="lq7-qX-vks" secondAttribute="trailing" id="2wQ-FS-UAs"/>
-                            <constraint firstAttribute="bottom" secondItem="EMA-TM-xS2" secondAttribute="bottom" id="Hlu-K7-VfA"/>
-                            <constraint firstItem="EMA-TM-xS2" firstAttribute="top" secondItem="uw5-Ua-KRj" secondAttribute="top" id="uSp-HI-SNt"/>
-                            <constraint firstItem="EMA-TM-xS2" firstAttribute="leading" secondItem="lq7-qX-vks" secondAttribute="leading" id="yzC-wz-Qol"/>
-                        </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="defaultTopColor">
-                                <color key="value" name="bgGradientTop"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="color" keyPath="defaultBottomColor">
-                                <color key="value" name="bgGradientBottom"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PPr-Yn-P8L" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1776.8115942028987" y="873.88392857142856"/>
-        </scene>
         <!--Mnemonic-->
         <scene sceneID="JRC-M4-aCL">
             <objects>
@@ -708,40 +674,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Di-Ae-loZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1066.6666666666667" y="873.88392857142856"/>
-        </scene>
-        <!--AppsViewController-->
-        <scene sceneID="em8-yx-bfm">
-            <objects>
-                <viewController storyboardIdentifier="AppsViewController" id="pOP-4o-DZZ" userLabel="AppsViewController" customClass="AppsViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="eN0-hT-iVh" customClass="GradientView" customModule="iosApp" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder_apps" translatesAutoresizingMaskIntoConstraints="NO" id="2Ew-EJ-g5O">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                            </imageView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="0zM-13-pwK"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="2Ew-EJ-g5O" firstAttribute="top" secondItem="eN0-hT-iVh" secondAttribute="top" id="6X3-nM-FbV"/>
-                            <constraint firstAttribute="bottom" secondItem="2Ew-EJ-g5O" secondAttribute="bottom" id="mT2-Ri-0eu"/>
-                            <constraint firstItem="2Ew-EJ-g5O" firstAttribute="leading" secondItem="0zM-13-pwK" secondAttribute="leading" id="mm2-PN-WKH"/>
-                            <constraint firstItem="2Ew-EJ-g5O" firstAttribute="trailing" secondItem="0zM-13-pwK" secondAttribute="trailing" id="xBd-is-2hu"/>
-                        </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="defaultTopColor">
-                                <color key="value" name="bgGradientTop"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="color" keyPath="defaultBottomColor">
-                                <color key="value" name="bgGradientBottom"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yuW-5B-rml" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2505.7971014492755" y="873.88392857142856"/>
         </scene>
         <!--DashboardViewController-->
         <scene sceneID="mfB-ws-kyz">
@@ -1996,8 +1928,6 @@
         <image name="button_receive" width="34.666667938232422" height="34.666667938232422"/>
         <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="neon_logo" width="299" height="299"/>
-        <image name="placeholder_apps" width="376" height="812"/>
-        <image name="placeholder_nfts" width="375" height="812"/>
         <image name="settings" width="16.666666030883789" height="16.666666030883789"/>
         <namedColor name="appRed">
             <color red="0.90600001811981201" green="0.21600000560283661" blue="0.58399999141693115" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

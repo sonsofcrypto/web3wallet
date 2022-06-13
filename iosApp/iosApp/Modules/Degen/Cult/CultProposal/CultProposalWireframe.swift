@@ -40,7 +40,7 @@ extension DefaultCultProposalWireframe: CultProposalWireframe {
     }
 
     func navigate(to destination: CultProposalWireframeDestination) {
-        print("navigate to \(destination)")
+
     }
 }
 

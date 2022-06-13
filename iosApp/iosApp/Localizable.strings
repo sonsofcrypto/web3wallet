@@ -111,3 +111,19 @@
 "nft.detail.button.send" = "Send";
 "nft.detail.section.title.description" = "Description";
 "nft.detail.section.title.properties" = "Properties";
+
+"chat" = "web3chat";
+"chat.colletion.top.cell.body" = "List of upcoming web3 apps, of course all will be fully decentralised! 🚀🚀🚀";
+"chat.item.web3chat" = "web3chat";
+
+"chat.friend.message1" = "Hi, how can I help?";
+"chat.friend.message2" = "Sure";
+"chat.friend.message3" = "A good place to start would be to follow us at @sonsofcrypto on twitter";
+"chat.friend.message4" = "Sure, will do ser!";
+"chat.friend.message5" = "By the way, did you manage to go to the #CULT event last weekend?";
+"chat.friend.message6" = "It was sick! 😎";
+"chat.friend.message7" = "Stay tunned Ser!";
+
+"chat.me.message1" = "I would like to find out more about SonsOfCrypto";
+"chat.me.message2" = "Perfect, I will check this out";
+"chat.me.message3" = "Also, please tell SonsOfCrypto team that they rock! 🔥";

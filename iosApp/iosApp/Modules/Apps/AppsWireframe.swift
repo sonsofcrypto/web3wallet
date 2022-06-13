@@ -6,6 +6,7 @@ import UIKit
 
 enum AppsWireframeDestination {
     
+    case chat
 }
 
 protocol AppsWireframe {
@@ -13,37 +14,44 @@ protocol AppsWireframe {
     func navigate(to destination: AppsWireframeDestination)
 }
 
-// MARK: - DefaultAppsWireframe
-
 final class DefaultAppsWireframe {
     
-    private weak var parent: UITabBarController!
+    private weak var presentingIn: UITabBarController!
+    private let chatWireframeFactory: ChatWireframeFactory
     private let appsService: AppsService
     
-    private weak var navigationController: UINavigationController!
+    private weak var navigationController: NavigationController!
     
     init(
-        parent: UITabBarController,
+        presentingIn: UITabBarController,
+        chatWireframeFactory: ChatWireframeFactory,
         appsService: AppsService
     ) {
-        self.parent = parent
+        self.presentingIn = presentingIn
+        self.chatWireframeFactory = chatWireframeFactory
         self.appsService = appsService
     }
 }
-
-// MARK: - AppsWireframe
 
 extension DefaultAppsWireframe: AppsWireframe {
     
     func present() {
         
         let vc = wireUp()
-        let vcs = (parent.viewControllers ?? []) + [vc]
-        parent.setViewControllers(vcs, animated: false)
+        let vcs = presentingIn.add(viewController: vc)
+        presentingIn.setViewControllers(vcs, animated: false)
     }
     
     func navigate(to destination: AppsWireframeDestination) {
-        print("navigate to \(destination)")
+        
+        switch destination {
+        case .chat:
+            let coordinator = chatWireframeFactory.makeWireframe(
+                presentingIn: navigationController,
+                context: .init(presentationStyle: .push)
+            )
+            coordinator.present()
+        }
     }
 }
 
@@ -54,7 +62,7 @@ private extension DefaultAppsWireframe {
         let interactor = DefaultAppsInteractor(
             appsService: appsService
         )
-        let vc: AppsViewController = UIStoryboard(.main).instantiate()
+        let vc: AppsViewController = UIStoryboard(.apps).instantiate()
         let presenter = DefaultAppsPresenter(
             view: vc,
             interactor: interactor,

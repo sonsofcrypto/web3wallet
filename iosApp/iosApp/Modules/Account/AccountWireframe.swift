@@ -43,7 +43,7 @@ extension DefaultAccountWireframe: AccountWireframe {
     }
 
     func navigate(to destination: AccountWireframeDestination) {
-        print("navigate to \(destination)")
+
     }
 }
 

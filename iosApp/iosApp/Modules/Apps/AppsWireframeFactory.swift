@@ -6,26 +6,30 @@ import UIKit
 
 protocol AppsWireframeFactory {
 
-    func makeWireframe(_ parent: UITabBarController) -> AppsWireframe
+    func makeWireframe(_ presentingIn: UITabBarController) -> AppsWireframe
 }
 
 final class DefaultAppsWireframeFactory {
 
+    private let chatWireframeFactory: ChatWireframeFactory
     private let appsService: AppsService
 
     init(
+        chatWireframeFactory: ChatWireframeFactory,
         appsService: AppsService
     ) {
+        self.chatWireframeFactory = chatWireframeFactory
         self.appsService = appsService
     }
 }
 
 extension DefaultAppsWireframeFactory: AppsWireframeFactory {
 
-    func makeWireframe(_ parent: UITabBarController) -> AppsWireframe {
+    func makeWireframe(_ presentingIn: UITabBarController) -> AppsWireframe {
         
         DefaultAppsWireframe(
-            parent: parent,
+            presentingIn: presentingIn,
+            chatWireframeFactory: chatWireframeFactory,
             appsService: appsService
         )
     }

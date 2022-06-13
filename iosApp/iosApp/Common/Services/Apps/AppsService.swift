@@ -4,6 +4,11 @@
 
 import Foundation
 
+enum AppItem {
+    
+    case chat
+}
+
 protocol AppsService {
 
 }
