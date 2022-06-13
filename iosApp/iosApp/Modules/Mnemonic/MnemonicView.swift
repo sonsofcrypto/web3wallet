@@ -247,7 +247,7 @@ extension MnemonicViewController: UICollectionViewDelegateFlowLayout {
         }
 
         switch viewModel {
-        case let .mnemonic(mnemonic):
+        case .mnemonic:
             return CGSize(width: width, height: Constant.mnemonicCellHeight)
         case let .switchWithTextInput(switchWithTextInput):
             return CGSize(
@@ -269,7 +269,7 @@ extension MnemonicViewController: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        guard let header = viewModel?.header(at: section) else {
+        guard viewModel?.header(at: section) != nil else {
             return .zero
         }
 

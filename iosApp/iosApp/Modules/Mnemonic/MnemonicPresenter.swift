@@ -103,18 +103,18 @@ extension DefaultMnemonicPresenter: MnemonicPresenter {
                 mnemonicHidden = false
                 updateView()
             }
-            let pasteBoard = UIPasteboard.general.setItems(
+            UIPasteboard.general.setItems(
                 [[UTType.utf8PlainText.identifier: keyStoreItem.mnemonic]],
                 options: [.expirationDate: Date().addingTimeInterval(30.0)])
         case let .didChangeMnemonic(text):
             keyStoreItem.mnemonic = text
             // TODO: - Validate and update view
-        case let .didEndEditingMnemonic(text):
+        case .didEndEditingMnemonic:
             // TODO: - Validate mnemonic
             showMnemonicOnly = false
             updateView()
         case .didSelectCta:
-            interactor.update(keyStoreItem)
+            _ = interactor.update(keyStoreItem)
             switch context.mode {
             case .update:
                 if let handler = context.didUpdateKeyStoreItemHandler {

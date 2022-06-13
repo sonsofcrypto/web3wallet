@@ -66,8 +66,6 @@ extension DefaultMnemonicWireframe: MnemonicWireframe {
         switch destination {
         case .learnMoreSalt:
             UIApplication.shared.open(Constant.saltExplanationURL)
-        default:
-            print("navigate to \(destination)")
         }
     }
 }

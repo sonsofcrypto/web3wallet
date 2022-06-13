@@ -64,7 +64,7 @@ extension DefaultNetworksPresenter: NetworksPresenter {
 
     func handle(_ event: NetworksPresenterEvent) {
         switch event {
-        case let .didSelectNetwork:
+        case .didSelectNetwork:
             wireframe.navigate(to: .dashboard)
         }
     }

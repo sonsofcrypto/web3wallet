@@ -134,7 +134,7 @@ extension DefaultSettingsInteractor: SettingsInteractor {
         var reloadIdx = 0
         for (idx, item) in items.enumerated() {
             switch item {
-            case let .group(items, title):
+            case let .group(_, title):
                 if title == setting.rawValue {
                    reloadIdx = idx
                 }

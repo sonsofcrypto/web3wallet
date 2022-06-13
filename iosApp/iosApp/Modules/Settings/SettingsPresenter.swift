@@ -101,11 +101,11 @@ private extension DefaultSettingsPresenter {
 
     func viewModel(for item: SettingsItem) -> SettingsViewModel.Item {
         switch item {
-            case let .group(items, title):
+            case let .group(_, title):
                 return .setting(title: Localized(title))
             case let .setting(setting):
                 return .setting(title: Localized(setting.rawValue))
-            case let .selectableOption(setting, optIdx, optTitle, selected):
+            case let .selectableOption(_, _, optTitle, selected):
                 return .selectableOption(title: Localized(optTitle), selected: selected)
             case let .action(actionType):
                 return .action(title: Localized(actionType.rawValue))
@@ -122,7 +122,7 @@ private extension DefaultSettingsPresenter {
     }
 
     func item(at idxPath: IndexPath) -> SettingsItem {
-        let section = items[idxPath.section]
+
         switch items[idxPath.section] {
         case let .group(items, _):
             return items[idxPath.item]
