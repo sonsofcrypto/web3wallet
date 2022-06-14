@@ -21,14 +21,31 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                api(project(":web3lib_crypto"))
+            }
+        }
         val commonTest by getting {
             dependencies {
+                api(project(":web3lib_crypto"))
                 implementation(kotlin("test"))
             }
         }
-        val androidMain by getting
-        val androidTest by getting
+        val androidMain by getting {
+            dependencies {
+                dependsOn(commonMain)
+            }
+        }
+
+        val androidTest by getting {
+            dependencies {
+                dependsOn(androidMain)
+                implementation(kotlin("test-junit"))
+                implementation(project(":web3lib_crypto"))
+            }
+        }
+
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting

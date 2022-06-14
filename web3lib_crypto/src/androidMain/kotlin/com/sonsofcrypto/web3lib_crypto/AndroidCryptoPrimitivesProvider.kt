@@ -38,6 +38,10 @@ class AndroidCryptoPrimitivesProvider : CryptoPrimitivesProvider {
         return CoreCrypto.keccak512(data)
     }
 
+    override fun hmacSha512(key: ByteArray, data: ByteArray): ByteArray {
+        return CoreCrypto.hmacSha512(key, data)
+    }
+
     private fun hashFnInt(hashFn: HashFn): Long {
         return when (hashFn) {
             HashFn.SHA256 -> CoreCrypto.HashFnSha256

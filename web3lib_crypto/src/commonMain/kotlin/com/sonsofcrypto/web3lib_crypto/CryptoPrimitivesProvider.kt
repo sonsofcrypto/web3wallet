@@ -16,6 +16,7 @@ interface CryptoPrimitivesProvider {
     fun sha512(data: ByteArray): ByteArray
     fun keccak256(data: ByteArray): ByteArray
     fun keccak512(data: ByteArray): ByteArray
+    fun hmacSha512(key: ByteArray, data: ByteArray): ByteArray
 }
 
 private var sharedProvider: CryptoPrimitivesProvider? = null
@@ -55,5 +56,9 @@ object Crypto : CryptoPrimitivesProvider {
 
     override fun keccak512(data: ByteArray): ByteArray {
         return sharedProvider!!.keccak512(data)
+    }
+
+    override fun hmacSha512(key: ByteArray, data: ByteArray): ByteArray {
+        return sharedProvider!!.hmacSha512(key, data)
     }
 }
