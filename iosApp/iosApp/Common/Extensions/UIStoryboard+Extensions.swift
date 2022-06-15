@@ -28,5 +28,7 @@ extension UIStoryboard {
         case mnemonicConfirmation = "MnemonicConfirmation"
         case apps = "Apps"
         case chat = "Chat"
+        case tokenPicker = "TokenPicker"
+        case tokenDetails = "TokenDetails"
     }
 }

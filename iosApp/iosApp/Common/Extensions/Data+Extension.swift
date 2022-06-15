@@ -32,6 +32,11 @@ extension Data {
     }
 }
 
+extension Data {
+    
+    var pngImage: UIImage? { .init(data: self) }
+}
+
 // MARK: - Appending
 
 extension Data {

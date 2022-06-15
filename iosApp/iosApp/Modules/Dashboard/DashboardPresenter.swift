@@ -21,8 +21,6 @@ protocol DashboardPresenter {
     func handle(_ event: DashboardPresenterEvent)
 }
 
-// MARK: - DefaultDashboardPresenter
-
 final class DefaultDashboardPresenter {
 
     private let interactor: DashboardInteractor
@@ -44,8 +42,6 @@ final class DefaultDashboardPresenter {
     }
 }
 
-// MARK: DashboardPresenter
-
 extension DefaultDashboardPresenter: DashboardPresenter {
 
     func present() {
@@ -65,25 +61,24 @@ extension DefaultDashboardPresenter: DashboardPresenter {
         case .presentUnderConstructionAlert:
             wireframe.navigate(to: .presentUnderConstructionAlert)
         case .receiveAction:
-            wireframe.navigate(to: .mnemonicConfirmation)
+            wireframe.navigate(to: .receiveCoins)
+        case .sendAction:
+            break
         default:
             print("Handle \(event)")
         }
     }
 }
 
-// MARK: - Event handling
-
 private extension DefaultDashboardPresenter {
     
     func token(for idx: Int) -> Token {
+        
         let tokens = interactor.tokens(for: .ethereum) + interactor.tokens(for: .solana)
         return tokens[idx]
     }
 
 }
-
-// MARK: - WalletsViewModel utilities
 
 private extension DefaultDashboardPresenter {
 

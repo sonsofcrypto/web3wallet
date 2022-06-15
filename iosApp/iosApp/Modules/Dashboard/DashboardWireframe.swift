@@ -9,6 +9,8 @@ enum DashboardWireframeDestination {
     case keyStoreNetworkSettings
     case presentUnderConstructionAlert
     case mnemonicConfirmation
+    case receiveCoins
+    case sendCoins
 }
 
 protocol DashboardWireframe {
@@ -86,6 +88,14 @@ extension DefaultDashboardWireframe: DashboardWireframe {
         case .mnemonicConfirmation:
             
             mnemonicConfirmationWireframeFactory.makeWireframe(parent).present()
+            
+        case .receiveCoins:
+            
+            presentTokenPicker(with: .receive)
+            
+        case .sendCoins:
+            
+            break
         }
     }
 }
@@ -105,5 +115,20 @@ private extension DefaultDashboardWireframe {
 
         vc.presenter = presenter
         return NavigationController(rootViewController: vc)
+    }
+    
+    func presentTokenPicker(
+        with source: TokenPickerWireframeContext.Source
+    ) {
+        
+        let factory: TokenPickerWireframeFactory = ServiceDirectory.assembler.resolve()
+        let context = TokenPickerWireframeContext(
+            presentationStyle: .present,
+            source: source
+        )
+        factory.makeWireframe(
+            presentingIn: parent,
+            context: context
+        ).present()
     }
 }

@@ -35,6 +35,7 @@ private extension AssemblerBootstrapper {
             StoreAssembler(),
             ChatServiceAssembler(),
             CultServiceAssembler(),
+            Web3ServiceAssembler(),
             // Modules
             AccountWireframeFactoryAssembler(),
             AlertWireframeFactoryAssembler(),
@@ -54,7 +55,9 @@ private extension AssemblerBootstrapper {
             SettingsWireframeFactoryAssembler(),
             ChatWireframeFactoryAssembler(),
             CultProposalsWireframeFactoryAssembler(),
-            CultProposalWireframeFactoryAssembler()
+            CultProposalWireframeFactoryAssembler(),
+            TokenPickerWireframeFactoryAssembler(),
+            TokenDetailsWireframeFactoryAssembler()
         ]
     }
 }

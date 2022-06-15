@@ -45,7 +45,8 @@ extension CALayer {
     func applyHighlighted(_ highlighted: Bool) {
         borderColor = (highlighted
             ? Theme.color.tint
-            : Theme.color.tintLight).cgColor
+            : Theme.color.tintLight
+        ).cgColor
         shadowOpacity = highlighted ? 1 :0
     }
 }

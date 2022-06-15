@@ -108,3 +108,11 @@ extension String {
         return String(self[start ..< end])
     }
 }
+
+extension String {
+    
+    var qrCodeData: Data? {
+        
+        data(using: .isoLatin1, allowLossyConversion: false)
+    }
+}
