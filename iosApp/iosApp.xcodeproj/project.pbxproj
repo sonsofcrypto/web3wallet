@@ -260,6 +260,8 @@
 		1C60C37928588147003BE25D /* TokenPickerFilterAllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C37828588147003BE25D /* TokenPickerFilterAllCell.swift */; };
 		1C60C37B2859BDD9003BE25D /* UIView+Toast+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C37A2859BDD9003BE25D /* UIView+Toast+Extensions.swift */; };
 		1C60C37E2859CC2A003BE25D /* ShareFactoryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C37D2859CC2A003BE25D /* ShareFactoryHelper.swift */; };
+		1C60C380285A2DC6003BE25D /* TokenPickerPresenter+Receive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C37F285A2DC6003BE25D /* TokenPickerPresenter+Receive.swift */; };
+		1C60C382285A5AE8003BE25D /* UICollectionViewCell+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C381285A5AE8003BE25D /* UICollectionViewCell+Extensions.swift */; };
 		1C6486F3282D783A0091A12D /* DefaultGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6486F2282D783A0091A12D /* DefaultGradientView.swift */; };
 		1C6487022832DB830091A12D /* DefaultAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487012832DB830091A12D /* DefaultAssembler.swift */; };
 		1C6487042832DB8B0091A12D /* Assembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487032832DB8B0091A12D /* Assembler.swift */; };
@@ -647,6 +649,8 @@
 		1C60C37828588147003BE25D /* TokenPickerFilterAllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenPickerFilterAllCell.swift; sourceTree = "<group>"; };
 		1C60C37A2859BDD9003BE25D /* UIView+Toast+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Toast+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C37D2859CC2A003BE25D /* ShareFactoryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareFactoryHelper.swift; sourceTree = "<group>"; };
+		1C60C37F285A2DC6003BE25D /* TokenPickerPresenter+Receive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokenPickerPresenter+Receive.swift"; sourceTree = "<group>"; };
+		1C60C381285A5AE8003BE25D /* UICollectionViewCell+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Extensions.swift"; sourceTree = "<group>"; };
 		1C6486F2282D783A0091A12D /* DefaultGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGradientView.swift; sourceTree = "<group>"; };
 		1C6487012832DB830091A12D /* DefaultAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAssembler.swift; sourceTree = "<group>"; };
 		1C6487032832DB8B0091A12D /* Assembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assembler.swift; sourceTree = "<group>"; };
@@ -997,6 +1001,7 @@
 				1C60C1E0285724D0003BE25D /* TokenPicker.storyboard */,
 				1C60C1D7285724D0003BE25D /* TokenPickerInteractor.swift */,
 				1C60C1DE285724D0003BE25D /* TokenPickerPresenter.swift */,
+				1C60C37F285A2DC6003BE25D /* TokenPickerPresenter+Receive.swift */,
 				1C60C1DD285724D0003BE25D /* TokenPickerView.swift */,
 				1C60C1DB285724D0003BE25D /* TokenPickerViewModel.swift */,
 				1C60C1D6285724D0003BE25D /* TokenPickerWireframe.swift */,
@@ -1508,6 +1513,7 @@
 				1C60C37A2859BDD9003BE25D /* UIView+Toast+Extensions.swift */,
 				1CB3A1D82840D6B70092D667 /* UIView+LayoutConstraints+Extensions.swift */,
 				1C5B60372843FACD00ECBD79 /* UIViewController+Extensions.swift */,
+				1C60C381285A5AE8003BE25D /* UICollectionViewCell+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1974,6 +1980,7 @@
 				1C60C2C1285724D0003BE25D /* KeyStoreView.swift in Sources */,
 				D11A991127B99D1800EDFDD0 /* AnyEncodable.swift in Sources */,
 				1C60C31B285724D1003BE25D /* AppsWireframeFactoryAssembler.swift in Sources */,
+				1C60C382285A5AE8003BE25D /* UICollectionViewCell+Extensions.swift in Sources */,
 				1A4C3885680B997E1684F34C /* Network.swift in Sources */,
 				1C60C2DD285724D0003BE25D /* DashboardView.swift in Sources */,
 				1C60C2FF285724D1003BE25D /* NFTsDashboardView+MainScrollView.swift in Sources */,
@@ -2121,6 +2128,7 @@
 				1C60C35C285724D1003BE25D /* DegenPresenter.swift in Sources */,
 				1A4C3B6D2DFADBE2EF71F3A5 /* SettingsService.swift in Sources */,
 				1A4C34ABFF1DD20804DED956 /* AppsService.swift in Sources */,
+				1C60C380285A2DC6003BE25D /* TokenPickerPresenter+Receive.swift in Sources */,
 				1C60C314285724D1003BE25D /* AccountWireframe.swift in Sources */,
 				1C60C330285724D1003BE25D /* NFTsCollectionViewModel.swift in Sources */,
 				1C60C2AE285724D0003BE25D /* TokenPickerInteractor.swift in Sources */,

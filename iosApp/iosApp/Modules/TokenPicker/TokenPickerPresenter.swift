@@ -28,7 +28,7 @@ final class DefaultTokenPickerPresenter {
     private var searchTerm: String = ""
     private var networks = [Web3Network]()
     private var selectedNetworks = [Web3Network]()
-    private var currencies = [Web3Token]()
+    private var tokens = [Web3Token]()
     private var itemsDisplayed = [TokenPickerViewModel.Item]()
 
     init(
@@ -47,7 +47,8 @@ final class DefaultTokenPickerPresenter {
 extension DefaultTokenPickerPresenter: TokenPickerPresenter {
 
     func present() {
-        
+
+        refreshTokens()
         refreshData()
     }
 
@@ -67,7 +68,7 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
             
         case let .selectItem(token):
             
-            guard let token = currencies.filter({ $0.symbol == token.symbol }).first else { return }
+            guard let token = tokens.findToken(matching: token.symbol) else { return }
             wireframe.navigate(to: .tokenDetails(token))
             
         case .dismiss:
@@ -78,6 +79,14 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
 }
 
 private extension DefaultTokenPickerPresenter {
+    
+    func refreshTokens() {
+        
+        // Get all available networks
+        networks = interactor.allNetworks
+        // Get all available tokens
+        tokens = interactor.allTokens
+    }
     
     func refreshData() {
         
@@ -105,20 +114,17 @@ private extension DefaultTokenPickerPresenter {
     
     func makeFilters() -> [TokenPickerViewModel.Filter] {
         
-        networks = interactor.allNetworks
-        
         var filters: [TokenPickerViewModel.Filter] = [
             .init(
                 type: .all(name: Localized("tokenPicker.networks.all")),
                 isSelected: selectedNetworks.isEmpty
             )
         ]
-        let networkFilters: [TokenPickerViewModel.Filter] = networks.compactMap { network in
+        let networkFilters: [TokenPickerViewModel.Filter] = networks.compactMap {
             
-            let isNetworkSelected = (selectedNetworks.first { $0.name == network.name }) != nil
-            return .init(
-                type: .item(icon: network.icon, name: network.name),
-                isSelected: isNetworkSelected
+            .init(
+                type: .item(icon: $0.icon, name: $0.name),
+                isSelected: selectedNetworks.hasNetwork(matching: $0.name)
             )
         }
         filters.append(contentsOf: networkFilters)
@@ -127,113 +133,42 @@ private extension DefaultTokenPickerPresenter {
     
     func makeEmptySearchItems() -> [TokenPickerViewModel.Item] {
         
-        let currencies = interactor.tokens(matching: "")
-        self.currencies = currencies
+        let tokens = tokens.filteredBy(searchTerm: searchTerm, networkIn: selectedNetworks)
         
-        let featuredCurrencies = currencies.filter { shouldAddToken($0) && $0.type == .featured }
-        let popularCurrencies = currencies.filter { shouldAddToken($0) && $0.type == .popular }
-        let otherCurrencies = currencies.filter { shouldAddToken($0) && $0.type != .popular }
+        var featuredTokens = [Web3Token]()
+        var popularTokens = [Web3Token]()
+        var otherTokens = [Web3Token]()
+        
+        tokens.forEach {
+            
+            switch $0.type {
+            case .featured:
+                featuredTokens.append($0)
+            case .popular:
+                popularTokens.append($0)
+            case .normal:
+                otherTokens.append($0)
+            }
+        }
         
         var items = [TokenPickerViewModel.Item]()
         
-        if !featuredCurrencies.isEmpty {
-            
-            items.append(
-                .group(
-                    .init(
-                        name: Localized("tokenPicker.featured.title")
-                    )
-                )
-            )
-            let featuredItems: [TokenPickerViewModel.Item] = featuredCurrencies.compactMap {
-                .token(
-                    .init(
-                        image: $0.image?.pngImage ?? .init(named: "default_currency")!,
-                        symbol: $0.symbol,
-                        name: $0.name,
-                        network: $0.network.name
-                    )
-                )
-            }
-            items.append(contentsOf: featuredItems)
-        }
-        
-        if !popularCurrencies.isEmpty {
-            
-            items.append(
-                .group(
-                    .init(
-                        name: Localized("tokenPicker.popular.title")
-                    )
-                )
-            )
-            let popularItems: [TokenPickerViewModel.Item] = popularCurrencies.compactMap {
-                .token(
-                    .init(
-                        image: $0.image?.pngImage ?? .init(named: "default_currency")!,
-                        symbol: $0.symbol,
-                        name: $0.name,
-                        network: $0.network.name
-                    )
-                )
-            }
-            items.append(contentsOf: popularItems)
-        }
-        
-        if !otherCurrencies.isEmpty {
-            
-            items.append(
-                .group(
-                    .init(
-                        name: Localized("tokenPicker.all.title")
-                    )
-                )
-            )
-            let allItems: [TokenPickerViewModel.Item] = otherCurrencies.compactMap {
-                .token(
-                    .init(
-                        image: $0.image?.pngImage ?? .init(named: "default_currency")!,
-                        symbol: $0.symbol,
-                        name: $0.name,
-                        network: $0.network.name
-                    )
-                )
-            }
-            items.append(contentsOf: allItems)
-        }
-        
-        if items.isEmpty {
-            
-            items.append(.group(.init(name: Localized("tokenPicker.noResults"))))
-        }
-        
-        return items
+        let featuredGroupName = Localized("tokenPicker.featured.title")
+        items.append(contentsOf: makeItems(with: featuredGroupName, and: featuredTokens))
+
+        let popularGroupName = Localized("tokenPicker.popular.title")
+        items.append(contentsOf: makeItems(with: popularGroupName, and: popularTokens))
+
+        let allGroupName = Localized("tokenPicker.all.title")
+        items.append(contentsOf: makeItems(with: allGroupName, and: otherTokens))
+
+        return items.addNoResultsIfNeeded
     }
     
     func makeSearchItems(for searchTerm: String) -> [TokenPickerViewModel.Item] {
         
-        let currencies = interactor.tokens(matching: searchTerm).filter {
-            shouldAddToken($0)
-        }
-        self.currencies = currencies
-        
-        var items: [TokenPickerViewModel.Item] = currencies.compactMap {
-            .token(
-                .init(
-                    image: $0.image?.pngImage ?? .init(named: "default_currency")!,
-                    symbol: $0.symbol,
-                    name: $0.name,
-                    network: $0.network.name
-                )
-            )
-        }
-        
-        if items.isEmpty {
-            
-            items.append(.group(.init(name: Localized("tokenPicker.noResults"))))
-        }
-        
-        return items
+        let tokens = tokens.filteredBy(searchTerm: searchTerm, networkIn: selectedNetworks)
+        return tokens.toTokenPikerViewModelItemArray.addNoResultsIfNeeded
     }
 }
 
@@ -250,11 +185,9 @@ private extension DefaultTokenPickerPresenter {
             
         case let .item(_, name):
             
-            guard let networkSelected = networks.first(where: { $0.name == name }) else { return }
+            guard let networkSelected = networks.findNetwork(matching: name) else { return }
             
-            let isNetworkSelected = selectedNetworks.first { $0.name == name } != nil
-            
-            if isNetworkSelected {
+            if selectedNetworks.hasNetwork(matching: name) {
                 
                 selectedNetworks.removeAll { $0.name == name }
             } else {
@@ -268,8 +201,84 @@ private extension DefaultTokenPickerPresenter {
     
     func shouldAddToken(_ token: Web3Token) -> Bool {
         
-        guard !selectedNetworks.isEmpty else { return true }
+        selectedNetworks.hasNetwork(matching: token.network.name)
+    }
+    
+    func makeItems(with groupName: String, and tokens: [Web3Token]) -> [TokenPickerViewModel.Item] {
         
-        return selectedNetworks.first { $0.name == token.network.name } != nil
+        guard !tokens.isEmpty else { return [] }
+        
+        var items = [TokenPickerViewModel.Item]()
+        items.append(
+            .group(
+                .init(name: groupName)
+            )
+        )
+        items.append(contentsOf: tokens.toTokenPikerViewModelItemArray)
+        return items
+    }
+}
+
+private extension Array where Element == Web3Network {
+    
+    func hasNetwork(matching name: String) -> Bool {
+        
+        findNetwork(matching: name) != nil
+    }
+    
+    func findNetwork(matching name: String) -> Web3Network? {
+        
+        filter { $0.name == name }.first
+    }
+}
+
+private extension Array where Element == Web3Token {
+    
+    var toTokenPikerViewModelItemArray: [TokenPickerViewModel.Item] {
+        compactMap {
+            .token(
+                .init(
+                    image: $0.image?.pngImage ?? .init(named: "default_currency")!,
+                    symbol: $0.symbol,
+                    name: $0.name,
+                    network: $0.network.name
+                )
+            )
+        }
+    }
+    
+    func filteredBy(searchTerm: String, networkIn selectedNetworks: [Web3Network]) -> [ Web3Token ] {
+        
+        filter {
+            
+            let searchTermMatching =
+                $0.name.capitalized.hasPrefix(searchTerm.capitalized) ||
+                $0.symbol.capitalized.hasPrefix(searchTerm.capitalized)
+            
+            let condition1 = searchTerm.isEmpty ? true : searchTermMatching
+            
+            let condition2 = selectedNetworks.isEmpty ? true : selectedNetworks.hasNetwork(
+                matching: $0.network.name
+            )
+            
+            return condition1 && condition2
+        }
+    }
+    
+    func findToken(matching symbol: String) -> Web3Token? {
+        
+        filter { $0.symbol == symbol }.first
+    }
+}
+
+private extension Array where Element == TokenPickerViewModel.Item {
+    
+    var addNoResultsIfNeeded: [TokenPickerViewModel.Item] {
+        
+        guard isEmpty else { return self }
+        
+        return [
+            .group(.init(name: Localized("tokenPicker.noResults")))
+        ]
     }
 }

@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="unt-fL-27U">
-                                <rect key="frame" x="0.0" y="44" width="414" height="112"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="116"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JBP-rK-Jt4">
                                         <rect key="frame" x="16" y="8" width="382" height="40"/>
@@ -34,7 +34,7 @@
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BnW-Q9-Lqj">
                                                         <rect key="frame" x="28.5" y="0.0" width="289.5" height="40"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="search" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                         <connections>
                                                             <outlet property="delegate" destination="Y2U-n2-HqG" id="YCm-6L-abH"/>
                                                         </connections>
@@ -64,7 +64,7 @@
                                         </constraints>
                                     </view>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="F4P-go-cM1">
-                                        <rect key="frame" x="0.0" y="56" width="414" height="48"/>
+                                        <rect key="frame" x="0.0" y="60" width="414" height="48"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="JEq-4V-9Yz"/>
@@ -143,7 +143,7 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="F4P-go-cM1" secondAttribute="trailing" id="0CK-QP-oQT"/>
                                     <constraint firstItem="JBP-rK-Jt4" firstAttribute="top" secondItem="unt-fL-27U" secondAttribute="top" constant="8" id="5SI-rd-hb4"/>
-                                    <constraint firstAttribute="height" constant="112" id="BEZ-Q3-S61"/>
+                                    <constraint firstAttribute="height" constant="116" id="BEZ-Q3-S61"/>
                                     <constraint firstItem="JBP-rK-Jt4" firstAttribute="leading" secondItem="unt-fL-27U" secondAttribute="leading" constant="16" id="M0b-yI-ea7"/>
                                     <constraint firstItem="F4P-go-cM1" firstAttribute="leading" secondItem="unt-fL-27U" secondAttribute="leading" id="eT8-Lx-gZS"/>
                                     <constraint firstAttribute="trailing" secondItem="JBP-rK-Jt4" secondAttribute="trailing" constant="16" id="oYw-i2-XLg"/>
@@ -151,7 +151,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="md3-vt-1dq">
-                                <rect key="frame" x="0.0" y="156" width="414" height="706"/>
+                                <rect key="frame" x="0.0" y="160" width="414" height="702"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Rdh-1Y-e7S">
                                     <size key="itemSize" width="414" height="128"/>

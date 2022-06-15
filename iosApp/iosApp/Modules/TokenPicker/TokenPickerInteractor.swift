@@ -7,7 +7,7 @@ import Foundation
 protocol TokenPickerInteractor: AnyObject {
 
     var allNetworks: [ Web3Network ] { get }
-    func tokens(matching: String) -> [ Web3Token ]
+    var allTokens: [ Web3Token ] { get }
 }
 
 final class DefaultTokenPickerInteractor {
@@ -29,14 +29,8 @@ extension DefaultTokenPickerInteractor: TokenPickerInteractor {
         web3Service.allNetworks
     }
 
-    func tokens(matching searchTerm: String) -> [ Web3Token ] {
+    var allTokens: [ Web3Token ] {
         
-        let currencies = web3Service.allTokens
-        
-        return currencies.filter {
-            
-            guard !searchTerm.isEmpty else { return true }
-            return $0.name.capitalized.hasPrefix(searchTerm.capitalized) || $0.symbol.capitalized.hasPrefix(searchTerm.capitalized)
-        }
+        web3Service.allTokens
     }
 }

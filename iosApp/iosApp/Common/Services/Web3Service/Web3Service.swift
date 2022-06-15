@@ -8,6 +8,7 @@ protocol Web3Service: AnyObject {
 
     var allNetworks: [Web3Network] { get }
     var allTokens: [Web3Token] { get }
+    var myTokens: [Web3Token] { get }
 }
 
 //All | Ethereum | Solana

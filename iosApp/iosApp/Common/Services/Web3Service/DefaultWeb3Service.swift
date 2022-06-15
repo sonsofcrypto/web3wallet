@@ -36,6 +36,11 @@ extension DefaultWeb3Service: Web3Service {
             return $0.network.name < $1.network.name
         }
     }
+    
+    var myTokens: [Web3Token] {
+        []
+    }
+
 }
 
 

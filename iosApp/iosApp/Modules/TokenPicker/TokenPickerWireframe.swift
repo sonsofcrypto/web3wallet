@@ -12,6 +12,7 @@ struct TokenPickerWireframeContext {
     enum Source: String {
         
         case receive
+        case send
     }
 }
 
