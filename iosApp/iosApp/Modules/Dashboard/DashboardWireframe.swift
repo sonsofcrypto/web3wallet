@@ -5,7 +5,7 @@
 import UIKit
 
 enum DashboardWireframeDestination {
-    case wallet(wallet: KeyStoreItem, token: Token)
+    case wallet(wallet: KeyStoreItem, token: Web3Token)
     case keyStoreNetworkSettings
     case presentUnderConstructionAlert
     case mnemonicConfirmation
@@ -28,6 +28,8 @@ final class DefaultDashboardWireframe {
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
     private let onboardingService: OnboardingService
+    private let web3Service: Web3Service
+    private let priceHistoryService: PriceHistoryService
 
     init(
         parent: UIViewController,
@@ -35,7 +37,9 @@ final class DefaultDashboardWireframe {
         accountWireframeFactory: AccountWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
-        onboardingService: OnboardingService
+        onboardingService: OnboardingService,
+        web3Service: Web3Service,
+        priceHistoryService: PriceHistoryService
     ) {
         self.parent = parent
         self.keyStoreService = keyStoreService
@@ -43,6 +47,8 @@ final class DefaultDashboardWireframe {
         self.alertWireframeFactory = alertWireframeFactory
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
         self.onboardingService = onboardingService
+        self.web3Service = web3Service
+        self.priceHistoryService = priceHistoryService
     }
 }
 
@@ -104,7 +110,10 @@ private extension DefaultDashboardWireframe {
 
     func wireUp() -> UIViewController {
         
-        let interactor = DefaultDashboardInteractor(keyStoreService)
+        let interactor = DefaultDashboardInteractor(
+            web3Service: web3Service,
+            priceHistoryService: priceHistoryService
+        )
         let vc: DashboardViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultDashboardPresenter(
             view: vc,

@@ -16,19 +16,25 @@ final class DefaultDashboardWireframeFactory {
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
     private let onboardingService: OnboardingService
+    private let web3Service: Web3Service
+    private let priceHistoryService: PriceHistoryService
 
     init(
         keyStoreService: KeyStoreService,
         accountWireframeFactory: AccountWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
-        onboardingService: OnboardingService
+        onboardingService: OnboardingService,
+        web3Service: Web3Service,
+        priceHistoryService: PriceHistoryService
     ) {
         self.keyStoreService = keyStoreService
         self.accountWireframeFactory = accountWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
         self.onboardingService = onboardingService
+        self.web3Service = web3Service
+        self.priceHistoryService = priceHistoryService
     }
 }
 
@@ -42,7 +48,9 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             accountWireframeFactory: accountWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
             mnemonicConfirmationWireframeFactory: mnemonicConfirmationWireframeFactory,
-            onboardingService: onboardingService
+            onboardingService: onboardingService,
+            web3Service: web3Service,
+            priceHistoryService: priceHistoryService
         )
     }
 }

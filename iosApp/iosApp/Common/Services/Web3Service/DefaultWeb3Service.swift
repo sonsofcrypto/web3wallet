@@ -68,7 +68,7 @@ extension DefaultWeb3Service: Web3Service {
     func tokenIcon(for token: Web3Token) -> Data {
         
         "token_\(token.symbol.lowercased())_icon".loadIconData
-    }
+    }    
 }
 
 private extension DefaultWeb3Service {
@@ -102,7 +102,8 @@ private extension DefaultWeb3Service {
             name: "Bitcoin",
             address: "691tAaz5x1HUXrCNLbtMDqcw6o5Sdn4xqX",
             type: .normal,
-            network: bitcoinNetwork
+            network: bitcoinNetwork,
+            balance: 0
         )
     }
 }
@@ -124,7 +125,8 @@ private extension DefaultWeb3Service {
             name: "Ethereum",
             address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
             type: .popular,
-            network: ethereumNetwork
+            network: ethereumNetwork,
+            balance: 0
         )
     }
     
@@ -135,7 +137,8 @@ private extension DefaultWeb3Service {
             name: "USD Coin",
             address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
             type: .popular,
-            network: ethereumNetwork
+            network: ethereumNetwork,
+            balance: 0
         )
     }
     
@@ -146,7 +149,8 @@ private extension DefaultWeb3Service {
             name: "Cult DAO",
             address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
             type: .featured,
-            network: ethereumNetwork
+            network: ethereumNetwork,
+            balance: 0
         )
     }
     
@@ -160,21 +164,24 @@ private extension DefaultWeb3Service {
                 name: "Tether",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
                 type: .normal,
-                network: ethereumNetwork
+                network: ethereumNetwork,
+                balance: 0
             ),
             .init(
                 symbol: "DOGE",
                 name: "Dogecoin",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
                 type: .normal,
-                network: ethereumNetwork
+                network: ethereumNetwork,
+                balance: 0
             ),
             .init(
                 symbol: "SHIB",
                 name: "Shiba Inu",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
                 type: .normal,
-                network: ethereumNetwork
+                network: ethereumNetwork,
+                balance: 0
             ),
             ethereumEthToken,
             .init(
@@ -182,56 +189,64 @@ private extension DefaultWeb3Service {
                 name: "Solana",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
                 type: .normal,
-                network: ethereumNetwork
+                network: ethereumNetwork,
+                balance: 0
             ),
             .init(
                 symbol: "ADA",
                 name: "Cardano",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
                 type: .normal,
-                network: ethereumNetwork
+                network: ethereumNetwork,
+                balance: 0
             ),
             .init(
                 symbol: "XRP",
                 name: "XRP",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
                 type: .normal,
-                network: ethereumNetwork
+                network: ethereumNetwork,
+                balance: 0
             ),
             .init(
                 symbol: "DOT",
                 name: "Polkadot",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
                 type: .normal,
-                network: ethereumNetwork
+                network: ethereumNetwork,
+                balance: 0
             ),
             .init(
                 symbol: "BNB",
                 name: "BNB",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
                 type: .normal,
-                network: ethereumNetwork
+                network: ethereumNetwork,
+                balance: 0
             ),
             .init(
                 symbol: "MNGO",
                 name: "Mango",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
                 type: .normal,
-                network: ethereumNetwork
+                network: ethereumNetwork,
+                balance: 0
             ),
             .init(
                 symbol: "CRV",
                 name: "Curve DAO",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
                 type: .normal,
-                network: ethereumNetwork
+                network: ethereumNetwork,
+                balance: 0
             ),
             .init(
                 symbol: "RAY",
                 name: "Raydium",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
                 type: .normal,
-                network: ethereumNetwork
+                network: ethereumNetwork,
+                balance: 0
             )
         ]
     }
@@ -254,7 +269,8 @@ private extension DefaultWeb3Service {
             name: "Solana",
             address: "HN7cABqLq46Es1jh92dQQisAq662SmxEJKLsHHe4YWrH",
             type: .normal,
-            network: solanaNetwork
+            network: solanaNetwork,
+            balance: 0
         )
     }
     
@@ -267,21 +283,24 @@ private extension DefaultWeb3Service {
                 name: "Curve DAO",
                 address: "HN7cABqLq46Es1jh92dQQisAq662SmxEJKLsHHe4YWrH",
                 type: .normal,
-                network: solanaNetwork
+                network: solanaNetwork,
+                balance: 0
             ),
             .init(
                 symbol: "MNGO",
                 name: "Mango",
                 address: "HN7cABqLq46Es1jh92dQQisAq662SmxEJKLsHHe4YWrH",
                 type: .normal,
-                network: solanaNetwork
+                network: solanaNetwork,
+                balance: 0
             ),
             .init(
                 symbol: "RAY",
                 name: "Raydium",
                 address: "HN7cABqLq46Es1jh92dQQisAq662SmxEJKLsHHe4YWrH",
                 type: .normal,
-                network: solanaNetwork
+                network: solanaNetwork,
+                balance: 0
             )
         ]
     }

@@ -7,27 +7,33 @@ import Foundation
 protocol AccountInteractor: AnyObject {
 
     var wallet: KeyStoreItem { get }
-    var token: Token { get }
+    var token: Web3Token { get }
+    func priceData(for token: Web3Token) -> [ Web3Candle ]
 }
 
 final class DefaultAccountInteractor {
 
-    private(set) var wallet: KeyStoreItem
-    private(set) var token: Token
+    private let priceHistoryService: PriceHistoryService
+    private (set) var wallet: KeyStoreItem
+    private (set) var token: Web3Token
 
-    private var accountService: AccountService
 
     init(
-        accountService: AccountService,
+        priceHistoryService: PriceHistoryService,
         wallet: KeyStoreItem,
-        token: Token
+        token: Web3Token
     ) {
-        self.accountService = accountService
+        self.priceHistoryService = priceHistoryService
         self.wallet = wallet
         self.token = token
     }
 }
 
 extension DefaultAccountInteractor: AccountInteractor {
+    
+    func priceData(for token: Web3Token) -> [ Web3Candle ] {
+        
+        priceHistoryService.priceData(for: token, period: .lastXDays(34))
+    }
 
 }

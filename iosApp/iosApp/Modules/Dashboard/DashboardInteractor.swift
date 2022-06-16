@@ -6,88 +6,40 @@ import Foundation
 
 protocol DashboardInteractor: AnyObject {
 
-    func tokens(for network: CryptoNetwork) -> [Token]
+    var myTokens: [Web3Token] { get }
+    func tokenIcon(for token: Web3Token) -> Data
+    func priceData(for token: Web3Token) -> [ Web3Candle ]
 }
-
-// MARK: - DefaultDashboardInteractor
 
 final class DefaultDashboardInteractor {
 
-    private var walletsService: KeyStoreService
+    private let web3Service: Web3Service
+    private let priceHistoryService: PriceHistoryService
 
-    init(_ walletsService: KeyStoreService) {
-        self.walletsService = walletsService
+    init(
+        web3Service: Web3Service,
+        priceHistoryService: PriceHistoryService
+    ) {
+        
+        self.web3Service = web3Service
+        self.priceHistoryService = priceHistoryService
     }
 }
 
-// MARK: - DefaultDashboardInteractor
-
 extension DefaultDashboardInteractor: DashboardInteractor {
 
-    func tokens(for network: CryptoNetwork) -> [Token] {
-        switch network {
-        case .ethereum:
-            return [
-                .init(
-                    name: "Ethereum",
-                    ticker: "ETH",
-                    address: nil,
-                    network: .ethereum,
-                    iconName: "token_eth_icon"
-                ),
-                .init(
-                    name: "CULT",
-                    ticker: "CULT",
-                    address: nil,
-                    network: .ethereum,
-                    iconName: "token_cult_icon"
-                )
-            ]
-        case .solana:
-            return [
-                .init(
-                    name: "Solana",
-                    ticker: "SOL",
-                    address: nil,
-                    network: .solana,
-                    iconName: "solana_sol_icon"
-                ),
-                .init(
-                    name: "Raydium",
-                    ticker: "RAY",
-                    address: nil,
-                    network: .solana,
-                    iconName: "token_ray_icon"
-                ),
-                .init(
-                    name: "Mango",
-                    ticker: "MNGO",
-                    address: nil,
-                    network: .solana,
-                    iconName: "token_mngo_icon"
-                ),
-                .init(
-                    name: "Solana",
-                    ticker: "SOL",
-                    address: nil,
-                    network: .solana,
-                    iconName: "solana_sol_icon"
-                ),
-                .init(
-                    name: "Raydium",
-                    ticker: "RAY",
-                    address: nil,
-                    network: .solana,
-                    iconName: "token_ray_icon"
-                ),
-                .init(
-                    name: "Mango",
-                    ticker: "MNGO",
-                    address: nil,
-                    network: .solana,
-                    iconName: "token_mngo_icon"
-                )
-            ]
-        }
+    var myTokens: [Web3Token] {
+        
+        web3Service.myTokens
+    }
+    
+    func tokenIcon(for token: Web3Token) -> Data {
+        
+        web3Service.tokenIcon(for: token)
+    }
+    
+    func priceData(for token: Web3Token) -> [ Web3Candle ] {
+        
+        priceHistoryService.priceData(for: token, period: .lastXDays(43))
     }
 }

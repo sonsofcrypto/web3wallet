@@ -9,18 +9,18 @@ protocol AccountWireframeFactory {
     func makeWireframe(
         _ parent: UIViewController,
         wallet: KeyStoreItem,
-        token: Token
+        token: Web3Token
     ) -> AccountWireframe
 }
 
 final class DefaultAccountWireframeFactory {
 
-    private let accountService: AccountService
+    private let priceHistoryService: PriceHistoryService
 
     init(
-        accountService: AccountService
+        priceHistoryService: PriceHistoryService
     ) {
-        self.accountService = accountService
+        self.priceHistoryService = priceHistoryService
     }
 }
 
@@ -29,13 +29,13 @@ extension DefaultAccountWireframeFactory: AccountWireframeFactory {
     func makeWireframe(
         _ parent: UIViewController,
         wallet: KeyStoreItem,
-        token: Token
+        token: Web3Token
     ) -> AccountWireframe {
         
         DefaultAccountWireframe(
             parent: parent,
             interactor: DefaultAccountInteractor(
-                accountService: accountService,
+                priceHistoryService: priceHistoryService,
                 wallet: wallet,
                 token: token
             )

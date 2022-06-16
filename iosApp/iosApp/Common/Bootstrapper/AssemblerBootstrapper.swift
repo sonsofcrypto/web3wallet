@@ -37,6 +37,7 @@ private extension AssemblerBootstrapper {
             CultServiceAssembler(),
             Web3ServiceAssembler(),
             Web3ServiceLocalStorageAssembler(),
+            PriceHistoryServiceAssembler(),
             // Modules
             AccountWireframeFactoryAssembler(),
             AlertWireframeFactoryAssembler(),

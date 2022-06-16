@@ -264,6 +264,8 @@
 		1C60C382285A5AE8003BE25D /* UICollectionViewCell+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C381285A5AE8003BE25D /* UICollectionViewCell+Extensions.swift */; };
 		1C60C384285A649B003BE25D /* Web3ServiceLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C383285A649B003BE25D /* Web3ServiceLocalStorage.swift */; };
 		1C60C386285AFB20003BE25D /* Web3ServiceLocalStorageAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C385285AFB20003BE25D /* Web3ServiceLocalStorageAssembler.swift */; };
+		1C60C38C285B9F71003BE25D /* PriceHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C38B285B9F71003BE25D /* PriceHistoryService.swift */; };
+		1C60C38E285B9F7F003BE25D /* PriceHistoryServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C38D285B9F7F003BE25D /* PriceHistoryServiceAssembler.swift */; };
 		1C6486F3282D783A0091A12D /* DefaultGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6486F2282D783A0091A12D /* DefaultGradientView.swift */; };
 		1C6487022832DB830091A12D /* DefaultAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487012832DB830091A12D /* DefaultAssembler.swift */; };
 		1C6487042832DB8B0091A12D /* Assembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487032832DB8B0091A12D /* Assembler.swift */; };
@@ -655,6 +657,8 @@
 		1C60C381285A5AE8003BE25D /* UICollectionViewCell+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C383285A649B003BE25D /* Web3ServiceLocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3ServiceLocalStorage.swift; sourceTree = "<group>"; };
 		1C60C385285AFB20003BE25D /* Web3ServiceLocalStorageAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3ServiceLocalStorageAssembler.swift; sourceTree = "<group>"; };
+		1C60C38B285B9F71003BE25D /* PriceHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceHistoryService.swift; sourceTree = "<group>"; };
+		1C60C38D285B9F7F003BE25D /* PriceHistoryServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceHistoryServiceAssembler.swift; sourceTree = "<group>"; };
 		1C6486F2282D783A0091A12D /* DefaultGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultGradientView.swift; sourceTree = "<group>"; };
 		1C6487012832DB830091A12D /* DefaultAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAssembler.swift; sourceTree = "<group>"; };
 		1C6487032832DB8B0091A12D /* Assembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assembler.swift; sourceTree = "<group>"; };
@@ -1535,6 +1539,8 @@
 			children = (
 				1C60C3762858634A003BE25D /* DefaultWeb3Service.swift */,
 				1CD3FE8828559EF2008312DE /* Web3Service.swift */,
+				1C60C38B285B9F71003BE25D /* PriceHistoryService.swift */,
+				1C60C38D285B9F7F003BE25D /* PriceHistoryServiceAssembler.swift */,
 				1C60C1AD28572405003BE25D /* Web3ServiceAssembler.swift */,
 				1C60C383285A649B003BE25D /* Web3ServiceLocalStorage.swift */,
 				1C60C385285AFB20003BE25D /* Web3ServiceLocalStorageAssembler.swift */,
@@ -2110,7 +2116,9 @@
 				1A4C37AEF66358EA9CA0CA59 /* AccountService.swift in Sources */,
 				1C60C349285724D1003BE25D /* CultProposalViewModel.swift in Sources */,
 				1C60C337285724D1003BE25D /* SwapWireframeFactory.swift in Sources */,
+				1C60C38C285B9F71003BE25D /* PriceHistoryService.swift in Sources */,
 				1C60C30F285724D1003BE25D /* AccountChartCell.swift in Sources */,
+				1C60C38E285B9F7F003BE25D /* PriceHistoryServiceAssembler.swift in Sources */,
 				1C60C34B285724D1003BE25D /* CultProposalView.swift in Sources */,
 				1CB3A1E42840D6B70092D667 /* Int+Extensions.swift in Sources */,
 				1C60C348285724D1003BE25D /* CultProposalPresenter.swift in Sources */,

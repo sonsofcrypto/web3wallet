@@ -8,18 +8,14 @@ protocol Web3Service: AnyObject {
 
     var allNetworks: [Web3Network] { get }
     var allTokens: [Web3Token] { get }
+    
     var myTokens: [Web3Token] { get }
+    
     func networkIcon(for network: Web3Network) -> Data
     func tokenIcon(for token: Web3Token) -> Data
 }
 
-struct Web3Balance {
-    
-    let token: Web3Token
-    let balance: Float
-}
-
-struct Web3Network: Codable {
+struct Web3Network: Codable, Equatable, Hashable {
     
     let name: String
     let hasDns: Bool
@@ -32,6 +28,7 @@ struct Web3Token: Codable {
     let address: String
     let type: `Type`
     let network: Web3Network
+    let balance: Double
 }
 
 extension Web3Token {

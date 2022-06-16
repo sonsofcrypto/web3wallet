@@ -50,6 +50,7 @@ extension DefaultAccountWireframe: AccountWireframe {
 extension DefaultAccountWireframe {
 
     private func wireUp() -> UIViewController {
+        
         let vc: AccountViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultAccountPresenter(
             view: vc,

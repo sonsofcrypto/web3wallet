@@ -46,7 +46,7 @@ extension DashboardWalletCell {
 
     func update(with viewModel: DashboardViewModel.Wallet) {
         
-        imageView.image = UIImage(named: viewModel.imageName)
+        imageView.image = viewModel.imageData.pngImage
         currencyLabel.text = viewModel.name
         fiatBalanceLabel.text = viewModel.fiatBalance
         pctChangeLabel.text = viewModel.pctChange
