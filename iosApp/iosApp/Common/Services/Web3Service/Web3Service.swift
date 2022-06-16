@@ -9,19 +9,24 @@ protocol Web3Service: AnyObject {
     var allNetworks: [Web3Network] { get }
     var allTokens: [Web3Token] { get }
     var myTokens: [Web3Token] { get }
+    func networkIcon(for network: Web3Network) -> Data
+    func tokenIcon(for token: Web3Token) -> Data
+}
+
+struct Web3Balance {
+    
+    let token: Web3Token
+    let balance: Float
 }
 
 struct Web3Network: Codable {
     
-    let icon: Data
     let name: String
     let hasDns: Bool
 }
 
 struct Web3Token: Codable {
     
-    /** Image in png format */
-    let image: Data?
     let symbol: String
     let name: String
     let address: String

@@ -45,7 +45,30 @@ extension DefaultWeb3Service: Web3Service {
         
         return defaultTokens.sortByNetworkAndName
     }
+    
+    func networkIcon(for network: Web3Network) -> Data {
+        
+        switch network.name {
+            
+        case "Bitcoin":
+            return "token_btc_icon".loadIconData
+            
+        case "Ethereum":
+            return "token_eth_icon".loadIconData
+            
+        case "Solana":
+            return "token_sol_icon".loadIconData
+            
+        default:
+            
+            return "default_token".loadIconData
+        }
+    }
 
+    func tokenIcon(for token: Web3Token) -> Data {
+        
+        "token_\(token.symbol.lowercased())_icon".loadIconData
+    }
 }
 
 private extension DefaultWeb3Service {
@@ -67,7 +90,6 @@ private extension DefaultWeb3Service {
    var bitcoinNetwork: Web3Network {
         
         .init(
-            icon: "token_btc_icon".loadIconData,
             name: "Bitcoin",
             hasDns: false
         )
@@ -76,7 +98,6 @@ private extension DefaultWeb3Service {
     var bitcoinToken: Web3Token {
         
         .init(
-            image: "token_btc_icon".loadIconData,
             symbol: "BTC",
             name: "Bitcoin",
             address: "691tAaz5x1HUXrCNLbtMDqcw6o5Sdn4xqX",
@@ -91,7 +112,6 @@ private extension DefaultWeb3Service {
     var ethereumNetwork: Web3Network {
         
         .init(
-            icon: "token_eth_icon".loadIconData,
             name: "Ethereum",
             hasDns: true
         )
@@ -100,7 +120,6 @@ private extension DefaultWeb3Service {
     var ethereumEthToken: Web3Token {
         
         .init(
-            image: "token_eth_icon".loadIconData,
             symbol: "ETH",
             name: "Ethereum",
             address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
@@ -112,7 +131,6 @@ private extension DefaultWeb3Service {
     var ethereumUsdcToken: Web3Token {
         
         .init(
-            image: "token_usdc_icon".loadIconData,
             symbol: "USDC",
             name: "USD Coin",
             address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
@@ -124,7 +142,6 @@ private extension DefaultWeb3Service {
     var ethereumCultToken: Web3Token {
         
         .init(
-            image: "token_cult_icon".loadIconData,
             symbol: "CULT",
             name: "Cult DAO",
             address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
@@ -139,15 +156,13 @@ private extension DefaultWeb3Service {
             ethereumCultToken,
             ethereumUsdcToken,
             .init(
-                image: "token_usdt_icon".loadIconData,
-                symbol: "Tether",
-                name: "USDT",
+                symbol: "USDT",
+                name: "Tether",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
                 type: .normal,
                 network: ethereumNetwork
             ),
             .init(
-                image: "token_doge_icon".loadIconData,
                 symbol: "DOGE",
                 name: "Dogecoin",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
@@ -155,7 +170,6 @@ private extension DefaultWeb3Service {
                 network: ethereumNetwork
             ),
             .init(
-                image: "token_shib_icon".loadIconData,
                 symbol: "SHIB",
                 name: "Shiba Inu",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
@@ -164,7 +178,6 @@ private extension DefaultWeb3Service {
             ),
             ethereumEthToken,
             .init(
-                image: "token_sol_icon".loadIconData,
                 symbol: "SOL",
                 name: "Solana",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
@@ -172,7 +185,6 @@ private extension DefaultWeb3Service {
                 network: ethereumNetwork
             ),
             .init(
-                image: "token_ada_icon".loadIconData,
                 symbol: "ADA",
                 name: "Cardano",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
@@ -180,7 +192,6 @@ private extension DefaultWeb3Service {
                 network: ethereumNetwork
             ),
             .init(
-                image: "token_xrp_icon".loadIconData,
                 symbol: "XRP",
                 name: "XRP",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
@@ -188,7 +199,6 @@ private extension DefaultWeb3Service {
                 network: ethereumNetwork
             ),
             .init(
-                image: "token_dot_icon".loadIconData,
                 symbol: "DOT",
                 name: "Polkadot",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
@@ -196,7 +206,6 @@ private extension DefaultWeb3Service {
                 network: ethereumNetwork
             ),
             .init(
-                image: "token_bnb_icon".loadIconData,
                 symbol: "BNB",
                 name: "BNB",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
@@ -204,7 +213,6 @@ private extension DefaultWeb3Service {
                 network: ethereumNetwork
             ),
             .init(
-                image: "token_mngo_icon".loadIconData,
                 symbol: "MNGO",
                 name: "Mango",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
@@ -212,7 +220,6 @@ private extension DefaultWeb3Service {
                 network: ethereumNetwork
             ),
             .init(
-                image: "token_crv_icon".loadIconData,
                 symbol: "CRV",
                 name: "Curve DAO",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
@@ -220,7 +227,6 @@ private extension DefaultWeb3Service {
                 network: ethereumNetwork
             ),
             .init(
-                image: "token_ray_icon".loadIconData,
                 symbol: "RAY",
                 name: "Raydium",
                 address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
@@ -236,7 +242,6 @@ private extension DefaultWeb3Service {
    var solanaNetwork: Web3Network {
         
         .init(
-            icon: "token_sol_icon".loadIconData,
             name: "Solana",
             hasDns: false
         )
@@ -245,7 +250,6 @@ private extension DefaultWeb3Service {
     var solanaSolToken: Web3Token {
         
         .init(
-            image: "token_sol_icon".loadIconData,
             symbol: "SOL",
             name: "Solana",
             address: "HN7cABqLq46Es1jh92dQQisAq662SmxEJKLsHHe4YWrH",
@@ -259,7 +263,6 @@ private extension DefaultWeb3Service {
         [
             solanaSolToken,
             .init(
-                image: "token_crv_icon".loadIconData,
                 symbol: "CRV",
                 name: "Curve DAO",
                 address: "HN7cABqLq46Es1jh92dQQisAq662SmxEJKLsHHe4YWrH",
@@ -267,7 +270,6 @@ private extension DefaultWeb3Service {
                 network: solanaNetwork
             ),
             .init(
-                image: "token_mngo_icon".loadIconData,
                 symbol: "MNGO",
                 name: "Mango",
                 address: "HN7cABqLq46Es1jh92dQQisAq662SmxEJKLsHHe4YWrH",
@@ -275,7 +277,6 @@ private extension DefaultWeb3Service {
                 network: solanaNetwork
             ),
             .init(
-                image: "token_ray_icon".loadIconData,
                 symbol: "RAY",
                 name: "Raydium",
                 address: "HN7cABqLq46Es1jh92dQQisAq662SmxEJKLsHHe4YWrH",

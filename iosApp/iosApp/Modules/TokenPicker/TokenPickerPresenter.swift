@@ -123,7 +123,10 @@ private extension DefaultTokenPickerPresenter {
         let networkFilters: [TokenPickerViewModel.Filter] = networks.compactMap {
             
             .init(
-                type: .item(icon: $0.icon, name: $0.name),
+                type: .item(
+                    icon: interactor.networkIcon(for: $0),
+                    name: $0.name
+                ),
                 isSelected: selectedNetworks.hasNetwork(matching: $0.name)
             )
         }
@@ -168,7 +171,7 @@ private extension DefaultTokenPickerPresenter {
     func makeSearchItems(for searchTerm: String) -> [TokenPickerViewModel.Item] {
         
         let tokens = tokens.filteredBy(searchTerm: searchTerm, networkIn: selectedNetworks)
-        return tokens.toTokenPikerViewModelItemArray.addNoResultsIfNeeded
+        return tokens.items(using: interactor).addNoResultsIfNeeded
     }
 }
 
@@ -214,7 +217,7 @@ private extension DefaultTokenPickerPresenter {
                 .init(name: groupName)
             )
         )
-        items.append(contentsOf: tokens.toTokenPikerViewModelItemArray)
+        items.append(contentsOf: tokens.items(using: interactor))
         return items
     }
 }
@@ -234,11 +237,11 @@ private extension Array where Element == Web3Network {
 
 private extension Array where Element == Web3Token {
     
-    var toTokenPikerViewModelItemArray: [TokenPickerViewModel.Item] {
+    func items(using interactor: TokenPickerInteractor) -> [TokenPickerViewModel.Item] {
         compactMap {
             .token(
                 .init(
-                    image: $0.image?.pngImage ?? .init(named: "default_currency")!,
+                    image: interactor.tokenIcon(for: $0).pngImage ?? .init(named: "default_token")!,
                     symbol: $0.symbol,
                     name: $0.name,
                     network: $0.network.name
