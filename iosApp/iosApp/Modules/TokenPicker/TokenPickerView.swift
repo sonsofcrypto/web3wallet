@@ -190,23 +190,16 @@ extension TokenPickerViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        
-        let cell = collectionViewCell(at: indexPath, for: collectionView)
-        let resizing = cell.systemLayoutSizeFitting(
-            UIView.layoutFittingCompressedSize,
-            withHorizontalFittingPriority: UILayoutPriority.required,
-            verticalFittingPriority: UILayoutPriority.fittingSizeLevel
-        )
-        
+                
         switch collectionView.tag {
             
         case CollectionTag.filters.rawValue:
 
-            return .init(width: resizing.width, height: collectionView.frame.height)
+            return .init(width: 56, height: collectionView.frame.height)
 
         case CollectionTag.items.rawValue:
             
-            return .init(width: collectionView.frame.width, height: resizing.height)
+            return .init(width: collectionView.frame.width, height: 56)
 
         default:
             

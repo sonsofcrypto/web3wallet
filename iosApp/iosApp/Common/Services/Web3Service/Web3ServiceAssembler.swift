@@ -6,9 +6,11 @@ final class Web3ServiceAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
         
-        registry.register(scope: .singleton) { _ -> Web3Service in
+        registry.register(scope: .singleton) { resolver -> Web3Service in
             
-            DefaultWeb3Service()
+            DefaultWeb3Service(
+                web3ServiceLocalStorage: resolver.resolve()
+            )
         }
     }
 }

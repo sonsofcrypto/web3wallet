@@ -11,18 +11,14 @@ protocol Web3Service: AnyObject {
     var myTokens: [Web3Token] { get }
 }
 
-//All | Ethereum | Solana
-//
-//Address | ETH DNS
-
-struct Web3Network {
+struct Web3Network: Codable {
     
     let icon: Data
     let name: String
     let hasDns: Bool
 }
 
-struct Web3Token {
+struct Web3Token: Codable {
     
     /** Image in png format */
     let image: Data?
@@ -35,7 +31,7 @@ struct Web3Token {
 
 extension Web3Token {
     
-    enum `Type` {
+    enum `Type`: Codable {
         
         case normal
         case featured

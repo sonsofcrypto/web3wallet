@@ -4,27 +4,30 @@
 
 import UIKit
 
-class DashboardNFTsCell: CollectionViewCell {
+final class DashboardNFTsCell: CollectionViewCell {
     
     @IBOutlet weak var carousel: iCarousel!
     
     private var viewModel: [DashboardViewModel.NFT] = []
     
     override func awakeFromNib() {
+        
         super.awakeFromNib()
+        
         layer.cornerRadius = Global.cornerRadius * 2
+        
         carousel.dataSource = self
         carousel.type = .coverFlow
     }
 
     override func prepareForReuse() {
+        
         super.prepareForReuse()
+        
         layer.transform = CATransform3DIdentity
         layer.removeAllAnimations()
     }
 }
-
-// MARK: - DashboardViewModel
 
 extension DashboardNFTsCell {
 
@@ -37,9 +40,6 @@ extension DashboardNFTsCell {
         }
     }
 }
-
-
-// MARK - iCarouselDataSource
 
 extension DashboardNFTsCell: iCarouselDataSource {
 

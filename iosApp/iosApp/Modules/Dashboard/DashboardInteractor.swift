@@ -33,14 +33,14 @@ extension DefaultDashboardInteractor: DashboardInteractor {
                     ticker: "ETH",
                     address: nil,
                     network: .ethereum,
-                    iconName: "currency_icon_small_eth"
+                    iconName: "token_eth_icon"
                 ),
                 .init(
                     name: "CULT",
                     ticker: "CULT",
                     address: nil,
                     network: .ethereum,
-                    iconName: "currency_icon_small_cult"
+                    iconName: "token_cult_icon"
                 )
             ]
         case .solana:
@@ -50,42 +50,42 @@ extension DefaultDashboardInteractor: DashboardInteractor {
                     ticker: "SOL",
                     address: nil,
                     network: .solana,
-                    iconName: "currency_icon_small_sol"
+                    iconName: "solana_sol_icon"
                 ),
                 .init(
                     name: "Raydium",
                     ticker: "RAY",
                     address: nil,
                     network: .solana,
-                    iconName: "currency_icon_small_ray"
+                    iconName: "token_ray_icon"
                 ),
                 .init(
                     name: "Mango",
                     ticker: "MNGO",
                     address: nil,
                     network: .solana,
-                    iconName: "currency_icon_small_mngo"
+                    iconName: "token_mngo_icon"
                 ),
                 .init(
                     name: "Solana",
                     ticker: "SOL",
                     address: nil,
                     network: .solana,
-                    iconName: "currency_icon_small_sol"
+                    iconName: "solana_sol_icon"
                 ),
                 .init(
                     name: "Raydium",
                     ticker: "RAY",
                     address: nil,
                     network: .solana,
-                    iconName: "currency_icon_small_ray"
+                    iconName: "token_ray_icon"
                 ),
                 .init(
                     name: "Mango",
                     ticker: "MNGO",
                     address: nil,
                     network: .solana,
-                    iconName: "currency_icon_small_mngo"
+                    iconName: "token_mngo_icon"
                 )
             ]
         }

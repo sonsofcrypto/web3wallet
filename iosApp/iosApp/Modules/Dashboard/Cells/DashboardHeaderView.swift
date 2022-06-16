@@ -4,7 +4,7 @@
 
 import UIKit
 
-class DashboardHeaderView: UICollectionReusableView {
+final class DashboardHeaderView: UICollectionReusableView {
 
     @IBOutlet weak var balance: UILabel!
     @IBOutlet weak var receiveButton: UIButton!
@@ -44,13 +44,14 @@ class DashboardHeaderView: UICollectionReusableView {
     }
 }
 
-// MARK: - DashboardViewModel
-
 extension DashboardHeaderView {
 
     func update(with viewModel: DashboardViewModel.Header?) {
+        
         balance.text =  viewModel?.balance
+        
         firstSectionLabel.text = viewModel?.firstSection
+        
         [receiveButton, sendButton, tradeButton].enumerated().forEach {
             let btnViewModel = viewModel?.buttons[$0.0]
             $0.1?.setTitle(btnViewModel?.title ?? "", for: .normal)
@@ -58,9 +59,6 @@ extension DashboardHeaderView {
         }
     }
 }
-
-
-// MARK: - Constant
 
 extension DashboardHeaderView {
 

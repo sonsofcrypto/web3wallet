@@ -93,7 +93,7 @@ extension DashboardViewModel {
             .init(
                 name: "Ethereum",
                 ticker: "ETH",
-                imageName: "currency_icon_small_eth",
+                imageName: "token_eth_icon",
                 fiatBalance: "$69,000",
                 cryptoBalance: "420.00 ETH",
                 pctChange: "4.5%",
@@ -103,7 +103,7 @@ extension DashboardViewModel {
             .init(
                 name: "Curve",
                 ticker: "CRV",
-                imageName: "currency_icon_small_crv",
+                imageName: "token_crv_icon",
                 fiatBalance: "$42,000",
                 cryptoBalance: "690.00 CRV",
                 pctChange: "2.5%",
@@ -118,7 +118,7 @@ extension DashboardViewModel {
             .init(
                 name: "Solana",
                 ticker: "SOL",
-                imageName: "currency_icon_small_sol",
+                imageName: "solana_sol_icon",
                 fiatBalance: "$69,000",
                 cryptoBalance: "420.00 SOL",
                 pctChange: "12%",
@@ -128,7 +128,7 @@ extension DashboardViewModel {
             .init(
                 name: "Raydium",
                 ticker: "RAY",
-                imageName: "currency_icon_small_ray",
+                imageName: "token_ray_icon",
                 fiatBalance: "$6,900.00",
                 cryptoBalance: "4,200 RAY",
                 pctChange: "5.5%",
@@ -138,7 +138,7 @@ extension DashboardViewModel {
             .init(
                 name: "Mango",
                 ticker: "MNGO",
-                imageName: "currency_icon_small_mngo",
+                imageName: "token_mngo_icon",
                 fiatBalance: "$4,200.00",
                 cryptoBalance: "69 MNGO",
                 pctChange: "5.5%",
@@ -148,7 +148,7 @@ extension DashboardViewModel {
             .init(
                 name: "Solana",
                 ticker: "SOL",
-                imageName: "currency_icon_small_sol",
+                imageName: "solana_sol_icon",
                 fiatBalance: "$69,000",
                 cryptoBalance: "420.00 SOL",
                 pctChange: "12%",
@@ -158,7 +158,7 @@ extension DashboardViewModel {
             .init(
                 name: "Raydium",
                 ticker: "RAY",
-                imageName: "currency_icon_small_ray",
+                imageName: "token_ray_icon",
                 fiatBalance: "$6,900.00",
                 cryptoBalance: "4,200 RAY",
                 pctChange: "5.5%",
@@ -168,7 +168,7 @@ extension DashboardViewModel {
             .init(
                 name: "Mango",
                 ticker: "MNGO",
-                imageName: "currency_icon_small_mngo",
+                imageName: "token_mgno_icon",
                 fiatBalance: "$4,200.00",
                 cryptoBalance: "69 MNGO",
                 pctChange: "5.5%",

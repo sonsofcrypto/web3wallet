@@ -13,6 +13,7 @@ enum DashboardPresenterEvent {
     case didSelectNFT(idx: Int)
     case didInteractWithCardSwitcher
     case presentUnderConstructionAlert
+    case didTapNetwork
 }
 
 protocol DashboardPresenter {

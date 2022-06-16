@@ -199,20 +199,20 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TokenPickerItemCell" id="NY7-Hg-YaP" customClass="TokenPickerItemCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="146" width="414" height="66"/>
+                                        <rect key="frame" x="0.0" y="146" width="414" height="70"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Y0p-oB-Rsl">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="d3y-PB-WKg">
-                                                    <rect key="frame" x="16" y="8" width="382" height="50"/>
+                                                    <rect key="frame" x="16" y="10" width="382" height="50"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ALS-tP-1kw">
                                                             <rect key="frame" x="0.0" y="0.0" width="40" height="50"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WSf-08-PkY">
-                                                                    <rect key="frame" x="0.0" y="5" width="40" height="40"/>
+                                                                    <rect key="frame" x="0.0" y="2" width="40" height="40"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" secondItem="WSf-08-PkY" secondAttribute="height" multiplier="1:1" id="5dg-yH-rIH"/>
                                                                         <constraint firstAttribute="width" constant="40" id="5gZ-gG-GIz"/>
@@ -222,7 +222,7 @@
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="trailing" secondItem="WSf-08-PkY" secondAttribute="trailing" id="4Pv-Yk-pYh"/>
-                                                                <constraint firstItem="WSf-08-PkY" firstAttribute="centerY" secondItem="ALS-tP-1kw" secondAttribute="centerY" id="J6w-Ms-NIZ"/>
+                                                                <constraint firstItem="WSf-08-PkY" firstAttribute="centerY" secondItem="ALS-tP-1kw" secondAttribute="centerY" constant="-3" id="J6w-Ms-NIZ"/>
                                                                 <constraint firstItem="WSf-08-PkY" firstAttribute="leading" secondItem="ALS-tP-1kw" secondAttribute="leading" id="VWX-Dq-EFb"/>
                                                                 <constraint firstAttribute="width" constant="40" id="ptd-Z6-bzS"/>
                                                             </constraints>
@@ -272,8 +272,8 @@
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="d3y-PB-WKg" firstAttribute="top" secondItem="Y0p-oB-Rsl" secondAttribute="top" constant="8" id="JYa-k5-V3b"/>
-                                                <constraint firstAttribute="bottom" secondItem="d3y-PB-WKg" secondAttribute="bottom" constant="8" id="R0A-uM-jLq"/>
+                                                <constraint firstItem="d3y-PB-WKg" firstAttribute="top" secondItem="Y0p-oB-Rsl" secondAttribute="top" constant="10" id="JYa-k5-V3b"/>
+                                                <constraint firstAttribute="bottom" secondItem="d3y-PB-WKg" secondAttribute="bottom" constant="10" id="R0A-uM-jLq"/>
                                                 <constraint firstItem="d3y-PB-WKg" firstAttribute="leading" secondItem="Y0p-oB-Rsl" secondAttribute="leading" constant="16" id="Sko-Xq-Qde"/>
                                                 <constraint firstAttribute="trailing" secondItem="d3y-PB-WKg" secondAttribute="trailing" constant="16" id="rpb-IP-ThR"/>
                                             </constraints>

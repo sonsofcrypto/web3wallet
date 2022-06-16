@@ -36,6 +36,7 @@ private extension AssemblerBootstrapper {
             ChatServiceAssembler(),
             CultServiceAssembler(),
             Web3ServiceAssembler(),
+            Web3ServiceLocalStorageAssembler(),
             // Modules
             AccountWireframeFactoryAssembler(),
             AlertWireframeFactoryAssembler(),

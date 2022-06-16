@@ -15,6 +15,9 @@ final class TokenPickerItemCell: UICollectionViewCell {
     override func awakeFromNib() {
         
         super.awakeFromNib()
+        
+        iconImageView.layer.cornerRadius = iconImageView.frame.size.width * 0.5
+        iconImageView.backgroundColor = Theme.color.text
                         
         nameLabel.applyStyle(.body)
         nameLabel.textColor = Theme.color.text

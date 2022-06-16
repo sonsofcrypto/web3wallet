@@ -36,14 +36,14 @@ extension SwapViewModel {
                 valueFiat: "$123,000",
                 ticker: "ETH",
                 balance: "1000",
-                currencyImage: "currency_icon_small_eth"
+                currencyImage: "token_eth_icon"
             ),
             toInput: .init(
                 valueCrypto: "69,000.00",
                 valueFiat: "$123,000",
                 ticker: "SOL",
                 balance: "0",
-                currencyImage: "currency_icon_small_sol"
+                currencyImage: "solana_sol_icon"
             ),
             rate: "1 SOL = 0.000425 ETH"
         )
