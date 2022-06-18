@@ -4,11 +4,11 @@
 
 import Foundation
 
-protocol TokenDetailsInteractor: AnyObject {
+protocol TokenReceiveInteractor: AnyObject {
 
 }
 
-final class DefaultTokenDetailsInteractor {
+final class DefaultTokenReceiveInteractor {
 
     private let web3Service: Web3Service
     
@@ -20,6 +20,6 @@ final class DefaultTokenDetailsInteractor {
     }
 }
 
-extension DefaultTokenDetailsInteractor: TokenDetailsInteractor {
+extension DefaultTokenReceiveInteractor: TokenReceiveInteractor {
 
 }

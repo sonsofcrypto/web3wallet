@@ -14,14 +14,14 @@ protocol TokenPickerWireframeFactory {
 
 final class DefaultTokenPickerWireframeFactory {
 
-    private let tokenDetailsWireframeFactory: TokenDetailsWireframeFactory
+    private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
     private let web3Service: Web3Service
 
     init(
-        tokenDetailsWireframeFactory: TokenDetailsWireframeFactory,
+        tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
         web3Service: Web3Service
     ) {
-        self.tokenDetailsWireframeFactory = tokenDetailsWireframeFactory
+        self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
         self.web3Service = web3Service
     }
 }
@@ -36,7 +36,7 @@ extension DefaultTokenPickerWireframeFactory: TokenPickerWireframeFactory {
         DefaultTokenPickerWireframe(
             presentingIn: presentingIn,
             context: context,
-            tokenDetailsWireframeFactory: tokenDetailsWireframeFactory,
+            tokenReceiveWireframeFactory: tokenReceiveWireframeFactory,
             web3Service: web3Service
         )
     }

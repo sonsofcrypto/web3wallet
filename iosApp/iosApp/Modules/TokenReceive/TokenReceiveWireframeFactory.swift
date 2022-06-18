@@ -4,15 +4,15 @@
 
 import UIKit
 
-protocol TokenDetailsWireframeFactory {
+protocol TokenReceiveWireframeFactory {
 
     func makeWireframe(
         presentingIn: UIViewController,
-        context: TokenDetailsWireframeContext
-    ) -> TokenDetailsWireframe
+        context: TokenReceiveWireframeContext
+    ) -> TokenReceiveWireframe
 }
 
-final class DefaultTokenDetailsWireframeFactory {
+final class DefaultTokenReceiveWireframeFactory {
 
     private let web3Service: Web3Service
 
@@ -23,14 +23,14 @@ final class DefaultTokenDetailsWireframeFactory {
     }
 }
 
-extension DefaultTokenDetailsWireframeFactory: TokenDetailsWireframeFactory {
+extension DefaultTokenReceiveWireframeFactory: TokenReceiveWireframeFactory {
 
     func makeWireframe(
         presentingIn: UIViewController,
-        context: TokenDetailsWireframeContext
-    ) -> TokenDetailsWireframe {
+        context: TokenReceiveWireframeContext
+    ) -> TokenReceiveWireframe {
         
-        DefaultTokenDetailsWireframe(
+        DefaultTokenReceiveWireframe(
             presentingIn: presentingIn,
             context: context,
             web3Service: web3Service

@@ -4,32 +4,32 @@
 
 import Foundation
 
-enum TokenDetailsPresenterEvent {
+enum TokenReceivePresenterEvent {
 
     case dismiss
     case share
 }
 
-protocol TokenDetailsPresenter {
+protocol TokenReceivePresenter {
 
     func present()
-    func handle(_ event: TokenDetailsPresenterEvent)
+    func handle(_ event: TokenReceivePresenterEvent)
 }
 
-final class DefaultTokenDetailsPresenter {
+final class DefaultTokenReceivePresenter {
 
-    private weak var view: TokenDetailsView?
-    private let interactor: TokenDetailsInteractor
-    private let wireframe: TokenDetailsWireframe
-    private let context: TokenDetailsWireframeContext
+    private weak var view: TokenReceiveView?
+    private let interactor: TokenReceiveInteractor
+    private let wireframe: TokenReceiveWireframe
+    private let context: TokenReceiveWireframeContext
     
-    private var items = [TokenDetailsViewModel.Item]()
+    private var items = [TokenReceiveViewModel.Item]()
 
     init(
-        view: TokenDetailsView,
-        interactor: TokenDetailsInteractor,
-        wireframe: TokenDetailsWireframe,
-        context: TokenDetailsWireframeContext
+        view: TokenReceiveView,
+        interactor: TokenReceiveInteractor,
+        wireframe: TokenReceiveWireframe,
+        context: TokenReceiveWireframeContext
     ) {
         self.view = view
         self.interactor = interactor
@@ -38,16 +38,16 @@ final class DefaultTokenDetailsPresenter {
     }
 }
 
-extension DefaultTokenDetailsPresenter: TokenDetailsPresenter {
+extension DefaultTokenReceivePresenter: TokenReceivePresenter {
 
     func present() {
         
         view?.update(
             with: .init(
-                title: Localized("tokenDetails.title.receive", arg: context.web3Token.symbol),
+                title: Localized("tokenReceive.title.receive", arg: context.web3Token.symbol),
                 content: .loaded(
                     .init(
-                        name: Localized("tokenDetails.qrcode.name"),
+                        name: Localized("tokenReceive.qrcode.name"),
                         symbol: context.web3Token.symbol,
                         address: context.web3Token.address,
                         disclaimer: disclaimer
@@ -57,7 +57,7 @@ extension DefaultTokenDetailsPresenter: TokenDetailsPresenter {
         )
     }
 
-    func handle(_ event: TokenDetailsPresenterEvent) {
+    func handle(_ event: TokenReceivePresenterEvent) {
 
         switch event {
             
@@ -72,11 +72,11 @@ extension DefaultTokenDetailsPresenter: TokenDetailsPresenter {
     }
 }
 
-private extension DefaultTokenDetailsPresenter {
+private extension DefaultTokenReceivePresenter {
     
     var disclaimer: String {
         
         let arg = "\(context.web3Token.network.name.capitalized) (\(context.web3Token.symbol))"
-        return Localized("tokenDetails.disclaimer", arg: arg)
+        return Localized("tokenReceive.disclaimer", arg: arg)
     }
 }

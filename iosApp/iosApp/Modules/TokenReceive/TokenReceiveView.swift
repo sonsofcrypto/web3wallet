@@ -4,14 +4,14 @@
 
 import UIKit
 
-protocol TokenDetailsView: AnyObject {
+protocol TokenReceiveView: AnyObject {
 
-    func update(with viewModel: TokenDetailsViewModel)
+    func update(with viewModel: TokenReceiveViewModel)
 }
 
-final class TokenDetailsViewController: BaseViewController {
+final class TokenReceiveViewController: BaseViewController {
 
-    var presenter: TokenDetailsPresenter!
+    var presenter: TokenReceivePresenter!
 
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -19,10 +19,10 @@ final class TokenDetailsViewController: BaseViewController {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var disclaimerLabel: UILabel!
     
-    @IBOutlet weak var copyButton: TokenDetailsActionButton!
-    @IBOutlet weak var shareButton: TokenDetailsActionButton!
+    @IBOutlet weak var copyButton: TokenReceiveActionButton!
+    @IBOutlet weak var shareButton: TokenReceiveActionButton!
 
-    private var viewModel: TokenDetailsViewModel?
+    private var viewModel: TokenReceiveViewModel?
     private lazy var filter = CIFilter(name: "CIQRCodeGenerator")
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -43,9 +43,9 @@ final class TokenDetailsViewController: BaseViewController {
     }
 }
 
-extension TokenDetailsViewController: TokenDetailsView {
+extension TokenReceiveViewController: TokenReceiveView {
 
-    func update(with viewModel: TokenDetailsViewModel) {
+    func update(with viewModel: TokenReceiveViewModel) {
 
         self.viewModel = viewModel
         
@@ -65,7 +65,7 @@ extension TokenDetailsViewController: TokenDetailsView {
     }
 }
 
-extension TokenDetailsViewController {
+extension TokenReceiveViewController {
     
     func configureNavigationBar() {
         
@@ -103,13 +103,13 @@ extension TokenDetailsViewController {
         disclaimerLabel.textColor = Theme.current.color.textSecondary
         
         copyButton.update(
-            with: Localized("tokenDetails.action.copy"),
+            with: Localized("tokenReceive.action.copy"),
             and: UIImage(named: "button_send"),
             onTap: makeCopyAction()
         )
 
         shareButton.update(
-            with: Localized("tokenDetails.action.share"),
+            with: Localized("tokenReceive.action.share"),
             and: UIImage(named: "button_send"),
             onTap: makeShareAction()
         )
@@ -129,7 +129,7 @@ extension TokenDetailsViewController {
     }
 }
 
-private extension TokenDetailsViewController {
+private extension TokenReceiveViewController {
     
     func makeCopyAction() -> (() -> Void) {
         
@@ -138,7 +138,7 @@ private extension TokenDetailsViewController {
             guard let self = self else { return }
             
             UIPasteboard.general.string = self.viewModel?.data?.address
-            self.view.presentToastAlert(with: Localized("tokenDetails.action.copy.toast"))
+            self.view.presentToastAlert(with: Localized("tokenReceive.action.copy.toast"))
         }
     }
 
@@ -156,7 +156,7 @@ private extension TokenDetailsViewController {
             ShareFactoryHelper().share(
                 items: [
                     image,
-                    Localized("tokenDetails.action.share.address", arg: data.symbol) + " " + data.address,
+                    Localized("tokenReceive.action.share.address", arg: data.symbol) + " " + data.address,
                     
                 ],
                 presentingIn: self
@@ -165,7 +165,7 @@ private extension TokenDetailsViewController {
     }
 }
 
-private extension TokenDetailsViewController {
+private extension TokenReceiveViewController {
     
     func makeQrCodePngImage(for address: String) -> UIImage? {
         

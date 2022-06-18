@@ -2,7 +2,7 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-final class TokenDetailsActionButton: UIView {
+final class TokenReceiveActionButton: UIView {
     
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -36,7 +36,7 @@ final class TokenDetailsActionButton: UIView {
     }
 }
 
-private extension TokenDetailsActionButton {
+private extension TokenReceiveActionButton {
     
     @objc func viewTapped() {
         

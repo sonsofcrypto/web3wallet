@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct TokenDetailsViewModel {
+struct TokenReceiveViewModel {
     
     let title: String
     let content: Content
@@ -16,7 +16,7 @@ struct TokenDetailsViewModel {
     }
 }
 
-extension TokenDetailsViewModel {
+extension TokenReceiveViewModel {
     
     struct Item {
         
@@ -27,7 +27,7 @@ extension TokenDetailsViewModel {
     }
 }
 
-extension TokenDetailsViewModel {
+extension TokenReceiveViewModel {
 
     struct Error {
         
@@ -37,9 +37,9 @@ extension TokenDetailsViewModel {
     }
 }
 
-extension TokenDetailsViewModel {
+extension TokenReceiveViewModel {
 
-    var data: TokenDetailsViewModel.Item? {
+    var data: TokenReceiveViewModel.Item? {
         switch content {
         case let .loaded(item):
             return item

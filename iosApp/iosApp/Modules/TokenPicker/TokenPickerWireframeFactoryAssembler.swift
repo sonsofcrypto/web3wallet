@@ -9,7 +9,7 @@ final class TokenPickerWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> TokenPickerWireframeFactory in
             
             DefaultTokenPickerWireframeFactory(
-                tokenDetailsWireframeFactory: resolver.resolve(),
+                tokenReceiveWireframeFactory: resolver.resolve(),
                 web3Service: resolver.resolve()
             )
         }

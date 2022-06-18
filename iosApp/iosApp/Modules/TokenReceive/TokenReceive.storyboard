@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Token Details View Controller-->
+        <!--Token Receive View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="TokenDetailsViewController" id="Y6W-OH-hqX" customClass="TokenDetailsViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TokenReceiveViewController" id="Y6W-OH-hqX" customClass="TokenReceiveViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc" customClass="GradientView" customModule="iosApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -68,7 +68,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="36" translatesAutoresizingMaskIntoConstraints="NO" id="8wg-2O-LVj">
                                                         <rect key="frame" x="67.5" y="0.0" width="196" height="92"/>
                                                         <subviews>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5a8-s7-CHy" customClass="TokenDetailsActionButton" customModule="iosApp" customModuleProvider="target">
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5a8-s7-CHy" customClass="TokenReceiveActionButton" customModule="iosApp" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="80" height="92"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cfW-6R-9nB">
@@ -99,7 +99,7 @@
                                                                     <outlet property="nameLabel" destination="fWZ-66-za8" id="ici-83-zel"/>
                                                                 </connections>
                                                             </view>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e3L-zP-54K" customClass="TokenDetailsActionButton" customModule="iosApp" customModuleProvider="target">
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e3L-zP-54K" customClass="TokenReceiveActionButton" customModule="iosApp" customModuleProvider="target">
                                                                 <rect key="frame" x="116" y="0.0" width="80" height="92"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FVd-66-SUx">

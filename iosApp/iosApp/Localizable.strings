@@ -137,10 +137,10 @@
 "tokenPicker.all.title" = "All coins";
 "tokenPicker.noResults" = "No results";
 
-"tokenDetails.title.receive" = "Receive %@";
-"tokenDetails.qrcode.name" = "web3wallet";
-"tokenDetails.disclaimer" = "Send only %@ to this address. Sending any other coins may result in permanent loss.";
-"tokenDetails.action.copy" = "Copy";
-"tokenDetails.action.copy.toast" = "Address copied to your clipboard";
-"tokenDetails.action.share" = "Share";
-"tokenDetails.action.share.address" = "My Public Address to Receive %@:";
+"tokenReceive.title.receive" = "Receive %@";
+"tokenReceive.qrcode.name" = "web3wallet";
+"tokenReceive.disclaimer" = "Send only %@ to this address. Sending any other coins may result in permanent loss.";
+"tokenReceive.action.copy" = "Copy";
+"tokenReceive.action.copy.toast" = "Address copied to your clipboard";
+"tokenReceive.action.share" = "Share";
+"tokenReceive.action.share.address" = "My Public Address to Receive %@:";

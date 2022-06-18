@@ -80,7 +80,7 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
             } else {
 
                 guard let token = tokens.findToken(matching: token.symbol) else { return }
-                wireframe.navigate(to: .tokenDetails(token))
+                wireframe.navigate(to: .tokenReceive(token))
             }
             
         case .addCustomToken:

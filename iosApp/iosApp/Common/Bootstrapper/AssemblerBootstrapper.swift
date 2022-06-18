@@ -59,7 +59,7 @@ private extension AssemblerBootstrapper {
             CultProposalsWireframeFactoryAssembler(),
             CultProposalWireframeFactoryAssembler(),
             TokenPickerWireframeFactoryAssembler(),
-            TokenDetailsWireframeFactoryAssembler()
+            TokenReceiveWireframeFactoryAssembler()
         ]
     }
 }

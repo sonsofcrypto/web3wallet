@@ -4,33 +4,33 @@
 
 import UIKit
 
-struct TokenDetailsWireframeContext {
+struct TokenReceiveWireframeContext {
     
     let presentationStyle: PresentationStyle
     let web3Token: Web3Token
 }
 
-enum TokenDetailsWireframeDestination {
+enum TokenReceiveWireframeDestination {
     
 }
 
-protocol TokenDetailsWireframe {
+protocol TokenReceiveWireframe {
     func present()
-    func navigate(to destination: TokenDetailsWireframeDestination)
+    func navigate(to destination: TokenReceiveWireframeDestination)
     func dismiss()
 }
 
-final class DefaultTokenDetailsWireframe {
+final class DefaultTokenReceiveWireframe {
     
     private weak var presentingIn: UIViewController!
-    private let context: TokenDetailsWireframeContext
+    private let context: TokenReceiveWireframeContext
     private let web3Service: Web3Service
     
     private weak var navigationController: NavigationController!
     
     init(
         presentingIn: UIViewController,
-        context: TokenDetailsWireframeContext,
+        context: TokenReceiveWireframeContext,
         web3Service: Web3Service
     ) {
         self.presentingIn = presentingIn
@@ -39,7 +39,7 @@ final class DefaultTokenDetailsWireframe {
     }
 }
 
-extension DefaultTokenDetailsWireframe: TokenDetailsWireframe {
+extension DefaultTokenReceiveWireframe: TokenReceiveWireframe {
     
     func present() {
         
@@ -63,7 +63,7 @@ extension DefaultTokenDetailsWireframe: TokenDetailsWireframe {
         }
     }
     
-    func navigate(to destination: TokenDetailsWireframeDestination) {
+    func navigate(to destination: TokenReceiveWireframeDestination) {
         
         
     }
@@ -74,15 +74,15 @@ extension DefaultTokenDetailsWireframe: TokenDetailsWireframe {
     }
 }
 
-private extension DefaultTokenDetailsWireframe {
+private extension DefaultTokenReceiveWireframe {
     
     func wireUp() -> UIViewController {
         
-        let interactor = DefaultTokenDetailsInteractor(
+        let interactor = DefaultTokenReceiveInteractor(
             web3Service: web3Service
         )
-        let vc: TokenDetailsViewController = UIStoryboard(.tokenDetails).instantiate()
-        let presenter = DefaultTokenDetailsPresenter(
+        let vc: TokenReceiveViewController = UIStoryboard(.tokenReceive).instantiate()
+        let presenter = DefaultTokenReceivePresenter(
             view: vc,
             interactor: interactor,
             wireframe: self,

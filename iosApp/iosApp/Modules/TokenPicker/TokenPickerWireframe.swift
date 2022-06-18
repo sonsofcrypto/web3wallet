@@ -44,7 +44,7 @@ struct TokenPickerWireframeContext {
 
 enum TokenPickerWireframeDestination {
     
-    case tokenDetails(Web3Token)
+    case tokenReceive(Web3Token)
     case addCustomToken
 }
 
@@ -58,18 +58,18 @@ final class DefaultTokenPickerWireframe {
     
     private weak var presentingIn: UIViewController!
     private let context: TokenPickerWireframeContext
-    private let tokenDetailsWireframeFactory: TokenDetailsWireframeFactory
+    private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
     private let web3Service: Web3Service
     
     init(
         presentingIn: UIViewController,
         context: TokenPickerWireframeContext,
-        tokenDetailsWireframeFactory: TokenDetailsWireframeFactory,
+        tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
         web3Service: Web3Service
     ) {
         self.presentingIn = presentingIn
         self.context = context
-        self.tokenDetailsWireframeFactory = tokenDetailsWireframeFactory
+        self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
         self.web3Service = web3Service
     }
 }
@@ -101,11 +101,11 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
     func navigate(to destination: TokenPickerWireframeDestination) {
         
         switch destination {
-        case let .tokenDetails(token):
+        case let .tokenReceive(token):
             
             guard let navigationController = presentingIn.presentedViewController else { return }
             
-            let coordinator = tokenDetailsWireframeFactory.makeWireframe(
+            let coordinator = tokenReceiveWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(presentationStyle: .push, web3Token: token)
             )

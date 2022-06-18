@@ -2,13 +2,13 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-final class TokenDetailsWireframeFactoryAssembler: AssemblerComponent {
+final class TokenReceiveWireframeFactoryAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
         
-        registry.register(scope: .instance) { resolver -> TokenDetailsWireframeFactory in
+        registry.register(scope: .instance) { resolver -> TokenReceiveWireframeFactory in
             
-            DefaultTokenDetailsWireframeFactory(
+            DefaultTokenReceiveWireframeFactory(
                 web3Service: resolver.resolve()
             )
         }
