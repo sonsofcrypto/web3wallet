@@ -9,7 +9,8 @@ final class AccountWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> AccountWireframeFactory in
             
             DefaultAccountWireframeFactory(
-                accountService: resolver.resolve()
+                tokenReceiveWireframeFactory: resolver.resolve(),
+                priceHistoryService: resolver.resolve()
             )
         }
     }

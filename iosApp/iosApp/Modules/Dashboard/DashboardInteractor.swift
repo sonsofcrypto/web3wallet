@@ -6,88 +6,68 @@ import Foundation
 
 protocol DashboardInteractor: AnyObject {
 
-    func tokens(for network: CryptoNetwork) -> [Token]
+    var myTokens: [Web3Token] { get }
+    func tokenIcon(for token: Web3Token) -> Data
+    func priceData(for token: Web3Token) -> [ Web3Candle ]
+    func nfts(for network: Web3Network) -> [ NFTItem ]
+    func updateMyWeb3Tokens(to tokens: [Web3Token])
+    func addWalletListener(_ listener: Web3ServiceWalletListener)
+    func removeWalletListener(_ listener: Web3ServiceWalletListener)
 }
-
-// MARK: - DefaultDashboardInteractor
 
 final class DefaultDashboardInteractor {
 
-    private var walletsService: KeyStoreService
+    private let web3Service: Web3Service
+    private let priceHistoryService: PriceHistoryService
+    private let nftsService: NFTsService
 
-    init(_ walletsService: KeyStoreService) {
-        self.walletsService = walletsService
+    init(
+        web3Service: Web3Service,
+        priceHistoryService: PriceHistoryService,
+        nftsService: NFTsService
+    ) {
+        
+        self.web3Service = web3Service
+        self.priceHistoryService = priceHistoryService
+        self.nftsService = nftsService
     }
 }
 
-// MARK: - DefaultDashboardInteractor
-
 extension DefaultDashboardInteractor: DashboardInteractor {
 
-    func tokens(for network: CryptoNetwork) -> [Token] {
-        switch network {
-        case .ethereum:
-            return [
-                .init(
-                    name: "Ethereum",
-                    ticker: "ETH",
-                    address: nil,
-                    network: .ethereum,
-                    iconName: "currency_icon_small_eth"
-                ),
-                .init(
-                    name: "CULT",
-                    ticker: "CULT",
-                    address: nil,
-                    network: .ethereum,
-                    iconName: "currency_icon_small_cult"
-                )
-            ]
-        case .solana:
-            return [
-                .init(
-                    name: "Solana",
-                    ticker: "SOL",
-                    address: nil,
-                    network: .solana,
-                    iconName: "currency_icon_small_sol"
-                ),
-                .init(
-                    name: "Raydium",
-                    ticker: "RAY",
-                    address: nil,
-                    network: .solana,
-                    iconName: "currency_icon_small_ray"
-                ),
-                .init(
-                    name: "Mango",
-                    ticker: "MNGO",
-                    address: nil,
-                    network: .solana,
-                    iconName: "currency_icon_small_mngo"
-                ),
-                .init(
-                    name: "Solana",
-                    ticker: "SOL",
-                    address: nil,
-                    network: .solana,
-                    iconName: "currency_icon_small_sol"
-                ),
-                .init(
-                    name: "Raydium",
-                    ticker: "RAY",
-                    address: nil,
-                    network: .solana,
-                    iconName: "currency_icon_small_ray"
-                ),
-                .init(
-                    name: "Mango",
-                    ticker: "MNGO",
-                    address: nil,
-                    network: .solana,
-                    iconName: "currency_icon_small_mngo"
-                )
-            ]
-        }
+    var myTokens: [Web3Token] {
+        
+        web3Service.myTokens
     }
+    
+    func tokenIcon(for token: Web3Token) -> Data {
+        
+        web3Service.tokenIcon(for: token)
+    }
+    
+    func priceData(for token: Web3Token) -> [ Web3Candle ] {
+        
+        priceHistoryService.priceData(for: token, period: .lastXDays(43))
+    }
+    
+    func nfts(for network: Web3Network) -> [ NFTItem ] {
+        
+        nftsService.yourNFTs(forNetwork: network)
+    }
+    
+    func updateMyWeb3Tokens(to tokens: [Web3Token]) {
+        
+        web3Service.storeMyTokens(to: tokens)
+    }
+    
+    func addWalletListener(_ listener: Web3ServiceWalletListener) {
+        
+        web3Service.addWalletListener(listener)
+    }
+    
+    func removeWalletListener(_ listener: Web3ServiceWalletListener) {
+        
+        web3Service.removeWalletListener(listener)
+    }
+
 }

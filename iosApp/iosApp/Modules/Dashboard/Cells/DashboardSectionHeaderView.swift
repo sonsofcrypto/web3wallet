@@ -4,23 +4,22 @@
 
 import UIKit
 
-class DashboardSectionHeaderView: UICollectionReusableView {
+final class DashboardSectionHeaderView: UICollectionReusableView {
 
     private lazy var label: UILabel = {
         let label = UILabel(with: .callout)
         self.addSubview(label)
+        label.addConstraints(
+            [
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Global.padding)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Global.padding)),
+                .layout(anchor: .topAnchor),
+                .layout(anchor: .bottomAnchor)
+            ]
+        )
         return label
     }()
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        label.sizeToFit()
-        label.frame.origin.x = Global.padding
-        label.frame.origin.y = bounds.height - Global.padding - label.bounds.height
-    }
 }
-
-// MARK: - DashboardViewModel
 
 extension DashboardSectionHeaderView {
 

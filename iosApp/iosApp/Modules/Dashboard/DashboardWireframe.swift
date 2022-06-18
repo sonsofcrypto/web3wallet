@@ -5,10 +5,14 @@
 import UIKit
 
 enum DashboardWireframeDestination {
-    case wallet(wallet: KeyStoreItem, token: Token)
+    case wallet(token: Web3Token)
     case keyStoreNetworkSettings
     case presentUnderConstructionAlert
     case mnemonicConfirmation
+    case receiveCoins
+    case sendCoins
+    case nftItem(NFTItem)
+    case editTokens(selectedTokens: [Web3Token], onCompletion: ([Web3Token]) -> Void)
 }
 
 protocol DashboardWireframe {
@@ -25,7 +29,12 @@ final class DefaultDashboardWireframe {
     private let accountWireframeFactory: AccountWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
+    private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
+    private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let onboardingService: OnboardingService
+    private let web3Service: Web3Service
+    private let priceHistoryService: PriceHistoryService
+    private let nftsService: NFTsService
 
     init(
         parent: UIViewController,
@@ -33,14 +42,24 @@ final class DefaultDashboardWireframe {
         accountWireframeFactory: AccountWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
-        onboardingService: OnboardingService
+        tokenPickerWireframeFactory: TokenPickerWireframeFactory,
+        nftDetailWireframeFactory: NFTDetailWireframeFactory,
+        onboardingService: OnboardingService,
+        web3Service: Web3Service,
+        priceHistoryService: PriceHistoryService,
+        nftsService: NFTsService
     ) {
         self.parent = parent
         self.keyStoreService = keyStoreService
         self.accountWireframeFactory = accountWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
+        self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
+        self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.onboardingService = onboardingService
+        self.web3Service = web3Service
+        self.priceHistoryService = priceHistoryService
+        self.nftsService = nftsService
     }
 }
 
@@ -72,8 +91,10 @@ extension DefaultDashboardWireframe: DashboardWireframe {
 
         switch destination {
             
-        case let .wallet(wallet, token):
-            accountWireframeFactory.makeWireframe(vc, wallet: wallet, token: token).present()
+        case let .wallet(token):
+            accountWireframeFactory.makeWireframe(
+                presentingIn: vc, context: .init(web3Token: token)
+            ).present()
             
         case .keyStoreNetworkSettings:
             vc.edgeCardsController?.setDisplayMode(.overview, animated: true)
@@ -86,6 +107,35 @@ extension DefaultDashboardWireframe: DashboardWireframe {
         case .mnemonicConfirmation:
             
             mnemonicConfirmationWireframeFactory.makeWireframe(parent).present()
+            
+        case .receiveCoins:
+            
+            presentTokenPicker(with: .receive)
+            
+        case .sendCoins:
+            
+            presentTokenPicker(with: .send)
+            
+        case let .nftItem(nftItem):
+            
+            nftDetailWireframeFactory.makeWireframe(
+                parent,
+                context: .init(
+                    nftIdentifier: nftItem.identifier,
+                    nftCollectionIdentifier: nftItem.collectionIdentifier
+                )
+            ).present()
+            
+        case let .editTokens(selectedTokens, onCompletion):
+            
+            let coordinator = tokenPickerWireframeFactory.makeWireframe(
+                presentingIn: parent,
+                context: .init(
+                    presentationStyle: .present,
+                    source: .multiSelectEdit(selectedTokens: selectedTokens, onCompletion: onCompletion)
+                )
+            )
+            coordinator.present()
         }
     }
 }
@@ -94,8 +144,12 @@ private extension DefaultDashboardWireframe {
 
     func wireUp() -> UIViewController {
         
-        let interactor = DefaultDashboardInteractor(keyStoreService)
-        let vc: DashboardViewController = UIStoryboard(.main).instantiate()
+        let interactor = DefaultDashboardInteractor(
+            web3Service: web3Service,
+            priceHistoryService: priceHistoryService,
+            nftsService: nftsService
+        )
+        let vc: DashboardViewController = UIStoryboard(.dashboard).instantiate()
         let presenter = DefaultDashboardPresenter(
             view: vc,
             interactor: interactor,
@@ -105,5 +159,20 @@ private extension DefaultDashboardWireframe {
 
         vc.presenter = presenter
         return NavigationController(rootViewController: vc)
+    }
+    
+    func presentTokenPicker(
+        with source: TokenPickerWireframeContext.Source
+    ) {
+        
+        let factory: TokenPickerWireframeFactory = ServiceDirectory.assembler.resolve()
+        let context = TokenPickerWireframeContext(
+            presentationStyle: .present,
+            source: source
+        )
+        factory.makeWireframe(
+            presentingIn: parent,
+            context: context
+        ).present()
     }
 }

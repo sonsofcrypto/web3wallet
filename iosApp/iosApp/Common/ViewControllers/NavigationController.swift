@@ -31,5 +31,7 @@ class NavigationController: UINavigationController {
         navigationBar.scrollEdgeAppearance = appearance
         navigationBar.compactAppearance = appearance
         navigationBar.compactScrollEdgeAppearance = appearance
+        
+        interactivePopGestureRecognizer?.delegate = nil
     }
 }

@@ -15,20 +15,35 @@ final class DefaultDashboardWireframeFactory {
     private let accountWireframeFactory: AccountWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
+    private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
+    private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let onboardingService: OnboardingService
+    private let web3Service: Web3Service
+    private let priceHistoryService: PriceHistoryService
+    private let nftsService: NFTsService
 
     init(
         keyStoreService: KeyStoreService,
         accountWireframeFactory: AccountWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
-        onboardingService: OnboardingService
+        tokenPickerWireframeFactory: TokenPickerWireframeFactory,
+        nftDetailWireframeFactory: NFTDetailWireframeFactory,
+        onboardingService: OnboardingService,
+        web3Service: Web3Service,
+        priceHistoryService: PriceHistoryService,
+        nftsService: NFTsService
     ) {
         self.keyStoreService = keyStoreService
         self.accountWireframeFactory = accountWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
+        self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
+        self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.onboardingService = onboardingService
+        self.web3Service = web3Service
+        self.priceHistoryService = priceHistoryService
+        self.nftsService = nftsService
     }
 }
 
@@ -42,7 +57,12 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             accountWireframeFactory: accountWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
             mnemonicConfirmationWireframeFactory: mnemonicConfirmationWireframeFactory,
-            onboardingService: onboardingService
+            tokenPickerWireframeFactory: tokenPickerWireframeFactory,
+            nftDetailWireframeFactory: nftDetailWireframeFactory,
+            onboardingService: onboardingService,
+            web3Service: web3Service,
+            priceHistoryService: priceHistoryService,
+            nftsService: nftsService
         )
     }
 }
