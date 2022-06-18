@@ -116,10 +116,19 @@ private extension DefaultDashboardPresenter {
             )
         }
         
+        let walletTotal = networksAndTokensDict.values.reduce(into: 0.0) { (walletTotal, tokens) in
+            
+            let sectionTotal = tokens.reduce(into: 0.0) { sectionTotal, token in
+                sectionTotal += token.balance * token.usdPrice
+            }
+            
+            walletTotal += sectionTotal
+        }
+        
         return .init(
             shouldAnimateCardSwitcher: onboardingService.shouldShowOnboardingButton(),
             header: .init(
-                balance: "$69,420.00",
+                balance: walletTotal.formatted(.currency(code: "USD")),
                 pct: "+4.5%",
                 pctUp: true,
                 buttons: [
@@ -150,8 +159,8 @@ private extension DefaultDashboardPresenter {
                 name: $0.name,
                 ticker: $0.symbol,
                 imageData: interactor.tokenIcon(for: $0),
-                fiatBalance: "$69,000",
-                cryptoBalance: "\($0.balance) \($0.symbol)",
+                fiatBalance: ($0.balance * $0.usdPrice).formatted(.currency(code: "USD")),
+                cryptoBalance: "\($0.balance.toString(decimals: 2)) \($0.symbol)",
                 pctChange: "4.5%",
                 priceUp: true,
                 candles: .loaded(interactor.priceData(for: $0).toCandlesViewModelCandle)

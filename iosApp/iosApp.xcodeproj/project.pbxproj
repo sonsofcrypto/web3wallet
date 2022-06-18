@@ -54,6 +54,7 @@
 		1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */; };
 		1C54DBDC285DD10000E378F6 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */; };
 		1C54DBDE285DD15400E378F6 /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBDD285DD15400E378F6 /* Account.storyboard */; };
+		1C54DBE0285E1A0E00E378F6 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBDF285E1A0E00E378F6 /* Double+Extensions.swift */; };
 		1C5B60382843FACD00ECBD79 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B60372843FACD00ECBD79 /* UIViewController+Extensions.swift */; };
 		1C5B603B284675B800ECBD79 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5B603A284675B800ECBD79 /* Kingfisher */; };
 		1C60C1AA28571B95003BE25D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */; };
@@ -450,6 +451,7 @@
 		1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnOffSwitch.swift; sourceTree = "<group>"; };
 		1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
 		1C54DBDD285DD15400E378F6 /* Account.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
+		1C54DBDF285E1A0E00E378F6 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		1C5B60372843FACD00ECBD79 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1AB28571BB6003BE25D /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
@@ -1504,6 +1506,7 @@
 				1CB3A1E12840D6B70092D667 /* CALayer+Extension.swift */,
 				1CB3A1D12840D6B70092D667 /* CG+Extensions.swift */,
 				1CB3A1DE2840D6B70092D667 /* Data+Extension.swift */,
+				1C54DBDF285E1A0E00E378F6 /* Double+Extensions.swift */,
 				1CB3A1DA2840D6B70092D667 /* Formatter+Extensions.swift */,
 				1CB3A1D02840D6B70092D667 /* Int+Extensions.swift */,
 				1CB3A1E22840D6B70092D667 /* NSLocalizedString+Extension.swift */,
@@ -1513,6 +1516,7 @@
 				1CB3A1DD2840D6B70092D667 /* UIBarButtonItem+Extensions.swift */,
 				1CB3A1D42840D6B70092D667 /* UIButton+Extensions.swift */,
 				1CB3A1E02840D6B70092D667 /* UICollectionView+Extensions.swift */,
+				1C60C381285A5AE8003BE25D /* UICollectionViewCell+Extensions.swift */,
 				1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */,
 				1CB3A1D22840D6B70092D667 /* UIFont+Extension.swift */,
 				1C60C1AB28571BB6003BE25D /* UIImageView+Extensions.swift */,
@@ -1524,10 +1528,9 @@
 				1CE66BE3284CFB7600AB6ACA /* UITextView+Extensions.swift */,
 				1CD3FE332851D2A0008312DE /* UIView+Animations+Chat.swift */,
 				1CB3A1D52840D6B70092D667 /* UIView+Extensions.swift */,
-				1C60C37A2859BDD9003BE25D /* UIView+Toast+Extensions.swift */,
 				1CB3A1D82840D6B70092D667 /* UIView+LayoutConstraints+Extensions.swift */,
+				1C60C37A2859BDD9003BE25D /* UIView+Toast+Extensions.swift */,
 				1C5B60372843FACD00ECBD79 /* UIViewController+Extensions.swift */,
-				1C60C381285A5AE8003BE25D /* UICollectionViewCell+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2029,6 +2032,7 @@
 				1C60C37928588147003BE25D /* TokenPickerFilterAllCell.swift in Sources */,
 				1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */,
 				1C60C2B5285724D0003BE25D /* TokenPickerWireframeFactory.swift in Sources */,
+				1C54DBE0285E1A0E00E378F6 /* Double+Extensions.swift in Sources */,
 				1C6487202832E3FA0091A12D /* KeyChainServiceAssembler.swift in Sources */,
 				1C60C2EA285724D0003BE25D /* NetworksWireframeFactoryAssembler.swift in Sources */,
 				1C60C2E9285724D0003BE25D /* DashboardWireframe.swift in Sources */,

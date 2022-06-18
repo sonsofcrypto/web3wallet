@@ -145,4 +145,4 @@
 "tokenReceive.action.share" = "Share";
 "tokenReceive.action.share.address" = "My Public Address to Receive %@:";
 "tokenReceive.action.add" = "Add";
-"tokenReceive.action.add.toast" = "+10 coins!";
+"tokenReceive.action.add.toast" = "+%@ coins added to your wallet!";

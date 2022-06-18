@@ -38,7 +38,8 @@ struct Web3Token: Codable, Equatable {
     let type: `Type`
     let network: Web3Network
     let balance: Double
-    let showInWallet: Bool    
+    let showInWallet: Bool
+    let usdPrice: Double
 }
 
 extension Web3Token {

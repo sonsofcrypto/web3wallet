@@ -8,7 +8,7 @@ enum TokenReceivePresenterEvent {
 
     case dismiss
     case share
-    case addCoins
+    case addCoins(onCompletion: (Double) -> Void)
 }
 
 protocol TokenReceivePresenter {
@@ -70,7 +70,7 @@ extension DefaultTokenReceivePresenter: TokenReceivePresenter {
             
             break
             
-        case .addCoins:
+        case let .addCoins(onCompletion):
             
             let localStorage: Web3ServiceLocalStorage = ServiceDirectory.assembler.resolve()
             var allTokens = localStorage.readAllTokens()
@@ -82,6 +82,8 @@ extension DefaultTokenReceivePresenter: TokenReceivePresenter {
             ) else { return }
 
             allTokens.removeAll { $0.equalTo(network: token.network.name, symbol: token.symbol) }
+            
+            let coinsToAdd = 1000/token.usdPrice
 
             let updatedToken = Web3Token(
                 symbol: token.symbol,
@@ -89,13 +91,16 @@ extension DefaultTokenReceivePresenter: TokenReceivePresenter {
                 address: token.address,
                 type: token.type,
                 network: token.network,
-                balance: token.balance + 10,
-                showInWallet: token.showInWallet
+                balance: token.balance + coinsToAdd,
+                showInWallet: token.showInWallet,
+                usdPrice: token.usdPrice
             )
             
             allTokens.append(updatedToken)
             
             localStorage.storeAllTokens(with: allTokens)
+            
+            onCompletion(coinsToAdd)
         }
     }
 }

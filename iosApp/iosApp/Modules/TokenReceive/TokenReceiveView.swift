@@ -178,8 +178,17 @@ private extension TokenReceiveViewController {
         {
             [weak self] in
             guard let self = self else { return }
-            self.presenter.handle(.addCoins)
-            self.view.presentToastAlert(with: Localized("tokenReceive.action.add.toast"))
+            self.presenter.handle(.addCoins(onCompletion: self.makeCoinsAddedToast()))
+        }
+    }
+    
+    func makeCoinsAddedToast() -> (Double) -> () {
+        
+        {
+            [weak self] coins in
+            guard let self = self else { return }
+            let arg = coins.toString(decimals: 2)
+            self.view.presentToastAlert(with: Localized("tokenReceive.action.add.toast", arg: arg))
         }
     }
 }

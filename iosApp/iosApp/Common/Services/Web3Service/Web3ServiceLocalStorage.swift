@@ -72,7 +72,8 @@ extension DefaultWeb3ServiceLocalStorage: Web3ServiceLocalStorage {
                         type: myToken.type,
                         network: myToken.network,
                         balance: myToken.balance,
-                        showInWallet: true
+                        showInWallet: true,
+                        usdPrice: myToken.usdPrice
                     )
                 )
             } else {
@@ -84,7 +85,8 @@ extension DefaultWeb3ServiceLocalStorage: Web3ServiceLocalStorage {
                         type: token.type,
                         network: token.network,
                         balance: token.balance,
-                        showInWallet: false
+                        showInWallet: false,
+                        usdPrice: token.usdPrice
                     )
                 )
             }
@@ -141,7 +143,8 @@ private extension DefaultWeb3ServiceLocalStorage {
             type: .popular,
             network: ethereumNetwork,
             balance: 0,
-            showInWallet: true
+            showInWallet: true,
+            usdPrice: 1008.77
         )
     }
     
@@ -154,7 +157,9 @@ private extension DefaultWeb3ServiceLocalStorage {
             type: .popular,
             network: ethereumNetwork,
             balance: 0,
-            showInWallet: true
+            showInWallet: true,
+            usdPrice: 1.00
+            
         )
     }
     
@@ -167,7 +172,8 @@ private extension DefaultWeb3ServiceLocalStorage {
             type: .featured,
             network: ethereumNetwork,
             balance: 0,
-            showInWallet: true
+            showInWallet: true,
+            usdPrice: 0.00000902
         )
     }
     
@@ -180,7 +186,8 @@ private extension DefaultWeb3ServiceLocalStorage {
             type: .normal,
             network: ethereumNetwork,
             balance: 0,
-            showInWallet: true
+            showInWallet: true,
+            usdPrice: 7.92
         )
     }
     
@@ -196,7 +203,8 @@ private extension DefaultWeb3ServiceLocalStorage {
                 type: .normal,
                 network: ethereumNetwork,
                 balance: 0,
-                showInWallet: false
+                showInWallet: false,
+                usdPrice: 1.00
             ),
             .init(
                 symbol: "DOGE",
@@ -205,7 +213,8 @@ private extension DefaultWeb3ServiceLocalStorage {
                 type: .normal,
                 network: ethereumNetwork,
                 balance: 0,
-                showInWallet: false
+                showInWallet: false,
+                usdPrice: 0.054510
             ),
             .init(
                 symbol: "SHIB",
@@ -214,7 +223,8 @@ private extension DefaultWeb3ServiceLocalStorage {
                 type: .normal,
                 network: ethereumNetwork,
                 balance: 0,
-                showInWallet: false
+                showInWallet: false,
+                usdPrice: 0.00000791
             ),
             ethereumEthToken,
             .init(
@@ -224,7 +234,8 @@ private extension DefaultWeb3ServiceLocalStorage {
                 type: .normal,
                 network: ethereumNetwork,
                 balance: 0,
-                showInWallet: false
+                showInWallet: false,
+                usdPrice: 30.25
             ),
             .init(
                 symbol: "ADA",
@@ -233,7 +244,8 @@ private extension DefaultWeb3ServiceLocalStorage {
                 type: .normal,
                 network: ethereumNetwork,
                 balance: 0,
-                showInWallet: false
+                showInWallet: false,
+                usdPrice: 0.46
             ),
             .init(
                 symbol: "XRP",
@@ -242,7 +254,8 @@ private extension DefaultWeb3ServiceLocalStorage {
                 type: .normal,
                 network: ethereumNetwork,
                 balance: 0,
-                showInWallet: false
+                showInWallet: false,
+                usdPrice: 0.309679
             ),
             ethereumDotToken,
             .init(
@@ -252,7 +265,8 @@ private extension DefaultWeb3ServiceLocalStorage {
                 type: .normal,
                 network: ethereumNetwork,
                 balance: 0,
-                showInWallet: false
+                showInWallet: false,
+                usdPrice: 202.32
             ),
             .init(
                 symbol: "MNGO",
@@ -261,7 +275,8 @@ private extension DefaultWeb3ServiceLocalStorage {
                 type: .normal,
                 network: ethereumNetwork,
                 balance: 0,
-                showInWallet: false
+                showInWallet: false,
+                usdPrice: 0.04704166
             ),
             .init(
                 symbol: "CRV",
@@ -270,7 +285,8 @@ private extension DefaultWeb3ServiceLocalStorage {
                 type: .normal,
                 network: ethereumNetwork,
                 balance: 0,
-                showInWallet: false
+                showInWallet: false,
+                usdPrice: 0.595908
             ),
             .init(
                 symbol: "RAY",
@@ -279,7 +295,8 @@ private extension DefaultWeb3ServiceLocalStorage {
                 type: .normal,
                 network: ethereumNetwork,
                 balance: 0,
-                showInWallet: false
+                showInWallet: false,
+                usdPrice: 0.628254
             )
         ]
     }
@@ -304,7 +321,8 @@ private extension DefaultWeb3ServiceLocalStorage {
             type: .normal,
             network: solanaNetwork,
             balance: 0,
-            showInWallet: true
+            showInWallet: true,
+            usdPrice: 30.25
         )
     }
     
@@ -317,7 +335,8 @@ private extension DefaultWeb3ServiceLocalStorage {
             type: .normal,
             network: solanaNetwork,
             balance: 0,
-            showInWallet: true
+            showInWallet: true,
+            usdPrice: 0.04704166
         )
     }
     
@@ -332,7 +351,8 @@ private extension DefaultWeb3ServiceLocalStorage {
                 type: .normal,
                 network: solanaNetwork,
                 balance: 0,
-                showInWallet: false
+                showInWallet: false,
+                usdPrice: 0.595908
             ),
             solanaMngoToken,
             .init(
@@ -342,7 +362,8 @@ private extension DefaultWeb3ServiceLocalStorage {
                 type: .normal,
                 network: solanaNetwork,
                 balance: 0,
-                showInWallet: false
+                showInWallet: false,
+                usdPrice: 0.628254
             )
         ]
     }
