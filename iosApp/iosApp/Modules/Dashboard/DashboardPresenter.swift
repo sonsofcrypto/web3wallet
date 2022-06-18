@@ -140,12 +140,7 @@ private extension DefaultDashboardPresenter {
     
     func makeDashboardViewModelWallets(from tokens: [Web3Token]) -> [DashboardViewModel.Wallet] {
         
-        tokens.sorted(by: {
-            guard $0.balance == $1.balance else {
-                return $0.balance < $1.balance
-            }
-            return $0.name < $1.name
-        }).compactMap {
+        tokens.sortByNetworkBalanceAndName.compactMap {
             
             .init(
                 name: $0.name,

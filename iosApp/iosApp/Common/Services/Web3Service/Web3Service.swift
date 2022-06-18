@@ -41,3 +41,38 @@ extension Web3Token {
         case popular
     }
 }
+
+extension Array where Element == Web3Token {
+    
+    var sortByNetworkBalanceAndName: [Web3Token] {
+        
+        sorted {
+            
+            if $0.network.name != $1.network.name {
+                
+                return $0.network.name < $1.network.name
+            }
+            else if $0.balance != $0.balance {
+                
+                return $0.balance < $1.balance
+            } else {
+                
+                return $0.name < $1.name
+            }
+        }
+    }
+    
+    var sortByNetworkAndName: [ Web3Token ] {
+        
+        sorted {
+            
+            guard $0.symbol == $1.symbol else {
+                
+                return $0.symbol < $0.symbol
+            }
+            
+            return $0.network.name > $1.network.name
+        }
+    }
+
+}

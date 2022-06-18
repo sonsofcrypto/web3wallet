@@ -39,7 +39,14 @@ final class TokenPickerItemCell: UICollectionViewCell {
         symbolLabel.text = viewModel.symbol
         nameLabel.text = viewModel.name
         networkLabel.text = viewModel.network
-        multiSelectTick.isHidden = !viewModel.isSelected
+        if let isSelected = viewModel.isSelected {
+        
+            multiSelectTick.isHidden = false
+            multiSelectTick.tintColor = isSelected ? Theme.color.tint : Theme.color.tintLight
+        } else {
+            
+            multiSelectTick.isHidden = true
+        }
         
         widthLayoutConstraint.constant = width
     }

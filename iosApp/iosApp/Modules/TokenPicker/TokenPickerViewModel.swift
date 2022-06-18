@@ -46,7 +46,7 @@ extension TokenPickerViewModel {
         let symbol: String
         let name: String
         let network: String
-        let isSelected: Bool
+        let isSelected: Bool?
     }
 }
 

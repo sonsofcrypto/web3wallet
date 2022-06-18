@@ -41,7 +41,7 @@ extension DefaultWeb3Service: Web3Service {
         
         guard myTokens.isEmpty else { return myTokens }
         
-        return defaultTokens.sortByNetworkAndName
+        return defaultTokens.sortByNetworkBalanceAndName
     }
     
     func storeMyTokens(to tokens: [Web3Token]) {
@@ -294,21 +294,5 @@ private extension DefaultWeb3Service {
                 balance: 0
             )
         ]
-    }
-}
-
-private extension Array where Element == Web3Token {
-    
-    var sortByNetworkAndName: [ Web3Token ] {
-        
-        sorted {
-            
-            guard $0.symbol == $1.symbol else {
-                
-                return $0.symbol < $0.symbol
-            }
-            
-            return $0.network.name > $1.network.name
-        }
     }
 }

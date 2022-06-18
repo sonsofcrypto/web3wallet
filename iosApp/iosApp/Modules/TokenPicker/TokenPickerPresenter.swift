@@ -9,7 +9,8 @@ enum TokenPickerPresenterEvent {
     case search(searchTerm: String)
     case selectFilter(TokenPickerViewModel.Filter)
     case selectItem(TokenPickerViewModel.Token)
-    case confirmTokens
+    case addCustomToken
+    case done
     case dismiss
 }
 
@@ -32,7 +33,7 @@ final class DefaultTokenPickerPresenter {
     private var tokens = [Web3Token]()
     private var itemsDisplayed = [TokenPickerViewModel.Item]()
     
-    var selectedTokens = [Web3Token]()
+    var selectedTokens: [Web3Token]?
 
     init(
         view: TokenPickerView,
@@ -82,9 +83,16 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
                 wireframe.navigate(to: .tokenDetails(token))
             }
             
-        case .confirmTokens:
+        case .addCustomToken:
             
-            guard case let TokenPickerWireframeContext.Source.multiSelectEdit(_, onCompletion) = context.source else {
+            wireframe.navigate(to: .addCustomToken)
+            
+        case .done:
+            
+            guard
+                case let TokenPickerWireframeContext.Source.multiSelectEdit(_, onCompletion) = context.source,
+                let selectedTokens = selectedTokens
+            else {
                 
                 return
             }
@@ -115,25 +123,25 @@ private extension DefaultTokenPickerPresenter {
     
     func handleTokenTappedOnMultiSelect(token: TokenPickerViewModel.Token) {
         
-        guard let tokenTapped = tokens.first(
-            where: {
-                $0.network.name == token.network && $0.symbol == token.symbol
-            }
-        ) else { return }
+        guard
+            let tokenTapped = tokens.findToken(
+                withNetwork: token.network,
+                andSymbol: token.symbol
+            ),
+            let selectedTokens = selectedTokens
+        else { return }
         
-        if selectedTokens.contains(where: {
-            $0.network.name == token.network && $0.symbol == token.symbol
-        }) {
+        if selectedTokens.hasToken(withNetwork: token.network, andSymbol: token.symbol) {
             
-            selectedTokens.removeAll {
-                $0.network.name == token.network && $0.symbol == token.symbol
-            }
-
+            self.selectedTokens = selectedTokens.removingToken(
+                withNetwork: token.network,
+                andSymbol: token.symbol
+            )
         } else {
 
-            selectedTokens.append(tokenTapped)
-
+            self.selectedTokens = selectedTokens.addingToken(with: tokenTapped)
         }
+        
         refreshData()
     }
     
@@ -297,7 +305,7 @@ private extension Array where Element == Web3Token {
     
     func items(
         using interactor: TokenPickerInteractor,
-        selectedTokens: [Web3Token]
+        selectedTokens: [Web3Token]?
     ) -> [TokenPickerViewModel.Item] {
         compactMap { token in
             .token(
@@ -306,7 +314,7 @@ private extension Array where Element == Web3Token {
                     symbol: token.symbol,
                     name: token.name,
                     network: token.network.name,
-                    isSelected: selectedTokens.contains(
+                    isSelected: selectedTokens?.contains(
                         where: { 
                             $0.network.name == token.network.name && $0.symbol == token.symbol
                         }
@@ -332,6 +340,32 @@ private extension Array where Element == Web3Token {
             
             return condition1 && condition2
         }
+    }
+    
+    func addingToken(with token: Web3Token) -> [Web3Token] {
+        
+        var tokens = self
+        tokens.append(token)
+        return tokens
+    }
+    
+    func removingToken(withNetwork network: String, andSymbol symbol: String) -> [Web3Token] {
+        
+        var tokens = self
+        tokens.removeAll {
+            $0.network.name == network && $0.symbol == symbol
+        }
+        return tokens
+    }
+    
+    func hasToken(withNetwork network: String, andSymbol symbol: String) -> Bool {
+        
+        findToken(withNetwork: network, andSymbol: symbol) != nil
+    }
+    
+    func findToken(withNetwork network: String, andSymbol symbol: String) -> Web3Token? {
+        
+        filter { $0.network.name == network && $0.symbol == symbol }.first
     }
     
     func findToken(matching symbol: String) -> Web3Token? {

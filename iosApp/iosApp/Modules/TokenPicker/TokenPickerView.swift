@@ -71,8 +71,12 @@ extension TokenPickerViewController: TokenPickerView {
                 
         if viewModel.allowMultiSelection {
             
-            configureConfirmationNavBarItem()
+            configureNavBarLeftBarButtonIconAddToken()
+            configureNavBarRightBarButtonIconDone()
             itemsCollectionView.allowsMultipleSelection = viewModel.allowMultiSelection
+        } else {
+            
+            configureNavBarLeftBarButtonIconClose()
         }
     }
 }
@@ -91,8 +95,11 @@ extension TokenPickerViewController {
         ]
         let vStack = VStackView(views)
         vStack.spacing = 4
-        
         navigationItem.titleView = vStack
+    }
+    
+    func configureNavBarLeftBarButtonIconClose() {
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "close-icon"),
             style: .plain,
@@ -102,15 +109,38 @@ extension TokenPickerViewController {
         navigationItem.leftBarButtonItem?.tintColor  = Theme.color.tint
     }
     
-    func configureConfirmationNavBarItem() {
+    func configureNavBarLeftBarButtonIconAddToken() {
+        
+        let button = UIButton()
+        button.setImage(
+            .init(named: "plus_icon"),
+            for: .normal
+        )
+        button.tintColor = Theme.color.tint
+        button.addTarget(self, action: #selector(addCustomToken), for: .touchUpInside)
+        button.addConstraints(
+            [
+                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
+            ]
+        )
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
+    }
+    
+    @objc func addCustomToken() {
+        
+        presenter.handle(.addCustomToken)
+    }
+    
+    func configureNavBarRightBarButtonIconDone() {
         
         let button = UIButton()
         button.setImage(
             .init(named: "confirm_icon"),
             for: .normal
         )
-        button.tintColor = Theme.color.red
-        button.addTarget(self, action: #selector(confirmTokensTapped), for: .touchUpInside)
+        button.tintColor = Theme.color.tint
+        button.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
         button.addConstraints(
             [
                 .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
@@ -120,9 +150,9 @@ extension TokenPickerViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
     
-    @objc func confirmTokensTapped() {
+    @objc func doneTapped() {
         
-        presenter.handle(.confirmTokens)
+        presenter.handle(.done)
     }
     
     func configureUI() {
