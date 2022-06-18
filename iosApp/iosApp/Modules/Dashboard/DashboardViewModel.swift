@@ -53,6 +53,7 @@ extension DashboardViewModel {
 extension DashboardViewModel {
 
     struct NFT {
-        let imageName: String
+        let image: String
+        let onSelected: () -> Void
     }
 }

@@ -10,6 +10,7 @@ protocol Web3Service: AnyObject {
     var allTokens: [Web3Token] { get }
     
     var myTokens: [Web3Token] { get }
+    func storeMyTokens(to tokens: [Web3Token])
     
     func networkIcon(for network: Web3Network) -> Data
     func tokenIcon(for token: Web3Token) -> Data

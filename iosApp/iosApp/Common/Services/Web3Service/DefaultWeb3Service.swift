@@ -20,7 +20,6 @@ extension DefaultWeb3Service: Web3Service {
     
     var allNetworks: [Web3Network] {
         [
-            bitcoinNetwork,
             ethereumNetwork,
             solanaNetwork
         ]
@@ -30,7 +29,6 @@ extension DefaultWeb3Service: Web3Service {
         
         var tokens = [Web3Token]()
         
-        tokens.append(bitcoinToken)
         tokens.append(contentsOf: ethereumTokens)
         tokens.append(contentsOf: solanaTokens)
         
@@ -39,11 +37,16 @@ extension DefaultWeb3Service: Web3Service {
     
     var myTokens: [Web3Token] {
         
-        let myTokens = web3ServiceLocalStorage.getMyTokens()
+        let myTokens = web3ServiceLocalStorage.readMyTokens()
         
         guard myTokens.isEmpty else { return myTokens }
         
         return defaultTokens.sortByNetworkAndName
+    }
+    
+    func storeMyTokens(to tokens: [Web3Token]) {
+        
+        web3ServiceLocalStorage.storeMyTokens(to: tokens)
     }
     
     func networkIcon(for network: Web3Network) -> Data {
@@ -76,35 +79,13 @@ private extension DefaultWeb3Service {
     var defaultTokens: [Web3Token] {
         
         [
-            bitcoinToken,
             ethereumEthToken,
-            ethereumUsdcToken,
             ethereumCultToken,
-            solanaSolToken
+            ethereumUsdcToken,
+            ethereumDotToken,
+            solanaSolToken,
+            solanaMngoToken
         ]
-    }
-}
-
-private extension DefaultWeb3Service {
-    
-   var bitcoinNetwork: Web3Network {
-        
-        .init(
-            name: "Bitcoin",
-            hasDns: false
-        )
-    }
-    
-    var bitcoinToken: Web3Token {
-        
-        .init(
-            symbol: "BTC",
-            name: "Bitcoin",
-            address: "691tAaz5x1HUXrCNLbtMDqcw6o5Sdn4xqX",
-            type: .normal,
-            network: bitcoinNetwork,
-            balance: 0
-        )
     }
 }
 
@@ -149,6 +130,18 @@ private extension DefaultWeb3Service {
             name: "Cult DAO",
             address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
             type: .featured,
+            network: ethereumNetwork,
+            balance: 0
+        )
+    }
+    
+    var ethereumDotToken: Web3Token {
+        
+        .init(
+            symbol: "DOT",
+            name: "Polkadot",
+            address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
+            type: .normal,
             network: ethereumNetwork,
             balance: 0
         )
@@ -208,14 +201,7 @@ private extension DefaultWeb3Service {
                 network: ethereumNetwork,
                 balance: 0
             ),
-            .init(
-                symbol: "DOT",
-                name: "Polkadot",
-                address: "0x71C7632EC7ab88b098ddfB731B7401B5f6d8976F",
-                type: .normal,
-                network: ethereumNetwork,
-                balance: 0
-            ),
+            ethereumDotToken,
             .init(
                 symbol: "BNB",
                 name: "BNB",
@@ -274,6 +260,18 @@ private extension DefaultWeb3Service {
         )
     }
     
+    var solanaMngoToken: Web3Token {
+        
+        .init(
+            symbol: "MNGO",
+            name: "Mango",
+            address: "HN7cABqLq46Es1jh92dQQisAq662SmxEJKLsHHe4YWrH",
+            type: .normal,
+            network: solanaNetwork,
+            balance: 0
+        )
+    }
+    
     var solanaTokens: [ Web3Token ] {
         
         [
@@ -286,14 +284,7 @@ private extension DefaultWeb3Service {
                 network: solanaNetwork,
                 balance: 0
             ),
-            .init(
-                symbol: "MNGO",
-                name: "Mango",
-                address: "HN7cABqLq46Es1jh92dQQisAq662SmxEJKLsHHe4YWrH",
-                type: .normal,
-                network: solanaNetwork,
-                balance: 0
-            ),
+            solanaMngoToken,
             .init(
                 symbol: "RAY",
                 name: "Raydium",
@@ -312,12 +303,12 @@ private extension Array where Element == Web3Token {
         
         sorted {
             
-            guard $0.network.name == $1.network.name else {
+            guard $0.symbol == $1.symbol else {
                 
                 return $0.symbol < $0.symbol
             }
             
-            return $0.network.name < $1.network.name
+            return $0.network.name > $1.network.name
         }
     }
 }

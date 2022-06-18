@@ -11,6 +11,7 @@ final class TokenPickerItemCell: UICollectionViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var networkLabel: UILabel!
     @IBOutlet weak var widthLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var multiSelectTick: UIImageView!
 
     override func awakeFromNib() {
         
@@ -38,6 +39,7 @@ final class TokenPickerItemCell: UICollectionViewCell {
         symbolLabel.text = viewModel.symbol
         nameLabel.text = viewModel.name
         networkLabel.text = viewModel.network
+        multiSelectTick.isHidden = !viewModel.isSelected
         
         widthLayoutConstraint.constant = width
     }

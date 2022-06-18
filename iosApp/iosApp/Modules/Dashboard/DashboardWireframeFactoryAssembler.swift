@@ -13,9 +13,12 @@ final class DashboardWireframeFactoryAssembler: AssemblerComponent {
                 accountWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
                 mnemonicConfirmationWireframeFactory: resolver.resolve(),
+                tokenPickerWireframeFactory: resolver.resolve(),
+                nftDetailWireframeFactory: resolver.resolve(),
                 onboardingService: resolver.resolve(),
                 web3Service: resolver.resolve(),
-                priceHistoryService: resolver.resolve()
+                priceHistoryService: resolver.resolve(),
+                nftsService: resolver.resolve()
             )
         }
     }

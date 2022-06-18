@@ -21,6 +21,9 @@ final class DashboardWalletCell: CollectionViewCell {
         
         layer.cornerRadius = Global.cornerRadius * 2
         
+        imageView.layer.cornerRadius = imageView.frame.size.width * 0.5
+        imageView.backgroundColor = Theme.color.text
+        
         contentStack.setCustomSpacing(13, after: topContentStack)
         
         currencyLabel.applyStyle(.callout)

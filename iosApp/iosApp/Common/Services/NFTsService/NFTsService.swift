@@ -24,6 +24,9 @@ protocol NFTsService: AnyObject {
     func yourNftCollections(
         onCompletion: (Result<[NFTCollection], Error>) -> Void
     )
+    func yourNFTs(
+        forNetwork network: Web3Network
+    ) -> [NFTItem]
 }
 
 struct NFTItem {

@@ -129,6 +129,8 @@
 "chat.me.message3" = "Also, please tell SonsOfCrypto team that they rock! 🔥";
 
 "tokenPicker.title.receive" = "Receive";
+"tokenPicker.title.send" = "Send";
+"tokenPicker.title.multiSelectEdit" = "Select";
 "tokenPicker.networks.all" = "All networks";
 "tokenPicker.featured.title" = "Featured";
 "tokenPicker.popular.title" = "Popular";

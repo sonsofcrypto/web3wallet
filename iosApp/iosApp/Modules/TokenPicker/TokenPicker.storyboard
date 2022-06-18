@@ -263,7 +263,21 @@
                                                         </stackView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uYF-eg-TXZ">
                                                             <rect key="frame" x="147" y="0.0" width="235" height="50"/>
+                                                            <subviews>
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="confirm_icon" translatesAutoresizingMaskIntoConstraints="NO" id="efG-KG-3kf">
+                                                                    <rect key="frame" x="211" y="13" width="24" height="24"/>
+                                                                    <color key="tintColor" name="appRed"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="24" id="AMa-zh-bdU"/>
+                                                                        <constraint firstAttribute="width" constant="24" id="PpG-jm-f8D"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                            </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstItem="efG-KG-3kf" firstAttribute="centerY" secondItem="uYF-eg-TXZ" secondAttribute="centerY" id="RMQ-Qr-am1"/>
+                                                                <constraint firstAttribute="trailing" secondItem="efG-KG-3kf" secondAttribute="trailing" id="Veb-Ok-Wwx"/>
+                                                            </constraints>
                                                         </view>
                                                     </subviews>
                                                     <constraints>
@@ -280,6 +294,7 @@
                                         </collectionViewCellContentView>
                                         <connections>
                                             <outlet property="iconImageView" destination="WSf-08-PkY" id="X47-Zp-AsR"/>
+                                            <outlet property="multiSelectTick" destination="efG-KG-3kf" id="4yS-sP-Xpc"/>
                                             <outlet property="nameLabel" destination="76J-2u-RQP" id="a3d-bK-d7g"/>
                                             <outlet property="networkLabel" destination="5SO-rv-yof" id="eZH-Pb-DIL"/>
                                             <outlet property="symbolLabel" destination="qwV-5w-tiR" id="uzS-C4-5ZU"/>
@@ -320,6 +335,7 @@
     </scenes>
     <resources>
         <image name="clear" catalog="system" width="128" height="114"/>
+        <image name="confirm_icon" width="980" height="982"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <namedColor name="appRed">
             <color red="0.90600001811981201" green="0.21600000560283661" blue="0.58399999141693115" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

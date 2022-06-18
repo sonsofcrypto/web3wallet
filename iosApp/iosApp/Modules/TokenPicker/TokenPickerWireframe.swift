@@ -9,10 +9,36 @@ struct TokenPickerWireframeContext {
     let presentationStyle: PresentationStyle
     let source: Source
     
-    enum Source: String {
+    enum Source {
         
         case receive
         case send
+        case multiSelectEdit(
+            selectedTokens: [Web3Token],
+            onCompletion: (([Web3Token]) -> Void)
+        )
+        
+        var localizedValue: String {
+            
+            switch self {
+            case .receive:
+                return "receive"
+            case .send:
+                return "send"
+            case .multiSelectEdit:
+                return "multiSelectEdit"
+            }
+        }
+        
+        var isMultiSelect: Bool {
+            
+            switch self {
+            case .multiSelectEdit:
+                return true
+            case .receive, .send:
+                return false
+            }
+        }
     }
 }
 

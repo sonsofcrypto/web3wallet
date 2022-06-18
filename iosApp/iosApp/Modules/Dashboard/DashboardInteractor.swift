@@ -9,20 +9,25 @@ protocol DashboardInteractor: AnyObject {
     var myTokens: [Web3Token] { get }
     func tokenIcon(for token: Web3Token) -> Data
     func priceData(for token: Web3Token) -> [ Web3Candle ]
+    func nfts(for network: Web3Network) -> [ NFTItem ]
+    func updateMyWeb3Tokens(to tokens: [Web3Token])
 }
 
 final class DefaultDashboardInteractor {
 
     private let web3Service: Web3Service
     private let priceHistoryService: PriceHistoryService
+    private let nftsService: NFTsService
 
     init(
         web3Service: Web3Service,
-        priceHistoryService: PriceHistoryService
+        priceHistoryService: PriceHistoryService,
+        nftsService: NFTsService
     ) {
         
         self.web3Service = web3Service
         self.priceHistoryService = priceHistoryService
+        self.nftsService = nftsService
     }
 }
 
@@ -41,5 +46,15 @@ extension DefaultDashboardInteractor: DashboardInteractor {
     func priceData(for token: Web3Token) -> [ Web3Candle ] {
         
         priceHistoryService.priceData(for: token, period: .lastXDays(43))
+    }
+    
+    func nfts(for network: Web3Network) -> [ NFTItem ] {
+        
+        nftsService.yourNFTs(forNetwork: network)
+    }
+    
+    func updateMyWeb3Tokens(to tokens: [Web3Token]) {
+        
+        web3Service.storeMyTokens(to: tokens)
     }
 }

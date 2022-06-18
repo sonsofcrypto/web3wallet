@@ -14,21 +14,22 @@ enum DashboardPresenterEvent {
     case didInteractWithCardSwitcher
     case presentUnderConstructionAlert
     case didTapNetwork
+    case didTapEditTokens
 }
 
 protocol DashboardPresenter {
-
+    
     func present()
     func handle(_ event: DashboardPresenterEvent)
 }
 
 final class DefaultDashboardPresenter {
-
+    
     private weak var view: DashboardView?
     private let interactor: DashboardInteractor
     private let wireframe: DashboardWireframe
     private let onboardingService: OnboardingService
-
+    
     var myTokens = [Web3Token]()
     
     init(
@@ -45,12 +46,12 @@ final class DefaultDashboardPresenter {
 }
 
 extension DefaultDashboardPresenter: DashboardPresenter {
-
+    
     func present() {
         
         fetchMyTokens()
     }
-
+    
     func handle(_ event: DashboardPresenterEvent) {
         switch event {
         case let .didSelectWallet(idx):
@@ -67,6 +68,12 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             wireframe.navigate(to: .receiveCoins)
         case .sendAction:
             break
+        case .didTapEditTokens:
+            wireframe.navigate(to: .editTokens(
+                selectedTokens: myTokens,
+                onCompletion: makeOnEditTokensCompletion()
+            )
+            )
         default:
             print("Handle \(event)")
         }
@@ -77,21 +84,22 @@ private extension DefaultDashboardPresenter {
     
     func fetchMyTokens() {
         
-        let web3Service: Web3Service = ServiceDirectory.assembler.resolve()
-        self.myTokens = web3Service.myTokens
+        myTokens = interactor.myTokens
         view?.update(with: viewModel())
     }
 }
 
 private extension DefaultDashboardPresenter {
-
+    
     func viewModel() -> DashboardViewModel {
         
         let networksAndTokensDict = myTokens.networksAndTokensDict
         
         var sections = [DashboardViewModel.Section]()
         
-        networksAndTokensDict.keys.forEach { network in
+        Array(networksAndTokensDict.keys).sorted(by: {
+            $0.name < $1.name
+        }).forEach { network in
             
             let tokens: [Web3Token] = networksAndTokensDict[network] ?? []
             
@@ -99,7 +107,7 @@ private extension DefaultDashboardPresenter {
                 .init(
                     name: network.name,
                     wallets: makeDashboardViewModelWallets(from: tokens),
-                    nfts: mockNFTsETH()
+                    nfts: makeDashboardViewModelNFts(from: interactor.nfts(for: network))
                 )
             )
         }
@@ -132,7 +140,12 @@ private extension DefaultDashboardPresenter {
     
     func makeDashboardViewModelWallets(from tokens: [Web3Token]) -> [DashboardViewModel.Wallet] {
         
-        tokens.compactMap {
+        tokens.sorted(by: {
+            guard $0.balance == $1.balance else {
+                return $0.balance < $1.balance
+            }
+            return $0.name < $1.name
+        }).compactMap {
             
             .init(
                 name: $0.name,
@@ -144,6 +157,34 @@ private extension DefaultDashboardPresenter {
                 priceUp: true,
                 candles: .loaded(interactor.priceData(for: $0).toCandlesViewModelCandle)
             )
+        }
+    }
+    
+    func makeDashboardViewModelNFts(from nfts: [NFTItem]) -> [DashboardViewModel.NFT] {
+        
+        nfts.compactMap { .init(image: $0.image, onSelected: makeOnNFTSelected(for: $0)) }
+    }
+    
+    func makeOnNFTSelected(for nftItem: NFTItem) -> () -> Void {
+        
+        {
+            [weak self] in
+            
+            guard let self = self else { return }
+            
+            self.wireframe.navigate(to: .nftItem(nftItem))
+        }
+    }
+    
+    func makeOnEditTokensCompletion() -> ([Web3Token]) -> Void {
+        
+        {
+            [weak self] updatedTokens in
+            
+            guard let self = self else { return }
+            
+            self.interactor.updateMyWeb3Tokens(to: updatedTokens)
+            self.fetchMyTokens()
         }
     }
 }
@@ -184,29 +225,5 @@ private extension Array where Element == Web3Candle {
                 period: $0.period
             )
         }
-    }
-}
-
-extension DefaultDashboardPresenter {
-
-    func mockNFTsETH() -> [DashboardViewModel.NFT] {
-        
-        return [
-            .init(imageName: "ape"),
-            .init(imageName: "ape2"),
-            .init(imageName: "ape3"),
-            .init(imageName: "ape4"),
-            .init(imageName: "ape5"),
-            .init(imageName: "penguin"),
-            .init(imageName: "penguin2"),
-            .init(imageName: "punk"),
-            .init(imageName: "punk2"),
-            .init(imageName: "punk3"),
-            .init(imageName: "punk4")
-        ]
-    }
-
-    static func mockNFTsSOL() -> [DashboardViewModel.NFT] {
-        return []
     }
 }

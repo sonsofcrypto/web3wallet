@@ -68,6 +68,12 @@ extension TokenPickerViewController: TokenPickerView {
         
         filtersCollectionView.reloadData()
         itemsCollectionView.reloadData()
+                
+        if viewModel.allowMultiSelection {
+            
+            configureConfirmationNavBarItem()
+            itemsCollectionView.allowsMultipleSelection = viewModel.allowMultiSelection
+        }
     }
 }
 
@@ -96,6 +102,29 @@ extension TokenPickerViewController {
         navigationItem.leftBarButtonItem?.tintColor  = Theme.color.tint
     }
     
+    func configureConfirmationNavBarItem() {
+        
+        let button = UIButton()
+        button.setImage(
+            .init(named: "confirm_icon"),
+            for: .normal
+        )
+        button.tintColor = Theme.color.red
+        button.addTarget(self, action: #selector(confirmTokensTapped), for: .touchUpInside)
+        button.addConstraints(
+            [
+                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
+            ]
+        )
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+    }
+    
+    @objc func confirmTokensTapped() {
+        
+        presenter.handle(.confirmTokens)
+    }
+    
     func configureUI() {
         
         (view as? GradientView)?.colors = [
@@ -111,7 +140,7 @@ extension TokenPickerViewController {
         searchTextField.text = nil
         searchTextField.delegate = self
         
-        clearSearchButton.isHidden = true        
+        clearSearchButton.isHidden = true
     }
 
     @objc func dismissTapped() {

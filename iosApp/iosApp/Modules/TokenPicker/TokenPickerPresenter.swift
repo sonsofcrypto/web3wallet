@@ -9,6 +9,7 @@ enum TokenPickerPresenterEvent {
     case search(searchTerm: String)
     case selectFilter(TokenPickerViewModel.Filter)
     case selectItem(TokenPickerViewModel.Token)
+    case confirmTokens
     case dismiss
 }
 
@@ -30,6 +31,8 @@ final class DefaultTokenPickerPresenter {
     private var selectedNetworks = [Web3Network]()
     private var tokens = [Web3Token]()
     private var itemsDisplayed = [TokenPickerViewModel.Item]()
+    
+    var selectedTokens = [Web3Token]()
 
     init(
         view: TokenPickerView,
@@ -48,6 +51,7 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
 
     func present() {
 
+        loadSelectedTokensIfNeeded()
         refreshTokens()
         refreshData()
     }
@@ -68,8 +72,25 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
             
         case let .selectItem(token):
             
-            guard let token = tokens.findToken(matching: token.symbol) else { return }
-            wireframe.navigate(to: .tokenDetails(token))
+            if context.source.isMultiSelect {
+                
+                handleTokenTappedOnMultiSelect(token: token)
+                
+            } else {
+
+                guard let token = tokens.findToken(matching: token.symbol) else { return }
+                wireframe.navigate(to: .tokenDetails(token))
+            }
+            
+        case .confirmTokens:
+            
+            guard case let TokenPickerWireframeContext.Source.multiSelectEdit(_, onCompletion) = context.source else {
+                
+                return
+            }
+            
+            onCompletion(selectedTokens)
+            wireframe.dismiss()
             
         case .dismiss:
             
@@ -79,6 +100,42 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
 }
 
 private extension DefaultTokenPickerPresenter {
+    
+    func loadSelectedTokensIfNeeded() {
+        
+        switch context.source {
+            
+        case let .multiSelectEdit(selectedTokens, _):
+            self.selectedTokens = selectedTokens
+            
+        default:
+            break
+        }
+    }
+    
+    func handleTokenTappedOnMultiSelect(token: TokenPickerViewModel.Token) {
+        
+        guard let tokenTapped = tokens.first(
+            where: {
+                $0.network.name == token.network && $0.symbol == token.symbol
+            }
+        ) else { return }
+        
+        if selectedTokens.contains(where: {
+            $0.network.name == token.network && $0.symbol == token.symbol
+        }) {
+            
+            selectedTokens.removeAll {
+                $0.network.name == token.network && $0.symbol == token.symbol
+            }
+
+        } else {
+
+            selectedTokens.append(tokenTapped)
+
+        }
+        refreshData()
+    }
     
     func refreshTokens() {
         
@@ -107,7 +164,8 @@ private extension DefaultTokenPickerPresenter {
     func makeViewModel() -> TokenPickerViewModel {
         
         .init(
-            title: Localized("tokenPicker.title.\(context.source.rawValue)"),
+            title: Localized("tokenPicker.title.\(context.source.localizedValue)"),
+            allowMultiSelection: context.source.isMultiSelect,
             content: .loaded(filters: makeFilters(), items: itemsDisplayed)
         )
     }
@@ -171,7 +229,7 @@ private extension DefaultTokenPickerPresenter {
     func makeSearchItems(for searchTerm: String) -> [TokenPickerViewModel.Item] {
         
         let tokens = tokens.filteredBy(searchTerm: searchTerm, networkIn: selectedNetworks)
-        return tokens.items(using: interactor).addNoResultsIfNeeded
+        return tokens.items(using: interactor, selectedTokens: selectedTokens).addNoResultsIfNeeded
     }
 }
 
@@ -217,7 +275,7 @@ private extension DefaultTokenPickerPresenter {
                 .init(name: groupName)
             )
         )
-        items.append(contentsOf: tokens.items(using: interactor))
+        items.append(contentsOf: tokens.items(using: interactor, selectedTokens: selectedTokens))
         return items
     }
 }
@@ -237,14 +295,22 @@ private extension Array where Element == Web3Network {
 
 private extension Array where Element == Web3Token {
     
-    func items(using interactor: TokenPickerInteractor) -> [TokenPickerViewModel.Item] {
-        compactMap {
+    func items(
+        using interactor: TokenPickerInteractor,
+        selectedTokens: [Web3Token]
+    ) -> [TokenPickerViewModel.Item] {
+        compactMap { token in
             .token(
                 .init(
-                    image: interactor.tokenIcon(for: $0).pngImage ?? .init(named: "default_token")!,
-                    symbol: $0.symbol,
-                    name: $0.name,
-                    network: $0.network.name
+                    image: interactor.tokenIcon(for: token).pngImage ?? .init(named: "default_token")!,
+                    symbol: token.symbol,
+                    name: token.name,
+                    network: token.network.name,
+                    isSelected: selectedTokens.contains(
+                        where: { 
+                            $0.network.name == token.network.name && $0.symbol == token.symbol
+                        }
+                    )
                 )
             )
         }
