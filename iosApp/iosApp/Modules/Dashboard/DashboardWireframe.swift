@@ -147,7 +147,7 @@ private extension DefaultDashboardWireframe {
             priceHistoryService: priceHistoryService,
             nftsService: nftsService
         )
-        let vc: DashboardViewController = UIStoryboard(.main).instantiate()
+        let vc: DashboardViewController = UIStoryboard(.dashboard).instantiate()
         let presenter = DefaultDashboardPresenter(
             view: vc,
             interactor: interactor,
