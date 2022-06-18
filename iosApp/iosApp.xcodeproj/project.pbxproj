@@ -970,8 +970,8 @@
 				1C60C233285724D0003BE25D /* NFTsDashboard */,
 				1C60C23E285724D0003BE25D /* Root */,
 				1C60C1C8285724D0003BE25D /* Settings */,
-				1C60C3612857C5D9003BE25D /* TokenReceive */,
 				1C60C1D5285724D0003BE25D /* TokenPicker */,
+				1C60C3612857C5D9003BE25D /* TokenReceive */,
 			);
 			name = Modules;
 			path = iosApp/Modules;
