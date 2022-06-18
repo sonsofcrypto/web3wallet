@@ -91,8 +91,10 @@ extension DefaultDashboardWireframe: DashboardWireframe {
 
         switch destination {
             
-        case let .wallet(wallet, token):
-            accountWireframeFactory.makeWireframe(vc, wallet: wallet, token: token).present()
+        case let .wallet(_, token):
+            accountWireframeFactory.makeWireframe(
+                presentingIn: vc, context: .init(web3Token: token)
+            ).present()
             
         case .keyStoreNetworkSettings:
             vc.edgeCardsController?.setDisplayMode(.overview, animated: true)

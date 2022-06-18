@@ -7,19 +7,21 @@ import UIKit
 protocol AccountWireframeFactory {
 
     func makeWireframe(
-        _ parent: UIViewController,
-        wallet: KeyStoreItem,
-        token: Web3Token
+        presentingIn: UIViewController,
+        context: AccountWireframeContext
     ) -> AccountWireframe
 }
 
 final class DefaultAccountWireframeFactory {
 
+    private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
     private let priceHistoryService: PriceHistoryService
 
     init(
+        tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
         priceHistoryService: PriceHistoryService
     ) {
+        self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
         self.priceHistoryService = priceHistoryService
     }
 }
@@ -27,18 +29,15 @@ final class DefaultAccountWireframeFactory {
 extension DefaultAccountWireframeFactory: AccountWireframeFactory {
 
     func makeWireframe(
-        _ parent: UIViewController,
-        wallet: KeyStoreItem,
-        token: Web3Token
+        presentingIn: UIViewController,
+        context: AccountWireframeContext
     ) -> AccountWireframe {
         
         DefaultAccountWireframe(
-            parent: parent,
-            interactor: DefaultAccountInteractor(
-                priceHistoryService: priceHistoryService,
-                wallet: wallet,
-                token: token
-            )
+            presentingIn: presentingIn,
+            context: context,
+            tokenReceiveWireframeFactory: tokenReceiveWireframeFactory,
+            priceHistoryService: priceHistoryService
         )
     }
 }

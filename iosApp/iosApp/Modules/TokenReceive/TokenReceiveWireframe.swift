@@ -70,7 +70,12 @@ extension DefaultTokenReceiveWireframe: TokenReceiveWireframe {
     
     func dismiss() {
         
-        navigationController.popViewController(animated: true)
+        if navigationController.viewControllers.count == 1 {
+            
+            navigationController.dismiss(animated: true)
+        } else {
+            navigationController.popViewController(animated: true)
+        }
     }
 }
 
@@ -102,7 +107,15 @@ private extension DefaultTokenReceiveWireframe {
             )
             self.navigationController = navigationController
             return navigationController
-        case .present, .push:
+        case .present:
+
+            vc.hidesBottomBarWhenPushed = true
+            
+            let navigationController = NavigationController(rootViewController: vc)
+            self.navigationController = navigationController
+            return navigationController
+
+        case .push:
             
             vc.hidesBottomBarWhenPushed = true
             

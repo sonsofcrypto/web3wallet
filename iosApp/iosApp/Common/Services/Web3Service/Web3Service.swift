@@ -68,12 +68,13 @@ extension Array where Element == Web3Token {
             if $0.network.name != $1.network.name {
                 
                 return $0.network.name < $1.network.name
-            }
-            else if $0.balance != $0.balance {
+            } else if
+                $0.network.name == $1.network.name &&
+                $0.balance != $1.balance
+            {
+                return $0.balance > $1.balance
                 
-                return $0.balance < $1.balance
             } else {
-                
                 return $0.name < $1.name
             }
         }

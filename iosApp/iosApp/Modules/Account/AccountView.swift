@@ -27,23 +27,6 @@ final class AccountViewController: BaseViewController {
 
 extension AccountViewController {
 
-    @IBAction func receiveAction(_ sender: Any) {
-
-        presenter.handle(.receive)
-    }
-
-    @IBAction func sendAction(_ sender: Any) {
-
-    }
-
-    @IBAction func tradeAction(_ sender: Any) {
-
-    }
-
-    @IBAction func moreAction(_ sender: Any) {
-
-    }
-
     @IBAction func dismissAction(_ sender: Any) {
         dismiss(animated: true)
     }

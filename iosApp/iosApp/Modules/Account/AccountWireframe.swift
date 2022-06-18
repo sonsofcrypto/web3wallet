@@ -4,6 +4,11 @@
 
 import UIKit
 
+struct AccountWireframeContext {
+    
+    let web3Token: Web3Token
+}
+
 enum AccountWireframeDestination {
 
     case receive
@@ -16,16 +21,23 @@ protocol AccountWireframe {
 
 final class DefaultAccountWireframe {
 
-    private weak var parent: UIViewController?
-
-    private let interactor: AccountInteractor
+    private weak var presentingIn: UIViewController?
+    private let context: AccountWireframeContext
+    private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
+    private let priceHistoryService: PriceHistoryService
+    
+    private weak var navigationController: NavigationController!
 
     init(
-        parent: UIViewController,
-        interactor: AccountInteractor
+        presentingIn: UIViewController,
+        context: AccountWireframeContext,
+        tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
+        priceHistoryService: PriceHistoryService
     ) {
-        self.parent = parent
-        self.interactor = interactor
+        self.presentingIn = presentingIn
+        self.context = context
+        self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
+        self.priceHistoryService = priceHistoryService
     }
 }
 
@@ -34,7 +46,7 @@ extension DefaultAccountWireframe: AccountWireframe {
     func present() {
         
         let vc = wireUp()
-        let topVc = (parent as? UINavigationController)?.topViewController
+        let topVc = (presentingIn as? UINavigationController)?.topViewController
 
         if let transitionDelegate =  topVc as? UIViewControllerTransitioningDelegate {
             vc.transitioningDelegate = transitionDelegate
@@ -49,7 +61,12 @@ extension DefaultAccountWireframe: AccountWireframe {
         switch destination {
             
         case .receive:
-            print("Go to Receive coins!")
+            
+            let coordinator = tokenReceiveWireframeFactory.makeWireframe(
+                presentingIn: navigationController,
+                context: .init(presentationStyle: .present, web3Token: context.web3Token)
+            )
+            coordinator.present()
         }
     }
 }
@@ -58,14 +75,21 @@ private extension DefaultAccountWireframe {
 
     func wireUp() -> UIViewController {
         
+        let interactor = DefaultAccountInteractor(
+            priceHistoryService: priceHistoryService
+        )
+        
         let vc: AccountViewController = UIStoryboard(.account).instantiate()
         let presenter = DefaultAccountPresenter(
             view: vc,
             interactor: interactor,
-            wireframe: self
+            wireframe: self,
+            context: context
         )
 
         vc.presenter = presenter
-        return NavigationController(rootViewController: vc)
+        let navigationController = NavigationController(rootViewController: vc)
+        self.navigationController = navigationController
+        return navigationController
     }
 }

@@ -7,6 +7,9 @@ import Foundation
 enum AccountPresenterEvent {
 
     case receive
+    case send
+    case swap
+    case more
 }
 
 protocol AccountPresenter {
@@ -17,28 +20,28 @@ protocol AccountPresenter {
 
 final class DefaultAccountPresenter {
 
+    private weak var view: AccountView?
     private let interactor: AccountInteractor
     private let wireframe: AccountWireframe
-
-    // private var items: [Item]
-
-    private weak var view: AccountView?
+    private let context: AccountWireframeContext
 
     init(
         view: AccountView,
         interactor: AccountInteractor,
-        wireframe: AccountWireframe
+        wireframe: AccountWireframe,
+        context: AccountWireframeContext
     ) {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
+        self.context = context
     }
 }
 
 extension DefaultAccountPresenter: AccountPresenter {
 
     func present() {
-        view?.update(with: viewModel(interactor.wallet, token: interactor.token))
+        view?.update(with: viewModel(token: context.web3Token))
     }
 
     func handle(_ event: AccountPresenterEvent) {
@@ -46,6 +49,12 @@ extension DefaultAccountPresenter: AccountPresenter {
         switch event {
         case .receive:
             wireframe.navigate(to: .receive)
+        case .send:
+            break
+        case .swap:
+            break
+        case .more:
+            break
         }
     }
 }
@@ -56,7 +65,7 @@ private extension DefaultAccountPresenter {
 
 private extension DefaultAccountPresenter {
 
-    func viewModel(_ wallet: KeyStoreItem, token: Web3Token) -> AccountViewModel {
+    func viewModel(token: Web3Token) -> AccountViewModel {
         .init(
             currencyName: token.name,
             header: .init(
@@ -65,10 +74,26 @@ private extension DefaultAccountPresenter {
                 pct: "+4.5%",
                 pctUp: true,
                 buttons: [
-                    .init(title: Localized("receive"), imageName: "button_receive"),
-                    .init(title: Localized("send"), imageName: "button_send"),
-                    .init(title: Localized("trade"), imageName: "button_trade"),
-                    .init(title: Localized("more"), imageName: "button_more")
+                    .init(
+                        title: Localized("receive"),
+                        imageName: "button_receive",
+                        onTap: makeOnReceieveTap()
+                    ),
+                    .init(
+                        title: Localized("send"),
+                        imageName: "button_send",
+                        onTap: makeOnSendTap()
+                    ),
+                    .init(
+                        title: Localized("trade"),
+                        imageName: "button_trade",
+                        onTap: makeOnSwapTap()
+                    ),
+                    .init(
+                        title: Localized("more"),
+                        imageName: "button_more",
+                        onTap: makeOnMoreTap()
+                    )
                 ]
             ),
             candles: .loaded(interactor.priceData(for: token).toCandlesViewModelCandle),
@@ -93,6 +118,53 @@ private extension DefaultAccountPresenter {
                 )
             ]
         )
+    }
+}
+
+private extension DefaultAccountPresenter {
+    
+    func makeOnReceieveTap() -> () -> Void {
+        
+        {
+            [weak self] in
+            
+            guard let self = self else { return }
+            
+            self.handle(.receive)
+        }
+    }
+    
+    func makeOnSendTap() -> () -> Void {
+        
+        {
+            [weak self] in
+            
+            guard let self = self else { return }
+            
+            self.handle(.send)
+        }
+    }
+    
+    func makeOnSwapTap() -> () -> Void {
+        
+        {
+            [weak self] in
+            
+            guard let self = self else { return }
+            
+            self.handle(.swap)
+        }
+    }
+    
+    func makeOnMoreTap() -> () -> Void {
+        
+        {
+            [weak self] in
+            
+            guard let self = self else { return }
+            
+            self.handle(.more)
+        }
     }
 }
 

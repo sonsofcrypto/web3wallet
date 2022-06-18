@@ -83,7 +83,9 @@ extension TokenReceiveViewController {
         
         navigationItem.titleView = vStack
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "arrow_back"),
+            image: UIImage(
+                named: navigationController?.viewControllers.count == 1 ? "close-icon" : "arrow_back"
+            ),
             style: .plain,
             target: self,
             action: #selector(dismissTapped)

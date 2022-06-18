@@ -17,15 +17,17 @@ struct AccountViewModel {
 extension AccountViewModel {
 
     struct Header {
+        
         let balance: String
         let fiatBalance: String
         let pct: String
         let pctUp: Bool
-        let buttons: [DashboardViewModel.Header.Button]
+        let buttons: [AccountViewModel.Header.Button]
 
         struct Button {
             let title: String
             let imageName: String
+            let onTap: () -> Void
         }
     }
 }
