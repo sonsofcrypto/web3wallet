@@ -34,6 +34,7 @@ struct Web3Token: Codable, Equatable {
     let symbol: String
     let name: String
     let address: String
+    let decimals: Int
     let type: `Type`
     let network: Web3Network
     let balance: Double

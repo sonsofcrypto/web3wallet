@@ -89,10 +89,11 @@ extension DefaultTokenReceivePresenter: TokenReceivePresenter {
                 symbol: token.symbol,
                 name: token.name,
                 address: token.address,
+                decimals: token.decimals,
                 type: token.type,
                 network: token.network,
                 balance: token.balance + coinsToAdd,
-                showInWallet: token.showInWallet,
+                showInWallet: true,
                 usdPrice: token.usdPrice
             )
             

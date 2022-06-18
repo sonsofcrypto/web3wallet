@@ -7,6 +7,7 @@ extension NFTsDashboardViewController {
     func makeMainScrollView() -> UIScrollView {
         
         let mainScrollView = UIScrollView()
+        mainScrollView.showsVerticalScrollIndicator = false
         mainScrollView.showsHorizontalScrollIndicator = false
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = Theme.color.tintLight
