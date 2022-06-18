@@ -18,21 +18,6 @@ final class DefaultWeb3Service {
 
 extension DefaultWeb3Service: Web3Service {
     
-    var allNetworks: [Web3Network] {
-        
-        allTokens.reduce([]) { result, token in
-            
-            if !result.contains(token.network) {
-                
-                var result = result
-                result.append(token.network)
-                return result
-            }
-            
-            return result
-        }
-    }
-    
     var allTokens: [Web3Token] {
         
         web3ServiceLocalStorage.readAllTokens().sortByNetworkAndName

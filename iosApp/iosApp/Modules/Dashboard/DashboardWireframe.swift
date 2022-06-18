@@ -5,7 +5,7 @@
 import UIKit
 
 enum DashboardWireframeDestination {
-    case wallet(wallet: KeyStoreItem, token: Web3Token)
+    case wallet(token: Web3Token)
     case keyStoreNetworkSettings
     case presentUnderConstructionAlert
     case mnemonicConfirmation
@@ -91,7 +91,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
 
         switch destination {
             
-        case let .wallet(_, token):
+        case let .wallet(token):
             accountWireframeFactory.makeWireframe(
                 presentingIn: vc, context: .init(web3Token: token)
             ).present()
@@ -114,7 +114,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             
         case .sendCoins:
             
-            break
+            presentTokenPicker(with: .send)
             
         case let .nftItem(nftItem):
             

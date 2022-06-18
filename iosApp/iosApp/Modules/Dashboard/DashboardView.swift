@@ -181,11 +181,9 @@ extension DashboardViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let section = viewModel?.sections[indexPath.section]
-        if indexPath.item < section?.wallets.count ?? 0 {
-            presenter.handle(.didSelectWallet(idx: indexPath.item))
-        }
-        // TODO: implement NFT selection
+        guard let section = viewModel?.sections[indexPath.section] else { return }
+        let symbol = section.wallets[indexPath.item].ticker
+        presenter.handle(.didSelectWallet(network: section.name, symbol: symbol))
     }
 
     func collectionView(

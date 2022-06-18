@@ -28,9 +28,8 @@ final class DefaultTokenPickerPresenter {
     private let context: TokenPickerWireframeContext
     
     private var searchTerm: String = ""
-    private var networks = [Web3Network]()
-    private var selectedNetworks = [Web3Network]()
     private var tokens = [Web3Token]()
+    private var selectedNetworks = [Web3Network]()
     private var itemsDisplayed = [TokenPickerViewModel.Item]()
     
     var selectedTokens: [Web3Token]?
@@ -73,14 +72,21 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
             
         case let .selectItem(token):
             
-            if context.source.isMultiSelect {
+            switch context.source {
                 
-                handleTokenTappedOnMultiSelect(token: token)
+            case .receive:
                 
-            } else {
-
                 guard let token = tokens.findToken(matching: token.symbol) else { return }
                 wireframe.navigate(to: .tokenReceive(token))
+
+            case .send:
+                
+                guard let token = tokens.findToken(matching: token.symbol) else { return }
+                wireframe.navigate(to: .tokenSend(token))
+
+            case .multiSelectEdit:
+                
+                handleTokenTappedOnMultiSelect(token: token)
             }
             
         case .addCustomToken:
@@ -147,19 +153,33 @@ private extension DefaultTokenPickerPresenter {
     
     func refreshTokens() {
         
-        // Get all available networks
-        networks = interactor.allNetworks
-        // Get all available tokens
-        tokens = interactor.allTokens
+        switch context.source {
+        case .receive, .multiSelectEdit:
+            tokens = interactor.allTokens
+        case .send:
+            tokens = interactor.allTokens.filter {
+                $0.balance > 0
+            }
+        }
     }
     
     func refreshData() {
         
-        if searchTerm.isEmpty {
-            itemsDisplayed = makeEmptySearchItems()
-        } else {
+        switch context.source {
+            
+        case .multiSelectEdit, .receive:
+            
+            if searchTerm.isEmpty {
+                itemsDisplayed = makeEmptySearchItems()
+            } else {
+                itemsDisplayed = makeSearchItems(for: searchTerm)
+            }
+            
+        case .send:
+            
             itemsDisplayed = makeSearchItems(for: searchTerm)
         }
+        
         updateView()
     }
     
@@ -186,7 +206,7 @@ private extension DefaultTokenPickerPresenter {
                 isSelected: selectedNetworks.isEmpty
             )
         ]
-        let networkFilters: [TokenPickerViewModel.Filter] = networks.compactMap {
+        let networkFilters: [TokenPickerViewModel.Filter] = tokens.networks.compactMap {
             
             .init(
                 type: .item(
@@ -237,7 +257,7 @@ private extension DefaultTokenPickerPresenter {
     func makeSearchItems(for searchTerm: String) -> [TokenPickerViewModel.Item] {
         
         let tokens = tokens.filteredBy(searchTerm: searchTerm, networkIn: selectedNetworks)
-        return tokens.items(using: interactor, selectedTokens: selectedTokens).addNoResultsIfNeeded
+        return makeItems(from: tokens).addNoResultsIfNeeded
     }
 }
 
@@ -254,7 +274,7 @@ private extension DefaultTokenPickerPresenter {
             
         case let .item(_, name):
             
-            guard let networkSelected = networks.findNetwork(matching: name) else { return }
+            guard let networkSelected = tokens.networks.findNetwork(matching: name) else { return }
             
             if selectedNetworks.hasNetwork(matching: name) {
                 
@@ -283,8 +303,45 @@ private extension DefaultTokenPickerPresenter {
                 .init(name: groupName)
             )
         )
-        items.append(contentsOf: tokens.items(using: interactor, selectedTokens: selectedTokens))
+        items.append(contentsOf: makeItems(from: tokens))
         return items
+    }
+    
+    func makeItems(
+        from tokens: [Web3Token]
+    ) -> [TokenPickerViewModel.Item] {
+        
+        tokens.sortByNetworkBalanceAndName.compactMap { token in
+            
+            let type: TokenPickerViewModel.TokenType
+            switch context.source {
+                
+            case .receive:
+                type = .receive
+            case .send:
+                type = .send(
+                    tokens: token.balance.toString(decimals: 2),
+                    usdTotal: token.usdBalanceString
+                )
+            case .multiSelectEdit:
+                let isSelected = selectedTokens?.contains(
+                    where: {
+                        $0.network.name == token.network.name && $0.symbol == token.symbol
+                    }
+                )
+                type = .multiSelect(isSelected: isSelected ?? false)
+            }
+            
+            return .token(
+                .init(
+                    image: interactor.tokenIcon(for: token).pngImage ?? .init(named: "default_token")!,
+                    symbol: token.symbol,
+                    name: token.name,
+                    network: token.network.name,
+                    type: type
+                )
+            )
+        }
     }
 }
 
@@ -302,28 +359,7 @@ private extension Array where Element == Web3Network {
 }
 
 private extension Array where Element == Web3Token {
-    
-    func items(
-        using interactor: TokenPickerInteractor,
-        selectedTokens: [Web3Token]?
-    ) -> [TokenPickerViewModel.Item] {
-        compactMap { token in
-            .token(
-                .init(
-                    image: interactor.tokenIcon(for: token).pngImage ?? .init(named: "default_token")!,
-                    symbol: token.symbol,
-                    name: token.name,
-                    network: token.network.name,
-                    isSelected: selectedTokens?.contains(
-                        where: { 
-                            $0.network.name == token.network.name && $0.symbol == token.symbol
-                        }
-                    )
-                )
-            )
-        }
-    }
-    
+
     func filteredBy(searchTerm: String, networkIn selectedNetworks: [Web3Network]) -> [ Web3Token ] {
         
         filter {

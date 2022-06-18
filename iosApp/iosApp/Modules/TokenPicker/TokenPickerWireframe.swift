@@ -45,6 +45,7 @@ struct TokenPickerWireframeContext {
 enum TokenPickerWireframeDestination {
     
     case tokenReceive(Web3Token)
+    case tokenSend(Web3Token)
     case addCustomToken
 }
 
@@ -110,6 +111,10 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
                 context: .init(presentationStyle: .push, web3Token: token)
             )
             coordinator.present()
+            
+        case let .tokenSend(token):
+            
+            print("Navigate to send token screen for \(token.symbol)")
             
         case .addCustomToken:
             

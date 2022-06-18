@@ -42,11 +42,19 @@ extension TokenPickerViewModel {
     }
     
     struct Token {
+        
         let image: UIImage
         let symbol: String
         let name: String
         let network: String
-        let isSelected: Bool?
+        let type: TokenType
+    }
+    
+    enum TokenType {
+        
+        case receive
+        case send(tokens: String, usdTotal: String)
+        case multiSelect(isSelected: Bool)
     }
 }
 

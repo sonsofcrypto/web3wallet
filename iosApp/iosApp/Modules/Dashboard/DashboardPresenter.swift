@@ -9,7 +9,7 @@ enum DashboardPresenterEvent {
     case sendAction
     case tradeAction
     case walletConnectionSettingsAction
-    case didSelectWallet(idx: Int)
+    case didSelectWallet(network: String, symbol: String)
     case didSelectNFT(idx: Int)
     case didInteractWithCardSwitcher
     case presentUnderConstructionAlert
@@ -56,9 +56,11 @@ extension DefaultDashboardPresenter: DashboardPresenter {
     
     func handle(_ event: DashboardPresenterEvent) {
         switch event {
-        case let .didSelectWallet(idx):
-            let keyStoreItem = KeyStoreItem.rand()
-            wireframe.navigate(to: .wallet(wallet: keyStoreItem, token: myTokens[idx]))
+        case let .didSelectWallet(network, symbol):
+            guard let token = myTokens.first(
+                where: { $0.equalTo(network: network, symbol: symbol) }
+            ) else { return }
+            wireframe.navigate(to: .wallet(token: token))
         case .walletConnectionSettingsAction:
             wireframe.navigate(to: .keyStoreNetworkSettings)
         case .didInteractWithCardSwitcher:
@@ -69,7 +71,7 @@ extension DefaultDashboardPresenter: DashboardPresenter {
         case .receiveAction:
             wireframe.navigate(to: .receiveCoins)
         case .sendAction:
-            break
+            wireframe.navigate(to: .sendCoins)
         case .didTapEditTokens:
             wireframe.navigate(to: .editTokens(
                 selectedTokens: myTokens,
@@ -159,7 +161,7 @@ private extension DefaultDashboardPresenter {
                 name: $0.name,
                 ticker: $0.symbol,
                 imageData: interactor.tokenIcon(for: $0),
-                fiatBalance: ($0.balance * $0.usdPrice).formatted(.currency(code: "USD")),
+                fiatBalance: $0.usdBalanceString,
                 cryptoBalance: "\($0.balance.toString(decimals: 2)) \($0.symbol)",
                 pctChange: "4.5%",
                 priceUp: true,

@@ -11,10 +11,9 @@ protocol Web3ServiceWalletListener: AnyObject {
 
 protocol Web3Service: AnyObject {
 
-    var allNetworks: [Web3Network] { get }
     var allTokens: [Web3Token] { get }
-    
     var myTokens: [Web3Token] { get }
+    
     func storeMyTokens(to tokens: [Web3Token])
     
     func networkIcon(for network: Web3Network) -> Data
@@ -58,6 +57,16 @@ extension Web3Token {
         
         self.network.name == network && self.symbol == symbol
     }
+    
+    var usdBalance: Double {
+        
+        balance * usdPrice
+    }
+    
+    var usdBalanceString: String {
+        
+        usdBalance.formatted(.currency(code: "USD"))
+    }
 }
 
 extension Array where Element == Web3Token {
@@ -73,7 +82,7 @@ extension Array where Element == Web3Token {
                 $0.network.name == $1.network.name &&
                 $0.balance != $1.balance
             {
-                return $0.balance > $1.balance
+                return $0.usdBalance > $1.usdBalance
                 
             } else {
                 return $0.name < $1.name
@@ -94,4 +103,18 @@ extension Array where Element == Web3Token {
         }
     }
 
+    var networks: [Web3Network] {
+        
+        reduce([]) { result, token in
+            
+            if !result.contains(token.network) {
+                
+                var result = result
+                result.append(token.network)
+                return result
+            }
+            
+            return result
+        }
+    }
 }
