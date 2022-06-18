@@ -4,6 +4,11 @@
 
 import Foundation
 
+protocol Web3ServiceWalletListener: AnyObject {
+    
+    func tokensChanged()
+}
+
 protocol Web3Service: AnyObject {
 
     var allNetworks: [Web3Network] { get }
@@ -14,6 +19,9 @@ protocol Web3Service: AnyObject {
     
     func networkIcon(for network: Web3Network) -> Data
     func tokenIcon(for token: Web3Token) -> Data
+    
+    func addWalletListener(_ listener: Web3ServiceWalletListener)
+    func removeWalletListener(_ listener: Web3ServiceWalletListener)
 }
 
 struct Web3Network: Codable, Equatable, Hashable {
@@ -22,7 +30,7 @@ struct Web3Network: Codable, Equatable, Hashable {
     let hasDns: Bool
 }
 
-struct Web3Token: Codable {
+struct Web3Token: Codable, Equatable {
     
     let symbol: String
     let name: String
@@ -30,15 +38,24 @@ struct Web3Token: Codable {
     let type: `Type`
     let network: Web3Network
     let balance: Double
+    let showInWallet: Bool    
 }
 
 extension Web3Token {
     
-    enum `Type`: Codable {
+    enum `Type`: Codable, Equatable {
         
         case normal
         case featured
         case popular
+    }
+}
+
+extension Web3Token {
+    
+    func equalTo(network: String, symbol: String) -> Bool {
+        
+        self.network.name == network && self.symbol == symbol
     }
 }
 

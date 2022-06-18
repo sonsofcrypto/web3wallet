@@ -42,6 +42,8 @@ final class DefaultDashboardPresenter {
         self.interactor = interactor
         self.wireframe = wireframe
         self.onboardingService = onboardingService
+        
+        interactor.addWalletListener(self)
     }
 }
 
@@ -84,7 +86,9 @@ private extension DefaultDashboardPresenter {
     
     func fetchMyTokens() {
         
-        myTokens = interactor.myTokens
+        let myTokens = interactor.myTokens
+        guard self.myTokens != myTokens else { return }
+        self.myTokens = myTokens
         view?.update(with: viewModel())
     }
 }
@@ -179,7 +183,6 @@ private extension DefaultDashboardPresenter {
             guard let self = self else { return }
             
             self.interactor.updateMyWeb3Tokens(to: updatedTokens)
-            self.fetchMyTokens()
         }
     }
 }
@@ -220,5 +223,13 @@ private extension Array where Element == Web3Candle {
                 period: $0.period
             )
         }
+    }
+}
+
+extension DefaultDashboardPresenter: Web3ServiceWalletListener {
+    
+    func tokensChanged() {
+        
+        fetchMyTokens()
     }
 }

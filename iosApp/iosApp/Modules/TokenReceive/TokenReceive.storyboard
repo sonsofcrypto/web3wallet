@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -66,7 +67,7 @@
                                                 <rect key="frame" x="0.0" y="502.5" width="331" height="92"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="36" translatesAutoresizingMaskIntoConstraints="NO" id="8wg-2O-LVj">
-                                                        <rect key="frame" x="67.5" y="0.0" width="196" height="92"/>
+                                                        <rect key="frame" x="9.5" y="0.0" width="312" height="92"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5a8-s7-CHy" customClass="TokenReceiveActionButton" customModule="iosApp" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="80" height="92"/>
@@ -130,6 +131,38 @@
                                                                     <outlet property="nameLabel" destination="ocM-mk-vVE" id="LuN-io-7Tf"/>
                                                                 </connections>
                                                             </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EHa-JP-XO2" customClass="TokenReceiveActionButton" customModule="iosApp" customModuleProvider="target">
+                                                                <rect key="frame" x="232" y="0.0" width="80" height="92"/>
+                                                                <subviews>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus_icon" translatesAutoresizingMaskIntoConstraints="NO" id="283-7F-yhm">
+                                                                        <rect key="frame" x="17" y="8" width="46" height="46"/>
+                                                                        <color key="tintColor" name="tintSecondary"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="46" id="Gd0-qb-0Zs"/>
+                                                                            <constraint firstAttribute="height" constant="46" id="Tzw-7A-Hft"/>
+                                                                        </constraints>
+                                                                    </imageView>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zO-BX-ZhK">
+                                                                        <rect key="frame" x="8" y="63.5" width="64" height="20.5"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="trailing" secondItem="4zO-BX-ZhK" secondAttribute="trailing" constant="8" id="Apf-Cz-zmr"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="4zO-BX-ZhK" secondAttribute="bottom" constant="8" id="VdY-qT-7B8"/>
+                                                                    <constraint firstItem="283-7F-yhm" firstAttribute="centerX" secondItem="EHa-JP-XO2" secondAttribute="centerX" id="Z6M-Rd-ocD"/>
+                                                                    <constraint firstAttribute="height" constant="92" id="hTD-KC-Ejq"/>
+                                                                    <constraint firstItem="283-7F-yhm" firstAttribute="top" secondItem="EHa-JP-XO2" secondAttribute="top" constant="8" id="i59-nL-h84"/>
+                                                                    <constraint firstItem="4zO-BX-ZhK" firstAttribute="leading" secondItem="EHa-JP-XO2" secondAttribute="leading" constant="8" id="iPP-7w-aka"/>
+                                                                </constraints>
+                                                                <connections>
+                                                                    <outlet property="iconImageView" destination="283-7F-yhm" id="hVM-Kk-HCa"/>
+                                                                    <outlet property="nameLabel" destination="4zO-BX-ZhK" id="keK-YE-wtr"/>
+                                                                </connections>
+                                                            </view>
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
@@ -165,6 +198,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addButton" destination="EHa-JP-XO2" id="q6d-90-TJM"/>
                         <outlet property="addressLabel" destination="PXR-kb-IY5" id="sFe-gO-vjZ"/>
                         <outlet property="cardView" destination="aVI-ho-kAy" id="GOJ-px-KYd"/>
                         <outlet property="copyButton" destination="5a8-s7-CHy" id="fQu-bB-4LZ"/>
@@ -180,6 +214,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="plus_icon" width="512" height="512"/>
+        <namedColor name="tintSecondary">
+            <color red="0.51399999856948853" green="0.80800002813339233" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -6,6 +6,7 @@ import UIKit
 
 enum AccountWireframeDestination {
 
+    case receive
 }
 
 protocol AccountWireframe {
@@ -31,6 +32,7 @@ final class DefaultAccountWireframe {
 extension DefaultAccountWireframe: AccountWireframe {
 
     func present() {
+        
         let vc = wireUp()
         let topVc = (parent as? UINavigationController)?.topViewController
 
@@ -44,12 +46,17 @@ extension DefaultAccountWireframe: AccountWireframe {
 
     func navigate(to destination: AccountWireframeDestination) {
 
+        switch destination {
+            
+        case .receive:
+            print("Go to Receive coins!")
+        }
     }
 }
 
-extension DefaultAccountWireframe {
+private extension DefaultAccountWireframe {
 
-    private func wireUp() -> UIViewController {
+    func wireUp() -> UIViewController {
         
         let vc: AccountViewController = UIStoryboard(.main).instantiate()
         let presenter = DefaultAccountPresenter(

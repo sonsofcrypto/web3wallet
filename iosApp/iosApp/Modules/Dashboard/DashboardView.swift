@@ -30,7 +30,7 @@ final class DashboardViewController: BaseViewController {
         
         presenter.present()
     }
-
+    
     override func viewWillLayoutSubviews() {
         
         super.viewWillLayoutSubviews()
@@ -60,7 +60,6 @@ extension DashboardViewController {
     @IBAction func walletConnectionSettingsAction(_ sender: Any) {
         presenter.handle(.walletConnectionSettingsAction)
     }
-
 }
 
 extension DashboardViewController: DashboardView {

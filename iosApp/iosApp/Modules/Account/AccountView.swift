@@ -29,6 +29,7 @@ extension AccountViewController {
 
     @IBAction func receiveAction(_ sender: Any) {
 
+        presenter.handle(.receive)
     }
 
     @IBAction func sendAction(_ sender: Any) {

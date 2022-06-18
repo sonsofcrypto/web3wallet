@@ -6,6 +6,7 @@ import Foundation
 
 enum AccountPresenterEvent {
 
+    case receive
 }
 
 protocol AccountPresenter {
@@ -42,6 +43,10 @@ extension DefaultAccountPresenter: AccountPresenter {
 
     func handle(_ event: AccountPresenterEvent) {
 
+        switch event {
+        case .receive:
+            wireframe.navigate(to: .receive)
+        }
     }
 }
 

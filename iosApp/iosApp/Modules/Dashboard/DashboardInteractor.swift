@@ -11,6 +11,8 @@ protocol DashboardInteractor: AnyObject {
     func priceData(for token: Web3Token) -> [ Web3Candle ]
     func nfts(for network: Web3Network) -> [ NFTItem ]
     func updateMyWeb3Tokens(to tokens: [Web3Token])
+    func addWalletListener(_ listener: Web3ServiceWalletListener)
+    func removeWalletListener(_ listener: Web3ServiceWalletListener)
 }
 
 final class DefaultDashboardInteractor {
@@ -57,4 +59,15 @@ extension DefaultDashboardInteractor: DashboardInteractor {
         
         web3Service.storeMyTokens(to: tokens)
     }
+    
+    func addWalletListener(_ listener: Web3ServiceWalletListener) {
+        
+        web3Service.addWalletListener(listener)
+    }
+    
+    func removeWalletListener(_ listener: Web3ServiceWalletListener) {
+        
+        web3Service.removeWalletListener(listener)
+    }
+
 }

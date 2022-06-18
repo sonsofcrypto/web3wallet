@@ -8,6 +8,7 @@ enum TokenReceivePresenterEvent {
 
     case dismiss
     case share
+    case addCoins
 }
 
 protocol TokenReceivePresenter {
@@ -68,6 +69,33 @@ extension DefaultTokenReceivePresenter: TokenReceivePresenter {
         case .share:
             
             break
+            
+        case .addCoins:
+            
+            let localStorage: Web3ServiceLocalStorage = ServiceDirectory.assembler.resolve()
+            var allTokens = localStorage.readAllTokens()
+
+            guard let token = allTokens.first(
+                where: {
+                    context.web3Token.equalTo(network: $0.network.name, symbol: $0.symbol)
+                }
+            ) else { return }
+
+            allTokens.removeAll { $0.equalTo(network: token.network.name, symbol: token.symbol) }
+
+            let updatedToken = Web3Token(
+                symbol: token.symbol,
+                name: token.name,
+                address: token.address,
+                type: token.type,
+                network: token.network,
+                balance: token.balance + 10,
+                showInWallet: token.showInWallet
+            )
+            
+            allTokens.append(updatedToken)
+            
+            localStorage.storeAllTokens(with: allTokens)
         }
     }
 }

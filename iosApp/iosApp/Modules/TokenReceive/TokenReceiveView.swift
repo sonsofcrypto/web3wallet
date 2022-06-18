@@ -21,6 +21,7 @@ final class TokenReceiveViewController: BaseViewController {
     
     @IBOutlet weak var copyButton: TokenReceiveActionButton!
     @IBOutlet weak var shareButton: TokenReceiveActionButton!
+    @IBOutlet weak var addButton: TokenReceiveActionButton!
 
     private var viewModel: TokenReceiveViewModel?
     private lazy var filter = CIFilter(name: "CIQRCodeGenerator")
@@ -113,6 +114,12 @@ extension TokenReceiveViewController {
             and: UIImage(named: "button_send"),
             onTap: makeShareAction()
         )
+        
+        addButton.update(
+            with: Localized("tokenReceive.action.add"),
+            and: UIImage(named: "plus_icon"),
+            onTap: makeAddAction()
+        )
     }
     
     func configureUI() {
@@ -161,6 +168,16 @@ private extension TokenReceiveViewController {
                 ],
                 presentingIn: self
             )
+        }
+    }
+    
+    func makeAddAction() -> (() -> Void) {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.addCoins)
+            self.view.presentToastAlert(with: Localized("tokenReceive.action.add.toast"))
         }
     }
 }
