@@ -1,6 +1,8 @@
 package coreCrypto
 
-import "math/big"
+import (
+	"math/big"
+)
 
 // isOdd is `big.Int` odd number
 func isOdd(a *big.Int) bool {
