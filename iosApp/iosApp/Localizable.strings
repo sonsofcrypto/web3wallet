@@ -17,6 +17,7 @@
 "send" = "Send";
 "trade" = "Trade";
 "more" = "More";
+"done" = "Done";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";
@@ -146,3 +147,19 @@
 "tokenReceive.action.share.address" = "My Public Address to Receive %@:";
 "tokenReceive.action.add" = "Add";
 "tokenReceive.action.add.toast" = "+%@ coins added to your wallet!";
+
+"tokenAdd.title" = "Add Token";
+"tokenAdd.network.title" = "Network";
+"tokenAdd.contractAddress.title" = "Contract Address";
+"tokenAdd.contractAddress.placeholder" = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
+"tokenAdd.name.title" = "Name";
+"tokenAdd.name.placeholder" = "USD Coin";
+"tokenAdd.symbol.title" = "Symbol";
+"tokenAdd.symbol.placeholder" = "USDC";
+"tokenAdd.decimals.title" = "Decimals";
+"tokenAdd.decimals.placeholder" = "1-32";
+"tokenAdd.validation.field.required" = "This field is required";
+"tokenAdd.validation.field.address.ethereum.invalid" = "Invalid Ethereum address";
+"tokenAdd.validation.field.address.solana.invalid" = "Invalid Solana address";
+"tokenAdd.validation.field.decimal.int" = "This must be a valid Int";
+"tokenAdd.validation.field.decimal.range" = "Number should be between 0 and 32";

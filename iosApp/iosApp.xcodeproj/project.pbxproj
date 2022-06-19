@@ -55,6 +55,16 @@
 		1C54DBDC285DD10000E378F6 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */; };
 		1C54DBDE285DD15400E378F6 /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBDD285DD15400E378F6 /* Account.storyboard */; };
 		1C54DBE0285E1A0E00E378F6 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBDF285E1A0E00E378F6 /* Double+Extensions.swift */; };
+		1C54DBE3285E831B00E378F6 /* TokenAddWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE2285E831B00E378F6 /* TokenAddWireframe.swift */; };
+		1C54DBE5285E832600E378F6 /* TokenAddWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE4285E832600E378F6 /* TokenAddWireframeFactory.swift */; };
+		1C54DBE7285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE6285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift */; };
+		1C54DBE9285E833200E378F6 /* TokenAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE8285E833200E378F6 /* TokenAddViewModel.swift */; };
+		1C54DBEB285E833600E378F6 /* TokenAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBEA285E833500E378F6 /* TokenAddView.swift */; };
+		1C54DBED285E834200E378F6 /* TokenAddInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBEC285E834200E378F6 /* TokenAddInteractor.swift */; };
+		1C54DBEF285E835400E378F6 /* TokenAdd.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBEE285E835400E378F6 /* TokenAdd.storyboard */; };
+		1C54DBF3285E83A300E378F6 /* TokenAddPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF2285E83A300E378F6 /* TokenAddPresenter.swift */; };
+		1C54DBF5285F32DC00E378F6 /* TokenAddInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF4285F32DC00E378F6 /* TokenAddInputView.swift */; };
+		1C54DBF8285F8F3700E378F6 /* TokenAddCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF7285F8F3700E378F6 /* TokenAddCollectionViewCell.swift */; };
 		1C5B60382843FACD00ECBD79 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B60372843FACD00ECBD79 /* UIViewController+Extensions.swift */; };
 		1C5B603B284675B800ECBD79 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5B603A284675B800ECBD79 /* Kingfisher */; };
 		1C60C1AA28571B95003BE25D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */; };
@@ -452,6 +462,16 @@
 		1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
 		1C54DBDD285DD15400E378F6 /* Account.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
 		1C54DBDF285E1A0E00E378F6 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		1C54DBE2285E831B00E378F6 /* TokenAddWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddWireframe.swift; sourceTree = "<group>"; };
+		1C54DBE4285E832600E378F6 /* TokenAddWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddWireframeFactory.swift; sourceTree = "<group>"; };
+		1C54DBE6285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C54DBE8285E833200E378F6 /* TokenAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddViewModel.swift; sourceTree = "<group>"; };
+		1C54DBEA285E833500E378F6 /* TokenAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddView.swift; sourceTree = "<group>"; };
+		1C54DBEC285E834200E378F6 /* TokenAddInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddInteractor.swift; sourceTree = "<group>"; };
+		1C54DBEE285E835400E378F6 /* TokenAdd.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TokenAdd.storyboard; sourceTree = "<group>"; };
+		1C54DBF2285E83A300E378F6 /* TokenAddPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddPresenter.swift; sourceTree = "<group>"; };
+		1C54DBF4285F32DC00E378F6 /* TokenAddInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddInputView.swift; sourceTree = "<group>"; };
+		1C54DBF7285F8F3700E378F6 /* TokenAddCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddCollectionViewCell.swift; sourceTree = "<group>"; };
 		1C5B60372843FACD00ECBD79 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1AB28571BB6003BE25D /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
@@ -958,6 +978,31 @@
 			path = VisualEffectView;
 			sourceTree = "<group>";
 		};
+		1C54DBE1285E82FC00E378F6 /* TokenAdd */ = {
+			isa = PBXGroup;
+			children = (
+				1C54DBEE285E835400E378F6 /* TokenAdd.storyboard */,
+				1C54DBF4285F32DC00E378F6 /* TokenAddInputView.swift */,
+				1C54DBEC285E834200E378F6 /* TokenAddInteractor.swift */,
+				1C54DBF2285E83A300E378F6 /* TokenAddPresenter.swift */,
+				1C54DBEA285E833500E378F6 /* TokenAddView.swift */,
+				1C54DBE8285E833200E378F6 /* TokenAddViewModel.swift */,
+				1C54DBE2285E831B00E378F6 /* TokenAddWireframe.swift */,
+				1C54DBE4285E832600E378F6 /* TokenAddWireframeFactory.swift */,
+				1C54DBE6285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift */,
+				1C54DBF6285F8F2800E378F6 /* Cells */,
+			);
+			path = TokenAdd;
+			sourceTree = "<group>";
+		};
+		1C54DBF6285F8F2800E378F6 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				1C54DBF7285F8F3700E378F6 /* TokenAddCollectionViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		1C60C1C7285724D0003BE25D /* Modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -977,6 +1022,7 @@
 				1C60C23E285724D0003BE25D /* Root */,
 				1C60C1C8285724D0003BE25D /* Settings */,
 				1C60C1D5285724D0003BE25D /* TokenPicker */,
+				1C54DBE1285E82FC00E378F6 /* TokenAdd */,
 				1C60C3612857C5D9003BE25D /* TokenReceive */,
 			);
 			name = Modules;
@@ -1883,6 +1929,7 @@
 				D11A990527B8615B00EDFDD0 /* GothicA1-ExtraBold.ttf in Resources */,
 				D11A990827B8615B00EDFDD0 /* GothicA1-Black.ttf in Resources */,
 				D11A990627B8615B00EDFDD0 /* OFL.txt in Resources */,
+				1C54DBEF285E835400E378F6 /* TokenAdd.storyboard in Resources */,
 				D11A990427B8615B00EDFDD0 /* GothicA1-Bold.ttf in Resources */,
 				D157F7D727B69B6400578FF8 /* LaunchScreen.storyboard in Resources */,
 				D11B7E952800E82300F40488 /* WordLists in Resources */,
@@ -1968,6 +2015,7 @@
 				1A4C3C9B866507D8700399F6 /* KeyStoreService.swift in Sources */,
 				1C64872D2832E5800091A12D /* AccountServiceAssembler.swift in Sources */,
 				1A4C3708C25B84EAA53D0FB6 /* KeyStoreItem.swift in Sources */,
+				1C54DBED285E834200E378F6 /* TokenAddInteractor.swift in Sources */,
 				1C60C2BD285724D0003BE25D /* ButtonsSheetViewModel.swift in Sources */,
 				1C60C2C7285724D0003BE25D /* ChatInteractor.swift in Sources */,
 				1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */,
@@ -2066,6 +2114,7 @@
 				1C60C347285724D1003BE25D /* CultProposalWireframeFactoryAssembler.swift in Sources */,
 				1C60C2BC285724D0003BE25D /* ButtonsSheetView.swift in Sources */,
 				1C60C2FB285724D0003BE25D /* NFTDetailWireframeFactoryAssembler.swift in Sources */,
+				1C54DBF5285F32DC00E378F6 /* TokenAddInputView.swift in Sources */,
 				1C60C3632857C5E5003BE25D /* TokenReceivePresenter.swift in Sources */,
 				1C60C313285724D1003BE25D /* AccountSectionHeader.swift in Sources */,
 				1CB3A1EF2840D6B70092D667 /* UIStackView+Extensions.swift in Sources */,
@@ -2111,6 +2160,7 @@
 				1C60C346285724D1003BE25D /* AMMsCell.swift in Sources */,
 				1C6487362832E6650091A12D /* NFTsServiceAssembler.swift in Sources */,
 				1C64871B2832E3490091A12D /* KeyStoreServiceAssembler.swift in Sources */,
+				1C54DBF3285E83A300E378F6 /* TokenAddPresenter.swift in Sources */,
 				1C60C2F3285724D0003BE25D /* NFTDetailWireframe.swift in Sources */,
 				1C60C2CF285724D0003BE25D /* AlertView.swift in Sources */,
 				D116CF3227C31ECC005542AA /* iCarousel.m in Sources */,
@@ -2133,10 +2183,13 @@
 				1C60C38E285B9F7F003BE25D /* PriceHistoryServiceAssembler.swift in Sources */,
 				1C60C34B285724D1003BE25D /* CultProposalView.swift in Sources */,
 				1CB3A1E42840D6B70092D667 /* Int+Extensions.swift in Sources */,
+				1C54DBE7285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift in Sources */,
 				1C60C348285724D1003BE25D /* CultProposalPresenter.swift in Sources */,
 				1C60C2D5285724D0003BE25D /* MnemonicViewModel.swift in Sources */,
 				1CB3A1EA2840D6B70092D667 /* String+Extensions.swift in Sources */,
+				1C54DBF8285F8F3700E378F6 /* TokenAddCollectionViewCell.swift in Sources */,
 				1C60C309285724D1003BE25D /* RootWireframe.swift in Sources */,
+				1C54DBE5285E832600E378F6 /* TokenAddWireframeFactory.swift in Sources */,
 				1CB3A1E82840D6B70092D667 /* UIButton+Extensions.swift in Sources */,
 				1C60C2F8285724D0003BE25D /* NFTDetailViewModel.swift in Sources */,
 				D1BF2684280D7FC300DE9A0B /* DefaultTheme.swift in Sources */,
@@ -2188,6 +2241,7 @@
 				1C60C2DF285724D0003BE25D /* DashboardSectionHeaderView.swift in Sources */,
 				1C60C335285724D1003BE25D /* NFTsCollectionView+Shared.swift in Sources */,
 				1C60C2C0285724D0003BE25D /* KeyStoreCell.swift in Sources */,
+				1C54DBE9285E833200E378F6 /* TokenAddViewModel.swift in Sources */,
 				1C60C2A7285724D0003BE25D /* SettingsInteractor.swift in Sources */,
 				1A4C3AD382E8BADCBE160CBC /* DApp.swift in Sources */,
 				1C60C2C2285724D0003BE25D /* ChatWireframe.swift in Sources */,
@@ -2202,6 +2256,7 @@
 				1C6487272832E5150091A12D /* DefaultAppsService.swift in Sources */,
 				1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */,
 				1C60C332285724D1003BE25D /* NFTsCollectionWireframeFactoryAssembler.swift in Sources */,
+				1C54DBEB285E833600E378F6 /* TokenAddView.swift in Sources */,
 				D1BF2685280D7FC300DE9A0B /* Theme.swift in Sources */,
 				1A4C39C49AEF7D7C5D4E8CE6 /* CollectionViewSectionLabelFooter.swift in Sources */,
 				1C60C334285724D1003BE25D /* NFTsCollectionInteractor.swift in Sources */,
@@ -2258,6 +2313,7 @@
 				1CD3FE8928559EF2008312DE /* Web3Service.swift in Sources */,
 				1A4C33E50A1388781E82DD29 /* CryptoUtils.swift in Sources */,
 				1C60C3692857C5F8003BE25D /* TokenReceiveWireframe.swift in Sources */,
+				1C54DBE3285E831B00E378F6 /* TokenAddWireframe.swift in Sources */,
 				1C60C324285724D1003BE25D /* AppsHeaderCollectionViewCell.swift in Sources */,
 				1C60C32B285724D1003BE25D /* MnemonicConfirmationWireframe.swift in Sources */,
 				1C60C2D0285724D0003BE25D /* AlertPresenter.swift in Sources */,
