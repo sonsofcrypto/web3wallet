@@ -34,19 +34,25 @@ fun ByteArray.toInt(): Int {
 }
 
 
-fun UInt.toByteArray(): ByteArray {
+fun UInt.toByteArray(bigEndian: Boolean = true): ByteArray {
     var array = ByteArray(4)
     for (i in 0..3) array[i] = (this shr (i*8)).toByte()
-    return array
+    return if (bigEndian) array.reversedArray() else array
 }
 
 fun ByteArray.toUInt(): UInt {
-    return (this[3].toUInt() shl 24) or
-            (this[2].toUInt() and 255u shl 16) or
-            (this[1].toUInt() and 255u shl 8) or
-            (this[0].toUInt() and 255u)
-}
+    val bytes = 4
+    val paddedArray = ByteArray(bytes)
+    for (i in 0 until bytes-this.size) paddedArray[i] = 0
+    for (i in bytes-this.size until paddedArray.size) {
+        paddedArray[i] = this[i-(bytes-this.size)]
+    }
 
+    return (((paddedArray[0].toUInt() and 0xFFu) shl 24) or
+            ((paddedArray[1].toUInt() and 0xFFu) shl 16) or
+            ((paddedArray[2].toUInt() and 0xFFu) shl 8) or
+            (paddedArray[3].toUInt() and 0xFFu)).toUInt()
+}
 
 // MARK: - BitArray
 

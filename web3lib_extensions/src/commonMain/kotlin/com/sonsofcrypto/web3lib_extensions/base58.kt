@@ -141,13 +141,6 @@ fun ByteArray.encodeToBase58WithChecksum(): String {
     return arrayWithChecksum.encodeToBase58String()
 }
 
-//fun ByteArray.encodeToBase58WithChecksum() = ByteArray(size + CHECKSUM_SIZE).apply {
-//    System.arraycopy(this@encodeToBase58WithChecksum, 0, this, 0, this@encodeToBase58WithChecksum.size)
-//    val checksum = this@encodeToBase58WithChecksum.sha256().sha256()
-//    System.arraycopy(checksum, 0, this, this@encodeToBase58WithChecksum.size, CHECKSUM_SIZE)
-//
-//}.encodeToBase58String()
-
 fun String.decodeBase58WithChecksum(): ByteArray {
     val rawBytes = decodeBase58()
     if (rawBytes.size < CHECKSUM_SIZE) {

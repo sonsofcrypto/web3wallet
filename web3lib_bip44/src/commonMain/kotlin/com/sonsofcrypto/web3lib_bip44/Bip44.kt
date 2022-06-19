@@ -2,17 +2,19 @@ package com.sonsofcrypto.web3lib_bip44
 
 import com.sonsofcrypto.web3lib_crypto.*
 import com.sonsofcrypto.web3lib_extensions.*
-import kotlin.math.pow
 
+const val firstHardenedIdx: UInt = 2147483648u
 
+/** Extended key, bip44 compliant (xprv xpub) */
 class ExtKey(
-    val version: Bip44.Version, // 4 Bytes
-    val depth: Int,             // 1 Byte
-    val fingerprint: ByteArray, // 4 Bytes
-    val index: UInt,             // 4 Bytes
-    val chainCode: ByteArray,   // 32 bytes
-    val key: ByteArray,         // 33 bytes
-    ) {
+    val version: Version,               // 4 Bytes
+    val depth: UInt,                    // 1 Byte
+    val fingerprint: ByteArray,         // 4 Bytes
+    val index: UInt,                    // 4 Bytes
+    val chainCode: ByteArray,           // 32 bytes
+    val key: ByteArray,                 // 33 bytes (prefix 0x0 for prv key)
+    val curve: Curve = Curve.SECP256K1,
+) {
 
     /** Base58Check encoded xprv or xpub string */
     fun base58WithChecksumString(): String = bytes().encodeToBase58WithChecksum()
@@ -27,113 +29,234 @@ class ExtKey(
             if (isXprv()) ByteArray(1) + key else key
     }
 
-    /** returns `Key` if `key` is private key else null */
-    fun key(): Key? = if(isXprv()) Key(key) else null
-
     /** Is `ExtKey` is private or public key */
     fun isXprv(): Boolean = (key.size == 32)
 
-//    companion object {
-//
-//        fun fromBytes(): ExtKey {
-//            TODO("Implement and throw error in case parsing fails")
-//            TODO("Throw error")
-//        }
-//    }
-}
+    /** `xpub` verions of `ExtKey` */
+    fun xpub(): ExtKey = ExtKey(
+        version.pubVersion(),
+        depth,
+        fingerprint,
+        index,
+        chainCode,
+        pub(),
+        curve
+    )
 
-class Key(val prv: ByteArray) {
+    /** Compressed pub key */
+    fun pub(): ByteArray = if (!isXprv()) key else Crypto.compressedPubKey(curve, key)
 
-    fun pub(): ByteArray {
-        TODO("Implement")
+    /**
+     * Derive child key at index. If key is private derives regular child
+     * child key. If index is greater than `firstHardenedIdx` derives hardened
+     * xprv key. If key is public derives xpub.
+     */
+    @Throws(Error::class) fun deriveChildKey(key: ExtKey, idx: UInt): ExtKey {
+        if (!key.isXprv() && idx >= firstHardenedIdx) {
+            throw Error.HardenedFromPub
+        }
+
+        val curve = key.curve
+        val data: ByteArray = if(idx >= firstHardenedIdx) {
+            ByteArray(size = 1) + key.key
+        } else {
+            if (!key.isXprv()) key.key
+            else Crypto.compressedPubKey(curve, key.key)
+        }
+
+        val hmac = Crypto.hmacSha512(key.chainCode, data + idx.toByteArray())
+        val childPrvKey = hmac.copyOfRange(0, 32) // L
+        val childKey = if (key.isXprv()) {
+            val prvKey = Crypto.addPrvKeys(curve, childPrvKey, key.key)
+            if (!Crypto.isBip44ValidPrv(curve, prvKey)) {
+                throw Error.InvalidDerivedKey(idx)
+            }
+            prvKey
+        } else {
+            val pubKey = Crypto.compressedPubKey(curve, childPrvKey)
+            if (!Crypto.isBip44ValidPrv(curve, pubKey)) {
+                throw Error.InvalidDerivedKey(idx)
+            }
+            Crypto.addPubKeys(curve, pubKey, key.key)
+        }
+
+        return ExtKey(
+            if (key.isXprv()) key.version else key.version.pubVersion(),
+            key.depth + 1u,
+            Crypto.ripemd160(Crypto.sha256(key.pub())).copyOfRange(0, 4),
+            idx,
+            hmac.copyOfRange(32, 64), // R
+            childKey,
+            key.curve
+        )
+    }
+
+    /** Validated that key is bip32 and bip44 compliant */
+    @Throws(Error::class) fun validate() {
+        val isKeyBytesPrivate = key.size == 32
+        val isVersionPrivate = !version.isPub()
+        val prefix = key.copyOfRange(0, 1).toUInt()
+        val depth = this.depth.toUInt()
+        val fingerprint = this.fingerprint.toUInt()
+        val index = this.index.toUInt()
+        if (isKeyBytesPrivate != isVersionPrivate) {
+            throw Error.PrvPubVersionMismatch
+        }
+        if (!isKeyBytesPrivate && (prefix == 4u || prefix == 1u)) {
+            throw Error.InvalidKeyPrefix
+        }
+        if (depth == 0u && fingerprint != 0u) {
+            throw Error.DepthFingerprintMismatch
+        }
+        if (depth == 0u && index != 0u) {
+            throw Error.DepthIndexMismatch
+        }
+        if (isXprv() && !Crypto.isBip44ValidPrv(curve, key)) {
+            throw Error.InvalidPrvKey
+        }
+        if (!isXprv() && !Crypto.isBip44ValidPub(curve, key)) {
+            throw Error.InvalidPubKey
+        }
+    }
+
+    /** Exceptions */
+    sealed class Error(
+        message: String? = null,
+        cause: Throwable? = null
+    ) : Exception(message, cause) {
+
+        constructor(cause: Throwable) : this(null, cause)
+
+        /** Entropy size does not math bip39 standard */
+        object HardenedFromPub : Error("Can not derive hardened key from xpub")
+
+        /** Some derived keys can be too large as per bip44 spec */
+        data class InvalidDerivedKey(val idx: UInt) : Error("Derived key $idx is outside of `bip44` spec")
+
+        /** Version & key bytes mismatch */
+        object PrvPubVersionMismatch : Error("Version does not match key bytes")
+
+        /** Invalid prv / pub key prefix */
+        object InvalidKeyPrefix : Error("Invalid prv / pub key prefix")
+
+        /** Depth is 0 but fingerprint is not */
+        object DepthFingerprintMismatch : Error("Depth fingerprint mismatch")
+
+        /** Depth is 0 but index is not */
+        object DepthIndexMismatch : Error("Depth index mismatch")
+
+        /** Invalid version bytes */
+        object InvalidVersionBytes : Error("Invalid version bytes")
+
+        /** Invalid private key bytes */
+        object InvalidPrvKey : Error("Invalid private key")
+
+        /** Invalid public key bytes */
+        object InvalidPubKey : Error("Invalid public key")
+    }
+
+    /** Versions of extended key */
+    enum class Version {
+        MAINNETPRV, MAINNETPUB, TESTNETPRV, TESTNETPUB;
+
+        fun hex(): ByteArray = hexString().hexStringToByteArray()
+
+        fun isMainNet(): Boolean = listOf(MAINNETPRV, MAINNETPUB).contains(this)
+        fun isPub(): Boolean = listOf(MAINNETPUB, TESTNETPUB).contains(this)
+
+        fun pubVersion(): Version = if (isMainNet()) MAINNETPUB else TESTNETPUB
+
+
+        fun hexString(): String {
+            return when (this) {
+                MAINNETPRV -> "0488ade4"
+                MAINNETPUB -> "0488b21e"
+                TESTNETPRV -> "04358394"
+                TESTNETPUB -> "043587cf"
+            }
+        }
+
+        companion object {
+
+            @Throws(Error::class) fun from(byteArray: ByteArray): Version {
+                return when (byteArray.toHexString()) {
+                    MAINNETPRV.hexString() -> MAINNETPRV
+                    MAINNETPUB.hexString() -> MAINNETPUB
+                    TESTNETPRV.hexString() -> TESTNETPRV
+                    TESTNETPUB.hexString() -> TESTNETPUB
+                    else -> throw Error.InvalidVersionBytes
+                }
+            }
+        }
+    }
+
+    companion object {
+
+        /** Deserializes extended key from string */
+        @Throws(Error::class)
+        fun fromString(string: String, curve: Curve = Curve.SECP256K1): ExtKey {
+            return fromBytes(string.decodeBase58WithChecksum(), curve)
+        }
+
+        /** Deserializes extended key from bytes */
+        @Throws(Error::class)
+        fun fromBytes(bytes: ByteArray, curve: Curve = Curve.SECP256K1): ExtKey {
+            val extKey = ExtKey(
+                Version.from(bytes.copyOfRange(0, 4)),  // 4 Bytes
+                bytes[4].toUInt(),                      // 1 Byte
+                bytes.copyOfRange(5, 9),                // 4 Bytes
+                bytes.copyOfRange(9, 13).toUInt(),      // 4 Bytes
+                bytes.copyOfRange(13, 45),              // 32 bytes
+                bytes.copyOfRange(if (bytes[45].toInt() == 0) 46 else 45, 78),
+                curve,
+            )
+            extKey.validate()
+            return extKey
+        }
     }
 }
 
+/** Generates master key from seed. Validates that key is compliant */
 class Bip44 {
     val seed: ByteArray
     val masterExtKey: ExtKey
 
-    constructor(seed: ByteArray, version: Version) {
+    /** Generates master key from seed. Validates that key is compliant */
+    @Throws(Error::class) constructor(seed: ByteArray, version: ExtKey.Version) {
         val hmac = Crypto.hmacSha512("Bitcoin seed".encodeToByteArray(), seed)
         this.seed = seed
         this.masterExtKey = ExtKey(
             version,
-            0,
+            0u,
             ByteArray(4),
-            0.toUInt(),
+            0u,
             hmac.copyOfRange(32, 64), // R
             hmac.copyOfRange(0, 32)   // L
         )
-        // TODO("Figure out what to do if key is not in range")
-
+        masterExtKey.validate()
     }
 
-//    def derive_ext_private_key(private_key, chain_code, child_number):
-//    if child_number >= 2 ** 31:
-//    # Generate a hardened key
-//      data = b'\x00' + private_key.to_bytes(32, 'big')
-//    else:
-//    # Generate a non-hardened key
-//       p = curve_point_from_int(private_key)
-//       data = serialize_curve_point(p)
-//
-//    data += child_number.to_bytes(4, 'big')
-//    hmac_bytes = hmac.new(chain_code, data, hashlib.sha512).digest()
-//    L, R = hmac_bytes[:32], hmac_bytes[32:]
-//    L_as_int = int.from_bytes(L, 'big')
-//    child_private_key = (L_as_int + private_key) % SECP256k1_ORD
-//    child_chain_code = R
-//
-//    return (child_private_key, child_chain_code)
-
     /** Derive key parsing path in format m/44'/60'/0'/0/0 */
-    fun deviceChildKey(path: String): ExtKey? {
+    @Throws(Error::class) fun deviceChildKey(path: String): ExtKey {
         val components = path.split("/")
         var parent = masterExtKey
-        var depth = 0
+        var retryCnt = 0
 
         for (component in components.subList(1, components.size)) {
             val digitStr = component.filter { it.isDigit() }
             val hardened = component.length != digitStr.length
-            val idx = digitStr.toUInt(10) +
-                if (hardened) 2.toDouble().pow(31).toUInt() else 0.toUInt()
-
-            println("=== $component ${digitStr.toUInt()} ${idx.toUInt()}")
-
-            // 	if secretKeyNum.Cmp(btcec.S256().N) >= 0 || secretKeyNum.Sign() == 0 {
-            //		return nil, ErrUnusableSeed
-            //	}
-            0.toLong()
-        }
-
-        return null
-    }
-
-    fun derivePrivateKey(privateKey: ByteArray, chainCode: ByteArray, childNumber: UInt) {
-        val data = if (childNumber >= 2.toDouble().pow(31).toUInt()) {
-            ByteArray(1) + privateKey
-        } else {
-            ByteArray(0)
-        }
-    }
-
-    fun extendPublicKey() {
-
-    }
-
-
-    enum class Version {
-        MAINNETPRV, MAINNETPUB, TESTNETPRV, TESTNETPUB;
-
-        fun hex(): ByteArray {
-            return when (this) {
-                MAINNETPRV -> "0488ade4".hexStringToByteArray()
-                MAINNETPUB -> "0488b21e".hexStringToByteArray()
-                TESTNETPRV -> "04358394".hexStringToByteArray()
-                TESTNETPUB -> "043587cf".hexStringToByteArray()
+            val idx = digitStr.toUInt(10) + if (hardened) firstHardenedIdx else 0.toUInt()
+            try {
+                val child = parent.deriveChildKey(parent, idx)
+                parent = child
+            } catch (e: Error) {
+                retryCnt += 1
+                if (retryCnt >= 5) {
+                    throw e
+                }
             }
         }
+        parent.validate()
+        return parent
     }
 }
-
-
