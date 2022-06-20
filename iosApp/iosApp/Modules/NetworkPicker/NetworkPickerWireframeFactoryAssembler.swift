@@ -2,14 +2,13 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-final class TokenAddWireframeFactoryAssembler: AssemblerComponent {
+final class NetworkPickerWireframeFactoryAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
         
-        registry.register(scope: .instance) { resolver -> TokenAddWireframeFactory in
+        registry.register(scope: .instance) { resolver -> NetworkPickerWireframeFactory in
             
-            DefaultTokenAddWireframeFactory(
-                networkPickerWireframeFactory: resolver.resolve(),
+            DefaultNetworkPickerWireframeFactory(
                 web3Service: resolver.resolve()
             )
         }

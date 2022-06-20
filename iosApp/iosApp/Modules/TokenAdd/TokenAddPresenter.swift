@@ -99,8 +99,11 @@ private extension DefaultTokenAddPresenter {
         return .init(
             title: Localized("tokenAdd.title"),
             network: .init(
-                name: Localized("tokenAdd.network.title"),
-                value: network.name
+                item: .init(
+                    name: Localized("tokenAdd.network.title"),
+                    value: network.name
+                ),
+                onTapped: makeNetworkOnTapped()
             ),
             contractAddress: .init(
                 item: .init(
@@ -299,4 +302,22 @@ private extension DefaultTokenAddPresenter {
         }
     }
 
+    func makeNetworkOnTapped() -> (() -> Void) {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.wireframe.navigate(to: .selectNetwork(onCompletion: self.onNetworkSelected()))
+        }
+    }
+    
+    func onNetworkSelected() -> (Web3Network) -> () {
+        
+        {
+            [weak self] network in
+            guard let self = self else { return }
+            self.network = network
+            self.refresh()
+        }
+    }
 }

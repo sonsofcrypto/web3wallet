@@ -76,7 +76,7 @@ extension TokenPickerViewController: TokenPickerView {
             itemsCollectionView.allowsMultipleSelection = viewModel.allowMultiSelection
         } else {
             
-            configureNavBarLeftBarButtonIconClose()
+            configureLeftBarButtonItemDismissAction()
         }
     }
 }
@@ -97,18 +97,7 @@ extension TokenPickerViewController {
         vStack.spacing = 4
         navigationItem.titleView = vStack
     }
-    
-    func configureNavBarLeftBarButtonIconClose() {
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "close-icon"),
-            style: .plain,
-            target: self,
-            action: #selector(dismissTapped)
-        )
-        navigationItem.leftBarButtonItem?.tintColor  = Theme.color.tint
-    }
-    
     func configureNavBarLeftBarButtonIconAddToken() {
         
         let button = UIButton()
@@ -173,7 +162,7 @@ extension TokenPickerViewController {
         clearSearchButton.isHidden = true
     }
 
-    @objc func dismissTapped() {
+    @objc override func dismissTapped() {
         
         presenter.handle(.dismiss)
     }

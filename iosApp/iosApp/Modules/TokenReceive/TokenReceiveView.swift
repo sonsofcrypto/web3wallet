@@ -82,15 +82,8 @@ extension TokenReceiveViewController {
         vStack.spacing = 4
         
         navigationItem.titleView = vStack
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(
-                named: navigationController?.viewControllers.count == 1 ? "close-icon" : "arrow_back"
-            ),
-            style: .plain,
-            target: self,
-            action: #selector(dismissTapped)
-        )
-        navigationItem.leftBarButtonItem?.tintColor  = Theme.color.tint
+        
+        configureLeftBarButtonItemDismissAction()
         
         cardView.backgroundColor = Theme.current.color.backgroundDark
         cardView.layer.cornerRadius = 12
@@ -132,7 +125,7 @@ extension TokenReceiveViewController {
         ]
     }
 
-    @objc func dismissTapped() {
+    @objc override func dismissTapped() {
         
         presenter.handle(.dismiss)
     }

@@ -6,18 +6,19 @@ import UIKit
 
 extension UIViewController {
     
-    func addCloseButtonToNavigationBar() {
+    func configureLeftBarButtonItemDismissAction() {
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "close-icon"),
+        let icon = navigationController?.viewControllers.count == 1 ? "close_icon" : "arrow_back"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: UIImage(named: icon),
             style: .plain,
             target: self,
-            action: #selector(dismissAction)
+            action: #selector(dismissTapped)
         )
-        navigationItem.rightBarButtonItem?.tintColor  = Theme.color.tint
+        navigationItem.leftBarButtonItem?.tintColor  = Theme.color.tint
     }
     
-    @objc func dismissAction() {
+    @objc func dismissTapped() {
 
         fatalError("Please override by subclass")
     }

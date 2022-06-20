@@ -14,11 +14,14 @@ protocol TokenAddWireframeFactory {
 
 final class DefaultTokenAddWireframeFactory {
 
+    private let networkPickerWireframeFactory: NetworkPickerWireframeFactory
     private let web3Service: Web3Service
 
     init(
+        networkPickerWireframeFactory: NetworkPickerWireframeFactory,
         web3Service: Web3Service
     ) {
+        self.networkPickerWireframeFactory = networkPickerWireframeFactory
         self.web3Service = web3Service
     }
 }
@@ -33,6 +36,7 @@ extension DefaultTokenAddWireframeFactory: TokenAddWireframeFactory {
         DefaultTokenAddWireframe(
             presentingIn: presentingIn,
             context: context,
+            networkPickerWireframeFactory: networkPickerWireframeFactory,
             web3Service: web3Service
         )
     }

@@ -33,7 +33,7 @@ final class NFTsCollectionViewController: BaseViewController {
         refresh()
     }
     
-    @objc override func dismissAction() {
+    @objc override func dismissTapped() {
         
         presenter.handle(.dismiss)
     }
@@ -86,6 +86,6 @@ private extension NFTsCollectionViewController {
         self.mainScrollView = mainScrollView
         mainScrollView.addConstraints(.toEdges)
         
-        addCloseButtonToNavigationBar()
+        configureLeftBarButtonItemDismissAction()
     }
 }

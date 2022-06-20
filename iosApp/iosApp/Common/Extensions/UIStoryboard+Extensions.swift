@@ -33,5 +33,6 @@ extension UIStoryboard {
         case tokenPicker = "TokenPicker"
         case tokenReceive = "TokenReceive"
         case tokenAdd = "TokenAdd"
+        case networkPicker = "NetworkPicker"
     }
 }

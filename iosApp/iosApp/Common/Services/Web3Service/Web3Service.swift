@@ -29,6 +29,14 @@ struct Web3Network: Codable, Equatable, Hashable {
     let hasDns: Bool
 }
 
+extension Array where Element == Web3Network {
+    
+    var sortByName: [Web3Network] {
+        
+        sorted { $0.name < $1.name }
+    }
+}
+
 struct Web3Token: Codable, Equatable {
     
     let symbol: String // ETH

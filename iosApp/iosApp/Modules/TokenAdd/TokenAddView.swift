@@ -59,15 +59,7 @@ extension TokenAddViewController {
         let vStack = VStackView([titleLabel])
         navigationItem.titleView = vStack
 
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(
-                named: navigationController?.viewControllers.count == 1 ? "close-icon" : "arrow_back"
-            ),
-            style: .plain,
-            target: self,
-            action: #selector(dismissTapped)
-        )
-        navigationItem.leftBarButtonItem?.tintColor  = Theme.color.tint
+        configureLeftBarButtonItemDismissAction()
         
         let button = UIButton()
         button.setImage(
@@ -103,7 +95,7 @@ extension TokenAddViewController {
         constraint.isActive = true
     }
 
-    @objc func dismissTapped() {
+    @objc override func dismissTapped() {
         
         presenter.handle(.dismiss)
     }

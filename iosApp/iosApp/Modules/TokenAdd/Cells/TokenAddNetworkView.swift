@@ -9,7 +9,7 @@ final class TokenAddNetworkView: UIView {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var valueLabel: UILabel!
     
-    private var viewModel: TokenAddViewModel.Item!
+    private var viewModel: TokenAddViewModel.NetworkItem!
     
     override func awakeFromNib() {
         
@@ -20,15 +20,26 @@ final class TokenAddNetworkView: UIView {
 
         valueLabel.applyStyle(.body)
         valueLabel.textColor = Theme.color.tint
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+        addGestureRecognizer(tapGesture)
     }
     
     func update(
-        with viewModel: TokenAddViewModel.Item
+        with viewModel: TokenAddViewModel.NetworkItem
     ) {
         
         self.viewModel = viewModel
         
-        nameLabel.text = viewModel.name
-        valueLabel.text = viewModel.value
+        nameLabel.text = viewModel.item.name
+        valueLabel.text = viewModel.item.value
+    }
+}
+
+private extension TokenAddNetworkView {
+    
+    @objc func viewTapped() {
+        
+        viewModel.onTapped()
     }
 }

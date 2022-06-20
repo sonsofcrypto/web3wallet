@@ -11,6 +11,7 @@ struct TokenAddWireframeContext {
 
 enum TokenAddWireframeDestination {
     
+    case selectNetwork(onCompletion: (Web3Network) -> Void)
 }
 
 protocol TokenAddWireframe {
@@ -23,6 +24,7 @@ final class DefaultTokenAddWireframe {
     
     private weak var presentingIn: UIViewController!
     private let context: TokenAddWireframeContext
+    private let networkPickerWireframeFactory: NetworkPickerWireframeFactory
     private let web3Service: Web3Service
     
     private weak var navigationController: NavigationController!
@@ -30,10 +32,12 @@ final class DefaultTokenAddWireframe {
     init(
         presentingIn: UIViewController,
         context: TokenAddWireframeContext,
+        networkPickerWireframeFactory: NetworkPickerWireframeFactory,
         web3Service: Web3Service
     ) {
         self.presentingIn = presentingIn
         self.context = context
+        self.networkPickerWireframeFactory = networkPickerWireframeFactory
         self.web3Service = web3Service
     }
 }
@@ -61,6 +65,16 @@ extension DefaultTokenAddWireframe: TokenAddWireframe {
     
     func navigate(to destination: TokenAddWireframeDestination) {
         
+        switch destination {
+            
+        case let .selectNetwork(onCompletion):
+            
+            let coordinator = networkPickerWireframeFactory.makeWireframe(
+                presentingIn: navigationController,
+                context: .init(presentationStyle: .push, onNetworkSelected: onCompletion)
+            )
+            coordinator.present()
+        }
     }
     
     func dismiss() {

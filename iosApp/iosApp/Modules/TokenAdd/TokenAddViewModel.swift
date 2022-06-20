@@ -15,7 +15,7 @@ struct TokenAddViewModel {
     }
     
     let title: String
-    let network: Item
+    let network: NetworkItem
     let contractAddress: TextFieldItem
     let name: TextFieldItem
     let symbol: TextFieldItem
@@ -25,6 +25,12 @@ struct TokenAddViewModel {
         
         let name: String
         let value: String?
+    }
+    
+    struct NetworkItem {
+        
+        let item: Item
+        let onTapped: () -> Void
     }
     
     struct TextFieldItem {
