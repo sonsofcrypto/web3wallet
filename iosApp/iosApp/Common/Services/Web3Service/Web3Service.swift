@@ -31,12 +31,12 @@ struct Web3Network: Codable, Equatable, Hashable {
 
 struct Web3Token: Codable, Equatable {
     
-    let symbol: String
-    let name: String
-    let address: String
-    let decimals: Int
+    let symbol: String // ETH
+    let name: String // Ethereum
+    let address: String // 0x482828...
+    let decimals: Int // 8
     let type: `Type`
-    let network: Web3Network
+    let network: Web3Network //
     let balance: Double
     let showInWallet: Bool
     let usdPrice: Double

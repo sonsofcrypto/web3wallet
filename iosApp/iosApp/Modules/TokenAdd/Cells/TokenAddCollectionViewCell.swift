@@ -5,7 +5,9 @@
 import UIKit
 
 final class TokenAddCollectionViewCell: UICollectionViewCell {
-    
+
+    @IBOutlet weak var networkDetailsView: TokenAddNetworkView!
+
     @IBOutlet weak var tokenDetailsView: UIView!
     @IBOutlet weak var contractAddressView: TokenAddInputView!
     @IBOutlet weak var nameView: TokenAddInputView!
@@ -17,7 +19,12 @@ final class TokenAddCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         
         super.awakeFromNib()
-        
+
+        networkDetailsView.backgroundColor = Theme.color.backgroundDark
+        networkDetailsView.layer.cornerRadius = Global.cornerRadius
+        networkDetailsView.layer.borderWidth = 1
+        networkDetailsView.layer.borderColor = Theme.color.tintLight.cgColor
+
         tokenDetailsView.backgroundColor = Theme.color.backgroundDark
         tokenDetailsView.layer.cornerRadius = Global.cornerRadius
         tokenDetailsView.layer.borderWidth = 1
@@ -39,6 +46,8 @@ final class TokenAddCollectionViewCell: UICollectionViewCell {
         with viewModel: TokenAddViewModel,
         and width: CGFloat
     ) {
+        
+        networkDetailsView.update(with: viewModel.network)
 
         contractAddressView.update(
             with: viewModel.contractAddress,

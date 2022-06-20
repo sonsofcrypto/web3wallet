@@ -65,6 +65,7 @@
 		1C54DBF3285E83A300E378F6 /* TokenAddPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF2285E83A300E378F6 /* TokenAddPresenter.swift */; };
 		1C54DBF5285F32DC00E378F6 /* TokenAddInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF4285F32DC00E378F6 /* TokenAddInputView.swift */; };
 		1C54DBF8285F8F3700E378F6 /* TokenAddCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF7285F8F3700E378F6 /* TokenAddCollectionViewCell.swift */; };
+		1C54DBFA285F9EBF00E378F6 /* TokenAddNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF9285F9EBF00E378F6 /* TokenAddNetworkView.swift */; };
 		1C5B60382843FACD00ECBD79 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B60372843FACD00ECBD79 /* UIViewController+Extensions.swift */; };
 		1C5B603B284675B800ECBD79 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5B603A284675B800ECBD79 /* Kingfisher */; };
 		1C60C1AA28571B95003BE25D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */; };
@@ -472,6 +473,7 @@
 		1C54DBF2285E83A300E378F6 /* TokenAddPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddPresenter.swift; sourceTree = "<group>"; };
 		1C54DBF4285F32DC00E378F6 /* TokenAddInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddInputView.swift; sourceTree = "<group>"; };
 		1C54DBF7285F8F3700E378F6 /* TokenAddCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddCollectionViewCell.swift; sourceTree = "<group>"; };
+		1C54DBF9285F9EBF00E378F6 /* TokenAddNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddNetworkView.swift; sourceTree = "<group>"; };
 		1C5B60372843FACD00ECBD79 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1AB28571BB6003BE25D /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
@@ -982,7 +984,6 @@
 			isa = PBXGroup;
 			children = (
 				1C54DBEE285E835400E378F6 /* TokenAdd.storyboard */,
-				1C54DBF4285F32DC00E378F6 /* TokenAddInputView.swift */,
 				1C54DBEC285E834200E378F6 /* TokenAddInteractor.swift */,
 				1C54DBF2285E83A300E378F6 /* TokenAddPresenter.swift */,
 				1C54DBEA285E833500E378F6 /* TokenAddView.swift */,
@@ -999,6 +1000,8 @@
 			isa = PBXGroup;
 			children = (
 				1C54DBF7285F8F3700E378F6 /* TokenAddCollectionViewCell.swift */,
+				1C54DBF4285F32DC00E378F6 /* TokenAddInputView.swift */,
+				1C54DBF9285F9EBF00E378F6 /* TokenAddNetworkView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1998,6 +2001,7 @@
 				D11A990F27B99D1800EDFDD0 /* AnyDecodable.swift in Sources */,
 				D11A991027B99D1800EDFDD0 /* AnyCodable.swift in Sources */,
 				1C60C2C4285724D0003BE25D /* ChatRightCollectionViewCell.swift in Sources */,
+				1C54DBFA285F9EBF00E378F6 /* TokenAddNetworkView.swift in Sources */,
 				1C6486F3282D783A0091A12D /* DefaultGradientView.swift in Sources */,
 				1C60C37E2859CC2A003BE25D /* ShareFactoryHelper.swift in Sources */,
 				D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */,
