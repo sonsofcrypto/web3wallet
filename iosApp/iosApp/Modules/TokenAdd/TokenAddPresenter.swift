@@ -76,13 +76,17 @@ extension DefaultTokenAddPresenter: TokenAddPresenter {
 private extension DefaultTokenAddPresenter {
     
     func refresh(
-        firstResponder: TokenAddViewModel.TextFieldType? = nil
+        firstResponder: TokenAddViewModel.TextFieldType? = nil,
+        customToken: String? = nil
     ) {
         
         validateFields()
-        view?.update(
-            with: makeViewModel(firstResponder: firstResponder)
+        
+        let viewModel = makeViewModel(
+            customToken: customToken,
+            firstResponder: firstResponder
         )
+        view?.update(with: viewModel)
         
         // TODO: Fetch other contractAddress details async
         // if contractAddress is a valid one for the selected network
@@ -92,7 +96,7 @@ private extension DefaultTokenAddPresenter {
         customToken: String? = nil,
         name: String? = nil,
         symbol: String? = nil,
-        hint: String? = nil,
+        decimals: String? = nil,
         firstResponder: TokenAddViewModel.TextFieldType?
     ) -> TokenAddViewModel {
         
@@ -111,7 +115,7 @@ private extension DefaultTokenAddPresenter {
             contractAddress: .init(
                 item: .init(
                     name: Localized("tokenAdd.contractAddress.title"),
-                    value: nil
+                    value: customToken
                 ),
                 placeholder: Localized("tokenAdd.contractAddress.placeholder"),
                 hint: contractAddressValidationError,
@@ -124,7 +128,7 @@ private extension DefaultTokenAddPresenter {
             name: .init(
                 item: .init(
                     name: Localized("tokenAdd.name.title"),
-                    value: nil
+                    value: name
                 ),
                 placeholder: Localized("tokenAdd.name.placeholder"),
                 hint: nameValidationError,
@@ -137,7 +141,7 @@ private extension DefaultTokenAddPresenter {
             symbol: .init(
                 item: .init(
                     name: Localized("tokenAdd.symbol.title"),
-                    value: nil
+                    value: symbol
                 ),
                 placeholder: Localized("tokenAdd.symbol.placeholder"),
                 hint: symbolValidationError,
@@ -150,7 +154,7 @@ private extension DefaultTokenAddPresenter {
             decimals: .init(
                 item: .init(
                     name: Localized("tokenAdd.decimals.title"),
-                    value: nil
+                    value: decimals
                 ),
                 placeholder: Localized("tokenAdd.decimals.placeholder"),
                 hint: decimalsValidationError,
@@ -318,7 +322,7 @@ private extension DefaultTokenAddPresenter {
             [weak self] address in
             guard let self = self else { return }
             self.contractAddress = address
-            self.refresh()
+            self.refresh(customToken: self.contractAddress)
         }
     }
 

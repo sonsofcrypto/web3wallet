@@ -154,7 +154,7 @@ extension QRCodeScanViewController: AVCaptureMetadataOutputObjectsDelegate {
     ) {
         
         guard let metadataObject = metadataObjects.first else { return }
-        
+
         guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
         
         guard let qrCode = readableObject.stringValue else { return }
@@ -164,4 +164,35 @@ extension QRCodeScanViewController: AVCaptureMetadataOutputObjectsDelegate {
         presenter.handle(.qrCode(qrCode))
     }
 
+}
+
+private extension UIImage {
+    
+    var qrCode: String? {
+        
+        guard
+            let detector = CIDetector(
+                ofType: CIDetectorTypeQRCode,
+                context: nil,
+                options: [
+                    CIDetectorAccuracy: CIDetectorAccuracyHigh
+                ]
+            ),
+            let ciImage = CIImage(image: self),
+            let features = detector.features(in: ciImage) as? [CIQRCodeFeature]
+        else {
+            return nil
+        }
+
+        var qrCode = ""
+        for feature in features {
+            
+            guard let indeedMessageString = feature.messageString else {
+                continue
+            }
+            qrCode += indeedMessageString
+        }
+
+        return qrCode.isEmpty ? nil : qrCode
+    }
 }
