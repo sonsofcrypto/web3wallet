@@ -37,16 +37,6 @@ extension DefaultTokenAddInteractor: TokenAddInteractor {
     
     func isValid(address: String, forNetwork network: Web3Network) -> Bool {
         
-        switch network.name.lowercased() {
-            
-        case "ethereum":
-            return address.hasPrefix("0x") && address.count == 42
-            
-        case "solana":
-            return true
-            
-        default:
-            return false
-        }
+        web3Service.isValid(address: address, forNetwork: network)
     }
 }

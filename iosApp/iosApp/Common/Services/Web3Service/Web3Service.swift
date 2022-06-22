@@ -21,6 +21,8 @@ protocol Web3Service: AnyObject {
     
     func addWalletListener(_ listener: Web3ServiceWalletListener)
     func removeWalletListener(_ listener: Web3ServiceWalletListener)
+    
+    func isValid(address: String, forNetwork network: Web3Network) -> Bool
 }
 
 struct Web3Network: Codable, Equatable, Hashable {

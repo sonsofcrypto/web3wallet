@@ -62,7 +62,7 @@ extension TokenPickerViewController: TokenPickerView {
 
         self.viewModel = viewModel
         
-        configureNavigationBar()
+        configureNavigationBar(title: viewModel.title)
         
         clearSearchButton.isHidden = searchTextField.text?.isEmpty ?? true
         
@@ -83,21 +83,6 @@ extension TokenPickerViewController: TokenPickerView {
 
 extension TokenPickerViewController {
     
-    func configureNavigationBar() {
-        
-        let titleLabel = UILabel(frame: .zero)
-        titleLabel.textAlignment = .center
-        titleLabel.text = viewModel?.title
-        titleLabel.applyStyle(.navTitle)
-        
-        let views: [UIView] = [
-            titleLabel
-        ]
-        let vStack = VStackView(views)
-        vStack.spacing = 4
-        navigationItem.titleView = vStack
-    }
-        
     func configureNavBarLeftBarButtonIconAddToken() {
         
         let button = UIButton()

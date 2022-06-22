@@ -166,3 +166,7 @@
 
 "networkPicker.title" = "Select network";
 "networkPicker.noResults" = "No results";
+
+"qrCodeScan.title" = "Scan QR code";
+"qrCodeScan.error.notSupported.title" = "Scanning not supported";
+"qrCodeScan.error.notSupported.message" = "Your device does not support QR code scanning. Please use a device with a camera.";

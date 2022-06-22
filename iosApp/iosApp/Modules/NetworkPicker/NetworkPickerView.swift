@@ -61,7 +61,7 @@ extension NetworkPickerViewController: NetworkPickerView {
 
         self.viewModel = viewModel
         
-        configureNavigationBar()
+        configureNavigationBar(title: viewModel.title)
         
         clearSearchButton.isHidden = searchTextField.text?.isEmpty ?? true
         
@@ -70,22 +70,7 @@ extension NetworkPickerViewController: NetworkPickerView {
 }
 
 private extension NetworkPickerViewController {
-    
-    func configureNavigationBar() {
         
-        let titleLabel = UILabel(frame: .zero)
-        titleLabel.textAlignment = .center
-        titleLabel.text = viewModel?.title
-        titleLabel.applyStyle(.navTitle)
-        
-        let views: [UIView] = [
-            titleLabel
-        ]
-        let vStack = VStackView(views)
-        vStack.spacing = 4
-        navigationItem.titleView = vStack
-    }
-    
     func configureUI() {
         
         (view as? GradientView)?.colors = [

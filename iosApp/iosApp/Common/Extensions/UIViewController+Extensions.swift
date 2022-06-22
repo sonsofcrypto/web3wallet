@@ -6,6 +6,28 @@ import UIKit
 
 extension UIViewController {
     
+    func configureNavigationBar(title: String?) {
+        
+        let titleLabel = UILabel(frame: .zero)
+        titleLabel.textAlignment = .center
+        titleLabel.text = title
+        titleLabel.applyStyle(.navTitle)
+        navigationItem.titleView = titleLabel
+    }
+
+//    let titleLabel = UILabel(frame: .zero)
+//    titleLabel.textAlignment = .center
+//    titleLabel.text = viewModel?.title
+//    titleLabel.applyStyle(.navTitle)
+//
+//    let views: [UIView] = [
+//        titleLabel
+//    ]
+//    let vStack = VStackView(views)
+//    vStack.spacing = 4
+//    navigationItem.titleView = vStack
+
+    
     func configureLeftBarButtonItemDismissAction() {
         
         let icon = navigationController?.viewControllers.count == 1 ? "close_icon" : "arrow_back"

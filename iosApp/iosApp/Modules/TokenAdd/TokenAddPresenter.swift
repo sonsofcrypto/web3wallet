@@ -83,6 +83,9 @@ private extension DefaultTokenAddPresenter {
         view?.update(
             with: makeViewModel(firstResponder: firstResponder)
         )
+        
+        // TODO: Fetch other contractAddress details async
+        // if contractAddress is a valid one for the selected network
     }
     
     func makeViewModel(
@@ -295,10 +298,27 @@ private extension DefaultTokenAddPresenter {
             switch textFieldType {
                 
             case .contractAddress:
-                print("Present QRCode scanner")
+                
+                self.wireframe.navigate(
+                    to: .qrCodeScan(
+                        network: self.network,
+                        onCompletion: self.makeOnQRScanned()
+                    )
+                )
+                
             default:
                 break
             }
+        }
+    }
+    
+    func makeOnQRScanned() -> (String) -> Void {
+        
+        {
+            [weak self] address in
+            guard let self = self else { return }
+            self.contractAddress = address
+            self.refresh()
         }
     }
 

@@ -12,6 +12,7 @@ struct TokenAddWireframeContext {
 enum TokenAddWireframeDestination {
     
     case selectNetwork(onCompletion: (Web3Network) -> Void)
+    case qrCodeScan(network: Web3Network, onCompletion: (String) -> Void)
 }
 
 protocol TokenAddWireframe {
@@ -25,6 +26,7 @@ final class DefaultTokenAddWireframe {
     private weak var presentingIn: UIViewController!
     private let context: TokenAddWireframeContext
     private let networkPickerWireframeFactory: NetworkPickerWireframeFactory
+    private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let web3Service: Web3Service
     
     private weak var navigationController: NavigationController!
@@ -33,11 +35,13 @@ final class DefaultTokenAddWireframe {
         presentingIn: UIViewController,
         context: TokenAddWireframeContext,
         networkPickerWireframeFactory: NetworkPickerWireframeFactory,
+        qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         web3Service: Web3Service
     ) {
         self.presentingIn = presentingIn
         self.context = context
         self.networkPickerWireframeFactory = networkPickerWireframeFactory
+        self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.web3Service = web3Service
     }
 }
@@ -72,6 +76,18 @@ extension DefaultTokenAddWireframe: TokenAddWireframe {
             let coordinator = networkPickerWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(presentationStyle: .push, onNetworkSelected: onCompletion)
+            )
+            coordinator.present()
+            
+        case let .qrCodeScan(network, onCompletion):
+            
+            let coordinator = qrCodeScanWireframeFactory.makeWireframe(
+                presentingIn: navigationController,
+                context: .init(
+                    presentationStyle: .push,
+                    network: network,
+                    onCompletion: onCompletion
+                )
             )
             coordinator.present()
         }

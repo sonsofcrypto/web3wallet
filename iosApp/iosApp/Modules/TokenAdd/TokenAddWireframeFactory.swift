@@ -15,13 +15,16 @@ protocol TokenAddWireframeFactory {
 final class DefaultTokenAddWireframeFactory {
 
     private let networkPickerWireframeFactory: NetworkPickerWireframeFactory
+    private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let web3Service: Web3Service
 
     init(
         networkPickerWireframeFactory: NetworkPickerWireframeFactory,
+        qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         web3Service: Web3Service
     ) {
         self.networkPickerWireframeFactory = networkPickerWireframeFactory
+        self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.web3Service = web3Service
     }
 }
@@ -37,6 +40,7 @@ extension DefaultTokenAddWireframeFactory: TokenAddWireframeFactory {
             presentingIn: presentingIn,
             context: context,
             networkPickerWireframeFactory: networkPickerWireframeFactory,
+            qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
             web3Service: web3Service
         )
     }

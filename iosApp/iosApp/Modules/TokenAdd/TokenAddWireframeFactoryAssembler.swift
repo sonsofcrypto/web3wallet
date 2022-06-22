@@ -10,6 +10,7 @@ final class TokenAddWireframeFactoryAssembler: AssemblerComponent {
             
             DefaultTokenAddWireframeFactory(
                 networkPickerWireframeFactory: resolver.resolve(),
+                qrCodeScanWireframeFactory: resolver.resolve(),
                 web3Service: resolver.resolve()
             )
         }
