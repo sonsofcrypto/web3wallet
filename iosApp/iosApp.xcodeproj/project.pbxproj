@@ -55,6 +55,34 @@
 		1C54DBDC285DD10000E378F6 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */; };
 		1C54DBDE285DD15400E378F6 /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBDD285DD15400E378F6 /* Account.storyboard */; };
 		1C54DBE0285E1A0E00E378F6 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBDF285E1A0E00E378F6 /* Double+Extensions.swift */; };
+		1C54DBE3285E831B00E378F6 /* TokenAddWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE2285E831B00E378F6 /* TokenAddWireframe.swift */; };
+		1C54DBE5285E832600E378F6 /* TokenAddWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE4285E832600E378F6 /* TokenAddWireframeFactory.swift */; };
+		1C54DBE7285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE6285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift */; };
+		1C54DBE9285E833200E378F6 /* TokenAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE8285E833200E378F6 /* TokenAddViewModel.swift */; };
+		1C54DBEB285E833600E378F6 /* TokenAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBEA285E833500E378F6 /* TokenAddView.swift */; };
+		1C54DBED285E834200E378F6 /* TokenAddInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBEC285E834200E378F6 /* TokenAddInteractor.swift */; };
+		1C54DBEF285E835400E378F6 /* TokenAdd.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBEE285E835400E378F6 /* TokenAdd.storyboard */; };
+		1C54DBF3285E83A300E378F6 /* TokenAddPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF2285E83A300E378F6 /* TokenAddPresenter.swift */; };
+		1C54DBF5285F32DC00E378F6 /* TokenAddInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF4285F32DC00E378F6 /* TokenAddInputView.swift */; };
+		1C54DBF8285F8F3700E378F6 /* TokenAddCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF7285F8F3700E378F6 /* TokenAddCollectionViewCell.swift */; };
+		1C54DBFA285F9EBF00E378F6 /* TokenAddNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF9285F9EBF00E378F6 /* TokenAddNetworkView.swift */; };
+		1C54DBFD2860E5AB00E378F6 /* NetworkPickerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBFC2860E5AB00E378F6 /* NetworkPickerInteractor.swift */; };
+		1C54DBFF2860E5B000E378F6 /* NetworkPickerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBFE2860E5B000E378F6 /* NetworkPickerPresenter.swift */; };
+		1C54DC012860E5BC00E378F6 /* NetworkPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC002860E5BC00E378F6 /* NetworkPickerView.swift */; };
+		1C54DC032860E5C100E378F6 /* NetworkPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC022860E5C100E378F6 /* NetworkPickerViewModel.swift */; };
+		1C54DC052860E5C500E378F6 /* NetworkPickerWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC042860E5C500E378F6 /* NetworkPickerWireframe.swift */; };
+		1C54DC072860E5CB00E378F6 /* NetworkPickerWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC062860E5CB00E378F6 /* NetworkPickerWireframeFactory.swift */; };
+		1C54DC092860E5D200E378F6 /* NetworkPickerWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC082860E5D200E378F6 /* NetworkPickerWireframeFactoryAssembler.swift */; };
+		1C54DC0B2860E63600E378F6 /* NetworkPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC0A2860E63600E378F6 /* NetworkPicker.storyboard */; };
+		1C54DC0E2860E91D00E378F6 /* NetworkPickerItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC0D2860E91D00E378F6 /* NetworkPickerItemCell.swift */; };
+		1C54DC112862350B00E378F6 /* QRCodeScanPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC102862350A00E378F6 /* QRCodeScanPresenter.swift */; };
+		1C54DC132862351100E378F6 /* QRCodeScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC122862351100E378F6 /* QRCodeScanView.swift */; };
+		1C54DC152862351500E378F6 /* QRCodeScanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC142862351500E378F6 /* QRCodeScanViewModel.swift */; };
+		1C54DC172862351D00E378F6 /* QRCodeScanWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC162862351D00E378F6 /* QRCodeScanWireframe.swift */; };
+		1C54DC192862352200E378F6 /* QRCodeScanWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC182862352200E378F6 /* QRCodeScanWireframeFactory.swift */; };
+		1C54DC1B2862352800E378F6 /* QRCodeScanWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC1A2862352800E378F6 /* QRCodeScanWireframeFactoryAssembler.swift */; };
+		1C54DC1D2862354C00E378F6 /* QRCodeScan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */; };
+		1C54DC1F2862373C00E378F6 /* QRCodeScanInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC1E2862373C00E378F6 /* QRCodeScanInteractor.swift */; };
 		1C5B60382843FACD00ECBD79 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B60372843FACD00ECBD79 /* UIViewController+Extensions.swift */; };
 		1C5B603B284675B800ECBD79 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5B603A284675B800ECBD79 /* Kingfisher */; };
 		1C60C1AA28571B95003BE25D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */; };
@@ -263,7 +291,6 @@
 		1C60C37928588147003BE25D /* TokenPickerFilterAllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C37828588147003BE25D /* TokenPickerFilterAllCell.swift */; };
 		1C60C37B2859BDD9003BE25D /* UIView+Toast+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C37A2859BDD9003BE25D /* UIView+Toast+Extensions.swift */; };
 		1C60C37E2859CC2A003BE25D /* ShareFactoryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C37D2859CC2A003BE25D /* ShareFactoryHelper.swift */; };
-		1C60C380285A2DC6003BE25D /* TokenPickerPresenter+Receive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C37F285A2DC6003BE25D /* TokenPickerPresenter+Receive.swift */; };
 		1C60C382285A5AE8003BE25D /* UICollectionViewCell+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C381285A5AE8003BE25D /* UICollectionViewCell+Extensions.swift */; };
 		1C60C384285A649B003BE25D /* Web3ServiceLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C383285A649B003BE25D /* Web3ServiceLocalStorage.swift */; };
 		1C60C386285AFB20003BE25D /* Web3ServiceLocalStorageAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C385285AFB20003BE25D /* Web3ServiceLocalStorageAssembler.swift */; };
@@ -452,6 +479,34 @@
 		1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
 		1C54DBDD285DD15400E378F6 /* Account.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
 		1C54DBDF285E1A0E00E378F6 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		1C54DBE2285E831B00E378F6 /* TokenAddWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddWireframe.swift; sourceTree = "<group>"; };
+		1C54DBE4285E832600E378F6 /* TokenAddWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddWireframeFactory.swift; sourceTree = "<group>"; };
+		1C54DBE6285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C54DBE8285E833200E378F6 /* TokenAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddViewModel.swift; sourceTree = "<group>"; };
+		1C54DBEA285E833500E378F6 /* TokenAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddView.swift; sourceTree = "<group>"; };
+		1C54DBEC285E834200E378F6 /* TokenAddInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddInteractor.swift; sourceTree = "<group>"; };
+		1C54DBEE285E835400E378F6 /* TokenAdd.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TokenAdd.storyboard; sourceTree = "<group>"; };
+		1C54DBF2285E83A300E378F6 /* TokenAddPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddPresenter.swift; sourceTree = "<group>"; };
+		1C54DBF4285F32DC00E378F6 /* TokenAddInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddInputView.swift; sourceTree = "<group>"; };
+		1C54DBF7285F8F3700E378F6 /* TokenAddCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddCollectionViewCell.swift; sourceTree = "<group>"; };
+		1C54DBF9285F9EBF00E378F6 /* TokenAddNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddNetworkView.swift; sourceTree = "<group>"; };
+		1C54DBFC2860E5AB00E378F6 /* NetworkPickerInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPickerInteractor.swift; sourceTree = "<group>"; };
+		1C54DBFE2860E5B000E378F6 /* NetworkPickerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPickerPresenter.swift; sourceTree = "<group>"; };
+		1C54DC002860E5BC00E378F6 /* NetworkPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPickerView.swift; sourceTree = "<group>"; };
+		1C54DC022860E5C100E378F6 /* NetworkPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPickerViewModel.swift; sourceTree = "<group>"; };
+		1C54DC042860E5C500E378F6 /* NetworkPickerWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPickerWireframe.swift; sourceTree = "<group>"; };
+		1C54DC062860E5CB00E378F6 /* NetworkPickerWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPickerWireframeFactory.swift; sourceTree = "<group>"; };
+		1C54DC082860E5D200E378F6 /* NetworkPickerWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPickerWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C54DC0A2860E63600E378F6 /* NetworkPicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NetworkPicker.storyboard; sourceTree = "<group>"; };
+		1C54DC0D2860E91D00E378F6 /* NetworkPickerItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPickerItemCell.swift; sourceTree = "<group>"; };
+		1C54DC102862350A00E378F6 /* QRCodeScanPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanPresenter.swift; sourceTree = "<group>"; };
+		1C54DC122862351100E378F6 /* QRCodeScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanView.swift; sourceTree = "<group>"; };
+		1C54DC142862351500E378F6 /* QRCodeScanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanViewModel.swift; sourceTree = "<group>"; };
+		1C54DC162862351D00E378F6 /* QRCodeScanWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanWireframe.swift; sourceTree = "<group>"; };
+		1C54DC182862352200E378F6 /* QRCodeScanWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanWireframeFactory.swift; sourceTree = "<group>"; };
+		1C54DC1A2862352800E378F6 /* QRCodeScanWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QRCodeScan.storyboard; sourceTree = "<group>"; };
+		1C54DC1E2862373C00E378F6 /* QRCodeScanInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanInteractor.swift; sourceTree = "<group>"; };
 		1C5B60372843FACD00ECBD79 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1AB28571BB6003BE25D /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
@@ -659,7 +714,6 @@
 		1C60C37828588147003BE25D /* TokenPickerFilterAllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenPickerFilterAllCell.swift; sourceTree = "<group>"; };
 		1C60C37A2859BDD9003BE25D /* UIView+Toast+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Toast+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C37D2859CC2A003BE25D /* ShareFactoryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareFactoryHelper.swift; sourceTree = "<group>"; };
-		1C60C37F285A2DC6003BE25D /* TokenPickerPresenter+Receive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TokenPickerPresenter+Receive.swift"; sourceTree = "<group>"; };
 		1C60C381285A5AE8003BE25D /* UICollectionViewCell+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C383285A649B003BE25D /* Web3ServiceLocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3ServiceLocalStorage.swift; sourceTree = "<group>"; };
 		1C60C385285AFB20003BE25D /* Web3ServiceLocalStorageAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3ServiceLocalStorageAssembler.swift; sourceTree = "<group>"; };
@@ -958,6 +1012,71 @@
 			path = VisualEffectView;
 			sourceTree = "<group>";
 		};
+		1C54DBE1285E82FC00E378F6 /* TokenAdd */ = {
+			isa = PBXGroup;
+			children = (
+				1C54DBEE285E835400E378F6 /* TokenAdd.storyboard */,
+				1C54DBEC285E834200E378F6 /* TokenAddInteractor.swift */,
+				1C54DBF2285E83A300E378F6 /* TokenAddPresenter.swift */,
+				1C54DBEA285E833500E378F6 /* TokenAddView.swift */,
+				1C54DBE8285E833200E378F6 /* TokenAddViewModel.swift */,
+				1C54DBE2285E831B00E378F6 /* TokenAddWireframe.swift */,
+				1C54DBE4285E832600E378F6 /* TokenAddWireframeFactory.swift */,
+				1C54DBE6285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift */,
+				1C54DBF6285F8F2800E378F6 /* Cells */,
+			);
+			path = TokenAdd;
+			sourceTree = "<group>";
+		};
+		1C54DBF6285F8F2800E378F6 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				1C54DBF7285F8F3700E378F6 /* TokenAddCollectionViewCell.swift */,
+				1C54DBF4285F32DC00E378F6 /* TokenAddInputView.swift */,
+				1C54DBF9285F9EBF00E378F6 /* TokenAddNetworkView.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		1C54DBFB2860E59600E378F6 /* NetworkPicker */ = {
+			isa = PBXGroup;
+			children = (
+				1C54DC0A2860E63600E378F6 /* NetworkPicker.storyboard */,
+				1C54DBFC2860E5AB00E378F6 /* NetworkPickerInteractor.swift */,
+				1C54DBFE2860E5B000E378F6 /* NetworkPickerPresenter.swift */,
+				1C54DC002860E5BC00E378F6 /* NetworkPickerView.swift */,
+				1C54DC022860E5C100E378F6 /* NetworkPickerViewModel.swift */,
+				1C54DC042860E5C500E378F6 /* NetworkPickerWireframe.swift */,
+				1C54DC062860E5CB00E378F6 /* NetworkPickerWireframeFactory.swift */,
+				1C54DC082860E5D200E378F6 /* NetworkPickerWireframeFactoryAssembler.swift */,
+				1C54DC0C2860E90800E378F6 /* Cells */,
+			);
+			path = NetworkPicker;
+			sourceTree = "<group>";
+		};
+		1C54DC0C2860E90800E378F6 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				1C54DC0D2860E91D00E378F6 /* NetworkPickerItemCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		1C54DC0F2862320200E378F6 /* QRCodeScan */ = {
+			isa = PBXGroup;
+			children = (
+				1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */,
+				1C54DC1E2862373C00E378F6 /* QRCodeScanInteractor.swift */,
+				1C54DC102862350A00E378F6 /* QRCodeScanPresenter.swift */,
+				1C54DC122862351100E378F6 /* QRCodeScanView.swift */,
+				1C54DC142862351500E378F6 /* QRCodeScanViewModel.swift */,
+				1C54DC162862351D00E378F6 /* QRCodeScanWireframe.swift */,
+				1C54DC182862352200E378F6 /* QRCodeScanWireframeFactory.swift */,
+				1C54DC1A2862352800E378F6 /* QRCodeScanWireframeFactoryAssembler.swift */,
+			);
+			path = QRCodeScan;
+			sourceTree = "<group>";
+		};
 		1C60C1C7285724D0003BE25D /* Modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -970,12 +1089,15 @@
 				1C60C1E1285724D0003BE25D /* KeyStore */,
 				1C60C202285724D0003BE25D /* Mnemonic */,
 				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
+				1C54DBFB2860E59600E378F6 /* NetworkPicker */,
 				1C60C21C285724D0003BE25D /* Networks */,
 				1C60C225285724D0003BE25D /* NFTDetail */,
 				1C60C268285724D0003BE25D /* NFTsCollection */,
 				1C60C233285724D0003BE25D /* NFTsDashboard */,
+				1C54DC0F2862320200E378F6 /* QRCodeScan */,
 				1C60C23E285724D0003BE25D /* Root */,
 				1C60C1C8285724D0003BE25D /* Settings */,
+				1C54DBE1285E82FC00E378F6 /* TokenAdd */,
 				1C60C1D5285724D0003BE25D /* TokenPicker */,
 				1C60C3612857C5D9003BE25D /* TokenReceive */,
 			);
@@ -1015,7 +1137,6 @@
 				1C60C1E0285724D0003BE25D /* TokenPicker.storyboard */,
 				1C60C1D7285724D0003BE25D /* TokenPickerInteractor.swift */,
 				1C60C1DE285724D0003BE25D /* TokenPickerPresenter.swift */,
-				1C60C37F285A2DC6003BE25D /* TokenPickerPresenter+Receive.swift */,
 				1C60C1DD285724D0003BE25D /* TokenPickerView.swift */,
 				1C60C1DB285724D0003BE25D /* TokenPickerViewModel.swift */,
 				1C60C1D6285724D0003BE25D /* TokenPickerWireframe.swift */,
@@ -1878,12 +1999,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C54DC1D2862354C00E378F6 /* QRCodeScan.storyboard in Resources */,
 				1C60C2C8285724D0003BE25D /* Chat.storyboard in Resources */,
 				D11A990A27B8615B00EDFDD0 /* NothingYouCouldDo-Regular.ttf in Resources */,
 				D11A990527B8615B00EDFDD0 /* GothicA1-ExtraBold.ttf in Resources */,
 				D11A990827B8615B00EDFDD0 /* GothicA1-Black.ttf in Resources */,
 				D11A990627B8615B00EDFDD0 /* OFL.txt in Resources */,
+				1C54DBEF285E835400E378F6 /* TokenAdd.storyboard in Resources */,
 				D11A990427B8615B00EDFDD0 /* GothicA1-Bold.ttf in Resources */,
+				1C54DC0B2860E63600E378F6 /* NetworkPicker.storyboard in Resources */,
 				D157F7D727B69B6400578FF8 /* LaunchScreen.storyboard in Resources */,
 				D11B7E952800E82300F40488 /* WordLists in Resources */,
 				D11A990227B8615B00EDFDD0 /* GothicA1-Light.ttf in Resources */,
@@ -1951,6 +2075,8 @@
 				D11A990F27B99D1800EDFDD0 /* AnyDecodable.swift in Sources */,
 				D11A991027B99D1800EDFDD0 /* AnyCodable.swift in Sources */,
 				1C60C2C4285724D0003BE25D /* ChatRightCollectionViewCell.swift in Sources */,
+				1C54DBFA285F9EBF00E378F6 /* TokenAddNetworkView.swift in Sources */,
+				1C54DC192862352200E378F6 /* QRCodeScanWireframeFactory.swift in Sources */,
 				1C6486F3282D783A0091A12D /* DefaultGradientView.swift in Sources */,
 				1C60C37E2859CC2A003BE25D /* ShareFactoryHelper.swift in Sources */,
 				D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */,
@@ -1965,9 +2091,11 @@
 				1CB3A1F22840D6B70092D667 /* Data+Extension.swift in Sources */,
 				1C60C2F6285724D0003BE25D /* NFTDetailWireframeFactory.swift in Sources */,
 				1C6487432832E7EA0091A12D /* SettingsServiceAssembler.swift in Sources */,
+				1C54DC132862351100E378F6 /* QRCodeScanView.swift in Sources */,
 				1A4C3C9B866507D8700399F6 /* KeyStoreService.swift in Sources */,
 				1C64872D2832E5800091A12D /* AccountServiceAssembler.swift in Sources */,
 				1A4C3708C25B84EAA53D0FB6 /* KeyStoreItem.swift in Sources */,
+				1C54DBED285E834200E378F6 /* TokenAddInteractor.swift in Sources */,
 				1C60C2BD285724D0003BE25D /* ButtonsSheetViewModel.swift in Sources */,
 				1C60C2C7285724D0003BE25D /* ChatInteractor.swift in Sources */,
 				1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */,
@@ -2010,6 +2138,7 @@
 				1A4C30116B1618C1596D9D14 /* NetworksService.swift in Sources */,
 				1C60C2CA285724D0003BE25D /* ChatPresenter.swift in Sources */,
 				1C60C321285724D1003BE25D /* AppsCell.swift in Sources */,
+				1C54DC152862351500E378F6 /* QRCodeScanViewModel.swift in Sources */,
 				1C60C2A3285724D0003BE25D /* SettingsActionCell.swift in Sources */,
 				1C60C2D6285724D0003BE25D /* MnemonicWireframeFactory.swift in Sources */,
 				1C60C35B285724D1003BE25D /* DegenViewModel.swift in Sources */,
@@ -2052,6 +2181,7 @@
 				1C60C2EB285724D0003BE25D /* NetworksViewModel.swift in Sources */,
 				1C60C2BF285724D0003BE25D /* KeyStoreWireframe.swift in Sources */,
 				1C60C345285724D1003BE25D /* AMMsViewModel.swift in Sources */,
+				1C54DBFD2860E5AB00E378F6 /* NetworkPickerInteractor.swift in Sources */,
 				1C60C31C285724D1003BE25D /* AppsWireframe.swift in Sources */,
 				1C60C32D285724D1003BE25D /* MnemonicConfirmationViewModel.swift in Sources */,
 				1C60C37B2859BDD9003BE25D /* UIView+Toast+Extensions.swift in Sources */,
@@ -2066,6 +2196,7 @@
 				1C60C347285724D1003BE25D /* CultProposalWireframeFactoryAssembler.swift in Sources */,
 				1C60C2BC285724D0003BE25D /* ButtonsSheetView.swift in Sources */,
 				1C60C2FB285724D0003BE25D /* NFTDetailWireframeFactoryAssembler.swift in Sources */,
+				1C54DBF5285F32DC00E378F6 /* TokenAddInputView.swift in Sources */,
 				1C60C3632857C5E5003BE25D /* TokenReceivePresenter.swift in Sources */,
 				1C60C313285724D1003BE25D /* AccountSectionHeader.swift in Sources */,
 				1CB3A1EF2840D6B70092D667 /* UIStackView+Extensions.swift in Sources */,
@@ -2111,6 +2242,7 @@
 				1C60C346285724D1003BE25D /* AMMsCell.swift in Sources */,
 				1C6487362832E6650091A12D /* NFTsServiceAssembler.swift in Sources */,
 				1C64871B2832E3490091A12D /* KeyStoreServiceAssembler.swift in Sources */,
+				1C54DBF3285E83A300E378F6 /* TokenAddPresenter.swift in Sources */,
 				1C60C2F3285724D0003BE25D /* NFTDetailWireframe.swift in Sources */,
 				1C60C2CF285724D0003BE25D /* AlertView.swift in Sources */,
 				D116CF3227C31ECC005542AA /* iCarousel.m in Sources */,
@@ -2133,10 +2265,13 @@
 				1C60C38E285B9F7F003BE25D /* PriceHistoryServiceAssembler.swift in Sources */,
 				1C60C34B285724D1003BE25D /* CultProposalView.swift in Sources */,
 				1CB3A1E42840D6B70092D667 /* Int+Extensions.swift in Sources */,
+				1C54DBE7285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift in Sources */,
 				1C60C348285724D1003BE25D /* CultProposalPresenter.swift in Sources */,
 				1C60C2D5285724D0003BE25D /* MnemonicViewModel.swift in Sources */,
 				1CB3A1EA2840D6B70092D667 /* String+Extensions.swift in Sources */,
+				1C54DBF8285F8F3700E378F6 /* TokenAddCollectionViewCell.swift in Sources */,
 				1C60C309285724D1003BE25D /* RootWireframe.swift in Sources */,
+				1C54DBE5285E832600E378F6 /* TokenAddWireframeFactory.swift in Sources */,
 				1CB3A1E82840D6B70092D667 /* UIButton+Extensions.swift in Sources */,
 				1C60C2F8285724D0003BE25D /* NFTDetailViewModel.swift in Sources */,
 				D1BF2684280D7FC300DE9A0B /* DefaultTheme.swift in Sources */,
@@ -2154,12 +2289,12 @@
 				1C60C35C285724D1003BE25D /* DegenPresenter.swift in Sources */,
 				1A4C3B6D2DFADBE2EF71F3A5 /* SettingsService.swift in Sources */,
 				1A4C34ABFF1DD20804DED956 /* AppsService.swift in Sources */,
-				1C60C380285A2DC6003BE25D /* TokenPickerPresenter+Receive.swift in Sources */,
 				1C60C314285724D1003BE25D /* AccountWireframe.swift in Sources */,
 				1C60C330285724D1003BE25D /* NFTsCollectionViewModel.swift in Sources */,
 				1C60C2AE285724D0003BE25D /* TokenPickerInteractor.swift in Sources */,
 				1C60C2D4285724D0003BE25D /* MnemonicWireframe.swift in Sources */,
 				1C60C2A8285724D0003BE25D /* SettingsViewModel.swift in Sources */,
+				1C54DC072860E5CB00E378F6 /* NetworkPickerWireframeFactory.swift in Sources */,
 				1C60C35A285724D1003BE25D /* DegenInteractor.swift in Sources */,
 				1C60C2EE285724D0003BE25D /* NetworksWireframeFactory.swift in Sources */,
 				1A4C3735189D6616D915D851 /* TabBarController.swift in Sources */,
@@ -2167,6 +2302,8 @@
 				1C60C353285724D1003BE25D /* CultProposalsViewModel.swift in Sources */,
 				1C60C2E6285724D0003BE25D /* DashboardWireframeFactory.swift in Sources */,
 				1C60C350285724D1003BE25D /* CultProposalsWireframeFactoryAssemler.swift in Sources */,
+				1C54DC032860E5C100E378F6 /* NetworkPickerViewModel.swift in Sources */,
+				1C54DC1B2862352800E378F6 /* QRCodeScanWireframeFactoryAssembler.swift in Sources */,
 				1C60C2DC285724D0003BE25D /* MnemonicWireframeFactoryAssembler.swift in Sources */,
 				1C60C300285724D1003BE25D /* NFTsDashboardWireframe.swift in Sources */,
 				1C64871E2832E3D60091A12D /* DefaultKeyChainService.swift in Sources */,
@@ -2186,8 +2323,10 @@
 				1C60C2F1285724D0003BE25D /* NetworksPresenter.swift in Sources */,
 				1C60C2A4285724D0003BE25D /* SettingsCell.swift in Sources */,
 				1C60C2DF285724D0003BE25D /* DashboardSectionHeaderView.swift in Sources */,
+				1C54DC112862350B00E378F6 /* QRCodeScanPresenter.swift in Sources */,
 				1C60C335285724D1003BE25D /* NFTsCollectionView+Shared.swift in Sources */,
 				1C60C2C0285724D0003BE25D /* KeyStoreCell.swift in Sources */,
+				1C54DBE9285E833200E378F6 /* TokenAddViewModel.swift in Sources */,
 				1C60C2A7285724D0003BE25D /* SettingsInteractor.swift in Sources */,
 				1A4C3AD382E8BADCBE160CBC /* DApp.swift in Sources */,
 				1C60C2C2285724D0003BE25D /* ChatWireframe.swift in Sources */,
@@ -2202,6 +2341,7 @@
 				1C6487272832E5150091A12D /* DefaultAppsService.swift in Sources */,
 				1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */,
 				1C60C332285724D1003BE25D /* NFTsCollectionWireframeFactoryAssembler.swift in Sources */,
+				1C54DBEB285E833600E378F6 /* TokenAddView.swift in Sources */,
 				D1BF2685280D7FC300DE9A0B /* Theme.swift in Sources */,
 				1A4C39C49AEF7D7C5D4E8CE6 /* CollectionViewSectionLabelFooter.swift in Sources */,
 				1C60C334285724D1003BE25D /* NFTsCollectionInteractor.swift in Sources */,
@@ -2209,7 +2349,10 @@
 				1A4C3F3B50559576A91700B7 /* CollectionViewTextInputCell.swift in Sources */,
 				1C60C340285724D1003BE25D /* AMMsPresenter.swift in Sources */,
 				1C60C30C285724D1003BE25D /* RootWireframeFactoryAssembler.swift in Sources */,
+				1C54DC172862351D00E378F6 /* QRCodeScanWireframe.swift in Sources */,
+				1C54DC0E2860E91D00E378F6 /* NetworkPickerItemCell.swift in Sources */,
 				1C60C312285724D1003BE25D /* AccountHeaderCell.swift in Sources */,
+				1C54DC092860E5D200E378F6 /* NetworkPickerWireframeFactoryAssembler.swift in Sources */,
 				1C60C317285724D1003BE25D /* AccountInteractor.swift in Sources */,
 				1C60C2B1285724D0003BE25D /* TokenPickerViewModel.swift in Sources */,
 				1A4C3B697503D478741295DB /* TextField.swift in Sources */,
@@ -2226,8 +2369,10 @@
 				1C60C2D3285724D0003BE25D /* MnemonicSettingCell.swift in Sources */,
 				1C6487302832E5E90091A12D /* DefaultNetworksService.swift in Sources */,
 				1A4C32C95088080680260BD6 /* CollectionViewSegmentWithTextAndSwitchCell.swift in Sources */,
+				1C54DC1F2862373C00E378F6 /* QRCodeScanInteractor.swift in Sources */,
 				1A4C370634B11B400C5C4356 /* TouchPassThroughCollectionView.swift in Sources */,
 				1A4C303A23D7DA2A37B292C1 /* CardFlipTransition.swift in Sources */,
+				1C54DC052860E5C500E378F6 /* NetworkPickerWireframe.swift in Sources */,
 				1A4C373BF33DAF794F261056 /* CardFlipAnimatedTransitioning2.swift in Sources */,
 				1C60C2AB285724D0003BE25D /* SettingsWireframeFactoryAssembler.swift in Sources */,
 				1A4C3B81B628EF4EDC8F7177 /* TransformView.swift in Sources */,
@@ -2251,6 +2396,8 @@
 				D1BC5303284B5B89007E6FF4 /* CultService.swift in Sources */,
 				1C60C2CB285724D0003BE25D /* ChatWireframeFactory.swift in Sources */,
 				1C60C2D1285724D0003BE25D /* AlertContext.swift in Sources */,
+				1C54DC012860E5BC00E378F6 /* NetworkPickerView.swift in Sources */,
+				1C54DBFF2860E5B000E378F6 /* NetworkPickerPresenter.swift in Sources */,
 				1C60C2E0285724D0003BE25D /* DashboardWalletCell.swift in Sources */,
 				1C60C319285724D1003BE25D /* AccountWireframeFactoryAssembler.swift in Sources */,
 				1A4C3F175B65F553F0F5E86D /* SecretStorage.swift in Sources */,
@@ -2258,6 +2405,7 @@
 				1CD3FE8928559EF2008312DE /* Web3Service.swift in Sources */,
 				1A4C33E50A1388781E82DD29 /* CryptoUtils.swift in Sources */,
 				1C60C3692857C5F8003BE25D /* TokenReceiveWireframe.swift in Sources */,
+				1C54DBE3285E831B00E378F6 /* TokenAddWireframe.swift in Sources */,
 				1C60C324285724D1003BE25D /* AppsHeaderCollectionViewCell.swift in Sources */,
 				1C60C32B285724D1003BE25D /* MnemonicConfirmationWireframe.swift in Sources */,
 				1C60C2D0285724D0003BE25D /* AlertPresenter.swift in Sources */,

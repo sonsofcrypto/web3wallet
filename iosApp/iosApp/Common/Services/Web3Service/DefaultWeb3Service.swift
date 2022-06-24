@@ -66,4 +66,19 @@ extension DefaultWeb3Service: Web3Service {
         
         web3ServiceLocalStorage.removeWalletListener(listener)
     }
+    
+    func isValid(address: String, forNetwork network: Web3Network) -> Bool {
+        
+        switch network.name.lowercased() {
+            
+        case "ethereum":
+            return address.hasPrefix("0x") && address.count == 42
+            
+        case "solana":
+            return true
+            
+        default:
+            return false
+        }
+    }
 }

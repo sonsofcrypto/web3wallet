@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="116"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JBP-rK-Jt4">
-                                        <rect key="frame" x="16" y="8" width="382" height="40"/>
+                                        <rect key="frame" x="16" y="12" width="382" height="40"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="P7U-RZ-aiY">
                                                 <rect key="frame" x="16" y="0.0" width="350" height="40"/>
@@ -31,7 +31,7 @@
                                                         <rect key="frame" x="0.0" y="0.5" width="20.5" height="38.5"/>
                                                         <color key="tintColor" name="appRed"/>
                                                     </imageView>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BnW-Q9-Lqj">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BnW-Q9-Lqj">
                                                         <rect key="frame" x="28.5" y="0.0" width="289.5" height="40"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="search" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
@@ -142,7 +142,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="F4P-go-cM1" secondAttribute="trailing" id="0CK-QP-oQT"/>
-                                    <constraint firstItem="JBP-rK-Jt4" firstAttribute="top" secondItem="unt-fL-27U" secondAttribute="top" constant="8" id="5SI-rd-hb4"/>
+                                    <constraint firstItem="JBP-rK-Jt4" firstAttribute="top" secondItem="unt-fL-27U" secondAttribute="top" constant="12" id="5SI-rd-hb4"/>
                                     <constraint firstAttribute="height" constant="116" id="BEZ-Q3-S61"/>
                                     <constraint firstItem="JBP-rK-Jt4" firstAttribute="leading" secondItem="unt-fL-27U" secondAttribute="leading" constant="16" id="M0b-yI-ea7"/>
                                     <constraint firstItem="F4P-go-cM1" firstAttribute="leading" secondItem="unt-fL-27U" secondAttribute="leading" id="eT8-Lx-gZS"/>

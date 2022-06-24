@@ -21,6 +21,8 @@ protocol Web3Service: AnyObject {
     
     func addWalletListener(_ listener: Web3ServiceWalletListener)
     func removeWalletListener(_ listener: Web3ServiceWalletListener)
+    
+    func isValid(address: String, forNetwork network: Web3Network) -> Bool
 }
 
 struct Web3Network: Codable, Equatable, Hashable {
@@ -29,14 +31,22 @@ struct Web3Network: Codable, Equatable, Hashable {
     let hasDns: Bool
 }
 
+extension Array where Element == Web3Network {
+    
+    var sortByName: [Web3Network] {
+        
+        sorted { $0.name < $1.name }
+    }
+}
+
 struct Web3Token: Codable, Equatable {
     
-    let symbol: String
-    let name: String
-    let address: String
-    let decimals: Int
+    let symbol: String // ETH
+    let name: String // Ethereum
+    let address: String // 0x482828...
+    let decimals: Int // 8
     let type: `Type`
-    let network: Web3Network
+    let network: Web3Network //
     let balance: Double
     let showInWallet: Bool
     let usdPrice: Double

@@ -62,7 +62,7 @@ extension TokenPickerViewController: TokenPickerView {
 
         self.viewModel = viewModel
         
-        configureNavigationBar()
+        configureNavigationBar(title: viewModel.title)
         
         clearSearchButton.isHidden = searchTextField.text?.isEmpty ?? true
         
@@ -76,38 +76,12 @@ extension TokenPickerViewController: TokenPickerView {
             itemsCollectionView.allowsMultipleSelection = viewModel.allowMultiSelection
         } else {
             
-            configureNavBarLeftBarButtonIconClose()
+            configureLeftBarButtonItemDismissAction()
         }
     }
 }
 
 extension TokenPickerViewController {
-    
-    func configureNavigationBar() {
-        
-        let titleLabel = UILabel(frame: .zero)
-        titleLabel.textAlignment = .center
-        titleLabel.text = viewModel?.title
-        titleLabel.applyStyle(.navTitle)
-        
-        let views: [UIView] = [
-            titleLabel
-        ]
-        let vStack = VStackView(views)
-        vStack.spacing = 4
-        navigationItem.titleView = vStack
-    }
-    
-    func configureNavBarLeftBarButtonIconClose() {
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "close-icon"),
-            style: .plain,
-            target: self,
-            action: #selector(dismissTapped)
-        )
-        navigationItem.leftBarButtonItem?.tintColor  = Theme.color.tint
-    }
     
     func configureNavBarLeftBarButtonIconAddToken() {
         
@@ -173,7 +147,7 @@ extension TokenPickerViewController {
         clearSearchButton.isHidden = true
     }
 
-    @objc func dismissTapped() {
+    @objc override func dismissTapped() {
         
         presenter.handle(.dismiss)
     }

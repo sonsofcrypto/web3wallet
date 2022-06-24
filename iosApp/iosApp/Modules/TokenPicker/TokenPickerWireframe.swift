@@ -60,17 +60,20 @@ final class DefaultTokenPickerWireframe {
     private weak var presentingIn: UIViewController!
     private let context: TokenPickerWireframeContext
     private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
+    private let tokenAddWireframeFactory: TokenAddWireframeFactory
     private let web3Service: Web3Service
     
     init(
         presentingIn: UIViewController,
         context: TokenPickerWireframeContext,
         tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
+        tokenAddWireframeFactory: TokenAddWireframeFactory,
         web3Service: Web3Service
     ) {
         self.presentingIn = presentingIn
         self.context = context
         self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
+        self.tokenAddWireframeFactory = tokenAddWireframeFactory
         self.web3Service = web3Service
     }
 }
@@ -104,10 +107,10 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
         switch destination {
         case let .tokenReceive(token):
             
-            guard let navigationController = presentingIn.presentedViewController else { return }
+            guard let presentingIn = presentingIn.presentedViewController else { return }
             
             let coordinator = tokenReceiveWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
+                presentingIn: presentingIn,
                 context: .init(presentationStyle: .push, web3Token: token)
             )
             coordinator.present()
@@ -118,7 +121,13 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
             
         case .addCustomToken:
             
-            print("Navigate to add custom token")
+            guard let presentingIn = presentingIn.presentedViewController else { return }
+            
+            let coordinator = tokenAddWireframeFactory.makeWireframe(
+                presentingIn: presentingIn,
+                context: .init(presentationStyle: .push)
+            )
+            coordinator.present()
         }
     }
     
