@@ -44,4 +44,27 @@ extension UIViewController {
 
         fatalError("Please override by subclass")
     }
+    
+    func configureRightBarButtonItemAction(icon: String, tint: UIColor = Theme.color.tint) {
+        
+        let button = UIButton()
+        button.setImage(
+            .init(named: icon),
+            for: .normal
+        )
+        button.tintColor = tint
+        button.addTarget(self, action: #selector(navBarRightBarActionTapped), for: .touchUpInside)
+        button.addConstraints(
+            [
+                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
+            ]
+        )
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+    }
+    
+    @objc func navBarRightBarActionTapped() {
+
+        fatalError("Please override by subclass")
+    }
 }

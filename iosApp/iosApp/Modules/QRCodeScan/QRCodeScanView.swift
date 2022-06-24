@@ -18,6 +18,7 @@ final class QRCodeScanViewController: BaseViewController {
     
     private var captureSession: AVCaptureSession?
     private var previewLayer: AVCaptureVideoPreviewLayer?
+    private var activityIndicatorView: UIView!
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -58,6 +59,14 @@ final class QRCodeScanViewController: BaseViewController {
         
         presenter.handle(.dismiss)
     }
+    
+    @objc override func navBarRightBarActionTapped() {
+        
+        let picker = UIImagePickerController()
+        //picker.allowsEditing = true
+        picker.delegate = self
+        present(picker, animated: true)
+    }
 }
 
 extension QRCodeScanViewController: QRCodeScanView {
@@ -80,10 +89,13 @@ private extension QRCodeScanViewController {
         ]
         
         configureLeftBarButtonItemDismissAction()
+        let loadIcon = "paste_icon"
+        configureRightBarButtonItemAction(icon: loadIcon)
         
         configureQRCodeScan()
         
         addTopView()
+        addActivityIndicatorView()
     }
     
     func configureQRCodeScan() {
@@ -179,6 +191,40 @@ private extension QRCodeScanViewController {
         maskLayer.path = path.cgPath
         view.layer.mask = maskLayer
     }
+    
+    func addActivityIndicatorView() {
+        
+        let view = UIView()
+        view.backgroundColor = Theme.color.background
+        view.layer.cornerRadius = 24
+        view.layer.borderColor = Theme.color.tintLight.cgColor
+        view.layer.borderWidth = 1
+        
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.startAnimating()
+        activityIndicator.color = Theme.color.tint
+        view.addSubview(activityIndicator)
+        activityIndicator.addConstraints(
+            [
+                .layout(anchor: .centerXAnchor),
+                .layout(anchor: .centerYAnchor)
+            ]
+        )
+        
+        self.view.addSubview(view)
+        
+        view.addConstraints(
+            [
+                .layout(anchor: .centerXAnchor),
+                .layout(anchor: .centerYAnchor),
+                .layout(anchor: .widthAnchor, constant: .equalTo(constant: self.view.bounds.width * 0.25)),
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: self.view.bounds.width * 0.25))
+            ]
+        )
+        
+        self.activityIndicatorView = view
+        view.isHidden = true
+    }
 }
 
 extension QRCodeScanViewController: AVCaptureMetadataOutputObjectsDelegate {
@@ -230,5 +276,29 @@ private extension UIImage {
         }
 
         return qrCode.isEmpty ? nil : qrCode
+    }
+}
+
+extension QRCodeScanViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+    ) {
+        
+        activityIndicatorView.isHidden = false
+        
+        picker.dismiss(animated: true) { [weak self] in
+            
+            guard let self = self else { return }
+            
+            if let qrCode = (info[.originalImage] as? UIImage)?.qrCode {
+            
+                self.presenter.handle(.qrCode(qrCode))
+            } else {
+                
+                self.activityIndicatorView.isHidden = true
+            }
+        }
     }
 }
