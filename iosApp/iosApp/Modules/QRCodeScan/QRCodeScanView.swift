@@ -82,6 +82,8 @@ private extension QRCodeScanViewController {
         configureLeftBarButtonItemDismissAction()
         
         configureQRCodeScan()
+        
+        addTopView()
     }
     
     func configureQRCodeScan() {
@@ -143,6 +145,40 @@ private extension QRCodeScanViewController {
         captureSession = nil
     }
 
+    func addTopView() {
+        
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.autoresizingMask = [
+            .flexibleWidth,
+            .flexibleHeight
+        ]
+        
+        addMask(to: blurEffectView)
+        
+        self.view.addSubview(blurEffectView)
+
+        blurEffectView.addConstraints(.toEdges)
+    }
+    
+    func addMask(to view: UIView) {
+        
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = view.bounds
+        let size: CGFloat = self.view.bounds.width * 0.8
+        let rect = CGRect(
+            x: self.view.bounds.width * 0.5 - size * 0.5,
+            y: self.view.bounds.height * 0.475 - size * 0.5,
+            width: size,
+            height: size
+        )
+        let circlePath = UIBezierPath(roundedRect: rect, cornerRadius: 40)
+        let path = UIBezierPath(rect: self.view.bounds)
+        path.append(circlePath)
+        maskLayer.fillRule = .evenOdd
+        maskLayer.path = path.cgPath
+        view.layer.mask = maskLayer
+    }
 }
 
 extension QRCodeScanViewController: AVCaptureMetadataOutputObjectsDelegate {
