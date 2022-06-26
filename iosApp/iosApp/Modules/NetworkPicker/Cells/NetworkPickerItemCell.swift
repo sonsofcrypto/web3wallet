@@ -15,10 +15,10 @@ final class NetworkPickerItemCell: UICollectionViewCell {
         super.awakeFromNib()
         
         iconImageView.layer.cornerRadius = iconImageView.frame.size.width * 0.5
-        iconImageView.backgroundColor = Theme.color.text
+        iconImageView.backgroundColor = ThemeOG.color.text
                         
         nameLabel.applyStyle(.body)
-        nameLabel.textColor = Theme.color.text
+        nameLabel.textColor = ThemeOG.color.text
     }
 
     func update(

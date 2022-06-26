@@ -26,7 +26,7 @@ extension NFTDetailViewController {
         
         view.layer.cornerRadius = Global.cornerRadius
         view.layer.borderWidth = 1
-        view.layer.borderColor = Theme.color.tintLight.cgColor
+        view.layer.borderColor = ThemeOG.color.tintLight.cgColor
 
         return view
     }
@@ -50,7 +50,7 @@ private extension NFTDetailViewController {
         
         rows.append(.vSpace(height: Global.padding))
         rows.append(
-            .dividerLine(backgroundColor: Theme.color.tintLight)
+            .dividerLine(backgroundColor: ThemeOG.color.tintLight)
         )
         rows.append(.vSpace(height: Global.padding))
 
@@ -202,9 +202,9 @@ private extension NFTDetailViewController {
 
         view.layer.cornerRadius = 16
         view.layer.borderWidth = 1
-        view.layer.borderColor = Theme.color.tintLight.cgColor
+        view.layer.borderColor = ThemeOG.color.tintLight.cgColor
         view.clipsToBounds = true
-        view.backgroundColor = Theme.color.backgroundDark
+        view.backgroundColor = ThemeOG.color.backgroundDark
         return view
     }
     
@@ -217,7 +217,7 @@ private extension NFTDetailViewController {
         let topLabel = UILabel(with: .smallerLabel)
         topLabel.numberOfLines = 1
         topLabel.text = item.name
-        topLabel.textColor = Theme.color.text
+        topLabel.textColor = ThemeOG.color.text
         topLabel.textAlignment = .center
         view.addArrangedSubview(topLabel)
         
@@ -226,7 +226,7 @@ private extension NFTDetailViewController {
         let middleLabel = UILabel(with: .smallerLabel)
         middleLabel.numberOfLines = 1
         middleLabel.text = item.value
-        middleLabel.textColor = Theme.color.green
+        middleLabel.textColor = ThemeOG.color.green
         middleLabel.textAlignment = .center
         view.addArrangedSubview(middleLabel)
 
@@ -235,7 +235,7 @@ private extension NFTDetailViewController {
         let bottomLabel = UILabel(with: .smallerLabel)
         bottomLabel.numberOfLines = 1
         bottomLabel.text = item.info
-        bottomLabel.textColor = Theme.color.text
+        bottomLabel.textColor = ThemeOG.color.text
         bottomLabel.textAlignment = .center
         view.addArrangedSubview(bottomLabel)
                 

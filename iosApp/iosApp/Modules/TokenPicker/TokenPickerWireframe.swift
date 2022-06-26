@@ -109,11 +109,11 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
             
             guard let presentingIn = presentingIn.presentedViewController else { return }
             
-            let coordinator = tokenReceiveWireframeFactory.makeWireframe(
+            let wireframe = tokenReceiveWireframeFactory.makeWireframe(
                 presentingIn: presentingIn,
                 context: .init(presentationStyle: .push, web3Token: token)
             )
-            coordinator.present()
+            wireframe.present()
             
         case let .tokenSend(token):
             

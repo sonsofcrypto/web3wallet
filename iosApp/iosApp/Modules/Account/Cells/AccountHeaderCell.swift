@@ -20,8 +20,8 @@ final class AccountHeaderCell: UICollectionViewCell {
         
         super.awakeFromNib()
         
-        balanceLabel.textColor = Theme.color.text
-        balanceLabel.font = Theme.font.hugeBalance
+        balanceLabel.textColor = ThemeOG.color.text
+        balanceLabel.font = ThemeOG.font.hugeBalance
         balanceFiatLabel.applyStyle(.subhead)
         balanceFiatLabel.font = UIFont.font(
             .gothicA1,

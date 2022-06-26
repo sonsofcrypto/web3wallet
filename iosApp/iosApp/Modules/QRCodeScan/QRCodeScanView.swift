@@ -55,12 +55,12 @@ final class QRCodeScanViewController: BaseViewController {
         captureSession?.stopRunning()
     }
     
-    @objc override func dismissTapped() {
+    @objc override func navBarLeftActionTapped() {
         
         presenter.handle(.dismiss)
     }
     
-    @objc override func navBarRightBarActionTapped() {
+    @objc override func navBarRightActionTapped() {
         
         let picker = UIImagePickerController()
         //picker.allowsEditing = true
@@ -75,22 +75,17 @@ extension QRCodeScanViewController: QRCodeScanView {
 
         self.viewModel = viewModel
         
-        configureNavigationBar(title: viewModel.title)
+        title = viewModel.title.uppercased()
     }
 }
 
 private extension QRCodeScanViewController {
     
     func configureUI() {
-        
-        (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
-        ]
-        
-        configureLeftBarButtonItemDismissAction()
+                
+        configureNavBarLeftAction()
         let loadIcon = "paste_icon"
-        configureRightBarButtonItemAction(icon: loadIcon)
+        configureNavBarRightAction(icon: loadIcon)
         
         configureQRCodeScan()
         
@@ -195,14 +190,14 @@ private extension QRCodeScanViewController {
     func addActivityIndicatorView() {
         
         let view = UIView()
-        view.backgroundColor = Theme.color.background
+        view.backgroundColor = ThemeOG.color.background
         view.layer.cornerRadius = 24
-        view.layer.borderColor = Theme.color.tintLight.cgColor
+        view.layer.borderColor = ThemeOG.color.tintLight.cgColor
         view.layer.borderWidth = 1
         
         let activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.startAnimating()
-        activityIndicator.color = Theme.color.tint
+        activityIndicator.color = ThemeOG.color.tint
         view.addSubview(activityIndicator)
         activityIndicator.addConstraints(
             [

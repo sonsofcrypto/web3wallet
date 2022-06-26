@@ -15,6 +15,20 @@
 		<string>GothicA1-Black.ttf</string>
 		<string>GothicA1-SemiBold.ttf</string>
 		<string>NothingYouCouldDo-Regular.ttf</string>
+		<string>NaokoAA_Black.otf</string>
+		<string>NaokoAA_Light_Italic.otf</string>
+		<string>NaokoAA_Light.otf</string>
+		<string>NaokoAA_Medium_Italic.otf</string>
+		<string>NaokoAA_Medium.otf</string>
+		<string>NaokoAA_Regular_Italic.otf</string>
+		<string>NaokoAA_Regular.otf</string>
+		<string>NaokoAA_Semilight_Italic.otf</string>
+		<string>NaokoAA_Semilight.otf</string>
+		<string>NaokoAA-Black-Italic.otf</string>
+		<string>NaokoAA-Bold-Italic.otf</string>
+		<string>NaokoAA-Bold.otf</string>
+		<string>NaokoAA-Extrabold-Italic.otf</string>
+		<string>NaokoAA-Extrabold.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

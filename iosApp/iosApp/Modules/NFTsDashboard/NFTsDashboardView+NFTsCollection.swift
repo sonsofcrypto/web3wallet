@@ -27,7 +27,7 @@ extension NFTsDashboardViewController {
         let titleLabel = UILabel(with: .bodyGlow)
         titleLabel.numberOfLines = 1
         titleLabel.text = Localized("nfts.dashboard.collection.title")
-        //titleLabel.textColor = Theme.color.red
+        //titleLabel.textColor = ThemeOG.color.red
         titleLabel.textAlignment = .center
         rows.append(titleLabel)
         
@@ -130,7 +130,7 @@ private extension NFTsDashboardViewController {
 
         view.layer.cornerRadius = 16
         view.layer.borderWidth = 1
-        view.layer.borderColor = Theme.color.tintLight.cgColor
+        view.layer.borderColor = ThemeOG.color.tintLight.cgColor
         view.clipsToBounds = true
         
 //        let imageDiameter: CGFloat = 80
@@ -139,7 +139,7 @@ private extension NFTsDashboardViewController {
 //        imageView.contentMode = .scaleAspectFill
 //        imageView.layer.cornerRadius = imageDiameter * 0.5
 //        imageView.layer.borderWidth = 3
-//        imageView.layer.borderColor = Theme.color.tint.cgColor
+//        imageView.layer.borderColor = ThemeOG.color.tint.cgColor
 //        imageView.load(url: collection.authorImage)
 //        view.addSubview(imageView)
 //        imageView.addConstraints(
@@ -206,7 +206,7 @@ private extension NFTsDashboardViewController {
         let titleLabel = UILabel(with: .smallerLabel)
         titleLabel.numberOfLines = 1
         titleLabel.text = collection.title
-        titleLabel.textColor = Theme.color.text
+        titleLabel.textColor = ThemeOG.color.text
         titleLabel.textAlignment = .center
         view.addArrangedSubview(titleLabel)
 
@@ -217,12 +217,12 @@ private extension NFTsDashboardViewController {
             arg: collection.author
         ).attributtedString(
             with: font,
-            and: Theme.color.text,
+            and: ThemeOG.color.text,
             updating: [collection.author],
-            withColour: Theme.color.red,
+            withColour: ThemeOG.color.red,
             andFont: font
         )
-        authorLabel.layer.applyShadow(Theme.color.tintSecondary)
+        authorLabel.layer.applyShadow(ThemeOG.color.tintSecondary)
         authorLabel.textAlignment = .center
         view.addArrangedSubview(authorLabel)
         view.spacing = Global.padding * 0.5

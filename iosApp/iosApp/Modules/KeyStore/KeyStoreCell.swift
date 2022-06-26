@@ -12,7 +12,7 @@ final class KeyStoreCell: CollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         titleLabel.applyStyle(.callout)
-        accessoryButton.tintColor = Theme.color.textTertiary
+        accessoryButton.tintColor = ThemeOG.color.textTertiary
     }
 
     override func prepareForReuse() {

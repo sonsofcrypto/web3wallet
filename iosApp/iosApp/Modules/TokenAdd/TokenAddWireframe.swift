@@ -73,23 +73,23 @@ extension DefaultTokenAddWireframe: TokenAddWireframe {
             
         case let .selectNetwork(onCompletion):
             
-            let coordinator = networkPickerWireframeFactory.makeWireframe(
+            let wireframe = networkPickerWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(presentationStyle: .push, onNetworkSelected: onCompletion)
             )
-            coordinator.present()
+            wireframe.present()
             
         case let .qrCodeScan(network, onCompletion):
             
-            let coordinator = qrCodeScanWireframeFactory.makeWireframe(
+            let wireframe = qrCodeScanWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(
                     presentationStyle: .push,
-                    network: network,
+                    type: .network(network),
                     onCompletion: onCompletion
                 )
             )
-            coordinator.present()
+            wireframe.present()
         }
     }
     

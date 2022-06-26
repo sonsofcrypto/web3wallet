@@ -59,14 +59,14 @@ extension TokenAddViewController {
         let vStack = VStackView([titleLabel])
         navigationItem.titleView = vStack
 
-        configureLeftBarButtonItemDismissAction()
+        configureNavBarLeftAction()
         
         let button = UIButton()
         button.setImage(
             .init(named: "add_icon"),
             for: .normal
         )
-        button.tintColor = Theme.color.tint
+        button.tintColor = ThemeOG.color.tint
         button.addTarget(self, action: #selector(addTokenTapped), for: .touchUpInside)
         button.addConstraints(
             [
@@ -79,11 +79,6 @@ extension TokenAddViewController {
     
     func configureUI() {
         
-        (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
-        ]
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(resignFirstResponder))
         view.addGestureRecognizer(tapGesture)
         
@@ -95,7 +90,7 @@ extension TokenAddViewController {
         constraint.isActive = true
     }
 
-    @objc override func dismissTapped() {
+    @objc override func navBarLeftActionTapped() {
         
         presenter.handle(.dismiss)
     }

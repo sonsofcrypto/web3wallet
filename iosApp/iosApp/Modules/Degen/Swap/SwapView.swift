@@ -53,17 +53,17 @@ extension SwapViewController {
     
     func configureUI() {
         (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
+            ThemeOG.color.background,
+            ThemeOG.color.backgroundDark
         ]
 
-        container.backgroundColor = Theme.color.background
+        container.backgroundColor = ThemeOG.color.background
         container.layer.applyRectShadow()
         container.layer.applyBorder()
         container.layer.applyHighlighted(false)
 
-        rateLabel.font = Theme.font.caption2
-        rateLabel.textColor = Theme.color.textTertiary
+        rateLabel.font = ThemeOG.font.caption2
+        rateLabel.textColor = ThemeOG.color.textTertiary
 
         swapButton.setTitle(Localized("swap"), for: .normal)
     }

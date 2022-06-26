@@ -83,8 +83,8 @@ extension CultProposalsViewController {
     func configureUI() {
         title = Localized("Proposals")
         (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
+            ThemeOG.color.background,
+            ThemeOG.color.backgroundDark
         ]
     }
 }

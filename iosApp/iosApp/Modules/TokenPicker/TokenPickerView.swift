@@ -76,7 +76,7 @@ extension TokenPickerViewController: TokenPickerView {
             itemsCollectionView.allowsMultipleSelection = viewModel.allowMultiSelection
         } else {
             
-            configureLeftBarButtonItemDismissAction()
+            configureNavBarLeftAction()
         }
     }
 }
@@ -90,7 +90,7 @@ extension TokenPickerViewController {
             .init(named: "plus_icon"),
             for: .normal
         )
-        button.tintColor = Theme.color.tint
+        button.tintColor = ThemeOG.color.tint
         button.addTarget(self, action: #selector(addCustomToken), for: .touchUpInside)
         button.addConstraints(
             [
@@ -113,7 +113,7 @@ extension TokenPickerViewController {
             .init(named: "confirm_icon"),
             for: .normal
         )
-        button.tintColor = Theme.color.tint
+        button.tintColor = ThemeOG.color.tint
         button.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
         button.addConstraints(
             [
@@ -132,11 +132,11 @@ extension TokenPickerViewController {
     func configureUI() {
         
         (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
+            ThemeOG.color.background,
+            ThemeOG.color.backgroundDark
         ]
         
-        searchTextFieldBox.backgroundColor = Theme.color.backgroundDark
+        searchTextFieldBox.backgroundColor = ThemeOG.color.backgroundDark
         searchTextFieldBox.layer.cornerRadius = 16
         
         searchTextField.backgroundColor = .clear
@@ -147,7 +147,7 @@ extension TokenPickerViewController {
         clearSearchButton.isHidden = true
     }
 
-    @objc override func dismissTapped() {
+    @objc override func navBarLeftActionTapped() {
         
         presenter.handle(.dismiss)
     }

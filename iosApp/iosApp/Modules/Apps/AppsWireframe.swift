@@ -46,11 +46,11 @@ extension DefaultAppsWireframe: AppsWireframe {
         
         switch destination {
         case .chat:
-            let coordinator = chatWireframeFactory.makeWireframe(
+            let wireframe = chatWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(presentationStyle: .push)
             )
-            coordinator.present()
+            wireframe.present()
         }
     }
 }

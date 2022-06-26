@@ -14,7 +14,7 @@ final class TokenPickerGroupCell: UICollectionViewCell {
         super.awakeFromNib()
                 
         nameLabel.applyStyle(.body)
-        nameLabel.textColor = Theme.color.textSecondary
+        nameLabel.textColor = ThemeOG.color.textSecondary
     }
 
     func update(

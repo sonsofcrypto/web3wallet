@@ -13,13 +13,13 @@ final class AppsCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
 
         //layer.applyRectShadow()
-        layer.borderColor = Theme.color.tintLight.cgColor
+        layer.borderColor = ThemeOG.color.tintLight.cgColor
         layer.borderWidth = 1
         layer.cornerRadius = Global.cornerRadius
 
-        titleLabel.textColor = Theme.color.text
-        titleLabel.font = Theme.font.callout
-        titleLabel.layer.shadowColor = Theme.color.tintSecondary.cgColor
+        titleLabel.textColor = ThemeOG.color.text
+        titleLabel.font = ThemeOG.font.callout
+        titleLabel.layer.shadowColor = ThemeOG.color.tintSecondary.cgColor
         titleLabel.layer.shadowOffset = .zero
         titleLabel.layer.shadowRadius = Global.shadowRadius
         titleLabel.layer.shadowOpacity = 1

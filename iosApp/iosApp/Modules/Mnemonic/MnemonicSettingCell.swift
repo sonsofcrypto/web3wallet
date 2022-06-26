@@ -10,9 +10,9 @@ final class MnemonicSettingCell: CollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        titleLabel.textColor = Theme.color.text
-        titleLabel.font = Theme.font.callout
-        titleLabel.layer.shadowColor = Theme.color.tintSecondary.cgColor
+        titleLabel.textColor = ThemeOG.color.text
+        titleLabel.font = ThemeOG.font.callout
+        titleLabel.layer.shadowColor = ThemeOG.color.tintSecondary.cgColor
         titleLabel.layer.shadowOffset = .zero
         titleLabel.layer.shadowRadius = Global.shadowRadius
         titleLabel.layer.shadowOpacity = 1

@@ -6,7 +6,7 @@ import UIKit
 
 extension UIFont {
 
-    static func font(_ font: Font, style: Style = .regular, size: Size = .body) -> UIFont {
+    static func font(_ font: Font, style: FontStyleOG = .regular, size: FontSizeOG = .body) -> UIFont {
         if let font = UIFont(
             name: "\(font.rawValue) \(style.rawValue)",
             size: size.size()
@@ -15,7 +15,7 @@ extension UIFont {
         }
 
         if let font = UIFont(
-            name: "\(font.rawValue) \(Style.regular.rawValue)",
+            name: "\(font.rawValue) \(FontStyleOG.regular.rawValue)",
             size: size.size()
         ) {
             return font
@@ -29,11 +29,13 @@ extension UIFont {
     }
 
     enum Font: String {
+        
         case gothicA1 = "Gothic A1"
         case nothingYouCouldDo = "Nothing You Could Do"
     }
 
-    enum Style: String {
+    enum FontStyleOG: String {
+        
         case thin = "Thin"
         case extraLight = "ExtraLight"
         case light = "Light"
@@ -59,7 +61,8 @@ extension UIFont {
         }
     }
 
-    enum Size {
+    enum FontSizeOG {
+        
         case largeTitle
         case title1
         case title2

@@ -81,10 +81,10 @@ private extension DefaultAlertView {
     func makeAlertView(with alertViewModel: AlertViewModel) -> UIView {
         
         let alertView = UIView()
-        alertView.backgroundColor = Theme.color.background
+        alertView.backgroundColor = ThemeOG.color.background
         alertView.layer.cornerRadius = Global.cornerRadius
         alertView.layer.borderWidth = 1
-        alertView.layer.borderColor = Theme.color.tintLight.cgColor
+        alertView.layer.borderColor = ThemeOG.color.tintLight.cgColor
         
         let alertContent = makeAlertContent(with: viewModel.context)
         alertView.addSubview(alertContent)

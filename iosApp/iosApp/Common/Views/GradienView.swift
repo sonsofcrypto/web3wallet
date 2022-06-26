@@ -8,12 +8,38 @@ import UIKit
 /// stuble shadows without having to add assets to the app. `UIView` wrapper
 /// is handy as it avoids having to deal with more cumbersome `CALayer` layout
 @IBDesignable
-class GradientView: UIView {
+final class GradientView: UIView {
     
     enum Direction {
         case vertical
         case horizontal
         case custom(CGPoint, CGPoint)
+    }
+    
+    init() {
+        super.init(frame: .zero)
+        configureUI()
+    }
+    
+    override init(frame: CGRect) {
+        
+        super.init(frame: frame)
+        
+        configureUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        
+        super.init(coder: coder)
+        
+        configureUI()
+    }
+    
+    override func awakeFromNib() {
+        
+        super.awakeFromNib()
+        
+        configureUI()
     }
     
     /// Defining the color of each gradient * stop. Defaults to nil. Animatable.
@@ -65,5 +91,26 @@ class GradientView: UIView {
 
     override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
+    }
+}
+
+private extension GradientView {
+    
+    func configureUI() {
+        
+        let themeProvider: ThemeProvider = ServiceDirectory.assembler.resolve()
+        
+        switch themeProvider.current {
+        case .themeOG:
+            colors = [
+                ThemeOG.color.background,
+                ThemeOG.color.backgroundDark
+            ]
+        case let .themeHome(themeHome):
+            colors = [
+                themeHome.gradient().topColour,
+                themeHome.gradient().bottomColour
+            ]
+        }
     }
 }

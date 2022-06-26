@@ -23,8 +23,8 @@ final class MnemonicCell: CollectionViewCell {
     }
 
     func configure() {
-        var attrs = Theme.attributes.body()
-        attrs[.font] = Theme.font.headline
+        var attrs = ThemeOG.attributes.body()
+        attrs[.font] = ThemeOG.font.headline
 
         textView.typingAttributes = attrs
         textView.backgroundColor = .clear

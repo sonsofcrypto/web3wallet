@@ -83,20 +83,20 @@ extension TokenReceiveViewController {
         
         navigationItem.titleView = vStack
         
-        configureLeftBarButtonItemDismissAction()
+        configureNavBarLeftAction()
         
-        cardView.backgroundColor = Theme.color.backgroundDark
+        cardView.backgroundColor = ThemeOG.color.backgroundDark
         cardView.layer.cornerRadius = 12
         
         nameLabel.applyStyle(.headlineGlow)
-        nameLabel.textColor = Theme.color.text
+        nameLabel.textColor = ThemeOG.color.text
         
         addressLabel.applyStyle(.body)
-        addressLabel.textColor = Theme.color.text
+        addressLabel.textColor = ThemeOG.color.text
         addressLabel.textAlignment = .center
 
         disclaimerLabel.applyStyle(.smallBody)
-        disclaimerLabel.textColor = Theme.color.textSecondary
+        disclaimerLabel.textColor = ThemeOG.color.textSecondary
         
         copyButton.update(
             with: Localized("tokenReceive.action.copy"),
@@ -120,12 +120,12 @@ extension TokenReceiveViewController {
     func configureUI() {
         
         (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
+            ThemeOG.color.background,
+            ThemeOG.color.backgroundDark
         ]
     }
 
-    @objc override func dismissTapped() {
+    @objc override func navBarLeftActionTapped() {
         
         presenter.handle(.dismiss)
     }

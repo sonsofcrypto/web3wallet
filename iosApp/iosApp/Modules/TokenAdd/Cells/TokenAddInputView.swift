@@ -105,13 +105,13 @@ private extension TokenAddInputView {
         
         let nameLabel = UILabel()
         nameLabel.applyStyle(.smallerLabel)
-        nameLabel.textColor = Theme.color.textSecondary
+        nameLabel.textColor = ThemeOG.color.textSecondary
         stackView.addArrangedSubview(nameLabel)
         self.nameLabel = nameLabel
 
         let textField = UITextField()
-        textField.font = Theme.font.body
-        textField.textColor = Theme.color.text
+        textField.font = ThemeOG.font.body
+        textField.textColor = ThemeOG.color.text
         textField.borderStyle = .none
         textField.autocorrectionType = .no
         textField.spellCheckingType = .no
@@ -124,7 +124,7 @@ private extension TokenAddInputView {
 
         let hintLabel = UILabel()
         hintLabel.applyStyle(.smallLabel)
-        hintLabel.textColor = Theme.color.tint
+        hintLabel.textColor = ThemeOG.color.tint
         hintLabel.isHidden = true
         stackView.addArrangedSubview(hintLabel)
         self.hintLabel = hintLabel
@@ -140,7 +140,7 @@ private extension TokenAddInputView {
         
         let pasteAction = UIButton(type: .custom)
         pasteAction.setImage("paste_icon".assetImage, for: .normal)
-        pasteAction.tintColor = Theme.color.tint
+        pasteAction.tintColor = ThemeOG.color.tint
         pasteAction.addTarget(self, action: #selector(pasteActionTapped), for: .touchUpInside)
         pasteAction.addConstraints(
             [
@@ -153,7 +153,7 @@ private extension TokenAddInputView {
         
         let scanAction = UIButton(type: .custom)
         scanAction.setImage("scan_icon".assetImage, for: .normal)
-        scanAction.tintColor = Theme.color.tint
+        scanAction.tintColor = ThemeOG.color.tint
         scanAction.addTarget(self, action: #selector(scanActionTapped), for: .touchUpInside)
         scanAction.addConstraints(
             [
@@ -204,13 +204,13 @@ private extension TokenAddInputView {
                 )
             )
         )
-        view.backgroundColor = Theme.color.backgroundDark
+        view.backgroundColor = ThemeOG.color.backgroundDark
         
         let doneAction = UIButton(type: .custom)
-        doneAction.titleLabel?.font = Theme.font.body
+        doneAction.titleLabel?.font = ThemeOG.font.body
         doneAction.titleLabel?.textAlignment = .right
         doneAction.setTitle(Localized("done"), for: .normal)
-        doneAction.setTitleColor(Theme.color.tint, for: .normal)
+        doneAction.setTitleColor(ThemeOG.color.tint, for: .normal)
         doneAction.addTarget(self, action: #selector(dismissKeyboard), for: .touchUpInside)
         view.addSubview(doneAction)
         doneAction.addConstraints(

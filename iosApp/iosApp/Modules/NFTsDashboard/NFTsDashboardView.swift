@@ -80,11 +80,6 @@ private extension NFTsDashboardViewController {
         view = GradientView()
         //view.addConstraints(.toEdges)
         
-        (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
-        ]
-        
         let mainScrollView = makeMainScrollView()
         view.addSubview(mainScrollView)
         self.mainScrollView = mainScrollView

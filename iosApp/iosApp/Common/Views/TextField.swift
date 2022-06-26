@@ -6,7 +6,7 @@ import UIKit
 
 class TextField: UITextField {
 
-    var defaultPlaceholderAttributes = Theme.attributes.placeholder()
+    var defaultPlaceholderAttributes = ThemeOG.attributes.placeholder()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,11 +29,11 @@ class TextField: UITextField {
     }
     
     func configure() {
-        defaultTextAttributes = Theme.attributes.body()
-        typingAttributes = Theme.attributes.body()
-        backgroundColor = Theme.color.backgroundDark.withAlphaComponent(0.25)
+        defaultTextAttributes = ThemeOG.attributes.body()
+        typingAttributes = ThemeOG.attributes.body()
+        backgroundColor = ThemeOG.color.backgroundDark.withAlphaComponent(0.25)
         clipsToBounds = true
-        layer.applyBorder(Theme.color.tintLight)
+        layer.applyBorder(ThemeOG.color.tintLight)
         layer.cornerRadius = Global.cornerRadius
     }
 }

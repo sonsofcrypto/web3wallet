@@ -22,7 +22,7 @@ final class DashboardWalletCell: CollectionViewCell {
         layer.cornerRadius = Global.cornerRadius * 2
         
         imageView.layer.cornerRadius = imageView.frame.size.width * 0.5
-        imageView.backgroundColor = Theme.color.text
+        imageView.backgroundColor = ThemeOG.color.text
         
         contentStack.setCustomSpacing(13, after: topContentStack)
         
@@ -31,7 +31,7 @@ final class DashboardWalletCell: CollectionViewCell {
         pctChangeLabel.applyStyle(.callout)
         
         [fiatBalanceLabel, pctChangeLabel].forEach { $0.applyStyle(.smallLabel) }
-        fiatBalanceLabel.textColor = Theme.color.textSecondary
+        fiatBalanceLabel.textColor = ThemeOG.color.textSecondary
         
         cryptoBalanceLabel.applyStyle(.callout)
     }
@@ -54,8 +54,8 @@ extension DashboardWalletCell {
         fiatBalanceLabel.text = viewModel.fiatBalance
         pctChangeLabel.text = viewModel.pctChange
         pctChangeLabel.textColor = viewModel.priceUp
-            ? Theme.color.green
-            : Theme.color.red
+            ? ThemeOG.color.green
+            : ThemeOG.color.red
         pctChangeLabel.layer.shadowColor = pctChangeLabel.textColor.cgColor
         charView.update(viewModel.candles)
         cryptoBalanceLabel.text = viewModel.cryptoBalance

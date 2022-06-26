@@ -13,6 +13,7 @@ enum DashboardPresenterEvent {
     case didSelectNFT(idx: Int)
     case didInteractWithCardSwitcher
     case didTapNetwork
+    case didScanQRCode
     case didTapEditTokens
 }
 
@@ -71,14 +72,13 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             view?.update(with: viewModel())
             
         case .receiveAction:
-            wireframe.navigate(
-                to: .receiveCoins
-            )
+            wireframe.navigate(to: .receiveCoins)
             
         case .sendAction:
-            wireframe.navigate(
-                to: .sendCoins
-            )
+            wireframe.navigate(to: .sendCoins)
+            
+        case .didScanQRCode:
+            wireframe.navigate(to: .scanQRCode(onCompletion: makeOnQRCodeScanned()))
             
         case .didTapEditTokens:
             wireframe.navigate(
@@ -252,5 +252,19 @@ extension DefaultDashboardPresenter: Web3ServiceWalletListener {
     func tokensChanged() {
         
         fetchMyTokens()
+    }
+}
+
+private extension DefaultDashboardPresenter {
+    
+    func makeOnQRCodeScanned() -> (String) -> Void {
+        
+        {
+            [weak self] qrCode in
+            
+            guard let self = self else { return }
+            
+            print("QR code scanned: \(qrCode)")
+        }
     }
 }

@@ -16,13 +16,15 @@ final class AnimatedTextBarButton: UIBarButtonItem {
         with text: [String],
         mode: AnimatedTextButton.Mode,
         target: AnyObject?,
-        action: Selector
+        action: Selector,
+        tint: UIColor
     ) {
         let button = AnimatedTextButton(
             with: text,
             mode: mode,
             target: target,
-            action: action
+            action: action,
+            tint: tint
         )
         self.init(customView: button)
         self.button = button

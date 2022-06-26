@@ -10,37 +10,43 @@ extension UIViewController {
         
         let titleLabel = UILabel(frame: .zero)
         titleLabel.textAlignment = .center
-        titleLabel.text = title
-        titleLabel.applyStyle(.navTitle)
+        switch theme {
+        case .themeOG:
+            titleLabel.applyStyle(.navTitle)
+            titleLabel.text = title
+        case .themeHome:
+            titleLabel.text = title?.capitalized
+        }
         navigationItem.titleView = titleLabel
     }
 
-    func configureLeftBarButtonItemDismissAction() {
+    func configureNavBarLeftAction(icon: String? = nil) {
         
-        let icon = navigationController?.viewControllers.count == 1 ? "close_icon" : "arrow_back"
+        let icon = icon ?? (navigationController?.viewControllers.count == 1 ? "close_icon" : "arrow_back")
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(named: icon),
             style: .plain,
             target: self,
-            action: #selector(dismissTapped)
+            action: #selector(navBarLeftActionTapped)
         )
-        navigationItem.leftBarButtonItem?.tintColor  = Theme.color.tint
+        
+        navigationItem.leftBarButtonItem?.tintColor = themeNavBarTint
     }
     
-    @objc func dismissTapped() {
+    @objc func navBarLeftActionTapped() {
 
         fatalError("Please override by subclass")
     }
     
-    func configureRightBarButtonItemAction(icon: String, tint: UIColor = Theme.color.tint) {
+    func configureNavBarRightAction(icon: String) {
         
         let button = UIButton()
         button.setImage(
             .init(named: icon),
             for: .normal
         )
-        button.tintColor = tint
-        button.addTarget(self, action: #selector(navBarRightBarActionTapped), for: .touchUpInside)
+        button.tintColor = themeNavBarTint
+        button.addTarget(self, action: #selector(navBarRightActionTapped), for: .touchUpInside)
         button.addConstraints(
             [
                 .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
@@ -50,8 +56,23 @@ extension UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
     
-    @objc func navBarRightBarActionTapped() {
+    @objc func navBarRightActionTapped() {
 
         fatalError("Please override by subclass")
+    }
+}
+
+extension UIViewController: ThemeProviding {}
+
+private extension UIViewController {
+    
+    var themeNavBarTint: UIColor? {
+        
+        switch theme {
+        case .themeOG:
+            return ThemeOG.color.tint
+        case let .themeHome(themeHome):
+            return themeHome.navBarColour().tintColour
+        }
     }
 }

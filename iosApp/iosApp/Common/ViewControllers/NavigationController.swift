@@ -10,20 +10,32 @@ class NavigationController: UINavigationController {
         super.viewDidLoad()
 
         let appearance = navigationBar.standardAppearance
-        let titleShadow = NSShadow()
-        titleShadow.shadowOffset = .zero
-        titleShadow.shadowBlurRadius = Global.shadowRadius
-        titleShadow.shadowColor = Theme.color.tint
 
-        appearance.titleTextAttributes = [
-            .foregroundColor: Theme.color.tint,
-            .font: Theme.font.navTitle,
-            .shadow: titleShadow
-        ]
+        let themeProvider: ThemeProvider = ServiceDirectory.assembler.resolve()
+        
+        switch themeProvider.current {
+        case .themeOG:
+            let titleShadow = NSShadow()
+            titleShadow.shadowOffset = .zero
+            titleShadow.shadowBlurRadius = Global.shadowRadius
+            appearance.backgroundColor = ThemeOG.color.background.withAlphaComponent(1)
+            appearance.titleTextAttributes = [
+                .foregroundColor: ThemeOG.color.tint,
+                .font: ThemeOG.font.navTitle,
+                .shadow: titleShadow
+            ]
+            titleShadow.shadowColor = ThemeOG.color.tint
 
-        appearance.backgroundColor = Theme.color.background.withAlphaComponent(1)
+        case let .themeHome(themeHome):
+            appearance.backgroundColor = themeHome.navBarColour().backgroundColour
+            appearance.titleTextAttributes = [
+                .foregroundColor: themeHome.navBarColour().foregroundColour,
+                .font: themeHome.font(for: .navBarTitle)
+            ]
+        }
+        
         appearance.setBackIndicatorImage(
-            UIImage(named: "arrow_back"),
+            UIImage(named: "nav_bar_back"),
             transitionMaskImage:  nil
         )
 
