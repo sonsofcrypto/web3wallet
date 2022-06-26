@@ -41,7 +41,7 @@ extension NFTDetailViewController {
         
         let label = UILabel(with: .body)
         label.text = text
-        label.textColor = Theme.current.color.red
+        label.textColor = Theme.color.red
         label.layer.applyShadow(Theme.color.red)
         label.numberOfLines = 0
         hStack.addArrangedSubview(label)

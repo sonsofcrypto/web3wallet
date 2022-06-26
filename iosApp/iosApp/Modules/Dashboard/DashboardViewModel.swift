@@ -5,6 +5,7 @@
 import Foundation
 
 struct DashboardViewModel {
+    
     let shouldAnimateCardSwitcher: Bool
     let header: DashboardViewModel.Header
     let sections: [DashboardViewModel.Section]

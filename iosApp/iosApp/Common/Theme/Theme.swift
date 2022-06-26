@@ -27,6 +27,7 @@ protocol ThemeColor {
 }
 
 protocol ThemeFont {
+    
     var body: UIFont { get }
     var navTitle: UIFont { get }
     var title1: UIFont { get }
@@ -50,13 +51,13 @@ protocol ThemeAttributes {
     func textShadow(_ tint: UIColor) -> NSShadow
 }
 
-struct Theme: ThemeProvider {
+struct Theme {
 
-    static var current: ThemeProvider = DefaultTheme()
+    private static var current: ThemeProvider = DefaultTheme()
     
-    var color: ThemeColor = Theme.current.color
-    var font: ThemeFont = Theme.current.font
-    var attributes: ThemeAttributes = Theme.current.attributes
+//    var color: ThemeColor = Theme.color
+//    var font: ThemeFont = Theme.font
+//    var attributes: ThemeAttributes = Theme.attributes
     
     static var color: ThemeColor {
         Theme.current.color

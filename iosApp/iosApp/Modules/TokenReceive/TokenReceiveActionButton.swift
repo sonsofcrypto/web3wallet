@@ -13,7 +13,7 @@ final class TokenReceiveActionButton: UIView {
 
         super.awakeFromNib()
         
-        iconImageView.backgroundColor = Theme.current.color.background
+        iconImageView.backgroundColor = Theme.color.background
         iconImageView.layer.cornerRadius = iconImageView.frame.size.width * 0.5
 
         nameLabel.applyStyle(.callout)

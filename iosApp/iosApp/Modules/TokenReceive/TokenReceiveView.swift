@@ -85,18 +85,18 @@ extension TokenReceiveViewController {
         
         configureLeftBarButtonItemDismissAction()
         
-        cardView.backgroundColor = Theme.current.color.backgroundDark
+        cardView.backgroundColor = Theme.color.backgroundDark
         cardView.layer.cornerRadius = 12
         
         nameLabel.applyStyle(.headlineGlow)
-        nameLabel.textColor = Theme.current.color.text
+        nameLabel.textColor = Theme.color.text
         
         addressLabel.applyStyle(.body)
-        addressLabel.textColor = Theme.current.color.text
+        addressLabel.textColor = Theme.color.text
         addressLabel.textAlignment = .center
 
         disclaimerLabel.applyStyle(.smallBody)
-        disclaimerLabel.textColor = Theme.current.color.textSecondary
+        disclaimerLabel.textColor = Theme.color.textSecondary
         
         copyButton.update(
             with: Localized("tokenReceive.action.copy"),

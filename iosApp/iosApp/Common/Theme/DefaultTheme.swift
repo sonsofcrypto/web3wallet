@@ -129,7 +129,7 @@ extension DefaultTheme {
             [
                 .font: Theme.font.body,
                 .foregroundColor: Theme.color.text,
-                .shadow: textShadow(Theme.current.color.tintSecondary)
+                .shadow: textShadow(Theme.color.tintSecondary)
             ]
         }
 

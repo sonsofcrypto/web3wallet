@@ -12,12 +12,11 @@ enum DashboardPresenterEvent {
     case didSelectWallet(network: String, symbol: String)
     case didSelectNFT(idx: Int)
     case didInteractWithCardSwitcher
-    case presentUnderConstructionAlert
     case didTapNetwork
     case didTapEditTokens
 }
 
-protocol DashboardPresenter {
+protocol DashboardPresenter: AnyObject {
     
     func present()
     func handle(_ event: DashboardPresenterEvent)
@@ -55,29 +54,40 @@ extension DefaultDashboardPresenter: DashboardPresenter {
     }
     
     func handle(_ event: DashboardPresenterEvent) {
+        
         switch event {
+            
         case let .didSelectWallet(network, symbol):
             guard let token = myTokens.first(
                 where: { $0.equalTo(network: network, symbol: symbol) }
             ) else { return }
             wireframe.navigate(to: .wallet(token: token))
+            
         case .walletConnectionSettingsAction:
             wireframe.navigate(to: .keyStoreNetworkSettings)
+            
         case .didInteractWithCardSwitcher:
             onboardingService.markDidInteractCardSwitcher()
             view?.update(with: viewModel())
-        case .presentUnderConstructionAlert:
-            wireframe.navigate(to: .presentUnderConstructionAlert)
+            
         case .receiveAction:
-            wireframe.navigate(to: .receiveCoins)
+            wireframe.navigate(
+                to: .receiveCoins
+            )
+            
         case .sendAction:
-            wireframe.navigate(to: .sendCoins)
+            wireframe.navigate(
+                to: .sendCoins
+            )
+            
         case .didTapEditTokens:
-            wireframe.navigate(to: .editTokens(
-                selectedTokens: myTokens,
-                onCompletion: makeOnEditTokensCompletion()
+            wireframe.navigate(
+                to: .editTokens(
+                    selectedTokens: myTokens,
+                    onCompletion: makeOnEditTokensCompletion()
+                )
             )
-            )
+            
         default:
             print("Handle \(event)")
         }

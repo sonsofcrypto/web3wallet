@@ -83,6 +83,7 @@
 		1C54DC1B2862352800E378F6 /* QRCodeScanWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC1A2862352800E378F6 /* QRCodeScanWireframeFactoryAssembler.swift */; };
 		1C54DC1D2862354C00E378F6 /* QRCodeScan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */; };
 		1C54DC1F2862373C00E378F6 /* QRCodeScanInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC1E2862373C00E378F6 /* QRCodeScanInteractor.swift */; };
+		1C54DC2128680B7F00E378F6 /* DashboardView+ThemeOG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC2028680B7F00E378F6 /* DashboardView+ThemeOG.swift */; };
 		1C5B60382843FACD00ECBD79 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B60372843FACD00ECBD79 /* UIViewController+Extensions.swift */; };
 		1C5B603B284675B800ECBD79 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5B603A284675B800ECBD79 /* Kingfisher */; };
 		1C60C1AA28571B95003BE25D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */; };
@@ -507,6 +508,7 @@
 		1C54DC1A2862352800E378F6 /* QRCodeScanWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QRCodeScan.storyboard; sourceTree = "<group>"; };
 		1C54DC1E2862373C00E378F6 /* QRCodeScanInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanInteractor.swift; sourceTree = "<group>"; };
+		1C54DC2028680B7F00E378F6 /* DashboardView+ThemeOG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardView+ThemeOG.swift"; sourceTree = "<group>"; };
 		1C5B60372843FACD00ECBD79 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1AB28571BB6003BE25D /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
@@ -1248,6 +1250,7 @@
 				1C60C214285724D0003BE25D /* DashboardInteractor.swift */,
 				1C60C216285724D0003BE25D /* DashboardPresenter.swift */,
 				1C60C20E285724D0003BE25D /* DashboardView.swift */,
+				1C54DC2028680B7F00E378F6 /* DashboardView+ThemeOG.swift */,
 				1C60C219285724D0003BE25D /* DashboardViewModel.swift */,
 				1C60C21B285724D0003BE25D /* DashboardWireframe.swift */,
 				1C60C218285724D0003BE25D /* DashboardWireframeFactory.swift */,
@@ -2214,6 +2217,7 @@
 				1C60C323285724D1003BE25D /* AppsWireframeFactory.swift in Sources */,
 				1C60C344285724D1003BE25D /* AMMsView.swift in Sources */,
 				1CE66BE4284CFB7600AB6ACA /* UITextView+Extensions.swift in Sources */,
+				1C54DC2128680B7F00E378F6 /* DashboardView+ThemeOG.swift in Sources */,
 				1C60C2B3285724D0003BE25D /* TokenPickerView.swift in Sources */,
 				1C60C31E285724D1003BE25D /* AppsViewModel.swift in Sources */,
 				1C60C2D7285724D0003BE25D /* MnemonicPresenter.swift in Sources */,

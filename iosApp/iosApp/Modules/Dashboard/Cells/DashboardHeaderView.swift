@@ -5,6 +5,8 @@
 import UIKit
 
 final class DashboardHeaderView: UICollectionReusableView {
+    
+    private weak var presenter: DashboardPresenter?
 
     @IBOutlet weak var balance: UILabel!
     @IBOutlet weak var receiveButton: UIButton!
@@ -15,11 +17,14 @@ final class DashboardHeaderView: UICollectionReusableView {
     @IBOutlet weak var buttonsStack: UIStackView!
     
     override func awakeFromNib() {
+        
         super.awakeFromNib()
+        
         configureUI()
     }
 
     private func configureUI() {
+        
         balance.textColor = Theme.color.text
         balance.font = Theme.font.hugeBalance
         containerStack.setCustomSpacing(
@@ -37,7 +42,9 @@ final class DashboardHeaderView: UICollectionReusableView {
     }
 
     override func prepareForReuse() {
+        
         super.prepareForReuse()
+        
         buttonsStack.arrangedSubviews.forEach {
             ($0 as? UIButton)?.removeAllTargets()
         }
@@ -46,7 +53,12 @@ final class DashboardHeaderView: UICollectionReusableView {
 
 extension DashboardHeaderView {
 
-    func update(with viewModel: DashboardViewModel.Header?) {
+    func update(
+        with viewModel: DashboardViewModel.Header?,
+        presenter: DashboardPresenter?
+    ) {
+        
+        self.presenter = presenter
         
         balance.text =  viewModel?.balance
         
@@ -60,9 +72,46 @@ extension DashboardHeaderView {
     }
 }
 
+private extension DashboardHeaderView {
+
+    func addActions(for supplementary: DashboardHeaderView) {
+        
+        receiveButton.addTarget(
+            self,
+            action: #selector(receiveAction(_:)),
+            for: .touchUpInside
+        )
+        sendButton.addTarget(
+            self,
+            action: #selector(sendAction(_:)),
+            for: .touchUpInside
+        )
+        tradeButton.addTarget(
+            self,
+            action: #selector(tradeAction(_:)),
+            for: .touchUpInside
+        )
+    }
+    
+    @IBAction func receiveAction(_ sender: Any) {
+        
+        presenter?.handle(.receiveAction)
+    }
+    
+    @IBAction func sendAction(_ sender: Any) {
+        
+        presenter?.handle(.sendAction)
+    }
+    
+    @IBAction func tradeAction(_ sender: Any) {
+        
+        presenter?.handle(.tradeAction)
+    }
+}
+
 extension DashboardHeaderView {
 
     enum Constant {
-        static let sectionTitleOffset: CGFloat = 27
+        static let sectionTitleOffset: CGFloat = 28
     }
 }

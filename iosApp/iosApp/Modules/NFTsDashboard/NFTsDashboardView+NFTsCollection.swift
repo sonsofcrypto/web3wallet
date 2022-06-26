@@ -27,7 +27,7 @@ extension NFTsDashboardViewController {
         let titleLabel = UILabel(with: .bodyGlow)
         titleLabel.numberOfLines = 1
         titleLabel.text = Localized("nfts.dashboard.collection.title")
-        //titleLabel.textColor = Theme.current.color.red
+        //titleLabel.textColor = Theme.color.red
         titleLabel.textAlignment = .center
         rows.append(titleLabel)
         
@@ -206,7 +206,7 @@ private extension NFTsDashboardViewController {
         let titleLabel = UILabel(with: .smallerLabel)
         titleLabel.numberOfLines = 1
         titleLabel.text = collection.title
-        titleLabel.textColor = Theme.current.color.text
+        titleLabel.textColor = Theme.color.text
         titleLabel.textAlignment = .center
         view.addArrangedSubview(titleLabel)
 
@@ -217,9 +217,9 @@ private extension NFTsDashboardViewController {
             arg: collection.author
         ).attributtedString(
             with: font,
-            and: Theme.current.color.text,
+            and: Theme.color.text,
             updating: [collection.author],
-            withColour: Theme.current.color.red,
+            withColour: Theme.color.red,
             andFont: font
         )
         authorLabel.layer.applyShadow(Theme.color.tintSecondary)

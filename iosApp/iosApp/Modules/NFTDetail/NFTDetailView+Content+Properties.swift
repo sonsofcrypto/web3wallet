@@ -204,7 +204,7 @@ private extension NFTDetailViewController {
         view.layer.borderWidth = 1
         view.layer.borderColor = Theme.color.tintLight.cgColor
         view.clipsToBounds = true
-        view.backgroundColor = Theme.current.color.backgroundDark
+        view.backgroundColor = Theme.color.backgroundDark
         return view
     }
     
@@ -217,7 +217,7 @@ private extension NFTDetailViewController {
         let topLabel = UILabel(with: .smallerLabel)
         topLabel.numberOfLines = 1
         topLabel.text = item.name
-        topLabel.textColor = Theme.current.color.text
+        topLabel.textColor = Theme.color.text
         topLabel.textAlignment = .center
         view.addArrangedSubview(topLabel)
         
@@ -226,7 +226,7 @@ private extension NFTDetailViewController {
         let middleLabel = UILabel(with: .smallerLabel)
         middleLabel.numberOfLines = 1
         middleLabel.text = item.value
-        middleLabel.textColor = Theme.current.color.green
+        middleLabel.textColor = Theme.color.green
         middleLabel.textAlignment = .center
         view.addArrangedSubview(middleLabel)
 
@@ -235,7 +235,7 @@ private extension NFTDetailViewController {
         let bottomLabel = UILabel(with: .smallerLabel)
         bottomLabel.numberOfLines = 1
         bottomLabel.text = item.info
-        bottomLabel.textColor = Theme.current.color.text
+        bottomLabel.textColor = Theme.color.text
         bottomLabel.textAlignment = .center
         view.addArrangedSubview(bottomLabel)
                 
