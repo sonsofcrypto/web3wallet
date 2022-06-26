@@ -136,6 +136,20 @@ private extension DashboardViewController {
         transitioningDelegate = self
 
         edgeCardsController?.delegate = self
+        
+        collectionView.register(
+            DashboardSectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "\(DashboardSectionHeaderView.self)"
+        )
+        
+        var insets = collectionView.contentInset
+        insets.bottom += Global.padding
+        collectionView.contentInset = insets
+
+        var transform = CATransform3DIdentity
+        transform.m34 = -1.0 / 500.0
+        collectionView.layer.sublayerTransform = transform
                 
         switch themeProvider.current {
             
@@ -151,20 +165,6 @@ private extension DashboardViewController {
             image: UIImage(named: "tab_icon_dashboard"),
             tag: 0
         )
-        
-        collectionView.register(
-            DashboardSectionHeaderView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: "\(DashboardSectionHeaderView.self)"
-        )
-        
-        var insets = collectionView.contentInset
-        insets.bottom += Global.padding
-        collectionView.contentInset = insets
-
-        var transform = CATransform3DIdentity
-        transform.m34 = -1.0 / 500.0
-        collectionView.layer.sublayerTransform = transform
     }
 }
 
