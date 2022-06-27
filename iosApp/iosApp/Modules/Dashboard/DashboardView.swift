@@ -143,9 +143,14 @@ private extension DashboardViewController {
         edgeCardsController?.delegate = self
                 
         collectionView.register(
-            DashboardSectionHeaderView.self,
+            DashboardHeaderBalanceView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: "\(DashboardSectionHeaderView.self)"
+            withReuseIdentifier: "\(DashboardHeaderBalanceView.self)"
+        )
+        collectionView.register(
+            DashboardHeaderNameView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "\(DashboardHeaderNameView.self)"
         )
         collectionView.setCollectionViewLayout(
             makeCompositionalLayout(),
@@ -186,7 +191,10 @@ private extension DashboardViewController {
             
             guard let viewModel = self.viewModel else { return nil }
             
-            if sectionIndex == viewModel.sections.count - 1 {
+            if sectionIndex == 0 {
+                
+                return self.makeButtonsCollectionLayoutSection()
+            } else if sectionIndex == viewModel.sections.count - 1 {
                 
                 return self.makeNFTsCollectionLayoutSection()
             } else {
@@ -196,9 +204,53 @@ private extension DashboardViewController {
         }
     }
     
+    func makeButtonsCollectionLayoutSection() -> NSCollectionLayoutSection {
+        
+        let inset: CGFloat = theme.padding * 0.5
+        
+        // Item
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: inset, bottom: 0, trailing: inset)
+        
+        // Group
+        let screenWidth: CGFloat = (view.bounds.width - theme.padding)
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .absolute(screenWidth),
+            heightDimension: .absolute(UIButton.Web3WalletButtonStyle.primary.height + theme.padding)
+        )
+        let outerGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize, subitems: [item]
+        )
+        
+        // Section
+        let sectionInset: CGFloat = theme.padding * 0.5
+        let section = NSCollectionLayoutSection(group: outerGroup)
+        section.contentInsets = .init(
+            top: sectionInset,
+            leading: sectionInset,
+            bottom: sectionInset * 4,
+            trailing: sectionInset
+        )
+        
+        let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100))
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerItemSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.boundarySupplementaryItems = [headerItem]
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+                
+        return section
+    }
+    
     func makeWalletsCollectionLayoutSection() -> NSCollectionLayoutSection {
         
-        let inset: CGFloat = 8
+        let inset: CGFloat = theme.padding * 0.5
         
         // Item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
@@ -206,15 +258,15 @@ private extension DashboardViewController {
         item.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
         
         // Group
-        let screenWidth: CGFloat = (view.bounds.width - 16)
+        let screenWidth: CGFloat = (view.bounds.width - theme.padding * 0.5)
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(screenWidth),
-            heightDimension: .absolute(screenWidth * 0.5)
+            heightDimension: .absolute(screenWidth * 0.425)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         // Section
-        let sectionInset: CGFloat = 8
+        let sectionInset: CGFloat = theme.padding * 0.5
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(
             top: sectionInset,
@@ -236,7 +288,7 @@ private extension DashboardViewController {
     
     func makeNFTsCollectionLayoutSection() -> NSCollectionLayoutSection {
         
-        let inset: CGFloat = 8
+        let inset: CGFloat = theme.padding * 0.5
         
         // Item
         let itemSize = NSCollectionLayoutSize(
@@ -247,7 +299,7 @@ private extension DashboardViewController {
         item.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
         
         // Group
-        let screenWidth: CGFloat = (view.bounds.width - 16)
+        let screenWidth: CGFloat = (view.bounds.width - theme.padding)
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(screenWidth),
             heightDimension: .absolute(screenWidth * 0.5)
@@ -257,12 +309,12 @@ private extension DashboardViewController {
         )
         
         // Section
-        let sectionInset: CGFloat = 8
+        let sectionInset: CGFloat = theme.padding * 0.5
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = .init(
             top: sectionInset,
             leading: sectionInset,
-            bottom: sectionInset,// + collectionView.frame.size.width * 0.475,
+            bottom: sectionInset + collectionView.frame.size.width * 0.475,
             trailing: sectionInset
         )
         
@@ -378,7 +430,9 @@ extension DashboardViewController: UICollectionViewDataSource {
         
         guard let section = viewModel?.sections[section] else { return 0 }
         
-        return section.items.count
+        guard section.items.count > 4 else { return section.items.count }
+        
+        return (section.isCollapsed ?? false) ? 4 : section.items.count
     }
     
     func collectionView(
@@ -391,7 +445,13 @@ extension DashboardViewController: UICollectionViewDataSource {
             fatalError("No viewModel for \(indexPath) \(collectionView)")
         }
         
-        if let wallet = section.items.wallet(at: indexPath.row) {
+        let actions = section.items.actions()
+        if !actions.isEmpty {
+            
+            let cell = collectionView.dequeue(DashboardButtonsCell.self, for: indexPath)
+            cell.update(with: actions, presenter: presenter)
+            return cell
+        } else if let wallet = section.items.wallet(at: indexPath.row) {
             
             let cell = collectionView.dequeue(DashboardWalletCell.self, for: indexPath)
             cell.update(with: wallet)
@@ -413,32 +473,19 @@ extension DashboardViewController: UICollectionViewDataSource {
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
         
-        if kind == UICollectionView.elementKindSectionHeader {
+        switch kind {
             
-            switch indexPath.section {
-                
-            case 0:
-                let supplementary = collectionView.dequeue(
-                    DashboardHeaderView.self,
-                    for: indexPath,
-                    kind: kind
-                )
-                supplementary.update(with: viewModel?.header, presenter: presenter)
-                return supplementary
-                
-            default:
-                
-                let supplementary = collectionView.dequeue(
-                    DashboardSectionHeaderView.self,
-                    for: indexPath,
-                    kind: kind
-                )
-                supplementary.update(with: viewModel?.sections[indexPath.section])
-                return supplementary
-            }
+        case UICollectionView.elementKindSectionHeader:
+            
+            return supplementaryHeaderView(kind: kind, at: indexPath)
+            
+        default:
+            fatalError("Unexpected supplementary idxPath: \(indexPath) \(kind)")
         }
-
-        fatalError("Unexpected supplementary idxPath: \(indexPath) \(kind)")
+        guard kind == UICollectionView.elementKindSectionHeader else {
+            
+            fatalError("Unexpected supplementary idxPath: \(indexPath) \(kind)")
+        }
     }
 }
 
@@ -449,6 +496,8 @@ extension DashboardViewController: UICollectionViewDelegate {
         guard let section = viewModel?.sections[indexPath.section] else { return }
         
         switch section.items {
+        case .actions:
+            break
         case let .wallets(wallets):
             let wallet = wallets[indexPath.item]
             presenter.handle(.didSelectWallet(network: section.name, symbol: wallet.ticker))
@@ -494,5 +543,40 @@ final class BackgroundSupplementaryView: UICollectionReusableView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+private extension DashboardViewController {
+    
+    func supplementaryHeaderView(
+        kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        
+        guard let section = viewModel?.sections[indexPath.section] else {
+            fatalError("no section")
+        }
+        
+        switch indexPath.section {
+            
+        case 0:
+            let supplementary = collectionView.dequeue(
+                DashboardHeaderBalanceView.self,
+                for: indexPath,
+                kind: kind
+            )
+            supplementary.update(with: section)
+            return supplementary
+            
+        default:
+            
+            let supplementary = collectionView.dequeue(
+                DashboardHeaderNameView.self,
+                for: indexPath,
+                kind: kind
+            )
+            supplementary.update(with: section)
+            return supplementary
+        }
     }
 }

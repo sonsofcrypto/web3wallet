@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class DashboardWalletCell: CollectionViewCell {
+final class DashboardWalletCell: UICollectionViewCell, ThemeProviding {
 
     @IBOutlet weak var contentStack: UIStackView!
     @IBOutlet weak var topContentStack: UIStackView!
@@ -19,8 +19,30 @@ final class DashboardWalletCell: CollectionViewCell {
         
         super.awakeFromNib()
         
-        layer.cornerRadius = Global.cornerRadius * 2
+        //layer.cornerRadius = G"lobal.cornerRadius * 2
         
+        let image = UIImage(named: "themeA-dashboard-screen")!
+        let screenView = UIImageView(
+            image: image.resizableImage(
+                withCapInsets: .init(
+                    top: image.size.height * 0.5,
+                    left: image.size.width * 0.5,
+                    bottom: image.size.height * 0.5,
+                    right: image.size.width * 0.5
+                ),
+                resizingMode: .stretch
+            )
+        )
+        insertSubview(screenView, at: 0)
+        screenView.addConstraints(
+            [
+                .layout(anchor: .topAnchor),
+                .layout(anchor: .bottomAnchor),
+                .layout(anchor: .leadingAnchor),
+                .layout(anchor: .trailingAnchor)
+            ]
+        )
+                
         imageView.layer.cornerRadius = imageView.frame.size.width * 0.5
         imageView.backgroundColor = ThemeOG.color.text
         
@@ -33,7 +55,8 @@ final class DashboardWalletCell: CollectionViewCell {
         [fiatBalanceLabel, pctChangeLabel].forEach { $0.applyStyle(.smallLabel) }
         fiatBalanceLabel.textColor = ThemeOG.color.textSecondary
         
-        cryptoBalanceLabel.applyStyle(.callout)
+        cryptoBalanceLabel.font = theme.font(for: .footnote)
+        cryptoBalanceLabel.textColor = theme.colour(for: .orange)
     }
 
     override func prepareForReuse() {

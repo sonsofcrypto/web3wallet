@@ -9,14 +9,6 @@ protocol ThemeHome {
     func navBarColour() -> ThemeHomeNavBar
     func tabBarColour() -> ThemeHomeTabBar
     func gradient() -> ThemeHomeGradient
-    func font(for font: ThemeHomeFont) -> UIFont
-    func colour(for colour: ThemeHomeColour) -> UIColor
-}
-
-extension ThemeHome {
-    
-    func colour(for colour: ThemeHomeColour) -> UIColor {
-        
-        .init(named: colour.rawValue)!
-    }
+    func font(for font: ThemeFont) -> UIFont
+    func colour(for colour: ThemeColour) -> UIColor
 }

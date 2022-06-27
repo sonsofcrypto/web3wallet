@@ -30,7 +30,7 @@ class NavigationController: UINavigationController {
             appearance.backgroundColor = themeHome.navBarColour().backgroundColour
             appearance.titleTextAttributes = [
                 .foregroundColor: themeHome.navBarColour().foregroundColour,
-                .font: themeHome.font(for: .navBarTitle)
+                .font: themeHome.font(for: .navTitle)
             ]
         }
         

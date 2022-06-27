@@ -8,5 +8,4 @@ struct ThemeHomeTabBar {
     let tintColour: UIColor
     let itemNormalColour: UIColor
     let itemSelectedColour: UIColor
-    
 }

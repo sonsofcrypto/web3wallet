@@ -4,6 +4,10 @@
 
 enum ThemeHomeColour: String {
     
+    case white
+    case black
+    case grey
+    case grey_ios
     case marine
     case blue
     case blue_lagun

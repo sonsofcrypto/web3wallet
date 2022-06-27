@@ -9,6 +9,8 @@ enum DashboardPresenterEvent {
     case sendAction
     case tradeAction
     case walletConnectionSettingsAction
+    case didTapCollapse(network: String)
+    case didTapExpand(network: String)
     case didSelectWallet(network: String, symbol: String)
     case didSelectNFT(idx: Int)
     case didInteractWithCardSwitcher
@@ -30,6 +32,7 @@ final class DefaultDashboardPresenter {
     private let wireframe: DashboardWireframe
     private let onboardingService: OnboardingService
     
+    var expandedNetworks = [String]()
     var myTokens = [Web3Token]()
     
     init(
@@ -57,6 +60,14 @@ extension DefaultDashboardPresenter: DashboardPresenter {
     func handle(_ event: DashboardPresenterEvent) {
         
         switch event {
+            
+        case let .didTapCollapse(network):
+            expandedNetworks.removeAll { $0 == network }
+            view?.update(with: viewModel())
+            
+        case let .didTapExpand(network):
+            expandedNetworks.append(network)
+            view?.update(with: viewModel())
             
         case let .didSelectWallet(network, symbol):
             guard let token = myTokens.first(
@@ -123,6 +134,7 @@ private extension DefaultDashboardPresenter {
             sections.append(
                 .init(
                     name: network.name,
+                    isCollapsed: false,//!expandedNetworks.contains(network.name),
                     items: .wallets(
                         makeDashboardViewModelWallets(from: tokens)
                     )
@@ -138,6 +150,7 @@ private extension DefaultDashboardPresenter {
             sections.append(
                 .init(
                     name: Localized("dashboard.section.nfts").uppercased(),
+                    isCollapsed: false,
                     items: .nfts(nfts)
                 )
             )
@@ -152,28 +165,35 @@ private extension DefaultDashboardPresenter {
             walletTotal += sectionTotal
         }
         
+        sections.insert(
+            .init(
+                name: walletTotal.formatted(.currency(code: "USD")),
+                isCollapsed: nil,
+                items: .actions(
+                    [
+                        .init(
+                            title: Localized("dashboard.button.receive"),
+                            imageName: "receive-button",
+                            type: .receive
+                        ),
+                        .init(
+                            title: Localized("dashboard.button.send"),
+                            imageName: "send-button",
+                            type: .send
+                        ),
+                        .init(
+                            title: Localized("dashboard.button.trade"),
+                            imageName: "trade-button",
+                            type: .swap
+                        )
+                    ]
+                )
+            ),
+            at: 0
+        )
+        
         return .init(
             shouldAnimateCardSwitcher: onboardingService.shouldShowOnboardingButton(),
-            header: .init(
-                balance: walletTotal.formatted(.currency(code: "USD")),
-                pct: "+4.5%",
-                pctUp: true,
-                buttons: [
-                    .init(
-                        title: Localized("dashboard.button.receive"),
-                        imageName: "button_receive"
-                    ),
-                    .init(
-                        title: Localized("dashboard.button.send"),
-                        imageName: "button_send"
-                    ),
-                    .init(
-                        title: Localized("dashboard.button.trade"),
-                        imageName: "button_trade"
-                    )
-                ],
-                firstSection: sections.first?.name ?? ""
-            ),
             sections: sections
         )
     }

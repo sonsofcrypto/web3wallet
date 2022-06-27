@@ -19,8 +19,8 @@ extension ThemeProviding {
 
 final class ThemeProvider {
     
-//    var current: Theme = .themeHome(ThemeHomeA())
-    var current: Theme = .themeOG(ThemeOG())
+    var current: Theme = .themeHome(ThemeHomeA())
+//    var current: Theme = .themeOG(ThemeOG())
     
 //    func flipTheme() {
 //

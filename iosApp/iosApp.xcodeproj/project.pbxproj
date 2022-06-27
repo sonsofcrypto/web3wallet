@@ -85,35 +85,39 @@
 		1C54DC1F2862373C00E378F6 /* QRCodeScanInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC1E2862373C00E378F6 /* QRCodeScanInteractor.swift */; };
 		1C54DC2128680B7F00E378F6 /* DashboardView+ThemeOG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC2028680B7F00E378F6 /* DashboardView+ThemeOG.swift */; };
 		1C54DC242868178700E378F6 /* ThemeOGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC232868178700E378F6 /* ThemeOGColor.swift */; };
-		1C54DC26286817A000E378F6 /* ThemeOGFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC25286817A000E378F6 /* ThemeOGFont.swift */; };
 		1C54DC28286817BD00E378F6 /* ThemeOGAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC27286817BD00E378F6 /* ThemeOGAttributes.swift */; };
 		1C54DC2A2868193300E378F6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC292868193300E378F6 /* Theme.swift */; };
 		1C54DC2D286819D100E378F6 /* ThemeHomeA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC2C286819D100E378F6 /* ThemeHomeA.swift */; };
 		1C54DC2F286819D900E378F6 /* ThemeHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC2E286819D900E378F6 /* ThemeHome.swift */; };
-		1C54DC3128681BAF00E378F6 /* ThemeHomeFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC3028681BAF00E378F6 /* ThemeHomeFont.swift */; };
 		1C54DC3328681BB700E378F6 /* ThemeHomeColour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC3228681BB700E378F6 /* ThemeHomeColour.swift */; };
-		1C54DC352868204000E378F6 /* Colours.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC342868204000E378F6 /* Colours.xcassets */; };
+		1C54DC352868204000E378F6 /* Colours-ThemeA.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC342868204000E378F6 /* Colours-ThemeA.xcassets */; };
 		1C54DC372868227E00E378F6 /* ThemeHomeGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC362868227E00E378F6 /* ThemeHomeGradient.swift */; };
 		1C54DC392868264500E378F6 /* ThemeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC382868264500E378F6 /* ThemeProvider.swift */; };
 		1C54DC3B2868265A00E378F6 /* ThemeProviderAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC3A2868265A00E378F6 /* ThemeProviderAssembler.swift */; };
 		1C54DC3D2868282600E378F6 /* DashboardView+ThemeHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC3C2868282600E378F6 /* DashboardView+ThemeHome.swift */; };
 		1C54DC3F28682BAF00E378F6 /* ThemeHomeNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC3E28682BAF00E378F6 /* ThemeHomeNavBar.swift */; };
 		1C54DC4128683AA600E378F6 /* ThemeHomeTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC4028683AA600E378F6 /* ThemeHomeTabBar.swift */; };
-		1C54DC5128683DDA00E378F6 /* NaokoAA_Light_Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4328683DD900E378F6 /* NaokoAA_Light_Italic.otf */; };
+		1C54DC5128683DDA00E378F6 /* NaokoAA-Light-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4328683DD900E378F6 /* NaokoAA-Light-Italic.otf */; };
 		1C54DC5228683DDA00E378F6 /* NaokoAA-Extrabold-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4428683DD900E378F6 /* NaokoAA-Extrabold-Italic.otf */; };
 		1C54DC5328683DDA00E378F6 /* NaokoAA-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4528683DD900E378F6 /* NaokoAA-Bold.otf */; };
 		1C54DC5428683DDA00E378F6 /* NaokoAA-Bold-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4628683DD900E378F6 /* NaokoAA-Bold-Italic.otf */; };
-		1C54DC5528683DDA00E378F6 /* NaokoAA_Regular_Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4728683DD900E378F6 /* NaokoAA_Regular_Italic.otf */; };
-		1C54DC5628683DDA00E378F6 /* NaokoAA_Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4828683DD900E378F6 /* NaokoAA_Regular.otf */; };
-		1C54DC5728683DDA00E378F6 /* NaokoAA_Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4928683DD900E378F6 /* NaokoAA_Medium.otf */; };
-		1C54DC5828683DDA00E378F6 /* NaokoAA-Black-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4A28683DDA00E378F6 /* NaokoAA-Black-Italic.otf */; };
-		1C54DC5928683DDA00E378F6 /* NaokoAA_Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4B28683DDA00E378F6 /* NaokoAA_Light.otf */; };
+		1C54DC5528683DDA00E378F6 /* NaokoAA-Regular-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4728683DD900E378F6 /* NaokoAA-Regular-Italic.otf */; };
+		1C54DC5628683DDA00E378F6 /* NaokoAA-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4828683DD900E378F6 /* NaokoAA-Regular.otf */; };
+		1C54DC5728683DDA00E378F6 /* NaokoAA-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4928683DD900E378F6 /* NaokoAA-Medium.otf */; };
+		1C54DC5828683DDA00E378F6 /* NaokoAA-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4A28683DDA00E378F6 /* NaokoAA-BlackItalic.otf */; };
+		1C54DC5928683DDA00E378F6 /* NaokoAA-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4B28683DDA00E378F6 /* NaokoAA-Light.otf */; };
 		1C54DC5A28683DDA00E378F6 /* NaokoAA-Extrabold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4C28683DDA00E378F6 /* NaokoAA-Extrabold.otf */; };
-		1C54DC5B28683DDA00E378F6 /* NaokoAA_Semilight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4D28683DDA00E378F6 /* NaokoAA_Semilight.otf */; };
-		1C54DC5C28683DDA00E378F6 /* NaokoAA_Semilight_Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4E28683DDA00E378F6 /* NaokoAA_Semilight_Italic.otf */; };
-		1C54DC5D28683DDA00E378F6 /* NaokoAA_Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4F28683DDA00E378F6 /* NaokoAA_Black.otf */; };
-		1C54DC5E28683DDA00E378F6 /* NaokoAA_Medium_Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC5028683DDA00E378F6 /* NaokoAA_Medium_Italic.otf */; };
-		1C54DC60286859D900E378F6 /* OG-Colours.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC5F286859D900E378F6 /* OG-Colours.xcassets */; };
+		1C54DC5B28683DDA00E378F6 /* NaokoAA-Semilight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4D28683DDA00E378F6 /* NaokoAA-Semilight.otf */; };
+		1C54DC5C28683DDA00E378F6 /* NaokoAA-Semilight-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4E28683DDA00E378F6 /* NaokoAA-Semilight-Italic.otf */; };
+		1C54DC5D28683DDA00E378F6 /* NaokoAA-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4F28683DDA00E378F6 /* NaokoAA-Black.otf */; };
+		1C54DC5E28683DDA00E378F6 /* NaokoAA-Medium-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC5028683DDA00E378F6 /* NaokoAA-Medium-Italic.otf */; };
+		1C54DC60286859D900E378F6 /* Colours-OG.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC5F286859D900E378F6 /* Colours-OG.xcassets */; };
+		1C54DC662869A48A00E378F6 /* DashboardHeaderBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC652869A48A00E378F6 /* DashboardHeaderBalanceView.swift */; };
+		1C54DC682869BE6500E378F6 /* DashboardButtonsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC672869BE6500E378F6 /* DashboardButtonsCell.swift */; };
+		1C54DC6A2869D60D00E378F6 /* ThemeFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC692869D60D00E378F6 /* ThemeFont.swift */; };
+		1C54DC6C2869E48D00E378F6 /* ThemeOGFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC6B2869E48D00E378F6 /* ThemeOGFont.swift */; };
+		1C54DC6E2869EB4500E378F6 /* ThemeColour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC6D2869EB4400E378F6 /* ThemeColour.swift */; };
+		1C54DC74286A1D4C00E378F6 /* Assets-ThemeA.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC73286A1D4B00E378F6 /* Assets-ThemeA.xcassets */; };
 		1C5B60382843FACD00ECBD79 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B60372843FACD00ECBD79 /* UIViewController+Extensions.swift */; };
 		1C5B603B284675B800ECBD79 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5B603A284675B800ECBD79 /* Kingfisher */; };
 		1C60C1AA28571B95003BE25D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */; };
@@ -180,9 +184,8 @@
 		1C60C2DC285724D0003BE25D /* MnemonicWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C20C285724D0003BE25D /* MnemonicWireframeFactoryAssembler.swift */; };
 		1C60C2DD285724D0003BE25D /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C20E285724D0003BE25D /* DashboardView.swift */; };
 		1C60C2DE285724D0003BE25D /* DashboardNFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C210285724D0003BE25D /* DashboardNFTCell.swift */; };
-		1C60C2DF285724D0003BE25D /* DashboardSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C211285724D0003BE25D /* DashboardSectionHeaderView.swift */; };
+		1C60C2DF285724D0003BE25D /* DashboardHeaderNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C211285724D0003BE25D /* DashboardHeaderNameView.swift */; };
 		1C60C2E0285724D0003BE25D /* DashboardWalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C212285724D0003BE25D /* DashboardWalletCell.swift */; };
-		1C60C2E1285724D0003BE25D /* DashboardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C213285724D0003BE25D /* DashboardHeaderView.swift */; };
 		1C60C2E2285724D0003BE25D /* DashboardInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C214285724D0003BE25D /* DashboardInteractor.swift */; };
 		1C60C2E3285724D0003BE25D /* AnimatedTextBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C215285724D0003BE25D /* AnimatedTextBarButton.swift */; };
 		1C60C2E4285724D0003BE25D /* DashboardPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C216285724D0003BE25D /* DashboardPresenter.swift */; };
@@ -538,35 +541,39 @@
 		1C54DC1E2862373C00E378F6 /* QRCodeScanInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanInteractor.swift; sourceTree = "<group>"; };
 		1C54DC2028680B7F00E378F6 /* DashboardView+ThemeOG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardView+ThemeOG.swift"; sourceTree = "<group>"; };
 		1C54DC232868178700E378F6 /* ThemeOGColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeOGColor.swift; sourceTree = "<group>"; };
-		1C54DC25286817A000E378F6 /* ThemeOGFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeOGFont.swift; sourceTree = "<group>"; };
 		1C54DC27286817BD00E378F6 /* ThemeOGAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeOGAttributes.swift; sourceTree = "<group>"; };
 		1C54DC292868193300E378F6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		1C54DC2C286819D100E378F6 /* ThemeHomeA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeHomeA.swift; sourceTree = "<group>"; };
 		1C54DC2E286819D900E378F6 /* ThemeHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeHome.swift; sourceTree = "<group>"; };
-		1C54DC3028681BAF00E378F6 /* ThemeHomeFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeHomeFont.swift; sourceTree = "<group>"; };
 		1C54DC3228681BB700E378F6 /* ThemeHomeColour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeHomeColour.swift; sourceTree = "<group>"; };
-		1C54DC342868204000E378F6 /* Colours.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colours.xcassets; sourceTree = "<group>"; };
+		1C54DC342868204000E378F6 /* Colours-ThemeA.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Colours-ThemeA.xcassets"; sourceTree = "<group>"; };
 		1C54DC362868227E00E378F6 /* ThemeHomeGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeHomeGradient.swift; sourceTree = "<group>"; };
 		1C54DC382868264500E378F6 /* ThemeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeProvider.swift; sourceTree = "<group>"; };
 		1C54DC3A2868265A00E378F6 /* ThemeProviderAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeProviderAssembler.swift; sourceTree = "<group>"; };
 		1C54DC3C2868282600E378F6 /* DashboardView+ThemeHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardView+ThemeHome.swift"; sourceTree = "<group>"; };
 		1C54DC3E28682BAF00E378F6 /* ThemeHomeNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeHomeNavBar.swift; sourceTree = "<group>"; };
 		1C54DC4028683AA600E378F6 /* ThemeHomeTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeHomeTabBar.swift; sourceTree = "<group>"; };
-		1C54DC4328683DD900E378F6 /* NaokoAA_Light_Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NaokoAA_Light_Italic.otf; sourceTree = "<group>"; };
+		1C54DC4328683DD900E378F6 /* NaokoAA-Light-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Light-Italic.otf"; sourceTree = "<group>"; };
 		1C54DC4428683DD900E378F6 /* NaokoAA-Extrabold-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Extrabold-Italic.otf"; sourceTree = "<group>"; };
 		1C54DC4528683DD900E378F6 /* NaokoAA-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Bold.otf"; sourceTree = "<group>"; };
 		1C54DC4628683DD900E378F6 /* NaokoAA-Bold-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Bold-Italic.otf"; sourceTree = "<group>"; };
-		1C54DC4728683DD900E378F6 /* NaokoAA_Regular_Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NaokoAA_Regular_Italic.otf; sourceTree = "<group>"; };
-		1C54DC4828683DD900E378F6 /* NaokoAA_Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NaokoAA_Regular.otf; sourceTree = "<group>"; };
-		1C54DC4928683DD900E378F6 /* NaokoAA_Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NaokoAA_Medium.otf; sourceTree = "<group>"; };
-		1C54DC4A28683DDA00E378F6 /* NaokoAA-Black-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Black-Italic.otf"; sourceTree = "<group>"; };
-		1C54DC4B28683DDA00E378F6 /* NaokoAA_Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NaokoAA_Light.otf; sourceTree = "<group>"; };
+		1C54DC4728683DD900E378F6 /* NaokoAA-Regular-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Regular-Italic.otf"; sourceTree = "<group>"; };
+		1C54DC4828683DD900E378F6 /* NaokoAA-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Regular.otf"; sourceTree = "<group>"; };
+		1C54DC4928683DD900E378F6 /* NaokoAA-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Medium.otf"; sourceTree = "<group>"; };
+		1C54DC4A28683DDA00E378F6 /* NaokoAA-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-BlackItalic.otf"; sourceTree = "<group>"; };
+		1C54DC4B28683DDA00E378F6 /* NaokoAA-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Light.otf"; sourceTree = "<group>"; };
 		1C54DC4C28683DDA00E378F6 /* NaokoAA-Extrabold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Extrabold.otf"; sourceTree = "<group>"; };
-		1C54DC4D28683DDA00E378F6 /* NaokoAA_Semilight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NaokoAA_Semilight.otf; sourceTree = "<group>"; };
-		1C54DC4E28683DDA00E378F6 /* NaokoAA_Semilight_Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NaokoAA_Semilight_Italic.otf; sourceTree = "<group>"; };
-		1C54DC4F28683DDA00E378F6 /* NaokoAA_Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NaokoAA_Black.otf; sourceTree = "<group>"; };
-		1C54DC5028683DDA00E378F6 /* NaokoAA_Medium_Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NaokoAA_Medium_Italic.otf; sourceTree = "<group>"; };
-		1C54DC5F286859D900E378F6 /* OG-Colours.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "OG-Colours.xcassets"; sourceTree = "<group>"; };
+		1C54DC4D28683DDA00E378F6 /* NaokoAA-Semilight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Semilight.otf"; sourceTree = "<group>"; };
+		1C54DC4E28683DDA00E378F6 /* NaokoAA-Semilight-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Semilight-Italic.otf"; sourceTree = "<group>"; };
+		1C54DC4F28683DDA00E378F6 /* NaokoAA-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Black.otf"; sourceTree = "<group>"; };
+		1C54DC5028683DDA00E378F6 /* NaokoAA-Medium-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Medium-Italic.otf"; sourceTree = "<group>"; };
+		1C54DC5F286859D900E378F6 /* Colours-OG.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Colours-OG.xcassets"; sourceTree = "<group>"; };
+		1C54DC652869A48A00E378F6 /* DashboardHeaderBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardHeaderBalanceView.swift; sourceTree = "<group>"; };
+		1C54DC672869BE6500E378F6 /* DashboardButtonsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardButtonsCell.swift; sourceTree = "<group>"; };
+		1C54DC692869D60D00E378F6 /* ThemeFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeFont.swift; sourceTree = "<group>"; };
+		1C54DC6B2869E48D00E378F6 /* ThemeOGFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeOGFont.swift; sourceTree = "<group>"; };
+		1C54DC6D2869EB4400E378F6 /* ThemeColour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColour.swift; sourceTree = "<group>"; };
+		1C54DC73286A1D4B00E378F6 /* Assets-ThemeA.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets-ThemeA.xcassets"; sourceTree = "<group>"; };
 		1C5B60372843FACD00ECBD79 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1AB28571BB6003BE25D /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
@@ -632,9 +639,8 @@
 		1C60C20C285724D0003BE25D /* MnemonicWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C60C20E285724D0003BE25D /* DashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		1C60C210285724D0003BE25D /* DashboardNFTCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardNFTCell.swift; sourceTree = "<group>"; };
-		1C60C211285724D0003BE25D /* DashboardSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardSectionHeaderView.swift; sourceTree = "<group>"; };
+		1C60C211285724D0003BE25D /* DashboardHeaderNameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardHeaderNameView.swift; sourceTree = "<group>"; };
 		1C60C212285724D0003BE25D /* DashboardWalletCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardWalletCell.swift; sourceTree = "<group>"; };
-		1C60C213285724D0003BE25D /* DashboardHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardHeaderView.swift; sourceTree = "<group>"; };
 		1C60C214285724D0003BE25D /* DashboardInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardInteractor.swift; sourceTree = "<group>"; };
 		1C60C215285724D0003BE25D /* AnimatedTextBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedTextBarButton.swift; sourceTree = "<group>"; };
 		1C60C216285724D0003BE25D /* DashboardPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardPresenter.swift; sourceTree = "<group>"; };
@@ -1139,8 +1145,8 @@
 			isa = PBXGroup;
 			children = (
 				D1BF2681280D7FC200DE9A0B /* ThemeOG.swift */,
+				1C54DC6B2869E48D00E378F6 /* ThemeOGFont.swift */,
 				1C54DC232868178700E378F6 /* ThemeOGColor.swift */,
-				1C54DC25286817A000E378F6 /* ThemeOGFont.swift */,
 				1C54DC27286817BD00E378F6 /* ThemeOGAttributes.swift */,
 			);
 			path = ThemeOG;
@@ -1153,7 +1159,6 @@
 				1C54DC3E28682BAF00E378F6 /* ThemeHomeNavBar.swift */,
 				1C54DC4028683AA600E378F6 /* ThemeHomeTabBar.swift */,
 				1C54DC362868227E00E378F6 /* ThemeHomeGradient.swift */,
-				1C54DC3028681BAF00E378F6 /* ThemeHomeFont.swift */,
 				1C54DC3228681BB700E378F6 /* ThemeHomeColour.swift */,
 				1C54DC2C286819D100E378F6 /* ThemeHomeA.swift */,
 			);
@@ -1163,16 +1168,16 @@
 		1C54DC4228683DA900E378F6 /* Naoko */ = {
 			isa = PBXGroup;
 			children = (
-				1C54DC4F28683DDA00E378F6 /* NaokoAA_Black.otf */,
-				1C54DC4328683DD900E378F6 /* NaokoAA_Light_Italic.otf */,
-				1C54DC4B28683DDA00E378F6 /* NaokoAA_Light.otf */,
-				1C54DC5028683DDA00E378F6 /* NaokoAA_Medium_Italic.otf */,
-				1C54DC4928683DD900E378F6 /* NaokoAA_Medium.otf */,
-				1C54DC4728683DD900E378F6 /* NaokoAA_Regular_Italic.otf */,
-				1C54DC4828683DD900E378F6 /* NaokoAA_Regular.otf */,
-				1C54DC4E28683DDA00E378F6 /* NaokoAA_Semilight_Italic.otf */,
-				1C54DC4D28683DDA00E378F6 /* NaokoAA_Semilight.otf */,
-				1C54DC4A28683DDA00E378F6 /* NaokoAA-Black-Italic.otf */,
+				1C54DC4F28683DDA00E378F6 /* NaokoAA-Black.otf */,
+				1C54DC4328683DD900E378F6 /* NaokoAA-Light-Italic.otf */,
+				1C54DC4B28683DDA00E378F6 /* NaokoAA-Light.otf */,
+				1C54DC5028683DDA00E378F6 /* NaokoAA-Medium-Italic.otf */,
+				1C54DC4928683DD900E378F6 /* NaokoAA-Medium.otf */,
+				1C54DC4728683DD900E378F6 /* NaokoAA-Regular-Italic.otf */,
+				1C54DC4828683DD900E378F6 /* NaokoAA-Regular.otf */,
+				1C54DC4E28683DDA00E378F6 /* NaokoAA-Semilight-Italic.otf */,
+				1C54DC4D28683DDA00E378F6 /* NaokoAA-Semilight.otf */,
+				1C54DC4A28683DDA00E378F6 /* NaokoAA-BlackItalic.otf */,
 				1C54DC4628683DD900E378F6 /* NaokoAA-Bold-Italic.otf */,
 				1C54DC4528683DD900E378F6 /* NaokoAA-Bold.otf */,
 				1C54DC4428683DD900E378F6 /* NaokoAA-Extrabold-Italic.otf */,
@@ -1366,9 +1371,10 @@
 		1C60C20F285724D0003BE25D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				1C60C213285724D0003BE25D /* DashboardHeaderView.swift */,
+				1C54DC672869BE6500E378F6 /* DashboardButtonsCell.swift */,
+				1C54DC652869A48A00E378F6 /* DashboardHeaderBalanceView.swift */,
+				1C60C211285724D0003BE25D /* DashboardHeaderNameView.swift */,
 				1C60C210285724D0003BE25D /* DashboardNFTCell.swift */,
-				1C60C211285724D0003BE25D /* DashboardSectionHeaderView.swift */,
 				1C60C212285724D0003BE25D /* DashboardWalletCell.swift */,
 			);
 			path = Cells;
@@ -1809,12 +1815,12 @@
 			children = (
 				1C54DC4228683DA900E378F6 /* Naoko */,
 				D11A98FF27B8615B00EDFDD0 /* NothingYouCouldDo-Regular.ttf */,
-				D11A98F427B8615B00EDFDD0 /* Gothic_A1 */,
+				D11A98F427B8615B00EDFDD0 /* GothicA1 */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		D11A98F427B8615B00EDFDD0 /* Gothic_A1 */ = {
+		D11A98F427B8615B00EDFDD0 /* GothicA1 */ = {
 			isa = PBXGroup;
 			children = (
 				D11A98F527B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf */,
@@ -1828,7 +1834,7 @@
 				D11A98FD27B8615B00EDFDD0 /* GothicA1-Black.ttf */,
 				D11A98FE27B8615B00EDFDD0 /* GothicA1-SemiBold.ttf */,
 			);
-			path = Gothic_A1;
+			path = GothicA1;
 			sourceTree = "<group>";
 		};
 		D11A990B27B99D1800EDFDD0 /* AnyCodable */ = {
@@ -1880,8 +1886,9 @@
 				D157F7CA27B69B6300578FF8 /* AppDelegate.swift */,
 				D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */,
 				D157F7D327B69B6400578FF8 /* Assets.xcassets */,
-				1C54DC342868204000E378F6 /* Colours.xcassets */,
-				1C54DC5F286859D900E378F6 /* OG-Colours.xcassets */,
+				1C54DC73286A1D4B00E378F6 /* Assets-ThemeA.xcassets */,
+				1C54DC342868204000E378F6 /* Colours-ThemeA.xcassets */,
+				1C54DC5F286859D900E378F6 /* Colours-OG.xcassets */,
 				D15B06C527B6D247008C3C62 /* Common */,
 				D11A98F327B8615B00EDFDD0 /* Fonts */,
 				D157F7D527B69B6400578FF8 /* LaunchScreen.storyboard */,
@@ -1972,6 +1979,8 @@
 				1C54DC292868193300E378F6 /* Theme.swift */,
 				1C54DC382868264500E378F6 /* ThemeProvider.swift */,
 				1C54DC3A2868265A00E378F6 /* ThemeProviderAssembler.swift */,
+				1C54DC692869D60D00E378F6 /* ThemeFont.swift */,
+				1C54DC6D2869EB4400E378F6 /* ThemeColour.swift */,
 				1C54DC2B2868199C00E378F6 /* ThemeHome */,
 				1C54DC222868168D00E378F6 /* ThemeOG */,
 			);
@@ -2111,29 +2120,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C54DC1D2862354C00E378F6 /* QRCodeScan.storyboard in Resources */,
-				1C54DC5C28683DDA00E378F6 /* NaokoAA_Semilight_Italic.otf in Resources */,
-				1C54DC352868204000E378F6 /* Colours.xcassets in Resources */,
+				1C54DC5C28683DDA00E378F6 /* NaokoAA-Semilight-Italic.otf in Resources */,
+				1C54DC352868204000E378F6 /* Colours-ThemeA.xcassets in Resources */,
 				1C60C2C8285724D0003BE25D /* Chat.storyboard in Resources */,
-				1C54DC5B28683DDA00E378F6 /* NaokoAA_Semilight.otf in Resources */,
-				1C54DC5128683DDA00E378F6 /* NaokoAA_Light_Italic.otf in Resources */,
+				1C54DC5B28683DDA00E378F6 /* NaokoAA-Semilight.otf in Resources */,
+				1C54DC5128683DDA00E378F6 /* NaokoAA-Light-Italic.otf in Resources */,
 				D11A990A27B8615B00EDFDD0 /* NothingYouCouldDo-Regular.ttf in Resources */,
 				1C54DC5328683DDA00E378F6 /* NaokoAA-Bold.otf in Resources */,
 				D11A990527B8615B00EDFDD0 /* GothicA1-ExtraBold.ttf in Resources */,
 				D11A990827B8615B00EDFDD0 /* GothicA1-Black.ttf in Resources */,
-				1C54DC60286859D900E378F6 /* OG-Colours.xcassets in Resources */,
-				1C54DC5828683DDA00E378F6 /* NaokoAA-Black-Italic.otf in Resources */,
-				1C54DC5E28683DDA00E378F6 /* NaokoAA_Medium_Italic.otf in Resources */,
+				1C54DC60286859D900E378F6 /* Colours-OG.xcassets in Resources */,
+				1C54DC5828683DDA00E378F6 /* NaokoAA-BlackItalic.otf in Resources */,
+				1C54DC5E28683DDA00E378F6 /* NaokoAA-Medium-Italic.otf in Resources */,
 				D11A990627B8615B00EDFDD0 /* OFL.txt in Resources */,
-				1C54DC5928683DDA00E378F6 /* NaokoAA_Light.otf in Resources */,
+				1C54DC5928683DDA00E378F6 /* NaokoAA-Light.otf in Resources */,
 				1C54DBEF285E835400E378F6 /* TokenAdd.storyboard in Resources */,
 				1C54DC5428683DDA00E378F6 /* NaokoAA-Bold-Italic.otf in Resources */,
 				D11A990427B8615B00EDFDD0 /* GothicA1-Bold.ttf in Resources */,
 				1C54DC0B2860E63600E378F6 /* NetworkPicker.storyboard in Resources */,
-				1C54DC5528683DDA00E378F6 /* NaokoAA_Regular_Italic.otf in Resources */,
+				1C54DC5528683DDA00E378F6 /* NaokoAA-Regular-Italic.otf in Resources */,
 				D157F7D727B69B6400578FF8 /* LaunchScreen.storyboard in Resources */,
 				D11B7E952800E82300F40488 /* WordLists in Resources */,
 				D11A990227B8615B00EDFDD0 /* GothicA1-Light.ttf in Resources */,
 				1C54DC5228683DDA00E378F6 /* NaokoAA-Extrabold-Italic.otf in Resources */,
+				1C54DC74286A1D4C00E378F6 /* Assets-ThemeA.xcassets in Resources */,
 				D11A990727B8615B00EDFDD0 /* GothicA1-Medium.ttf in Resources */,
 				1C54DC5A28683DDA00E378F6 /* NaokoAA-Extrabold.otf in Resources */,
 				1C54DBDE285DD15400E378F6 /* Account.storyboard in Resources */,
@@ -2141,7 +2151,7 @@
 				D14ECE3927B833E500228F90 /* Localizable.strings in Resources */,
 				D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */,
 				D1123920284B423D00D39A0C /* cult_manifesto.pdf in Resources */,
-				1C54DC5D28683DDA00E378F6 /* NaokoAA_Black.otf in Resources */,
+				1C54DC5D28683DDA00E378F6 /* NaokoAA-Black.otf in Resources */,
 				D157F7D427B69B6400578FF8 /* Assets.xcassets in Resources */,
 				D11A990327B8615B00EDFDD0 /* GothicA1-Thin.ttf in Resources */,
 				D11A990927B8615B00EDFDD0 /* GothicA1-SemiBold.ttf in Resources */,
@@ -2149,10 +2159,10 @@
 				1C60C3712857CEB5003BE25D /* TokenReceive.storyboard in Resources */,
 				1C60C322285724D1003BE25D /* Apps.storyboard in Resources */,
 				D11A990127B8615B00EDFDD0 /* GothicA1-Regular.ttf in Resources */,
-				1C54DC5628683DDA00E378F6 /* NaokoAA_Regular.otf in Resources */,
+				1C54DC5628683DDA00E378F6 /* NaokoAA-Regular.otf in Resources */,
 				1C54DBDC285DD10000E378F6 /* Dashboard.storyboard in Resources */,
 				1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */,
-				1C54DC5728683DDA00E378F6 /* NaokoAA_Medium.otf in Resources */,
+				1C54DC5728683DDA00E378F6 /* NaokoAA-Medium.otf in Resources */,
 				1C60C327285724D1003BE25D /* MnemonicConfirmation.storyboard in Resources */,
 				1A4C33A130E35EBC0BC27B07 /* mock-candles.json in Resources */,
 			);
@@ -2327,6 +2337,7 @@
 				1C60C2BC285724D0003BE25D /* ButtonsSheetView.swift in Sources */,
 				1C60C2FB285724D0003BE25D /* NFTDetailWireframeFactoryAssembler.swift in Sources */,
 				1C54DBF5285F32DC00E378F6 /* TokenAddInputView.swift in Sources */,
+				1C54DC682869BE6500E378F6 /* DashboardButtonsCell.swift in Sources */,
 				1C60C3632857C5E5003BE25D /* TokenReceivePresenter.swift in Sources */,
 				1C60C313285724D1003BE25D /* AccountSectionHeader.swift in Sources */,
 				1CB3A1EF2840D6B70092D667 /* UIStackView+Extensions.swift in Sources */,
@@ -2449,22 +2460,22 @@
 				1A4C3C28443621328248F5A7 /* CandlesViewViewModel.swift in Sources */,
 				1C60C2AD285724D0003BE25D /* TokenPickerWireframe.swift in Sources */,
 				1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */,
+				1C54DC6A2869D60D00E378F6 /* ThemeFont.swift in Sources */,
 				1C54DC3D2868282600E378F6 /* DashboardView+ThemeHome.swift in Sources */,
 				1C60C2C9285724D0003BE25D /* ChatWireframeFactoryAssembler.swift in Sources */,
 				1C60C2ED285724D0003BE25D /* NetworksInteractor.swift in Sources */,
 				1C64873C2832E7640091A12D /* DefaultStore.swift in Sources */,
-				1C54DC3128681BAF00E378F6 /* ThemeHomeFont.swift in Sources */,
 				1C60C336285724D1003BE25D /* NFTsCollectionPresenter.swift in Sources */,
 				1C60C339285724D1003BE25D /* SwapInputView.swift in Sources */,
 				1C60C2CD285724D0003BE25D /* AlertWireframeFactory.swift in Sources */,
 				1C60C2F1285724D0003BE25D /* NetworksPresenter.swift in Sources */,
 				1C60C2A4285724D0003BE25D /* SettingsCell.swift in Sources */,
-				1C60C2DF285724D0003BE25D /* DashboardSectionHeaderView.swift in Sources */,
+				1C60C2DF285724D0003BE25D /* DashboardHeaderNameView.swift in Sources */,
 				1C54DC112862350B00E378F6 /* QRCodeScanPresenter.swift in Sources */,
 				1C60C335285724D1003BE25D /* NFTsCollectionView+Shared.swift in Sources */,
 				1C60C2C0285724D0003BE25D /* KeyStoreCell.swift in Sources */,
-				1C54DC26286817A000E378F6 /* ThemeOGFont.swift in Sources */,
 				1C54DBE9285E833200E378F6 /* TokenAddViewModel.swift in Sources */,
+				1C54DC662869A48A00E378F6 /* DashboardHeaderBalanceView.swift in Sources */,
 				1C60C2A7285724D0003BE25D /* SettingsInteractor.swift in Sources */,
 				1A4C3AD382E8BADCBE160CBC /* DApp.swift in Sources */,
 				1C60C2C2285724D0003BE25D /* ChatWireframe.swift in Sources */,
@@ -2499,6 +2510,7 @@
 				1C60C31D285724D1003BE25D /* AppsCollectionViewCell.swift in Sources */,
 				1C60C305285724D1003BE25D /* NFTsDashboardWireframeFactoryAssembler.swift in Sources */,
 				1C54DC3F28682BAF00E378F6 /* ThemeHomeNavBar.swift in Sources */,
+				1C54DC6E2869EB4500E378F6 /* ThemeColour.swift in Sources */,
 				1C60C384285A649B003BE25D /* Web3ServiceLocalStorage.swift in Sources */,
 				1C54DC2D286819D100E378F6 /* ThemeHomeA.swift in Sources */,
 				1C60C2D8285724D0003BE25D /* MnemonicInteractor.swift in Sources */,
@@ -2534,6 +2546,7 @@
 				1A4C36EEA61FB60EE15ED6DD /* OnboardingService.swift in Sources */,
 				1C60C306285724D1003BE25D /* NFTsDashboardPresenter.swift in Sources */,
 				D1BC5303284B5B89007E6FF4 /* CultService.swift in Sources */,
+				1C54DC6C2869E48D00E378F6 /* ThemeOGFont.swift in Sources */,
 				1C60C2CB285724D0003BE25D /* ChatWireframeFactory.swift in Sources */,
 				1C60C2D1285724D0003BE25D /* AlertContext.swift in Sources */,
 				1C54DC012860E5BC00E378F6 /* NetworkPickerView.swift in Sources */,
@@ -2550,7 +2563,6 @@
 				1C60C32B285724D1003BE25D /* MnemonicConfirmationWireframe.swift in Sources */,
 				1C60C2D0285724D0003BE25D /* AlertPresenter.swift in Sources */,
 				1C60C2BA285724D0003BE25D /* KeyStoreViewModel.swift in Sources */,
-				1C60C2E1285724D0003BE25D /* DashboardHeaderView.swift in Sources */,
 				1C60C33C285724D1003BE25D /* SwapViewModel.swift in Sources */,
 				1C64873E2832E76B0091A12D /* StoreAssembler.swift in Sources */,
 				1C60C2B8285724D0003BE25D /* KeyStoreWireframeFactory.swift in Sources */,
