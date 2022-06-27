@@ -10,19 +10,22 @@ protocol DashboardView: AnyObject {
 }
 
 final class DashboardViewController: BaseViewController {
-
+    
     var presenter: DashboardPresenter!
     var themeProvider: ThemeProvider!
 
     private (set) var viewModel: DashboardViewModel?
     private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
-    private var walletCellSize: CGSize = .zero
-    private var nftsCellSize: CGSize = .zero
     private var previousYOffset: CGFloat = 0
     private (set) var lastVelocity: CGFloat = 0
+    
+    private var backgroundSunsetBottomConstraint: NSLayoutConstraint?
+    private var backgroundGradientTopConstraint: NSLayoutConstraint?
+    private var backgroundGradientViewOffset: CGFloat = 0
+    private var backgroundGradientHeightConstraint: NSLayoutConstraint?
 
     @IBOutlet weak var collectionView: UICollectionView!
-
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -44,7 +47,9 @@ final class DashboardViewController: BaseViewController {
             presenter.handle(.didTapEditTokens)
             
         case .themeHome:
-            presenter.handle(.didScanQRCode)
+//            themeProvider.flipTheme()
+            presenter.handle(.didTapEditTokens)
+            //presenter.handle(.didScanQRCode)
         }
     }
     
@@ -52,18 +57,14 @@ final class DashboardViewController: BaseViewController {
         
         super.viewWillLayoutSubviews()
         
-        let length = (view.bounds.width - Global.padding * 2 - Constant.spacing) / 2
-            
-        walletCellSize = CGSize(width: length, height: length)
-        nftsCellSize = CGSize(
-            width: view.bounds.width - Global.padding * 2,
-            height: length
-        )
+        backgroundGradientTopConstraint?.constant = -(collectionView.contentOffset.y + backgroundGradientViewOffset)
+        backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
+        backgroundSunsetBottomConstraint?.constant = -(collectionView.contentOffset.y * 0.1 + sunsetBottomConstraintOffset)
     }
 }
 
 extension DashboardViewController: DashboardView {
-
+    
     func update(with viewModel: DashboardViewModel) {
         
         self.viewModel = viewModel
@@ -86,6 +87,8 @@ extension DashboardViewController: UIScrollViewDelegate {
         
         lastVelocity = scrollView.contentOffset.y - previousYOffset
         previousYOffset = scrollView.contentOffset.y
+        
+        backgroundGradientTopConstraint?.constant = -(scrollView.contentOffset.y + backgroundGradientViewOffset)
     }
 }
 
@@ -135,12 +138,18 @@ private extension DashboardViewController {
                 
         transitioningDelegate = self
 
-        edgeCardsController?.delegate = self
+        backgroundGradientViewOffset = view.frame.size.height
         
+        edgeCardsController?.delegate = self
+                
         collectionView.register(
             DashboardSectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: "\(DashboardSectionHeaderView.self)"
+        )
+        collectionView.setCollectionViewLayout(
+            makeCompositionalLayout(),
+            animated: false
         )
         
         var insets = collectionView.contentInset
@@ -158,6 +167,8 @@ private extension DashboardViewController {
             
         case .themeHome:
             configureThemeHome()
+            // Add custom background view
+            addCustomBackgroundGradientView()
         }
         
         navigationController?.tabBarItem = UITabBarItem(
@@ -165,6 +176,184 @@ private extension DashboardViewController {
             image: UIImage(named: "tab_icon_dashboard"),
             tag: 0
         )
+    }
+    
+    func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
+        
+        UICollectionViewCompositionalLayout { [weak self] sectionIndex, environment in
+            
+            guard let self = self else { return nil }
+            
+            guard let viewModel = self.viewModel else { return nil }
+            
+            if sectionIndex == viewModel.sections.count - 1 {
+                
+                return self.makeNFTsCollectionLayoutSection()
+            } else {
+                
+                return self.makeWalletsCollectionLayoutSection()
+            }
+        }
+    }
+    
+    func makeWalletsCollectionLayoutSection() -> NSCollectionLayoutSection {
+        
+        let inset: CGFloat = 8
+        
+        // Item
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
+        
+        // Group
+        let screenWidth: CGFloat = (view.bounds.width - 16)
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .absolute(screenWidth),
+            heightDimension: .absolute(screenWidth * 0.5)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        // Section
+        let sectionInset: CGFloat = 8
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(
+            top: sectionInset,
+            leading: sectionInset,
+            bottom: sectionInset * 3,
+            trailing: sectionInset
+        )
+        
+        let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100))
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerItemSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.boundarySupplementaryItems = [headerItem]
+        
+        return section
+    }
+    
+    func makeNFTsCollectionLayoutSection() -> NSCollectionLayoutSection {
+        
+        let inset: CGFloat = 8
+        
+        // Item
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(0.5),
+            heightDimension: .fractionalWidth(0.5)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
+        
+        // Group
+        let screenWidth: CGFloat = (view.bounds.width - 16)
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .absolute(screenWidth),
+            heightDimension: .absolute(screenWidth * 0.5)
+        )
+        let outerGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize, subitems: [item]
+        )
+        
+        // Section
+        let sectionInset: CGFloat = 8
+        let section = NSCollectionLayoutSection(group: outerGroup)
+        section.contentInsets = .init(
+            top: sectionInset,
+            leading: sectionInset,
+            bottom: sectionInset,// + collectionView.frame.size.width * 0.475,
+            trailing: sectionInset
+        )
+        
+        let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100))
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerItemSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.boundarySupplementaryItems = [headerItem]
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+                
+        return section
+    }
+    
+    func addCustomBackgroundGradientView() {
+        
+        // 1 - Add gradient
+        let backgroundGradient = GradientView()
+        backgroundGradient.isDashboard = true
+        view.insertSubview(backgroundGradient, at: 0)
+        
+        backgroundGradient.translatesAutoresizingMaskIntoConstraints = false
+        
+        let topConstraint = backgroundGradient.topAnchor.constraint(
+            equalTo: view.topAnchor
+        )
+        self.backgroundGradientTopConstraint = topConstraint
+        topConstraint.isActive = true
+
+        backgroundGradient.leadingAnchor.constraint(
+            equalTo: view.leadingAnchor
+        ).isActive = true
+
+        backgroundGradient.trailingAnchor.constraint(
+            equalTo: view.trailingAnchor
+        ).isActive = true
+
+        let heightConstraint = backgroundGradient.heightAnchor.constraint(
+            equalToConstant: backgroundGradientHeight
+        )
+        self.backgroundGradientHeightConstraint = heightConstraint
+        heightConstraint.isActive = true
+        
+        // 2 - Add sunset image
+        let sunsetBackground = UIImageView(
+            image: UIImage(named: "sun_and_palms")
+        )
+        view.insertSubview(sunsetBackground, at: 1)
+        
+        sunsetBackground.translatesAutoresizingMaskIntoConstraints = false
+        
+        let bottomConstraint = sunsetBackground.bottomAnchor.constraint(
+            equalTo: backgroundGradient.bottomAnchor,
+            constant: sunsetBottomConstraintOffset
+        )
+        self.backgroundSunsetBottomConstraint = bottomConstraint
+        bottomConstraint.isActive = true
+
+        sunsetBackground.leadingAnchor.constraint(
+            equalTo: view.leadingAnchor,
+            constant: 16
+        ).isActive = true
+
+        view.trailingAnchor.constraint(
+            equalTo: sunsetBackground.trailingAnchor,
+            constant: 16
+        ).isActive = true
+        
+        sunsetBackground.heightAnchor.constraint(
+            equalTo: sunsetBackground.widthAnchor,
+            multiplier: 0.7
+        ).isActive = true
+    }
+    
+    var backgroundGradientHeight: CGFloat {
+        
+        let offset = backgroundGradientViewOffset * 2
+        
+        if collectionView.frame.size.height > collectionView.contentSize.height {
+            
+            return collectionView.frame.size.height + offset
+        } else {
+            
+            return collectionView.contentSize.height + offset
+        }
+    }
+    
+    var sunsetBottomConstraintOffset: CGFloat {
+        
+        backgroundGradientViewOffset * 0.90
     }
 }
 
@@ -181,35 +370,40 @@ extension DashboardViewController: EdgeCardsControllerDelegate {
 extension DashboardViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return viewModel?.sections.count ?? 0
+        
+        viewModel?.sections.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        guard let section = viewModel?.sections[section] else {
-            return 0
-        }
-        return section.wallets.count + (section.nfts.count > 0 ? 1 : 0)
+        guard let section = viewModel?.sections[section] else { return 0 }
+        
+        return section.items.count
     }
     
-
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        
+
         guard let section = viewModel?.sections[indexPath.section] else {
+            
             fatalError("No viewModel for \(indexPath) \(collectionView)")
         }
-
-        if indexPath.item >= section.wallets.count {
-            let cell = collectionView.dequeue(DashboardNFTsCell.self, for: indexPath)
-            cell.update(with: section.nfts)
+        
+        if let wallet = section.items.wallet(at: indexPath.row) {
+            
+            let cell = collectionView.dequeue(DashboardWalletCell.self, for: indexPath)
+            cell.update(with: wallet)
+            return cell
+        } else if let nft = section.items.nft(at: indexPath.row) {
+            
+            let cell = collectionView.dequeue(DashboardNFTCell.self, for: indexPath)
+            cell.update(with: nft)
             return cell
         } else {
-            let cell = collectionView.dequeue(DashboardWalletCell.self, for: indexPath)
-            cell.update(with: section.wallets[indexPath.item])
-            return cell
+            
+            fatalError("No viewModel for \(indexPath) \(collectionView)")
         }
     }
 
@@ -248,41 +442,20 @@ extension DashboardViewController: UICollectionViewDataSource {
     }
 }
 
-extension DashboardViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
-        
-        if indexPath.item >= viewModel?.sections[indexPath.section].wallets.count ?? 0 {
-            return nftsCellSize
-        }
-
-        return walletCellSize
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForHeaderInSection section: Int
-    ) -> CGSize {
-        
-        .init(
-            width: view.bounds.width - Global.padding * 2,
-            height: section == 0 ? Constant.headerHeight : Constant.sectionHeaderHeight
-        )
-    }
-}
-
 extension DashboardViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         guard let section = viewModel?.sections[indexPath.section] else { return }
-        let symbol = section.wallets[indexPath.item].ticker
-        presenter.handle(.didSelectWallet(network: section.name, symbol: symbol))
+        
+        switch section.items {
+        case let .wallets(wallets):
+            let wallet = wallets[indexPath.item]
+            presenter.handle(.didSelectWallet(network: section.name, symbol: wallet.ticker))
+        case let .nfts(nfts):
+            let nft = nfts[indexPath.item]
+            nft.onSelected()
+        }
     }
 
     func collectionView(
@@ -308,13 +481,18 @@ extension DashboardViewController: UICollectionViewDelegate {
     }
 }
 
-
-extension DashboardViewController {
-
-    enum Constant {
+final class BackgroundSupplementaryView: UICollectionReusableView {
+    
+    override init(frame: CGRect) {
         
-        static let headerHeight: CGFloat = 211
-        static let sectionHeaderHeight: CGFloat = 59
-        static let spacing: CGFloat = 17
+        super.init(frame: frame)
+        
+        layer.cornerRadius = 8
+        
+        backgroundColor = UIColor(white: 0.85, alpha: 1)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

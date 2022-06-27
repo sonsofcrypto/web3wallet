@@ -31,7 +31,9 @@ extension ThemeHomeA: ThemeHome {
         
         .init(
             topColour: .init(rgb: 0xE73795),
-            bottomColour: .init(rgb: 0x181849)
+            
+            bottomColour: .init(rgb: 0x351E54)
+            //bottomColour: .init(rgb: 0x181849)
         )
     }
     

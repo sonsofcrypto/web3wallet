@@ -179,7 +179,7 @@
 		1C60C2DB285724D0003BE25D /* MnemonicContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C20B285724D0003BE25D /* MnemonicContext.swift */; };
 		1C60C2DC285724D0003BE25D /* MnemonicWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C20C285724D0003BE25D /* MnemonicWireframeFactoryAssembler.swift */; };
 		1C60C2DD285724D0003BE25D /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C20E285724D0003BE25D /* DashboardView.swift */; };
-		1C60C2DE285724D0003BE25D /* DashboardNFTsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C210285724D0003BE25D /* DashboardNFTsCell.swift */; };
+		1C60C2DE285724D0003BE25D /* DashboardNFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C210285724D0003BE25D /* DashboardNFTCell.swift */; };
 		1C60C2DF285724D0003BE25D /* DashboardSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C211285724D0003BE25D /* DashboardSectionHeaderView.swift */; };
 		1C60C2E0285724D0003BE25D /* DashboardWalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C212285724D0003BE25D /* DashboardWalletCell.swift */; };
 		1C60C2E1285724D0003BE25D /* DashboardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C213285724D0003BE25D /* DashboardHeaderView.swift */; };
@@ -631,7 +631,7 @@
 		1C60C20B285724D0003BE25D /* MnemonicContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicContext.swift; sourceTree = "<group>"; };
 		1C60C20C285724D0003BE25D /* MnemonicWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C60C20E285724D0003BE25D /* DashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
-		1C60C210285724D0003BE25D /* DashboardNFTsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardNFTsCell.swift; sourceTree = "<group>"; };
+		1C60C210285724D0003BE25D /* DashboardNFTCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardNFTCell.swift; sourceTree = "<group>"; };
 		1C60C211285724D0003BE25D /* DashboardSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardSectionHeaderView.swift; sourceTree = "<group>"; };
 		1C60C212285724D0003BE25D /* DashboardWalletCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardWalletCell.swift; sourceTree = "<group>"; };
 		1C60C213285724D0003BE25D /* DashboardHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardHeaderView.swift; sourceTree = "<group>"; };
@@ -1367,7 +1367,7 @@
 			isa = PBXGroup;
 			children = (
 				1C60C213285724D0003BE25D /* DashboardHeaderView.swift */,
-				1C60C210285724D0003BE25D /* DashboardNFTsCell.swift */,
+				1C60C210285724D0003BE25D /* DashboardNFTCell.swift */,
 				1C60C211285724D0003BE25D /* DashboardSectionHeaderView.swift */,
 				1C60C212285724D0003BE25D /* DashboardWalletCell.swift */,
 			);
@@ -2385,7 +2385,7 @@
 				1C60C2AA285724D0003BE25D /* SettingsWireframeFactory.swift in Sources */,
 				D1A564C42843E2BE00D4B7D8 /* IosCryptoPrimitivesProvider.swift in Sources */,
 				1C60C2FC285724D0003BE25D /* NFTDetailView+Content+Image.swift in Sources */,
-				1C60C2DE285724D0003BE25D /* DashboardNFTsCell.swift in Sources */,
+				1C60C2DE285724D0003BE25D /* DashboardNFTCell.swift in Sources */,
 				1C6487232832E4BA0091A12D /* DefaultDegenService.swift in Sources */,
 				1C60C2F9285724D0003BE25D /* NFTDetailPresenter.swift in Sources */,
 				1CB3A1EE2840D6B70092D667 /* Formatter+Extensions.swift in Sources */,

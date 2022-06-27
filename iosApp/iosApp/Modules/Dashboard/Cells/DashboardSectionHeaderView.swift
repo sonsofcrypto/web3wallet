@@ -7,6 +7,7 @@ import UIKit
 final class DashboardSectionHeaderView: UICollectionReusableView {
 
     private lazy var label: UILabel = {
+        
         let label = UILabel(with: .callout)
         self.addSubview(label)
         label.addConstraints(
@@ -24,6 +25,7 @@ final class DashboardSectionHeaderView: UICollectionReusableView {
 extension DashboardSectionHeaderView {
 
     func update(with viewModel: DashboardViewModel.Section?) {
+        
         label.text = viewModel?.name
     }
 }

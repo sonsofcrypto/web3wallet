@@ -59,13 +59,13 @@
                                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="gL5-Xi-B5l">
                                                                             <rect key="frame" x="4" y="19.5" width="86" height="20.5"/>
                                                                             <subviews>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KIk-TP-Ljg">
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KIk-TP-Ljg">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="41.5" height="20.5"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxK-oA-qeH">
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxK-oA-qeH">
                                                                                     <rect key="frame" x="44.5" y="0.0" width="41.5" height="20.5"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                     <nil key="textColor"/>
@@ -109,28 +109,27 @@
                                             <outlet property="topContentStack" destination="ZBz-cd-RC6" id="wwS-FF-T9Q"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DashboardNFTsCell" id="0I7-Tw-S7A" customClass="DashboardNFTsCell" customModule="iosApp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DashboardNFTCell" id="0I7-Tw-S7A" userLabel="DashboardNFTCell" customClass="DashboardNFTCell" customModule="iosApp" customModuleProvider="target">
                                         <rect key="frame" x="35.5" y="338" width="343" height="162"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="o9u-b1-GI9">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="162"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sib-AX-RRK" customClass="iCarousel">
-                                                    <rect key="frame" x="16" y="8" width="311" height="146"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </view>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4MR-RL-mh2">
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="162"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="Sib-AX-RRK" secondAttribute="bottom" constant="8" id="0uS-NM-Id7"/>
-                                                <constraint firstAttribute="trailing" secondItem="Sib-AX-RRK" secondAttribute="trailing" constant="16" id="AZm-Az-FXR"/>
-                                                <constraint firstItem="Sib-AX-RRK" firstAttribute="top" secondItem="o9u-b1-GI9" secondAttribute="top" constant="8" id="c13-hy-Aly"/>
-                                                <constraint firstItem="Sib-AX-RRK" firstAttribute="leading" secondItem="o9u-b1-GI9" secondAttribute="leading" constant="16" id="fAi-oL-D6O"/>
+                                                <constraint firstItem="4MR-RL-mh2" firstAttribute="top" secondItem="o9u-b1-GI9" secondAttribute="top" id="MCA-5E-vvW"/>
+                                                <constraint firstAttribute="trailing" secondItem="4MR-RL-mh2" secondAttribute="trailing" id="MRv-R1-JQp"/>
+                                                <constraint firstAttribute="bottom" secondItem="4MR-RL-mh2" secondAttribute="bottom" id="cQN-xV-nTr"/>
+                                                <constraint firstItem="4MR-RL-mh2" firstAttribute="leading" secondItem="o9u-b1-GI9" secondAttribute="leading" id="vvp-68-LKF"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="343" height="162"/>
                                         <connections>
-                                            <outlet property="carousel" destination="Sib-AX-RRK" id="zVv-eB-if9"/>
+                                            <outlet property="imageView" destination="4MR-RL-mh2" id="PGM-yO-dQ9"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

@@ -38,9 +38,12 @@ final class TokenReceiveViewController: BaseViewController {
         
         super.viewDidLoad()
         
-        configureUI()
-        
         presenter?.present()
+    }
+    
+    @objc override func navBarLeftActionTapped() {
+        
+        presenter.handle(.dismiss)
     }
 }
 
@@ -66,7 +69,7 @@ extension TokenReceiveViewController: TokenReceiveView {
     }
 }
 
-extension TokenReceiveViewController {
+private extension TokenReceiveViewController {
     
     func configureNavigationBar() {
         
@@ -115,19 +118,6 @@ extension TokenReceiveViewController {
             and: UIImage(named: "plus_icon"),
             onTap: makeAddAction()
         )
-    }
-    
-    func configureUI() {
-        
-        (view as? GradientView)?.colors = [
-            ThemeOG.color.background,
-            ThemeOG.color.backgroundDark
-        ]
-    }
-
-    @objc override func navBarLeftActionTapped() {
-        
-        presenter.handle(.dismiss)
     }
 }
 

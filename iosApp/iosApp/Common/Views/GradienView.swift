@@ -53,6 +53,14 @@ final class GradientView: UIView {
         }
     }
     
+    var isDashboard: Bool = false {
+        
+        didSet {
+            
+            configureUI()
+        }
+    }
+    
     /// Defines direction of gradient in `CAGradientLayer`
     var direction: Direction = .horizontal {
         didSet {
@@ -60,6 +68,13 @@ final class GradientView: UIView {
             case .vertical:
                 (layer as? CAGradientLayer)?.startPoint = CGPoint(x: 0, y: 0)
                 (layer as? CAGradientLayer)?.endPoint = CGPoint(x: 0, y: 1)
+                if isDashboard {
+                    
+                    (layer as? CAGradientLayer)?.locations = [0.25, 0.5, 0.75, 1]
+                } else {
+                
+                    (layer as? CAGradientLayer)?.locations = [0, 1]
+                }
             case .horizontal:
                 (layer as? CAGradientLayer)?.startPoint = CGPoint(x: 0, y: 0.5)
                 (layer as? CAGradientLayer)?.endPoint = CGPoint(x: 1, y: 0.5)
@@ -107,10 +122,20 @@ private extension GradientView {
                 ThemeOG.color.backgroundDark
             ]
         case let .themeHome(themeHome):
-            colors = [
-                themeHome.gradient().topColour,
-                themeHome.gradient().bottomColour
-            ]
+            
+            if isDashboard {
+                colors = [
+                    themeHome.gradient().topColour,
+                    themeHome.gradient().topColour,
+                    themeHome.gradient().bottomColour,
+                    themeHome.gradient().bottomColour
+                ]
+            } else {
+                colors = [
+                    themeHome.gradient().topColour,
+                    themeHome.gradient().bottomColour
+                ]
+            }
         }
     }
 }

@@ -31,6 +31,7 @@
 "dashboard.button.receive" = "Receive";
 "dashboard.button.send" = "Send";
 "dashboard.button.trade" = "Trade";
+"dashboard.section.nfts" = "NFestival";
 
 "degen.dappCategory.title.amm" = "Automated market makers";
 "degen.dappCategory.title.stakeYield" = "Staking and Yield farms";

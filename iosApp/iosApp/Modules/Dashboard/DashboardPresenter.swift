@@ -112,6 +112,7 @@ private extension DefaultDashboardPresenter {
         let networksAndTokensDict = myTokens.networksAndTokensDict
         
         var sections = [DashboardViewModel.Section]()
+        var nfts = [DashboardViewModel.NFT]()
         
         Array(networksAndTokensDict.keys).sorted(by: {
             $0.name < $1.name
@@ -122,8 +123,22 @@ private extension DefaultDashboardPresenter {
             sections.append(
                 .init(
                     name: network.name,
-                    wallets: makeDashboardViewModelWallets(from: tokens),
-                    nfts: makeDashboardViewModelNFts(from: interactor.nfts(for: network))
+                    items: .wallets(
+                        makeDashboardViewModelWallets(from: tokens)
+                    )
+                )
+            )
+            
+            nfts.append(
+                contentsOf: makeDashboardViewModelNFts(from: interactor.nfts(for: network))
+            )
+        }
+        
+        if !nfts.isEmpty {
+            sections.append(
+                .init(
+                    name: Localized("dashboard.section.nfts").uppercased(),
+                    items: .nfts(nfts)
                 )
             )
         }

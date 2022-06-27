@@ -31,8 +31,37 @@ extension DashboardViewModel {
 
     struct Section {
         let name: String
-        let wallets: [DashboardViewModel.Wallet]
-        let nfts: [DashboardViewModel.NFT]
+        let items: Items
+        
+        enum Items {
+            
+            case wallets([DashboardViewModel.Wallet])
+            case nfts([DashboardViewModel.NFT])
+            
+            var count: Int {
+                
+                switch self {
+                case let .wallets(wallets):
+                    return wallets.count
+                case let .nfts(nfts):
+                    return nfts.count
+                }
+            }
+            
+            func wallet(at index: Int) -> DashboardViewModel.Wallet? {
+                
+                guard case let Items.wallets(wallets) = self else { return nil }
+                
+                return wallets[index]
+            }
+
+            func nft(at index: Int) -> DashboardViewModel.NFT? {
+                
+                guard case let Items.nfts(nfts) = self else { return nil }
+                
+                return nfts[index]
+            }
+        }
     }
 }
 
