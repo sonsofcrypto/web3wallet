@@ -5,7 +5,7 @@ import com.sonsofcrypto.web3lib_crypto.*
 import com.sonsofcrypto.web3lib_extensions.*
 import java.lang.Exception
 
-class TmpTest {
+class Bip39Test {
 
     val expectedSeed = """
             2e73becc0eeff6f84871ae5591ec1de98c2f25ba2ba0d638cf0c14267acc7c32

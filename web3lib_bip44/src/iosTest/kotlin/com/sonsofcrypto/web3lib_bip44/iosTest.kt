@@ -1,4 +1,4 @@
-package com.sonsofcrypto.explore
+package com.sonsofcrypto.web3lib_bip44
 
 import kotlin.test.Test
 import kotlin.test.assertTrue

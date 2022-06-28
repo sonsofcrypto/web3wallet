@@ -3,55 +3,8 @@ package coreCrypto
 import (
 	"crypto/aes"
 	"crypto/cipher"
-	"crypto/rand"
-	"crypto/sha256"
-	"crypto/sha512"
 	"errors"
-	"golang.org/x/crypto/pbkdf2"
-	"hash"
-	"log"
 )
-
-// HashFn is `int` not type due to `go bind` support (it does not support enums)
-const (
-	HashFnSha256 = iota
-	HashFnSha512 = iota
-)
-
-// HashFunc hash functions, use constants above
-func HashFunc(h int) func() hash.Hash {
-	switch h {
-	case HashFnSha256:
-		return sha256.New
-	case HashFnSha512:
-		return sha512.New
-	}
-	log.Fatalln("Hashing func of ", h, "type is not supported")
-	return nil
-}
-
-// Hash pass one of the hash constants from top of the file. (`HashFnSha256`,
-// `HashFnSha512`, ...) Enum not used due to `go bind` (does not support enums)
-func Hash(data []byte, hashFn int) []byte {
-	h := HashFunc(hashFn)()
-	h.Write(data)
-	return h.Sum(nil)
-}
-
-//SecureRand cryptographically secure random bytes of size or error
-func SecureRand(size int) ([]byte, error) {
-	entropy := make([]byte, size)
-	if _, err := rand.Read(entropy); err != nil {
-		return nil, err
-	}
-	return entropy, nil
-}
-
-// Pbkdf2 pass one of the hash constants from top of the file. (`HashFnSha256`,
-// `HashFnSha512`, ...) Enum not used due to `go bind` (does not support enums)
-func Pbkdf2(password, salt []byte, iter, keyLen, hashFn int) []byte {
-	return pbkdf2.Key(password, salt, iter, keyLen, HashFunc(hashFn))
-}
 
 var (
 	ErrDecrypt = errors.New("could not decrypt key with given password")
