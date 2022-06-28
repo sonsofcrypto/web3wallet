@@ -22,16 +22,16 @@ final class ThemeProvider {
     var current: Theme = .themeHome(ThemeHomeA())
 //    var current: Theme = .themeOG(ThemeOG())
     
-//    func flipTheme() {
-//
-//        if case Theme.themeHome = current {
-//            self.current = .themeOG(ThemeOG())
-//        } else {
-//            self.current = .themeHome(ThemeHomeA())
-//        }
-//
-//        (UIApplication.shared.delegate as? AppDelegate)?.rebootUI()
-//    }
+    func flipTheme() {
+
+        if case Theme.themeHome = current {
+            self.current = .themeOG(ThemeOG())
+        } else {
+            self.current = .themeHome(ThemeHomeA())
+        }
+
+        (UIApplication.shared.delegate as? AppDelegate)?.rebootUI()
+    }
 }
 
 extension ThemeProvider {
