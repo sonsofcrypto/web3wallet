@@ -18,33 +18,17 @@ final class DashboardWalletCell: UICollectionViewCell, ThemeProviding {
     override func awakeFromNib() {
         
         super.awakeFromNib()
-        
-        //layer.cornerRadius = G"lobal.cornerRadius * 2
-        
-        let image = UIImage(named: "themeA-dashboard-screen")!
-        let screenView = UIImageView(
-            image: image.resizableImage(
-                withCapInsets: .init(
-                    top: image.size.height * 0.5,
-                    left: image.size.width * 0.5,
-                    bottom: image.size.height * 0.5,
-                    right: image.size.width * 0.5
-                ),
-                resizingMode: .stretch
-            )
-        )
-        insertSubview(screenView, at: 0)
-        screenView.addConstraints(
-            [
-                .layout(anchor: .topAnchor),
-                .layout(anchor: .bottomAnchor),
-                .layout(anchor: .leadingAnchor),
-                .layout(anchor: .trailingAnchor)
-            ]
-        )
                 
+        switch theme {
+            
+        case .themeOG:
+            layer.cornerRadius = theme.cornerRadius * 2
+        case .themeHome:
+            addThemeAScreen()
+        }
+        
         imageView.layer.cornerRadius = imageView.frame.size.width * 0.5
-        imageView.backgroundColor = ThemeOG.color.text
+        imageView.backgroundColor = theme.colour(for: .text)
         
         contentStack.setCustomSpacing(13, after: topContentStack)
         
@@ -57,6 +41,7 @@ final class DashboardWalletCell: UICollectionViewCell, ThemeProviding {
         
         cryptoBalanceLabel.font = theme.font(for: .footnote)
         cryptoBalanceLabel.textColor = theme.colour(for: .orange)
+
     }
 
     override func prepareForReuse() {
@@ -82,5 +67,51 @@ extension DashboardWalletCell {
         pctChangeLabel.layer.shadowColor = pctChangeLabel.textColor.cgColor
         charView.update(viewModel.candles)
         cryptoBalanceLabel.text = viewModel.cryptoBalance
+    }
+}
+
+private extension DashboardWalletCell {
+    
+    func addThemeAScreen() {
+        
+        clipsToBounds = false
+        
+        // Add screen
+        let image = UIImage(named: "themeA-dashboard-screen")!
+        let screenView = UIImageView(
+            image: image.resizableImage(
+                withCapInsets: .init(
+                    top: image.size.height * 0.5,
+                    left: image.size.width * 0.5,
+                    bottom: image.size.height * 0.5,
+                    right: image.size.width * 0.5
+                ),
+                resizingMode: .stretch
+            )
+        )
+        insertSubview(screenView, at: 0)
+        screenView.addConstraints(
+            [
+                .layout(anchor: .topAnchor),
+                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: -6)),
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: -4)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: -4))
+            ]
+        )
+
+        // Add mask
+        let maskImage = UIImage(named: "themA-dashboard-mask")!
+        let maskView = UIImageView(
+            image: maskImage
+        )
+        screenView.addSubview(maskView)
+        maskView.addConstraints(
+            [
+                .layout(anchor: .topAnchor),
+                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: 10)),
+                .layout(anchor: .leadingAnchor),
+                .layout(anchor: .trailingAnchor)
+            ]
+        )
     }
 }

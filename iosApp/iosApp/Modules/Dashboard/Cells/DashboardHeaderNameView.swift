@@ -34,7 +34,7 @@ private extension DashboardHeaderNameView {
         addSubview(label)
         label.addConstraints(
             [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: theme.padding)),
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: theme.padding * 0.5)),
                 .layout(anchor: .trailingAnchor, constant: .equalTo(constant: theme.padding)),
                 .layout(anchor: .topAnchor),
                 .layout(anchor: .bottomAnchor),
@@ -47,7 +47,7 @@ private extension DashboardHeaderNameView {
         addSubview(view)
         view.addConstraints(
             [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: theme.padding)),
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: theme.padding * 0.5)),
                 .layout(anchor: .trailingAnchor, constant: .equalTo(constant: -theme.padding)),
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: 0.3)),
                 .layout(anchor: .bottomAnchor)

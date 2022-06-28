@@ -42,7 +42,7 @@ final class DashboardViewController: BaseViewController {
     override func navBarRightActionTapped() {
         
 //        themeProvider.flipTheme()
-//        return 
+//        return
         switch theme {
             
         case .themeOG:
@@ -251,15 +251,23 @@ private extension DashboardViewController {
         let inset: CGFloat = theme.padding * 0.5
         
         // Item
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(0.5),
+            heightDimension: .fractionalHeight(1)
+        )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
+        item.contentInsets = NSDirectionalEdgeInsets(
+            top: inset,
+            leading: inset,
+            bottom: inset,
+            trailing: inset
+        )
         
         // Group
-        let screenWidth: CGFloat = (view.bounds.width - theme.padding * 0.5)
+        let screenWidth: CGFloat = (view.bounds.width)
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(screenWidth),
-            heightDimension: .absolute(screenWidth * 0.425)
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(screenWidth * 0.4125)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
@@ -273,7 +281,10 @@ private extension DashboardViewController {
             trailing: sectionInset
         )
         
-        let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100))
+        let headerItemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(100)
+        )
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerItemSize,
             elementKind: UICollectionView.elementKindSectionHeader,
@@ -294,7 +305,12 @@ private extension DashboardViewController {
             heightDimension: .fractionalWidth(0.5)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: inset, leading: inset, bottom: inset, trailing: inset)
+        item.contentInsets = NSDirectionalEdgeInsets(
+            top: inset,
+            leading: inset,
+            bottom: inset,
+            trailing: inset
+        )
         
         // Group
         let screenWidth: CGFloat = (view.bounds.width - theme.padding)
@@ -316,7 +332,10 @@ private extension DashboardViewController {
             trailing: sectionInset
         )
         
-        let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100))
+        let headerItemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(100)
+        )
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerItemSize,
             elementKind: UICollectionView.elementKindSectionHeader,
