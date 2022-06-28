@@ -41,13 +41,14 @@ final class DashboardViewController: BaseViewController {
     
     override func navBarRightActionTapped() {
         
+//        themeProvider.flipTheme()
+//        return 
         switch theme {
             
         case .themeOG:
             presenter.handle(.didTapEditTokens)
             
         case .themeHome:
-//            themeProvider.flipTheme()
             presenter.handle(.didTapEditTokens)
             //presenter.handle(.didScanQRCode)
         }
@@ -311,7 +312,7 @@ private extension DashboardViewController {
         section.contentInsets = .init(
             top: sectionInset,
             leading: sectionInset,
-            bottom: sectionInset + nftSectionBottomOffset - theme.padding * 4,
+            bottom: sectionInset + nftSectionBottomOffset,
             trailing: sectionInset
         )
         
@@ -414,7 +415,7 @@ private extension DashboardViewController {
         
         let sunsetImageWidth = view.frame.size.width - theme.padding * 2
         let sunsetImageHeight = sunsetImageWidth * 0.7
-        return sunsetImageHeight
+        return sunsetImageHeight - theme.padding * 4
     }
 }
 
@@ -532,22 +533,6 @@ extension DashboardViewController: UICollectionViewDelegate {
         anim.timingFunction = CAMediaTimingFunction(name: .easeOut)
         anim.beginTime = CACurrentMediaTime() + 0.05 * CGFloat(indexPath.item);
         cell.layer.add(anim, forKey: "transform")
-    }
-}
-
-final class BackgroundSupplementaryView: UICollectionReusableView {
-    
-    override init(frame: CGRect) {
-        
-        super.init(frame: frame)
-        
-        layer.cornerRadius = 8
-        
-        backgroundColor = UIColor(white: 0.85, alpha: 1)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 
