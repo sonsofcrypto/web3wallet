@@ -22,7 +22,7 @@ final class DashboardHeaderBalanceView: UICollectionReusableView, ThemeProviding
                     anchor: .trailingAnchor,
                     constant: .equalTo(constant: theme.padding)
                 ),
-                .layout(anchor: .topAnchor, constant: .equalTo(constant: theme.padding * 2)),
+//                .layout(anchor: .topAnchor, constant: .equalTo(constant: theme.padding * 2)),
                 .layout(anchor: .bottomAnchor, constant: .equalTo(constant: theme.padding * 1.5))
             ]
         )

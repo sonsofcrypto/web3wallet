@@ -20,15 +20,10 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cZV-5M-45A" customClass="CollectionView" customModule="iosApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="16" minimumInteritemSpacing="16" id="jcN-6a-ZNE">
-                                    <size key="itemSize" width="162" height="161"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
-                                </collectionViewFlowLayout>
+                                <collectionViewLayout key="collectionViewLayout" id="pah-ou-6d3"/>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DashboardButtonsCell" id="iRS-bM-l9Q" customClass="DashboardButtonsCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="0.0" width="162" height="161"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="162" height="161"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ALr-Vi-5Tt">
                                             <rect key="frame" x="0.0" y="0.0" width="162" height="161"/>
@@ -82,7 +77,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DashboardWalletCell" id="KRw-Bo-3H1" customClass="DashboardWalletCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="236" y="0.0" width="162" height="161"/>
+                                        <rect key="frame" x="252" y="0.0" width="162" height="161"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="CtI-9b-ZLL">
                                             <rect key="frame" x="0.0" y="0.0" width="162" height="161"/>
@@ -164,7 +159,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DashboardNFTCell" id="0I7-Tw-S7A" userLabel="DashboardNFTCell" customClass="DashboardNFTCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="16" y="177" width="343" height="162"/>
+                                        <rect key="frame" x="0.0" y="171" width="343" height="162"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="o9u-b1-GI9">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="162"/>

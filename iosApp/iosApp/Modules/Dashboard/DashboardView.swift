@@ -59,7 +59,6 @@ final class DashboardViewController: BaseViewController {
         
         backgroundGradientTopConstraint?.constant = -(collectionView.contentOffset.y + backgroundGradientViewOffset)
         backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
-        backgroundSunsetBottomConstraint?.constant = -(collectionView.contentOffset.y * 0.1 + sunsetBottomConstraintOffset)
     }
 }
 
@@ -137,8 +136,6 @@ private extension DashboardViewController {
     func configureUI() {
                 
         transitioningDelegate = self
-
-        backgroundGradientViewOffset = view.frame.size.height
         
         edgeCardsController?.delegate = self
                 
@@ -314,7 +311,7 @@ private extension DashboardViewController {
         section.contentInsets = .init(
             top: sectionInset,
             leading: sectionInset,
-            bottom: sectionInset + collectionView.frame.size.width * 0.475,
+            bottom: sectionInset + nftSectionBottomOffset - theme.padding * 4,
             trailing: sectionInset
         )
         
@@ -331,7 +328,10 @@ private extension DashboardViewController {
     }
     
     func addCustomBackgroundGradientView() {
-        
+
+        // 0 - Configure background gradient offset (extra bit at top & bottom)
+        backgroundGradientViewOffset = view.frame.size.height
+
         // 1 - Add gradient
         let backgroundGradient = GradientView()
         backgroundGradient.isDashboard = true
@@ -367,21 +367,21 @@ private extension DashboardViewController {
         
         sunsetBackground.translatesAutoresizingMaskIntoConstraints = false
         
-        let bottomConstraint = sunsetBackground.bottomAnchor.constraint(
-            equalTo: backgroundGradient.bottomAnchor,
-            constant: sunsetBottomConstraintOffset
+        let bottomConstraint = backgroundGradient.bottomAnchor.constraint(
+            equalTo: sunsetBackground.bottomAnchor,
+            constant: sunsetBottomConstraintOffset - 20
         )
         self.backgroundSunsetBottomConstraint = bottomConstraint
         bottomConstraint.isActive = true
 
         sunsetBackground.leadingAnchor.constraint(
             equalTo: view.leadingAnchor,
-            constant: 16
+            constant: theme.padding
         ).isActive = true
 
         view.trailingAnchor.constraint(
             equalTo: sunsetBackground.trailingAnchor,
-            constant: 16
+            constant: theme.padding
         ).isActive = true
         
         sunsetBackground.heightAnchor.constraint(
@@ -405,7 +405,16 @@ private extension DashboardViewController {
     
     var sunsetBottomConstraintOffset: CGFloat {
         
-        backgroundGradientViewOffset * 0.90
+        backgroundGradientViewOffset
+    }
+    
+    var nftSectionBottomOffset: CGFloat {
+        
+        guard themeProvider.themeHome != nil else { return 0 }
+        
+        let sunsetImageWidth = view.frame.size.width - theme.padding * 2
+        let sunsetImageHeight = sunsetImageWidth * 0.7
+        return sunsetImageHeight
     }
 }
 
@@ -480,10 +489,6 @@ extension DashboardViewController: UICollectionViewDataSource {
             return supplementaryHeaderView(kind: kind, at: indexPath)
             
         default:
-            fatalError("Unexpected supplementary idxPath: \(indexPath) \(kind)")
-        }
-        guard kind == UICollectionView.elementKindSectionHeader else {
-            
             fatalError("Unexpected supplementary idxPath: \(indexPath) \(kind)")
         }
     }
