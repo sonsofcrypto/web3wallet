@@ -6,7 +6,7 @@ extension DashboardViewController {
     
     func configureThemeHome() {
         
-        guard let themeHome = themeProvider.themeHome else { return }
+        guard Theme.type.isThemeA else { return }
         
         title = Localized("web3wallet").uppercased()
 

@@ -14,10 +14,10 @@ extension CollectionViewSectionLabelFooter {
     func update(with viewModel: MnemonicViewModel.Footer) {
         switch viewModel {
         case let .attrStr(text, highlightWords):
-            let attrs = ThemeOG.attributes.sectionFooter()
+            let attrs = sectionFooter()
             let hlAttrs: [NSAttributedString.Key : Any] = [
-                .font: ThemeOG.font.cellDetail,
-                .foregroundColor: ThemeOG.color.tint,
+                .font: Theme.font.callout,
+                .foregroundColor: Theme.colour.fillPrimary,
             ]
             let attrStr = NSMutableAttributedString(
                 string: text,
@@ -31,5 +31,16 @@ extension CollectionViewSectionLabelFooter {
         default:
             ()
         }
+    }
+    
+    private func sectionFooter() -> [NSAttributedString.Key: Any] {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 6
+        
+        return [
+            .font: Theme.font.callout,
+            .foregroundColor: Theme.colour.labelTertiary,
+            .paragraphStyle: paragraphStyle
+        ]
     }
 }

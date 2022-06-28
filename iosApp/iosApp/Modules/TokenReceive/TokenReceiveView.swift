@@ -88,18 +88,18 @@ private extension TokenReceiveViewController {
         
         configureNavBarLeftAction()
         
-        cardView.backgroundColor = ThemeOG.color.backgroundDark
+        cardView.backgroundColor = Theme.colour.backgroundBasePrimary
         cardView.layer.cornerRadius = 12
         
         nameLabel.applyStyle(.headlineGlow)
-        nameLabel.textColor = ThemeOG.color.text
+        nameLabel.textColor = Theme.colour.labelPrimary
         
         addressLabel.applyStyle(.body)
-        addressLabel.textColor = ThemeOG.color.text
+        addressLabel.textColor = Theme.colour.labelPrimary
         addressLabel.textAlignment = .center
 
         disclaimerLabel.applyStyle(.smallBody)
-        disclaimerLabel.textColor = ThemeOG.color.textSecondary
+        disclaimerLabel.textColor = Theme.colour.labelSecondary
         
         copyButton.update(
             with: Localized("tokenReceive.action.copy"),

@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class DashboardWalletCell: UICollectionViewCell, ThemeProviding {
+final class DashboardWalletCell: UICollectionViewCell {
 
     @IBOutlet weak var contentStack: UIStackView!
     @IBOutlet weak var topContentStack: UIStackView!
@@ -19,16 +19,16 @@ final class DashboardWalletCell: UICollectionViewCell, ThemeProviding {
         
         super.awakeFromNib()
                 
-        switch theme {
+        switch Theme.type {
             
         case .themeOG:
-            layer.cornerRadius = theme.cornerRadius * 2
-        case .themeHome:
+            layer.cornerRadius = Theme.constant.cornerRadius * 2
+        case .themeA:
             addThemeAScreen()
         }
         
         imageView.layer.cornerRadius = imageView.frame.size.width * 0.5
-        imageView.backgroundColor = theme.colour(for: .text)
+        imageView.backgroundColor = Theme.colour.labelPrimary
         
         contentStack.setCustomSpacing(13, after: topContentStack)
         
@@ -37,10 +37,10 @@ final class DashboardWalletCell: UICollectionViewCell, ThemeProviding {
         pctChangeLabel.applyStyle(.callout)
         
         [fiatBalanceLabel, pctChangeLabel].forEach { $0.applyStyle(.smallLabel) }
-        fiatBalanceLabel.textColor = ThemeOG.color.textSecondary
+        fiatBalanceLabel.textColor = Theme.colour.labelSecondary
         
-        cryptoBalanceLabel.font = theme.font(for: .footnote)
-        cryptoBalanceLabel.textColor = theme.colour(for: .orange)
+        cryptoBalanceLabel.font = Theme.font.footnote
+        cryptoBalanceLabel.textColor = Theme.colour.systemOrange
 
     }
 
@@ -62,8 +62,8 @@ extension DashboardWalletCell {
         fiatBalanceLabel.text = viewModel.fiatBalance
         pctChangeLabel.text = viewModel.pctChange
         pctChangeLabel.textColor = viewModel.priceUp
-            ? ThemeOG.color.green
-            : ThemeOG.color.red
+            ? Theme.colour.systemGreen
+            : Theme.colour.systemRed
         pctChangeLabel.layer.shadowColor = pctChangeLabel.textColor.cgColor
         charView.update(viewModel.candles)
         cryptoBalanceLabel.text = viewModel.cryptoBalance

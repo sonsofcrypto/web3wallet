@@ -12,7 +12,6 @@ protocol DashboardView: AnyObject {
 final class DashboardViewController: BaseViewController {
     
     var presenter: DashboardPresenter!
-    var themeProvider: ThemeProvider!
 
     private (set) var viewModel: DashboardViewModel?
     private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
@@ -43,12 +42,12 @@ final class DashboardViewController: BaseViewController {
         
 //        themeProvider.flipTheme()
 //        return
-        switch theme {
+        switch Theme.type {
             
         case .themeOG:
             presenter.handle(.didTapEditTokens)
             
-        case .themeHome:
+        case .themeA:
             presenter.handle(.didTapEditTokens)
             //presenter.handle(.didScanQRCode)
         }
@@ -163,12 +162,12 @@ private extension DashboardViewController {
         transform.m34 = -1.0 / 500.0
         collectionView.layer.sublayerTransform = transform
                 
-        switch themeProvider.current {
+        switch Theme.type {
             
         case .themeOG:
             configureThemeOG()
             
-        case .themeHome:
+        case .themeA:
             configureThemeHome()
             // Add custom background view
             addCustomBackgroundGradientView()
@@ -204,7 +203,7 @@ private extension DashboardViewController {
     
     func makeButtonsCollectionLayoutSection() -> NSCollectionLayoutSection {
         
-        let inset: CGFloat = theme.padding * 0.5
+        let inset: CGFloat = Theme.constant.padding * 0.5
         
         // Item
         let itemSize = NSCollectionLayoutSize(
@@ -215,17 +214,17 @@ private extension DashboardViewController {
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: inset, bottom: 0, trailing: inset)
         
         // Group
-        let screenWidth: CGFloat = (view.bounds.width - theme.padding)
+        let screenWidth: CGFloat = (view.bounds.width - Theme.constant.padding)
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(screenWidth),
-            heightDimension: .absolute(UIButton.Web3WalletButtonStyle.primary.height + theme.padding)
+            heightDimension: .absolute(UIButton.Web3WalletButtonStyle.primary.height + Theme.constant.padding)
         )
         let outerGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize, subitems: [item]
         )
         
         // Section
-        let sectionInset: CGFloat = theme.padding * 0.5
+        let sectionInset: CGFloat = Theme.constant.padding * 0.5
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = .init(
             top: sectionInset,
@@ -248,7 +247,7 @@ private extension DashboardViewController {
     
     func makeWalletsCollectionLayoutSection() -> NSCollectionLayoutSection {
         
-        let inset: CGFloat = theme.padding * 0.5
+        let inset: CGFloat = Theme.constant.padding * 0.5
         
         // Item
         let itemSize = NSCollectionLayoutSize(
@@ -272,7 +271,7 @@ private extension DashboardViewController {
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         // Section
-        let sectionInset: CGFloat = theme.padding * 0.5
+        let sectionInset: CGFloat = Theme.constant.padding * 0.5
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(
             top: sectionInset,
@@ -297,7 +296,7 @@ private extension DashboardViewController {
     
     func makeNFTsCollectionLayoutSection() -> NSCollectionLayoutSection {
         
-        let inset: CGFloat = theme.padding * 0.5
+        let inset: CGFloat = Theme.constant.padding * 0.5
         
         // Item
         let itemSize = NSCollectionLayoutSize(
@@ -313,7 +312,7 @@ private extension DashboardViewController {
         )
         
         // Group
-        let screenWidth: CGFloat = (view.bounds.width - theme.padding)
+        let screenWidth: CGFloat = (view.bounds.width - Theme.constant.padding)
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(screenWidth),
             heightDimension: .absolute(screenWidth * 0.5)
@@ -323,7 +322,7 @@ private extension DashboardViewController {
         )
         
         // Section
-        let sectionInset: CGFloat = theme.padding * 0.5
+        let sectionInset: CGFloat = Theme.constant.padding * 0.5
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = .init(
             top: sectionInset,
@@ -396,12 +395,12 @@ private extension DashboardViewController {
 
         sunsetBackground.leadingAnchor.constraint(
             equalTo: view.leadingAnchor,
-            constant: theme.padding
+            constant: Theme.constant.padding
         ).isActive = true
 
         view.trailingAnchor.constraint(
             equalTo: sunsetBackground.trailingAnchor,
-            constant: theme.padding
+            constant: Theme.constant.padding
         ).isActive = true
         
         sunsetBackground.heightAnchor.constraint(
@@ -430,11 +429,11 @@ private extension DashboardViewController {
     
     var nftSectionBottomOffset: CGFloat {
         
-        guard themeProvider.themeHome != nil else { return 0 }
+        guard Theme.type == .themeA else { return 0 }
         
-        let sunsetImageWidth = view.frame.size.width - theme.padding * 2
+        let sunsetImageWidth = view.frame.size.width - Theme.constant.padding * 2
         let sunsetImageHeight = sunsetImageWidth * 0.7
-        return sunsetImageHeight - theme.padding * 4
+        return sunsetImageHeight - Theme.constant.padding * 4
     }
 }
 

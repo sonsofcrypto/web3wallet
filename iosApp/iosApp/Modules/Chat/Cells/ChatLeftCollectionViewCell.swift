@@ -14,7 +14,7 @@ final class ChatLeftCollectionViewCell: UICollectionViewCell {
         
         super.awakeFromNib()
                 
-        bubbleView.backgroundColor = ThemeOG.color.backgroundDark
+        bubbleView.backgroundColor = Theme.colour.backgroundBasePrimary
         bubbleView.layer.cornerRadius = 8
         bubbleView.addConstraints(
             [
@@ -23,8 +23,8 @@ final class ChatLeftCollectionViewCell: UICollectionViewCell {
         )
         
         messageLabel.applyStyle(.body)
-        messageLabel.textColor = ThemeOG.color.text
-        messageLabel.layer.shadowColor = ThemeOG.color.tintSecondary.cgColor
+        messageLabel.textColor = Theme.colour.labelPrimary
+        messageLabel.layer.shadowColor = Theme.colour.fillSecondary.cgColor
         messageLabel.layer.shadowOffset = .zero
         messageLabel.layer.shadowRadius = Global.shadowRadius
         messageLabel.layer.shadowOpacity = 1

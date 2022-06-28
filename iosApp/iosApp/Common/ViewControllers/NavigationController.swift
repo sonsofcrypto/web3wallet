@@ -11,26 +11,24 @@ class NavigationController: UINavigationController {
 
         let appearance = navigationBar.standardAppearance
 
-        let themeProvider: ThemeProvider = ServiceDirectory.assembler.resolve()
-        
-        switch themeProvider.current {
+        switch Theme.type {
         case .themeOG:
             let titleShadow = NSShadow()
             titleShadow.shadowOffset = .zero
             titleShadow.shadowBlurRadius = Global.shadowRadius
-            appearance.backgroundColor = ThemeOG.color.background.withAlphaComponent(1)
+            appearance.backgroundColor = Theme.colour.backgroundBaseSecondary.withAlphaComponent(1)
             appearance.titleTextAttributes = [
-                .foregroundColor: ThemeOG.color.tint,
-                .font: ThemeOG.font.navTitle,
+                .foregroundColor: Theme.colour.fillPrimary,
+                .font: Theme.font.navTitle,
                 .shadow: titleShadow
             ]
-            titleShadow.shadowColor = ThemeOG.color.tint
+            titleShadow.shadowColor = Theme.colour.fillPrimary
 
-        case let .themeHome(themeHome):
-            appearance.backgroundColor = themeHome.navBarColour().backgroundColour
+        case .themeA:
+            appearance.backgroundColor = .init(rgb: 0x1D1D1D).withAlpha(0.94)
             appearance.titleTextAttributes = [
-                .foregroundColor: themeHome.navBarColour().foregroundColour,
-                .font: themeHome.font(for: .navTitle)
+                .foregroundColor: Theme.colour.systemOrange,
+                .font: Theme.font.navTitle
             ]
         }
         

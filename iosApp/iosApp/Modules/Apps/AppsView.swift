@@ -132,8 +132,8 @@ private extension AppsViewController {
         title = Localized("apps")
 
         (view as? GradientView)?.colors = [
-            ThemeOG.color.background,
-            ThemeOG.color.backgroundDark
+            Theme.colour.backgroundBaseSecondary,
+            Theme.colour.backgroundBasePrimary
         ]
     }
 }

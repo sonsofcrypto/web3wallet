@@ -74,13 +74,13 @@ private extension NetworkPickerViewController {
     func configureUI() {
         
         (view as? GradientView)?.colors = [
-            ThemeOG.color.background,
-            ThemeOG.color.backgroundDark
+            Theme.colour.backgroundBaseSecondary,
+            Theme.colour.backgroundBasePrimary
         ]
         
         configureNavBarLeftAction()
         
-        searchTextFieldBox.backgroundColor = ThemeOG.color.backgroundDark
+        searchTextFieldBox.backgroundColor = Theme.colour.backgroundBasePrimary
         searchTextFieldBox.layer.cornerRadius = 16
         
         searchTextField.backgroundColor = .clear

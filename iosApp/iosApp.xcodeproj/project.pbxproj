@@ -84,19 +84,9 @@
 		1C54DC1D2862354C00E378F6 /* QRCodeScan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */; };
 		1C54DC1F2862373C00E378F6 /* QRCodeScanInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC1E2862373C00E378F6 /* QRCodeScanInteractor.swift */; };
 		1C54DC2128680B7F00E378F6 /* DashboardView+ThemeOG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC2028680B7F00E378F6 /* DashboardView+ThemeOG.swift */; };
-		1C54DC242868178700E378F6 /* ThemeOGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC232868178700E378F6 /* ThemeOGColor.swift */; };
-		1C54DC28286817BD00E378F6 /* ThemeOGAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC27286817BD00E378F6 /* ThemeOGAttributes.swift */; };
 		1C54DC2A2868193300E378F6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC292868193300E378F6 /* Theme.swift */; };
-		1C54DC2D286819D100E378F6 /* ThemeHomeA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC2C286819D100E378F6 /* ThemeHomeA.swift */; };
-		1C54DC2F286819D900E378F6 /* ThemeHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC2E286819D900E378F6 /* ThemeHome.swift */; };
-		1C54DC3328681BB700E378F6 /* ThemeHomeColour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC3228681BB700E378F6 /* ThemeHomeColour.swift */; };
 		1C54DC352868204000E378F6 /* Colours-ThemeA.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC342868204000E378F6 /* Colours-ThemeA.xcassets */; };
-		1C54DC372868227E00E378F6 /* ThemeHomeGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC362868227E00E378F6 /* ThemeHomeGradient.swift */; };
-		1C54DC392868264500E378F6 /* ThemeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC382868264500E378F6 /* ThemeProvider.swift */; };
-		1C54DC3B2868265A00E378F6 /* ThemeProviderAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC3A2868265A00E378F6 /* ThemeProviderAssembler.swift */; };
 		1C54DC3D2868282600E378F6 /* DashboardView+ThemeHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC3C2868282600E378F6 /* DashboardView+ThemeHome.swift */; };
-		1C54DC3F28682BAF00E378F6 /* ThemeHomeNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC3E28682BAF00E378F6 /* ThemeHomeNavBar.swift */; };
-		1C54DC4128683AA600E378F6 /* ThemeHomeTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC4028683AA600E378F6 /* ThemeHomeTabBar.swift */; };
 		1C54DC5128683DDA00E378F6 /* NaokoAA-Light-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4328683DD900E378F6 /* NaokoAA-Light-Italic.otf */; };
 		1C54DC5228683DDA00E378F6 /* NaokoAA-Extrabold-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4428683DD900E378F6 /* NaokoAA-Extrabold-Italic.otf */; };
 		1C54DC5328683DDA00E378F6 /* NaokoAA-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4528683DD900E378F6 /* NaokoAA-Bold.otf */; };
@@ -114,10 +104,9 @@
 		1C54DC60286859D900E378F6 /* Colours-OG.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC5F286859D900E378F6 /* Colours-OG.xcassets */; };
 		1C54DC662869A48A00E378F6 /* DashboardHeaderBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC652869A48A00E378F6 /* DashboardHeaderBalanceView.swift */; };
 		1C54DC682869BE6500E378F6 /* DashboardButtonsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC672869BE6500E378F6 /* DashboardButtonsCell.swift */; };
-		1C54DC6A2869D60D00E378F6 /* ThemeFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC692869D60D00E378F6 /* ThemeFont.swift */; };
-		1C54DC6C2869E48D00E378F6 /* ThemeOGFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC6B2869E48D00E378F6 /* ThemeOGFont.swift */; };
-		1C54DC6E2869EB4500E378F6 /* ThemeColour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC6D2869EB4400E378F6 /* ThemeColour.swift */; };
+		1C54DC6A2869D60D00E378F6 /* ThemeA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC692869D60D00E378F6 /* ThemeA.swift */; };
 		1C54DC74286A1D4C00E378F6 /* Assets-ThemeA.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC73286A1D4B00E378F6 /* Assets-ThemeA.xcassets */; };
+		1C54DC7A286B84B700E378F6 /* ThemeOG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC79286B84B700E378F6 /* ThemeOG.swift */; };
 		1C5B60382843FACD00ECBD79 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B60372843FACD00ECBD79 /* UIViewController+Extensions.swift */; };
 		1C5B603B284675B800ECBD79 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5B603A284675B800ECBD79 /* Kingfisher */; };
 		1C60C1AA28571B95003BE25D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */; };
@@ -429,7 +418,6 @@
 		D1A67140283D6BAE0042A448 /* web3lib.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A6713F283D6BAE0042A448 /* web3lib.xcframework */; };
 		D1A67141283D6BAE0042A448 /* web3lib.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D1A6713F283D6BAE0042A448 /* web3lib.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D1BC5303284B5B89007E6FF4 /* CultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BC5302284B5B89007E6FF4 /* CultService.swift */; };
-		D1BF2685280D7FC300DE9A0B /* ThemeOG.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BF2681280D7FC200DE9A0B /* ThemeOG.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -540,19 +528,9 @@
 		1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QRCodeScan.storyboard; sourceTree = "<group>"; };
 		1C54DC1E2862373C00E378F6 /* QRCodeScanInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanInteractor.swift; sourceTree = "<group>"; };
 		1C54DC2028680B7F00E378F6 /* DashboardView+ThemeOG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardView+ThemeOG.swift"; sourceTree = "<group>"; };
-		1C54DC232868178700E378F6 /* ThemeOGColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeOGColor.swift; sourceTree = "<group>"; };
-		1C54DC27286817BD00E378F6 /* ThemeOGAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeOGAttributes.swift; sourceTree = "<group>"; };
 		1C54DC292868193300E378F6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
-		1C54DC2C286819D100E378F6 /* ThemeHomeA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeHomeA.swift; sourceTree = "<group>"; };
-		1C54DC2E286819D900E378F6 /* ThemeHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeHome.swift; sourceTree = "<group>"; };
-		1C54DC3228681BB700E378F6 /* ThemeHomeColour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeHomeColour.swift; sourceTree = "<group>"; };
 		1C54DC342868204000E378F6 /* Colours-ThemeA.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Colours-ThemeA.xcassets"; sourceTree = "<group>"; };
-		1C54DC362868227E00E378F6 /* ThemeHomeGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeHomeGradient.swift; sourceTree = "<group>"; };
-		1C54DC382868264500E378F6 /* ThemeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeProvider.swift; sourceTree = "<group>"; };
-		1C54DC3A2868265A00E378F6 /* ThemeProviderAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeProviderAssembler.swift; sourceTree = "<group>"; };
 		1C54DC3C2868282600E378F6 /* DashboardView+ThemeHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboardView+ThemeHome.swift"; sourceTree = "<group>"; };
-		1C54DC3E28682BAF00E378F6 /* ThemeHomeNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeHomeNavBar.swift; sourceTree = "<group>"; };
-		1C54DC4028683AA600E378F6 /* ThemeHomeTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeHomeTabBar.swift; sourceTree = "<group>"; };
 		1C54DC4328683DD900E378F6 /* NaokoAA-Light-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Light-Italic.otf"; sourceTree = "<group>"; };
 		1C54DC4428683DD900E378F6 /* NaokoAA-Extrabold-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Extrabold-Italic.otf"; sourceTree = "<group>"; };
 		1C54DC4528683DD900E378F6 /* NaokoAA-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Bold.otf"; sourceTree = "<group>"; };
@@ -570,10 +548,9 @@
 		1C54DC5F286859D900E378F6 /* Colours-OG.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Colours-OG.xcassets"; sourceTree = "<group>"; };
 		1C54DC652869A48A00E378F6 /* DashboardHeaderBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardHeaderBalanceView.swift; sourceTree = "<group>"; };
 		1C54DC672869BE6500E378F6 /* DashboardButtonsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardButtonsCell.swift; sourceTree = "<group>"; };
-		1C54DC692869D60D00E378F6 /* ThemeFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeFont.swift; sourceTree = "<group>"; };
-		1C54DC6B2869E48D00E378F6 /* ThemeOGFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeOGFont.swift; sourceTree = "<group>"; };
-		1C54DC6D2869EB4400E378F6 /* ThemeColour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColour.swift; sourceTree = "<group>"; };
+		1C54DC692869D60D00E378F6 /* ThemeA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeA.swift; sourceTree = "<group>"; };
 		1C54DC73286A1D4B00E378F6 /* Assets-ThemeA.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets-ThemeA.xcassets"; sourceTree = "<group>"; };
+		1C54DC79286B84B700E378F6 /* ThemeOG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeOG.swift; sourceTree = "<group>"; };
 		1C5B60372843FACD00ECBD79 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1AB28571BB6003BE25D /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
@@ -884,7 +861,6 @@
 		D1A564C32843E2BE00D4B7D8 /* IosCryptoPrimitivesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosCryptoPrimitivesProvider.swift; sourceTree = "<group>"; };
 		D1A6713F283D6BAE0042A448 /* web3lib.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = web3lib.xcframework; path = ../web3lib/build/XCFrameworks/debug/web3lib.xcframework; sourceTree = "<group>"; };
 		D1BC5302284B5B89007E6FF4 /* CultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultService.swift; sourceTree = "<group>"; };
-		D1BF2681280D7FC200DE9A0B /* ThemeOG.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeOG.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1139,30 +1115,6 @@
 				1C54DC1A2862352800E378F6 /* QRCodeScanWireframeFactoryAssembler.swift */,
 			);
 			path = QRCodeScan;
-			sourceTree = "<group>";
-		};
-		1C54DC222868168D00E378F6 /* ThemeOG */ = {
-			isa = PBXGroup;
-			children = (
-				D1BF2681280D7FC200DE9A0B /* ThemeOG.swift */,
-				1C54DC6B2869E48D00E378F6 /* ThemeOGFont.swift */,
-				1C54DC232868178700E378F6 /* ThemeOGColor.swift */,
-				1C54DC27286817BD00E378F6 /* ThemeOGAttributes.swift */,
-			);
-			path = ThemeOG;
-			sourceTree = "<group>";
-		};
-		1C54DC2B2868199C00E378F6 /* ThemeHome */ = {
-			isa = PBXGroup;
-			children = (
-				1C54DC2E286819D900E378F6 /* ThemeHome.swift */,
-				1C54DC3E28682BAF00E378F6 /* ThemeHomeNavBar.swift */,
-				1C54DC4028683AA600E378F6 /* ThemeHomeTabBar.swift */,
-				1C54DC362868227E00E378F6 /* ThemeHomeGradient.swift */,
-				1C54DC3228681BB700E378F6 /* ThemeHomeColour.swift */,
-				1C54DC2C286819D100E378F6 /* ThemeHomeA.swift */,
-			);
-			path = ThemeHome;
 			sourceTree = "<group>";
 		};
 		1C54DC4228683DA900E378F6 /* Naoko */ = {
@@ -1977,12 +1929,8 @@
 			isa = PBXGroup;
 			children = (
 				1C54DC292868193300E378F6 /* Theme.swift */,
-				1C54DC382868264500E378F6 /* ThemeProvider.swift */,
-				1C54DC3A2868265A00E378F6 /* ThemeProviderAssembler.swift */,
-				1C54DC692869D60D00E378F6 /* ThemeFont.swift */,
-				1C54DC6D2869EB4400E378F6 /* ThemeColour.swift */,
-				1C54DC2B2868199C00E378F6 /* ThemeHome */,
-				1C54DC222868168D00E378F6 /* ThemeOG */,
+				1C54DC692869D60D00E378F6 /* ThemeA.swift */,
+				1C54DC79286B84B700E378F6 /* ThemeOG.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -2211,7 +2159,6 @@
 			files = (
 				D11A990F27B99D1800EDFDD0 /* AnyDecodable.swift in Sources */,
 				D11A991027B99D1800EDFDD0 /* AnyCodable.swift in Sources */,
-				1C54DC2F286819D900E378F6 /* ThemeHome.swift in Sources */,
 				1C60C2C4285724D0003BE25D /* ChatRightCollectionViewCell.swift in Sources */,
 				1C54DBFA285F9EBF00E378F6 /* TokenAddNetworkView.swift in Sources */,
 				1C54DC192862352200E378F6 /* QRCodeScanWireframeFactory.swift in Sources */,
@@ -2241,7 +2188,6 @@
 				1C60C2A5285724D0003BE25D /* SettingsListSelectCell.swift in Sources */,
 				1C60C32A285724D1003BE25D /* MnemonicConfirmationWireframeFactory.swift in Sources */,
 				1CE66BCE2848EAA600AB6ACA /* ChatServiceAssembler.swift in Sources */,
-				1C54DC3B2868265A00E378F6 /* ThemeProviderAssembler.swift in Sources */,
 				1C6487042832DB8B0091A12D /* Assembler.swift in Sources */,
 				1C60C302285724D1003BE25D /* NFTsDashboardViewModel.swift in Sources */,
 				1C60C2F5285724D0003BE25D /* NFTDetailView.swift in Sources */,
@@ -2323,7 +2269,6 @@
 				1C60C31C285724D1003BE25D /* AppsWireframe.swift in Sources */,
 				1C60C32D285724D1003BE25D /* MnemonicConfirmationViewModel.swift in Sources */,
 				1C60C37B2859BDD9003BE25D /* UIView+Toast+Extensions.swift in Sources */,
-				1C54DC3328681BB700E378F6 /* ThemeHomeColour.swift in Sources */,
 				1C60C2F7285724D0003BE25D /* NFTDetailInteractor.swift in Sources */,
 				1C60C35D285724D1003BE25D /* DegenWireframeFactory.swift in Sources */,
 				1CB3A1E92840D6B70092D667 /* UIView+Extensions.swift in Sources */,
@@ -2333,7 +2278,6 @@
 				1C60C2E3285724D0003BE25D /* AnimatedTextBarButton.swift in Sources */,
 				1C60C2B9285724D0003BE25D /* KeyStorePresenter.swift in Sources */,
 				1C60C347285724D1003BE25D /* CultProposalWireframeFactoryAssembler.swift in Sources */,
-				1C54DC392868264500E378F6 /* ThemeProvider.swift in Sources */,
 				1C60C2BC285724D0003BE25D /* ButtonsSheetView.swift in Sources */,
 				1C60C2FB285724D0003BE25D /* NFTDetailWireframeFactoryAssembler.swift in Sources */,
 				1C54DBF5285F32DC00E378F6 /* TokenAddInputView.swift in Sources */,
@@ -2362,7 +2306,6 @@
 				1C60C36B2857C5FE003BE25D /* TokenReceiveWireframeFactory.swift in Sources */,
 				1C6487382832E6BE0091A12D /* DefaultOnboardingService.swift in Sources */,
 				1C60C2BE285724D0003BE25D /* KeyStoreWireframeFactoryAssembler.swift in Sources */,
-				1C54DC242868178700E378F6 /* ThemeOGColor.swift in Sources */,
 				1C60C318285724D1003BE25D /* AccountPresenter.swift in Sources */,
 				1C60C354285724D1003BE25D /* CultProposalsInteractor.swift in Sources */,
 				1C60C30D285724D1003BE25D /* RootWireframeFactory.swift in Sources */,
@@ -2409,9 +2352,7 @@
 				1C60C38E285B9F7F003BE25D /* PriceHistoryServiceAssembler.swift in Sources */,
 				1C60C34B285724D1003BE25D /* CultProposalView.swift in Sources */,
 				1CB3A1E42840D6B70092D667 /* Int+Extensions.swift in Sources */,
-				1C54DC4128683AA600E378F6 /* ThemeHomeTabBar.swift in Sources */,
 				1C54DBE7285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift in Sources */,
-				1C54DC372868227E00E378F6 /* ThemeHomeGradient.swift in Sources */,
 				1C60C348285724D1003BE25D /* CultProposalPresenter.swift in Sources */,
 				1C60C2D5285724D0003BE25D /* MnemonicViewModel.swift in Sources */,
 				1CB3A1EA2840D6B70092D667 /* String+Extensions.swift in Sources */,
@@ -2423,7 +2364,6 @@
 				1CE66BCC2848EA9F00AB6ACA /* DefaultChatService.swift in Sources */,
 				1C60C333285724D1003BE25D /* NFTsCollectionWireframeFactory.swift in Sources */,
 				1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */,
-				1C54DC28286817BD00E378F6 /* ThemeOGAttributes.swift in Sources */,
 				1C6487142832DE560091A12D /* ReachabilityServiceAssembler.swift in Sources */,
 				1CB3A1F12840D6B70092D667 /* UIBarButtonItem+Extensions.swift in Sources */,
 				1C60C1AA28571B95003BE25D /* UIColor+Extensions.swift in Sources */,
@@ -2460,7 +2400,7 @@
 				1A4C3C28443621328248F5A7 /* CandlesViewViewModel.swift in Sources */,
 				1C60C2AD285724D0003BE25D /* TokenPickerWireframe.swift in Sources */,
 				1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */,
-				1C54DC6A2869D60D00E378F6 /* ThemeFont.swift in Sources */,
+				1C54DC6A2869D60D00E378F6 /* ThemeA.swift in Sources */,
 				1C54DC3D2868282600E378F6 /* DashboardView+ThemeHome.swift in Sources */,
 				1C60C2C9285724D0003BE25D /* ChatWireframeFactoryAssembler.swift in Sources */,
 				1C60C2ED285724D0003BE25D /* NetworksInteractor.swift in Sources */,
@@ -2491,7 +2431,6 @@
 				1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */,
 				1C60C332285724D1003BE25D /* NFTsCollectionWireframeFactoryAssembler.swift in Sources */,
 				1C54DBEB285E833600E378F6 /* TokenAddView.swift in Sources */,
-				D1BF2685280D7FC300DE9A0B /* ThemeOG.swift in Sources */,
 				1A4C39C49AEF7D7C5D4E8CE6 /* CollectionViewSectionLabelFooter.swift in Sources */,
 				1C60C334285724D1003BE25D /* NFTsCollectionInteractor.swift in Sources */,
 				1C60C32C285724D1003BE25D /* MnemonicConfirmationWireframeFactoryAssembler.swift in Sources */,
@@ -2506,13 +2445,11 @@
 				1C60C2B1285724D0003BE25D /* TokenPickerViewModel.swift in Sources */,
 				1A4C3B697503D478741295DB /* TextField.swift in Sources */,
 				1C60C2B2285724D0003BE25D /* TokenPickerWireframeFactoryAssembler.swift in Sources */,
+				1C54DC7A286B84B700E378F6 /* ThemeOG.swift in Sources */,
 				1A4C3469AE463198FCE284E2 /* CollectionViewSwitchCell.swift in Sources */,
 				1C60C31D285724D1003BE25D /* AppsCollectionViewCell.swift in Sources */,
 				1C60C305285724D1003BE25D /* NFTsDashboardWireframeFactoryAssembler.swift in Sources */,
-				1C54DC3F28682BAF00E378F6 /* ThemeHomeNavBar.swift in Sources */,
-				1C54DC6E2869EB4500E378F6 /* ThemeColour.swift in Sources */,
 				1C60C384285A649B003BE25D /* Web3ServiceLocalStorage.swift in Sources */,
-				1C54DC2D286819D100E378F6 /* ThemeHomeA.swift in Sources */,
 				1C60C2D8285724D0003BE25D /* MnemonicInteractor.swift in Sources */,
 				1C6487122832DE4D0091A12D /* ReachabilityService.swift in Sources */,
 				1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */,
@@ -2546,7 +2483,6 @@
 				1A4C36EEA61FB60EE15ED6DD /* OnboardingService.swift in Sources */,
 				1C60C306285724D1003BE25D /* NFTsDashboardPresenter.swift in Sources */,
 				D1BC5303284B5B89007E6FF4 /* CultService.swift in Sources */,
-				1C54DC6C2869E48D00E378F6 /* ThemeOGFont.swift in Sources */,
 				1C60C2CB285724D0003BE25D /* ChatWireframeFactory.swift in Sources */,
 				1C60C2D1285724D0003BE25D /* AlertContext.swift in Sources */,
 				1C54DC012860E5BC00E378F6 /* NetworkPickerView.swift in Sources */,

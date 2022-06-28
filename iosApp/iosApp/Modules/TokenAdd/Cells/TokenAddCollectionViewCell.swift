@@ -20,15 +20,15 @@ final class TokenAddCollectionViewCell: UICollectionViewCell {
         
         super.awakeFromNib()
 
-        networkDetailsView.backgroundColor = ThemeOG.color.backgroundDark
+        networkDetailsView.backgroundColor = Theme.colour.backgroundBasePrimary
         networkDetailsView.layer.cornerRadius = Global.cornerRadius
         networkDetailsView.layer.borderWidth = 1
-        networkDetailsView.layer.borderColor = ThemeOG.color.tintLight.cgColor
+        networkDetailsView.layer.borderColor = Theme.colour.fillTertiary.cgColor
 
-        tokenDetailsView.backgroundColor = ThemeOG.color.backgroundDark
+        tokenDetailsView.backgroundColor = Theme.colour.backgroundBasePrimary
         tokenDetailsView.layer.cornerRadius = Global.cornerRadius
         tokenDetailsView.layer.borderWidth = 1
-        tokenDetailsView.layer.borderColor = ThemeOG.color.tintLight.cgColor
+        tokenDetailsView.layer.borderColor = Theme.colour.fillTertiary.cgColor
     }
     
     @discardableResult

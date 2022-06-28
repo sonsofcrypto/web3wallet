@@ -6,7 +6,7 @@ extension DashboardViewController {
     
     func configureThemeOG() {
         
-        guard themeProvider.themeOG != nil else { return }
+        guard Theme.type != .themeOG else { return }
         
         title = Localized("dashboard")
 

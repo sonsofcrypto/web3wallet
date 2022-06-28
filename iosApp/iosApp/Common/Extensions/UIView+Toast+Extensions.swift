@@ -14,7 +14,7 @@ extension UIView {
 
         let backgroundView = UIView()
         backgroundView.layer.cornerRadius = 8
-        backgroundView.backgroundColor = ThemeOG.color.background
+        backgroundView.backgroundColor = Theme.colour.backgroundBaseSecondary
         toastView.addSubview(backgroundView)
         backgroundView.addConstraints(
             [

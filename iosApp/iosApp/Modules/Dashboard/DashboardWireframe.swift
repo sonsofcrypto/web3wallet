@@ -26,7 +26,6 @@ final class DefaultDashboardWireframe {
     private weak var parent: UIViewController!
     private weak var vc: UIViewController!
 
-    private let themeProvider: ThemeProvider
     private let keyStoreService: KeyStoreService
     private let accountWireframeFactory: AccountWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
@@ -41,7 +40,6 @@ final class DefaultDashboardWireframe {
 
     init(
         parent: UIViewController,
-        themeProvider: ThemeProvider,
         keyStoreService: KeyStoreService,
         accountWireframeFactory: AccountWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
@@ -55,7 +53,6 @@ final class DefaultDashboardWireframe {
         nftsService: NFTsService
     ) {
         self.parent = parent
-        self.themeProvider = themeProvider
         self.keyStoreService = keyStoreService
         self.accountWireframeFactory = accountWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
@@ -176,7 +173,6 @@ private extension DefaultDashboardWireframe {
             onboardingService: onboardingService
         )
         vc.presenter = presenter
-        vc.themeProvider = themeProvider
         return NavigationController(rootViewController: vc)
     }
     

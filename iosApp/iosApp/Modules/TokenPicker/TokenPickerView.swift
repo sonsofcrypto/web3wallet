@@ -90,7 +90,7 @@ extension TokenPickerViewController {
             .init(named: "plus_icon"),
             for: .normal
         )
-        button.tintColor = ThemeOG.color.tint
+        button.tintColor = Theme.colour.fillPrimary
         button.addTarget(self, action: #selector(addCustomToken), for: .touchUpInside)
         button.addConstraints(
             [
@@ -98,7 +98,7 @@ extension TokenPickerViewController {
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
             ]
         )
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
+        
     }
     
     @objc func addCustomToken() {
@@ -113,7 +113,7 @@ extension TokenPickerViewController {
             .init(named: "confirm_icon"),
             for: .normal
         )
-        button.tintColor = ThemeOG.color.tint
+        button.tintColor = Theme.colour.fillPrimary
         button.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
         button.addConstraints(
             [
@@ -132,11 +132,11 @@ extension TokenPickerViewController {
     func configureUI() {
         
         (view as? GradientView)?.colors = [
-            ThemeOG.color.background,
-            ThemeOG.color.backgroundDark
+            Theme.colour.backgroundBaseSecondary,
+            Theme.colour.backgroundBasePrimary
         ]
         
-        searchTextFieldBox.backgroundColor = ThemeOG.color.backgroundDark
+        searchTextFieldBox.backgroundColor = Theme.colour.backgroundBasePrimary
         searchTextFieldBox.layer.cornerRadius = 16
         
         searchTextField.backgroundColor = .clear

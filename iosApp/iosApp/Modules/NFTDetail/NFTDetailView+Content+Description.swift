@@ -15,7 +15,7 @@ extension NFTDetailViewController {
         
         view.layer.cornerRadius = Global.cornerRadius
         view.layer.borderWidth = 1
-        view.layer.borderColor = ThemeOG.color.tintLight.cgColor
+        view.layer.borderColor = Theme.colour.fillTertiary.cgColor
 
         return view
     }
@@ -36,7 +36,7 @@ private extension NFTDetailViewController {
         
         vStack.addArrangedSubview(.vSpace(height: Global.padding))
         vStack.addArrangedSubview(
-            .dividerLine(backgroundColor: ThemeOG.color.tintLight)
+            .dividerLine(backgroundColor: Theme.colour.fillTertiary)
         )
         vStack.addArrangedSubview(.vSpace(height: Global.padding))
         
@@ -56,7 +56,7 @@ private extension NFTDetailViewController {
         
         let label = UILabel()
         label.text = text
-        label.textColor = ThemeOG.color.text
+        label.textColor = Theme.colour.labelPrimary
         label.numberOfLines = 0
         label.applyStyle(.body)
         hStack.addArrangedSubview(label)

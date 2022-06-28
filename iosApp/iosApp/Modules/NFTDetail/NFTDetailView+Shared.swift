@@ -9,7 +9,7 @@ extension NFTDetailViewController {
         let mainScrollView = UIScrollView()
         mainScrollView.showsVerticalScrollIndicator = false
         let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = ThemeOG.color.tintLight
+        refreshControl.tintColor = Theme.colour.fillTertiary
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         mainScrollView.refreshControl = refreshControl
         
@@ -41,8 +41,8 @@ extension NFTDetailViewController {
         
         let label = UILabel(with: .body)
         label.text = text
-        label.textColor = ThemeOG.color.red
-        label.layer.applyShadow(ThemeOG.color.red)
+        label.textColor = Theme.colour.systemRed
+        label.layer.applyShadow(Theme.colour.systemRed)
         label.numberOfLines = 0
         hStack.addArrangedSubview(label)
 

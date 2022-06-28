@@ -4,8 +4,9 @@
 
 import UIKit
 
-final class DashboardButtonsCell: UICollectionViewCell, ThemeProviding {
+final class DashboardButtonsCell: UICollectionViewCell {
 
+    private weak var lineView: UIView!
     @IBOutlet weak var receiveButton: UIButton!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var tradeButton: UIButton!
@@ -21,7 +22,7 @@ final class DashboardButtonsCell: UICollectionViewCell, ThemeProviding {
         tradeButton.apply(style: .primary)
         
         let view = UIView()
-        view.backgroundColor = theme.colour(for: .text)
+        view.backgroundColor = Theme.colour.labelPrimary
         addSubview(view)
         view.addConstraints(
             [
@@ -31,6 +32,19 @@ final class DashboardButtonsCell: UICollectionViewCell, ThemeProviding {
                 .layout(anchor: .topAnchor)
             ]
         )
+        self.lineView = view
+    }
+    
+    override func traitCollectionDidChange(
+        _ previousTraitCollection: UITraitCollection?
+    ) {
+        
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        receiveButton.apply(style: .primary)
+        sendButton.apply(style: .primary)
+        tradeButton.apply(style: .primary)
+        lineView.backgroundColor = Theme.colour.labelPrimary
     }
 }
 

@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class DashboardHeaderNameView: UICollectionReusableView, ThemeProviding {
+final class DashboardHeaderNameView: UICollectionReusableView {
     
     private weak var label: UILabel!
     
@@ -28,14 +28,14 @@ private extension DashboardHeaderNameView {
     func configureUI() {
         
         let label = UILabel()
-        label.font = theme.font(for: .title2)
-        label.textColor = theme.colour(for: .text)
+        label.font = Theme.font.title2
+        label.textColor = Theme.colour.labelPrimary
         self.label = label
         addSubview(label)
         label.addConstraints(
             [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: theme.padding * 0.5)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: theme.padding)),
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding * 0.5)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
                 .layout(anchor: .topAnchor),
                 .layout(anchor: .bottomAnchor),
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: 30))
@@ -43,12 +43,12 @@ private extension DashboardHeaderNameView {
         )
         
         let view = UIView()
-        view.backgroundColor = theme.colour(for: .text)
+        view.backgroundColor = Theme.colour.labelPrimary
         addSubview(view)
         view.addConstraints(
             [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: theme.padding * 0.5)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: -theme.padding)),
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding * 0.5)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: -Theme.constant.padding)),
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: 0.3)),
                 .layout(anchor: .bottomAnchor)
             ]

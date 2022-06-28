@@ -42,7 +42,7 @@ class CollectionViewCell: UICollectionViewCell {
     }
 
     private func configureUI() {
-        backgroundColor = ThemeOG.color.background
+        backgroundColor = Theme.colour.backgroundBaseSecondary
         layer.applyRectShadow()
         layer.applyBorder()
         configure(for: false)
@@ -51,8 +51,8 @@ class CollectionViewCell: UICollectionViewCell {
     private func configure(for selected: Bool) {
         layer.shadowOpacity = selected ? 1 : 0
         layer.borderColor = ( selected
-            ? ThemeOG.color.tint
-            : ThemeOG.color.tintLight
+            ? Theme.colour.fillPrimary
+            : Theme.colour.fillTertiary
         ).cgColor
     }
 }

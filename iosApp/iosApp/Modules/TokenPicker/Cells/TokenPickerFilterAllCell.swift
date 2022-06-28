@@ -19,10 +19,10 @@ final class TokenPickerFilterCell: UICollectionViewCell {
         
         iconImageView.layer.cornerRadius = iconImageView.frame.size.width * 0.5
         iconImageView.layer.borderWidth = 1
-        iconImageView.layer.borderColor = ThemeOG.color.tintLight.cgColor
+        iconImageView.layer.borderColor = Theme.colour.fillTertiary.cgColor
         
-        nameLabel.font = ThemeOG.font.body
-        nameLabel.textColor = ThemeOG.color.text
+        nameLabel.font = Theme.font.body
+        nameLabel.textColor = Theme.colour.labelPrimary
     }
     
     func update(
@@ -51,8 +51,8 @@ private extension TokenPickerFilterCell {
     
     func applySelection(to isSelected: Bool) {
         
-        boundingView.backgroundColor = isSelected ? ThemeOG.color.backgroundDark : UIColor.clear
-        let selectedColor = isSelected ? ThemeOG.color.tint : ThemeOG.color.tintLight
+        boundingView.backgroundColor = isSelected ? Theme.colour.backgroundBasePrimary : UIColor.clear
+        let selectedColor = isSelected ? Theme.colour.fillPrimary : Theme.colour.fillTertiary
         boundingView.layer.borderColor = selectedColor.cgColor
     }
 }

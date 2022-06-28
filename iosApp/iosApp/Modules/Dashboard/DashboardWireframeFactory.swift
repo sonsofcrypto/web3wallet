@@ -11,7 +11,6 @@ protocol DashboardWireframeFactory: AnyObject {
 
 final class DefaultDashboardWireframeFactory {
 
-    private let themeProvider: ThemeProvider
     private let keyStoreService: KeyStoreService
     private let accountWireframeFactory: AccountWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
@@ -25,7 +24,6 @@ final class DefaultDashboardWireframeFactory {
     private let nftsService: NFTsService
 
     init(
-        themeProvider: ThemeProvider,
         keyStoreService: KeyStoreService,
         accountWireframeFactory: AccountWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
@@ -38,7 +36,6 @@ final class DefaultDashboardWireframeFactory {
         priceHistoryService: PriceHistoryService,
         nftsService: NFTsService
     ) {
-        self.themeProvider = themeProvider
         self.keyStoreService = keyStoreService
         self.accountWireframeFactory = accountWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
@@ -59,7 +56,6 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
         
         DefaultDashboardWireframe(
             parent: parent,
-            themeProvider: themeProvider,
             keyStoreService: keyStoreService,
             accountWireframeFactory: accountWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,

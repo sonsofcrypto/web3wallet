@@ -21,3 +21,11 @@ extension CGRect {
         CGPoint(x: midX, y: midY)
     }
 }
+
+extension CGFloat {
+    
+    var half: CGFloat {
+        
+        self * 0.5
+    }
+}

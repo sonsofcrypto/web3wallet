@@ -68,8 +68,8 @@ extension ChatViewController {
     func configureUI() {
         
         (view as? GradientView)?.colors = [
-            ThemeOG.color.background,
-            ThemeOG.color.backgroundDark
+            Theme.colour.backgroundBaseSecondary,
+            Theme.colour.backgroundBasePrimary
         ]
         
         bottomContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -77,9 +77,9 @@ extension ChatViewController {
         bottomContainerView.bottomAnchor.constraint(
             equalTo: view.keyboardLayoutGuide.topAnchor
         ).isActive = true
-        bottomContainerView.backgroundColor = ThemeOG.color.backgroundDark
+        bottomContainerView.backgroundColor = Theme.colour.backgroundBasePrimary
         
-        bottomInputBox.backgroundColor = ThemeOG.color.background
+        bottomInputBox.backgroundColor = Theme.colour.backgroundBaseSecondary
         bottomInputBox.layer.cornerRadius = 16
         
         inputTextView.backgroundColor = .clear

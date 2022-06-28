@@ -4,26 +4,26 @@
 
 import UIKit
 
-final class DashboardHeaderBalanceView: UICollectionReusableView, ThemeProviding {
+final class DashboardHeaderBalanceView: UICollectionReusableView {
     
     private lazy var label: UILabel = {
         
         let label = UILabel()
-        label.font = theme.font(for: .largeTitle)
+        label.font = Theme.font.largeTitle
         label.textAlignment = .center
         self.addSubview(label)
         label.addConstraints(
             [
                 .layout(
                     anchor: .leadingAnchor,
-                    constant: .equalTo(constant: theme.padding)
+                    constant: .equalTo(constant: Theme.constant.padding)
                 ),
                 .layout(
                     anchor: .trailingAnchor,
-                    constant: .equalTo(constant: theme.padding)
+                    constant: .equalTo(constant: Theme.constant.padding)
                 ),
-//                .layout(anchor: .topAnchor, constant: .equalTo(constant: theme.padding * 2)),
-                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: theme.padding * 1.5))
+//                .layout(anchor: .topAnchor, constant: .equalTo(constant: Theme.constant.padding * 2)),
+                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: Theme.constant.padding * 1.5))
             ]
         )
         return label

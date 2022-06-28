@@ -21,8 +21,6 @@ private extension AssemblerBootstrapper {
     func makeComponents() -> [AssemblerComponent] {
         
         [
-            // Theme
-            ThemeProviderAssembler(),
             // Services
             AccountServiceAssembler(),
             AppsServiceAssembler(),

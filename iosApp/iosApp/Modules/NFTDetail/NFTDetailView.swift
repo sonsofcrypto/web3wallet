@@ -78,8 +78,8 @@ private extension NFTDetailViewController {
         //view.addConstraints(.toEdges)
         
         (view as? GradientView)?.colors = [
-            ThemeOG.color.background,
-            ThemeOG.color.backgroundDark
+            Theme.colour.backgroundBaseSecondary,
+            Theme.colour.backgroundBasePrimary
         ]
         
         let mainScrollView = makeMainScrollView()

@@ -13,7 +13,7 @@ extension UIButton {
     }
 }
 
-extension UIButton: ThemeProviding {
+extension UIButton {
     
     enum Web3WalletButtonStyle {
         
@@ -30,8 +30,8 @@ extension UIButton: ThemeProviding {
     
     func apply(style: Web3WalletButtonStyle) {
         
-        switch theme {
-        case .themeHome:
+        switch Theme.type {
+        case .themeA:
             applyThemeHome(style: style)
         case .themeOG:
             applyThemeOG(style: style)
@@ -60,11 +60,11 @@ private extension UIButton {
         )
         
         backgroundColor = .clear
-        tintColor = theme.colour(for: .text)
+        tintColor = Theme.colour.labelPrimary
         layer.borderWidth = 0.5
-        layer.borderColor = theme.colour(for: .text).cgColor
+        layer.borderColor = Theme.colour.labelPrimary.cgColor
         layer.cornerRadius = style.height * 0.5
-        titleLabel?.font = theme.font(for: .callout)
+        titleLabel?.font = Theme.font.callout
         titleLabel?.textAlignment = .natural
         imageEdgeInsets = .init(top: 0, left: -10, bottom: 0, right: 0)
         titleEdgeInsets = .init(top: 0, left: 0, bottom: 4, right: 0)
@@ -91,9 +91,9 @@ private extension UIButton {
             ]
         )
         
-        tintColor = theme.colour(for: .text)
-        layer.cornerRadius = theme.cornerRadius
-        titleLabel?.font = theme.font(for: .caption1)
+        tintColor = Theme.colour.labelPrimary
+        layer.cornerRadius = Theme.constant.cornerRadius
+        titleLabel?.font = Theme.font.caption1
         titleLabel?.textAlignment = .center
     }
 }

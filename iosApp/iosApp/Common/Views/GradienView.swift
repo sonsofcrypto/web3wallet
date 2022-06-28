@@ -113,27 +113,25 @@ private extension GradientView {
     
     func configureUI() {
         
-        let themeProvider: ThemeProvider = ServiceDirectory.assembler.resolve()
-        
-        switch themeProvider.current {
+        switch Theme.type {
         case .themeOG:
             colors = [
-                ThemeOG.color.background,
-                ThemeOG.color.backgroundDark
+                Theme.colour.backgroundBaseSecondary,
+                Theme.colour.backgroundBasePrimary
             ]
-        case let .themeHome(themeHome):
+        case .themeA:
             
             if isDashboard {
                 colors = [
-                    themeHome.gradient().topColour,
-                    themeHome.gradient().topColour,
-                    themeHome.gradient().bottomColour,
-                    themeHome.gradient().bottomColour
+                    .init(rgb: 0xE73795),
+                    .init(rgb: 0xE73795),
+                    .init(rgb: 0x351E54),
+                    .init(rgb: 0x351E54)
                 ]
             } else {
                 colors = [
-                    themeHome.gradient().topColour,
-                    themeHome.gradient().bottomColour
+                    .init(rgb: 0xE73795),
+                    .init(rgb: 0x351E54)
                 ]
             }
         }

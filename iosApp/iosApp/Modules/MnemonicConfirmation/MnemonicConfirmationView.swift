@@ -70,18 +70,18 @@ private extension MnemonicConfirmationViewController {
         
         title = Localized("mnemonicConfirmation.title")
         (view as? GradientView)?.colors = [
-            ThemeOG.color.background,
-            ThemeOG.color.backgroundDark
+            Theme.colour.backgroundBaseSecondary,
+            Theme.colour.backgroundBasePrimary
         ]
         
         statusLabel.text = Localized("mnemonicConfirmation.confirm.wallet")
-        statusLabel.font = ThemeOG.font.body
-        statusLabel.textColor = ThemeOG.color.text
+        statusLabel.font = Theme.font.body
+        statusLabel.textColor = Theme.colour.labelPrimary
         
         textView.delegate = self
-        textView.backgroundColor = ThemeOG.color.background.withAlpha(0.8)
-        textView.font = ThemeOG.font.body
-        textView.textColor = ThemeOG.color.text
+        textView.backgroundColor = Theme.colour.backgroundBaseSecondary.withAlpha(0.8)
+        textView.font = Theme.font.body
+        textView.textColor = Theme.colour.labelPrimary
         textView.inputAccessoryView = makeInputAccessoryView()
 
         button.setTitle(Localized("mnemonicConfirmation.title"), for: .normal)
@@ -110,8 +110,8 @@ private extension MnemonicConfirmationViewController {
         let attributedText = NSMutableAttributedString(
             string: textView.text,
             attributes: [
-                .font: ThemeOG.font.body,
-                .foregroundColor: ThemeOG.color.text
+                .font: Theme.font.body,
+                .foregroundColor: Theme.colour.labelPrimary
             ]
         )
         
@@ -127,8 +127,8 @@ private extension MnemonicConfirmationViewController {
             
             attributedText.setAttributes(
                 [
-                    .foregroundColor: ThemeOG.color.red,
-                    .font: ThemeOG.font.body
+                    .foregroundColor: Theme.colour.systemRed,
+                    .font: Theme.font.body
                 ],
                 range: .init(
                     location: location,
@@ -143,7 +143,7 @@ private extension MnemonicConfirmationViewController {
         textView.attributedText = attributedText
         
         textView.layer.borderWidth = hasInvalidWords ? 2 : 0
-        textView.layer.borderColor = hasInvalidWords ? ThemeOG.color.red.cgColor : nil
+        textView.layer.borderColor = hasInvalidWords ? Theme.colour.systemRed.cgColor : nil
         
         textView.inputAccessoryView?.clearSubviews()
         addWords(viewModel.potentialWords, to: textView.inputAccessoryView)
@@ -170,7 +170,7 @@ private extension MnemonicConfirmationViewController {
                 )
             )
         )
-        scrollView.backgroundColor = ThemeOG.color.background.withAlpha(0.8)
+        scrollView.backgroundColor = Theme.colour.backgroundBaseSecondary.withAlpha(0.8)
         addWords([], to: scrollView)
         return scrollView
     }

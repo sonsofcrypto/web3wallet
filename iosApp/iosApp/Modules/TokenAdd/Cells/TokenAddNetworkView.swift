@@ -16,10 +16,10 @@ final class TokenAddNetworkView: UIView {
         super.awakeFromNib()
         
         nameLabel.applyStyle(.smallLabel)
-        nameLabel.textColor = ThemeOG.color.text
+        nameLabel.textColor = Theme.colour.labelPrimary
 
         valueLabel.applyStyle(.body)
-        valueLabel.textColor = ThemeOG.color.tint
+        valueLabel.textColor = Theme.colour.fillPrimary
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         addGestureRecognizer(tapGesture)

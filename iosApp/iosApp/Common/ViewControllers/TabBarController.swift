@@ -12,42 +12,40 @@ class TabBarController: UITabBarController {
         let appearance = tabBar.standardAppearance
         let itemAppearance = appearance.inlineLayoutAppearance
 
-        let themeProvider: ThemeProvider = ServiceDirectory.assembler.resolve()
-
-        switch themeProvider.current {
+        switch Theme.type {
         case .themeOG:
-            appearance.backgroundColor = ThemeOG.color.background.withAlphaComponent(1)
+            appearance.backgroundColor = Theme.colour.backgroundBaseSecondary.withAlphaComponent(1)
 
-            itemAppearance.normal.iconColor = ThemeOG.color.textTertiary
+            itemAppearance.normal.iconColor = Theme.colour.labelTertiary
             itemAppearance.normal.titleTextAttributes = [
-                .foregroundColor: ThemeOG.color.textTertiary,
-                .font: ThemeOG.font.tabBar,
+                .foregroundColor: Theme.colour.labelTertiary,
+                .font: Theme.font.tabBar,
             ]
 
-            itemAppearance.selected.iconColor = ThemeOG.color.tintSecondary
+            itemAppearance.selected.iconColor = Theme.colour.fillSecondary
             itemAppearance.selected.titleTextAttributes = [
-                .foregroundColor: ThemeOG.color.tintSecondary,
-                .font: ThemeOG.font.tabBar,
+                .foregroundColor: Theme.colour.fillSecondary,
+                .font: Theme.font.tabBar,
             ]
             
-            tabBar.tintColor = ThemeOG.color.tintSecondary
+            tabBar.tintColor = Theme.colour.fillSecondary
 
-        case let .themeHome(themeHome):
-            appearance.backgroundColor = themeHome.tabBarColour().backgroundColour
-            
-            itemAppearance.normal.iconColor = themeHome.tabBarColour().itemNormalColour
+        case .themeA:
+            appearance.backgroundColor = UIColor(rgb: 0x555453)
+        
+            itemAppearance.normal.iconColor = Theme.colour.systemBlue
             itemAppearance.normal.titleTextAttributes = [
-                .foregroundColor: themeHome.tabBarColour().itemNormalColour,
-                .font: ThemeOG.font.tabBar,
+                .foregroundColor: Theme.colour.systemBlue,
+                .font: Theme.font.tabBar,
             ]
 
-            itemAppearance.selected.iconColor = themeHome.tabBarColour().itemSelectedColour
+            itemAppearance.selected.iconColor = Theme.colour.systemPink
             itemAppearance.selected.titleTextAttributes = [
-                .foregroundColor: themeHome.tabBarColour().itemSelectedColour,
-                .font: ThemeOG.font.tabBar,
+                .foregroundColor: Theme.colour.systemPink,
+                .font: Theme.font.tabBar,
             ]
             
-            tabBar.tintColor = themeHome.tabBarColour().tintColour
+            tabBar.tintColor = Theme.colour.systemPink
         }
 
         appearance.inlineLayoutAppearance = itemAppearance

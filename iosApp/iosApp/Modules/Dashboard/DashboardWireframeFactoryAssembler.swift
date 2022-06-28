@@ -9,7 +9,6 @@ final class DashboardWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> DashboardWireframeFactory in
             
             DefaultDashboardWireframeFactory(
-                themeProvider: resolver.resolve(),
                 keyStoreService: resolver.resolve(),
                 accountWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),

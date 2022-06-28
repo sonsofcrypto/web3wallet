@@ -66,7 +66,7 @@ extension TokenAddViewController {
             .init(named: "add_icon"),
             for: .normal
         )
-        button.tintColor = ThemeOG.color.tint
+        button.tintColor = Theme.colour.fillPrimary
         button.addTarget(self, action: #selector(addTokenTapped), for: .touchUpInside)
         button.addConstraints(
             [

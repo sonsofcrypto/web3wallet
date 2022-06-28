@@ -10,11 +10,11 @@ extension UIViewController {
         
         let titleLabel = UILabel(frame: .zero)
         titleLabel.textAlignment = .center
-        switch theme {
+        switch Theme.type {
         case .themeOG:
             titleLabel.applyStyle(.navTitle)
             titleLabel.text = title
-        case .themeHome:
+        case .themeA:
             titleLabel.text = title?.capitalized
         }
         navigationItem.titleView = titleLabel
@@ -62,17 +62,17 @@ extension UIViewController {
     }
 }
 
-extension UIViewController: ThemeProviding {}
+extension UIViewController {}
 
 private extension UIViewController {
     
     var themeNavBarTint: UIColor? {
         
-        switch theme {
+        switch Theme.type {
         case .themeOG:
-            return ThemeOG.color.tint
-        case let .themeHome(themeHome):
-            return themeHome.navBarColour().tintColour
+            return Theme.colour.fillPrimary
+        case .themeA:
+            return .init(named: "orange")
         }
     }
 }

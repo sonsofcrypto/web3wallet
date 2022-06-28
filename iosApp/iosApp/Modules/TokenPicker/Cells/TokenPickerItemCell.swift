@@ -24,16 +24,16 @@ final class TokenPickerItemCell: UICollectionViewCell {
         super.awakeFromNib()
         
         iconImageView.layer.cornerRadius = iconImageView.frame.size.width * 0.5
-        iconImageView.backgroundColor = ThemeOG.color.text
+        iconImageView.backgroundColor = Theme.colour.labelPrimary
                         
         nameLabel.applyStyle(.body)
-        nameLabel.textColor = ThemeOG.color.text
+        nameLabel.textColor = Theme.colour.labelPrimary
         
         symbolLabel.applyStyle(.callout)
-        symbolLabel.textColor = ThemeOG.color.textSecondary
+        symbolLabel.textColor = Theme.colour.labelSecondary
 
         networkLabel.applyStyle(.smallLabel)
-        networkLabel.textColor = ThemeOG.color.textTertiary
+        networkLabel.textColor = Theme.colour.labelTertiary
         
         multiSelectTick.isHidden = true
         
@@ -68,7 +68,7 @@ final class TokenPickerItemCell: UICollectionViewCell {
 
         case let .multiSelect(isSelected):
             multiSelectTick.isHidden = false
-            multiSelectTick.tintColor = isSelected ? ThemeOG.color.tint : ThemeOG.color.tintLight
+            multiSelectTick.tintColor = isSelected ? Theme.colour.fillPrimary : Theme.colour.fillTertiary
 
         case let .send(tokens, usdTotal):
             symbolLabel.isHidden = true

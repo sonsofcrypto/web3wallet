@@ -190,14 +190,14 @@ private extension QRCodeScanViewController {
     func addActivityIndicatorView() {
         
         let view = UIView()
-        view.backgroundColor = ThemeOG.color.background
+        view.backgroundColor = Theme.colour.backgroundBaseSecondary
         view.layer.cornerRadius = 24
-        view.layer.borderColor = ThemeOG.color.tintLight.cgColor
+        view.layer.borderColor = Theme.colour.fillTertiary.cgColor
         view.layer.borderWidth = 1
         
         let activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.startAnimating()
-        activityIndicator.color = ThemeOG.color.tint
+        activityIndicator.color = Theme.colour.fillPrimary
         view.addSubview(activityIndicator)
         activityIndicator.addConstraints(
             [

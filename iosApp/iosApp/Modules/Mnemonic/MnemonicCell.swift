@@ -23,8 +23,12 @@ final class MnemonicCell: CollectionViewCell {
     }
 
     func configure() {
-        var attrs = ThemeOG.attributes.body()
-        attrs[.font] = ThemeOG.font.headline
+        var attrs: [NSAttributedString.Key: Any] = [
+            .font: Theme.font.body,
+            .foregroundColor: Theme.colour.labelPrimary,
+            .shadow: textShadow(Theme.colour.fillSecondary)
+        ]
+        attrs[.font] = Theme.font.headline
 
         textView.typingAttributes = attrs
         textView.backgroundColor = .clear
@@ -34,6 +38,14 @@ final class MnemonicCell: CollectionViewCell {
         overlay.clipsToBounds = true
         overlayLabel.text = Localized("newMnemonic.tapToReveal")
         overlayLabel.applyStyle(.headlineGlow)
+    }
+    
+    func textShadow(_ tint: UIColor) -> NSShadow {
+        let shadow = NSShadow()
+        shadow.shadowOffset = .zero
+        shadow.shadowBlurRadius = Global.shadowRadius
+        shadow.shadowColor = tint
+        return shadow
     }
 
     func update(

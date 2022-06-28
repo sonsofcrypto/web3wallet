@@ -32,12 +32,12 @@ class Button: UIButton {
     }
 
     func configureUI() {
-        backgroundColor = ThemeOG.color.background
+        backgroundColor = Theme.colour.backgroundBaseSecondary
         layer.applyRectShadow()
         layer.applyBorder()
         layer.applyHighlighted(false)
         titleLabel?.applyStyle(.callout)
-        tintColor = ThemeOG.color.text
+        tintColor = Theme.colour.labelPrimary
     }
 }
 

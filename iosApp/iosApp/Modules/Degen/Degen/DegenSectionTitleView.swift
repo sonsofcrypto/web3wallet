@@ -19,7 +19,18 @@ extension DegenSectionTitleView {
 
         label.attributedText = NSAttributedString(
             string: viewModel?.sectionTitle ?? "",
-            attributes: ThemeOG.attributes.sectionFooter()
+            attributes: sectionFooter()
         )
+    }
+    
+    private func sectionFooter() -> [NSAttributedString.Key: Any] {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 6
+        
+        return [
+            .font: Theme.font.callout,
+            .foregroundColor: Theme.colour.labelTertiary,
+            .paragraphStyle: paragraphStyle
+        ]
     }
 }

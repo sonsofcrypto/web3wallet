@@ -13,12 +13,12 @@ final class SwapInputView: UIView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = UIColor.bgGradientTopSecondary
+        backgroundColor = Theme.colour.backgroundBaseSecondary
         layer.cornerRadius = Global.cornerRadius
         layer.masksToBounds = true
 
-        textField.textColor = ThemeOG.color.text
-        textField.font = ThemeOG.font.title1
+        textField.textColor = Theme.colour.labelPrimary
+        textField.font = Theme.font.title1
         textField.keyboardType = .decimalPad
 
         currencyButton.rightImageView.image = UIImage(named: "chevron_down")
@@ -27,7 +27,7 @@ final class SwapInputView: UIView {
         currencyButton.titleLabel?.textAlignment = .center
 
         [fiatValueLabel, balanceLabel].forEach {
-            $0.textColor = ThemeOG.color.textSecondary
+            $0.textColor = Theme.colour.labelSecondary
         }
 
         [currencyButton, balanceLabel].forEach {

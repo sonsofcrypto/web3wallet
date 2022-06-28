@@ -53,7 +53,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func rebootUI() {
 
-        MainBootstrapper(window: window).boot()
+        //MainBootstrapper(window: window).boot()
+        
+        //Theme =
+        
+        //let a = Theme.colour.fillPrimary
     }
 }
 

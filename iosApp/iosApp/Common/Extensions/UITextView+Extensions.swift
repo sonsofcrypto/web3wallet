@@ -29,54 +29,54 @@ extension UITextView {
     func applyStyle(_ style: Style) {
         switch style {
         case .navTitle:
-            font = ThemeOG.font.navTitle
-            textColor = ThemeOG.color.tint
+            font = Theme.font.navTitle
+            textColor = Theme.colour.fillPrimary
         case .headlineGlow:
-            font = ThemeOG.font.headline
-            layer.applyShadow(ThemeOG.color.tintSecondary)
-            textColor = ThemeOG.color.text
+            font = Theme.font.headline
+            layer.applyShadow(Theme.colour.fillSecondary)
+            textColor = Theme.colour.labelPrimary
         case .callout:
-            font = ThemeOG.font.callout
-            //layer.applyShadow(ThemeOG.color.tintSecondary)
-            textColor = ThemeOG.color.text
+            font = Theme.font.callout
+            //layer.applyShadow(Theme.colour.fillSecondary)
+            textColor = Theme.colour.labelPrimary
             update(lineSpacing: 6)
         case .subhead:
-            font = ThemeOG.font.subhead
-            textColor = ThemeOG.color.textSecondary
+            font = Theme.font.subheadline
+            textColor = Theme.colour.labelSecondary
         case .subheadGlow:
-            font = ThemeOG.font.subhead
-            layer.applyShadow(ThemeOG.color.tintSecondary)
-            textColor = ThemeOG.color.text
-            font = ThemeOG.font.subhead
-            layer.applyShadow(ThemeOG.color.tintSecondary)
-            textColor = ThemeOG.color.text
+            font = Theme.font.subheadline
+            layer.applyShadow(Theme.colour.fillSecondary)
+            textColor = Theme.colour.labelPrimary
+            font = Theme.font.subheadline
+            layer.applyShadow(Theme.colour.fillSecondary)
+            textColor = Theme.colour.labelPrimary
         case .body:
-            font = ThemeOG.font.subhead
-            textColor = ThemeOG.color.text
+            font = Theme.font.subheadline
+            textColor = Theme.colour.labelPrimary
             update(lineSpacing: 8)
         case .bodyGlow:
-            font = ThemeOG.font.body
-            layer.applyShadow(ThemeOG.color.tintSecondary)
-            textColor = ThemeOG.color.text
+            font = Theme.font.body
+            layer.applyShadow(Theme.colour.fillSecondary)
+            textColor = Theme.colour.labelPrimary
         case.smallLabel:
-            font = ThemeOG.font.footnote
-            textColor = ThemeOG.color.textTertiary
+            font = Theme.font.footnote
+            textColor = Theme.colour.labelTertiary
         case.smallerLabel:
             font = UIFont.font(.gothicA1, style: .medium, size: .caption1)
-            textColor = ThemeOG.color.textSecondary
+            textColor = Theme.colour.labelSecondary
         case.smallestLabel:
             font = UIFont.font(.gothicA1, style: .medium, size: .caption2)
-            textColor = ThemeOG.color.textTertiary
+            textColor = Theme.colour.labelTertiary
         case.smallestLabelGlow:
             layer.applyShadow(
-                ThemeOG.color.tintSecondary,
+                Theme.colour.fillSecondary,
                 radius: Global.shadowRadius / 2
             )
-            font = ThemeOG.font.caption2
-            textColor = ThemeOG.color.tintSecondary
+            font = Theme.font.caption2
+            textColor = Theme.colour.fillSecondary
         case .smallBody:
-            font = ThemeOG.font.footnote
-            textColor = ThemeOG.color.textSecondary
+            font = Theme.font.footnote
+            textColor = Theme.colour.labelSecondary
         }
     }
 }
