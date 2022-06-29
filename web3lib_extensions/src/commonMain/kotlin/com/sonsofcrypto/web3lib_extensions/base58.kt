@@ -59,7 +59,7 @@ fun ByteArray.encodeToBase58String(): String {
         encoded[--outputStart] = ENCODED_ZERO
     }
     // Return encoded string (including encoded leading zeros).
-    return String(encoded, outputStart, encoded.size - outputStart)
+    return encoded.concatToString(outputStart, encoded.size - outputStart)
 }
 
 /**
