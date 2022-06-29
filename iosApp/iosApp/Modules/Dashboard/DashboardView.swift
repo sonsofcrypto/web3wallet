@@ -23,24 +23,29 @@ final class DashboardViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
         configureUI()
-        presenter?.present()
+        
+        presenter.present()
     }
-
+    
     override func viewWillLayoutSubviews() {
+        
         super.viewWillLayoutSubviews()
+        
         let length = (view.bounds.width - Global.padding * 2 - Constant.spacing) / 2
         walletCellSize = CGSize(width: length, height: length)
         nftsCellSize = CGSize(
             width: view.bounds.width - Global.padding * 2,
             height: length)
     }
+}
 
-    // MARK: - Actions
-
+extension DashboardViewController {
+    
     @IBAction func receiveAction(_ sender: Any) {
-        
         presenter.handle(.receiveAction)
     }
 
@@ -55,16 +60,16 @@ final class DashboardViewController: BaseViewController {
     @IBAction func walletConnectionSettingsAction(_ sender: Any) {
         presenter.handle(.walletConnectionSettingsAction)
     }
-
 }
-
-// MARK: - DashboardView
 
 extension DashboardViewController: DashboardView {
 
     func update(with viewModel: DashboardViewModel) {
+        
         self.viewModel = viewModel
+        
         collectionView.reloadData()
+        
         if let btn = navigationItem.leftBarButtonItem as? AnimatedTextBarButton {
             let nonAnimMode: AnimatedTextButton.Mode = btn.mode == .animating ? .static : .hidden
             btn.setMode(
@@ -72,15 +77,8 @@ extension DashboardViewController: DashboardView {
                 animated: true
             )
         }
-        let pctLabel = navigationItem.rightBarButtonItem?.customView as? UILabel
-        pctLabel?.text = viewModel.header.pct
-        pctLabel?.textColor = viewModel.header.pctUp
-            ? Theme.color.green
-            : Theme.color.red
     }
 }
-
-// MARK: - UICollectionViewDataSource
 
 extension DashboardViewController: UICollectionViewDataSource {
 
@@ -96,7 +94,11 @@ extension DashboardViewController: UICollectionViewDataSource {
     }
     
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        
         guard let section = viewModel?.sections[indexPath.section] else {
             fatalError("No viewModel for \(indexPath) \(collectionView)")
         }
@@ -112,9 +114,16 @@ extension DashboardViewController: UICollectionViewDataSource {
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        
         if kind == UICollectionView.elementKindSectionHeader {
+            
             switch indexPath.section {
+                
             case 0:
                 let supplementary = collectionView.dequeue(
                     DashboardHeaderView.self,
@@ -124,6 +133,7 @@ extension DashboardViewController: UICollectionViewDataSource {
                 supplementary.update(with: viewModel?.header)
                 addActions(for: supplementary)
                 return supplementary
+                
             default:
                 let supplementary = collectionView.dequeue(
                     DashboardSectionHeaderView.self,
@@ -139,11 +149,14 @@ extension DashboardViewController: UICollectionViewDataSource {
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
-
 extension DashboardViewController: UICollectionViewDelegateFlowLayout {
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        
         if indexPath.item >= viewModel?.sections[indexPath.section].wallets.count ?? 0 {
             return nftsCellSize
         }
@@ -151,27 +164,34 @@ extension DashboardViewController: UICollectionViewDelegateFlowLayout {
         return walletCellSize
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        CGSize(
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+    ) -> CGSize {
+        
+        .init(
             width: view.bounds.width - Global.padding * 2,
             height: section == 0 ? Constant.headerHeight : Constant.sectionHeaderHeight
         )
     }
 }
 
-// MARK: - UICollectionViewDelegate
-
 extension DashboardViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let section = viewModel?.sections[indexPath.section]
-        if indexPath.item < section?.wallets.count ?? 0 {
-            presenter.handle(.didSelectWallet(idx: indexPath.item))
-        }
-        // TODO: implement NFT selection
+        
+        guard let section = viewModel?.sections[indexPath.section] else { return }
+        let symbol = section.wallets[indexPath.item].ticker
+        presenter.handle(.didSelectWallet(network: section.name, symbol: symbol))
     }
 
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        
         guard lastVelocity > 0 else {
             return
         }
@@ -189,8 +209,6 @@ extension DashboardViewController: UICollectionViewDelegate {
     }
 }
 
-// MARK: - UIScrollViewDelegate
-
 extension DashboardViewController: UIScrollViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -199,8 +217,6 @@ extension DashboardViewController: UIScrollViewDelegate {
     }
 }
 
-// MARK: - UIViewControllerTransitioningDelegate
-
 extension DashboardViewController: UIViewControllerTransitioningDelegate {
 
     func animationController(
@@ -208,6 +224,7 @@ extension DashboardViewController: UIViewControllerTransitioningDelegate {
         presenting: UIViewController,
         source: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
+        
         let presentedVc = (presented as? UINavigationController)?.topViewController
         animatedTransitioning = nil
 
@@ -223,6 +240,7 @@ extension DashboardViewController: UIViewControllerTransitioningDelegate {
     }
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
         let presentedVc = (dismissed as? UINavigationController)?.topViewController
         animatedTransitioning = nil
 
@@ -244,6 +262,7 @@ extension DashboardViewController: UIViewControllerTransitioningDelegate {
 extension DashboardViewController {
     
     func configureUI() {
+        
         title = Localized("dashboard")
         (view as? GradientView)?.colors = [
             Theme.color.background,
@@ -262,7 +281,6 @@ extension DashboardViewController {
             withReuseIdentifier: "\(DashboardSectionHeaderView.self)"
         )
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem.glowLabel()
         let btn = AnimatedTextBarButton(
             with: [
                 "Wallet",
@@ -274,6 +292,21 @@ extension DashboardViewController {
         )
         btn.setMode(.hidden, animated: true)
         navigationItem.leftBarButtonItem = btn
+        
+        let button = UIButton()
+        button.setImage(
+            .init(named: "list_settings_icon"),
+            for: .normal
+        )
+        button.tintColor = Theme.color.red
+        button.addTarget(self, action: #selector(editTokensTapped), for: .touchUpInside)
+        button.addConstraints(
+            [
+                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
+            ]
+        )
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
 
         transitioningDelegate = self
 
@@ -290,9 +323,12 @@ extension DashboardViewController {
 
         edgeCardsController?.delegate = self
     }
+    
+    @objc func editTokensTapped() {
+        
+        presenter.handle(.didTapEditTokens)
+    }
 }
-
-// MARK: -
 
 extension DashboardViewController: EdgeCardsControllerDelegate {
 
@@ -303,8 +339,6 @@ extension DashboardViewController: EdgeCardsControllerDelegate {
         presenter.handle(.didInteractWithCardSwitcher)
     }
 }
-
-// MARK: - Utilities
 
 private extension DashboardViewController {
 
@@ -326,8 +360,6 @@ private extension DashboardViewController {
         )
     }
 }
-
-// MARK: - Constant
 
 extension DashboardViewController {
 

@@ -7,38 +7,37 @@ import UIKit
 protocol AccountWireframeFactory {
 
     func makeWireframe(
-        _ parent: UIViewController,
-        wallet: KeyStoreItem,
-        token: Token
+        presentingIn: UIViewController,
+        context: AccountWireframeContext
     ) -> AccountWireframe
 }
 
 final class DefaultAccountWireframeFactory {
 
-    private let accountService: AccountService
+    private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
+    private let priceHistoryService: PriceHistoryService
 
     init(
-        accountService: AccountService
+        tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
+        priceHistoryService: PriceHistoryService
     ) {
-        self.accountService = accountService
+        self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
+        self.priceHistoryService = priceHistoryService
     }
 }
 
 extension DefaultAccountWireframeFactory: AccountWireframeFactory {
 
     func makeWireframe(
-        _ parent: UIViewController,
-        wallet: KeyStoreItem,
-        token: Token
+        presentingIn: UIViewController,
+        context: AccountWireframeContext
     ) -> AccountWireframe {
         
         DefaultAccountWireframe(
-            parent: parent,
-            interactor: DefaultAccountInteractor(
-                accountService: accountService,
-                wallet: wallet,
-                token: token
-            )
+            presentingIn: presentingIn,
+            context: context,
+            tokenReceiveWireframeFactory: tokenReceiveWireframeFactory,
+            priceHistoryService: priceHistoryService
         )
     }
 }

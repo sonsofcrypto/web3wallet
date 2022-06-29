@@ -86,15 +86,27 @@ extension SettingsViewController: UICollectionViewDataSource {
 
 extension SettingsViewController: UICollectionViewDelegate {
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        
         presenter.handle(.didSelectItemAt(idxPath: indexPath))
     }
 }
 
 extension SettingsViewController: UICollectionViewDelegateFlowLayout {
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 32, height: Global.cellHeightSmall)
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        
+        .init(
+            width: collectionView.frame.width - Global.padding * 2,
+            height: Global.cellHeightSmall
+        )
     }
 }
 

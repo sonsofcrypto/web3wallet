@@ -84,21 +84,21 @@ final class KeyStoreViewController: BaseViewController {
     }
 
     func debugPrint(_ msg: String? = nil) {
-        return;
-        if let msg = msg {
-            print(msg)
-        }
-        print("view bounds", view.bounds)
-        print("view safeAreaInsets", view.safeAreaInsets)
-        print("view alignmentRectInsets", view.alignmentRectInsets)
-        print("cv contentInset", collectionView.contentInset)
-        print("cv contentSize", collectionView.contentSize)
-        print("bcv bounds", buttonsCollectionView.bounds)
-        print("bcv contentSize", buttonsCollectionView.contentSize)
-        print("bcv contentOffset", buttonsCollectionView.contentOffset)
-        print("bcv safeAreaInsets", buttonsCollectionView.safeAreaInsets)
-        print("bcv contentInset", buttonsCollectionView.contentInset)
-        print("=======")
+
+//        if let msg = msg {
+//            print(msg)
+//        }
+//        print("view bounds", view.bounds)
+//        print("view safeAreaInsets", view.safeAreaInsets)
+//        print("view alignmentRectInsets", view.alignmentRectInsets)
+//        print("cv contentInset", collectionView.contentInset)
+//        print("cv contentSize", collectionView.contentSize)
+//        print("bcv bounds", buttonsCollectionView.bounds)
+//        print("bcv contentSize", buttonsCollectionView.contentSize)
+//        print("bcv contentOffset", buttonsCollectionView.contentOffset)
+//        print("bcv safeAreaInsets", buttonsCollectionView.safeAreaInsets)
+//        print("bcv contentInset", buttonsCollectionView.contentInset)
+//        print("=======")
     }
 }
 

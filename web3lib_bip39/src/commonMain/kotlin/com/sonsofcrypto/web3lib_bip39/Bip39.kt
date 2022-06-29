@@ -108,6 +108,8 @@ class Bip39(val mnemonic: List<String>, val salt: String, val worldList: WordLis
                 words.add(worldList.word(idx))
             }
 
+            // TODO("Check that seed produces valid master key")
+
             return Bip39(words, salt, worldList)
         }
 

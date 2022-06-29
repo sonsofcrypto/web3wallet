@@ -4,7 +4,7 @@
 
 import UIKit
 
-class AccountHeaderCell: UICollectionViewCell {
+final class AccountHeaderCell: UICollectionViewCell {
     
     @IBOutlet weak var containerStack: UIStackView!
     @IBOutlet weak var balanceLabel: UILabel!
@@ -14,8 +14,12 @@ class AccountHeaderCell: UICollectionViewCell {
     @IBOutlet weak var tradeButton: UIButton!
     @IBOutlet weak var moreButton: UIButton!
     
+    private var viewModel: AccountViewModel.Header?
+    
     override func awakeFromNib() {
+        
         super.awakeFromNib()
+        
         balanceLabel.textColor = Theme.color.text
         balanceLabel.font = Theme.font.hugeBalance
         balanceFiatLabel.applyStyle(.subhead)
@@ -37,13 +41,35 @@ class AccountHeaderCell: UICollectionViewCell {
     }
 }
 
-// MARK: - AccountViewModel
+extension AccountHeaderCell {
+    
+    @IBAction func receiveAction(_ sender: Any) {
+
+        viewModel?.buttons[0].onTap()
+    }
+
+    @IBAction func sendAction(_ sender: Any) {
+
+    }
+
+    @IBAction func tradeAction(_ sender: Any) {
+
+    }
+
+    @IBAction func moreAction(_ sender: Any) {
+
+    }
+}
 
 extension AccountHeaderCell {
 
     func update(with viewModel: AccountViewModel.Header?) {
+        
+        self.viewModel = viewModel
+        
         balanceLabel.text = viewModel?.balance
         balanceFiatLabel.text = viewModel?.fiatBalance
+        
         [receiveButton, sendButton, tradeButton, moreButton].enumerated().forEach {
             let button = viewModel?.buttons[$0.0]
             $0.1?.setImage(UIImage(named: button?.imageName ?? ""), for: .normal)

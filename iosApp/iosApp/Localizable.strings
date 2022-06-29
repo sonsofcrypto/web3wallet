@@ -17,6 +17,7 @@
 "send" = "Send";
 "trade" = "Trade";
 "more" = "More";
+"done" = "Done";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";
@@ -111,3 +112,61 @@
 "nft.detail.button.send" = "Send";
 "nft.detail.section.title.description" = "Description";
 "nft.detail.section.title.properties" = "Properties";
+
+"chat" = "web3chat";
+"chat.colletion.top.cell.body" = "List of upcoming web3 apps, of course all will be fully decentralised! 🚀🚀🚀";
+"chat.item.web3chat" = "web3chat";
+
+"chat.friend.message1" = "Hi, how can I help?";
+"chat.friend.message2" = "Sure";
+"chat.friend.message3" = "A good place to start would be to follow us at @sonsofcrypto on twitter";
+"chat.friend.message4" = "Sure, will do ser!";
+"chat.friend.message5" = "By the way, did you manage to go to the #CULT event last weekend?";
+"chat.friend.message6" = "It was sick! 😎";
+"chat.friend.message7" = "Stay tunned Ser!";
+
+"chat.me.message1" = "I would like to find out more about SonsOfCrypto";
+"chat.me.message2" = "Perfect, I will check this out";
+"chat.me.message3" = "Also, please tell SonsOfCrypto team that they rock! 🔥";
+
+"tokenPicker.title.receive" = "Receive";
+"tokenPicker.title.send" = "Send";
+"tokenPicker.title.multiSelectEdit" = "Select";
+"tokenPicker.networks.all" = "All networks";
+"tokenPicker.featured.title" = "Featured";
+"tokenPicker.popular.title" = "Popular";
+"tokenPicker.all.title" = "All coins";
+"tokenPicker.noResults" = "No results";
+
+"tokenReceive.title.receive" = "Receive %@";
+"tokenReceive.qrcode.name" = "web3wallet";
+"tokenReceive.disclaimer" = "Send only %@ to this address. Sending any other coins may result in permanent loss.";
+"tokenReceive.action.copy" = "Copy";
+"tokenReceive.action.copy.toast" = "Address copied to your clipboard";
+"tokenReceive.action.share" = "Share";
+"tokenReceive.action.share.address" = "My Public Address to Receive %@:";
+"tokenReceive.action.add" = "Add";
+"tokenReceive.action.add.toast" = "+%@ coins added to your wallet!";
+
+"tokenAdd.title" = "Add Token";
+"tokenAdd.network.title" = "Network";
+"tokenAdd.contractAddress.title" = "Contract Address";
+"tokenAdd.contractAddress.placeholder" = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
+"tokenAdd.name.title" = "Name";
+"tokenAdd.name.placeholder" = "USD Coin";
+"tokenAdd.symbol.title" = "Symbol";
+"tokenAdd.symbol.placeholder" = "USDC";
+"tokenAdd.decimals.title" = "Decimals";
+"tokenAdd.decimals.placeholder" = "1-32";
+"tokenAdd.validation.field.required" = "This field is required";
+"tokenAdd.validation.field.address.ethereum.invalid" = "Invalid Ethereum address";
+"tokenAdd.validation.field.address.solana.invalid" = "Invalid Solana address";
+"tokenAdd.validation.field.decimal.int" = "This must be a valid Int";
+"tokenAdd.validation.field.decimal.range" = "Number should be between 0 and 32";
+
+"networkPicker.title" = "Select network";
+"networkPicker.noResults" = "No results";
+
+"qrCodeScan.title" = "Scan QR code";
+"qrCodeScan.error.notSupported.title" = "Scanning not supported";
+"qrCodeScan.error.notSupported.message" = "Your device does not support QR code scanning. Please use a device with a camera.";

@@ -42,7 +42,7 @@ extension DefaultSwapWireframe: SwapWireframe {
     }
 
     func navigate(to destination: SwapWireframeDestination) {
-        print("navigate to \(destination)")
+
     }
 }
 

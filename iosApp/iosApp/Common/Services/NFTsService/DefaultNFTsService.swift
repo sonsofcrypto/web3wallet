@@ -66,4 +66,19 @@ extension DefaultNFTsService: NFTsService {
         
         onCompletion(.success(Self.yourNFTCollections))
     }
+    
+    func yourNFTs(
+        forNetwork network: Web3Network
+    ) -> [NFTItem] {
+        
+        switch network.name.lowercased() {
+            
+        case "ethereum":
+            
+            return Self.yourNFTs
+        default:
+            
+            return []
+        }
+    }
 }

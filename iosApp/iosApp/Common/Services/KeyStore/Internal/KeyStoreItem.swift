@@ -83,7 +83,7 @@ extension KeyStoreItem {
         return .init(
             uuid: UUID(),
             mnemonicSalt: "",
-            password: password ?? "",
+            password: password,
             mnemonic: mnemonic.joined(separator: " "),
             name: "",
             saltMnemonic: false,

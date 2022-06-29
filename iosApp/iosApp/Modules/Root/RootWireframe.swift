@@ -73,7 +73,16 @@ extension DefaultRootWireframe: RootWireframe {
         dashboardWireframeFactory.makeWireframe(tabVc).present()
         degenWireframeFactory.makeWireframe(tabVc).present()
         nftsDashboardWireframeFactory.makeWireframe(tabVc).present()
-        appsWireframeFactory.makeWireframe(tabVc).present()
+        if FeatureFlag.embedChatInTab.isEnabled {
+            
+            let chatWireframeFactory: ChatWireframeFactory = ServiceDirectory.assembler.resolve()
+            chatWireframeFactory.makeWireframe(
+                presentingIn: tabVc,
+                context: .init(presentationStyle: .embed)
+            ).present()
+        } else {
+            appsWireframeFactory.makeWireframe(tabVc).present()
+        }
         settingsWireframeFactory.makeWireframe(tabVc).present()
         
         window?.rootViewController = vc

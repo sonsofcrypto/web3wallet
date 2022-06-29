@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "currency_icon_small_mngo@3x.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -4,7 +4,7 @@
 
 import UIKit
 
-class DashboardWalletCell: CollectionViewCell {
+final class DashboardWalletCell: CollectionViewCell {
 
     @IBOutlet weak var contentStack: UIStackView!
     @IBOutlet weak var topContentStack: UIStackView!
@@ -16,29 +16,40 @@ class DashboardWalletCell: CollectionViewCell {
     @IBOutlet weak var cryptoBalanceLabel: UILabel!
     
     override func awakeFromNib() {
+        
         super.awakeFromNib()
+        
         layer.cornerRadius = Global.cornerRadius * 2
+        
+        imageView.layer.cornerRadius = imageView.frame.size.width * 0.5
+        imageView.backgroundColor = Theme.color.text
+        
         contentStack.setCustomSpacing(13, after: topContentStack)
+        
         currencyLabel.applyStyle(.callout)
+        
         pctChangeLabel.applyStyle(.callout)
+        
         [fiatBalanceLabel, pctChangeLabel].forEach { $0.applyStyle(.smallLabel) }
         fiatBalanceLabel.textColor = Theme.color.textSecondary
+        
         cryptoBalanceLabel.applyStyle(.callout)
     }
 
     override func prepareForReuse() {
+        
         super.prepareForReuse()
+        
         layer.transform = CATransform3DIdentity
         layer.removeAllAnimations()
     }
 }
 
-// MARK: - DashboardViewModel
-
 extension DashboardWalletCell {
 
     func update(with viewModel: DashboardViewModel.Wallet) {
-        imageView.image = UIImage(named: viewModel.imageName)
+        
+        imageView.image = viewModel.imageData.pngImage
         currencyLabel.text = viewModel.name
         fiatBalanceLabel.text = viewModel.fiatBalance
         pctChangeLabel.text = viewModel.pctChange

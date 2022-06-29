@@ -6,9 +6,6 @@ import com.sonsofcrypto.web3lib_bip39.*
 import com.sonsofcrypto.web3lib_crypto.*
 import android.widget.TextView
 
-fun greet(): String {
-    return Greeting().greeting()
-}
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,8 +14,9 @@ class MainActivity : AppCompatActivity() {
 
         val tv: TextView = findViewById(R.id.text_view)
         Crypto.setProvider(AndroidCryptoPrimitivesProvider())
-        tv.text = greet() + String(Crypto.secureRand(128))
+        tv.text = Crypto.secureRand(128).toString()
 
-        TmpTest().runAll()
+        Bip39Test().runAll()
+        Bip44Test().runAll()
     }
 }
