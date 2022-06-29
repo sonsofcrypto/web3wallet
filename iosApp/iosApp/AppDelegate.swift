@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let bytes = try! Crypto.shared.secureRand(size: 16)
         let data = bytes.data()
         let string = String(data: data, encoding: .ascii) ?? ""
-        print("Testing web3lib integration", Greeting().greeting() + string)
+        print("Testing web3lib integration", string)
         return true
     }
 
