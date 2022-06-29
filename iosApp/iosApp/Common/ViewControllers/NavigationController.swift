@@ -4,7 +4,7 @@
 
 import UIKit
 
-class NavigationController: UINavigationController {
+final class NavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -12,7 +12,9 @@ class NavigationController: UINavigationController {
         let appearance = navigationBar.standardAppearance
 
         switch Theme.type {
+            
         case .themeOG:
+            
             let titleShadow = NSShadow()
             titleShadow.shadowOffset = .zero
             titleShadow.shadowBlurRadius = Global.shadowRadius
@@ -25,9 +27,10 @@ class NavigationController: UINavigationController {
             titleShadow.shadowColor = Theme.colour.fillPrimary
 
         case .themeA:
-            appearance.backgroundColor = .init(rgb: 0x1D1D1D).withAlpha(0.94)
+            
+            appearance.backgroundColor = Theme.colour.navBarBackground
             appearance.titleTextAttributes = [
-                .foregroundColor: Theme.colour.systemOrange,
+                .foregroundColor: Theme.colour.navBarTint,
                 .font: Theme.font.navTitle
             ]
         }

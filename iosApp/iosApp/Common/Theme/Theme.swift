@@ -49,6 +49,13 @@ struct ThemeFont {
 
 struct ThemeColour {
     
+    let navBarBackground: UIColor
+    let navBarTint: UIColor
+
+    let tabBarBackground: UIColor
+    let tabBarTint: UIColor
+    let tabBarTintSelected: UIColor
+
     let systemRed: UIColor
     let systemOrange: UIColor
     let systemYellow: UIColor

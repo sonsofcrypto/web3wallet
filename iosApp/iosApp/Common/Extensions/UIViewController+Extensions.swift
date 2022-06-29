@@ -6,20 +6,6 @@ import UIKit
 
 extension UIViewController {
     
-    func configureNavigationBar(title: String?) {
-        
-        let titleLabel = UILabel(frame: .zero)
-        titleLabel.textAlignment = .center
-        switch Theme.type {
-        case .themeOG:
-            titleLabel.applyStyle(.navTitle)
-            titleLabel.text = title
-        case .themeA:
-            titleLabel.text = title?.capitalized
-        }
-        navigationItem.titleView = titleLabel
-    }
-
     func configureNavBarLeftAction(icon: String? = nil) {
         
         let icon = icon ?? (navigationController?.viewControllers.count == 1 ? "close_icon" : "arrow_back")

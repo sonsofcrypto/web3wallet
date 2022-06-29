@@ -10,6 +10,7 @@ final class DashboardHeaderBalanceView: UICollectionReusableView {
         
         let label = UILabel()
         label.font = Theme.font.largeTitle
+        label.textColor = Theme.colour.labelPrimary
         label.textAlignment = .center
         self.addSubview(label)
         label.addConstraints(

@@ -62,7 +62,7 @@ extension TokenPickerViewController: TokenPickerView {
 
         self.viewModel = viewModel
         
-        configureNavigationBar(title: viewModel.title)
+        title = viewModel.title
         
         clearSearchButton.isHidden = searchTextField.text?.isEmpty ?? true
         

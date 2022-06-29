@@ -6,13 +6,18 @@ import UIKit
 
 struct ThemeOG: Themable {
     
-    private let name: String = "ThemeOG"
+    private let name: String = "themeOG"
     
     var type: ThemeType { .themeOG }
 
     var colour: ThemeColour {
         
         .init(
+            navBarBackground: .init(rgb: 0x1D1D1D).withAlpha(0.94),
+            navBarTint: .init(named: "\(name)-system-orange")!,
+            tabBarBackground: .init(rgb: 0x161616).withAlpha(0.84),
+            tabBarTint: .init(named: "\(name)-system-orange")!,
+            tabBarTintSelected: .init(named: "\(name)-system-marine")!,
             systemRed: .init(named: "\(name)-system-red")!,
             systemOrange: .init(named: "\(name)-system-orange")!,
             systemYellow: .init(named: "\(name)-system-yellow")!,
@@ -48,7 +53,7 @@ struct ThemeOG: Themable {
         
         .init(
             largeTitle: .init(name: "GothicA1-Regular", size: 40)!,
-            navTitle: .init(name: "NothingYouCouldDo-Regular", size: 24)!,
+            navTitle: UIFont.font(.nothingYouCouldDo, style: .regular, size: .custom(size: 24)),
             title1: .init(name: "GothicA1-Bold", size: 28)!,
             title2: .init(name: "GothicA1-Bold", size: 26)!,
             title3: .init(name: "GothicA1-Bold", size: 24)!,

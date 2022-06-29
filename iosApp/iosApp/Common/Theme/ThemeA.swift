@@ -13,6 +13,11 @@ struct ThemeA: Themable {
     var colour: ThemeColour {
         
         .init(
+            navBarBackground: .init(rgb: 0x1D1D1D).withAlpha(0.94),
+            navBarTint: .init(named: "\(name)-system-orange")!,
+            tabBarBackground: .init(rgb: 0x161616),
+            tabBarTint: .init(named: "\(name)-system-marine")!,
+            tabBarTintSelected: .init(named: "\(name)-system-pink")!,
             systemRed: .init(named: "\(name)-system-red")!,
             systemOrange: .init(named: "\(name)-system-orange")!,
             systemYellow: .init(named: "\(name)-system-yellow")!,
