@@ -42,6 +42,13 @@ final class GradientView: UIView {
         configureUI()
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        configureUI()
+    }
+    
     /// Defining the color of each gradient * stop. Defaults to nil. Animatable.
     var colors: [UIColor] {
         get {
