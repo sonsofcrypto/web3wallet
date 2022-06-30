@@ -204,10 +204,6 @@ extension KeyStoreViewController {
             .layerMaxXMinYCorner,
             .layerMinXMinYCorner
         ]
-        (view as? GradientView)?.colors = [
-            Theme.colour.backgroundBaseSecondary,
-            Theme.colour.backgroundBasePrimary
-        ]
     }
 
     func updateLogo(_ viewModel: KeyStoreViewModel) {

@@ -78,15 +78,24 @@ extension DashboardButtonsCell {
                 
             case .receive:
                 receiveButton.setTitle($0.title.uppercased(), for: .normal)
-                receiveButton.setImage($0.imageName.assetImage, for: .normal)
+                receiveButton.setImage(
+                    $0.imageName.assetImage?.withTintColor(Theme.colour.labelPrimary),
+                    for: .normal
+                )
 
             case .send:
                 sendButton.setTitle($0.title.uppercased(), for: .normal)
-                sendButton.setImage($0.imageName.assetImage, for: .normal)
+                sendButton.setImage(
+                    $0.imageName.assetImage?.withTintColor(Theme.colour.labelPrimary),
+                    for: .normal
+                )
 
             case .swap:
                 tradeButton.setTitle($0.title.uppercased(), for: .normal)
-                tradeButton.setImage($0.imageName.assetImage, for: .normal)
+                tradeButton.setImage(
+                    $0.imageName.assetImage?.withTintColor(Theme.colour.labelPrimary),
+                    for: .normal
+                )
             }
         }
     }

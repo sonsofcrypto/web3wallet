@@ -54,19 +54,6 @@ final class QRCodeScanViewController: BaseViewController {
 
         captureSession?.stopRunning()
     }
-    
-    @objc override func navBarLeftActionTapped() {
-        
-        presenter.handle(.dismiss)
-    }
-    
-    @objc override func navBarRightActionTapped() {
-        
-        let picker = UIImagePickerController()
-        //picker.allowsEditing = true
-        picker.delegate = self
-        present(picker, animated: true)
-    }
 }
 
 extension QRCodeScanViewController: QRCodeScanView {
@@ -83,14 +70,37 @@ private extension QRCodeScanViewController {
     
     func configureUI() {
                 
-        configureNavBarLeftAction()
-        let loadIcon = "paste_icon"
-        configureNavBarRightAction(icon: loadIcon)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: Localized("close"),
+            style: .plain,
+            target: self,
+            action: #selector(closeTapped)
+        )
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: Localized("paste"),
+            style: .plain,
+            target: self,
+            action: #selector(pasteTapped)
+        )
         
         configureQRCodeScan()
         
         addTopView()
         addActivityIndicatorView()
+    }
+    
+    @objc func closeTapped() {
+        
+        presenter.handle(.dismiss)
+    }
+    
+    @objc func pasteTapped() {
+        
+        let picker = UIImagePickerController()
+        //picker.allowsEditing = true
+        picker.delegate = self
+        present(picker, animated: true)
     }
     
     func configureQRCodeScan() {

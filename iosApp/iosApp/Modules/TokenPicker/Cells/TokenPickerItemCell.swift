@@ -68,7 +68,7 @@ final class TokenPickerItemCell: UICollectionViewCell {
 
         case let .multiSelect(isSelected):
             multiSelectTick.isHidden = false
-            multiSelectTick.tintColor = isSelected ? Theme.colour.fillPrimary : Theme.colour.fillTertiary
+            multiSelectTick.tintColor = isSelected ? Theme.colour.systemOrange : Theme.colour.fillTertiary
 
         case let .send(tokens, usdTotal):
             symbolLabel.isHidden = true

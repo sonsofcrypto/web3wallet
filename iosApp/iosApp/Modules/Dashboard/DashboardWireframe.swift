@@ -144,11 +144,16 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             
         case let .editTokens(selectedTokens, onCompletion):
             
+            let source: TokenPickerWireframeContext.Source = .multiSelectEdit(
+                network: nil,
+                selectedTokens: selectedTokens,
+                onCompletion: onCompletion
+            )
             let wireframe = tokenPickerWireframeFactory.makeWireframe(
                 presentingIn: parent,
                 context: .init(
                     presentationStyle: .present,
-                    source: .multiSelectEdit(selectedTokens: selectedTokens, onCompletion: onCompletion)
+                    source: source
                 )
             )
             wireframe.present()

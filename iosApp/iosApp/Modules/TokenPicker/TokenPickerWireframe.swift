@@ -14,6 +14,7 @@ struct TokenPickerWireframeContext {
         case receive
         case send
         case multiSelectEdit(
+            network: Web3Network?,
             selectedTokens: [Web3Token],
             onCompletion: (([Web3Token]) -> Void)
         )

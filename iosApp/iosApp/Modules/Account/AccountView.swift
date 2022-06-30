@@ -35,6 +35,7 @@ extension AccountViewController {
 extension AccountViewController: AccountView {
 
     func update(with viewModel: AccountViewModel) {
+        
         self.viewModel = viewModel
         collectionView.reloadData()
         title = viewModel.currencyName

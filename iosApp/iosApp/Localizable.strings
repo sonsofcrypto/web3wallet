@@ -18,6 +18,7 @@
 "trade" = "Trade";
 "more" = "More";
 "done" = "Done";
+"close" = "Close";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";

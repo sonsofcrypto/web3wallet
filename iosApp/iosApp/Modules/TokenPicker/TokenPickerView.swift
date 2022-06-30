@@ -71,83 +71,56 @@ extension TokenPickerViewController: TokenPickerView {
                 
         if viewModel.allowMultiSelection {
             
-            configureNavBarLeftBarButtonIconAddToken()
-            configureNavBarRightBarButtonIconDone()
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                imageName: "nav_bar_add",
+                target: self,
+                selector: #selector(addCustomToken)
+            )
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                title: Localized("done"),
+                style: .plain,
+                target: self,
+                action: #selector(doneTapped)
+            )
             itemsCollectionView.allowsMultipleSelection = viewModel.allowMultiSelection
         } else {
             
-            configureNavBarLeftAction()
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                title: Localized("close"),
+                style: .plain,
+                target: self,
+                action: #selector(closeTapped)
+            )
         }
     }
 }
 
-extension TokenPickerViewController {
-    
-    func configureNavBarLeftBarButtonIconAddToken() {
-        
-        let button = UIButton()
-        button.setImage(
-            .init(named: "plus_icon"),
-            for: .normal
-        )
-        button.tintColor = Theme.colour.fillPrimary
-        button.addTarget(self, action: #selector(addCustomToken), for: .touchUpInside)
-        button.addConstraints(
-            [
-                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
-            ]
-        )
-        
-    }
-    
-    @objc func addCustomToken() {
-        
-        presenter.handle(.addCustomToken)
-    }
-    
-    func configureNavBarRightBarButtonIconDone() {
-        
-        let button = UIButton()
-        button.setImage(
-            .init(named: "confirm_icon"),
-            for: .normal
-        )
-        button.tintColor = Theme.colour.fillPrimary
-        button.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
-        button.addConstraints(
-            [
-                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
-            ]
-        )
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
-    }
-    
-    @objc func doneTapped() {
-        
-        presenter.handle(.done)
-    }
+private extension TokenPickerViewController {
     
     func configureUI() {
         
-        (view as? GradientView)?.colors = [
-            Theme.colour.backgroundBaseSecondary,
-            Theme.colour.backgroundBasePrimary
-        ]
-        
-        searchTextFieldBox.backgroundColor = Theme.colour.backgroundBasePrimary
-        searchTextFieldBox.layer.cornerRadius = 16
+        searchTextFieldBox.backgroundColor = Theme.colour.systemOrange
+        searchTextFieldBox.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         
         searchTextField.backgroundColor = .clear
-        searchTextField.textColor = .white
+        searchTextField.textColor = Theme.colour.labelPrimary
         searchTextField.text = nil
         searchTextField.delegate = self
         
         clearSearchButton.isHidden = true
     }
 
-    @objc override func navBarLeftActionTapped() {
+    @objc func addCustomToken() {
+        
+        presenter.handle(.addCustomToken)
+    }
+
+    @objc func doneTapped() {
+        
+        presenter.handle(.done)
+    }
+
+    @objc func closeTapped() {
         
         presenter.handle(.dismiss)
     }

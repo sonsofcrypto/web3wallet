@@ -32,11 +32,6 @@ final class NFTDetailViewController: BaseViewController {
 
         refresh()
     }
-    
-    @objc override func navBarLeftActionTapped() {
-        
-        presenter.handle(.dismiss)
-    }
 }
 
 extension NFTDetailViewController: NFTDetailView {
@@ -87,6 +82,16 @@ private extension NFTDetailViewController {
         self.mainScrollView = mainScrollView
         mainScrollView.addConstraints(.toEdges)
         
-        configureNavBarLeftAction()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            imageName: "nav_bar_back",
+            target: self,
+            selector: #selector(navBarLeftActionTapped)
+        )
     }
+    
+    @objc func navBarLeftActionTapped() {
+        
+        presenter.handle(.dismiss)
+    }
+
 }

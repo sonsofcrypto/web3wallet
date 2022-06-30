@@ -78,7 +78,11 @@ private extension NetworkPickerViewController {
             Theme.colour.backgroundBasePrimary
         ]
         
-        configureNavBarLeftAction()
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(
+//            imageName: "nav_bar_back",
+//            target: self,
+//            selector: #selector(navBarLeftActionTapped)
+//        )
         
         searchTextFieldBox.backgroundColor = Theme.colour.backgroundBasePrimary
         searchTextFieldBox.layer.cornerRadius = 16

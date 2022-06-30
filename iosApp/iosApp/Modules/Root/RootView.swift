@@ -30,9 +30,9 @@ extension RootViewController: RootView {
 extension RootViewController {
     
     func configureUI() {
-        (view as? GradientView)?.colors = [
-            Theme.colour.backgroundBaseSecondary,
-            Theme.colour.backgroundBasePrimary
-        ]
+//        (view as? GradientView)?.colors = [
+//            Theme.colour.backgroundBaseSecondary,
+//            Theme.colour.backgroundBasePrimary
+//        ]
     }
 }

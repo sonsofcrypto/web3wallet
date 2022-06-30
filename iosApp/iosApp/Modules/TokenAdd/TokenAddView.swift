@@ -59,22 +59,17 @@ extension TokenAddViewController {
         let vStack = VStackView([titleLabel])
         navigationItem.titleView = vStack
 
-        configureNavBarLeftAction()
-        
-        let button = UIButton()
-        button.setImage(
-            .init(named: "add_icon"),
-            for: .normal
-        )
-        button.tintColor = Theme.colour.fillPrimary
-        button.addTarget(self, action: #selector(addTokenTapped), for: .touchUpInside)
-        button.addConstraints(
-            [
-                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
-            ]
-        )
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+       navigationItem.leftBarButtonItem = UIBarButtonItem(
+           imageName: "nav_bar_back",
+           target: self,
+           selector: #selector(navBarLeftActionTapped)
+       )
+       
+       navigationItem.rightBarButtonItem = UIBarButtonItem(
+           imageName: "nav_bar_scan",
+           target: self,
+           selector: #selector(addTokenTapped)
+       )
     }
     
     func configureUI() {
@@ -90,7 +85,7 @@ extension TokenAddViewController {
         constraint.isActive = true
     }
 
-    @objc override func navBarLeftActionTapped() {
+    @objc func navBarLeftActionTapped() {
         
         presenter.handle(.dismiss)
     }

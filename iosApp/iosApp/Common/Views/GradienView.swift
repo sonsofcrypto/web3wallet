@@ -123,16 +123,18 @@ private extension GradientView {
             
             if isDashboard {
                 colors = [
-                    .init(rgb: 0xE73795),
-                    .init(rgb: 0xE73795),
-                    .init(rgb: 0x351E54),
-                    .init(rgb: 0x351E54)
+                    .init(rgb: isDarkMode ? 0xE73795 : 0x025DA4),
+                    .init(rgb: isDarkMode ? 0xE73795 : 0x025DA4),
+                    .init(rgb: isDarkMode ? 0x351E54 : 0xF5B438),
+                    .init(rgb: isDarkMode ? 0x351E54 : 0xF5B438)
                 ]
             } else {
                 colors = [
-                    .init(rgb: 0xE73795),
-                    .init(rgb: 0x351E54)
+                    .init(rgb: isDarkMode ? 0xE73795 : 0x025DA4),
+                    .init(rgb: isDarkMode ? 0xE73795 : 0x025DA4),
+                    .init(rgb: isDarkMode ? 0x351E54 : 0xF5B438)
                 ]
+                //(layer as? CAGradientLayer)?.locations = [0, 0.1, 0.3, 1]
             }
         }
     }

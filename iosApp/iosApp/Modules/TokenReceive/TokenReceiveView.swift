@@ -41,10 +41,6 @@ final class TokenReceiveViewController: BaseViewController {
         presenter?.present()
     }
     
-    @objc override func navBarLeftActionTapped() {
-        
-        presenter.handle(.dismiss)
-    }
 }
 
 extension TokenReceiveViewController: TokenReceiveView {
@@ -73,20 +69,12 @@ private extension TokenReceiveViewController {
     
     func configureNavigationBar() {
         
-        let titleLabel = UILabel(frame: .zero)
-        titleLabel.textAlignment = .center
-        titleLabel.text = viewModel?.title
-        titleLabel.applyStyle(.navTitle)
-        
-        let views: [UIView] = [
-            titleLabel
-        ]
-        let vStack = VStackView(views)
-        vStack.spacing = 4
-        
-        navigationItem.titleView = vStack
-        
-        configureNavBarLeftAction()
+        title = viewModel?.title
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            imageName: "nav_bar_back",
+            target: self,
+            selector: #selector(navBarLeftActionTapped)
+        )
         
         cardView.backgroundColor = Theme.colour.backgroundBasePrimary
         cardView.layer.cornerRadius = 12
@@ -118,6 +106,11 @@ private extension TokenReceiveViewController {
             and: UIImage(named: "plus_icon"),
             onTap: makeAddAction()
         )
+    }
+    
+    @objc func navBarLeftActionTapped() {
+        
+        presenter.handle(.dismiss)
     }
 }
 

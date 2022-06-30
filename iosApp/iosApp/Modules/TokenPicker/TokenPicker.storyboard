@@ -14,7 +14,7 @@
         <scene sceneID="pVQ-Nm-bbF">
             <objects>
                 <viewController storyboardIdentifier="TokenPickerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y2U-n2-HqG" customClass="TokenPickerViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="esC-9x-ufv" customClass="DefaultGradientView" customModule="iosApp" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="esC-9x-ufv" customClass="GradientView" customModule="iosApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

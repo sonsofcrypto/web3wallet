@@ -32,11 +32,6 @@ final class NFTsCollectionViewController: BaseViewController {
 
         refresh()
     }
-    
-    @objc override func navBarLeftActionTapped() {
-        
-        presenter.handle(.dismiss)
-    }
 }
 
 extension NFTsCollectionViewController: NFTsCollectionView {
@@ -81,6 +76,17 @@ private extension NFTsCollectionViewController {
         self.mainScrollView = mainScrollView
         mainScrollView.addConstraints(.toEdges)
         
-        configureNavBarLeftAction()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: Localized("close"),
+            style: .plain,
+            target: self,
+            action: #selector(closeTapped)
+        )
     }
+    
+    @objc func closeTapped() {
+        
+        presenter.handle(.dismiss)
+    }
+
 }

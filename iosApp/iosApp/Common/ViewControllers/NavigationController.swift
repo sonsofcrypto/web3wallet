@@ -44,6 +44,7 @@ final class NavigationController: UINavigationController {
         navigationBar.scrollEdgeAppearance = appearance
         navigationBar.compactAppearance = appearance
         navigationBar.compactScrollEdgeAppearance = appearance
+        navigationBar.tintColor = Theme.colour.navBarTint
         
         interactivePopGestureRecognizer?.delegate = nil
     }

@@ -96,7 +96,7 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
         case .done:
             
             guard
-                case let TokenPickerWireframeContext.Source.multiSelectEdit(_, onCompletion) = context.source,
+                case let TokenPickerWireframeContext.Source.multiSelectEdit(_, _, onCompletion) = context.source,
                 let selectedTokens = selectedTokens
             else {
                 
@@ -119,7 +119,7 @@ private extension DefaultTokenPickerPresenter {
         
         switch context.source {
             
-        case let .multiSelectEdit(selectedTokens, _):
+        case let .multiSelectEdit(_, selectedTokens, _):
             self.selectedTokens = selectedTokens
             
         default:

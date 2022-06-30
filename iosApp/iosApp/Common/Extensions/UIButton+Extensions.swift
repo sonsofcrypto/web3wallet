@@ -65,6 +65,7 @@ private extension UIButton {
         layer.borderColor = Theme.colour.labelPrimary.cgColor
         layer.cornerRadius = style.height * 0.5
         titleLabel?.font = Theme.font.callout
+        setTitleColor(Theme.colour.labelPrimary, for: .normal)
         titleLabel?.textAlignment = .natural
         imageEdgeInsets = .init(top: 0, left: -10, bottom: 0, right: 0)
         titleEdgeInsets = .init(top: 0, left: 0, bottom: 4, right: 0)
