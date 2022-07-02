@@ -83,9 +83,10 @@ private extension NFTDetailViewController {
         mainScrollView.addConstraints(.toEdges)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            imageName: "nav_bar_back",
+            image: .init(systemName: "chevron.left"),
+            style: .plain,
             target: self,
-            selector: #selector(navBarLeftActionTapped)
+            action: #selector(navBarLeftActionTapped)
         )
     }
     

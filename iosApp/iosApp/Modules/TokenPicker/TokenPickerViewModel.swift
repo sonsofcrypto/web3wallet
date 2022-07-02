@@ -46,7 +46,7 @@ extension TokenPickerViewModel {
         let image: UIImage
         let symbol: String
         let name: String
-        let network: String
+        let network: String?
         let type: TokenType
     }
     

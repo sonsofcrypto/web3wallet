@@ -12,6 +12,7 @@ final class TokenPickerItemCell: UICollectionViewCell {
     @IBOutlet weak var networkLabel: UILabel!
     @IBOutlet weak var widthLayoutConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var multiSelectView: UIView!
     @IBOutlet weak var multiSelectTick: UIImageView!
     
     @IBOutlet weak var tokenPriceStackView: UIStackView!
@@ -23,31 +24,34 @@ final class TokenPickerItemCell: UICollectionViewCell {
         
         super.awakeFromNib()
         
-        iconImageView.layer.cornerRadius = iconImageView.frame.size.width * 0.5
         iconImageView.backgroundColor = Theme.colour.labelPrimary
-                        
-        nameLabel.applyStyle(.body)
+        iconImageView.layer.cornerRadius = 15
+
+        nameLabel.font = Theme.font.body
         nameLabel.textColor = Theme.colour.labelPrimary
         
-        symbolLabel.applyStyle(.callout)
+        symbolLabel.font = Theme.font.body
         symbolLabel.textColor = Theme.colour.labelSecondary
 
-        networkLabel.applyStyle(.smallLabel)
-        networkLabel.textColor = Theme.colour.labelTertiary
+        networkLabel.font = Theme.font.callout
+        networkLabel.textColor = Theme.colour.labelSecondary
         
-        multiSelectTick.isHidden = true
+        multiSelectView.isHidden = true
         
         tokenPriceStackView.isHidden = true
-        tokenLabel.applyStyle(.body)
+        tokenLabel.font = Theme.font.body
+        tokenLabel.textColor = Theme.colour.labelPrimary
         tokenLabel.textAlignment = .right
-        tokenSymbolLabel.applyStyle(.bodyGlow)
+        tokenSymbolLabel.font = Theme.font.callout
+        tokenSymbolLabel.textColor = Theme.colour.labelSecondary
         tokenSymbolLabel.textAlignment = .right
         tokenSymbolLabel.addConstraints(
             [
                 .hugging(layoutAxis: .horizontal, priority: .required)
             ]
         )
-        usdPriceLabel.applyStyle(.smallBody)
+        usdPriceLabel.font = Theme.font.callout
+        usdPriceLabel.textColor = Theme.colour.labelSecondary
         usdPriceLabel.textAlignment = .right
     }
 
@@ -59,7 +63,12 @@ final class TokenPickerItemCell: UICollectionViewCell {
         iconImageView.image = viewModel.image
         symbolLabel.text = viewModel.symbol
         nameLabel.text = viewModel.name
-        networkLabel.text = viewModel.network
+        if let network = viewModel.network {
+            networkLabel.isHidden = true
+            networkLabel.text = network
+        } else {
+            networkLabel.isHidden = true
+        }
         
         switch viewModel.type {
             
@@ -67,8 +76,9 @@ final class TokenPickerItemCell: UICollectionViewCell {
             break
 
         case let .multiSelect(isSelected):
-            multiSelectTick.isHidden = false
-            multiSelectTick.tintColor = isSelected ? Theme.colour.systemOrange : Theme.colour.fillTertiary
+            multiSelectView.isHidden = false
+            multiSelectTick.tintColor = Theme.colour.labelSecondary
+            multiSelectTick.image = isSelected ? .init(systemName: "checkmark.circle.fill") : .init(systemName: "circle")
 
         case let .send(tokens, usdTotal):
             symbolLabel.isHidden = true

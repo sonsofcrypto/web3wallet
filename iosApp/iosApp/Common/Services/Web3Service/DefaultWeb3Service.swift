@@ -18,6 +18,25 @@ final class DefaultWeb3Service {
 
 extension DefaultWeb3Service: Web3Service {
     
+    var allNetworks: [Web3Network] {
+        
+        var networks = allTokens.networks
+        networks.append(
+            
+            .init(
+                id: "10",
+                name: "Polygon",
+                hasDns: false,
+                url: nil,
+                status: .comingSoon,
+                connectionType: nil,
+                explorer: nil,
+                selectedByUser: false
+            )
+        )
+        return networks
+    }
+    
     var allTokens: [Web3Token] {
         
         web3ServiceLocalStorage.readAllTokens().sortByNetworkAndName
@@ -80,5 +99,10 @@ extension DefaultWeb3Service: Web3Service {
         default:
             return false
         }
+    }
+    
+    func update(network: Web3Network, active: Bool) {
+        
+        web3ServiceLocalStorage.update(network: network, active: active)
     }
 }

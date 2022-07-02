@@ -148,7 +148,9 @@ private extension DashboardViewController {
         let screenWidth: CGFloat = (view.bounds.width - Theme.constant.padding)
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(screenWidth),
-            heightDimension: .absolute(UIButton.Web3WalletButtonStyle.primary.height + Theme.constant.padding)
+            heightDimension: .absolute(
+                Theme.constant.buttonDashboardActionHeight + Theme.constant.padding
+            )
         )
         let outerGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize, subitems: [item]

@@ -6,10 +6,7 @@ import Foundation
 
 protocol NetworksService {
 
-    typealias NetworksHandler = ([Network]) -> ()
-
-    var active: Network? { get set }
-
-    func availableNetworks() -> [Network]
-    func updateStatus(_ networks: [Network], handler: @escaping NetworksHandler)
+    func networkIcon(for network: Web3Network) -> Data
+    func allNetworks() -> [Web3Network]
+    func update(network: Web3Network, active: Bool)
 }

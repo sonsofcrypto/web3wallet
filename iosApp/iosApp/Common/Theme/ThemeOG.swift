@@ -6,65 +6,41 @@ import UIKit
 
 struct ThemeOG: Themable {
     
-    private let name: String = "themeOG"
-    
     var type: ThemeType { .themeOG }
 
     var colour: ThemeColour {
         
-        .init(
-            navBarBackground: .init(rgb: 0x1D1D1D).withAlpha(0.94),
-            navBarTint: .init(named: "\(name)-system-orange")!,
-            tabBarBackground: .init(rgb: 0x161616).withAlpha(0.84),
-            tabBarTint: .init(named: "\(name)-system-orange")!,
-            tabBarTintSelected: .init(named: "\(name)-system-marine")!,
-            systemRed: .init(named: "\(name)-system-red")!,
-            systemOrange: .init(named: "\(name)-system-orange")!,
-            systemYellow: .init(named: "\(name)-system-yellow")!,
-            systemGreen: .init(named: "\(name)-system-green")!, //appGreen
-            systemTeal: .init(named: "\(name)-system-teal")!,
-            systemBlue: .init(named: "\(name)-system-blue")!,
-            systemMarine: .init(named: "\(name)-system-marine")!,
-            systemPurple: .init(named: "\(name)-system-purple")!,
-            systemPink: .init(named: "\(name)-system-pink")!, //appRed
-            systemGray: .init(named: "\(name)-system-gray")!,
-            systemGray02: .init(named: "\(name)-system-gray02")!,
-            systemGray03: .init(named: "\(name)-system-gray03")!,
-            systemGray04: .init(named: "\(name)-system-gray04")!,
-            systemGray05: .init(named: "\(name)-system-gray05")!,
-            systemGray06: .init(named: "\(name)-system-gray06")!,
-            backgroundBasePrimary: .init(named: "\(name)-background-base-primary")!, //bgGradientTop
-            backgroundBaseSecondary: .init(named: "\(name)-background-base-secondary")!, //bgGradientTopSecondary
-            backgroundBaseTertiary: .init(named: "\(name)-background-base-tertiary")!, //bgGradientBottom
-            labelPrimary: .init(named: "\(name)-label-primary")!, //textColor
-            labelSecondary: .init(named: "\(name)-label-secondary")!, //textColorSecondary
-            labelTertiary: .init(named: "\(name)-label-tertiary")!, //textColorTertiary
-            labelQuaternary: .init(named: "\(name)-label-quaternary")!,
-            separatorNoTransparency: .init(named: "\(name)-separator-no-transparency")!,
-            separatorWithTransparency: .init(named: "\(name)-separator-with-transparency")!,
-            fillPrimary: .init(named: "\(name)-fill-primary")!, //tintPrimary
-            fillSecondary: .init(named: "\(name)-fill-secondary")!, //tintSecondary
-            fillTertiary: .init(named: "\(name)-fill-tertiary")!,
-            fillQuaternary: .init(named: "\(name)-fill-quaternary")!
-        )
+        .init(themeName: "themeOG")
     }
     
     var font: ThemeFont {
         
         .init(
-            largeTitle: .init(name: "GothicA1-Regular", size: 40)!,
-            navTitle: UIFont.font(.nothingYouCouldDo, style: .regular, size: .custom(size: 24)),
-            title1: .init(name: "GothicA1-Bold", size: 28)!,
-            title2: .init(name: "GothicA1-Bold", size: 26)!,
-            title3: .init(name: "GothicA1-Bold", size: 24)!,
-            headline: .init(name: "GothicA1-Regular", size: 18)!,
-            subheadline: .init(name: "GothicA1-Regular", size: 14)!,
-            body: .init(name: "GothicA1-Regular", size: 17)!,
-            callout: .init(name: "GothicA1-Regular", size: 16)!,
-            caption1: .init(name: "GothicA1-Regular", size: 13)!,
-            caption2: .init(name: "GothicA1-Regular", size: 12)!,
-            footnote: .init(name: "GothicA1-Regular", size: 11)!,
-            tabBar: UIFont.font(.gothicA1, style: .medium, size: .custom(size: 10))
+            largeTitle: .systemFont(ofSize: 34, weight: .regular), // line_height = 41
+            largeTitleBold: .systemFont(ofSize: 34, weight: .bold), // line_height = 41
+            title1: .systemFont(ofSize: 28, weight: .regular), // line_height = 34
+            title1Bold: .systemFont(ofSize: 28, weight: .bold), // line_height = 34
+            title2: .systemFont(ofSize: 22, weight: .regular), // line_height = 28
+            title2Bold: .systemFont(ofSize: 22, weight: .bold), // line_height = 28
+            title3: .systemFont(ofSize: 20, weight: .regular), // line_height = 25
+            title3Bold: .systemFont(ofSize: 20, weight: .semibold), // line_height = 25
+            headline: .systemFont(ofSize: 17, weight: .regular), // line_height = 22
+            headlineBold: .systemFont(ofSize: 17, weight: .semibold), // line_height = 22
+            subheadline: .systemFont(ofSize: 15, weight: .regular), // line_height = 20
+            subheadlineBold: .systemFont(ofSize: 15, weight: .semibold), // line_height = 20
+            body: .systemFont(ofSize: 17, weight: .regular), // line_height = 22
+            bodyBold: .systemFont(ofSize: 17, weight: .semibold), // line_height = 22
+            callout: .systemFont(ofSize: 16, weight: .regular),  // line_height = 21
+            calloutBold: .systemFont(ofSize: 16, weight: .semibold),  // line_height = 21
+            caption1: .systemFont(ofSize: 12, weight: .regular), // line_height = 16
+            caption1Bold: .systemFont(ofSize: 12, weight: .semibold), // line_height = 16
+            caption2: .systemFont(ofSize: 11, weight: .regular), // line_height = 13
+            caption2Bold: .systemFont(ofSize: 11, weight: .semibold), // line_height = 13
+            footnote: .systemFont(ofSize: 13, weight: .regular), // line_height = 18
+            footnoteBold: .systemFont(ofSize: 13, weight: .semibold), // line_height = 18
+            navTitle: .systemFont(ofSize: 18, weight: .regular), // line_height = 20
+            tabBar: .systemFont(ofSize: 11, weight: .semibold), // line_height = 13
+            networkTitle: .init(name: "NaokoAA-BlackItalic", size: 16)!
         )
     }
     
@@ -76,7 +52,9 @@ struct ThemeOG: Themable {
             shadowRadius: 4,
             cellHeight: 64,
             cellHeightSmall: 46,
-            padding: 16
+            padding: 16,
+            buttonPrimaryHeight: 45,
+            buttonDashboardActionHeight: 34
         )
     }
 }

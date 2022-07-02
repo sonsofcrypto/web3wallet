@@ -28,7 +28,7 @@ private extension DashboardHeaderNameView {
     func configureUI() {
         
         let label = UILabel()
-        label.font = Theme.font.title2
+        label.font = Theme.font.networkTitle
         label.textColor = Theme.colour.labelPrimary
         self.label = label
         addSubview(label)

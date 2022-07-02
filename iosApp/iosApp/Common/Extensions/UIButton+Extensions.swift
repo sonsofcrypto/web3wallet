@@ -18,44 +18,48 @@ extension UIButton {
     enum Web3WalletButtonStyle {
         
         case primary
-        
-        var height: CGFloat {
-            
-            switch self {
-            case .primary:
-                return 34
-            }
-        }
+        case dashboardAction
     }
     
     func apply(style: Web3WalletButtonStyle) {
         
-        switch Theme.type {
-        case .themeA:
-            applyThemeHome(style: style)
-        case .themeOG:
-            applyThemeOG(style: style)
+        switch style {
+        case .primary:
+            applyPrimaryStyle()
+        case .dashboardAction:
+            applyDashboardActionStyle()
         }
     }
 }
 
 private extension UIButton {
     
-    func applyThemeHome(style: Web3WalletButtonStyle) {
-        
-        switch style {
-        case .primary:
-            applyThemeHomePrimaryStyle()
-        }
-    }
-    
-    func applyThemeHomePrimaryStyle() {
-        
-        let style = Web3WalletButtonStyle.primary
+    func applyPrimaryStyle() {
         
         addConstraints(
             [
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: style.height))
+                .layout(
+                    anchor: .heightAnchor,
+                    constant: .equalTo(constant: Theme.constant.buttonPrimaryHeight)
+                )
+            ]
+        )
+        
+        backgroundColor = Theme.colour.buttonBackgroundPrimary
+        tintColor = Theme.colour.labelPrimary
+        layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        titleLabel?.font = Theme.font.title3
+        setTitleColor(Theme.colour.labelPrimary, for: .normal)
+    }
+    
+    func applyDashboardActionStyle() {
+        
+        addConstraints(
+            [
+                .layout(
+                    anchor: .heightAnchor,
+                    constant: .equalTo(constant: Theme.constant.buttonDashboardActionHeight)
+                )
             ]
         )
         
@@ -63,38 +67,12 @@ private extension UIButton {
         tintColor = Theme.colour.labelPrimary
         layer.borderWidth = 0.5
         layer.borderColor = Theme.colour.labelPrimary.cgColor
-        layer.cornerRadius = style.height * 0.5
-        titleLabel?.font = Theme.font.callout
+        layer.cornerRadius = Theme.constant.cornerRadius
+        titleLabel?.font = Theme.font.calloutBold
         setTitleColor(Theme.colour.labelPrimary, for: .normal)
         titleLabel?.textAlignment = .natural
-        imageEdgeInsets = .init(top: 0, left: -10, bottom: 0, right: 0)
-        titleEdgeInsets = .init(top: 0, left: 0, bottom: 4, right: 0)
-    }
-}
-
-private extension UIButton {
-    
-    func applyThemeOG(style: Web3WalletButtonStyle) {
         
-        switch style {
-        case .primary:
-            applyThemeOGPrimaryStyle()
-        }
-    }
-    
-    func applyThemeOGPrimaryStyle() {
-        
-        let height: CGFloat = 33
-        
-        addConstraints(
-            [
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: height))
-            ]
-        )
-        
-        tintColor = Theme.colour.labelPrimary
-        layer.cornerRadius = Theme.constant.cornerRadius
-        titleLabel?.font = Theme.font.caption1
-        titleLabel?.textAlignment = .center
+        titleEdgeInsets = .init(top: 0, left: 8, bottom: 0, right: 0)
+        imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 8)
     }
 }

@@ -29,6 +29,18 @@
 		<string>NaokoAA-Bold.otf</string>
 		<string>NaokoAA-Extrabold-Italic.otf</string>
 		<string>NaokoAA-Extrabold.otf</string>
+		<string>SFProDisplay-Bold</string>
+		<string>SFProDisplay-BoldItalic</string>
+		<string>SFProDisplay-Regular</string>
+		<string>SFProDisplay-RegularItalic</string>
+		<string>SFProDisplay-Semibold</string>
+		<string>SFProDisplay-SemiboldItalic</string>
+		<string>SFProText-Bold</string>
+		<string>SFProText-BoldItalic</string>
+		<string>SFProText-Regular</string>
+		<string>SFProText-RegularItalic</string>
+		<string>SFProText-Semibold</string>
+		<string>SFProText-SemiboldItalic</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

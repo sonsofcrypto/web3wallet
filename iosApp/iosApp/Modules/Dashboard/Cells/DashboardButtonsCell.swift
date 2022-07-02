@@ -17,12 +17,7 @@ final class DashboardButtonsCell: UICollectionViewCell {
         
         super.awakeFromNib()
         
-        receiveButton.apply(style: .primary)
-        sendButton.apply(style: .primary)
-        tradeButton.apply(style: .primary)
-        
         let view = UIView()
-        view.backgroundColor = Theme.colour.labelPrimary
         addSubview(view)
         view.addConstraints(
             [
@@ -33,6 +28,8 @@ final class DashboardButtonsCell: UICollectionViewCell {
             ]
         )
         self.lineView = view
+        
+        updateViews()
     }
     
     override func traitCollectionDidChange(
@@ -41,9 +38,17 @@ final class DashboardButtonsCell: UICollectionViewCell {
         
         super.traitCollectionDidChange(previousTraitCollection)
         
-        receiveButton.apply(style: .primary)
-        sendButton.apply(style: .primary)
-        tradeButton.apply(style: .primary)
+        updateViews()
+    }
+}
+
+private extension DashboardButtonsCell {
+    
+    func updateViews() {
+        
+        receiveButton.apply(style: .dashboardAction)
+        sendButton.apply(style: .dashboardAction)
+        tradeButton.apply(style: .dashboardAction)
         lineView.backgroundColor = Theme.colour.labelPrimary
     }
 }
@@ -77,21 +82,21 @@ extension DashboardButtonsCell {
             switch $0.type {
                 
             case .receive:
-                receiveButton.setTitle($0.title.uppercased(), for: .normal)
+                receiveButton.setTitle($0.title, for: .normal)
                 receiveButton.setImage(
                     $0.imageName.assetImage?.withTintColor(Theme.colour.labelPrimary),
                     for: .normal
                 )
 
             case .send:
-                sendButton.setTitle($0.title.uppercased(), for: .normal)
+                sendButton.setTitle($0.title, for: .normal)
                 sendButton.setImage(
                     $0.imageName.assetImage?.withTintColor(Theme.colour.labelPrimary),
                     for: .normal
                 )
 
             case .swap:
-                tradeButton.setTitle($0.title.uppercased(), for: .normal)
+                tradeButton.setTitle($0.title, for: .normal)
                 tradeButton.setImage(
                     $0.imageName.assetImage?.withTintColor(Theme.colour.labelPrimary),
                     for: .normal

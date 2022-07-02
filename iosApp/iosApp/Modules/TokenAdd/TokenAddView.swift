@@ -52,23 +52,20 @@ extension TokenAddViewController {
     
    func configureNavigationBar() {
         
-        let titleLabel = UILabel(frame: .zero)
-        titleLabel.textAlignment = .center
-        titleLabel.text = viewModel?.title
-        titleLabel.applyStyle(.navTitle)
-        let vStack = VStackView([titleLabel])
-        navigationItem.titleView = vStack
+       title = viewModel?.title
 
        navigationItem.leftBarButtonItem = UIBarButtonItem(
-           imageName: "nav_bar_back",
+           image: .init(systemName: "chevron.left"),
+           style: .plain,
            target: self,
-           selector: #selector(navBarLeftActionTapped)
+           action: #selector(navBarLeftActionTapped)
        )
-       
+
        navigationItem.rightBarButtonItem = UIBarButtonItem(
-           imageName: "nav_bar_scan",
+           image: .init(systemName: "qrcode.viewfinder"),
+           style: .plain,
            target: self,
-           selector: #selector(addTokenTapped)
+           action: #selector(addTokenTapped)
        )
     }
     

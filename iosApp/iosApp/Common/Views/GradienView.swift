@@ -75,13 +75,6 @@ final class GradientView: UIView {
             case .vertical:
                 (layer as? CAGradientLayer)?.startPoint = CGPoint(x: 0, y: 0)
                 (layer as? CAGradientLayer)?.endPoint = CGPoint(x: 0, y: 1)
-                if isDashboard {
-                    
-                    (layer as? CAGradientLayer)?.locations = [0.25, 0.5, 0.75, 1]
-                } else {
-                
-                    (layer as? CAGradientLayer)?.locations = [0, 1]
-                }
             case .horizontal:
                 (layer as? CAGradientLayer)?.startPoint = CGPoint(x: 0, y: 0.5)
                 (layer as? CAGradientLayer)?.endPoint = CGPoint(x: 1, y: 0.5)
@@ -122,26 +115,25 @@ private extension GradientView {
         
         switch Theme.type {
         case .themeOG:
+            let topColor = Theme.colour.backgroundBaseSecondary
+            let bottomColor = Theme.colour.backgroundBasePrimary
             colors = [
-                Theme.colour.backgroundBaseSecondary,
-                Theme.colour.backgroundBasePrimary
+                topColor,
+                bottomColor
             ]
         case .themeA:
             
+            let topColor = isDarkMode ? Theme.colour.systemPink : Theme.colour.systemMarine
+            let bottomColor = isDarkMode ? Theme.colour.systemPurple : Theme.colour.systemYellow
+            
             if isDashboard {
                 colors = [
-                    .init(rgb: isDarkMode ? 0xE73795 : 0x025DA4),
-                    .init(rgb: isDarkMode ? 0xE73795 : 0x025DA4),
-                    .init(rgb: isDarkMode ? 0x351E54 : 0xF5B438),
-                    .init(rgb: isDarkMode ? 0x351E54 : 0xF5B438)
+                    topColor, topColor, bottomColor, bottomColor
                 ]
             } else {
                 colors = [
-                    .init(rgb: isDarkMode ? 0xE73795 : 0x025DA4),
-                    .init(rgb: isDarkMode ? 0xE73795 : 0x025DA4),
-                    .init(rgb: isDarkMode ? 0x351E54 : 0xF5B438)
+                    topColor, topColor, bottomColor
                 ]
-                //(layer as? CAGradientLayer)?.locations = [0, 0.1, 0.3, 1]
             }
         }
     }

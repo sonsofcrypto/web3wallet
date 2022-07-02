@@ -197,8 +197,11 @@ extension KeyStoreViewController: UICollectionViewDelegateFlowLayout {
 extension KeyStoreViewController {
     
     func configureUI() {
+        
         title = Localized("wallets")
+        
         configureInsets()
+        
         buttonBackgroundView.layer.cornerRadius = Global.cornerRadius * 2
         buttonBackgroundView.layer.maskedCorners = [
             .layerMaxXMinYCorner,

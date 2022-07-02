@@ -129,18 +129,20 @@ private extension DefaultTokenPickerPresenter {
     
     func handleTokenTappedOnMultiSelect(token: TokenPickerViewModel.Token) {
         
+        guard let network = token.network ?? context.source.network?.name else { return }
+        
         guard
             let tokenTapped = tokens.findToken(
-                withNetwork: token.network,
+                withNetwork: network,
                 andSymbol: token.symbol
             ),
             let selectedTokens = selectedTokens
         else { return }
         
-        if selectedTokens.hasToken(withNetwork: token.network, andSymbol: token.symbol) {
+        if selectedTokens.hasToken(withNetwork: network, andSymbol: token.symbol) {
             
             self.selectedTokens = selectedTokens.removingToken(
-                withNetwork: token.network,
+                withNetwork: network,
                 andSymbol: token.symbol
             )
         } else {

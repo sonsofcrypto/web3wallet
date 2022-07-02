@@ -71,9 +71,10 @@ private extension TokenReceiveViewController {
         
         title = viewModel?.title
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            imageName: "nav_bar_back",
+            image: .init(systemName: "chevron.left"),
+            style: .plain,
             target: self,
-            selector: #selector(navBarLeftActionTapped)
+            action: #selector(navBarLeftActionTapped)
         )
         
         cardView.backgroundColor = Theme.colour.backgroundBasePrimary

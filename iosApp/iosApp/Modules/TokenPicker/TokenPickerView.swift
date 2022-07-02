@@ -23,7 +23,9 @@ final class TokenPickerViewController: BaseViewController {
     
     @IBOutlet weak var filtersCollectionView: UICollectionView!
     @IBOutlet weak var itemsCollectionView: UICollectionView!
+    @IBOutlet weak var searchContainerBox: UIView!
     @IBOutlet weak var searchTextFieldBox: UIView!
+    @IBOutlet weak var searchImageView: UIImageView!
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var clearSearchButton: UIButton!
     
@@ -72,9 +74,10 @@ extension TokenPickerViewController: TokenPickerView {
         if viewModel.allowMultiSelection {
             
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                imageName: "nav_bar_add",
+                image: .init(systemName: "plus"),
+                style: .plain,
                 target: self,
-                selector: #selector(addCustomToken)
+                action: #selector(addCustomToken)
             )
             navigationItem.rightBarButtonItem = UIBarButtonItem(
                 title: Localized("done"),
@@ -99,15 +102,21 @@ private extension TokenPickerViewController {
     
     func configureUI() {
         
-        searchTextFieldBox.backgroundColor = Theme.colour.systemOrange
+        searchContainerBox.backgroundColor = Theme.colour.navBarBackground
+        
+        searchTextFieldBox.backgroundColor = Theme.colour.fillTertiary
         searchTextFieldBox.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         
+        searchImageView.tintColor = Theme.colour.labelSecondary
+        
         searchTextField.backgroundColor = .clear
-        searchTextField.textColor = Theme.colour.labelPrimary
+        searchTextField.textColor = Theme.colour.labelSecondary
+        searchTextField.font = Theme.font.title3
         searchTextField.text = nil
         searchTextField.delegate = self
         
         clearSearchButton.isHidden = true
+        clearSearchButton.tintColor = Theme.colour.labelSecondary
     }
 
     @objc func addCustomToken() {

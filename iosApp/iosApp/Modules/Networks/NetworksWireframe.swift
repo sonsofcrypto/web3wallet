@@ -58,7 +58,8 @@ extension DefaultNetworksWireframe: NetworksWireframe {
 extension DefaultNetworksWireframe {
 
     private func wireUp() -> UIViewController {
-        let vc: NetworksViewController = UIStoryboard(.main).instantiate()
+        
+        let vc: NetworksViewController = UIStoryboard(.networks).instantiate()
         let presenter = DefaultNetworksPresenter(
             view: vc,
             interactor: interactor,

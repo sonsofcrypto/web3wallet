@@ -14,6 +14,8 @@ protocol Web3ServiceLocalStorage: AnyObject {
     
     func addWalletListener(_ listener: Web3ServiceWalletListener)
     func removeWalletListener(_ listener: Web3ServiceWalletListener)
+    
+    func update(network: Web3Network, active: Bool)
 }
 
 final class DefaultWeb3ServiceLocalStorage {
@@ -52,7 +54,7 @@ extension DefaultWeb3ServiceLocalStorage: Web3ServiceLocalStorage {
     func readMyTokens() -> [Web3Token] {
         
         let allTokens = readAllTokens()
-        return allTokens.filter { $0.showInWallet }
+        return allTokens.filter { $0.showInWallet && $0.network.selectedByUser }
     }
     
     func storeMyTokens(with myTokens: [Web3Token]) {
@@ -108,6 +110,47 @@ extension DefaultWeb3ServiceLocalStorage: Web3ServiceLocalStorage {
         
         listeners.removeAll { $0 === listener }
     }
+    
+    func update(network: Web3Network, active: Bool) {
+        
+        let tokens = readAllTokens()
+        
+        var updatedTokens = [Web3Token]()
+        tokens.forEach {
+            
+            if $0.network.name == network.name {
+                
+                updatedTokens.append(
+                    .init(
+                        symbol: $0.symbol,
+                        name: $0.name,
+                        address: $0.address,
+                        decimals: $0.decimals,
+                        type: $0.type,
+                        network: .init(
+                            id: $0.network.id,
+                            name: $0.network.name,
+                            hasDns: $0.network.hasDns,
+                            url: $0.network.url,
+                            status: $0.network.status,
+                            connectionType: $0.network.connectionType,
+                            explorer: $0.network.explorer,
+                            selectedByUser: active
+                        ),
+                        balance: $0.balance,
+                        showInWallet: $0.showInWallet,
+                        usdPrice: $0.usdPrice
+                    )
+                )
+            } else {
+                
+                updatedTokens.append($0)
+            }
+        }
+        storeAllTokens(with: updatedTokens)
+        
+        updateListenersWalletTokensChanged()
+    }
 }
 
 private extension DefaultWeb3ServiceLocalStorage {
@@ -131,8 +174,14 @@ private extension DefaultWeb3ServiceLocalStorage {
     var ethereumNetwork: Web3Network {
         
         .init(
+            id: "60",
             name: "Ethereum",
-            hasDns: true
+            hasDns: true,
+            url: nil,
+            status: .connected,
+            connectionType: .liteClient,
+            explorer: .liteClientOnly,
+            selectedByUser: true
         )
     }
     
@@ -323,8 +372,14 @@ private extension DefaultWeb3ServiceLocalStorage {
    var solanaNetwork: Web3Network {
         
         .init(
+            id: "90",
             name: "Solana",
-            hasDns: false
+            hasDns: false,
+            url: nil,
+            status: .disconnected,
+            connectionType: .networkDefault,
+            explorer: .web2,
+            selectedByUser: true
         )
     }
     

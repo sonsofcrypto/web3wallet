@@ -118,16 +118,18 @@ private extension DashboardViewController {
     func configureUI() {
                 
         transitioningDelegate = self
-        
+                
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            imageName: "nav_bar_back",
+            image: .init(systemName: "chevron.left"),
+            style: .plain,
             target: self,
-            selector: #selector(navBarLeftActionTapped)
+            action: #selector(navBarLeftActionTapped)
         )
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            imageName: "nav_bar_scan",
+            image: .init(systemName: "qrcode.viewfinder"),
+            style: .plain,
             target: self,
-            selector: #selector(navBarRightActionTapped)
+            action: #selector(navBarRightActionTapped)
         )
 
         edgeCardsController?.delegate = self

@@ -296,10 +296,6 @@ private extension MnemonicViewController {
     
     func configureUI() {
         title = Localized("newMnemonic.title")
-        (view as? GradientView)?.colors = [
-            Theme.colour.backgroundBaseSecondary,
-            Theme.colour.backgroundBasePrimary
-        ]
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "arrow_back"),

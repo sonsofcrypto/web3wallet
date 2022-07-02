@@ -29,11 +29,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="162" height="161"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="WnD-eS-KMs">
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="WnD-eS-KMs">
                                                     <rect key="frame" x="0.0" y="16" width="162" height="145"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BRV-5u-nlb">
-                                                            <rect key="frame" x="0.0" y="0.0" width="48.5" height="145"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="43.5" height="145"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             <state key="normal" title="Button" image="button:BRV-5u-nlb:image"/>
                                                             <connections>
@@ -41,7 +41,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fK5-V4-qwA">
-                                                            <rect key="frame" x="56.5" y="0.0" width="49" height="145"/>
+                                                            <rect key="frame" x="59.5" y="0.0" width="43" height="145"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             <state key="normal" title="Button"/>
                                                             <connections>
@@ -49,7 +49,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3B2-ne-SvS">
-                                                            <rect key="frame" x="113.5" y="0.0" width="48.5" height="145"/>
+                                                            <rect key="frame" x="118.5" y="0.0" width="43.5" height="145"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             <state key="normal" title="Button"/>
                                                             <connections>
@@ -58,7 +58,7 @@
                                                         </button>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="34" id="bId-r3-o9x"/>
+                                                        <constraint firstAttribute="height" constant="40" id="bId-r3-o9x"/>
                                                     </constraints>
                                                 </stackView>
                                             </subviews>

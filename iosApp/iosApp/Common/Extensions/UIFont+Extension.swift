@@ -5,7 +5,7 @@
 import UIKit
 
 extension UIFont {
-
+    
     static func font(_ font: Font, style: FontStyleOG = .regular, size: FontSizeOG = .body) -> UIFont {
         if let font = UIFont(
             name: "\(font.rawValue) \(style.rawValue)",

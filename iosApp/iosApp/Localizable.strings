@@ -6,8 +6,8 @@
 
 "OK" = "OK";
 "web3wallet" = "web3wallet";
-"wallets" = "wallets";
-"networks" = "networks";
+"wallets" = "Wallets";
+"networks" = "Networks";
 "dashboard" = "Dashboard";
 "degen" = "Degen";
 "nfts" = "NFTs";
@@ -19,11 +19,14 @@
 "more" = "More";
 "done" = "Done";
 "close" = "Close";
+"connected" = "Connected";
+"disconnected" = "Disconnected";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";
 "wallets.connectHD" = "Connect hardware wallet";
 
+"networks.header" = "Choose one or multiple networks for your wallet.";
 "networks.cell.connection" = "Connection:";
 "networks.cell.status" = "Status:";
 "networks.cell.explorer" = "Explorer:";

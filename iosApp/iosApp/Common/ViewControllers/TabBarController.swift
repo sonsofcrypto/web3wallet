@@ -12,7 +12,7 @@ class TabBarController: UITabBarController {
         let appearance = tabBar.standardAppearance
         let itemAppearance = appearance.inlineLayoutAppearance
 
-        appearance.backgroundColor = Theme.colour.tabBarBackground
+        appearance.backgroundColor = Theme.colour.backgroundElevatedPrimary
         
         itemAppearance.normal.iconColor = Theme.colour.tabBarTint
         itemAppearance.normal.titleTextAttributes = [

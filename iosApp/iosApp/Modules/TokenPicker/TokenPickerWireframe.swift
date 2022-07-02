@@ -40,6 +40,16 @@ struct TokenPickerWireframeContext {
                 return false
             }
         }
+        
+        var network: Web3Network? {
+            
+            switch self {
+            case let .multiSelectEdit(network, _, _):
+                return network
+            case .receive, .send:
+                return nil
+            }
+        }
     }
 }
 
