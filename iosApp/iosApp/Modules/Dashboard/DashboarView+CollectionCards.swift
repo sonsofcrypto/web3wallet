@@ -119,14 +119,17 @@ private extension DashboardViewController {
             
             guard let viewModel = self.viewModel else { return nil }
             
-            if sectionIndex == 0 {
+            guard let section = self.viewModel?.sections[sectionIndex] else { return nil }
+            
+            switch section.items {
                 
+            case .actions:
                 return self.makeButtonsCollectionLayoutSection()
-            } else if sectionIndex == viewModel.sections.count - 1 {
                 
+            case .nfts:
                 return self.makeNFTsCollectionLayoutSection()
-            } else {
                 
+            case .wallets:
                 return self.makeWalletsCollectionLayoutSection()
             }
         }

@@ -30,7 +30,7 @@ final class DefaultTokenPickerPresenter {
     private var searchTerm: String = ""
     private var tokens = [Web3Token]()
     private var selectedNetworks = [Web3Network]()
-    private var itemsDisplayed = [TokenPickerViewModel.Item]()
+    private var sectionsDisplayed = [TokenPickerViewModel.Section]()
     
     var selectedTokens: [Web3Token]?
 
@@ -172,14 +172,14 @@ private extension DefaultTokenPickerPresenter {
         case .multiSelectEdit, .receive:
             
             if searchTerm.isEmpty {
-                itemsDisplayed = makeEmptySearchItems()
+                sectionsDisplayed = makeEmptySearchSections()
             } else {
-                itemsDisplayed = makeSearchItems(for: searchTerm)
+                sectionsDisplayed = makeSearchItems(for: searchTerm)
             }
             
         case .send:
             
-            itemsDisplayed = makeSearchItems(for: searchTerm)
+            sectionsDisplayed = makeSearchItems(for: searchTerm)
         }
         
         updateView()
@@ -196,11 +196,13 @@ private extension DefaultTokenPickerPresenter {
         .init(
             title: Localized("tokenPicker.title.\(context.source.localizedValue)"),
             allowMultiSelection: context.source.isMultiSelect,
-            content: .loaded(filters: makeFilters(), items: itemsDisplayed)
+            content: .loaded(filters: makeFilters(), sections: sectionsDisplayed)
         )
     }
     
     func makeFilters() -> [TokenPickerViewModel.Filter] {
+        
+        guard context.source.network == nil else { return [] }
         
         var filters: [TokenPickerViewModel.Filter] = [
             .init(
@@ -222,7 +224,7 @@ private extension DefaultTokenPickerPresenter {
         return filters
     }
     
-    func makeEmptySearchItems() -> [TokenPickerViewModel.Item] {
+    func makeEmptySearchSections() -> [TokenPickerViewModel.Section] {
         
         let tokens = tokens.filteredBy(searchTerm: searchTerm, networkIn: selectedNetworks)
         
@@ -242,24 +244,34 @@ private extension DefaultTokenPickerPresenter {
             }
         }
         
-        var items = [TokenPickerViewModel.Item]()
+        var sections = [TokenPickerViewModel.Section]()
         
-        let featuredGroupName = Localized("tokenPicker.featured.title")
-        items.append(contentsOf: makeItems(with: featuredGroupName, and: featuredTokens))
+        if !featuredTokens.isEmpty {
+            
+            let featuredGroupName = Localized("tokenPicker.featured.title")
+            sections.append(
+                .init(name: featuredGroupName, items: makeViewModelTokens(from: featuredTokens))
+            )
+        }
 
-        let popularGroupName = Localized("tokenPicker.popular.title")
-        items.append(contentsOf: makeItems(with: popularGroupName, and: popularTokens))
+        if !popularTokens.isEmpty {
+            
+            let popularGroupName = Localized("tokenPicker.popular.title")
+            sections.append(
+                .init(name: popularGroupName, items: makeViewModelTokens(from: popularTokens))
+            )
+        }
 
-        let allGroupName = Localized("tokenPicker.all.title")
-        items.append(contentsOf: makeItems(with: allGroupName, and: otherTokens))
+        let otherSections = makeAToZSectionTokens(from: otherTokens)
+        sections.append(contentsOf: otherSections)
 
-        return items.addNoResultsIfNeeded
+        return sections.addNoResultsIfNeeded
     }
     
-    func makeSearchItems(for searchTerm: String) -> [TokenPickerViewModel.Item] {
+    func makeSearchItems(for searchTerm: String) -> [TokenPickerViewModel.Section] {
         
         let tokens = tokens.filteredBy(searchTerm: searchTerm, networkIn: selectedNetworks)
-        return makeItems(from: tokens).addNoResultsIfNeeded
+        return makeAToZSectionTokens(from: tokens).addNoResultsIfNeeded
     }
 }
 
@@ -295,25 +307,53 @@ private extension DefaultTokenPickerPresenter {
         selectedNetworks.hasNetwork(matching: token.network.name)
     }
     
-    func makeItems(with groupName: String, and tokens: [Web3Token]) -> [TokenPickerViewModel.Item] {
+    func makeAToZSectionTokens(from tokens: [Web3Token]) -> [TokenPickerViewModel.Section] {
         
-        guard !tokens.isEmpty else { return [] }
-        
-        var items = [TokenPickerViewModel.Item]()
-        items.append(
-            .group(
-                .init(name: groupName)
-            )
-        )
-        items.append(contentsOf: makeItems(from: tokens))
-        return items
+        var sections = [TokenPickerViewModel.Section]()
+        sections.append(contentsOf: makeGroupToken(for: "A", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "B", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "C", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "D", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "E", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "F", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "G", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "H", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "I", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "J", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "K", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "L", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "M", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "N", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "O", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "P", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "Q", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "R", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "S", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "T", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "U", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "V", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "W", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "X", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "Y", tokens: tokens))
+        sections.append(contentsOf: makeGroupToken(for: "Z", tokens: tokens))
+        return sections
     }
     
-    func makeItems(
-        from tokens: [Web3Token]
-    ) -> [TokenPickerViewModel.Item] {
+    func makeGroupToken(for prefix: String, tokens: [Web3Token]) -> [TokenPickerViewModel.Section] {
         
-        tokens.sortByNetworkBalanceAndName.compactMap { token in
+        let tokens = tokens.filter { $0.name.uppercased().hasPrefix(prefix) }
+        guard !tokens.isEmpty else { return [] }
+        return [
+            .init(name: prefix, items: makeViewModelTokens(from: tokens))
+        ]
+    }
+    
+    func makeViewModelTokens(
+        from tokens: [Web3Token]
+    ) -> [TokenPickerViewModel.Token] {
+        
+        let sortedTokens = tokens.sortByNetworkBalanceAndName
+        return sortedTokens.compactMap { token in
             
             let type: TokenPickerViewModel.TokenType
             switch context.source {
@@ -334,14 +374,24 @@ private extension DefaultTokenPickerPresenter {
                 type = .multiSelect(isSelected: isSelected ?? false)
             }
             
-            return .token(
-                .init(
-                    image: interactor.tokenIcon(for: token).pngImage ?? .init(named: "default_token")!,
-                    symbol: token.symbol,
-                    name: token.name,
-                    network: token.network.name,
-                    type: type
-                )
+            let position: TokenPickerViewModel.Token.Position
+            if sortedTokens.first == token && sortedTokens.last == token {
+                position = .onlyOne
+            } else if sortedTokens.first == token {
+                position = .first
+            } else if sortedTokens.last == token {
+                position = .last
+            } else {
+                position = .middle
+            }
+            
+            return .init(
+                image: interactor.tokenIcon(for: token).pngImage ?? .init(named: "default_token")!,
+                symbol: token.symbol,
+                name: token.name,
+                network: token.network.name,
+                type: type,
+                position: position
             )
         }
     }
@@ -412,14 +462,14 @@ private extension Array where Element == Web3Token {
     }
 }
 
-private extension Array where Element == TokenPickerViewModel.Item {
+private extension Array where Element == TokenPickerViewModel.Section {
     
-    var addNoResultsIfNeeded: [TokenPickerViewModel.Item] {
+    var addNoResultsIfNeeded: [TokenPickerViewModel.Section] {
         
         guard isEmpty else { return self }
         
         return [
-            .group(.init(name: Localized("tokenPicker.noResults")))
+            .init(name: Localized("tokenPicker.noResults"), items: [])
         ]
     }
 }

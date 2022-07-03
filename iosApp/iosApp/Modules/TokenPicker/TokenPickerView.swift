@@ -31,6 +31,10 @@ final class TokenPickerViewController: BaseViewController {
     
     private var searchTerm = ""
 
+    private var backgroundGradientTopConstraint: NSLayoutConstraint?
+    private var backgroundGradientViewOffset: CGFloat = 0
+    private var backgroundGradientHeightConstraint: NSLayoutConstraint?
+
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -46,6 +50,14 @@ final class TokenPickerViewController: BaseViewController {
         configureUI()
         
         presenter?.present()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        
+        super.viewWillLayoutSubviews()
+        
+        backgroundGradientTopConstraint?.constant = -(itemsCollectionView.contentOffset.y + backgroundGradientViewOffset)
+        backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
     }
 }
 
@@ -68,6 +80,7 @@ extension TokenPickerViewController: TokenPickerView {
         
         clearSearchButton.isHidden = searchTextField.text?.isEmpty ?? true
         
+        filtersCollectionView.isHidden = viewModel.filters().isEmpty
         filtersCollectionView.reloadData()
         itemsCollectionView.reloadData()
                 
@@ -117,6 +130,19 @@ private extension TokenPickerViewController {
         
         clearSearchButton.isHidden = true
         clearSearchButton.tintColor = Theme.colour.labelSecondary
+        
+        itemsCollectionView.register(
+            TokenPickerGroupCell.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "\(TokenPickerGroupCell.self)"
+        )
+
+        itemsCollectionView.setCollectionViewLayout(
+            UICollectionViewCompositionalLayout(section: makeItemsCollectionLayoutSection()),
+            animated: false
+        )
+        
+        //addCustomBackgroundGradientView()
     }
 
     @objc func addCustomToken() {
@@ -137,6 +163,24 @@ private extension TokenPickerViewController {
 
 extension TokenPickerViewController: UICollectionViewDataSource {
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        
+        switch collectionView.tag {
+            
+        case CollectionTag.filters.rawValue:
+
+            return 1
+
+        case CollectionTag.items.rawValue:
+            
+            return viewModel?.sections().count ?? 0
+            
+        default:
+            
+            fatalError("Collection not implemented")
+        }
+    }
+    
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
@@ -150,7 +194,11 @@ extension TokenPickerViewController: UICollectionViewDataSource {
 
         case CollectionTag.items.rawValue:
             
-            return viewModel?.items().count ?? 0
+            guard let section = viewModel?.sections()[section] else {
+                return 0
+            }
+
+            return section.items.count
             
         default:
             
@@ -165,6 +213,34 @@ extension TokenPickerViewController: UICollectionViewDataSource {
     ) -> UICollectionViewCell {
         
         collectionViewCell(at: indexPath, for: collectionView)
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        
+        guard
+            collectionView.tag == CollectionTag.items.rawValue,
+            let section = viewModel?.sections()[indexPath.section]
+        else { fatalError() }
+        
+        switch kind {
+            
+        case UICollectionView.elementKindSectionHeader:
+            
+            let supplementary = collectionView.dequeue(
+                TokenPickerGroupCell.self,
+                for: indexPath,
+                kind: kind
+            )
+            supplementary.update(with: section)
+            return supplementary
+            
+        default:
+            fatalError("Unexpected supplementary idxPath: \(indexPath) \(kind)")
+        }
     }
 }
 
@@ -193,6 +269,8 @@ extension TokenPickerViewController: UICollectionViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         guard scrollView.tag == CollectionTag.items.rawValue else { return }
+    
+        backgroundGradientTopConstraint?.constant = -(scrollView.contentOffset.y + backgroundGradientViewOffset)
         
         dismissKeyboard()
     }
@@ -211,10 +289,6 @@ extension TokenPickerViewController: UICollectionViewDelegateFlowLayout {
         case CollectionTag.filters.rawValue:
 
             return .init(width: 56, height: collectionView.frame.height)
-
-        case CollectionTag.items.rawValue:
-            
-            return .init(width: collectionView.frame.width, height: 56)
 
         default:
             
@@ -242,10 +316,10 @@ private extension TokenPickerViewController {
     
     func itemSelectedAt(indexPath: IndexPath) {
         
-        guard let item = viewModel?.items()[indexPath.row] else { return }
-        
-        guard case let TokenPickerViewModel.Item.token(token) = item else { return }
-        
+        guard let section = viewModel?.sections()[indexPath.section] else {
+            fatalError()
+        }
+        let token = section.items[indexPath.item]
         presenter.handle(.selectItem(token))
     }
     
@@ -294,36 +368,20 @@ private extension TokenPickerViewController {
         for collectionView: UICollectionView
     ) -> UICollectionViewCell {
         
-        guard let item = viewModel?.items()[indexPath.item] else {
+        guard let section = viewModel?.sections()[indexPath.section] else {
             fatalError()
         }
         
-        switch item {
-            
-        case let .group(group):
-            
-            let cell = collectionView.dequeue(
-                TokenPickerGroupCell.self,
-                for: indexPath
-            )
-            cell.update(
-                with: group,
-                and: collectionView.frame.size.width
-            )
-            return cell
-            
-        case let .token(token):
-            
-            let cell = collectionView.dequeue(
-                TokenPickerItemCell.self,
-                for: indexPath
-            )
-            cell.update(
-                with: token,
-                and: collectionView.frame.size.width
-            )
-            return cell
-        }
+        let token = section.items[indexPath.item]
+                    
+        let cell = collectionView.dequeue(
+            TokenPickerItemCell.self,
+            for: indexPath
+        )
+        cell.update(
+            with: token
+        )
+        return cell
     }
     
     @objc func dismissKeyboard() {
@@ -331,3 +389,91 @@ private extension TokenPickerViewController {
         searchTextField.resignFirstResponder()
     }
 }
+
+private extension TokenPickerViewController {
+    
+    func makeItemsCollectionLayoutSection() -> NSCollectionLayoutSection {
+        
+        // Item
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        // Group
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(44)
+        )
+        let outerGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize, subitems: [item]
+        )
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: outerGroup)
+        
+        let headerItemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(54)
+        )
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerItemSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.boundarySupplementaryItems = [headerItem]
+
+        return section
+    }
+}
+
+extension TokenPickerViewController: UIScrollViewDelegate {
+
+    func addCustomBackgroundGradientView() {
+
+        // 0 - Configure background gradient offset (extra bit at top & bottom)
+        backgroundGradientViewOffset = view.frame.size.height
+
+        // 1 - Add gradient
+        let backgroundGradient = GradientView()
+        backgroundGradient.isDashboard = true
+        view.insertSubview(backgroundGradient, at: 0)
+        
+        backgroundGradient.translatesAutoresizingMaskIntoConstraints = false
+        
+        let topConstraint = backgroundGradient.topAnchor.constraint(
+            equalTo: searchContainerBox.bottomAnchor
+        )
+        self.backgroundGradientTopConstraint = topConstraint
+        topConstraint.isActive = true
+
+        backgroundGradient.leadingAnchor.constraint(
+            equalTo: view.leadingAnchor
+        ).isActive = true
+
+        backgroundGradient.trailingAnchor.constraint(
+            equalTo: view.trailingAnchor
+        ).isActive = true
+
+        let heightConstraint = backgroundGradient.heightAnchor.constraint(
+            equalToConstant: backgroundGradientHeight
+        )
+        self.backgroundGradientHeightConstraint = heightConstraint
+        heightConstraint.isActive = true
+    }
+
+    var backgroundGradientHeight: CGFloat {
+        
+        let offset = backgroundGradientViewOffset * 2
+        
+        if itemsCollectionView.frame.size.height > itemsCollectionView.contentSize.height {
+            
+            return itemsCollectionView.frame.size.height + offset
+        } else {
+            
+            return itemsCollectionView.contentSize.height + offset
+        }
+    }
+}
+

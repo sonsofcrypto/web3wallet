@@ -89,7 +89,7 @@ extension DefaultWeb3ServiceLocalStorage: Web3ServiceLocalStorage {
                         type: token.type,
                         network: token.network,
                         balance: token.balance,
-                        showInWallet: false,
+                        showInWallet: token.network.selectedByUser ? false : token.showInWallet,
                         usdPrice: token.usdPrice
                     )
                 )

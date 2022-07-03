@@ -20,7 +20,7 @@ extension DefaultWeb3Service: Web3Service {
     
     var allNetworks: [Web3Network] {
         
-        var networks = allTokens.networks
+        var networks = web3ServiceLocalStorage.readAllTokens().networks
         networks.append(
             
             .init(
@@ -39,12 +39,16 @@ extension DefaultWeb3Service: Web3Service {
     
     var allTokens: [Web3Token] {
         
-        web3ServiceLocalStorage.readAllTokens().sortByNetworkAndName
+        web3ServiceLocalStorage.readAllTokens().sortByNetworkAndName.filter {
+            $0.network.selectedByUser
+        }
     }
     
     var myTokens: [Web3Token] {
         
-        web3ServiceLocalStorage.readMyTokens().sortByNetworkBalanceAndName
+        web3ServiceLocalStorage.readMyTokens().sortByNetworkBalanceAndName.filter {
+            $0.network.selectedByUser
+        }
     }
     
     func storeMyTokens(to tokens: [Web3Token]) {

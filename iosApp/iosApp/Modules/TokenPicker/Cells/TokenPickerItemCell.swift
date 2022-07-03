@@ -6,11 +6,14 @@ import UIKit
 
 final class TokenPickerItemCell: UICollectionViewCell {
     
+    @IBOutlet weak var separatorTopView: UIView!
+    @IBOutlet weak var separatorTopViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var separatorTopViewTrailingConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var symbolLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var networkLabel: UILabel!
-    @IBOutlet weak var widthLayoutConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var multiSelectView: UIView!
     @IBOutlet weak var multiSelectTick: UIImageView!
@@ -19,6 +22,8 @@ final class TokenPickerItemCell: UICollectionViewCell {
     @IBOutlet weak var tokenLabel: UILabel!
     @IBOutlet weak var tokenSymbolLabel: UILabel!
     @IBOutlet weak var usdPriceLabel: UILabel!
+    
+    @IBOutlet weak var separatorBottomView: UIView!
 
     override func awakeFromNib() {
         
@@ -53,11 +58,13 @@ final class TokenPickerItemCell: UICollectionViewCell {
         usdPriceLabel.font = Theme.font.callout
         usdPriceLabel.textColor = Theme.colour.labelSecondary
         usdPriceLabel.textAlignment = .right
+        
+        separatorTopView.backgroundColor = Theme.colour.separatorNoTransparency
+        separatorBottomView.backgroundColor = Theme.colour.separatorNoTransparency
     }
 
     func update(
-        with viewModel: TokenPickerViewModel.Token,
-        and width: CGFloat
+        with viewModel: TokenPickerViewModel.Token
     ) {
 
         iconImageView.image = viewModel.image
@@ -88,6 +95,27 @@ final class TokenPickerItemCell: UICollectionViewCell {
             usdPriceLabel.text = usdTotal
         }
         
-        widthLayoutConstraint.constant = width
+        switch viewModel.position {
+        case .onlyOne:
+            separatorTopView.isHidden = false
+            separatorTopViewLeadingConstraint.constant = 0
+            separatorTopViewTrailingConstraint.constant = 0
+            separatorBottomView.isHidden = false
+        case .first:
+            separatorTopView.isHidden = false
+            separatorTopViewLeadingConstraint.constant = 0
+            separatorTopViewTrailingConstraint.constant = 0
+            separatorBottomView.isHidden = true
+        case .middle:
+            separatorTopView.isHidden = false
+            separatorTopViewLeadingConstraint.constant = Theme.constant.padding
+            separatorTopViewTrailingConstraint.constant = Theme.constant.padding
+            separatorBottomView.isHidden = true
+        case .last:
+            separatorTopView.isHidden = false
+            separatorTopViewLeadingConstraint.constant = Theme.constant.padding
+            separatorTopViewTrailingConstraint.constant = Theme.constant.padding
+            separatorBottomView.isHidden = false
+        }
     }
 }

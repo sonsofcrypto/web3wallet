@@ -15,7 +15,7 @@ extension TokenPickerViewModel {
     
     enum Content {
         case loading
-        case loaded(filters: [Filter], items: [Item])
+        case loaded(filters: [Filter], sections: [Section])
         case error(error: AppsViewModel.Error)
     }
 
@@ -31,14 +31,10 @@ extension TokenPickerViewModel {
         }
     }
 
-    enum Item {
+    struct Section {
         
-        case group(Group)
-        case token(Token)
-    }
-    
-    struct Group {
         let name: String
+        let items: [Token]
     }
     
     struct Token {
@@ -48,6 +44,15 @@ extension TokenPickerViewModel {
         let name: String
         let network: String?
         let type: TokenType
+        let position: Position
+        
+        enum Position {
+            
+            case onlyOne
+            case first
+            case middle
+            case last
+        }
     }
     
     enum TokenType {
@@ -79,10 +84,10 @@ extension TokenPickerViewModel {
         }
     }
     
-    func items() -> [TokenPickerViewModel.Item] {
+    func sections() -> [TokenPickerViewModel.Section] {
         switch content {
-        case let .loaded(_, items):
-            return items
+        case let .loaded(_, sections):
+            return sections
         default:
             return []
         }

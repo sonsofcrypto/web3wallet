@@ -140,7 +140,6 @@
 "tokenPicker.networks.all" = "All networks";
 "tokenPicker.featured.title" = "Featured";
 "tokenPicker.popular.title" = "Popular";
-"tokenPicker.all.title" = "All coins";
 "tokenPicker.noResults" = "No results";
 
 "tokenReceive.title.receive" = "Receive %@";

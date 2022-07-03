@@ -174,44 +174,6 @@
                                     <inset key="sectionInset" minX="0.0" minY="8" maxX="0.0" maxY="16"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TokenPickerGroupCell" id="GEO-AK-0Ev" customClass="TokenPickerGroupCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="8" width="414" height="128"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="UYr-SG-Hby">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="128"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ue8-X2-M3h">
-                                                    <rect key="frame" x="16" y="4" width="382" height="120"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oEp-FH-kgs">
-                                                            <rect key="frame" x="0.0" y="0.0" width="41.5" height="120"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="216" id="0gt-ig-L1H"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="49X-lV-XAU">
-                                                            <rect key="frame" x="49.5" y="0.0" width="332.5" height="120"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </view>
-                                                    </subviews>
-                                                </stackView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="Ue8-X2-M3h" secondAttribute="trailing" constant="16" id="5hB-Bc-TTT"/>
-                                                <constraint firstItem="Ue8-X2-M3h" firstAttribute="leading" secondItem="UYr-SG-Hby" secondAttribute="leading" constant="16" id="cOQ-IN-cZd"/>
-                                                <constraint firstAttribute="bottom" secondItem="Ue8-X2-M3h" secondAttribute="bottom" constant="4" id="ki5-hB-Baj"/>
-                                                <constraint firstItem="Ue8-X2-M3h" firstAttribute="top" secondItem="UYr-SG-Hby" secondAttribute="top" constant="4" id="z7t-G6-umP"/>
-                                            </constraints>
-                                        </collectionViewCellContentView>
-                                        <connections>
-                                            <outlet property="nameLabel" destination="oEp-FH-kgs" id="Sgi-6U-Kah"/>
-                                            <outlet property="widthLayoutConstraint" destination="0gt-ig-L1H" id="ixz-jj-KUW"/>
-                                        </connections>
-                                    </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TokenPickerItemCell" id="NY7-Hg-YaP" customClass="TokenPickerItemCell" customModule="iosApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="146" width="414" height="70"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -219,6 +181,20 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IzD-aQ-86v">
+                                                    <rect key="frame" x="87" y="-29" width="240" height="128"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="0.5" id="iN1-HZ-cc5"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w7c-JT-JSl">
+                                                    <rect key="frame" x="87" y="-29" width="240" height="128"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="0.5" id="iv7-LM-VU3"/>
+                                                    </constraints>
+                                                </view>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="d3y-PB-WKg">
                                                     <rect key="frame" x="16" y="10" width="382" height="50"/>
                                                     <subviews>
@@ -339,10 +315,16 @@
                                                 </stackView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="IzD-aQ-86v" secondAttribute="trailing" id="AQZ-d4-XMn"/>
                                                 <constraint firstItem="d3y-PB-WKg" firstAttribute="top" secondItem="Y0p-oB-Rsl" secondAttribute="top" constant="10" id="JYa-k5-V3b"/>
+                                                <constraint firstItem="IzD-aQ-86v" firstAttribute="leading" secondItem="Y0p-oB-Rsl" secondAttribute="leading" id="Ph9-FH-n3b"/>
                                                 <constraint firstAttribute="bottom" secondItem="d3y-PB-WKg" secondAttribute="bottom" constant="10" id="R0A-uM-jLq"/>
                                                 <constraint firstItem="d3y-PB-WKg" firstAttribute="leading" secondItem="Y0p-oB-Rsl" secondAttribute="leading" constant="16" id="Sko-Xq-Qde"/>
+                                                <constraint firstItem="IzD-aQ-86v" firstAttribute="top" secondItem="Y0p-oB-Rsl" secondAttribute="top" id="Zo3-fx-kXO"/>
+                                                <constraint firstItem="w7c-JT-JSl" firstAttribute="leading" secondItem="Y0p-oB-Rsl" secondAttribute="leading" id="nIH-wN-zSQ"/>
+                                                <constraint firstAttribute="bottom" secondItem="w7c-JT-JSl" secondAttribute="bottom" id="pbu-e7-mRV"/>
                                                 <constraint firstAttribute="trailing" secondItem="d3y-PB-WKg" secondAttribute="trailing" constant="16" id="rpb-IP-ThR"/>
+                                                <constraint firstAttribute="trailing" secondItem="w7c-JT-JSl" secondAttribute="trailing" id="v25-3Y-iCg"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
@@ -351,12 +333,15 @@
                                             <outlet property="multiSelectView" destination="LIB-ng-HGj" id="krY-k0-0YQ"/>
                                             <outlet property="nameLabel" destination="76J-2u-RQP" id="a3d-bK-d7g"/>
                                             <outlet property="networkLabel" destination="5SO-rv-yof" id="eZH-Pb-DIL"/>
+                                            <outlet property="separatorBottomView" destination="w7c-JT-JSl" id="1eS-gS-Ok1"/>
+                                            <outlet property="separatorTopView" destination="IzD-aQ-86v" id="NTc-cP-pDe"/>
+                                            <outlet property="separatorTopViewLeadingConstraint" destination="Ph9-FH-n3b" id="uEi-n5-jpP"/>
+                                            <outlet property="separatorTopViewTrailingConstraint" destination="AQZ-d4-XMn" id="sbf-CB-z6K"/>
                                             <outlet property="symbolLabel" destination="qwV-5w-tiR" id="uzS-C4-5ZU"/>
                                             <outlet property="tokenLabel" destination="Pg7-64-9cC" id="gIM-sA-Ovx"/>
                                             <outlet property="tokenPriceStackView" destination="MP4-lm-Ne3" id="Ft3-xt-Z9F"/>
                                             <outlet property="tokenSymbolLabel" destination="H30-o2-63v" id="Fna-bU-hcu"/>
                                             <outlet property="usdPriceLabel" destination="tvo-3m-tky" id="rkb-Kf-wQQ"/>
-                                            <outlet property="widthLayoutConstraint" destination="Eg9-tZ-P01" id="hpX-z8-r48"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
