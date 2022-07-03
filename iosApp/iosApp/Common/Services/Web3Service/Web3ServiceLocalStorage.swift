@@ -130,6 +130,7 @@ extension DefaultWeb3ServiceLocalStorage: Web3ServiceLocalStorage {
                         network: .init(
                             id: $0.network.id,
                             name: $0.network.name,
+                            cost: $0.network.cost,
                             hasDns: $0.network.hasDns,
                             url: $0.network.url,
                             status: $0.network.status,
@@ -176,6 +177,7 @@ private extension DefaultWeb3ServiceLocalStorage {
         .init(
             id: "60",
             name: "Ethereum",
+            cost: "43 gwei - $0.91",
             hasDns: true,
             url: nil,
             status: .connected,
@@ -374,6 +376,7 @@ private extension DefaultWeb3ServiceLocalStorage {
         .init(
             id: "90",
             name: "Solana",
+            cost: "5k LAMPORTS - $0.01",
             hasDns: false,
             url: nil,
             status: .disconnected,

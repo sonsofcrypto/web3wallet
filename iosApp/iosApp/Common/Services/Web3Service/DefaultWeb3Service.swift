@@ -26,6 +26,7 @@ extension DefaultWeb3Service: Web3Service {
             .init(
                 id: "10",
                 name: "Polygon",
+                cost: "5k LAMPORTS - $0.01",
                 hasDns: false,
                 url: nil,
                 status: .comingSoon,

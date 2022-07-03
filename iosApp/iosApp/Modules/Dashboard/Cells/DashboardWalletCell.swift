@@ -32,14 +32,16 @@ final class DashboardWalletCell: UICollectionViewCell {
         
         contentStack.setCustomSpacing(13, after: topContentStack)
         
-        currencyLabel.applyStyle(.callout)
+        fiatBalanceLabel.font = Theme.font.dashboardTVBalance
+        fiatBalanceLabel.textColor = Theme.colour.labelPrimary
         
-        pctChangeLabel.applyStyle(.callout)
+        currencyLabel.font = Theme.font.dashboardTVSymbol
+        currencyLabel.textColor = Theme.colour.labelPrimary
         
-        [fiatBalanceLabel, pctChangeLabel].forEach { $0.applyStyle(.smallLabel) }
-        fiatBalanceLabel.textColor = Theme.colour.labelSecondary
+        pctChangeLabel.font = Theme.font.dashboardTVPct
+        pctChangeLabel.textColor = Theme.colour.systemGreen
         
-        cryptoBalanceLabel.font = Theme.font.footnote
+        cryptoBalanceLabel.font = Theme.font.dashboardTVTokenBalance
         cryptoBalanceLabel.textColor = Theme.colour.systemOrange
 
     }
@@ -58,7 +60,7 @@ extension DashboardWalletCell {
     func update(with viewModel: DashboardViewModel.Wallet) {
         
         imageView.image = viewModel.imageData.pngImage
-        currencyLabel.text = viewModel.name
+        currencyLabel.text = viewModel.ticker
         fiatBalanceLabel.text = viewModel.fiatBalance
         pctChangeLabel.text = viewModel.pctChange
         pctChangeLabel.textColor = viewModel.priceUp

@@ -31,6 +31,16 @@ struct TokenPickerWireframeContext {
             }
         }
         
+        var isSend: Bool {
+            
+            switch self {
+            case .send:
+                return true
+            case .multiSelectEdit, .receive:
+                return false
+            }
+        }
+        
         var isMultiSelect: Bool {
             
             switch self {
@@ -164,6 +174,7 @@ private extension DefaultTokenPickerWireframe {
         )
         
         vc.presenter = presenter
+        vc.context = context
         
         switch context.presentationStyle {
         case .embed:

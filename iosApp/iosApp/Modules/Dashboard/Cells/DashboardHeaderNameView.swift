@@ -10,6 +10,8 @@ final class DashboardHeaderNameView: UICollectionReusableView {
     private var viewModel: DashboardViewModel.Section!
     
     private weak var label: UILabel!
+    private weak var fuelCostImageView: UIView!
+    private weak var fuelCostLabel: UILabel!
     private weak var rightAction: UILabel!
     
     override init(frame: CGRect) {
@@ -35,8 +37,42 @@ private extension DashboardHeaderNameView {
         label.font = Theme.font.networkTitle
         label.textColor = Theme.colour.labelPrimary
         self.label = label
-        addSubview(label)
         label.addConstraints(
+            [
+                .hugging(layoutAxis: .horizontal, priority: .required)
+            ]
+        )
+        
+        let iconImageViewGroup = UIView()
+        iconImageViewGroup.backgroundColor = .clear
+        let iconImageView = UIImageView(
+            image: .init(named: "dashboard-charging-station")!
+        )
+        iconImageViewGroup.addSubview(iconImageView)
+        iconImageView.addConstraints(
+            [
+                .layout(anchor: .leadingAnchor),
+                .layout(anchor: .trailingAnchor),
+                .layout(anchor: .centerYAnchor, constant: .equalTo(constant: -2)),
+                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 14)),
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 14))
+            ]
+        )
+        self.fuelCostImageView = iconImageViewGroup
+        
+        let fuelCostLabel = UILabel()
+        fuelCostLabel.font = Theme.font.dashboardSectionFuel
+        fuelCostLabel.textColor = Theme.colour.labelPrimary
+        self.fuelCostLabel = fuelCostLabel
+        
+        let groupView = HStackView(
+            [label, iconImageViewGroup, fuelCostLabel],
+            spacing: Theme.constant.padding.half
+        )
+        addSubview(groupView)
+        groupView.setCustomSpacing(Theme.constant.padding, after: label)
+        
+        groupView.addConstraints(
             [
                 .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding * 0.5)),
                 .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
@@ -99,6 +135,17 @@ extension DashboardHeaderNameView {
             rightAction.text = viewModel.rightActionTitle
         case .nfts, .actions:
             rightAction.isHidden = true
+        }
+        
+        if let fuelCost = viewModel.fuelCost {
+            
+            self.fuelCostImageView.isHidden = false
+            self.fuelCostLabel.isHidden = false
+            self.fuelCostLabel.text = fuelCost
+        } else {
+            
+            self.fuelCostImageView.isHidden = true
+            self.fuelCostLabel.isHidden = true
         }
     }
 }

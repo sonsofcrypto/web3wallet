@@ -142,6 +142,7 @@ private extension DefaultDashboardPresenter {
             sections.append(
                 .init(
                     name: network.name,
+                    fuelCost: network.cost,
                     rightActionTitle: Localized("more").uppercased(),
                     isCollapsed: false,//!expandedNetworks.contains(network.name),
                     items: .wallets(
@@ -161,6 +162,7 @@ private extension DefaultDashboardPresenter {
             sections.append(
                 .init(
                     name: Localized("dashboard.section.nfts").uppercased(),
+                    fuelCost: nil,
                     rightActionTitle: nil,
                     isCollapsed: false,
                     items: .nfts(nfts)
@@ -180,6 +182,7 @@ private extension DefaultDashboardPresenter {
         sections.insert(
             .init(
                 name: walletTotal.formatted(.currency(code: "USD")),
+                fuelCost: nil,
                 rightActionTitle: nil,
                 isCollapsed: nil,
                 items: .actions(
@@ -228,6 +231,7 @@ private extension DefaultDashboardPresenter {
             allSections.append(
                 sectionWithName ?? .init(
                     name: network.name,
+                    fuelCost: network.cost,
                     rightActionTitle: Localized("more").uppercased(),
                     isCollapsed: false,
                     items: .wallets([])

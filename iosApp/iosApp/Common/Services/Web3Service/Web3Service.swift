@@ -32,6 +32,7 @@ struct Web3Network: Codable, Equatable, Hashable {
     
     let id: String
     let name: String
+    let cost: String
     let hasDns: Bool
     let url: URL?
     let status: Status

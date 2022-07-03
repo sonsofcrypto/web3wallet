@@ -18,6 +18,7 @@ final class TokenPickerViewController: BaseViewController {
     }
 
     var presenter: TokenPickerPresenter!
+    var context: TokenPickerWireframeContext!
 
     private var viewModel: TokenPickerViewModel?
     
@@ -404,7 +405,7 @@ private extension TokenPickerViewController {
         // Group
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(44)
+            heightDimension: .estimated(context.source.isSend ? 64 : 44)
         )
         let outerGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize, subitems: [item]

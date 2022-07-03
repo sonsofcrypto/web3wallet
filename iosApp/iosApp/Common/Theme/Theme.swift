@@ -57,6 +57,11 @@ struct ThemeFont {
     let navTitle: UIFont
     let tabBar: UIFont
     let networkTitle: UIFont
+    let dashboardSectionFuel: UIFont
+    let dashboardTVBalance: UIFont
+    let dashboardTVSymbol: UIFont
+    let dashboardTVPct: UIFont
+    let dashboardTVTokenBalance: UIFont
 }
 
 struct ThemeColour {

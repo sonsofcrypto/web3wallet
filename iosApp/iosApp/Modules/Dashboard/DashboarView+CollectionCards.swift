@@ -117,7 +117,7 @@ private extension DashboardViewController {
             
             guard let self = self else { return nil }
             
-            guard let viewModel = self.viewModel else { return nil }
+            guard self.viewModel != nil else { return nil }
             
             guard let section = self.viewModel?.sections[sectionIndex] else { return nil }
             
@@ -169,7 +169,10 @@ private extension DashboardViewController {
             trailing: sectionInset
         )
         
-        let headerItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(100))
+        let headerItemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(100)
+        )
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerItemSize,
             elementKind: UICollectionView.elementKindSectionHeader,

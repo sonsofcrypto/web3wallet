@@ -40,7 +40,12 @@ struct ThemeA: Themable {
             footnoteBold: .systemFont(ofSize: 13, weight: .semibold), // line_height = 18
             navTitle: .systemFont(ofSize: 18, weight: .regular), // line_height = 20
             tabBar: .systemFont(ofSize: 11, weight: .semibold), // line_height = 13
-            networkTitle: .init(name: "NaokoAA-BlackItalic", size: 16)!
+            networkTitle: .init(name: "NaokoAA-BlackItalic", size: 16)!,
+            dashboardSectionFuel: .init(name: "NaokoAA-RegularItalic", size: 11)!,
+            dashboardTVBalance: .init(name: "OCR-A", size: 16)!,
+            dashboardTVSymbol: .init(name: "NaokoAA-Semilight", size: 13)!,
+            dashboardTVPct: .init(name: "OCR-A", size: 10)!,
+            dashboardTVTokenBalance: .init(name: "OCR-A", size: 13)!
         )
     }
     

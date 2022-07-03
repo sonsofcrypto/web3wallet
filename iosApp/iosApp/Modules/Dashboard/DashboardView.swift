@@ -33,6 +33,15 @@ final class DashboardViewController: BaseViewController {
         configureUI()
         
         presenter.present()
+        
+        for family: String in UIFont.familyNames
+        {
+            print(family)
+            for names: String in UIFont.fontNames(forFamilyName: family)
+            {
+                print("== \(names)")
+            }
+        }
     }
         
     override func viewWillLayoutSubviews() {

@@ -386,6 +386,7 @@
 		1CD3FE20284D5840008312DE /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD3FE1F284D5840008312DE /* FeatureFlags.swift */; };
 		1CD3FE342851D2A0008312DE /* UIView+Animations+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD3FE332851D2A0008312DE /* UIView+Animations+Chat.swift */; };
 		1CD3FE8928559EF2008312DE /* Web3Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD3FE8828559EF2008312DE /* Web3Service.swift */; };
+		1CD843EA287218C800E6D359 /* OCR-A Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1CD843E9287218C100E6D359 /* OCR-A Regular.ttf */; };
 		1CE66BCA2848EA9900AB6ACA /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BC92848EA9900AB6ACA /* ChatService.swift */; };
 		1CE66BCC2848EA9F00AB6ACA /* DefaultChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCB2848EA9F00AB6ACA /* DefaultChatService.swift */; };
 		1CE66BCE2848EAA600AB6ACA /* ChatServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */; };
@@ -841,6 +842,7 @@
 		1CD3FE1F284D5840008312DE /* FeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
 		1CD3FE332851D2A0008312DE /* UIView+Animations+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animations+Chat.swift"; sourceTree = "<group>"; };
 		1CD3FE8828559EF2008312DE /* Web3Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Web3Service.swift; sourceTree = "<group>"; };
+		1CD843E9287218C100E6D359 /* OCR-A Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OCR-A Regular.ttf"; sourceTree = "<group>"; };
 		1CE66BC92848EA9900AB6ACA /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		1CE66BCB2848EA9F00AB6ACA /* DefaultChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatService.swift; sourceTree = "<group>"; };
 		1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceAssembler.swift; sourceTree = "<group>"; };
@@ -1784,6 +1786,14 @@
 			path = Web3Service;
 			sourceTree = "<group>";
 		};
+		1CD843E8287218B900E6D359 /* OCR-A */ = {
+			isa = PBXGroup;
+			children = (
+				1CD843E9287218C100E6D359 /* OCR-A Regular.ttf */,
+			);
+			path = "OCR-A";
+			sourceTree = "<group>";
+		};
 		1CE66BC82848EA9000AB6ACA /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -1807,6 +1817,7 @@
 		D11A98F327B8615B00EDFDD0 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				1CD843E8287218B900E6D359 /* OCR-A */,
 				1CAC55FA286EFFC300CCB2B6 /* SFProDisplay */,
 				1CAC55F3286EFFC200CCB2B6 /* SFProText */,
 				1C54DC4228683DA900E378F6 /* Naoko */,
@@ -2157,6 +2168,7 @@
 				1C54DC5D28683DDA00E378F6 /* NaokoAA-Black.otf in Resources */,
 				D157F7D427B69B6400578FF8 /* Assets.xcassets in Resources */,
 				D11A990327B8615B00EDFDD0 /* GothicA1-Thin.ttf in Resources */,
+				1CD843EA287218C800E6D359 /* OCR-A Regular.ttf in Resources */,
 				D11A990927B8615B00EDFDD0 /* GothicA1-SemiBold.ttf in Resources */,
 				D157F7D227B69B6300578FF8 /* Main.storyboard in Resources */,
 				1CAC5608286EFFC300CCB2B6 /* SFProDisplay-RegularItalic.otf in Resources */,
@@ -2754,6 +2766,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = web3wallet;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We use the phone's camera to read QR codes";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -2791,6 +2804,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = web3wallet;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We use the phone's camera to read QR codes";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSCameraUsageDescription</key>
-	<string>We use the phone&apos;s camera to read QR codes</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>GothicA1-ExtraLight.ttf</string>
@@ -29,18 +27,7 @@
 		<string>NaokoAA-Bold.otf</string>
 		<string>NaokoAA-Extrabold-Italic.otf</string>
 		<string>NaokoAA-Extrabold.otf</string>
-		<string>SFProDisplay-Bold</string>
-		<string>SFProDisplay-BoldItalic</string>
-		<string>SFProDisplay-Regular</string>
-		<string>SFProDisplay-RegularItalic</string>
-		<string>SFProDisplay-Semibold</string>
-		<string>SFProDisplay-SemiboldItalic</string>
-		<string>SFProText-Bold</string>
-		<string>SFProText-BoldItalic</string>
-		<string>SFProText-Regular</string>
-		<string>SFProText-RegularItalic</string>
-		<string>SFProText-Semibold</string>
-		<string>SFProText-SemiboldItalic</string>
+		<string>OCR-A Regular.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
