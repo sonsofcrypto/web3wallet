@@ -6,6 +6,7 @@ import Foundation
 
 protocol DashboardInteractor: AnyObject {
 
+    var allNetworks: [Web3Network] { get }
     var myTokens: [Web3Token] { get }
     func tokenIcon(for token: Web3Token) -> Data
     func priceData(for token: Web3Token) -> [ Web3Candle ]
@@ -34,6 +35,11 @@ final class DefaultDashboardInteractor {
 }
 
 extension DefaultDashboardInteractor: DashboardInteractor {
+    
+    var allNetworks: [Web3Network] {
+        
+        web3Service.allNetworks
+    }
 
     var myTokens: [Web3Token] {
         

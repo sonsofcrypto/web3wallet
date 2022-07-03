@@ -15,6 +15,7 @@ extension DashboardViewModel {
     struct Section {
         
         let name: String
+        let rightActionTitle: String?
         let isCollapsed: Bool?
         let items: Items
         

@@ -162,8 +162,8 @@ private extension DashboardViewController {
     
     @objc func navBarRightActionTapped() {
         
-        presenter.handle(.didTapEditTokens)
-        //presenter.handle(.didScanQRCode)
+        //presenter.handle(.didTapEditTokens)
+        presenter.handle(.didScanQRCode)
     }
     
 }
@@ -314,7 +314,7 @@ private extension DashboardViewController {
                 for: indexPath,
                 kind: kind
             )
-            supplementary.update(with: section)
+            supplementary.update(with: section, presenter: presenter)
             return supplementary
         }
     }

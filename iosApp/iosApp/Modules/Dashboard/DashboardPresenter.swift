@@ -16,7 +16,7 @@ enum DashboardPresenterEvent {
     case didInteractWithCardSwitcher
     case didTapNetwork
     case didScanQRCode
-    case didTapEditTokens
+    case didTapEditTokens(network: String)
 }
 
 protocol DashboardPresenter: AnyObject {
@@ -91,9 +91,17 @@ extension DefaultDashboardPresenter: DashboardPresenter {
         case .didScanQRCode:
             wireframe.navigate(to: .scanQRCode(onCompletion: makeOnQRCodeScanned()))
             
-        case .didTapEditTokens:
+        case let .didTapEditTokens(network):
+            
+            let networkOrNil = interactor.allNetworks.first {
+                $0.name.lowercased() == network.lowercased()
+            }
+            
+            guard let network = networkOrNil else { return }
+            
             wireframe.navigate(
                 to: .editTokens(
+                    network: network,
                     selectedTokens: myTokens,
                     onCompletion: makeOnEditTokensCompletion()
                 )
@@ -134,6 +142,7 @@ private extension DefaultDashboardPresenter {
             sections.append(
                 .init(
                     name: network.name,
+                    rightActionTitle: Localized("more").uppercased(),
                     isCollapsed: false,//!expandedNetworks.contains(network.name),
                     items: .wallets(
                         makeDashboardViewModelWallets(from: tokens)
@@ -146,10 +155,13 @@ private extension DefaultDashboardPresenter {
             )
         }
         
+        sections = addMissingSectionsIfNeeded(to: sections)
+        
         if !nfts.isEmpty {
             sections.append(
                 .init(
                     name: Localized("dashboard.section.nfts").uppercased(),
+                    rightActionTitle: nil,
                     isCollapsed: false,
                     items: .nfts(nfts)
                 )
@@ -168,6 +180,7 @@ private extension DefaultDashboardPresenter {
         sections.insert(
             .init(
                 name: walletTotal.formatted(.currency(code: "USD")),
+                rightActionTitle: nil,
                 isCollapsed: nil,
                 items: .actions(
                     [
@@ -196,6 +209,33 @@ private extension DefaultDashboardPresenter {
             shouldAnimateCardSwitcher: onboardingService.shouldShowOnboardingButton(),
             sections: sections
         )
+    }
+    
+    func addMissingSectionsIfNeeded(
+        to sections: [DashboardViewModel.Section]
+    ) -> [DashboardViewModel.Section] {
+        
+        var allSections = [DashboardViewModel.Section]()
+        
+        let allNetworks = interactor.allNetworks.filter { $0.selectedByUser }.sortByName
+        
+        allNetworks.forEach { network in
+            
+            let sectionWithName = sections.filter {
+                $0.name.lowercased() == network.name.lowercased()
+            }.first
+            
+            allSections.append(
+                sectionWithName ?? .init(
+                    name: network.name,
+                    rightActionTitle: Localized("more").uppercased(),
+                    isCollapsed: false,
+                    items: .wallets([])
+                )
+            )
+        }
+        
+        return allSections
     }
     
     func makeDashboardViewModelWallets(from tokens: [Web3Token]) -> [DashboardViewModel.Wallet] {

@@ -6,7 +6,11 @@ import UIKit
 
 final class DashboardHeaderNameView: UICollectionReusableView {
     
+    private weak var presenter: DashboardPresenter!
+    private var viewModel: DashboardViewModel.Section!
+    
     private weak var label: UILabel!
+    private weak var rightAction: UILabel!
     
     override init(frame: CGRect) {
         
@@ -42,6 +46,21 @@ private extension DashboardHeaderNameView {
             ]
         )
         
+        let rightAction = UILabel()
+        rightAction.font = Theme.font.body
+        rightAction.textColor = Theme.colour.labelPrimary
+        rightAction.isHidden = true
+        rightAction.add(.targetAction(.init(target: self, selector: #selector(moreTapped))))
+        self.rightAction = rightAction
+        addSubview(rightAction)
+        rightAction.addConstraints(
+            [
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
+                .layout(anchor: .centerYAnchor),
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 30))
+            ]
+        )
+        
         let view = UIView()
         view.backgroundColor = Theme.colour.labelPrimary
         addSubview(view)
@@ -54,12 +73,32 @@ private extension DashboardHeaderNameView {
             ]
         )
     }
+    
+    @objc func moreTapped() {
+        
+        presenter.handle(.didTapEditTokens(network: viewModel.name))
+    }
 }
 
 extension DashboardHeaderNameView {
 
-    func update(with viewModel: DashboardViewModel.Section) {
+    func update(
+        with viewModel: DashboardViewModel.Section,
+        presenter: DashboardPresenter
+    ) {
+        
+        self.viewModel = viewModel
+        self.presenter = presenter
         
         label.text = viewModel.name.uppercased()
+        
+        switch viewModel.items {
+            
+        case .wallets:
+            rightAction.isHidden = false
+            rightAction.text = viewModel.rightActionTitle
+        case .nfts, .actions:
+            rightAction.isHidden = true
+        }
     }
 }

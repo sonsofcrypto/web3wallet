@@ -157,7 +157,11 @@ private extension DefaultTokenPickerPresenter {
         
         switch context.source {
         case .receive, .multiSelectEdit:
-            tokens = interactor.allTokens
+            tokens = interactor.allTokens.filter {
+                
+                guard let network = context.source.network else { return true }
+                return $0.network == network
+            }
         case .send:
             tokens = interactor.allTokens.filter {
                 $0.balance > 0

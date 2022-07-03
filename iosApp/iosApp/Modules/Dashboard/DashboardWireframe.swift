@@ -13,7 +13,11 @@ enum DashboardWireframeDestination {
     case sendCoins
     case scanQRCode(onCompletion: (String) -> Void)
     case nftItem(NFTItem)
-    case editTokens(selectedTokens: [Web3Token], onCompletion: ([Web3Token]) -> Void)
+    case editTokens(
+        network: Web3Network,
+        selectedTokens: [Web3Token],
+        onCompletion: ([Web3Token]) -> Void
+    )
 }
 
 protocol DashboardWireframe {
@@ -142,10 +146,10 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 )
             ).present()
             
-        case let .editTokens(selectedTokens, onCompletion):
+        case let .editTokens(network, selectedTokens, onCompletion):
             
             let source: TokenPickerWireframeContext.Source = .multiSelectEdit(
-                network: nil,
+                network: network,
                 selectedTokens: selectedTokens,
                 onCompletion: onCompletion
             )
