@@ -26,6 +26,7 @@ final class KeyStoreViewController: BaseViewController {
     @IBOutlet weak var logoView: UIImageView!
     @IBOutlet weak var buttonsCollectionView: UICollectionView!
     @IBOutlet weak var buttonBackgroundView: UIVisualEffectView!
+    @IBOutlet weak var buttonHandleView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -207,6 +208,10 @@ extension KeyStoreViewController {
             .layerMaxXMinYCorner,
             .layerMinXMinYCorner
         ]
+        buttonBackgroundView.contentView.backgroundColor = Theme.colour.gradientTop.withAlpha(0.4)
+        
+        buttonHandleView.backgroundColor = Theme.colour.backgroundBasePrimary
+        buttonHandleView.layer.cornerRadius = buttonHandleView.frame.size.height.half
     }
 
     func updateLogo(_ viewModel: KeyStoreViewModel) {

@@ -83,31 +83,10 @@ extension TokenPickerViewController: TokenPickerView {
         filtersCollectionView.isHidden = viewModel.filters().isEmpty
         filtersCollectionView.reloadData()
         itemsCollectionView.reloadData()
-                
-        if viewModel.allowMultiSelection {
-            
-            navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: .init(systemName: "plus"),
-                style: .plain,
-                target: self,
-                action: #selector(addCustomToken)
-            )
-            navigationItem.rightBarButtonItem = UIBarButtonItem(
-                title: Localized("done"),
-                style: .plain,
-                target: self,
-                action: #selector(doneTapped)
-            )
-            itemsCollectionView.allowsMultipleSelection = viewModel.allowMultiSelection
-        } else {
-            
-            navigationItem.leftBarButtonItem = UIBarButtonItem(
-                title: Localized("close"),
-                style: .plain,
-                target: self,
-                action: #selector(closeTapped)
-            )
-        }
+        
+        updateNavigationBarIcons()
+        
+        updateBackgroundGradient(after: 0.05)
     }
 }
 
@@ -146,6 +125,36 @@ private extension TokenPickerViewController {
         
         addCustomBackgroundGradientView()
     }
+    
+    func updateNavigationBarIcons() {
+        
+        guard let viewModel = viewModel else { return }
+        
+        if viewModel.allowMultiSelection {
+            
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                image: .init(systemName: "plus"),
+                style: .plain,
+                target: self,
+                action: #selector(addCustomToken)
+            )
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                title: Localized("done"),
+                style: .plain,
+                target: self,
+                action: #selector(doneTapped)
+            )
+            itemsCollectionView.allowsMultipleSelection = viewModel.allowMultiSelection
+        } else {
+            
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                title: Localized("close"),
+                style: .plain,
+                target: self,
+                action: #selector(closeTapped)
+            )
+        }
+    }
 
     @objc func addCustomToken() {
         
@@ -160,6 +169,20 @@ private extension TokenPickerViewController {
     @objc func closeTapped() {
         
         presenter.handle(.dismiss)
+    }
+    
+    func updateBackgroundGradient(after delay: TimeInterval) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+            guard let self = self else { return }
+            self.updateBackgroundGradient()
+        }
+    }
+    
+    func updateBackgroundGradient() {
+        
+        updateBackgroundGradientTopConstraint()
+        backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
     }
     
     func updateBackgroundGradientTopConstraint() {
