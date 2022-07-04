@@ -33,7 +33,6 @@ final class TokenPickerViewController: BaseViewController {
     private var searchTerm = ""
 
     private var backgroundGradientTopConstraint: NSLayoutConstraint?
-    private var backgroundGradientViewOffset: CGFloat = 0
     private var backgroundGradientHeightConstraint: NSLayoutConstraint?
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -57,7 +56,7 @@ final class TokenPickerViewController: BaseViewController {
         
         super.viewWillLayoutSubviews()
         
-        backgroundGradientTopConstraint?.constant = -(itemsCollectionView.contentOffset.y + backgroundGradientViewOffset)
+        updateBackgroundGradientTopConstraint()
         backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
     }
 }
@@ -116,6 +115,8 @@ private extension TokenPickerViewController {
     
     func configureUI() {
         
+        view.backgroundColor = Theme.colour.gradientBottom
+        
         searchContainerBox.backgroundColor = Theme.colour.navBarBackground
         
         searchTextFieldBox.backgroundColor = Theme.colour.fillTertiary
@@ -143,7 +144,7 @@ private extension TokenPickerViewController {
             animated: false
         )
         
-        //addCustomBackgroundGradientView()
+        addCustomBackgroundGradientView()
     }
 
     @objc func addCustomToken() {
@@ -159,6 +160,17 @@ private extension TokenPickerViewController {
     @objc func closeTapped() {
         
         presenter.handle(.dismiss)
+    }
+    
+    func updateBackgroundGradientTopConstraint() {
+        
+        let constant: CGFloat
+        if itemsCollectionView.contentOffset.y < 0 {
+            constant = 0
+        } else {
+            constant = -itemsCollectionView.contentOffset.y
+        }
+        backgroundGradientTopConstraint?.constant =  constant
     }
 }
 
@@ -271,7 +283,7 @@ extension TokenPickerViewController: UICollectionViewDelegate {
         
         guard scrollView.tag == CollectionTag.items.rawValue else { return }
     
-        backgroundGradientTopConstraint?.constant = -(scrollView.contentOffset.y + backgroundGradientViewOffset)
+        updateBackgroundGradientTopConstraint()
         
         dismissKeyboard()
     }
@@ -433,9 +445,6 @@ extension TokenPickerViewController: UIScrollViewDelegate {
 
     func addCustomBackgroundGradientView() {
 
-        // 0 - Configure background gradient offset (extra bit at top & bottom)
-        backgroundGradientViewOffset = view.frame.size.height
-
         // 1 - Add gradient
         let backgroundGradient = GradientView()
         backgroundGradient.isDashboard = true
@@ -466,14 +475,12 @@ extension TokenPickerViewController: UIScrollViewDelegate {
 
     var backgroundGradientHeight: CGFloat {
         
-        let offset = backgroundGradientViewOffset * 2
-        
         if itemsCollectionView.frame.size.height > itemsCollectionView.contentSize.height {
             
-            return itemsCollectionView.frame.size.height + offset
+            return itemsCollectionView.frame.size.height
         } else {
             
-            return itemsCollectionView.contentSize.height + offset
+            return itemsCollectionView.contentSize.height
         }
     }
 }

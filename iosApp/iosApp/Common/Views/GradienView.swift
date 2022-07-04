@@ -123,17 +123,22 @@ private extension GradientView {
             ]
         case .themeA:
             
-            let topColor = isDarkMode ? Theme.colour.systemPink : Theme.colour.systemMarine
-            let bottomColor = isDarkMode ? Theme.colour.systemPurple : Theme.colour.systemYellow
+            let topColor = Theme.colour.gradientTop
+            let middleTopColor = isDarkMode ? UIColor(rgb: 0xDA3E9B) : UIColor(rgb: 0x4361BC).withAlpha(0.75)
+            let middleColor = isDarkMode ? UIColor(rgb: 0xC939AA) : UIColor(rgb: 0xBE6CF4).withAlpha(0.75)
+            let middleBottomColor = isDarkMode ? UIColor(rgb: 0xAC36B0) : UIColor(rgb: 0xFC78A9).withAlpha(0.71)
+            let bottomColor = Theme.colour.gradientBottom
             
             if isDashboard {
                 colors = [
-                    topColor, topColor, bottomColor, bottomColor
+                    topColor, middleTopColor, middleColor, middleBottomColor, bottomColor
                 ]
+                //(layer as? CAGradientLayer)?.locations = [0,0.3,0.375,0.5,0.75,1]
             } else {
                 colors = [
-                    topColor, topColor, bottomColor
+                    topColor, middleTopColor, middleColor, middleBottomColor, bottomColor
                 ]
+                //(layer as? CAGradientLayer)?.locations = [0,0.3,0.375,0.5,0.75,1]
             }
         }
     }

@@ -111,8 +111,8 @@ private extension DashboardWalletCell {
             [
                 .layout(anchor: .topAnchor),
                 .layout(anchor: .bottomAnchor, constant: .equalTo(constant: 10)),
-                .layout(anchor: .leadingAnchor),
-                .layout(anchor: .trailingAnchor)
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 4)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 4))
             ]
         )
     }

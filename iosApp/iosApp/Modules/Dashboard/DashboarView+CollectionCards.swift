@@ -8,21 +8,16 @@ extension DashboardViewController {
     
     var backgroundGradientHeight: CGFloat {
         
-        let offset = backgroundGradientViewOffset * 2
-        
         if collectionView.frame.size.height > collectionView.contentSize.height {
             
-            return collectionView.frame.size.height + offset
+            return collectionView.frame.size.height
         } else {
             
-            return collectionView.contentSize.height + offset
+            return collectionView.contentSize.height
         }
     }
     
     func addCustomBackgroundGradientView() {
-
-        // 0 - Configure background gradient offset (extra bit at top & bottom)
-        backgroundGradientViewOffset = view.frame.size.height
 
         // 1 - Add gradient
         let backgroundGradient = GradientView()
@@ -61,7 +56,7 @@ extension DashboardViewController {
         
         let bottomConstraint = backgroundGradient.bottomAnchor.constraint(
             equalTo: sunsetBackground.bottomAnchor,
-            constant: sunsetBottomConstraintOffset - 20
+            constant: -18
         )
         self.backgroundSunsetBottomConstraint = bottomConstraint
         bottomConstraint.isActive = true
@@ -284,12 +279,7 @@ private extension DashboardViewController {
                 
         return section
     }
-    
-    var sunsetBottomConstraintOffset: CGFloat {
         
-        backgroundGradientViewOffset
-    }
-    
     var nftSectionBottomOffset: CGFloat {
         
         guard Theme.type == .themeA else { return 0 }

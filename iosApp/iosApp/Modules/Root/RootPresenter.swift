@@ -35,7 +35,7 @@ extension DefaultRootPresenter: RootPresenter {
     func present() {
 
         wireframe.navigate(
-            to: !keyStoreService.isEmpty() ? .keyStore : .dashboard,
+            to: keyStoreService.isEmpty() ? .keyStore : .dashboard,
             animated: false
         )
     }

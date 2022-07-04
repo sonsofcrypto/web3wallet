@@ -23,7 +23,6 @@ final class DashboardViewController: BaseViewController {
     var lastVelocity: CGFloat = 0
     var backgroundSunsetBottomConstraint: NSLayoutConstraint?
     var backgroundGradientTopConstraint: NSLayoutConstraint?
-    var backgroundGradientViewOffset: CGFloat = 0
     var backgroundGradientHeightConstraint: NSLayoutConstraint?
     
     override func viewDidLoad() {
@@ -33,22 +32,13 @@ final class DashboardViewController: BaseViewController {
         configureUI()
         
         presenter.present()
-        
-        for family: String in UIFont.familyNames
-        {
-            print(family)
-            for names: String in UIFont.fontNames(forFamilyName: family)
-            {
-                print("== \(names)")
-            }
-        }
     }
         
     override func viewWillLayoutSubviews() {
         
         super.viewWillLayoutSubviews()
         
-        backgroundGradientTopConstraint?.constant = -(collectionView.contentOffset.y + backgroundGradientViewOffset)
+        updateBackgroundGradientTopConstraint()
         backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
     }
 }
@@ -78,7 +68,7 @@ extension DashboardViewController: UIScrollViewDelegate {
         lastVelocity = scrollView.contentOffset.y - previousYOffset
         previousYOffset = scrollView.contentOffset.y
         
-        backgroundGradientTopConstraint?.constant = -(scrollView.contentOffset.y + backgroundGradientViewOffset)
+        updateBackgroundGradientTopConstraint()
     }
 }
 
@@ -125,6 +115,8 @@ extension DashboardViewController: UIViewControllerTransitioningDelegate {
 private extension DashboardViewController {
     
     func configureUI() {
+        
+        view.backgroundColor = Theme.colour.gradientBottom
                 
         transitioningDelegate = self
                 
@@ -175,6 +167,16 @@ private extension DashboardViewController {
         presenter.handle(.didScanQRCode)
     }
     
+    func updateBackgroundGradientTopConstraint() {
+        
+        let constant: CGFloat
+        if collectionView.contentOffset.y < 0 {
+            constant = 0
+        } else {
+            constant = -collectionView.contentOffset.y
+        }
+        backgroundGradientTopConstraint?.constant =  constant
+    }
 }
 
 extension DashboardViewController: EdgeCardsControllerDelegate {

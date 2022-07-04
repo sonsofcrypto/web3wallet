@@ -73,6 +73,9 @@ struct ThemeColour {
     let tabBarBackground: UIColor
     let tabBarTint: UIColor
     let tabBarTintSelected: UIColor
+    
+    let gradientTop: UIColor
+    let gradientBottom: UIColor
 
     let systemRed: UIColor
     let systemOrange: UIColor
@@ -123,6 +126,8 @@ struct ThemeColour {
         self.tabBarBackground = .init(named: "\(name)-nav-bar-background")!
         self.tabBarTint = .init(named: "\(name)-tab-bar-tint")!
         self.tabBarTintSelected = .init(named: "\(name)-tab-bar-tint-selected")!
+        self.gradientTop = .init(named: "\(name)-gradient-top")!
+        self.gradientBottom = .init(named: "\(name)-gradient-bottom")!
         self.systemRed = .init(named: "\(name)-system-red")!
         self.systemOrange = .init(named: "\(name)-system-orange")!
         self.systemYellow = .init(named: "\(name)-system-yellow")!

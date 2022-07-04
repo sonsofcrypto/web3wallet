@@ -181,7 +181,7 @@ private extension DefaultDashboardPresenter {
         
         sections.insert(
             .init(
-                name: walletTotal.formatted(.currency(code: "USD")),
+                name: walletTotal.formatCurrency() ?? "",
                 fuelCost: nil,
                 rightActionTitle: nil,
                 isCollapsed: nil,

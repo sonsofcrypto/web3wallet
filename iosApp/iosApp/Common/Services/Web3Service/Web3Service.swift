@@ -113,7 +113,7 @@ extension Web3Token {
     
     var usdBalanceString: String {
         
-        usdBalance.formatted(.currency(code: "USD"))
+        usdBalance.formatCurrency() ?? ""
     }
 }
 
