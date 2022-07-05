@@ -9,7 +9,9 @@ final class MnemonicSettingCell: CollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
 
     override func awakeFromNib() {
+        
         super.awakeFromNib()
+        
         titleLabel.textColor = Theme.colour.labelPrimary
         titleLabel.font = Theme.font.callout
         titleLabel.layer.shadowColor = Theme.colour.fillSecondary.cgColor

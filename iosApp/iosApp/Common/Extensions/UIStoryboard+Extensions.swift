@@ -26,6 +26,7 @@ extension UIStoryboard {
     enum Id: String {
         case main = "Main"
         case keyStore = "KeyStore"
+        case mnemonic = "Mnemonic"
         case dashboard = "Dashboard"
         case networks = "Networks"
         case account = "Account"

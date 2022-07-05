@@ -73,7 +73,7 @@
 "keyStore.importPrivateKey" = "Import private key";
 "keyStore.createMultiSig" = "Create multisig wallet";
 
-"newMnemonic.title" = "Create new wallet";
+"newMnemonic.title" = "New wallet";
 "newMnemonic.tapToReveal" = "Tap to reveal mnemonic";
 "newMnemonic.footer" = "Write down mnemonic above. Never share it with anyone. All of the accounts/wallets are derived from it. If lost crypto is unrecoverable";
 "newMnemonic.footerHighlightWord0" = "Never";

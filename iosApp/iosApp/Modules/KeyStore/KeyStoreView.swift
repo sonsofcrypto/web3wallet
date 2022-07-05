@@ -139,23 +139,36 @@ extension KeyStoreViewController: UICollectionViewDataSource {
     }
     
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == buttonsCollectionView {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        
+        switch collectionView {
+            
+        case buttonsCollectionView:
+            
             let button = viewModel?.buttons.buttons[indexPath.item]
-            return collectionView.dequeue(ButtonsSheetViewCell.self, for: indexPath)
-                    .update(with: button)
+            return collectionView.dequeue(
+                ButtonsSheetViewCell.self,
+                for: indexPath
+            ).update(with: button)
+            
+        default:
+            
+            let cell = collectionView.dequeue(KeyStoreCell.self, for: indexPath)
+            cell.indexImage.image = .init(systemName: "\(indexPath.item + 1).square.fill")
+            cell.indexImage.tintColor = Theme.colour.navBarTint
+            cell.titleLabel.text = viewModel?.items[indexPath.item].title
+            cell.accessoryButton.tag = indexPath.item
+            cell.accessoryButton.addTarget(
+                self,
+                action: #selector(accessoryAction(_:)),
+                for: .touchUpInside
+            )
+            cell.arrowForward.image = .init(systemName: "chevron.right")
+            return cell
         }
-
-        let cell = collectionView.dequeue(KeyStoreCell.self, for: indexPath)
-        cell.titleLabel.text = viewModel?.items[indexPath.item].title
-        cell.accessoryButton.tag = indexPath.item
-        cell.accessoryButton.addTarget(
-            self,
-            action: #selector(accessoryAction(_:)),
-            for: .touchUpInside
-        )
-
-        return cell
     }
 }
 
@@ -377,6 +390,7 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
         presenting: UIViewController,
         source: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
+        
         guard viewModel?.transitionStyle == .flip else {
             return nil
         }

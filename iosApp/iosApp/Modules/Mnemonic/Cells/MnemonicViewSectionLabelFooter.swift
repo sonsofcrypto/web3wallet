@@ -4,20 +4,22 @@
 
 import UIKit
 
-class CollectionViewSectionLabelFooter: UICollectionReusableView {
+class MnemonicViewSectionLabelFooter: UICollectionReusableView {
 
     @IBOutlet weak var label: UILabel!
 }
 
-extension CollectionViewSectionLabelFooter {
+extension MnemonicViewSectionLabelFooter {
 
     func update(with viewModel: MnemonicViewModel.Footer) {
+        
         switch viewModel {
+            
         case let .attrStr(text, highlightWords):
             let attrs = sectionFooter()
             let hlAttrs: [NSAttributedString.Key : Any] = [
-                .font: Theme.font.callout,
-                .foregroundColor: Theme.colour.fillPrimary,
+                .font: Theme.font.subheadlineBold,
+                .foregroundColor: Theme.colour.labelPrimary,
             ]
             let attrStr = NSMutableAttributedString(
                 string: text,
@@ -34,12 +36,13 @@ extension CollectionViewSectionLabelFooter {
     }
     
     private func sectionFooter() -> [NSAttributedString.Key: Any] {
+        
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
         
         return [
-            .font: Theme.font.callout,
-            .foregroundColor: Theme.colour.labelTertiary,
+            .font: Theme.font.subheadline,
+            .foregroundColor: Theme.colour.labelSecondary,
             .paragraphStyle: paragraphStyle
         ]
     }

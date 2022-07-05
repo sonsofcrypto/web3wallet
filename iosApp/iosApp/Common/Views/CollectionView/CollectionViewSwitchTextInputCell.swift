@@ -71,6 +71,7 @@ extension CollectionViewSwitchTextInputCell {
         textChangeHandler: ((String)->Void)?,
         descriptionAction: (()->Void)?
     ) -> CollectionViewSwitchTextInputCell {
+        
         titleLabel.text = viewModel.title
         onOffSwitch.setOn(viewModel.onOff, animated: false)
         textField.text = viewModel.text

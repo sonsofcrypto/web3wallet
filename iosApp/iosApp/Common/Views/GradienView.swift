@@ -138,7 +138,7 @@ private extension GradientView {
                 colors = [
                     topColor, middleTopColor, middleColor, middleBottomColor, bottomColor
                 ]
-                //(layer as? CAGradientLayer)?.locations = [0,0.3,0.375,0.5,0.75,1]
+                //(layer as? CAGradientLayer)?.locations = [0,0.3,0.5,0.75,1]
             }
         }
     }

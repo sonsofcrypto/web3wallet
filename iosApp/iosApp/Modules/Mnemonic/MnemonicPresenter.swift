@@ -202,18 +202,18 @@ private extension DefaultMnemonicPresenter {
                 title: Localized("newMnemonic.iCould.title"),
                 onOff: keyStoreItem.iCloudSecretStorage
             ),
-            MnemonicViewModel.Item.switchWithTextInput(
-                switchWithTextInput: .init(
-                    title: Localized("newMnemonic.salt.title"),
-                    onOff: keyStoreItem.saltMnemonic,
-                    text: keyStoreItem.mnemonicSalt,
-                    placeholder: Localized("newMnemonic.salt.placeholder"),
-                    description: Localized("newMnemonic.salt.description"),
-                    descriptionHighlightedWords: [
-                        Localized("newMnemonic.salt.descriptionHighlight")
-                    ]
-                )
-            ),
+//            MnemonicViewModel.Item.switchWithTextInput(
+//                switchWithTextInput: .init(
+//                    title: Localized("newMnemonic.salt.title"),
+//                    onOff: keyStoreItem.saltMnemonic,
+//                    text: keyStoreItem.mnemonicSalt,
+//                    placeholder: Localized("newMnemonic.salt.placeholder"),
+//                    description: Localized("newMnemonic.salt.description"),
+//                    descriptionHighlightedWords: [
+//                        Localized("newMnemonic.salt.descriptionHighlight")
+//                    ]
+//                )
+//            ),
             MnemonicViewModel.Item.segmentWithTextAndSwitchInput(
                 segmentWithTextAndSwitchInput: .init(
                     title: Localized("newMnemonic.passType.title"),

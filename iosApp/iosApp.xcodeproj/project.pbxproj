@@ -12,7 +12,6 @@
 		1A4C308B6FA11A032039F086 /* CandlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C359691FCF66942DF6CEF /* CandlesView.swift */; };
 		1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C300D073ABE25FC79D4A9 /* CollectionViewCell.swift */; };
 		1A4C31E84A86A69FFC7C3E0F /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D40E32D58F958911B60 /* Setting.swift */; };
-		1A4C32C95088080680260BD6 /* CollectionViewSegmentWithTextAndSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C30BC614DE35A99D3A781 /* CollectionViewSegmentWithTextAndSwitchCell.swift */; };
 		1A4C33A130E35EBC0BC27B07 /* mock-candles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1A4C3EE3468010FE10976BEE /* mock-candles.json */; };
 		1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */; };
 		1A4C33E50A1388781E82DD29 /* CryptoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E102C6A06DEC7657DD0 /* CryptoUtils.swift */; };
@@ -30,7 +29,6 @@
 		1A4C37AEF66358EA9CA0CA59 /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C388B9A42E6A279D2867F /* AccountService.swift */; };
 		1A4C3869B6A3E1BF415E15DB /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39FB21CCAF442F3001E6 /* Global.swift */; };
 		1A4C38C98450A3C5884565AC /* CultProposal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C36ECC90C8D924B7C413B /* CultProposal.swift */; };
-		1A4C39C49AEF7D7C5D4E8CE6 /* CollectionViewSectionLabelFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C31A1B60496E59ABF568A /* CollectionViewSectionLabelFooter.swift */; };
 		1A4C39EAC9477080E80A6C07 /* EdgeCardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3178DA54CD0800157DD5 /* EdgeCardsController.swift */; };
 		1A4C3AD382E8BADCBE160CBC /* DApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C375870963EEF9ECBE64B /* DApp.swift */; };
 		1A4C3B1D9B56685FF628A0AD /* DegenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C34077200A9E856B77DDF /* DegenService.swift */; };
@@ -157,14 +155,12 @@
 		1C60C2D0285724D0003BE25D /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1FF285724D0003BE25D /* AlertPresenter.swift */; };
 		1C60C2D1285724D0003BE25D /* AlertContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C200285724D0003BE25D /* AlertContext.swift */; };
 		1C60C2D2285724D0003BE25D /* AlertWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C201285724D0003BE25D /* AlertWireframeFactoryAssembler.swift */; };
-		1C60C2D3285724D0003BE25D /* MnemonicSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C203285724D0003BE25D /* MnemonicSettingCell.swift */; };
 		1C60C2D4285724D0003BE25D /* MnemonicWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C204285724D0003BE25D /* MnemonicWireframe.swift */; };
 		1C60C2D5285724D0003BE25D /* MnemonicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C205285724D0003BE25D /* MnemonicViewModel.swift */; };
 		1C60C2D6285724D0003BE25D /* MnemonicWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C206285724D0003BE25D /* MnemonicWireframeFactory.swift */; };
 		1C60C2D7285724D0003BE25D /* MnemonicPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C207285724D0003BE25D /* MnemonicPresenter.swift */; };
 		1C60C2D8285724D0003BE25D /* MnemonicInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C208285724D0003BE25D /* MnemonicInteractor.swift */; };
 		1C60C2D9285724D0003BE25D /* MnemonicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C209285724D0003BE25D /* MnemonicView.swift */; };
-		1C60C2DA285724D0003BE25D /* MnemonicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C20A285724D0003BE25D /* MnemonicCell.swift */; };
 		1C60C2DB285724D0003BE25D /* MnemonicContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C20B285724D0003BE25D /* MnemonicContext.swift */; };
 		1C60C2DC285724D0003BE25D /* MnemonicWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C20C285724D0003BE25D /* MnemonicWireframeFactoryAssembler.swift */; };
 		1C60C2DD285724D0003BE25D /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C20E285724D0003BE25D /* DashboardView.swift */; };
@@ -387,6 +383,10 @@
 		1CD3FE342851D2A0008312DE /* UIView+Animations+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD3FE332851D2A0008312DE /* UIView+Animations+Chat.swift */; };
 		1CD3FE8928559EF2008312DE /* Web3Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD3FE8828559EF2008312DE /* Web3Service.swift */; };
 		1CD843EA287218C800E6D359 /* OCR-A Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1CD843E9287218C100E6D359 /* OCR-A Regular.ttf */; };
+		1CD843F52874215F00E6D359 /* MnemonicSettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD843F12874215E00E6D359 /* MnemonicSettingCell.swift */; };
+		1CD843F62874215F00E6D359 /* MnemonicViewSectionLabelFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD843F22874215E00E6D359 /* MnemonicViewSectionLabelFooter.swift */; };
+		1CD843F72874215F00E6D359 /* MnemonicSegmentWithTextAndSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD843F32874215E00E6D359 /* MnemonicSegmentWithTextAndSwitchCell.swift */; };
+		1CD843F82874215F00E6D359 /* MnemonicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD843F42874215E00E6D359 /* MnemonicCell.swift */; };
 		1CE66BCA2848EA9900AB6ACA /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BC92848EA9900AB6ACA /* ChatService.swift */; };
 		1CE66BCC2848EA9F00AB6ACA /* DefaultChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCB2848EA9F00AB6ACA /* DefaultChatService.swift */; };
 		1CE66BCE2848EAA600AB6ACA /* ChatServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */; };
@@ -468,10 +468,8 @@
 		1A4C300D073ABE25FC79D4A9 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		1A4C308C7EEAF2E80221C519 /* TouchPassThroughCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchPassThroughCollectionView.swift; sourceTree = "<group>"; };
 		1A4C309894247AA73F274756 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		1A4C30BC614DE35A99D3A781 /* CollectionViewSegmentWithTextAndSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewSegmentWithTextAndSwitchCell.swift; sourceTree = "<group>"; };
 		1A4C3178DA54CD0800157DD5 /* EdgeCardsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EdgeCardsController.swift; sourceTree = "<group>"; };
 		1A4C3197D56E5BD363126FBA /* CollectionViewTextInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewTextInputCell.swift; sourceTree = "<group>"; };
-		1A4C31A1B60496E59ABF568A /* CollectionViewSectionLabelFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewSectionLabelFooter.swift; sourceTree = "<group>"; };
 		1A4C3228790C1569B37F5179 /* AppsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsService.swift; sourceTree = "<group>"; };
 		1A4C325A6875E5041A491945 /* CollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		1A4C3378B5287B6A9BDE65CD /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
@@ -613,14 +611,12 @@
 		1C60C1FF285724D0003BE25D /* AlertPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		1C60C200285724D0003BE25D /* AlertContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertContext.swift; sourceTree = "<group>"; };
 		1C60C201285724D0003BE25D /* AlertWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
-		1C60C203285724D0003BE25D /* MnemonicSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicSettingCell.swift; sourceTree = "<group>"; };
 		1C60C204285724D0003BE25D /* MnemonicWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicWireframe.swift; sourceTree = "<group>"; };
 		1C60C205285724D0003BE25D /* MnemonicViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicViewModel.swift; sourceTree = "<group>"; };
 		1C60C206285724D0003BE25D /* MnemonicWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C207285724D0003BE25D /* MnemonicPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicPresenter.swift; sourceTree = "<group>"; };
 		1C60C208285724D0003BE25D /* MnemonicInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicInteractor.swift; sourceTree = "<group>"; };
 		1C60C209285724D0003BE25D /* MnemonicView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicView.swift; sourceTree = "<group>"; };
-		1C60C20A285724D0003BE25D /* MnemonicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicCell.swift; sourceTree = "<group>"; };
 		1C60C20B285724D0003BE25D /* MnemonicContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicContext.swift; sourceTree = "<group>"; };
 		1C60C20C285724D0003BE25D /* MnemonicWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C60C20E285724D0003BE25D /* DashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
@@ -843,6 +839,10 @@
 		1CD3FE332851D2A0008312DE /* UIView+Animations+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animations+Chat.swift"; sourceTree = "<group>"; };
 		1CD3FE8828559EF2008312DE /* Web3Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Web3Service.swift; sourceTree = "<group>"; };
 		1CD843E9287218C100E6D359 /* OCR-A Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OCR-A Regular.ttf"; sourceTree = "<group>"; };
+		1CD843F12874215E00E6D359 /* MnemonicSettingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicSettingCell.swift; sourceTree = "<group>"; };
+		1CD843F22874215E00E6D359 /* MnemonicViewSectionLabelFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicViewSectionLabelFooter.swift; sourceTree = "<group>"; };
+		1CD843F32874215E00E6D359 /* MnemonicSegmentWithTextAndSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicSegmentWithTextAndSwitchCell.swift; sourceTree = "<group>"; };
+		1CD843F42874215E00E6D359 /* MnemonicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicCell.swift; sourceTree = "<group>"; };
 		1CE66BC92848EA9900AB6ACA /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		1CE66BCB2848EA9F00AB6ACA /* DefaultChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatService.swift; sourceTree = "<group>"; };
 		1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceAssembler.swift; sourceTree = "<group>"; };
@@ -1312,16 +1312,15 @@
 		1C60C202285724D0003BE25D /* Mnemonic */ = {
 			isa = PBXGroup;
 			children = (
-				1C60C20A285724D0003BE25D /* MnemonicCell.swift */,
 				1C60C20B285724D0003BE25D /* MnemonicContext.swift */,
 				1C60C208285724D0003BE25D /* MnemonicInteractor.swift */,
 				1C60C207285724D0003BE25D /* MnemonicPresenter.swift */,
-				1C60C203285724D0003BE25D /* MnemonicSettingCell.swift */,
 				1C60C209285724D0003BE25D /* MnemonicView.swift */,
 				1C60C205285724D0003BE25D /* MnemonicViewModel.swift */,
 				1C60C204285724D0003BE25D /* MnemonicWireframe.swift */,
 				1C60C206285724D0003BE25D /* MnemonicWireframeFactory.swift */,
 				1C60C20C285724D0003BE25D /* MnemonicWireframeFactoryAssembler.swift */,
+				1CD843F02874215E00E6D359 /* Cells */,
 			);
 			path = Mnemonic;
 			sourceTree = "<group>";
@@ -1794,6 +1793,17 @@
 			path = "OCR-A";
 			sourceTree = "<group>";
 		};
+		1CD843F02874215E00E6D359 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				1CD843F12874215E00E6D359 /* MnemonicSettingCell.swift */,
+				1CD843F22874215E00E6D359 /* MnemonicViewSectionLabelFooter.swift */,
+				1CD843F32874215E00E6D359 /* MnemonicSegmentWithTextAndSwitchCell.swift */,
+				1CD843F42874215E00E6D359 /* MnemonicCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		1CE66BC82848EA9000AB6ACA /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -1995,8 +2005,6 @@
 			children = (
 				1A4C325A6875E5041A491945 /* CollectionView.swift */,
 				1A4C300D073ABE25FC79D4A9 /* CollectionViewCell.swift */,
-				1A4C31A1B60496E59ABF568A /* CollectionViewSectionLabelFooter.swift */,
-				1A4C30BC614DE35A99D3A781 /* CollectionViewSegmentWithTextAndSwitchCell.swift */,
 				1A4C34D0D6A40418A679AF6F /* CollectionViewSwitchCell.swift */,
 				1A4C3A15CDDE6C7239483474 /* CollectionViewSwitchTextInputCell.swift */,
 				1A4C3197D56E5BD363126FBA /* CollectionViewTextInputCell.swift */,
@@ -2362,7 +2370,6 @@
 				1CB3A1F02840D6B70092D667 /* UIStoryboard+Extensions.swift in Sources */,
 				1C60C2F4285724D0003BE25D /* NFTDetailView+Content+Description.swift in Sources */,
 				1C60C2E5285724D0003BE25D /* AnimatedTextButton.swift in Sources */,
-				1C60C2DA285724D0003BE25D /* MnemonicCell.swift in Sources */,
 				1C6487322832E5F90091A12D /* NetworksServiceAssembler.swift in Sources */,
 				1C60C2F0285724D0003BE25D /* NetworksCell.swift in Sources */,
 				1C60C323285724D1003BE25D /* AppsWireframeFactory.swift in Sources */,
@@ -2374,6 +2381,7 @@
 				1C60C36B2857C5FE003BE25D /* TokenReceiveWireframeFactory.swift in Sources */,
 				1C6487382832E6BE0091A12D /* DefaultOnboardingService.swift in Sources */,
 				1C60C2BE285724D0003BE25D /* KeyStoreWireframeFactoryAssembler.swift in Sources */,
+				1CD843F52874215F00E6D359 /* MnemonicSettingCell.swift in Sources */,
 				1C60C318285724D1003BE25D /* AccountPresenter.swift in Sources */,
 				1C60C354285724D1003BE25D /* CultProposalsInteractor.swift in Sources */,
 				1C60C30D285724D1003BE25D /* RootWireframeFactory.swift in Sources */,
@@ -2441,6 +2449,7 @@
 				1C60C2B0285724D0003BE25D /* TokenPickerGroupCell.swift in Sources */,
 				1C60C2E8285724D0003BE25D /* DashboardWireframeFactoryAssembler.swift in Sources */,
 				1C60C1AE28572405003BE25D /* Web3ServiceAssembler.swift in Sources */,
+				1CD843F82874215F00E6D359 /* MnemonicCell.swift in Sources */,
 				1C60C35C285724D1003BE25D /* DegenPresenter.swift in Sources */,
 				1A4C3B6D2DFADBE2EF71F3A5 /* SettingsService.swift in Sources */,
 				1A4C34ABFF1DD20804DED956 /* AppsService.swift in Sources */,
@@ -2499,7 +2508,6 @@
 				1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */,
 				1C60C332285724D1003BE25D /* NFTsCollectionWireframeFactoryAssembler.swift in Sources */,
 				1C54DBEB285E833600E378F6 /* TokenAddView.swift in Sources */,
-				1A4C39C49AEF7D7C5D4E8CE6 /* CollectionViewSectionLabelFooter.swift in Sources */,
 				1C60C334285724D1003BE25D /* NFTsCollectionInteractor.swift in Sources */,
 				1C60C32C285724D1003BE25D /* MnemonicConfirmationWireframeFactoryAssembler.swift in Sources */,
 				1A4C3F3B50559576A91700B7 /* CollectionViewTextInputCell.swift in Sources */,
@@ -2515,6 +2523,7 @@
 				1C60C2B2285724D0003BE25D /* TokenPickerWireframeFactoryAssembler.swift in Sources */,
 				1C54DC7A286B84B700E378F6 /* ThemeOG.swift in Sources */,
 				1A4C3469AE463198FCE284E2 /* CollectionViewSwitchCell.swift in Sources */,
+				1CD843F62874215F00E6D359 /* MnemonicViewSectionLabelFooter.swift in Sources */,
 				1C60C31D285724D1003BE25D /* AppsCollectionViewCell.swift in Sources */,
 				1C60C305285724D1003BE25D /* NFTsDashboardWireframeFactoryAssembler.swift in Sources */,
 				1C60C384285A649B003BE25D /* Web3ServiceLocalStorage.swift in Sources */,
@@ -2523,9 +2532,7 @@
 				1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */,
 				1A4C3F71ED826BCCF12C9DF1 /* CollectionViewSwitchTextInputCell.swift in Sources */,
 				1C60C34D285724D1003BE25D /* CultProposalVoteView.swift in Sources */,
-				1C60C2D3285724D0003BE25D /* MnemonicSettingCell.swift in Sources */,
 				1C6487302832E5E90091A12D /* DefaultNetworksService.swift in Sources */,
-				1A4C32C95088080680260BD6 /* CollectionViewSegmentWithTextAndSwitchCell.swift in Sources */,
 				1C54DC1F2862373C00E378F6 /* QRCodeScanInteractor.swift in Sources */,
 				1A4C370634B11B400C5C4356 /* TouchPassThroughCollectionView.swift in Sources */,
 				1A4C303A23D7DA2A37B292C1 /* CardFlipTransition.swift in Sources */,
@@ -2535,6 +2542,7 @@
 				1A4C3B81B628EF4EDC8F7177 /* TransformView.swift in Sources */,
 				1A4C31E84A86A69FFC7C3E0F /* Setting.swift in Sources */,
 				1C60C342285724D1003BE25D /* AMMsWireframeFactoryAssembler.swift in Sources */,
+				1CD843F72874215F00E6D359 /* MnemonicSegmentWithTextAndSwitchCell.swift in Sources */,
 				1C60C386285AFB20003BE25D /* Web3ServiceLocalStorageAssembler.swift in Sources */,
 				1C60C301285724D1003BE25D /* NFTsDashboardView.swift in Sources */,
 				1C60C36F2857C613003BE25D /* TokenReceiveInteractor.swift in Sources */,

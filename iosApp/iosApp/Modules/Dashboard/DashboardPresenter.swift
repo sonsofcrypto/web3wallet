@@ -252,6 +252,7 @@ private extension DefaultDashboardPresenter {
                 imageData: interactor.tokenIcon(for: $0),
                 fiatBalance: $0.usdBalanceString,
                 cryptoBalance: "\($0.balance.toString(decimals: $0.decimals)) \($0.symbol)",
+                tokenPrice: $0.usdPrice.formatCurrency() ?? "",
                 pctChange: "4.5%",
                 priceUp: true,
                 candles: .loaded(interactor.priceData(for: $0).toCandlesViewModelCandle)

@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class MnemonicCell: CollectionViewCell {
+final class MnemonicCell: UICollectionViewCell {
 
     typealias TextChangeHandler = (String) -> Void
 
@@ -18,17 +18,22 @@ final class MnemonicCell: CollectionViewCell {
     private var viewModel: MnemonicViewModel.Mnemonic? = nil
 
     override func awakeFromNib() {
+        
         super.awakeFromNib()
+        
         configure()
     }
 
     func configure() {
+        
+        layer.cornerRadius = Theme.constant.cornerRadius
+        backgroundColor = Theme.colour.labelQuaternary
+        
         var attrs: [NSAttributedString.Key: Any] = [
             .font: Theme.font.body,
-            .foregroundColor: Theme.colour.labelPrimary,
-            .shadow: textShadow(Theme.colour.fillSecondary)
+            .foregroundColor: Theme.colour.labelPrimary
         ]
-        attrs[.font] = Theme.font.headline
+        attrs[.font] = Theme.font.body
 
         textView.typingAttributes = attrs
         textView.backgroundColor = .clear
@@ -37,10 +42,12 @@ final class MnemonicCell: CollectionViewCell {
         overlay.layer.cornerRadius = Global.cornerRadius
         overlay.clipsToBounds = true
         overlayLabel.text = Localized("newMnemonic.tapToReveal")
-        overlayLabel.applyStyle(.headlineGlow)
+        overlayLabel.font = Theme.font.body
+        overlayLabel.textColor = Theme.colour.labelPrimary
     }
     
     func textShadow(_ tint: UIColor) -> NSShadow {
+        
         let shadow = NSShadow()
         shadow.shadowOffset = .zero
         shadow.shadowBlurRadius = Global.shadowRadius
@@ -99,6 +106,7 @@ extension MnemonicCell: UITextViewDelegate {
 extension MnemonicCell {
 
     func animateCopiedToPasteboard() {
+        
         guard viewModel?.type != .editHidden && viewModel?.type != .importing else {
             return
         }

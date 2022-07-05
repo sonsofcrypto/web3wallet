@@ -10,21 +10,21 @@ class CollectionViewCell: UICollectionViewCell {
         didSet { update(for: cornerStyle) }
     }
 
-    override var isSelected: Bool {
-        didSet {
-            UIView.animate(withDuration: 0.1) { [weak self] in
-                self?.layer.applyHighlighted(self?.isSelected ?? false)
-            }
-        }
-    }
+//    override var isSelected: Bool {
+//        didSet {
+//            UIView.animate(withDuration: 0.1) { [weak self] in
+//                self?.layer.applyHighlighted(self?.isSelected ?? false)
+//            }
+//        }
+//    }
 
-    override var isHighlighted: Bool {
-        didSet {
-            UIView.animate(withDuration: 0.01) { [weak self] in
-                self?.layer.applyHighlighted(self?.isHighlighted ?? false)
-            }
-        }
-    }
+//    override var isHighlighted: Bool {
+//        didSet {
+//            UIView.animate(withDuration: 0.01) { [weak self] in
+//                self?.layer.applyHighlighted(self?.isHighlighted ?? false)
+//            }
+//        }
+//    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,25 +36,27 @@ class CollectionViewCell: UICollectionViewCell {
         configureUI()
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layer.applyShadowPath(bounds, radius: layer.cornerRadius)
-    }
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        //layer.applyShadowPath(bounds, radius: layer.cornerRadius)
+//    }
 
     private func configureUI() {
-        backgroundColor = Theme.colour.backgroundBaseSecondary
-        layer.applyRectShadow()
-        layer.applyBorder()
-        configure(for: false)
+        
+        layer.cornerRadius = Theme.constant.cornerRadius
+        backgroundColor = Theme.colour.labelQuaternary
+        //layer.applyRectShadow()
+        //layer.applyBorder()
+        //configure(for: false)
     }
 
-    private func configure(for selected: Bool) {
-        layer.shadowOpacity = selected ? 1 : 0
-        layer.borderColor = ( selected
-            ? Theme.colour.fillPrimary
-            : Theme.colour.fillTertiary
-        ).cgColor
-    }
+//    private func configure(for selected: Bool) {
+//        layer.shadowOpacity = selected ? 1 : 0
+//        layer.borderColor = ( selected
+//            ? Theme.colour.fillPrimary
+//            : Theme.colour.fillTertiary
+//        ).cgColor
+//    }
 }
 
 // MARK: - Style

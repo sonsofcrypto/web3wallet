@@ -12,9 +12,21 @@ class CollectionViewTextInputCell: CollectionViewCell {
     var textChangeHandler: ((String)->Void)?
 
     override func awakeFromNib() {
+        
         super.awakeFromNib()
-        titleLabel.applyStyle(.bodyGlow)
+        
+        titleLabel.font = Theme.font.body
+        titleLabel.textColor = Theme.colour.labelPrimary
+        
+        textField.backgroundColor = Theme.colour.labelQuaternary
+        textField.font = Theme.font.body
+        textField.textColor = Theme.colour.labelSecondary
         textField.delegate = self
+    }
+    
+    override func resignFirstResponder() -> Bool {
+        
+        textField.resignFirstResponder()
     }
 }
 
@@ -41,6 +53,7 @@ extension CollectionViewTextInputCell {
         with viewModel: MnemonicViewModel.Name,
         textChangeHandler: ((String)->Void)? = nil
     ) -> CollectionViewTextInputCell {
+        
         titleLabel.text = viewModel.title
         textField.text = viewModel.value
         (textField as? TextField)?.placeholderAttrText = viewModel.placeholder

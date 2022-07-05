@@ -44,7 +44,6 @@ extension DefaultMnemonicWireframe: MnemonicWireframe {
     func present() {
         
         let vc = wireUp()
-
         parent.present(vc, animated: true)
         
 //        let topVc = (parent as? UINavigationController)?.topViewController
@@ -77,7 +76,7 @@ extension DefaultMnemonicWireframe {
     private func wireUp() -> UIViewController {
         
         let interactor = DefaultMnemonicInteractor(keyStoreService)
-        let vc: MnemonicViewController = UIStoryboard(.main).instantiate()
+        let vc: MnemonicViewController = UIStoryboard(.mnemonic).instantiate()
         let presenter = DefaultMnemonicPresenter(
             context: context,
             view: vc,

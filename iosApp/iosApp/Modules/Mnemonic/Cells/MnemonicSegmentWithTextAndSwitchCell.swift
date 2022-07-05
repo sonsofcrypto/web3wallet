@@ -4,7 +4,7 @@
 
 import UIKit
 
-class CollectionViewSegmentWithTextAndSwitchCell: CollectionViewCell {
+class MnemonicSegmentWithTextAndSwitchCell: CollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var segmentControl: UISegmentedControl!
@@ -24,13 +24,32 @@ class CollectionViewSegmentWithTextAndSwitchCell: CollectionViewCell {
     }
 
     func configureUI() {
-        titleLabel.applyStyle(.bodyGlow)
-        switchLabel.applyStyle(.bodyGlow)
+        
+        titleLabel.font = Theme.font.body
+        titleLabel.textColor = Theme.colour.labelPrimary
+        
+        switchLabel.font = Theme.font.body
+        switchLabel.textColor = Theme.colour.labelPrimary
+        
+        textField.backgroundColor = Theme.colour.labelQuaternary
+        textField.font = Theme.font.body
+        textField.textColor = Theme.colour.labelSecondary
         textField.delegate = self
+        
         onOffSwitch.addTarget(
             self,
             action: #selector(switchAction(_:)),
             for: .valueChanged
+        )
+        
+        segmentControl.selectedSegmentTintColor = Theme.colour.labelQuaternary
+        segmentControl.tintColor = Theme.colour.labelQuaternary
+        segmentControl.setTitleTextAttributes(
+            [
+                NSAttributedString.Key.font: Theme.font.footnote,
+                NSAttributedString.Key.foregroundColor: Theme.colour.labelPrimary
+            ],
+            for: .normal
         )
         segmentControl.addTarget(
             self,
@@ -48,9 +67,7 @@ class CollectionViewSegmentWithTextAndSwitchCell: CollectionViewCell {
     }
 }
 
-// MARK: - UITextFieldDelegate
-
-extension CollectionViewSegmentWithTextAndSwitchCell: UITextFieldDelegate {
+extension MnemonicSegmentWithTextAndSwitchCell: UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         textChangeHandler?(textField.text ?? "")
@@ -63,16 +80,14 @@ extension CollectionViewSegmentWithTextAndSwitchCell: UITextFieldDelegate {
     }
 }
 
-// MARK: - CollectionViewSegmentWithTextAndSwitchCell
-
-extension CollectionViewSegmentWithTextAndSwitchCell {
+extension MnemonicSegmentWithTextAndSwitchCell {
 
     func update(
         with viewModel: MnemonicViewModel.SegmentWithTextAndSwitchInput,
         selectSegmentAction: ((Int) -> Void)?,
         textChangeHandler: ((String)->Void)?,
         switchHandler: ((Bool)->Void)?
-    ) -> CollectionViewSegmentWithTextAndSwitchCell {
+    ) -> MnemonicSegmentWithTextAndSwitchCell {
         titleLabel.text = viewModel.title
         textField.text = viewModel.password
         (textField as? TextField)?.placeholderAttrText = viewModel.placeholder

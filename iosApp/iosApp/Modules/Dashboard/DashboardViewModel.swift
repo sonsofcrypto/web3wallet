@@ -75,6 +75,7 @@ extension DashboardViewModel {
         let imageData: Data
         let fiatBalance: String
         let cryptoBalance: String
+        let tokenPrice: String
         let pctChange: String
         let priceUp: Bool
         let candles: CandlesViewModel
