@@ -53,7 +53,13 @@ extension MnemonicTextInputCollectionViewCell {
         
         titleLabel.text = viewModel.title
         textField.text = viewModel.value
-        (textField as? TextField)?.placeholderAttrText = viewModel.placeholder
+        textField.attributedPlaceholder = NSAttributedString(
+            string: viewModel.placeholder,
+            attributes: [
+                NSAttributedString.Key.font: Theme.font.body,
+                NSAttributedString.Key.foregroundColor: Theme.colour.labelSecondary
+            ]
+        )
         self.textChangeHandler = textChangeHandler
         return self
     }

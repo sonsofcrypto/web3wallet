@@ -95,11 +95,12 @@ extension KeyStoreItem {
     }
 
     static func blank() -> KeyStoreItem {
-        .init(
+        let mnemonic = try! Bip39(.entropy128).mnemonic
+        return .init(
             uuid: UUID(),
             mnemonicSalt: "",
             password: "",
-            mnemonic: "",
+            mnemonic: mnemonic.joined(separator: " "),
             name: "",
             saltMnemonic: false,
             passwordType: .bio,

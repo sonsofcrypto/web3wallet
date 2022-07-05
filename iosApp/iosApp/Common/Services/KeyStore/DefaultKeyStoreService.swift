@@ -31,7 +31,7 @@ extension DefaultKeyStoreService: KeyStoreService {
     }
 
     func generateNewKeyStoreItem() -> KeyStoreItem {
-        KeyStoreItem.rand()
+        KeyStoreItem.blank()
     }
 
     func keyStoreItem(at idx: Int) -> KeyStoreItem? {
