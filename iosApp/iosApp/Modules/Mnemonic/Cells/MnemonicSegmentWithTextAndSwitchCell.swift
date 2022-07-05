@@ -13,17 +13,28 @@ class MnemonicSegmentWithTextAndSwitchCell: CollectionViewCell {
     @IBOutlet weak var onOffSwitch: UISwitch!
     @IBOutlet weak var vStack: UIStackView!
     @IBOutlet weak var hStack: UIStackView!
+    @IBOutlet weak var separator1: UIView!
+    @IBOutlet weak var group1: UIView!
+    @IBOutlet weak var separator2: UIView!
+    @IBOutlet weak var group2: UIView!
 
     var selectSegmentAction: ((Int) -> Void)?
     var textChangeHandler: ((String)->Void)?
     var switchAction: ((Bool)->Void)?
 
     override func awakeFromNib() {
+        
         super.awakeFromNib()
+        
         configureUI()
     }
 
     func configureUI() {
+        
+        bottomSeparatorView.isHidden = true
+        
+        separator1.backgroundColor = Theme.colour.labelTertiary
+        separator2.backgroundColor = Theme.colour.labelTertiary
         
         titleLabel.font = Theme.font.body
         titleLabel.textColor = Theme.colour.labelPrimary
@@ -31,10 +42,11 @@ class MnemonicSegmentWithTextAndSwitchCell: CollectionViewCell {
         switchLabel.font = Theme.font.body
         switchLabel.textColor = Theme.colour.labelPrimary
         
-        textField.backgroundColor = Theme.colour.labelQuaternary
         textField.font = Theme.font.body
-        textField.textColor = Theme.colour.labelSecondary
+        textField.textColor = Theme.colour.labelPrimary
         textField.delegate = self
+        textField.rightView = makeClearButton()
+        textField.rightViewMode = .whileEditing
         
         onOffSwitch.addTarget(
             self,
@@ -63,6 +75,12 @@ class MnemonicSegmentWithTextAndSwitchCell: CollectionViewCell {
     }
 
     @objc func segmentAction(_ sender: UISegmentedControl) {
+        
+        UIView.animate(withDuration: 0.15) { [weak self] in
+            guard let self = self else { return }
+            self.group1.alpha = sender.selectedSegmentIndex == 2 ? 0 : 1
+            self.group2.alpha = sender.selectedSegmentIndex == 2 ? 0 : 1
+        }
         selectSegmentAction?(sender.selectedSegmentIndex)
     }
 }
@@ -90,11 +108,16 @@ extension MnemonicSegmentWithTextAndSwitchCell {
     ) -> MnemonicSegmentWithTextAndSwitchCell {
         titleLabel.text = viewModel.title
         textField.text = viewModel.password
-        (textField as? TextField)?.placeholderAttrText = viewModel.placeholder
+        textField.attributedPlaceholder = NSAttributedString(
+            string: viewModel.placeholder,
+            attributes: [
+                NSAttributedString.Key.font: Theme.font.body,
+                NSAttributedString.Key.foregroundColor: Theme.colour.labelSecondary
+            ]
+        )
+
         switchLabel.text = viewModel.onOffTitle
         onOffSwitch.setOn(viewModel.onOff, animated: false)
-
-//        vStack.setCustomSpacing(viewModel.onOff ? 2 : 2, after: hStack)
 
         self.selectSegmentAction = selectSegmentAction
         self.textChangeHandler = textChangeHandler
@@ -109,7 +132,29 @@ extension MnemonicSegmentWithTextAndSwitchCell {
         }
 
         segmentControl.selectedSegmentIndex = viewModel.selectedSegment
+        group1.alpha = segmentControl.selectedSegmentIndex == 2 ? 0 : 1
+        group2.alpha = segmentControl.selectedSegmentIndex == 2 ? 0 : 1
 
         return self
+    }
+}
+
+private extension MnemonicSegmentWithTextAndSwitchCell {
+    
+    func makeClearButton() -> UIButton {
+        
+        let button = UIButton(type: .system)
+        button.setImage(
+            .init(systemName: "xmark.circle.fill"),
+            for: .normal
+        )
+        button.tintColor = Theme.colour.labelSecondary
+        button.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
+        return button
+    }
+    
+    @objc func clearTapped() {
+        
+        textField.text = nil
     }
 }

@@ -1,10 +1,10 @@
-// Created by web3d3v on 12/04/2022.
+// Created by web3d4v on 05/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import UIKit
 
-class CollectionViewSwitchTextInputCell: CollectionViewCell {
+final class MnemonicSwitchTextInputCollectionViewCell: CollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var onOffSwitch: UISwitch!
@@ -45,9 +45,7 @@ class CollectionViewSwitchTextInputCell: CollectionViewCell {
     }
 }
 
-// MARK: - UITextFieldDelegate
-
-extension CollectionViewSwitchTextInputCell: UITextFieldDelegate {
+extension MnemonicSwitchTextInputCollectionViewCell: UITextFieldDelegate {
 
 
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -61,16 +59,14 @@ extension CollectionViewSwitchTextInputCell: UITextFieldDelegate {
     }
 }
 
-// MARK: - CollectionViewSwitchTextInputCell
-
-extension CollectionViewSwitchTextInputCell {
+extension MnemonicSwitchTextInputCollectionViewCell {
 
     func update(
         with viewModel: MnemonicViewModel.SwitchWithTextInput,
         switchAction: ((Bool)->Void)?,
         textChangeHandler: ((String)->Void)?,
         descriptionAction: (()->Void)?
-    ) -> CollectionViewSwitchTextInputCell {
+    ) -> Self {
         
         titleLabel.text = viewModel.title
         onOffSwitch.setOn(viewModel.onOff, animated: false)

@@ -14,7 +14,7 @@ final class KeyStoreCell: CollectionViewCell {
     override func awakeFromNib() {
         
         super.awakeFromNib()
-        
+                
         titleLabel.font = Theme.font.title3
         titleLabel.textColor = Theme.colour.labelPrimary
         accessoryButton.tintColor = Theme.colour.labelSecondary

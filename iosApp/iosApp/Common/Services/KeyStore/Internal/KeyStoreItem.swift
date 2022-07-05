@@ -85,7 +85,7 @@ extension KeyStoreItem {
             mnemonicSalt: "",
             password: password,
             mnemonic: mnemonic.joined(separator: " "),
-            name: "",
+            name: "Main Wallet 1",
             saltMnemonic: false,
             passwordType: .bio,
             passUnlockWithBio: false,

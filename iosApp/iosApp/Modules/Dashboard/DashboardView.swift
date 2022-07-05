@@ -164,10 +164,10 @@ private extension DashboardViewController {
     @objc func navBarRightActionTapped() {
         
         //presenter.handle(.didTapEditTokens)
-        //presenter.handle(.didScanQRCode)
+        presenter.handle(.didScanQRCode)
         
-        let factory: MnemonicWireframeFactory = ServiceDirectory.assembler.resolve()
-        factory.makeWireframe(self, context: .init(mode: .new)).present()
+//        let factory: MnemonicWireframeFactory = ServiceDirectory.assembler.resolve()
+//        factory.makeWireframe(self, context: .init(mode: .new)).present()
     }
     
     func updateBackgroundGradientTopConstraint() {

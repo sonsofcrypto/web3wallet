@@ -1,10 +1,10 @@
-// Created by web3d3v on 12/04/2022.
+// Created by web3d3v on 05/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import UIKit
 
-class CollectionViewSwitchCell: CollectionViewCell {
+final class MnemonicSwitchCollectionViewCell: CollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var onOffSwitch: UISwitch!
@@ -30,15 +30,13 @@ class CollectionViewSwitchCell: CollectionViewCell {
     }
 }
 
-// MARK: - Update with viewModel
-
-extension CollectionViewSwitchCell {
+extension MnemonicSwitchCollectionViewCell {
 
     func update(
         with title: String,
         onOff: Bool,
         handler: ((Bool)->Void)? = nil
-    ) -> CollectionViewSwitchCell {
+    ) -> Self {
         titleLabel.text = title
         onOffSwitch.setOn(onOff, animated: false)
         return self

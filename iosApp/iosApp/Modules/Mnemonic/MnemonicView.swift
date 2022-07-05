@@ -131,7 +131,7 @@ extension MnemonicViewController: UICollectionViewDataSource {
 
         case let .name(name):
             return collectionView.dequeue(
-                CollectionViewTextInputCell.self,
+                MnemonicTextInputCollectionViewCell.self,
                 for: idxPath
             ).update(
                 with: name,
@@ -140,7 +140,7 @@ extension MnemonicViewController: UICollectionViewDataSource {
 
         case let .switch(title, onOff):
             return collectionView.dequeue(
-                CollectionViewSwitchCell.self,
+                MnemonicSwitchCollectionViewCell.self,
                 for: idxPath
             ).update(
                 with: title,
@@ -149,7 +149,7 @@ extension MnemonicViewController: UICollectionViewDataSource {
             )
         case let .switchWithTextInput(switchWithTextInput):
             return collectionView.dequeue(
-                CollectionViewSwitchTextInputCell.self,
+                MnemonicSwitchTextInputCollectionViewCell.self,
                 for: idxPath
             ).update(
                 with: switchWithTextInput,
@@ -356,7 +356,7 @@ private extension MnemonicViewController {
         static let mnemonicCellHeight: CGFloat = 110
         static let cellHeight: CGFloat = 46
         static let cellSaltOpenHeight: CGFloat = 142
-        static let cellPassOpenHeight: CGFloat = 147
-        static let footerHeight: CGFloat = 90
+        static let cellPassOpenHeight: CGFloat = 138
+        static let footerHeight: CGFloat = 80
     }
 }

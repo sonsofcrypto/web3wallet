@@ -1,10 +1,10 @@
-// Created by web3d3v on 12/04/2022.
+// Created by web3d4v on 05/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import UIKit
 
-class CollectionViewTextInputCell: CollectionViewCell {
+final class MnemonicTextInputCollectionViewCell: CollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
@@ -18,10 +18,11 @@ class CollectionViewTextInputCell: CollectionViewCell {
         titleLabel.font = Theme.font.body
         titleLabel.textColor = Theme.colour.labelPrimary
         
-        textField.backgroundColor = Theme.colour.labelQuaternary
         textField.font = Theme.font.body
-        textField.textColor = Theme.colour.labelSecondary
+        textField.textColor = Theme.colour.labelPrimary
         textField.delegate = self
+        textField.rightView = makeClearButton()
+        textField.rightViewMode = .whileEditing
     }
     
     override func resignFirstResponder() -> Bool {
@@ -30,9 +31,7 @@ class CollectionViewTextInputCell: CollectionViewCell {
     }
 }
 
-// MARK: - UITextFieldDelegate
-
-extension CollectionViewTextInputCell: UITextFieldDelegate {
+extension MnemonicTextInputCollectionViewCell: UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         textChangeHandler?(textField.text ?? "")
@@ -45,19 +44,38 @@ extension CollectionViewTextInputCell: UITextFieldDelegate {
     }
 }
 
-// MARK: - MnemonicViewModel.Name
-
-extension CollectionViewTextInputCell {
+extension MnemonicTextInputCollectionViewCell {
 
     func update(
         with viewModel: MnemonicViewModel.Name,
         textChangeHandler: ((String)->Void)? = nil
-    ) -> CollectionViewTextInputCell {
+    ) -> Self {
         
         titleLabel.text = viewModel.title
         textField.text = viewModel.value
         (textField as? TextField)?.placeholderAttrText = viewModel.placeholder
         self.textChangeHandler = textChangeHandler
         return self
+    }
+}
+
+
+private extension MnemonicTextInputCollectionViewCell {
+    
+    func makeClearButton() -> UIButton {
+        
+        let button = UIButton(type: .system)
+        button.setImage(
+            .init(systemName: "xmark.circle.fill"),
+            for: .normal
+        )
+        button.tintColor = Theme.colour.labelSecondary
+        button.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
+        return button
+    }
+    
+    @objc func clearTapped() {
+        
+        textField.text = nil
     }
 }

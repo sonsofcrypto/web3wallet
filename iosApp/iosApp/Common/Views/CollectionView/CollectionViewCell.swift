@@ -5,6 +5,26 @@
 import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
+    
+    var bottomSeparatorView: UIView!
+    
+    override func awakeFromNib() {
+        
+        super.awakeFromNib()
+        
+        let separator = UIView()
+        separator.backgroundColor = Theme.colour.labelTertiary
+        contentView.addSubview(separator)
+        separator.addConstraints(
+            [
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
+                .layout(anchor: .trailingAnchor),
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 0.5)),
+                .layout(anchor: .bottomAnchor)
+            ]
+        )
+        self.bottomSeparatorView = separator
+    }
 
     var cornerStyle: Style = .single {
         didSet { update(for: cornerStyle) }

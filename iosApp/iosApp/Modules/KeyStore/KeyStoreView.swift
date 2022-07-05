@@ -157,8 +157,15 @@ extension KeyStoreViewController: UICollectionViewDataSource {
         default:
             
             let cell = collectionView.dequeue(KeyStoreCell.self, for: indexPath)
-            cell.indexImage.image = .init(systemName: "\(indexPath.item + 1).square.fill")
-            cell.indexImage.tintColor = Theme.colour.navBarTint
+            let image = UIImage(systemName: "\(indexPath.item + 1).square.fill")!
+            let config = UIImage.SymbolConfiguration(
+                paletteColors: [
+                    Theme.colour.labelPrimary,
+                    Theme.colour.systemBlue
+                ]
+            )
+            cell.indexImage.image = image.applyingSymbolConfiguration(config)
+            //cell.indexImage.tintColor = Theme.colour.navBarTint
             cell.titleLabel.text = viewModel?.items[indexPath.item].title
             cell.accessoryButton.tag = indexPath.item
             cell.accessoryButton.addTarget(
