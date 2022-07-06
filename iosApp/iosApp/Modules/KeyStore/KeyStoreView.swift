@@ -156,25 +156,11 @@ extension KeyStoreViewController: UICollectionViewDataSource {
             
         default:
             
-            let cell = collectionView.dequeue(KeyStoreCell.self, for: indexPath)
-            let image = UIImage(systemName: "\(indexPath.item + 1).square.fill")!
-            let config = UIImage.SymbolConfiguration(
-                paletteColors: [
-                    Theme.colour.labelPrimary,
-                    Theme.colour.systemBlue
-                ]
+            return collectionView.dequeue(KeyStoreCell.self, for: indexPath).update(
+                with: viewModel?.items[indexPath.item],
+                at: indexPath.item,
+                presenter: presenter
             )
-            cell.indexImage.image = image.applyingSymbolConfiguration(config)
-            //cell.indexImage.tintColor = Theme.colour.navBarTint
-            cell.titleLabel.text = viewModel?.items[indexPath.item].title
-            cell.accessoryButton.tag = indexPath.item
-            cell.accessoryButton.addTarget(
-                self,
-                action: #selector(accessoryAction(_:)),
-                for: .touchUpInside
-            )
-            cell.arrowForward.image = .init(systemName: "chevron.right")
-            return cell
         }
     }
 }
@@ -187,10 +173,6 @@ extension KeyStoreViewController: UICollectionViewDelegate {
             return
         }
         presenter.handle(.didSelectKeyStoreItemtAt(idx: indexPath.item))
-    }
-
-    @objc func accessoryAction(_ sender: UIButton) {
-        presenter.handle(.didSelectAccessory(idx: sender.tag))
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

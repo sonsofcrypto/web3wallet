@@ -11,6 +11,8 @@ final class KeyStoreCell: CollectionViewCell {
     @IBOutlet weak var accessoryButton: UIButton!
     @IBOutlet weak var arrowForward: UIImageView!
     
+    private weak var presenter: KeyStorePresenter!
+    
     override func awakeFromNib() {
         
         super.awakeFromNib()
@@ -19,6 +21,13 @@ final class KeyStoreCell: CollectionViewCell {
         titleLabel.textColor = Theme.colour.labelPrimary
         accessoryButton.tintColor = Theme.colour.labelSecondary
         arrowForward.tintColor = Theme.colour.labelSecondary
+        
+        accessoryButton.addTarget(
+            self,
+            action: #selector(accessoryAction(_:)),
+            for: .touchUpInside
+        )
+        arrowForward.image = .init(systemName: "chevron.right")
     }
 
     override func prepareForReuse() {
@@ -27,4 +36,38 @@ final class KeyStoreCell: CollectionViewCell {
         
         accessoryButton.removeAllTargets()
     }
+}
+
+extension KeyStoreCell {
+    
+    func update(
+        with viewModel: KeyStoreViewModel.KeyStoreItem?,
+        at index: Int,
+        presenter: KeyStorePresenter
+    ) -> Self {
+        
+        let image = UIImage(systemName: "\(index + 1).square.fill")!
+        let config = UIImage.SymbolConfiguration(
+            paletteColors: [
+                Theme.colour.labelPrimary,
+                Theme.colour.systemBlue
+            ]
+        )
+        indexImage.image = image.applyingSymbolConfiguration(config)
+
+        titleLabel.text = viewModel?.title
+        
+        accessoryButton.tag = index
+        
+        return self
+    }
+}
+
+private extension KeyStoreCell {
+    
+    @objc func accessoryAction(_ sender: UIButton) {
+        
+        presenter.handle(.didSelectAccessory(idx: sender.tag))
+    }
+
 }

@@ -70,6 +70,7 @@ private extension TokenReceiveViewController {
     func configureNavigationBar() {
         
         title = viewModel?.title
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: .init(systemName: "chevron.left"),
             style: .plain,
@@ -78,33 +79,41 @@ private extension TokenReceiveViewController {
         )
         
         cardView.backgroundColor = Theme.colour.backgroundBasePrimary
-        cardView.layer.cornerRadius = 12
+        cardView.layer.cornerRadius = Theme.constant.cornerRadius
         
-        nameLabel.applyStyle(.headlineGlow)
+        nameLabel.font = Theme.font.body
         nameLabel.textColor = Theme.colour.labelPrimary
         
-        addressLabel.applyStyle(.body)
+        addressLabel.font = Theme.font.body
         addressLabel.textColor = Theme.colour.labelPrimary
         addressLabel.textAlignment = .center
 
-        disclaimerLabel.applyStyle(.smallBody)
-        disclaimerLabel.textColor = Theme.colour.labelSecondary
+        disclaimerLabel.font = Theme.font.body
+        disclaimerLabel.textColor = Theme.colour.labelPrimary
         
         copyButton.update(
             with: Localized("tokenReceive.action.copy"),
-            and: UIImage(named: "button_send"),
+            and: UIImage(systemName: "square.on.square"),
             onTap: makeCopyAction()
         )
+        copyButton.tintColor = Theme.colour.labelPrimary
 
         shareButton.update(
             with: Localized("tokenReceive.action.share"),
-            and: UIImage(named: "button_send"),
+            and: UIImage(systemName: "square.and.arrow.up"),
             onTap: makeShareAction()
         )
+        shareButton.tintColor = Theme.colour.labelPrimary
         
+        let image = UIImage(systemName: "plus")!
+        let config = UIImage.SymbolConfiguration(
+            paletteColors: [
+                Theme.colour.labelPrimary
+            ]
+        )
         addButton.update(
             with: Localized("tokenReceive.action.add"),
-            and: UIImage(named: "plus_icon"),
+            and: image.applyingSymbolConfiguration(config),
             onTap: makeAddAction()
         )
     }

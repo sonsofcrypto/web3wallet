@@ -13,10 +13,8 @@ final class TokenReceiveActionButton: UIView {
 
         super.awakeFromNib()
         
-        iconImageView.backgroundColor = Theme.colour.backgroundBaseSecondary
-        iconImageView.layer.cornerRadius = iconImageView.frame.size.width * 0.5
-
-        nameLabel.applyStyle(.callout)
+        nameLabel.font = Theme.font.body
+        nameLabel.textColor = Theme.colour.labelPrimary
         
         guard gestureRecognizers?.isEmpty ?? true else { return }
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))

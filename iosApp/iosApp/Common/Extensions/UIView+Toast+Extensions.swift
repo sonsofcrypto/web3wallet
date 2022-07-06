@@ -14,7 +14,7 @@ extension UIView {
 
         let backgroundView = UIView()
         backgroundView.layer.cornerRadius = 8
-        backgroundView.backgroundColor = Theme.colour.backgroundBaseSecondary
+        backgroundView.backgroundColor = Theme.colour.navBarBackground
         toastView.addSubview(backgroundView)
         backgroundView.addConstraints(
             [
@@ -25,7 +25,8 @@ extension UIView {
         )
 
         let label = UILabel()
-        label.applyStyle(.body)
+        label.font = Theme.font.body
+        label.textColor = Theme.colour.labelPrimary
         label.numberOfLines = 0
         label.text = message
         backgroundView.addSubview(label)
