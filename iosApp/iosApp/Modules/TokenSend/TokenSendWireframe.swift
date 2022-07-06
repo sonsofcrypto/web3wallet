@@ -12,6 +12,7 @@ struct TokenSendWireframeContext {
 
 enum TokenSendWireframeDestination {
     
+    case qrCodeScan(onCompletion: (String) -> Void)
 }
 
 protocol TokenSendWireframe {
@@ -24,6 +25,7 @@ final class DefaultTokenSendWireframe {
     
     private weak var presentingIn: UIViewController!
     private let context: TokenSendWireframeContext
+    private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let web3Service: Web3Service
     
     private weak var navigationController: NavigationController!
@@ -31,10 +33,12 @@ final class DefaultTokenSendWireframe {
     init(
         presentingIn: UIViewController,
         context: TokenSendWireframeContext,
+        qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         web3Service: Web3Service
     ) {
         self.presentingIn = presentingIn
         self.context = context
+        self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.web3Service = web3Service
     }
 }
@@ -65,7 +69,19 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
     
     func navigate(to destination: TokenSendWireframeDestination) {
         
-        
+        switch destination {
+        case let .qrCodeScan(onCompletion):
+            
+            let wireframe = qrCodeScanWireframeFactory.makeWireframe(
+                presentingIn: navigationController,
+                context: .init(
+                    presentationStyle: .present,
+                    type: .network(context.web3Token.network),
+                    onCompletion: onCompletion
+                )
+            )
+            wireframe.present()
+        }
     }
     
     func dismiss() {

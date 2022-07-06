@@ -93,12 +93,10 @@
 		1C54DC5C28683DDA00E378F6 /* NaokoAA-Semilight-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4E28683DDA00E378F6 /* NaokoAA-Semilight-Italic.otf */; };
 		1C54DC5D28683DDA00E378F6 /* NaokoAA-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4F28683DDA00E378F6 /* NaokoAA-Black.otf */; };
 		1C54DC5E28683DDA00E378F6 /* NaokoAA-Medium-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC5028683DDA00E378F6 /* NaokoAA-Medium-Italic.otf */; };
-		1C54DC60286859D900E378F6 /* Colours-OG.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC5F286859D900E378F6 /* Colours-OG.xcassets */; };
 		1C54DC662869A48A00E378F6 /* DashboardHeaderBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC652869A48A00E378F6 /* DashboardHeaderBalanceView.swift */; };
 		1C54DC682869BE6500E378F6 /* DashboardButtonsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC672869BE6500E378F6 /* DashboardButtonsCell.swift */; };
 		1C54DC6A2869D60D00E378F6 /* ThemeA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC692869D60D00E378F6 /* ThemeA.swift */; };
 		1C54DC74286A1D4C00E378F6 /* Assets-ThemeA.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC73286A1D4B00E378F6 /* Assets-ThemeA.xcassets */; };
-		1C54DC7A286B84B700E378F6 /* ThemeOG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC79286B84B700E378F6 /* ThemeOG.swift */; };
 		1C5B603B284675B800ECBD79 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5B603A284675B800ECBD79 /* Kingfisher */; };
 		1C60C1AA28571B95003BE25D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */; };
 		1C60C1AC28571BB6003BE25D /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1AB28571BB6003BE25D /* UIImageView+Extensions.swift */; };
@@ -348,6 +346,8 @@
 		1C9E319F287580D900DD2031 /* TokenSendPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E319E287580D900DD2031 /* TokenSendPresenter.swift */; };
 		1C9E31A1287580DE00DD2031 /* TokenSendInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E31A0287580DE00DD2031 /* TokenSendInteractor.swift */; };
 		1C9E31A3287580E500DD2031 /* TokenSend.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C9E31A2287580E500DD2031 /* TokenSend.storyboard */; };
+		1C9E31A62876023E00DD2031 /* TokenSendToCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E31A52876023E00DD2031 /* TokenSendToCollectionViewCell.swift */; };
+		1C9E31A8287618D500DD2031 /* TokenSendTokenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E31A7287618D500DD2031 /* TokenSendTokenCollectionViewCell.swift */; };
 		1CAC55A4286DF26100CCB2B6 /* Networks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC55A3286DF26100CCB2B6 /* Networks.storyboard */; };
 		1CAC55A8286E119500CCB2B6 /* KeyStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC55A7286E119500CCB2B6 /* KeyStore.storyboard */; };
 		1CAC5601286EFFC300CCB2B6 /* SFProText-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC55F4286EFFC200CCB2B6 /* SFProText-Regular.otf */; };
@@ -559,12 +559,10 @@
 		1C54DC4E28683DDA00E378F6 /* NaokoAA-Semilight-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Semilight-Italic.otf"; sourceTree = "<group>"; };
 		1C54DC4F28683DDA00E378F6 /* NaokoAA-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Black.otf"; sourceTree = "<group>"; };
 		1C54DC5028683DDA00E378F6 /* NaokoAA-Medium-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Medium-Italic.otf"; sourceTree = "<group>"; };
-		1C54DC5F286859D900E378F6 /* Colours-OG.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Colours-OG.xcassets"; sourceTree = "<group>"; };
 		1C54DC652869A48A00E378F6 /* DashboardHeaderBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardHeaderBalanceView.swift; sourceTree = "<group>"; };
 		1C54DC672869BE6500E378F6 /* DashboardButtonsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardButtonsCell.swift; sourceTree = "<group>"; };
 		1C54DC692869D60D00E378F6 /* ThemeA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeA.swift; sourceTree = "<group>"; };
 		1C54DC73286A1D4B00E378F6 /* Assets-ThemeA.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets-ThemeA.xcassets"; sourceTree = "<group>"; };
-		1C54DC79286B84B700E378F6 /* ThemeOG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeOG.swift; sourceTree = "<group>"; };
 		1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1AB28571BB6003BE25D /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1AD28572405003BE25D /* Web3ServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3ServiceAssembler.swift; sourceTree = "<group>"; };
@@ -813,6 +811,8 @@
 		1C9E319E287580D900DD2031 /* TokenSendPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendPresenter.swift; sourceTree = "<group>"; };
 		1C9E31A0287580DE00DD2031 /* TokenSendInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendInteractor.swift; sourceTree = "<group>"; };
 		1C9E31A2287580E500DD2031 /* TokenSend.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TokenSend.storyboard; sourceTree = "<group>"; };
+		1C9E31A52876023E00DD2031 /* TokenSendToCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendToCollectionViewCell.swift; sourceTree = "<group>"; };
+		1C9E31A7287618D500DD2031 /* TokenSendTokenCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendTokenCollectionViewCell.swift; sourceTree = "<group>"; };
 		1CAC55A3286DF26100CCB2B6 /* Networks.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Networks.storyboard; sourceTree = "<group>"; };
 		1CAC55A7286E119500CCB2B6 /* KeyStore.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = KeyStore.storyboard; sourceTree = "<group>"; };
 		1CAC55F4286EFFC200CCB2B6 /* SFProText-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Regular.otf"; sourceTree = "<group>"; };
@@ -1733,8 +1733,18 @@
 				1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */,
 				1C9E3196287580BF00DD2031 /* TokenSendWireframeFactory.swift */,
 				1C9E3198287580C700DD2031 /* TokenSendWireframeFactoryAssembler.swift */,
+				1C9E31A42875FF3000DD2031 /* Cells */,
 			);
 			path = TokenSend;
+			sourceTree = "<group>";
+		};
+		1C9E31A42875FF3000DD2031 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				1C9E31A52876023E00DD2031 /* TokenSendToCollectionViewCell.swift */,
+				1C9E31A7287618D500DD2031 /* TokenSendTokenCollectionViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		1CAC55F3286EFFC200CCB2B6 /* SFProText */ = {
@@ -1942,7 +1952,6 @@
 				D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */,
 				1C54DC73286A1D4B00E378F6 /* Assets-ThemeA.xcassets */,
 				D157F7D327B69B6400578FF8 /* Assets.xcassets */,
-				1C54DC5F286859D900E378F6 /* Colours-OG.xcassets */,
 				1C54DC342868204000E378F6 /* Colours-ThemeA.xcassets */,
 				D15B06C527B6D247008C3C62 /* Common */,
 				D11A98F327B8615B00EDFDD0 /* Fonts */,
@@ -2033,7 +2042,6 @@
 			children = (
 				1C54DC292868193300E378F6 /* Theme.swift */,
 				1C54DC692869D60D00E378F6 /* ThemeA.swift */,
-				1C54DC79286B84B700E378F6 /* ThemeOG.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -2180,7 +2188,6 @@
 				D11A990827B8615B00EDFDD0 /* GothicA1-Black.ttf in Resources */,
 				1CAC5603286EFFC300CCB2B6 /* SFProText-BoldItalic.otf in Resources */,
 				1CAC5605286EFFC300CCB2B6 /* SFProText-Semibold.otf in Resources */,
-				1C54DC60286859D900E378F6 /* Colours-OG.xcassets in Resources */,
 				1CAC55A4286DF26100CCB2B6 /* Networks.storyboard in Resources */,
 				1C54DC5828683DDA00E378F6 /* NaokoAA-BlackItalic.otf in Resources */,
 				1C54DC5E28683DDA00E378F6 /* NaokoAA-Medium-Italic.otf in Resources */,
@@ -2477,6 +2484,7 @@
 				1C60C309285724D1003BE25D /* RootWireframe.swift in Sources */,
 				1C54DBE5285E832600E378F6 /* TokenAddWireframeFactory.swift in Sources */,
 				1CB3A1E82840D6B70092D667 /* UIButton+Extensions.swift in Sources */,
+				1C9E31A8287618D500DD2031 /* TokenSendTokenCollectionViewCell.swift in Sources */,
 				1C60C2F8285724D0003BE25D /* NFTDetailViewModel.swift in Sources */,
 				1CE66BCC2848EA9F00AB6ACA /* DefaultChatService.swift in Sources */,
 				1C60C333285724D1003BE25D /* NFTsCollectionWireframeFactory.swift in Sources */,
@@ -2561,7 +2569,6 @@
 				1C60C2B1285724D0003BE25D /* TokenPickerViewModel.swift in Sources */,
 				1A4C3B697503D478741295DB /* TextField.swift in Sources */,
 				1C60C2B2285724D0003BE25D /* TokenPickerWireframeFactoryAssembler.swift in Sources */,
-				1C54DC7A286B84B700E378F6 /* ThemeOG.swift in Sources */,
 				1C9E3195287580B600DD2031 /* TokenSendWireframe.swift in Sources */,
 				1CD843F62874215F00E6D359 /* MnemonicViewSectionLabelFooter.swift in Sources */,
 				1C60C31D285724D1003BE25D /* AppsCollectionViewCell.swift in Sources */,
@@ -2579,6 +2586,7 @@
 				1CD844002874257500E6D359 /* MnemonicSwitchTextInputCollectionViewCell.swift in Sources */,
 				1A4C373BF33DAF794F261056 /* CardFlipAnimatedTransitioning2.swift in Sources */,
 				1C60C2AB285724D0003BE25D /* SettingsWireframeFactoryAssembler.swift in Sources */,
+				1C9E31A62876023E00DD2031 /* TokenSendToCollectionViewCell.swift in Sources */,
 				1A4C3B81B628EF4EDC8F7177 /* TransformView.swift in Sources */,
 				1A4C31E84A86A69FFC7C3E0F /* Setting.swift in Sources */,
 				1C60C342285724D1003BE25D /* AMMsWireframeFactoryAssembler.swift in Sources */,

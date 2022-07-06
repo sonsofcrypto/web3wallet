@@ -21,6 +21,7 @@
 "close" = "Close";
 "connected" = "Connected";
 "disconnected" = "Disconnected";
+"paste" = "Paste";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";
@@ -174,3 +175,7 @@
 "qrCodeScan.title" = "Scan QR code";
 "qrCodeScan.error.notSupported.title" = "Scanning not supported";
 "qrCodeScan.error.notSupported.message" = "Your device does not support QR code scanning. Please use a device with a camera.";
+
+"tokenSend.title" = "Send %@";
+"tokenSend.cell.address.textField.placeholder" = "Name, ENS, or address";
+"tokenSend.cell.token.placeholder" = "0";

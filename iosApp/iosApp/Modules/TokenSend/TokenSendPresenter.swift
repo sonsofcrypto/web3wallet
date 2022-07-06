@@ -7,11 +7,10 @@ import Foundation
 enum TokenSendPresenterEvent {
 
     case dismiss
-    case share
-    case addCoins(onCompletion: (Double) -> Void)
+    case qrCodeScan
 }
 
-protocol TokenSendPresenter {
+protocol TokenSendPresenter: AnyObject {
 
     func present()
     func handle(_ event: TokenSendPresenterEvent)
@@ -24,6 +23,7 @@ final class DefaultTokenSendPresenter {
     private let wireframe: TokenSendWireframe
     private let context: TokenSendWireframeContext
     
+    private var address: String?
     private var items = [TokenSendViewModel.Item]()
 
     init(
@@ -43,18 +43,21 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
 
     func present() {
         
-        view?.update(
-            with: .init(
-                title: Localized("TokenSend.title.receive", arg: context.web3Token.symbol),
-                content: .loaded(
+        updateView(
+            with: [
+                .address(
                     .init(
-                        name: Localized("TokenSend.qrcode.name"),
-                        symbol: context.web3Token.symbol,
-                        address: context.web3Token.address,
-                        disclaimer: disclaimer
+                        value: nil,
+                        isValid: false
+                    )
+                ),
+                .token(
+                    .init(
+                        tokenAmount: nil,
+                        tokenSymbol: context.web3Token.symbol.uppercased()
                     )
                 )
-            )
+            ]
         )
     }
 
@@ -66,51 +69,51 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
             
             wireframe.dismiss()
 
-        case .share:
+        case .qrCodeScan:
             
-            break
-            
-        case let .addCoins(onCompletion):
-            
-            let localStorage: Web3ServiceLocalStorage = ServiceDirectory.assembler.resolve()
-            var allTokens = localStorage.readAllTokens()
-
-            guard let token = allTokens.first(
-                where: {
-                    context.web3Token.equalTo(network: $0.network.name, symbol: $0.symbol)
-                }
-            ) else { return }
-
-            allTokens.removeAll { $0.equalTo(network: token.network.name, symbol: token.symbol) }
-            
-            let coinsToAdd = 1000/token.usdPrice
-
-            let updatedToken = Web3Token(
-                symbol: token.symbol,
-                name: token.name,
-                address: token.address,
-                decimals: token.decimals,
-                type: token.type,
-                network: token.network,
-                balance: token.balance + coinsToAdd,
-                showInWallet: true,
-                usdPrice: token.usdPrice
-            )
-            
-            allTokens.append(updatedToken)
-            
-            localStorage.storeAllTokens(with: allTokens)
-            
-            onCompletion(coinsToAdd)
+            view?.dismissKeyboard()
+            let onQRCodeScanned = makeOnQRCodeScanned()
+            wireframe.navigate(to: .qrCodeScan(onCompletion: onQRCodeScanned))
         }
     }
 }
 
 private extension DefaultTokenSendPresenter {
     
-    var disclaimer: String {
+    func updateView(with items: [TokenSendViewModel.Item]) {
         
-        let arg = "\(context.web3Token.network.name.capitalized) (\(context.web3Token.symbol))"
-        return Localized("TokenSend.disclaimer", arg: arg)
+        view?.update(
+            with: .init(
+                title: Localized("tokenSend.title", arg: context.web3Token.symbol),
+                items: items
+            )
+        )
+    }
+    
+    func makeOnQRCodeScanned() -> (String) -> Void {
+        
+        { [weak self] address in
+            
+            guard let self = self else { return }
+            self.updateAddress(with: address)
+        }
+    }
+    
+    func updateAddress(with address: String) {
+        
+        self.address = address
+        
+        let isValid = interactor.isAddressValid(address: address, network: context.web3Token.network)
+        
+        updateView(
+            with: [
+                .address(
+                    .init(
+                        value: address,
+                        isValid: isValid
+                    )
+                )
+            ]
+        )
     }
 }

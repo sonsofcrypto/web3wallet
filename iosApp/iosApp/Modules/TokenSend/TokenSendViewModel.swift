@@ -7,44 +7,57 @@ import Foundation
 struct TokenSendViewModel {
     
     let title: String
-    let content: Content
-    
-    enum Content {
-        case loading
-        case loaded(Item)
-        case error(error: AppsViewModel.Error)
-    }
+    let items: [Item]
 }
 
 extension TokenSendViewModel {
     
-    struct Item {
+    enum Item {
         
-        let name: String
-        let symbol: String
-        let address: String
-        let disclaimer: String
+        case address(Address)
+        case token(Token)
+    }
+    
+    struct Address {
+        
+        let value: String?
+        let isValid: Bool
+    }
+    
+    struct Token {
+        
+        let tokenAmount: Double?
+        let tokenSymbol: String
     }
 }
 
-extension TokenSendViewModel {
-
-    struct Error {
+extension Array where Element == TokenSendViewModel.Item {
+    
+    var address: TokenSendViewModel.Address? {
         
-        let title: String
-        let body: String
-        let actions: [String]
-    }
-}
-
-extension TokenSendViewModel {
-
-    var data: TokenSendViewModel.Item? {
-        switch content {
-        case let .loaded(item):
-            return item
-        default:
-            return nil
+        var address: TokenSendViewModel.Address?
+        forEach {
+            
+            if case let TokenSendViewModel.Item.address(value) = $0 {
+                
+                address = value
+            }
         }
+        
+        return address
+    }
+    
+    var token: TokenSendViewModel.Token? {
+        
+        var token: TokenSendViewModel.Token?
+        forEach {
+            
+            if case let TokenSendViewModel.Item.token(value) = $0 {
+                
+                token = value
+            }
+        }
+        
+        return token
     }
 }

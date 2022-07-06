@@ -9,6 +9,7 @@ final class TokenSendWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> TokenSendWireframeFactory in
             
             DefaultTokenSendWireframeFactory(
+                qrCodeScanWireframeFactory: resolver.resolve(),
                 web3Service: resolver.resolve()
             )
         }

@@ -7,7 +7,7 @@ import UIKit
 final class TokenAddInputView: UIView {
     
     private var nameLabel: UILabel!
-    private var textField: UITextField!
+    private var textField: TextField!
     private var hintLabel: UILabel!
     private var actionsView: UIView!
     private var pasteAction: UIButton!
@@ -109,9 +109,7 @@ private extension TokenAddInputView {
         stackView.addArrangedSubview(nameLabel)
         self.nameLabel = nameLabel
 
-        let textField = UITextField()
-        textField.font = Theme.font.body
-        textField.textColor = Theme.colour.labelPrimary
+        let textField = TextField()
         textField.borderStyle = .none
         textField.autocorrectionType = .no
         textField.spellCheckingType = .no
