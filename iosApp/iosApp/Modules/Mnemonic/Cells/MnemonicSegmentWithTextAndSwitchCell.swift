@@ -54,8 +54,6 @@ class MnemonicSegmentWithTextAndSwitchCell: CollectionViewCell {
             for: .valueChanged
         )
         
-        segmentControl.selectedSegmentTintColor = Theme.colour.labelQuaternary
-        segmentControl.tintColor = Theme.colour.labelQuaternary
         segmentControl.setTitleTextAttributes(
             [
                 NSAttributedString.Key.font: Theme.font.footnote,
@@ -67,6 +65,23 @@ class MnemonicSegmentWithTextAndSwitchCell: CollectionViewCell {
             self,
             action: #selector(segmentAction(_:)),
             for: .valueChanged
+        )
+
+        segmentControl.setBackgroundImage(
+            Theme.colour.labelQuaternary.image(),
+            for: .normal,
+            barMetrics: .default
+        )
+        segmentControl.setBackgroundImage(
+            Theme.colour.labelSecondary.image(),
+            for: .selected,
+            barMetrics: .default
+        )
+        segmentControl.setDividerImage(
+            UIColor.clear.image(),
+            forLeftSegmentState: .normal,
+            rightSegmentState: .normal,
+            barMetrics: .default
         )
     }
 
@@ -156,5 +171,16 @@ private extension MnemonicSegmentWithTextAndSwitchCell {
     @objc func clearTapped() {
         
         textField.text = nil
+    }
+}
+
+extension UIColor {
+    
+    func image(_ size: CGSize = CGSize(width: 1, height: 32)) -> UIImage {
+        
+        UIGraphicsImageRenderer(size: size).image { rendererContext in
+            self.setFill()
+            rendererContext.fill(CGRect(origin: .zero, size: size))
+        }
     }
 }
