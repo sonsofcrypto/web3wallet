@@ -26,21 +26,12 @@ final class TokenReceiveViewController: BaseViewController {
     private var viewModel: TokenReceiveViewModel?
     private lazy var filter = CIFilter(name: "CIQRCodeGenerator")
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         presenter?.present()
     }
-    
 }
 
 extension TokenReceiveViewController: TokenReceiveView {
