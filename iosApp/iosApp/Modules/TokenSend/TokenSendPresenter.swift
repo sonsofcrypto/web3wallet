@@ -7,6 +7,9 @@ import Foundation
 enum TokenSendPresenterEvent {
 
     case dismiss
+    case addressChanged(to: String)
+    case pasteAddress
+    case tokenChanged(to: Double)
     case qrCodeScan
 }
 
@@ -24,6 +27,7 @@ final class DefaultTokenSendPresenter {
     private let context: TokenSendWireframeContext
     
     private var address: String?
+    private var amount: Double?
     private var items = [TokenSendViewModel.Item]()
 
     init(
@@ -54,7 +58,10 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                 .token(
                     .init(
                         tokenAmount: nil,
-                        tokenSymbol: context.web3Token.symbol.uppercased()
+                        tokenSymbol: context.web3Token.symbol.uppercased(),
+                        tokenMaxAmount: context.web3Token.balance,
+                        insufficientFunds: false,
+                        shouldUpdateTextFields: false
                     )
                 )
             ]
@@ -74,6 +81,21 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
             view?.dismissKeyboard()
             let onQRCodeScanned = makeOnQRCodeScanned()
             wireframe.navigate(to: .qrCodeScan(onCompletion: onQRCodeScanned))
+            
+        case let .addressChanged(address):
+            
+            updateAddress(with: address)
+            
+        case .pasteAddress:
+            
+            let clipboard = UIPasteboard.general.string ?? ""
+            let isValid = interactor.isAddressValid(address: clipboard, network: context.web3Token.network)
+            guard isValid else { return }
+            updateAddress(with: clipboard)
+            
+        case let .tokenChanged(amount):
+            
+            updateToken(with: amount, shouldUpdateTextFields: false)
         }
     }
 }
@@ -111,6 +133,30 @@ private extension DefaultTokenSendPresenter {
                     .init(
                         value: address,
                         isValid: isValid
+                    )
+                )
+            ]
+        )
+    }
+    
+    func updateToken(
+        with amount: Double,
+        shouldUpdateTextFields: Bool
+    ) {
+        
+        self.amount = amount
+        
+        let insufficientFunds = amount > context.web3Token.balance
+        
+        updateView(
+            with: [
+                .token(
+                    .init(
+                        tokenAmount: amount,
+                        tokenSymbol: context.web3Token.symbol.uppercased(),
+                        tokenMaxAmount: context.web3Token.balance,
+                        insufficientFunds: insufficientFunds,
+                        shouldUpdateTextFields: shouldUpdateTextFields
                     )
                 )
             ]

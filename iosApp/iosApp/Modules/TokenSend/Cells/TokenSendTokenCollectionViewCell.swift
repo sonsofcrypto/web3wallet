@@ -7,7 +7,9 @@ final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var tokenTextFieldView: UIView!
     @IBOutlet weak var tokenTextField: TextField!
     @IBOutlet weak var tokenLabel: UILabel!
+    @IBOutlet weak var tokenMaxButton: UIButton!
     
+    private var viewModel: TokenSendViewModel.Token!
     private weak var presenter: TokenSendPresenter!
     
     override func awakeFromNib() {
@@ -22,30 +24,60 @@ final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
             placeholder: Localized("tokenSend.cell.token.placeholder")
         )
         tokenTextField.delegate = self
-        tokenTextField.rightView = makeTokenClearButton()
-        tokenTextField.rightViewMode = .whileEditing
-
+//        tokenTextField.rightView = makeTokenClearButton()
+//        tokenTextField.rightViewMode = .whileEditing
+        
         tokenLabel.font = Theme.font.body
         tokenLabel.textColor = Theme.colour.labelPrimary
+        
+        tokenMaxButton.isHidden = true
+        tokenMaxButton.tintColor = Theme.colour.labelSecondary
+        tokenMaxButton.addTarget(
+            self,
+            action: #selector(tokenMaxAmountTapped),
+            for: .touchUpInside
+        )
     }
     
     func update(
-        with token: TokenSendViewModel.Token,
+        with viewModel: TokenSendViewModel.Token,
         presenter: TokenSendPresenter
     ) {
         
+        self.viewModel = viewModel
         self.presenter = presenter
         
-        if let tokenAmount = token.tokenAmount {
+        if viewModel.shouldUpdateTextFields, let tokenAmount = viewModel.tokenAmount {
+            
             tokenTextField.text = "\(tokenAmount)"
-        } else {
-            tokenTextField.text = nil
         }
-        tokenLabel.text = token.tokenSymbol
+        
+        tokenLabel.text = viewModel.tokenSymbol
+        
+        if viewModel.insufficientFunds {
+            
+            print("Insufficient funds!!")
+        }
     }
 }
 
 extension TokenSendTokenCollectionViewCell: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        if textField == tokenTextField {
+            
+            tokenMaxButton.isHidden = false
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        if textField == tokenTextField {
+            
+            tokenMaxButton.isHidden = true
+        }
+    }
     
     func textField(
         _ textField: UITextField,
@@ -62,7 +94,12 @@ extension TokenSendTokenCollectionViewCell: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         
-        print("selection: \(textField.text)")
+        if textField.text == "." {
+            textField.text = "0."
+        }
+        
+        guard let text = textField.text, let double = Double(text) else { return }
+        presenter.handle(.tokenChanged(to: double))
     }
 }
 
@@ -102,5 +139,10 @@ private extension TokenSendTokenCollectionViewCell {
     @objc func qrCodeScanTapped() {
         
         presenter.handle(.qrCodeScan)
+    }
+    
+    @objc func tokenMaxAmountTapped() {
+        
+        tokenTextField.text = "\(viewModel.tokenMaxAmount)"
     }
 }

@@ -75,7 +75,7 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
             let wireframe = qrCodeScanWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(
-                    presentationStyle: .present,
+                    presentationStyle: .push,
                     type: .network(context.web3Token.network),
                     onCompletion: onCompletion
                 )

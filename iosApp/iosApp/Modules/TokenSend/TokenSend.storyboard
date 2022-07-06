@@ -68,7 +68,7 @@
                                                                 <constraint firstItem="qKW-xc-SBl" firstAttribute="leading" secondItem="NVb-pb-KwR" secondAttribute="leading" constant="8" id="uhk-qX-iF3"/>
                                                             </constraints>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x1z-UV-idE">
+                                                        <view contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="x1z-UV-idE">
                                                             <rect key="frame" x="314.5" y="0.0" width="68.5" height="44"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="cUZ-SL-8be">
@@ -81,7 +81,7 @@
                                                                                 <constraint firstAttribute="width" constant="22" id="km9-J0-nlC"/>
                                                                             </constraints>
                                                                         </imageView>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Paste" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9x-wg-Frk">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Paste" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9x-wg-Frk">
                                                                             <rect key="frame" x="26" y="0.0" width="42.5" height="22"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
@@ -97,7 +97,7 @@
                                                                 <constraint firstAttribute="trailing" secondItem="cUZ-SL-8be" secondAttribute="trailing" id="pJO-OT-4yV"/>
                                                             </constraints>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Bo-2J-bdY">
+                                                        <view contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="3Bo-2J-bdY">
                                                             <rect key="frame" x="391" y="0.0" width="22" height="44"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="JHU-hX-f0Q">
@@ -162,10 +162,18 @@
                                                                     <rect key="frame" x="8" y="0.0" width="397" height="44"/>
                                                                     <subviews>
                                                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AwI-nP-fDm" customClass="TextField" customModule="iosApp" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="347.5" height="44"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="317.5" height="44"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                                         </textField>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JQp-TF-PUR">
+                                                                            <rect key="frame" x="325.5" y="0.0" width="22" height="44"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="22" id="Xh8-21-hUR"/>
+                                                                            </constraints>
+                                                                            <state key="normal" title="Button"/>
+                                                                            <buttonConfiguration key="configuration" style="plain" image="dial.max.fill" catalog="system"/>
+                                                                        </button>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCQ-zI-HLX">
                                                                             <rect key="frame" x="355.5" y="0.0" width="41.5" height="44"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -199,6 +207,7 @@
                                         <size key="customSize" width="413" height="85"/>
                                         <connections>
                                             <outlet property="tokenLabel" destination="tCQ-zI-HLX" id="Iue-no-gyV"/>
+                                            <outlet property="tokenMaxButton" destination="JQp-TF-PUR" id="2n5-hu-g6V"/>
                                             <outlet property="tokenTextField" destination="AwI-nP-fDm" id="qdO-41-0kO"/>
                                             <outlet property="tokenTextFieldView" destination="DTb-h8-xUs" id="vAb-GJ-D0g"/>
                                         </connections>
@@ -225,6 +234,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="dial.max.fill" catalog="system" width="128" height="106"/>
         <image name="person.fill.badge.plus" catalog="system" width="128" height="124"/>
         <image name="wand.and.stars.inverse" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
