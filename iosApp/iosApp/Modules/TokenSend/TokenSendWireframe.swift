@@ -86,7 +86,7 @@ private extension DefaultTokenSendWireframe {
         let interactor = DefaultTokenSendInteractor(
             web3Service: web3Service
         )
-        let vc: TokenSendViewController = UIStoryboard(.TokenSend).instantiate()
+        let vc: TokenSendViewController = UIStoryboard(.tokenSend).instantiate()
         let presenter = DefaultTokenSendPresenter(
             view: vc,
             interactor: interactor,

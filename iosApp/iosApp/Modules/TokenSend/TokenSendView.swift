@@ -14,9 +14,6 @@ final class TokenSendViewController: BaseViewController {
     var presenter: TokenSendPresenter!
 
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var addressLabel: UILabel!
-    @IBOutlet weak var disclaimerLabel: UILabel!
     
     private var viewModel: TokenSendViewModel?
     
@@ -26,7 +23,6 @@ final class TokenSendViewController: BaseViewController {
         
         presenter?.present()
     }
-    
 }
 
 extension TokenSendViewController: TokenSendView {
@@ -34,19 +30,6 @@ extension TokenSendViewController: TokenSendView {
     func update(with viewModel: TokenSendViewModel) {
 
         self.viewModel = viewModel
-        
-        configureNavigationBar()
-        
-        switch viewModel.content {
-            
-        case let .loaded(item):
-            nameLabel.text = item.name
-            addressLabel.text = item.address
-            disclaimerLabel.text = item.disclaimer
-            
-        case .loading, .error:
-            break
-        }
     }
 }
 
@@ -61,20 +44,7 @@ private extension TokenSendViewController {
             style: .plain,
             target: self,
             action: #selector(navBarLeftActionTapped)
-        )
-        
-        cardView.backgroundColor = Theme.colour.backgroundBasePrimary
-        cardView.layer.cornerRadius = Theme.constant.cornerRadius
-        
-        nameLabel.font = Theme.font.body
-        nameLabel.textColor = Theme.colour.labelPrimary
-        
-        addressLabel.font = Theme.font.body
-        addressLabel.textColor = Theme.colour.labelPrimary
-        addressLabel.textAlignment = .center
-
-        disclaimerLabel.font = Theme.font.body
-        disclaimerLabel.textColor = Theme.colour.labelPrimary
+        )        
     }
     
     @objc func navBarLeftActionTapped() {

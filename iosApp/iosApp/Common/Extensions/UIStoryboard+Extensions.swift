@@ -36,6 +36,7 @@ extension UIStoryboard {
         case tokenPicker = "TokenPicker"
         case tokenReceive = "TokenReceive"
         case tokenAdd = "TokenAdd"
+        case tokenSend = "TokenSend"
         case networkPicker = "NetworkPicker"
         case qrCodeScan = "QRCodeScan"
     }
