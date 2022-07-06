@@ -8,12 +8,45 @@ import UIKit
 /// stuble shadows without having to add assets to the app. `UIView` wrapper
 /// is handy as it avoids having to deal with more cumbersome `CALayer` layout
 @IBDesignable
-class GradientView: UIView {
+final class GradientView: UIView {
     
     enum Direction {
         case vertical
         case horizontal
         case custom(CGPoint, CGPoint)
+    }
+    
+    init() {
+        super.init(frame: .zero)
+        configureUI()
+    }
+    
+    override init(frame: CGRect) {
+        
+        super.init(frame: frame)
+        
+        configureUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        
+        super.init(coder: coder)
+        
+        configureUI()
+    }
+    
+    override func awakeFromNib() {
+        
+        super.awakeFromNib()
+        
+        configureUI()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        configureUI()
     }
     
     /// Defining the color of each gradient * stop. Defaults to nil. Animatable.
@@ -24,6 +57,14 @@ class GradientView: UIView {
         }
         set {
             (layer as? CAGradientLayer)?.colors = newValue.map { $0.cgColor }
+        }
+    }
+    
+    var isDashboard: Bool = false {
+        
+        didSet {
+            
+            configureUI()
         }
     }
     
@@ -65,5 +106,40 @@ class GradientView: UIView {
 
     override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
+    }
+}
+
+private extension GradientView {
+    
+    func configureUI() {
+        
+        switch Theme.type {
+        case .themeOG:
+            let topColor = Theme.colour.backgroundBaseSecondary
+            let bottomColor = Theme.colour.backgroundBasePrimary
+            colors = [
+                topColor,
+                bottomColor
+            ]
+        case .themeA:
+            
+            let topColor = Theme.colour.gradientTop
+            let middleTopColor = isDarkMode ? UIColor(rgb: 0xDA3E9B) : UIColor(rgb: 0x4361BC).withAlpha(0.75)
+            let middleColor = isDarkMode ? UIColor(rgb: 0xC939AA) : UIColor(rgb: 0xBE6CF4).withAlpha(0.75)
+            let middleBottomColor = isDarkMode ? UIColor(rgb: 0xAC36B0) : UIColor(rgb: 0xFC78A9).withAlpha(0.71)
+            let bottomColor = Theme.colour.gradientBottom
+            
+            if isDashboard {
+                colors = [
+                    topColor, middleTopColor, middleColor, middleBottomColor, bottomColor
+                ]
+                //(layer as? CAGradientLayer)?.locations = [0,0.3,0.375,0.5,0.75,1]
+            } else {
+                colors = [
+                    topColor, middleTopColor, middleColor, middleBottomColor, bottomColor
+                ]
+                //(layer as? CAGradientLayer)?.locations = [0,0.3,0.5,0.75,1]
+            }
+        }
     }
 }

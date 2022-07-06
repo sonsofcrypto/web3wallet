@@ -5,33 +5,64 @@
 import Foundation
 
 struct DashboardViewModel {
+    
     let shouldAnimateCardSwitcher: Bool
-    let header: DashboardViewModel.Header
     let sections: [DashboardViewModel.Section]
 }
 
 extension DashboardViewModel {
 
-    struct Header {
-        let balance: String
-        let pct: String
-        let pctUp: Bool
-        let buttons: [DashboardViewModel.Header.Button]
-        let firstSection: String?
-
-        struct Button {
-            let title: String
-            let imageName: String
-        }
-    }
-}
-
-extension DashboardViewModel {
-
     struct Section {
+        
         let name: String
-        let wallets: [DashboardViewModel.Wallet]
-        let nfts: [DashboardViewModel.NFT]
+        let fuelCost: String?
+        let rightActionTitle: String?
+        let isCollapsed: Bool?
+        let items: Items
+        
+        enum Items {
+            
+            case actions([DashboardViewModel.Action])
+            case wallets([DashboardViewModel.Wallet])
+            case nfts([DashboardViewModel.NFT])
+            
+            var count: Int {
+                
+                switch self {
+                case .actions:
+                    return 1
+                case let .wallets(wallets):
+                    return wallets.count
+                case let .nfts(nfts):
+                    return nfts.count
+                }
+            }
+            
+            func actions() -> [DashboardViewModel.Action] {
+                
+                guard case let Items.actions(actions) = self else { return [] }
+                
+                return actions
+            }
+            
+            func wallet(at index: Int) -> DashboardViewModel.Wallet? {
+                
+                guard case let Items.wallets(wallets) = self else { return nil }
+                
+                guard wallets.count > index else { return nil }
+                
+                return wallets[index]
+            }
+
+            func nft(at index: Int) -> DashboardViewModel.NFT? {
+                
+                guard case let Items.nfts(nfts) = self else { return nil }
+                
+                guard nfts.count > index else { return nil }
+                
+                return nfts[index]
+            }
+        }
     }
 }
 
@@ -44,6 +75,7 @@ extension DashboardViewModel {
         let imageData: Data
         let fiatBalance: String
         let cryptoBalance: String
+        let tokenPrice: String
         let pctChange: String
         let priceUp: Bool
         let candles: CandlesViewModel
@@ -55,5 +87,22 @@ extension DashboardViewModel {
     struct NFT {
         let image: String
         let onSelected: () -> Void
+    }
+}
+
+extension DashboardViewModel {
+
+    struct Action {
+        
+        let title: String
+        let imageName: String
+        let type: `Type`
+        
+        enum `Type` {
+            
+            case send
+            case receive
+            case swap
+        }
     }
 }

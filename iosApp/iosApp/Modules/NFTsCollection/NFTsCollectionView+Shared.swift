@@ -9,7 +9,7 @@ extension NFTsCollectionViewController {
         let mainScrollView = UIScrollView()
         mainScrollView.showsVerticalScrollIndicator = false
         let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = Theme.color.tintLight
+        refreshControl.tintColor = Theme.colour.fillTertiary
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         mainScrollView.refreshControl = refreshControl
         

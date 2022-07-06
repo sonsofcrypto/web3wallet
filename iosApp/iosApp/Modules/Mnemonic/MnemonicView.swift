@@ -31,6 +31,8 @@ final class MnemonicViewController: BaseViewController {
         didAppear = true
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle { .darkContent }
+    
     @IBAction func ctaAction(_ sender: Any) {
         presenter.handle(.didSelectCta)
     }
@@ -45,13 +47,15 @@ final class MnemonicViewController: BaseViewController {
 extension MnemonicViewController: MnemonicView {
 
     func update(with viewModel: MnemonicViewModel) {
+        
         let needsReload = self.needsReload(self.viewModel, viewModel: viewModel)
         self.viewModel = viewModel
 
         guard let cv = collectionView else {
             return
         }
-        
+
+        ctaButton.apply(style: .primary)
         ctaButton.setTitle(viewModel.cta, for: .normal)
 
         let cells = cv.indexPathsForVisibleItems
@@ -81,7 +85,11 @@ extension MnemonicViewController: UICollectionViewDataSource {
     }
     
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        
         guard let viewModel = viewModel?.item(at: indexPath) else {
             fatalError("Wrong number of items in section \(indexPath)")
         }
@@ -101,7 +109,12 @@ extension MnemonicViewController: UICollectionViewDataSource {
         return cell
     }
 
-    func cell(cv: UICollectionView, viewModel: MnemonicViewModel.Item, idxPath: IndexPath) -> UICollectionViewCell {
+    func cell(
+        cv: UICollectionView,
+        viewModel: MnemonicViewModel.Item,
+        idxPath: IndexPath
+    ) -> UICollectionViewCell {
+        
         switch viewModel {
 
         case let .mnemonic(mnemonic):
@@ -118,7 +131,7 @@ extension MnemonicViewController: UICollectionViewDataSource {
 
         case let .name(name):
             return collectionView.dequeue(
-                CollectionViewTextInputCell.self,
+                MnemonicTextInputCollectionViewCell.self,
                 for: idxPath
             ).update(
                 with: name,
@@ -127,7 +140,7 @@ extension MnemonicViewController: UICollectionViewDataSource {
 
         case let .switch(title, onOff):
             return collectionView.dequeue(
-                CollectionViewSwitchCell.self,
+                MnemonicSwitchCollectionViewCell.self,
                 for: idxPath
             ).update(
                 with: title,
@@ -136,7 +149,7 @@ extension MnemonicViewController: UICollectionViewDataSource {
             )
         case let .switchWithTextInput(switchWithTextInput):
             return collectionView.dequeue(
-                CollectionViewSwitchTextInputCell.self,
+                MnemonicSwitchTextInputCollectionViewCell.self,
                 for: idxPath
             ).update(
                 with: switchWithTextInput,
@@ -146,7 +159,7 @@ extension MnemonicViewController: UICollectionViewDataSource {
             )
         case let .segmentWithTextAndSwitchInput(segmentWithTextAndSwitchInput):
             return collectionView.dequeue(
-                CollectionViewSegmentWithTextAndSwitchCell.self,
+                MnemonicSegmentWithTextAndSwitchCell.self,
                 for: idxPath
             ).update(
                 with: segmentWithTextAndSwitchInput,
@@ -157,7 +170,12 @@ extension MnemonicViewController: UICollectionViewDataSource {
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        
         switch kind {
 
         case UICollectionView.elementKindSectionHeader:
@@ -169,7 +187,7 @@ extension MnemonicViewController: UICollectionViewDataSource {
             }
 
             let footer = collectionView.dequeue(
-                CollectionViewSectionLabelFooter.self,
+                MnemonicViewSectionLabelFooter.self,
                 for: indexPath,
                 kind: kind
             )
@@ -178,7 +196,8 @@ extension MnemonicViewController: UICollectionViewDataSource {
             return footer
 
         default:
-            ()
+            
+            fatalError("Failed to handle \(kind) \(indexPath)")
         }
         fatalError("Failed to handle \(kind) \(indexPath)")
     }
@@ -186,12 +205,17 @@ extension MnemonicViewController: UICollectionViewDataSource {
 
 extension MnemonicViewController: UICollectionViewDelegate {
 
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        if indexPath.item == 0 {
-            let cell = collectionView.cellForItem(at: IndexPath(item:0, section: 0))
-            (cell as? MnemonicCell)?.animateCopiedToPasteboard()
-            presenter.handle(.didTapMnemonic)
-        }
+    func collectionView(
+        _ collectionView: UICollectionView,
+        shouldSelectItemAt indexPath: IndexPath
+    ) -> Bool {
+        
+        guard indexPath == .init(row: 0, section: 0) else { return false }
+        
+        let cell = collectionView.cellForItem(at: .init(item: 0, section: 0))
+        (cell as? MnemonicCell)?.animateCopiedToPasteboard()
+        presenter.handle(.didTapMnemonic)
+        
         return false
     }
 
@@ -239,7 +263,12 @@ extension MnemonicViewController: UICollectionViewDelegate {
 
 extension MnemonicViewController: UICollectionViewDelegateFlowLayout {
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        
         let width = view.bounds.width - Global.padding * 2
 
         guard let viewModel = viewModel?.item(at: indexPath) else {
@@ -290,24 +319,27 @@ extension MnemonicViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension MnemonicViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        collectionView.visibleCells.forEach { $0.resignFirstResponder() }
+    }
+}
+
 // MARK: - Configure UI
 
 private extension MnemonicViewController {
     
     func configureUI() {
         title = Localized("newMnemonic.title")
-        (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
-        ]
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "arrow_back"),
+            image: .init(systemName: "chevron.left"),
             style: .plain,
             target: self,
             action: #selector(dismissAction(_:))
         )
-        navigationItem.leftBarButtonItem?.tintColor = Theme.color.tint
     }
 
     func needsReload(_ preViewModel: MnemonicViewModel?, viewModel: MnemonicViewModel) -> Bool {
@@ -317,13 +349,14 @@ private extension MnemonicViewController {
 
 // MARK: - Constants
 
-extension MnemonicViewController {
+private extension MnemonicViewController {
 
     enum Constant {
+        
         static let mnemonicCellHeight: CGFloat = 110
         static let cellHeight: CGFloat = 46
         static let cellSaltOpenHeight: CGFloat = 142
-        static let cellPassOpenHeight: CGFloat = 147
-        static let footerHeight: CGFloat = 64
+        static let cellPassOpenHeight: CGFloat = 138
+        static let footerHeight: CGFloat = 80
     }
 }

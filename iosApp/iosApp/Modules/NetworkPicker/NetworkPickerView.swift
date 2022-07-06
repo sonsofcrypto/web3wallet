@@ -61,7 +61,7 @@ extension NetworkPickerViewController: NetworkPickerView {
 
         self.viewModel = viewModel
         
-        configureNavigationBar(title: viewModel.title)
+        title = viewModel.title
         
         clearSearchButton.isHidden = searchTextField.text?.isEmpty ?? true
         
@@ -74,13 +74,17 @@ private extension NetworkPickerViewController {
     func configureUI() {
         
         (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
+            Theme.colour.backgroundBaseSecondary,
+            Theme.colour.backgroundBasePrimary
         ]
         
-        configureLeftBarButtonItemDismissAction()
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(
+//            imageName: "nav_bar_back",
+//            target: self,
+//            selector: #selector(navBarLeftActionTapped)
+//        )
         
-        searchTextFieldBox.backgroundColor = Theme.color.backgroundDark
+        searchTextFieldBox.backgroundColor = Theme.colour.backgroundBasePrimary
         searchTextFieldBox.layer.cornerRadius = 16
         
         searchTextField.backgroundColor = .clear

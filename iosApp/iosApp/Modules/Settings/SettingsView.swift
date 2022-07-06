@@ -26,12 +26,13 @@ final class SettingsViewController: BaseViewController {
     }
 
     override func viewDidLoad() {
+
         super.viewDidLoad()
-        configureUI()
         presenter?.present()
     }
 
     override func viewDidAppear(_ animated: Bool) {
+        
         super.viewDidAppear(animated)
         collectionView.deselectAllExcept(viewModel?.selectedIdxPaths())
 
@@ -108,13 +109,4 @@ extension SettingsViewController: UICollectionViewDelegateFlowLayout {
             height: Global.cellHeightSmall
         )
     }
-}
-
-private extension SettingsViewController {
-    
-    func configureUI() {
-        
-        (view as? GradientView)?.colors = [Theme.color.background, Theme.color.backgroundDark]
-    }
-
 }

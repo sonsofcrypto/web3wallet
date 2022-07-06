@@ -14,6 +14,7 @@ struct TokenPickerWireframeContext {
         case receive
         case send
         case multiSelectEdit(
+            network: Web3Network?,
             selectedTokens: [Web3Token],
             onCompletion: (([Web3Token]) -> Void)
         )
@@ -30,6 +31,16 @@ struct TokenPickerWireframeContext {
             }
         }
         
+        var isSend: Bool {
+            
+            switch self {
+            case .send:
+                return true
+            case .multiSelectEdit, .receive:
+                return false
+            }
+        }
+        
         var isMultiSelect: Bool {
             
             switch self {
@@ -37,6 +48,16 @@ struct TokenPickerWireframeContext {
                 return true
             case .receive, .send:
                 return false
+            }
+        }
+        
+        var network: Web3Network? {
+            
+            switch self {
+            case let .multiSelectEdit(network, _, _):
+                return network
+            case .receive, .send:
+                return nil
             }
         }
     }
@@ -109,11 +130,11 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
             
             guard let presentingIn = presentingIn.presentedViewController else { return }
             
-            let coordinator = tokenReceiveWireframeFactory.makeWireframe(
+            let wireframe = tokenReceiveWireframeFactory.makeWireframe(
                 presentingIn: presentingIn,
                 context: .init(presentationStyle: .push, web3Token: token)
             )
-            coordinator.present()
+            wireframe.present()
             
         case let .tokenSend(token):
             
@@ -153,6 +174,7 @@ private extension DefaultTokenPickerWireframe {
         )
         
         vc.presenter = presenter
+        vc.context = context
         
         switch context.presentationStyle {
         case .embed:

@@ -5,12 +5,13 @@
 import Foundation
 
 protocol Web3ServiceWalletListener: AnyObject {
-    
+
     func tokensChanged()
 }
 
 protocol Web3Service: AnyObject {
 
+    var allNetworks: [Web3Network] { get }
     var allTokens: [Web3Token] { get }
     var myTokens: [Web3Token] { get }
     
@@ -23,13 +24,49 @@ protocol Web3Service: AnyObject {
     func removeWalletListener(_ listener: Web3ServiceWalletListener)
     
     func isValid(address: String, forNetwork network: Web3Network) -> Bool
+    
+    func update(network: Web3Network, active: Bool)
 }
 
 struct Web3Network: Codable, Equatable, Hashable {
     
+    let id: String
     let name: String
+    let cost: String
     let hasDns: Bool
+    let url: URL?
+    let status: Status
+    let connectionType: ConnectionType?
+    let explorer: Explorer?
+    let selectedByUser: Bool
 }
+
+extension Web3Network {
+    
+    enum Status: Codable, Equatable, Hashable {
+        
+        case unknown
+        case connected
+        case connectedSync(pct: Float)
+        case disconnected
+        case comingSoon
+    }
+
+    enum ConnectionType: Codable, Equatable, Hashable {
+        
+        case liteClient
+        case networkDefault
+        case infura
+        case alchyme
+    }
+    
+    enum Explorer: Codable, Equatable, Hashable {
+        
+        case liteClientOnly
+        case web2
+    }
+}
+
 
 extension Array where Element == Web3Network {
     
@@ -76,7 +113,7 @@ extension Web3Token {
     
     var usdBalanceString: String {
         
-        usdBalance.formatted(.currency(code: "USD"))
+        usdBalance.formatCurrency() ?? ""
     }
 }
 

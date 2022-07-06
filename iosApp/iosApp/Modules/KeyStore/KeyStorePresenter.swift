@@ -12,7 +12,7 @@ enum KeyStorePresenterEvent {
     case didChangeButtonsSheetMode(sheetMode: ButtonSheetViewModel.SheetMode)
 }
 
-protocol KeyStorePresenter {
+protocol KeyStorePresenter: AnyObject {
 
     func present()
     func handle(_ event: KeyStorePresenterEvent)

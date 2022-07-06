@@ -4,26 +4,22 @@
 
 import UIKit
 
-class NavigationController: UINavigationController {
+final class NavigationController: UINavigationController {
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         let appearance = navigationBar.standardAppearance
-        let titleShadow = NSShadow()
-        titleShadow.shadowOffset = .zero
-        titleShadow.shadowBlurRadius = Global.shadowRadius
-        titleShadow.shadowColor = Theme.color.tint
 
+        appearance.backgroundColor = Theme.colour.navBarBackground
         appearance.titleTextAttributes = [
-            .foregroundColor: Theme.color.tint,
-            .font: Theme.font.navTitle,
-            .shadow: titleShadow
+            .foregroundColor: Theme.colour.navBarTitle,
+            .font: Theme.font.navTitle
         ]
-
-        appearance.backgroundColor = Theme.color.background.withAlphaComponent(1)
+        
         appearance.setBackIndicatorImage(
-            UIImage(named: "arrow_back"),
+            UIImage(systemName: "chevron.left"),
             transitionMaskImage:  nil
         )
 
@@ -31,6 +27,7 @@ class NavigationController: UINavigationController {
         navigationBar.scrollEdgeAppearance = appearance
         navigationBar.compactAppearance = appearance
         navigationBar.compactScrollEdgeAppearance = appearance
+        navigationBar.tintColor = Theme.colour.navBarTint
         
         interactivePopGestureRecognizer?.delegate = nil
     }

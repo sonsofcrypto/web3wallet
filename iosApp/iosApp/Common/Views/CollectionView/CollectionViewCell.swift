@@ -5,26 +5,46 @@
 import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
+    
+    var bottomSeparatorView: UIView!
+    
+    override func awakeFromNib() {
+        
+        super.awakeFromNib()
+        
+        let separator = UIView()
+        separator.backgroundColor = Theme.colour.labelTertiary
+        contentView.addSubview(separator)
+        separator.addConstraints(
+            [
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
+                .layout(anchor: .trailingAnchor),
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 0.5)),
+                .layout(anchor: .bottomAnchor)
+            ]
+        )
+        self.bottomSeparatorView = separator
+    }
 
     var cornerStyle: Style = .single {
         didSet { update(for: cornerStyle) }
     }
 
-    override var isSelected: Bool {
-        didSet {
-            UIView.animate(withDuration: 0.1) { [weak self] in
-                self?.layer.applyHighlighted(self?.isSelected ?? false)
-            }
-        }
-    }
+//    override var isSelected: Bool {
+//        didSet {
+//            UIView.animate(withDuration: 0.1) { [weak self] in
+//                self?.layer.applyHighlighted(self?.isSelected ?? false)
+//            }
+//        }
+//    }
 
-    override var isHighlighted: Bool {
-        didSet {
-            UIView.animate(withDuration: 0.01) { [weak self] in
-                self?.layer.applyHighlighted(self?.isHighlighted ?? false)
-            }
-        }
-    }
+//    override var isHighlighted: Bool {
+//        didSet {
+//            UIView.animate(withDuration: 0.01) { [weak self] in
+//                self?.layer.applyHighlighted(self?.isHighlighted ?? false)
+//            }
+//        }
+//    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,25 +56,27 @@ class CollectionViewCell: UICollectionViewCell {
         configureUI()
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layer.applyShadowPath(bounds, radius: layer.cornerRadius)
-    }
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        //layer.applyShadowPath(bounds, radius: layer.cornerRadius)
+//    }
 
     private func configureUI() {
-        backgroundColor = Theme.color.background
-        layer.applyRectShadow()
-        layer.applyBorder()
-        configure(for: false)
+        
+        layer.cornerRadius = Theme.constant.cornerRadius
+        backgroundColor = Theme.colour.labelQuaternary
+        //layer.applyRectShadow()
+        //layer.applyBorder()
+        //configure(for: false)
     }
 
-    private func configure(for selected: Bool) {
-        layer.shadowOpacity = selected ? 1 : 0
-        layer.borderColor = ( selected
-            ? Theme.color.tint
-            : Theme.color.tintLight
-        ).cgColor
-    }
+//    private func configure(for selected: Bool) {
+//        layer.shadowOpacity = selected ? 1 : 0
+//        layer.borderColor = ( selected
+//            ? Theme.colour.fillPrimary
+//            : Theme.colour.fillTertiary
+//        ).cgColor
+//    }
 }
 
 // MARK: - Style

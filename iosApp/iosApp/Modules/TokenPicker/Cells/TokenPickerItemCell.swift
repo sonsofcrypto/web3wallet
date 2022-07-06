@@ -6,60 +6,76 @@ import UIKit
 
 final class TokenPickerItemCell: UICollectionViewCell {
     
+    @IBOutlet weak var separatorTopView: UIView!
+    @IBOutlet weak var separatorTopViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var separatorTopViewTrailingConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var symbolLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var networkLabel: UILabel!
-    @IBOutlet weak var widthLayoutConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var multiSelectView: UIView!
     @IBOutlet weak var multiSelectTick: UIImageView!
     
     @IBOutlet weak var tokenPriceStackView: UIStackView!
     @IBOutlet weak var tokenLabel: UILabel!
     @IBOutlet weak var tokenSymbolLabel: UILabel!
     @IBOutlet weak var usdPriceLabel: UILabel!
+    
+    @IBOutlet weak var separatorBottomView: UIView!
 
     override func awakeFromNib() {
         
         super.awakeFromNib()
         
-        iconImageView.layer.cornerRadius = iconImageView.frame.size.width * 0.5
-        iconImageView.backgroundColor = Theme.color.text
-                        
-        nameLabel.applyStyle(.body)
-        nameLabel.textColor = Theme.color.text
-        
-        symbolLabel.applyStyle(.callout)
-        symbolLabel.textColor = Theme.color.textSecondary
+        iconImageView.backgroundColor = Theme.colour.labelPrimary
+        iconImageView.layer.cornerRadius = 15
 
-        networkLabel.applyStyle(.smallLabel)
-        networkLabel.textColor = Theme.color.textTertiary
+        nameLabel.font = Theme.font.body
+        nameLabel.textColor = Theme.colour.labelPrimary
         
-        multiSelectTick.isHidden = true
+        symbolLabel.font = Theme.font.body
+        symbolLabel.textColor = Theme.colour.labelSecondary
+
+        networkLabel.font = Theme.font.callout
+        networkLabel.textColor = Theme.colour.labelSecondary
+        
+        multiSelectView.isHidden = true
         
         tokenPriceStackView.isHidden = true
-        tokenLabel.applyStyle(.body)
+        tokenLabel.font = Theme.font.body
+        tokenLabel.textColor = Theme.colour.labelPrimary
         tokenLabel.textAlignment = .right
-        tokenSymbolLabel.applyStyle(.bodyGlow)
+        tokenSymbolLabel.font = Theme.font.callout
+        tokenSymbolLabel.textColor = Theme.colour.labelSecondary
         tokenSymbolLabel.textAlignment = .right
         tokenSymbolLabel.addConstraints(
             [
                 .hugging(layoutAxis: .horizontal, priority: .required)
             ]
         )
-        usdPriceLabel.applyStyle(.smallBody)
+        usdPriceLabel.font = Theme.font.callout
+        usdPriceLabel.textColor = Theme.colour.labelSecondary
         usdPriceLabel.textAlignment = .right
+        
+        separatorTopView.backgroundColor = Theme.colour.separatorNoTransparency
+        separatorBottomView.backgroundColor = Theme.colour.separatorNoTransparency
     }
 
     func update(
-        with viewModel: TokenPickerViewModel.Token,
-        and width: CGFloat
+        with viewModel: TokenPickerViewModel.Token
     ) {
 
         iconImageView.image = viewModel.image
         symbolLabel.text = viewModel.symbol
         nameLabel.text = viewModel.name
-        networkLabel.text = viewModel.network
+        if let network = viewModel.network {
+            networkLabel.isHidden = true
+            networkLabel.text = network
+        } else {
+            networkLabel.isHidden = true
+        }
         
         switch viewModel.type {
             
@@ -67,8 +83,9 @@ final class TokenPickerItemCell: UICollectionViewCell {
             break
 
         case let .multiSelect(isSelected):
-            multiSelectTick.isHidden = false
-            multiSelectTick.tintColor = isSelected ? Theme.color.tint : Theme.color.tintLight
+            multiSelectView.isHidden = false
+            multiSelectTick.tintColor = Theme.colour.labelSecondary
+            multiSelectTick.image = isSelected ? .init(systemName: "checkmark.circle.fill") : .init(systemName: "circle")
 
         case let .send(tokens, usdTotal):
             symbolLabel.isHidden = true
@@ -78,6 +95,27 @@ final class TokenPickerItemCell: UICollectionViewCell {
             usdPriceLabel.text = usdTotal
         }
         
-        widthLayoutConstraint.constant = width
+        switch viewModel.position {
+        case .onlyOne:
+            separatorTopView.isHidden = false
+            separatorTopViewLeadingConstraint.constant = 0
+            separatorTopViewTrailingConstraint.constant = 0
+            separatorBottomView.isHidden = false
+        case .first:
+            separatorTopView.isHidden = false
+            separatorTopViewLeadingConstraint.constant = 0
+            separatorTopViewTrailingConstraint.constant = 0
+            separatorBottomView.isHidden = true
+        case .middle:
+            separatorTopView.isHidden = false
+            separatorTopViewLeadingConstraint.constant = Theme.constant.padding
+            separatorTopViewTrailingConstraint.constant = Theme.constant.padding
+            separatorBottomView.isHidden = true
+        case .last:
+            separatorTopView.isHidden = false
+            separatorTopViewLeadingConstraint.constant = Theme.constant.padding
+            separatorTopViewTrailingConstraint.constant = Theme.constant.padding
+            separatorBottomView.isHidden = false
+        }
     }
 }

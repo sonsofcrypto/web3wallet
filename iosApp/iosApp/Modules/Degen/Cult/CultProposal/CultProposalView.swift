@@ -52,8 +52,8 @@ extension CultProposalViewController {
     
     func configureUI() {
         (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
+            Theme.colour.backgroundBaseSecondary,
+            Theme.colour.backgroundBasePrimary
         ]
     }
 }

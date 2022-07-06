@@ -18,16 +18,22 @@ final class TokenPickerViewController: BaseViewController {
     }
 
     var presenter: TokenPickerPresenter!
+    var context: TokenPickerWireframeContext!
 
     private var viewModel: TokenPickerViewModel?
     
     @IBOutlet weak var filtersCollectionView: UICollectionView!
     @IBOutlet weak var itemsCollectionView: UICollectionView!
+    @IBOutlet weak var searchContainerBox: UIView!
     @IBOutlet weak var searchTextFieldBox: UIView!
+    @IBOutlet weak var searchImageView: UIImageView!
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var clearSearchButton: UIButton!
     
     private var searchTerm = ""
+
+    private var backgroundGradientTopConstraint: NSLayoutConstraint?
+    private var backgroundGradientHeightConstraint: NSLayoutConstraint?
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -44,6 +50,14 @@ final class TokenPickerViewController: BaseViewController {
         configureUI()
         
         presenter?.present()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        
+        super.viewWillLayoutSubviews()
+        
+        updateBackgroundGradientTopConstraint()
+        backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
     }
 }
 
@@ -62,98 +76,146 @@ extension TokenPickerViewController: TokenPickerView {
 
         self.viewModel = viewModel
         
-        configureNavigationBar(title: viewModel.title)
+        title = viewModel.title
         
         clearSearchButton.isHidden = searchTextField.text?.isEmpty ?? true
         
+        filtersCollectionView.isHidden = viewModel.filters().isEmpty
         filtersCollectionView.reloadData()
         itemsCollectionView.reloadData()
-                
-        if viewModel.allowMultiSelection {
-            
-            configureNavBarLeftBarButtonIconAddToken()
-            configureNavBarRightBarButtonIconDone()
-            itemsCollectionView.allowsMultipleSelection = viewModel.allowMultiSelection
-        } else {
-            
-            configureLeftBarButtonItemDismissAction()
-        }
+        
+        updateNavigationBarIcons()
+        
+        updateBackgroundGradient(after: 0.05)
     }
 }
 
-extension TokenPickerViewController {
-    
-    func configureNavBarLeftBarButtonIconAddToken() {
-        
-        let button = UIButton()
-        button.setImage(
-            .init(named: "plus_icon"),
-            for: .normal
-        )
-        button.tintColor = Theme.color.tint
-        button.addTarget(self, action: #selector(addCustomToken), for: .touchUpInside)
-        button.addConstraints(
-            [
-                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
-            ]
-        )
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
-    }
-    
-    @objc func addCustomToken() {
-        
-        presenter.handle(.addCustomToken)
-    }
-    
-    func configureNavBarRightBarButtonIconDone() {
-        
-        let button = UIButton()
-        button.setImage(
-            .init(named: "confirm_icon"),
-            for: .normal
-        )
-        button.tintColor = Theme.color.tint
-        button.addTarget(self, action: #selector(doneTapped), for: .touchUpInside)
-        button.addConstraints(
-            [
-                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
-            ]
-        )
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
-    }
-    
-    @objc func doneTapped() {
-        
-        presenter.handle(.done)
-    }
+private extension TokenPickerViewController {
     
     func configureUI() {
         
-        (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
-        ]
+        view.backgroundColor = Theme.colour.gradientBottom
         
-        searchTextFieldBox.backgroundColor = Theme.color.backgroundDark
-        searchTextFieldBox.layer.cornerRadius = 16
+        searchContainerBox.backgroundColor = Theme.colour.navBarBackground
+        
+        searchTextFieldBox.backgroundColor = Theme.colour.fillTertiary
+        searchTextFieldBox.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        
+        searchImageView.tintColor = Theme.colour.labelSecondary
         
         searchTextField.backgroundColor = .clear
-        searchTextField.textColor = .white
+        searchTextField.textColor = Theme.colour.labelSecondary
+        searchTextField.font = Theme.font.title3
         searchTextField.text = nil
         searchTextField.delegate = self
         
         clearSearchButton.isHidden = true
+        clearSearchButton.tintColor = Theme.colour.labelSecondary
+        
+        itemsCollectionView.register(
+            TokenPickerGroupCell.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "\(TokenPickerGroupCell.self)"
+        )
+
+        itemsCollectionView.setCollectionViewLayout(
+            UICollectionViewCompositionalLayout(section: makeItemsCollectionLayoutSection()),
+            animated: false
+        )
+        
+        addCustomBackgroundGradientView()
+    }
+    
+    func updateNavigationBarIcons() {
+        
+        guard let viewModel = viewModel else { return }
+        
+        if viewModel.allowMultiSelection {
+            
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                image: .init(systemName: "plus"),
+                style: .plain,
+                target: self,
+                action: #selector(addCustomToken)
+            )
+            navigationItem.rightBarButtonItem = UIBarButtonItem(
+                title: Localized("done"),
+                style: .plain,
+                target: self,
+                action: #selector(doneTapped)
+            )
+            itemsCollectionView.allowsMultipleSelection = viewModel.allowMultiSelection
+        } else {
+            
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                title: Localized("close"),
+                style: .plain,
+                target: self,
+                action: #selector(closeTapped)
+            )
+        }
     }
 
-    @objc override func dismissTapped() {
+    @objc func addCustomToken() {
+        
+        presenter.handle(.addCustomToken)
+    }
+
+    @objc func doneTapped() {
+        
+        presenter.handle(.done)
+    }
+
+    @objc func closeTapped() {
         
         presenter.handle(.dismiss)
+    }
+    
+    func updateBackgroundGradient(after delay: TimeInterval) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+            guard let self = self else { return }
+            self.updateBackgroundGradient()
+        }
+    }
+    
+    func updateBackgroundGradient() {
+        
+        updateBackgroundGradientTopConstraint()
+        backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
+    }
+    
+    func updateBackgroundGradientTopConstraint() {
+        
+        let constant: CGFloat
+        if itemsCollectionView.contentOffset.y < 0 {
+            constant = 0
+        } else {
+            constant = -itemsCollectionView.contentOffset.y
+        }
+        backgroundGradientTopConstraint?.constant =  constant
     }
 }
 
 extension TokenPickerViewController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        
+        switch collectionView.tag {
+            
+        case CollectionTag.filters.rawValue:
+
+            return 1
+
+        case CollectionTag.items.rawValue:
+            
+            return viewModel?.sections().count ?? 0
+            
+        default:
+            
+            fatalError("Collection not implemented")
+        }
+    }
     
     func collectionView(
         _ collectionView: UICollectionView,
@@ -168,7 +230,11 @@ extension TokenPickerViewController: UICollectionViewDataSource {
 
         case CollectionTag.items.rawValue:
             
-            return viewModel?.items().count ?? 0
+            guard let section = viewModel?.sections()[section] else {
+                return 0
+            }
+
+            return section.items.count
             
         default:
             
@@ -183,6 +249,34 @@ extension TokenPickerViewController: UICollectionViewDataSource {
     ) -> UICollectionViewCell {
         
         collectionViewCell(at: indexPath, for: collectionView)
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        
+        guard
+            collectionView.tag == CollectionTag.items.rawValue,
+            let section = viewModel?.sections()[indexPath.section]
+        else { fatalError() }
+        
+        switch kind {
+            
+        case UICollectionView.elementKindSectionHeader:
+            
+            let supplementary = collectionView.dequeue(
+                TokenPickerGroupCell.self,
+                for: indexPath,
+                kind: kind
+            )
+            supplementary.update(with: section)
+            return supplementary
+            
+        default:
+            fatalError("Unexpected supplementary idxPath: \(indexPath) \(kind)")
+        }
     }
 }
 
@@ -211,6 +305,8 @@ extension TokenPickerViewController: UICollectionViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
         guard scrollView.tag == CollectionTag.items.rawValue else { return }
+    
+        updateBackgroundGradientTopConstraint()
         
         dismissKeyboard()
     }
@@ -229,10 +325,6 @@ extension TokenPickerViewController: UICollectionViewDelegateFlowLayout {
         case CollectionTag.filters.rawValue:
 
             return .init(width: 56, height: collectionView.frame.height)
-
-        case CollectionTag.items.rawValue:
-            
-            return .init(width: collectionView.frame.width, height: 56)
 
         default:
             
@@ -260,10 +352,10 @@ private extension TokenPickerViewController {
     
     func itemSelectedAt(indexPath: IndexPath) {
         
-        guard let item = viewModel?.items()[indexPath.row] else { return }
-        
-        guard case let TokenPickerViewModel.Item.token(token) = item else { return }
-        
+        guard let section = viewModel?.sections()[indexPath.section] else {
+            fatalError()
+        }
+        let token = section.items[indexPath.item]
         presenter.handle(.selectItem(token))
     }
     
@@ -312,36 +404,20 @@ private extension TokenPickerViewController {
         for collectionView: UICollectionView
     ) -> UICollectionViewCell {
         
-        guard let item = viewModel?.items()[indexPath.item] else {
+        guard let section = viewModel?.sections()[indexPath.section] else {
             fatalError()
         }
         
-        switch item {
-            
-        case let .group(group):
-            
-            let cell = collectionView.dequeue(
-                TokenPickerGroupCell.self,
-                for: indexPath
-            )
-            cell.update(
-                with: group,
-                and: collectionView.frame.size.width
-            )
-            return cell
-            
-        case let .token(token):
-            
-            let cell = collectionView.dequeue(
-                TokenPickerItemCell.self,
-                for: indexPath
-            )
-            cell.update(
-                with: token,
-                and: collectionView.frame.size.width
-            )
-            return cell
-        }
+        let token = section.items[indexPath.item]
+                    
+        let cell = collectionView.dequeue(
+            TokenPickerItemCell.self,
+            for: indexPath
+        )
+        cell.update(
+            with: token
+        )
+        return cell
     }
     
     @objc func dismissKeyboard() {
@@ -349,3 +425,86 @@ private extension TokenPickerViewController {
         searchTextField.resignFirstResponder()
     }
 }
+
+private extension TokenPickerViewController {
+    
+    func makeItemsCollectionLayoutSection() -> NSCollectionLayoutSection {
+        
+        // Item
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        // Group
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(context.source.isSend ? 64 : 44)
+        )
+        let outerGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize, subitems: [item]
+        )
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: outerGroup)
+        
+        let headerItemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(54)
+        )
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerItemSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.boundarySupplementaryItems = [headerItem]
+
+        return section
+    }
+}
+
+extension TokenPickerViewController: UIScrollViewDelegate {
+
+    func addCustomBackgroundGradientView() {
+
+        // 1 - Add gradient
+        let backgroundGradient = GradientView()
+        backgroundGradient.isDashboard = true
+        view.insertSubview(backgroundGradient, at: 0)
+        
+        backgroundGradient.translatesAutoresizingMaskIntoConstraints = false
+        
+        let topConstraint = backgroundGradient.topAnchor.constraint(
+            equalTo: searchContainerBox.bottomAnchor
+        )
+        self.backgroundGradientTopConstraint = topConstraint
+        topConstraint.isActive = true
+
+        backgroundGradient.leadingAnchor.constraint(
+            equalTo: view.leadingAnchor
+        ).isActive = true
+
+        backgroundGradient.trailingAnchor.constraint(
+            equalTo: view.trailingAnchor
+        ).isActive = true
+
+        let heightConstraint = backgroundGradient.heightAnchor.constraint(
+            equalToConstant: backgroundGradientHeight
+        )
+        self.backgroundGradientHeightConstraint = heightConstraint
+        heightConstraint.isActive = true
+    }
+
+    var backgroundGradientHeight: CGFloat {
+        
+        if itemsCollectionView.frame.size.height > itemsCollectionView.contentSize.height {
+            
+            return itemsCollectionView.frame.size.height
+        } else {
+            
+            return itemsCollectionView.contentSize.height
+        }
+    }
+}
+

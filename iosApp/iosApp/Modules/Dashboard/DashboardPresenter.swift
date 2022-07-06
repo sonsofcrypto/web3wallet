@@ -9,15 +9,17 @@ enum DashboardPresenterEvent {
     case sendAction
     case tradeAction
     case walletConnectionSettingsAction
+    case didTapCollapse(network: String)
+    case didTapExpand(network: String)
     case didSelectWallet(network: String, symbol: String)
     case didSelectNFT(idx: Int)
     case didInteractWithCardSwitcher
-    case presentUnderConstructionAlert
     case didTapNetwork
-    case didTapEditTokens
+    case didScanQRCode
+    case didTapEditTokens(network: String)
 }
 
-protocol DashboardPresenter {
+protocol DashboardPresenter: AnyObject {
     
     func present()
     func handle(_ event: DashboardPresenterEvent)
@@ -30,6 +32,7 @@ final class DefaultDashboardPresenter {
     private let wireframe: DashboardWireframe
     private let onboardingService: OnboardingService
     
+    var expandedNetworks = [String]()
     var myTokens = [Web3Token]()
     
     init(
@@ -55,29 +58,55 @@ extension DefaultDashboardPresenter: DashboardPresenter {
     }
     
     func handle(_ event: DashboardPresenterEvent) {
+        
         switch event {
+            
+        case let .didTapCollapse(network):
+            expandedNetworks.removeAll { $0 == network }
+            view?.update(with: viewModel())
+            
+        case let .didTapExpand(network):
+            expandedNetworks.append(network)
+            view?.update(with: viewModel())
+            
         case let .didSelectWallet(network, symbol):
             guard let token = myTokens.first(
                 where: { $0.equalTo(network: network, symbol: symbol) }
             ) else { return }
             wireframe.navigate(to: .wallet(token: token))
+            
         case .walletConnectionSettingsAction:
             wireframe.navigate(to: .keyStoreNetworkSettings)
+            
         case .didInteractWithCardSwitcher:
             onboardingService.markDidInteractCardSwitcher()
             view?.update(with: viewModel())
-        case .presentUnderConstructionAlert:
-            wireframe.navigate(to: .presentUnderConstructionAlert)
+            
         case .receiveAction:
             wireframe.navigate(to: .receiveCoins)
+            
         case .sendAction:
             wireframe.navigate(to: .sendCoins)
-        case .didTapEditTokens:
-            wireframe.navigate(to: .editTokens(
-                selectedTokens: myTokens,
-                onCompletion: makeOnEditTokensCompletion()
+            
+        case .didScanQRCode:
+            wireframe.navigate(to: .scanQRCode(onCompletion: makeOnQRCodeScanned()))
+            
+        case let .didTapEditTokens(network):
+            
+            let networkOrNil = interactor.allNetworks.first {
+                $0.name.lowercased() == network.lowercased()
+            }
+            
+            guard let network = networkOrNil else { return }
+            
+            wireframe.navigate(
+                to: .editTokens(
+                    network: network,
+                    selectedTokens: myTokens,
+                    onCompletion: makeOnEditTokensCompletion()
+                )
             )
-            )
+            
         default:
             print("Handle \(event)")
         }
@@ -102,6 +131,7 @@ private extension DefaultDashboardPresenter {
         let networksAndTokensDict = myTokens.networksAndTokensDict
         
         var sections = [DashboardViewModel.Section]()
+        var nfts = [DashboardViewModel.NFT]()
         
         Array(networksAndTokensDict.keys).sorted(by: {
             $0.name < $1.name
@@ -112,8 +142,30 @@ private extension DefaultDashboardPresenter {
             sections.append(
                 .init(
                     name: network.name,
-                    wallets: makeDashboardViewModelWallets(from: tokens),
-                    nfts: makeDashboardViewModelNFts(from: interactor.nfts(for: network))
+                    fuelCost: network.cost,
+                    rightActionTitle: Localized("more").uppercased(),
+                    isCollapsed: false,//!expandedNetworks.contains(network.name),
+                    items: .wallets(
+                        makeDashboardViewModelWallets(from: tokens)
+                    )
+                )
+            )
+            
+            nfts.append(
+                contentsOf: makeDashboardViewModelNFts(from: interactor.nfts(for: network))
+            )
+        }
+        
+        sections = addMissingSectionsIfNeeded(to: sections)
+        
+        if !nfts.isEmpty {
+            sections.append(
+                .init(
+                    name: Localized("dashboard.section.nfts").uppercased(),
+                    fuelCost: nil,
+                    rightActionTitle: nil,
+                    isCollapsed: false,
+                    items: .nfts(nfts)
                 )
             )
         }
@@ -127,30 +179,67 @@ private extension DefaultDashboardPresenter {
             walletTotal += sectionTotal
         }
         
+        sections.insert(
+            .init(
+                name: walletTotal.formatCurrency() ?? "",
+                fuelCost: nil,
+                rightActionTitle: nil,
+                isCollapsed: nil,
+                items: .actions(
+                    [
+                        .init(
+                            title: Localized("dashboard.button.receive"),
+                            imageName: "receive-button",
+                            type: .receive
+                        ),
+                        .init(
+                            title: Localized("dashboard.button.send"),
+                            imageName: "send-button",
+                            type: .send
+                        ),
+                        .init(
+                            title: Localized("dashboard.button.trade"),
+                            imageName: "trade-button",
+                            type: .swap
+                        )
+                    ]
+                )
+            ),
+            at: 0
+        )
+        
         return .init(
             shouldAnimateCardSwitcher: onboardingService.shouldShowOnboardingButton(),
-            header: .init(
-                balance: walletTotal.formatted(.currency(code: "USD")),
-                pct: "+4.5%",
-                pctUp: true,
-                buttons: [
-                    .init(
-                        title: Localized("dashboard.button.receive"),
-                        imageName: "button_receive"
-                    ),
-                    .init(
-                        title: Localized("dashboard.button.send"),
-                        imageName: "button_send"
-                    ),
-                    .init(
-                        title: Localized("dashboard.button.trade"),
-                        imageName: "button_trade"
-                    )
-                ],
-                firstSection: sections.first?.name ?? ""
-            ),
             sections: sections
         )
+    }
+    
+    func addMissingSectionsIfNeeded(
+        to sections: [DashboardViewModel.Section]
+    ) -> [DashboardViewModel.Section] {
+        
+        var allSections = [DashboardViewModel.Section]()
+        
+        let allNetworks = interactor.allNetworks.filter { $0.selectedByUser }.sortByName
+        
+        allNetworks.forEach { network in
+            
+            let sectionWithName = sections.filter {
+                $0.name.lowercased() == network.name.lowercased()
+            }.first
+            
+            allSections.append(
+                sectionWithName ?? .init(
+                    name: network.name,
+                    fuelCost: network.cost,
+                    rightActionTitle: Localized("more").uppercased(),
+                    isCollapsed: false,
+                    items: .wallets([])
+                )
+            )
+        }
+        
+        return allSections
     }
     
     func makeDashboardViewModelWallets(from tokens: [Web3Token]) -> [DashboardViewModel.Wallet] {
@@ -163,6 +252,7 @@ private extension DefaultDashboardPresenter {
                 imageData: interactor.tokenIcon(for: $0),
                 fiatBalance: $0.usdBalanceString,
                 cryptoBalance: "\($0.balance.toString(decimals: $0.decimals)) \($0.symbol)",
+                tokenPrice: $0.usdPrice.formatCurrency() ?? "",
                 pctChange: "4.5%",
                 priceUp: true,
                 candles: .loaded(interactor.priceData(for: $0).toCandlesViewModelCandle)
@@ -242,5 +332,19 @@ extension DefaultDashboardPresenter: Web3ServiceWalletListener {
     func tokensChanged() {
         
         fetchMyTokens()
+    }
+}
+
+private extension DefaultDashboardPresenter {
+    
+    func makeOnQRCodeScanned() -> (String) -> Void {
+        
+        {
+            [weak self] qrCode in
+            
+            guard let self = self else { return }
+            
+            print("QR code scanned: \(qrCode)")
+        }
     }
 }

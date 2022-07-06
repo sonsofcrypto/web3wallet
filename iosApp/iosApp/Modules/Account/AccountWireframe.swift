@@ -62,11 +62,11 @@ extension DefaultAccountWireframe: AccountWireframe {
             
         case .receive:
             
-            let coordinator = tokenReceiveWireframeFactory.makeWireframe(
+            let wireframe = tokenReceiveWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(presentationStyle: .present, web3Token: context.web3Token)
             )
-            coordinator.present()
+            wireframe.present()
         }
     }
 }

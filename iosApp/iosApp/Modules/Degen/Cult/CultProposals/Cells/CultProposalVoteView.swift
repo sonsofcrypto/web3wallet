@@ -16,8 +16,8 @@ class CultProposalVoteView: UIView {
 
     private lazy var progressView: UIView = {
         let view = UIView(frame: bounds)
-        view.backgroundColor = Theme.current.color.tintLight
-        view.layer.applyBorder(Theme.current.color.tintLight)
+        view.backgroundColor = Theme.colour.fillTertiary
+        view.layer.applyBorder(Theme.colour.fillTertiary)
         view.layer.cornerRadius = Global.cornerRadius
         insertSubview(view, at: 0)
         return view
@@ -31,8 +31,8 @@ class CultProposalVoteView: UIView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = Theme.current.color.background
-        layer.applyBorder(Theme.current.color.tintLight)
+        backgroundColor = Theme.colour.backgroundBaseSecondary
+        layer.applyBorder(Theme.colour.fillTertiary)
         layer.cornerRadius = Global.cornerRadius
     }
 

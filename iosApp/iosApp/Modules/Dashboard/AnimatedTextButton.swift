@@ -17,14 +17,19 @@ final class AnimatedTextButton: UIButton {
     private var isAnimating: Bool = false
 
     private(set) var mode: Mode = .hidden
+    private var tint: UIColor!
 
     convenience init(
         with text: [String],
         mode: Mode,
         target: AnyObject?,
-        action: Selector
+        action: Selector,
+        tint: UIColor
     ) {
         self.init(frame: .init(x: 0, y: 0, width: 100, height: 44))
+        
+        self.tint = tint
+        
         setText(text)
         setMode(mode, animated: false)
         addTarget(target, action: action, for: .touchUpInside)
@@ -77,7 +82,7 @@ private extension AnimatedTextButton {
 
     func configureUI() {
 
-        let iconImageView = UIImageView(image: UIImage(named: "arrow_back"))
+        let iconImageView = UIImageView(image: UIImage(systemName: "chevron.left"))
         let vStack = VStackView([], alignment: .leading, spacing: 2)
         let hStack = HStackView([iconImageView, vStack], alignment: .center, spacing: 1)
 
@@ -117,9 +122,9 @@ private extension AnimatedTextButton {
     func makeTextLabel() -> UILabel {
         let label = UILabel()
         label.font = UIFont.font(.gothicA1, style: .medium, size: .caption2)
-        label.textColor = Theme.color.tint
+        label.textColor = tint
         label.layer.applyShadow(
-            Theme.color.tint,
+            tint,
             radius: Global.shadowRadius
         )
         vStack.addArrangedSubview(label)

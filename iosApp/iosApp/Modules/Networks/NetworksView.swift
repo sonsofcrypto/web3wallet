@@ -14,29 +14,16 @@ final class NetworksViewController: BaseViewController {
     var presenter: NetworksPresenter!
 
     private var viewModel: NetworksViewModel?
-    private var prevViewSize: CGSize = .zero
 
     @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
         configureUI()
+        
         presenter?.present()
-        prevViewSize = view.bounds.size
-    }
-
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        if view.bounds.size != prevViewSize {
-            collectionView.collectionViewLayout.invalidateLayout()
-            prevViewSize = view.bounds.size
-        }
-    }
-
-    // MARK: - Actions
-
-    @IBAction func templateAction(_ sender: Any) {
-
     }
 }
 
@@ -45,14 +32,10 @@ final class NetworksViewController: BaseViewController {
 extension NetworksViewController: NetworksView {
 
     func update(with viewModel: NetworksViewModel) {
+        
         self.viewModel = viewModel
+        
         collectionView.reloadData()
-        if let idx = viewModel.selectedIdx(), !viewModel.network().isEmpty {
-            collectionView.deselectAllExcept(
-                IndexPath(item: idx, section: 0),
-                animated: true
-            )
-        }
     }
 }
 
@@ -60,53 +43,138 @@ extension NetworksViewController: NetworksView {
 
 extension NetworksViewController: UICollectionViewDataSource {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.network().count ?? 0
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        
+        viewModel?.network().count ?? 0
     }
     
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeue(NetworksCell.self, for: indexPath)
-        cell.update(with: viewModel?.network()[indexPath.item])
+        cell.update(
+            with: viewModel?.network()[indexPath.item],
+            at: indexPath.item,
+            presenter: presenter
+        )
         return cell
     }
 }
 
 extension NetworksViewController: UICollectionViewDelegate {
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        guard let viewModel = viewModel?.network()[indexPath.item] else {
+            return
+        }
+        
+        guard viewModel.connected != nil else { return }
+        
         presenter.handle(.didSelectNetwork(idx: indexPath.item))
     }
-}
-
-extension NetworksViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(
-            width: view.bounds.width - Global.padding * 2,
-            height: Constant.cellHeight
-        )
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        
+        guard let viewModel = viewModel, case let NetworksViewModel.loaded(header, _) = viewModel else {
+            
+            fatalError("We should always have networks")
+        }
+        
+        switch kind {
+            
+        case UICollectionView.elementKindSectionHeader:
+            
+            let supplementary = collectionView.dequeue(
+                NetworkHeaderCell.self,
+                for: indexPath,
+                kind: kind
+            )
+            supplementary.update(with: header)
+            return supplementary
+            
+        default:
+            fatalError("Unexpected supplementary idxPath: \(indexPath) \(kind)")
+        }
     }
 }
 
-// MARK: - Configure UI
-
-extension NetworksViewController {
+private extension NetworksViewController {
     
     func configureUI() {
+        
         title = Localized("networks")
-        (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
-        ]
+        
+        collectionView.setCollectionViewLayout(
+            makeCompositionalLayout(),
+            animated: false
+        )
+        
+        collectionView.register(
+            NetworkHeaderCell.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "\(NetworkHeaderCell.self)"
+        )
     }
-}
+    
+    func makeCompositionalLayout() -> UICollectionViewLayout {
+        
+        let inset: CGFloat = Theme.constant.padding
+        
+        // Item
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(
+            top: inset * 0.5,
+            leading: inset,
+            bottom: inset * 0.5,
+            trailing: inset
+        )
+        
+        // Group
+        let screenWidth: CGFloat = (view.bounds.width - Theme.constant.padding * 1.5)
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .absolute(screenWidth),
+            heightDimension: .absolute(148)
+        )
+        let outerGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize, subitems: [item]
+        )
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: outerGroup)
+        section.contentInsets = .init(
+            top: inset,
+            leading: 0,
+            bottom: 0,
+            trailing: 0
+        )
+        let headerItemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(100)
+        )
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerItemSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.boundarySupplementaryItems = [headerItem]
 
-// MARK: - Constants
-
-extension NetworksViewController {
-
-    enum Constant {
-        static let cellHeight: CGFloat = 115
+        return UICollectionViewCompositionalLayout(section: section)
     }
 }

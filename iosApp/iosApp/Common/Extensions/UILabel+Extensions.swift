@@ -30,53 +30,53 @@ extension UILabel {
         switch style {
         case .navTitle:
             font = Theme.font.navTitle
-            textColor = Theme.color.tint
+            textColor = Theme.colour.fillPrimary
         case .headlineGlow:
             font = Theme.font.headline
-            layer.applyShadow(Theme.color.tintSecondary)
-            textColor = Theme.color.text
+            layer.applyShadow(Theme.colour.fillSecondary)
+            textColor = Theme.colour.labelPrimary
         case .callout:
             font = Theme.font.callout
-            layer.applyShadow(Theme.color.tintSecondary)
-            textColor = Theme.color.text
+            layer.applyShadow(Theme.colour.fillSecondary)
+            textColor = Theme.colour.labelPrimary
             update(lineSpacing: 6)
         case .subhead:
-            font = Theme.font.subhead
-            textColor = Theme.color.textSecondary
+            font = Theme.font.subheadline
+            textColor = Theme.colour.labelSecondary
         case .subheadGlow:
-            font = Theme.font.subhead
-            layer.applyShadow(Theme.color.tintSecondary)
-            textColor = Theme.color.text
-            font = Theme.font.subhead
-            layer.applyShadow(Theme.color.tintSecondary)
-            textColor = Theme.color.text
+            font = Theme.font.subheadline
+            layer.applyShadow(Theme.colour.fillSecondary)
+            textColor = Theme.colour.labelPrimary
+            font = Theme.font.subheadline
+            layer.applyShadow(Theme.colour.fillSecondary)
+            textColor = Theme.colour.labelPrimary
         case .body:
             font = Theme.font.body
-            textColor = Theme.color.text
+            textColor = Theme.colour.labelPrimary
             update(lineSpacing: 8)
         case .bodyGlow:
             font = Theme.font.body
-            layer.applyShadow(Theme.color.tintSecondary)
-            textColor = Theme.color.text
+            layer.applyShadow(Theme.colour.fillSecondary)
+            textColor = Theme.colour.labelPrimary
         case.smallLabel:
             font = Theme.font.footnote
-            textColor = Theme.color.textTertiary
+            textColor = Theme.colour.labelTertiary
         case.smallerLabel:
             font = UIFont.font(.gothicA1, style: .medium, size: .caption1)
-            textColor = Theme.color.textSecondary
+            textColor = Theme.colour.labelSecondary
         case.smallestLabel:
             font = UIFont.font(.gothicA1, style: .medium, size: .caption2)
-            textColor = Theme.color.textTertiary
+            textColor = Theme.colour.labelTertiary
         case.smallestLabelGlow:
             layer.applyShadow(
-                Theme.color.tintSecondary,
+                Theme.colour.fillSecondary,
                 radius: Global.shadowRadius / 2
             )
             font = Theme.font.caption2
-            textColor = Theme.color.tintSecondary
+            textColor = Theme.colour.fillSecondary
         case .smallBody:
             font = Theme.font.footnote
-            textColor = Theme.color.textSecondary
+            textColor = Theme.colour.labelSecondary
         }
     }
 }

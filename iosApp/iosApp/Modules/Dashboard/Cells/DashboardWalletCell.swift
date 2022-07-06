@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class DashboardWalletCell: CollectionViewCell {
+final class DashboardWalletCell: UICollectionViewCell {
 
     @IBOutlet weak var contentStack: UIStackView!
     @IBOutlet weak var topContentStack: UIStackView!
@@ -18,22 +18,32 @@ final class DashboardWalletCell: CollectionViewCell {
     override func awakeFromNib() {
         
         super.awakeFromNib()
-        
-        layer.cornerRadius = Global.cornerRadius * 2
+                
+        switch Theme.type {
+            
+        case .themeOG:
+            layer.cornerRadius = Theme.constant.cornerRadius * 2
+        case .themeA:
+            addThemeAScreen()
+        }
         
         imageView.layer.cornerRadius = imageView.frame.size.width * 0.5
-        imageView.backgroundColor = Theme.color.text
+        imageView.backgroundColor = Theme.colour.labelPrimary
         
         contentStack.setCustomSpacing(13, after: topContentStack)
         
-        currencyLabel.applyStyle(.callout)
+        fiatBalanceLabel.font = Theme.font.dashboardTVBalance
+        fiatBalanceLabel.textColor = Theme.colour.labelPrimary
         
-        pctChangeLabel.applyStyle(.callout)
+        currencyLabel.font = Theme.font.dashboardTVSymbol
+        currencyLabel.textColor = Theme.colour.labelPrimary
         
-        [fiatBalanceLabel, pctChangeLabel].forEach { $0.applyStyle(.smallLabel) }
-        fiatBalanceLabel.textColor = Theme.color.textSecondary
+        pctChangeLabel.font = Theme.font.dashboardTVPct
+        pctChangeLabel.textColor = Theme.colour.systemGreen
         
-        cryptoBalanceLabel.applyStyle(.callout)
+        cryptoBalanceLabel.font = Theme.font.dashboardTVTokenBalance
+        cryptoBalanceLabel.textColor = Theme.colour.systemOrange
+
     }
 
     override func prepareForReuse() {
@@ -50,14 +60,60 @@ extension DashboardWalletCell {
     func update(with viewModel: DashboardViewModel.Wallet) {
         
         imageView.image = viewModel.imageData.pngImage
-        currencyLabel.text = viewModel.name
+        currencyLabel.text = viewModel.ticker
         fiatBalanceLabel.text = viewModel.fiatBalance
         pctChangeLabel.text = viewModel.pctChange
         pctChangeLabel.textColor = viewModel.priceUp
-            ? Theme.color.green
-            : Theme.color.red
+            ? Theme.colour.systemGreen
+            : Theme.colour.systemRed
         pctChangeLabel.layer.shadowColor = pctChangeLabel.textColor.cgColor
         charView.update(viewModel.candles)
         cryptoBalanceLabel.text = viewModel.cryptoBalance
+    }
+}
+
+private extension DashboardWalletCell {
+    
+    func addThemeAScreen() {
+        
+        clipsToBounds = false
+        
+        // Add screen
+        let image = UIImage(named: "themeA-dashboard-screen")!
+        let screenView = UIImageView(
+            image: image.resizableImage(
+                withCapInsets: .init(
+                    top: image.size.height * 0.5,
+                    left: image.size.width * 0.5,
+                    bottom: image.size.height * 0.5,
+                    right: image.size.width * 0.5
+                ),
+                resizingMode: .stretch
+            )
+        )
+        insertSubview(screenView, at: 0)
+        screenView.addConstraints(
+            [
+                .layout(anchor: .topAnchor),
+                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: -6)),
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: -4)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: -4))
+            ]
+        )
+
+        // Add mask
+        let maskImage = UIImage(named: "themA-dashboard-mask")!
+        let maskView = UIImageView(
+            image: maskImage
+        )
+        screenView.addSubview(maskView)
+        maskView.addConstraints(
+            [
+                .layout(anchor: .topAnchor),
+                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: 10)),
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 4)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 4))
+            ]
+        )
     }
 }

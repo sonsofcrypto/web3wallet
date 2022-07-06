@@ -5,53 +5,53 @@
 import Foundation
 
 enum NetworksViewModel {
-    case loaded(networks: [Network], selectedIdx: Int)
+    
+    case loaded(header: String, networks: [Network])
     case error(error: NetworksViewModel.Error)
 }
-
-// MARK - Item
 
 extension NetworksViewModel {
 
     struct Network {
+
+        let icon: Data
         let name: String
         let connectionType: String
         let status: String
         let explorer: String
-        let connected: Bool
+        let connected: Bool?
     }
 }
-
-// MARK: - Error
 
 extension NetworksViewModel {
 
     struct Error {
+        
         let title: String
         let body: String
         let actions: [String]
     }
 }
 
-// MARK: - Utility
-
 extension NetworksViewModel {
-
-    func network() -> [NetworksViewModel.Network] {
+    
+    var header: String {
+        
         switch self {
-        case let .loaded(items, _):
-            return items
+        case let .loaded(header, _):
+            return header
         default:
-            return []
+            return ""
         }
     }
 
-    func selectedIdx() -> Int? {
+    func network() -> [NetworksViewModel.Network] {
+        
         switch self {
-        case let .loaded(_, idx):
-            return idx
+        case let .loaded(_, items):
+            return items
         default:
-            return nil
+            return []
         }
     }
 }

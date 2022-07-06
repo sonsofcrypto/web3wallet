@@ -71,7 +71,7 @@ private extension NFTLoadingView {
     
     func commonInit() {
         
-        backgroundColor = UIColor.bgGradientTopSecondary
+        backgroundColor = Theme.colour.backgroundBaseSecondary
         
         let imageView = UIImageView()
         addSubview(imageView)

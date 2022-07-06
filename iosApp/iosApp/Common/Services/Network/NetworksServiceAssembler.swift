@@ -6,9 +6,11 @@ final class NetworksServiceAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
         
-        registry.register(scope: .singleton) { _ -> NetworksService in
+        registry.register(scope: .singleton) { resolver -> NetworksService in
             
-            DefaultNetworksService()
+            DefaultNetworksService(
+                web3Service: resolver.resolve()
+            )
         }
     }
 }

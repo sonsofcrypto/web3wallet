@@ -6,8 +6,6 @@ import UIKit
 
 class TextField: UITextField {
 
-    var defaultPlaceholderAttributes = Theme.attributes.placeholder()
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -23,17 +21,44 @@ class TextField: UITextField {
         set {
             attributedPlaceholder = NSAttributedString(
                 string: newValue ?? "",
-                attributes: defaultPlaceholderAttributes
+                attributes: placeholder()
             )
         }
     }
     
     func configure() {
-        defaultTextAttributes = Theme.attributes.body()
-        typingAttributes = Theme.attributes.body()
-        backgroundColor = Theme.color.backgroundDark.withAlphaComponent(0.25)
+        defaultTextAttributes = body()
+        typingAttributes = body()
+        backgroundColor = Theme.colour.backgroundBasePrimary.withAlphaComponent(0.25)
         clipsToBounds = true
-        layer.applyBorder(Theme.color.tintLight)
+        layer.applyBorder(Theme.colour.fillTertiary)
         layer.cornerRadius = Global.cornerRadius
+    }
+}
+
+private extension TextField {
+    
+    func placeholder() -> [NSAttributedString.Key: Any] {
+        [
+            .font: Theme.font.subheadline,
+            .foregroundColor: Theme.colour.labelTertiary,
+        ]
+    }
+    
+    func body() -> [NSAttributedString.Key: Any] {
+        [
+            .font: Theme.font.body,
+            .foregroundColor: Theme.colour.labelPrimary,
+            .shadow: textShadow(Theme.colour.fillSecondary)
+        ]
+    }
+    
+    func textShadow(_ tint: UIColor) -> NSShadow {
+        
+        let shadow = NSShadow()
+        shadow.shadowOffset = .zero
+        shadow.shadowBlurRadius = Global.shadowRadius
+        shadow.shadowColor = tint
+        return shadow
     }
 }

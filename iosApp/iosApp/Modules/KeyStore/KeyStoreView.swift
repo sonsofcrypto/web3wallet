@@ -26,6 +26,7 @@ final class KeyStoreViewController: BaseViewController {
     @IBOutlet weak var logoView: UIImageView!
     @IBOutlet weak var buttonsCollectionView: UICollectionView!
     @IBOutlet weak var buttonBackgroundView: UIVisualEffectView!
+    @IBOutlet weak var buttonHandleView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,23 +139,29 @@ extension KeyStoreViewController: UICollectionViewDataSource {
     }
     
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == buttonsCollectionView {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        
+        switch collectionView {
+            
+        case buttonsCollectionView:
+            
             let button = viewModel?.buttons.buttons[indexPath.item]
-            return collectionView.dequeue(ButtonsSheetViewCell.self, for: indexPath)
-                    .update(with: button)
+            return collectionView.dequeue(
+                ButtonsSheetViewCell.self,
+                for: indexPath
+            ).update(with: button)
+            
+        default:
+            
+            return collectionView.dequeue(KeyStoreCell.self, for: indexPath).update(
+                with: viewModel?.items[indexPath.item],
+                at: indexPath.item,
+                presenter: presenter
+            )
         }
-
-        let cell = collectionView.dequeue(KeyStoreCell.self, for: indexPath)
-        cell.titleLabel.text = viewModel?.items[indexPath.item].title
-        cell.accessoryButton.tag = indexPath.item
-        cell.accessoryButton.addTarget(
-            self,
-            action: #selector(accessoryAction(_:)),
-            for: .touchUpInside
-        )
-
-        return cell
     }
 }
 
@@ -166,10 +173,6 @@ extension KeyStoreViewController: UICollectionViewDelegate {
             return
         }
         presenter.handle(.didSelectKeyStoreItemtAt(idx: indexPath.item))
-    }
-
-    @objc func accessoryAction(_ sender: UIButton) {
-        presenter.handle(.didSelectAccessory(idx: sender.tag))
     }
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -197,17 +200,20 @@ extension KeyStoreViewController: UICollectionViewDelegateFlowLayout {
 extension KeyStoreViewController {
     
     func configureUI() {
+        
         title = Localized("wallets")
+        
         configureInsets()
+        
         buttonBackgroundView.layer.cornerRadius = Global.cornerRadius * 2
         buttonBackgroundView.layer.maskedCorners = [
             .layerMaxXMinYCorner,
             .layerMinXMinYCorner
         ]
-        (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
-        ]
+        buttonBackgroundView.contentView.backgroundColor = Theme.colour.gradientTop.withAlpha(0.4)
+        
+        buttonHandleView.backgroundColor = Theme.colour.backgroundBasePrimary
+        buttonHandleView.layer.cornerRadius = buttonHandleView.frame.size.height.half
     }
 
     func updateLogo(_ viewModel: KeyStoreViewModel) {
@@ -373,6 +379,7 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
         presenting: UIViewController,
         source: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
+        
         guard viewModel?.transitionStyle == .flip else {
             return nil
         }

@@ -6,8 +6,8 @@
 
 "OK" = "OK";
 "web3wallet" = "web3wallet";
-"wallets" = "wallets";
-"networks" = "networks";
+"wallets" = "Wallets";
+"networks" = "Networks";
 "dashboard" = "Dashboard";
 "degen" = "Degen";
 "nfts" = "NFTs";
@@ -18,11 +18,15 @@
 "trade" = "Trade";
 "more" = "More";
 "done" = "Done";
+"close" = "Close";
+"connected" = "Connected";
+"disconnected" = "Disconnected";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";
 "wallets.connectHD" = "Connect hardware wallet";
 
+"networks.header" = "Choose one or multiple networks for your wallet.";
 "networks.cell.connection" = "Connection:";
 "networks.cell.status" = "Status:";
 "networks.cell.explorer" = "Explorer:";
@@ -31,6 +35,7 @@
 "dashboard.button.receive" = "Receive";
 "dashboard.button.send" = "Send";
 "dashboard.button.trade" = "Trade";
+"dashboard.section.nfts" = "NFestival";
 
 "degen.dappCategory.title.amm" = "Automated market makers";
 "degen.dappCategory.title.stakeYield" = "Staking and Yield farms";
@@ -68,13 +73,13 @@
 "keyStore.importPrivateKey" = "Import private key";
 "keyStore.createMultiSig" = "Create multisig wallet";
 
-"newMnemonic.title" = "Create new wallet";
+"newMnemonic.title" = "New wallet";
 "newMnemonic.tapToReveal" = "Tap to reveal mnemonic";
 "newMnemonic.footer" = "Write down mnemonic above. Never share it with anyone. All of the accounts/wallets are derived from it. If lost crypto is unrecoverable";
 "newMnemonic.footerHighlightWord0" = "Never";
 "newMnemonic.footerHighlightWord1" = "unrecoverable";
-"newMnemonic.name.title" = "Name wallet";
-"newMnemonic.name.placeholder" = "Default wallet";
+"newMnemonic.name.title" = "Wallet name";
+"newMnemonic.name.placeholder" = "eg: Default wallet";
 "newMnemonic.iCould.title" = "Backup in iCloud";
 "newMnemonic.salt.title" = "Salt mnemonic";
 "newMnemonic.salt.placeholder" = "Enter password";
@@ -135,7 +140,6 @@
 "tokenPicker.networks.all" = "All networks";
 "tokenPicker.featured.title" = "Featured";
 "tokenPicker.popular.title" = "Popular";
-"tokenPicker.all.title" = "All coins";
 "tokenPicker.noResults" = "No results";
 
 "tokenReceive.title.receive" = "Receive %@";

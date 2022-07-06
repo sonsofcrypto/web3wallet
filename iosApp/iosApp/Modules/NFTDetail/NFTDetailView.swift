@@ -32,11 +32,6 @@ final class NFTDetailViewController: BaseViewController {
 
         refresh()
     }
-    
-    @objc override func dismissTapped() {
-        
-        presenter.handle(.dismiss)
-    }
 }
 
 extension NFTDetailViewController: NFTDetailView {
@@ -78,8 +73,8 @@ private extension NFTDetailViewController {
         //view.addConstraints(.toEdges)
         
         (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
+            Theme.colour.backgroundBaseSecondary,
+            Theme.colour.backgroundBasePrimary
         ]
         
         let mainScrollView = makeMainScrollView()
@@ -87,6 +82,17 @@ private extension NFTDetailViewController {
         self.mainScrollView = mainScrollView
         mainScrollView.addConstraints(.toEdges)
         
-        configureLeftBarButtonItemDismissAction()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: .init(systemName: "chevron.left"),
+            style: .plain,
+            target: self,
+            action: #selector(navBarLeftActionTapped)
+        )
     }
+    
+    @objc func navBarLeftActionTapped() {
+        
+        presenter.handle(.dismiss)
+    }
+
 }

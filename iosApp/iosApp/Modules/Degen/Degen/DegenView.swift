@@ -113,11 +113,6 @@ extension DegenViewController {
     func configureUI() {
         navigationItem.backButtonTitle = ""
 
-        (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
-        ]
-
         var insets = collectionView.contentInset
         insets.bottom += Global.padding
         collectionView.contentInset = insets

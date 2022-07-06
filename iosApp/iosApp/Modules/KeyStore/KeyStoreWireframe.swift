@@ -105,7 +105,7 @@ private extension DefaultKeyStoreWireframe {
 
     func wireUp() -> UIViewController {
         let interactor = DefaultKeyStoreInteractor(keyStoreSerive)
-        let vc: KeyStoreViewController = UIStoryboard(.main).instantiate()
+        let vc: KeyStoreViewController = UIStoryboard(.keyStore).instantiate()
         let presenter = DefaultKeyStorePresenter(
             view: vc,
             interactor: interactor,

@@ -85,7 +85,7 @@ extension KeyStoreItem {
             mnemonicSalt: "",
             password: password,
             mnemonic: mnemonic.joined(separator: " "),
-            name: "",
+            name: "Main Wallet 1",
             saltMnemonic: false,
             passwordType: .bio,
             passUnlockWithBio: false,
@@ -95,11 +95,12 @@ extension KeyStoreItem {
     }
 
     static func blank() -> KeyStoreItem {
-        .init(
+        let mnemonic = try! Bip39(.entropy128).mnemonic
+        return .init(
             uuid: UUID(),
             mnemonicSalt: "",
             password: "",
-            mnemonic: "",
+            mnemonic: mnemonic.joined(separator: " "),
             name: "",
             saltMnemonic: false,
             passwordType: .bio,

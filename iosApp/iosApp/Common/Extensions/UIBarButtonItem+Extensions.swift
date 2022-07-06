@@ -5,8 +5,23 @@
 import UIKit
 
 extension UIBarButtonItem {
+    
+    convenience init(
+        imageName: String,
+        style: UIBarButtonItem.Style = .plain,
+        target: Any?,
+        selector: Selector?
+    ) {
+        self.init(
+            image: UIImage(named: imageName),
+            style: .plain,
+            target: target,
+            action: selector
+        )
+    }
 
     static func glowLabel(_ title: String = "") -> UIBarButtonItem {
+        
         let label = UILabel(with: .subheadGlow)
         label.font = UIFont.font(.gothicA1, style: .regular, size: .caption1)
         return UIBarButtonItem(customView: label)

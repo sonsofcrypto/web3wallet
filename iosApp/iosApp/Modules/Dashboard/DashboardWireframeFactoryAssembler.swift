@@ -15,6 +15,7 @@ final class DashboardWireframeFactoryAssembler: AssemblerComponent {
                 mnemonicConfirmationWireframeFactory: resolver.resolve(),
                 tokenPickerWireframeFactory: resolver.resolve(),
                 nftDetailWireframeFactory: resolver.resolve(),
+                qrCodeScanWireframeFactory: resolver.resolve(),
                 onboardingService: resolver.resolve(),
                 web3Service: resolver.resolve(),
                 priceHistoryService: resolver.resolve(),

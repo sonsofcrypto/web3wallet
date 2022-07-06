@@ -7,8 +7,13 @@ import UIKit
 struct QRCodeScanWireframeContext {
     
     let presentationStyle: PresentationStyle
-    let network: Web3Network
+    let type: `Type`
     let onCompletion: (String) -> Void
+
+    enum `Type` {
+        case `default`
+        case network(Web3Network)
+    }
 }
 
 enum QRCodeScanWireframeDestination {

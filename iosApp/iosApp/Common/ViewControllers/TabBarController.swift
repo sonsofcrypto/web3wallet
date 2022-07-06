@@ -8,29 +8,29 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+                        
         let appearance = tabBar.standardAppearance
-        appearance.backgroundColor = Theme.color.background.withAlphaComponent(1)
-
         let itemAppearance = appearance.inlineLayoutAppearance
 
-        itemAppearance.normal.iconColor = Theme.color.textTertiary
+        appearance.backgroundColor = Theme.colour.backgroundElevatedPrimary
+        
+        itemAppearance.normal.iconColor = Theme.colour.tabBarTint
         itemAppearance.normal.titleTextAttributes = [
-            .foregroundColor: Theme.color.textTertiary,
+            .foregroundColor: Theme.colour.tabBarTint,
             .font: Theme.font.tabBar,
         ]
-
-        itemAppearance.selected.iconColor = Theme.color.tintSecondary
+        
+        itemAppearance.selected.iconColor = Theme.colour.tabBarTintSelected
         itemAppearance.selected.titleTextAttributes = [
-            .foregroundColor: Theme.color.tintSecondary,
+            .foregroundColor: Theme.colour.tabBarTintSelected,
             .font: Theme.font.tabBar,
         ]
+        tabBar.tintColor = Theme.colour.tabBarTint
 
         appearance.inlineLayoutAppearance = itemAppearance
         appearance.compactInlineLayoutAppearance = itemAppearance
         appearance.stackedLayoutAppearance = itemAppearance
 
-        tabBar.tintColor = Theme.color.tintSecondary
         tabBar.standardAppearance = appearance
         tabBar.scrollEdgeAppearance = appearance
     }

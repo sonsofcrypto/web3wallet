@@ -84,8 +84,8 @@ extension AMMsViewController {
     func configureUI() {
         title = Localized("amms")
         (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
+            Theme.colour.backgroundBaseSecondary,
+            Theme.colour.backgroundBasePrimary
         ]
 
         var insets = collectionView.contentInset

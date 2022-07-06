@@ -50,9 +50,16 @@ extension DefaultQRCodeScanPresenter: QRCodeScanPresenter {
             
         case let .qrCode(qrCode):
             
-            guard interactor.isValid(address: qrCode, for: context.network) else { return }
-            
-            wireframe.navigate(to: .qrCode(qrCode))
+            switch context.type {
+                
+            case .`default`:
+                wireframe.navigate(to: .qrCode(qrCode))
+                
+            case let .network(network):
+                
+                guard interactor.isValid(address: qrCode, for: network) else { return }
+                wireframe.navigate(to: .qrCode(qrCode))
+            }
             
         case .dismiss:
             

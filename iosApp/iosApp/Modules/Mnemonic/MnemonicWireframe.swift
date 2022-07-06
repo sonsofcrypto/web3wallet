@@ -44,22 +44,23 @@ extension DefaultMnemonicWireframe: MnemonicWireframe {
     func present() {
         
         let vc = wireUp()
-
-        let topVc = (parent as? UINavigationController)?.topViewController
-
-        if let transitionDelegate =  topVc as? UIViewControllerTransitioningDelegate {
-            vc.transitioningDelegate = transitionDelegate
-        }
-
-        switch settingsService.createWalletTransitionType {
-        case .cardFlip:
-            vc.modalPresentationStyle = .overCurrentContext
-        case .sheet:
-            vc.modalPresentationStyle = .automatic
-        }
-
-        self.vc = vc
-        topVc?.show(vc, sender: self)
+        parent.present(vc, animated: true)
+        
+//        let topVc = (parent as? UINavigationController)?.topViewController
+//
+//        if let transitionDelegate =  topVc as? UIViewControllerTransitioningDelegate {
+//            vc.transitioningDelegate = transitionDelegate
+//        }
+//
+//        switch settingsService.createWalletTransitionType {
+//        case .cardFlip:
+//            vc.modalPresentationStyle = .overCurrentContext
+//        case .sheet:
+//            vc.modalPresentationStyle = .automatic
+//        }
+//
+//        self.vc = vc
+//        topVc?.show(vc, sender: self)
     }
 
     func navigate(to destination: MnemonicWireframeDestination) {
@@ -73,8 +74,9 @@ extension DefaultMnemonicWireframe: MnemonicWireframe {
 extension DefaultMnemonicWireframe {
 
     private func wireUp() -> UIViewController {
+        
         let interactor = DefaultMnemonicInteractor(keyStoreService)
-        let vc: MnemonicViewController = UIStoryboard(.main).instantiate()
+        let vc: MnemonicViewController = UIStoryboard(.mnemonic).instantiate()
         let presenter = DefaultMnemonicPresenter(
             context: context,
             view: vc,

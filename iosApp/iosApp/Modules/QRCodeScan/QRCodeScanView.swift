@@ -54,19 +54,6 @@ final class QRCodeScanViewController: BaseViewController {
 
         captureSession?.stopRunning()
     }
-    
-    @objc override func dismissTapped() {
-        
-        presenter.handle(.dismiss)
-    }
-    
-    @objc override func navBarRightBarActionTapped() {
-        
-        let picker = UIImagePickerController()
-        //picker.allowsEditing = true
-        picker.delegate = self
-        present(picker, animated: true)
-    }
 }
 
 extension QRCodeScanViewController: QRCodeScanView {
@@ -75,27 +62,45 @@ extension QRCodeScanViewController: QRCodeScanView {
 
         self.viewModel = viewModel
         
-        configureNavigationBar(title: viewModel.title)
+        title = viewModel.title.uppercased()
     }
 }
 
 private extension QRCodeScanViewController {
     
     func configureUI() {
+                
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: Localized("close"),
+            style: .plain,
+            target: self,
+            action: #selector(closeTapped)
+        )
         
-        (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
-        ]
-        
-        configureLeftBarButtonItemDismissAction()
-        let loadIcon = "paste_icon"
-        configureRightBarButtonItemAction(icon: loadIcon)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: Localized("paste"),
+            style: .plain,
+            target: self,
+            action: #selector(pasteTapped)
+        )
         
         configureQRCodeScan()
         
         addTopView()
         addActivityIndicatorView()
+    }
+    
+    @objc func closeTapped() {
+        
+        presenter.handle(.dismiss)
+    }
+    
+    @objc func pasteTapped() {
+        
+        let picker = UIImagePickerController()
+        //picker.allowsEditing = true
+        picker.delegate = self
+        present(picker, animated: true)
     }
     
     func configureQRCodeScan() {
@@ -195,14 +200,14 @@ private extension QRCodeScanViewController {
     func addActivityIndicatorView() {
         
         let view = UIView()
-        view.backgroundColor = Theme.color.background
+        view.backgroundColor = Theme.colour.backgroundBaseSecondary
         view.layer.cornerRadius = 24
-        view.layer.borderColor = Theme.color.tintLight.cgColor
+        view.layer.borderColor = Theme.colour.fillTertiary.cgColor
         view.layer.borderWidth = 1
         
         let activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.startAnimating()
-        activityIndicator.color = Theme.color.tint
+        activityIndicator.color = Theme.colour.fillPrimary
         view.addSubview(activityIndicator)
         activityIndicator.addConstraints(
             [

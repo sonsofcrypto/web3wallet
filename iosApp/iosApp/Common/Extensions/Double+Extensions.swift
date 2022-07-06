@@ -9,5 +9,21 @@ extension Double {
         String(format: "%.\(decimals)f", self)
     }
     
-    
+    func formatCurrency(
+        with currencyCode: String = "USD",
+        maximumFractionDigits: Int = 2
+    ) -> String? {
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencyCode = currencyCode
+        formatter.maximumFractionDigits = maximumFractionDigits
+        
+        // formatted(.currency(code: "USD"))
+        var formattedCurrency: String? = formatter.string(from: Float(self))
+        if currencyCode == "USD" {
+            formattedCurrency = formattedCurrency?.replacingOccurrences(of: "US", with: "")
+        }
+        return formattedCurrency
+    }
 }

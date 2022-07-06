@@ -17,6 +17,7 @@ final class DefaultDashboardWireframeFactory {
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
     private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
+    private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let onboardingService: OnboardingService
     private let web3Service: Web3Service
     private let priceHistoryService: PriceHistoryService
@@ -29,6 +30,7 @@ final class DefaultDashboardWireframeFactory {
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
         tokenPickerWireframeFactory: TokenPickerWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
+        qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         onboardingService: OnboardingService,
         web3Service: Web3Service,
         priceHistoryService: PriceHistoryService,
@@ -40,6 +42,7 @@ final class DefaultDashboardWireframeFactory {
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
         self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
+        self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.onboardingService = onboardingService
         self.web3Service = web3Service
         self.priceHistoryService = priceHistoryService
@@ -59,6 +62,7 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             mnemonicConfirmationWireframeFactory: mnemonicConfirmationWireframeFactory,
             tokenPickerWireframeFactory: tokenPickerWireframeFactory,
             nftDetailWireframeFactory: nftDetailWireframeFactory,
+            qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
             onboardingService: onboardingService,
             web3Service: web3Service,
             priceHistoryService: priceHistoryService,

@@ -47,11 +47,11 @@ extension NFTDetailViewController {
             ]
         )
         
-        vStackView.backgroundColor = Theme.current.color.backgroundDark
+        vStackView.backgroundColor = Theme.colour.backgroundBasePrimary
         vStackView.layer.cornerRadius = Global.cornerRadius
         vStackView.layer.cornerRadius = Global.cornerRadius
         vStackView.layer.borderWidth = 1
-        vStackView.layer.borderColor = Theme.color.tintLight.cgColor
+        vStackView.layer.borderColor = Theme.colour.fillTertiary.cgColor
 
         return containerView
     }

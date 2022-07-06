@@ -5,6 +5,14 @@
 import UIKit
 
 extension UIView {
+    
+    var isDarkMode: Bool {
+        
+        UITraitCollection.current.userInterfaceStyle == .dark
+    }
+}
+
+extension UIView {
 
     class func springAnimate(
         _ duration: TimeInterval = 0.5,
@@ -72,7 +80,7 @@ extension UIView {
     }
     
     class func dividerLine(
-        backgroundColor: UIColor = Theme.color.red,
+        backgroundColor: UIColor = Theme.colour.systemRed,
         height: CGFloat = 1
     ) -> UIView {
         

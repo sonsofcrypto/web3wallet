@@ -52,37 +52,24 @@ extension TokenAddViewController {
     
    func configureNavigationBar() {
         
-        let titleLabel = UILabel(frame: .zero)
-        titleLabel.textAlignment = .center
-        titleLabel.text = viewModel?.title
-        titleLabel.applyStyle(.navTitle)
-        let vStack = VStackView([titleLabel])
-        navigationItem.titleView = vStack
+       title = viewModel?.title
 
-        configureLeftBarButtonItemDismissAction()
-        
-        let button = UIButton()
-        button.setImage(
-            .init(named: "add_icon"),
-            for: .normal
-        )
-        button.tintColor = Theme.color.tint
-        button.addTarget(self, action: #selector(addTokenTapped), for: .touchUpInside)
-        button.addConstraints(
-            [
-                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
-            ]
-        )
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+       navigationItem.leftBarButtonItem = UIBarButtonItem(
+           image: .init(systemName: "chevron.left"),
+           style: .plain,
+           target: self,
+           action: #selector(navBarLeftActionTapped)
+       )
+
+       navigationItem.rightBarButtonItem = UIBarButtonItem(
+           image: .init(systemName: "qrcode.viewfinder"),
+           style: .plain,
+           target: self,
+           action: #selector(addTokenTapped)
+       )
     }
     
     func configureUI() {
-        
-        (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
-        ]
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(resignFirstResponder))
         view.addGestureRecognizer(tapGesture)
@@ -95,7 +82,7 @@ extension TokenAddViewController {
         constraint.isActive = true
     }
 
-    @objc override func dismissTapped() {
+    @objc func navBarLeftActionTapped() {
         
         presenter.handle(.dismiss)
     }

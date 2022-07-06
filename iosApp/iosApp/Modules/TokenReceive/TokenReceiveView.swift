@@ -26,19 +26,9 @@ final class TokenReceiveViewController: BaseViewController {
     private var viewModel: TokenReceiveViewModel?
     private lazy var filter = CIFilter(name: "CIQRCodeGenerator")
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-        configureUI()
         
         presenter?.present()
     }
@@ -66,66 +56,60 @@ extension TokenReceiveViewController: TokenReceiveView {
     }
 }
 
-extension TokenReceiveViewController {
+private extension TokenReceiveViewController {
     
     func configureNavigationBar() {
         
-        let titleLabel = UILabel(frame: .zero)
-        titleLabel.textAlignment = .center
-        titleLabel.text = viewModel?.title
-        titleLabel.applyStyle(.navTitle)
+        title = viewModel?.title
         
-        let views: [UIView] = [
-            titleLabel
-        ]
-        let vStack = VStackView(views)
-        vStack.spacing = 4
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: .init(systemName: "chevron.left"),
+            style: .plain,
+            target: self,
+            action: #selector(navBarLeftActionTapped)
+        )
         
-        navigationItem.titleView = vStack
+        cardView.backgroundColor = Theme.colour.backgroundBasePrimary
+        cardView.layer.cornerRadius = Theme.constant.cornerRadius
         
-        configureLeftBarButtonItemDismissAction()
+        nameLabel.font = Theme.font.body
+        nameLabel.textColor = Theme.colour.labelPrimary
         
-        cardView.backgroundColor = Theme.current.color.backgroundDark
-        cardView.layer.cornerRadius = 12
-        
-        nameLabel.applyStyle(.headlineGlow)
-        nameLabel.textColor = Theme.current.color.text
-        
-        addressLabel.applyStyle(.body)
-        addressLabel.textColor = Theme.current.color.text
+        addressLabel.font = Theme.font.body
+        addressLabel.textColor = Theme.colour.labelPrimary
         addressLabel.textAlignment = .center
 
-        disclaimerLabel.applyStyle(.smallBody)
-        disclaimerLabel.textColor = Theme.current.color.textSecondary
+        disclaimerLabel.font = Theme.font.body
+        disclaimerLabel.textColor = Theme.colour.labelPrimary
         
         copyButton.update(
             with: Localized("tokenReceive.action.copy"),
-            and: UIImage(named: "button_send"),
+            and: UIImage(systemName: "square.on.square"),
             onTap: makeCopyAction()
         )
+        copyButton.tintColor = Theme.colour.labelPrimary
 
         shareButton.update(
             with: Localized("tokenReceive.action.share"),
-            and: UIImage(named: "button_send"),
+            and: UIImage(systemName: "square.and.arrow.up"),
             onTap: makeShareAction()
         )
+        shareButton.tintColor = Theme.colour.labelPrimary
         
+        let image = UIImage(systemName: "plus")!
+        let config = UIImage.SymbolConfiguration(
+            paletteColors: [
+                Theme.colour.labelPrimary
+            ]
+        )
         addButton.update(
             with: Localized("tokenReceive.action.add"),
-            and: UIImage(named: "plus_icon"),
+            and: image.applyingSymbolConfiguration(config),
             onTap: makeAddAction()
         )
     }
     
-    func configureUI() {
-        
-        (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
-        ]
-    }
-
-    @objc override func dismissTapped() {
+    @objc func navBarLeftActionTapped() {
         
         presenter.handle(.dismiss)
     }

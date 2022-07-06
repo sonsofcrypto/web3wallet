@@ -32,11 +32,6 @@ final class NFTsCollectionViewController: BaseViewController {
 
         refresh()
     }
-    
-    @objc override func dismissTapped() {
-        
-        presenter.handle(.dismiss)
-    }
 }
 
 extension NFTsCollectionViewController: NFTsCollectionView {
@@ -76,16 +71,22 @@ private extension NFTsCollectionViewController {
         
         view = GradientView()
         
-        (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
-        ]
-        
         let mainScrollView = makeMainScrollView()
         view.addSubview(mainScrollView)
         self.mainScrollView = mainScrollView
         mainScrollView.addConstraints(.toEdges)
         
-        configureLeftBarButtonItemDismissAction()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: Localized("close"),
+            style: .plain,
+            target: self,
+            action: #selector(closeTapped)
+        )
     }
+    
+    @objc func closeTapped() {
+        
+        presenter.handle(.dismiss)
+    }
+
 }

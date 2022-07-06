@@ -11,8 +11,13 @@ enum DashboardWireframeDestination {
     case mnemonicConfirmation
     case receiveCoins
     case sendCoins
+    case scanQRCode(onCompletion: (String) -> Void)
     case nftItem(NFTItem)
-    case editTokens(selectedTokens: [Web3Token], onCompletion: ([Web3Token]) -> Void)
+    case editTokens(
+        network: Web3Network,
+        selectedTokens: [Web3Token],
+        onCompletion: ([Web3Token]) -> Void
+    )
 }
 
 protocol DashboardWireframe {
@@ -31,6 +36,7 @@ final class DefaultDashboardWireframe {
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
     private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
+    private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let onboardingService: OnboardingService
     private let web3Service: Web3Service
     private let priceHistoryService: PriceHistoryService
@@ -44,6 +50,7 @@ final class DefaultDashboardWireframe {
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
         tokenPickerWireframeFactory: TokenPickerWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
+        qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         onboardingService: OnboardingService,
         web3Service: Web3Service,
         priceHistoryService: PriceHistoryService,
@@ -56,6 +63,7 @@ final class DefaultDashboardWireframe {
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
         self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
+        self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.onboardingService = onboardingService
         self.web3Service = web3Service
         self.priceHistoryService = priceHistoryService
@@ -116,6 +124,18 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             
             presentTokenPicker(with: .send)
             
+        case let .scanQRCode(onCompletion):
+            
+            let wireframe = qrCodeScanWireframeFactory.makeWireframe(
+                presentingIn: parent,
+                context: .init(
+                    presentationStyle: .present,
+                    type: .default,
+                    onCompletion: onCompletion
+                )
+            )
+            wireframe.present()
+            
         case let .nftItem(nftItem):
             
             nftDetailWireframeFactory.makeWireframe(
@@ -126,16 +146,21 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 )
             ).present()
             
-        case let .editTokens(selectedTokens, onCompletion):
+        case let .editTokens(network, selectedTokens, onCompletion):
             
-            let coordinator = tokenPickerWireframeFactory.makeWireframe(
+            let source: TokenPickerWireframeContext.Source = .multiSelectEdit(
+                network: network,
+                selectedTokens: selectedTokens,
+                onCompletion: onCompletion
+            )
+            let wireframe = tokenPickerWireframeFactory.makeWireframe(
                 presentingIn: parent,
                 context: .init(
                     presentationStyle: .present,
-                    source: .multiSelectEdit(selectedTokens: selectedTokens, onCompletion: onCompletion)
+                    source: source
                 )
             )
-            coordinator.present()
+            wireframe.present()
         }
     }
 }
@@ -156,7 +181,6 @@ private extension DefaultDashboardWireframe {
             wireframe: self,
             onboardingService: onboardingService
         )
-
         vc.presenter = presenter
         return NavigationController(rootViewController: vc)
     }

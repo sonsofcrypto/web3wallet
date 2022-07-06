@@ -1,4 +1,4 @@
-// Created by web3d3v on 11/02/2022.
+// Created by web3d4v on 26/06/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
@@ -10,18 +10,21 @@ protocol DashboardView: AnyObject {
 }
 
 final class DashboardViewController: BaseViewController {
+    
+    @IBOutlet weak var collectionView: UICollectionView!
 
     var presenter: DashboardPresenter!
 
-    private var viewModel: DashboardViewModel?
-    private var walletCellSize: CGSize = .zero
-    private var nftsCellSize: CGSize = .zero
-    private var previousYOffset: CGFloat = 0
-    private var lastVelocity: CGFloat = 0
-    private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
-
-    @IBOutlet weak var collectionView: UICollectionView!
-
+    // NOTE: Ideally all this should be private but because we split the code in separate
+    // extensions this needs to be internal unfortunately (hoping swift one day fixes this).
+    var viewModel: DashboardViewModel?
+    var animatedTransitioning: UIViewControllerAnimatedTransitioning?
+    var previousYOffset: CGFloat = 0
+    var lastVelocity: CGFloat = 0
+    var backgroundSunsetBottomConstraint: NSLayoutConstraint?
+    var backgroundGradientTopConstraint: NSLayoutConstraint?
+    var backgroundGradientHeightConstraint: NSLayoutConstraint?
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -30,40 +33,18 @@ final class DashboardViewController: BaseViewController {
         
         presenter.present()
     }
-    
+        
     override func viewWillLayoutSubviews() {
         
         super.viewWillLayoutSubviews()
         
-        let length = (view.bounds.width - Global.padding * 2 - Constant.spacing) / 2
-        walletCellSize = CGSize(width: length, height: length)
-        nftsCellSize = CGSize(
-            width: view.bounds.width - Global.padding * 2,
-            height: length)
-    }
-}
-
-extension DashboardViewController {
-    
-    @IBAction func receiveAction(_ sender: Any) {
-        presenter.handle(.receiveAction)
-    }
-
-    @IBAction func sendAction(_ sender: Any) {
-        presenter.handle(.sendAction)
-    }
-
-    @IBAction func tradeAction(_ sender: Any) {
-        presenter.handle(.tradeAction)
-    }
-
-    @IBAction func walletConnectionSettingsAction(_ sender: Any) {
-        presenter.handle(.walletConnectionSettingsAction)
+        updateBackgroundGradientTopConstraint()
+        backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
     }
 }
 
 extension DashboardViewController: DashboardView {
-
+    
     func update(with viewModel: DashboardViewModel) {
         
         self.viewModel = viewModel
@@ -80,140 +61,14 @@ extension DashboardViewController: DashboardView {
     }
 }
 
-extension DashboardViewController: UICollectionViewDataSource {
-
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return viewModel?.sections.count ?? 0
-    }
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let section = viewModel?.sections[section] else {
-            return 0
-        }
-        return section.wallets.count + (section.nfts.count > 0 ? 1 : 0)
-    }
-    
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        
-        guard let section = viewModel?.sections[indexPath.section] else {
-            fatalError("No viewModel for \(indexPath) \(collectionView)")
-        }
-
-        if indexPath.item >= section.wallets.count {
-            let cell = collectionView.dequeue(DashboardNFTsCell.self, for: indexPath)
-            cell.update(with: section.nfts)
-            return cell
-        } else {
-            let cell = collectionView.dequeue(DashboardWalletCell.self, for: indexPath)
-            cell.update(with: section.wallets[indexPath.item])
-            return cell
-        }
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        viewForSupplementaryElementOfKind kind: String,
-        at indexPath: IndexPath
-    ) -> UICollectionReusableView {
-        
-        if kind == UICollectionView.elementKindSectionHeader {
-            
-            switch indexPath.section {
-                
-            case 0:
-                let supplementary = collectionView.dequeue(
-                    DashboardHeaderView.self,
-                    for: indexPath,
-                    kind: kind
-                )
-                supplementary.update(with: viewModel?.header)
-                addActions(for: supplementary)
-                return supplementary
-                
-            default:
-                let supplementary = collectionView.dequeue(
-                    DashboardSectionHeaderView.self,
-                    for: indexPath,
-                    kind: kind
-                )
-                supplementary.update(with: viewModel?.sections[indexPath.section])
-                return supplementary
-            }
-        }
-
-        fatalError("Unexpected supplementary idxPath: \(indexPath) \(kind)")
-    }
-}
-
-extension DashboardViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
-        
-        if indexPath.item >= viewModel?.sections[indexPath.section].wallets.count ?? 0 {
-            return nftsCellSize
-        }
-
-        return walletCellSize
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        referenceSizeForHeaderInSection section: Int
-    ) -> CGSize {
-        
-        .init(
-            width: view.bounds.width - Global.padding * 2,
-            height: section == 0 ? Constant.headerHeight : Constant.sectionHeaderHeight
-        )
-    }
-}
-
-extension DashboardViewController: UICollectionViewDelegate {
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        guard let section = viewModel?.sections[indexPath.section] else { return }
-        let symbol = section.wallets[indexPath.item].ticker
-        presenter.handle(.didSelectWallet(network: section.name, symbol: symbol))
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        willDisplay cell: UICollectionViewCell,
-        forItemAt indexPath: IndexPath
-    ) {
-        
-        guard lastVelocity > 0 else {
-            return
-        }
-
-        let rotation = CATransform3DMakeRotation(-3.13 / 2, 1, 0, 0)
-        let anim = CABasicAnimation(keyPath: "transform")
-        anim.fromValue = CATransform3DScale(rotation, 0.5, 0.5, 0)
-        anim.toValue = CATransform3DIdentity
-        anim.duration = 0.3
-        anim.isRemovedOnCompletion = true
-        anim.fillMode = .both
-        anim.timingFunction = CAMediaTimingFunction(name: .easeOut)
-        anim.beginTime = CACurrentMediaTime() + 0.05 * CGFloat(indexPath.item);
-        cell.layer.add(anim, forKey: "transform")
-    }
-}
-
 extension DashboardViewController: UIScrollViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
         lastVelocity = scrollView.contentOffset.y - previousYOffset
         previousYOffset = scrollView.contentOffset.y
+        
+        updateBackgroundGradientTopConstraint()
     }
 }
 
@@ -257,76 +112,73 @@ extension DashboardViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
-// MARK: - Configure UI
-
-extension DashboardViewController {
+private extension DashboardViewController {
     
     func configureUI() {
         
-        title = Localized("dashboard")
-        (view as? GradientView)?.colors = [
-            Theme.color.background,
-            Theme.color.backgroundDark
-        ]
+        view.backgroundColor = Theme.colour.gradientBottom
+                
+        transitioningDelegate = self
+                
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: .init(systemName: "chevron.left"),
+            style: .plain,
+            target: self,
+            action: #selector(navBarLeftActionTapped)
+        )
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: .init(systemName: "qrcode.viewfinder"),
+            style: .plain,
+            target: self,
+            action: #selector(navBarRightActionTapped)
+        )
 
+        edgeCardsController?.delegate = self
+                
+        switch Theme.type {
+            
+        case .themeOG:
+            title = Localized("dashboard")
+            let overScrollView = (collectionView as? CollectionView)
+            overScrollView?.overScrollView.image = UIImage(named: "overscroll_pepe")
+            configureCollectionCardsLayout()
+            
+        case .themeA:
+            title = Localized("web3wallet").uppercased()
+            addCustomBackgroundGradientView()
+            configureCollectionCardsLayout()
+        }
+        
         navigationController?.tabBarItem = UITabBarItem(
             title: Localized("dashboard.tab.title"),
             image: UIImage(named: "tab_icon_dashboard"),
             tag: 0
         )
-
-        collectionView.register(
-            DashboardSectionHeaderView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: "\(DashboardSectionHeaderView.self)"
-        )
-
-        let btn = AnimatedTextBarButton(
-            with: [
-                "Wallet",
-                "Network"
-            ],
-            mode: .static,
-            target: self,
-            action: #selector(walletConnectionSettingsAction(_:))
-        )
-        btn.setMode(.hidden, animated: true)
-        navigationItem.leftBarButtonItem = btn
-        
-        let button = UIButton()
-        button.setImage(
-            .init(named: "list_settings_icon"),
-            for: .normal
-        )
-        button.tintColor = Theme.color.red
-        button.addTarget(self, action: #selector(editTokensTapped), for: .touchUpInside)
-        button.addConstraints(
-            [
-                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
-            ]
-        )
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
-
-        transitioningDelegate = self
-
-        var insets = collectionView.contentInset
-        insets.bottom += Global.padding
-        collectionView.contentInset = insets
-
-        var transform = CATransform3DIdentity
-        transform.m34 = -1.0 / 500.0
-        collectionView.layer.sublayerTransform = transform
-
-        let overScrollView = (collectionView as? CollectionView)
-        overScrollView?.overScrollView.image = UIImage(named: "overscroll_pepe")
-
-        edgeCardsController?.delegate = self
     }
     
-    @objc func editTokensTapped() {
+    @objc func navBarLeftActionTapped() {
         
-        presenter.handle(.didTapEditTokens)
+        presenter.handle(.walletConnectionSettingsAction)
+    }
+    
+    @objc func navBarRightActionTapped() {
+        
+        //presenter.handle(.didTapEditTokens)
+        presenter.handle(.didScanQRCode)
+        
+//        let factory: MnemonicWireframeFactory = ServiceDirectory.assembler.resolve()
+//        factory.makeWireframe(self, context: .init(mode: .new)).present()
+    }
+    
+    func updateBackgroundGradientTopConstraint() {
+        
+        let constant: CGFloat
+        if collectionView.contentOffset.y < 0 {
+            constant = 0
+        } else {
+            constant = -collectionView.contentOffset.y
+        }
+        backgroundGradientTopConstraint?.constant =  constant
     }
 }
 
@@ -340,32 +192,144 @@ extension DashboardViewController: EdgeCardsControllerDelegate {
     }
 }
 
-private extension DashboardViewController {
+extension DashboardViewController: UICollectionViewDataSource {
 
-    func addActions(for supplementary: DashboardHeaderView) {
-        supplementary.receiveButton.addTarget(
-            self,
-            action: #selector(receiveAction(_:)),
-            for: .touchUpInside
-        )
-        supplementary.sendButton.addTarget(
-            self,
-            action: #selector(sendAction(_:)),
-            for: .touchUpInside
-        )
-        supplementary.tradeButton.addTarget(
-            self,
-            action: #selector(tradeAction(_:)),
-            for: .touchUpInside
-        )
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        
+        viewModel?.sections.count ?? 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        guard let section = viewModel?.sections[section] else { return 0 }
+        
+        guard section.items.count > 4 else { return section.items.count }
+        
+        return (section.isCollapsed ?? false) ? 4 : section.items.count
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+
+        guard let section = viewModel?.sections[indexPath.section] else {
+            
+            fatalError("No viewModel for \(indexPath) \(collectionView)")
+        }
+        
+        let actions = section.items.actions()
+        if !actions.isEmpty {
+            
+            let cell = collectionView.dequeue(DashboardButtonsCell.self, for: indexPath)
+            cell.update(with: actions, presenter: presenter)
+            return cell
+        } else if let wallet = section.items.wallet(at: indexPath.row) {
+            
+            let cell = collectionView.dequeue(DashboardWalletCell.self, for: indexPath)
+            cell.update(with: wallet)
+            return cell
+        } else if let nft = section.items.nft(at: indexPath.row) {
+            
+            let cell = collectionView.dequeue(DashboardNFTCell.self, for: indexPath)
+            cell.update(with: nft)
+            return cell
+        } else {
+            
+            fatalError("No viewModel for \(indexPath) \(collectionView)")
+        }
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        
+        switch kind {
+            
+        case UICollectionView.elementKindSectionHeader:
+            
+            return supplementaryHeaderView(kind: kind, at: indexPath)
+            
+        default:
+            fatalError("Unexpected supplementary idxPath: \(indexPath) \(kind)")
+        }
     }
 }
 
-extension DashboardViewController {
+extension DashboardViewController: UICollectionViewDelegate {
 
-    enum Constant {
-        static let headerHeight: CGFloat = 211
-        static let sectionHeaderHeight: CGFloat = 59
-        static let spacing: CGFloat = 17
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        guard let section = viewModel?.sections[indexPath.section] else { return }
+        
+        switch section.items {
+        case .actions:
+            break
+        case let .wallets(wallets):
+            let wallet = wallets[indexPath.item]
+            presenter.handle(.didSelectWallet(network: section.name, symbol: wallet.ticker))
+        case let .nfts(nfts):
+            let nft = nfts[indexPath.item]
+            nft.onSelected()
+        }
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        
+        guard lastVelocity > 0 else {
+            return
+        }
+
+        let rotation = CATransform3DMakeRotation(-3.13 / 2, 1, 0, 0)
+        let anim = CABasicAnimation(keyPath: "transform")
+        anim.fromValue = CATransform3DScale(rotation, 0.5, 0.5, 0)
+        anim.toValue = CATransform3DIdentity
+        anim.duration = 0.3
+        anim.isRemovedOnCompletion = true
+        anim.fillMode = .both
+        anim.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        anim.beginTime = CACurrentMediaTime() + 0.05 * CGFloat(indexPath.item);
+        cell.layer.add(anim, forKey: "transform")
+    }
+}
+
+private extension DashboardViewController {
+    
+    func supplementaryHeaderView(
+        kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        
+        guard let section = viewModel?.sections[indexPath.section] else {
+            fatalError("no section")
+        }
+        
+        switch indexPath.section {
+            
+        case 0:
+            let supplementary = collectionView.dequeue(
+                DashboardHeaderBalanceView.self,
+                for: indexPath,
+                kind: kind
+            )
+            supplementary.update(with: section)
+            return supplementary
+            
+        default:
+            
+            let supplementary = collectionView.dequeue(
+                DashboardHeaderNameView.self,
+                for: indexPath,
+                kind: kind
+            )
+            supplementary.update(with: section, presenter: presenter)
+            return supplementary
+        }
     }
 }
