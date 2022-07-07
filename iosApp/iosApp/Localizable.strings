@@ -179,3 +179,6 @@
 "tokenSend.title" = "Send %@";
 "tokenSend.cell.address.textField.placeholder" = "Name, ENS, or address";
 "tokenSend.cell.token.placeholder" = "0";
+"tokenSend.cell.currency.placeholder" = "0.0";
+"tokenSend.cell.currency.label.usd" = "USD";
+"tokenSend.cell.available" = "Available: %@";

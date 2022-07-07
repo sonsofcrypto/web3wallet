@@ -29,6 +29,7 @@ extension TokenSendViewModel {
         let tokenAmount: Double?
         let tokenSymbol: String
         let tokenMaxAmount: Double
+        let currencyTokenPrice: Double
         let insufficientFunds: Bool
         let shouldUpdateTextFields: Bool
     }

@@ -60,6 +60,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                         tokenAmount: nil,
                         tokenSymbol: context.web3Token.symbol.uppercased(),
                         tokenMaxAmount: context.web3Token.balance,
+                        currencyTokenPrice: context.web3Token.usdPrice,
                         insufficientFunds: false,
                         shouldUpdateTextFields: false
                     )
@@ -91,7 +92,10 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
             let clipboard = UIPasteboard.general.string ?? ""
             let isValid = interactor.isAddressValid(address: clipboard, network: context.web3Token.network)
             guard isValid else { return }
-            updateAddress(with: clipboard)
+            updateAddress(with: interactor.addressFormattedShort(
+                address: clipboard,
+                network: context.web3Token.network)
+            )
             
         case let .tokenChanged(amount):
             
@@ -155,6 +159,7 @@ private extension DefaultTokenSendPresenter {
                         tokenAmount: amount,
                         tokenSymbol: context.web3Token.symbol.uppercased(),
                         tokenMaxAmount: context.web3Token.balance,
+                        currencyTokenPrice: context.web3Token.usdPrice,
                         insufficientFunds: insufficientFunds,
                         shouldUpdateTextFields: shouldUpdateTextFields
                     )

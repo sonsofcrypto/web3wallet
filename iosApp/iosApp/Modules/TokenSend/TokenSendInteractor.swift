@@ -10,6 +10,11 @@ protocol TokenSendInteractor: AnyObject {
         address: String,
         network: Web3Network
     ) -> Bool
+    
+    func addressFormattedShort(
+        address: String,
+        network: Web3Network
+    ) -> String
 }
 
 final class DefaultTokenSendInteractor {
@@ -33,4 +38,22 @@ extension DefaultTokenSendInteractor: TokenSendInteractor {
         
         web3Service.isValid(address: address, forNetwork: network)
     }
+    
+    func addressFormattedShort(
+        address: String,
+        network: Web3Network
+    ) -> String {
+        
+        let total = 5
+
+        switch network.name.lowercased() {
+            
+        case "ethereum":
+            return address.prefix(2 + total) + "..." + address.suffix(total)
+
+        default:
+            return address.prefix(total) + "..." + address.suffix(total)
+        }
+    }
+
 }

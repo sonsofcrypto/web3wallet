@@ -45,17 +45,21 @@ extension TokenSendViewController: TokenSendView {
         }
     }
     
-    func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         
         collectionView.visibleCells.forEach { $0.resignFirstResponder() }
     }
 }
 
 extension TokenSendViewController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        viewModel?.items.count ?? 0
+    }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        viewModel?.items.count ?? 0
+        1
     }
     
     func collectionView(
@@ -63,7 +67,7 @@ extension TokenSendViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
 
-        guard let item = viewModel?.items[indexPath.item] else { fatalError() }
+        guard let item = viewModel?.items[indexPath.section] else { fatalError() }
         
         switch item {
             
@@ -81,6 +85,14 @@ extension TokenSendViewController: UICollectionViewDataSource {
     }
 }
 
+extension TokenSendViewController: UICollectionViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        dismissKeyboard()
+    }
+}
+
 private extension TokenSendViewController {
     
     func configureUI() {
@@ -93,9 +105,13 @@ private extension TokenSendViewController {
         )
         
         collectionView.dataSource = self
+        collectionView.delegate = self
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        collectionView.addGestureRecognizer(tapGesture)
         
         collectionView.setCollectionViewLayout(
-            makeCollectionLayoutSection(),
+            makeCompositionalLayout(),
             animated: false
         )
     }
@@ -108,7 +124,47 @@ private extension TokenSendViewController {
 
 private extension TokenSendViewController {
     
-    func makeCollectionLayoutSection() -> UICollectionViewLayout {
+    func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
+        
+        UICollectionViewCompositionalLayout { [weak self] sectionIndex, environment in
+            
+            guard let self = self else { return nil }
+            
+            switch sectionIndex {
+                
+            case 0:
+                return self.makeAddressCollectionLayoutSection(
+                    withCellHeight: Theme.constant.cellHeightSmall
+                )
+                
+            case 1:
+                return self.makeAddressCollectionLayoutSection(
+                    withCellHeight:  self.makeAddressCellHeight()
+                )
+                
+            default:
+                fatalError()
+            }
+        }
+    }
+    
+    func makeAddressCellHeight() -> CGFloat {
+        
+        var height: CGFloat = 0
+        
+        height += Theme.constant.padding * 0.5
+        height += 22 // Available label height
+        height += Theme.constant.padding * 0.5
+        height += Theme.constant.cellHeightSmall
+        height += Theme.constant.padding
+        height += Theme.constant.cellHeightSmall
+        
+        return height
+    }
+    
+    func makeAddressCollectionLayoutSection(
+        withCellHeight cellHeight: CGFloat
+    ) -> NSCollectionLayoutSection {
         
         let inset: CGFloat = Theme.constant.padding * 0.5
         
@@ -123,7 +179,7 @@ private extension TokenSendViewController {
         // Group
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .absolute(Theme.constant.cellHeightSmall)
+            heightDimension: .estimated(cellHeight)
         )
         let outerGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize, subitems: [item]
@@ -133,13 +189,13 @@ private extension TokenSendViewController {
         let sectionInset: CGFloat = Theme.constant.padding * 0.5
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = .init(
-            top: sectionInset,
+            top: sectionInset * (cellHeight == Theme.constant.cellHeightSmall ? 2 : 1),
             leading: sectionInset,
             bottom: sectionInset,
             trailing: sectionInset
         )
                         
-        return UICollectionViewCompositionalLayout(section: section)
+        return section
     }
     
     func updateCells() {
