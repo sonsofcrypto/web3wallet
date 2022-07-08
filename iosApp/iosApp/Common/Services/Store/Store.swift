@@ -8,3 +8,4 @@ protocol Store {
     func set<T>(_ val: T, key: String) throws where T: Codable
     func get<T>(_ key: String) -> T? where T: Codable
 }
+

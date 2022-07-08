@@ -1,9 +1,7 @@
 package com.sonsofcrypto.web3wallet.android
 
-import com.sonsofcrypto.web3lib_bip39.Bip39
-import com.sonsofcrypto.web3lib_bip44.*
-import com.sonsofcrypto.web3lib_crypto.*
-import com.sonsofcrypto.web3lib_extensions.*
+import com.sonsofcrypto.web3lib_core.*
+import com.sonsofcrypto.web3lib_utils.*
 import kotlin.Exception
 
 class Bip44Test {
@@ -16,14 +14,13 @@ class Bip44Test {
     var xprv = """
         xprv9s21ZrQH143K3vzEmTsVh32LojJ7b2xJBmrgyqVjqwbHEaRqGkQ1mxTrch59AiN2
         5ztNS2EzLCz5G7vE42VCtVnvCUEpYdDnbZFZJyEodkH
-    """.trimIndent().replace("\n", "")
+        """.trimIndent().replace("\n", "")
 
     var account = """
-        
+
     """.trimIndent()
 
     fun runAll() {
-        setup()
         testBip44MasterKey()
         testVector1()
         testVector2()
@@ -31,11 +28,8 @@ class Bip44Test {
         testVector4()
         testVector5()
         testExtKeyFromString()
-        test1000SeedDerivations()
-    }
-
-    fun setup() {
-        Crypto.setProvider(AndroidCryptoPrimitivesProvider())
+//        test1000SeedDerivations()
+//        println("=== passed")
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
@@ -46,7 +40,7 @@ class Bip44Test {
         val bip44 = Bip44(seed.hexStringToByteArray(), ExtKey.Version.MAINNETPRV)
         assertTrue(
             bip44.masterExtKey.base58WithChecksumString() == xprv,
-            "xprv does not match expected"
+            "xprv does not match expected \n ${bip44.masterExtKey.base58WithChecksumString()}\n$xprv"
         )
     }
 

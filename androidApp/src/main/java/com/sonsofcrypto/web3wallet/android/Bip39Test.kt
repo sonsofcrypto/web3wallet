@@ -1,8 +1,7 @@
 package com.sonsofcrypto.web3wallet.android
 
-import com.sonsofcrypto.web3lib_bip39.*
-import com.sonsofcrypto.web3lib_crypto.*
-import com.sonsofcrypto.web3lib_extensions.*
+import com.sonsofcrypto.web3lib_utils.*
+import com.sonsofcrypto.web3lib_core.*
 import java.lang.Exception
 
 class Bip39Test {
@@ -22,13 +21,8 @@ class Bip39Test {
     val entropyString = "d39162739a7879018108d9f5ffea50a2"
 
     fun runAll() {
-        setup()
         testBip39Seed()
         testBip39Entropy()
-    }
-
-    fun setup() {
-        Crypto.setProvider(AndroidCryptoPrimitivesProvider())
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {

@@ -194,3 +194,20 @@ web3lib_crypto/src/androidMain/libs/
 web3lib_crypto/src/jsMain/libs/
 
 iosApp/Frameworks/
+
+coreCrypto/CoreCrypto.xcframework
+
+web3lib/src/androidMain/libs
+web3lib/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
+web3lib/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
+
+web3lib_utils/src/androidMain/libs
+web3lib_utils/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
+web3lib_utils/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
+
+web3lib_core/src/androidMain/libs
+web3lib_core/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
+web3lib_core/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
+
+web3lib_keyStore/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
+web3lib_keyStore/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
