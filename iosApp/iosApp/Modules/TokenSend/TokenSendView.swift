@@ -7,6 +7,7 @@ import UIKit
 protocol TokenSendView: AnyObject {
 
     func update(with viewModel: TokenSendViewModel)
+    func presentFeePicker(with fees: [TokenSendViewModel.Fee])
     func dismissKeyboard()
 }
 
@@ -15,6 +16,7 @@ final class TokenSendViewController: BaseViewController {
     var presenter: TokenSendPresenter!
 
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var feesPickerView: FeedPickerView!
     
     private var viewModel: TokenSendViewModel?
     
@@ -43,6 +45,11 @@ extension TokenSendViewController: TokenSendView {
             
             updateCells()
         }
+    }
+    
+    func presentFeePicker(with fees: [TokenSendViewModel.Fee]) {
+        
+        feesPickerView.present(with: fees, presenter: presenter)
     }
     
     @objc func dismissKeyboard() {
@@ -81,6 +88,12 @@ extension TokenSendViewController: UICollectionViewDataSource {
             let cell = collectionView.dequeue(TokenSendTokenCollectionViewCell.self, for: indexPath)
             cell.update(with: token, presenter: presenter)
             return cell
+            
+        case let .send(cta):
+            
+            let cell = collectionView.dequeue(TokenSendCTACollectionViewCell.self, for: indexPath)
+            cell.update(with: cta, presenter: presenter)
+            return cell
         }
     }
 }
@@ -114,6 +127,8 @@ private extension TokenSendViewController {
             makeCompositionalLayout(),
             animated: false
         )
+        
+        feesPickerView.isHidden = true
     }
     
     @objc func navBarLeftActionTapped() {
@@ -134,12 +149,20 @@ private extension TokenSendViewController {
                 
             case 0:
                 return self.makeAddressCollectionLayoutSection(
+                    sectionIndex: sectionIndex,
                     withCellHeight: Theme.constant.cellHeightSmall
                 )
                 
             case 1:
                 return self.makeAddressCollectionLayoutSection(
-                    withCellHeight:  self.makeAddressCellHeight()
+                    sectionIndex: sectionIndex,
+                    withCellHeight: self.makeAddressCellHeight()
+                )
+                
+            case 2:
+                return self.makeAddressCollectionLayoutSection(
+                    sectionIndex: sectionIndex,
+                    withCellHeight: self.makeCTACellHeight()
                 )
                 
             default:
@@ -152,7 +175,6 @@ private extension TokenSendViewController {
         
         var height: CGFloat = 0
         
-        height += Theme.constant.padding * 0.5
         height += 22 // Available label height
         height += Theme.constant.padding * 0.5
         height += Theme.constant.cellHeightSmall
@@ -162,11 +184,22 @@ private extension TokenSendViewController {
         return height
     }
     
+    func makeCTACellHeight() -> CGFloat {
+        
+        var height: CGFloat = 0
+        
+        //height += Theme.constant.cellHeightSmall
+        //height += Theme.constant.padding
+        //height += 36 // fees view
+        height += 132
+        
+        return height
+    }
+    
     func makeAddressCollectionLayoutSection(
+        sectionIndex: Int,
         withCellHeight cellHeight: CGFloat
     ) -> NSCollectionLayoutSection {
-        
-        let inset: CGFloat = Theme.constant.padding * 0.5
         
         // Item
         let itemSize = NSCollectionLayoutSize(
@@ -174,7 +207,6 @@ private extension TokenSendViewController {
             heightDimension: .fractionalHeight(1)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: inset, bottom: 0, trailing: inset)
         
         // Group
         let groupSize = NSCollectionLayoutSize(
@@ -186,12 +218,12 @@ private extension TokenSendViewController {
         )
         
         // Section
-        let sectionInset: CGFloat = Theme.constant.padding * 0.5
+        let sectionInset: CGFloat = Theme.constant.padding
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = .init(
-            top: sectionInset * (cellHeight == Theme.constant.cellHeightSmall ? 2 : 1),
+            top: sectionIndex == 0 ? sectionInset : sectionIndex == 1 ? sectionInset * 0.5 : 0,
             leading: sectionInset,
-            bottom: sectionInset,
+            bottom: sectionIndex == 1 ? 0 : sectionInset,
             trailing: sectionInset
         )
                         
@@ -213,6 +245,11 @@ private extension TokenSendViewController {
                 
                 guard let token = viewModel?.items.token else { return }
                 tokenCell.update(with: token, presenter: presenter)
+                
+            case let ctaCell as TokenSendCTACollectionViewCell:
+                
+                guard let cta = viewModel?.items.send else { return }
+                ctaCell.update(with: cta, presenter: presenter)
 
             default:
                 

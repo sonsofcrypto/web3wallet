@@ -4,14 +4,11 @@
 
 final class TokenSendCTACollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var textFieldView: UIView!
-    @IBOutlet weak var qrCodeScanButton: UIButton!
-    @IBOutlet weak var textField: TextField!
-    @IBOutlet weak var pasteView: UIView!
-    @IBOutlet weak var pasteIcon: UIImageView!
-    @IBOutlet weak var pasteLabel: UILabel!
-    @IBOutlet weak var addContactView: UIView!
-    @IBOutlet weak var addContactIcon: UIImageView!
+    @IBOutlet weak var button: UIButton!
+    
+    @IBOutlet weak var networkTokenIcon: UIImageView!
+    @IBOutlet weak var networkEstimateFeeLabel: UILabel!
+    @IBOutlet weak var networkFeeButton: UIButton!
     
     private weak var presenter: TokenSendPresenter!
     
@@ -19,97 +16,66 @@ final class TokenSendCTACollectionViewCell: UICollectionViewCell {
         
         super.awakeFromNib()
         
-        textFieldView.backgroundColor = Theme.colour.labelQuaternary
-        textFieldView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        qrCodeScanButton.setImage(
-            .init(systemName: "qrcode.viewfinder"),
-            for: .normal
-        )
-        qrCodeScanButton.tintColor = Theme.colour.labelPrimary
-        qrCodeScanButton.addTarget(self, action: #selector(qrCodeScanTapped), for: .touchUpInside)
+        button.apply(style: .primary)
         
-        textField.update(
-            placeholder: Localized("tokenSend.cell.address.textField.placeholder")
-        )
-        textField.delegate = self
-        textField.rightView = makeClearButton()
-        textField.rightViewMode = .whileEditing
-
-        pasteView.add(.targetAction(.init(target: self, selector: #selector(pasteTapped))))
-        pasteIcon.tintColor = Theme.colour.labelPrimary
-        pasteLabel.font = Theme.font.bodyBold
-        pasteLabel.textColor = Theme.colour.labelPrimary
-        pasteLabel.text = Localized("paste")
+        networkTokenIcon.image = .init(named: "send-ethereum-token")
         
-        addContactView.isHidden = true
-        addContactIcon.tintColor = Theme.colour.labelPrimary
-    }
-    
-    override func resignFirstResponder() -> Bool {
+        networkEstimateFeeLabel.font = Theme.font.body
+        networkEstimateFeeLabel.textColor = Theme.colour.labelPrimary
         
-        return textField.resignFirstResponder()
+        networkFeeButton.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        networkFeeButton.layer.borderWidth = 0.5
+        networkFeeButton.layer.borderColor = Theme.colour.labelPrimary.cgColor
+        networkFeeButton.tintColor = Theme.colour.labelPrimary
+        
+        networkFeeButton.addTarget(self, action: #selector(changeNetworkFee), for: .touchUpInside)
     }
 }
 
-extension TokenSendToCollectionViewCell {
+extension TokenSendCTACollectionViewCell {
     
     func update(
-        with address: TokenSendViewModel.Address,
+        with viewModel: TokenSendViewModel.Send,
         presenter: TokenSendPresenter
     ) {
         
         self.presenter = presenter
         
-        textField.text = address.value
+        switch viewModel.buttonState {
+        case .ready:
+            button.setTitle(Localized("tokenSend.cell.send.ready"), for: .normal)
+        case .insufficientFunds:
+            button.setTitle(Localized("tokenSend.cell.send.insufficientFunds"), for: .normal)
+        }
         
-        pasteView.isHidden = address.isValid
-        addContactView.isHidden = !address.isValid
+        networkEstimateFeeLabel.text = viewModel.estimatedFee
+        
+        switch viewModel.feeType {
+        case .low:
+            updateButton(with: Localized("tokenSend.cell.send.fee.low"))
+            //networkFeeButton.setTitle(Localized("tokenSend.cell.send.fee.low"), for: .normal)
+        case .medium:
+            networkFeeButton.setTitle(Localized("tokenSend.cell.send.fee.medium"), for: .normal)
+        case .high:
+            networkFeeButton.setTitle(Localized("tokenSend.cell.send.fee.high"), for: .normal)
+        }
     }
 }
 
-extension TokenSendToCollectionViewCell: UITextFieldDelegate {
+private extension TokenSendCTACollectionViewCell {
     
-    func textFieldDidChangeSelection(_ textField: UITextField) {
+    func updateButton(with title: String) {
         
-        presenter.handle(.addressChanged(to: textField.text ?? ""))
-    }
-}
-
-private extension TokenSendToCollectionViewCell {
-    
-    @objc func pasteTapped() {
-        
-        presenter.handle(.pasteAddress)
+        var configuration = UIButton.Configuration.plain()
+        configuration.title = title
+        configuration.image = .init(named: "dashboard-charging-station")
+        configuration.imagePadding = Theme.constant.padding * 0.5
+        networkFeeButton.configuration = configuration
+        networkFeeButton.updateConfiguration()
     }
     
-    @objc func qrCodeScanTapped() {
+    @objc func changeNetworkFee() {
         
-        presenter.handle(.qrCodeScan)
-    }
-}
-
-private extension TokenSendToCollectionViewCell {
-    
-    func makeClearButton() -> UIButton {
-        
-        let button = UIButton(type: .system)
-        button.setImage(
-            .init(systemName: "xmark.circle.fill"),
-            for: .normal
-        )
-        button.tintColor = Theme.colour.labelSecondary
-        button.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
-        button.addConstraints(
-            [
-                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
-            ]
-        )
-        return button
-    }
-    
-    @objc func clearTapped() {
-        
-        textField.text = nil
+        presenter.handle(.feeTapped)
     }
 }

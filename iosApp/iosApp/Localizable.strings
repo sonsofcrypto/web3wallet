@@ -22,6 +22,8 @@
 "connected" = "Connected";
 "disconnected" = "Disconnected";
 "paste" = "Paste";
+"min" = "min";
+"sec" = "sec";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";
@@ -182,3 +184,8 @@
 "tokenSend.cell.currency.placeholder" = "0.0";
 "tokenSend.cell.currency.label.usd" = "USD";
 "tokenSend.cell.available" = "Available: %@";
+"tokenSend.cell.send.ready" = "Review";
+"tokenSend.cell.send.insufficientFunds" = "Insufficient Funds";
+"tokenSend.cell.send.fee.low" = "Low";
+"tokenSend.cell.send.fee.medium" = "Average";
+"tokenSend.cell.send.fee.high" = "Fast";

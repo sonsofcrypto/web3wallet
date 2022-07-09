@@ -26,6 +26,16 @@ protocol Web3Service: AnyObject {
     func isValid(address: String, forNetwork network: Web3Network) -> Bool
     
     func update(network: Web3Network, active: Bool)
+    func networkFeeInUSD(network: Web3Network, fee: Web3NetworkFee) -> Double
+    func networkFeeInSeconds(network: Web3Network, fee: Web3NetworkFee) -> Int
+    func networkFeeInNetworkToken(network: Web3Network, fee: Web3NetworkFee) -> String
+}
+
+enum Web3NetworkFee: String {
+    
+    case low
+    case medium
+    case high
 }
 
 struct Web3Network: Codable, Equatable, Hashable {

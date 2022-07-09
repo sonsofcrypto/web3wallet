@@ -348,6 +348,9 @@
 		1C9E31A3287580E500DD2031 /* TokenSend.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C9E31A2287580E500DD2031 /* TokenSend.storyboard */; };
 		1C9E31A62876023E00DD2031 /* TokenSendToCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E31A52876023E00DD2031 /* TokenSendToCollectionViewCell.swift */; };
 		1C9E31A8287618D500DD2031 /* TokenSendTokenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E31A7287618D500DD2031 /* TokenSendTokenCollectionViewCell.swift */; };
+		1C9E31AC287700A100DD2031 /* TokenSendCTACollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E31AB287700A100DD2031 /* TokenSendCTACollectionViewCell.swift */; };
+		1C9E31AE287732A700DD2031 /* Assets-Old.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C9E31AD287732A700DD2031 /* Assets-Old.xcassets */; };
+		1C9E31B028787A3000DD2031 /* FeedPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E31AF28787A3000DD2031 /* FeedPickerView.swift */; };
 		1CAC55A4286DF26100CCB2B6 /* Networks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC55A3286DF26100CCB2B6 /* Networks.storyboard */; };
 		1CAC55A8286E119500CCB2B6 /* KeyStore.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC55A7286E119500CCB2B6 /* KeyStore.storyboard */; };
 		1CAC5601286EFFC300CCB2B6 /* SFProText-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC55F4286EFFC200CCB2B6 /* SFProText-Regular.otf */; };
@@ -813,6 +816,9 @@
 		1C9E31A2287580E500DD2031 /* TokenSend.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TokenSend.storyboard; sourceTree = "<group>"; };
 		1C9E31A52876023E00DD2031 /* TokenSendToCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendToCollectionViewCell.swift; sourceTree = "<group>"; };
 		1C9E31A7287618D500DD2031 /* TokenSendTokenCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendTokenCollectionViewCell.swift; sourceTree = "<group>"; };
+		1C9E31AB287700A100DD2031 /* TokenSendCTACollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendCTACollectionViewCell.swift; sourceTree = "<group>"; };
+		1C9E31AD287732A700DD2031 /* Assets-Old.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets-Old.xcassets"; sourceTree = "<group>"; };
+		1C9E31AF28787A3000DD2031 /* FeedPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPickerView.swift; sourceTree = "<group>"; };
 		1CAC55A3286DF26100CCB2B6 /* Networks.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Networks.storyboard; sourceTree = "<group>"; };
 		1CAC55A7286E119500CCB2B6 /* KeyStore.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = KeyStore.storyboard; sourceTree = "<group>"; };
 		1CAC55F4286EFFC200CCB2B6 /* SFProText-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFProText-Regular.otf"; sourceTree = "<group>"; };
@@ -1726,6 +1732,7 @@
 			isa = PBXGroup;
 			children = (
 				1C9E31A2287580E500DD2031 /* TokenSend.storyboard */,
+				1C9E31AF28787A3000DD2031 /* FeedPickerView.swift */,
 				1C9E31A0287580DE00DD2031 /* TokenSendInteractor.swift */,
 				1C9E319E287580D900DD2031 /* TokenSendPresenter.swift */,
 				1C9E319C287580D400DD2031 /* TokenSendView.swift */,
@@ -1743,6 +1750,7 @@
 			children = (
 				1C9E31A52876023E00DD2031 /* TokenSendToCollectionViewCell.swift */,
 				1C9E31A7287618D500DD2031 /* TokenSendTokenCollectionViewCell.swift */,
+				1C9E31AB287700A100DD2031 /* TokenSendCTACollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1952,6 +1960,7 @@
 				D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */,
 				1C54DC73286A1D4B00E378F6 /* Assets-ThemeA.xcassets */,
 				D157F7D327B69B6400578FF8 /* Assets.xcassets */,
+				1C9E31AD287732A700DD2031 /* Assets-Old.xcassets */,
 				1C54DC342868204000E378F6 /* Colours-ThemeA.xcassets */,
 				D15B06C527B6D247008C3C62 /* Common */,
 				D11A98F327B8615B00EDFDD0 /* Fonts */,
@@ -2207,6 +2216,7 @@
 				D11A990227B8615B00EDFDD0 /* GothicA1-Light.ttf in Resources */,
 				1C54DC5228683DDA00E378F6 /* NaokoAA-Extrabold-Italic.otf in Resources */,
 				1CAC5607286EFFC300CCB2B6 /* SFProDisplay-SemiboldItalic.otf in Resources */,
+				1C9E31AE287732A700DD2031 /* Assets-Old.xcassets in Resources */,
 				1C54DC74286A1D4C00E378F6 /* Assets-ThemeA.xcassets in Resources */,
 				D11A990727B8615B00EDFDD0 /* GothicA1-Medium.ttf in Resources */,
 				1C54DC5A28683DDA00E378F6 /* NaokoAA-Extrabold.otf in Resources */,
@@ -2510,6 +2520,7 @@
 				1C60C35A285724D1003BE25D /* DegenInteractor.swift in Sources */,
 				1C60C2EE285724D0003BE25D /* NetworksWireframeFactory.swift in Sources */,
 				1A4C3735189D6616D915D851 /* TabBarController.swift in Sources */,
+				1C9E31B028787A3000DD2031 /* FeedPickerView.swift in Sources */,
 				1C60C2AF285724D0003BE25D /* TokenPickerItemCell.swift in Sources */,
 				1C60C353285724D1003BE25D /* CultProposalsViewModel.swift in Sources */,
 				1C60C2E6285724D0003BE25D /* DashboardWireframeFactory.swift in Sources */,
@@ -2632,6 +2643,7 @@
 				1C60C2B8285724D0003BE25D /* KeyStoreWireframeFactory.swift in Sources */,
 				1A4C34B44D253D748EFB2631 /* Bip39.swift in Sources */,
 				1A4C367CFF657470F7722F74 /* Currency.swift in Sources */,
+				1C9E31AC287700A100DD2031 /* TokenSendCTACollectionViewCell.swift in Sources */,
 				1C60C307285724D1003BE25D /* NFTsDashboardInteractor.swift in Sources */,
 				1C60C329285724D1003BE25D /* MnemonicConfirmationService.swift in Sources */,
 				1A4C35A9CDBB31FFE29C51D1 /* WebViewController.swift in Sources */,
@@ -2820,7 +2832,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5K4DT22LXR;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2858,7 +2870,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5K4DT22LXR;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;

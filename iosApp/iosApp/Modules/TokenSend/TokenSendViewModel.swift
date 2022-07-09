@@ -12,10 +12,18 @@ struct TokenSendViewModel {
 
 extension TokenSendViewModel {
     
+    struct Fee {
+        
+        let id: String
+        let name: String
+        let value: String
+    }
+    
     enum Item {
         
         case address(Address)
         case token(Token)
+        case send(Send)
     }
     
     struct Address {
@@ -32,6 +40,26 @@ extension TokenSendViewModel {
         let currencyTokenPrice: Double
         let insufficientFunds: Bool
         let shouldUpdateTextFields: Bool
+    }
+    
+    struct Send {
+        
+        let estimatedFee: String
+        let feeType: FeeType
+        let buttonState: State
+        
+        enum FeeType {
+            
+            case low
+            case medium
+            case high
+        }
+        
+        enum State {
+            
+            case insufficientFunds
+            case ready
+        }
     }
 }
 
@@ -63,5 +91,19 @@ extension Array where Element == TokenSendViewModel.Item {
         }
         
         return token
+    }
+    
+    var send: TokenSendViewModel.Send? {
+        
+        var send: TokenSendViewModel.Send?
+        forEach {
+            
+            if case let TokenSendViewModel.Item.send(value) = $0 {
+                
+                send = value
+            }
+        }
+        
+        return send
     }
 }

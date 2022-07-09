@@ -40,7 +40,7 @@ final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
         tokenLabel.font = Theme.font.body
         tokenLabel.textColor = Theme.colour.labelPrimary
         
-        tokenMaxButton.isHidden = true
+        tokenMaxButton.isHidden = false
         tokenMaxButton.tintColor = Theme.colour.labelSecondary
         tokenMaxButton.addTarget(
             self,
@@ -64,7 +64,7 @@ final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
         currencyLabel.textColor = Theme.colour.labelSecondary
         currencyLabel.text = Localized("tokenSend.cell.currency.label.usd")
 
-        currencyMaxButton.isHidden = true
+        currencyMaxButton.isHidden = false
         currencyMaxButton.tintColor = Theme.colour.labelSecondary
         currencyMaxButton.addTarget(
             self,
@@ -125,10 +125,10 @@ extension TokenSendTokenCollectionViewCell: UITextFieldDelegate {
         
         if textField == tokenTextField {
             
-            tokenMaxButton.isHidden = true
+            tokenMaxButton.isHidden = false
         } else if textField == currencyTextField {
             
-            currencyMaxButton.isHidden = true
+            currencyMaxButton.isHidden = false
         }
         
         updateAvailableText()
@@ -174,6 +174,8 @@ extension TokenSendTokenCollectionViewCell: UITextFieldDelegate {
             } else {
                 tokenTextField.text = nil
             }
+            
+            presenter.handle(.tokenChanged(to: currencyAmount/viewModel.currencyTokenPrice))
         }
     }
 }
@@ -191,8 +193,8 @@ private extension TokenSendTokenCollectionViewCell {
         button.addTarget(self, action: #selector(clearTokenTapped), for: .touchUpInside)
         button.addConstraints(
             [
-                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
+                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 20)),
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 20))
             ]
         )
         return button
@@ -202,6 +204,8 @@ private extension TokenSendTokenCollectionViewCell {
         
         tokenTextField.text = nil
         currencyTextField.text = nil
+        
+        presenter.handle(.tokenChanged(to: 0))
     }
 }
 
