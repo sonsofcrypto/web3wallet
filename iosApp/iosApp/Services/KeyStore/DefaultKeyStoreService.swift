@@ -10,12 +10,12 @@ final class DefaultKeyStoreService {
     }
 
     private let store: Store
-    private let keyChainService: KeyChainService
+    private let keyChainService: OldKeyChainService
     private var keyStoreItems: [KeyStoreItem]
 
     init(
         store: Store,
-        keyChainService: KeyChainService
+        keyChainService: OldKeyChainService
     ) {
         self.store = store
         self.keyChainService = keyChainService

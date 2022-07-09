@@ -29,13 +29,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(documents.last ?? "")
 #endif
 
-        Crypto.shared.setProvider(provider: IosCryptoPrimitivesProvider())
-        let bytes = try! Crypto.shared.secureRand(size: 16)
-        let data = bytes.data()
-        let string = String(data: data, encoding: .ascii) ?? ""
-        print("Testing web3lib integration", string)
-        let result = web3lib.HashKt.keccak256(data: data.byteArray()).toData(offset: 0, length: 32)
-        print("=== ||", String(data: result, encoding: .ascii))
         return true
     }
 

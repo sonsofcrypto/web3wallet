@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
-import SwiftKeccak
+import web3lib
 
 // https://github.com/ethereum/wiki/wiki/Web3-Secret-Storage-Definition#pbkdf2-sha-256
 struct SecretStorage: Codable {
@@ -62,7 +62,7 @@ extension SecretStorage {
         let encryptionKey = dKey[0...15]
         let tail16Byte = dKey[(dKey.count - 16)...(dKey.count - 1)]
         let cypher = try aesCTR(key: encryptionKey, data: data, iv: iv)
-        let mac = keccak256(Data().appending(tail16Byte).appending(cypher))
+        let mac = HashKt.keccak256(data: Data().appending(tail16Byte).appending(cypher).byteArray()).toDataFull()
         return SecretStorage(
             crypto: .init(
                 ciphertext: cypher.hexString(),
@@ -113,7 +113,7 @@ extension SecretStorage {
         let encryptionKey = dKey[0...15]
         let tail16Byte = dKey[(dKey.count - 16)...(dKey.count - 1)]
 
-        guard mac == keccak256(Data().appending(tail16Byte).appending(data)) else {
+        guard mac == HashKt.keccak256(data: Data().appending(tail16Byte).appending(data).byteArray()).toDataFull() else {
             throw SError.wrongPassword
         }
 

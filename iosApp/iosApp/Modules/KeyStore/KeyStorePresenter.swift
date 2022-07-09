@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 enum KeyStorePresenterEvent {
     case didSelectKeyStoreItemtAt(idx: Int)

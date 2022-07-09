@@ -317,8 +317,7 @@
 		1C6487162832DEFE0091A12D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487152832DEFE0091A12D /* Reachability.swift */; };
 		1C6487182832E2720091A12D /* DefaultKeyStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487172832E2720091A12D /* DefaultKeyStoreService.swift */; };
 		1C64871B2832E3490091A12D /* KeyStoreServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64871A2832E3490091A12D /* KeyStoreServiceAssembler.swift */; };
-		1C64871E2832E3D60091A12D /* DefaultKeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64871D2832E3D60091A12D /* DefaultKeyChainService.swift */; };
-		1C6487202832E3FA0091A12D /* KeyChainServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64871F2832E3FA0091A12D /* KeyChainServiceAssembler.swift */; };
+		1C64871E2832E3D60091A12D /* OldKeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64871D2832E3D60091A12D /* OldKeyChainService.swift */; };
 		1C6487232832E4BA0091A12D /* DefaultDegenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487222832E4BA0091A12D /* DefaultDegenService.swift */; };
 		1C6487252832E4D40091A12D /* DegenServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487242832E4D40091A12D /* DegenServiceAssembler.swift */; };
 		1C6487272832E5150091A12D /* DefaultAppsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487262832E5150091A12D /* DefaultAppsService.swift */; };
@@ -423,9 +422,6 @@
 		D11A991027B99D1800EDFDD0 /* AnyCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A990D27B99D1800EDFDD0 /* AnyCodable.swift */; };
 		D11A991127B99D1800EDFDD0 /* AnyEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11A990E27B99D1800EDFDD0 /* AnyEncodable.swift */; };
 		D11B7E952800E82300F40488 /* WordLists in Resources */ = {isa = PBXBuildFile; fileRef = D11B7E942800E82300F40488 /* WordLists */; };
-		D13D8144283D6A4B0038A6BA /* KeccakTiny in Frameworks */ = {isa = PBXBuildFile; productRef = D13D8143283D6A4B0038A6BA /* KeccakTiny */; };
-		D13D8146283D6A4B0038A6BA /* Sha3Tiny in Frameworks */ = {isa = PBXBuildFile; productRef = D13D8145283D6A4B0038A6BA /* Sha3Tiny */; };
-		D13D8148283D6A4B0038A6BA /* SwiftKeccak in Frameworks */ = {isa = PBXBuildFile; productRef = D13D8147283D6A4B0038A6BA /* SwiftKeccak */; };
 		D14ECE3927B833E500228F90 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D14ECE3827B833E500228F90 /* Localizable.strings */; };
 		D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CA27B69B6300578FF8 /* AppDelegate.swift */; };
 		D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */; };
@@ -436,7 +432,6 @@
 		D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B06C227B6D23C008C3C62 /* GradienView.swift */; };
 		D1966C3C281468C300550332 /* SecretStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1966C3B281468C300550332 /* SecretStorageTests.swift */; };
 		D19A20BC2815CA7D008A84CD /* Bip39.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C33D3E14DE9116A15DA02 /* Bip39.swift */; };
-		D19A20BE2815F15F008A84CD /* KeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A20BD2815F15F008A84CD /* KeyChainService.swift */; };
 		D19A20BF2815F843008A84CD /* SecretStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D2A7A195294A4542553 /* SecretStorage.swift */; };
 		D1A564C12843E24700D4B7D8 /* CoreCrypto.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A564C02843E24700D4B7D8 /* CoreCrypto.xcframework */; };
 		D1A564C42843E2BE00D4B7D8 /* IosCryptoPrimitivesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A564C32843E2BE00D4B7D8 /* IosCryptoPrimitivesProvider.swift */; };
@@ -785,8 +780,7 @@
 		1C6487152832DEFE0091A12D /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		1C6487172832E2720091A12D /* DefaultKeyStoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKeyStoreService.swift; sourceTree = "<group>"; };
 		1C64871A2832E3490091A12D /* KeyStoreServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreServiceAssembler.swift; sourceTree = "<group>"; };
-		1C64871D2832E3D60091A12D /* DefaultKeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKeyChainService.swift; sourceTree = "<group>"; };
-		1C64871F2832E3FA0091A12D /* KeyChainServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainServiceAssembler.swift; sourceTree = "<group>"; };
+		1C64871D2832E3D60091A12D /* OldKeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldKeyChainService.swift; sourceTree = "<group>"; };
 		1C6487222832E4BA0091A12D /* DefaultDegenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDegenService.swift; sourceTree = "<group>"; };
 		1C6487242832E4D40091A12D /* DegenServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DegenServiceAssembler.swift; sourceTree = "<group>"; };
 		1C6487262832E5150091A12D /* DefaultAppsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAppsService.swift; sourceTree = "<group>"; };
@@ -906,7 +900,6 @@
 		D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3walletUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D15B06C227B6D23C008C3C62 /* GradienView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradienView.swift; sourceTree = "<group>"; };
 		D1966C3B281468C300550332 /* SecretStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretStorageTests.swift; sourceTree = "<group>"; };
-		D19A20BD2815F15F008A84CD /* KeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainService.swift; sourceTree = "<group>"; };
 		D1A564C02843E24700D4B7D8 /* CoreCrypto.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CoreCrypto.xcframework; path = Frameworks/CoreCrypto.xcframework; sourceTree = "<group>"; };
 		D1A564C32843E2BE00D4B7D8 /* IosCryptoPrimitivesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosCryptoPrimitivesProvider.swift; sourceTree = "<group>"; };
 		D1A6713F283D6BAE0042A448 /* web3lib.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = web3lib.xcframework; path = ../web3lib/build/XCFrameworks/debug/web3lib.xcframework; sourceTree = "<group>"; };
@@ -918,10 +911,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D13D8144283D6A4B0038A6BA /* KeccakTiny in Frameworks */,
-				D13D8148283D6A4B0038A6BA /* SwiftKeccak in Frameworks */,
 				D1A67140283D6BAE0042A448 /* web3lib.xcframework in Frameworks */,
-				D13D8146283D6A4B0038A6BA /* Sha3Tiny in Frameworks */,
 				1C5B603B284675B800ECBD79 /* Kingfisher in Frameworks */,
 				D1A564C12843E24700D4B7D8 /* CoreCrypto.xcframework in Frameworks */,
 			);
@@ -1656,6 +1646,7 @@
 		1C6487002832DB440091A12D /* Assembler */ = {
 			isa = PBXGroup;
 			children = (
+				1C6487052832DC290091A12D /* ServiceDirectory.swift */,
 				1C6487032832DB8B0091A12D /* Assembler.swift */,
 				1C6487012832DB830091A12D /* DefaultAssembler.swift */,
 			);
@@ -1695,9 +1686,7 @@
 		1C64871C2832E3B90091A12D /* KeychainService */ = {
 			isa = PBXGroup;
 			children = (
-				1C64871D2832E3D60091A12D /* DefaultKeyChainService.swift */,
-				D19A20BD2815F15F008A84CD /* KeyChainService.swift */,
-				1C64871F2832E3FA0091A12D /* KeyChainServiceAssembler.swift */,
+				1C64871D2832E3D60091A12D /* OldKeyChainService.swift */,
 			);
 			path = KeychainService;
 			sourceTree = "<group>";
@@ -1953,16 +1942,23 @@
 		D157F7C927B69B6300578FF8 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				D157F7CA27B69B6300578FF8 /* AppDelegate.swift */,
+				D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */,
+				1CD3FE1F284D5840008312DE /* FeatureFlags.swift */,
+				1C6487002832DB440091A12D /* Assembler */,
+				1C6487072832DC550091A12D /* Bootstrapper */,
+				D15B06C527B6D247008C3C62 /* Common */,
+				1C60C1C7285724D0003BE25D /* Modules */,
+				1A4C38B91F448C1E962685B3 /* Services */,
+				D1BF267E280D7FC200DE9A0B /* Theme */,
+				D1C07F4F28785DB200A8ECF7 /* Tmp */,
 				D11B7E942800E82300F40488 /* WordLists */,
 				D157F7D827B69B6400578FF8 /* Info.plist */,
 				D14ECE3827B833E500228F90 /* Localizable.strings */,
-				D157F7CA27B69B6300578FF8 /* AppDelegate.swift */,
-				D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */,
 				1C54DC73286A1D4B00E378F6 /* Assets-ThemeA.xcassets */,
 				D157F7D327B69B6400578FF8 /* Assets.xcassets */,
 				1C9E31AD287732A700DD2031 /* Assets-Old.xcassets */,
 				1C54DC342868204000E378F6 /* Colours-ThemeA.xcassets */,
-				D15B06C527B6D247008C3C62 /* Common */,
 				D11A98F327B8615B00EDFDD0 /* Fonts */,
 				D157F7D527B69B6400578FF8 /* LaunchScreen.storyboard */,
 				D157F7D027B69B6300578FF8 /* Main.storyboard */,
@@ -2005,18 +2001,8 @@
 		D15B06C527B6D247008C3C62 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				1A4C3E4B8A77C60E556CCD65 /* Currency.swift */,
-				1CD3FE1F284D5840008312DE /* FeatureFlags.swift */,
-				1A4C39FB21CCAF442F3001E6 /* Global.swift */,
-				1C6487052832DC290091A12D /* ServiceDirectory.swift */,
-				1C6487002832DB440091A12D /* Assembler */,
-				1C6487072832DC550091A12D /* Bootstrapper */,
-				1A4C31B16EDB37329772A173 /* CryptoUtils */,
 				1CB3A1CE2840D6B70092D667 /* Extensions */,
 				1C60C37C2859CC19003BE25D /* Helpers */,
-				1C60C1C7285724D0003BE25D /* Modules */,
-				1A4C38B91F448C1E962685B3 /* Services */,
-				D1BF267E280D7FC200DE9A0B /* Theme */,
 				1A4C37A412F5D0AF12CB3719 /* Transitions */,
 				1A4C3C27E8AC72B44037C9E2 /* ViewControllers */,
 				1CBFDAF628113D180054B276 /* ViewModels */,
@@ -2055,6 +2041,16 @@
 			path = Theme;
 			sourceTree = "<group>";
 		};
+		D1C07F4F28785DB200A8ECF7 /* Tmp */ = {
+			isa = PBXGroup;
+			children = (
+				1A4C31B16EDB37329772A173 /* CryptoUtils */,
+				1A4C3E4B8A77C60E556CCD65 /* Currency.swift */,
+				1A4C39FB21CCAF442F3001E6 /* Global.swift */,
+			);
+			path = Tmp;
+			sourceTree = "<group>";
+		};
 		D1FA44A02805B52A00817274 /* CollectionView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2084,9 +2080,6 @@
 			);
 			name = iosApp;
 			packageProductDependencies = (
-				D13D8143283D6A4B0038A6BA /* KeccakTiny */,
-				D13D8145283D6A4B0038A6BA /* Sha3Tiny */,
-				D13D8147283D6A4B0038A6BA /* SwiftKeccak */,
 				1C5B603A284675B800ECBD79 /* Kingfisher */,
 			);
 			productName = web3wallet;
@@ -2163,7 +2156,6 @@
 			);
 			mainGroup = D157F7BE27B69B6300578FF8;
 			packageReferences = (
-				D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak" */,
 				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
@@ -2338,7 +2330,6 @@
 				1C60C2C6285724D0003BE25D /* ChatViewModel.swift in Sources */,
 				1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */,
 				1C60C351285724D1003BE25D /* CultProposalsView.swift in Sources */,
-				D19A20BE2815F15F008A84CD /* KeyChainService.swift in Sources */,
 				1C60C2FA285724D0003BE25D /* NFTDetailView+Content+Price.swift in Sources */,
 				1A4C37074D8859F0DC14C905 /* NavigationController.swift in Sources */,
 				1A4C3869B6A3E1BF415E15DB /* Global.swift in Sources */,
@@ -2378,7 +2369,6 @@
 				1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */,
 				1C60C2B5285724D0003BE25D /* TokenPickerWireframeFactory.swift in Sources */,
 				1C54DBE0285E1A0E00E378F6 /* Double+Extensions.swift in Sources */,
-				1C6487202832E3FA0091A12D /* KeyChainServiceAssembler.swift in Sources */,
 				1C60C2EA285724D0003BE25D /* NetworksWireframeFactoryAssembler.swift in Sources */,
 				1C60C2E9285724D0003BE25D /* DashboardWireframe.swift in Sources */,
 				1C60C2EF285724D0003BE25D /* NetworksWireframe.swift in Sources */,
@@ -2529,7 +2519,7 @@
 				1C54DC1B2862352800E378F6 /* QRCodeScanWireframeFactoryAssembler.swift in Sources */,
 				1C60C2DC285724D0003BE25D /* MnemonicWireframeFactoryAssembler.swift in Sources */,
 				1C60C300285724D1003BE25D /* NFTsDashboardWireframe.swift in Sources */,
-				1C64871E2832E3D60091A12D /* DefaultKeyChainService.swift in Sources */,
+				1C64871E2832E3D60091A12D /* OldKeyChainService.swift in Sources */,
 				1CB3A1F42840D6B70092D667 /* UICollectionView+Extensions.swift in Sources */,
 				1C6487182832E2720091A12D /* DefaultKeyStoreService.swift in Sources */,
 				1A4C308B6FA11A032039F086 /* CandlesView.swift in Sources */,
@@ -3020,14 +3010,6 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/bitflying/SwiftKeccak.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.2;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -3035,21 +3017,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
-		};
-		D13D8143283D6A4B0038A6BA /* KeccakTiny */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak" */;
-			productName = KeccakTiny;
-		};
-		D13D8145283D6A4B0038A6BA /* Sha3Tiny */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak" */;
-			productName = Sha3Tiny;
-		};
-		D13D8147283D6A4B0038A6BA /* SwiftKeccak */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D13D8142283D61DF0038A6BA /* XCRemoteSwiftPackageReference "SwiftKeccak" */;
-			productName = SwiftKeccak;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
