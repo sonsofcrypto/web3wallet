@@ -24,6 +24,7 @@
 "paste" = "Paste";
 "min" = "min";
 "sec" = "sec";
+"save" = "Save";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";
@@ -158,7 +159,7 @@
 "tokenAdd.title" = "Add Token";
 "tokenAdd.network.title" = "Network";
 "tokenAdd.contractAddress.title" = "Contract Address";
-"tokenAdd.contractAddress.placeholder" = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
+"tokenAdd.contractAddress.placeholder" = "0xa0b869...   06eb48";
 "tokenAdd.name.title" = "Name";
 "tokenAdd.name.placeholder" = "USD Coin";
 "tokenAdd.symbol.title" = "Symbol";

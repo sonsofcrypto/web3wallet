@@ -39,7 +39,7 @@ final class TokenAddInputView: UIView {
             textField.text = value
         }
         textField.tag = viewModel.tag
-        textField.placeholder = viewModel.placeholder
+        textField.update(placeholder: viewModel.placeholder)
         textField.keyboardType = keyboardType
         textField.returnKeyType = returnType
         textField.autocapitalizationType = autocapitalizationType
@@ -104,8 +104,8 @@ private extension TokenAddInputView {
         stackView.spacing = 8
         
         let nameLabel = UILabel()
-        nameLabel.applyStyle(.smallerLabel)
-        nameLabel.textColor = Theme.colour.labelSecondary
+        nameLabel.font =  Theme.font.footnote
+        nameLabel.textColor = Theme.colour.labelPrimary
         stackView.addArrangedSubview(nameLabel)
         self.nameLabel = nameLabel
 
@@ -121,8 +121,8 @@ private extension TokenAddInputView {
         self.textField = textField
 
         let hintLabel = UILabel()
-        hintLabel.applyStyle(.smallLabel)
-        hintLabel.textColor = Theme.colour.fillPrimary
+        hintLabel.font = Theme.font.caption1
+        hintLabel.textColor = Theme.colour.labelPrimary
         hintLabel.isHidden = true
         stackView.addArrangedSubview(hintLabel)
         self.hintLabel = hintLabel
@@ -137,8 +137,8 @@ private extension TokenAddInputView {
         stackView.spacing = 16
         
         let pasteAction = UIButton(type: .custom)
-        pasteAction.setImage("paste_icon".assetImage, for: .normal)
-        pasteAction.tintColor = Theme.colour.fillPrimary
+        pasteAction.setImage(.init(systemName: "doc.on.clipboard"), for: .normal)
+        pasteAction.tintColor = Theme.colour.labelPrimary
         pasteAction.addTarget(self, action: #selector(pasteActionTapped), for: .touchUpInside)
         pasteAction.addConstraints(
             [
@@ -150,8 +150,8 @@ private extension TokenAddInputView {
         self.pasteAction = pasteAction
         
         let scanAction = UIButton(type: .custom)
-        scanAction.setImage("scan_icon".assetImage, for: .normal)
-        scanAction.tintColor = Theme.colour.fillPrimary
+        scanAction.setImage(.init(systemName: "qrcode.viewfinder"), for: .normal)
+        scanAction.tintColor = Theme.colour.labelPrimary
         scanAction.addTarget(self, action: #selector(scanActionTapped), for: .touchUpInside)
         scanAction.addConstraints(
             [
