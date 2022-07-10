@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 enum RootWireframeDestination {
     case dashboard
@@ -33,7 +34,7 @@ final class DefaultRootWireframe {
     private let nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory
     private let appsWireframeFactory: AppsWireframeFactory
     private let settingsWireframeFactory: SettingsWireframeFactory
-    private let keyStoreService: OldKeyStoreService
+    private let keyStoreService: KeyStoreService
 
     init(
         window: UIWindow?,
@@ -44,7 +45,7 @@ final class DefaultRootWireframe {
         nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory,
         appsWireframeFactory: AppsWireframeFactory,
         settingsWireframeFactory: SettingsWireframeFactory,
-        keyStoreService: OldKeyStoreService
+        keyStoreService: KeyStoreService
     ) {
         
         self.window = window

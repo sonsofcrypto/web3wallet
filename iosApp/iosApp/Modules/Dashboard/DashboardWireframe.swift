@@ -30,7 +30,6 @@ final class DefaultDashboardWireframe {
     private weak var parent: UIViewController!
     private weak var vc: UIViewController!
 
-    private let keyStoreService: OldKeyStoreService
     private let accountWireframeFactory: AccountWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
@@ -44,7 +43,6 @@ final class DefaultDashboardWireframe {
 
     init(
         parent: UIViewController,
-        keyStoreService: OldKeyStoreService,
         accountWireframeFactory: AccountWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
@@ -57,7 +55,6 @@ final class DefaultDashboardWireframe {
         nftsService: NFTsService
     ) {
         self.parent = parent
-        self.keyStoreService = keyStoreService
         self.accountWireframeFactory = accountWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory

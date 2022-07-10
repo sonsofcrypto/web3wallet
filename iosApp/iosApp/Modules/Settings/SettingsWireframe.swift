@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 struct SettingsWireframeContext {
     
@@ -23,14 +24,14 @@ final class DefaultSettingsWireframe {
 
     private weak var parent: UITabBarController!
     private let settingsService: SettingsService
-    private let keyStoreService: OldKeyStoreService
+    private let keyStoreService: KeyStoreService
     
     private weak var navigationController: NavigationController!
 
     init(
         parent: UITabBarController,
         settingsService: SettingsService,
-        keyStoreService: OldKeyStoreService
+        keyStoreService: KeyStoreService
     ) {
         self.parent = parent
         self.settingsService = settingsService

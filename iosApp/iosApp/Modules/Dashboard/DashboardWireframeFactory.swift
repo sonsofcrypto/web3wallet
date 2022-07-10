@@ -5,13 +5,11 @@
 import UIKit
 
 protocol DashboardWireframeFactory: AnyObject {
-
     func makeWireframe(_ parent: UIViewController) -> DashboardWireframe
 }
 
 final class DefaultDashboardWireframeFactory {
 
-    private let keyStoreService: OldKeyStoreService
     private let accountWireframeFactory: AccountWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
@@ -24,7 +22,6 @@ final class DefaultDashboardWireframeFactory {
     private let nftsService: NFTsService
 
     init(
-        keyStoreService: OldKeyStoreService,
         accountWireframeFactory: AccountWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
@@ -36,7 +33,6 @@ final class DefaultDashboardWireframeFactory {
         priceHistoryService: PriceHistoryService,
         nftsService: NFTsService
     ) {
-        self.keyStoreService = keyStoreService
         self.accountWireframeFactory = accountWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
@@ -53,10 +49,8 @@ final class DefaultDashboardWireframeFactory {
 extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
 
     func makeWireframe(_ parent: UIViewController) -> DashboardWireframe {
-        
         DefaultDashboardWireframe(
             parent: parent,
-            keyStoreService: keyStoreService,
             accountWireframeFactory: accountWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
             mnemonicConfirmationWireframeFactory: mnemonicConfirmationWireframeFactory,
@@ -68,5 +62,27 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             priceHistoryService: priceHistoryService,
             nftsService: nftsService
         )
+    }
+}
+
+// MARK: - Assembler
+
+final class DashboardWireframeFactoryAssembler: AssemblerComponent {
+
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> DashboardWireframeFactory in
+            DefaultDashboardWireframeFactory(
+                accountWireframeFactory: resolver.resolve(),
+                alertWireframeFactory: resolver.resolve(),
+                mnemonicConfirmationWireframeFactory: resolver.resolve(),
+                tokenPickerWireframeFactory: resolver.resolve(),
+                nftDetailWireframeFactory: resolver.resolve(),
+                qrCodeScanWireframeFactory: resolver.resolve(),
+                onboardingService: resolver.resolve(),
+                web3Service: resolver.resolve(),
+                priceHistoryService: resolver.resolve(),
+                nftsService: resolver.resolve()
+            )
+        }
     }
 }

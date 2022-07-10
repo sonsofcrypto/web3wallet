@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 protocol SettingsWireframeFactory {
 
@@ -16,11 +17,11 @@ protocol SettingsWireframeFactory {
 final class DefaultSettingsWireframeFactory {
 
     private let settingsService: SettingsService
-    private let keyStoreService: OldKeyStoreService
+    private let keyStoreService: KeyStoreService
 
     init(
         settingsService: SettingsService,
-        keyStoreService: OldKeyStoreService
+        keyStoreService: KeyStoreService
     ) {
         self.settingsService = settingsService
         self.keyStoreService = keyStoreService
@@ -40,5 +41,19 @@ extension DefaultSettingsWireframeFactory: SettingsWireframeFactory {
             settingsService: settingsService,
             keyStoreService: keyStoreService
         )
+    }
+}
+
+// MARK: - Assembler
+
+final class SettingsWireframeFactoryAssembler: AssemblerComponent {
+
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> SettingsWireframeFactory in
+            DefaultSettingsWireframeFactory(
+                settingsService: resolver.resolve(),
+                keyStoreService: resolver.resolve()
+            )
+        }
     }
 }
