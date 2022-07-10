@@ -19,9 +19,14 @@ extension AssemblerBootstrapper: Bootstrapper {
 private extension AssemblerBootstrapper {
     
     func makeComponents() -> [AssemblerComponent] {
-        
+
         [
             // Services
+            KeyStoreKeyValStoreServiceAssembler(),
+            KeyStoreServiceAssembler(),
+            KeyChainServiceAssembler(),
+            OldKeyStoreServiceAssembler(),
+            OldKeyChainServiceAssembler(),
             AccountServiceAssembler(),
             AppsServiceAssembler(),
             DegenServiceAssembler(),
@@ -47,7 +52,7 @@ private extension AssemblerBootstrapper {
             DegenWireframeFactoryAssembler(),
             SwapWireframeFactoryAssembler(),
             KeyStoreWireframeFactoryAssembler(),
-            MnemonicWireframeFactoryAssembler(),
+            MnemonicNewWireframeFactoryAssembler(),
             MnemonicConfirmationWireframeFactoryAssembler(),
             NetworksWireframeFactoryAssembler(),
             NFTsDashboardWireframeFactoryAssembler(),

@@ -30,5 +30,3 @@ interface KeyChainService {
     fun set(id: String, data: ByteArray, type: ServiceType, icloud: Boolean)
     fun remove(id: String, type: ServiceType)
 }
-
-expect class DefaultKeyChainService: KeyChainService

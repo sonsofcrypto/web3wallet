@@ -20,7 +20,7 @@ final class DefaultRootWireframeFactory {
     private let nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory
     private let appsWireframeFactory: AppsWireframeFactory
     private let settingsWireframeFactory: SettingsWireframeFactory
-    private let keyStoreService: KeyStoreService
+    private let keyStoreService: OldKeyStoreService
 
     init(
         keyStoreWireframeFactory: KeyStoreWireframeFactory,
@@ -30,7 +30,7 @@ final class DefaultRootWireframeFactory {
         nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory,
         appsWireframeFactory: AppsWireframeFactory,
         settingsWireframeFactory: SettingsWireframeFactory,
-        keyStoreService: KeyStoreService
+        keyStoreService: OldKeyStoreService
     ) {
         self.keyStoreWireframeFactory = keyStoreWireframeFactory
         self.networksWireframeFactory = networksWireframeFactory

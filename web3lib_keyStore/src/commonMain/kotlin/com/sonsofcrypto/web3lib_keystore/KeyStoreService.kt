@@ -5,10 +5,25 @@ import kotlinx.serialization.decodeFromByteArray
 import kotlinx.serialization.encodeToByteArray
 import kotlinx.serialization.protobuf.ProtoBuf
 
+private val selectedKey = "selected_uuid"
+
+/**
+ * Handles management of `KeyStoreItem`s and `SecretStorage` items.
+ */
 interface KeyStoreService {
+    /** Latest selected `KeyStoreItem` (persists between launches) */
+    var selected: KeyStoreItem?
+    /** Add `KeyStoreItem` using password and SecreteStorage.
+     *
+     * NOTE: It first attempts to delete any `KeyStoreItem` or `SecreteStorage`
+     * that might be present with same `KeyStoreItem.uuid`
+     */
     fun add(item: KeyStoreItem, password: String, secretStorage: SecretStorage)
+    /** Removes `KeyStoreItem` and its corresponding `SecretStorage` */
     fun remove(item: KeyStoreItem)
+    /** Lists all the items in `KeyStore` */
     fun items(): List<KeyStoreItem>
+    /** Retrieves `SecretStorage` for `KeyStoreItem` using password */
     fun secretStorage(item: KeyStoreItem, password: String): SecretStorage?
 }
 
@@ -16,6 +31,10 @@ class DefaultKeyStoreService(
     private val store: KeyValueStore,
     private val keyChainService: KeyChainService
 ) : KeyStoreService {
+
+    override var selected: KeyStoreItem?
+    get() = store.get<String>(selectedKey)?.let { store.get<KeyStoreItem>(it) }
+    set(value) = store.set(selectedKey, value)
 
     override fun add(item: KeyStoreItem, password: String, secretStorage: SecretStorage) {
         this.remove(item)
@@ -25,7 +44,7 @@ class DefaultKeyStoreService(
                 item.uuid,
                 ProtoBuf.encodeToByteArray(password),
                 ServiceType.PASSWORD,
-                true
+                item.passwordType == KeyStoreItem.PasswordType.BIO
             )
         }
         keyChainService.set(
@@ -45,6 +64,7 @@ class DefaultKeyStoreService(
 
     override fun items(): List<KeyStoreItem> {
         return store.allKeys()
+            .filter { it != selectedKey }
             .mapNotNull { store.get<KeyStoreItem>(it) }
             .sortedBy { it.sortOrder }
     }

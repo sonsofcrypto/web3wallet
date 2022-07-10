@@ -16,13 +16,13 @@
 		1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */; };
 		1A4C33E50A1388781E82DD29 /* CryptoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E102C6A06DEC7657DD0 /* CryptoUtils.swift */; };
 		1A4C34ABFF1DD20804DED956 /* AppsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3228790C1569B37F5179 /* AppsService.swift */; };
-		1A4C34B44D253D748EFB2631 /* Bip39.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C33D3E14DE9116A15DA02 /* Bip39.swift */; };
+		1A4C34B44D253D748EFB2631 /* OldBip39.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C33D3E14DE9116A15DA02 /* OldBip39.swift */; };
 		1A4C35A9CDBB31FFE29C51D1 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39C4B0802356E1007E01 /* WebViewController.swift */; };
 		1A4C367CFF657470F7722F74 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E4B8A77C60E556CCD65 /* Currency.swift */; };
 		1A4C36EEA61FB60EE15ED6DD /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38D3A7CC14ADC53A0E39 /* OnboardingService.swift */; };
 		1A4C370634B11B400C5C4356 /* TouchPassThroughCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C308C7EEAF2E80221C519 /* TouchPassThroughCollectionView.swift */; };
 		1A4C37074D8859F0DC14C905 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */; };
-		1A4C3708C25B84EAA53D0FB6 /* KeyStoreItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C376D2673983B26F249FF /* KeyStoreItem.swift */; };
+		1A4C3708C25B84EAA53D0FB6 /* OldKeyStoreItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C376D2673983B26F249FF /* OldKeyStoreItem.swift */; };
 		1A4C3735189D6616D915D851 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C309894247AA73F274756 /* TabBarController.swift */; };
 		1A4C373BF33DAF794F261056 /* CardFlipAnimatedTransitioning2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3649032759624C3E2734 /* CardFlipAnimatedTransitioning2.swift */; };
 		1A4C37AEF66358EA9CA0CA59 /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C388B9A42E6A279D2867F /* AccountService.swift */; };
@@ -38,12 +38,13 @@
 		1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */; };
 		1A4C3C28443621328248F5A7 /* CandlesViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C344022DBA2423C0F15F6 /* CandlesViewViewModel.swift */; };
 		1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C325A6875E5041A491945 /* CollectionView.swift */; };
-		1A4C3C9B866507D8700399F6 /* KeyStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C36CAEB50425CE9839ED4 /* KeyStoreService.swift */; };
+		1A4C3C9B866507D8700399F6 /* OldKeyStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C36CAEB50425CE9839ED4 /* OldKeyStoreService.swift */; };
+		1A4C3CFB23D66DF60B4BCE71 /* KeyStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3553B19E38E28C955332 /* KeyStoreService.swift */; };
 		1A4C3DD46D1762F337905047 /* CryptoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E102C6A06DEC7657DD0 /* CryptoUtils.swift */; };
 		1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3B70AA1B0BC942B15671 /* Store.swift */; };
 		1A4C3E41DA2739ED48CD12F9 /* CultServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3635DC5425C3CA3A2D25 /* CultServiceAssembler.swift */; };
 		1A4C3EB4D429242923984C76 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3378B5287B6A9BDE65CD /* Button.swift */; };
-		1A4C3F175B65F553F0F5E86D /* SecretStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D2A7A195294A4542553 /* SecretStorage.swift */; };
+		1A4C3F175B65F553F0F5E86D /* OldSecretStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D2A7A195294A4542553 /* OldSecretStorage.swift */; };
 		1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */; };
 		1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */; };
 		1C54DBDC285DD10000E378F6 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */; };
@@ -127,9 +128,7 @@
 		1C60C2B9285724D0003BE25D /* KeyStorePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1E4285724D0003BE25D /* KeyStorePresenter.swift */; };
 		1C60C2BA285724D0003BE25D /* KeyStoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1E5285724D0003BE25D /* KeyStoreViewModel.swift */; };
 		1C60C2BB285724D0003BE25D /* ButtonsSheetViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1E7285724D0003BE25D /* ButtonsSheetViewCell.swift */; };
-		1C60C2BC285724D0003BE25D /* ButtonsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1E8285724D0003BE25D /* ButtonsSheetView.swift */; };
 		1C60C2BD285724D0003BE25D /* ButtonsSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1E9285724D0003BE25D /* ButtonsSheetViewModel.swift */; };
-		1C60C2BE285724D0003BE25D /* KeyStoreWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1EA285724D0003BE25D /* KeyStoreWireframeFactoryAssembler.swift */; };
 		1C60C2BF285724D0003BE25D /* KeyStoreWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1EB285724D0003BE25D /* KeyStoreWireframe.swift */; };
 		1C60C2C0285724D0003BE25D /* KeyStoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1EC285724D0003BE25D /* KeyStoreCell.swift */; };
 		1C60C2C1285724D0003BE25D /* KeyStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1ED285724D0003BE25D /* KeyStoreView.swift */; };
@@ -150,14 +149,13 @@
 		1C60C2D0285724D0003BE25D /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1FF285724D0003BE25D /* AlertPresenter.swift */; };
 		1C60C2D1285724D0003BE25D /* AlertContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C200285724D0003BE25D /* AlertContext.swift */; };
 		1C60C2D2285724D0003BE25D /* AlertWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C201285724D0003BE25D /* AlertWireframeFactoryAssembler.swift */; };
-		1C60C2D4285724D0003BE25D /* MnemonicWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C204285724D0003BE25D /* MnemonicWireframe.swift */; };
-		1C60C2D5285724D0003BE25D /* MnemonicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C205285724D0003BE25D /* MnemonicViewModel.swift */; };
-		1C60C2D6285724D0003BE25D /* MnemonicWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C206285724D0003BE25D /* MnemonicWireframeFactory.swift */; };
-		1C60C2D7285724D0003BE25D /* MnemonicPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C207285724D0003BE25D /* MnemonicPresenter.swift */; };
-		1C60C2D8285724D0003BE25D /* MnemonicInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C208285724D0003BE25D /* MnemonicInteractor.swift */; };
-		1C60C2D9285724D0003BE25D /* MnemonicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C209285724D0003BE25D /* MnemonicView.swift */; };
-		1C60C2DB285724D0003BE25D /* MnemonicContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C20B285724D0003BE25D /* MnemonicContext.swift */; };
-		1C60C2DC285724D0003BE25D /* MnemonicWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C20C285724D0003BE25D /* MnemonicWireframeFactoryAssembler.swift */; };
+		1C60C2D4285724D0003BE25D /* MnemonicNewWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C204285724D0003BE25D /* MnemonicNewWireframe.swift */; };
+		1C60C2D5285724D0003BE25D /* MnemonicNewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C205285724D0003BE25D /* MnemonicNewViewModel.swift */; };
+		1C60C2D6285724D0003BE25D /* MnemonicNewWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C206285724D0003BE25D /* MnemonicNewWireframeFactory.swift */; };
+		1C60C2D7285724D0003BE25D /* MnemonicNewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C207285724D0003BE25D /* MnemonicNewPresenter.swift */; };
+		1C60C2D8285724D0003BE25D /* MnemonicNewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C208285724D0003BE25D /* MnemonicNewInteractor.swift */; };
+		1C60C2D9285724D0003BE25D /* MnemonicNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C209285724D0003BE25D /* MnemonicNewView.swift */; };
+		1C60C2DB285724D0003BE25D /* MnemonicNewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C20B285724D0003BE25D /* MnemonicNewContext.swift */; };
 		1C60C2DD285724D0003BE25D /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C20E285724D0003BE25D /* DashboardView.swift */; };
 		1C60C2DE285724D0003BE25D /* DashboardNFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C210285724D0003BE25D /* DashboardNFTCell.swift */; };
 		1C60C2DF285724D0003BE25D /* DashboardHeaderNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C211285724D0003BE25D /* DashboardHeaderNameView.swift */; };
@@ -315,9 +313,7 @@
 		1C6487122832DE4D0091A12D /* ReachabilityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487112832DE4D0091A12D /* ReachabilityService.swift */; };
 		1C6487142832DE560091A12D /* ReachabilityServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487132832DE560091A12D /* ReachabilityServiceAssembler.swift */; };
 		1C6487162832DEFE0091A12D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487152832DEFE0091A12D /* Reachability.swift */; };
-		1C6487182832E2720091A12D /* DefaultKeyStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487172832E2720091A12D /* DefaultKeyStoreService.swift */; };
-		1C64871B2832E3490091A12D /* KeyStoreServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64871A2832E3490091A12D /* KeyStoreServiceAssembler.swift */; };
-		1C64871E2832E3D60091A12D /* OldKeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64871D2832E3D60091A12D /* OldKeyChainService.swift */; };
+		1C64871E2832E3D60091A12D /* KeyChainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64871D2832E3D60091A12D /* KeyChainService.swift */; };
 		1C6487232832E4BA0091A12D /* DefaultDegenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487222832E4BA0091A12D /* DefaultDegenService.swift */; };
 		1C6487252832E4D40091A12D /* DegenServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487242832E4D40091A12D /* DegenServiceAssembler.swift */; };
 		1C6487272832E5150091A12D /* DefaultAppsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487262832E5150091A12D /* DefaultAppsService.swift */; };
@@ -395,7 +391,7 @@
 		1CD843F72874215F00E6D359 /* MnemonicSegmentWithTextAndSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD843F32874215E00E6D359 /* MnemonicSegmentWithTextAndSwitchCell.swift */; };
 		1CD843F82874215F00E6D359 /* MnemonicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD843F42874215E00E6D359 /* MnemonicCell.swift */; };
 		1CD843FA2874236C00E6D359 /* MnemonicTextInputCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD843F92874236C00E6D359 /* MnemonicTextInputCollectionViewCell.swift */; };
-		1CD843FC287423EB00E6D359 /* Mnemonic.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CD843FB287423EB00E6D359 /* Mnemonic.storyboard */; };
+		1CD843FC287423EB00E6D359 /* MnemonicNew.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CD843FB287423EB00E6D359 /* MnemonicNew.storyboard */; };
 		1CD843FE2874245400E6D359 /* MnemonicSwitchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD843FD2874245400E6D359 /* MnemonicSwitchCollectionViewCell.swift */; };
 		1CD844002874257500E6D359 /* MnemonicSwitchTextInputCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD843FF2874257500E6D359 /* MnemonicSwitchTextInputCollectionViewCell.swift */; };
 		1CE66BCA2848EA9900AB6ACA /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BC92848EA9900AB6ACA /* ChatService.swift */; };
@@ -431,8 +427,7 @@
 		D157F7EE27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */; };
 		D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B06C227B6D23C008C3C62 /* GradienView.swift */; };
 		D1966C3C281468C300550332 /* SecretStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1966C3B281468C300550332 /* SecretStorageTests.swift */; };
-		D19A20BC2815CA7D008A84CD /* Bip39.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C33D3E14DE9116A15DA02 /* Bip39.swift */; };
-		D19A20BF2815F843008A84CD /* SecretStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D2A7A195294A4542553 /* SecretStorage.swift */; };
+		D19A20BC2815CA7D008A84CD /* OldBip39.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C33D3E14DE9116A15DA02 /* OldBip39.swift */; };
 		D1A564C12843E24700D4B7D8 /* CoreCrypto.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A564C02843E24700D4B7D8 /* CoreCrypto.xcframework */; };
 		D1A564C42843E2BE00D4B7D8 /* IosCryptoPrimitivesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A564C32843E2BE00D4B7D8 /* IosCryptoPrimitivesProvider.swift */; };
 		D1A67140283D6BAE0042A448 /* web3lib.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A6713F283D6BAE0042A448 /* web3lib.xcframework */; };
@@ -479,17 +474,18 @@
 		1A4C3228790C1569B37F5179 /* AppsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsService.swift; sourceTree = "<group>"; };
 		1A4C325A6875E5041A491945 /* CollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
 		1A4C3378B5287B6A9BDE65CD /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
-		1A4C33D3E14DE9116A15DA02 /* Bip39.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bip39.swift; sourceTree = "<group>"; };
+		1A4C33D3E14DE9116A15DA02 /* OldBip39.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldBip39.swift; sourceTree = "<group>"; };
 		1A4C34077200A9E856B77DDF /* DegenService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenService.swift; sourceTree = "<group>"; };
 		1A4C344022DBA2423C0F15F6 /* CandlesViewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandlesViewViewModel.swift; sourceTree = "<group>"; };
+		1A4C3553B19E38E28C955332 /* KeyStoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreService.swift; sourceTree = "<group>"; };
 		1A4C359691FCF66942DF6CEF /* CandlesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandlesView.swift; sourceTree = "<group>"; };
 		1A4C3635DC5425C3CA3A2D25 /* CultServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultServiceAssembler.swift; sourceTree = "<group>"; };
 		1A4C3644A9D218CC991B2A56 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		1A4C3649032759624C3E2734 /* CardFlipAnimatedTransitioning2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFlipAnimatedTransitioning2.swift; sourceTree = "<group>"; };
-		1A4C36CAEB50425CE9839ED4 /* KeyStoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreService.swift; sourceTree = "<group>"; };
+		1A4C36CAEB50425CE9839ED4 /* OldKeyStoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldKeyStoreService.swift; sourceTree = "<group>"; };
 		1A4C36ECC90C8D924B7C413B /* CultProposal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposal.swift; sourceTree = "<group>"; };
 		1A4C375870963EEF9ECBE64B /* DApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DApp.swift; sourceTree = "<group>"; };
-		1A4C376D2673983B26F249FF /* KeyStoreItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreItem.swift; sourceTree = "<group>"; };
+		1A4C376D2673983B26F249FF /* OldKeyStoreItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldKeyStoreItem.swift; sourceTree = "<group>"; };
 		1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsService.swift; sourceTree = "<group>"; };
 		1A4C388B9A42E6A279D2867F /* AccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
 		1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewEffectViewiOS14.swift; sourceTree = "<group>"; };
@@ -499,7 +495,7 @@
 		1A4C39FB21CCAF442F3001E6 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		1A4C3B70AA1B0BC942B15671 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
-		1A4C3D2A7A195294A4542553 /* SecretStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecretStorage.swift; sourceTree = "<group>"; };
+		1A4C3D2A7A195294A4542553 /* OldSecretStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldSecretStorage.swift; sourceTree = "<group>"; };
 		1A4C3D40E32D58F958911B60 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		1A4C3DAB38F681061328F3F0 /* NetworksService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksService.swift; sourceTree = "<group>"; };
 		1A4C3DBA41AF75471C619124 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
@@ -590,9 +586,7 @@
 		1C60C1E4285724D0003BE25D /* KeyStorePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStorePresenter.swift; sourceTree = "<group>"; };
 		1C60C1E5285724D0003BE25D /* KeyStoreViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreViewModel.swift; sourceTree = "<group>"; };
 		1C60C1E7285724D0003BE25D /* ButtonsSheetViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsSheetViewCell.swift; sourceTree = "<group>"; };
-		1C60C1E8285724D0003BE25D /* ButtonsSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsSheetView.swift; sourceTree = "<group>"; };
 		1C60C1E9285724D0003BE25D /* ButtonsSheetViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsSheetViewModel.swift; sourceTree = "<group>"; };
-		1C60C1EA285724D0003BE25D /* KeyStoreWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C60C1EB285724D0003BE25D /* KeyStoreWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreWireframe.swift; sourceTree = "<group>"; };
 		1C60C1EC285724D0003BE25D /* KeyStoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreCell.swift; sourceTree = "<group>"; };
 		1C60C1ED285724D0003BE25D /* KeyStoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreView.swift; sourceTree = "<group>"; };
@@ -613,14 +607,13 @@
 		1C60C1FF285724D0003BE25D /* AlertPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		1C60C200285724D0003BE25D /* AlertContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertContext.swift; sourceTree = "<group>"; };
 		1C60C201285724D0003BE25D /* AlertWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
-		1C60C204285724D0003BE25D /* MnemonicWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicWireframe.swift; sourceTree = "<group>"; };
-		1C60C205285724D0003BE25D /* MnemonicViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicViewModel.swift; sourceTree = "<group>"; };
-		1C60C206285724D0003BE25D /* MnemonicWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicWireframeFactory.swift; sourceTree = "<group>"; };
-		1C60C207285724D0003BE25D /* MnemonicPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicPresenter.swift; sourceTree = "<group>"; };
-		1C60C208285724D0003BE25D /* MnemonicInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicInteractor.swift; sourceTree = "<group>"; };
-		1C60C209285724D0003BE25D /* MnemonicView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicView.swift; sourceTree = "<group>"; };
-		1C60C20B285724D0003BE25D /* MnemonicContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicContext.swift; sourceTree = "<group>"; };
-		1C60C20C285724D0003BE25D /* MnemonicWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C60C204285724D0003BE25D /* MnemonicNewWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicNewWireframe.swift; sourceTree = "<group>"; };
+		1C60C205285724D0003BE25D /* MnemonicNewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicNewViewModel.swift; sourceTree = "<group>"; };
+		1C60C206285724D0003BE25D /* MnemonicNewWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicNewWireframeFactory.swift; sourceTree = "<group>"; };
+		1C60C207285724D0003BE25D /* MnemonicNewPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicNewPresenter.swift; sourceTree = "<group>"; };
+		1C60C208285724D0003BE25D /* MnemonicNewInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicNewInteractor.swift; sourceTree = "<group>"; };
+		1C60C209285724D0003BE25D /* MnemonicNewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicNewView.swift; sourceTree = "<group>"; };
+		1C60C20B285724D0003BE25D /* MnemonicNewContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicNewContext.swift; sourceTree = "<group>"; };
 		1C60C20E285724D0003BE25D /* DashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		1C60C210285724D0003BE25D /* DashboardNFTCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardNFTCell.swift; sourceTree = "<group>"; };
 		1C60C211285724D0003BE25D /* DashboardHeaderNameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardHeaderNameView.swift; sourceTree = "<group>"; };
@@ -778,9 +771,7 @@
 		1C6487112832DE4D0091A12D /* ReachabilityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityService.swift; sourceTree = "<group>"; };
 		1C6487132832DE560091A12D /* ReachabilityServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityServiceAssembler.swift; sourceTree = "<group>"; };
 		1C6487152832DEFE0091A12D /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
-		1C6487172832E2720091A12D /* DefaultKeyStoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKeyStoreService.swift; sourceTree = "<group>"; };
-		1C64871A2832E3490091A12D /* KeyStoreServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreServiceAssembler.swift; sourceTree = "<group>"; };
-		1C64871D2832E3D60091A12D /* OldKeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldKeyChainService.swift; sourceTree = "<group>"; };
+		1C64871D2832E3D60091A12D /* KeyChainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainService.swift; sourceTree = "<group>"; };
 		1C6487222832E4BA0091A12D /* DefaultDegenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDegenService.swift; sourceTree = "<group>"; };
 		1C6487242832E4D40091A12D /* DegenServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DegenServiceAssembler.swift; sourceTree = "<group>"; };
 		1C6487262832E5150091A12D /* DefaultAppsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAppsService.swift; sourceTree = "<group>"; };
@@ -858,7 +849,7 @@
 		1CD843F32874215E00E6D359 /* MnemonicSegmentWithTextAndSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicSegmentWithTextAndSwitchCell.swift; sourceTree = "<group>"; };
 		1CD843F42874215E00E6D359 /* MnemonicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicCell.swift; sourceTree = "<group>"; };
 		1CD843F92874236C00E6D359 /* MnemonicTextInputCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicTextInputCollectionViewCell.swift; sourceTree = "<group>"; };
-		1CD843FB287423EB00E6D359 /* Mnemonic.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Mnemonic.storyboard; sourceTree = "<group>"; };
+		1CD843FB287423EB00E6D359 /* MnemonicNew.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MnemonicNew.storyboard; sourceTree = "<group>"; };
 		1CD843FD2874245400E6D359 /* MnemonicSwitchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicSwitchCollectionViewCell.swift; sourceTree = "<group>"; };
 		1CD843FF2874257500E6D359 /* MnemonicSwitchTextInputCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicSwitchTextInputCollectionViewCell.swift; sourceTree = "<group>"; };
 		1CE66BC92848EA9900AB6ACA /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
@@ -950,7 +941,7 @@
 			children = (
 				1A4C3E102C6A06DEC7657DD0 /* CryptoUtils.swift */,
 				D1A564C32843E2BE00D4B7D8 /* IosCryptoPrimitivesProvider.swift */,
-				1A4C33D3E14DE9116A15DA02 /* Bip39.swift */,
+				1A4C33D3E14DE9116A15DA02 /* OldBip39.swift */,
 			);
 			path = CryptoUtils;
 			sourceTree = "<group>";
@@ -999,10 +990,10 @@
 		1A4C378CF260A81DDB68B039 /* KeyStore */ = {
 			isa = PBXGroup;
 			children = (
-				1C6487172832E2720091A12D /* DefaultKeyStoreService.swift */,
-				1A4C36CAEB50425CE9839ED4 /* KeyStoreService.swift */,
-				1C64871A2832E3490091A12D /* KeyStoreServiceAssembler.swift */,
-				1C6487192832E3290091A12D /* Internal */,
+				1A4C376D2673983B26F249FF /* OldKeyStoreItem.swift */,
+				1A4C3D2A7A195294A4542553 /* OldSecretStorage.swift */,
+				1A4C36CAEB50425CE9839ED4 /* OldKeyStoreService.swift */,
+				1A4C3553B19E38E28C955332 /* KeyStoreService.swift */,
 			);
 			path = KeyStore;
 			sourceTree = "<group>";
@@ -1187,7 +1178,7 @@
 				1C60C20D285724D0003BE25D /* Dashboard */,
 				1C60C272285724D0003BE25D /* Degen */,
 				1C60C1E1285724D0003BE25D /* KeyStore */,
-				1C60C202285724D0003BE25D /* Mnemonic */,
+				1C60C202285724D0003BE25D /* MnemonicNew */,
 				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
 				1C54DBFB2860E59600E378F6 /* NetworkPicker */,
 				1C60C21C285724D0003BE25D /* Networks */,
@@ -1269,7 +1260,6 @@
 				1C60C1E5285724D0003BE25D /* KeyStoreViewModel.swift */,
 				1C60C1EB285724D0003BE25D /* KeyStoreWireframe.swift */,
 				1C60C1E3285724D0003BE25D /* KeyStoreWireframeFactory.swift */,
-				1C60C1EA285724D0003BE25D /* KeyStoreWireframeFactoryAssembler.swift */,
 				1C60C1E6285724D0003BE25D /* ButtonSheetView */,
 			);
 			path = KeyStore;
@@ -1278,7 +1268,6 @@
 		1C60C1E6285724D0003BE25D /* ButtonSheetView */ = {
 			isa = PBXGroup;
 			children = (
-				1C60C1E8285724D0003BE25D /* ButtonsSheetView.swift */,
 				1C60C1E7285724D0003BE25D /* ButtonsSheetViewCell.swift */,
 				1C60C1E9285724D0003BE25D /* ButtonsSheetViewModel.swift */,
 			);
@@ -1324,21 +1313,20 @@
 			path = Alert;
 			sourceTree = "<group>";
 		};
-		1C60C202285724D0003BE25D /* Mnemonic */ = {
+		1C60C202285724D0003BE25D /* MnemonicNew */ = {
 			isa = PBXGroup;
 			children = (
-				1CD843FB287423EB00E6D359 /* Mnemonic.storyboard */,
-				1C60C20B285724D0003BE25D /* MnemonicContext.swift */,
-				1C60C208285724D0003BE25D /* MnemonicInteractor.swift */,
-				1C60C207285724D0003BE25D /* MnemonicPresenter.swift */,
-				1C60C209285724D0003BE25D /* MnemonicView.swift */,
-				1C60C205285724D0003BE25D /* MnemonicViewModel.swift */,
-				1C60C204285724D0003BE25D /* MnemonicWireframe.swift */,
-				1C60C206285724D0003BE25D /* MnemonicWireframeFactory.swift */,
-				1C60C20C285724D0003BE25D /* MnemonicWireframeFactoryAssembler.swift */,
+				1CD843FB287423EB00E6D359 /* MnemonicNew.storyboard */,
+				1C60C20B285724D0003BE25D /* MnemonicNewContext.swift */,
+				1C60C208285724D0003BE25D /* MnemonicNewInteractor.swift */,
+				1C60C207285724D0003BE25D /* MnemonicNewPresenter.swift */,
+				1C60C209285724D0003BE25D /* MnemonicNewView.swift */,
+				1C60C205285724D0003BE25D /* MnemonicNewViewModel.swift */,
+				1C60C204285724D0003BE25D /* MnemonicNewWireframe.swift */,
+				1C60C206285724D0003BE25D /* MnemonicNewWireframeFactory.swift */,
 				1CD843F02874215E00E6D359 /* Cells */,
 			);
-			path = Mnemonic;
+			path = MnemonicNew;
 			sourceTree = "<group>";
 		};
 		1C60C20D285724D0003BE25D /* Dashboard */ = {
@@ -1674,19 +1662,10 @@
 			path = Reachability;
 			sourceTree = "<group>";
 		};
-		1C6487192832E3290091A12D /* Internal */ = {
-			isa = PBXGroup;
-			children = (
-				1A4C376D2673983B26F249FF /* KeyStoreItem.swift */,
-				1A4C3D2A7A195294A4542553 /* SecretStorage.swift */,
-			);
-			path = Internal;
-			sourceTree = "<group>";
-		};
 		1C64871C2832E3B90091A12D /* KeychainService */ = {
 			isa = PBXGroup;
 			children = (
-				1C64871D2832E3D60091A12D /* OldKeyChainService.swift */,
+				1C64871D2832E3D60091A12D /* KeyChainService.swift */,
 			);
 			path = KeychainService;
 			sourceTree = "<group>";
@@ -2156,7 +2135,7 @@
 			);
 			mainGroup = D157F7BE27B69B6300578FF8;
 			packageReferences = (
-				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
 			);
 			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
 			projectDirPath = "";
@@ -2184,7 +2163,7 @@
 				1CAC5609286EFFC300CCB2B6 /* SFProDisplay-Regular.otf in Resources */,
 				D11A990A27B8615B00EDFDD0 /* NothingYouCouldDo-Regular.ttf in Resources */,
 				1C54DC5328683DDA00E378F6 /* NaokoAA-Bold.otf in Resources */,
-				1CD843FC287423EB00E6D359 /* Mnemonic.storyboard in Resources */,
+				1CD843FC287423EB00E6D359 /* MnemonicNew.storyboard in Resources */,
 				D11A990527B8615B00EDFDD0 /* GothicA1-ExtraBold.ttf in Resources */,
 				D11A990827B8615B00EDFDD0 /* GothicA1-Black.ttf in Resources */,
 				1CAC5603286EFFC300CCB2B6 /* SFProText-BoldItalic.otf in Resources */,
@@ -2300,9 +2279,9 @@
 				1C60C2F6285724D0003BE25D /* NFTDetailWireframeFactory.swift in Sources */,
 				1C6487432832E7EA0091A12D /* SettingsServiceAssembler.swift in Sources */,
 				1C54DC132862351100E378F6 /* QRCodeScanView.swift in Sources */,
-				1A4C3C9B866507D8700399F6 /* KeyStoreService.swift in Sources */,
+				1A4C3C9B866507D8700399F6 /* OldKeyStoreService.swift in Sources */,
 				1C64872D2832E5800091A12D /* AccountServiceAssembler.swift in Sources */,
-				1A4C3708C25B84EAA53D0FB6 /* KeyStoreItem.swift in Sources */,
+				1A4C3708C25B84EAA53D0FB6 /* OldKeyStoreItem.swift in Sources */,
 				1C54DBED285E834200E378F6 /* TokenAddInteractor.swift in Sources */,
 				1C60C2BD285724D0003BE25D /* ButtonsSheetViewModel.swift in Sources */,
 				1C60C2C7285724D0003BE25D /* ChatInteractor.swift in Sources */,
@@ -2333,7 +2312,7 @@
 				1C60C2FA285724D0003BE25D /* NFTDetailView+Content+Price.swift in Sources */,
 				1A4C37074D8859F0DC14C905 /* NavigationController.swift in Sources */,
 				1A4C3869B6A3E1BF415E15DB /* Global.swift in Sources */,
-				1C60C2DB285724D0003BE25D /* MnemonicContext.swift in Sources */,
+				1C60C2DB285724D0003BE25D /* MnemonicNewContext.swift in Sources */,
 				1C60C33E285724D1003BE25D /* SwapView.swift in Sources */,
 				1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */,
 				1C60C2C1285724D0003BE25D /* KeyStoreView.swift in Sources */,
@@ -2347,7 +2326,7 @@
 				1C60C321285724D1003BE25D /* AppsCell.swift in Sources */,
 				1C54DC152862351500E378F6 /* QRCodeScanViewModel.swift in Sources */,
 				1C60C2A3285724D0003BE25D /* SettingsActionCell.swift in Sources */,
-				1C60C2D6285724D0003BE25D /* MnemonicWireframeFactory.swift in Sources */,
+				1C60C2D6285724D0003BE25D /* MnemonicNewWireframeFactory.swift in Sources */,
 				1C60C35B285724D1003BE25D /* DegenViewModel.swift in Sources */,
 				1A4C39EAC9477080E80A6C07 /* EdgeCardsController.swift in Sources */,
 				1C60C341285724D1003BE25D /* AMMsInteractor.swift in Sources */,
@@ -2357,7 +2336,7 @@
 				1C60C308285724D1003BE25D /* NFTsDashboardWireframeFactory.swift in Sources */,
 				1C60C325285724D1003BE25D /* AppsView.swift in Sources */,
 				1C60C34E285724D1003BE25D /* CultProposalCell.swift in Sources */,
-				1C60C2D9285724D0003BE25D /* MnemonicView.swift in Sources */,
+				1C60C2D9285724D0003BE25D /* MnemonicNewView.swift in Sources */,
 				1C6487062832DC290091A12D /* ServiceDirectory.swift in Sources */,
 				1C60C32F285724D1003BE25D /* NFTsCollectionView+NFTs.swift in Sources */,
 				1CB3A1F62840D6B70092D667 /* NSLocalizedString+Extension.swift in Sources */,
@@ -2401,7 +2380,6 @@
 				1C60C2E3285724D0003BE25D /* AnimatedTextBarButton.swift in Sources */,
 				1C60C2B9285724D0003BE25D /* KeyStorePresenter.swift in Sources */,
 				1C60C347285724D1003BE25D /* CultProposalWireframeFactoryAssembler.swift in Sources */,
-				1C60C2BC285724D0003BE25D /* ButtonsSheetView.swift in Sources */,
 				1C60C2FB285724D0003BE25D /* NFTDetailWireframeFactoryAssembler.swift in Sources */,
 				1C54DBF5285F32DC00E378F6 /* TokenAddInputView.swift in Sources */,
 				1C54DC682869BE6500E378F6 /* DashboardButtonsCell.swift in Sources */,
@@ -2423,10 +2401,9 @@
 				1CE66BE4284CFB7600AB6ACA /* UITextView+Extensions.swift in Sources */,
 				1C60C2B3285724D0003BE25D /* TokenPickerView.swift in Sources */,
 				1C60C31E285724D1003BE25D /* AppsViewModel.swift in Sources */,
-				1C60C2D7285724D0003BE25D /* MnemonicPresenter.swift in Sources */,
+				1C60C2D7285724D0003BE25D /* MnemonicNewPresenter.swift in Sources */,
 				1C60C36B2857C5FE003BE25D /* TokenReceiveWireframeFactory.swift in Sources */,
 				1C6487382832E6BE0091A12D /* DefaultOnboardingService.swift in Sources */,
-				1C60C2BE285724D0003BE25D /* KeyStoreWireframeFactoryAssembler.swift in Sources */,
 				1CD843F52874215F00E6D359 /* MnemonicSettingCell.swift in Sources */,
 				1C60C318285724D1003BE25D /* AccountPresenter.swift in Sources */,
 				1C60C354285724D1003BE25D /* CultProposalsInteractor.swift in Sources */,
@@ -2451,7 +2428,6 @@
 				1CE66BCA2848EA9900AB6ACA /* ChatService.swift in Sources */,
 				1C60C346285724D1003BE25D /* AMMsCell.swift in Sources */,
 				1C6487362832E6650091A12D /* NFTsServiceAssembler.swift in Sources */,
-				1C64871B2832E3490091A12D /* KeyStoreServiceAssembler.swift in Sources */,
 				1C54DBF3285E83A300E378F6 /* TokenAddPresenter.swift in Sources */,
 				1C60C2F3285724D0003BE25D /* NFTDetailWireframe.swift in Sources */,
 				1C60C2CF285724D0003BE25D /* AlertView.swift in Sources */,
@@ -2478,7 +2454,7 @@
 				1CB3A1E42840D6B70092D667 /* Int+Extensions.swift in Sources */,
 				1C54DBE7285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift in Sources */,
 				1C60C348285724D1003BE25D /* CultProposalPresenter.swift in Sources */,
-				1C60C2D5285724D0003BE25D /* MnemonicViewModel.swift in Sources */,
+				1C60C2D5285724D0003BE25D /* MnemonicNewViewModel.swift in Sources */,
 				1CB3A1EA2840D6B70092D667 /* String+Extensions.swift in Sources */,
 				1C54DBF8285F8F3700E378F6 /* TokenAddCollectionViewCell.swift in Sources */,
 				1C60C309285724D1003BE25D /* RootWireframe.swift in Sources */,
@@ -2504,7 +2480,7 @@
 				1C60C314285724D1003BE25D /* AccountWireframe.swift in Sources */,
 				1C60C330285724D1003BE25D /* NFTsCollectionViewModel.swift in Sources */,
 				1C60C2AE285724D0003BE25D /* TokenPickerInteractor.swift in Sources */,
-				1C60C2D4285724D0003BE25D /* MnemonicWireframe.swift in Sources */,
+				1C60C2D4285724D0003BE25D /* MnemonicNewWireframe.swift in Sources */,
 				1C60C2A8285724D0003BE25D /* SettingsViewModel.swift in Sources */,
 				1C54DC072860E5CB00E378F6 /* NetworkPickerWireframeFactory.swift in Sources */,
 				1C60C35A285724D1003BE25D /* DegenInteractor.swift in Sources */,
@@ -2517,11 +2493,9 @@
 				1C60C350285724D1003BE25D /* CultProposalsWireframeFactoryAssemler.swift in Sources */,
 				1C54DC032860E5C100E378F6 /* NetworkPickerViewModel.swift in Sources */,
 				1C54DC1B2862352800E378F6 /* QRCodeScanWireframeFactoryAssembler.swift in Sources */,
-				1C60C2DC285724D0003BE25D /* MnemonicWireframeFactoryAssembler.swift in Sources */,
 				1C60C300285724D1003BE25D /* NFTsDashboardWireframe.swift in Sources */,
-				1C64871E2832E3D60091A12D /* OldKeyChainService.swift in Sources */,
+				1C64871E2832E3D60091A12D /* KeyChainService.swift in Sources */,
 				1CB3A1F42840D6B70092D667 /* UICollectionView+Extensions.swift in Sources */,
-				1C6487182832E2720091A12D /* DefaultKeyStoreService.swift in Sources */,
 				1A4C308B6FA11A032039F086 /* CandlesView.swift in Sources */,
 				1CB3A1EC2840D6B70092D667 /* UIView+LayoutConstraints+Extensions.swift in Sources */,
 				1A4C3C28443621328248F5A7 /* CandlesViewViewModel.swift in Sources */,
@@ -2575,7 +2549,7 @@
 				1C60C31D285724D1003BE25D /* AppsCollectionViewCell.swift in Sources */,
 				1C60C305285724D1003BE25D /* NFTsDashboardWireframeFactoryAssembler.swift in Sources */,
 				1C60C384285A649B003BE25D /* Web3ServiceLocalStorage.swift in Sources */,
-				1C60C2D8285724D0003BE25D /* MnemonicInteractor.swift in Sources */,
+				1C60C2D8285724D0003BE25D /* MnemonicNewInteractor.swift in Sources */,
 				1C6487122832DE4D0091A12D /* ReachabilityService.swift in Sources */,
 				1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */,
 				1C60C34D285724D1003BE25D /* CultProposalVoteView.swift in Sources */,
@@ -2617,7 +2591,7 @@
 				1C54DBFF2860E5B000E378F6 /* NetworkPickerPresenter.swift in Sources */,
 				1C60C2E0285724D0003BE25D /* DashboardWalletCell.swift in Sources */,
 				1C60C319285724D1003BE25D /* AccountWireframeFactoryAssembler.swift in Sources */,
-				1A4C3F175B65F553F0F5E86D /* SecretStorage.swift in Sources */,
+				1A4C3F175B65F553F0F5E86D /* OldSecretStorage.swift in Sources */,
 				1C60C331285724D1003BE25D /* NFTsCollectionWireframe.swift in Sources */,
 				1CD3FE8928559EF2008312DE /* Web3Service.swift in Sources */,
 				1A4C33E50A1388781E82DD29 /* CryptoUtils.swift in Sources */,
@@ -2631,7 +2605,7 @@
 				1C60C33C285724D1003BE25D /* SwapViewModel.swift in Sources */,
 				1C64873E2832E76B0091A12D /* StoreAssembler.swift in Sources */,
 				1C60C2B8285724D0003BE25D /* KeyStoreWireframeFactory.swift in Sources */,
-				1A4C34B44D253D748EFB2631 /* Bip39.swift in Sources */,
+				1A4C34B44D253D748EFB2631 /* OldBip39.swift in Sources */,
 				1A4C367CFF657470F7722F74 /* Currency.swift in Sources */,
 				1C9E31AC287700A100DD2031 /* TokenSendCTACollectionViewCell.swift in Sources */,
 				1C60C307285724D1003BE25D /* NFTsDashboardInteractor.swift in Sources */,
@@ -2640,6 +2614,7 @@
 				1A4C38C98450A3C5884565AC /* CultProposal.swift in Sources */,
 				1A4C3E41DA2739ED48CD12F9 /* CultServiceAssembler.swift in Sources */,
 				1C60C30E285724D1003BE25D /* AccountMarketInfoCell.swift in Sources */,
+				1A4C3CFB23D66DF60B4BCE71 /* KeyStoreService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2648,8 +2623,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1966C3C281468C300550332 /* SecretStorageTests.swift in Sources */,
-				D19A20BF2815F843008A84CD /* SecretStorage.swift in Sources */,
-				D19A20BC2815CA7D008A84CD /* Bip39.swift in Sources */,
+				D19A20BC2815CA7D008A84CD /* OldBip39.swift in Sources */,
 				1A4C3DD46D1762F337905047 /* CryptoUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3002,7 +2976,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -3015,7 +2989,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		1C5B603A284675B800ECBD79 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */

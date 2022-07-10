@@ -6,8 +6,8 @@ import Foundation
 import web3lib
 
 // https://github.com/ethereum/wiki/wiki/Web3-Secret-Storage-Definition#pbkdf2-sha-256
-struct SecretStorage: Codable {
-    let crypto: SecretStorage.Crypto
+struct OldSecretStorage: Codable {
+    let crypto: OldSecretStorage.Crypto
     let id: String
     let version: Int
     let address: String?
@@ -36,7 +36,7 @@ struct SecretStorage: Codable {
 
 // MARK: - Encrypt
 
-extension SecretStorage {
+extension OldSecretStorage {
 
     static func encrypt(
         _ data: Data,
@@ -49,7 +49,7 @@ extension SecretStorage {
         dkLen: Int = 32,
         cipher: String = "aes-128-ctr",
         w3wParams: W3WParams = .default()
-    ) throws -> SecretStorage {
+    ) throws -> OldSecretStorage {
         let id = UUID().uuidString
         let salt = try Data.secRandom(32)
         let iv = try Data.secRandom(16)
@@ -63,7 +63,7 @@ extension SecretStorage {
         let tail16Byte = dKey[(dKey.count - 16)...(dKey.count - 1)]
         let cypher = try aesCTR(key: encryptionKey, data: data, iv: iv)
         let mac = HashKt.keccak256(data: Data().appending(tail16Byte).appending(cypher).byteArray()).toDataFull()
-        return SecretStorage(
+        return OldSecretStorage(
             crypto: .init(
                 ciphertext: cypher.hexString(),
                 cipher: cipher,
@@ -87,7 +87,7 @@ extension SecretStorage {
 
 // MARK: - Decrypt
 
-extension SecretStorage {
+extension OldSecretStorage {
 
     func decrypt(_ password: String) throws -> Data {
 
@@ -123,7 +123,7 @@ extension SecretStorage {
 
 // MARK: - Crypto
 
-extension SecretStorage {
+extension OldSecretStorage {
 
     struct Crypto: Codable {
         var ciphertext: String
@@ -138,7 +138,7 @@ extension SecretStorage {
 
 // MARK: - KdfParams
 
-extension SecretStorage.Crypto {
+extension OldSecretStorage.Crypto {
 
     struct KdfParams: Codable {
         var n: Int?
@@ -165,7 +165,7 @@ extension SecretStorage.Crypto {
 
 // MARK: - CipherParams
 
-extension SecretStorage.Crypto {
+extension OldSecretStorage.Crypto {
 
     struct CipherParams: Codable {
         var iv: String
@@ -174,7 +174,7 @@ extension SecretStorage.Crypto {
 
 // MARK: - W3WParams
 
-extension SecretStorage {
+extension OldSecretStorage {
 
     struct W3WParams: Codable {
 
@@ -198,7 +198,7 @@ extension SecretStorage {
 
 // MARK: - ItemType
 
-extension SecretStorage.W3WParams {
+extension OldSecretStorage.W3WParams {
 
     enum ItemType: Int, Codable {
         case key
@@ -208,7 +208,7 @@ extension SecretStorage.W3WParams {
 
 // MARK: - PasswordType
 
-extension SecretStorage.W3WParams {
+extension OldSecretStorage.W3WParams {
 
     enum PasswordType: Int, Codable, CaseIterable {
         case pin
@@ -230,7 +230,7 @@ extension SecretStorage.W3WParams {
 
 // MARK: - Error
 
-extension SecretStorage {
+extension OldSecretStorage {
 
     enum SError: Error {
         case pbkdf2FailedToDeriveKey

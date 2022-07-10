@@ -15,12 +15,12 @@ final class DefaultRootPresenter {
 
     private weak var view: RootView?
     private let wireframe: RootWireframe
-    private let keyStoreService: KeyStoreService
+    private let keyStoreService: OldKeyStoreService
 
     init(
         view: RootView,
         wireframe: RootWireframe,
-        keyStoreService: KeyStoreService
+        keyStoreService: OldKeyStoreService
     ) {
         self.view = view
         self.wireframe = wireframe
@@ -35,7 +35,7 @@ extension DefaultRootPresenter: RootPresenter {
     func present() {
 
         wireframe.navigate(
-            to: !keyStoreService.isEmpty() ? .keyStore : .dashboard,
+            to: keyStoreService.isEmpty() ? .keyStore : .dashboard,
             animated: false
         )
     }

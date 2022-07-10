@@ -2,16 +2,48 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-final class DefaultKeyStoreService {
+import Foundation
 
-    var selectedKeyStoreItem: KeyStoreItem? {
+protocol OldKeyStoreService: AnyObject {
+
+    typealias KeyStoreHandler = ([OldKeyStoreItem]) -> Void
+
+    var selectedKeyStoreItem: OldKeyStoreItem? { get set }
+
+    func latestItems() -> [OldKeyStoreItem]
+
+    /// Generates new `KeyStoreItem` but does not save it to `KeyStore`
+    func generateNewKeyStoreItem() -> OldKeyStoreItem
+
+    /// returns nil if items are not loaded yet
+    func keyStoreItem(at idx: Int) -> OldKeyStoreItem?
+
+    func add(_ keyStoreItem: OldKeyStoreItem) throws
+
+    func delete(_ keyStoreItem: OldKeyStoreItem) throws
+
+    func reset() throws
+
+    /// Checks if any data is present in `KeyStore`, returns correct value
+    /// event before `load(_:)` is called
+    func isEmpty() -> Bool
+
+    func load(_ handler: KeyStoreHandler)
+
+    func createDefaultKeyStoreItem()
+}
+
+
+final class OldDefaultKeyStoreService {
+
+    var selectedKeyStoreItem: OldKeyStoreItem? {
         get { store.get(Constant.activeKeyStoreItem) }
         set { try? store.set(newValue, key: Constant.activeKeyStoreItem) }
     }
 
     private let store: Store
     private let keyChainService: OldKeyChainService
-    private var keyStoreItems: [KeyStoreItem]
+    private var keyStoreItems: [OldKeyStoreItem]
 
     init(
         store: Store,
@@ -24,21 +56,21 @@ final class DefaultKeyStoreService {
     }
 }
 
-extension DefaultKeyStoreService: KeyStoreService {
+extension OldDefaultKeyStoreService: OldKeyStoreService {
 
-    func latestItems() -> [KeyStoreItem] {
+    func latestItems() -> [OldKeyStoreItem] {
         return keyStoreItems
     }
 
-    func generateNewKeyStoreItem() -> KeyStoreItem {
-        KeyStoreItem.blank()
+    func generateNewKeyStoreItem() -> OldKeyStoreItem {
+        OldKeyStoreItem.blank()
     }
 
-    func keyStoreItem(at idx: Int) -> KeyStoreItem? {
+    func keyStoreItem(at idx: Int) -> OldKeyStoreItem? {
         keyStoreItems[safe: idx]
     }
 
-    func add(_ keyStoreItem: KeyStoreItem) throws {
+    func add(_ keyStoreItem: OldKeyStoreItem) throws {
         // TODO: Refactor entire logic here
         let id = keyStoreItem.id
         var keyStoreItem = keyStoreItem
@@ -59,7 +91,7 @@ extension DefaultKeyStoreService: KeyStoreService {
         keyStoreItems.append(keyStoreItem)
     }
 
-    func delete(_ keyStoreItem: KeyStoreItem) throws {
+    func delete(_ keyStoreItem: OldKeyStoreItem) throws {
         keyStoreItems.removeAll(where: { $0.uuid == keyStoreItem.uuid })
         keyChainService.removeItem(keyStoreItem)
     }
@@ -83,15 +115,15 @@ extension DefaultKeyStoreService: KeyStoreService {
         try? add(item)
     }
 
-    func keyChainItems() -> [KeyStoreItem] {
+    func keyChainItems() -> [OldKeyStoreItem] {
         let decoder = JSONDecoder()
         do {
             let dataItems = try keyChainService.allKeyStoreItems()
-            var items = [KeyStoreItem]()
+            var items = [OldKeyStoreItem]()
             for data in dataItems {
-                let secureStorage = try decoder.decode(SecretStorage.self, from: data)
+                let secureStorage = try decoder.decode(OldSecretStorage.self, from: data)
                 let password = try keyChainService.password(for: secureStorage.id)
-                let item = KeyStoreItem.from(secureStorage, password: password)
+                let item = OldKeyStoreItem.from(secureStorage, password: password)
                 items.append(item)
             }
             return items
@@ -103,7 +135,7 @@ extension DefaultKeyStoreService: KeyStoreService {
     }
 }
 
-private extension DefaultKeyStoreService {
+private extension OldDefaultKeyStoreService {
 
     func randomPassword() -> String {
         var retryCnt = 0
@@ -118,10 +150,24 @@ private extension DefaultKeyStoreService {
     }
 }
 
-private extension DefaultKeyStoreService {
+private extension OldDefaultKeyStoreService {
 
     enum Constant {
         static let keyStoreItems = "keyStoreItemsKey"
         static let activeKeyStoreItem = "activeKeyStoreItemKey"
+    }
+}
+
+// MARK: - Assembler
+
+final class OldKeyStoreServiceAssembler: AssemblerComponent {
+
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .singleton) { resolver -> OldKeyStoreService in
+            OldDefaultKeyStoreService(
+                store: resolver.resolve(),
+                keyChainService: resolver.resolve()
+            )
+        }
     }
 }

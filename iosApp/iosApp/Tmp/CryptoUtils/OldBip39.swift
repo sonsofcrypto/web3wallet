@@ -5,7 +5,7 @@
 import Foundation
 import CryptoKit
 
-class Bip39 {
+class OldBip39 {
 
     let mnemonic: [String]
     let salt: String
@@ -26,7 +26,7 @@ class Bip39 {
         wordList: WordList = .english
     ) throws {
         // TODO: Validate entropy size
-        let entropyChecksumStr = Bip39.entropyWithCheckString(entropy)
+        let entropyChecksumStr = OldBip39.entropyWithCheckString(entropy)
         var mnemonic = [String]()
 
         for i in 0..<(entropyChecksumStr.count / 11) {
@@ -93,7 +93,7 @@ class Bip39 {
 
 // MARK: - Utils
 
-private extension Bip39 {
+private extension OldBip39 {
 
     static func entropyWithCheckString(_ entropy: Data) -> String {
         // checksum length is entropyLen / 32, count is in bytes so divide by 4
@@ -126,7 +126,7 @@ private extension Bip39 {
 
 // MARK: - EntropySize
 
-extension Bip39 {
+extension OldBip39 {
 
     enum EntropySize: Int, CaseIterable {
         case entropy128 = 128
@@ -139,7 +139,7 @@ extension Bip39 {
 
 // MARK: - Error
 
-extension Bip39 {
+extension OldBip39 {
 
     enum Bip39Error: Error {
         case failedToDeriveKeyFromMnemonic
@@ -152,7 +152,7 @@ extension Bip39 {
 
 // MARK: - WordList
 
-extension Bip39 {
+extension OldBip39 {
 
     enum WordList {
         case english

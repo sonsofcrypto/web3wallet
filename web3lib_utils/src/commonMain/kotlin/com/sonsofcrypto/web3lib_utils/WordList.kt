@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3lib_utils
 
 enum class WordList {
-    ENGLISH,
+    ENGLISH;
 //    SPANISH,
 //    FRENCH,
 //    PORTUGUESE,
@@ -10,11 +10,27 @@ enum class WordList {
 //    JAPANESE,
 //    KOREAN,
 //    CHINESE_SIMPLIFIED,
-//    CHINESE_TRADITIONAL,
+//    CHINESE_TRADITIONAL;
+
+    companion object {
+
+        fun fromLocaleString(locale: String): WordList = when (locale) {
+            "en" -> WordList.ENGLISH
+//            "es" -> WordList.SPANISH
+//            "fr" -> WordList.FRENCH
+//            "pt" -> WordList.PORTUGUESE
+//            "it" -> WordList.ITALIAN
+//            "cz" -> WordList.CZECH
+//            "ja" -> WordList.JAPANESE
+//            "ko" -> WordList.KOREAN
+//            "zh_cn" -> WordList.CHINESE_SIMPLIFIED
+//            "zh_tw" -> WordList.CHINESE_TRADITIONAL
+            else -> ENGLISH
+        }
+    }
 }
 
-fun WordList.words(): List<String> {
-    return when (this) {
+fun WordList.words(): List<String> = when (this) {
         WordList.ENGLISH -> WORDLIST_ENGLISH
 //        WordList.SPANISH -> WORDLIST_SPANISH
 //        WordList.FRENCH -> WORDLIST_FRENCH
@@ -26,11 +42,22 @@ fun WordList.words(): List<String> {
 //        WordList.CHINESE_SIMPLIFIED -> WORDLIST_CHINESE_SIMPLIFIED
 //        WordList.CHINESE_TRADITIONAL -> WORDLIST_CHINESE_TRADITIONAL
     }
-}
 
 fun WordList.word(index: Int): String = words()[index]
 fun WordList.indexOf(word: String): Int = words().indexOf(word) // TODO("Optimize performance")
 
+fun WordList.localeString(): String = when (this) {
+        WordList.ENGLISH -> "en"
+//        WordList.SPANISH -> "es"
+//        WordList.FRENCH -> "fr"
+//        WordList.PORTUGUESE -> "pt"
+//        WordList.ITALIAN -> "it"
+//        WordList.CZECH -> "cz"
+//        WordList.JAPANESE -> "ja"
+//        WordList.KOREAN -> "ko"
+//        WordList.CHINESE_SIMPLIFIED -> "zh_cn"
+//        WordList.CHINESE_TRADITIONAL -> "zh_tw"
+    }
 
 /* bip39 english words */
 val WORDLIST_ENGLISH: List<String> = listOf(

@@ -63,12 +63,11 @@ extension MnemonicSwitchTextInputCollectionViewCell: UITextFieldDelegate {
 extension MnemonicSwitchTextInputCollectionViewCell {
 
     func update(
-        with viewModel: MnemonicViewModel.SwitchWithTextInput,
+        with viewModel: MnemonicNewViewModel.SwitchWithTextInput,
         switchAction: ((Bool)->Void)?,
         textChangeHandler: ((String)->Void)?,
         descriptionAction: (()->Void)?
     ) -> Self {
-        
         titleLabel.text = viewModel.title
         onOffSwitch.setOn(viewModel.onOff, animated: false)
         textField.text = viewModel.text
@@ -90,11 +89,10 @@ extension MnemonicSwitchTextInputCollectionViewCell {
 
         descriptionLabel.attributedText = attrStr
         vStack.setCustomSpacing(viewModel.onOff ? 2 : 2, after: hStack)
-        
+
         self.switchAction = switchAction
         self.textChangeHandler = textChangeHandler
         self.descriptionAction = descriptionAction
-
         return self
     }
     

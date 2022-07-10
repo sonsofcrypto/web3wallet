@@ -107,16 +107,14 @@ class Bip39(val mnemonic: List<String>, val salt: String, val worldList: WordLis
                 words.add(worldList.word(idx))
             }
 
-            // TODO("Check that seed produces valid master key")
-
             return Bip39(words, salt, worldList)
         }
 
-        private fun isValidEntropySize(size: Int): Boolean = EntropySize.values()
-            .map { it.value / 8 }
+        fun isValidWordsSize(size: Int): Boolean = listOf(12, 15, 18, 21, 24)
             .contains(size)
 
-        private fun isValidWordsSize(size: Int): Boolean = listOf(12, 15, 18, 21, 24)
+        private fun isValidEntropySize(size: Int): Boolean = EntropySize.values()
+            .map { it.value / 8 }
             .contains(size)
     }
 }

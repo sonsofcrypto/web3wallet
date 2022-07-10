@@ -3,18 +3,19 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
-protocol MnemonicWireframeFactory {
+protocol MnemonicNewWireframeFactory {
 
     func makeWireframe(
         _ parent: UIViewController?,
-        context: MnemonicContext
-    ) -> MnemonicWireframe
+        context: MnemonicNewContext
+    ) -> MnemonicNewWireframe
 }
 
 // MARK: - DefaultMnemonicWireframeFactory
 
-final class DefaultMnemonicWireframeFactory {
+final class DefaultMnemonicNewWireframeFactory {
 
     private let keyStoreService: KeyStoreService
     private let settingsService: SettingsService
@@ -30,18 +31,31 @@ final class DefaultMnemonicWireframeFactory {
 
 // MARK: - MnemonicWireframeFactory
 
-extension DefaultMnemonicWireframeFactory: MnemonicWireframeFactory {
+extension DefaultMnemonicNewWireframeFactory: MnemonicNewWireframeFactory {
 
     func makeWireframe(
         _ parent: UIViewController?,
-        context: MnemonicContext
-    ) -> MnemonicWireframe {
+        context: MnemonicNewContext
+    ) -> MnemonicNewWireframe {
         
-        DefaultMnemonicWireframe(
+        DefaultMnemonicNewWireframe(
             parent: parent,
             context: context,
             keyStoreService: keyStoreService,
             settingsService: settingsService
         )
+    }
+}
+
+// MARK: - Assembler
+
+final class MnemonicNewWireframeFactoryAssembler: AssemblerComponent {
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> MnemonicNewWireframeFactory in
+            DefaultMnemonicNewWireframeFactory(
+                keyStoreService: resolver.resolve(),
+                settingsService: resolver.resolve()
+            )
+        }
     }
 }

@@ -21,7 +21,7 @@ class MnemonicSegmentWithTextAndSwitchCell: CollectionViewCell {
     var selectSegmentAction: ((Int) -> Void)?
     var textChangeHandler: ((String)->Void)?
     var switchAction: ((Bool)->Void)?
-
+    
     override func awakeFromNib() {
         
         super.awakeFromNib()
@@ -114,7 +114,7 @@ extension MnemonicSegmentWithTextAndSwitchCell: UITextFieldDelegate {
 extension MnemonicSegmentWithTextAndSwitchCell {
 
     func update(
-        with viewModel: MnemonicViewModel.SegmentWithTextAndSwitchInput,
+        with viewModel: MnemonicNewViewModel.SegmentWithTextAndSwitchInput,
         selectSegmentAction: ((Int) -> Void)?,
         textChangeHandler: ((String)->Void)?,
         switchHandler: ((Bool)->Void)?

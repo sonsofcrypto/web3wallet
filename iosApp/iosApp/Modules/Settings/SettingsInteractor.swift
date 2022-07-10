@@ -19,14 +19,14 @@ protocol SettingsInteractor: AnyObject {
 final class DefaultSettingsInteractor {
 
     private var settingsService: SettingsService
-    private var keyStoreService: KeyStoreService
+    private var keyStoreService: OldKeyStoreService
 
     private(set) var title: String
     private(set) var items: [SettingsItem]
 
     init(
         _ settingsService: SettingsService,
-        keyStoreService: KeyStoreService,
+        keyStoreService: OldKeyStoreService,
         title: String = "settings",
         settings: [SettingsItem] = DefaultSettingsInteractor.rootSettings()
     ) {

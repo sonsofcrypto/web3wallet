@@ -16,11 +16,11 @@ protocol SettingsWireframeFactory {
 final class DefaultSettingsWireframeFactory {
 
     private let settingsService: SettingsService
-    private let keyStoreService: KeyStoreService
+    private let keyStoreService: OldKeyStoreService
 
     init(
         settingsService: SettingsService,
-        keyStoreService: KeyStoreService
+        keyStoreService: OldKeyStoreService
     ) {
         self.settingsService = settingsService
         self.keyStoreService = keyStoreService

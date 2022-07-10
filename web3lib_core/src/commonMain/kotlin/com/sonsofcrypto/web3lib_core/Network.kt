@@ -4,4 +4,6 @@ class Network(
     val id: UInt,
     val name: String,
     val resolverAddress: Address?
-)
+) {
+
+}

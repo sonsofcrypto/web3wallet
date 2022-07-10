@@ -11,7 +11,7 @@ protocol DashboardWireframeFactory: AnyObject {
 
 final class DefaultDashboardWireframeFactory {
 
-    private let keyStoreService: KeyStoreService
+    private let keyStoreService: OldKeyStoreService
     private let accountWireframeFactory: AccountWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
@@ -24,7 +24,7 @@ final class DefaultDashboardWireframeFactory {
     private let nftsService: NFTsService
 
     init(
-        keyStoreService: KeyStoreService,
+        keyStoreService: OldKeyStoreService,
         accountWireframeFactory: AccountWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,

@@ -2,7 +2,6 @@ package com.sonsofcrypto.web3wallet.android
 
 import com.sonsofcrypto.keyvaluestore.KeyValueStore
 import com.sonsofcrypto.web3lib_keystore.*
-import com.sonsofcrypto.web3lib_utils.hexStringToByteArray
 import com.sonsofcrypto.web3lib_utils.secureRand
 import com.sonsofcrypto.web3lib_utils.toHexString
 import java.lang.Exception
@@ -16,6 +15,7 @@ class KeyStoreTest {
         testSecretStorageEncryptDecrypt()
         testSecretStorageDecrypt()
         testKeyStore()
+        testKeyStoreSelected()
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
@@ -25,7 +25,7 @@ class KeyStoreTest {
     fun testSecretStorageEncryptDecrypt() {
         val data = secureRand(32)
         val password = "testpass"
-        val secretStorage = SecretStorage.encypt(
+        val secretStorage = SecretStorage.encrypt(
             id = mockKeyStoreItem.uuid,
             data = data,
             password = password,
@@ -59,7 +59,7 @@ class KeyStoreTest {
         keyStore.items().forEach { keyStore.remove(it) }
 
         val password = "testpass"
-        val secretStorage = SecretStorage.encypt(
+        val secretStorage = SecretStorage.encrypt(
             id = mockKeyStoreItem.uuid,
             data = secureRand(32),
             password = password,
@@ -82,6 +82,19 @@ class KeyStoreTest {
 
         keyStore.items().forEach { keyStore.remove(it) }
         assertTrue(keyStore.items().size == 0, "Failed to remove items")
+    }
+
+    fun testKeyStoreSelected() {
+        val keyStore = DefaultKeyStoreService(
+            KeyValueStore("KeyStoreItemsTest2"),
+            MockKeyChainService()
+        )
+        keyStore.items().forEach { keyStore.remove(it) }
+        keyStore.selected = mockKeyStoreItem
+        assertTrue(
+            keyStore.selected != mockKeyStoreItem,
+            "Failed selected"
+        )
     }
 
     class MockKeyChainService: KeyChainService {

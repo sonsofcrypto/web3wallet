@@ -25,7 +25,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("com.russhwolf:multiplatform-settings:${rootProject.ext["settings_version"]}")
-                implementation("com.russhwolf:multiplatform-settings-serialization:${rootProject.ext["settings_version"]}")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${rootProject.ext["serialization_version"]}")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${rootProject.ext["serialization_version"]}")
             }
@@ -41,7 +40,6 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation("com.russhwolf:multiplatform-settings:${rootProject.ext["settings_version"]}")
-                implementation("com.russhwolf:multiplatform-settings-serialization:${rootProject.ext["settings_version"]}")
             }
         }
         val androidTest by getting {
@@ -86,7 +84,6 @@ val serializationVersion = "1.3.3"
 
 dependencies {
     implementation("com.russhwolf:multiplatform-settings:${rootProject.ext["settings_version"]}")
-    implementation("com.russhwolf:multiplatform-settings-serialization:${rootProject.ext["settings_version"]}")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${rootProject.ext["serialization_version"]}")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${rootProject.ext["serialization_version"]}")
 }

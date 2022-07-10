@@ -47,7 +47,7 @@ data class SecretStorage(
 
     @Serializable
     data class W3WParams(
-        val mnemonicLocal: String,
+        val mnemonicLocale: String,
     )
 
     @Throws(Error::class)
@@ -87,11 +87,11 @@ data class SecretStorage(
     companion object {
 
         @Throws(Error::class)
-        fun encypt(
+        fun encrypt(
             id: String,
             data: ByteArray,
             password: String,
-            address: ByteArray? = null,
+            address: String? = null,
             n: Long = 262144, // 1 << 18
             p: Long = 1,
             r: Long = 8,
@@ -120,9 +120,25 @@ data class SecretStorage(
                 ),
                 id,
                 version,
-                address?.toHexString(),
+                address,
                 w3wParams
             )
         }
+
+        fun encryptDefault(
+            id: String,
+            data: ByteArray,
+            password: String,
+            address: String? = null,
+            w3wParams: W3WParams? = null
+        ): SecretStorage = encrypt(
+                id = id,
+                data = data,
+                password = password,
+                address = address,
+                w3wParams = w3wParams,
+            )
+
+
     }
 }

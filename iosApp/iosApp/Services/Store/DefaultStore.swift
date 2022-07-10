@@ -64,5 +64,4 @@ extension DefaultStore {
     enum StoreError: Error {
         case failedToReadStoreData
     }
-    
 }

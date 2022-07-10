@@ -11,7 +11,7 @@ class MnemonicViewSectionLabelFooter: UICollectionReusableView {
 
 extension MnemonicViewSectionLabelFooter {
 
-    func update(with viewModel: MnemonicViewModel.Footer) {
+    func update(with viewModel: MnemonicNewViewModel.Footer) {
         
         switch viewModel {
             

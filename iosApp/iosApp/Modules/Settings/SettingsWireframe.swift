@@ -23,14 +23,14 @@ final class DefaultSettingsWireframe {
 
     private weak var parent: UITabBarController!
     private let settingsService: SettingsService
-    private let keyStoreService: KeyStoreService
+    private let keyStoreService: OldKeyStoreService
     
     private weak var navigationController: NavigationController!
 
     init(
         parent: UITabBarController,
         settingsService: SettingsService,
-        keyStoreService: KeyStoreService
+        keyStoreService: OldKeyStoreService
     ) {
         self.parent = parent
         self.settingsService = settingsService

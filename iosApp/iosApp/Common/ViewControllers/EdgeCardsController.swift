@@ -107,6 +107,7 @@ class EdgeCardsController: BaseViewController {
     }
 
     @objc func edgePanned(_ recognizer: UIScreenEdgePanGestureRecognizer) {
+        print("=== edge panned")
         panned(recognizer)
     }
 

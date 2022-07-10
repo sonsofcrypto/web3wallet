@@ -4,17 +4,17 @@
 
 import UIKit
 
-protocol MnemonicView: AnyObject {
+protocol MnemonicNewView: AnyObject {
 
-    func update(with viewModel: MnemonicViewModel)
+    func update(with viewModel: MnemonicNewViewModel)
     func dismiss(animated flag: Bool, completion: (() -> Void)?)
 }
 
-final class MnemonicViewController: BaseViewController {
+final class MnemonicNewViewController: BaseViewController {
 
-    var presenter: MnemonicPresenter!
+    var presenter: MnemonicNewPresenter!
 
-    private var viewModel: MnemonicViewModel?
+    private var viewModel: MnemonicNewViewModel?
     private var didAppear: Bool = false
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -44,10 +44,9 @@ final class MnemonicViewController: BaseViewController {
 
 // MARK: - Mnemonic
 
-extension MnemonicViewController: MnemonicView {
+extension MnemonicNewViewController: MnemonicNewView {
 
-    func update(with viewModel: MnemonicViewModel) {
-        
+    func update(with viewModel: MnemonicNewViewModel) {
         let needsReload = self.needsReload(self.viewModel, viewModel: viewModel)
         self.viewModel = viewModel
 
@@ -55,7 +54,6 @@ extension MnemonicViewController: MnemonicView {
             return
         }
 
-        ctaButton.apply(style: .primary)
         ctaButton.setTitle(viewModel.cta, for: .normal)
 
         let cells = cv.indexPathsForVisibleItems
@@ -65,7 +63,7 @@ extension MnemonicViewController: MnemonicView {
             cv.performBatchUpdates({ cv.reloadSections(idxs) })
             return
         }
-
+        
         didAppear
             ? cv.performBatchUpdates({ cv.reconfigureItems(at: cells) })
             : cv.reloadData()
@@ -74,7 +72,7 @@ extension MnemonicViewController: MnemonicView {
 
 // MARK: - UICollectionViewDataSource
 
-extension MnemonicViewController: UICollectionViewDataSource {
+extension MnemonicNewViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return viewModel?.sectionsItems.count ?? 0
@@ -111,22 +109,18 @@ extension MnemonicViewController: UICollectionViewDataSource {
 
     func cell(
         cv: UICollectionView,
-        viewModel: MnemonicViewModel.Item,
+        viewModel: MnemonicNewViewModel.Item,
         idxPath: IndexPath
     ) -> UICollectionViewCell {
-        
+
         switch viewModel {
 
         case let .mnemonic(mnemonic):
             return collectionView.dequeue(MnemonicCell.self, for: idxPath)
                 .update(
                     with: mnemonic,
-                    textChangeHandler: { [weak self] text in
-                        self?.nameDidChangeMnemonic(text)
-                    },
-                    textEditingEndHandler: { [weak self] text in
-                        self?.nameDidEndEditingMnemonic(text)
-                    }
+                    textChangeHandler: nil,
+                    textEditingEndHandler: nil
                 )
 
         case let .name(name):
@@ -203,7 +197,7 @@ extension MnemonicViewController: UICollectionViewDataSource {
     }
 }
 
-extension MnemonicViewController: UICollectionViewDelegate {
+extension MnemonicNewViewController: UICollectionViewDelegate {
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -217,14 +211,6 @@ extension MnemonicViewController: UICollectionViewDelegate {
         presenter.handle(.didTapMnemonic)
         
         return false
-    }
-
-    func nameDidChangeMnemonic(_ text: String) {
-        presenter.handle(.didChangeMnemonic(text: text))
-    }
-
-    func nameDidEndEditingMnemonic(_ text: String) {
-        presenter.handle(.didEndEditingMnemonic(text: text))
     }
 
     func nameDidChange(_ name: String) {
@@ -261,7 +247,7 @@ extension MnemonicViewController: UICollectionViewDelegate {
     }
 }
 
-extension MnemonicViewController: UICollectionViewDelegateFlowLayout {
+extension MnemonicNewViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -319,17 +305,16 @@ extension MnemonicViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension MnemonicViewController: UIScrollViewDelegate {
+extension MnemonicNewViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         collectionView.visibleCells.forEach { $0.resignFirstResponder() }
     }
 }
 
 // MARK: - Configure UI
 
-private extension MnemonicViewController {
+private extension MnemonicNewViewController {
     
     func configureUI() {
         title = Localized("newMnemonic.title")
@@ -340,19 +325,20 @@ private extension MnemonicViewController {
             target: self,
             action: #selector(dismissAction(_:))
         )
+        
+        ctaButton.style = .primary
     }
 
-    func needsReload(_ preViewModel: MnemonicViewModel?, viewModel: MnemonicViewModel) -> Bool {
+    func needsReload(_ preViewModel: MnemonicNewViewModel?, viewModel: MnemonicNewViewModel) -> Bool {
         preViewModel?.sectionsItems[1].count != viewModel.sectionsItems[1].count
     }
 }
 
 // MARK: - Constants
 
-private extension MnemonicViewController {
+private extension MnemonicNewViewController {
 
     enum Constant {
-        
         static let mnemonicCellHeight: CGFloat = 110
         static let cellHeight: CGFloat = 46
         static let cellSaltOpenHeight: CGFloat = 142

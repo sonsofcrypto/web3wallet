@@ -8,12 +8,12 @@ final class DefaultOnboardingService {
 
     let settings: SettingsService
     let defaults: UserDefaults
-    let keyStoreService: KeyStoreService
+    let keyStoreService: OldKeyStoreService
 
     init(
         settings: SettingsService,
         defaults: UserDefaults,
-        keyStoreService: KeyStoreService
+        keyStoreService: OldKeyStoreService
     ) {
         self.settings = settings
         self.defaults = defaults

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 protocol KeyStoreWireframeFactory {
 
@@ -16,16 +17,16 @@ protocol KeyStoreWireframeFactory {
 
 final class DefaultKeyStoreWireframeFactory {
 
-    private let keyStoreSerive: KeyStoreService
+    private let keyStoreService: KeyStoreService
     private let settingsService: SettingsService
-    private let newMnemonic: MnemonicWireframeFactory
+    private let newMnemonic: MnemonicNewWireframeFactory
 
     init(
-        walletsService: KeyStoreService,
+        keyStoreService: KeyStoreService,
         settingsService: SettingsService,
-        newMnemonic: MnemonicWireframeFactory
+        newMnemonic: MnemonicNewWireframeFactory
     ) {
-        self.keyStoreSerive = walletsService
+        self.keyStoreService = keyStoreService
         self.settingsService = settingsService
         self.newMnemonic = newMnemonic
     }
@@ -42,9 +43,24 @@ extension DefaultKeyStoreWireframeFactory: KeyStoreWireframeFactory {
         DefaultKeyStoreWireframe(
             parent: parent,
             window: window,
-            keyStoreSerive: keyStoreSerive,
+            keyStoreService: keyStoreService,
             newMnemonic: newMnemonic,
             settingsService: settingsService
         )
+    }
+}
+
+// MARK: - KeyStoreWireframeFactoryAssembler
+
+final class KeyStoreWireframeFactoryAssembler: AssemblerComponent {
+
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> KeyStoreWireframeFactory in
+            DefaultKeyStoreWireframeFactory(
+                keyStoreService: resolver.resolve(),
+                settingsService: resolver.resolve(),
+                newMnemonic: resolver.resolve()
+            )
+        }
     }
 }

@@ -30,7 +30,7 @@ final class DefaultDashboardWireframe {
     private weak var parent: UIViewController!
     private weak var vc: UIViewController!
 
-    private let keyStoreService: KeyStoreService
+    private let keyStoreService: OldKeyStoreService
     private let accountWireframeFactory: AccountWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
@@ -44,7 +44,7 @@ final class DefaultDashboardWireframe {
 
     init(
         parent: UIViewController,
-        keyStoreService: KeyStoreService,
+        keyStoreService: OldKeyStoreService,
         accountWireframeFactory: AccountWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,

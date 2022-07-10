@@ -15,7 +15,7 @@ final class MnemonicCell: UICollectionViewCell {
     var textChaneHandler: TextChangeHandler?
     var textEditingEndHandler: TextChangeHandler?
 
-    private var viewModel: MnemonicViewModel.Mnemonic? = nil
+    private var viewModel: MnemonicNewViewModel.Mnemonic? = nil
 
     override func awakeFromNib() {
         
@@ -56,7 +56,7 @@ final class MnemonicCell: UICollectionViewCell {
     }
 
     func update(
-        with viewModel: MnemonicViewModel.Mnemonic?,
+        with viewModel: MnemonicNewViewModel.Mnemonic?,
         textChangeHandler: TextChangeHandler? = nil,
         textEditingEndHandler: TextChangeHandler? = nil
     ) -> MnemonicCell {

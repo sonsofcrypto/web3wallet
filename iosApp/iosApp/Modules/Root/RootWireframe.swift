@@ -33,7 +33,7 @@ final class DefaultRootWireframe {
     private let nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory
     private let appsWireframeFactory: AppsWireframeFactory
     private let settingsWireframeFactory: SettingsWireframeFactory
-    private let keyStoreService: KeyStoreService
+    private let keyStoreService: OldKeyStoreService
 
     init(
         window: UIWindow?,
@@ -44,7 +44,7 @@ final class DefaultRootWireframe {
         nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory,
         appsWireframeFactory: AppsWireframeFactory,
         settingsWireframeFactory: SettingsWireframeFactory,
-        keyStoreService: KeyStoreService
+        keyStoreService: OldKeyStoreService
     ) {
         
         self.window = window

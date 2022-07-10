@@ -2,8 +2,6 @@ package com.sonsofcrypto.keyvaluestore
 
 import com.russhwolf.settings.NSUserDefaultsSettings
 import com.russhwolf.settings.Settings
-import com.russhwolf.settings.serialization.decodeValueOrNull
-import com.russhwolf.settings.serialization.encodeValue
 import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.pin
 import kotlinx.cinterop.usePinned
@@ -34,8 +32,13 @@ actual class KeyValueStore {
         Boolean::class -> settings.getBooleanOrNull(key) as T?
         else -> {
             val data = settings.getStringOrNull(key)
-            if (data != null) Json.decodeFromString(T::class.serializer(), data)
-            else null
+            if (data != null) {
+                try {
+                    Json.decodeFromString(T::class.serializer(), data)
+                } catch (e: Exception) {
+                    null
+                }
+            } else null
         }
     }
 

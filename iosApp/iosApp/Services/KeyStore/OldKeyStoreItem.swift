@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct KeyStoreItem {
+struct OldKeyStoreItem {
     let uuid: UUID
 
     var mnemonicSalt: String
@@ -17,26 +17,26 @@ struct KeyStoreItem {
     var passUnlockWithBio: Bool
     var iCloudSecretStorage: Bool
 
-    var secretStorage: SecretStorage? = nil
+    var secretStorage: OldSecretStorage? = nil
 }
 
 // MARK: - Convenience
 
-extension KeyStoreItem {
+extension OldKeyStoreItem {
 
     var id: String {
         uuid.uuidString
     }
 
     static func from(
-        _ secretStorage: SecretStorage,
+        _ secretStorage: OldSecretStorage,
         password: String? = nil
-    ) -> KeyStoreItem {
+    ) -> OldKeyStoreItem {
         var mnemonic = ""
 
         if !secretStorage.w3wParams.saltMnemonic, let password = password,
            let entropy = try? secretStorage.decrypt(password),
-           let mnemonicWords = (try? Bip39(entropy))?.mnemonic {
+           let mnemonicWords = (try? OldBip39(entropy))?.mnemonic {
             mnemonic = mnemonicWords.joined(separator: " ")
         }
 
@@ -57,8 +57,8 @@ extension KeyStoreItem {
     mutating func updateSecretStorage(_ password: String) throws {
         let words = mnemonic.split(separator: " ").map { String($0) }
         // TODO: Validate word count
-        self.secretStorage = try SecretStorage.encrypt(
-            try Bip39(mnemonic: words).entropy(),
+        self.secretStorage = try OldSecretStorage.encrypt(
+            try OldBip39(mnemonic: words).entropy(),
             password: password,
             w3wParams: .init(
                 name: name,
@@ -73,11 +73,11 @@ extension KeyStoreItem {
 
 // MARK: - Random
 
-extension KeyStoreItem {
+extension OldKeyStoreItem {
 
-    static func rand() -> KeyStoreItem {
+    static func rand() -> OldKeyStoreItem {
         // TODO: Throw and try to recover upstream
-        let mnemonic = try! Bip39(.entropy128).mnemonic
+        let mnemonic = try! OldBip39(.entropy128).mnemonic
         let password = (try! Data.secRandom(16)).hexString()
 
         return .init(
@@ -94,8 +94,8 @@ extension KeyStoreItem {
         )
     }
 
-    static func blank() -> KeyStoreItem {
-        let mnemonic = try! Bip39(.entropy128).mnemonic
+    static func blank() -> OldKeyStoreItem {
+        let mnemonic = try! OldBip39(.entropy128).mnemonic
         return .init(
             uuid: UUID(),
             mnemonicSalt: "",
@@ -113,7 +113,7 @@ extension KeyStoreItem {
 
 // MARK: - PasswordType
 
-extension KeyStoreItem {
+extension OldKeyStoreItem {
 
     enum PasswordType: Int, Codable, CaseIterable {
         case pin
@@ -131,7 +131,7 @@ extension KeyStoreItem {
             }
         }
 
-        var w3wParams: SecretStorage.W3WParams.PasswordType {
+        var w3wParams: OldSecretStorage.W3WParams.PasswordType {
             switch self {
             case .pin:
                  return .pin
@@ -143,7 +143,7 @@ extension KeyStoreItem {
         }
 
         static func from(
-            _ w3wParams: SecretStorage.W3WParams.PasswordType
+            _ w3wParams: OldSecretStorage.W3WParams.PasswordType
         ) -> PasswordType {
             switch w3wParams {
             case .pin:
@@ -159,4 +159,4 @@ extension KeyStoreItem {
 
 // MARK: - Codable
 
-extension KeyStoreItem: Codable {}
+extension OldKeyStoreItem: Codable {}

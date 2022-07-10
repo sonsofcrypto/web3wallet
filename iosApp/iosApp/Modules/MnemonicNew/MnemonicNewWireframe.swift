@@ -3,22 +3,23 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
-enum MnemonicWireframeDestination {
+enum MnemonicNewWireframeDestination {
     case learnMoreSalt
 }
 
-protocol MnemonicWireframe {
+protocol MnemonicNewWireframe {
     func present()
-    func navigate(to destination: MnemonicWireframeDestination)
+    func navigate(to destination: MnemonicNewWireframeDestination)
 }
 
 // MARK: - class DefaultMnemonicWireframe {
 
-final class DefaultMnemonicWireframe {
+final class DefaultMnemonicNewWireframe {
 
     private weak var parent: UIViewController!
-    private let context: MnemonicContext
+    private let context: MnemonicNewContext
     private let keyStoreService: KeyStoreService
     private let settingsService: SettingsService
 
@@ -26,7 +27,7 @@ final class DefaultMnemonicWireframe {
 
     init(
         parent: UIViewController?,
-        context: MnemonicContext,
+        context: MnemonicNewContext,
         keyStoreService: KeyStoreService,
         settingsService: SettingsService
     ) {
@@ -39,31 +40,28 @@ final class DefaultMnemonicWireframe {
 
 // MARK: - MnemonicWireframe
 
-extension DefaultMnemonicWireframe: MnemonicWireframe {
+extension DefaultMnemonicNewWireframe: MnemonicNewWireframe {
 
     func present() {
-        
         let vc = wireUp()
-        parent.present(vc, animated: true)
-        
-//        let topVc = (parent as? UINavigationController)?.topViewController
-//
-//        if let transitionDelegate =  topVc as? UIViewControllerTransitioningDelegate {
-//            vc.transitioningDelegate = transitionDelegate
-//        }
-//
-//        switch settingsService.createWalletTransitionType {
-//        case .cardFlip:
-//            vc.modalPresentationStyle = .overCurrentContext
-//        case .sheet:
-//            vc.modalPresentationStyle = .automatic
-//        }
-//
-//        self.vc = vc
-//        topVc?.show(vc, sender: self)
+        let topVc = (parent as? UINavigationController)?.topViewController
+
+        if let transitionDelegate =  topVc as? UIViewControllerTransitioningDelegate {
+            vc.transitioningDelegate = transitionDelegate
+        }
+
+        switch settingsService.createWalletTransitionType {
+        case .cardFlip:
+            vc.modalPresentationStyle = .overCurrentContext
+        case .sheet:
+            vc.modalPresentationStyle = .automatic
+        }
+
+        self.vc = vc
+        topVc?.show(vc, sender: self)
     }
 
-    func navigate(to destination: MnemonicWireframeDestination) {
+    func navigate(to destination: MnemonicNewWireframeDestination) {
         switch destination {
         case .learnMoreSalt:
             UIApplication.shared.open(Constant.saltExplanationURL)
@@ -71,13 +69,13 @@ extension DefaultMnemonicWireframe: MnemonicWireframe {
     }
 }
 
-extension DefaultMnemonicWireframe {
+extension DefaultMnemonicNewWireframe {
 
     private func wireUp() -> UIViewController {
         
-        let interactor = DefaultMnemonicInteractor(keyStoreService)
-        let vc: MnemonicViewController = UIStoryboard(.mnemonic).instantiate()
-        let presenter = DefaultMnemonicPresenter(
+        let interactor = DefaultMnemonicNewInteractor(keyStoreService)
+        let vc: MnemonicNewViewController = UIStoryboard(.mnemonicNew).instantiate()
+        let presenter = DefaultMnemonicNewPresenter(
             context: context,
             view: vc,
             interactor: interactor,
@@ -91,7 +89,7 @@ extension DefaultMnemonicWireframe {
 
 // MARK: - Constant
 
-extension DefaultMnemonicWireframe {
+extension DefaultMnemonicNewWireframe {
 
     enum Constant {
 
