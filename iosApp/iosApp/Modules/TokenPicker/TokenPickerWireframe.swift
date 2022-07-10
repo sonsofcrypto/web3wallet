@@ -81,6 +81,7 @@ final class DefaultTokenPickerWireframe {
     private weak var presentingIn: UIViewController!
     private let context: TokenPickerWireframeContext
     private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
+    private let tokenSendWireframeFactory: TokenSendWireframeFactory
     private let tokenAddWireframeFactory: TokenAddWireframeFactory
     private let web3Service: Web3Service
     
@@ -88,12 +89,14 @@ final class DefaultTokenPickerWireframe {
         presentingIn: UIViewController,
         context: TokenPickerWireframeContext,
         tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
+        tokenSendWireframeFactory: TokenSendWireframeFactory,
         tokenAddWireframeFactory: TokenAddWireframeFactory,
         web3Service: Web3Service
     ) {
         self.presentingIn = presentingIn
         self.context = context
         self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
+        self.tokenSendWireframeFactory = tokenSendWireframeFactory
         self.tokenAddWireframeFactory = tokenAddWireframeFactory
         self.web3Service = web3Service
     }
@@ -138,17 +141,23 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
             
         case let .tokenSend(token):
             
-            print("Navigate to send token screen for \(token.symbol)")
+            guard let presentingIn = presentingIn.presentedViewController ?? presentingIn else { return }
+            
+            let wireframe = tokenSendWireframeFactory.makeWireframe(
+                presentingIn: presentingIn,
+                context: .init(presentationStyle: .push, web3Token: token)
+            )
+            wireframe.present()
             
         case .addCustomToken:
             
             guard let presentingIn = presentingIn.presentedViewController else { return }
             
-            let coordinator = tokenAddWireframeFactory.makeWireframe(
+            let wireframe = tokenAddWireframeFactory.makeWireframe(
                 presentingIn: presentingIn,
                 context: .init(presentationStyle: .push)
             )
-            coordinator.present()
+            wireframe.present()
         }
     }
     

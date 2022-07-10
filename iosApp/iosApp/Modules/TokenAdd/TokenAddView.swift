@@ -60,14 +60,14 @@ extension TokenAddViewController {
            target: self,
            action: #selector(navBarLeftActionTapped)
        )
-
+       
        navigationItem.rightBarButtonItem = UIBarButtonItem(
-           image: .init(systemName: "qrcode.viewfinder"),
+           title: Localized("save"),
            style: .plain,
            target: self,
            action: #selector(addTokenTapped)
        )
-    }
+   }
     
     func configureUI() {
         

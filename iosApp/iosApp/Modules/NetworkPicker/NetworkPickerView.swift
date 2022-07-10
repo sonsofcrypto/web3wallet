@@ -23,7 +23,7 @@ final class NetworkPickerViewController: BaseViewController {
     
     @IBOutlet weak var itemsCollectionView: UICollectionView!
     @IBOutlet weak var searchTextFieldBox: UIView!
-    @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var searchTextField: TextField!
     @IBOutlet weak var clearSearchButton: UIButton!
     
     private var searchTerm = ""
@@ -87,8 +87,6 @@ private extension NetworkPickerViewController {
         searchTextFieldBox.backgroundColor = Theme.colour.backgroundBasePrimary
         searchTextFieldBox.layer.cornerRadius = 16
         
-        searchTextField.backgroundColor = .clear
-        searchTextField.textColor = .white
         searchTextField.text = nil
         searchTextField.delegate = self
         

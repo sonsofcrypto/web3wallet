@@ -7,7 +7,7 @@ import UIKit
 final class MnemonicTextInputCollectionViewCell: CollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var textField: TextField!
 
     var textChangeHandler: ((String)->Void)?
 
@@ -18,8 +18,6 @@ final class MnemonicTextInputCollectionViewCell: CollectionViewCell {
         titleLabel.font = Theme.font.body
         titleLabel.textColor = Theme.colour.labelPrimary
         
-        textField.font = Theme.font.body
-        textField.textColor = Theme.colour.labelPrimary
         textField.delegate = self
         textField.rightView = makeClearButton()
         textField.rightViewMode = .whileEditing
@@ -57,7 +55,7 @@ extension MnemonicTextInputCollectionViewCell {
             string: viewModel.placeholder,
             attributes: [
                 NSAttributedString.Key.font: Theme.font.body,
-                NSAttributedString.Key.foregroundColor: Theme.colour.labelSecondary
+                NSAttributedString.Key.foregroundColor: Theme.colour.textFieldPlaceholderColour
             ]
         )
         self.textChangeHandler = textChangeHandler

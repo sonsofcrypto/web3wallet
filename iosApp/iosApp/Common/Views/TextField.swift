@@ -4,61 +4,54 @@
 
 import UIKit
 
-class TextField: UITextField {
+final class TextField: UITextField {
 
     override init(frame: CGRect) {
+        
         super.init(frame: frame)
         configure()
     }
     
     required init?(coder: NSCoder) {
+        
         super.init(coder: coder)
         configure()
     }
-
-    var placeholderAttrText: String? {
-        get { attributedPlaceholder?.string }
-        set {
+    
+    override var font: UIFont? {
+        
+        didSet {
+            
+            // Update placeholder font
             attributedPlaceholder = NSAttributedString(
-                string: newValue ?? "",
-                attributes: placeholder()
+                string: placeholder ?? "",
+                attributes: makePlaceholderAttributes()
             )
         }
     }
     
-    func configure() {
-        defaultTextAttributes = body()
-        typingAttributes = body()
-        backgroundColor = Theme.colour.backgroundBasePrimary.withAlphaComponent(0.25)
-        clipsToBounds = true
-        layer.applyBorder(Theme.colour.fillTertiary)
-        layer.cornerRadius = Global.cornerRadius
+    func update(placeholder: String?) {
+        
+        attributedPlaceholder = NSAttributedString(
+            string: placeholder ?? "",
+            attributes: makePlaceholderAttributes()
+        )
     }
 }
 
 private extension TextField {
     
-    func placeholder() -> [NSAttributedString.Key: Any] {
-        [
-            .font: Theme.font.subheadline,
-            .foregroundColor: Theme.colour.labelTertiary,
-        ]
+    func configure() {
+
+        font = Theme.font.body
+        textColor = Theme.colour.textFieldTextColour
+        backgroundColor = .clear
     }
     
-    func body() -> [NSAttributedString.Key: Any] {
+    func makePlaceholderAttributes() -> [NSAttributedString.Key: Any] {
         [
-            .font: Theme.font.body,
-            .foregroundColor: Theme.colour.labelPrimary,
-            .shadow: textShadow(Theme.colour.fillSecondary)
+            .font: font ?? Theme.font.body,
+            .foregroundColor: Theme.colour.textFieldPlaceholderColour
         ]
-    }
-    
-    func textShadow(_ tint: UIColor) -> NSShadow {
-        
-        let shadow = NSShadow()
-        shadow.shadowOffset = .zero
-        shadow.shadowBlurRadius = Global.shadowRadius
-        shadow.shadowColor = tint
-        return shadow
     }
 }

@@ -14,11 +14,14 @@ protocol TokenSendWireframeFactory {
 
 final class DefaultTokenSendWireframeFactory {
 
+    private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let web3Service: Web3Service
 
     init(
+        qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         web3Service: Web3Service
     ) {
+        self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.web3Service = web3Service
     }
 }
@@ -33,6 +36,7 @@ extension DefaultTokenSendWireframeFactory: TokenSendWireframeFactory {
         DefaultTokenSendWireframe(
             presentingIn: presentingIn,
             context: context,
+            qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
             web3Service: web3Service
         )
     }

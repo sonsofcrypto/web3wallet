@@ -72,7 +72,9 @@ private extension UIButton {
         setTitleColor(Theme.colour.labelPrimary, for: .normal)
         titleLabel?.textAlignment = .natural
         
-        titleEdgeInsets = .init(top: 0, left: 8, bottom: 0, right: 0)
-        imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 8)
+        var configuration = UIButton.Configuration.plain()
+        configuration.imagePadding = Theme.constant.padding * 0.5
+        self.configuration = configuration
+        updateConfiguration()
     }
 }

@@ -110,4 +110,41 @@ extension DefaultWeb3Service: Web3Service {
         
         web3ServiceLocalStorage.update(network: network, active: active)
     }
+    
+    func networkFeeInUSD(network: Web3Network, fee: Web3NetworkFee) -> Double {
+        
+        switch fee {
+        case .low:
+            return 0.25
+        case .medium:
+            return 0.75
+        case .high:
+            return 1.45
+        }
+    }
+    
+    func networkFeeInSeconds(network: Web3Network, fee: Web3NetworkFee) -> Int {
+        
+        switch fee {
+        case .low:
+            return 65
+        case .medium:
+            return 30
+        case .high:
+            return 6
+        }
+    }
+    
+    func networkFeeInNetworkToken(network: Web3Network, fee: Web3NetworkFee) -> String {
+
+        switch fee {
+        case .low:
+            return "14 gwei"
+        case .medium:
+            return "17 gwei"
+        case .high:
+            return "18 gwei"
+        }
+    }
+
 }

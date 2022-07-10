@@ -27,7 +27,7 @@ final class TokenPickerViewController: BaseViewController {
     @IBOutlet weak var searchContainerBox: UIView!
     @IBOutlet weak var searchTextFieldBox: UIView!
     @IBOutlet weak var searchImageView: UIImageView!
-    @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var searchTextField: TextField!
     @IBOutlet weak var clearSearchButton: UIButton!
     
     private var searchTerm = ""
@@ -104,7 +104,6 @@ private extension TokenPickerViewController {
         searchImageView.tintColor = Theme.colour.labelSecondary
         
         searchTextField.backgroundColor = .clear
-        searchTextField.textColor = Theme.colour.labelSecondary
         searchTextField.font = Theme.font.title3
         searchTextField.text = nil
         searchTextField.delegate = self

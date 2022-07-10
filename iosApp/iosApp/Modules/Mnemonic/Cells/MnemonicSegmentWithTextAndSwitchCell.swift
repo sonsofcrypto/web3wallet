@@ -8,7 +8,7 @@ class MnemonicSegmentWithTextAndSwitchCell: CollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var segmentControl: UISegmentedControl!
-    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var textField: TextField!
     @IBOutlet weak var switchLabel: UILabel!
     @IBOutlet weak var onOffSwitch: UISwitch!
     @IBOutlet weak var vStack: UIStackView!
@@ -42,8 +42,6 @@ class MnemonicSegmentWithTextAndSwitchCell: CollectionViewCell {
         switchLabel.font = Theme.font.body
         switchLabel.textColor = Theme.colour.labelPrimary
         
-        textField.font = Theme.font.body
-        textField.textColor = Theme.colour.labelPrimary
         textField.delegate = self
         textField.rightView = makeClearButton()
         textField.rightViewMode = .whileEditing
@@ -127,7 +125,7 @@ extension MnemonicSegmentWithTextAndSwitchCell {
             string: viewModel.placeholder,
             attributes: [
                 NSAttributedString.Key.font: Theme.font.body,
-                NSAttributedString.Key.foregroundColor: Theme.colour.labelSecondary
+                NSAttributedString.Key.foregroundColor: Theme.colour.textFieldPlaceholderColour
             ]
         )
 

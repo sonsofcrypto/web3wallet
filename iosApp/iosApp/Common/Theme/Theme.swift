@@ -118,6 +118,9 @@ struct ThemeColour {
     let switchTintDisabled: UIColor
     let switchOnTint: UIColor
     
+    let textFieldTextColour: UIColor
+    let textFieldPlaceholderColour: UIColor
+    
     init(themeName name: String) {
         
         self.navBarBackground = .init(named: "\(name)-nav-bar-background")!
@@ -162,6 +165,9 @@ struct ThemeColour {
         self.switchTint = .init(named: "\(name)-switch-tint")!
         self.switchTintDisabled = .init(named: "\(name)-switch-tint-disabled")!
         self.switchOnTint = .init(named: "\(name)-switch-on-tint")!
+        self.textFieldTextColour = .init(named: "\(name)-textField-text")!
+        self.textFieldPlaceholderColour = .init(named: "\(name)-textField-placeholder")!
+
     }
 }
 

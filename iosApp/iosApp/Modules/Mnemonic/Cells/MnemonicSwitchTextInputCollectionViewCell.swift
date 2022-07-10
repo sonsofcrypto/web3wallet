@@ -8,7 +8,7 @@ final class MnemonicSwitchTextInputCollectionViewCell: CollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var onOffSwitch: UISwitch!
-    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var textField: TextField!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var vStack: UIStackView!
     @IBOutlet weak var hStack: UIStackView!
@@ -23,6 +23,7 @@ final class MnemonicSwitchTextInputCollectionViewCell: CollectionViewCell {
     }
 
     func configureUI() {
+        
         titleLabel.applyStyle(.bodyGlow)
         textField.delegate = self
 
@@ -72,7 +73,7 @@ extension MnemonicSwitchTextInputCollectionViewCell {
         onOffSwitch.setOn(viewModel.onOff, animated: false)
         textField.text = viewModel.text
 
-        (textField as? TextField)?.placeholderAttrText = viewModel.placeholder
+        textField.update(placeholder: viewModel.placeholder)
 
         let attrStr = NSMutableAttributedString(
             string: viewModel.description,

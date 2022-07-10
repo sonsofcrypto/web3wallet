@@ -29,38 +29,38 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TokenAddCollectionViewCell" id="O3H-ZS-yap" customClass="TokenAddCollectionViewCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="16" width="414" height="437"/>
+                                        <rect key="frame" x="0.0" y="16" width="414" height="331"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TTd-81-Tql">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="437"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="331"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="CdQ-um-Qmu">
-                                                    <rect key="frame" x="16" y="0.0" width="382" height="437"/>
+                                                    <rect key="frame" x="16" y="0.0" width="382" height="331"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I5B-4g-MN0" customClass="TokenAddNetworkView" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="82"/>
+                                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I5B-4g-MN0" customClass="TokenAddNetworkView" customModule="iosApp" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="32"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="UUd-vO-vdF">
-                                                                    <rect key="frame" x="16" y="16" width="350" height="50"/>
+                                                                    <rect key="frame" x="16" y="16" width="350" height="0.0"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFV-Iu-ShS">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="276.5" height="50"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="276.5" height="0.0"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6h2-Rm-kWl">
-                                                                            <rect key="frame" x="284.5" y="0.0" width="41.5" height="50"/>
+                                                                            <rect key="frame" x="284.5" y="0.0" width="41.5" height="0.0"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nyi-MN-ghh">
-                                                                            <rect key="frame" x="334" y="0.0" width="16" height="50"/>
+                                                                            <rect key="frame" x="334" y="0.0" width="16" height="0.0"/>
                                                                             <subviews>
                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_cell_forward" translatesAutoresizingMaskIntoConstraints="NO" id="un3-GH-WYF">
-                                                                                    <rect key="frame" x="0.0" y="17" width="16" height="16"/>
+                                                                                    <rect key="frame" x="0.0" y="-8" width="16" height="16"/>
                                                                                     <color key="tintColor" name="tintPrimary"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="height" constant="16" id="Hsi-Ow-9dV"/>
@@ -91,16 +91,16 @@
                                                             </connections>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fo3-Rt-kEn">
-                                                            <rect key="frame" x="0.0" y="106" width="382" height="331"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="331"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="wSD-NM-Jdo">
                                                                     <rect key="frame" x="0.0" y="16" width="382" height="299"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ya-NR-F88">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="50"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="51.5"/>
                                                                             <subviews>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JmI-An-p3s" customClass="TokenAddInputView" customModule="iosApp" customModuleProvider="target">
-                                                                                    <rect key="frame" x="16" y="0.0" width="350" height="50"/>
+                                                                                    <rect key="frame" x="16" y="0.0" width="350" height="51.5"/>
                                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                                 </view>
                                                                             </subviews>
@@ -113,14 +113,14 @@
                                                                             </constraints>
                                                                         </view>
                                                                         <view alpha="0.25" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WJc-cu-8Cg">
-                                                                            <rect key="frame" x="0.0" y="66" width="382" height="1"/>
+                                                                            <rect key="frame" x="0.0" y="67.5" width="382" height="0.5"/>
                                                                             <color key="backgroundColor" name="tintPrimary"/>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="height" constant="1" id="4dd-vR-0Xj"/>
+                                                                                <constraint firstAttribute="height" constant="0.5" id="4dd-vR-0Xj"/>
                                                                             </constraints>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vTS-ge-pV2">
-                                                                            <rect key="frame" x="0.0" y="83" width="382" height="50"/>
+                                                                            <rect key="frame" x="0.0" y="84" width="382" height="50"/>
                                                                             <subviews>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dtQ-1d-StX" customClass="TokenAddInputView" customModule="iosApp" customModuleProvider="target">
                                                                                     <rect key="frame" x="16" y="0.0" width="350" height="50"/>
@@ -136,14 +136,14 @@
                                                                             </constraints>
                                                                         </view>
                                                                         <view alpha="0.25" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TLd-ba-zoo">
-                                                                            <rect key="frame" x="0.0" y="149" width="382" height="1"/>
+                                                                            <rect key="frame" x="0.0" y="150" width="382" height="0.5"/>
                                                                             <color key="backgroundColor" name="tintPrimary"/>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="height" constant="1" id="Jnc-pB-BeD"/>
+                                                                                <constraint firstAttribute="height" constant="0.5" id="Jnc-pB-BeD"/>
                                                                             </constraints>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yBX-0f-tq5">
-                                                                            <rect key="frame" x="0.0" y="166" width="382" height="50"/>
+                                                                            <rect key="frame" x="0.0" y="166.5" width="382" height="50"/>
                                                                             <subviews>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mwJ-wc-SKv" customClass="TokenAddInputView" customModule="iosApp" customModuleProvider="target">
                                                                                     <rect key="frame" x="16" y="0.0" width="350" height="50"/>
@@ -159,10 +159,10 @@
                                                                             </constraints>
                                                                         </view>
                                                                         <view alpha="0.25" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qBH-aP-J0f">
-                                                                            <rect key="frame" x="0.0" y="232" width="382" height="1"/>
+                                                                            <rect key="frame" x="0.0" y="232.5" width="382" height="0.5"/>
                                                                             <color key="backgroundColor" name="tintPrimary"/>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="height" constant="1" id="HUR-xi-wav"/>
+                                                                                <constraint firstAttribute="height" constant="0.5" id="HUR-xi-wav"/>
                                                                             </constraints>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YvU-cS-5XO">
