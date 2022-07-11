@@ -90,7 +90,7 @@
                                             <outlet property="textView" destination="eSV-tY-oCm" id="r51-WE-ans"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MnemonicTextInputCollectionViewCell" id="8fn-ei-R02" customClass="MnemonicTextInputCollectionViewCell" customModule="iosApp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MnemonicTextInputCollectionViewCell" id="8fn-ei-R02" customClass="TextInputCollectionViewCell" customModule="iosApp" customModuleProvider="target">
                                         <rect key="frame" x="35.5" y="165" width="343" height="46"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Gkc-Qu-FVc">
@@ -127,7 +127,7 @@
                                             <outlet property="titleLabel" destination="9Ts-dC-PYu" id="dKX-Af-Yo7"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MnemonicSwitchCollectionViewCell" id="K9M-Vg-GDj" customClass="MnemonicSwitchCollectionViewCell" customModule="iosApp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MnemonicSwitchCollectionViewCell" id="K9M-Vg-GDj" customClass="SwitchCollectionViewCell" customModule="iosApp" customModuleProvider="target">
                                         <rect key="frame" x="35.5" y="211" width="343" height="46"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="4t3-Tx-iQZ">
@@ -162,7 +162,7 @@
                                             <outlet property="titleLabel" destination="k6X-cf-KR9" id="fCp-mp-Kfc"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MnemonicSwitchTextInputCollectionViewCell" id="Zxs-iw-AAY" customClass="MnemonicSwitchTextInputCollectionViewCell" customModule="iosApp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MnemonicSwitchTextInputCollectionViewCell" id="Zxs-iw-AAY" customClass="SwitchTextInputCollectionViewCell" customModule="iosApp" customModuleProvider="target">
                                         <rect key="frame" x="35.5" y="257" width="343" height="142"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="SkZ-ws-zY1">
@@ -220,7 +220,7 @@
                                             <outlet property="vStack" destination="mtu-gi-h34" id="pri-Cf-qJ4"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MnemonicSegmentWithTextAndSwitchCell" id="yxK-2e-Z16" customClass="MnemonicSegmentWithTextAndSwitchCell" customModule="iosApp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MnemonicSegmentWithTextAndSwitchCell" id="yxK-2e-Z16" customClass="SegmentWithTextAndSwitchCell" customModule="iosApp" customModuleProvider="target">
                                         <rect key="frame" x="35.5" y="399" width="343" height="142"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="8bl-SF-D5j">
@@ -352,7 +352,7 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MnemonicViewSectionLabelFooter" id="WkI-WP-GSv" customClass="MnemonicViewSectionLabelFooter" customModule="iosApp" customModuleProvider="target">
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MnemonicViewSectionLabelFooter" id="WkI-WP-GSv" customClass="SectionLabelFooter" customModule="iosApp" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="549" width="414" height="50"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>

@@ -125,7 +125,7 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
 
         case let .name(name):
             return collectionView.dequeue(
-                MnemonicTextInputCollectionViewCell.self,
+                TextInputCollectionViewCell.self,
                 for: idxPath
             ).update(
                 with: name,
@@ -134,7 +134,7 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
 
         case let .switch(title, onOff):
             return collectionView.dequeue(
-                MnemonicSwitchCollectionViewCell.self,
+                SwitchCollectionViewCell.self,
                 for: idxPath
             ).update(
                 with: title,
@@ -143,7 +143,7 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
             )
         case let .switchWithTextInput(switchWithTextInput):
             return collectionView.dequeue(
-                MnemonicSwitchTextInputCollectionViewCell.self,
+                SwitchTextInputCollectionViewCell.self,
                 for: idxPath
             ).update(
                 with: switchWithTextInput,
@@ -153,7 +153,7 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
             )
         case let .segmentWithTextAndSwitchInput(segmentWithTextAndSwitchInput):
             return collectionView.dequeue(
-                MnemonicSegmentWithTextAndSwitchCell.self,
+                SegmentWithTextAndSwitchCell.self,
                 for: idxPath
             ).update(
                 with: segmentWithTextAndSwitchInput,
@@ -181,7 +181,7 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
             }
 
             let footer = collectionView.dequeue(
-                MnemonicViewSectionLabelFooter.self,
+                SectionLabelFooter.self,
                 for: indexPath,
                 kind: kind
             )

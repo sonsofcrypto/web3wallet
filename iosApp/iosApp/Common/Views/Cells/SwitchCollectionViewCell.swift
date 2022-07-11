@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class MnemonicSwitchCollectionViewCell: CollectionViewCell {
+final class SwitchCollectionViewCell: CollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var onOffSwitch: UISwitch!
@@ -30,7 +30,7 @@ final class MnemonicSwitchCollectionViewCell: CollectionViewCell {
     }
 }
 
-extension MnemonicSwitchCollectionViewCell {
+extension SwitchCollectionViewCell {
 
     func update(
         with title: String,

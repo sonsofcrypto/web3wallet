@@ -4,12 +4,12 @@
 
 import UIKit
 
-class MnemonicViewSectionLabelFooter: UICollectionReusableView {
+class SectionLabelFooter: UICollectionReusableView {
 
     @IBOutlet weak var label: UILabel!
 }
 
-extension MnemonicViewSectionLabelFooter {
+extension SectionLabelFooter {
 
     func update(with viewModel: MnemonicNewViewModel.Footer) {
         

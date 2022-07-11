@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class MnemonicSwitchTextInputCollectionViewCell: CollectionViewCell {
+final class SwitchTextInputCollectionViewCell: CollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var onOffSwitch: UISwitch!
@@ -46,7 +46,7 @@ final class MnemonicSwitchTextInputCollectionViewCell: CollectionViewCell {
     }
 }
 
-extension MnemonicSwitchTextInputCollectionViewCell: UITextFieldDelegate {
+extension SwitchTextInputCollectionViewCell: UITextFieldDelegate {
 
 
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -60,7 +60,7 @@ extension MnemonicSwitchTextInputCollectionViewCell: UITextFieldDelegate {
     }
 }
 
-extension MnemonicSwitchTextInputCollectionViewCell {
+extension SwitchTextInputCollectionViewCell {
 
     func update(
         with viewModel: MnemonicNewViewModel.SwitchWithTextInput,

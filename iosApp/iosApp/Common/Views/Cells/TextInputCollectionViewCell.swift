@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class MnemonicTextInputCollectionViewCell: CollectionViewCell {
+final class TextInputCollectionViewCell: CollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
@@ -26,7 +26,7 @@ final class MnemonicTextInputCollectionViewCell: CollectionViewCell {
     }
 }
 
-extension MnemonicTextInputCollectionViewCell: UITextFieldDelegate {
+extension TextInputCollectionViewCell: UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         textChangeHandler?(textField.text ?? "")
@@ -39,7 +39,7 @@ extension MnemonicTextInputCollectionViewCell: UITextFieldDelegate {
     }
 }
 
-extension MnemonicTextInputCollectionViewCell {
+extension TextInputCollectionViewCell {
 
     func update(
         with viewModel: MnemonicNewViewModel.Name,

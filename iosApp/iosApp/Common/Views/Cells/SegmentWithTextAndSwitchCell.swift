@@ -4,7 +4,7 @@
 
 import UIKit
 
-class MnemonicSegmentWithTextAndSwitchCell: CollectionViewCell {
+class SegmentWithTextAndSwitchCell: CollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var segmentControl: UISegmentedControl!
@@ -98,7 +98,7 @@ class MnemonicSegmentWithTextAndSwitchCell: CollectionViewCell {
     }
 }
 
-extension MnemonicSegmentWithTextAndSwitchCell: UITextFieldDelegate {
+extension SegmentWithTextAndSwitchCell: UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         textChangeHandler?(textField.text ?? "")
@@ -111,14 +111,14 @@ extension MnemonicSegmentWithTextAndSwitchCell: UITextFieldDelegate {
     }
 }
 
-extension MnemonicSegmentWithTextAndSwitchCell {
+extension SegmentWithTextAndSwitchCell {
 
     func update(
         with viewModel: MnemonicNewViewModel.SegmentWithTextAndSwitchInput,
         selectSegmentAction: ((Int) -> Void)?,
         textChangeHandler: ((String)->Void)?,
         switchHandler: ((Bool)->Void)?
-    ) -> MnemonicSegmentWithTextAndSwitchCell {
+    ) -> SegmentWithTextAndSwitchCell {
         titleLabel.text = viewModel.title
         textField.text = viewModel.password
         textField.attributedPlaceholder = NSAttributedString(
@@ -152,7 +152,7 @@ extension MnemonicSegmentWithTextAndSwitchCell {
     }
 }
 
-private extension MnemonicSegmentWithTextAndSwitchCell {
+private extension SegmentWithTextAndSwitchCell {
     
     func makeClearButton() -> UIButton {
         
