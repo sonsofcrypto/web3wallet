@@ -39,16 +39,52 @@ extension TextInputCollectionViewCell: UITextFieldDelegate {
     }
 }
 
+// MARK: - Update view viewModel
+
 extension TextInputCollectionViewCell {
 
     func update(
         with viewModel: MnemonicNewViewModel.Name,
         textChangeHandler: ((String)->Void)? = nil
     ) -> Self {
-        titleLabel.text = viewModel.title
-        textField.text = viewModel.value
-        (textField as? TextField)?.placeholderAttrText = viewModel.placeholder
+        update(
+            title: viewModel.title,
+            value: viewModel.value,
+            placeholder: viewModel.placeholder,
+            textChangeHandler: textChangeHandler
+        )
+        return self
+    }
+
+    func update(
+        with viewModel: MnemonicUpdateViewModel.Name,
+        textChangeHandler: ((String)->Void)? = nil
+    ) -> Self {
+        update(
+            title: viewModel.title,
+            value: viewModel.value,
+            placeholder: viewModel.placeholder,
+            textChangeHandler: textChangeHandler
+        )
+        return self
+    }
+}
+
+// MARK: - Utilities
+
+private extension TextInputCollectionViewCell {
+
+    func update(
+        title: String,
+        value: String,
+        placeholder: String,
+        textChangeHandler: ((String)->Void)? = nil
+    ) -> Self {
+        titleLabel.text = title
+        textField.text = value
+        (textField as? TextField)?.placeholderAttrText = placeholder
         self.textChangeHandler = textChangeHandler
         return self
     }
+
 }

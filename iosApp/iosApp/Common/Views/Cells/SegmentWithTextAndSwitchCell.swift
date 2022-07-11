@@ -119,24 +119,77 @@ extension SegmentWithTextAndSwitchCell {
         textChangeHandler: ((String)->Void)?,
         switchHandler: ((Bool)->Void)?
     ) -> SegmentWithTextAndSwitchCell {
-        titleLabel.text = viewModel.title
-        textField.text = viewModel.password
+        update(
+            title: viewModel.title ,
+            password: viewModel.password ,
+            placeholder: viewModel.placeholder ,
+            onOffTitle: viewModel.onOffTitle ,
+            onOff: viewModel.onOff ,
+            segmentOptions: viewModel.segmentOptions ,
+            selectedSegment: viewModel.selectedSegment ,
+            selectSegmentAction: selectSegmentAction,
+            textChangeHandler: textChangeHandler,
+            switchHandler: switchHandler
+        )
+
+        return self
+    }
+
+    func update(
+        with viewModel: MnemonicUpdateViewModel.SegmentWithTextAndSwitchInput,
+        selectSegmentAction: ((Int) -> Void)?,
+        textChangeHandler: ((String)->Void)?,
+        switchHandler: ((Bool)->Void)?
+    ) -> SegmentWithTextAndSwitchCell {
+        update(
+            title: viewModel.title ,
+            password: viewModel.password ,
+            placeholder: viewModel.placeholder ,
+            onOffTitle: viewModel.onOffTitle ,
+            onOff: viewModel.onOff ,
+            segmentOptions: viewModel.segmentOptions ,
+            selectedSegment: viewModel.selectedSegment ,
+            selectSegmentAction: selectSegmentAction,
+            textChangeHandler: textChangeHandler,
+            switchHandler: switchHandler
+        )
+
+        return self
+    }
+}
+
+private extension SegmentWithTextAndSwitchCell {
+
+    func update(
+        title: String,
+        password: String,
+        placeholder: String,
+        onOffTitle: String,
+        onOff: Bool,
+        segmentOptions: [String],
+        selectedSegment: Int,
+        selectSegmentAction: ((Int) -> Void)?,
+        textChangeHandler: ((String)->Void)?,
+        switchHandler: ((Bool)->Void)?
+    ) {
+        titleLabel.text = title
+        textField.text = password
         textField.attributedPlaceholder = NSAttributedString(
-            string: viewModel.placeholder,
+            string: placeholder,
             attributes: [
                 NSAttributedString.Key.font: Theme.font.body,
                 NSAttributedString.Key.foregroundColor: Theme.colour.textFieldPlaceholderColour
             ]
         )
 
-        switchLabel.text = viewModel.onOffTitle
-        onOffSwitch.setOn(viewModel.onOff, animated: false)
+        switchLabel.text = onOffTitle
+        onOffSwitch.setOn(onOff, animated: false)
 
         self.selectSegmentAction = selectSegmentAction
         self.textChangeHandler = textChangeHandler
         self.switchAction = switchHandler
 
-        for (idx, item) in viewModel.segmentOptions.enumerated() {
+        for (idx, item) in segmentOptions.enumerated() {
             if segmentControl.numberOfSegments <= idx {
                 segmentControl.insertSegment(withTitle: item, at: idx, animated: false)
             } else {
@@ -144,15 +197,10 @@ extension SegmentWithTextAndSwitchCell {
             }
         }
 
-        segmentControl.selectedSegmentIndex = viewModel.selectedSegment
+        segmentControl.selectedSegmentIndex = selectedSegment
         group1.alpha = segmentControl.selectedSegmentIndex == 2 ? 0 : 1
         group2.alpha = segmentControl.selectedSegmentIndex == 2 ? 0 : 1
-
-        return self
     }
-}
-
-private extension SegmentWithTextAndSwitchCell {
     
     func makeClearButton() -> UIButton {
         

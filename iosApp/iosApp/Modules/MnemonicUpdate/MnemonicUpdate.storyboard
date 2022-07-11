@@ -13,7 +13,7 @@
         <!--Mnemonic-->
         <scene sceneID="kAc-Pk-Fax">
             <objects>
-                <viewController storyboardIdentifier="MnemonicNewViewController" title="Mnemonic" id="ozv-nd-HZD" customClass="MnemonicNewViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MnemonicUpdateViewController" title="Mnemonic" id="ozv-nd-HZD" customClass="MnemonicUpdateViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sR2-sg-55A" customClass="GradientView" customModule="iosApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -28,7 +28,7 @@
                                     <inset key="sectionInset" minX="16" minY="16" maxX="16" maxY="8"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="NewMnemonicCell" reuseIdentifier="MnemonicNewCell" id="NxP-wa-eOH" customClass="MnemonicNewCell" customModule="iosApp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="MnemonicUpdateCell" reuseIdentifier="MnemonicUpdateCell" id="NxP-wa-eOH" customClass="MnemonicUpdateCell" customModule="iosApp" customModuleProvider="target">
                                         <rect key="frame" x="35.5" y="16" width="343" height="149"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ldd-2d-QGe">
@@ -273,7 +273,7 @@
                                                                         <constraint firstAttribute="height" constant="0.5" id="QYK-us-fuA"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Pin" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Eth-cU-Ld1" customClass="TextField" customModule="iosApp" customModuleProvider="target">
+                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Pin" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Eth-cU-Ld1">
                                                                     <rect key="frame" x="0.0" y="14.5" width="311" height="17"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>

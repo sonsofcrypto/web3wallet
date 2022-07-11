@@ -123,7 +123,6 @@ extension KeyStoreViewController: UICollectionViewDataSource {
         switch collectionView {
             
         case buttonsCollectionView:
-            
             let button = viewModel?.buttons.buttons[indexPath.item]
             return collectionView.dequeue(
                 ButtonsSheetViewCell.self,
@@ -131,11 +130,12 @@ extension KeyStoreViewController: UICollectionViewDataSource {
             ).update(with: button)
             
         default:
-            
             return collectionView.dequeue(KeyStoreCell.self, for: indexPath).update(
                 with: viewModel?.items[indexPath.item],
-                at: indexPath.item,
-                presenter: presenter
+                accessoryHandler: { [weak self] in
+                    self?.presenter.handle(.didSelectAccessory(idx: indexPath.item))
+                },
+                index: indexPath.item
             )
         }
     }
@@ -368,6 +368,12 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
             )
         }
 
+        if presentedVc?.isKind(of: MnemonicUpdateViewController.self) ?? false {
+            animatedTransitioning = CardFlipAnimatedTransitioning(
+                targetView: targetView() ?? view
+            )
+        }
+
         return animatedTransitioning
     }
 
@@ -380,6 +386,13 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
         animatedTransitioning = nil
 
         if presentedVc?.isKind(of: MnemonicNewViewController.self) ?? false {
+            animatedTransitioning = CardFlipAnimatedTransitioning(
+                targetView: targetView() ?? view,
+                isPresenting: false
+            )
+        }
+
+        if presentedVc?.isKind(of: MnemonicUpdateViewController.self) ?? false {
             animatedTransitioning = CardFlipAnimatedTransitioning(
                 targetView: targetView() ?? view,
                 isPresenting: false

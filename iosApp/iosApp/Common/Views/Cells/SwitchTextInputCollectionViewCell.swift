@@ -60,6 +60,8 @@ extension SwitchTextInputCollectionViewCell: UITextFieldDelegate {
     }
 }
 
+// MARK: - Update with viewModel
+
 extension SwitchTextInputCollectionViewCell {
 
     func update(
@@ -68,35 +70,84 @@ extension SwitchTextInputCollectionViewCell {
         textChangeHandler: ((String)->Void)?,
         descriptionAction: (()->Void)?
     ) -> Self {
-        titleLabel.text = viewModel.title
-        onOffSwitch.setOn(viewModel.onOff, animated: false)
-        textField.text = viewModel.text
+        update(
+            title: viewModel.title,
+            onOff: viewModel.onOff,
+            text: viewModel.text,
+            placeholder: viewModel.placeholder,
+            description: viewModel.description,
+            descriptionHighlightedWords: viewModel.descriptionHighlightedWords,
+            switchAction: switchAction,
+            textChangeHandler: textChangeHandler,
+            descriptionAction: descriptionAction
+        )
+        return self
+    }
 
-        textField.update(placeholder: viewModel.placeholder)
+    func update(
+        with viewModel: MnemonicUpdateViewModel.SwitchWithTextInput,
+        switchAction: ((Bool)->Void)?,
+        textChangeHandler: ((String)->Void)?,
+        descriptionAction: (()->Void)?
+    ) -> Self {
+        update(
+            title: viewModel.title,
+            onOff: viewModel.onOff,
+            text: viewModel.text,
+            placeholder: viewModel.placeholder,
+            description: viewModel.description,
+            descriptionHighlightedWords: viewModel.descriptionHighlightedWords,
+            switchAction: switchAction,
+            textChangeHandler: textChangeHandler,
+            descriptionAction: descriptionAction
+        )
+        return self
+    }
+}
+
+// MARK: - Utilities
+
+private extension SwitchTextInputCollectionViewCell {
+
+    func update(
+        title: String,
+        onOff: Bool,
+        text: String,
+        placeholder: String,
+        description: String,
+        descriptionHighlightedWords: [String],
+        switchAction: ((Bool)->Void)?,
+        textChangeHandler: ((String)->Void)?,
+        descriptionAction: (()->Void)?
+    ) {
+        titleLabel.text = title
+        onOffSwitch.setOn(onOff, animated: false)
+        textField.text = text
+
+        (textField as? TextField)?.placeholderAttrText = placeholder
 
         let attrStr = NSMutableAttributedString(
-            string: viewModel.description,
+            string: description,
             attributes: sectionFooter()
         )
 
         var hlAttrs  = sectionFooter()
         hlAttrs[.foregroundColor] = Theme.colour.fillPrimary
 
-        viewModel.descriptionHighlightedWords.forEach {
-            let range = NSString(string: viewModel.description).range(of: $0)
+        descriptionHighlightedWords.forEach {
+            let range = NSString(string: description).range(of: $0)
             attrStr.setAttributes(hlAttrs, range: range)
         }
 
         descriptionLabel.attributedText = attrStr
-        vStack.setCustomSpacing(viewModel.onOff ? 2 : 2, after: hStack)
+        vStack.setCustomSpacing(onOff ? 2 : 2, after: hStack)
 
         self.switchAction = switchAction
         self.textChangeHandler = textChangeHandler
         self.descriptionAction = descriptionAction
-        return self
     }
-    
-    private func sectionFooter() -> [NSAttributedString.Key: Any] {
+
+    func sectionFooter() -> [NSAttributedString.Key: Any] {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
         

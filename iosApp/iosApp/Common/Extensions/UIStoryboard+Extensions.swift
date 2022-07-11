@@ -27,6 +27,7 @@ extension UIStoryboard {
         case main = "Main"
         case keyStore = "KeyStore"
         case mnemonicNew = "MnemonicNew"
+        case mnemonicUpdate = "MnemonicUpdate"
         case dashboard = "Dashboard"
         case networks = "Networks"
         case account = "Account"

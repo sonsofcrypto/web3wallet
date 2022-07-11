@@ -11,8 +11,8 @@ final class KeyStoreCell: CollectionViewCell {
     @IBOutlet weak var accessoryButton: UIButton!
     @IBOutlet weak var arrowForward: UIImageView!
     
-    private weak var presenter: KeyStorePresenter!
-    
+    var accessoryHandler: (()->())? = nil
+        
     override func awakeFromNib() {
         
         super.awakeFromNib()
@@ -29,21 +29,14 @@ final class KeyStoreCell: CollectionViewCell {
         )
         arrowForward.image = .init(systemName: "chevron.right")
     }
-
-    override func prepareForReuse() {
-        
-        super.prepareForReuse()
-        
-        accessoryButton.removeAllTargets()
-    }
 }
 
 extension KeyStoreCell {
     
     func update(
         with viewModel: KeyStoreViewModel.KeyStoreItem?,
-        at index: Int,
-        presenter: KeyStorePresenter
+        accessoryHandler: (()->())? = nil,
+        index: Int
     ) -> Self {
         
         let image = UIImage(systemName: "\(index + 1).square.fill")!
@@ -56,9 +49,8 @@ extension KeyStoreCell {
         indexImage.image = image.applyingSymbolConfiguration(config)
 
         titleLabel.text = viewModel?.title
-        
-        accessoryButton.tag = index
-        
+        self.accessoryHandler = accessoryHandler
+                
         return self
     }
 }
@@ -66,8 +58,6 @@ extension KeyStoreCell {
 private extension KeyStoreCell {
     
     @objc func accessoryAction(_ sender: UIButton) {
-        
-        presenter.handle(.didSelectAccessory(idx: sender.tag))
+        accessoryHandler?()
     }
-
 }

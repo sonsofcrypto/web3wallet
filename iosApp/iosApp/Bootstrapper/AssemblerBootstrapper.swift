@@ -51,6 +51,7 @@ private extension AssemblerBootstrapper {
             SwapWireframeFactoryAssembler(),
             KeyStoreWireframeFactoryAssembler(),
             MnemonicNewWireframeFactoryAssembler(),
+            MnemonicUpdateWireframeFactoryAssembler(),
             MnemonicConfirmationWireframeFactoryAssembler(),
             NetworksWireframeFactoryAssembler(),
             NFTsDashboardWireframeFactoryAssembler(),

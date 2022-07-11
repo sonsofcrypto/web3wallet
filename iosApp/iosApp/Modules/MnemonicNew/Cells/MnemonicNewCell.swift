@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class MnemonicCell: UICollectionViewCell {
+final class MnemonicNewCell: UICollectionViewCell {
 
     typealias TextChangeHandler = (String) -> Void
 
@@ -59,7 +59,7 @@ final class MnemonicCell: UICollectionViewCell {
         with viewModel: MnemonicNewViewModel.Mnemonic?,
         textChangeHandler: TextChangeHandler? = nil,
         textEditingEndHandler: TextChangeHandler? = nil
-    ) -> MnemonicCell {
+    ) -> MnemonicNewCell {
         guard let viewModel = viewModel else {
             return self
         }
@@ -82,7 +82,7 @@ final class MnemonicCell: UICollectionViewCell {
 
 // MARK: - UITextViewDelegate
 
-extension MnemonicCell: UITextViewDelegate {
+extension MnemonicNewCell: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             textChaneHandler?(textView.text)
@@ -103,7 +103,7 @@ extension MnemonicCell: UITextViewDelegate {
 
 // MARK: - Animation
 
-extension MnemonicCell {
+extension MnemonicNewCell {
 
     func animateCopiedToPasteboard() {
         
