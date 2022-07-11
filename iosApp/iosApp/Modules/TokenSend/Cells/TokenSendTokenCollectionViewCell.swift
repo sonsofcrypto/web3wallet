@@ -30,9 +30,7 @@ final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
         tokenTextFieldView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
 
         tokenTextField.font = Theme.font.title3Bold
-        tokenTextField.update(
-            placeholder: Localized("tokenSend.cell.token.placeholder")
-        )
+        tokenTextField.placeholderAttrText = Localized("tokenSend.cell.token.placeholder")
         tokenTextField.delegate = self
         tokenTextField.rightView = makeTokenClearButton()
         tokenTextField.rightViewMode = .whileEditing
@@ -53,9 +51,7 @@ final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
         
         currencyTextField.font = Theme.font.title3Bold
         currencyTextField.textColor = Theme.colour.labelSecondary
-        currencyTextField.update(
-            placeholder: Localized("tokenSend.cell.currency.placeholder")
-        )
+        currencyTextField.placeholderAttrText = Localized("tokenSend.cell.currency.placeholder")
         currencyTextField.delegate = self
         currencyTextField.rightView = makeTokenClearButton()
         currencyTextField.rightViewMode = .whileEditing

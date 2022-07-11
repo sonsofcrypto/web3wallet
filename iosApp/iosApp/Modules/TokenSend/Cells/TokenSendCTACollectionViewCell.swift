@@ -16,8 +16,7 @@ final class TokenSendCTACollectionViewCell: UICollectionViewCell {
         
         super.awakeFromNib()
         
-        button.apply(style: .primary)
-        
+        (button as? Button)?.style = .primary
         networkTokenIcon.image = .init(named: "send-ethereum-token")
         
         networkEstimateFeeLabel.font = Theme.font.body

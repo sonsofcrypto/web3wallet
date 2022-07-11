@@ -39,7 +39,7 @@ final class TokenAddInputView: UIView {
             textField.text = value
         }
         textField.tag = viewModel.tag
-        textField.update(placeholder: viewModel.placeholder)
+        textField.placeholderAttrText = viewModel.placeholder
         textField.keyboardType = keyboardType
         textField.returnKeyType = returnType
         textField.autocapitalizationType = autocapitalizationType

@@ -28,9 +28,7 @@ final class TokenSendToCollectionViewCell: UICollectionViewCell {
         qrCodeScanButton.tintColor = Theme.colour.labelPrimary
         qrCodeScanButton.addTarget(self, action: #selector(qrCodeScanTapped), for: .touchUpInside)
         
-        textField.update(
-            placeholder: Localized("tokenSend.cell.address.textField.placeholder")
-        )
+        textField.placeholderAttrText  = Localized("tokenSend.cell.address.textField.placeholder")
         textField.delegate = self
         textField.rightView = makeClearButton()
         textField.rightViewMode = .whileEditing
