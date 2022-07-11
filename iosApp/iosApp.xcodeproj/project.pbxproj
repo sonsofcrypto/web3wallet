@@ -330,9 +330,6 @@
 		1C9E319F287580D900DD2031 /* TokenSendPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E319E287580D900DD2031 /* TokenSendPresenter.swift */; };
 		1C9E31A1287580DE00DD2031 /* TokenSendInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E31A0287580DE00DD2031 /* TokenSendInteractor.swift */; };
 		1C9E31A3287580E500DD2031 /* TokenSend.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C9E31A2287580E500DD2031 /* TokenSend.storyboard */; };
-		1C9E31A62876023E00DD2031 /* TokenSendToCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E31A52876023E00DD2031 /* TokenSendToCollectionViewCell.swift */; };
-		1C9E31A8287618D500DD2031 /* TokenSendTokenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E31A7287618D500DD2031 /* TokenSendTokenCollectionViewCell.swift */; };
-		1C9E31AC287700A100DD2031 /* TokenSendCTACollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E31AB287700A100DD2031 /* TokenSendCTACollectionViewCell.swift */; };
 		1C9E31AE287732A700DD2031 /* Assets-Old.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C9E31AD287732A700DD2031 /* Assets-Old.xcassets */; };
 		1C9E31B028787A3000DD2031 /* FeedPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E31AF28787A3000DD2031 /* FeedPickerView.swift */; };
 		1CAC55A4286DF26100CCB2B6 /* Networks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CAC55A3286DF26100CCB2B6 /* Networks.storyboard */; };
@@ -420,6 +417,9 @@
 		D1A67140283D6BAE0042A448 /* web3lib.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A6713F283D6BAE0042A448 /* web3lib.xcframework */; };
 		D1A67141283D6BAE0042A448 /* web3lib.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D1A6713F283D6BAE0042A448 /* web3lib.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D1BC5303284B5B89007E6FF4 /* CultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BC5302284B5B89007E6FF4 /* CultService.swift */; };
+		D1ED725F287C1122005805CF /* TokenSendTokenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ED725C287C1122005805CF /* TokenSendTokenCollectionViewCell.swift */; };
+		D1ED7260287C1122005805CF /* TokenSendCTACollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ED725D287C1122005805CF /* TokenSendCTACollectionViewCell.swift */; };
+		D1ED7261287C1122005805CF /* TokenSendToCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ED725E287C1122005805CF /* TokenSendToCollectionViewCell.swift */; };
 		D1EF5BC7287BEE92004CAD82 /* MnemonicUpdateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BBE287BEE92004CAD82 /* MnemonicUpdateCell.swift */; };
 		D1EF5BC8287BEE92004CAD82 /* MnemonicUpdateContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BBF287BEE92004CAD82 /* MnemonicUpdateContext.swift */; };
 		D1EF5BC9287BEE92004CAD82 /* DefaultMnemonicUpdateWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BC0287BEE92004CAD82 /* DefaultMnemonicUpdateWireframe.swift */; };
@@ -785,9 +785,6 @@
 		1C9E319E287580D900DD2031 /* TokenSendPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendPresenter.swift; sourceTree = "<group>"; };
 		1C9E31A0287580DE00DD2031 /* TokenSendInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendInteractor.swift; sourceTree = "<group>"; };
 		1C9E31A2287580E500DD2031 /* TokenSend.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TokenSend.storyboard; sourceTree = "<group>"; };
-		1C9E31A52876023E00DD2031 /* TokenSendToCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendToCollectionViewCell.swift; sourceTree = "<group>"; };
-		1C9E31A7287618D500DD2031 /* TokenSendTokenCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendTokenCollectionViewCell.swift; sourceTree = "<group>"; };
-		1C9E31AB287700A100DD2031 /* TokenSendCTACollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendCTACollectionViewCell.swift; sourceTree = "<group>"; };
 		1C9E31AD287732A700DD2031 /* Assets-Old.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets-Old.xcassets"; sourceTree = "<group>"; };
 		1C9E31AF28787A3000DD2031 /* FeedPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPickerView.swift; sourceTree = "<group>"; };
 		1CAC55A3286DF26100CCB2B6 /* Networks.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Networks.storyboard; sourceTree = "<group>"; };
@@ -880,6 +877,9 @@
 		D1A564C02843E24700D4B7D8 /* CoreCrypto.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CoreCrypto.xcframework; path = Frameworks/CoreCrypto.xcframework; sourceTree = "<group>"; };
 		D1A6713F283D6BAE0042A448 /* web3lib.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = web3lib.xcframework; path = ../web3lib/build/XCFrameworks/debug/web3lib.xcframework; sourceTree = "<group>"; };
 		D1BC5302284B5B89007E6FF4 /* CultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultService.swift; sourceTree = "<group>"; };
+		D1ED725C287C1122005805CF /* TokenSendTokenCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenSendTokenCollectionViewCell.swift; sourceTree = "<group>"; };
+		D1ED725D287C1122005805CF /* TokenSendCTACollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenSendCTACollectionViewCell.swift; sourceTree = "<group>"; };
+		D1ED725E287C1122005805CF /* TokenSendToCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenSendToCollectionViewCell.swift; sourceTree = "<group>"; };
 		D1EF5BBE287BEE92004CAD82 /* MnemonicUpdateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateCell.swift; sourceTree = "<group>"; };
 		D1EF5BBF287BEE92004CAD82 /* MnemonicUpdateContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateContext.swift; sourceTree = "<group>"; };
 		D1EF5BC0287BEE92004CAD82 /* DefaultMnemonicUpdateWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultMnemonicUpdateWireframe.swift; sourceTree = "<group>"; };
@@ -1693,9 +1693,9 @@
 		1C9E31A42875FF3000DD2031 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				1C9E31A52876023E00DD2031 /* TokenSendToCollectionViewCell.swift */,
-				1C9E31A7287618D500DD2031 /* TokenSendTokenCollectionViewCell.swift */,
-				1C9E31AB287700A100DD2031 /* TokenSendCTACollectionViewCell.swift */,
+				D1ED725D287C1122005805CF /* TokenSendCTACollectionViewCell.swift */,
+				D1ED725E287C1122005805CF /* TokenSendToCollectionViewCell.swift */,
+				D1ED725C287C1122005805CF /* TokenSendTokenCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2143,7 +2143,7 @@
 			);
 			mainGroup = D157F7BE27B69B6300578FF8;
 			packageReferences = (
-				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
+				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
 			projectDirPath = "";
@@ -2427,6 +2427,7 @@
 				1C60C2E2285724D0003BE25D /* DashboardInteractor.swift in Sources */,
 				1C54DC2A2868193300E378F6 /* Theme.swift in Sources */,
 				1CBB9CBC286DA9E90007E2D4 /* DashboarView+CollectionCards.swift in Sources */,
+				D1ED725F287C1122005805CF /* TokenSendTokenCollectionViewCell.swift in Sources */,
 				1C60C36028572555003BE25D /* AppsServiceAssembler.swift in Sources */,
 				1C60C304285724D1003BE25D /* NFTsDashboardView+NFTsCollection.swift in Sources */,
 				1C60C34A285724D1003BE25D /* CultProposalWireframeFactory.swift in Sources */,
@@ -2470,7 +2471,6 @@
 				1C60C309285724D1003BE25D /* RootWireframe.swift in Sources */,
 				1C54DBE5285E832600E378F6 /* TokenAddWireframeFactory.swift in Sources */,
 				1CB3A1E82840D6B70092D667 /* UIButton+Extensions.swift in Sources */,
-				1C9E31A8287618D500DD2031 /* TokenSendTokenCollectionViewCell.swift in Sources */,
 				1C60C2F8285724D0003BE25D /* NFTDetailViewModel.swift in Sources */,
 				1CE66BCC2848EA9F00AB6ACA /* DefaultChatService.swift in Sources */,
 				1C60C333285724D1003BE25D /* NFTsCollectionWireframeFactory.swift in Sources */,
@@ -2478,6 +2478,7 @@
 				1C6487142832DE560091A12D /* ReachabilityServiceAssembler.swift in Sources */,
 				1CB3A1F12840D6B70092D667 /* UIBarButtonItem+Extensions.swift in Sources */,
 				1C60C1AA28571B95003BE25D /* UIColor+Extensions.swift in Sources */,
+				D1ED7260287C1122005805CF /* TokenSendCTACollectionViewCell.swift in Sources */,
 				D1EF5BCF287BEE92004CAD82 /* MnemonicUpdateInteractor.swift in Sources */,
 				1C60C2E7285724D0003BE25D /* DashboardViewModel.swift in Sources */,
 				1C60C36D2857C605003BE25D /* TokenReceiveWireframeFactoryAssembler.swift in Sources */,
@@ -2503,6 +2504,7 @@
 				1C60C350285724D1003BE25D /* CultProposalsWireframeFactoryAssemler.swift in Sources */,
 				1C54DC032860E5C100E378F6 /* NetworkPickerViewModel.swift in Sources */,
 				1C54DC1B2862352800E378F6 /* QRCodeScanWireframeFactoryAssembler.swift in Sources */,
+				D1ED7261287C1122005805CF /* TokenSendToCollectionViewCell.swift in Sources */,
 				1C60C300285724D1003BE25D /* NFTsDashboardWireframe.swift in Sources */,
 				1C64871E2832E3D60091A12D /* KeyChainService.swift in Sources */,
 				1CB3A1F42840D6B70092D667 /* UICollectionView+Extensions.swift in Sources */,
@@ -2612,7 +2614,6 @@
 				1C64873E2832E76B0091A12D /* StoreAssembler.swift in Sources */,
 				1C60C2B8285724D0003BE25D /* KeyStoreWireframeFactory.swift in Sources */,
 				1A4C367CFF657470F7722F74 /* Currency.swift in Sources */,
-				1C9E31AC287700A100DD2031 /* TokenSendCTACollectionViewCell.swift in Sources */,
 				1C60C307285724D1003BE25D /* NFTsDashboardInteractor.swift in Sources */,
 				1C60C329285724D1003BE25D /* MnemonicConfirmationService.swift in Sources */,
 				1A4C35A9CDBB31FFE29C51D1 /* WebViewController.swift in Sources */,
@@ -2979,7 +2980,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
+		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -2992,7 +2993,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		1C5B603A284675B800ECBD79 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
+			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
