@@ -94,12 +94,15 @@
                                                                         <constraint firstItem="0xi-Fa-Osp" firstAttribute="centerY" secondItem="0Cv-dJ-6lZ" secondAttribute="centerY" id="XEq-DR-BZP"/>
                                                                     </constraints>
                                                                 </stackView>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qWd-03-bRn">
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qWd-03-bRn" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="35" width="265" height="0.5"/>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="0.5" id="JGT-Tq-Hi0"/>
                                                                     </constraints>
+                                                                    <connections>
+                                                                        <outlet property="heightConstraint" destination="JGT-Tq-Hi0" id="cu8-yu-M2n"/>
+                                                                    </connections>
                                                                 </view>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="GXC-A4-ytl">
                                                                     <rect key="frame" x="0.0" y="39.5" width="265" height="61.5"/>
@@ -178,7 +181,6 @@
                                             <outlet property="explorerLabel" destination="uJg-7T-RiJ" id="XgK-32-8Di"/>
                                             <outlet property="explorerTitleLabel" destination="8po-cq-n6E" id="Xif-75-DQO"/>
                                             <outlet property="iconImageView" destination="4Ql-z9-Qyf" id="RTZ-hP-a5i"/>
-                                            <outlet property="separatorView" destination="qWd-03-bRn" id="T9K-dL-JTa"/>
                                             <outlet property="settingsButton" destination="dlv-eb-kn9" id="iGs-yd-4Ie"/>
                                             <outlet property="statusLabel" destination="qZL-hP-g4U" id="dN1-9Y-wVp"/>
                                             <outlet property="statusTitleLabel" destination="HrG-3v-GAN" id="Mcy-NV-Rlz"/>
