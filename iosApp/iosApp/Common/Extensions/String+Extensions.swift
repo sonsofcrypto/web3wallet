@@ -107,6 +107,10 @@ extension String {
         let end = index(start, offsetBy: range.upperBound - range.lowerBound)
         return String(self[start ..< end])
     }
+
+    func substringMax(_ length: Int) -> String {
+        self.substring(toIndex: self.length > length ? length : self.length)
+    }
 }
 
 extension String {

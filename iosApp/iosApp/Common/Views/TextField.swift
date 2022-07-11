@@ -4,54 +4,75 @@
 
 import UIKit
 
-final class TextField: UITextField {
+class TextField: UITextField {
 
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
         configure()
     }
     
     required init?(coder: NSCoder) {
-        
         super.init(coder: coder)
         configure()
     }
-    
-    override var font: UIFont? {
-        
-        didSet {
-            
-            // Update placeholder font
+
+    var placeholderAttrText: String? {
+        get { attributedPlaceholder?.string }
+        set {
             attributedPlaceholder = NSAttributedString(
-                string: placeholder ?? "",
-                attributes: makePlaceholderAttributes()
+                string: newValue ?? "",
+                attributes: placeholder()
             )
         }
     }
     
-    func update(placeholder: String?) {
-        
-        attributedPlaceholder = NSAttributedString(
-            string: placeholder ?? "",
-            attributes: makePlaceholderAttributes()
-        )
+    func configure() {
+        font = Theme.font.body
+        textColor = Theme.colour.labelPrimary
+        rightView = makeClearButton()
+        clipsToBounds = true
     }
 }
 
 private extension TextField {
     
-    func configure() {
-
-        font = Theme.font.body
-        textColor = Theme.colour.textFieldTextColour
-        backgroundColor = .clear
+    func placeholder() -> [NSAttributedString.Key: Any] {
+        [
+            .font: Theme.font.body,
+            .foregroundColor: Theme.colour.labelSecondary
+        ]
     }
     
-    func makePlaceholderAttributes() -> [NSAttributedString.Key: Any] {
+    func body() -> [NSAttributedString.Key: Any] {
         [
-            .font: font ?? Theme.font.body,
-            .foregroundColor: Theme.colour.textFieldPlaceholderColour
+            .font: Theme.font.body,
+            .foregroundColor: Theme.colour.labelPrimary,
+            .shadow: textShadow(Theme.colour.fillSecondary)
         ]
+    }
+    
+    func textShadow(_ tint: UIColor) -> NSShadow {
+        
+        let shadow = NSShadow()
+        shadow.shadowOffset = .zero
+        shadow.shadowBlurRadius = Global.shadowRadius
+        shadow.shadowColor = tint
+        return shadow
+    }
+    
+    func makeClearButton() -> UIButton {
+        
+        let button = UIButton(type: .system)
+        button.setImage(
+            .init(systemName: "xmark.circle.fill"),
+            for: .normal
+        )
+        button.tintColor = Theme.colour.labelSecondary
+        button.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
+        return button
+    }
+    
+    @objc func clearTapped() {
+        text = nil
     }
 }

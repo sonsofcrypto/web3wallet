@@ -8,20 +8,49 @@ plugins {
 
 kotlin {
     android()
-
     val xcf = XCFramework()
-
+    val frameworkPath = project.file("src/iosMain/libs/CoreCrypto").absolutePath
     listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
+        iosX64() {
+            compilations.getByName("main") {
+                val CoreCrypto by cinterops.creating {
+                    defFile("$frameworkPath/ios-arm64_x86_64-simulator/CoreCrypto.def")
+                    compilerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+                }
+            }
+            binaries.all {
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+            }
+        },
+        iosArm64() {
+            compilations.getByName("main") {
+                val CoreCrypto by cinterops.creating {
+                    defFile("$frameworkPath/ios-arm64/CoreCrypto.def")
+                    compilerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64/")
+                }
+            }
+            binaries.all {
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64/")
+            }
+        },
+        iosSimulatorArm64() {
+            compilations.getByName("main") {
+                val CoreCrypto by cinterops.creating {
+                    defFile("$frameworkPath/ios-arm64_x86_64-simulator/CoreCrypto.def")
+                    compilerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+                }
+            }
+            binaries.all {
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+            }
+        },
     ).forEach {
         it.binaries.framework {
             baseName = "web3lib"
-            export(project(":web3lib_bip39"))
-            export(project(":web3lib_bip44"))
-            export(project(":web3lib_crypto"))
-            export(project(":web3lib_extensions"))
+            export(project(":web3lib_utils"))
+            export(project(":web3lib_core"))
+            export(project(":web3lib_keyStore"))
+            export(project(":web3lib_keyValueStore"))
             xcf.add(this)
         }
     }
@@ -29,15 +58,19 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(project(":web3lib_bip39"))
-                api(project(":web3lib_bip44"))
-                api(project(":web3lib_crypto"))
-                api(project(":web3lib_extensions"))
+                api(project(":web3lib_utils"))
+                api(project(":web3lib_core"))
+                api(project(":web3lib_keyStore"))
+                api(project(":web3lib_keyValueStore"))
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation(project(":web3lib_utils"))
+                implementation(project(":web3lib_core"))
+                implementation(project(":web3lib_keyStore"))
+                implementation(project(":web3lib_keyValueStore"))
             }
         }
         val androidMain by getting
@@ -51,8 +84,12 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
         }
-        val iosX64Test by getting
-        val iosArm64Test by getting
+        val iosX64Test by getting {
+
+        }
+        val iosArm64Test by getting {
+
+        }
         val iosSimulatorArm64Test by getting
         val iosTest by creating {
             dependsOn(commonTest)

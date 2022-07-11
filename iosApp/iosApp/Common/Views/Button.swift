@@ -5,6 +5,10 @@
 import UIKit
 
 class Button: UIButton {
+    
+    var style: Style = .normal {
+        didSet { configure(for: style) }
+    }
 
     override var isHighlighted: Bool {
         didSet { layer.applyHighlighted(isHighlighted) }
@@ -12,12 +16,12 @@ class Button: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureUI()
+        configure(for: style)
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        configureUI()
+        configure(for: style)
     }
 
     override func layoutSubviews() {
@@ -27,17 +31,54 @@ class Button: UIButton {
 
     override var intrinsicContentSize: CGSize {
         var size = super.intrinsicContentSize
-        size.height = Constant.defaultButtonHeight
+        switch style {
+        case .primary:
+            size.height = Theme.constant.buttonPrimaryHeight
+        case .dashboardAction:
+            size.height = Theme.constant.buttonDashboardActionHeight
+        case .normal:
+            size.height = Constant.defaultButtonHeight
+        }
         return size
     }
 
-    func configureUI() {
-        backgroundColor = Theme.colour.backgroundBaseSecondary
-        layer.applyRectShadow()
-        layer.applyBorder()
-        layer.applyHighlighted(false)
-        titleLabel?.applyStyle(.callout)
-        tintColor = Theme.colour.labelPrimary
+    
+    func configure(for style: Style = .normal) {
+        switch style {
+        case .primary:
+            backgroundColor = Theme.colour.buttonBackgroundPrimary
+            tintColor = Theme.colour.labelPrimary
+            layer.cornerRadius = Theme.constant.cornerRadiusSmall
+            titleLabel?.font = Theme.font.title3
+            setTitleColor(Theme.colour.labelPrimary, for: .normal)
+        case .dashboardAction:
+            backgroundColor = .clear
+            tintColor = Theme.colour.labelPrimary
+            layer.borderWidth = 0.5
+            layer.borderColor = Theme.colour.labelPrimary.cgColor
+            layer.cornerRadius = Theme.constant.cornerRadius
+            titleLabel?.font = Theme.font.calloutBold
+            setTitleColor(Theme.colour.labelPrimary, for: .normal)
+            titleLabel?.textAlignment = .natural
+            titleEdgeInsets = .init(top: 0, left: 8, bottom: 0, right: 0)
+            imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 8)
+        case .normal:
+            backgroundColor = Theme.colour.backgroundBaseSecondary
+            layer.applyRectShadow()
+            layer.applyBorder()
+            layer.applyHighlighted(false)
+            titleLabel?.applyStyle(.callout)
+            tintColor = Theme.colour.labelPrimary
+        }
+    }
+}
+
+extension Button {
+    
+    enum Style {
+        case normal
+        case primary
+        case dashboardAction
     }
 }
 
@@ -116,8 +157,8 @@ class LeftRightImageButton: Button {
 
 class VerticalButton: Button {
 
-    override func configureUI() {
-        super.configureUI()
+    override func configure(for style: Style) {
+        super.configure(for: style)
         titleLabel?.textAlignment = .center
     }
 

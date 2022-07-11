@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 protocol KeyStoreWireframeFactory {
 
@@ -16,18 +17,21 @@ protocol KeyStoreWireframeFactory {
 
 final class DefaultKeyStoreWireframeFactory {
 
-    private let keyStoreSerive: KeyStoreService
+    private let keyStoreService: KeyStoreService
     private let settingsService: SettingsService
-    private let newMnemonic: MnemonicWireframeFactory
+    private let newMnemonic: MnemonicNewWireframeFactory
+    private let updateMnemonic: MnemonicUpdateWireframeFactory
 
     init(
-        walletsService: KeyStoreService,
+        keyStoreService: KeyStoreService,
         settingsService: SettingsService,
-        newMnemonic: MnemonicWireframeFactory
+        newMnemonic: MnemonicNewWireframeFactory,
+        updateMnemonic: MnemonicUpdateWireframeFactory
     ) {
-        self.keyStoreSerive = walletsService
+        self.keyStoreService = keyStoreService
         self.settingsService = settingsService
         self.newMnemonic = newMnemonic
+        self.updateMnemonic = updateMnemonic
     }
 }
 
@@ -42,9 +46,26 @@ extension DefaultKeyStoreWireframeFactory: KeyStoreWireframeFactory {
         DefaultKeyStoreWireframe(
             parent: parent,
             window: window,
-            keyStoreSerive: keyStoreSerive,
+            keyStoreService: keyStoreService,
             newMnemonic: newMnemonic,
+            updateMnemonic: updateMnemonic,
             settingsService: settingsService
         )
+    }
+}
+
+// MARK: - KeyStoreWireframeFactoryAssembler
+
+final class KeyStoreWireframeFactoryAssembler: AssemblerComponent {
+
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> KeyStoreWireframeFactory in
+            DefaultKeyStoreWireframeFactory(
+                keyStoreService: resolver.resolve(),
+                settingsService: resolver.resolve(),
+                newMnemonic: resolver.resolve(),
+                updateMnemonic: resolver.resolve()
+            )
+        }
     }
 }

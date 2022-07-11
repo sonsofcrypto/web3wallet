@@ -45,10 +45,9 @@ final class DashboardButtonsCell: UICollectionViewCell {
 private extension DashboardButtonsCell {
     
     func updateViews() {
-        
-        receiveButton.apply(style: .dashboardAction)
-        sendButton.apply(style: .dashboardAction)
-        tradeButton.apply(style: .dashboardAction)
+        [receiveButton, sendButton, tradeButton].forEach {
+            ($0 as? Button)?.style = .dashboardAction
+        }
         lineView.backgroundColor = Theme.colour.labelPrimary
     }
 }

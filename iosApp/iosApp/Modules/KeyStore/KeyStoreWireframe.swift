@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 enum KeyStoreWireframeDestination {
 
@@ -30,8 +31,9 @@ final class DefaultKeyStoreWireframe {
 
     private weak var parent: UIViewController?
     private weak var window: UIWindow?
-    private let keyStoreSerive: KeyStoreService
-    private let newMnemonic: MnemonicWireframeFactory
+    private let keyStoreService: KeyStoreService
+    private let newMnemonic: MnemonicNewWireframeFactory
+    private let updateMnemonic: MnemonicUpdateWireframeFactory
     private let settingsService: SettingsService
 
     private weak var vc: UIViewController?
@@ -39,14 +41,16 @@ final class DefaultKeyStoreWireframe {
     init(
         parent: UIViewController?,
         window: UIWindow?,
-        keyStoreSerive: KeyStoreService,
-        newMnemonic: MnemonicWireframeFactory,
+        keyStoreService: KeyStoreService,
+        newMnemonic: MnemonicNewWireframeFactory,
+        updateMnemonic: MnemonicUpdateWireframeFactory,
         settingsService: SettingsService
     ) {
         self.parent = parent
         self.window = window
-        self.keyStoreSerive = keyStoreSerive
+        self.keyStoreService = keyStoreService
         self.newMnemonic = newMnemonic
+        self.updateMnemonic = updateMnemonic
         self.settingsService = settingsService
     }
 }
@@ -82,18 +86,18 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
         case .dashBoardOnboarding:
             edgeVc?.setDisplayMode(.masterOnboardAnim, animated: true)
         case let .newMnemonic(handler):
-            let context = MnemonicContext(mode: .new, createHandler: handler)
+            let context = MnemonicNewContext(createHandler: handler)
             newMnemonic.makeWireframe(vc, context: context).present()
         case let .importMnemonic(handler):
-            let context = MnemonicContext(mode: .restore, createHandler: handler)
-            newMnemonic.makeWireframe(vc, context: context).present()
+            () // TODO: - Fix
+//            let context = MnemonicNewContext(mode: .restore, createHandler: handler)
+//            newMnemonic.makeWireframe(vc, context: context).present()
         case let .keyStoreItem(keyStoreItem, handler):
-            let context = MnemonicContext(
-                mode: .update(keyStoreItem: keyStoreItem),
-                createHandler: nil,
+            let context = MnemonicUpdateContext(
+                keyStoreItem: keyStoreItem,
                 updateHandler: handler
             )
-            newMnemonic.makeWireframe(vc, context: context).present()
+            updateMnemonic.makeWireframe(vc, context: context).present()
         default:
             print("Navigate to", destination)
 
@@ -104,7 +108,7 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
 private extension DefaultKeyStoreWireframe {
 
     func wireUp() -> UIViewController {
-        let interactor = DefaultKeyStoreInteractor(keyStoreSerive)
+        let interactor = DefaultKeyStoreInteractor(keyStoreService)
         let vc: KeyStoreViewController = UIStoryboard(.keyStore).instantiate()
         let presenter = DefaultKeyStorePresenter(
             view: vc,

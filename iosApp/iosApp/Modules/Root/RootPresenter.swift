@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 protocol RootPresenter {
 
@@ -35,7 +36,7 @@ extension DefaultRootPresenter: RootPresenter {
     func present() {
 
         wireframe.navigate(
-            to: !keyStoreService.isEmpty() ? .keyStore : .dashboard,
+            to: keyStoreService.items().isEmpty ? .keyStore : .dashboard,
             animated: false
         )
     }

@@ -5,7 +5,6 @@
 import Foundation
 
 struct DashboardViewModel {
-    
     let shouldAnimateCardSwitcher: Bool
     let sections: [DashboardViewModel.Section]
 }
@@ -13,7 +12,6 @@ struct DashboardViewModel {
 extension DashboardViewModel {
 
     struct Section {
-        
         let name: String
         let fuelCost: String?
         let rightActionTitle: String?
@@ -21,13 +19,11 @@ extension DashboardViewModel {
         let items: Items
         
         enum Items {
-            
             case actions([DashboardViewModel.Action])
             case wallets([DashboardViewModel.Wallet])
             case nfts([DashboardViewModel.NFT])
             
             var count: Int {
-                
                 switch self {
                 case .actions:
                     return 1
@@ -39,9 +35,7 @@ extension DashboardViewModel {
             }
             
             func actions() -> [DashboardViewModel.Action] {
-                
                 guard case let Items.actions(actions) = self else { return [] }
-                
                 return actions
             }
             

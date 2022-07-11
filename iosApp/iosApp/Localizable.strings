@@ -86,7 +86,7 @@
 "newMnemonic.name.placeholder" = "eg: Default wallet";
 "newMnemonic.iCould.title" = "Backup in iCloud";
 "newMnemonic.salt.title" = "Salt mnemonic";
-"newMnemonic.salt.placeholder" = "Enter password";
+"newMnemonic.salt.placeholder" = "Enter salt";
 "newMnemonic.salt.description" = "Adding salt to mnemonic increases security but decrees portability. Learn more";
 "newMnemonic.salt.descriptionHighlight" = "Learn more";
 "newMnemonic.passType.title" = "Pass type";
@@ -100,6 +100,8 @@
 "newMnemonic.cta.new" = "Create new wallet";
 "newMnemonic.cta.update" = "Update";
 "newMnemonic.cta.import" = "Import";
+"newMnemonic.defaultWalletName" = "Default wallet";
+"newMnemonic.defaultNthWalletName" = "Wallet %d";
 
 "setting.action.resetKeyStore" = "Reset keystore";
 "setting.theme" = "Theme";

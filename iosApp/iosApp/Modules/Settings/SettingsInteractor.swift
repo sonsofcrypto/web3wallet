@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 protocol SettingsInteractor: AnyObject {
 
@@ -150,8 +151,10 @@ extension DefaultSettingsInteractor: SettingsInteractor {
     func handleActionIfPossible(_ action: SettingsItem.ActionType) -> Bool {
         switch action {
         case .resetKeyStore:
-            try? keyStoreService.reset()
-//            fatalError("Killing app after keyStore reset")
+            keyStoreService.items().forEach {
+                keyStoreService.remove(item: $0)
+            }
+            // fatalError("Killing app after keyStore reset")
             return true
         }
     }

@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"crypto/elliptic"
 	"github.com/ethereum/go-ethereum/crypto/secp256k1"
+	"golang.org/x/crypto/pbkdf2"
+	"golang.org/x/crypto/scrypt"
 	"log"
 	"math/big"
 )
@@ -134,4 +136,30 @@ func compressPublicKey(x *big.Int, y *big.Int) []byte {
 	key.Write(xBytes)
 
 	return key.Bytes()
+}
+
+// Secret storage constants
+const (
+	SecretStorageHeaderKDF        = "scrypt"
+	SecretStorageCipherAes128Crt  = "aes-128-ctr"
+	SecretStorageScryptN          = 1 << 18
+	SecretStorageScryptP          = 1
+	SecretStorageScryptR          = 8
+	SecretStorageScryptDKLen      = 32
+	SecretStoragePrivateKeyMinLen = 32
+)
+
+// ScryptKey derivation
+func ScryptKey(pswd, salt []byte, N, r, p, keyLen int) []byte {
+	dk, err := scrypt.Key(pswd, salt, N, r, p, keyLen)
+	if err != nil {
+		log.Panicln("Failed to derive key from password", err)
+	}
+	return dk
+}
+
+// Pbkdf2 pass one of the hash constants from top of the file. (`HashFnSha256`,
+// `HashFnSha512`, ...) Enum not used due to `go bind` (does not support enums)
+func Pbkdf2(password, salt []byte, iter, keyLen, hashFn int) []byte {
+	return pbkdf2.Key(password, salt, iter, keyLen, HashFunc(hashFn))
 }

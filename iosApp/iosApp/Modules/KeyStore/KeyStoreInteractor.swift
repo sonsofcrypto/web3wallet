@@ -3,53 +3,45 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 protocol KeyStoreInteractor: AnyObject {
+    var selected: KeyStoreItem? {set get}
+    var items: [KeyStoreItem] { get }
+    var isEmpty: Bool { get }
 
-    typealias KeyStoreHandler = ([KeyStoreItem]) -> Void
-
-    var selectedKeyStoreItem: KeyStoreItem? { get set }
-
-    var keyStoreItems: [KeyStoreItem] { get }
-
-    /// Generates new `KeyStoreItem` but does not save it to `KeyStore`
-    func generateNewKeyStoreItem() -> KeyStoreItem
-
-    /// returns nil if items are not loaded yet
-    func keyStoreItem(at idx: Int) -> KeyStoreItem?
-
+    func item(at idx: Int) -> KeyStoreItem?
     func index(of keyStoreItem: KeyStoreItem?) -> Int?
 
-    func add(_ keyStoreItem: KeyStoreItem) throws
+    func add(item: KeyStoreItem, password: String, secretStorage: SecretStorage) throws
+    func remove(item: KeyStoreItem)
 
-    func delete(_ keyStoreItem: KeyStoreItem) throws
-
+    /// Generates new `KeyStoreItem` but does not save it to `KeyStore`
+    func generateNewKeyStoreItem(_ type: KeyStoreItem.Type_) -> KeyStoreItem
     func reset() throws
-
-    /// Checks if any data is present in `KeyStore`, returns correct value
-    /// event before `load(_:)` is called
-    func isEmpty() -> Bool
-
-    func load(_ handler: KeyStoreHandler)
 }
 
 // MARK: - DefaultKeyStoreInteractor
 
 final class DefaultKeyStoreInteractor {
 
-    var selectedKeyStoreItem: KeyStoreItem? {
-        get { keyStoreService.selectedKeyStoreItem }
-        set { keyStoreService.selectedKeyStoreItem = newValue }
+    var selected: KeyStoreItem? {
+        get { keyStoreService.selected }
+        set { keyStoreService.selected = newValue }
     }
 
-    var keyStoreItems: [KeyStoreItem] {
-        get { keyStoreService.latestItems() }
+    var items: [KeyStoreItem] {
+        keyStoreService.items()
+    }
+
+    var isEmpty: Bool {
+        items.isEmpty
     }
 
     private var keyStoreService: KeyStoreService
 
-    init(_ walletsService: KeyStoreService) {
-        self.keyStoreService = walletsService
+    init(_ keyStoreService: KeyStoreService) {
+        self.keyStoreService = keyStoreService
     }
 }
 
@@ -57,38 +49,38 @@ final class DefaultKeyStoreInteractor {
 
 extension DefaultKeyStoreInteractor: KeyStoreInteractor {
 
-    func generateNewKeyStoreItem() -> KeyStoreItem {
-        keyStoreService.generateNewKeyStoreItem()
+    func item(at idx: Int) -> KeyStoreItem? {
+        items[safe: idx]
     }
-
-    func keyStoreItem(at idx: Int) -> KeyStoreItem? {
-        keyStoreService.keyStoreItem(at: idx)
-    }
-
     func index(of keyStoreItem: KeyStoreItem?) -> Int? {
-        guard let keyStoreItem = keyStoreItem else {
-            return nil
-        }
-        return keyStoreItems.firstIndex(where: { $0.uuid == keyStoreItem.uuid })
+        items.firstIndex(where: { $0.uuid == keyStoreItem?.uuid })
     }
 
-    func add(_ keyStoreItem: KeyStoreItem) throws {
-        try keyStoreService.add(keyStoreItem)
+    func add(item: KeyStoreItem, password: String, secretStorage: SecretStorage) throws {
+        try keyStoreService.add(item: item, password: password, secretStorage: secretStorage)
     }
 
-    func delete(_ keyStoreItem: KeyStoreItem) throws {
-        try keyStoreService.delete(keyStoreItem)
+    func remove(item: KeyStoreItem) {
+        keyStoreService.remove(item: item)
+    }
+
+    /// Generates new `KeyStoreItem` but does not save it to `KeyStore`
+    func generateNewKeyStoreItem(_ type: KeyStoreItem.Type_) -> KeyStoreItem {
+        return .init(
+            uuid: UUID().uuidString,
+            name: "",
+            sortOrder: (items.last?.sortOrder ?? 0) + 100,
+            type: type,
+            passUnlockWithBio: true,
+            iCloudSecretStorage: true,
+            saltMnemonic: false,
+            passwordType: .pass,
+            derivationPath: "m/44'/60'/0'/0/0", // TODO: Get default derivations path from wallet
+            addresses: [:]
+        )
     }
 
     func reset() throws {
-        try keyStoreService.reset()
-    }
-
-    func isEmpty() -> Bool {
-        keyStoreItems.isEmpty
-    }
-
-    func load(_ handler: KeyStoreHandler) {
-        keyStoreService.load(handler)
+        items.forEach { keyStoreService.remove(item: $0) }
     }
 }

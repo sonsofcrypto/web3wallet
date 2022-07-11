@@ -8,15 +8,6 @@
         "revision" : "59eb199fdb8dd47733624e8b0277822d0232579e",
         "version" : "7.2.2"
       }
-    },
-    {
-      "identity" : "swiftkeccak",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/bitflying/SwiftKeccak.git",
-      "state" : {
-        "revision" : "5fc323d4b08a8c77cbb690505445b32a3b5a8aff",
-        "version" : "0.1.2"
-      }
     }
   ],
   "version" : 2

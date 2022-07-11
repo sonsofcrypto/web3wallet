@@ -511,6 +511,7 @@ extension EdgeCardsController: UIGestureRecognizerDelegate {
             action: #selector(edgePanned(_:))
         )
         edgeRecognizer.edges = .left
+        edgeRecognizer.delegate = self
         view.addGestureRecognizer(edgeRecognizer)
 
         panRecognizer = UIPanGestureRecognizer(

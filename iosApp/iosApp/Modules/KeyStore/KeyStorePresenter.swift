@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 enum KeyStorePresenterEvent {
     case didSelectKeyStoreItemtAt(idx: Int)
@@ -56,12 +57,7 @@ final class DefaultKeyStorePresenter {
 extension DefaultKeyStorePresenter: KeyStorePresenter {
 
     func present() {
-        view?.update(with: viewModel(.loading))
-        interactor.load { [weak self] items in
-            DispatchQueue.main.async {
-                self?.updateView()
-            }
-        }
+        updateView()
     }
 
     func handle(_ event: KeyStorePresenterEvent) {
@@ -85,8 +81,8 @@ extension DefaultKeyStorePresenter: KeyStorePresenter {
 private extension DefaultKeyStorePresenter {
 
     func handleDidSelectItem(at idx: Int) {
-        let keyStoreItem = interactor.keyStoreItems[idx]
-        interactor.selectedKeyStoreItem = keyStoreItem
+        let keyStoreItem = interactor.items[idx]
+        interactor.selected = keyStoreItem
         view?.update(with: viewModel())
         wireframe.navigate(to: .networks)
     }
@@ -94,9 +90,9 @@ private extension DefaultKeyStorePresenter {
     func handleDidSelectAccessory(at idx: Int) {
         targetView = .keyStoreItemAt(idx: idx)
         view?.updateTargetView(targetView)
-        let item = interactor.keyStoreItems[idx]
+        let item = interactor.items[idx]
         wireframe.navigate(to: .keyStoreItem(item: item) { [weak self] item in
-            self?.handleDidUpdateNewKeyStoreItem(item)
+             self?.handleDidUpdateNewKeyStoreItem(item)
         })
     }
 
@@ -111,11 +107,11 @@ private extension DefaultKeyStorePresenter {
         switch buttonsViewModel.buttons[idx].type {
         case .newMnemonic:
             wireframe.navigate(to: .newMnemonic { [weak self] keyStoreItem in
-                self?.handleDidCreateNewKeyStoreItem(keyStoreItem)
+                 self?.handleDidCreateNewKeyStoreItem(keyStoreItem)
             })
         case .importMnemonic:
             wireframe.navigate(to: .importMnemonic { [weak self] item in
-                self?.handleDidCreateNewKeyStoreItem(item)
+                 self?.handleDidCreateNewKeyStoreItem(item)
             })
         case .moreOption:
             handleDidChangeButtonsState(.expanded)
@@ -143,21 +139,20 @@ private extension DefaultKeyStorePresenter {
     }
 
     func handleDidCreateNewKeyStoreItem(_ keyStoreItem: KeyStoreItem) {
-        interactor.selectedKeyStoreItem = keyStoreItem
+        interactor.selected = keyStoreItem
         if let idx = interactor.index(of: keyStoreItem) {
             targetView = .keyStoreItemAt(idx: idx)
         }
 
         updateView()
 
-        if interactor.keyStoreItems.count == 1 {
+        if interactor.items.count == 1 {
             // HACK: This is non ideal, but since we dont have `viewDidAppear`
             // simply animate to dashboard after first wallet was created
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) { [weak self] in
                  self?.wireframe.navigate(to: .dashBoardOnboarding)
             }
         }
-
         targetView = .none
     }
 
@@ -178,14 +173,14 @@ private extension DefaultKeyStorePresenter {
 private extension DefaultKeyStorePresenter {
 
     func viewModel(_ state: KeyStoreViewModel.State = .loaded) -> KeyStoreViewModel {
-        let active = interactor.selectedKeyStoreItem
+        let active = interactor.selected
         return .init(
-            isEmpty: interactor.isEmpty(),
+            isEmpty: interactor.isEmpty,
             state: state,
-            items: interactor.keyStoreItems.map {
+            items: interactor.items.map {
                 KeyStoreViewModel.KeyStoreItem(title: $0.name)
             },
-            selectedIdxs: [interactor.index(of: interactor.selectedKeyStoreItem)]
+            selectedIdxs: [interactor.index(of: interactor.selected)]
                 .compactMap{  $0 },
             buttons: buttonsViewModel,
             targetView: targetView,

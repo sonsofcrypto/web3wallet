@@ -35,12 +35,10 @@ final class KeyStoreViewController: BaseViewController {
         configureUI()
         presenter?.present()
         prevViewSize = view.bounds.size
-        debugPrint("viewDidLoad")
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        debugPrint("viewWillAppear")
     }
 
     override func viewWillLayoutSubviews() {
@@ -54,7 +52,6 @@ final class KeyStoreViewController: BaseViewController {
             prevViewSize = view.bounds.size
             needsLayoutUI = true
         }
-        debugPrint("viewWillLayoutSubviews")
     }
 
     override func viewDidLayoutSubviews() {
@@ -65,12 +62,10 @@ final class KeyStoreViewController: BaseViewController {
             layoutButtonsBackground()
             needsLayoutUI = false
         }
-        debugPrint("viewDidLayoutSubviews")
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        debugPrint("viewDidAppear")
         animateIntro()
         collectionView.deselectAllExcept(selectedIdxPaths())
         buttonsCollectionView.deselectAllExcept()
@@ -81,25 +76,6 @@ final class KeyStoreViewController: BaseViewController {
         collectionView.collectionViewLayout.invalidateLayout()
         buttonsCollectionView.collectionViewLayout.invalidateLayout()
         needsLayoutUI = true
-        debugPrint("viewSafeAreaInsetsDidChange")
-    }
-
-    func debugPrint(_ msg: String? = nil) {
-
-//        if let msg = msg {
-//            print(msg)
-//        }
-//        print("view bounds", view.bounds)
-//        print("view safeAreaInsets", view.safeAreaInsets)
-//        print("view alignmentRectInsets", view.alignmentRectInsets)
-//        print("cv contentInset", collectionView.contentInset)
-//        print("cv contentSize", collectionView.contentSize)
-//        print("bcv bounds", buttonsCollectionView.bounds)
-//        print("bcv contentSize", buttonsCollectionView.contentSize)
-//        print("bcv contentOffset", buttonsCollectionView.contentOffset)
-//        print("bcv safeAreaInsets", buttonsCollectionView.safeAreaInsets)
-//        print("bcv contentInset", buttonsCollectionView.contentInset)
-//        print("=======")
     }
 }
 
@@ -147,7 +123,6 @@ extension KeyStoreViewController: UICollectionViewDataSource {
         switch collectionView {
             
         case buttonsCollectionView:
-            
             let button = viewModel?.buttons.buttons[indexPath.item]
             return collectionView.dequeue(
                 ButtonsSheetViewCell.self,
@@ -155,11 +130,12 @@ extension KeyStoreViewController: UICollectionViewDataSource {
             ).update(with: button)
             
         default:
-            
             return collectionView.dequeue(KeyStoreCell.self, for: indexPath).update(
                 with: viewModel?.items[indexPath.item],
-                at: indexPath.item,
-                presenter: presenter
+                accessoryHandler: { [weak self] in
+                    self?.presenter.handle(.didSelectAccessory(idx: indexPath.item))
+                },
+                index: indexPath.item
             )
         }
     }
@@ -180,7 +156,6 @@ extension KeyStoreViewController: UICollectionViewDelegate {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        debugPrint("scrollViewDidScroll")
         updateSheetModeIfNeeded(scrollView)
     }
 }
@@ -387,7 +362,13 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
         let presentedVc = (presented as? UINavigationController)?.topViewController
         animatedTransitioning = nil
 
-        if presentedVc?.isKind(of: MnemonicViewController.self) ?? false {
+        if presentedVc?.isKind(of: MnemonicNewViewController.self) ?? false {
+            animatedTransitioning = CardFlipAnimatedTransitioning(
+                targetView: targetView() ?? view
+            )
+        }
+
+        if presentedVc?.isKind(of: MnemonicUpdateViewController.self) ?? false {
             animatedTransitioning = CardFlipAnimatedTransitioning(
                 targetView: targetView() ?? view
             )
@@ -404,7 +385,14 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
         let presentedVc = (dismissed as? UINavigationController)?.topViewController
         animatedTransitioning = nil
 
-        if presentedVc?.isKind(of: MnemonicViewController.self) ?? false {
+        if presentedVc?.isKind(of: MnemonicNewViewController.self) ?? false {
+            animatedTransitioning = CardFlipAnimatedTransitioning(
+                targetView: targetView() ?? view,
+                isPresenting: false
+            )
+        }
+
+        if presentedVc?.isKind(of: MnemonicUpdateViewController.self) ?? false {
             animatedTransitioning = CardFlipAnimatedTransitioning(
                 targetView: targetView() ?? view,
                 isPresenting: false

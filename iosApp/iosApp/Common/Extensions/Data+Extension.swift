@@ -53,6 +53,6 @@ extension Data {
 extension Data {
 
     func byteArray() -> KotlinByteArray {
-        return ExtensionsKt.byteArray(self)
+        return ExtensionsKt.byteArrayFrom(data: self)
     }
 }
