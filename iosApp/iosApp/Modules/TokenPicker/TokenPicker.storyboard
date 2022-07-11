@@ -181,19 +181,25 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IzD-aQ-86v">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IzD-aQ-86v" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
                                                     <rect key="frame" x="87" y="-29" width="240" height="128"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.5" id="iN1-HZ-cc5"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <outlet property="heightConstraint" destination="iN1-HZ-cc5" id="vb8-Wp-poe"/>
+                                                    </connections>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w7c-JT-JSl">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w7c-JT-JSl" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
                                                     <rect key="frame" x="87" y="-29" width="240" height="128"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="0.5" id="iv7-LM-VU3"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <outlet property="heightConstraint" destination="iv7-LM-VU3" id="GLz-B9-FKr"/>
+                                                    </connections>
                                                 </view>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="d3y-PB-WKg">
                                                     <rect key="frame" x="16" y="10" width="382" height="50"/>
@@ -334,7 +340,7 @@
                                             <outlet property="nameLabel" destination="76J-2u-RQP" id="a3d-bK-d7g"/>
                                             <outlet property="networkLabel" destination="5SO-rv-yof" id="eZH-Pb-DIL"/>
                                             <outlet property="separatorBottomView" destination="w7c-JT-JSl" id="1eS-gS-Ok1"/>
-                                            <outlet property="separatorTopView" destination="IzD-aQ-86v" id="NTc-cP-pDe"/>
+                                            <outlet property="separatorTopView" destination="IzD-aQ-86v" id="vsY-jd-q1e"/>
                                             <outlet property="separatorTopViewLeadingConstraint" destination="Ph9-FH-n3b" id="uEi-n5-jpP"/>
                                             <outlet property="separatorTopViewTrailingConstraint" destination="AQZ-d4-XMn" id="sbf-CB-z6K"/>
                                             <outlet property="symbolLabel" destination="qwV-5w-tiR" id="uzS-C4-5ZU"/>

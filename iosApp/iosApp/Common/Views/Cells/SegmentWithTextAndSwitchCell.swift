@@ -13,9 +13,7 @@ class SegmentWithTextAndSwitchCell: CollectionViewCell {
     @IBOutlet weak var onOffSwitch: UISwitch!
     @IBOutlet weak var vStack: UIStackView!
     @IBOutlet weak var hStack: UIStackView!
-    @IBOutlet weak var separator1: UIView!
     @IBOutlet weak var group1: UIView!
-    @IBOutlet weak var separator2: UIView!
     @IBOutlet weak var group2: UIView!
 
     var selectSegmentAction: ((Int) -> Void)?
@@ -32,10 +30,7 @@ class SegmentWithTextAndSwitchCell: CollectionViewCell {
     func configureUI() {
         
         bottomSeparatorView.isHidden = true
-        
-        separator1.backgroundColor = Theme.colour.labelTertiary
-        separator2.backgroundColor = Theme.colour.labelTertiary
-        
+                
         titleLabel.font = Theme.font.body
         titleLabel.textColor = Theme.colour.labelPrimary
         

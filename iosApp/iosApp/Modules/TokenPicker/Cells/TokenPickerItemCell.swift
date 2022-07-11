@@ -58,9 +58,6 @@ final class TokenPickerItemCell: UICollectionViewCell {
         usdPriceLabel.font = Theme.font.callout
         usdPriceLabel.textColor = Theme.colour.labelSecondary
         usdPriceLabel.textAlignment = .right
-        
-        separatorTopView.backgroundColor = Theme.colour.separatorNoTransparency
-        separatorBottomView.backgroundColor = Theme.colour.separatorNoTransparency
     }
 
     func update(

@@ -10,7 +10,6 @@ final class NetworksCell: UICollectionViewCell {
     private var idx: Int!
     
     @IBOutlet weak var iconImageView: UIImageView!
-    @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var switchControl: UISwitch!
     @IBOutlet weak var settingsButton: UIButton!
@@ -29,8 +28,6 @@ final class NetworksCell: UICollectionViewCell {
         contentView.layer.cornerRadius = Theme.constant.cornerRadius
 
         iconImageView.layer.cornerRadius = iconImageView.frame.size.width * 0.5
-        
-        separatorView.backgroundColor = Theme.colour.labelTertiary
         
         titleLabel.font = Theme.font.body
         titleLabel.textColor = Theme.colour.labelPrimary

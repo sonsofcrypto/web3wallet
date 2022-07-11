@@ -39,6 +39,8 @@ extension KeyStoreCell {
         index: Int
     ) -> Self {
         
+        self.presenter = presenter
+        
         let image = UIImage(systemName: "\(index + 1).square.fill")!
         let config = UIImage.SymbolConfiguration(
             paletteColors: [

@@ -266,12 +266,15 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nId-fj-OZp">
                                                             <rect key="frame" x="0.0" y="46" width="327" height="46"/>
                                                             <subviews>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ALJ-qL-8rl">
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ALJ-qL-8rl" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="327" height="0.5"/>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="0.5" id="QYK-us-fuA"/>
                                                                     </constraints>
+                                                                    <connections>
+                                                                        <outlet property="heightConstraint" destination="QYK-us-fuA" id="4mg-eS-CXo"/>
+                                                                    </connections>
                                                                 </view>
                                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Pin" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Eth-cU-Ld1" customClass="TextField" customModule="iosApp" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="14.5" width="311" height="17"/>
@@ -293,12 +296,15 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JqS-Fy-1pJ">
                                                             <rect key="frame" x="0.0" y="92" width="327" height="46"/>
                                                             <subviews>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vz9-AW-PlK">
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vz9-AW-PlK" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="327" height="0.5"/>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="0.5" id="MRI-Oo-tbL"/>
                                                                     </constraints>
+                                                                    <connections>
+                                                                        <outlet property="heightConstraint" destination="MRI-Oo-tbL" id="Ywe-yh-mFg"/>
+                                                                    </connections>
                                                                 </view>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="muA-zh-I7a">
                                                                     <rect key="frame" x="0.0" y="7.5" width="311" height="31"/>
@@ -343,8 +349,6 @@
                                             <outlet property="hStack" destination="eLr-Fq-O8V" id="ohD-7o-DeD"/>
                                             <outlet property="onOffSwitch" destination="0fI-cU-S30" id="6ge-0n-zMe"/>
                                             <outlet property="segmentControl" destination="mlZ-c0-cNx" id="MP6-ot-G9B"/>
-                                            <outlet property="separator1" destination="ALJ-qL-8rl" id="Osc-EI-TSu"/>
-                                            <outlet property="separator2" destination="Vz9-AW-PlK" id="EnU-PU-aYf"/>
                                             <outlet property="switchLabel" destination="obB-S5-ceg" id="zeX-ON-YhK"/>
                                             <outlet property="textField" destination="Eth-cU-Ld1" id="Ht4-1x-hFk"/>
                                             <outlet property="titleLabel" destination="dPx-sd-A2j" id="y1y-aN-ewg"/>

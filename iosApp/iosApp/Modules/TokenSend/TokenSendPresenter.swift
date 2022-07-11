@@ -245,7 +245,7 @@ private extension DefaultTokenSendPresenter {
     }
 }
 
-extension Web3NetworkFee {
+private extension Web3NetworkFee {
     
     var name: String {
         

@@ -40,6 +40,7 @@
 		1A4C3EB4D429242923984C76 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3378B5287B6A9BDE65CD /* Button.swift */; };
 		1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */; };
 		1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */; };
+		1C47C0E5287BFC06008E0146 /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C47C0E4287BFC06008E0146 /* SeparatorView.swift */; };
 		1C54DBDC285DD10000E378F6 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */; };
 		1C54DBDE285DD15400E378F6 /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBDD285DD15400E378F6 /* Account.storyboard */; };
 		1C54DBE0285E1A0E00E378F6 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBDF285E1A0E00E378F6 /* Double+Extensions.swift */; };
@@ -496,6 +497,7 @@
 		1A4C3EE3468010FE10976BEE /* mock-candles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mock-candles.json"; sourceTree = "<group>"; };
 		1A4C3F5900131CEDA6520958 /* TransformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformView.swift; sourceTree = "<group>"; };
 		1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnOffSwitch.swift; sourceTree = "<group>"; };
+		1C47C0E4287BFC06008E0146 /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
 		1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
 		1C54DBDD285DD15400E378F6 /* Account.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
 		1C54DBDF285E1A0E00E378F6 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
@@ -1939,6 +1941,7 @@
 				1A4C3378B5287B6A9BDE65CD /* Button.swift */,
 				D15B06C227B6D23C008C3C62 /* GradienView.swift */,
 				1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */,
+				1C47C0E4287BFC06008E0146 /* SeparatorView.swift */,
 				1A4C3DBA41AF75471C619124 /* TextField.swift */,
 				D1EF5BBB287BEC58004CAD82 /* Cells */,
 				1A4C3850817DBF09BB66090A /* CadlesView */,
@@ -2574,6 +2577,7 @@
 				1CD844002874257500E6D359 /* SwitchTextInputCollectionViewCell.swift in Sources */,
 				1A4C373BF33DAF794F261056 /* CardFlipAnimatedTransitioning2.swift in Sources */,
 				1A4C3B81B628EF4EDC8F7177 /* TransformView.swift in Sources */,
+				1C47C0E5287BFC06008E0146 /* SeparatorView.swift in Sources */,
 				1A4C31E84A86A69FFC7C3E0F /* Setting.swift in Sources */,
 				1C60C342285724D1003BE25D /* AMMsWireframeFactoryAssembler.swift in Sources */,
 				1CD843F72874215F00E6D359 /* SegmentWithTextAndSwitchCell.swift in Sources */,
