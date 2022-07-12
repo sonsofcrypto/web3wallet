@@ -35,10 +35,11 @@ extension TokenSendViewModel {
     struct Token {
         
         let tokenAmount: Double?
+        let tokenSymbolIcon: Data
         let tokenSymbol: String
         let tokenMaxAmount: Double
+        let tokenMaxDecimals: Int
         let currencyTokenPrice: Double
-        let insufficientFunds: Bool
         let shouldUpdateTextFields: Bool
     }
     

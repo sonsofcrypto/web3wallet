@@ -11,7 +11,7 @@ final class KeyStoreCell: CollectionViewCell {
     @IBOutlet weak var accessoryButton: UIButton!
     @IBOutlet weak var arrowForward: UIImageView!
     
-    var accessoryHandler: (()->())? = nil
+    private var accessoryHandler: (() -> Void)? = nil
         
     override func awakeFromNib() {
         
@@ -38,8 +38,8 @@ extension KeyStoreCell {
         accessoryHandler: (()->())? = nil,
         index: Int
     ) -> Self {
-        
-        self.presenter = presenter
+
+        self.accessoryHandler = accessoryHandler
         
         let image = UIImage(systemName: "\(index + 1).square.fill")!
         let config = UIImage.SymbolConfiguration(
@@ -51,7 +51,6 @@ extension KeyStoreCell {
         indexImage.image = image.applyingSymbolConfiguration(config)
 
         titleLabel.text = viewModel?.title
-        self.accessoryHandler = accessoryHandler
                 
         return self
     }

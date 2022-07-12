@@ -16,6 +16,7 @@ protocol TokenSendInteractor: AnyObject {
         network: Web3Network
     ) -> String
     
+    func tokenIcon(for token: Web3Token) -> Data
     func networkFees(network: Web3Network) -> [Web3NetworkFee]
     func networkFeeInUSD(network: Web3Network, fee: Web3NetworkFee) -> Double
     func networkFeeInSeconds(network: Web3Network, fee: Web3NetworkFee) -> Int
@@ -59,6 +60,11 @@ extension DefaultTokenSendInteractor: TokenSendInteractor {
         default:
             return address.prefix(total) + "..." + address.suffix(total)
         }
+    }
+    
+    func tokenIcon(for token: Web3Token) -> Data {
+        
+        web3Service.tokenIcon(for: token)
     }
     
     func networkFees(network: Web3Network) -> [Web3NetworkFee] {

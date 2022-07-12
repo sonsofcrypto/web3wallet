@@ -58,7 +58,8 @@ struct ThemeA: Themable {
             cellHeight: 64,
             cellHeightSmall: 46,
             padding: 16,
-            buttonPrimaryHeight: 45,
+            buttonPrimaryHeight: 46,
+            buttonSecondarySmallHeight: 24,
             buttonDashboardActionHeight: 32
         )
     }

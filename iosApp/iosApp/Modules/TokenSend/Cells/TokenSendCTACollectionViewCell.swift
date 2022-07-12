@@ -4,29 +4,28 @@
 
 final class TokenSendCTACollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var button: Button!
     
     @IBOutlet weak var networkTokenIcon: UIImageView!
     @IBOutlet weak var networkEstimateFeeLabel: UILabel!
-    @IBOutlet weak var networkFeeButton: UIButton!
+    @IBOutlet weak var networkFeeButton: Button!
     
     private weak var presenter: TokenSendPresenter!
     
     override func awakeFromNib() {
         
         super.awakeFromNib()
-        
-        (button as? Button)?.style = .primary
+                
+        button.style = .primary
+
         networkTokenIcon.image = .init(named: "send-ethereum-token")
-        
-        networkEstimateFeeLabel.font = Theme.font.body
+
+        networkEstimateFeeLabel.font = Theme.font.caption2
         networkEstimateFeeLabel.textColor = Theme.colour.labelPrimary
         
-        networkFeeButton.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        networkFeeButton.layer.borderWidth = 0.5
-        networkFeeButton.layer.borderColor = Theme.colour.labelPrimary.cgColor
-        networkFeeButton.tintColor = Theme.colour.labelPrimary
-        
+        networkFeeButton.style = .secondarySmall(
+            leftImage: .init(named: "dashboard-charging-station")
+        )
         networkFeeButton.addTarget(self, action: #selector(changeNetworkFee), for: .touchUpInside)
     }
 }
@@ -51,8 +50,7 @@ extension TokenSendCTACollectionViewCell {
         
         switch viewModel.feeType {
         case .low:
-            updateButton(with: Localized("tokenSend.cell.send.fee.low"))
-            //networkFeeButton.setTitle(Localized("tokenSend.cell.send.fee.low"), for: .normal)
+            networkFeeButton.setTitle(Localized("tokenSend.cell.send.fee.low"), for: .normal)
         case .medium:
             networkFeeButton.setTitle(Localized("tokenSend.cell.send.fee.medium"), for: .normal)
         case .high:
@@ -62,16 +60,6 @@ extension TokenSendCTACollectionViewCell {
 }
 
 private extension TokenSendCTACollectionViewCell {
-    
-    func updateButton(with title: String) {
-        
-        var configuration = UIButton.Configuration.plain()
-        configuration.title = title
-        configuration.image = .init(named: "dashboard-charging-station")
-        configuration.imagePadding = Theme.constant.padding * 0.5
-        networkFeeButton.configuration = configuration
-        networkFeeButton.updateConfiguration()
-    }
     
     @objc func changeNetworkFee() {
         

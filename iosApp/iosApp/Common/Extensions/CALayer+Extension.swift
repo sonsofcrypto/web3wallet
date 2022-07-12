@@ -43,10 +43,11 @@ extension CALayer {
 extension CALayer {
 
     func applyHighlighted(_ highlighted: Bool) {
+        // TODO: @Annon discussion
         borderColor = (highlighted
             ? Theme.colour.fillPrimary
-            : Theme.colour.fillTertiary
+            : Theme.colour.fillPrimary
         ).cgColor
-        shadowOpacity = highlighted ? 1 :0
+        shadowOpacity = highlighted ? 1 : 0
     }
 }

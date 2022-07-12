@@ -6,13 +6,13 @@ import UIKit
 
 class Button: UIButton {
     
-    var style: Style = .normal {
+    var style: Style = .primary {
         didSet { configure(for: style) }
     }
 
-    override var isHighlighted: Bool {
-        didSet { layer.applyHighlighted(isHighlighted) }
-    }
+//    override var isHighlighted: Bool {
+//        didSet { layer.applyHighlighted(isHighlighted) }
+//    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,62 +23,32 @@ class Button: UIButton {
         super.init(coder: coder)
         configure(for: style)
     }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layer.applyShadowPath(bounds)
-    }
+    
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        layer.applyShadowPath(bounds)
+//    }
 
     override var intrinsicContentSize: CGSize {
         var size = super.intrinsicContentSize
         switch style {
         case .primary:
             size.height = Theme.constant.buttonPrimaryHeight
+        case .secondarySmall:
+            size.height = Theme.constant.buttonSecondarySmallHeight
         case .dashboardAction:
             size.height = Theme.constant.buttonDashboardActionHeight
-        case .normal:
-            size.height = Constant.defaultButtonHeight
         }
         return size
-    }
-
-    
-    func configure(for style: Style = .normal) {
-        switch style {
-        case .primary:
-            backgroundColor = Theme.colour.buttonBackgroundPrimary
-            tintColor = Theme.colour.labelPrimary
-            layer.cornerRadius = Theme.constant.cornerRadiusSmall
-            titleLabel?.font = Theme.font.title3
-            setTitleColor(Theme.colour.labelPrimary, for: .normal)
-        case .dashboardAction:
-            backgroundColor = .clear
-            tintColor = Theme.colour.labelPrimary
-            layer.borderWidth = 0.5
-            layer.borderColor = Theme.colour.labelPrimary.cgColor
-            layer.cornerRadius = Theme.constant.cornerRadius
-            titleLabel?.font = Theme.font.calloutBold
-            setTitleColor(Theme.colour.labelPrimary, for: .normal)
-            titleLabel?.textAlignment = .natural
-            titleEdgeInsets = .init(top: 0, left: 8, bottom: 0, right: 0)
-            imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 8)
-        case .normal:
-            backgroundColor = Theme.colour.backgroundBaseSecondary
-            layer.applyRectShadow()
-            layer.applyBorder()
-            layer.applyHighlighted(false)
-            titleLabel?.applyStyle(.callout)
-            tintColor = Theme.colour.labelPrimary
-        }
     }
 }
 
 extension Button {
     
     enum Style {
-        case normal
         case primary
-        case dashboardAction
+        case secondarySmall(leftImage: UIImage?)
+        case dashboardAction(leftImage: UIImage?)
     }
 }
 
@@ -86,8 +56,50 @@ extension Button {
 
 private extension Button {
     
-    enum Constant {
-        static let defaultButtonHeight: CGFloat = 64
+    func configure(for style: Style = .primary) {
+        
+        switch style {
+        case .primary:
+            backgroundColor = Theme.colour.buttonBackgroundPrimary
+            tintColor = Theme.colour.labelPrimary
+            layer.cornerRadius = Theme.constant.cornerRadiusSmall
+            titleLabel?.font = Theme.font.title3
+            setTitleColor(Theme.colour.labelPrimary, for: .normal)
+        case let .secondarySmall(leftImage):
+            updateSecondaryStyle(leftImage: leftImage)
+            layer.cornerRadius = Theme.constant.buttonSecondarySmallHeight.half
+        case let .dashboardAction(leftImage):
+            updateSecondaryStyle(leftImage: leftImage)
+            layer.cornerRadius = Theme.constant.buttonDashboardActionHeight.half
+        }
+        invalidateIntrinsicContentSize()
+    }
+    
+    func updateSecondaryStyle(leftImage: UIImage?) {
+        
+        var configuration = UIButton.Configuration.plain()
+        configuration.titleTextAttributesTransformer = .init{ incoming in
+            var outgoing = incoming
+            outgoing.font = Theme.font.footnote
+            return outgoing
+        }
+        configuration.titlePadding = Theme.constant.padding * 0.5
+        configuration.imagePadding = Theme.constant.padding * 0.5
+        self.configuration = configuration
+        updateConfiguration()
+        
+        backgroundColor = .clear
+        tintColor = Theme.colour.labelPrimary
+        layer.borderWidth = 0.5
+        layer.borderColor = Theme.colour.labelPrimary.cgColor
+        setTitleColor(Theme.colour.labelPrimary, for: .normal)
+        titleLabel?.textAlignment = .natural
+        
+        if let leftImage = leftImage {
+            
+            setImage(leftImage, for: .normal)
+        }
+        
     }
 }
 
@@ -117,7 +129,7 @@ class LeftImageButton: Button {
 
 // MARK: - LeftImageButton
 
-class LeftRightImageButton: Button {
+final class LeftRightImageButton: Button {
 
     var padding: CGFloat = 4
     var titleLabelXOffset: CGFloat = 0
@@ -156,13 +168,18 @@ class LeftRightImageButton: Button {
 }
 
 class VerticalButton: Button {
-
-    override func configure(for style: Style) {
-        super.configure(for: style)
-        titleLabel?.textAlignment = .center
+    
+    override var style: Button.Style {
+        
+        didSet {
+            
+            super.style = style
+            titleLabel?.textAlignment = .center
+        }
     }
 
     override func layoutSubviews() {
+        
         super.layoutSubviews()
 
         guard let imageView = self.imageView, let label = self.titleLabel else {
