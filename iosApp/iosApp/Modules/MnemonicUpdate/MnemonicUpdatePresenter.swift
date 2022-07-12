@@ -64,6 +64,17 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
         let start = Date()
         interactor.generateNewMnemonic()
         updateView()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.wireframe.navigate(
+                to: .authenticate(
+                    context: .init(
+                        keyStoreItem: context.keyStoreItem,
+                        handler: handleAuthenticateResult
+                    )
+                )
+            )
+        }
     }
 
     func handle(_ event: MnemonicUpdatePresenterEvent) {
@@ -115,7 +126,21 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
     }
 }
 
-// MARK: - WalletsViewModel utilities
+// MARK: - Action handlers
+
+private extension DefaultMnemonicUpdatePresenter {
+
+    func handleAuthenticateResult(_ result: AuthenticateContext.AuthResult) {
+        switch result {
+        case let .success(password, salt):
+            print("=== \(password) \(salt)")
+        case let .failure(error):
+            print("=== \(error)")
+        }
+    }
+}
+
+// MARK: - MnemonicUpdateViewModel utilities
 
 private extension DefaultMnemonicUpdatePresenter {
 

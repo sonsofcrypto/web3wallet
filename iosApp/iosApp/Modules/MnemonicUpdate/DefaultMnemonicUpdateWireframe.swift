@@ -7,6 +7,7 @@ import web3lib
 
 enum MnemonicUpdateWireframeDestination {
     case learnMoreSalt
+    case authenticate(context: AuthenticateContext)
 }
 
 protocol MnemonicUpdateWireframe {
@@ -22,6 +23,7 @@ final class DefaultMnemonicUpdateWireframe {
     private let context: MnemonicUpdateContext
     private let keyStoreService: KeyStoreService
     private let settingsService: SettingsService
+    private let authenticateWireframeFactory: AuthenticateWireframeFactory
 
     private weak var vc: UIViewController!
 
@@ -29,12 +31,14 @@ final class DefaultMnemonicUpdateWireframe {
         parent: UIViewController?,
         context: MnemonicUpdateContext,
         keyStoreService: KeyStoreService,
-        settingsService: SettingsService
+        settingsService: SettingsService,
+        authenticateWireframeFactory: AuthenticateWireframeFactory
     ) {
         self.parent = parent
         self.context = context
         self.keyStoreService = keyStoreService
         self.settingsService = settingsService
+        self.authenticateWireframeFactory = authenticateWireframeFactory
     }
 }
 
@@ -65,6 +69,10 @@ extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
         switch destination {
         case .learnMoreSalt:
             UIApplication.shared.open(Constant.saltExplanationURL)
+        case let .authenticate(context):
+            authenticateWireframeFactory
+                .makeWireframe(vc, context: context)
+                .present()
         }
     }
 }
