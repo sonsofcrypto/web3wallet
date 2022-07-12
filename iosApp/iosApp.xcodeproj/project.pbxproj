@@ -26,7 +26,7 @@
 		1A4C3A41389B5EC22F3B2B88 /* Authenticate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A4C39D6ADB830082AC3CEA6 /* Authenticate.storyboard */; };
 		1A4C3AD382E8BADCBE160CBC /* DApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C375870963EEF9ECBE64B /* DApp.swift */; };
 		1A4C3B1D9B56685FF628A0AD /* DegenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C34077200A9E856B77DDF /* DegenService.swift */; };
-		1A4C3B25A582595A7B1E8EA9 /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C332FF69B880FCA444DE2 /* PresentationController.swift */; };
+		1A4C3B25A582595A7B1E8EA9 /* PreferredSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C332FF69B880FCA444DE2 /* PreferredSizePresentationController.swift */; };
 		1A4C3B49BC67AF7AA3BF0D8F /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3644A9D218CC991B2A56 /* VisualEffectView.swift */; };
 		1A4C3B697503D478741295DB /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DBA41AF75471C619124 /* TextField.swift */; };
 		1A4C3B6D2DFADBE2EF71F3A5 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DED61DB8FC18EFD5B0B /* SettingsService.swift */; };
@@ -477,7 +477,7 @@
 		1A4C3178DA54CD0800157DD5 /* EdgeCardsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EdgeCardsController.swift; sourceTree = "<group>"; };
 		1A4C3228790C1569B37F5179 /* AppsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsService.swift; sourceTree = "<group>"; };
 		1A4C325A6875E5041A491945 /* CollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
-		1A4C332FF69B880FCA444DE2 /* PresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
+		1A4C332FF69B880FCA444DE2 /* PreferredSizePresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferredSizePresentationController.swift; sourceTree = "<group>"; };
 		1A4C3378B5287B6A9BDE65CD /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		1A4C34077200A9E856B77DDF /* DegenService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenService.swift; sourceTree = "<group>"; };
 		1A4C344022DBA2423C0F15F6 /* CandlesViewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandlesViewViewModel.swift; sourceTree = "<group>"; };
@@ -1003,7 +1003,7 @@
 				1A4C3E976CBAB0A97E8AF408 /* CardFlipTransition.swift */,
 				1CE66BD12848ED4000AB6ACA /* PresentationStyle.swift */,
 				1A4C3F5900131CEDA6520958 /* TransformView.swift */,
-				1A4C332FF69B880FCA444DE2 /* PresentationController.swift */,
+				1A4C332FF69B880FCA444DE2 /* PreferredSizePresentationController.swift */,
 			);
 			path = Transitions;
 			sourceTree = "<group>";
@@ -2653,7 +2653,7 @@
 				1C60C30E285724D1003BE25D /* AccountMarketInfoCell.swift in Sources */,
 				1A4C3CFB23D66DF60B4BCE71 /* KeyStoreService.swift in Sources */,
 				1A4C3E81CF175B7B283C13E0 /* AuthenticateContext.swift in Sources */,
-				1A4C3B25A582595A7B1E8EA9 /* PresentationController.swift in Sources */,
+				1A4C3B25A582595A7B1E8EA9 /* PreferredSizePresentationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,12 +5,16 @@
 import Foundation
 import web3lib
 
-enum AuthenticatePresenterEvent {
+enum AuthenticatePresenterErrror: Error {
+    case failedToAuthenticate
+}
 
+enum AuthenticatePresenterEvent {
+    case didCancel
+    case didConfirm
 }
 
 protocol AuthenticatePresenter {
-
     func present()
     func handle(_ event: AuthenticatePresenterEvent)
 }
@@ -43,12 +47,20 @@ class DefaultAuthenticatePresenter {
 extension DefaultAuthenticatePresenter: AuthenticatePresenter {
 
     func present() {
-        view?.update(with: .loading)
-        // TODO: Interactor
+        view?.update(with: viewModel())
     }
 
     func handle(_ event: AuthenticatePresenterEvent) {
-
+        switch event {
+        case .didCancel:
+            wireframe.dismiss()
+            context.handler?(
+                .failure(AuthenticatePresenterErrror.failedToAuthenticate)
+            )
+        case .didConfirm:
+            ()
+            // TODO: -
+        }
     }
 }
 
@@ -62,10 +74,13 @@ private extension DefaultAuthenticatePresenter {
 
 private extension DefaultAuthenticatePresenter {
 
-//    func viewModel(from items: [Item], active: Item?) -> AuthenticateViewModel {
-//        .loaded(
-//            wallets: viewModel(from: wallets),
-//            selectedIdx: selectedIdx(wallets, active: active)
-//        )
-//    }
+    func viewModel() -> AuthenticateViewModel {
+        // TODO(Sancho): Update, fix, localize, make sane
+        // Also view wise, I did no design just default elements
+        .init(
+            title: "Unlock",
+            passwordPlaceholder: "Password",
+            saltPlaceholder: "Sale"
+        )
+    }
 }

@@ -6,8 +6,9 @@ import UIKit
 import web3lib
 
 enum MnemonicUpdateWireframeDestination {
-    case learnMoreSalt
     case authenticate(context: AuthenticateContext)
+    case learnMoreSalt
+    case dismiss
 }
 
 protocol MnemonicUpdateWireframe {
@@ -73,6 +74,8 @@ extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
             authenticateWireframeFactory
                 .makeWireframe(vc, context: context)
                 .present()
+        case .dismiss:
+            vc.dismiss(animated: true)
         }
     }
 }

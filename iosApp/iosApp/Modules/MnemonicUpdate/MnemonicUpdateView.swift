@@ -28,6 +28,9 @@ final class MnemonicUpdateViewController: BaseViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        if !didAppear {
+            presenter.handle(.didInitialAppear)
+        }
         didAppear = true
     }
     

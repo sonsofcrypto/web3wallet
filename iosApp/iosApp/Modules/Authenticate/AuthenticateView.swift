@@ -10,16 +10,28 @@ protocol AuthenticateView: AnyObject {
     func animateError()
 }
 
-class AuthenticateViewController: UIViewController {
+class AuthenticateViewController: UIViewController, ModalDismissProtocol {
 
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var saltTextField: UITextField!
+    @IBOutlet weak var passwordTextField: TextField!
+    @IBOutlet weak var saltTextField: TextField!
     @IBOutlet weak var catButton: UIButton!
+
+    weak var modalDismissDelegate: ModalDismissDelegate?
 
     var presenter: AuthenticatePresenter!
 
     private var viewModel: AuthenticateViewModel?
-    
+
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setupTransitioning()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupTransitioning()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -28,8 +40,12 @@ class AuthenticateViewController: UIViewController {
 
     // MARK: - Actions
 
-    @IBAction func ctaAction(_ sender: Any) {
+    @IBAction func dismissAction(_ sender: Any) {
+        presenter.handle(.didCancel)
+    }
 
+    @IBAction func ctaAction(_ sender: Any) {
+        presenter.handle(.didConfirm)
     }
 }
 
@@ -39,6 +55,10 @@ extension AuthenticateViewController: AuthenticateView {
 
     func update(with viewModel: AuthenticateViewModel) {
         self.viewModel = viewModel
+        title = viewModel.title
+        passwordTextField.placeholderAttrText = viewModel.passwordPlaceholder
+        saltTextField.placeholderAttrText = viewModel.saltPlaceholder
+        catButton.setTitle(viewModel.title, for: .normal)
     }
 
     func animateError() {
@@ -52,15 +72,20 @@ extension AuthenticateViewController {
     
     func configureUI() {
         title = Localized("authenticate")
-        setupTransitioning()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            with: .init(systemName: "chevron.left"),
+            target: self,
+            action: #selector(dismissAction(_:))
+        )
     }
 }
 
-extension AuthenticateViewController: UIViewControllerTransitioningDelegate {
+extension AuthenticateViewController: UIViewControllerTransitioningDelegate, ModalDismissDelegate {
 
     func setupTransitioning() {
         modalPresentationStyle = .custom
         transitioningDelegate = self
+        modalDismissDelegate = self
     }
 
     func presentationController(
@@ -68,10 +93,13 @@ extension AuthenticateViewController: UIViewControllerTransitioningDelegate {
         presenting: UIViewController?,
         source: UIViewController
     ) -> UIPresentationController? {
-        print("=== getting called")
-        return PresentationController(
+        return PreferredSizePresentationController(
             presentedViewController: presented,
             presenting: presenting
         )
+    }
+
+    func viewControllerDismissActionPressed(_ viewController: UIViewController?) {
+        dismissAction(self)
     }
 }

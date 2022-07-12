@@ -65,6 +65,9 @@ extension DefaultAuthenticateWireframe {
         )
 
         vc.presenter = presenter
-        return NavigationController(rootViewController: vc)
+        let navVc = NavigationController(rootViewController: vc)
+        navVc.modalPresentationStyle = .custom
+        navVc.transitioningDelegate = vc as? UIViewControllerTransitioningDelegate
+        return navVc
     }
 }
