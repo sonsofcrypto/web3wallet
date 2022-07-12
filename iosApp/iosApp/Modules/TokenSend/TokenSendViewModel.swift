@@ -40,7 +40,6 @@ extension TokenSendViewModel {
         let tokenMaxAmount: Double
         let tokenMaxDecimals: Int
         let currencyTokenPrice: Double
-        let insufficientFunds: Bool
         let shouldUpdateTextFields: Bool
     }
     

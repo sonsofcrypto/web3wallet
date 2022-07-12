@@ -85,11 +85,6 @@ extension TokenSendTokenCollectionViewCell {
                 
         tokenIconImageView.image = viewModel.tokenSymbolIcon.pngImage
         tokenLabel.text = viewModel.tokenSymbol
-        
-        if viewModel.insufficientFunds {
-            
-            print("Insufficient funds!!")
-        }
     }
 }
 

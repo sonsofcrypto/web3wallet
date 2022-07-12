@@ -68,7 +68,6 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                         tokenMaxAmount: context.web3Token.balance,
                         tokenMaxDecimals: context.web3Token.decimals,
                         currencyTokenPrice: context.web3Token.usdPrice,
-                        insufficientFunds: false,
                         shouldUpdateTextFields: false
                     )
                 ),
@@ -188,7 +187,6 @@ private extension DefaultTokenSendPresenter {
                         tokenMaxAmount: context.web3Token.balance,
                         tokenMaxDecimals: context.web3Token.decimals,
                         currencyTokenPrice: context.web3Token.usdPrice,
-                        insufficientFunds: insufficientFunds,
                         shouldUpdateTextFields: shouldUpdateTextFields
                     )
                 ),
