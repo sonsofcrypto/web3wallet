@@ -162,7 +162,18 @@ extension KeyStoreViewController: UICollectionViewDelegate {
 
 extension KeyStoreViewController: UICollectionViewDelegateFlowLayout {
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        
+        if collectionView == buttonsCollectionView {
+            return CGSize(
+                width: view.bounds.width - Global.padding * 2,
+                height: Theme.constant.buttonPrimaryHeight
+            )
+        }
         return CGSize(
             width: view.bounds.width - Global.padding * 2,
             height: Global.cellHeight
@@ -252,13 +263,13 @@ extension KeyStoreViewController {
 
     func configureInsets() {
         let inset = view.bounds.height
-            - Global.cellHeight * 3
+            - Theme.constant.buttonPrimaryHeight * 3
             - Global.padding * 4
             - buttonsCollectionView.safeAreaInsets.top
             + 2
         buttonsCollectionView.contentInset.top = inset
         collectionView.contentInset.bottom = view.bounds.height
-            - Global.cellHeight - inset
+            - Theme.constant.buttonPrimaryHeight - inset
     }
 
     func layoutButtonsBackground() {

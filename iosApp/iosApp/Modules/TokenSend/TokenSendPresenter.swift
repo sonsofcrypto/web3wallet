@@ -63,8 +63,10 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                 .token(
                     .init(
                         tokenAmount: nil,
+                        tokenSymbolIcon: interactor.tokenIcon(for: context.web3Token),
                         tokenSymbol: context.web3Token.symbol.uppercased(),
                         tokenMaxAmount: context.web3Token.balance,
+                        tokenMaxDecimals: context.web3Token.decimals,
                         currencyTokenPrice: context.web3Token.usdPrice,
                         insufficientFunds: false,
                         shouldUpdateTextFields: false
@@ -181,8 +183,10 @@ private extension DefaultTokenSendPresenter {
                 .token(
                     .init(
                         tokenAmount: amount,
+                        tokenSymbolIcon: interactor.tokenIcon(for: context.web3Token),
                         tokenSymbol: context.web3Token.symbol.uppercased(),
                         tokenMaxAmount: context.web3Token.balance,
+                        tokenMaxDecimals: context.web3Token.decimals,
                         currencyTokenPrice: context.web3Token.usdPrice,
                         insufficientFunds: insufficientFunds,
                         shouldUpdateTextFields: shouldUpdateTextFields

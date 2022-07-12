@@ -4,74 +4,68 @@
 
 final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var availableLabel: UILabel!
-    
-    @IBOutlet weak var tokenTextFieldView: UIView!
-    @IBOutlet weak var tokenTextField: TextField!
+    @IBOutlet weak var cellBackgroundView: UIView!
+    @IBOutlet weak var sendCurrencySymbol: UILabel!
+    @IBOutlet weak var sendAmountTextField: TextField!
+    @IBOutlet weak var sendAmountLabel: UILabel!
+    @IBOutlet weak var tokenView: UIView!
+    @IBOutlet weak var tokenIconImageView: UIImageView!
     @IBOutlet weak var tokenLabel: UILabel!
-    @IBOutlet weak var tokenMaxButton: UIButton!
-
-    @IBOutlet weak var currencyTextFieldView: UIView!
-    @IBOutlet weak var currencyTextField: TextField!
-    @IBOutlet weak var currencyLabel: UILabel!
-    @IBOutlet weak var currencyMaxButton: UIButton!
+    @IBOutlet weak var tokenDropdownImageView: UIImageView!
+    @IBOutlet weak var balanceLabel: UILabel!
+    @IBOutlet weak var maxButton: Button!
     
     private var viewModel: TokenSendViewModel.Token!
     private weak var presenter: TokenSendPresenter!
+    
+    private var mode: Mode = .token
+    
+    private enum Mode {
+        case token
+        case usd
+    }
     
     override func awakeFromNib() {
         
         super.awakeFromNib()
         
-        availableLabel.font = Theme.font.bodyBold
-        availableLabel.textColor = Theme.colour.labelSecondary
+        cellBackgroundView.backgroundColor = Theme.colour.labelQuaternary
+        cellBackgroundView.layer.cornerRadius = Theme.constant.cornerRadius
         
-        tokenTextFieldView.backgroundColor = Theme.colour.labelQuaternary
-        tokenTextFieldView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-
-        tokenTextField.font = Theme.font.title3Bold
-        tokenTextField.placeholderAttrText = Localized("tokenSend.cell.token.placeholder")
-        tokenTextField.delegate = self
-        tokenTextField.rightView = makeTokenClearButton()
-        tokenTextField.rightViewMode = .whileEditing
-
+        sendCurrencySymbol.font = Theme.font.title3
+        sendCurrencySymbol.textColor = Theme.colour.labelPrimary
+        sendCurrencySymbol.isHidden = true
+        sendAmountTextField.font = Theme.font.title3
+        sendAmountTextField.placeholderAttrText = "0"
+        sendAmountTextField.delegate = self
+        sendAmountTextField.rightView = makeTokenClearButton()
+        sendAmountTextField.rightViewMode = .whileEditing
+        sendAmountLabel.font = Theme.font.footnote
+        sendAmountLabel.textColor = Theme.colour.labelPrimary
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(flipMode))
+        sendAmountLabel.isUserInteractionEnabled = true
+        sendAmountLabel.addGestureRecognizer(tapGesture)
+        
+        tokenView.backgroundColor = Theme.colour.labelQuaternary
+        tokenView.layer.cornerRadius = Theme.constant.cornerRadius
+        tokenIconImageView.layer.cornerRadius = tokenIconImageView.frame.size.width * 0.5
         tokenLabel.font = Theme.font.body
         tokenLabel.textColor = Theme.colour.labelPrimary
-        
-        tokenMaxButton.isHidden = false
-        tokenMaxButton.tintColor = Theme.colour.labelSecondary
-        tokenMaxButton.addTarget(
-            self,
-            action: #selector(tokenMaxAmountTapped),
-            for: .touchUpInside
+        tokenDropdownImageView.image = .init(
+            systemName: "chevron.down"
         )
+        tokenDropdownImageView.tintColor = Theme.colour.labelPrimary
         
-        currencyTextFieldView.backgroundColor = Theme.colour.labelQuaternary
-        currencyTextFieldView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        
-        currencyTextField.font = Theme.font.title3Bold
-        currencyTextField.textColor = Theme.colour.labelSecondary
-        currencyTextField.placeholderAttrText = Localized("tokenSend.cell.currency.placeholder")
-        currencyTextField.delegate = self
-        currencyTextField.rightView = makeTokenClearButton()
-        currencyTextField.rightViewMode = .whileEditing
-
-        currencyLabel.font = Theme.font.body
-        currencyLabel.textColor = Theme.colour.labelSecondary
-        currencyLabel.text = Localized("tokenSend.cell.currency.label.usd")
-
-        currencyMaxButton.isHidden = false
-        currencyMaxButton.tintColor = Theme.colour.labelSecondary
-        currencyMaxButton.addTarget(
-            self,
-            action: #selector(currencyMaxAmountTapped),
-            for: .touchUpInside
-        )
+        balanceLabel.font = Theme.font.footnote
+        balanceLabel.textColor = Theme.colour.labelPrimary
+        maxButton.style = .secondarySmall(leftImage: nil)
+        maxButton.setTitle(Localized("tokenSend.cell.max"), for: .normal)
+        maxButton.addTarget(self, action: #selector(tokenMaxAmountTapped), for: .touchUpInside)
     }
     
     override func resignFirstResponder() -> Bool {
         
-        return tokenTextField.resignFirstResponder() || currencyTextField.resignFirstResponder()
+        return sendAmountTextField.resignFirstResponder()
     }
 }
 
@@ -85,50 +79,21 @@ extension TokenSendTokenCollectionViewCell {
         self.viewModel = viewModel
         self.presenter = presenter
         
-        if viewModel.shouldUpdateTextFields, let tokenAmount = viewModel.tokenAmount {
-            
-            tokenTextField.text = "\(tokenAmount)"
-            currencyTextField.text = "\(tokenAmount * viewModel.currencyTokenPrice)"
-        }
-        
+        updateSendAmountTextField()
+        updateSendAmountLabel()
+        updateBalanceLabel()
+                
+        tokenIconImageView.image = viewModel.tokenSymbolIcon.pngImage
         tokenLabel.text = viewModel.tokenSymbol
         
         if viewModel.insufficientFunds {
             
             print("Insufficient funds!!")
         }
-        
-        updateAvailableText()
     }
 }
 
 extension TokenSendTokenCollectionViewCell: UITextFieldDelegate {
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-        if textField == tokenTextField {
-            
-            tokenMaxButton.isHidden = false
-        } else if textField == currencyTextField {
-            
-            currencyMaxButton.isHidden = false
-        }
-        
-        updateAvailableText()
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        
-        if textField == tokenTextField {
-            
-            tokenMaxButton.isHidden = false
-        } else if textField == currencyTextField {
-            
-            currencyMaxButton.isHidden = false
-        }
-        
-        updateAvailableText()
-    }
     
     func textField(
         _ textField: UITextField,
@@ -145,33 +110,21 @@ extension TokenSendTokenCollectionViewCell: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         
-        if textField == tokenTextField {
+        if textField == sendAmountTextField, viewModel.tokenMaxDecimals > 0 {
             
             if textField.text == "." {
                 textField.text = "0."
             }
-            
-            guard let text = textField.text, let double = Double(text) else { return }
-            
+        }
+        
+        let double = Double(textField.text ?? "0") ?? 0
+        
+        switch mode {
+        case .token:
             presenter.handle(.tokenChanged(to: double))
-            
-            updateCurrencyTextField(with: double)
-            
-        } else if textField == currencyTextField {
-            
-            if textField.text == "." {
-                textField.text = "0."
-            }
-            
-            let currencyAmount = Double(textField.text ?? "") ?? 0
-            
-            if currencyAmount > 0 {
-                tokenTextField.text = "\(currencyAmount/viewModel.currencyTokenPrice)"
-            } else {
-                tokenTextField.text = nil
-            }
-            
-            presenter.handle(.tokenChanged(to: currencyAmount/viewModel.currencyTokenPrice))
+        case .usd:
+            let tokenAmount = double / viewModel.currencyTokenPrice
+            presenter.handle(.tokenChanged(to: tokenAmount))
         }
     }
 }
@@ -198,8 +151,7 @@ private extension TokenSendTokenCollectionViewCell {
         
     @objc func clearTokenTapped() {
         
-        tokenTextField.text = nil
-        currencyTextField.text = nil
+        sendAmountTextField.text = nil
         
         presenter.handle(.tokenChanged(to: 0))
     }
@@ -219,56 +171,131 @@ private extension TokenSendTokenCollectionViewCell {
     
     @objc func tokenMaxAmountTapped() {
         
-        setMaxAmounts()
+        switch mode {
+        case .token:
+            sendAmountTextField.text = viewModel.tokenMaxAmount.toString(
+                decimals: viewModel.tokenMaxDecimals
+            )
+        case .usd:
+            let maxAmount = viewModel.tokenMaxAmount * viewModel.currencyTokenPrice
+            sendAmountTextField.text = maxAmount.toString()
+        }
+        
+        presenter.handle(.tokenChanged(to: viewModel.tokenMaxAmount))
     }
     
-    @objc func currencyMaxAmountTapped() {
+    func updateSendAmountTextField(forceUpdate: Bool = false) {
         
-        setMaxAmounts()
-    }
-    
-    func setMaxAmounts() {
+        switch mode {
+        case .token:
+            
+            let hasDecimals = viewModel.tokenMaxDecimals > 0
+            sendAmountTextField.keyboardType = hasDecimals ? .decimalPad : .numberPad
+            
+            if forceUpdate {
+                
+                let usdAmount = Double(sendAmountTextField.text ?? "0") ?? 0
+                if usdAmount == 0 {
+                    sendAmountTextField.text = nil
+                } else {
+                    let tokenAmount = usdAmount / viewModel.currencyTokenPrice
+                    sendAmountTextField.text = tokenAmount.toString(
+                        decimals: viewModel.tokenMaxDecimals
+                    )
+                }
+            } else if viewModel.shouldUpdateTextFields {
+                
+                let tokenAmount = viewModel.tokenAmount ?? 0
+                sendAmountTextField.text = tokenAmount.toString(
+                    decimals: viewModel.tokenMaxDecimals
+                )
+            }
+            
+            sendCurrencySymbol.isHidden = true
+        case .usd:
+            
+            sendAmountTextField.keyboardType = .decimalPad
+            
+            if forceUpdate {
+                
+                let tokenAmount = Double(sendAmountTextField.text ?? "0") ?? 0
+                if tokenAmount == 0 {
+                    sendAmountTextField.text = nil
+                } else {
+                    let value = tokenAmount * viewModel.currencyTokenPrice
+                    sendAmountTextField.text = value.toString(
+                        decimals: viewModel.tokenMaxDecimals
+                    )
+                }
+            } else if viewModel.shouldUpdateTextFields {
+                
+                let tokenAmount = viewModel.tokenAmount ?? 0
+                if tokenAmount == 0 {
+                    sendAmountTextField.text = nil
+                } else {
+                    let value = tokenAmount * viewModel.currencyTokenPrice
+                    sendAmountTextField.text = value.toString(
+                        decimals: viewModel.tokenMaxDecimals
+                    )
+                }
+            }
+            
+            sendCurrencySymbol.isHidden = false
+            sendCurrencySymbol.text = 0.formatCurrency(maximumFractionDigits: 0)?.replacingOccurrences(
+                of: "0",
+                with: ""
+            )
+        }
         
-        tokenTextField.text = "\(viewModel.tokenMaxAmount)"
-        
-        let currencyMax = viewModel.tokenMaxAmount * viewModel.currencyTokenPrice
-        currencyTextField.text = currencyMax.toString()
-    }
-    
-    func updateCurrencyTextField(with amount: Double) {
-        
-        if amount > 0 {
-            currencyTextField.text = "\(amount * viewModel.currencyTokenPrice)"
-        } else {
-            currencyTextField.text = nil
+        if viewModel.shouldUpdateTextFields, let tokenAmount = viewModel.tokenAmount {
+            
+            sendAmountTextField.text = tokenAmount.toString(decimals: viewModel.tokenMaxDecimals)
         }
     }
     
-    func updateAvailableText() {
+    func updateSendAmountLabel() {
         
-        if tokenTextField.isFirstResponder {
+        switch mode {
             
-            availableLabel.text = makeTokenAvailable()
-        } else if currencyTextField.isFirstResponder {
+        case .token:
+            let amount = Double(sendAmountTextField.text ?? "0") ?? 0
+            let currencyAmount = amount * viewModel.currencyTokenPrice
+            sendAmountLabel.text = currencyAmount.formatCurrency()
             
-            availableLabel.text = makeCurrencyAvailable()
-        } else {
-            
-            availableLabel.text = makeTokenAvailable()
+        case .usd:
+            let amount = Double(sendAmountTextField.text ?? "0") ?? 0
+            let tokenAmount = amount / viewModel.currencyTokenPrice
+            sendAmountLabel.text = tokenAmount.toString(
+                decimals: viewModel.tokenMaxDecimals
+            )
         }
     }
     
-    func makeTokenAvailable() -> String {
+    func updateBalanceLabel() {
         
-        guard let viewModel = viewModel else { return "" }
-        let value = "\(viewModel.tokenMaxAmount) \(viewModel.tokenSymbol)"
-        return Localized("tokenSend.cell.available", arg: value)
+        switch mode {
+        case .token:
+            balanceLabel.text = Localized(
+                "tokenSend.cell.balance",
+                arg: viewModel.tokenMaxAmount.toString(decimals: viewModel.tokenMaxDecimals)
+            )
+        case .usd:
+            let maxBalanceAmountUsd = viewModel.tokenMaxAmount * viewModel.currencyTokenPrice
+            balanceLabel.text = Localized(
+                "tokenSend.cell.balance",
+                arg: maxBalanceAmountUsd.formatCurrency() ?? ""
+            )
+        }
     }
-
-    func makeCurrencyAvailable() -> String {
+    
+    @objc func flipMode() {
         
-        guard let viewModel = viewModel else { return "" }
-        let value = (viewModel.tokenMaxAmount * viewModel.currencyTokenPrice).formatCurrency() ?? ""
-        return Localized("tokenSend.cell.available", arg: value)
+        mode = mode == .token ? .usd : .token
+        
+        updateSendAmountTextField(forceUpdate: true)
+        updateSendAmountLabel()
+        updateBalanceLabel()
+        
+        sendAmountTextField.becomeFirstResponder()
     }
 }

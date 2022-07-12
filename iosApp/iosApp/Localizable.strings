@@ -186,7 +186,8 @@
 "tokenSend.cell.token.placeholder" = "0";
 "tokenSend.cell.currency.placeholder" = "0.0";
 "tokenSend.cell.currency.label.usd" = "USD";
-"tokenSend.cell.available" = "Available: %@";
+"tokenSend.cell.balance" = "Balance: %@";
+"tokenSend.cell.max" = "MAX";
 "tokenSend.cell.send.ready" = "Review";
 "tokenSend.cell.send.insufficientFunds" = "Insufficient Funds";
 "tokenSend.cell.send.fee.low" = "Low";

@@ -50,6 +50,11 @@ extension TokenSendViewController: TokenSendView {
     func presentFeePicker(with fees: [TokenSendViewModel.Fee]) {
         
         feesPickerView.present(with: fees, presenter: presenter)
+        
+        let cell = collectionView.visibleCells.first { $0 is TokenSendCTACollectionViewCell } as! TokenSendCTACollectionViewCell
+        
+        print(view.convert(cell.networkFeeButton.bounds, from: cell.networkFeeButton))
+
     }
     
     @objc func dismissKeyboard() {
@@ -148,19 +153,19 @@ private extension TokenSendViewController {
             switch sectionIndex {
                 
             case 0:
-                return self.makeAddressCollectionLayoutSection(
+                return self.makeCollectionLayoutSection(
                     sectionIndex: sectionIndex,
                     withCellHeight: Theme.constant.cellHeightSmall
                 )
                 
             case 1:
-                return self.makeAddressCollectionLayoutSection(
+                return self.makeCollectionLayoutSection(
                     sectionIndex: sectionIndex,
-                    withCellHeight: self.makeAddressCellHeight()
+                    withCellHeight: self.makeTokenCellHeight()
                 )
                 
             case 2:
-                return self.makeAddressCollectionLayoutSection(
+                return self.makeCollectionLayoutSection(
                     sectionIndex: sectionIndex,
                     withCellHeight: self.makeCTACellHeight()
                 )
@@ -171,18 +176,7 @@ private extension TokenSendViewController {
         }
     }
     
-    func makeAddressCellHeight() -> CGFloat {
-        
-        var height: CGFloat = 0
-        
-        height += 22 // Available label height
-        height += Theme.constant.padding * 0.5
-        height += Theme.constant.cellHeightSmall
-        height += Theme.constant.padding
-        height += Theme.constant.cellHeightSmall
-        
-        return height
-    }
+    func makeTokenCellHeight() -> CGFloat { 78 }
     
     func makeCTACellHeight() -> CGFloat {
         
@@ -191,12 +185,12 @@ private extension TokenSendViewController {
         //height += Theme.constant.cellHeightSmall
         //height += Theme.constant.padding
         //height += 36 // fees view
-        height += 132
+        height += 118
         
         return height
     }
     
-    func makeAddressCollectionLayoutSection(
+    func makeCollectionLayoutSection(
         sectionIndex: Int,
         withCellHeight cellHeight: CGFloat
     ) -> NSCollectionLayoutSection {

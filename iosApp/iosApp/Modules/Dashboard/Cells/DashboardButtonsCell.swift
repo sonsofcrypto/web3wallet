@@ -7,11 +7,12 @@ import UIKit
 final class DashboardButtonsCell: UICollectionViewCell {
 
     private weak var lineView: UIView!
-    @IBOutlet weak var receiveButton: UIButton!
-    @IBOutlet weak var sendButton: UIButton!
-    @IBOutlet weak var tradeButton: UIButton!
+    @IBOutlet weak var receiveButton: Button!
+    @IBOutlet weak var sendButton: Button!
+    @IBOutlet weak var tradeButton: Button!
     
     private weak var presenter: DashboardPresenter!
+    private var viewModel: [DashboardViewModel.Action] = []
 
     override func awakeFromNib() {
         
@@ -45,8 +46,27 @@ final class DashboardButtonsCell: UICollectionViewCell {
 private extension DashboardButtonsCell {
     
     func updateViews() {
-        [receiveButton, sendButton, tradeButton].forEach {
-            ($0 as? Button)?.style = .dashboardAction
+
+        viewModel.forEach {
+            
+            switch $0.type {
+                
+            case .receive:
+                receiveButton.style = .dashboardAction(
+                    leftImage: $0.imageName.assetImage?.withTintColor(Theme.colour.labelPrimary)
+                )
+                receiveButton.setTitle($0.title, for: .normal)
+            case .send:
+                sendButton.style = .dashboardAction(
+                    leftImage: $0.imageName.assetImage?.withTintColor(Theme.colour.labelPrimary)
+                )
+                sendButton.setTitle($0.title, for: .normal)
+            case .swap:
+                tradeButton.style = .dashboardAction(
+                    leftImage: $0.imageName.assetImage?.withTintColor(Theme.colour.labelPrimary)
+                )
+                tradeButton.setTitle($0.title, for: .normal)
+            }
         }
         lineView.backgroundColor = Theme.colour.labelPrimary
     }
@@ -75,32 +95,8 @@ extension DashboardButtonsCell {
     func update(with viewModel: [DashboardViewModel.Action], presenter: DashboardPresenter) {
         
         self.presenter = presenter
+        self.viewModel = viewModel
         
-        viewModel.forEach {
-            
-            switch $0.type {
-                
-            case .receive:
-                receiveButton.setTitle($0.title, for: .normal)
-                receiveButton.setImage(
-                    $0.imageName.assetImage?.withTintColor(Theme.colour.labelPrimary),
-                    for: .normal
-                )
-
-            case .send:
-                sendButton.setTitle($0.title, for: .normal)
-                sendButton.setImage(
-                    $0.imageName.assetImage?.withTintColor(Theme.colour.labelPrimary),
-                    for: .normal
-                )
-
-            case .swap:
-                tradeButton.setTitle($0.title, for: .normal)
-                tradeButton.setImage(
-                    $0.imageName.assetImage?.withTintColor(Theme.colour.labelPrimary),
-                    for: .normal
-                )
-            }
-        }
+        updateViews()
     }
 }

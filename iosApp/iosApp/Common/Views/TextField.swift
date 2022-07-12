@@ -38,14 +38,14 @@ private extension TextField {
     
     func placeholder() -> [NSAttributedString.Key: Any] {
         [
-            .font: Theme.font.body,
+            .font: font ?? Theme.font.body,
             .foregroundColor: Theme.colour.labelSecondary
         ]
     }
     
     func body() -> [NSAttributedString.Key: Any] {
         [
-            .font: Theme.font.body,
+            .font: font ?? Theme.font.body,
             .foregroundColor: Theme.colour.labelPrimary,
             .shadow: textShadow(Theme.colour.fillSecondary)
         ]
