@@ -14,8 +14,8 @@ extension NFTDetailViewController {
             [
                 .layout(anchor: .topAnchor),
                 .layout(anchor: .bottomAnchor),
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Global.padding)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Global.padding))
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding))
             ]
         )
     }
@@ -33,21 +33,21 @@ private extension NFTDetailViewController {
         let nftImageView = makeNFTImage(with: item)
         vStackView.addArrangedSubview(nftImageView)
         
-        vStackView.addArrangedSubview(.vSpace(height: Global.padding))
+        vStackView.addArrangedSubview(.vSpace(height: Theme.constant.padding))
         
 //        let priceView = makeEthPrice(with: item)
 //        vStackView.addArrangedSubview(priceView)
         
         let descriptionView = makeDescription(with: collection)
-        vStackView.addArrangedSubview(.vSpace(height: Global.padding))
+        vStackView.addArrangedSubview(.vSpace(height: Theme.constant.padding))
         vStackView.addArrangedSubview(descriptionView)
 
         if let propertiesView = makeProperties(with: item) {
-            vStackView.addArrangedSubview(.vSpace(height: Global.padding * 2))
+            vStackView.addArrangedSubview(.vSpace(height: Theme.constant.padding * 2))
             vStackView.addArrangedSubview(propertiesView)
         }
 
-        vStackView.addArrangedSubview(.vSpace(height: Global.padding * 2))
+        vStackView.addArrangedSubview(.vSpace(height: Theme.constant.padding * 2))
 
         return vStackView
     }

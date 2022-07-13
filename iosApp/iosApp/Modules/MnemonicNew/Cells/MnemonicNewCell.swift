@@ -39,7 +39,7 @@ final class MnemonicNewCell: UICollectionViewCell {
         textView.backgroundColor = .clear
         textView.delegate = self
 
-        overlay.layer.cornerRadius = Global.cornerRadius
+        overlay.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         overlay.clipsToBounds = true
         overlayLabel.text = Localized("newMnemonic.tapToReveal")
         overlayLabel.font = Theme.font.body
@@ -50,7 +50,7 @@ final class MnemonicNewCell: UICollectionViewCell {
         
         let shadow = NSShadow()
         shadow.shadowOffset = .zero
-        shadow.shadowBlurRadius = Global.shadowRadius
+        shadow.shadowBlurRadius = Theme.constant.cornerRadiusSmall.half
         shadow.shadowColor = tint
         return shadow
     }

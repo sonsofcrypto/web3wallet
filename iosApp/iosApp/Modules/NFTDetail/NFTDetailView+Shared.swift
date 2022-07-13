@@ -21,7 +21,7 @@ extension NFTDetailViewController {
                 .layout(
                     anchor: .topAnchor,
                     constant: .equalTo(
-                        constant: Global.padding
+                        constant: Theme.constant.padding
                     )
                 ),
                 .layout(anchor: .bottomAnchor),
@@ -37,7 +37,7 @@ extension NFTDetailViewController {
         
         let hStack = HStackView()
         
-        hStack.addArrangedSubview(.hSpace(value: Global.padding))
+        hStack.addArrangedSubview(.hSpace(value: Theme.constant.padding))
         
         let label = UILabel(with: .body)
         label.text = text
@@ -46,7 +46,7 @@ extension NFTDetailViewController {
         label.numberOfLines = 0
         hStack.addArrangedSubview(label)
 
-        hStack.addArrangedSubview(.hSpace(value: Global.padding))
+        hStack.addArrangedSubview(.hSpace(value: Theme.constant.padding))
         
         return hStack
     }

@@ -24,7 +24,7 @@ extension NFTDetailViewController {
         view.addSubview(content)
         content.addConstraints(.toEdges)
         
-        view.layer.cornerRadius = Global.cornerRadius
+        view.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         view.layer.borderWidth = 1
         view.layer.borderColor = Theme.colour.fillTertiary.cgColor
 
@@ -41,18 +41,18 @@ private extension NFTDetailViewController {
         
         var rows: [UIView] = []
         
-        rows.append(.vSpace(height: Global.padding))
+        rows.append(.vSpace(height: Theme.constant.padding))
         
         let titleLabel = makeSectionTextInHorizontalStack(
             with: Localized("nft.detail.section.title.properties")
         )
         rows.append(titleLabel)
         
-        rows.append(.vSpace(height: Global.padding))
+        rows.append(.vSpace(height: Theme.constant.padding))
         rows.append(
             .dividerLine(backgroundColor: Theme.colour.fillTertiary)
         )
-        rows.append(.vSpace(height: Global.padding))
+        rows.append(.vSpace(height: Theme.constant.padding))
 
         switch layout {
         case .option1:
@@ -83,7 +83,7 @@ private extension NFTDetailViewController {
                         and: item2
                     )
                 )
-                rows.append(.vSpace(height: Global.padding))
+                rows.append(.vSpace(height: Theme.constant.padding))
             }
             
         case .option2:
@@ -108,7 +108,7 @@ private extension NFTDetailViewController {
                 
                 rows.append(containerView)
 
-                rows.append(.vSpace(height: Global.padding))
+                rows.append(.vSpace(height: Theme.constant.padding))
             }
         }
         
@@ -128,7 +128,7 @@ private extension NFTDetailViewController {
         }
         
         return .init(
-            width: (width - Global.padding * 9),
+            width: (width - Theme.constant.padding * 9),
             height: 80
         )
     }
@@ -147,7 +147,7 @@ private extension NFTDetailViewController {
             views.append(UIView())
         }
         
-        let hStack = HStackView(views, spacing: Global.padding)
+        let hStack = HStackView(views, spacing: Theme.constant.padding)
         
         let view = UIView()
         view.backgroundColor = .clear
@@ -183,10 +183,10 @@ private extension NFTDetailViewController {
         case .option2:
             stackView.addConstraints(
                 [
-                    .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Global.padding)),
-                    .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Global.padding)),
-                    .layout(anchor: .topAnchor, constant: .equalTo(constant: Global.padding)),
-                    .layout(anchor: .bottomAnchor, constant: .equalTo(constant: Global.padding))
+                    .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
+                    .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
+                    .layout(anchor: .topAnchor, constant: .equalTo(constant: Theme.constant.padding)),
+                    .layout(anchor: .bottomAnchor, constant: .equalTo(constant: Theme.constant.padding))
                 ]
             )
         }

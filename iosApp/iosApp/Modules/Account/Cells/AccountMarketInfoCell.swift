@@ -23,7 +23,7 @@ class AccountMarketInfoCell: CollectionViewCell {
             $0?.applyStyle(.subheadGlow)
         }
 
-        layer.cornerRadius = Global.cornerRadius * 2
+        layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
     }
 }
 

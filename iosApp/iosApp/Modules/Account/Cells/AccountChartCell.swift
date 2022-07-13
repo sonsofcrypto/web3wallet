@@ -10,7 +10,7 @@ class AccountChartCell: CollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        layer.cornerRadius = Global.cornerRadius * 2
+        layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
     }
 }
 

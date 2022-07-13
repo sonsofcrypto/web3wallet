@@ -59,9 +59,9 @@ extension NFTsDashboardViewController {
             )
         }
         
-        rows.append(.vSpace(height: Global.padding))
+        rows.append(.vSpace(height: Theme.constant.padding))
                 
-        return VStackView(rows, spacing: Global.padding)
+        return VStackView(rows, spacing: Theme.constant.padding)
     }
     
     func refreshNFTsCollections() {
@@ -74,8 +74,8 @@ extension NFTsDashboardViewController {
             [
                 .layout(anchor: .topAnchor),
                 .layout(anchor: .bottomAnchor),
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Global.padding)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Global.padding))
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding))
             ]
         )
     }
@@ -96,7 +96,7 @@ private extension NFTsDashboardViewController {
         } else {
             views.append(UIView())
         }
-        return HStackView(views, spacing: Global.padding)
+        return HStackView(views, spacing: Theme.constant.padding)
     }
     
     func makePopularNFTCollectionContent(
@@ -225,7 +225,7 @@ private extension NFTsDashboardViewController {
         authorLabel.layer.applyShadow(Theme.colour.fillSecondary)
         authorLabel.textAlignment = .center
         view.addArrangedSubview(authorLabel)
-        view.spacing = Global.padding * 0.5
+        view.spacing = Theme.constant.padding * 0.5
                 
         return view
     }

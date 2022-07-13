@@ -52,7 +52,7 @@ extension NFTsCollectionViewController {
             )
         }
         
-        return VStackView(rows, spacing: Global.padding)
+        return VStackView(rows, spacing: Theme.constant.padding)
     }
     
     func refreshNFTs() {
@@ -65,8 +65,8 @@ extension NFTsCollectionViewController {
             [
                 .layout(anchor: .topAnchor),
                 .layout(anchor: .bottomAnchor),
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Global.padding)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Global.padding))
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding))
             ]
         )
     }
@@ -81,7 +81,7 @@ private extension NFTsCollectionViewController {
             return 200
         }
         
-        return (viewWidth - Global.padding * 3) * 0.5
+        return (viewWidth - Theme.constant.padding * 3) * 0.5
     }
     
     func makeNFTsCollectionRow(
@@ -97,7 +97,7 @@ private extension NFTsCollectionViewController {
         } else {
             views.append(UIView())
         }
-        return HStackView(views, spacing: Global.padding)
+        return HStackView(views, spacing: Theme.constant.padding)
     }
     
     func makeNFTContent(

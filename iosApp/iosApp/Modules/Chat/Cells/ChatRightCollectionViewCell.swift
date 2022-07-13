@@ -26,7 +26,7 @@ final class ChatRightCollectionViewCell: UICollectionViewCell {
         messageLabel.textColor = Theme.colour.labelPrimary
         messageLabel.layer.shadowColor = Theme.colour.fillSecondary.cgColor
         messageLabel.layer.shadowOffset = .zero
-        messageLabel.layer.shadowRadius = Global.shadowRadius
+        messageLabel.layer.shadowRadius = Theme.constant.cornerRadiusSmall.half
         messageLabel.layer.shadowOpacity = 1
     }
 

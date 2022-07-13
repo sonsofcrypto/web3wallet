@@ -125,7 +125,7 @@ private extension AnimatedTextButton {
         label.textColor = tint
         label.layer.applyShadow(
             tint,
-            radius: Global.shadowRadius
+            radius: Theme.constant.cornerRadiusSmall.half
         )
         vStack.addArrangedSubview(label)
         return label

@@ -55,7 +55,7 @@ private extension TextField {
         
         let shadow = NSShadow()
         shadow.shadowOffset = .zero
-        shadow.shadowBlurRadius = Global.shadowRadius
+        shadow.shadowBlurRadius = Theme.constant.cornerRadiusSmall.half
         shadow.shadowColor = tint
         return shadow
     }

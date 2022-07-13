@@ -19,7 +19,9 @@ final class AccountViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
         configureUI()
         presenter?.present()
     }
@@ -114,7 +116,7 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
             return .zero
         }
 
-        let width = view.bounds.width - Global.padding * 2
+        let width = view.bounds.width - Theme.constant.padding * 2
 
         switch section {
         case .header:
@@ -128,23 +130,33 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+    ) -> CGSize {
+        
         guard let section = Section(rawValue: section), section == .transactions else {
             return .zero
         }
 
         return CGSize(
-            width: view.bounds.width - Global.padding * 2,
+            width: view.bounds.width - Theme.constant.padding * 2,
             height: Constant.sectionHeaderHeight
         )
     }
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        
         guard let section = Section(rawValue: section), section == .marketInfo else {
             return 0
         }
 
-        return Global.padding
+        return Theme.constant.padding
     }
 }
 
@@ -199,15 +211,12 @@ extension AccountViewController {
 extension AccountViewController {
     
     func configureUI() {
+        
         title = Localized("wallets")
-        (view as? GradientView)?.colors = [
-            Theme.colour.backgroundBaseSecondary,
-            Theme.colour.backgroundBasePrimary
-        ]
 
         navigationItem.rightBarButtonItem = UIBarButtonItem.glowLabel()
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "arrow_back"),
+            image: .init(systemName: "chevron.left"),
             style: .plain,
             target: self,
             action: #selector(dismissAction(_:))
@@ -215,7 +224,7 @@ extension AccountViewController {
         navigationItem.leftBarButtonItem?.tintColor  = Theme.colour.fillPrimary
 
         var insets = collectionView.contentInset
-        insets.bottom += Global.padding
+        insets.bottom += Theme.constant.padding
         collectionView.contentInset = insets
     }
 }

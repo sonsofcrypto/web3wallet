@@ -95,7 +95,7 @@ extension DashboardViewController {
         )
         
         var insets = collectionView.contentInset
-        insets.bottom += Global.padding
+        insets.bottom += Theme.constant.padding
         collectionView.contentInset = insets
 
         var transform = CATransform3DIdentity

@@ -120,7 +120,7 @@ extension AppsViewController: UICollectionViewDelegateFlowLayout {
         
         .init(
             width: collectionView.frame.width,
-            height: Global.cellHeight
+            height: Theme.constant.cellHeight
         )
     }
 }

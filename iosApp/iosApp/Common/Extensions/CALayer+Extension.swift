@@ -8,7 +8,7 @@ extension CALayer {
 
     func applyShadow(
         _ color: UIColor = Theme.colour.fillPrimary,
-        radius: CGFloat = Global.shadowRadius
+        radius: CGFloat = Theme.constant.cornerRadiusSmall.half
     ) {
         shadowColor = color.cgColor
         shadowRadius = radius
@@ -19,8 +19,8 @@ extension CALayer {
 
     func applyRectShadow(
         _ color: UIColor = Theme.colour.fillPrimary,
-        radius: CGFloat = Global.shadowRadius,
-        cornerRadius: CGFloat = Global.cornerRadius
+        radius: CGFloat = Theme.constant.cornerRadiusSmall.half,
+        cornerRadius: CGFloat = Theme.constant.cornerRadiusSmall
     ) {
         applyShadowPath(bounds, radius: cornerRadius)
         applyShadow(color, radius: radius)
@@ -31,7 +31,7 @@ extension CALayer {
         borderColor = color.cgColor
     }
 
-    func applyShadowPath(_ bounds: CGRect, radius: CGFloat = Global.cornerRadius) {
+    func applyShadowPath(_ bounds: CGRect, radius: CGFloat = Theme.constant.cornerRadiusSmall) {
         cornerRadius = radius
         shadowPath = UIBezierPath(
             roundedRect: bounds,

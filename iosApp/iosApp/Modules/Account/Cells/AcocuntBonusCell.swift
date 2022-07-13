@@ -11,7 +11,7 @@ final class AccountBonusCell: CollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         titleLabel.applyStyle(.callout)
-        layer.cornerRadius = Global.cornerRadius * 2
+        layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
     }
 
     override func prepareForReuse() {

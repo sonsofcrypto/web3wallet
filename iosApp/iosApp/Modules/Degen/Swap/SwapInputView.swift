@@ -14,7 +14,7 @@ final class SwapInputView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = Theme.colour.backgroundBaseSecondary
-        layer.cornerRadius = Global.cornerRadius
+        layer.cornerRadius = Theme.constant.cornerRadiusSmall
         layer.masksToBounds = true
 
         textField.textColor = Theme.colour.labelPrimary
@@ -43,15 +43,15 @@ final class SwapInputView: UIView {
         [inputStack, currencyStack].forEach { $0.axis = .vertical }
 
         fiatValueLabel.setContentHuggingPriority(.required, for: .vertical)
-        currencyStack.spacing = Global.padding / 2
+        currencyStack.spacing = Theme.constant.padding / 2
 
         addSubview(container)
 
         addConstraints([
-            container.topAnchor.constraint(equalTo: topAnchor, constant: Global.padding),
-            container.leftAnchor.constraint(equalTo: leftAnchor, constant: Global.padding),
-            container.rightAnchor.constraint(equalTo: rightAnchor, constant: -Global.padding),
-            container.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Global.padding),
+            container.topAnchor.constraint(equalTo: topAnchor, constant: Theme.constant.padding),
+            container.leftAnchor.constraint(equalTo: leftAnchor, constant: Theme.constant.padding),
+            container.rightAnchor.constraint(equalTo: rightAnchor, constant: -Theme.constant.padding),
+            container.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Theme.constant.padding),
             currencyButton.heightAnchor.constraint(equalToConstant: Constant.btnHeight),
             currencyButton.widthAnchor.constraint(equalToConstant: Constant.btnWidth)
         ])

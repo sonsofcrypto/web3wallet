@@ -105,8 +105,8 @@ extension SettingsViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         
         .init(
-            width: collectionView.frame.width - Global.padding * 2,
-            height: Global.cellHeightSmall
+            width: collectionView.frame.width - Theme.constant.padding * 2,
+            height: Theme.constant.cellHeightSmall
         )
     }
 }

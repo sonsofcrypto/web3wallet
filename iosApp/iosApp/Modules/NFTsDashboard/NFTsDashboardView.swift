@@ -54,7 +54,7 @@ extension NFTsDashboardViewController {
         
         let width: CGFloat
         if let view = navigationController?.view {
-            width = view.frame.size.width - Global.padding * 3
+            width = view.frame.size.width - Theme.constant.padding * 3
         } else {
             width = 220
         }

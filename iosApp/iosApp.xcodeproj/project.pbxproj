@@ -22,7 +22,6 @@
 		1A4C3735189D6616D915D851 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C309894247AA73F274756 /* TabBarController.swift */; };
 		1A4C373BF33DAF794F261056 /* CardFlipAnimatedTransitioning2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3649032759624C3E2734 /* CardFlipAnimatedTransitioning2.swift */; };
 		1A4C37AEF66358EA9CA0CA59 /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C388B9A42E6A279D2867F /* AccountService.swift */; };
-		1A4C3869B6A3E1BF415E15DB /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39FB21CCAF442F3001E6 /* Global.swift */; };
 		1A4C38C98450A3C5884565AC /* CultProposal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C36ECC90C8D924B7C413B /* CultProposal.swift */; };
 		1A4C39EAC9477080E80A6C07 /* EdgeCardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3178DA54CD0800157DD5 /* EdgeCardsController.swift */; };
 		1A4C3AD382E8BADCBE160CBC /* DApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C375870963EEF9ECBE64B /* DApp.swift */; };
@@ -485,7 +484,6 @@
 		1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewEffectViewiOS14.swift; sourceTree = "<group>"; };
 		1A4C39C4B0802356E1007E01 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAppCategory.swift; sourceTree = "<group>"; };
-		1A4C39FB21CCAF442F3001E6 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		1A4C3B70AA1B0BC942B15671 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		1A4C3D40E32D58F958911B60 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
@@ -1999,7 +1997,6 @@
 			isa = PBXGroup;
 			children = (
 				1A4C3E4B8A77C60E556CCD65 /* Currency.swift */,
-				1A4C39FB21CCAF442F3001E6 /* Global.swift */,
 			);
 			path = Tmp;
 			sourceTree = "<group>";
@@ -2323,7 +2320,6 @@
 				1C60C351285724D1003BE25D /* CultProposalsView.swift in Sources */,
 				1C60C2FA285724D0003BE25D /* NFTDetailView+Content+Price.swift in Sources */,
 				1A4C37074D8859F0DC14C905 /* NavigationController.swift in Sources */,
-				1A4C3869B6A3E1BF415E15DB /* Global.swift in Sources */,
 				1C60C2DB285724D0003BE25D /* MnemonicNewContext.swift in Sources */,
 				1C60C33E285724D1003BE25D /* SwapView.swift in Sources */,
 				1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */,
