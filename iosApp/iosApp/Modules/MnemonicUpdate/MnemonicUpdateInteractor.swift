@@ -13,11 +13,13 @@ enum MnemonicUpdateInteractorError: Error {
 protocol MnemonicUpdateInteractor: AnyObject {
     /// Name of the `KeyStoreItem`
     var name: String { get set }
+    /// Wallet mnemonic
+    var mnemonic: [String] { get set }
     /// Store mnemonic on icloud
     var iCloudSecretStorage: Bool { get set }
 
     /// Sets up interactor for `KeyStoreItem`
-    func setup(for keyStoreItem: KeyStoreItem, password: String, salt: String)
+    func setup(for keyStoreItem: KeyStoreItem, password: String, salt: String) throws
 
     /// Updates `KeyStoreItem` settings
     func update(for keyStoreItem: KeyStoreItem) throws -> KeyStoreItem
@@ -37,6 +39,7 @@ protocol MnemonicUpdateInteractor: AnyObject {
 final class DefaultMnemonicUpdateInteractor {
 
     var name: String = ""
+    var mnemonic: [String] = []
     var iCloudSecretStorage: Bool = true
     var derivationPath: String = "m/44'/60'/0'/0/0" // TODO: Get default derivations path from wallet
 
@@ -55,11 +58,25 @@ final class DefaultMnemonicUpdateInteractor {
 
 extension DefaultMnemonicUpdateInteractor: MnemonicUpdateInteractor {
 
-    func setup(for keyStoreItem: KeyStoreItem, password: String, salt: String) {
+    func setup(for keyStoreItem: KeyStoreItem, password: String, salt: String) throws {
         self.password = password
         self.salt = salt
         name = keyStoreItem.name
         iCloudSecretStorage = keyStoreItem.iCloudSecretStorage
+
+        guard let secretStorage = try? keyStoreService.secretStorage(
+            item: keyStoreItem,
+            password: password
+        )?.decrypt(password: password) else {
+            throw MnemonicUpdateInteractorError.failedToUnlockItem
+        }
+
+        // TODO: P1 Fix mnemonic description
+
+        mnemonic = [
+            "squeeze", "mention", "ostrich", "crunch", "maple", "liar",
+            "aerobic", "brass", "vote", "young", "neither", "dune",
+        ]
     }
 
     func update(for item: KeyStoreItem) throws -> KeyStoreItem {

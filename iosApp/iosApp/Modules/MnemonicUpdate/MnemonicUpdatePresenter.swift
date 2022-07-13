@@ -7,6 +7,7 @@ import web3lib
 import UniformTypeIdentifiers
 
 enum MnemonicUpdatePresenterEvent {
+    case didTapMnemonic
     case didChangeName(name: String)
     case didChangeICouldBackup(onOff: Bool)
     case didTapDelete
@@ -75,6 +76,12 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
 
     func handle(_ event: MnemonicUpdatePresenterEvent) {
         switch event {
+        case .didTapMnemonic:
+            let mnemonicStr = interactor.mnemonic.joined(separator: " ")
+            UIPasteboard.general.setItems(
+                [[UTType.utf8PlainText.identifier: mnemonicStr]],
+                options: [.expirationDate: Date().addingTimeInterval(30.0)]
+            )
         case let .didChangeName(name):
             interactor.name = name
         case let .didChangeICouldBackup(onOff):
@@ -120,11 +127,17 @@ private extension DefaultMnemonicUpdatePresenter {
         case let .success(password, salt):
             self.password = password
             self.salt = salt
-            interactor.setup(
-                for: context.keyStoreItem,
-                password: password,
-                salt: salt
-            )
+            do {
+                try interactor.setup(
+                    for: context.keyStoreItem,
+                    password: password,
+                    salt: salt
+                )
+            } catch {
+                // TODO(web3dgn): Present alert with ok, something along the
+                // lines failed to unlock wallet. Tapping OK `wireframe.navigate(to: .dismiss)`
+                // This is unrecoverable error but dont wanna crash the app for it
+            }
         case let .failure(error):
             wireframe.navigate(to: .dismiss)
         }
@@ -178,30 +191,6 @@ private extension DefaultMnemonicUpdatePresenter {
                 onOff: interactor.iCloudSecretStorage
             ),
         ]
-    }
-}
-
-// MARK: - Utilities
-
-private extension DefaultMnemonicUpdatePresenter {
-
-    func selectedPasswordTypeIdx() -> Int {
-        let values = KeyStoreItem.PasswordType.values()
-        for idx in 0..<values.size {
-            if values.get(index: idx) == interactor.passwordType {
-                return Int(idx)
-            }
-        }
-        return 2
-    }
-
-    func passwordTypes() -> [KeyStoreItem.PasswordType] {
-        let values = KeyStoreItem.PasswordType.values()
-        var array = [KeyStoreItem.PasswordType?]()
-        for idx in 0..<values.size {
-            array.append(values.get(index: idx))
-        }
-        return array.compactMap { $0 }
     }
 }
 

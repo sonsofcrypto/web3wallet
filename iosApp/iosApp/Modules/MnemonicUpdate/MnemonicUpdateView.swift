@@ -143,9 +143,9 @@ extension MnemonicUpdateViewController: UICollectionViewDataSource {
                 for: idxPath
             ).update(
                 with: switchWithTextInput,
-                switchAction: { onOff in self.saltSwitchDidChange(onOff) },
-                textChangeHandler: { text in self.saltTextDidChange(text) },
-                descriptionAction: { self.saltLearnMoreAction() }
+                switchAction: { onOff in () },
+                textChangeHandler: { text in () },
+                descriptionAction: { () }
             )
         case let .segmentWithTextAndSwitchInput(segmentWithTextAndSwitchInput):
             return collectionView.dequeue(
@@ -153,9 +153,9 @@ extension MnemonicUpdateViewController: UICollectionViewDataSource {
                 for: idxPath
             ).update(
                 with: segmentWithTextAndSwitchInput,
-                selectSegmentAction: { idx in self.passTypeDidChange(idx) },
-                textChangeHandler: { text in self.passwordDidChange(text) },
-                switchHandler: { onOff in self.allowFaceIdDidChange(onOff) }
+                selectSegmentAction: { idx in () },
+                textChangeHandler: { text in () },
+                switchHandler: { onOff in () }
             )
         }
     }
@@ -215,31 +215,6 @@ extension MnemonicUpdateViewController: UICollectionViewDelegate {
 
     func iCloudBackupDidChange(_ onOff: Bool) {
         presenter.handle(.didChangeICouldBackup(onOff: onOff))
-    }
-
-    func saltSwitchDidChange(_ onOff: Bool) {
-        presenter.handle(.saltSwitchDidChange(onOff: onOff))
-    }
-
-    func saltTextDidChange(_ text: String) {
-        presenter.handle(.didChangeSalt(salt: text))
-    }
-
-    func saltLearnMoreAction() {
-        presenter.handle(.saltLearnMoreAction)
-    }
-
-    func passTypeDidChange(_ idx: Int) {
-        presenter.handle(.passTypeDidChange(idx: idx))
-
-    }
-
-    func passwordDidChange(_ text: String) {
-        presenter.handle(.passwordDidChange(text: text))
-    }
-
-    func allowFaceIdDidChange(_ onOff: Bool) {
-        presenter.handle(.allowFaceIdDidChange(onOff: onOff))
     }
 }
 
