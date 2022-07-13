@@ -27,20 +27,14 @@ final class AccountViewController: BaseViewController {
     }
 }
 
-extension AccountViewController {
-
-    @IBAction func dismissAction(_ sender: Any) {
-        dismiss(animated: true)
-    }
-}
-
 extension AccountViewController: AccountView {
 
     func update(with viewModel: AccountViewModel) {
         
         self.viewModel = viewModel
-        collectionView.reloadData()
+        
         title = viewModel.currencyName
+        collectionView.reloadData()
 
         let btnLabel = (navigationItem.rightBarButtonItem?.customView as? UILabel)
         btnLabel?.text = viewModel.header.pct
@@ -56,11 +50,19 @@ extension AccountViewController: UICollectionViewDataSource {
         Section.all().count
     }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        
         Section(rawValue: section)?.cellCount(viewModel) ?? 0
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        
         switch Section(rawValue: indexPath.section)! {
         case .header:
             let cell = collectionView.dequeue(AccountHeaderCell.self, for: indexPath)
@@ -95,7 +97,12 @@ extension AccountViewController: UICollectionViewDataSource {
         }
     }
 
-    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        
         if kind == UICollectionView.elementKindSectionHeader {
             let supplementary = collectionView.dequeue(
                 AccountSectionHeader.self,
@@ -208,7 +215,7 @@ extension AccountViewController {
     }
 }
 
-extension AccountViewController {
+private extension AccountViewController {
     
     func configureUI() {
         
@@ -221,11 +228,15 @@ extension AccountViewController {
             target: self,
             action: #selector(dismissAction(_:))
         )
-        navigationItem.leftBarButtonItem?.tintColor  = Theme.colour.fillPrimary
 
         var insets = collectionView.contentInset
         insets.bottom += Theme.constant.padding
         collectionView.contentInset = insets
+    }
+    
+    @objc func dismissAction(_ sender: Any) {
+        
+        dismiss(animated: true)
     }
 }
 
@@ -235,7 +246,7 @@ extension AccountViewController {
         static let headerHeight: CGFloat = 172
         static let chartHeight: CGFloat = 162
         static let marketInfoHeight: CGFloat = 71
-        static let transactionsHeight: CGFloat = 64
+        static let transactionsHeight: CGFloat = 72
         static let sectionHeaderHeight: CGFloat = 24
     }
 }

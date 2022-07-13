@@ -13,7 +13,7 @@ final class AppsHeaderCollectionViewCell: UICollectionViewCell {
         
         super.awakeFromNib()
         
-        titleLabel.applyStyle(.callout)
+        titleLabel.apply(style: .callout)
     }
     
     func update(

@@ -6,6 +6,11 @@ import UIKit
 
 struct ThemeA: Themable {
     
+    var statusBarStyle: ThemeStatusBarStyle {
+        
+        .init(lightMode: .light, darkMode: .light)
+    }
+    
     var type: ThemeType { .themeA }
     
     var colour: ThemeColour {

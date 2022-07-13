@@ -17,7 +17,7 @@ final class SwitchCollectionViewCell: CollectionViewCell {
     }
 
     func configureUI() {
-        titleLabel.applyStyle(.bodyGlow)
+        titleLabel.apply(style: .body)
         onOffSwitch.addTarget(
             self,
             action: #selector(switchAction(_:)),

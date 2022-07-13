@@ -191,7 +191,7 @@ class VerticalButton: Button {
 
         // TODO: Remove this hack. Itroduced coz color and font were on being
         // set when setting from `AccountHeaderCell`
-        label.applyStyle(.smallestLabelGlow)
+        label.apply(style: .caption2)
 
         label.bounds.size.width = bounds.width
         label.bounds.size.height = bounds.height * 0.3333

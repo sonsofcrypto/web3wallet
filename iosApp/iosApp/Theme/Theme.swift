@@ -8,10 +8,53 @@ var Theme: Themable = ThemeA()
 
 protocol Themable {
     
+    var statusBarStyle: ThemeStatusBarStyle { get }
     var type: ThemeType { get }
     var font: ThemeFont { get }
     var colour: ThemeColour { get }
     var constant: ThemeConstant { get }
+}
+
+struct ThemeStatusBarStyle {
+    
+    let lightMode: Style
+    let darkMode: Style
+    
+    enum Style {
+        case light
+        case dark
+    }
+}
+
+extension ThemeStatusBarStyle {
+    
+    func statusBarStyle(for interfaceStyle: UIUserInterfaceStyle) -> UIStatusBarStyle {
+        
+        switch interfaceStyle {
+            
+        case .unspecified:
+            return .default
+            
+        case .light:
+            switch lightMode {
+            case .light:
+                return .lightContent
+            case .dark:
+                return .darkContent
+            }
+
+        case .dark:
+            switch darkMode {
+            case .light:
+                return .lightContent
+            case .dark:
+                return .darkContent
+            }
+
+        @unknown default:
+            return .default
+        }
+    }
 }
 
 enum ThemeType {

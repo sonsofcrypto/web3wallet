@@ -22,14 +22,14 @@ final class AccountHeaderCell: UICollectionViewCell {
         
         balanceLabel.textColor = Theme.colour.labelPrimary
         balanceLabel.font = Theme.font.largeTitle
-        balanceFiatLabel.applyStyle(.subhead)
+        balanceFiatLabel.apply(style: .subheadline)
         balanceFiatLabel.font = UIFont.font(
             .gothicA1,
             style: .regular,
             size: .custom(size: 15)
         )
         [receiveButton, sendButton, tradeButton, moreButton].forEach {
-            $0?.titleLabel?.applyStyle(.smallestLabelGlow)
+            $0?.titleLabel?.apply(style: .caption2)
         }
         containerStack.setCustomSpacing(0, after: balanceLabel)
         containerStack.setCustomSpacing(

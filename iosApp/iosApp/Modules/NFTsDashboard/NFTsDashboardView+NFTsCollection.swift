@@ -24,7 +24,7 @@ extension NFTsDashboardViewController {
 
         var rows: [UIView] = []
         
-        let titleLabel = UILabel(with: .bodyGlow)
+        let titleLabel = UILabel(with: .body)
         titleLabel.numberOfLines = 1
         titleLabel.text = Localized("nfts.dashboard.collection.title")
         //titleLabel.textColor = Theme.colour.systemRed
@@ -203,7 +203,7 @@ private extension NFTsDashboardViewController {
         
         let font = UIFont.font(.gothicA1, style: .medium, size: .caption2)
         
-        let titleLabel = UILabel(with: .smallerLabel)
+        let titleLabel = UILabel(with: .caption1)
         titleLabel.numberOfLines = 1
         titleLabel.text = collection.title
         titleLabel.textColor = Theme.colour.labelPrimary

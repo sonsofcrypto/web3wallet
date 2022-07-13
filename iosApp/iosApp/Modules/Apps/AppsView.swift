@@ -130,10 +130,5 @@ private extension AppsViewController {
     func configureUI() {
         
         title = Localized("apps")
-
-        (view as? GradientView)?.colors = [
-            Theme.colour.backgroundBaseSecondary,
-            Theme.colour.backgroundBasePrimary
-        ]
     }
 }

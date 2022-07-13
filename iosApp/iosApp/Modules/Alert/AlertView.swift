@@ -143,7 +143,7 @@ private extension DefaultAlertView {
         
         guard let message = message else { return [] }
         
-        let label = UILabel(with: .bodyGlow)
+        let label = UILabel(with: .body)
         label.text = message
         label.numberOfLines = 0
         
@@ -211,7 +211,7 @@ private extension DefaultAlertView {
         
         actions.forEach { item in
             
-            let label = UILabel(with: .bodyGlow)
+            let label = UILabel(with: .body)
             label.text = item.title
             label.textAlignment = .center
             

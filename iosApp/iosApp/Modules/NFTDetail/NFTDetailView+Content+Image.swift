@@ -61,7 +61,7 @@ private extension NFTDetailViewController {
     
     func makeHeaderImage(with item: NFTItem) -> UIView {
         
-        let label = UILabel(with: .headlineGlow)
+        let label = UILabel(with: .headline)
         label.text = item.name
         label.textAlignment = .center
         return label

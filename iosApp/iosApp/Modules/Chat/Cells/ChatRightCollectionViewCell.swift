@@ -22,7 +22,7 @@ final class ChatRightCollectionViewCell: UICollectionViewCell {
             ]
         )
         
-        messageLabel.applyStyle(.callout)
+        messageLabel.apply(style: .callout)
         messageLabel.textColor = Theme.colour.labelPrimary
         messageLabel.layer.shadowColor = Theme.colour.fillSecondary.cgColor
         messageLabel.layer.shadowOffset = .zero

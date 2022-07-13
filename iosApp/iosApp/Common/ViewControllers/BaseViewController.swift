@@ -6,7 +6,9 @@ import UIKit
 
 class BaseViewController: UIViewController {
     
-    override var preferredStatusBarStyle: UIStatusBarStyle { .lightContent }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        Theme.statusBarStyle.statusBarStyle(for: traitCollection.userInterfaceStyle)
+    }
     
     override func viewDidLoad() {
         

@@ -11,8 +11,8 @@ class CultProposalVoteView: UIView {
         didSet { setNeedsLayout() }
     }
 
-    private lazy var textLabel: UILabel = UILabel(with: .smallLabel)
-    private lazy var pctLabel: UILabel = UILabel(with: .smallLabel)
+    private lazy var textLabel: UILabel = UILabel(with: .callout)
+    private lazy var pctLabel: UILabel = UILabel(with: .callout)
 
     private lazy var progressView: UIView = {
         let view = UIView(frame: bounds)

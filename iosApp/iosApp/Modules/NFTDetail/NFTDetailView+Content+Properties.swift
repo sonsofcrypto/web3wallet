@@ -214,7 +214,7 @@ private extension NFTDetailViewController {
         
         let view = VStackView()
         
-        let topLabel = UILabel(with: .smallerLabel)
+        let topLabel = UILabel(with: .caption1)
         topLabel.numberOfLines = 1
         topLabel.text = item.name
         topLabel.textColor = Theme.colour.labelPrimary
@@ -223,7 +223,7 @@ private extension NFTDetailViewController {
         
         view.addArrangedSubview(.vSpace(height: 8))
         
-        let middleLabel = UILabel(with: .smallerLabel)
+        let middleLabel = UILabel(with: .caption1)
         middleLabel.numberOfLines = 1
         middleLabel.text = item.value
         middleLabel.textColor = Theme.colour.systemGreen
@@ -232,7 +232,7 @@ private extension NFTDetailViewController {
 
         view.addArrangedSubview(.vSpace(height: 8))
         
-        let bottomLabel = UILabel(with: .smallerLabel)
+        let bottomLabel = UILabel(with: .caption1)
         bottomLabel.numberOfLines = 1
         bottomLabel.text = item.info
         bottomLabel.textColor = Theme.colour.labelPrimary
