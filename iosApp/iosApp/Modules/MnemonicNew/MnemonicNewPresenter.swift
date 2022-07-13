@@ -96,6 +96,11 @@ extension DefaultMnemonicNewPresenter: MnemonicNewPresenter {
             )
         case .didSelectCta:
             do {
+                if interactor.passwordType == .bio {
+                    password = interactor.generatePassword()
+                } else {
+                    // TODO(web3dgn): Validate password / pin
+                }
                 let item = try interactor.createKeyStoreItem(password, salt: salt)
                 if let handler = context.didCreteKeyStoreItemHandler {
                     handler(item)

@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A4C3001CAC79A77987DA8AE /* Error+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39798419CEB3807348FA /* Error+Extensions.swift */; };
 		1A4C30116B1618C1596D9D14 /* NetworksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DAB38F681061328F3F0 /* NetworksService.swift */; };
 		1A4C303A23D7DA2A37B292C1 /* CardFlipTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E976CBAB0A97E8AF408 /* CardFlipTransition.swift */; };
 		1A4C308B6FA11A032039F086 /* CandlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C359691FCF66942DF6CEF /* CandlesView.swift */; };
 		1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C300D073ABE25FC79D4A9 /* CollectionViewCell.swift */; };
+		1A4C30D6ED56A03136C4CA71 /* Kotlin+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C301CA1E59BEACD136BCD /* Kotlin+Extensions.swift */; };
+		1A4C31D59C7D2B84D247FDDD /* TransformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C393772D3384C556C29C3 /* TransformView.swift */; };
 		1A4C31E84A86A69FFC7C3E0F /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D40E32D58F958911B60 /* Setting.swift */; };
 		1A4C33A130E35EBC0BC27B07 /* mock-candles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1A4C3EE3468010FE10976BEE /* mock-candles.json */; };
 		1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */; };
@@ -30,7 +33,6 @@
 		1A4C3B49BC67AF7AA3BF0D8F /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3644A9D218CC991B2A56 /* VisualEffectView.swift */; };
 		1A4C3B697503D478741295DB /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DBA41AF75471C619124 /* TextField.swift */; };
 		1A4C3B6D2DFADBE2EF71F3A5 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DED61DB8FC18EFD5B0B /* SettingsService.swift */; };
-		1A4C3B81B628EF4EDC8F7177 /* TransformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3F5900131CEDA6520958 /* TransformView.swift */; };
 		1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */; };
 		1A4C3C28443621328248F5A7 /* CandlesViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C344022DBA2423C0F15F6 /* CandlesViewViewModel.swift */; };
 		1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C325A6875E5041A491945 /* CollectionView.swift */; };
@@ -430,7 +432,7 @@
 		D1ED7261287C1122005805CF /* TokenSendToCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ED725E287C1122005805CF /* TokenSendToCollectionViewCell.swift */; };
 		D1EF5BC7287BEE92004CAD82 /* MnemonicUpdateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BBE287BEE92004CAD82 /* MnemonicUpdateCell.swift */; };
 		D1EF5BC8287BEE92004CAD82 /* MnemonicUpdateContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BBF287BEE92004CAD82 /* MnemonicUpdateContext.swift */; };
-		D1EF5BC9287BEE92004CAD82 /* DefaultMnemonicUpdateWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BC0287BEE92004CAD82 /* DefaultMnemonicUpdateWireframe.swift */; };
+		D1EF5BC9287BEE92004CAD82 /* MnemonicUpdateWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BC0287BEE92004CAD82 /* MnemonicUpdateWireframe.swift */; };
 		D1EF5BCA287BEE92004CAD82 /* MnemonicUpdateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BC1287BEE92004CAD82 /* MnemonicUpdateViewModel.swift */; };
 		D1EF5BCB287BEE92004CAD82 /* MnemonicUpdate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1EF5BC2287BEE92004CAD82 /* MnemonicUpdate.storyboard */; };
 		D1EF5BCC287BEE92004CAD82 /* MnemonicUpdatePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BC3287BEE92004CAD82 /* MnemonicUpdatePresenter.swift */; };
@@ -472,6 +474,7 @@
 
 /* Begin PBXFileReference section */
 		1A4C300D073ABE25FC79D4A9 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		1A4C301CA1E59BEACD136BCD /* Kotlin+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Kotlin+Extensions.swift"; sourceTree = "<group>"; };
 		1A4C308C7EEAF2E80221C519 /* TouchPassThroughCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchPassThroughCollectionView.swift; sourceTree = "<group>"; };
 		1A4C309894247AA73F274756 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		1A4C3178DA54CD0800157DD5 /* EdgeCardsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EdgeCardsController.swift; sourceTree = "<group>"; };
@@ -491,6 +494,8 @@
 		1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsService.swift; sourceTree = "<group>"; };
 		1A4C388B9A42E6A279D2867F /* AccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
 		1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewEffectViewiOS14.swift; sourceTree = "<group>"; };
+		1A4C393772D3384C556C29C3 /* TransformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformView.swift; sourceTree = "<group>"; };
+		1A4C39798419CEB3807348FA /* Error+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error+Extensions.swift"; sourceTree = "<group>"; };
 		1A4C39C4B0802356E1007E01 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAppCategory.swift; sourceTree = "<group>"; };
 		1A4C39D6ADB830082AC3CEA6 /* Authenticate.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Authenticate.storyboard; sourceTree = "<group>"; };
@@ -504,7 +509,6 @@
 		1A4C3DED61DB8FC18EFD5B0B /* SettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
 		1A4C3E976CBAB0A97E8AF408 /* CardFlipTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFlipTransition.swift; sourceTree = "<group>"; };
 		1A4C3EE3468010FE10976BEE /* mock-candles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mock-candles.json"; sourceTree = "<group>"; };
-		1A4C3F5900131CEDA6520958 /* TransformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformView.swift; sourceTree = "<group>"; };
 		1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnOffSwitch.swift; sourceTree = "<group>"; };
 		1C47C0E4287BFC06008E0146 /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
 		1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
@@ -899,7 +903,7 @@
 		D1ED725E287C1122005805CF /* TokenSendToCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenSendToCollectionViewCell.swift; sourceTree = "<group>"; };
 		D1EF5BBE287BEE92004CAD82 /* MnemonicUpdateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateCell.swift; sourceTree = "<group>"; };
 		D1EF5BBF287BEE92004CAD82 /* MnemonicUpdateContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateContext.swift; sourceTree = "<group>"; };
-		D1EF5BC0287BEE92004CAD82 /* DefaultMnemonicUpdateWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultMnemonicUpdateWireframe.swift; sourceTree = "<group>"; };
+		D1EF5BC0287BEE92004CAD82 /* MnemonicUpdateWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateWireframe.swift; sourceTree = "<group>"; };
 		D1EF5BC1287BEE92004CAD82 /* MnemonicUpdateViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateViewModel.swift; sourceTree = "<group>"; };
 		D1EF5BC2287BEE92004CAD82 /* MnemonicUpdate.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MnemonicUpdate.storyboard; sourceTree = "<group>"; };
 		D1EF5BC3287BEE92004CAD82 /* MnemonicUpdatePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdatePresenter.swift; sourceTree = "<group>"; };
@@ -1002,7 +1006,6 @@
 				1A4C3649032759624C3E2734 /* CardFlipAnimatedTransitioning2.swift */,
 				1A4C3E976CBAB0A97E8AF408 /* CardFlipTransition.swift */,
 				1CE66BD12848ED4000AB6ACA /* PresentationStyle.swift */,
-				1A4C3F5900131CEDA6520958 /* TransformView.swift */,
 				1A4C332FF69B880FCA444DE2 /* PreferredSizePresentationController.swift */,
 			);
 			path = Transitions;
@@ -1066,6 +1069,7 @@
 				1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */,
 				1A4C309894247AA73F274756 /* TabBarController.swift */,
 				1A4C39C4B0802356E1007E01 /* WebViewController.swift */,
+				1A4C393772D3384C556C29C3 /* TransformView.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1776,6 +1780,8 @@
 				1CB3A1D52840D6B70092D667 /* UIView+Extensions.swift */,
 				1CB3A1D82840D6B70092D667 /* UIView+LayoutConstraints+Extensions.swift */,
 				1C60C37A2859BDD9003BE25D /* UIView+Toast+Extensions.swift */,
+				1A4C39798419CEB3807348FA /* Error+Extensions.swift */,
+				1A4C301CA1E59BEACD136BCD /* Kotlin+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2044,7 +2050,7 @@
 			children = (
 				D1EF5BBD287BEE92004CAD82 /* Cells */,
 				D1EF5BBF287BEE92004CAD82 /* MnemonicUpdateContext.swift */,
-				D1EF5BC0287BEE92004CAD82 /* DefaultMnemonicUpdateWireframe.swift */,
+				D1EF5BC0287BEE92004CAD82 /* MnemonicUpdateWireframe.swift */,
 				D1EF5BC1287BEE92004CAD82 /* MnemonicUpdateViewModel.swift */,
 				D1EF5BC2287BEE92004CAD82 /* MnemonicUpdate.storyboard */,
 				D1EF5BC3287BEE92004CAD82 /* MnemonicUpdatePresenter.swift */,
@@ -2367,7 +2373,7 @@
 				1C60C32E285724D1003BE25D /* NFTsCollectionView.swift in Sources */,
 				1C60C2A9285724D0003BE25D /* SettingsItem.swift in Sources */,
 				1C60C3772858634A003BE25D /* DefaultWeb3Service.swift in Sources */,
-				D1EF5BC9287BEE92004CAD82 /* DefaultMnemonicUpdateWireframe.swift in Sources */,
+				D1EF5BC9287BEE92004CAD82 /* MnemonicUpdateWireframe.swift in Sources */,
 				1C60C308285724D1003BE25D /* NFTsDashboardWireframeFactory.swift in Sources */,
 				1C60C325285724D1003BE25D /* AppsView.swift in Sources */,
 				1C60C34E285724D1003BE25D /* CultProposalCell.swift in Sources */,
@@ -2603,7 +2609,6 @@
 				1C54DC052860E5C500E378F6 /* NetworkPickerWireframe.swift in Sources */,
 				1CD844002874257500E6D359 /* SwitchTextInputCollectionViewCell.swift in Sources */,
 				1A4C373BF33DAF794F261056 /* CardFlipAnimatedTransitioning2.swift in Sources */,
-				1A4C3B81B628EF4EDC8F7177 /* TransformView.swift in Sources */,
 				1C47C0E5287BFC06008E0146 /* SeparatorView.swift in Sources */,
 				1A4C31E84A86A69FFC7C3E0F /* Setting.swift in Sources */,
 				1C60C342285724D1003BE25D /* AMMsWireframeFactoryAssembler.swift in Sources */,
@@ -2654,6 +2659,9 @@
 				1A4C3CFB23D66DF60B4BCE71 /* KeyStoreService.swift in Sources */,
 				1A4C3E81CF175B7B283C13E0 /* AuthenticateContext.swift in Sources */,
 				1A4C3B25A582595A7B1E8EA9 /* PreferredSizePresentationController.swift in Sources */,
+				1A4C3001CAC79A77987DA8AE /* Error+Extensions.swift in Sources */,
+				1A4C30D6ED56A03136C4CA71 /* Kotlin+Extensions.swift in Sources */,
+				1A4C31D59C7D2B84D247FDDD /* TransformView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2840,6 +2848,7 @@
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = web3wallet;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We use the phone's camera to read QR codes";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Authenticate $(PRODUCT_NAME)";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -2878,6 +2887,7 @@
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = web3wallet;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We use the phone's camera to read QR codes";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Authenticate $(PRODUCT_NAME)";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

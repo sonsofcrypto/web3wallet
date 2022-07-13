@@ -33,6 +33,9 @@ protocol MnemonicNewInteractor: AnyObject {
     /// generates new wallet mnemonic
     func generateNewMnemonic()
 
+    /// generate password
+    func generatePassword() -> String
+
     /// See if passwords meets minimum specs
     func isValidPassword(password: String) -> Bool
 
@@ -76,6 +79,12 @@ extension DefaultMnemonicNewInteractor: MnemonicNewInteractor {
         } catch {
             fatalError("Failed to create bip39, bip44. \(error)")
         }
+    }
+
+    func generatePassword() -> String {
+        let password = try! CipherKt.secureRand(size: 32)
+        return String(data: password.toDataFull(), encoding: .ascii)
+            ?? password.toHexString()
     }
 
     func createKeyStoreItem(_ password: String, salt: String) throws -> KeyStoreItem {

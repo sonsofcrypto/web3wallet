@@ -10,6 +10,8 @@ struct AuthenticateContext {
     typealias AuthResult = Result<(String, String), Error>
     typealias Handler = (AuthResult) -> Void // password, salt
 
+    // TODO(web3dgn): Title should for context dependent ie unlock, sign ...
+    let title: String
     let keyStoreItem: KeyStoreItem
     let handler: Handler?
 }

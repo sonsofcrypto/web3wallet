@@ -39,8 +39,21 @@ class DefaultAuthenticateWireframe {
 extension DefaultAuthenticateWireframe: AuthenticateWireframe {
 
     func present() {
-        let vc = wireUp()
-        // TODO: Check if key chain will suffice
+        let interactor = DefaultAuthenticateInteractor(
+            keyStoreService: keyStoreService,
+            keyChainService: keyChainService
+        )
+
+        if interactor.canUnlockWithBio(context.keyStoreItem) {
+            interactor.unlockWithBiometrics(
+                context.keyStoreItem,
+                title: context.title,
+                handler: { result in self.context.handler?(result)}
+            )
+            return
+        }
+
+        let vc = wireUp(interactor)
         self.vc = vc
         parent?.present(vc, animated: true)
     }
@@ -52,15 +65,12 @@ extension DefaultAuthenticateWireframe: AuthenticateWireframe {
 
 extension DefaultAuthenticateWireframe {
 
-    private func wireUp() -> UIViewController {
+    private func wireUp(_ interactor: AuthenticateInteractor) -> UIViewController {
         let vc: AuthenticateViewController = UIStoryboard(.authenticate).instantiate()
         let presenter = DefaultAuthenticatePresenter(
             context: context,
             view: vc,
-            interactor: DefaultAuthenticateInteractor(
-                keyStoreService: keyStoreService,
-                keyChainService: keyChainService
-            ),
+            interactor: interactor,
             wireframe: self
         )
 

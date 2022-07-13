@@ -12,6 +12,8 @@ enum AuthenticatePresenterErrror: Error {
 enum AuthenticatePresenterEvent {
     case didCancel
     case didConfirm
+    case didChangePassword(text: String)
+    case didChangeSalt(text: String)
 }
 
 protocol AuthenticatePresenter {
@@ -29,6 +31,9 @@ class DefaultAuthenticatePresenter {
 
     private weak var view: AuthenticateView?
 
+    private var password: String = ""
+    private var salt: String = ""
+
     init(
         context: AuthenticateContext,
         view: AuthenticateView,
@@ -40,6 +45,10 @@ class DefaultAuthenticatePresenter {
         self.interactor = interactor
         self.wireframe = wireframe
     }
+
+    func updateView() {
+        view?.update(with: viewModel())
+    }
 }
 
 // MARK: AuthenticatePresenter
@@ -47,19 +56,46 @@ class DefaultAuthenticatePresenter {
 extension DefaultAuthenticatePresenter: AuthenticatePresenter {
 
     func present() {
-        view?.update(with: viewModel())
+        updateView()
+        if context.keyStoreItem.passUnlockWithBio {
+            interactor.unlockWithBiometrics(
+                context.keyStoreItem,
+                title: "Unlock", // TODO(web3dgn): Localized context aware title
+                handler: { [weak self] result in
+                    switch result {
+                    case let .success(password, _):
+                        self?.password = password
+                        self?.updateView()
+                    default:
+                        ()
+                    }
+                }
+            )
+        }
     }
 
     func handle(_ event: AuthenticatePresenterEvent) {
         switch event {
+        case let .didChangePassword(text):
+            password = text
+        case let .didChangeSalt(text):
+            salt = text
         case .didCancel:
             wireframe.dismiss()
             context.handler?(
                 .failure(AuthenticatePresenterErrror.failedToAuthenticate)
             )
         case .didConfirm:
-            ()
-            // TODO: -
+            guard interactor.isValid(
+                item: context.keyStoreItem,
+                password: password,
+                salt: salt
+            ) else {
+                view?.animateError()
+                return
+            }
+            wireframe.dismiss()
+            context.handler?(.success((password, salt)))
         }
     }
 }
@@ -77,10 +113,15 @@ private extension DefaultAuthenticatePresenter {
     func viewModel() -> AuthenticateViewModel {
         // TODO(Sancho): Update, fix, localize, make sane
         // Also view wise, I did no design just default elements
-        .init(
+        let item = context.keyStoreItem
+        return .init(
             title: "Unlock",
+            password: password,
             passwordPlaceholder: "Password",
-            saltPlaceholder: "Sale"
+            salt: salt,
+            saltPlaceholder: "Salt",
+            needsPassword: item.passwordType != .bio,
+            needsSalt: item.saltMnemonic
         )
     }
 }

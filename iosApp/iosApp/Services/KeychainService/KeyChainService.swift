@@ -4,12 +4,45 @@
 
 import Security
 import web3lib
+import LocalAuthentication
 
 // MARK: - web3lib.KeyChainService
 
 final class DefaultKeyChainService { }
 
 extension DefaultKeyChainService: KeyChainService {
+    
+    func biometricsSupported() -> Bool {
+        let context = LAContext()
+        var error: NSError?
+        return context.canEvaluatePolicy(
+            .deviceOwnerAuthentication,
+            error: &error
+        )
+    }
+
+    func biometricsAuthenticate(
+        title: String,
+        handler: @escaping (KotlinBoolean, KotlinError?) -> Void
+    ) {
+        let context = LAContext()
+        context.evaluatePolicy(
+            .deviceOwnerAuthentication,
+            localizedReason: title,
+            reply: { success, error in
+                DispatchQueue.main.async {
+                    guard let err = error else {
+                        handler(KotlinBoolean(bool: success),  nil)
+                        return
+                    }
+                    handler(
+                        KotlinBoolean(bool: success),
+                        KotlinError(message: err.localizedDescription)
+                    )
+                }
+            }
+        )
+    }
 
     func get(id: String, type: ServiceType) throws -> KotlinByteArray {
         let query = [

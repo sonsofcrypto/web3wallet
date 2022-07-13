@@ -40,7 +40,6 @@ extension DefaultMnemonicUpdateWireframeFactory: MnemonicUpdateWireframeFactory 
         _ parent: UIViewController?,
         context: MnemonicUpdateContext
     ) -> MnemonicUpdateWireframe {
-        
         DefaultMnemonicUpdateWireframe(
             parent: parent,
             context: context,

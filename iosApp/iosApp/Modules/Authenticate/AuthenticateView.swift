@@ -22,16 +22,6 @@ class AuthenticateViewController: UIViewController, ModalDismissProtocol {
 
     private var viewModel: AuthenticateViewModel?
 
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        setupTransitioning()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupTransitioning()
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -54,15 +44,23 @@ class AuthenticateViewController: UIViewController, ModalDismissProtocol {
 extension AuthenticateViewController: AuthenticateView {
 
     func update(with viewModel: AuthenticateViewModel) {
+        // TODO(web3dgn): UI is complete crap. fields to have password type
+        // background of this view is crap. Needs to animate up when keyboard
+        // comes up. I'd suggest CALayerTransform3D on `view`. I will implement
+        // something so that it is automatic on `PreferredSizePresentationControlelr`
         self.viewModel = viewModel
         title = viewModel.title
+        passwordTextField.text = viewModel.password
         passwordTextField.placeholderAttrText = viewModel.passwordPlaceholder
+        saltTextField.text = viewModel.salt
         saltTextField.placeholderAttrText = viewModel.saltPlaceholder
         catButton.setTitle(viewModel.title, for: .normal)
+        passwordTextField.isHidden = !viewModel.needsPassword
+        saltTextField.isHidden = !viewModel.needsSalt
     }
 
     func animateError() {
-
+        navigationController?.view.shakeAnimate()
     }
 }
 
@@ -82,12 +80,6 @@ extension AuthenticateViewController {
 
 extension AuthenticateViewController: UIViewControllerTransitioningDelegate, ModalDismissDelegate {
 
-    func setupTransitioning() {
-        modalPresentationStyle = .custom
-        transitioningDelegate = self
-        modalDismissDelegate = self
-    }
-
     func presentationController(
         forPresented presented: UIViewController,
         presenting: UIViewController?,
@@ -101,5 +93,36 @@ extension AuthenticateViewController: UIViewControllerTransitioningDelegate, Mod
 
     func viewControllerDismissActionPressed(_ viewController: UIViewController?) {
         dismissAction(self)
+    }
+}
+
+extension AuthenticateViewController: UITextFieldDelegate {
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        updatePresenter(textField)
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        updatePresenter(textField)
+        textField.resignFirstResponder()
+        return false
+    }
+
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
+        updatePresenter(textField)
+        return true
+    }
+
+    func updatePresenter(_ textField: UITextField) {
+        if textField == passwordTextField {
+            presenter.handle(.didChangePassword(text: textField.text ?? ""))
+        }
+        if textField == saltTextField {
+            presenter.handle(.didChangeSalt(text: textField.text ?? ""))
+        }
     }
 }

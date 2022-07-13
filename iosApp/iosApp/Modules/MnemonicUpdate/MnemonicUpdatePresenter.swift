@@ -7,7 +7,6 @@ import web3lib
 import UniformTypeIdentifiers
 
 enum MnemonicUpdatePresenterEvent {
-    case didInitialAppear
     case didChangeName(name: String)
     case didChangeICouldBackup(onOff: Bool)
     case saltSwitchDidChange(onOff: Bool)
@@ -65,19 +64,19 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
         let start = Date()
         interactor.generateNewMnemonic()
         updateView()
+        wireframe.navigate(
+            to: .authenticate(
+                context: .init(
+                    title: "Unlock", // TODO(web3dgn): Title should for context dependent ie unlock, sign ...
+                    keyStoreItem: context.keyStoreItem,
+                    handler: handleAuthenticateResult
+                )
+            )
+        )
     }
 
     func handle(_ event: MnemonicUpdatePresenterEvent) {
         switch event {
-        case .didInitialAppear:
-            self.wireframe.navigate(
-                to: .authenticate(
-                    context: .init(
-                        keyStoreItem: self.context.keyStoreItem,
-                        handler: self.handleAuthenticateResult
-                    )
-                )
-            )
         case let .didChangeName(name):
             interactor.name = name
         case let .didChangeICouldBackup(onOff):
@@ -132,7 +131,8 @@ private extension DefaultMnemonicUpdatePresenter {
     func handleAuthenticateResult(_ result: AuthenticateContext.AuthResult) {
         switch result {
         case let .success(password, salt):
-            print("=== \(password) \(salt)")
+            self.password = password
+            self.salt = salt
         case let .failure(error):
             wireframe.navigate(to: .dismiss)
         }

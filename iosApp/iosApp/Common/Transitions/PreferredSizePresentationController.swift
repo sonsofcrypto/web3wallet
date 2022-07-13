@@ -37,21 +37,21 @@ class PreferredSizePresentationController: UIPresentationController {
             // Compute size from presented view
             } else {
                 let width = max(
-                    min(bounds.width, bounds.height) * Const.widthScaler,
-                    Const.minWidth
+                    min(bounds.width, bounds.height) * Constant.widthScaler,
+                    Constant.minWidth
                 )
 
                 let presentedView = presentedViewController.view
 
                 size = presentedView?.systemLayoutSizeFitting(
-                    CGSize(width: width - 2 * Const.margin, height: 0),
+                    CGSize(width: width - 2 * Constant.margin, height: 0),
                     withHorizontalFittingPriority: .required,
                     verticalFittingPriority: .defaultLow
                 ) ?? size
             }
 
-            size.width = max(Const.minWidth, size.width)
-            size.height = max(Const.minWidth, size.height)
+            size.width = max(Constant.minWidth, size.width)
+            size.height = max(Constant.minWidth, size.height)
 
             return .init(
                 origin: .init(
@@ -69,10 +69,10 @@ class PreferredSizePresentationController: UIPresentationController {
         let bgView = newBGView()
         containerView?.addSubview(bgView)
         self.bgView = bgView
-        presentedView?.layer.cornerRadius = Const.cornerRadius
+        presentedView?.layer.cornerRadius = Constant.cornerRadius
 
-        UIView.animate(withDuration: Const.animDuration) {
-            self.bgView?.alpha = 1
+        UIView.animate(withDuration: Constant.animDuration) {
+            self.bgView?.alpha = Constant.bgAlpha
         }
     }
 
@@ -81,8 +81,8 @@ class PreferredSizePresentationController: UIPresentationController {
         // Add motion effects
         let offset = 12
         [
-            motionEffect(Const.vmPath, type: .tiltAlongVerticalAxis),
-            motionEffect(Const.hmPath, type: .tiltAlongHorizontalAxis)
+            motionEffect(Constant.vmPath, type: .tiltAlongVerticalAxis),
+            motionEffect(Constant.hmPath, type: .tiltAlongHorizontalAxis)
         ].forEach {
             $0.minimumRelativeValue = -offset
             $0.maximumRelativeValue = offset
@@ -93,7 +93,7 @@ class PreferredSizePresentationController: UIPresentationController {
     override func dismissalTransitionWillBegin() {
         super.dismissalTransitionWillBegin()
 
-        UIView.animate(withDuration: Const.animDuration) {
+        UIView.animate(withDuration: Constant.animDuration) {
             self.bgView?.alpha = 0
         }
     }
@@ -106,8 +106,8 @@ class PreferredSizePresentationController: UIPresentationController {
             return
         }
 
-        UIView.animate(withDuration: Const.animDuration) {
-            self.bgView?.alpha = 1
+        UIView.animate(withDuration: Constant.animDuration) {
+            self.bgView?.alpha = Constant.bgAlpha
         }
     }
 
@@ -128,6 +128,9 @@ class PreferredSizePresentationController: UIPresentationController {
             vc.modalDismissDelegate?.viewControllerDismissActionPressed(presentedViewController)
         } else if let vc = presentedViewController as? ModalDismissDelegate {
             vc.viewControllerDismissActionPressed(presentedViewController)
+        } else if let vc = presentedViewController as? UINavigationController,
+                  let childVc = vc.topViewController as? ModalDismissDelegate {
+            childVc.viewControllerDismissActionPressed(presentedViewController)
         } else {
             presentingViewController.dismiss(animated: true, completion: nil)
         }
@@ -143,16 +146,17 @@ class PreferredSizePresentationController: UIPresentationController {
     }
 
     private func newBGView() -> UIView {
-//        let bgView = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterialDark))
-//        bgView.frame = containerViewBounds()
-        let bgView = UIView(frame: containerViewBounds())
-        bgView.backgroundColor = UIColor.black.withAlphaComponent(Const.bgAlpha)
+        let bgView = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterialDark))
+        bgView.frame = containerViewBounds()
+//        let bgView = UIView(frame: containerViewBounds())
+//        bgView.backgroundColor = UIColor.black.withAlphaComponent(Const.bgAlpha)
         bgView.alpha = 0
         let tap = UITapGestureRecognizer(
             target: self,
             action: #selector(tapAction(_:))
         )
-        bgView.addGestureRecognizer(tap)
+        bgView.contentView.addGestureRecognizer(tap)
+//        bgView.addGestureRecognizer(tap)
         return bgView
     }
 
@@ -160,11 +164,11 @@ class PreferredSizePresentationController: UIPresentationController {
         containerView?.bounds ?? presentingViewController.view.bounds
     }
 
-    private struct Const {
+    private struct Constant {
         static let widthScaler: CGFloat = 0.91
         static let minWidth: CGFloat = 320
         static let margin: CGFloat = 16
-        static let bgAlpha: CGFloat = 0.4
+        static let bgAlpha: CGFloat = 1.0
         static let hmPath = "transform.translation.x"
         static let vmPath = "transform.translation.y"
         static let cornerRadius: CGFloat = 16
