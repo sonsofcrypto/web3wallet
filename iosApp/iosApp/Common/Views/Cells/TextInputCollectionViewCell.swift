@@ -17,6 +17,9 @@ final class TextInputCollectionViewCell: CollectionViewCell {
         titleLabel.font = Theme.font.body
         titleLabel.textColor = Theme.colour.labelPrimary
         
+        (textField as? TextField)?.textChangeHandler = { [weak self] text in
+            self?.textChangeHandler?(text ?? "")
+        }
         textField.delegate = self
         textField.rightViewMode = .whileEditing
     }
@@ -28,13 +31,8 @@ final class TextInputCollectionViewCell: CollectionViewCell {
 
 extension TextInputCollectionViewCell: UITextFieldDelegate {
 
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textChangeHandler?(textField.text ?? "")
-    }
-
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        textChangeHandler?(textField.text ?? "")
         return false
     }
 }
@@ -68,6 +66,19 @@ extension TextInputCollectionViewCell {
         )
         return self
     }
+
+    func update(
+        with viewModel: MnemonicImportViewModel.Name,
+        textChangeHandler: ((String)->Void)? = nil
+    ) -> Self {
+        update(
+            title: viewModel.title,
+            value: viewModel.value,
+            placeholder: viewModel.placeholder,
+            textChangeHandler: textChangeHandler
+        )
+        return self
+    }
 }
 
 // MARK: - Utilities
@@ -86,5 +97,4 @@ private extension TextInputCollectionViewCell {
         self.textChangeHandler = textChangeHandler
         return self
     }
-
 }

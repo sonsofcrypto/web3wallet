@@ -26,6 +26,9 @@ final class SwitchTextInputCollectionViewCell: CollectionViewCell {
         
         titleLabel.apply(style: .body)
         textField.delegate = self
+        (textField as? TextField)?.textChangeHandler = { [weak self] text in
+            self?.textChangeHandler?(text ?? "")
+        }
 
         descriptionLabel.addGestureRecognizer(
             .init(target: self, action: #selector(descriptionAction(_:)))
@@ -48,14 +51,8 @@ final class SwitchTextInputCollectionViewCell: CollectionViewCell {
 
 extension SwitchTextInputCollectionViewCell: UITextFieldDelegate {
 
-
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textChangeHandler?(textField.text ?? "")
-    }
-
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        textChangeHandler?(textField.text ?? "")
         return false
     }
 }
@@ -86,6 +83,26 @@ extension SwitchTextInputCollectionViewCell {
 
     func update(
         with viewModel: MnemonicUpdateViewModel.SwitchWithTextInput,
+        switchAction: ((Bool)->Void)?,
+        textChangeHandler: ((String)->Void)?,
+        descriptionAction: (()->Void)?
+    ) -> Self {
+        update(
+            title: viewModel.title,
+            onOff: viewModel.onOff,
+            text: viewModel.text,
+            placeholder: viewModel.placeholder,
+            description: viewModel.description,
+            descriptionHighlightedWords: viewModel.descriptionHighlightedWords,
+            switchAction: switchAction,
+            textChangeHandler: textChangeHandler,
+            descriptionAction: descriptionAction
+        )
+        return self
+    }
+
+    func update(
+        with viewModel: MnemonicImportViewModel.SwitchWithTextInput,
         switchAction: ((Bool)->Void)?,
         textChangeHandler: ((String)->Void)?,
         descriptionAction: (()->Void)?

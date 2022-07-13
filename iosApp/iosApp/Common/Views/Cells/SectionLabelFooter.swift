@@ -30,6 +30,15 @@ extension SectionLabelFooter {
             ()
         }
     }
+
+    func update(with viewModel: MnemonicImportViewModel.Footer) {
+        switch viewModel {
+        case let .attrStr(text, highlightWords):
+            updateFooter(text: text, highlightWords: highlightWords)
+        default:
+            ()
+        }
+    }
 }
 
 // MARK: -

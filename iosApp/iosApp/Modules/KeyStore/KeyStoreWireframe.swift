@@ -34,6 +34,7 @@ final class DefaultKeyStoreWireframe {
     private let keyStoreService: KeyStoreService
     private let newMnemonic: MnemonicNewWireframeFactory
     private let updateMnemonic: MnemonicUpdateWireframeFactory
+    private let importMnemonic: MnemonicImportWireframeFactory
     private let settingsService: SettingsService
 
     private weak var vc: UIViewController?
@@ -44,6 +45,7 @@ final class DefaultKeyStoreWireframe {
         keyStoreService: KeyStoreService,
         newMnemonic: MnemonicNewWireframeFactory,
         updateMnemonic: MnemonicUpdateWireframeFactory,
+        importMnemonic: MnemonicImportWireframeFactory,
         settingsService: SettingsService
     ) {
         self.parent = parent
@@ -51,6 +53,7 @@ final class DefaultKeyStoreWireframe {
         self.keyStoreService = keyStoreService
         self.newMnemonic = newMnemonic
         self.updateMnemonic = updateMnemonic
+        self.importMnemonic = importMnemonic
         self.settingsService = settingsService
     }
 }
@@ -89,9 +92,8 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
             let context = MnemonicNewContext(createHandler: handler)
             newMnemonic.makeWireframe(vc, context: context).present()
         case let .importMnemonic(handler):
-            () // TODO: - Fix
-//            let context = MnemonicNewContext(mode: .restore, createHandler: handler)
-//            newMnemonic.makeWireframe(vc, context: context).present()
+            let context = MnemonicImportContext(createHandler: handler)
+            importMnemonic.makeWireframe(vc, context: context).present()
         case let .keyStoreItem(keyStoreItem, handler):
             let context = MnemonicUpdateContext(
                 keyStoreItem: keyStoreItem,

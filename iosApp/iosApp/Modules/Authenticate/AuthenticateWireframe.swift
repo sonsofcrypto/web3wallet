@@ -16,7 +16,6 @@ class DefaultAuthenticateWireframe {
 
     private let context: AuthenticateContext
     private let keyStoreService: KeyStoreService
-    private let keyChainService: KeyChainService
 
     private weak var parent: UIViewController?
     private weak var vc: UIViewController?
@@ -24,13 +23,11 @@ class DefaultAuthenticateWireframe {
     init(
         parent: UIViewController,
         context: AuthenticateContext,
-        keyStoreService: KeyStoreService,
-        keyChainService: KeyChainService
+        keyStoreService: KeyStoreService
     ) {
         self.parent = parent
         self.context = context
         self.keyStoreService = keyStoreService
-        self.keyChainService = keyChainService
     }
 }
 
@@ -40,8 +37,7 @@ extension DefaultAuthenticateWireframe: AuthenticateWireframe {
 
     func present() {
         let interactor = DefaultAuthenticateInteractor(
-            keyStoreService: keyStoreService,
-            keyChainService: keyChainService
+            keyStoreService: keyStoreService
         )
 
         if interactor.canUnlockWithBio(context.keyStoreItem) {

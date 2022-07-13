@@ -1,6 +1,7 @@
 package com.sonsofcrypto.web3lib_core
 
 import com.sonsofcrypto.web3lib_utils.*
+import kotlin.math.ceil
 
 private const val PBKDF2_ITER = 2048
 private const val PBKDF2_KEYLEN = 64
@@ -45,7 +46,10 @@ class Bip39(val mnemonic: List<String>, val salt: String, val worldList: WordLis
         ES160(160),
         ES192(192),
         ES224(224),
-        ES256(256),
+        ES256(256);
+
+        fun validWordCounts(): List<Int> = EntropySize.values()
+            .map { ceil(it.value.toFloat() / 11f).toInt() }
     }
 
     /** Exceptions */

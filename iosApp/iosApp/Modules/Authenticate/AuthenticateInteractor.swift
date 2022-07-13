@@ -20,14 +20,9 @@ protocol AuthenticateInteractor: AnyObject {
 class DefaultAuthenticateInteractor {
 
     private var keyStoreService: KeyStoreService
-    private var keyChainService: KeyChainService
 
-    init(
-        keyStoreService: KeyStoreService,
-        keyChainService: KeyChainService
-    ) {
+    init(keyStoreService: KeyStoreService) {
         self.keyStoreService = keyStoreService
-        self.keyChainService = keyChainService
     }
 }
 

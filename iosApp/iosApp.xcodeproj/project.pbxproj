@@ -417,6 +417,15 @@
 		D157F7EE27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */; };
 		D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B06C227B6D23C008C3C62 /* GradienView.swift */; };
 		D1966C3C281468C300550332 /* SecretStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1966C3B281468C300550332 /* SecretStorageTests.swift */; };
+		D1976B0C287EFAE10063FC9C /* MnemonicImportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B03287EFAE10063FC9C /* MnemonicImportCell.swift */; };
+		D1976B0D287EFAE10063FC9C /* MnemonicImportContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B04287EFAE10063FC9C /* MnemonicImportContext.swift */; };
+		D1976B0E287EFAE10063FC9C /* MnemonicImportWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B05287EFAE10063FC9C /* MnemonicImportWireframe.swift */; };
+		D1976B0F287EFAE10063FC9C /* MnemonicImportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B06287EFAE10063FC9C /* MnemonicImportViewModel.swift */; };
+		D1976B10287EFAE10063FC9C /* MnemonicImportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B07287EFAE10063FC9C /* MnemonicImportPresenter.swift */; };
+		D1976B11287EFAE10063FC9C /* MnemonicImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B08287EFAE10063FC9C /* MnemonicImportView.swift */; };
+		D1976B12287EFAE10063FC9C /* MnemonicImportWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B09287EFAE10063FC9C /* MnemonicImportWireframeFactory.swift */; };
+		D1976B13287EFAE10063FC9C /* MnemonicImportInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B0A287EFAE10063FC9C /* MnemonicImportInteractor.swift */; };
+		D1976B14287EFAE10063FC9C /* MnemonicImport.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1976B0B287EFAE10063FC9C /* MnemonicImport.storyboard */; };
 		D1A12A60287D333900606FC8 /* AuthenticateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A59287D333900606FC8 /* AuthenticateView.swift */; };
 		D1A12A61287D333900606FC8 /* AuthenticateInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A5A287D333900606FC8 /* AuthenticateInteractor.swift */; };
 		D1A12A63287D333900606FC8 /* AuthenticatePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A5C287D333900606FC8 /* AuthenticatePresenter.swift */; };
@@ -889,6 +898,15 @@
 		D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3walletUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D15B06C227B6D23C008C3C62 /* GradienView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradienView.swift; sourceTree = "<group>"; };
 		D1966C3B281468C300550332 /* SecretStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretStorageTests.swift; sourceTree = "<group>"; };
+		D1976B03287EFAE10063FC9C /* MnemonicImportCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportCell.swift; sourceTree = "<group>"; };
+		D1976B04287EFAE10063FC9C /* MnemonicImportContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportContext.swift; sourceTree = "<group>"; };
+		D1976B05287EFAE10063FC9C /* MnemonicImportWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportWireframe.swift; sourceTree = "<group>"; };
+		D1976B06287EFAE10063FC9C /* MnemonicImportViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportViewModel.swift; sourceTree = "<group>"; };
+		D1976B07287EFAE10063FC9C /* MnemonicImportPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportPresenter.swift; sourceTree = "<group>"; };
+		D1976B08287EFAE10063FC9C /* MnemonicImportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportView.swift; sourceTree = "<group>"; };
+		D1976B09287EFAE10063FC9C /* MnemonicImportWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportWireframeFactory.swift; sourceTree = "<group>"; };
+		D1976B0A287EFAE10063FC9C /* MnemonicImportInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportInteractor.swift; sourceTree = "<group>"; };
+		D1976B0B287EFAE10063FC9C /* MnemonicImport.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MnemonicImport.storyboard; sourceTree = "<group>"; };
 		D1A12A59287D333900606FC8 /* AuthenticateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateView.swift; sourceTree = "<group>"; };
 		D1A12A5A287D333900606FC8 /* AuthenticateInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateInteractor.swift; sourceTree = "<group>"; };
 		D1A12A5C287D333900606FC8 /* AuthenticatePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticatePresenter.swift; sourceTree = "<group>"; };
@@ -1183,6 +1201,8 @@
 				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
 				1C60C202285724D0003BE25D /* MnemonicNew */,
 				D1EF5BBC287BEE92004CAD82 /* MnemonicUpdate */,
+				D1976B01287EFAE10063FC9C /* MnemonicImport */,
+				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
 				1C54DBFB2860E59600E378F6 /* NetworkPicker */,
 				1C60C21C285724D0003BE25D /* Networks */,
 				1C60C225285724D0003BE25D /* NFTDetail */,
@@ -1998,6 +2018,30 @@
 			path = Store;
 			sourceTree = "<group>";
 		};
+		D1976B01287EFAE10063FC9C /* MnemonicImport */ = {
+			isa = PBXGroup;
+			children = (
+				D1976B02287EFAE10063FC9C /* Cells */,
+				D1976B04287EFAE10063FC9C /* MnemonicImportContext.swift */,
+				D1976B05287EFAE10063FC9C /* MnemonicImportWireframe.swift */,
+				D1976B06287EFAE10063FC9C /* MnemonicImportViewModel.swift */,
+				D1976B07287EFAE10063FC9C /* MnemonicImportPresenter.swift */,
+				D1976B08287EFAE10063FC9C /* MnemonicImportView.swift */,
+				D1976B09287EFAE10063FC9C /* MnemonicImportWireframeFactory.swift */,
+				D1976B0A287EFAE10063FC9C /* MnemonicImportInteractor.swift */,
+				D1976B0B287EFAE10063FC9C /* MnemonicImport.storyboard */,
+			);
+			path = MnemonicImport;
+			sourceTree = "<group>";
+		};
+		D1976B02287EFAE10063FC9C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				D1976B03287EFAE10063FC9C /* MnemonicImportCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		D1A12A58287D333900606FC8 /* Authenticate */ = {
 			isa = PBXGroup;
 			children = (
@@ -2241,6 +2285,7 @@
 				D157F7D427B69B6400578FF8 /* Assets.xcassets in Resources */,
 				D11A990327B8615B00EDFDD0 /* GothicA1-Thin.ttf in Resources */,
 				1CD843EA287218C800E6D359 /* OCR-A Regular.ttf in Resources */,
+				D1976B14287EFAE10063FC9C /* MnemonicImport.storyboard in Resources */,
 				D11A990927B8615B00EDFDD0 /* GothicA1-SemiBold.ttf in Resources */,
 				1C9E31A3287580E500DD2031 /* TokenSend.storyboard in Resources */,
 				D157F7D227B69B6300578FF8 /* Main.storyboard in Resources */,
@@ -2304,6 +2349,7 @@
 				D11A990F27B99D1800EDFDD0 /* AnyDecodable.swift in Sources */,
 				D11A991027B99D1800EDFDD0 /* AnyCodable.swift in Sources */,
 				1C60C2C4285724D0003BE25D /* ChatRightCollectionViewCell.swift in Sources */,
+				D1976B13287EFAE10063FC9C /* MnemonicImportInteractor.swift in Sources */,
 				1C54DBFA285F9EBF00E378F6 /* TokenAddNetworkView.swift in Sources */,
 				1C54DC192862352200E378F6 /* QRCodeScanWireframeFactory.swift in Sources */,
 				1C60C37E2859CC2A003BE25D /* ShareFactoryHelper.swift in Sources */,
@@ -2348,6 +2394,7 @@
 				1C60C320285724D1003BE25D /* AppsInteractor.swift in Sources */,
 				1C60C2B7285724D0003BE25D /* KeyStoreInteractor.swift in Sources */,
 				1C60C2C6285724D0003BE25D /* ChatViewModel.swift in Sources */,
+				D1976B0F287EFAE10063FC9C /* MnemonicImportViewModel.swift in Sources */,
 				1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */,
 				1C60C351285724D1003BE25D /* CultProposalsView.swift in Sources */,
 				1C60C2FA285724D0003BE25D /* NFTDetailView+Content+Price.swift in Sources */,
@@ -2403,6 +2450,7 @@
 				1C60C326285724D1003BE25D /* MnemonicConfirmationPresenter.swift in Sources */,
 				1C6487162832DEFE0091A12D /* Reachability.swift in Sources */,
 				1C60C2FE285724D0003BE25D /* NFTDetailView+Content+Properties.swift in Sources */,
+				D1976B0E287EFAE10063FC9C /* MnemonicImportWireframe.swift in Sources */,
 				1C64870B2832DD630091A12D /* MainBootstrapper.swift in Sources */,
 				1C60C2EB285724D0003BE25D /* NetworksViewModel.swift in Sources */,
 				1C60C2BF285724D0003BE25D /* KeyStoreWireframe.swift in Sources */,
@@ -2504,12 +2552,14 @@
 				1C60C309285724D1003BE25D /* RootWireframe.swift in Sources */,
 				1C54DBE5285E832600E378F6 /* TokenAddWireframeFactory.swift in Sources */,
 				1CB3A1E82840D6B70092D667 /* UIButton+Extensions.swift in Sources */,
+				D1976B12287EFAE10063FC9C /* MnemonicImportWireframeFactory.swift in Sources */,
 				1C60C2F8285724D0003BE25D /* NFTDetailViewModel.swift in Sources */,
 				1CE66BCC2848EA9F00AB6ACA /* DefaultChatService.swift in Sources */,
 				1C60C333285724D1003BE25D /* NFTsCollectionWireframeFactory.swift in Sources */,
 				1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */,
 				1C6487142832DE560091A12D /* ReachabilityServiceAssembler.swift in Sources */,
 				1CB3A1F12840D6B70092D667 /* UIBarButtonItem+Extensions.swift in Sources */,
+				D1976B0D287EFAE10063FC9C /* MnemonicImportContext.swift in Sources */,
 				1C60C1AA28571B95003BE25D /* UIColor+Extensions.swift in Sources */,
 				D1ED7260287C1122005805CF /* TokenSendCTACollectionViewCell.swift in Sources */,
 				D1A12A66287D333900606FC8 /* AuthenticateWireframe.swift in Sources */,
@@ -2586,6 +2636,7 @@
 				1C54DC172862351D00E378F6 /* QRCodeScanWireframe.swift in Sources */,
 				1C54DC0E2860E91D00E378F6 /* NetworkPickerItemCell.swift in Sources */,
 				1C60C312285724D1003BE25D /* AccountHeaderCell.swift in Sources */,
+				D1976B11287EFAE10063FC9C /* MnemonicImportView.swift in Sources */,
 				1C54DC092860E5D200E378F6 /* NetworkPickerWireframeFactoryAssembler.swift in Sources */,
 				1C60C317285724D1003BE25D /* AccountInteractor.swift in Sources */,
 				1C60C2B1285724D0003BE25D /* TokenPickerViewModel.swift in Sources */,
@@ -2598,8 +2649,10 @@
 				1C60C305285724D1003BE25D /* NFTsDashboardWireframeFactoryAssembler.swift in Sources */,
 				D1A12A60287D333900606FC8 /* AuthenticateView.swift in Sources */,
 				1C60C384285A649B003BE25D /* Web3ServiceLocalStorage.swift in Sources */,
+				D1976B10287EFAE10063FC9C /* MnemonicImportPresenter.swift in Sources */,
 				1C60C2D8285724D0003BE25D /* MnemonicNewInteractor.swift in Sources */,
 				1C6487122832DE4D0091A12D /* ReachabilityService.swift in Sources */,
+				D1976B0C287EFAE10063FC9C /* MnemonicImportCell.swift in Sources */,
 				1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */,
 				1C60C34D285724D1003BE25D /* CultProposalVoteView.swift in Sources */,
 				1C6487302832E5E90091A12D /* DefaultNetworksService.swift in Sources */,
