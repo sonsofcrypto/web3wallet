@@ -16,7 +16,6 @@
 		1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */; };
 		1A4C34ABFF1DD20804DED956 /* AppsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3228790C1569B37F5179 /* AppsService.swift */; };
 		1A4C35A9CDBB31FFE29C51D1 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39C4B0802356E1007E01 /* WebViewController.swift */; };
-		1A4C367CFF657470F7722F74 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E4B8A77C60E556CCD65 /* Currency.swift */; };
 		1A4C370634B11B400C5C4356 /* TouchPassThroughCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C308C7EEAF2E80221C519 /* TouchPassThroughCollectionView.swift */; };
 		1A4C37074D8859F0DC14C905 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */; };
 		1A4C3735189D6616D915D851 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C309894247AA73F274756 /* TabBarController.swift */; };
@@ -490,7 +489,6 @@
 		1A4C3DAB38F681061328F3F0 /* NetworksService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksService.swift; sourceTree = "<group>"; };
 		1A4C3DBA41AF75471C619124 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		1A4C3DED61DB8FC18EFD5B0B /* SettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
-		1A4C3E4B8A77C60E556CCD65 /* Currency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		1A4C3E976CBAB0A97E8AF408 /* CardFlipTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFlipTransition.swift; sourceTree = "<group>"; };
 		1A4C3EE3468010FE10976BEE /* mock-candles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mock-candles.json"; sourceTree = "<group>"; };
 		1A4C3F5900131CEDA6520958 /* TransformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformView.swift; sourceTree = "<group>"; };
@@ -1901,7 +1899,6 @@
 				1C60C1C7285724D0003BE25D /* Modules */,
 				1A4C38B91F448C1E962685B3 /* Services */,
 				D1BF267E280D7FC200DE9A0B /* Theme */,
-				D1C07F4F28785DB200A8ECF7 /* Tmp */,
 				D11B7E942800E82300F40488 /* WordLists */,
 				D157F7D827B69B6400578FF8 /* Info.plist */,
 				D14ECE3827B833E500228F90 /* Localizable.strings */,
@@ -1991,14 +1988,6 @@
 				1C54DC692869D60D00E378F6 /* ThemeA.swift */,
 			);
 			path = Theme;
-			sourceTree = "<group>";
-		};
-		D1C07F4F28785DB200A8ECF7 /* Tmp */ = {
-			isa = PBXGroup;
-			children = (
-				1A4C3E4B8A77C60E556CCD65 /* Currency.swift */,
-			);
-			path = Tmp;
 			sourceTree = "<group>";
 		};
 		D1EF5BBB287BEC58004CAD82 /* Cells */ = {
@@ -2613,7 +2602,6 @@
 				1C60C33C285724D1003BE25D /* SwapViewModel.swift in Sources */,
 				1C64873E2832E76B0091A12D /* StoreAssembler.swift in Sources */,
 				1C60C2B8285724D0003BE25D /* KeyStoreWireframeFactory.swift in Sources */,
-				1A4C367CFF657470F7722F74 /* Currency.swift in Sources */,
 				1C60C307285724D1003BE25D /* NFTsDashboardInteractor.swift in Sources */,
 				1C60C329285724D1003BE25D /* MnemonicConfirmationService.swift in Sources */,
 				1A4C35A9CDBB31FFE29C51D1 /* WebViewController.swift in Sources */,
