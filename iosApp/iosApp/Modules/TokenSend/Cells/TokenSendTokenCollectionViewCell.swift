@@ -7,6 +7,7 @@ final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var cellBackgroundView: UIView!
     @IBOutlet weak var sendCurrencySymbol: UILabel!
     @IBOutlet weak var sendAmountTextField: TextField!
+    @IBOutlet weak var flipImageView: UIImageView!
     @IBOutlet weak var sendAmountLabel: UILabel!
     @IBOutlet weak var tokenView: UIView!
     @IBOutlet weak var tokenIconImageView: UIImageView!
@@ -40,11 +41,18 @@ final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
         sendAmountTextField.delegate = self
         sendAmountTextField.rightView = makeTokenClearButton()
         sendAmountTextField.rightViewMode = .whileEditing
+        
+        let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(flipMode))
+        flipImageView.image = .init(systemName: "arrow.left.arrow.right")
+        flipImageView.tintColor = Theme.colour.labelPrimary
+        flipImageView.isUserInteractionEnabled = true
+        flipImageView.addGestureRecognizer(tapGesture1)
+
+        let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(flipMode))
         sendAmountLabel.font = Theme.font.footnote
         sendAmountLabel.textColor = Theme.colour.labelPrimary
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(flipMode))
         sendAmountLabel.isUserInteractionEnabled = true
-        sendAmountLabel.addGestureRecognizer(tapGesture)
+        sendAmountLabel.addGestureRecognizer(tapGesture2)
         
         tokenView.backgroundColor = Theme.colour.labelQuaternary
         tokenView.layer.cornerRadius = Theme.constant.cornerRadius
@@ -262,7 +270,7 @@ private extension TokenSendTokenCollectionViewCell {
             let tokenAmount = amount / viewModel.currencyTokenPrice
             sendAmountLabel.text = tokenAmount.toString(
                 decimals: viewModel.tokenMaxDecimals
-            )
+            ) + " \(viewModel.tokenSymbol)"
         }
     }
     
