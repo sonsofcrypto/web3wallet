@@ -29,7 +29,7 @@ class KeyStoreTest {
             id = mockKeyStoreItem.uuid,
             data = data,
             password = password,
-            address = ByteArray(20),
+            address = "67ca77ce83b9668460ab6263dc202a788443510c",
             w3wParams = SecretStorage.W3WParams("en"),
         )
         val json = Json.encodeToString(secretStorage)
@@ -63,7 +63,7 @@ class KeyStoreTest {
             id = mockKeyStoreItem.uuid,
             data = secureRand(32),
             password = password,
-            address = ByteArray(20),
+            address = "67ca77ce83b9668460ab6263dc202a788443510c",
             w3wParams = SecretStorage.W3WParams("en"),
         )
         keyStore.add(mockKeyStoreItem, password, secretStorage)
@@ -113,6 +113,14 @@ class KeyStoreTest {
 
         override fun remove(id: String, type: ServiceType) {
             store.remove(id)
+        }
+
+        override fun biometricsSupported(): Boolean {
+            return true
+        }
+
+        override fun biometricsAuthenticate(title: String, handler: (Boolean, Error?) -> Unit) {
+            TODO("Not yet implemented")
         }
     }
 }

@@ -7,7 +7,26 @@ private const val PBKDF2_ITER = 2048
 private const val PBKDF2_KEYLEN = 64
 
 /** Encapsulates bip39 standard functions */
-class Bip39(val mnemonic: List<String>, val salt: String, val worldList: WordList) {
+class Bip39 {
+
+    val mnemonic: List<String>
+    val salt: String
+    val worldList: WordList
+
+    @Throws(Exception::class)
+    constructor(mnemonic: List<String>, salt: String, worldList: WordList) {
+        this.mnemonic = mnemonics
+        this.salt = salt
+        this.worldList = worldList
+
+        if (!isValidWordsCount(mnemonic.size))
+            throw Error.InvalidMnemonicSize(mnemonic.size)
+
+        mnemonic.forEach {
+            if (worldList.indexOf(it) == -1)
+                throw Error.InvalidWord(it)
+        }
+    }
 
     /** Seed for mnemonic */
     @Throws(Exception::class) fun seed(): ByteArray {
@@ -21,10 +40,7 @@ class Bip39(val mnemonic: List<String>, val salt: String, val worldList: WordLis
     }
 
     /** Original entropy for mnemonic */
-    fun entropy(): ByteArray {
-        if (!isValidWordsSize(mnemonic.size))
-            throw Error.InvalidMnemonicSize(mnemonic.size)
-
+    @Throws(Exception::class) fun entropy(): ByteArray {
         val indexes = mnemonic.map { worldList.indexOf(it) }
         val bitArray = BooleanArray(mnemonic.size * 11)
 
@@ -42,14 +58,7 @@ class Bip39(val mnemonic: List<String>, val salt: String, val worldList: WordLis
 
     /** Valid entropy sizes */
     enum class EntropySize(val value: Int) {
-        ES128(128),
-        ES160(160),
-        ES192(192),
-        ES224(224),
-        ES256(256);
-
-        fun validWordCounts(): List<Int> = EntropySize.values()
-            .map { ceil(it.value.toFloat() / 11f).toInt() }
+        ES128(128), ES160(160), ES192(192), ES224(224), ES256(256);
     }
 
     /** Exceptions */
@@ -66,9 +75,11 @@ class Bip39(val mnemonic: List<String>, val salt: String, val worldList: WordLis
         /** Mnemonic size does not math bip39 standard */
         data class InvalidMnemonicSize(val size: Int) : Error("Mnemonic size $size does not math bip39 standard")
 
+        /** Word is not part of bip39 set */
+        data class InvalidWord(val word: String) : Error("Invalid bip39 word $word")
+
         /** Failed to generate cryptographically secure randomness */
         object SecureRandomness : Error("Failed to generate cryptographically secure randomness")
-
     }
 
     companion object {
@@ -114,8 +125,11 @@ class Bip39(val mnemonic: List<String>, val salt: String, val worldList: WordLis
             return Bip39(words, salt, worldList)
         }
 
-        fun isValidWordsSize(size: Int): Boolean = listOf(12, 15, 18, 21, 24)
-            .contains(size)
+        fun isValidWordsCount(count: Int): Boolean = validWordCounts()
+            .contains(count)
+
+        fun validWordCounts(): List<Int> = EntropySize.values()
+            .map { ceil(it.value.toFloat() / 11f).toInt() }
 
         private fun isValidEntropySize(size: Int): Boolean = EntropySize.values()
             .map { it.value / 8 }

@@ -4,7 +4,6 @@ import com.sonsofcrypto.keyvaluestore.KeyValueStore
 import kotlinx.serialization.decodeFromByteArray
 import kotlinx.serialization.encodeToByteArray
 import kotlinx.serialization.protobuf.ProtoBuf
-import kotlin.native.concurrent.ThreadLocal
 
 private val selectedKey = "selected_uuid"
 

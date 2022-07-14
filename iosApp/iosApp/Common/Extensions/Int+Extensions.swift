@@ -7,6 +7,10 @@ import Foundation
 // MARK: - suffix number
 
 extension Int {
+
+    var int32: Int32 {
+        Int32(self)
+    }
     
     var stringValue: String {
         "\(self)"

@@ -32,7 +32,7 @@ protocol MnemonicImportInteractor: AnyObject {
     func suggestions(for word: String) -> [String]
 
     /// Returns nil if mnemonic is valid
-    func mnemonicError(words: [String]) -> Error?
+    func mnemonicError(words: [String], salt: String) -> Error?
 
     /// See if passwords meets minimum specs
     func isValidPassword(password: String) -> Bool
@@ -58,6 +58,14 @@ final class DefaultMnemonicImportInteractor {
 
     private(set) var locale = "en"
 
+    private lazy  var validator: Trie = {
+        let trie = Trie()
+        WordList.english.words().forEach {
+            trie.insert(word: $0)
+        }
+        return trie
+    }()
+
     private var bip39: Bip39!
     private var keyStoreService: KeyStoreService
 
@@ -71,21 +79,24 @@ final class DefaultMnemonicImportInteractor {
 extension DefaultMnemonicImportInteractor: MnemonicImportInteractor {
 
     func suggestions(for word: String) -> [String] {
-        return []
+        return validator.wordsStartingWith(prefix: word)
     }
 
-    func mnemonicError(words: [String]) -> Error? {
-        guard [12, 15, 18, 21, 24].contains(words.count) else {
+    func mnemonicError(words: [String], salt: String) -> Error? {
+        guard Bip39.companion.isValidWordsCount(count: words.count.int32) else {
             return MnemonicImportInteractorError.invalidWordCount
         }
-//        guard Bip39.EntropySize.validWordCounts().continas(words.count) else {
-//            return MnemonicImportInteractorError.invalidWordCount
-//        }
-        return nil
+
+        do {
+            let bip39 = Bip39(mnemonic: mnemonic, salt: salt, worldList: .english)
+            let bip44 = try Bip44(seed: try bip39.seed(), version: .mainnetprv)
+            return nil
+        } catch {
+            return error
+        }
     }
 
     func createKeyStoreItem(_ password: String, salt: String) throws -> KeyStoreItem {
-        // TODO: Change for importing
         let worldList = wordList(locale)
         let bip39 = Bip39(mnemonic: mnemonic, salt: salt, worldList: worldList)
         let bip44 = try Bip44(seed: try bip39.seed(), version: .mainnetprv)
