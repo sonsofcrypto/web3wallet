@@ -1,24 +1,24 @@
-// Created by web3d4v on 06/07/2022.
+// Created by web3d4v on 14/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import UIKit
 
-protocol TokenSendView: AnyObject {
+protocol TokenSwapView: AnyObject {
 
-    func update(with viewModel: TokenSendViewModel)
+    func update(with viewModel: TokenSwapViewModel)
     func presentFeePicker(with fees: [FeesPickerViewModel])
     func dismissKeyboard()
 }
 
-final class TokenSendViewController: BaseViewController {
+final class TokenSwapViewController: BaseViewController {
 
-    var presenter: TokenSendPresenter!
+    var presenter: TokenSwapPresenter!
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var feesPickerView: FeesPickerView!
     
-    private var viewModel: TokenSendViewModel?
+    private var viewModel: TokenSwapViewModel?
     
     override func viewDidLoad() {
         
@@ -30,9 +30,9 @@ final class TokenSendViewController: BaseViewController {
     }
 }
 
-extension TokenSendViewController: TokenSendView {
+extension TokenSwapViewController: TokenSwapView {
 
-    func update(with viewModel: TokenSendViewModel) {
+    func update(with viewModel: TokenSwapViewModel) {
 
         self.viewModel = viewModel
         
@@ -51,7 +51,7 @@ extension TokenSendViewController: TokenSendView {
         
         feesPickerView.present(with: fees, onFeeSelected: makeOnFeeSelected())
         
-        let cell = collectionView.visibleCells.first { $0 is TokenSendCTACollectionViewCell } as! TokenSendCTACollectionViewCell
+        let cell = collectionView.visibleCells.first { $0 is TokenSwapCTACollectionViewCell } as! TokenSwapCTACollectionViewCell
         
         print(view.convert(cell.networkFeeButton.bounds, from: cell.networkFeeButton))
 
@@ -63,7 +63,7 @@ extension TokenSendViewController: TokenSendView {
     }
 }
 
-extension TokenSendViewController: UICollectionViewDataSource {
+extension TokenSwapViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         viewModel?.items.count ?? 0
@@ -83,27 +83,22 @@ extension TokenSendViewController: UICollectionViewDataSource {
         
         switch item {
             
-        case let .address(value):
-            
-            let cell = collectionView.dequeue(TokenSendToCollectionViewCell.self, for: indexPath)
-            cell.update(with: value, presenter: presenter)
-            return cell
         case let .token(token):
             
-            let cell = collectionView.dequeue(TokenSendTokenCollectionViewCell.self, for: indexPath)
+            let cell = collectionView.dequeue(TokenSwapTokenCollectionViewCell.self, for: indexPath)
             cell.update(with: token, presenter: presenter)
             return cell
             
         case let .send(cta):
             
-            let cell = collectionView.dequeue(TokenSendCTACollectionViewCell.self, for: indexPath)
+            let cell = collectionView.dequeue(TokenSwapCTACollectionViewCell.self, for: indexPath)
             cell.update(with: cta, presenter: presenter)
             return cell
         }
     }
 }
 
-extension TokenSendViewController: UICollectionViewDelegate {
+extension TokenSwapViewController: UICollectionViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
@@ -111,7 +106,7 @@ extension TokenSendViewController: UICollectionViewDelegate {
     }
 }
 
-private extension TokenSendViewController {
+private extension TokenSwapViewController {
     
     func configureUI() {
                 
@@ -151,7 +146,7 @@ private extension TokenSendViewController {
     }
 }
 
-private extension TokenSendViewController {
+private extension TokenSwapViewController {
     
     func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
         
@@ -239,17 +234,12 @@ private extension TokenSendViewController {
             
             switch $0 {
                 
-            case let addressCell as TokenSendToCollectionViewCell:
-                
-                guard let address = viewModel?.items.address else { return }
-                addressCell.update(with: address, presenter: presenter)
-
-            case let tokenCell as TokenSendTokenCollectionViewCell:
+            case let tokenCell as TokenSwapTokenCollectionViewCell:
                 
                 guard let token = viewModel?.items.token else { return }
                 tokenCell.update(with: token, presenter: presenter)
                 
-            case let ctaCell as TokenSendCTACollectionViewCell:
+            case let ctaCell as TokenSwapCTACollectionViewCell:
                 
                 guard let cta = viewModel?.items.send else { return }
                 ctaCell.update(with: cta, presenter: presenter)

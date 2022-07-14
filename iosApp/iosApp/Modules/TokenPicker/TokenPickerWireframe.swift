@@ -111,11 +111,7 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
         switch context.presentationStyle {
             
         case .embed:
-            guard let tabBarController = presentingIn as? TabBarController else {
-                return
-            }
-            let vcs = tabBarController.add(viewController: vc)
-            tabBarController.setViewControllers(vcs, animated: false)
+            fatalError("Not implemented")
             
         case .present:
             presentingIn.present(vc, animated: true)
@@ -188,13 +184,7 @@ private extension DefaultTokenPickerWireframe {
         switch context.presentationStyle {
         case .embed:
             
-            let navigationController = NavigationController(rootViewController: vc)
-            navigationController.tabBarItem = UITabBarItem(
-                title: Localized("apps"),
-                image: UIImage(named: "tab_icon_apps"),
-                tag: 3
-            )
-            return navigationController
+            fatalError("Not implemented")
         case .present, .push:
             
             vc.hidesBottomBarWhenPushed = true

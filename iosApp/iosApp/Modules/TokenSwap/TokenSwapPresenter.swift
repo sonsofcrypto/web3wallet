@@ -1,45 +1,42 @@
-// Created by web3d4v on 06/07/2022.
+// Created by web3d4v on 14/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import Foundation
 
-enum TokenSendPresenterEvent {
+enum TokenSwapPresenterEvent {
 
     case dismiss
-    case addressChanged(to: String)
-    case pasteAddress
     case tokenChanged(to: Double)
     case feeChanged(to: String)
-    case qrCodeScan
     case feeTapped
 }
 
-protocol TokenSendPresenter: AnyObject {
+protocol TokenSwapPresenter: AnyObject {
 
     func present()
-    func handle(_ event: TokenSendPresenterEvent)
+    func handle(_ event: TokenSwapPresenterEvent)
 }
 
-final class DefaultTokenSendPresenter {
+final class DefaultTokenSwapPresenter {
 
-    private weak var view: TokenSendView?
-    private let interactor: TokenSendInteractor
-    private let wireframe: TokenSendWireframe
-    private let context: TokenSendWireframeContext
+    private weak var view: TokenSwapView?
+    private let interactor: TokenSwapInteractor
+    private let wireframe: TokenSwapWireframe
+    private let context: TokenSwapWireframeContext
     
     private var address: String?
     private var amount: Double?
     private var fee: Web3NetworkFee = .low
     
-    private var items = [TokenSendViewModel.Item]()
+    private var items = [TokenSwapViewModel.Item]()
     private var fees = [Web3NetworkFee]()
 
     init(
-        view: TokenSendView,
-        interactor: TokenSendInteractor,
-        wireframe: TokenSendWireframe,
-        context: TokenSendWireframeContext
+        view: TokenSwapView,
+        interactor: TokenSwapInteractor,
+        wireframe: TokenSwapWireframe,
+        context: TokenSwapWireframeContext
     ) {
         self.view = view
         self.interactor = interactor
@@ -48,18 +45,12 @@ final class DefaultTokenSendPresenter {
     }
 }
 
-extension DefaultTokenSendPresenter: TokenSendPresenter {
+extension DefaultTokenSwapPresenter: TokenSwapPresenter {
 
     func present() {
         
         updateView(
             with: [
-                .address(
-                    .init(
-                        value: nil,
-                        isValid: false
-                    )
-                ),
                 .token(
                     .init(
                         tokenAmount: nil,
@@ -82,33 +73,13 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
         )
     }
 
-    func handle(_ event: TokenSendPresenterEvent) {
+    func handle(_ event: TokenSwapPresenterEvent) {
 
         switch event {
             
         case .dismiss:
             
             wireframe.dismiss()
-
-        case .qrCodeScan:
-            
-            view?.dismissKeyboard()
-            let onQRCodeScanned = makeOnQRCodeScanned()
-            wireframe.navigate(to: .qrCodeScan(onCompletion: onQRCodeScanned))
-            
-        case let .addressChanged(address):
-            
-            updateAddress(with: address)
-            
-        case .pasteAddress:
-            
-            let clipboard = UIPasteboard.general.string ?? ""
-            let isValid = interactor.isAddressValid(address: clipboard, network: context.web3Token.network)
-            guard isValid else { return }
-            updateAddress(with: interactor.addressFormattedShort(
-                address: clipboard,
-                network: context.web3Token.network)
-            )
             
         case let .tokenChanged(amount):
             
@@ -129,45 +100,18 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
     }
 }
 
-private extension DefaultTokenSendPresenter {
+private extension DefaultTokenSwapPresenter {
     
-    func updateView(with items: [TokenSendViewModel.Item]) {
+    func updateView(with items: [TokenSwapViewModel.Item]) {
         
         view?.update(
             with: .init(
-                title: Localized("tokenSend.title", arg: context.web3Token.symbol),
+                title: Localized("TokenSwap.title"),
                 items: items
             )
         )
     }
-    
-    func makeOnQRCodeScanned() -> (String) -> Void {
         
-        { [weak self] address in
-            
-            guard let self = self else { return }
-            self.updateAddress(with: address)
-        }
-    }
-    
-    func updateAddress(with address: String) {
-        
-        self.address = address
-        
-        let isValid = interactor.isAddressValid(address: address, network: context.web3Token.network)
-        
-        updateView(
-            with: [
-                .address(
-                    .init(
-                        value: address,
-                        isValid: isValid
-                    )
-                )
-            ]
-        )
-    }
-    
     func updateToken(
         with amount: Double,
         shouldUpdateTextFields: Bool
@@ -231,7 +175,7 @@ private extension DefaultTokenSendPresenter {
         }
     }
     
-    func makeFeeType() -> TokenSendViewModel.Send.FeeType {
+    func makeFeeType() -> TokenSwapViewModel.Send.FeeType {
         
         switch fee {
             
@@ -253,11 +197,11 @@ private extension Web3NetworkFee {
         
         switch self {
         case .low:
-            return Localized("tokenSend.cell.send.fee.low")
+            return Localized("TokenSwap.cell.send.fee.low")
         case .medium:
-            return Localized("tokenSend.cell.send.fee.medium")
+            return Localized("TokenSwap.cell.send.fee.medium")
         case .high:
-            return Localized("tokenSend.cell.send.fee.high")
+            return Localized("TokenSwap.cell.send.fee.high")
         }
     }
 }

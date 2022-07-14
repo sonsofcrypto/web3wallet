@@ -1,8 +1,8 @@
-// Created by web3d4v on 06/07/2022.
+// Created by web3d4v on 14/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
+final class TokenSwapTokenCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var cellBackgroundView: UIView!
     @IBOutlet weak var sendCurrencySymbol: UILabel!
@@ -16,8 +16,8 @@ final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var maxButton: Button!
     
-    private var viewModel: TokenSendViewModel.Token!
-    private weak var presenter: TokenSendPresenter!
+    private var viewModel: TokenSwapViewModel.Token!
+    private weak var presenter: TokenSwapPresenter!
     
     private var mode: Mode = .token
     
@@ -67,7 +67,7 @@ final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
         balanceLabel.font = Theme.font.footnote
         balanceLabel.textColor = Theme.colour.labelPrimary
         maxButton.style = .secondarySmall(leftImage: nil)
-        maxButton.setTitle(Localized("tokenSend.cell.max"), for: .normal)
+        maxButton.setTitle(Localized("TokenSwap.cell.max"), for: .normal)
         maxButton.addTarget(self, action: #selector(tokenMaxAmountTapped), for: .touchUpInside)
     }
     
@@ -77,11 +77,11 @@ final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension TokenSendTokenCollectionViewCell {
+extension TokenSwapTokenCollectionViewCell {
     
     func update(
-        with viewModel: TokenSendViewModel.Token,
-        presenter: TokenSendPresenter
+        with viewModel: TokenSwapViewModel.Token,
+        presenter: TokenSwapPresenter
     ) {
         
         self.viewModel = viewModel
@@ -96,7 +96,7 @@ extension TokenSendTokenCollectionViewCell {
     }
 }
 
-extension TokenSendTokenCollectionViewCell: UITextFieldDelegate {
+extension TokenSwapTokenCollectionViewCell: UITextFieldDelegate {
     
     func textField(
         _ textField: UITextField,
@@ -132,7 +132,7 @@ extension TokenSendTokenCollectionViewCell: UITextFieldDelegate {
     }
 }
 
-private extension TokenSendTokenCollectionViewCell {
+private extension TokenSwapTokenCollectionViewCell {
     
     func makeTokenClearButton() -> UIButton {
         
@@ -160,7 +160,7 @@ private extension TokenSendTokenCollectionViewCell {
     }
 }
 
-private extension TokenSendTokenCollectionViewCell {
+private extension TokenSwapTokenCollectionViewCell {
     
     @objc func tokenMaxAmountTapped() {
         
@@ -269,13 +269,13 @@ private extension TokenSendTokenCollectionViewCell {
         switch mode {
         case .token:
             balanceLabel.text = Localized(
-                "tokenSend.cell.balance",
+                "TokenSwap.cell.balance",
                 arg: viewModel.tokenMaxAmount.toString(decimals: viewModel.tokenMaxDecimals)
             )
         case .usd:
             let maxBalanceAmountUsd = viewModel.tokenMaxAmount * viewModel.currencyTokenPrice
             balanceLabel.text = Localized(
-                "tokenSend.cell.balance",
+                "TokenSwap.cell.balance",
                 arg: maxBalanceAmountUsd.formatCurrency() ?? ""
             )
         }

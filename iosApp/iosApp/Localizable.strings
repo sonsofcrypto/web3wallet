@@ -193,3 +193,5 @@
 "tokenSend.cell.send.fee.low" = "Low";
 "tokenSend.cell.send.fee.medium" = "Average";
 "tokenSend.cell.send.fee.high" = "Fast";
+
+"tokenSwap.title" = "Token Swap";
