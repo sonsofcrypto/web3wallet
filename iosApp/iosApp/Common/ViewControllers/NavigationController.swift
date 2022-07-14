@@ -34,15 +34,16 @@ final class NavigationController: UINavigationController {
         navigationBar.compactScrollEdgeAppearance = appearance
         navigationBar.tintColor = Theme.colour.navBarTint
         
-        interactivePopGestureRecognizer?.delegate = self
-        interactivePopGestureRecognizer?.isEnabled = true
+        // TODO: Review pop gesture behaviour
+        interactivePopGestureRecognizer?.delegate = nil
+        //interactivePopGestureRecognizer?.isEnabled = true
     }
 }
 
-extension NavigationController: UIGestureRecognizerDelegate {
-    
-    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-
-        true
-    }
-}
+//extension NavigationController: UIGestureRecognizerDelegate {
+//
+//    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+//
+//        true
+//    }
+//}
