@@ -103,9 +103,7 @@ private extension Button {
     }
 }
 
-// MARK: - LeftImageButton
-
-class LeftImageButton: Button {
+final class LeftImageButton: Button {
 
     var padding: CGFloat = 4
     var titleLabelXOffset: CGFloat = -4
@@ -126,8 +124,6 @@ class LeftImageButton: Button {
         )
     }
 }
-
-// MARK: - LeftImageButton
 
 final class LeftRightImageButton: Button {
 
@@ -167,14 +163,13 @@ final class LeftRightImageButton: Button {
     }
 }
 
-class VerticalButton: Button {
+final class VerticalButton: Button {
     
     override var style: Button.Style {
         
         didSet {
             
             super.style = style
-            titleLabel?.textAlignment = .center
         }
     }
 
@@ -185,13 +180,16 @@ class VerticalButton: Button {
         guard let imageView = self.imageView, let label = self.titleLabel else {
             return
         }
+        
+        backgroundColor = Theme.colour.labelTertiary
 
         imageView.center.x = bounds.width / 2
         imageView.center.y = bounds.height * 0.3333
 
         // TODO: Remove this hack. Itroduced coz color and font were on being
         // set when setting from `AccountHeaderCell`
-        label.apply(style: .caption2)
+        label.apply(style: .footnote)
+        label.textAlignment = .center
 
         label.bounds.size.width = bounds.width
         label.bounds.size.height = bounds.height * 0.3333
