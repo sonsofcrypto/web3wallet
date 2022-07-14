@@ -67,10 +67,27 @@ extension MnemonicImportViewController: MnemonicImportView {
             cv.performBatchUpdates({ cv.reloadSections(idxs) })
             return
         }
-        
+
+        updateFootersIfNeeded(viewModel)
+
         didAppear && equalSectionCnt
             ? cv.performBatchUpdates({ cv.reconfigureItems(at: cells) })
             : cv.reloadData()
+    }
+
+    func updateFootersIfNeeded(_ viewModel: MnemonicImportViewModel) {
+        guard let _ = viewModel.footers[safe: 0], let cv = collectionView else {
+            return
+        }
+
+        let kind = UICollectionView.elementKindSectionFooter
+
+        cv.indexPathsForVisibleSupplementaryElements(ofKind: kind).forEach {
+            if let sectionFooter = viewModel.footers[safe: $0.section] {
+                let footerView = cv.supplementaryView(forElementKind: kind, at: $0)
+                (footerView as? SectionLabelFooter)?.update(with: sectionFooter)
+            }
+        }
     }
 }
 

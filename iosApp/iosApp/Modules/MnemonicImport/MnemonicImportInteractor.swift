@@ -88,7 +88,7 @@ extension DefaultMnemonicImportInteractor: MnemonicImportInteractor {
         }
 
         do {
-            let bip39 = Bip39(mnemonic: mnemonic, salt: salt, worldList: .english)
+            let bip39 = try Bip39(mnemonic: mnemonic, salt: salt, worldList: .english)
             let bip44 = try Bip44(seed: try bip39.seed(), version: .mainnetprv)
             return nil
         } catch {
@@ -98,7 +98,7 @@ extension DefaultMnemonicImportInteractor: MnemonicImportInteractor {
 
     func createKeyStoreItem(_ password: String, salt: String) throws -> KeyStoreItem {
         let worldList = wordList(locale)
-        let bip39 = Bip39(mnemonic: mnemonic, salt: salt, worldList: worldList)
+        let bip39 = try Bip39(mnemonic: mnemonic, salt: salt, worldList: worldList)
         let bip44 = try Bip44(seed: try bip39.seed(), version: .mainnetprv)
         let extKey = try bip44.deviceChildKey(path: derivationPath)
         let keyStoreItem = KeyStoreItem(

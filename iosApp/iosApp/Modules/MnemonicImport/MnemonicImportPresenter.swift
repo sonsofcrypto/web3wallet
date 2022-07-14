@@ -216,28 +216,15 @@ private extension DefaultMnemonicImportPresenter {
     }
 
     func mnemonicErrorString(_ error: Error?) -> String? {
-        print("===", error)
         guard let error = error else {
             return nil
         }
 
         if let err = error as? MnemonicImportInteractorError, err == .invalidWordCount,
             interactor.mnemonic.count > 12 {
-            print("=== Invalid word count")
-            return "Invalid word count" // TODO(web3dgn) localize 🙏
         }
-
-        if let err = error as? Bip39.Error {
-            print("=== bip39", err.message)
-            return err.message
-        }
-
-        if let err = error as? KotlinError {
-            print("=== KotlinError", err.message)
-            return err.message
-        }
-        print("=== nil")
-        return nil
+        print("=== returnig", error.localizedDescription)
+        return error.localizedDescription
     }
 }
 

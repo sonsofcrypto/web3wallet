@@ -15,7 +15,7 @@ class Bip39 {
 
     @Throws(Exception::class)
     constructor(mnemonic: List<String>, salt: String, worldList: WordList) {
-        this.mnemonic = mnemonics
+        this.mnemonic = mnemonic
         this.salt = salt
         this.worldList = worldList
 
