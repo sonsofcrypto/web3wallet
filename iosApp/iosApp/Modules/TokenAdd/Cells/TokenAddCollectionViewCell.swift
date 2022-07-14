@@ -21,10 +21,10 @@ final class TokenAddCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
 
         networkDetailsView.backgroundColor = Theme.colour.labelQuaternary
-        networkDetailsView.layer.cornerRadius = Global.cornerRadius
+        networkDetailsView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
 
         tokenDetailsView.backgroundColor = Theme.colour.labelQuaternary
-        tokenDetailsView.layer.cornerRadius = Global.cornerRadius
+        tokenDetailsView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
     }
     
     @discardableResult
@@ -63,6 +63,6 @@ final class TokenAddCollectionViewCell: UICollectionViewCell {
             keyboardType: .numberPad
         )
         
-        widthLayoutConstraint.constant = width - Global.padding * 2
+        widthLayoutConstraint.constant = width - Theme.constant.padding * 2
     }
 }

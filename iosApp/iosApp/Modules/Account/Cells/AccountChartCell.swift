@@ -4,24 +4,23 @@
 
 import UIKit
 
-class AccountChartCell: CollectionViewCell {
+final class AccountChartCell: CollectionViewCell {
 
     @IBOutlet weak var candlesView: CandlesView!
 
     override func awakeFromNib() {
+        
         super.awakeFromNib()
-        layer.cornerRadius = Global.cornerRadius * 2
+        
+        layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
     }
 }
-
-// MARK: - AccountViewModel
 
 extension AccountChartCell {
 
     func update(with viewModel: CandlesViewModel?) {
-        guard let viewModel = viewModel else {
-            return
-        }
+        
+        guard let viewModel = viewModel else { return }
 
         candlesView.update(viewModel)
     }

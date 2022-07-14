@@ -6,78 +6,170 @@ import UIKit
 
 extension UILabel {
 
-    convenience init(with style: UILabel.Style) {
+    convenience init(
+        with style: UILabel.Style,
+        weight: UILabel.Weight = .regular,
+        colour: UIColor = Theme.colour.labelPrimary
+    ) {
         self.init()
-        self.applyStyle(style)
+        
+        self.apply(
+            style: style,
+            weight: weight,
+            colour: colour
+        )
     }
 
     enum Style {
-        case navTitle
-        case headlineGlow
-        case callout
-        case subhead
-        case subheadGlow
+        
+        case largeTitle
+        case title1
+        case title2
+        case title3
+        case headline
+        case subheadline
         case body
-        case bodyGlow
-        case smallLabel
-        case smallerLabel
-        case smallestLabel
-        case smallestLabelGlow
-        case smallBody
+        case callout
+        case caption1
+        case caption2
+        case footnote
+        case navTitle
+        case tabBar
+        case networkTitle
+        case dashboardSectionFuel
+        case dashboardTVBalance
+        case dashboardTVSymbol
+        case dashboardTVPct
+        case dashboardTVTokenBalance
+    }
+    
+    enum Weight {
+        case regular
+        case bold
     }
 
-    func applyStyle(_ style: Style) {
+    func apply(
+        style: Style,
+        weight: UILabel.Weight = .regular,
+        colour: UIColor = Theme.colour.labelPrimary
+    ) {
+        
         switch style {
+            
+        case .largeTitle:
+            switch weight {
+            case .regular:
+                font = Theme.font.largeTitle
+            case .bold:
+                font = Theme.font.largeTitleBold
+            }
+        case .title1:
+            switch weight {
+            case .regular:
+                font = Theme.font.title1
+            case .bold:
+                font = Theme.font.title1Bold
+            }
+            
+        case .title2:
+            switch weight {
+            case .regular:
+                font = Theme.font.title2
+            case .bold:
+                font = Theme.font.title2Bold
+            }
+            
+        case .title3:
+            switch weight {
+            case .regular:
+                font = Theme.font.title3
+            case .bold:
+                font = Theme.font.title3Bold
+            }
+            
+        case .headline:
+            switch weight {
+            case .regular:
+                font = Theme.font.headline
+            case .bold:
+                font = Theme.font.headlineBold
+            }
+            
+        case .subheadline:
+            switch weight {
+            case .regular:
+                font = Theme.font.subheadline
+            case .bold:
+                font = Theme.font.subheadlineBold
+            }
+            
+        case .body:
+            switch weight {
+            case .regular:
+                font = Theme.font.body
+            case .bold:
+                font = Theme.font.bodyBold
+            }
+            
+        case .callout:
+            switch weight {
+            case .regular:
+                font = Theme.font.callout
+            case .bold:
+                font = Theme.font.calloutBold
+            }
+            
+        case .caption1:
+            switch weight {
+            case .regular:
+                font = Theme.font.caption1
+            case .bold:
+                font = Theme.font.caption1Bold
+            }
+            
+        case .caption2:
+            switch weight {
+            case .regular:
+                font = Theme.font.caption2
+            case .bold:
+                font = Theme.font.caption2Bold
+            }
+            
+        case .footnote:
+            switch weight {
+            case .regular:
+                font = Theme.font.footnote
+            case .bold:
+                font = Theme.font.footnoteBold
+            }
+            
         case .navTitle:
             font = Theme.font.navTitle
-            textColor = Theme.colour.fillPrimary
-        case .headlineGlow:
-            font = Theme.font.headline
-            layer.applyShadow(Theme.colour.fillSecondary)
-            textColor = Theme.colour.labelPrimary
-        case .callout:
-            font = Theme.font.callout
-            layer.applyShadow(Theme.colour.fillSecondary)
-            textColor = Theme.colour.labelPrimary
-            update(lineSpacing: 6)
-        case .subhead:
-            font = Theme.font.subheadline
-            textColor = Theme.colour.labelSecondary
-        case .subheadGlow:
-            font = Theme.font.subheadline
-            layer.applyShadow(Theme.colour.fillSecondary)
-            textColor = Theme.colour.labelPrimary
-            font = Theme.font.subheadline
-            layer.applyShadow(Theme.colour.fillSecondary)
-            textColor = Theme.colour.labelPrimary
-        case .body:
-            font = Theme.font.body
-            textColor = Theme.colour.labelPrimary
-            update(lineSpacing: 8)
-        case .bodyGlow:
-            font = Theme.font.body
-            layer.applyShadow(Theme.colour.fillSecondary)
-            textColor = Theme.colour.labelPrimary
-        case.smallLabel:
-            font = Theme.font.footnote
-            textColor = Theme.colour.labelTertiary
-        case.smallerLabel:
-            font = UIFont.font(.gothicA1, style: .medium, size: .caption1)
-            textColor = Theme.colour.labelSecondary
-        case.smallestLabel:
-            font = UIFont.font(.gothicA1, style: .medium, size: .caption2)
-            textColor = Theme.colour.labelTertiary
-        case.smallestLabelGlow:
-            layer.applyShadow(
-                Theme.colour.fillSecondary,
-                radius: Global.shadowRadius / 2
-            )
-            font = Theme.font.caption2
-            textColor = Theme.colour.fillSecondary
-        case .smallBody:
-            font = Theme.font.footnote
-            textColor = Theme.colour.labelSecondary
+            
+        case .tabBar:
+            font = Theme.font.tabBar
+            
+        case .networkTitle:
+            font = Theme.font.networkTitle
+            
+        case .dashboardSectionFuel:
+            font = Theme.font.dashboardSectionFuel
+            
+        case .dashboardTVBalance:
+            font = Theme.font.dashboardTVBalance
+            
+        case .dashboardTVSymbol:
+            font = Theme.font.dashboardTVSymbol
+            
+        case .dashboardTVPct:
+            font = Theme.font.dashboardTVPct
+            
+        case .dashboardTVTokenBalance:
+            font = Theme.font.dashboardTVTokenBalance
+            
         }
+        
+        textColor = colour
     }
 }
 

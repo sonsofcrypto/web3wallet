@@ -13,7 +13,7 @@ extension NFTDetailViewController {
         view.addSubview(content)
         content.addConstraints(.toEdges)
         
-        view.layer.cornerRadius = Global.cornerRadius
+        view.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         view.layer.borderWidth = 1
         view.layer.borderColor = Theme.colour.fillTertiary.cgColor
 
@@ -27,23 +27,23 @@ private extension NFTDetailViewController {
         
         let vStack = VStackView()
         
-        vStack.addArrangedSubview(.vSpace(height: Global.padding))
+        vStack.addArrangedSubview(.vSpace(height: Theme.constant.padding))
         
         let sectionTitle = makeSectionTextInHorizontalStack(
             with: Localized("nft.detail.section.title.description")
         )
         vStack.addArrangedSubview(sectionTitle)
         
-        vStack.addArrangedSubview(.vSpace(height: Global.padding))
+        vStack.addArrangedSubview(.vSpace(height: Theme.constant.padding))
         vStack.addArrangedSubview(
             .dividerLine(backgroundColor: Theme.colour.fillTertiary)
         )
-        vStack.addArrangedSubview(.vSpace(height: Global.padding))
+        vStack.addArrangedSubview(.vSpace(height: Theme.constant.padding))
         
         let sectionContent = makeTextInHorizontalStack(with: description)
         vStack.addArrangedSubview(sectionContent)
 
-        vStack.addArrangedSubview(.vSpace(height: Global.padding))
+        vStack.addArrangedSubview(.vSpace(height: Theme.constant.padding))
                 
         return vStack
     }
@@ -52,16 +52,16 @@ private extension NFTDetailViewController {
         
         let hStack = HStackView()
         
-        hStack.addArrangedSubview(.hSpace(value: Global.padding))
+        hStack.addArrangedSubview(.hSpace(value: Theme.constant.padding))
         
         let label = UILabel()
         label.text = text
         label.textColor = Theme.colour.labelPrimary
         label.numberOfLines = 0
-        label.applyStyle(.body)
+        label.apply(style: .body)
         hStack.addArrangedSubview(label)
 
-        hStack.addArrangedSubview(.hSpace(value: Global.padding))
+        hStack.addArrangedSubview(.hSpace(value: Theme.constant.padding))
         
         return hStack
     }

@@ -11,14 +11,14 @@ class CultProposalVoteView: UIView {
         didSet { setNeedsLayout() }
     }
 
-    private lazy var textLabel: UILabel = UILabel(with: .smallLabel)
-    private lazy var pctLabel: UILabel = UILabel(with: .smallLabel)
+    private lazy var textLabel: UILabel = UILabel(with: .callout)
+    private lazy var pctLabel: UILabel = UILabel(with: .callout)
 
     private lazy var progressView: UIView = {
         let view = UIView(frame: bounds)
         view.backgroundColor = Theme.colour.fillTertiary
         view.layer.applyBorder(Theme.colour.fillTertiary)
-        view.layer.cornerRadius = Global.cornerRadius
+        view.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         insertSubview(view, at: 0)
         return view
     }()
@@ -33,7 +33,7 @@ class CultProposalVoteView: UIView {
         super.awakeFromNib()
         backgroundColor = Theme.colour.backgroundBaseSecondary
         layer.applyBorder(Theme.colour.fillTertiary)
-        layer.cornerRadius = Global.cornerRadius
+        layer.cornerRadius = Theme.constant.cornerRadiusSmall
     }
 
     func update(title: String, pct: Float) {
@@ -44,7 +44,7 @@ class CultProposalVoteView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        stack.frame = bounds.insetBy(dx: Global.padding, dy: 0)
+        stack.frame = bounds.insetBy(dx: Theme.constant.padding, dy: 0)
         progressView.frame = CGRect(
             origin: .zero,
             size: CGSize(

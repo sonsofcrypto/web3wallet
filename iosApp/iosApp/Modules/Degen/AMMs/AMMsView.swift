@@ -26,7 +26,7 @@ final class AMMsViewController: BaseViewController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        let length = (view.bounds.width - Global.padding * 2 - Constant.spacing) / 2
+        let length = (view.bounds.width - Theme.constant.padding * 2 - Constant.spacing) / 2
         cellSize = CGSize(width: length, height: length)
     }
     
@@ -89,8 +89,8 @@ extension AMMsViewController {
         ]
 
         var insets = collectionView.contentInset
-        insets.top += Global.padding
-        insets.bottom += Global.padding
+        insets.top += Theme.constant.padding
+        insets.bottom += Theme.constant.padding
         collectionView.contentInset = insets
     }
 }

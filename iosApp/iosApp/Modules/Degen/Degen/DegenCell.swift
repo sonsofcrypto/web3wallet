@@ -12,8 +12,8 @@ final class DegenCell: CollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        titleLabel.applyStyle(.callout)
-        subTitleLabel.applyStyle(.subhead)
+        titleLabel.apply(style: .callout)
+        subTitleLabel.apply(style: .subheadline)
     }
 }
 

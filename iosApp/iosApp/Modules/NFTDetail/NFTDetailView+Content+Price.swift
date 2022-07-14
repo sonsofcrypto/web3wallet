@@ -19,7 +19,7 @@ extension NFTDetailViewController {
     func makeEthPriceContent(with item: NFTItem) -> UIView {
         
         let hStackView = HStackView()
-        hStackView.spacing = Global.padding * 0.5
+        hStackView.spacing = Theme.constant.padding * 0.5
         
         let iconImage = UIImageView(image: UIImage(named: "ethereum-icon"))
         iconImage.tintColor = Theme.colour.systemRed
@@ -31,7 +31,7 @@ extension NFTDetailViewController {
         )
         hStackView.addArrangedSubview(iconImage)
         
-        let ethPrice = UILabel(with: .headlineGlow)
+        let ethPrice = UILabel(with: .headline)
         ethPrice.textAlignment = .center
         ethPrice.text = "\(item.ethPrice)"
         

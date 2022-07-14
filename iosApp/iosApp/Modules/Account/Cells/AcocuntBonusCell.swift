@@ -7,14 +7,15 @@ import UIKit
 final class AccountBonusCell: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var chevronImage: UIImageView!
     
     override func awakeFromNib() {
+        
         super.awakeFromNib()
-        titleLabel.applyStyle(.callout)
-        layer.cornerRadius = Global.cornerRadius * 2
-    }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
+        
+        titleLabel.apply(style: .callout)
+        layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
+        
+        chevronImage.tintColor = Theme.colour.labelPrimary
     }
 }

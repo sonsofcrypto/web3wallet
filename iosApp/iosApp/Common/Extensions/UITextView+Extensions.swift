@@ -70,7 +70,7 @@ extension UITextView {
         case.smallestLabelGlow:
             layer.applyShadow(
                 Theme.colour.fillSecondary,
-                radius: Global.shadowRadius / 2
+                radius: Theme.constant.cornerRadiusSmall.half / 2
             )
             font = Theme.font.caption2
             textColor = Theme.colour.fillSecondary

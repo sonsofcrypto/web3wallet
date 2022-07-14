@@ -24,7 +24,7 @@ final class SwitchTextInputCollectionViewCell: CollectionViewCell {
 
     func configureUI() {
         
-        titleLabel.applyStyle(.bodyGlow)
+        titleLabel.apply(style: .body)
         textField.delegate = self
 
         descriptionLabel.addGestureRecognizer(

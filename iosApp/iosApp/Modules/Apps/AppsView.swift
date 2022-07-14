@@ -120,7 +120,7 @@ extension AppsViewController: UICollectionViewDelegateFlowLayout {
         
         .init(
             width: collectionView.frame.width,
-            height: Global.cellHeight
+            height: Theme.constant.cellHeight
         )
     }
 }
@@ -130,10 +130,5 @@ private extension AppsViewController {
     func configureUI() {
         
         title = Localized("apps")
-
-        (view as? GradientView)?.colors = [
-            Theme.colour.backgroundBaseSecondary,
-            Theme.colour.backgroundBasePrimary
-        ]
     }
 }

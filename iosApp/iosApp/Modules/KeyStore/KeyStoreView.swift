@@ -170,13 +170,13 @@ extension KeyStoreViewController: UICollectionViewDelegateFlowLayout {
         
         if collectionView == buttonsCollectionView {
             return CGSize(
-                width: view.bounds.width - Global.padding * 2,
+                width: view.bounds.width - Theme.constant.padding * 2,
                 height: Theme.constant.buttonPrimaryHeight
             )
         }
         return CGSize(
-            width: view.bounds.width - Global.padding * 2,
-            height: Global.cellHeight
+            width: view.bounds.width - Theme.constant.padding * 2,
+            height: Theme.constant.cellHeight
         )
     }
 }
@@ -191,7 +191,7 @@ extension KeyStoreViewController {
         
         configureInsets()
         
-        buttonBackgroundView.layer.cornerRadius = Global.cornerRadius * 2
+        buttonBackgroundView.layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
         buttonBackgroundView.layer.maskedCorners = [
             .layerMaxXMinYCorner,
             .layerMinXMinYCorner
@@ -264,7 +264,7 @@ extension KeyStoreViewController {
     func configureInsets() {
         let inset = view.bounds.height
             - Theme.constant.buttonPrimaryHeight * 3
-            - Global.padding * 4
+            - Theme.constant.padding * 4
             - buttonsCollectionView.safeAreaInsets.top
             + 2
         buttonsCollectionView.contentInset.top = inset
@@ -283,9 +283,9 @@ extension KeyStoreViewController {
         let top = topCell.convert(topCell.bounds.minXminY, to: view)
         buttonBackgroundView.frame = CGRect(
             x: 0,
-            y: top.y - Global.padding * 2,
+            y: top.y - Theme.constant.padding * 2,
             width: view.bounds.width,
-            height: view.bounds.height - top.y + Global.padding * 2
+            height: view.bounds.height - top.y + Theme.constant.padding * 2
         )
 
         if let cv = buttonsCollectionView {

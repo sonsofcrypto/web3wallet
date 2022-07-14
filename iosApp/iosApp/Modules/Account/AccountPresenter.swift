@@ -76,17 +76,17 @@ private extension DefaultAccountPresenter {
                 buttons: [
                     .init(
                         title: Localized("receive"),
-                        imageName: "button_receive",
+                        imageName: "receive-button",
                         onTap: makeOnReceieveTap()
                     ),
                     .init(
                         title: Localized("send"),
-                        imageName: "button_send",
+                        imageName: "arrow.forward",
                         onTap: makeOnSendTap()
                     ),
                     .init(
                         title: Localized("trade"),
-                        imageName: "button_trade",
+                        imageName: "trade-button",
                         onTap: makeOnSwapTap()
                     ),
                     .init(

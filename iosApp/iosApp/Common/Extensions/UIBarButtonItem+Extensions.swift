@@ -22,7 +22,7 @@ extension UIBarButtonItem {
 
     static func glowLabel(_ title: String = "") -> UIBarButtonItem {
         
-        let label = UILabel(with: .subheadGlow)
+        let label = UILabel(with: .subheadline)
         label.font = UIFont.font(.gothicA1, style: .regular, size: .caption1)
         return UIBarButtonItem(customView: label)
     }

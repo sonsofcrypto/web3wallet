@@ -12,8 +12,8 @@ final class AMMsCell: CollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        titleLabel.applyStyle(.headlineGlow)
-        subTitleLabel.applyStyle(.smallestLabel)
+        titleLabel.apply(style: .headline)
+        subTitleLabel.apply(style: .callout)
     }
 }
 

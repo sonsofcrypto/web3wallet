@@ -17,7 +17,7 @@ final class NetworkPickerItemCell: UICollectionViewCell {
         iconImageView.layer.cornerRadius = iconImageView.frame.size.width * 0.5
         iconImageView.backgroundColor = Theme.colour.labelPrimary
                         
-        nameLabel.applyStyle(.body)
+        nameLabel.apply(style: .body)
         nameLabel.textColor = Theme.colour.labelPrimary
     }
 

@@ -82,7 +82,7 @@ private extension DefaultAlertView {
         
         let alertView = UIView()
         alertView.backgroundColor = Theme.colour.backgroundBaseSecondary
-        alertView.layer.cornerRadius = Global.cornerRadius
+        alertView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         alertView.layer.borderWidth = 1
         alertView.layer.borderColor = Theme.colour.fillTertiary.cgColor
         
@@ -143,7 +143,7 @@ private extension DefaultAlertView {
         
         guard let message = message else { return [] }
         
-        let label = UILabel(with: .bodyGlow)
+        let label = UILabel(with: .body)
         label.text = message
         label.numberOfLines = 0
         
@@ -211,7 +211,7 @@ private extension DefaultAlertView {
         
         actions.forEach { item in
             
-            let label = UILabel(with: .bodyGlow)
+            let label = UILabel(with: .body)
             label.text = item.title
             label.textAlignment = .center
             

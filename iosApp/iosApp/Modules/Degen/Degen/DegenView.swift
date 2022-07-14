@@ -86,14 +86,14 @@ extension DegenViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(
-            width: view.bounds.width - Global.padding * 2,
+            width: view.bounds.width - Theme.constant.padding * 2,
             height: Constant.cellHeight
         )
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(
-            width: view.bounds.width - Global.padding * 2,
+            width: view.bounds.width - Theme.constant.padding * 2,
             height: Constant.headerHeight
         )
     }
@@ -114,7 +114,7 @@ extension DegenViewController {
         navigationItem.backButtonTitle = ""
 
         var insets = collectionView.contentInset
-        insets.bottom += Global.padding
+        insets.bottom += Theme.constant.padding
         collectionView.contentInset = insets
 
         let overScrollView = (collectionView as? CollectionView)

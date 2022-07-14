@@ -36,7 +36,7 @@ final class MnemonicUpdateCell: UICollectionViewCell {
         textView.isUserInteractionEnabled = false
 
         overlay.isHidden = false
-        overlay.layer.cornerRadius = Global.cornerRadius
+        overlay.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         overlay.clipsToBounds = true
         overlayLabel.text = Localized("newMnemonic.tapToReveal")
         overlayLabel.font = Theme.font.body
@@ -104,7 +104,7 @@ private extension MnemonicUpdateCell {
     func textShadow(_ tint: UIColor) -> NSShadow {
         let shadow = NSShadow()
         shadow.shadowOffset = .zero
-        shadow.shadowBlurRadius = Global.shadowRadius
+        shadow.shadowBlurRadius = Theme.constant.cornerRadiusSmall.half
         shadow.shadowColor = tint
         return shadow
     }

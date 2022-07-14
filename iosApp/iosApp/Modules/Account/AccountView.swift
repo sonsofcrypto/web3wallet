@@ -19,16 +19,11 @@ final class AccountViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
         configureUI()
         presenter?.present()
-    }
-}
-
-extension AccountViewController {
-
-    @IBAction func dismissAction(_ sender: Any) {
-        dismiss(animated: true)
     }
 }
 
@@ -37,8 +32,9 @@ extension AccountViewController: AccountView {
     func update(with viewModel: AccountViewModel) {
         
         self.viewModel = viewModel
-        collectionView.reloadData()
+        
         title = viewModel.currencyName
+        collectionView.reloadData()
 
         let btnLabel = (navigationItem.rightBarButtonItem?.customView as? UILabel)
         btnLabel?.text = viewModel.header.pct
@@ -54,11 +50,19 @@ extension AccountViewController: UICollectionViewDataSource {
         Section.all().count
     }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        
         Section(rawValue: section)?.cellCount(viewModel) ?? 0
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        
         switch Section(rawValue: indexPath.section)! {
         case .header:
             let cell = collectionView.dequeue(AccountHeaderCell.self, for: indexPath)
@@ -93,7 +97,12 @@ extension AccountViewController: UICollectionViewDataSource {
         }
     }
 
-    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        
         if kind == UICollectionView.elementKindSectionHeader {
             let supplementary = collectionView.dequeue(
                 AccountSectionHeader.self,
@@ -114,7 +123,7 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
             return .zero
         }
 
-        let width = view.bounds.width - Global.padding * 2
+        let width = view.bounds.width - Theme.constant.padding * 2
 
         switch section {
         case .header:
@@ -128,23 +137,33 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
         }
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+    ) -> CGSize {
+        
         guard let section = Section(rawValue: section), section == .transactions else {
             return .zero
         }
 
         return CGSize(
-            width: view.bounds.width - Global.padding * 2,
+            width: view.bounds.width - Theme.constant.padding * 2,
             height: Constant.sectionHeaderHeight
         )
     }
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        
         guard let section = Section(rawValue: section), section == .marketInfo else {
             return 0
         }
 
-        return Global.padding
+        return Theme.constant.padding
     }
 }
 
@@ -196,27 +215,28 @@ extension AccountViewController {
     }
 }
 
-extension AccountViewController {
+private extension AccountViewController {
     
     func configureUI() {
+        
         title = Localized("wallets")
-        (view as? GradientView)?.colors = [
-            Theme.colour.backgroundBaseSecondary,
-            Theme.colour.backgroundBasePrimary
-        ]
 
         navigationItem.rightBarButtonItem = UIBarButtonItem.glowLabel()
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "arrow_back"),
+            image: .init(systemName: "chevron.left"),
             style: .plain,
             target: self,
             action: #selector(dismissAction(_:))
         )
-        navigationItem.leftBarButtonItem?.tintColor  = Theme.colour.fillPrimary
 
         var insets = collectionView.contentInset
-        insets.bottom += Global.padding
+        insets.bottom += Theme.constant.padding
         collectionView.contentInset = insets
+    }
+    
+    @objc func dismissAction(_ sender: Any) {
+        
+        dismiss(animated: true)
     }
 }
 
@@ -226,7 +246,7 @@ extension AccountViewController {
         static let headerHeight: CGFloat = 172
         static let chartHeight: CGFloat = 162
         static let marketInfoHeight: CGFloat = 71
-        static let transactionsHeight: CGFloat = 64
+        static let transactionsHeight: CGFloat = 72
         static let sectionHeaderHeight: CGFloat = 24
     }
 }

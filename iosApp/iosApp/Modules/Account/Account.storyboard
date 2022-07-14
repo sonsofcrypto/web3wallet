@@ -245,6 +245,7 @@
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="343" height="64"/>
                                         <connections>
+                                            <outlet property="chevronImage" destination="YPe-sg-Ew9" id="FqK-Ik-9fn"/>
                                             <outlet property="titleLabel" destination="3Kg-Gn-0Lf" id="gDb-E3-vpv"/>
                                         </connections>
                                     </collectionViewCell>

@@ -16,7 +16,7 @@ final class SettingCell: CollectionViewCell {
         titleLabel.font = Theme.font.callout
         titleLabel.layer.shadowColor = Theme.colour.fillSecondary.cgColor
         titleLabel.layer.shadowOffset = .zero
-        titleLabel.layer.shadowRadius = Global.shadowRadius
+        titleLabel.layer.shadowRadius = Theme.constant.cornerRadiusSmall.half
         titleLabel.layer.shadowOpacity = 1
     }
 }

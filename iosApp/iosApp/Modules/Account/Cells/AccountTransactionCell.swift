@@ -4,33 +4,34 @@
 
 import UIKit
 
-class AccountTransactionCell: CollectionViewCell {
+final class AccountTransactionCell: CollectionViewCell {
 
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
 
     override func awakeFromNib() {
+        
         super.awakeFromNib()
-        dateLabel.applyStyle(.smallerLabel)
-        addressLabel.applyStyle(.smallerLabel)
-        addressLabel.textColor = Theme.colour.labelTertiary
-        amountLabel.applyStyle(.subheadGlow)
-        layer.cornerRadius = Global.cornerRadius * 2
+        
+        dateLabel.apply(style: .callout)
+        addressLabel.apply(style: .callout)
+        addressLabel.textColor = Theme.colour.labelSecondary
+        amountLabel.apply(style: .subheadline)
+        layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
     }
 }
-
-// MARK: - AccountViewModel
 
 extension AccountTransactionCell {
 
     func update(with viewModel: AccountViewModel.Transaction?) {
+        
         dateLabel.text = viewModel?.date
         amountLabel.text = viewModel?.amount
         addressLabel.text = viewModel?.address
         amountLabel.textColor = (viewModel?.isReceive ?? false)
             ? Theme.colour.systemGreen
             : Theme.colour.systemRed
-        amountLabel.layer.shadowColor = amountLabel.textColor.cgColor
+        //amountLabel.layer.shadowColor = amountLabel.textColor.cgColor
     }
 }
