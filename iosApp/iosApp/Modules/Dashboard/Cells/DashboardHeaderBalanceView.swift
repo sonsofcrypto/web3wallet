@@ -9,8 +9,7 @@ final class DashboardHeaderBalanceView: UICollectionReusableView {
     private lazy var label: UILabel = {
         
         let label = UILabel()
-        label.font = Theme.font.largeTitleBold
-        label.textColor = Theme.colour.labelPrimary
+        label.apply(style: .largeTitle, weight: .bold)
         label.textAlignment = .center
         self.addSubview(label)
         label.addConstraints(

@@ -41,32 +41,6 @@ extension UILabel {
         case dashboardTVSymbol
         case dashboardTVPct
         case dashboardTVTokenBalance
-        
-//        case largeTitle
-//        case title1
-//        case title2
-//        case title3
-//        case headline
-//        case body
-//        case callout
-//        case subhead
-//        case footnote
-//        case caption1
-//        case caption2
-//
-//
-        
-//        case headlineGlow
-//        case callout
-//        case subhead
-//        case subheadGlow
-//        case body
-//        case bodyGlow
-//        case smallLabel
-//        case smallerLabel
-//        case smallestLabel
-//        case smallestLabelGlow
-//        case smallBody
     }
     
     enum Weight {
@@ -77,8 +51,7 @@ extension UILabel {
     func apply(
         style: Style,
         weight: UILabel.Weight = .regular,
-        colour: UIColor = Theme.colour.labelPrimary//,
-        //glowEffect: Bool = false
+        colour: UIColor = Theme.colour.labelPrimary
     ) {
         
         switch style {
@@ -197,10 +170,6 @@ extension UILabel {
         }
         
         textColor = colour
-            
-//        if glowEffect {
-//            layer.applyShadow(Theme.colour.fillSecondary)
-//        }
     }
 }
 

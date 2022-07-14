@@ -20,14 +20,8 @@ final class AccountHeaderCell: UICollectionViewCell {
         
         super.awakeFromNib()
         
-        balanceLabel.textColor = Theme.colour.labelPrimary
-        balanceLabel.font = Theme.font.largeTitle
+        balanceLabel.apply(style: .largeTitle)
         balanceFiatLabel.apply(style: .subheadline)
-        balanceFiatLabel.font = UIFont.font(
-            .gothicA1,
-            style: .regular,
-            size: .custom(size: 15)
-        )
         containerStack.setCustomSpacing(0, after: balanceLabel)
         containerStack.setCustomSpacing(
             0,
