@@ -41,20 +41,20 @@ extension TokenSendCTACollectionViewCell {
         
         switch viewModel.buttonState {
         case .ready:
-            button.setTitle(Localized("tokenSend.cell.send.ready"), for: .normal)
+            button.setTitle(Localized("ready"), for: .normal)
         case .insufficientFunds:
-            button.setTitle(Localized("tokenSend.cell.send.insufficientFunds"), for: .normal)
+            button.setTitle(Localized("insufficientFunds"), for: .normal)
         }
         
         networkEstimateFeeLabel.text = viewModel.estimatedFee
         
         switch viewModel.feeType {
         case .low:
-            networkFeeButton.setTitle(Localized("tokenSend.cell.send.fee.low"), for: .normal)
+            networkFeeButton.setTitle(Localized("low"), for: .normal)
         case .medium:
-            networkFeeButton.setTitle(Localized("tokenSend.cell.send.fee.medium"), for: .normal)
+            networkFeeButton.setTitle(Localized("medium"), for: .normal)
         case .high:
-            networkFeeButton.setTitle(Localized("tokenSend.cell.send.fee.high"), for: .normal)
+            networkFeeButton.setTitle(Localized("high"), for: .normal)
         }
     }
 }

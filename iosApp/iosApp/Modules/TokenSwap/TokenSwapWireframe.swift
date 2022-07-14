@@ -7,12 +7,12 @@ import UIKit
 struct TokenSwapWireframeContext {
     
     let presentationStyle: PresentationStyle
-    let web3Token: Web3Token
+    let tokenFrom: Web3Token?
+    let tokenTo: Web3Token?
 }
 
 enum TokenSwapWireframeDestination {
     
-    case qrCodeScan(onCompletion: (String) -> Void)
 }
 
 protocol TokenSwapWireframe {
@@ -65,19 +65,6 @@ extension DefaultTokenSwapWireframe: TokenSwapWireframe {
     
     func navigate(to destination: TokenSwapWireframeDestination) {
         
-        switch destination {
-        case let .qrCodeScan(onCompletion):
-            
-            let wireframe = qrCodeScanWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
-                context: .init(
-                    presentationStyle: .push,
-                    type: .network(context.web3Token.network),
-                    onCompletion: onCompletion
-                )
-            )
-            wireframe.present()
-        }
     }
     
     func dismiss() {

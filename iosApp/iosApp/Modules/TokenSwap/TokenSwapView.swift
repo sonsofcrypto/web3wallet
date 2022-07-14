@@ -83,10 +83,10 @@ extension TokenSwapViewController: UICollectionViewDataSource {
         
         switch item {
             
-        case let .token(token):
+        case let .swap(swap):
             
             let cell = collectionView.dequeue(TokenSwapTokenCollectionViewCell.self, for: indexPath)
-            cell.update(with: token, presenter: presenter)
+            cell.update(with: swap, handler: makeTokenSwapHandler())
             return cell
             
         case let .send(cta):
@@ -159,16 +159,10 @@ private extension TokenSwapViewController {
             case 0:
                 return self.makeCollectionLayoutSection(
                     sectionIndex: sectionIndex,
-                    withCellHeight: Theme.constant.cellHeightSmall
+                    withCellHeight: self.makeSwapCellHeight()
                 )
                 
             case 1:
-                return self.makeCollectionLayoutSection(
-                    sectionIndex: sectionIndex,
-                    withCellHeight: self.makeTokenCellHeight()
-                )
-                
-            case 2:
                 return self.makeCollectionLayoutSection(
                     sectionIndex: sectionIndex,
                     withCellHeight: self.makeCTACellHeight()
@@ -180,15 +174,22 @@ private extension TokenSwapViewController {
         }
     }
     
-    func makeTokenCellHeight() -> CGFloat { 80 }
+    func makeSwapCellHeight() -> CGFloat {
+        var height: CGFloat = 0
+        
+        height += 80
+        height += 4
+        height += 24
+        height += 4
+        height += 80
+        
+        return height
+    }
     
     func makeCTACellHeight() -> CGFloat {
         
         var height: CGFloat = 0
         
-        //height += Theme.constant.cellHeightSmall
-        //height += Theme.constant.padding
-        //height += 36 // fees view
         height += 118
         
         return height
@@ -236,8 +237,8 @@ private extension TokenSwapViewController {
                 
             case let tokenCell as TokenSwapTokenCollectionViewCell:
                 
-                guard let token = viewModel?.items.token else { return }
-                tokenCell.update(with: token, presenter: presenter)
+                guard let swap = viewModel?.items.swap else { return }
+                tokenCell.update(with: swap, handler: makeTokenSwapHandler())
                 
             case let ctaCell as TokenSwapCTACollectionViewCell:
                 
@@ -248,6 +249,32 @@ private extension TokenSwapViewController {
                 
                 fatalError()
             }
+        }
+    }
+    
+    func makeTokenSwapHandler() -> TokenSwapTokenCollectionViewCell.Handler {
+        
+        .init(
+            onTokenFromAmountChanged: makeOnTokenFromAmountChanged(),
+            onTokenToAmountChanged: makeOnTokenToAmountChanged()
+        )
+    }
+    
+    func makeOnTokenFromAmountChanged() -> (Double) -> Void {
+        
+        {
+            [weak self] amount in
+            guard let self = self else { return }
+            self.presenter.handle(.tokenFromChanged(to: amount))
+        }
+    }
+    
+    func makeOnTokenToAmountChanged() -> (Double) -> Void {
+        
+        {
+            [weak self] amount in
+            guard let self = self else { return }
+            self.presenter.handle(.tokenToChanged(to: amount))
         }
     }
 }

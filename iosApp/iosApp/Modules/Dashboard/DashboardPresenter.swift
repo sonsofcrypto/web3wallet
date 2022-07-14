@@ -7,7 +7,7 @@ import Foundation
 enum DashboardPresenterEvent {
     case receiveAction
     case sendAction
-    case tradeAction
+    case swapAction
     case walletConnectionSettingsAction
     case didTapCollapse(network: String)
     case didTapExpand(network: String)
@@ -106,6 +106,10 @@ extension DefaultDashboardPresenter: DashboardPresenter {
                     onCompletion: makeOnEditTokensCompletion()
                 )
             )
+            
+        case .swapAction:
+            
+            wireframe.navigate(to: .tokenSwap)
             
         default:
             print("Handle \(event)")

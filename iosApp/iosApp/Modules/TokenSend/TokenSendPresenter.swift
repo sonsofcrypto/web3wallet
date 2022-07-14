@@ -253,11 +253,11 @@ private extension Web3NetworkFee {
         
         switch self {
         case .low:
-            return Localized("tokenSend.cell.send.fee.low")
+            return Localized("low")
         case .medium:
-            return Localized("tokenSend.cell.send.fee.medium")
+            return Localized("medium")
         case .high:
-            return Localized("tokenSend.cell.send.fee.high")
+            return Localized("high")
         }
     }
 }

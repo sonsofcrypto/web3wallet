@@ -141,7 +141,7 @@ private extension SwitchTextInputCollectionViewCell {
         onOffSwitch.setOn(onOff, animated: false)
         textField.text = text
 
-        (textField as? TextField)?.placeholderAttrText = placeholder
+        textField.placeholderAttrText = placeholder
 
         let attrStr = NSMutableAttributedString(
             string: description,

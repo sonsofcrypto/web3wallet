@@ -7,7 +7,8 @@ import Foundation
 enum TokenSwapPresenterEvent {
 
     case dismiss
-    case tokenChanged(to: Double)
+    case tokenFromChanged(to: Double)
+    case tokenToChanged(to: Double)
     case feeChanged(to: String)
     case feeTapped
 }
@@ -26,11 +27,15 @@ final class DefaultTokenSwapPresenter {
     private let context: TokenSwapWireframeContext
     
     private var address: String?
-    private var amount: Double?
+    private var amountFrom: Double?
+    private var amountTo: Double?
     private var fee: Web3NetworkFee = .low
     
     private var items = [TokenSwapViewModel.Item]()
     private var fees = [Web3NetworkFee]()
+    
+    private var tokenFrom: Web3Token!
+    private var tokenTo: Web3Token!
 
     init(
         view: TokenSwapView,
@@ -42,6 +47,8 @@ final class DefaultTokenSwapPresenter {
         self.interactor = interactor
         self.wireframe = wireframe
         self.context = context
+        
+        loadTokens()
     }
 }
 
@@ -51,15 +58,26 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
         
         updateView(
             with: [
-                .token(
+                .swap(
                     .init(
-                        tokenAmount: nil,
-                        tokenSymbolIcon: interactor.tokenIcon(for: context.web3Token),
-                        tokenSymbol: context.web3Token.symbol.uppercased(),
-                        tokenMaxAmount: context.web3Token.balance,
-                        tokenMaxDecimals: context.web3Token.decimals,
-                        currencyTokenPrice: context.web3Token.usdPrice,
-                        shouldUpdateTextFields: false
+                        tokenFrom: .init(
+                            tokenAmount: nil,
+                            tokenSymbolIcon: interactor.tokenIcon(for: tokenFrom),
+                            tokenSymbol: tokenFrom.symbol.uppercased(),
+                            tokenMaxAmount: tokenFrom.balance,
+                            tokenMaxDecimals: tokenFrom.decimals,
+                            currencyTokenPrice: tokenFrom.usdPrice,
+                            shouldUpdateTextFields: false
+                        ),
+                        tokenTo: .init(
+                            tokenAmount: nil,
+                            tokenSymbolIcon: interactor.tokenIcon(for: tokenTo),
+                            tokenSymbol: tokenTo.symbol.uppercased(),
+                            tokenMaxAmount: tokenTo.balance,
+                            tokenMaxDecimals: tokenTo.decimals,
+                            currencyTokenPrice: tokenTo.usdPrice,
+                            shouldUpdateTextFields: false
+                        )
                     )
                 ),
                 .send(
@@ -80,16 +98,20 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
         case .dismiss:
             
             wireframe.dismiss()
+        
+        case let .tokenFromChanged(amount):
             
-        case let .tokenChanged(amount):
+            updateSwap(amountFrom: amount, shouldUpdateTextFields: false)
             
-            updateToken(with: amount, shouldUpdateTextFields: false)
+        case let .tokenToChanged(amount):
+            
+            updateSwap(amountTo: amount, shouldUpdateTextFields: false)
             
         case let .feeChanged(identifier):
             
             guard let fee = fees.first(where: { $0.rawValue == identifier }) else { return }
             self.fee = fee
-            updateToken(with: amount ?? 0, shouldUpdateTextFields: false)
+            refreshView(with: .init(amountFrom: amountFrom, amountTo: amountTo))
             
         case .feeTapped:
             
@@ -102,42 +124,101 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
 
 private extension DefaultTokenSwapPresenter {
     
+    func loadTokens() {
+        
+        tokenFrom = context.tokenFrom ?? interactor.defaultTokenFrom()
+        tokenTo = context.tokenTo ?? interactor.defaultTokenTo()
+    }
+    
     func updateView(with items: [TokenSwapViewModel.Item]) {
         
         view?.update(
             with: .init(
-                title: Localized("TokenSwap.title"),
+                title: Localized("tokenSwap.title"),
                 items: items
             )
         )
     }
         
-    func updateToken(
-        with amount: Double,
+    func updateSwap(
+        amountFrom: Double,
         shouldUpdateTextFields: Bool
     ) {
         
-        self.amount = amount
+        self.amountFrom = amountFrom
         
-        let insufficientFunds = amount > context.web3Token.balance
+        let swapDataIn = SwapDataIn(
+            type: .calculateAmountTo(amountFrom: amountFrom),
+            tokenFrom: tokenFrom,
+            tokenTo: tokenTo
+        )
         
-        updateView(
+        interactor.swapTokenAmount(dataIn: swapDataIn) { [weak self] swapDataOut in
+            
+            guard let self = self else { return }
+            self.refreshView(with: swapDataOut, shouldUpdateToTextField: true)
+        }
+    }
+    
+    func updateSwap(
+        amountTo: Double,
+        shouldUpdateTextFields: Bool
+    ) {
+        
+        self.amountTo = amountTo
+        
+        let swapDataIn = SwapDataIn(
+            type: .calculateAmountFrom(amountTo: amountTo),
+            tokenFrom: tokenFrom,
+            tokenTo: tokenTo
+        )
+        
+        interactor.swapTokenAmount(dataIn: swapDataIn) { [weak self] swapDataOut in
+            
+            guard let self = self else { return }
+            self.refreshView(with: swapDataOut, shouldUpdateFromTextField: true)
+        }
+    }
+    
+    func refreshView(
+        with swapDataOut: SwapDataOut,
+        shouldUpdateFromTextField: Bool = false,
+        shouldUpdateToTextField: Bool = false
+    ) {
+        
+        amountFrom = swapDataOut.amountFrom
+        amountTo = swapDataOut.amountTo
+        
+        let insufficientFunds = (amountFrom ?? 0) > tokenFrom.balance
+        
+        self.updateView(
             with: [
-                .token(
+                .swap(
                     .init(
-                        tokenAmount: amount,
-                        tokenSymbolIcon: interactor.tokenIcon(for: context.web3Token),
-                        tokenSymbol: context.web3Token.symbol.uppercased(),
-                        tokenMaxAmount: context.web3Token.balance,
-                        tokenMaxDecimals: context.web3Token.decimals,
-                        currencyTokenPrice: context.web3Token.usdPrice,
-                        shouldUpdateTextFields: shouldUpdateTextFields
+                        tokenFrom: .init(
+                            tokenAmount: amountFrom,
+                            tokenSymbolIcon: interactor.tokenIcon(for: self.tokenFrom),
+                            tokenSymbol: tokenFrom.symbol.uppercased(),
+                            tokenMaxAmount: tokenFrom.balance,
+                            tokenMaxDecimals: tokenFrom.decimals,
+                            currencyTokenPrice: tokenFrom.usdPrice,
+                            shouldUpdateTextFields: shouldUpdateFromTextField
+                        ),
+                        tokenTo: .init(
+                            tokenAmount: amountTo,
+                            tokenSymbolIcon: interactor.tokenIcon(for: self.tokenTo),
+                            tokenSymbol: tokenTo.symbol.uppercased(),
+                            tokenMaxAmount: tokenTo.balance,
+                            tokenMaxDecimals: tokenTo.decimals,
+                            currencyTokenPrice: tokenTo.usdPrice,
+                            shouldUpdateTextFields: shouldUpdateToTextField
+                        )
                     )
                 ),
                 .send(
                     .init(
-                        estimatedFee: makeEstimatedFee(),
-                        feeType: makeFeeType(),
+                        estimatedFee: self.makeEstimatedFee(),
+                        feeType: self.makeFeeType(),
                         buttonState: insufficientFunds ? .insufficientFunds : .ready
                     )
                 )
@@ -147,8 +228,8 @@ private extension DefaultTokenSwapPresenter {
     
     func makeEstimatedFee() -> String {
         
-        let amountInUSD = interactor.networkFeeInUSD(network: context.web3Token.network, fee: fee)
-        let timeInSeconds = interactor.networkFeeInSeconds(network: context.web3Token.network, fee: fee)
+        let amountInUSD = interactor.networkFeeInUSD(network: tokenFrom.network, fee: fee)
+        let timeInSeconds = interactor.networkFeeInSeconds(network: tokenFrom.network, fee: fee)
         
         let min: Double = Double(timeInSeconds) / Double(60)
         if min > 1 {
@@ -160,7 +241,7 @@ private extension DefaultTokenSwapPresenter {
     
     func makeFees() -> [FeesPickerViewModel] {
         
-        let fees = interactor.networkFees(network: context.web3Token.network)
+        let fees = interactor.networkFees(network: tokenFrom.network)
         self.fees = fees
         return fees.compactMap { [weak self] in
             guard let self = self else { return nil }
@@ -168,7 +249,7 @@ private extension DefaultTokenSwapPresenter {
                 id: $0.rawValue,
                 name: $0.name,
                 value: self.interactor.networkFeeInNetworkToken(
-                    network: context.web3Token.network,
+                    network: tokenFrom.network,
                     fee: $0
                 )
             )
@@ -197,11 +278,11 @@ private extension Web3NetworkFee {
         
         switch self {
         case .low:
-            return Localized("TokenSwap.cell.send.fee.low")
+            return Localized("low")
         case .medium:
-            return Localized("TokenSwap.cell.send.fee.medium")
+            return Localized("medium")
         case .high:
-            return Localized("TokenSwap.cell.send.fee.high")
+            return Localized("high")
         }
     }
 }

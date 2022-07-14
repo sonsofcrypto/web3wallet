@@ -25,6 +25,12 @@
 "min" = "min";
 "sec" = "sec";
 "save" = "Save";
+"max" = "Max";
+"ready" = "Review";
+"insufficientFunds" = "Insufficient Funds";
+"low" = "Low";
+"medium" = "Average";
+"high" = "Fast";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";
@@ -187,11 +193,6 @@
 "tokenSend.cell.currency.placeholder" = "0.0";
 "tokenSend.cell.currency.label.usd" = "USD";
 "tokenSend.cell.balance" = "Balance: %@";
-"tokenSend.cell.max" = "MAX";
-"tokenSend.cell.send.ready" = "Review";
-"tokenSend.cell.send.insufficientFunds" = "Insufficient Funds";
-"tokenSend.cell.send.fee.low" = "Low";
-"tokenSend.cell.send.fee.medium" = "Average";
-"tokenSend.cell.send.fee.high" = "Fast";
 
 "tokenSwap.title" = "Token Swap";
+"tokenSwap.cell.balance" = "Balance: %@";

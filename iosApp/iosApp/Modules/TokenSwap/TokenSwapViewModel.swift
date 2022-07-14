@@ -21,19 +21,14 @@ extension TokenSwapViewModel {
     
     enum Item {
         
-        case token(Token)
+        case swap(Swap)
         case send(Send)
     }
     
-    struct Token {
+    struct Swap {
         
-        let tokenAmount: Double?
-        let tokenSymbolIcon: Data
-        let tokenSymbol: String
-        let tokenMaxAmount: Double
-        let tokenMaxDecimals: Int
-        let currencyTokenPrice: Double
-        let shouldUpdateTextFields: Bool
+        let tokenFrom: TokenSwapTokenViewModel
+        let tokenTo: TokenSwapTokenViewModel
     }
     
     struct Send {
@@ -59,18 +54,18 @@ extension TokenSwapViewModel {
 
 extension Array where Element == TokenSwapViewModel.Item {
     
-    var token: TokenSwapViewModel.Token? {
+    var swap: TokenSwapViewModel.Swap? {
         
-        var token: TokenSwapViewModel.Token?
+        var swap: TokenSwapViewModel.Swap?
         forEach {
             
-            if case let TokenSwapViewModel.Item.token(value) = $0 {
+            if case let TokenSwapViewModel.Item.swap(value) = $0 {
                 
-                token = value
+                swap = value
             }
         }
         
-        return token
+        return swap
     }
     
     var send: TokenSwapViewModel.Send? {

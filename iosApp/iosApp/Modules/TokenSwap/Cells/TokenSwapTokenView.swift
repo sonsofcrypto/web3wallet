@@ -1,10 +1,20 @@
-// Created by web3d4v on 06/07/2022.
+// Created by web3d4v on 14/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
+struct TokenSwapTokenViewModel {
     
-    @IBOutlet weak var cellBackgroundView: UIView!
+    let tokenAmount: Double?
+    let tokenSymbolIcon: Data
+    let tokenSymbol: String
+    let tokenMaxAmount: Double
+    let tokenMaxDecimals: Int
+    let currencyTokenPrice: Double
+    let shouldUpdateTextFields: Bool
+}
+
+final class TokenSwapTokenView: UIView {
+    
     @IBOutlet weak var sendCurrencySymbol: UILabel!
     @IBOutlet weak var sendAmountTextField: TextField!
     @IBOutlet weak var flipImageView: UIImageView!
@@ -16,22 +26,21 @@ final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var maxButton: Button!
     
-    private var viewModel: TokenSendViewModel.Token!
-    private weak var presenter: TokenSendPresenter!
-    
-    private var mode: Mode = .token
-    
     private enum Mode {
         case token
         case usd
     }
     
+    private var viewModel: TokenSwapTokenViewModel!
+    private var onTokenChanged: ((Double) -> Void)?
+    private var mode: Mode = .token
+    
     override func awakeFromNib() {
         
         super.awakeFromNib()
         
-        cellBackgroundView.backgroundColor = Theme.colour.labelQuaternary
-        cellBackgroundView.layer.cornerRadius = Theme.constant.cornerRadius
+        backgroundColor = Theme.colour.labelQuaternary
+        layer.cornerRadius = Theme.constant.cornerRadius
         
         sendCurrencySymbol.font = Theme.font.title3
         sendCurrencySymbol.textColor = Theme.colour.labelPrimary
@@ -77,15 +86,15 @@ final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension TokenSendTokenCollectionViewCell {
+extension TokenSwapTokenView {
     
     func update(
-        with viewModel: TokenSendViewModel.Token,
-        presenter: TokenSendPresenter
+        with viewModel: TokenSwapTokenViewModel,
+        onTokenChanged: ((Double) -> Void)? = nil
     ) {
         
         self.viewModel = viewModel
-        self.presenter = presenter
+        self.onTokenChanged = onTokenChanged
         
         updateSendAmountTextField()
         updateSendAmountLabel()
@@ -96,7 +105,7 @@ extension TokenSendTokenCollectionViewCell {
     }
 }
 
-extension TokenSendTokenCollectionViewCell: UITextFieldDelegate {
+extension TokenSwapTokenView: UITextFieldDelegate {
     
     func textField(
         _ textField: UITextField,
@@ -124,15 +133,15 @@ extension TokenSendTokenCollectionViewCell: UITextFieldDelegate {
         
         switch mode {
         case .token:
-            presenter.handle(.tokenChanged(to: double))
+            onTokenChanged?(double)
         case .usd:
             let tokenAmount = double / viewModel.currencyTokenPrice
-            presenter.handle(.tokenChanged(to: tokenAmount))
+            onTokenChanged?(tokenAmount)
         }
     }
 }
 
-private extension TokenSendTokenCollectionViewCell {
+private extension TokenSwapTokenView {
     
     func makeTokenClearButton() -> UIButton {
         
@@ -156,11 +165,11 @@ private extension TokenSendTokenCollectionViewCell {
         
         sendAmountTextField.text = nil
         
-        presenter.handle(.tokenChanged(to: 0))
+        onTokenChanged?(0)
     }
 }
 
-private extension TokenSendTokenCollectionViewCell {
+private extension TokenSwapTokenView {
     
     @objc func tokenMaxAmountTapped() {
         
@@ -174,7 +183,7 @@ private extension TokenSendTokenCollectionViewCell {
             sendAmountTextField.text = maxAmount.toString()
         }
         
-        presenter.handle(.tokenChanged(to: viewModel.tokenMaxAmount))
+        onTokenChanged?(viewModel.tokenMaxAmount)
     }
     
     func updateSendAmountTextField(forceUpdate: Bool = false) {
@@ -239,11 +248,6 @@ private extension TokenSendTokenCollectionViewCell {
                 with: ""
             )
         }
-        
-        if viewModel.shouldUpdateTextFields, let tokenAmount = viewModel.tokenAmount {
-            
-            sendAmountTextField.text = tokenAmount.toString(decimals: viewModel.tokenMaxDecimals)
-        }
     }
     
     func updateSendAmountLabel() {
@@ -269,13 +273,13 @@ private extension TokenSendTokenCollectionViewCell {
         switch mode {
         case .token:
             balanceLabel.text = Localized(
-                "tokenSend.cell.balance",
+                "tokenSwap.cell.balance",
                 arg: viewModel.tokenMaxAmount.toString(decimals: viewModel.tokenMaxDecimals)
             )
         case .usd:
             let maxBalanceAmountUsd = viewModel.tokenMaxAmount * viewModel.currencyTokenPrice
             balanceLabel.text = Localized(
-                "tokenSend.cell.balance",
+                "tokenSwap.cell.balance",
                 arg: maxBalanceAmountUsd.formatCurrency() ?? ""
             )
         }
@@ -292,3 +296,4 @@ private extension TokenSendTokenCollectionViewCell {
         sendAmountTextField.becomeFirstResponder()
     }
 }
+

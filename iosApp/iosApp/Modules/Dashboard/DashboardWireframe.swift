@@ -18,6 +18,7 @@ enum DashboardWireframeDestination {
         selectedTokens: [Web3Token],
         onCompletion: ([Web3Token]) -> Void
     )
+    case tokenSwap
 }
 
 protocol DashboardWireframe {
@@ -34,6 +35,7 @@ final class DefaultDashboardWireframe {
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
     private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
+    private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let onboardingService: OnboardingService
@@ -47,6 +49,7 @@ final class DefaultDashboardWireframe {
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
         tokenPickerWireframeFactory: TokenPickerWireframeFactory,
+        tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         onboardingService: OnboardingService,
@@ -59,6 +62,7 @@ final class DefaultDashboardWireframe {
         self.alertWireframeFactory = alertWireframeFactory
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
         self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
+        self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.onboardingService = onboardingService
@@ -155,6 +159,18 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 context: .init(
                     presentationStyle: .present,
                     source: source
+                )
+            )
+            wireframe.present()
+            
+        case .tokenSwap:
+            
+            let wireframe = tokenSwapWireframeFactory.makeWireframe(
+                presentingIn: parent,
+                context: .init(
+                    presentationStyle: .present,
+                    tokenFrom: nil,
+                    tokenTo: nil
                 )
             )
             wireframe.present()
