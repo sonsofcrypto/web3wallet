@@ -256,7 +256,8 @@ private extension TokenSwapViewController {
         
         .init(
             onTokenFromAmountChanged: makeOnTokenFromAmountChanged(),
-            onTokenToAmountChanged: makeOnTokenToAmountChanged()
+            onTokenToAmountChanged: makeOnTokenToAmountChanged(),
+            onSwapFlip: makeOnSwapFlip()
         )
     }
     
@@ -275,6 +276,15 @@ private extension TokenSwapViewController {
             [weak self] amount in
             guard let self = self else { return }
             self.presenter.handle(.tokenToChanged(to: amount))
+        }
+    }
+    
+    func makeOnSwapFlip() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.swapFlip)
         }
     }
 }

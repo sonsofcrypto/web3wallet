@@ -135,12 +135,12 @@ extension DefaultTokenSwapInteractor: TokenSwapInteractor {
     
     func defaultTokenFrom() -> Web3Token {
         
-        web3Service.allTokens[0]
+        web3Service.myTokens[safe: 0] ?? web3Service.allTokens[0]
     }
     
     func defaultTokenTo() -> Web3Token {
         
-        web3Service.allTokens[1]
+        web3Service.myTokens[safe: 1] ?? web3Service.allTokens[1]
     }
 
     func swapTokenAmount(

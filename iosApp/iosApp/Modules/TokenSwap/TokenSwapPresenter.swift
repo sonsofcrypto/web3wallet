@@ -9,6 +9,7 @@ enum TokenSwapPresenterEvent {
     case dismiss
     case tokenFromChanged(to: Double)
     case tokenToChanged(to: Double)
+    case swapFlip
     case feeChanged(to: String)
     case feeTapped
 }
@@ -26,16 +27,15 @@ final class DefaultTokenSwapPresenter {
     private let wireframe: TokenSwapWireframe
     private let context: TokenSwapWireframeContext
     
-    private var address: String?
-    private var amountFrom: Double?
-    private var amountTo: Double?
-    private var fee: Web3NetworkFee = .low
-    
     private var items = [TokenSwapViewModel.Item]()
     private var fees = [Web3NetworkFee]()
     
+    private var amountFrom: Double?
     private var tokenFrom: Web3Token!
+    private var amountTo: Double?
     private var tokenTo: Web3Token!
+
+    private var fee: Web3NetworkFee = .low
 
     init(
         view: TokenSwapView,
@@ -106,6 +106,24 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
         case let .tokenToChanged(amount):
             
             updateSwap(amountTo: amount, shouldUpdateTextFields: false)
+            
+        case .swapFlip:
+            
+            let currentAmountFrom = amountFrom
+            let currentAmountTo = amountTo
+            amountFrom = currentAmountTo
+            amountTo = currentAmountFrom
+            
+            let currentTokenFrom = tokenFrom
+            let currentTokenTo = tokenTo
+            tokenFrom = currentTokenTo
+            tokenTo = currentTokenFrom
+            
+            refreshView(
+                with: .init(amountFrom: amountFrom, amountTo: amountTo),
+                shouldUpdateFromTextField: true,
+                shouldUpdateToTextField: true
+            )
             
         case let .feeChanged(identifier):
             
@@ -197,7 +215,7 @@ private extension DefaultTokenSwapPresenter {
                     .init(
                         tokenFrom: .init(
                             tokenAmount: amountFrom,
-                            tokenSymbolIcon: interactor.tokenIcon(for: self.tokenFrom),
+                            tokenSymbolIcon: interactor.tokenIcon(for: tokenFrom),
                             tokenSymbol: tokenFrom.symbol.uppercased(),
                             tokenMaxAmount: tokenFrom.balance,
                             tokenMaxDecimals: tokenFrom.decimals,
@@ -206,7 +224,7 @@ private extension DefaultTokenSwapPresenter {
                         ),
                         tokenTo: .init(
                             tokenAmount: amountTo,
-                            tokenSymbolIcon: interactor.tokenIcon(for: self.tokenTo),
+                            tokenSymbolIcon: interactor.tokenIcon(for: tokenTo),
                             tokenSymbol: tokenTo.symbol.uppercased(),
                             tokenMaxAmount: tokenTo.balance,
                             tokenMaxDecimals: tokenTo.decimals,

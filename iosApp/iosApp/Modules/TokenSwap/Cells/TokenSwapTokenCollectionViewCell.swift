@@ -9,10 +9,13 @@ final class TokenSwapTokenCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tokenTo: TokenSwapTokenView!
     
+    private var handler: Handler!
+    
     struct Handler {
 
         let onTokenFromAmountChanged: ((Double) -> Void)?
         let onTokenToAmountChanged: ((Double) -> Void)?
+        let onSwapFlip: (() -> Void)?
     }
     
     override func awakeFromNib() {
@@ -23,11 +26,16 @@ final class TokenSwapTokenCollectionViewCell: UICollectionViewCell {
         imageView.superview?.backgroundColor = Theme.colour.labelQuaternary
         
         imageView.tintColor = Theme.colour.labelSecondary
-        imageView.image = .init(systemName: "arrow.down")
+        imageView.image = .init(systemName: "arrow.up.arrow.down")
         imageView.isHidden = false
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(flip))
+        imageView.addGestureRecognizer(tapGesture)
+        imageView.isUserInteractionEnabled = true
         
         loadingIndicator.isHidden = true
         loadingIndicator.color = Theme.colour.labelSecondary
+        
+        tokenTo.maxButton.isHidden = true
     }
     
     override func resignFirstResponder() -> Bool {
@@ -42,6 +50,8 @@ extension TokenSwapTokenCollectionViewCell {
         with viewModel: TokenSwapViewModel.Swap,
         handler: Handler
     ) {
+        
+        self.handler = handler
     
         loadingIndicator.stopAnimating()
         loadingIndicator.isHidden = true
@@ -68,5 +78,13 @@ extension TokenSwapTokenCollectionViewCell {
             self.imageView.isHidden = true
             handler.onTokenToAmountChanged?(amount)
         }
+    }
+}
+
+private extension TokenSwapTokenCollectionViewCell {
+    
+    @objc func flip() {
+        
+        handler.onSwapFlip?()
     }
 }
