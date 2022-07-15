@@ -21,17 +21,20 @@ final class DefaultKeyStoreWireframeFactory {
     private let settingsService: SettingsService
     private let newMnemonic: MnemonicNewWireframeFactory
     private let updateMnemonic: MnemonicUpdateWireframeFactory
+    private let importMnemonic: MnemonicImportWireframeFactory
 
     init(
         keyStoreService: KeyStoreService,
         settingsService: SettingsService,
         newMnemonic: MnemonicNewWireframeFactory,
-        updateMnemonic: MnemonicUpdateWireframeFactory
+        updateMnemonic: MnemonicUpdateWireframeFactory,
+        importMnemonic: MnemonicImportWireframeFactory
     ) {
         self.keyStoreService = keyStoreService
         self.settingsService = settingsService
         self.newMnemonic = newMnemonic
         self.updateMnemonic = updateMnemonic
+        self.importMnemonic = importMnemonic
     }
 }
 
@@ -49,6 +52,7 @@ extension DefaultKeyStoreWireframeFactory: KeyStoreWireframeFactory {
             keyStoreService: keyStoreService,
             newMnemonic: newMnemonic,
             updateMnemonic: updateMnemonic,
+            importMnemonic: importMnemonic,
             settingsService: settingsService
         )
     }
@@ -64,7 +68,8 @@ final class KeyStoreWireframeFactoryAssembler: AssemblerComponent {
                 keyStoreService: resolver.resolve(),
                 settingsService: resolver.resolve(),
                 newMnemonic: resolver.resolve(),
-                updateMnemonic: resolver.resolve()
+                updateMnemonic: resolver.resolve(),
+                importMnemonic: resolver.resolve()
             )
         }
     }

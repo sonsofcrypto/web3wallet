@@ -39,6 +39,7 @@ extension KeyStoreCell {
         index: Int
     ) -> Self {
 
+
         self.accessoryHandler = accessoryHandler
         
         let image = UIImage(systemName: "\(index + 1).square.fill")!

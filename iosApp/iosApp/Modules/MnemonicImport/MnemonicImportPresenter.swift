@@ -6,7 +6,8 @@ import Foundation
 import web3lib
 import UniformTypeIdentifiers
 
-enum MnemonicNewPresenterEvent {
+enum MnemonicImportPresenterEvent {
+    case didChangeMnemonic(mnemonic: String)
     case didChangeName(name: String)
     case didChangeICouldBackup(onOff: Bool)
     case saltSwitchDidChange(onOff: Bool)
@@ -20,30 +21,30 @@ enum MnemonicNewPresenterEvent {
     case didSelectDismiss
 }
 
-protocol MnemonicNewPresenter {
+protocol MnemonicImportPresenter {
 
     func present()
-    func handle(_ event: MnemonicNewPresenterEvent)
+    func handle(_ event: MnemonicImportPresenterEvent)
 }
 
 // MARK: - DefaultMnemonicPresenter
 
-final class DefaultMnemonicNewPresenter {
+final class DefaultMnemonicImportPresenter {
 
-    private let context: MnemonicNewContext
-    private let interactor: MnemonicNewInteractor
-    private let wireframe: MnemonicNewWireframe
+    private let context: MnemonicImportContext
+    private let interactor: MnemonicImportInteractor
+    private let wireframe: MnemonicImportWireframe
 
     private var password: String = ""
     private var salt: String = ""
 
-    private weak var view: MnemonicNewView?
+    private weak var view: MnemonicImportView?
 
     init(
-        context: MnemonicNewContext,
-        view: MnemonicNewView,
-        interactor: MnemonicNewInteractor,
-        wireframe: MnemonicNewWireframe
+        context: MnemonicImportContext,
+        view: MnemonicImportView,
+        interactor: MnemonicImportInteractor,
+        wireframe: MnemonicImportWireframe
     ) {
         self.context = context
         self.view = view
@@ -58,16 +59,18 @@ final class DefaultMnemonicNewPresenter {
 
 // MARK: MnemonicPresenter
 
-extension DefaultMnemonicNewPresenter: MnemonicNewPresenter {
+extension DefaultMnemonicImportPresenter: MnemonicImportPresenter {
 
     func present() {
         let start = Date()
-        interactor.generateNewMnemonic()
         updateView()
     }
 
-    func handle(_ event: MnemonicNewPresenterEvent) {
+    func handle(_ event: MnemonicImportPresenterEvent) {
         switch event {
+        case let .didChangeMnemonic(text):
+            interactor.mnemonic = text.split(separator: " ").map { String($0) }
+            updateView()
         case let .didChangeName(name):
             interactor.name = name
         case let .didChangeICouldBackup(onOff):
@@ -99,7 +102,7 @@ extension DefaultMnemonicNewPresenter: MnemonicNewPresenter {
                 if interactor.passwordType == .bio {
                     password = interactor.generatePassword()
                 } else {
-                    // TODO(web3dgn): Validate password / pin
+                    // TODO(web3dgn): Validate password / pin handle error
                 }
                 let item = try interactor.createKeyStoreItem(password, salt: salt)
                 if let handler = context.didCreteKeyStoreItemHandler {
@@ -122,10 +125,30 @@ extension DefaultMnemonicNewPresenter: MnemonicNewPresenter {
 
 // MARK: - WalletsViewModel utilities
 
-private extension DefaultMnemonicNewPresenter {
+private extension DefaultMnemonicImportPresenter {
 
-    func viewModel() -> MnemonicNewViewModel {
-        .init(
+    func viewModel() -> MnemonicImportViewModel {
+        if let error = interactor.mnemonicError(
+            words: interactor.mnemonic,
+            salt: salt
+        ) {
+            return .init(
+                sectionsItems: [
+                    mnemonicSectionItems()
+                ],
+                headers: [.none, .none],
+                footers: [
+                    .attrStr(
+                        text: mnemonicErrorString(error) ?? Localized("newMnemonic.footer"),
+                        highlightWords: Constant.mnemonicHighlightWords
+                    ),
+                    .none
+                ],
+                cta: Localized("newMnemonic.cta.import")
+            )
+        }
+
+        return .init(
             sectionsItems: [
                 mnemonicSectionItems(),
                 optionsSectionItems()
@@ -142,9 +165,9 @@ private extension DefaultMnemonicNewPresenter {
         )
     }
 
-    func mnemonicSectionItems() -> [MnemonicNewViewModel.Item] {
+    func mnemonicSectionItems() -> [MnemonicImportViewModel.Item] {
         [
-            MnemonicNewViewModel.Item.mnemonic(
+            MnemonicImportViewModel.Item.mnemonic(
                 mnemonic: .init(
                     value: interactor.mnemonic.joined(separator: " "),
                     type: .new
@@ -153,20 +176,20 @@ private extension DefaultMnemonicNewPresenter {
         ]
     }
 
-    func optionsSectionItems() -> [MnemonicNewViewModel.Item] {
+    func optionsSectionItems() -> [MnemonicImportViewModel.Item] {
         [
-            MnemonicNewViewModel.Item.name(
+            MnemonicImportViewModel.Item.name(
                 name: .init(
                     title: Localized("newMnemonic.name.title"),
                     value: interactor.name,
                     placeholder: Localized("newMnemonic.name.placeholder")
                 )
             ),
-            MnemonicNewViewModel.Item.switch(
+            MnemonicImportViewModel.Item.switch(
                 title: Localized("newMnemonic.iCould.title"),
                 onOff: interactor.iCloudSecretStorage
             ),
-            MnemonicNewViewModel.Item.switchWithTextInput(
+            MnemonicImportViewModel.Item.switchWithTextInput(
                 switchWithTextInput: .init(
                     title: Localized("newMnemonic.salt.title"),
                     onOff: interactor.saltMnemonic,
@@ -178,7 +201,7 @@ private extension DefaultMnemonicNewPresenter {
                     ]
                 )
             ),
-            MnemonicNewViewModel.Item.segmentWithTextAndSwitchInput(
+            MnemonicImportViewModel.Item.segmentWithTextAndSwitchInput(
                 segmentWithTextAndSwitchInput: .init(
                     title: Localized("newMnemonic.passType.title"),
                     segmentOptions: passwordTypes().map { "\($0)".lowercased() },
@@ -191,11 +214,23 @@ private extension DefaultMnemonicNewPresenter {
             )
         ]
     }
+
+    func mnemonicErrorString(_ error: Error?) -> String? {
+        guard let error = error else {
+            return nil
+        }
+
+        if let err = error as? MnemonicImportInteractorError, err == .invalidWordCount,
+            interactor.mnemonic.count > 12 {
+        }
+        print("=== returnig", error.localizedDescription)
+        return error.localizedDescription
+    }
 }
 
 // MARK: - Utilities
 
-private extension DefaultMnemonicNewPresenter {
+private extension DefaultMnemonicImportPresenter {
 
     func selectedPasswordTypeIdx() -> Int {
         let values = KeyStoreItem.PasswordType.values()
@@ -219,7 +254,7 @@ private extension DefaultMnemonicNewPresenter {
 
 // MARK: - Constant
 
-private extension DefaultMnemonicNewPresenter {
+private extension DefaultMnemonicImportPresenter {
 
     enum Constant {
         static let mnemonicHighlightWords: [String] = [

@@ -4,17 +4,17 @@
 
 import UIKit
 
-protocol MnemonicUpdateView: AnyObject {
+protocol MnemonicImportView: AnyObject {
 
-    func update(with viewModel: MnemonicUpdateViewModel)
+    func update(with viewModel: MnemonicImportViewModel)
     func dismiss(animated flag: Bool, completion: (() -> Void)?)
 }
 
-final class MnemonicUpdateViewController: BaseViewController {
+final class MnemonicImportViewController: BaseViewController {
 
-    var presenter: MnemonicUpdatePresenter!
+    var presenter: MnemonicImportPresenter!
 
-    private var viewModel: MnemonicUpdateViewModel?
+    private var viewModel: MnemonicImportViewModel?
     private var didAppear: Bool = false
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -29,6 +29,9 @@ final class MnemonicUpdateViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         didAppear = true
+        let cell = collectionView.visibleCells
+            .first(where: { ($0 as? MnemonicImportCell) != nil })
+        (cell as? MnemonicImportCell)?.textView.becomeFirstResponder()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle { .darkContent }
@@ -44,9 +47,10 @@ final class MnemonicUpdateViewController: BaseViewController {
 
 // MARK: - Mnemonic
 
-extension MnemonicUpdateViewController: MnemonicUpdateView {
+extension MnemonicImportViewController: MnemonicImportView {
 
-    func update(with viewModel: MnemonicUpdateViewModel) {
+    func update(with viewModel: MnemonicImportViewModel) {
+        let equalSectionCnt = viewModel.sectionsItems.count == self.viewModel?.sectionsItems.count
         let needsReload = self.needsReload(self.viewModel, viewModel: viewModel)
         self.viewModel = viewModel
 
@@ -59,20 +63,37 @@ extension MnemonicUpdateViewController: MnemonicUpdateView {
         let cells = cv.indexPathsForVisibleItems
         let idxs = IndexSet(0..<viewModel.sectionsItems.count)
 
-        if needsReload && didAppear {
+        if needsReload && didAppear && equalSectionCnt {
             cv.performBatchUpdates({ cv.reloadSections(idxs) })
             return
         }
-        
-        didAppear
+
+        updateFootersIfNeeded(viewModel)
+
+        didAppear && equalSectionCnt
             ? cv.performBatchUpdates({ cv.reconfigureItems(at: cells) })
             : cv.reloadData()
+    }
+
+    func updateFootersIfNeeded(_ viewModel: MnemonicImportViewModel) {
+        guard let _ = viewModel.footers[safe: 0], let cv = collectionView else {
+            return
+        }
+
+        let kind = UICollectionView.elementKindSectionFooter
+
+        cv.indexPathsForVisibleSupplementaryElements(ofKind: kind).forEach {
+            if let sectionFooter = viewModel.footers[safe: $0.section] {
+                let footerView = cv.supplementaryView(forElementKind: kind, at: $0)
+                (footerView as? SectionLabelFooter)?.update(with: sectionFooter)
+            }
+        }
     }
 }
 
 // MARK: - UICollectionViewDataSource
 
-extension MnemonicUpdateViewController: UICollectionViewDataSource {
+extension MnemonicImportViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return viewModel?.sectionsItems.count ?? 0
@@ -81,7 +102,6 @@ extension MnemonicUpdateViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel?.sectionsItems[safe: section]?.count ?? 0
     }
-    
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -109,15 +129,19 @@ extension MnemonicUpdateViewController: UICollectionViewDataSource {
 
     func cell(
         cv: UICollectionView,
-        viewModel: MnemonicUpdateViewModel.Item,
+        viewModel: MnemonicImportViewModel.Item,
         idxPath: IndexPath
     ) -> UICollectionViewCell {
 
         switch viewModel {
 
         case let .mnemonic(mnemonic):
-            return collectionView.dequeue(MnemonicUpdateCell.self, for: idxPath)
-                .update(with: mnemonic)
+            return collectionView.dequeue(MnemonicImportCell.self, for: idxPath)
+                .update(
+                    with: mnemonic,
+                    textChangeHandler: { value in self.mnemonicDidChange(value) },
+                    textEditingEndHandler: nil
+                )
 
         case let .name(name):
             return collectionView.dequeue(
@@ -143,9 +167,9 @@ extension MnemonicUpdateViewController: UICollectionViewDataSource {
                 for: idxPath
             ).update(
                 with: switchWithTextInput,
-                switchAction: { onOff in () },
-                textChangeHandler: { text in () },
-                descriptionAction: { () }
+                switchAction: { onOff in self.saltSwitchDidChange(onOff) },
+                textChangeHandler: { text in self.saltTextDidChange(text) },
+                descriptionAction: { self.saltLearnMoreAction() }
             )
         case let .segmentWithTextAndSwitchInput(segmentWithTextAndSwitchInput):
             return collectionView.dequeue(
@@ -153,9 +177,9 @@ extension MnemonicUpdateViewController: UICollectionViewDataSource {
                 for: idxPath
             ).update(
                 with: segmentWithTextAndSwitchInput,
-                selectSegmentAction: { idx in () },
-                textChangeHandler: { text in () },
-                switchHandler: { onOff in () }
+                selectSegmentAction: { idx in self.passTypeDidChange(idx) },
+                textChangeHandler: { text in self.passwordDidChange(text) },
+                switchHandler: { onOff in self.allowFaceIdDidChange(onOff) }
             )
         }
     }
@@ -193,20 +217,17 @@ extension MnemonicUpdateViewController: UICollectionViewDataSource {
     }
 }
 
-extension MnemonicUpdateViewController: UICollectionViewDelegate {
+extension MnemonicImportViewController: UICollectionViewDelegate {
 
     func collectionView(
         _ collectionView: UICollectionView,
         shouldSelectItemAt indexPath: IndexPath
     ) -> Bool {
-        
-        guard indexPath == .init(row: 0, section: 0) else { return false }
-        
-        let cell = collectionView.cellForItem(at: .init(item: 0, section: 0))
-        (cell as? MnemonicUpdateCell)?.animateCopiedToPasteboard()
-        presenter.handle(.didTapMnemonic)
-        
         return false
+    }
+
+    func mnemonicDidChange(_ mnemonic: String) {
+        presenter.handle(.didChangeMnemonic(mnemonic: mnemonic))
     }
 
     func nameDidChange(_ name: String) {
@@ -216,9 +237,34 @@ extension MnemonicUpdateViewController: UICollectionViewDelegate {
     func iCloudBackupDidChange(_ onOff: Bool) {
         presenter.handle(.didChangeICouldBackup(onOff: onOff))
     }
+
+    func saltSwitchDidChange(_ onOff: Bool) {
+        presenter.handle(.saltSwitchDidChange(onOff: onOff))
+    }
+
+    func saltTextDidChange(_ text: String) {
+        presenter.handle(.didChangeSalt(salt: text))
+    }
+
+    func saltLearnMoreAction() {
+        presenter.handle(.saltLearnMoreAction)
+    }
+
+    func passTypeDidChange(_ idx: Int) {
+        presenter.handle(.passTypeDidChange(idx: idx))
+
+    }
+
+    func passwordDidChange(_ text: String) {
+        presenter.handle(.passwordDidChange(text: text))
+    }
+
+    func allowFaceIdDidChange(_ onOff: Bool) {
+        presenter.handle(.allowFaceIdDidChange(onOff: onOff))
+    }
 }
 
-extension MnemonicUpdateViewController: UICollectionViewDelegateFlowLayout {
+extension MnemonicImportViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -226,10 +272,10 @@ extension MnemonicUpdateViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         
-        let width = view.bounds.width - Theme.constant.padding * 2
+        let width = view.bounds.width - Global.padding * 2
 
         guard let viewModel = viewModel?.item(at: indexPath) else {
-            return CGSize(width: width, height: Theme.constant.cellHeight)
+            return CGSize(width: width, height: Global.cellHeight)
         }
 
         switch viewModel {
@@ -276,7 +322,7 @@ extension MnemonicUpdateViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension MnemonicUpdateViewController: UIScrollViewDelegate {
+extension MnemonicImportViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         collectionView.visibleCells.forEach { $0.resignFirstResponder() }
@@ -285,7 +331,7 @@ extension MnemonicUpdateViewController: UIScrollViewDelegate {
 
 // MARK: - Configure UI
 
-private extension MnemonicUpdateViewController {
+private extension MnemonicImportViewController {
     
     func configureUI() {
         title = Localized("newMnemonic.title")
@@ -300,14 +346,20 @@ private extension MnemonicUpdateViewController {
         ctaButton.style = .primary
     }
 
-    func needsReload(_ preViewModel: MnemonicUpdateViewModel?, viewModel: MnemonicUpdateViewModel) -> Bool {
-        preViewModel?.sectionsItems[1].count != viewModel.sectionsItems[1].count
+    func needsReload(_ preViewModel: MnemonicImportViewModel?, viewModel: MnemonicImportViewModel) -> Bool {
+        guard viewModel.sectionsItems.count > 1 ||
+              (preViewModel?.sectionsItems.count ?? 0) > 1 else {
+            return false
+        }
+
+        return (preViewModel?.sectionsItems[safe: 1]?.count ?? 0) !=
+            (viewModel.sectionsItems[safe: 1]?.count ?? 0)
     }
 }
 
 // MARK: - Constants
 
-private extension MnemonicUpdateViewController {
+private extension MnemonicImportViewController {
 
     enum Constant {
         static let mnemonicCellHeight: CGFloat = 110

@@ -5,7 +5,7 @@
 import Foundation
 
 struct TokenPickerViewModel {
-    
+
     let title: String
     let allowMultiSelection: Bool
     let content: Content
@@ -92,4 +92,5 @@ extension TokenPickerViewModel {
             return []
         }
     }
+
 }

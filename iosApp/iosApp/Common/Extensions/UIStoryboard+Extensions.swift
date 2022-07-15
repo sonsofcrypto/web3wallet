@@ -28,6 +28,7 @@ extension UIStoryboard {
         case keyStore = "KeyStore"
         case mnemonicNew = "MnemonicNew"
         case mnemonicUpdate = "MnemonicUpdate"
+        case mnemonicImport = "MnemonicImport"
         case dashboard = "Dashboard"
         case networks = "Networks"
         case account = "Account"
@@ -40,5 +41,6 @@ extension UIStoryboard {
         case tokenSend = "TokenSend"
         case networkPicker = "NetworkPicker"
         case qrCodeScan = "QRCodeScan"
+        case authenticate = "Authenticate"
     }
 }

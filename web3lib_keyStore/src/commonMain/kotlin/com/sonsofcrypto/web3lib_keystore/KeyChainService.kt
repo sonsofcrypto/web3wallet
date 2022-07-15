@@ -29,4 +29,7 @@ interface KeyChainService {
     @Throws(KeyChainServiceErr::class)
     fun set(id: String, data: ByteArray, type: ServiceType, icloud: Boolean)
     fun remove(id: String, type: ServiceType)
+
+    fun biometricsSupported(): Boolean
+    fun biometricsAuthenticate(title: String, handler: (Boolean, Error?) -> Unit)
 }

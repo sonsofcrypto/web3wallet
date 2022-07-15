@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A4C3001CAC79A77987DA8AE /* Error+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39798419CEB3807348FA /* Error+Extensions.swift */; };
 		1A4C30116B1618C1596D9D14 /* NetworksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DAB38F681061328F3F0 /* NetworksService.swift */; };
 		1A4C303A23D7DA2A37B292C1 /* CardFlipTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E976CBAB0A97E8AF408 /* CardFlipTransition.swift */; };
 		1A4C308B6FA11A032039F086 /* CandlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C359691FCF66942DF6CEF /* CandlesView.swift */; };
 		1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C300D073ABE25FC79D4A9 /* CollectionViewCell.swift */; };
+		1A4C30D6ED56A03136C4CA71 /* Kotlin+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C301CA1E59BEACD136BCD /* Kotlin+Extensions.swift */; };
+		1A4C31D59C7D2B84D247FDDD /* TransformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C393772D3384C556C29C3 /* TransformView.swift */; };
 		1A4C31E84A86A69FFC7C3E0F /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D40E32D58F958911B60 /* Setting.swift */; };
 		1A4C33A130E35EBC0BC27B07 /* mock-candles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1A4C3EE3468010FE10976BEE /* mock-candles.json */; };
 		1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */; };
@@ -23,18 +26,20 @@
 		1A4C37AEF66358EA9CA0CA59 /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C388B9A42E6A279D2867F /* AccountService.swift */; };
 		1A4C38C98450A3C5884565AC /* CultProposal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C36ECC90C8D924B7C413B /* CultProposal.swift */; };
 		1A4C39EAC9477080E80A6C07 /* EdgeCardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3178DA54CD0800157DD5 /* EdgeCardsController.swift */; };
+		1A4C3A41389B5EC22F3B2B88 /* Authenticate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A4C39D6ADB830082AC3CEA6 /* Authenticate.storyboard */; };
 		1A4C3AD382E8BADCBE160CBC /* DApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C375870963EEF9ECBE64B /* DApp.swift */; };
 		1A4C3B1D9B56685FF628A0AD /* DegenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C34077200A9E856B77DDF /* DegenService.swift */; };
+		1A4C3B25A582595A7B1E8EA9 /* PreferredSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C332FF69B880FCA444DE2 /* PreferredSizePresentationController.swift */; };
 		1A4C3B49BC67AF7AA3BF0D8F /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3644A9D218CC991B2A56 /* VisualEffectView.swift */; };
 		1A4C3B697503D478741295DB /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DBA41AF75471C619124 /* TextField.swift */; };
 		1A4C3B6D2DFADBE2EF71F3A5 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DED61DB8FC18EFD5B0B /* SettingsService.swift */; };
-		1A4C3B81B628EF4EDC8F7177 /* TransformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3F5900131CEDA6520958 /* TransformView.swift */; };
 		1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */; };
 		1A4C3C28443621328248F5A7 /* CandlesViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C344022DBA2423C0F15F6 /* CandlesViewViewModel.swift */; };
 		1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C325A6875E5041A491945 /* CollectionView.swift */; };
 		1A4C3CFB23D66DF60B4BCE71 /* KeyStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3553B19E38E28C955332 /* KeyStoreService.swift */; };
 		1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3B70AA1B0BC942B15671 /* Store.swift */; };
 		1A4C3E41DA2739ED48CD12F9 /* CultServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3635DC5425C3CA3A2D25 /* CultServiceAssembler.swift */; };
+		1A4C3E81CF175B7B283C13E0 /* AuthenticateContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3B4D97107E875FCF5F38 /* AuthenticateContext.swift */; };
 		1A4C3EB4D429242923984C76 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3378B5287B6A9BDE65CD /* Button.swift */; };
 		1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */; };
 		1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */; };
@@ -412,6 +417,21 @@
 		D157F7EE27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */; };
 		D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B06C227B6D23C008C3C62 /* GradienView.swift */; };
 		D1966C3C281468C300550332 /* SecretStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1966C3B281468C300550332 /* SecretStorageTests.swift */; };
+		D1976B0C287EFAE10063FC9C /* MnemonicImportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B03287EFAE10063FC9C /* MnemonicImportCell.swift */; };
+		D1976B0D287EFAE10063FC9C /* MnemonicImportContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B04287EFAE10063FC9C /* MnemonicImportContext.swift */; };
+		D1976B0E287EFAE10063FC9C /* MnemonicImportWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B05287EFAE10063FC9C /* MnemonicImportWireframe.swift */; };
+		D1976B0F287EFAE10063FC9C /* MnemonicImportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B06287EFAE10063FC9C /* MnemonicImportViewModel.swift */; };
+		D1976B10287EFAE10063FC9C /* MnemonicImportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B07287EFAE10063FC9C /* MnemonicImportPresenter.swift */; };
+		D1976B11287EFAE10063FC9C /* MnemonicImportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B08287EFAE10063FC9C /* MnemonicImportView.swift */; };
+		D1976B12287EFAE10063FC9C /* MnemonicImportWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B09287EFAE10063FC9C /* MnemonicImportWireframeFactory.swift */; };
+		D1976B13287EFAE10063FC9C /* MnemonicImportInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B0A287EFAE10063FC9C /* MnemonicImportInteractor.swift */; };
+		D1976B14287EFAE10063FC9C /* MnemonicImport.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1976B0B287EFAE10063FC9C /* MnemonicImport.storyboard */; };
+		D1A12A60287D333900606FC8 /* AuthenticateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A59287D333900606FC8 /* AuthenticateView.swift */; };
+		D1A12A61287D333900606FC8 /* AuthenticateInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A5A287D333900606FC8 /* AuthenticateInteractor.swift */; };
+		D1A12A63287D333900606FC8 /* AuthenticatePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A5C287D333900606FC8 /* AuthenticatePresenter.swift */; };
+		D1A12A64287D333900606FC8 /* AuthenticateWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A5D287D333900606FC8 /* AuthenticateWireframeFactory.swift */; };
+		D1A12A65287D333900606FC8 /* AuthenticateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A5E287D333900606FC8 /* AuthenticateViewModel.swift */; };
+		D1A12A66287D333900606FC8 /* AuthenticateWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A5F287D333900606FC8 /* AuthenticateWireframe.swift */; };
 		D1A564C12843E24700D4B7D8 /* CoreCrypto.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A564C02843E24700D4B7D8 /* CoreCrypto.xcframework */; };
 		D1A67140283D6BAE0042A448 /* web3lib.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A6713F283D6BAE0042A448 /* web3lib.xcframework */; };
 		D1A67141283D6BAE0042A448 /* web3lib.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D1A6713F283D6BAE0042A448 /* web3lib.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -421,7 +441,7 @@
 		D1ED7261287C1122005805CF /* TokenSendToCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ED725E287C1122005805CF /* TokenSendToCollectionViewCell.swift */; };
 		D1EF5BC7287BEE92004CAD82 /* MnemonicUpdateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BBE287BEE92004CAD82 /* MnemonicUpdateCell.swift */; };
 		D1EF5BC8287BEE92004CAD82 /* MnemonicUpdateContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BBF287BEE92004CAD82 /* MnemonicUpdateContext.swift */; };
-		D1EF5BC9287BEE92004CAD82 /* DefaultMnemonicUpdateWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BC0287BEE92004CAD82 /* DefaultMnemonicUpdateWireframe.swift */; };
+		D1EF5BC9287BEE92004CAD82 /* MnemonicUpdateWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BC0287BEE92004CAD82 /* MnemonicUpdateWireframe.swift */; };
 		D1EF5BCA287BEE92004CAD82 /* MnemonicUpdateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BC1287BEE92004CAD82 /* MnemonicUpdateViewModel.swift */; };
 		D1EF5BCB287BEE92004CAD82 /* MnemonicUpdate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1EF5BC2287BEE92004CAD82 /* MnemonicUpdate.storyboard */; };
 		D1EF5BCC287BEE92004CAD82 /* MnemonicUpdatePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF5BC3287BEE92004CAD82 /* MnemonicUpdatePresenter.swift */; };
@@ -463,11 +483,13 @@
 
 /* Begin PBXFileReference section */
 		1A4C300D073ABE25FC79D4A9 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		1A4C301CA1E59BEACD136BCD /* Kotlin+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Kotlin+Extensions.swift"; sourceTree = "<group>"; };
 		1A4C308C7EEAF2E80221C519 /* TouchPassThroughCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchPassThroughCollectionView.swift; sourceTree = "<group>"; };
 		1A4C309894247AA73F274756 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		1A4C3178DA54CD0800157DD5 /* EdgeCardsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EdgeCardsController.swift; sourceTree = "<group>"; };
 		1A4C3228790C1569B37F5179 /* AppsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsService.swift; sourceTree = "<group>"; };
 		1A4C325A6875E5041A491945 /* CollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
+		1A4C332FF69B880FCA444DE2 /* PreferredSizePresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferredSizePresentationController.swift; sourceTree = "<group>"; };
 		1A4C3378B5287B6A9BDE65CD /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		1A4C34077200A9E856B77DDF /* DegenService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenService.swift; sourceTree = "<group>"; };
 		1A4C344022DBA2423C0F15F6 /* CandlesViewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandlesViewViewModel.swift; sourceTree = "<group>"; };
@@ -481,8 +503,13 @@
 		1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsService.swift; sourceTree = "<group>"; };
 		1A4C388B9A42E6A279D2867F /* AccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
 		1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewEffectViewiOS14.swift; sourceTree = "<group>"; };
+		1A4C393772D3384C556C29C3 /* TransformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformView.swift; sourceTree = "<group>"; };
+		1A4C39798419CEB3807348FA /* Error+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error+Extensions.swift"; sourceTree = "<group>"; };
 		1A4C39C4B0802356E1007E01 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAppCategory.swift; sourceTree = "<group>"; };
+		1A4C39D6ADB830082AC3CEA6 /* Authenticate.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Authenticate.storyboard; sourceTree = "<group>"; };
+		1A4C39FB21CCAF442F3001E6 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		1A4C3B4D97107E875FCF5F38 /* AuthenticateContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateContext.swift; sourceTree = "<group>"; };
 		1A4C3B70AA1B0BC942B15671 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		1A4C3D40E32D58F958911B60 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
@@ -491,7 +518,6 @@
 		1A4C3DED61DB8FC18EFD5B0B /* SettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
 		1A4C3E976CBAB0A97E8AF408 /* CardFlipTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFlipTransition.swift; sourceTree = "<group>"; };
 		1A4C3EE3468010FE10976BEE /* mock-candles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mock-candles.json"; sourceTree = "<group>"; };
-		1A4C3F5900131CEDA6520958 /* TransformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformView.swift; sourceTree = "<group>"; };
 		1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnOffSwitch.swift; sourceTree = "<group>"; };
 		1C47C0E4287BFC06008E0146 /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
 		1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
@@ -872,6 +898,21 @@
 		D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3walletUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D15B06C227B6D23C008C3C62 /* GradienView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradienView.swift; sourceTree = "<group>"; };
 		D1966C3B281468C300550332 /* SecretStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretStorageTests.swift; sourceTree = "<group>"; };
+		D1976B03287EFAE10063FC9C /* MnemonicImportCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportCell.swift; sourceTree = "<group>"; };
+		D1976B04287EFAE10063FC9C /* MnemonicImportContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportContext.swift; sourceTree = "<group>"; };
+		D1976B05287EFAE10063FC9C /* MnemonicImportWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportWireframe.swift; sourceTree = "<group>"; };
+		D1976B06287EFAE10063FC9C /* MnemonicImportViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportViewModel.swift; sourceTree = "<group>"; };
+		D1976B07287EFAE10063FC9C /* MnemonicImportPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportPresenter.swift; sourceTree = "<group>"; };
+		D1976B08287EFAE10063FC9C /* MnemonicImportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportView.swift; sourceTree = "<group>"; };
+		D1976B09287EFAE10063FC9C /* MnemonicImportWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportWireframeFactory.swift; sourceTree = "<group>"; };
+		D1976B0A287EFAE10063FC9C /* MnemonicImportInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportInteractor.swift; sourceTree = "<group>"; };
+		D1976B0B287EFAE10063FC9C /* MnemonicImport.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MnemonicImport.storyboard; sourceTree = "<group>"; };
+		D1A12A59287D333900606FC8 /* AuthenticateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateView.swift; sourceTree = "<group>"; };
+		D1A12A5A287D333900606FC8 /* AuthenticateInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateInteractor.swift; sourceTree = "<group>"; };
+		D1A12A5C287D333900606FC8 /* AuthenticatePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticatePresenter.swift; sourceTree = "<group>"; };
+		D1A12A5D287D333900606FC8 /* AuthenticateWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateWireframeFactory.swift; sourceTree = "<group>"; };
+		D1A12A5E287D333900606FC8 /* AuthenticateViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateViewModel.swift; sourceTree = "<group>"; };
+		D1A12A5F287D333900606FC8 /* AuthenticateWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateWireframe.swift; sourceTree = "<group>"; };
 		D1A564C02843E24700D4B7D8 /* CoreCrypto.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CoreCrypto.xcframework; path = Frameworks/CoreCrypto.xcframework; sourceTree = "<group>"; };
 		D1A6713F283D6BAE0042A448 /* web3lib.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = web3lib.xcframework; path = ../web3lib/build/XCFrameworks/debug/web3lib.xcframework; sourceTree = "<group>"; };
 		D1BC5302284B5B89007E6FF4 /* CultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultService.swift; sourceTree = "<group>"; };
@@ -880,7 +921,7 @@
 		D1ED725E287C1122005805CF /* TokenSendToCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenSendToCollectionViewCell.swift; sourceTree = "<group>"; };
 		D1EF5BBE287BEE92004CAD82 /* MnemonicUpdateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateCell.swift; sourceTree = "<group>"; };
 		D1EF5BBF287BEE92004CAD82 /* MnemonicUpdateContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateContext.swift; sourceTree = "<group>"; };
-		D1EF5BC0287BEE92004CAD82 /* DefaultMnemonicUpdateWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultMnemonicUpdateWireframe.swift; sourceTree = "<group>"; };
+		D1EF5BC0287BEE92004CAD82 /* MnemonicUpdateWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateWireframe.swift; sourceTree = "<group>"; };
 		D1EF5BC1287BEE92004CAD82 /* MnemonicUpdateViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateViewModel.swift; sourceTree = "<group>"; };
 		D1EF5BC2287BEE92004CAD82 /* MnemonicUpdate.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MnemonicUpdate.storyboard; sourceTree = "<group>"; };
 		D1EF5BC3287BEE92004CAD82 /* MnemonicUpdatePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicUpdatePresenter.swift; sourceTree = "<group>"; };
@@ -983,7 +1024,7 @@
 				1A4C3649032759624C3E2734 /* CardFlipAnimatedTransitioning2.swift */,
 				1A4C3E976CBAB0A97E8AF408 /* CardFlipTransition.swift */,
 				1CE66BD12848ED4000AB6ACA /* PresentationStyle.swift */,
-				1A4C3F5900131CEDA6520958 /* TransformView.swift */,
+				1A4C332FF69B880FCA444DE2 /* PreferredSizePresentationController.swift */,
 			);
 			path = Transitions;
 			sourceTree = "<group>";
@@ -1046,6 +1087,7 @@
 				1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */,
 				1A4C309894247AA73F274756 /* TabBarController.swift */,
 				1A4C39C4B0802356E1007E01 /* WebViewController.swift */,
+				1A4C393772D3384C556C29C3 /* TransformView.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1148,6 +1190,7 @@
 		1C60C1C7285724D0003BE25D /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				D1A12A58287D333900606FC8 /* Authenticate */,
 				1C60C244285724D0003BE25D /* Account */,
 				1C60C1FA285724D0003BE25D /* Alert */,
 				1C60C253285724D0003BE25D /* Apps */,
@@ -1158,6 +1201,8 @@
 				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
 				1C60C202285724D0003BE25D /* MnemonicNew */,
 				D1EF5BBC287BEE92004CAD82 /* MnemonicUpdate */,
+				D1976B01287EFAE10063FC9C /* MnemonicImport */,
+				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
 				1C54DBFB2860E59600E378F6 /* NetworkPicker */,
 				1C60C21C285724D0003BE25D /* Networks */,
 				1C60C225285724D0003BE25D /* NFTDetail */,
@@ -1755,6 +1800,8 @@
 				1CB3A1D52840D6B70092D667 /* UIView+Extensions.swift */,
 				1CB3A1D82840D6B70092D667 /* UIView+LayoutConstraints+Extensions.swift */,
 				1C60C37A2859BDD9003BE25D /* UIView+Toast+Extensions.swift */,
+				1A4C39798419CEB3807348FA /* Error+Extensions.swift */,
+				1A4C301CA1E59BEACD136BCD /* Kotlin+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1971,6 +2018,45 @@
 			path = Store;
 			sourceTree = "<group>";
 		};
+		D1976B01287EFAE10063FC9C /* MnemonicImport */ = {
+			isa = PBXGroup;
+			children = (
+				D1976B02287EFAE10063FC9C /* Cells */,
+				D1976B04287EFAE10063FC9C /* MnemonicImportContext.swift */,
+				D1976B05287EFAE10063FC9C /* MnemonicImportWireframe.swift */,
+				D1976B06287EFAE10063FC9C /* MnemonicImportViewModel.swift */,
+				D1976B07287EFAE10063FC9C /* MnemonicImportPresenter.swift */,
+				D1976B08287EFAE10063FC9C /* MnemonicImportView.swift */,
+				D1976B09287EFAE10063FC9C /* MnemonicImportWireframeFactory.swift */,
+				D1976B0A287EFAE10063FC9C /* MnemonicImportInteractor.swift */,
+				D1976B0B287EFAE10063FC9C /* MnemonicImport.storyboard */,
+			);
+			path = MnemonicImport;
+			sourceTree = "<group>";
+		};
+		D1976B02287EFAE10063FC9C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				D1976B03287EFAE10063FC9C /* MnemonicImportCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		D1A12A58287D333900606FC8 /* Authenticate */ = {
+			isa = PBXGroup;
+			children = (
+				D1A12A59287D333900606FC8 /* AuthenticateView.swift */,
+				D1A12A5A287D333900606FC8 /* AuthenticateInteractor.swift */,
+				D1A12A5C287D333900606FC8 /* AuthenticatePresenter.swift */,
+				D1A12A5D287D333900606FC8 /* AuthenticateWireframeFactory.swift */,
+				D1A12A5E287D333900606FC8 /* AuthenticateViewModel.swift */,
+				D1A12A5F287D333900606FC8 /* AuthenticateWireframe.swift */,
+				1A4C3B4D97107E875FCF5F38 /* AuthenticateContext.swift */,
+				1A4C39D6ADB830082AC3CEA6 /* Authenticate.storyboard */,
+			);
+			path = Authenticate;
+			sourceTree = "<group>";
+		};
 		D1BC5304284B5B8E007E6FF4 /* CultService */ = {
 			isa = PBXGroup;
 			children = (
@@ -2008,7 +2094,7 @@
 			children = (
 				D1EF5BBD287BEE92004CAD82 /* Cells */,
 				D1EF5BBF287BEE92004CAD82 /* MnemonicUpdateContext.swift */,
-				D1EF5BC0287BEE92004CAD82 /* DefaultMnemonicUpdateWireframe.swift */,
+				D1EF5BC0287BEE92004CAD82 /* MnemonicUpdateWireframe.swift */,
 				D1EF5BC1287BEE92004CAD82 /* MnemonicUpdateViewModel.swift */,
 				D1EF5BC2287BEE92004CAD82 /* MnemonicUpdate.storyboard */,
 				D1EF5BC3287BEE92004CAD82 /* MnemonicUpdatePresenter.swift */,
@@ -2132,7 +2218,7 @@
 			);
 			mainGroup = D157F7BE27B69B6300578FF8;
 			packageReferences = (
-				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
 			);
 			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
 			projectDirPath = "";
@@ -2199,6 +2285,7 @@
 				D157F7D427B69B6400578FF8 /* Assets.xcassets in Resources */,
 				D11A990327B8615B00EDFDD0 /* GothicA1-Thin.ttf in Resources */,
 				1CD843EA287218C800E6D359 /* OCR-A Regular.ttf in Resources */,
+				D1976B14287EFAE10063FC9C /* MnemonicImport.storyboard in Resources */,
 				D11A990927B8615B00EDFDD0 /* GothicA1-SemiBold.ttf in Resources */,
 				1C9E31A3287580E500DD2031 /* TokenSend.storyboard in Resources */,
 				D157F7D227B69B6300578FF8 /* Main.storyboard in Resources */,
@@ -2214,6 +2301,7 @@
 				1C54DC5728683DDA00E378F6 /* NaokoAA-Medium.otf in Resources */,
 				1C60C327285724D1003BE25D /* MnemonicConfirmation.storyboard in Resources */,
 				1A4C33A130E35EBC0BC27B07 /* mock-candles.json in Resources */,
+				1A4C3A41389B5EC22F3B2B88 /* Authenticate.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2261,6 +2349,7 @@
 				D11A990F27B99D1800EDFDD0 /* AnyDecodable.swift in Sources */,
 				D11A991027B99D1800EDFDD0 /* AnyCodable.swift in Sources */,
 				1C60C2C4285724D0003BE25D /* ChatRightCollectionViewCell.swift in Sources */,
+				D1976B13287EFAE10063FC9C /* MnemonicImportInteractor.swift in Sources */,
 				1C54DBFA285F9EBF00E378F6 /* TokenAddNetworkView.swift in Sources */,
 				1C54DC192862352200E378F6 /* QRCodeScanWireframeFactory.swift in Sources */,
 				1C60C37E2859CC2A003BE25D /* ShareFactoryHelper.swift in Sources */,
@@ -2305,6 +2394,7 @@
 				1C60C320285724D1003BE25D /* AppsInteractor.swift in Sources */,
 				1C60C2B7285724D0003BE25D /* KeyStoreInteractor.swift in Sources */,
 				1C60C2C6285724D0003BE25D /* ChatViewModel.swift in Sources */,
+				D1976B0F287EFAE10063FC9C /* MnemonicImportViewModel.swift in Sources */,
 				1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */,
 				1C60C351285724D1003BE25D /* CultProposalsView.swift in Sources */,
 				1C60C2FA285724D0003BE25D /* NFTDetailView+Content+Price.swift in Sources */,
@@ -2330,7 +2420,7 @@
 				1C60C32E285724D1003BE25D /* NFTsCollectionView.swift in Sources */,
 				1C60C2A9285724D0003BE25D /* SettingsItem.swift in Sources */,
 				1C60C3772858634A003BE25D /* DefaultWeb3Service.swift in Sources */,
-				D1EF5BC9287BEE92004CAD82 /* DefaultMnemonicUpdateWireframe.swift in Sources */,
+				D1EF5BC9287BEE92004CAD82 /* MnemonicUpdateWireframe.swift in Sources */,
 				1C60C308285724D1003BE25D /* NFTsDashboardWireframeFactory.swift in Sources */,
 				1C60C325285724D1003BE25D /* AppsView.swift in Sources */,
 				1C60C34E285724D1003BE25D /* CultProposalCell.swift in Sources */,
@@ -2360,6 +2450,7 @@
 				1C60C326285724D1003BE25D /* MnemonicConfirmationPresenter.swift in Sources */,
 				1C6487162832DEFE0091A12D /* Reachability.swift in Sources */,
 				1C60C2FE285724D0003BE25D /* NFTDetailView+Content+Properties.swift in Sources */,
+				D1976B0E287EFAE10063FC9C /* MnemonicImportWireframe.swift in Sources */,
 				1C64870B2832DD630091A12D /* MainBootstrapper.swift in Sources */,
 				1C60C2EB285724D0003BE25D /* NetworksViewModel.swift in Sources */,
 				1C60C2BF285724D0003BE25D /* KeyStoreWireframe.swift in Sources */,
@@ -2449,29 +2540,35 @@
 				1C60C38C285B9F71003BE25D /* PriceHistoryService.swift in Sources */,
 				1C60C30F285724D1003BE25D /* AccountChartCell.swift in Sources */,
 				1C60C38E285B9F7F003BE25D /* PriceHistoryServiceAssembler.swift in Sources */,
+				D1A12A65287D333900606FC8 /* AuthenticateViewModel.swift in Sources */,
 				1C60C34B285724D1003BE25D /* CultProposalView.swift in Sources */,
 				1CB3A1E42840D6B70092D667 /* Int+Extensions.swift in Sources */,
 				1C54DBE7285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift in Sources */,
 				1C60C348285724D1003BE25D /* CultProposalPresenter.swift in Sources */,
 				1C60C2D5285724D0003BE25D /* MnemonicNewViewModel.swift in Sources */,
 				1CB3A1EA2840D6B70092D667 /* String+Extensions.swift in Sources */,
+				D1A12A61287D333900606FC8 /* AuthenticateInteractor.swift in Sources */,
 				1C54DBF8285F8F3700E378F6 /* TokenAddCollectionViewCell.swift in Sources */,
 				1C60C309285724D1003BE25D /* RootWireframe.swift in Sources */,
 				1C54DBE5285E832600E378F6 /* TokenAddWireframeFactory.swift in Sources */,
 				1CB3A1E82840D6B70092D667 /* UIButton+Extensions.swift in Sources */,
+				D1976B12287EFAE10063FC9C /* MnemonicImportWireframeFactory.swift in Sources */,
 				1C60C2F8285724D0003BE25D /* NFTDetailViewModel.swift in Sources */,
 				1CE66BCC2848EA9F00AB6ACA /* DefaultChatService.swift in Sources */,
 				1C60C333285724D1003BE25D /* NFTsCollectionWireframeFactory.swift in Sources */,
 				1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */,
 				1C6487142832DE560091A12D /* ReachabilityServiceAssembler.swift in Sources */,
 				1CB3A1F12840D6B70092D667 /* UIBarButtonItem+Extensions.swift in Sources */,
+				D1976B0D287EFAE10063FC9C /* MnemonicImportContext.swift in Sources */,
 				1C60C1AA28571B95003BE25D /* UIColor+Extensions.swift in Sources */,
 				D1ED7260287C1122005805CF /* TokenSendCTACollectionViewCell.swift in Sources */,
+				D1A12A66287D333900606FC8 /* AuthenticateWireframe.swift in Sources */,
 				D1EF5BCF287BEE92004CAD82 /* MnemonicUpdateInteractor.swift in Sources */,
 				1C60C2E7285724D0003BE25D /* DashboardViewModel.swift in Sources */,
 				1C60C36D2857C605003BE25D /* TokenReceiveWireframeFactoryAssembler.swift in Sources */,
 				1C60C2B0285724D0003BE25D /* TokenPickerGroupCell.swift in Sources */,
 				1C60C1AE28572405003BE25D /* Web3ServiceAssembler.swift in Sources */,
+				D1A12A64287D333900606FC8 /* AuthenticateWireframeFactory.swift in Sources */,
 				1CD843F82874215F00E6D359 /* MnemonicNewCell.swift in Sources */,
 				1C60C35C285724D1003BE25D /* DegenPresenter.swift in Sources */,
 				1A4C3B6D2DFADBE2EF71F3A5 /* SettingsService.swift in Sources */,
@@ -2539,6 +2636,7 @@
 				1C54DC172862351D00E378F6 /* QRCodeScanWireframe.swift in Sources */,
 				1C54DC0E2860E91D00E378F6 /* NetworkPickerItemCell.swift in Sources */,
 				1C60C312285724D1003BE25D /* AccountHeaderCell.swift in Sources */,
+				D1976B11287EFAE10063FC9C /* MnemonicImportView.swift in Sources */,
 				1C54DC092860E5D200E378F6 /* NetworkPickerWireframeFactoryAssembler.swift in Sources */,
 				1C60C317285724D1003BE25D /* AccountInteractor.swift in Sources */,
 				1C60C2B1285724D0003BE25D /* TokenPickerViewModel.swift in Sources */,
@@ -2549,9 +2647,12 @@
 				1CD843F62874215F00E6D359 /* SectionLabelFooter.swift in Sources */,
 				1C60C31D285724D1003BE25D /* AppsCollectionViewCell.swift in Sources */,
 				1C60C305285724D1003BE25D /* NFTsDashboardWireframeFactoryAssembler.swift in Sources */,
+				D1A12A60287D333900606FC8 /* AuthenticateView.swift in Sources */,
 				1C60C384285A649B003BE25D /* Web3ServiceLocalStorage.swift in Sources */,
+				D1976B10287EFAE10063FC9C /* MnemonicImportPresenter.swift in Sources */,
 				1C60C2D8285724D0003BE25D /* MnemonicNewInteractor.swift in Sources */,
 				1C6487122832DE4D0091A12D /* ReachabilityService.swift in Sources */,
+				D1976B0C287EFAE10063FC9C /* MnemonicImportCell.swift in Sources */,
 				1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */,
 				1C60C34D285724D1003BE25D /* CultProposalVoteView.swift in Sources */,
 				1C6487302832E5E90091A12D /* DefaultNetworksService.swift in Sources */,
@@ -2561,7 +2662,6 @@
 				1C54DC052860E5C500E378F6 /* NetworkPickerWireframe.swift in Sources */,
 				1CD844002874257500E6D359 /* SwitchTextInputCollectionViewCell.swift in Sources */,
 				1A4C373BF33DAF794F261056 /* CardFlipAnimatedTransitioning2.swift in Sources */,
-				1A4C3B81B628EF4EDC8F7177 /* TransformView.swift in Sources */,
 				1C47C0E5287BFC06008E0146 /* SeparatorView.swift in Sources */,
 				1A4C31E84A86A69FFC7C3E0F /* Setting.swift in Sources */,
 				1C60C342285724D1003BE25D /* AMMsWireframeFactoryAssembler.swift in Sources */,
@@ -2604,11 +2704,17 @@
 				1C60C2B8285724D0003BE25D /* KeyStoreWireframeFactory.swift in Sources */,
 				1C60C307285724D1003BE25D /* NFTsDashboardInteractor.swift in Sources */,
 				1C60C329285724D1003BE25D /* MnemonicConfirmationService.swift in Sources */,
+				D1A12A63287D333900606FC8 /* AuthenticatePresenter.swift in Sources */,
 				1A4C35A9CDBB31FFE29C51D1 /* WebViewController.swift in Sources */,
 				1A4C38C98450A3C5884565AC /* CultProposal.swift in Sources */,
 				1A4C3E41DA2739ED48CD12F9 /* CultServiceAssembler.swift in Sources */,
 				1C60C30E285724D1003BE25D /* AccountMarketInfoCell.swift in Sources */,
 				1A4C3CFB23D66DF60B4BCE71 /* KeyStoreService.swift in Sources */,
+				1A4C3E81CF175B7B283C13E0 /* AuthenticateContext.swift in Sources */,
+				1A4C3B25A582595A7B1E8EA9 /* PreferredSizePresentationController.swift in Sources */,
+				1A4C3001CAC79A77987DA8AE /* Error+Extensions.swift in Sources */,
+				1A4C30D6ED56A03136C4CA71 /* Kotlin+Extensions.swift in Sources */,
+				1A4C31D59C7D2B84D247FDDD /* TransformView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2788,13 +2894,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 5K4DT22LXR;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = web3wallet;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We use the phone's camera to read QR codes";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Authenticate $(PRODUCT_NAME)";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -2826,13 +2933,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 5K4DT22LXR;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = web3wallet;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We use the phone's camera to read QR codes";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Authenticate $(PRODUCT_NAME)";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -2968,7 +3076,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -2981,7 +3089,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		1C5B603A284675B800ECBD79 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */

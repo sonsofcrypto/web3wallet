@@ -40,6 +40,9 @@ class SegmentWithTextAndSwitchCell: CollectionViewCell {
         textField.delegate = self
         textField.rightView = makeClearButton()
         textField.rightViewMode = .whileEditing
+        (textField as? TextField)?.textChangeHandler = { [weak self] text in
+            self?.textChangeHandler?(text ?? "")
+        }
         
         onOffSwitch.addTarget(
             self,
@@ -95,13 +98,8 @@ class SegmentWithTextAndSwitchCell: CollectionViewCell {
 
 extension SegmentWithTextAndSwitchCell: UITextFieldDelegate {
 
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textChangeHandler?(textField.text ?? "")
-    }
-
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        textChangeHandler?(textField.text ?? "")
         return false
     }
 }
@@ -132,6 +130,28 @@ extension SegmentWithTextAndSwitchCell {
 
     func update(
         with viewModel: MnemonicUpdateViewModel.SegmentWithTextAndSwitchInput,
+        selectSegmentAction: ((Int) -> Void)?,
+        textChangeHandler: ((String)->Void)?,
+        switchHandler: ((Bool)->Void)?
+    ) -> SegmentWithTextAndSwitchCell {
+        update(
+            title: viewModel.title ,
+            password: viewModel.password ,
+            placeholder: viewModel.placeholder ,
+            onOffTitle: viewModel.onOffTitle ,
+            onOff: viewModel.onOff ,
+            segmentOptions: viewModel.segmentOptions ,
+            selectedSegment: viewModel.selectedSegment ,
+            selectSegmentAction: selectSegmentAction,
+            textChangeHandler: textChangeHandler,
+            switchHandler: switchHandler
+        )
+
+        return self
+    }
+
+    func update(
+        with viewModel: MnemonicImportViewModel.SegmentWithTextAndSwitchInput,
         selectSegmentAction: ((Int) -> Void)?,
         textChangeHandler: ((String)->Void)?,
         switchHandler: ((Bool)->Void)?

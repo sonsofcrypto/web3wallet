@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         Bip44Test().runAll()
         KeyValueStoreTest().runAll()
         KeyStoreTest().runAll()
+        TrieTest().runAll()
         println("=== all tests executed ===")
     }
 }

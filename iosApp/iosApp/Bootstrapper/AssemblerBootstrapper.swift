@@ -42,6 +42,7 @@ private extension AssemblerBootstrapper {
             Web3ServiceLocalStorageAssembler(),
             PriceHistoryServiceAssembler(),
             // Modules
+            AuthenticateWireframeFactoryAssembler(),
             AccountWireframeFactoryAssembler(),
             AlertWireframeFactoryAssembler(),
             AppsWireframeFactoryAssembler(),
@@ -52,6 +53,7 @@ private extension AssemblerBootstrapper {
             KeyStoreWireframeFactoryAssembler(),
             MnemonicNewWireframeFactoryAssembler(),
             MnemonicUpdateWireframeFactoryAssembler(),
+            MnemonicImportWireframeFactoryAssembler(),
             MnemonicConfirmationWireframeFactoryAssembler(),
             NetworksWireframeFactoryAssembler(),
             NFTsDashboardWireframeFactoryAssembler(),

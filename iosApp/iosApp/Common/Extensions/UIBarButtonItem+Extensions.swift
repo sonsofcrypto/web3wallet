@@ -20,6 +20,15 @@ extension UIBarButtonItem {
         )
     }
 
+    convenience init(
+        with image: UIImage?,
+        style: UIBarButtonItem.Style = .plain,
+        target: Any?,
+        action: Selector?
+    ) {
+        self.init(image: image, style: style, target: target, action: action)
+    }
+
     static func glowLabel(_ title: String = "") -> UIBarButtonItem {
         
         let label = UILabel(with: .subheadline)

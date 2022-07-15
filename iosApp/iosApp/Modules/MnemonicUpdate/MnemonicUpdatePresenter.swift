@@ -7,15 +7,14 @@ import web3lib
 import UniformTypeIdentifiers
 
 enum MnemonicUpdatePresenterEvent {
+    case didTapMnemonic
     case didChangeName(name: String)
     case didChangeICouldBackup(onOff: Bool)
-    case saltSwitchDidChange(onOff: Bool)
-    case didChangeSalt(salt: String)
-    case saltLearnMoreAction
-    case passTypeDidChange(idx: Int)
-    case passwordDidChange(text: String)
-    case allowFaceIdDidChange(onOff: Bool)
-    case didTapMnemonic
+    case didTapDelete
+    case didChangeAddAccount(toCustom: Bool)
+    case didChangeAccount(idx: Int)
+    case didChangeCustomDerivation(path: String)
+    case didTapAddAccount
     case didSelectCta
     case didSelectDismiss
 }
@@ -36,6 +35,7 @@ final class DefaultMnemonicUpdatePresenter {
 
     private var password: String = ""
     private var salt: String = ""
+    private var customDerivation: Bool = false
 
     private weak var view: MnemonicUpdateView?
 
@@ -62,41 +62,44 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
 
     func present() {
         let start = Date()
-        interactor.generateNewMnemonic()
         updateView()
+        wireframe.navigate(
+            to: .authenticate(
+                context: .init(
+                    title: "Unlock", // TODO(web3dgn): Title should for context dependent ie unlock, sign ...
+                    keyStoreItem: context.keyStoreItem,
+                    handler: handleAuthenticateResult
+                )
+            )
+        )
     }
 
     func handle(_ event: MnemonicUpdatePresenterEvent) {
         switch event {
-        case let .didChangeName(name):
-            interactor.name = name
-        case let .didChangeICouldBackup(onOff):
-            interactor.iCloudSecretStorage = onOff
-        case let .saltSwitchDidChange(onOff):
-            interactor.saltMnemonic = onOff
-            updateView()
-        case let .didChangeSalt(salt):
-             self.salt = salt
-        case .saltLearnMoreAction:
-            wireframe.navigate(to: .learnMoreSalt)
-        case let .passTypeDidChange(idx):
-            let values =  KeyStoreItem.PasswordType.values()
-            interactor.passwordType = values.get(index: Int32(idx))
-                ?? interactor.passwordType
-            updateView()
-        case let .passwordDidChange(text):
-            password = text
-        case let .allowFaceIdDidChange(onOff):
-            interactor.passUnlockWithBio = onOff
         case .didTapMnemonic:
             let mnemonicStr = interactor.mnemonic.joined(separator: " ")
             UIPasteboard.general.setItems(
                 [[UTType.utf8PlainText.identifier: mnemonicStr]],
                 options: [.expirationDate: Date().addingTimeInterval(30.0)]
             )
+        case let .didChangeName(name):
+            interactor.name = name
+        case let .didChangeICouldBackup(onOff):
+            interactor.iCloudSecretStorage = onOff
+        case .didTapDelete:
+            // TODO(web3dgn): Present are you sure as this will delete wallet
+            interactor.delete(context.keyStoreItem)
+        case let .didChangeAddAccount(toCustom):
+            () // TODO: When implementing accounts
+        case let .didChangeAccount(idx):
+            () // TODO: When implementing accounts
+        case let .didChangeCustomDerivation(path):
+            () // TODO: When implementing accounts
+        case .didTapAddAccount:
+            () // TODO: When implementing accounts
         case .didSelectCta:
             do {
-                let item = try interactor.createKeyStoreItem(password, salt: salt)
+                let item = try interactor.update(for: context.keyStoreItem)
                 if let handler = context.didUpdateKeyStoreItemHandler {
                     handler(item)
                 }
@@ -107,7 +110,7 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
                     self.view?.dismiss(animated: true, completion: {})
                 }
             } catch {
-                // TODO: - Handle error
+                // TODO(web3dgn): - Handle error
             }
         case .didSelectDismiss:
             view?.dismiss(animated: true, completion: {})
@@ -115,7 +118,33 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
     }
 }
 
-// MARK: - WalletsViewModel utilities
+// MARK: - Action handlers
+
+private extension DefaultMnemonicUpdatePresenter {
+
+    func handleAuthenticateResult(_ result: AuthenticateContext.AuthResult) {
+        switch result {
+        case let .success(password, salt):
+            self.password = password
+            self.salt = salt
+            do {
+                try interactor.setup(
+                    for: context.keyStoreItem,
+                    password: password,
+                    salt: salt
+                )
+            } catch {
+                // TODO(web3dgn): Present alert with ok, something along the
+                // lines failed to unlock wallet. Tapping OK `wireframe.navigate(to: .dismiss)`
+                // This is unrecoverable error but dont wanna crash the app for it
+            }
+        case let .failure(error):
+            wireframe.navigate(to: .dismiss)
+        }
+    }
+}
+
+// MARK: - MnemonicUpdateViewModel utilities
 
 private extension DefaultMnemonicUpdatePresenter {
 
@@ -162,30 +191,6 @@ private extension DefaultMnemonicUpdatePresenter {
                 onOff: interactor.iCloudSecretStorage
             ),
         ]
-    }
-}
-
-// MARK: - Utilities
-
-private extension DefaultMnemonicUpdatePresenter {
-
-    func selectedPasswordTypeIdx() -> Int {
-        let values = KeyStoreItem.PasswordType.values()
-        for idx in 0..<values.size {
-            if values.get(index: idx) == interactor.passwordType {
-                return Int(idx)
-            }
-        }
-        return 2
-    }
-
-    func passwordTypes() -> [KeyStoreItem.PasswordType] {
-        let values = KeyStoreItem.PasswordType.values()
-        var array = [KeyStoreItem.PasswordType?]()
-        for idx in 0..<values.size {
-            array.append(values.get(index: idx))
-        }
-        return array.compactMap { $0 }
     }
 }
 

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Authenticate-->
+        <scene sceneID="kAc-Pk-Fax">
+            <objects>
+                <viewController storyboardIdentifier="AuthenticateViewController" title="Authenticate" id="ozv-nd-HZD" customClass="AuthenticateViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sR2-sg-55A" customClass="GradientView" customModule="iosApp" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="E48-x9-g35">
+                                <rect key="frame" x="16" y="60" width="382" height="786"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AhO-XF-m2S" customClass="TextField" customModule="iosApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="34"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="ozv-nd-HZD" id="tEC-ch-L3r"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uru-02-rXu" customClass="TextField" customModule="iosApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="382" height="34"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="ozv-nd-HZD" id="Ma6-lQ-n65"/>
+                                        </connections>
+                                    </textField>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VGT-Xr-nTb">
+                                        <rect key="frame" x="0.0" y="100" width="382" height="639"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3yx-4L-4tF" customClass="Button" customModule="iosApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="755" width="382" height="31"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                        <connections>
+                                            <action selector="ctaAction:" destination="ozv-nd-HZD" eventType="touchUpInside" id="ykC-d2-Iv1"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="qxm-99-VhP"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="E48-x9-g35" firstAttribute="top" secondItem="qxm-99-VhP" secondAttribute="top" constant="16" id="25T-e1-TkK"/>
+                            <constraint firstItem="qxm-99-VhP" firstAttribute="bottom" secondItem="E48-x9-g35" secondAttribute="bottom" constant="16" id="Y29-7y-RYS"/>
+                            <constraint firstItem="qxm-99-VhP" firstAttribute="trailing" secondItem="E48-x9-g35" secondAttribute="trailing" constant="16" id="aNU-i9-cW9"/>
+                            <constraint firstItem="E48-x9-g35" firstAttribute="leading" secondItem="qxm-99-VhP" secondAttribute="leading" constant="16" id="wKb-DB-XNC"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Title" id="PPb-lu-dBb">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="Pzs-TZ-At2"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="catButton" destination="3yx-4L-4tF" id="awu-ga-rgI"/>
+                        <outlet property="passwordTextField" destination="AhO-XF-m2S" id="YQT-jC-tYC"/>
+                        <outlet property="saltTextField" destination="Uru-02-rXu" id="BjA-d2-V27"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cQx-oo-5Mw" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1141" y="-567"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

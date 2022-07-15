@@ -5,21 +5,21 @@
 import UIKit
 import web3lib
 
-enum MnemonicUpdateWireframeDestination {
+enum MnemonicImportWireframeDestination {
     case learnMoreSalt
 }
 
-protocol MnemonicUpdateWireframe {
+protocol MnemonicImportWireframe {
     func present()
-    func navigate(to destination: MnemonicUpdateWireframeDestination)
+    func navigate(to destination: MnemonicImportWireframeDestination)
 }
 
 // MARK: - class DefaultMnemonicWireframe {
 
-final class DefaultMnemonicUpdateWireframe {
+final class DefaultMnemonicImportWireframe {
 
     private weak var parent: UIViewController!
-    private let context: MnemonicUpdateContext
+    private let context: MnemonicImportContext
     private let keyStoreService: KeyStoreService
     private let settingsService: SettingsService
 
@@ -27,7 +27,7 @@ final class DefaultMnemonicUpdateWireframe {
 
     init(
         parent: UIViewController?,
-        context: MnemonicUpdateContext,
+        context: MnemonicImportContext,
         keyStoreService: KeyStoreService,
         settingsService: SettingsService
     ) {
@@ -40,7 +40,7 @@ final class DefaultMnemonicUpdateWireframe {
 
 // MARK: - MnemonicWireframe
 
-extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
+extension DefaultMnemonicImportWireframe: MnemonicImportWireframe {
 
     func present() {
         let vc = wireUp()
@@ -61,7 +61,7 @@ extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
         topVc?.show(vc, sender: self)
     }
 
-    func navigate(to destination: MnemonicUpdateWireframeDestination) {
+    func navigate(to destination: MnemonicImportWireframeDestination) {
         switch destination {
         case .learnMoreSalt:
             UIApplication.shared.open(Constant.saltExplanationURL)
@@ -69,13 +69,13 @@ extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
     }
 }
 
-extension DefaultMnemonicUpdateWireframe {
+extension DefaultMnemonicImportWireframe {
 
     private func wireUp() -> UIViewController {
         
-        let interactor = DefaultMnemonicUpdateInteractor(keyStoreService)
-        let vc: MnemonicUpdateViewController = UIStoryboard(.mnemonicUpdate).instantiate()
-        let presenter = DefaultMnemonicUpdatePresenter(
+        let interactor = DefaultMnemonicImportInteractor(keyStoreService)
+        let vc: MnemonicImportViewController = UIStoryboard(.mnemonicImport).instantiate()
+        let presenter = DefaultMnemonicImportPresenter(
             context: context,
             view: vc,
             interactor: interactor,
@@ -89,7 +89,7 @@ extension DefaultMnemonicUpdateWireframe {
 
 // MARK: - Constant
 
-extension DefaultMnemonicUpdateWireframe {
+extension DefaultMnemonicImportWireframe {
 
     enum Constant {
 

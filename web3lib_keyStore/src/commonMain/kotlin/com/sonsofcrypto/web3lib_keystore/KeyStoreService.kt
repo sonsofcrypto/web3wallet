@@ -25,6 +25,12 @@ interface KeyStoreService {
     fun items(): List<KeyStoreItem>
     /** Retrieves `SecretStorage` for `KeyStoreItem` using password */
     fun secretStorage(item: KeyStoreItem, password: String): SecretStorage?
+    /** Does device support biometrics authentication */
+    fun biometricsSupported(): Boolean
+    /** Authenticate with biometrics */
+    fun biometricsAuthenticate(title: String, handler: (Boolean, Error?) -> Unit)
+    /** Retrieves password from keychain if one is present */
+    fun password(item: KeyStoreItem): String?
 }
 
 class DefaultKeyStoreService(
@@ -70,10 +76,28 @@ class DefaultKeyStoreService(
     }
 
     override fun secretStorage(item: KeyStoreItem, password: String): SecretStorage? {
-        val data = keyChainService.get(item.uuid, ServiceType.SECRET_STORAGE)
-        if (data != null) {
-            return ProtoBuf.decodeFromByteArray<SecretStorage>(data)
+        try {
+            return ProtoBuf.decodeFromByteArray<SecretStorage>(
+                keyChainService.get(item.uuid, ServiceType.SECRET_STORAGE)
+            )
+        } catch (exception: Exception) {
+            return null
         }
-        return null
+    }
+
+    override fun biometricsSupported(): Boolean = keyChainService.biometricsSupported()
+
+    override fun biometricsAuthenticate(title: String, handler: (Boolean, Error?) -> Unit) {
+        keyChainService.biometricsAuthenticate(title, handler)
+    }
+
+    override fun password(item: KeyStoreItem): String? {
+        try {
+            return ProtoBuf.decodeFromByteArray<String>(
+                keyChainService.get(item.uuid, ServiceType.PASSWORD)
+            )
+        } catch (error: Throwable) {
+            return null
+        }
     }
 }

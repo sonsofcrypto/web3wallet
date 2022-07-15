@@ -40,4 +40,16 @@ data class KeyStoreItem(
     enum class PasswordType {
         PIN, PASS, BIO,
     }
+
+    // Can unlock item with biometrics only (No need for pass entry UI)
+    fun canUnlockWithBio(): Boolean {
+        if (saltMnemonic) {
+            return false
+        }
+
+        return when {
+            passUnlockWithBio || passwordType == PasswordType.BIO -> true
+            else -> false
+        }
+    }
 }

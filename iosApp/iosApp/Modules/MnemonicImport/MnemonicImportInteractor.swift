@@ -5,14 +5,14 @@
 import Foundation
 import web3lib
 
-enum MnemonicNewInteractorError: Error {
-    case failedCreateBip39Bip44
+enum MnemonicImportInteractorError: Error {
+    case invalidWordCount
     case failedToLoadSecretStorageData
 }
 
-protocol MnemonicNewInteractor: AnyObject {
-    /// Entropy size ie word count
-    var entropySize: Bip39.EntropySize { get set }
+protocol MnemonicImportInteractor: AnyObject {
+    /// Bip39 mnemonic
+    var mnemonic: [String] { get set }
     /// Name of the `KeyStoreItem`
     var name: String { get set }
     /// Allows using Biometrics instead of typing password in
@@ -25,29 +25,30 @@ protocol MnemonicNewInteractor: AnyObject {
     var passwordType: KeyStoreItem.PasswordType { get set }
     /// Account derivations path
     var derivationPath: String { get set}
-    /// Mnemonic (words)
-    var mnemonic: [String] { get }
     /// Locale of mnemonic
     var locale: String { get }
 
-    /// generates new wallet mnemonic
-    func generateNewMnemonic()
+    /// Suggestions for word, if empty word is not valid bip39 word
+    func suggestions(for word: String) -> [String]
 
-    /// generate password
-    func generatePassword() -> String
+    /// Returns nil if mnemonic is valid
+    func mnemonicError(words: [String], salt: String) -> Error?
 
     /// See if passwords meets minimum specs
     func isValidPassword(password: String) -> Bool
+
+    /// generate password
+    func generatePassword() -> String
 
     /// Creates new `KeyStoreItem` and saves it to `KeyStore`
     func createKeyStoreItem(_ password: String, salt: String) throws -> KeyStoreItem
 }
 
-// MARK: - DefaultMnemonicNewInteractor
+// MARK: - DefaultMnemonicImportInteractor
 
-final class DefaultMnemonicNewInteractor {
+final class DefaultMnemonicImportInteractor {
 
-    var entropySize: Bip39.EntropySize = .es128
+    var mnemonic = [String]()
     var name: String = ""
     var passUnlockWithBio: Bool = true
     var iCloudSecretStorage: Bool = true
@@ -55,8 +56,15 @@ final class DefaultMnemonicNewInteractor {
     var passwordType: KeyStoreItem.PasswordType = .bio
     var derivationPath: String = "m/44'/60'/0'/0/0" // TODO: Get default derivations path from wallet
 
-    private(set) var mnemonic = [String]()
     private(set) var locale = "en"
+
+    private lazy  var validator: Trie = {
+        let trie = Trie()
+        WordList.english.words().forEach {
+            trie.insert(word: $0)
+        }
+        return trie
+    }()
 
     private var bip39: Bip39!
     private var keyStoreService: KeyStoreService
@@ -68,23 +76,24 @@ final class DefaultMnemonicNewInteractor {
 
 // MARK: - DefaultTemplateInteractor
 
-extension DefaultMnemonicNewInteractor: MnemonicNewInteractor {
+extension DefaultMnemonicImportInteractor: MnemonicImportInteractor {
 
-    func generateNewMnemonic() {
-        do {
-            let (bip39, bip44) = try bip39bip44()
-            self.bip39 = bip39
-            mnemonic = bip39.mnemonic
-            locale = bip39.worldList.localeString()
-        } catch {
-            fatalError("Failed to create bip39, bip44. \(error)")
-        }
+    func suggestions(for word: String) -> [String] {
+        return validator.wordsStartingWith(prefix: word)
     }
 
-    func generatePassword() -> String {
-        let password = try! CipherKt.secureRand(size: 32)
-        return String(data: password.toDataFull(), encoding: .ascii)
-            ?? password.toHexString()
+    func mnemonicError(words: [String], salt: String) -> Error? {
+        guard Bip39.companion.isValidWordsCount(count: words.count.int32) else {
+            return MnemonicImportInteractorError.invalidWordCount
+        }
+
+        do {
+            let bip39 = try Bip39(mnemonic: mnemonic, salt: salt, worldList: .english)
+            let bip44 = try Bip44(seed: try bip39.seed(), version: .mainnetprv)
+            return nil
+        } catch {
+            return error
+        }
     }
 
     func createKeyStoreItem(_ password: String, salt: String) throws -> KeyStoreItem {
@@ -123,26 +132,15 @@ extension DefaultMnemonicNewInteractor: MnemonicNewInteractor {
         // TODO(Enric): Validate pass (Pin at least 6 digits, pass at least 8 alpha numeric)
         return true
     }
+
+    func generatePassword() -> String {
+        let password = try! CipherKt.secureRand(size: 32)
+        return String(data: password.toDataFull(), encoding: .ascii)
+            ?? password.toHexString()
+    }
 }
 
-private extension DefaultMnemonicNewInteractor {
-
-    func bip39bip44(_ retry: Int = 3) throws -> (Bip39, Bip44) {
-        do {
-            let bip39 = try Bip39.companion.from(
-                entropySize: entropySize,
-                salt: "",
-                worldList: WordList.companion.fromLocaleString(locale: locale)
-            )
-            return (
-                bip39,
-                try Bip44(seed: try bip39.seed(), version: .mainnetprv)
-            )
-        } catch {
-            guard retry > 0 else { throw error }
-            return try bip39bip44(retry - 1)
-        }
-    }
+private extension DefaultMnemonicImportInteractor {
 
     func wordList(_ localeString: String) -> WordList {
         WordList.companion.fromLocaleString(locale: localeString)
@@ -186,7 +184,7 @@ private extension DefaultMnemonicNewInteractor {
 
 // MARK: - Constant
 
-private extension DefaultMnemonicNewInteractor {
+private extension DefaultMnemonicImportInteractor {
 
     enum Constant {
         static let maxNameLength: Int = 24

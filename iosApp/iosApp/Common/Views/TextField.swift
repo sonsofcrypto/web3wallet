@@ -6,6 +6,12 @@ import UIKit
 
 class TextField: UITextField {
 
+    var textChangeHandler: ((String?)->Void)?
+
+    override var text: String? {
+        didSet { textChangeHandler?(text) }
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -52,7 +58,6 @@ private extension TextField {
     }
     
     func textShadow(_ tint: UIColor) -> NSShadow {
-        
         let shadow = NSShadow()
         shadow.shadowOffset = .zero
         shadow.shadowBlurRadius = Theme.constant.cornerRadiusSmall.half
@@ -61,7 +66,6 @@ private extension TextField {
     }
     
     func makeClearButton() -> UIButton {
-        
         let button = UIButton(type: .system)
         button.setImage(
             .init(systemName: "xmark.circle.fill"),
