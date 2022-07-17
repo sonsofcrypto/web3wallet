@@ -7,12 +7,42 @@ plugins {
 
 kotlin {
     android()
-    
     val xcf = XCFramework()
+    val frameworkPath = project.file("src/iosMain/libs/CoreCrypto").absolutePath
     listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
+        iosX64() {
+            compilations.getByName("main") {
+                val CoreCrypto by cinterops.creating {
+                    defFile("$frameworkPath/ios-arm64_x86_64-simulator/CoreCrypto.def")
+                    compilerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+                }
+            }
+            binaries.all {
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+            }
+        },
+        iosArm64() {
+            compilations.getByName("main") {
+                val CoreCrypto by cinterops.creating {
+                    defFile("$frameworkPath/ios-arm64/CoreCrypto.def")
+                    compilerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64/")
+                }
+            }
+            binaries.all {
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64/")
+            }
+        },
+        iosSimulatorArm64() {
+            compilations.getByName("main") {
+                val CoreCrypto by cinterops.creating {
+                    defFile("$frameworkPath/ios-arm64_x86_64-simulator/CoreCrypto.def")
+                    compilerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+                }
+            }
+            binaries.all {
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+            }
+        },
     ).forEach {
         it.binaries.framework {
             baseName = "web3lib_provider"
@@ -21,7 +51,17 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(project(":web3lib_utils"))
+                implementation(project(":web3lib_core"))
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.ext["coroutines_version"]}") {
+                    version {
+                        strictly("${rootProject.ext["coroutines_version"]}")
+                    }
+                }
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
@@ -54,7 +94,7 @@ android {
     compileSdk = 32
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = 21
+        minSdk = 29
         targetSdk = 32
     }
 }

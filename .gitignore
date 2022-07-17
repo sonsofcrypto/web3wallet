@@ -211,3 +211,6 @@ web3lib_core/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.f
 
 web3lib_keyStore/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
 web3lib_keyStore/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
+
+web3lib_provider/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
+web3lib_provider/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework

@@ -1,9 +1,9 @@
-package com.example.web3lib_provider
+package com.sonsofcrypto.web3lib_provider
 
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class Bip39Test {
+class AndroidGreetingTest {
 
     @Test
     fun testExample() {

@@ -6,8 +6,6 @@ interface Provider {
 
 }
 
-typealias Address = ByteArray
-
 class TransactionRequest {
 
 }
@@ -21,7 +19,7 @@ interface Signer {
     fun provider(): Provider?
 
     /** Returns the checksum address */
-    suspend fun address(): Address
+    suspend fun address(): AddressBytes
 
     /** Signed prefixed-message. Bytes or encoded string as a UTF8-message */
     suspend fun signMessage(message: ByteArray): ByteArray

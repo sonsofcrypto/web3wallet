@@ -1,4 +1,4 @@
-package com.example.web3lib_provider
+package com.sonsofcrypto.web3lib_provider
 
 import kotlin.test.Test
 import kotlin.test.assertTrue

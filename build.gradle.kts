@@ -1,5 +1,5 @@
 buildscript {
-    val kotlinVersion = "1.7.0"
+    val kotlinVersion = "1.7.10"
     repositories {
         gradlePluginPortal()
         google()
@@ -16,6 +16,7 @@ allprojects {
 
     ext["settings_version"] = "1.0.0-alpha01"
     ext["serialization_version"] = "1.3.3"
+    ext["coroutines_version"] = "1.6.0-native-mt"
     repositories {
         google()
         mavenCentral()
