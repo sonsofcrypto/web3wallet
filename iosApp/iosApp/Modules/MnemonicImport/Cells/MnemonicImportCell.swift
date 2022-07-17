@@ -42,7 +42,7 @@ final class MnemonicImportCell: UICollectionViewCell {
         
         let shadow = NSShadow()
         shadow.shadowOffset = .zero
-        shadow.shadowBlurRadius = Global.shadowRadius
+        shadow.shadowBlurRadius = Theme.constant.cornerRadius
         shadow.shadowColor = tint
         return shadow
     }
