@@ -337,6 +337,7 @@
 		1C6720062880059B00C5F044 /* MnemonicNewWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6720052880059B00C5F044 /* MnemonicNewWireframeFactoryAssembler.swift */; };
 		1C672008288005C300C5F044 /* MnemonicUpdateWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C672007288005C300C5F044 /* MnemonicUpdateWireframeFactoryAssembler.swift */; };
 		1C67200A2880193000C5F044 /* TokenSwapTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6720092880193000C5F044 /* TokenSwapTokenView.swift */; };
+		1C67200C28849A2500C5F044 /* TokenNetworkFeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67200B28849A2500C5F044 /* TokenNetworkFeeView.swift */; };
 		1C7E1F55286F129000E24811 /* NetworkHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7E1F54286F129000E24811 /* NetworkHeaderCell.swift */; };
 		1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46D92813DE4800F6C40B /* BaseViewController.swift */; };
 		1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1C9B46FA281427B800F6C40B /* under-construction.gif */; };
@@ -522,7 +523,6 @@
 		1A4C39C4B0802356E1007E01 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAppCategory.swift; sourceTree = "<group>"; };
 		1A4C39D6ADB830082AC3CEA6 /* Authenticate.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Authenticate.storyboard; sourceTree = "<group>"; };
-		1A4C39FB21CCAF442F3001E6 /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		1A4C3B4D97107E875FCF5F38 /* AuthenticateContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateContext.swift; sourceTree = "<group>"; };
 		1A4C3B70AA1B0BC942B15671 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
@@ -826,6 +826,7 @@
 		1C6720052880059B00C5F044 /* MnemonicNewWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicNewWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C672007288005C300C5F044 /* MnemonicUpdateWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C6720092880193000C5F044 /* TokenSwapTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSwapTokenView.swift; sourceTree = "<group>"; };
+		1C67200B28849A2500C5F044 /* TokenNetworkFeeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenNetworkFeeView.swift; sourceTree = "<group>"; };
 		1C7E1F54286F129000E24811 /* NetworkHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHeaderCell.swift; sourceTree = "<group>"; };
 		1C9B46D92813DE4800F6C40B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1C9B46FA281427B800F6C40B /* under-construction.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "under-construction.gif"; sourceTree = "<group>"; };
@@ -1226,7 +1227,6 @@
 				1C60C20D285724D0003BE25D /* Dashboard */,
 				1C60C272285724D0003BE25D /* Degen */,
 				1C60C1E1285724D0003BE25D /* KeyStore */,
-				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
 				1C60C202285724D0003BE25D /* MnemonicNew */,
 				D1EF5BBC287BEE92004CAD82 /* MnemonicUpdate */,
 				D1976B01287EFAE10063FC9C /* MnemonicImport */,
@@ -1760,6 +1760,7 @@
 				1C671FFE287FE0FF00C5F044 /* TokenSwapCTACollectionViewCell.swift */,
 				1C672000287FE11700C5F044 /* TokenSwapTokenCollectionViewCell.swift */,
 				1C6720092880193000C5F044 /* TokenSwapTokenView.swift */,
+				1C67200B28849A2500C5F044 /* TokenNetworkFeeView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2157,12 +2158,8 @@
 		D1EF5BBC287BEE92004CAD82 /* MnemonicUpdate */ = {
 			isa = PBXGroup;
 			children = (
-				D1EF5BBD287BEE92004CAD82 /* Cells */,
-				D1EF5BBF287BEE92004CAD82 /* MnemonicUpdateContext.swift */,
-				D1EF5BC0287BEE92004CAD82 /* MnemonicUpdateWireframe.swift */,
-				D1EF5BC1287BEE92004CAD82 /* MnemonicUpdateViewModel.swift */,
 				D1EF5BC2287BEE92004CAD82 /* MnemonicUpdate.storyboard */,
-				D1EF5BC0287BEE92004CAD82 /* DefaultMnemonicUpdateWireframe.swift */,
+				D1EF5BC0287BEE92004CAD82 /* MnemonicUpdateWireframe.swift */,
 				D1EF5BBF287BEE92004CAD82 /* MnemonicUpdateContext.swift */,
 				D1EF5BC6287BEE92004CAD82 /* MnemonicUpdateInteractor.swift */,
 				D1EF5BC3287BEE92004CAD82 /* MnemonicUpdatePresenter.swift */,
@@ -2288,7 +2285,7 @@
 			);
 			mainGroup = D157F7BE27B69B6300578FF8;
 			packageReferences = (
-				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
+				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
 			projectDirPath = "";
@@ -2575,6 +2572,7 @@
 				1C60C318285724D1003BE25D /* AccountPresenter.swift in Sources */,
 				1C60C354285724D1003BE25D /* CultProposalsInteractor.swift in Sources */,
 				1C60C30D285724D1003BE25D /* RootWireframeFactory.swift in Sources */,
+				1C67200C28849A2500C5F044 /* TokenNetworkFeeView.swift in Sources */,
 				1C60C2E4285724D0003BE25D /* DashboardPresenter.swift in Sources */,
 				1C64870D2832DD970091A12D /* AssemblerBootstrapper.swift in Sources */,
 				1C60C2D2285724D0003BE25D /* AlertWireframeFactoryAssembler.swift in Sources */,
@@ -3160,7 +3158,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
+		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -3173,7 +3171,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		1C5B603A284675B800ECBD79 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
+			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */

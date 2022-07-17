@@ -3,30 +3,24 @@
 // SPDX-License-Identifier: MIT
 
 final class TokenSwapCTACollectionViewCell: UICollectionViewCell {
-    
+        
+    @IBOutlet weak var networkFeeView: TokenNetworkFeeView!
     @IBOutlet weak var button: Button!
     
-    @IBOutlet weak var networkTokenIcon: UIImageView!
-    @IBOutlet weak var networkEstimateFeeLabel: UILabel!
-    @IBOutlet weak var networkFeeButton: Button!
+    private var handler: Handler!
     
-    private weak var presenter: TokenSwapPresenter!
+    struct Handler {
+
+        let onNetworkFeesTapped: () -> Void
+        let onCTATapped: () -> Void
+    }
     
     override func awakeFromNib() {
         
         super.awakeFromNib()
                 
         button.style = .primary
-
-        networkTokenIcon.image = .init(named: "send-ethereum-token")
-
-        networkEstimateFeeLabel.font = Theme.font.caption2
-        networkEstimateFeeLabel.textColor = Theme.colour.labelPrimary
-        
-        networkFeeButton.style = .secondarySmall(
-            leftImage: .init(named: "dashboard-charging-station")
-        )
-        networkFeeButton.addTarget(self, action: #selector(changeNetworkFee), for: .touchUpInside)
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
 }
 
@@ -34,10 +28,10 @@ extension TokenSwapCTACollectionViewCell {
     
     func update(
         with viewModel: TokenSwapViewModel.Send,
-        presenter: TokenSwapPresenter
+        handler: Handler
     ) {
         
-        self.presenter = presenter
+        self.handler = handler
         
         switch viewModel.buttonState {
         case .ready:
@@ -46,23 +40,17 @@ extension TokenSwapCTACollectionViewCell {
             button.setTitle(Localized("insufficientFunds"), for: .normal)
         }
         
-        networkEstimateFeeLabel.text = viewModel.estimatedFee
-        
-        switch viewModel.feeType {
-        case .low:
-            networkFeeButton.setTitle(Localized("low"), for: .normal)
-        case .medium:
-            networkFeeButton.setTitle(Localized("medium"), for: .normal)
-        case .high:
-            networkFeeButton.setTitle(Localized("high"), for: .normal)
-        }
+        networkFeeView.update(
+            with: viewModel.tokenNetworkFeeViewModel,
+            handler: handler.onNetworkFeesTapped
+        )
     }
 }
 
 private extension TokenSwapCTACollectionViewCell {
-    
-    @objc func changeNetworkFee() {
         
-        presenter.handle(.feeTapped)
+    @objc func buttonTapped() {
+        
+        handler.onCTATapped()
     }
 }

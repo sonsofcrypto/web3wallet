@@ -12,6 +12,7 @@ enum TokenSwapPresenterEvent {
     case swapFlip
     case feeChanged(to: String)
     case feeTapped
+    case review
 }
 
 protocol TokenSwapPresenter: AnyObject {
@@ -67,7 +68,8 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                             tokenMaxAmount: tokenFrom.balance,
                             tokenMaxDecimals: tokenFrom.decimals,
                             currencyTokenPrice: tokenFrom.usdPrice,
-                            shouldUpdateTextFields: false
+                            shouldUpdateTextFields: false,
+                            shouldBecomeFirstResponder: true
                         ),
                         tokenTo: .init(
                             tokenAmount: nil,
@@ -76,14 +78,17 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                             tokenMaxAmount: tokenTo.balance,
                             tokenMaxDecimals: tokenTo.decimals,
                             currencyTokenPrice: tokenTo.usdPrice,
-                            shouldUpdateTextFields: false
+                            shouldUpdateTextFields: false,
+                            shouldBecomeFirstResponder: false
                         )
                     )
                 ),
                 .send(
                     .init(
-                        estimatedFee: makeEstimatedFee(),
-                        feeType: makeFeeType(),
+                        tokenNetworkFeeViewModel: .init(
+                            estimatedFee: makeEstimatedFee(),
+                            feeType: makeFeeType()
+                        ),
                         buttonState: .ready
                     )
                 )
@@ -136,6 +141,21 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
             view?.presentFeePicker(
                 with: makeFees()
             )
+            
+        case .review:
+            
+            guard (amountFrom ?? 0) > 0 else {
+                
+                refreshView(
+                    with: .init(amountFrom: nil, amountTo: nil),
+                    shouldUpdateFromTextField: true,
+                    shouldUpdateToTextField: true,
+                    shouldFromBecomeFirstResponder: true
+                )
+                return
+            }
+            
+            
         }
     }
 }
@@ -201,7 +221,8 @@ private extension DefaultTokenSwapPresenter {
     func refreshView(
         with swapDataOut: SwapDataOut,
         shouldUpdateFromTextField: Bool = false,
-        shouldUpdateToTextField: Bool = false
+        shouldUpdateToTextField: Bool = false,
+        shouldFromBecomeFirstResponder: Bool = false
     ) {
         
         amountFrom = swapDataOut.amountFrom
@@ -220,7 +241,8 @@ private extension DefaultTokenSwapPresenter {
                             tokenMaxAmount: tokenFrom.balance,
                             tokenMaxDecimals: tokenFrom.decimals,
                             currencyTokenPrice: tokenFrom.usdPrice,
-                            shouldUpdateTextFields: shouldUpdateFromTextField
+                            shouldUpdateTextFields: shouldUpdateFromTextField,
+                            shouldBecomeFirstResponder: shouldFromBecomeFirstResponder
                         ),
                         tokenTo: .init(
                             tokenAmount: amountTo,
@@ -229,14 +251,17 @@ private extension DefaultTokenSwapPresenter {
                             tokenMaxAmount: tokenTo.balance,
                             tokenMaxDecimals: tokenTo.decimals,
                             currencyTokenPrice: tokenTo.usdPrice,
-                            shouldUpdateTextFields: shouldUpdateToTextField
+                            shouldUpdateTextFields: shouldUpdateToTextField,
+                            shouldBecomeFirstResponder: false
                         )
                     )
                 ),
                 .send(
                     .init(
-                        estimatedFee: self.makeEstimatedFee(),
-                        feeType: self.makeFeeType(),
+                        tokenNetworkFeeViewModel: .init(
+                            estimatedFee: self.makeEstimatedFee(),
+                            feeType: self.makeFeeType()
+                        ),
                         buttonState: insufficientFunds ? .insufficientFunds : .ready
                     )
                 )
@@ -274,7 +299,7 @@ private extension DefaultTokenSwapPresenter {
         }
     }
     
-    func makeFeeType() -> TokenSwapViewModel.Send.FeeType {
+    func makeFeeType() -> TokenNetworkFeeViewModel.FeeType {
         
         switch fee {
             

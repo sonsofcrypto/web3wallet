@@ -33,16 +33,8 @@ extension TokenSwapViewModel {
     
     struct Send {
         
-        let estimatedFee: String
-        let feeType: FeeType
+        let tokenNetworkFeeViewModel: TokenNetworkFeeViewModel
         let buttonState: State
-        
-        enum FeeType {
-            
-            case low
-            case medium
-            case high
-        }
         
         enum State {
             

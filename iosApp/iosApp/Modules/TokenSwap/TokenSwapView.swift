@@ -8,6 +8,7 @@ protocol TokenSwapView: AnyObject {
 
     func update(with viewModel: TokenSwapViewModel)
     func presentFeePicker(with fees: [FeesPickerViewModel])
+    //func presentReviewSwap(with fees: [FeesPickerViewModel])
     func dismissKeyboard()
 }
 
@@ -49,12 +50,22 @@ extension TokenSwapViewController: TokenSwapView {
     
     func presentFeePicker(with fees: [FeesPickerViewModel]) {
         
-        feesPickerView.present(with: fees, onFeeSelected: makeOnFeeSelected())
-        
+        dismissKeyboard()
+                
         let cell = collectionView.visibleCells.first { $0 is TokenSwapCTACollectionViewCell } as! TokenSwapCTACollectionViewCell
-        
-        print(view.convert(cell.networkFeeButton.bounds, from: cell.networkFeeButton))
 
+        let fromFrame = feesPickerView.convert(
+            cell.networkFeeView.networkFeeButton.bounds,
+            from: cell.networkFeeView.networkFeeButton
+        )
+        feesPickerView.present(
+            with: fees,
+            onFeeSelected: makeOnFeeSelected(),
+            at: .init(
+                x: Theme.constant.padding,
+                y: fromFrame.midY
+            )
+        )
     }
     
     @objc func dismissKeyboard() {
@@ -92,7 +103,7 @@ extension TokenSwapViewController: UICollectionViewDataSource {
         case let .send(cta):
             
             let cell = collectionView.dequeue(TokenSwapCTACollectionViewCell.self, for: indexPath)
-            cell.update(with: cta, presenter: presenter)
+            cell.update(with: cta, handler: makeTokenCTAHandler())
             return cell
         }
     }
@@ -243,7 +254,7 @@ private extension TokenSwapViewController {
             case let ctaCell as TokenSwapCTACollectionViewCell:
                 
                 guard let cta = viewModel?.items.send else { return }
-                ctaCell.update(with: cta, presenter: presenter)
+                ctaCell.update(with: cta, handler: makeTokenCTAHandler())
 
             default:
                 
@@ -285,6 +296,32 @@ private extension TokenSwapViewController {
             [weak self] in
             guard let self = self else { return }
             self.presenter.handle(.swapFlip)
+        }
+    }
+    
+    func makeTokenCTAHandler() -> TokenSwapCTACollectionViewCell.Handler {
+        
+        .init(
+            onNetworkFeesTapped: makeOnNetworkFeesTapped(),
+            onCTATapped: makeOnCTATapped()
+        )
+    }
+    
+    func makeOnNetworkFeesTapped() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.feeTapped)
+        }
+    }
+    
+    func makeOnCTATapped() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.review)
         }
     }
 }

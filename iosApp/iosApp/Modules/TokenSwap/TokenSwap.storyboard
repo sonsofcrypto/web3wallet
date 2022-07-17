@@ -345,7 +345,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="f6n-ff-hYJ">
                                                     <rect key="frame" x="0.0" y="50" width="413" height="82"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SOB-Sd-QMS">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SOB-Sd-QMS" customClass="TokenNetworkFeeView" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="413" height="24"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="X17-UH-rTK">
@@ -379,6 +379,11 @@
                                                                 <constraint firstAttribute="trailing" secondItem="X17-UH-rTK" secondAttribute="trailing" constant="8" id="kCy-Pu-6g3"/>
                                                                 <constraint firstAttribute="height" constant="24" id="s7a-A7-aCq"/>
                                                             </constraints>
+                                                            <connections>
+                                                                <outlet property="networkEstimateFeeLabel" destination="c8c-2z-XZ1" id="dbJ-UO-YZ0"/>
+                                                                <outlet property="networkFeeButton" destination="foF-Fj-PaL" id="7Ho-ge-gHw"/>
+                                                                <outlet property="networkTokenIcon" destination="dYf-7r-Ed3" id="69E-Ch-5YH"/>
+                                                            </connections>
                                                         </view>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wiM-GP-EgD" customClass="Button" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="48" width="413" height="34"/>
@@ -397,9 +402,7 @@
                                         <size key="customSize" width="413" height="132"/>
                                         <connections>
                                             <outlet property="button" destination="wiM-GP-EgD" id="8pn-ar-tTp"/>
-                                            <outlet property="networkEstimateFeeLabel" destination="c8c-2z-XZ1" id="AhF-xp-gxu"/>
-                                            <outlet property="networkFeeButton" destination="foF-Fj-PaL" id="7md-MM-pTQ"/>
-                                            <outlet property="networkTokenIcon" destination="dYf-7r-Ed3" id="w8u-xw-9LB"/>
+                                            <outlet property="networkFeeView" destination="SOB-Sd-QMS" id="12L-4K-d55"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

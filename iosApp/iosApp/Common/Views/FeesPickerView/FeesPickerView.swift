@@ -47,7 +47,7 @@ final class FeesPickerView: UIView {
         self.fees = fees
         self.onFeeSelected = onFeeSelected
         
-        topConstraint.constant = topRightAnchor.y + feesView.frame.height
+        topConstraint.constant = topRightAnchor.y - feesView.frame.height * 0.5
         trailingConstraint.constant = topRightAnchor.x
         
         update(fees: fees)

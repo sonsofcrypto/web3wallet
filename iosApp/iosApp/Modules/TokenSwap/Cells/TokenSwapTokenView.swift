@@ -11,6 +11,7 @@ struct TokenSwapTokenViewModel {
     let tokenMaxDecimals: Int
     let currencyTokenPrice: Double
     let shouldUpdateTextFields: Bool
+    let shouldBecomeFirstResponder: Bool
 }
 
 final class TokenSwapTokenView: UIView {
@@ -102,6 +103,11 @@ extension TokenSwapTokenView {
                 
         tokenIconImageView.image = viewModel.tokenSymbolIcon.pngImage
         tokenLabel.text = viewModel.tokenSymbol
+        
+        if viewModel.shouldBecomeFirstResponder {
+            
+            sendAmountTextField.becomeFirstResponder()
+        }
     }
 }
 
@@ -208,9 +214,13 @@ private extension TokenSwapTokenView {
             } else if viewModel.shouldUpdateTextFields {
                 
                 let tokenAmount = viewModel.tokenAmount ?? 0
-                sendAmountTextField.text = tokenAmount.toString(
-                    decimals: viewModel.tokenMaxDecimals
-                )
+                if tokenAmount == 0 {
+                    sendAmountTextField.text = nil
+                } else {
+                    sendAmountTextField.text = tokenAmount.toString(
+                        decimals: viewModel.tokenMaxDecimals
+                    )
+                }
             }
             
             sendCurrencySymbol.isHidden = true
