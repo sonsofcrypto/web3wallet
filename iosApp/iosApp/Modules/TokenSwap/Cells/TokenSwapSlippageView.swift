@@ -2,16 +2,15 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-struct TokenSwapProviderViewModel {
+struct TokenSwapSlippageViewModel {
     
-    let icon: Data
-    let name: String
+    let value: String
 }
 
-final class TokenSwapProviderView: UIView {
+final class TokenSwapSlippageView: UIView {
     
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var button: Button!
     
     //private var handler: (() -> Void)!
     
@@ -20,7 +19,7 @@ final class TokenSwapProviderView: UIView {
         super.awakeFromNib()
         
         nameLabel.apply(style: .footnote)
-        nameLabel.text = Localized("tokenSwap.cell.provider")
+        nameLabel.text = Localized("tokenSwap.cell.slippage")
         
         var configuration = UIButton.Configuration.plain()
         configuration.titleTextAttributesTransformer = .init{ incoming in
@@ -41,33 +40,29 @@ final class TokenSwapProviderView: UIView {
         button.setTitleColor(Theme.colour.labelPrimary, for: .normal)
         button.addTarget(
             self,
-            action: #selector(changeProvider),
+            action: #selector(changeSlippage),
             for: .touchUpInside
         )
     }
 }
 
-extension TokenSwapProviderView {
+extension TokenSwapSlippageView {
     
     func update(
-        with viewModel: TokenSwapProviderViewModel
+        with viewModel: TokenSwapSlippageViewModel
         //handler: @escaping () -> Void
     ) {
         
         //self.handler = handler
 
-        button.setTitle(viewModel.name, for: .normal)
-        if let leftImage = viewModel.icon.pngImage {
-            
-            button.setImage(leftImage.resize(to: .init(width: 24, height: 24)), for: .normal)
-        }
+        button.setTitle(viewModel.value, for: .normal)
     }
 }
 
-private extension TokenSwapProviderView {
+private extension TokenSwapSlippageView {
     
-    @objc func changeProvider() {
+    @objc func changeSlippage() {
         
-        print("Change provider")
+        print("Change slippage tapped")
     }
 }

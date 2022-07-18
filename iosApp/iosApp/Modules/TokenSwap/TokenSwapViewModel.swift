@@ -12,35 +12,25 @@ struct TokenSwapViewModel {
 
 extension TokenSwapViewModel {
     
-    struct Fee {
-        
-        let id: String
-        let name: String
-        let value: String
-    }
-    
     enum Item {
         
         case swap(Swap)
-        case send(Send)
     }
     
     struct Swap {
         
         let tokenFrom: TokenSwapTokenViewModel
         let tokenTo: TokenSwapTokenViewModel
-    }
-    
-    struct Send {
-        
         let tokenSwapProviderViewModel: TokenSwapProviderViewModel
+        let tokenSwapPriceViewModel: TokenSwapPriceViewModel
+        let tokenSwapSlippageViewModel: TokenSwapSlippageViewModel
         let tokenNetworkFeeViewModel: TokenNetworkFeeViewModel
         let buttonState: State
-        
+
         enum State {
             
+            case swap(providerIcon: Data)
             case insufficientFunds
-            case ready
         }
     }
 }
@@ -59,19 +49,5 @@ extension Array where Element == TokenSwapViewModel.Item {
         }
         
         return swap
-    }
-    
-    var send: TokenSwapViewModel.Send? {
-        
-        var send: TokenSwapViewModel.Send?
-        forEach {
-            
-            if case let TokenSwapViewModel.Item.send(value) = $0 {
-                
-                send = value
-            }
-        }
-        
-        return send
     }
 }

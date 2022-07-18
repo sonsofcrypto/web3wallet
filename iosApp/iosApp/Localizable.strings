@@ -26,7 +26,6 @@
 "sec" = "sec";
 "save" = "Save";
 "max" = "Max";
-"ready" = "Review";
 "insufficientFunds" = "Insufficient Funds";
 "low" = "Low";
 "medium" = "Average";
@@ -196,4 +195,8 @@
 
 "tokenSwap.title" = "Token Swap";
 "tokenSwap.cell.balance" = "Balance: %@";
-"tokenSwap.cell.cta.provider" = "Provider:";
+"tokenSwap.cell.provider" = "Provider";
+"tokenSwap.cell.price" = "Price";
+"tokenSwap.cell.slippage" = "Slippage";
+"tokenSwap.cell.estimatedFee" = "Estimated Fee";
+"tokenSwap.cell.market.swap" = "Swap with";

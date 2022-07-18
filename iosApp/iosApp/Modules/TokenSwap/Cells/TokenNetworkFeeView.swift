@@ -17,6 +17,7 @@ struct TokenNetworkFeeViewModel {
 
 final class TokenNetworkFeeView: UIView {
     
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var networkTokenIcon: UIImageView!
     @IBOutlet weak var networkEstimateFeeLabel: UILabel!
     @IBOutlet weak var networkFeeButton: Button!
@@ -27,8 +28,10 @@ final class TokenNetworkFeeView: UIView {
         
         super.awakeFromNib()
         
+        nameLabel.apply(style: .footnote)
+        nameLabel.text = Localized("tokenSwap.cell.estimatedFee")
         networkTokenIcon.image = .init(named: "send-ethereum-token")
-        networkEstimateFeeLabel.font = Theme.font.caption2
+        networkEstimateFeeLabel.font = Theme.font.footnote
         networkEstimateFeeLabel.textColor = Theme.colour.labelPrimary
         networkFeeButton.style = .secondarySmall(
             leftImage: .init(named: "dashboard-charging-station")

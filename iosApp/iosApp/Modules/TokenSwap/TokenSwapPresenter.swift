@@ -80,17 +80,15 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                             currencyTokenPrice: tokenTo.usdPrice,
                             shouldUpdateTextFields: false,
                             shouldBecomeFirstResponder: false
-                        )
-                    )
-                ),
-                .send(
-                    .init(
+                        ),
                         tokenSwapProviderViewModel: makeTokenSwapProviderViewModel(),
+                        tokenSwapPriceViewModel: makeTokenPriceViewModel(),
+                        tokenSwapSlippageViewModel: makeTokenSwapSlippageViewModel(),
                         tokenNetworkFeeViewModel: .init(
                             estimatedFee: makeEstimatedFee(),
                             feeType: makeFeeType()
                         ),
-                        buttonState: .ready
+                        buttonState: .swap(providerIcon: makeSelectedProviderIcon())
                     )
                 )
             ]
@@ -254,17 +252,17 @@ private extension DefaultTokenSwapPresenter {
                             currencyTokenPrice: tokenTo.usdPrice,
                             shouldUpdateTextFields: shouldUpdateToTextField,
                             shouldBecomeFirstResponder: false
-                        )
-                    )
-                ),
-                .send(
-                    .init(
+                        ),
                         tokenSwapProviderViewModel: makeTokenSwapProviderViewModel(),
+                        tokenSwapPriceViewModel: makeTokenPriceViewModel(),
+                        tokenSwapSlippageViewModel: makeTokenSwapSlippageViewModel(),
                         tokenNetworkFeeViewModel: .init(
                             estimatedFee: self.makeEstimatedFee(),
                             feeType: self.makeFeeType()
                         ),
-                        buttonState: insufficientFunds ? .insufficientFunds : .ready
+                        buttonState: insufficientFunds ? .insufficientFunds : .swap(
+                            providerIcon: self.makeSelectedProviderIcon()
+                        )
                     )
                 )
             ]
@@ -319,9 +317,29 @@ private extension DefaultTokenSwapPresenter {
     func makeTokenSwapProviderViewModel() -> TokenSwapProviderViewModel {
         
         .init(
-            icon: UIImage(named: "provider-1inch")!.pngData()!,
-            name: "Uniswap"
+            icon: makeSelectedProviderIcon(),
+            name: selectedProviderName
         )
+    }
+    
+    func makeTokenSwapSlippageViewModel() -> TokenSwapSlippageViewModel {
+        
+        .init(value: "1%")
+    }
+    
+    func makeTokenPriceViewModel() -> TokenSwapPriceViewModel {
+        
+        let value = "0.588392859"
+        return .init(value: "1 \(tokenFrom.symbol) ≈ \(value) \(tokenTo.symbol)")
+    }
+    
+    func makeSelectedProviderIcon() -> Data {
+        
+        UIImage(named: "provider-\(selectedProviderName)")!.pngData()!
+    }
+    
+    var selectedProviderName: String {
+        "1inch"
     }
 }
 

@@ -52,7 +52,7 @@ extension TokenSwapViewController: TokenSwapView {
         
         dismissKeyboard()
                 
-        let cell = collectionView.visibleCells.first { $0 is TokenSwapCTACollectionViewCell } as! TokenSwapCTACollectionViewCell
+        let cell = collectionView.visibleCells.first { $0 is TokenSwapTokenCollectionViewCell } as! TokenSwapTokenCollectionViewCell
 
         let fromFrame = feesPickerView.convert(
             cell.networkFeeView.networkFeeButton.bounds,
@@ -98,12 +98,6 @@ extension TokenSwapViewController: UICollectionViewDataSource {
             
             let cell = collectionView.dequeue(TokenSwapTokenCollectionViewCell.self, for: indexPath)
             cell.update(with: swap, handler: makeTokenSwapHandler())
-            return cell
-            
-        case let .send(cta):
-            
-            let cell = collectionView.dequeue(TokenSwapCTACollectionViewCell.self, for: indexPath)
-            cell.update(with: cta, handler: makeTokenCTAHandler())
             return cell
         }
     }
@@ -173,12 +167,6 @@ private extension TokenSwapViewController {
                     withCellHeight: self.makeSwapCellHeight()
                 )
                 
-            case 1:
-                return self.makeCollectionLayoutSection(
-                    sectionIndex: sectionIndex,
-                    withCellHeight: self.makeCTACellHeight()
-                )
-                
             default:
                 fatalError()
             }
@@ -194,17 +182,14 @@ private extension TokenSwapViewController {
         height += 4
         height += 80
         
-        return height
-    }
-    
-    func makeCTACellHeight() -> CGFloat {
-        
-        var height: CGFloat = 0
-        
         height += 32 // Space
         height += 32 // provider
-        height += 16
-        height += 24 // network fee
+        height += 8
+        height += 24 // slippage fee
+        height += 8
+        height += 24 // price fee
+        height += 8
+        height += 24 // estimated fee
         height += 16
         height += 46 // review
         
@@ -255,11 +240,6 @@ private extension TokenSwapViewController {
                 
                 guard let swap = viewModel?.items.swap else { return }
                 tokenCell.update(with: swap, handler: makeTokenSwapHandler())
-                
-            case let ctaCell as TokenSwapCTACollectionViewCell:
-                
-                guard let cta = viewModel?.items.send else { return }
-                ctaCell.update(with: cta, handler: makeTokenCTAHandler())
 
             default:
                 
@@ -273,7 +253,9 @@ private extension TokenSwapViewController {
         .init(
             onTokenFromAmountChanged: makeOnTokenFromAmountChanged(),
             onTokenToAmountChanged: makeOnTokenToAmountChanged(),
-            onSwapFlip: makeOnSwapFlip()
+            onSwapFlip: makeOnSwapFlip(),
+            onNetworkFeesTapped: makeOnNetworkFeesTapped(),
+            onCTATapped: makeOnCTATapped()
         )
     }
     
@@ -302,14 +284,6 @@ private extension TokenSwapViewController {
             guard let self = self else { return }
             self.presenter.handle(.swapFlip)
         }
-    }
-    
-    func makeTokenCTAHandler() -> TokenSwapCTACollectionViewCell.Handler {
-        
-        .init(
-            onNetworkFeesTapped: makeOnNetworkFeesTapped(),
-            onCTATapped: makeOnCTATapped()
-        )
     }
     
     func makeOnNetworkFeesTapped() -> () -> Void {
