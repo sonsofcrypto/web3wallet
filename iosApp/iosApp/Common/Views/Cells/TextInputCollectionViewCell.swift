@@ -4,10 +4,16 @@
 
 import UIKit
 
+struct TextInputCollectionViewModel {
+    let title: String
+    let value: String
+    let placeholder: String
+}
+
 final class TextInputCollectionViewCell: CollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var textField: TextField!
 
     var textChangeHandler: ((String)->Void)?
 
@@ -17,7 +23,7 @@ final class TextInputCollectionViewCell: CollectionViewCell {
         titleLabel.font = Theme.font.body
         titleLabel.textColor = Theme.colour.labelPrimary
         
-        (textField as? TextField)?.textChangeHandler = { [weak self] text in
+        textField.textChangeHandler = { [weak self] text in
             self?.textChangeHandler?(text ?? "")
         }
         textField.delegate = self
@@ -30,6 +36,11 @@ final class TextInputCollectionViewCell: CollectionViewCell {
 }
 
 extension TextInputCollectionViewCell: UITextFieldDelegate {
+    
+//    func textFieldDidChangeSelection(_ textField: UITextField) {
+//        
+//        print("[PRINT 1]: \(textField.text)")
+//    }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -91,9 +102,10 @@ private extension TextInputCollectionViewCell {
         placeholder: String,
         textChangeHandler: ((String)->Void)? = nil
     ) -> Self {
+        
         titleLabel.text = title
         textField.text = value
-        (textField as? TextField)?.placeholderAttrText = placeholder
+        textField.placeholderAttrText = placeholder
         self.textChangeHandler = textChangeHandler
         return self
     }

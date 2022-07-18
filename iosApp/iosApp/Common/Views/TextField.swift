@@ -9,7 +9,10 @@ class TextField: UITextField {
     var textChangeHandler: ((String?)->Void)?
 
     override var text: String? {
-        didSet { textChangeHandler?(text) }
+        didSet {
+//            print("[PRINT 2]: \(text)")
+            textChangeHandler?(text)
+        }
     }
 
     override init(frame: CGRect) {
