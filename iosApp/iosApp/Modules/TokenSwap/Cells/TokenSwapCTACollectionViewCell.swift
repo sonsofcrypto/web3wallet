@@ -3,7 +3,8 @@
 // SPDX-License-Identifier: MIT
 
 final class TokenSwapCTACollectionViewCell: UICollectionViewCell {
-        
+    
+    @IBOutlet weak var tokenSwapProviderView: TokenSwapProviderView!
     @IBOutlet weak var networkFeeView: TokenNetworkFeeView!
     @IBOutlet weak var button: Button!
     
@@ -39,6 +40,10 @@ extension TokenSwapCTACollectionViewCell {
         case .insufficientFunds:
             button.setTitle(Localized("insufficientFunds"), for: .normal)
         }
+        
+        tokenSwapProviderView.update(
+            with: viewModel.tokenSwapProviderViewModel
+        )
         
         networkFeeView.update(
             with: viewModel.tokenNetworkFeeViewModel,

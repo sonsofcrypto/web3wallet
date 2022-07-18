@@ -201,7 +201,12 @@ private extension TokenSwapViewController {
         
         var height: CGFloat = 0
         
-        height += 118
+        height += 32 // Space
+        height += 32 // provider
+        height += 16
+        height += 24 // network fee
+        height += 16
+        height += 46 // review
         
         return height
     }

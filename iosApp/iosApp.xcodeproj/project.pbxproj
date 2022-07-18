@@ -338,6 +338,8 @@
 		1C672008288005C300C5F044 /* MnemonicUpdateWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C672007288005C300C5F044 /* MnemonicUpdateWireframeFactoryAssembler.swift */; };
 		1C67200A2880193000C5F044 /* TokenSwapTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6720092880193000C5F044 /* TokenSwapTokenView.swift */; };
 		1C67200C28849A2500C5F044 /* TokenNetworkFeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67200B28849A2500C5F044 /* TokenNetworkFeeView.swift */; };
+		1C67200E28849EE400C5F044 /* TokenSwapProviderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67200D28849EE400C5F044 /* TokenSwapProviderView.swift */; };
+		1C6720102884A9BF00C5F044 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67200F2884A9BF00C5F044 /* UIImage+Extension.swift */; };
 		1C7E1F55286F129000E24811 /* NetworkHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7E1F54286F129000E24811 /* NetworkHeaderCell.swift */; };
 		1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46D92813DE4800F6C40B /* BaseViewController.swift */; };
 		1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1C9B46FA281427B800F6C40B /* under-construction.gif */; };
@@ -827,6 +829,8 @@
 		1C672007288005C300C5F044 /* MnemonicUpdateWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C6720092880193000C5F044 /* TokenSwapTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSwapTokenView.swift; sourceTree = "<group>"; };
 		1C67200B28849A2500C5F044 /* TokenNetworkFeeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenNetworkFeeView.swift; sourceTree = "<group>"; };
+		1C67200D28849EE400C5F044 /* TokenSwapProviderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSwapProviderView.swift; sourceTree = "<group>"; };
+		1C67200F2884A9BF00C5F044 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		1C7E1F54286F129000E24811 /* NetworkHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHeaderCell.swift; sourceTree = "<group>"; };
 		1C9B46D92813DE4800F6C40B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1C9B46FA281427B800F6C40B /* under-construction.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "under-construction.gif"; sourceTree = "<group>"; };
@@ -1761,6 +1765,7 @@
 				1C672000287FE11700C5F044 /* TokenSwapTokenCollectionViewCell.swift */,
 				1C6720092880193000C5F044 /* TokenSwapTokenView.swift */,
 				1C67200B28849A2500C5F044 /* TokenNetworkFeeView.swift */,
+				1C67200D28849EE400C5F044 /* TokenSwapProviderView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1867,6 +1872,7 @@
 				1C60C37A2859BDD9003BE25D /* UIView+Toast+Extensions.swift */,
 				1A4C39798419CEB3807348FA /* Error+Extensions.swift */,
 				1A4C301CA1E59BEACD136BCD /* Kotlin+Extensions.swift */,
+				1C67200F2884A9BF00C5F044 /* UIImage+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2631,6 +2637,7 @@
 				D1976B12287EFAE10063FC9C /* MnemonicImportWireframeFactory.swift in Sources */,
 				1C60C2F8285724D0003BE25D /* NFTDetailViewModel.swift in Sources */,
 				1CE66BCC2848EA9F00AB6ACA /* DefaultChatService.swift in Sources */,
+				1C67200E28849EE400C5F044 /* TokenSwapProviderView.swift in Sources */,
 				1C60C333285724D1003BE25D /* NFTsCollectionWireframeFactory.swift in Sources */,
 				1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */,
 				1C6487142832DE560091A12D /* ReachabilityServiceAssembler.swift in Sources */,
@@ -2785,6 +2792,7 @@
 				1C64873E2832E76B0091A12D /* StoreAssembler.swift in Sources */,
 				1C60C2B8285724D0003BE25D /* KeyStoreWireframeFactory.swift in Sources */,
 				1C60C307285724D1003BE25D /* NFTsDashboardInteractor.swift in Sources */,
+				1C6720102884A9BF00C5F044 /* UIImage+Extension.swift in Sources */,
 				1C60C329285724D1003BE25D /* MnemonicConfirmationService.swift in Sources */,
 				D1A12A63287D333900606FC8 /* AuthenticatePresenter.swift in Sources */,
 				1A4C35A9CDBB31FFE29C51D1 /* WebViewController.swift in Sources */,

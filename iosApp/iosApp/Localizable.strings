@@ -196,3 +196,4 @@
 
 "tokenSwap.title" = "Token Swap";
 "tokenSwap.cell.balance" = "Balance: %@";
+"tokenSwap.cell.cta.provider" = "Provider:";

@@ -33,6 +33,7 @@ extension TokenSwapViewModel {
     
     struct Send {
         
+        let tokenSwapProviderViewModel: TokenSwapProviderViewModel
         let tokenNetworkFeeViewModel: TokenNetworkFeeViewModel
         let buttonState: State
         

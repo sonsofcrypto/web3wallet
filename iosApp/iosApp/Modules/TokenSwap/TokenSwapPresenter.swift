@@ -85,6 +85,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                 ),
                 .send(
                     .init(
+                        tokenSwapProviderViewModel: makeTokenSwapProviderViewModel(),
                         tokenNetworkFeeViewModel: .init(
                             estimatedFee: makeEstimatedFee(),
                             feeType: makeFeeType()
@@ -258,6 +259,7 @@ private extension DefaultTokenSwapPresenter {
                 ),
                 .send(
                     .init(
+                        tokenSwapProviderViewModel: makeTokenSwapProviderViewModel(),
                         tokenNetworkFeeViewModel: .init(
                             estimatedFee: self.makeEstimatedFee(),
                             feeType: self.makeFeeType()
@@ -312,6 +314,14 @@ private extension DefaultTokenSwapPresenter {
         case .high:
             return .high
         }
+    }
+    
+    func makeTokenSwapProviderViewModel() -> TokenSwapProviderViewModel {
+        
+        .init(
+            icon: UIImage(named: "provider-1inch")!.pngData()!,
+            name: "Uniswap"
+        )
     }
 }
 

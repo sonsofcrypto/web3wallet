@@ -4,8 +4,6 @@
 
 import UIKit
 
-import UIKit
-
 /// ModalDismissProtocol implement to support handeling of dismissal via tap on
 /// backgound chrome. Normally should be implemend by `presentedViewController`.
 @objc protocol ModalDismissProtocol: class {
