@@ -2,7 +2,7 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-final class TokenSwapTokenCollectionViewCell: UICollectionViewCell {
+final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var tokenFrom: TokenSwapTokenView!
@@ -65,7 +65,7 @@ final class TokenSwapTokenCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension TokenSwapTokenCollectionViewCell {
+extension TokenSwapMarketCollectionViewCell {
     
     func update(
         with viewModel: TokenSwapViewModel.Swap,
@@ -133,7 +133,7 @@ extension TokenSwapTokenCollectionViewCell {
     }
 }
 
-private extension TokenSwapTokenCollectionViewCell {
+private extension TokenSwapMarketCollectionViewCell {
     
     @objc func flip() {
         

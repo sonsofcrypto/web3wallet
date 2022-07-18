@@ -15,6 +15,7 @@ extension TokenSwapViewModel {
     enum Item {
         
         case swap(Swap)
+        case limit
     }
     
     struct Swap {

@@ -27,7 +27,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TokenSwapTokenCollectionViewCell" id="XPz-rC-pjp" customClass="TokenSwapTokenCollectionViewCell" customModule="iosApp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TokenSwapMarketCollectionViewCell" id="XPz-rC-pjp" customClass="TokenSwapMarketCollectionViewCell" customModule="iosApp" customModuleProvider="target">
                                         <rect key="frame" x="0.5" y="0.0" width="413" height="382"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="91N-vQ-8do">
@@ -492,6 +492,15 @@
                                             <outlet property="tokenSwapSlippageView" destination="rS4-TF-qqV" id="yW1-At-tMY"/>
                                             <outlet property="tokenTo" destination="RQJ-L1-jlw" id="lm4-da-KtH"/>
                                         </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TokenSwapLimitCollectionViewCell" id="Lbb-Ef-Z55" customClass="TokenSwapLimitCollectionViewCell" customModule="iosApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.5" y="392" width="413" height="382"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="9O1-d6-3kE">
+                                            <rect key="frame" x="0.0" y="0.0" width="413" height="382"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="413" height="382"/>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>

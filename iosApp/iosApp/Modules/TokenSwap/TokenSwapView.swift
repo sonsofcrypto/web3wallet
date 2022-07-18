@@ -52,7 +52,7 @@ extension TokenSwapViewController: TokenSwapView {
         
         dismissKeyboard()
                 
-        let cell = collectionView.visibleCells.first { $0 is TokenSwapTokenCollectionViewCell } as! TokenSwapTokenCollectionViewCell
+        let cell = collectionView.visibleCells.first { $0 is TokenSwapMarketCollectionViewCell } as! TokenSwapMarketCollectionViewCell
 
         let fromFrame = feesPickerView.convert(
             cell.networkFeeView.networkFeeButton.bounds,
@@ -76,13 +76,9 @@ extension TokenSwapViewController: TokenSwapView {
 
 extension TokenSwapViewController: UICollectionViewDataSource {
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        viewModel?.items.count ?? 0
-    }
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        1
+        viewModel?.items.count ?? 0
     }
     
     func collectionView(
@@ -90,15 +86,21 @@ extension TokenSwapViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
 
-        guard let item = viewModel?.items[indexPath.section] else { fatalError() }
+        guard let item = viewModel?.items[indexPath.row] else { fatalError() }
         
         switch item {
             
         case let .swap(swap):
             
-            let cell = collectionView.dequeue(TokenSwapTokenCollectionViewCell.self, for: indexPath)
+            let cell = collectionView.dequeue(TokenSwapMarketCollectionViewCell.self, for: indexPath)
             cell.update(with: swap, handler: makeTokenSwapHandler())
             return cell
+            
+        case .limit:
+
+            let cell = collectionView.dequeue(TokenSwapLimitCollectionViewCell.self, for: indexPath)
+            return cell
+
         }
     }
 }
@@ -124,6 +126,8 @@ private extension TokenSwapViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        collectionView.isPagingEnabled = true
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         collectionView.addGestureRecognizer(tapGesture)
@@ -209,23 +213,31 @@ private extension TokenSwapViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         // Group
+        let screenWidth: CGFloat = (view.bounds.width - Theme.constant.padding)
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
+            widthDimension: .absolute(screenWidth),
             heightDimension: .estimated(cellHeight)
         )
         let outerGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize, subitems: [item]
         )
+        outerGroup.contentInsets = .init(
+            top: 0,
+            leading: 8,
+            bottom: 0,
+            trailing: 8
+        )
         
         // Section
-        let sectionInset: CGFloat = Theme.constant.padding
+        let sectionInset: CGFloat = Theme.constant.padding * 0.5
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = .init(
-            top: sectionIndex == 0 ? sectionInset : sectionIndex == 1 ? sectionInset * 0.5 : 0,
+            top: 0,
             leading: sectionInset,
-            bottom: sectionIndex == 1 ? 0 : sectionInset,
+            bottom: 0,
             trailing: sectionInset
         )
+        section.orthogonalScrollingBehavior = .groupPaging
                         
         return section
     }
@@ -236,10 +248,14 @@ private extension TokenSwapViewController {
             
             switch $0 {
                 
-            case let tokenCell as TokenSwapTokenCollectionViewCell:
+            case let tokenCell as TokenSwapMarketCollectionViewCell:
                 
                 guard let swap = viewModel?.items.swap else { return }
                 tokenCell.update(with: swap, handler: makeTokenSwapHandler())
+                
+            case let _ as TokenSwapLimitCollectionViewCell:
+                
+                break
 
             default:
                 
@@ -248,7 +264,7 @@ private extension TokenSwapViewController {
         }
     }
     
-    func makeTokenSwapHandler() -> TokenSwapTokenCollectionViewCell.Handler {
+    func makeTokenSwapHandler() -> TokenSwapMarketCollectionViewCell.Handler {
         
         .init(
             onTokenFromAmountChanged: makeOnTokenFromAmountChanged(),

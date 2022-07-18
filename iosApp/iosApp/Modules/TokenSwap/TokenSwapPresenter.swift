@@ -90,7 +90,8 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                         ),
                         buttonState: .swap(providerIcon: makeSelectedProviderIcon())
                     )
-                )
+                ),
+                .limit
             ]
         )
     }
@@ -264,7 +265,8 @@ private extension DefaultTokenSwapPresenter {
                             providerIcon: self.makeSelectedProviderIcon()
                         )
                     )
-                )
+                ),
+                .limit
             ]
         )
     }
