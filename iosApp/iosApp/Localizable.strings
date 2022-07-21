@@ -29,6 +29,7 @@
 "low" = "Low";
 "medium" = "Average";
 "high" = "Fast";
+"comingSoon" = "Coming soon";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";
