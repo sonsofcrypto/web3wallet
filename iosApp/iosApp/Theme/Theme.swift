@@ -112,6 +112,7 @@ struct ThemeColour {
     let gradientTop: UIColor
     let gradientBottom: UIColor
 
+    let systemWhite: UIColor
     let systemRed: UIColor
     let systemOrange: UIColor
     let systemYellow: UIColor
@@ -127,7 +128,6 @@ struct ThemeColour {
     let systemGray03: UIColor
     let systemGray04: UIColor
     let systemGray05: UIColor
-    let systemGray06: UIColor
     
     let backgroundBasePrimary: UIColor
     let backgroundBaseSecondary: UIColor
@@ -138,6 +138,9 @@ struct ThemeColour {
     let fillSecondary: UIColor
     let fillTertiary: UIColor
     let fillQuaternary: UIColor
+    
+    let separatorNoTransparency: UIColor
+    let separatorWithTransparency: UIColor
     
     let navBarBackground: UIColor
     let navBarTint: UIColor
@@ -154,8 +157,6 @@ struct ThemeColour {
     
     let buttonBackgroundPrimary: UIColor
     let buttonBackgroundSecondary: UIColor
-    let separatorNoTransparency: UIColor
-    let separatorWithTransparency: UIColor
         
     let switchTint: UIColor
     let switchTintDisabled: UIColor
@@ -165,55 +166,6 @@ struct ThemeColour {
     let textFieldPlaceholderColour: UIColor
     
     let cellBackground: UIColor
-    
-    init(themeName name: String) {
-        
-        self.navBarBackground = .init(named: "\(name)-nav-bar-background")!
-        self.navBarTint = .init(named: "\(name)-nav-bar-tint")!
-        self.navBarTitle = .init(named: "\(name)-nav-bar-title")!
-        self.tabBarBackground = .init(named: "\(name)-nav-bar-background")!
-        self.tabBarTint = .init(named: "\(name)-tab-bar-tint")!
-        self.tabBarTintSelected = .init(named: "\(name)-tab-bar-tint-selected")!
-        self.gradientTop = .init(named: "\(name)-gradient-top")!
-        self.gradientBottom = .init(named: "\(name)-gradient-bottom")!
-        self.systemRed = .init(named: "\(name)-system-red")!
-        self.systemOrange = .init(named: "\(name)-system-orange")!
-        self.systemYellow = .init(named: "\(name)-system-yellow")!
-        self.systemGreen = .init(named: "\(name)-system-green")!
-        self.systemTeal = .init(named: "\(name)-system-teal")!
-        self.systemBlue = .init(named: "\(name)-system-blue")!
-        self.systemMarine = .init(named: "\(name)-system-marine")!
-        self.systemPurple = .init(named: "\(name)-system-purple")!
-        self.systemPink = .init(named: "\(name)-system-pink")!
-        self.systemGray = .init(named: "\(name)-system-gray")!
-        self.systemGray02 = .init(named: "\(name)-system-gray02")!
-        self.systemGray03 = .init(named: "\(name)-system-gray03")!
-        self.systemGray04 = .init(named: "\(name)-system-gray04")!
-        self.systemGray05 = .init(named: "\(name)-system-gray05")!
-        self.systemGray06 = .init(named: "\(name)-system-gray06")!
-        self.backgroundBasePrimary = .init(named: "\(name)-background-base-primary")!
-        self.backgroundBaseSecondary = .init(named: "\(name)-background-base-secondary")!
-        self.backgroundBaseTertiary = .init(named: "\(name)-background-base-tertiary")!
-        self.backgroundElevatedPrimary = .init(named: "\(name)-background-elevated-primary")!
-        self.labelPrimary = .init(named: "\(name)-label-primary")!
-        self.labelSecondary = .init(named: "\(name)-label-secondary")!
-        self.labelTertiary = .init(named: "\(name)-label-tertiary")!
-        self.labelQuaternary = .init(named: "\(name)-label-quaternary")!
-        self.buttonBackgroundPrimary = .init(named: "\(name)-button-background-primary")!
-        self.buttonBackgroundSecondary = .init(named: "\(name)-button-background-secondary")!
-        self.separatorNoTransparency = .init(named: "\(name)-separator-no-transparency")!
-        self.separatorWithTransparency = .init(named: "\(name)-separator-with-transparency")!
-        self.fillPrimary = .init(named: "\(name)-fill-primary")!
-        self.fillSecondary = .init(named: "\(name)-fill-secondary")!
-        self.fillTertiary = .init(named: "\(name)-fill-tertiary")!
-        self.fillQuaternary = .init(named: "\(name)-fill-quaternary")!
-        self.switchTint = .init(named: "\(name)-switch-tint")!
-        self.switchTintDisabled = .init(named: "\(name)-switch-tint-disabled")!
-        self.switchOnTint = .init(named: "\(name)-switch-on-tint")!
-        self.textFieldTextColour = .init(named: "\(name)-textField-text")!
-        self.textFieldPlaceholderColour = .init(named: "\(name)-textField-placeholder")!
-        self.cellBackground = self.labelQuaternary
-    }
 }
 
 struct ThemeConstant {

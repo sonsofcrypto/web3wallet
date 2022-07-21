@@ -14,8 +14,63 @@ struct ThemeA: Themable {
     var type: ThemeType { .themeA }
     
     var colour: ThemeColour {
-        
-        .init(themeName: "themeA")
+        let name = "themeA"
+        return .init(
+            gradientTop: .init(named: "\(name)-gradient-top")!,
+            gradientBottom: .init(named: "\(name)-gradient-bottom")!,
+            systemWhite: .init(named: "\(name)-system-white")!,
+            systemRed: .init(named: "\(name)-system-red")!,
+            systemOrange: .init(named: "\(name)-system-orange")!,
+            systemYellow: .init(named: "\(name)-system-yellow")!,
+            systemGreen: .init(named: "\(name)-system-green")!,
+            systemTeal: .init(named: "\(name)-system-teal")!,
+            systemBlue: .init(named: "\(name)-system-blue")!,
+            systemMarine: .init(named: "\(name)-system-marine")!,
+            systemPurple: .init(named: "\(name)-system-purple")!,
+            systemPink:  .init(named: "\(name)-system-pink")!,
+            systemGray: .init(named: "\(name)-system-gray")!,
+            systemGray02: .init(named: "\(name)-system-gray02")!,
+            systemGray03: .init(named: "\(name)-system-gray03")!,
+            systemGray04: .init(named: "\(name)-system-gray04")!,
+            systemGray05: .init(named: "\(name)-system-gray05")!,
+            backgroundBasePrimary: .init(named: "\(name)-background-base-primary")!,
+            backgroundBaseSecondary: .init(named: "\(name)-background-base-secondary")!,
+            backgroundBaseTertiary: .init(named: "\(name)-background-base-tertiary")!,
+            backgroundElevatedPrimary: .init(named: "\(name)-background-elevated-primary")!,
+            fillPrimary: .init(named: "\(name)-fill-primary")!,
+            fillSecondary: .init(named: "\(name)-fill-secondary")!,
+            fillTertiary: .init(named: "\(name)-fill-tertiary")!,
+            fillQuaternary: .init(named: "\(name)-fill-quaternary")!,
+            separatorNoTransparency: .init(named: "\(name)-separator-no-transparency")!,
+            separatorWithTransparency: .init(named: "\(name)-separator-with-transparency")!,
+            navBarBackground: .init(named: "\(name)-nav-bar-background")!,
+            navBarTint: .init(named: "\(name)-system-white")!,
+            navBarTitle: .init(named: "\(name)-system-orange")!,
+            tabBarBackground: .init(named: "\(name)-nav-bar-background")!,
+            tabBarTint: .init(named: "\(name)-system-blue")!,
+            tabBarTintSelected: .init(named: "\(name)-system-pink")!,
+            labelPrimary: .init(named: "\(name)-label-primary")!,
+            labelSecondary: .init(named: "\(name)-label-secondary")!,
+            labelTertiary: .init(named: "\(name)-label-tertiary")!,
+            labelQuaternary: .init(named: "\(name)-label-quaternary")!,
+            buttonBackgroundPrimary: .init { traits in
+                let pink = UIColor(named: "\(name)-system-pink")!
+                let blue = UIColor(named: "\(name)-system-blue")!
+                return traits.userInterfaceStyle == .dark ? pink : blue
+            },
+            buttonBackgroundSecondary: .init { traits in
+                
+                let light = UIColor(rgb: 0x787880).withAlpha(0.2)
+                let dark = UIColor(rgb: 0x787880).withAlpha(0.36)
+                return traits.userInterfaceStyle == .dark ? light : dark
+            },
+            switchTint: .init(named: "\(name)-separator-with-transparency")!.withAlpha(0.3),
+            switchTintDisabled: .init(named: "\(name)-separator-with-transparency")!.withAlpha(0.6),
+            switchOnTint: .init(named: "\(name)-system-orange")!,
+            textFieldTextColour: .init(named: "\(name)-system-white")!,
+            textFieldPlaceholderColour: .init(named: "\(name)-label-secondary")!,
+            cellBackground: .init(named: "\(name)-fill-quaternary")!
+        )
     }
     
     var font: ThemeFont {

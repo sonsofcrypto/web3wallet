@@ -103,7 +103,7 @@ final class GradientView: UIView {
     class func defaultShadowColors() -> [UIColor] {
         return [UIColor.black.withAlphaComponent(0), UIColor.black.withAlphaComponent(0.25)]
     }
-
+    
     override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
     }
@@ -113,33 +113,22 @@ private extension GradientView {
     
     func configureUI() {
         
-        switch Theme.type {
-        case .themeOG:
-            let topColor = Theme.colour.backgroundBaseSecondary
-            let bottomColor = Theme.colour.backgroundBasePrimary
+        let topColor = Theme.colour.gradientTop
+        let middleTopColor = isDarkMode ? UIColor(rgb: 0xDA3E9B) : UIColor(rgb: 0x4361BC).withAlpha(0.75)
+        let middleColor = isDarkMode ? UIColor(rgb: 0xC939AA) : UIColor(rgb: 0xBE6CF4).withAlpha(0.75)
+        let middleBottomColor = isDarkMode ? UIColor(rgb: 0xAC36B0) : UIColor(rgb: 0xFC78A9).withAlpha(0.71)
+        let bottomColor = Theme.colour.gradientBottom
+        
+        if isDashboard {
             colors = [
-                topColor,
-                bottomColor
+                topColor, middleTopColor, middleColor, middleBottomColor, bottomColor
             ]
-        case .themeA:
-            
-            let topColor = Theme.colour.gradientTop
-            let middleTopColor = isDarkMode ? UIColor(rgb: 0xDA3E9B) : UIColor(rgb: 0x4361BC).withAlpha(0.75)
-            let middleColor = isDarkMode ? UIColor(rgb: 0xC939AA) : UIColor(rgb: 0xBE6CF4).withAlpha(0.75)
-            let middleBottomColor = isDarkMode ? UIColor(rgb: 0xAC36B0) : UIColor(rgb: 0xFC78A9).withAlpha(0.71)
-            let bottomColor = Theme.colour.gradientBottom
-            
-            if isDashboard {
-                colors = [
-                    topColor, middleTopColor, middleColor, middleBottomColor, bottomColor
-                ]
-                //(layer as? CAGradientLayer)?.locations = [0,0.3,0.375,0.5,0.75,1]
-            } else {
-                colors = [
-                    topColor, middleTopColor, middleColor, middleBottomColor, bottomColor
-                ]
-                //(layer as? CAGradientLayer)?.locations = [0,0.3,0.5,0.75,1]
-            }
+            //(layer as? CAGradientLayer)?.locations = [0,0.3,0.375,0.5,0.75,1]
+        } else {
+            colors = [
+                topColor, middleTopColor, middleColor, middleBottomColor, bottomColor
+            ]
+            //(layer as? CAGradientLayer)?.locations = [0,0.3,0.5,0.75,1]
         }
     }
 }
