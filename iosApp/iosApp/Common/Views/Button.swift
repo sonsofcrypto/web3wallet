@@ -71,9 +71,9 @@ private extension Button {
             self.configuration = configuration
             updateConfiguration()
             backgroundColor = Theme.colour.buttonBackgroundPrimary
-            tintColor = Theme.colour.labelPrimary
+            tintColor = Theme.colour.buttonPrimaryText
             layer.cornerRadius = Theme.constant.cornerRadiusSmall
-            setTitleColor(Theme.colour.labelPrimary, for: .normal)
+            setTitleColor(Theme.colour.buttonPrimaryText, for: .normal)
         case let .secondarySmall(leftImage):
             updateSecondaryStyle(leftImage: leftImage)
             layer.cornerRadius = Theme.constant.buttonSecondarySmallHeight.half
@@ -98,15 +98,22 @@ private extension Button {
         updateConfiguration()
         
         backgroundColor = .clear
-        tintColor = Theme.colour.labelPrimary
+        tintColor = Theme.colour.buttonSecondaryText
         layer.borderWidth = 0.5
-        layer.borderColor = Theme.colour.labelPrimary.cgColor
-        setTitleColor(Theme.colour.labelPrimary, for: .normal)
+        layer.borderColor = Theme.colour.buttonSecondaryText.cgColor
+        setTitleColor(Theme.colour.buttonSecondaryText, for: .normal)
         titleLabel?.textAlignment = .natural
         
         if let leftImage = leftImage {
             
-            setImage(leftImage, for: .normal)
+            setImage(
+                leftImage.withRenderingMode(
+                    .alwaysTemplate
+                ).withTintColor(
+                    Theme.colour.buttonSecondaryText
+                ),
+                for: .normal
+            )
         }
         
     }

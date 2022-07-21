@@ -27,7 +27,7 @@ final class TokenSendToCollectionViewCell: UICollectionViewCell {
         
         super.awakeFromNib()
         
-        textFieldView.backgroundColor = Theme.colour.labelQuaternary
+        textFieldView.backgroundColor = Theme.colour.cellBackground
         textFieldView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         qrCodeScanButton.setImage(
             .init(systemName: "qrcode.viewfinder"),

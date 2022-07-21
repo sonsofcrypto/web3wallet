@@ -13,7 +13,7 @@ class CollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         
         let separator = UIView()
-        separator.backgroundColor = Theme.colour.labelTertiary
+        separator.backgroundColor = Theme.colour.separatorWithTransparency
         contentView.addSubview(separator)
         separator.addConstraints(
             [
@@ -64,7 +64,7 @@ class CollectionViewCell: UICollectionViewCell {
     private func configureUI() {
         
         layer.cornerRadius = Theme.constant.cornerRadius
-        backgroundColor = Theme.colour.labelQuaternary
+        backgroundColor = Theme.colour.cellBackground
         //layer.applyRectShadow()
         //layer.applyBorder()
         //configure(for: false)

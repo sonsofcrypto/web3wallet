@@ -21,7 +21,7 @@ final class DashboardWalletCell: UICollectionViewCell {
                 
         switch Theme.type {
             
-        case .themeOG:
+        case .themeIOS:
             layer.cornerRadius = Theme.constant.cornerRadius * 2
         case .themeA:
             addThemeAScreen()

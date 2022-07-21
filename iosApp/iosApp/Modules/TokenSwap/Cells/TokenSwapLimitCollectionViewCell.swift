@@ -8,7 +8,16 @@ final class TokenSwapLimitCollectionViewCell: UICollectionViewCell {
         
         super.awakeFromNib()
 
-        let imageView = UIImageView(image: .init(named: "coming-soon-meme"))
+        let imageView = UIImageView(
+            image: .init(
+                named: "coming-soon-meme"
+            )!.withRenderingMode(
+                .alwaysTemplate
+            ).withTintColor(
+                Theme.colour.labelPrimary
+            )
+        )
+        imageView.tintColor = Theme.colour.labelPrimary
         addSubview(imageView)
         
         let wrapperView = UIView()

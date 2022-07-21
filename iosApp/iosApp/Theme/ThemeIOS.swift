@@ -1,39 +1,59 @@
-// Created by web3d4v on 27/06/2022.
+// Created by web3d4v on 21/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import UIKit
 
-struct ThemeA: Themable {
+struct ThemeIOS: Themable {
     
     var statusBarStyle: ThemeStatusBarStyle {
         
-        .init(lightMode: .light, darkMode: .light)
+        .init(lightMode: .dark, darkMode: .light)
     }
     
-    var type: ThemeType { .themeA }
+    var type: ThemeType { .themeIOS }
     
     var colour: ThemeColour {
         
         let pallete = ThemeColourPalette()
         return .init(
             gradientTop: .init { traits in
-                traits.isDarkMode ? pallete.systemPink : pallete.systemBlue
+                traits.isDarkMode ?
+                pallete.systemBlack :
+                pallete.systemF2F2F7
             },
             gradientBottom: .init { traits in
-                traits.isDarkMode ? pallete.systemYellow : pallete.systemPurple
+                traits.isDarkMode ?
+                pallete.systemBlack :
+                pallete.systemF2F2F7
             },
-            navBarBackground: pallete.system1C1C1E,
+            navBarBackground: .init { traits in
+                traits.isDarkMode ?
+                pallete.systemBlack :
+                pallete.systemF2F2F7
+            },
             navBarTint: pallete.systemOrange,
-            navBarTitle: pallete.systemWhite,
-            tabBarBackground: pallete.system1C1C1E,
+            navBarTitle: .init { traits in
+                traits.isDarkMode ?
+                pallete.systemWhite :
+                pallete.systemBlack
+            },
+            tabBarBackground: .init { traits in
+                traits.isDarkMode ?
+                pallete.systemBlack :
+                pallete.systemF2F2F7
+            },
             tabBarTint: pallete.systemBlue,
             tabBarTintSelected: pallete.systemPink,
-            backgroundBasePrimary: pallete.systemBlack,
+            backgroundBasePrimary: .init { traits in
+                traits.isDarkMode ?
+                pallete.systemBlack :
+                pallete.systemF2F2F7
+            },
             backgroundBaseSecondary: .init { traits in
                 traits.isDarkMode ?
                 pallete.system1C1C1E :
-                pallete.systemF2F2F7
+                pallete.systemWhite
             },
             fillPrimary: .init { traits in
                 traits.isDarkMode ?
@@ -45,36 +65,106 @@ struct ThemeA: Themable {
                 pallete.system787880.withAlpha(0.32) :
                 pallete.system787880.withAlpha(0.16)
             },
-            fillTertiary: pallete.system767680,
-            fillQuaternary: pallete.systemEBEBF5.withAlpha(0.18),
-            separatorNoTransparency: pallete.systemC6C6C8,
-            separatorWithTransparency: pallete.systemEBEBF5.withAlpha(0.3),
-            labelPrimary: pallete.systemWhite,
-            labelSecondary: pallete.systemEBEBF5.withAlpha(0.6),
-            labelTertiary: pallete.systemEBEBF5.withAlpha(0.3),
-            labelQuaternary: pallete.systemEBEBF5.withAlpha(0.18),
+            fillTertiary: .init { traits in
+                traits.isDarkMode ?
+                pallete.system767680.withAlpha(0.24) :
+                pallete.system767680.withAlpha(0.12)
+            },
+            fillQuaternary: .init { traits in
+                traits.isDarkMode ?
+                pallete.system767680.withAlpha(0.18) :
+                pallete.system747480.withAlpha(0.08)
+            },
+            separatorNoTransparency: .init { traits in
+                traits.isDarkMode ?
+                pallete.system38383A :
+                pallete.systemC6C6C8
+            },
+            separatorWithTransparency: .init { traits in
+                traits.isDarkMode ?
+                pallete.system545458.withAlpha(0.65) :
+                pallete.system3C3C43.withAlpha(0.36)
+            },
+            labelPrimary: .init { traits in
+                traits.isDarkMode ?
+                pallete.systemWhite :
+                pallete.systemBlack
+            },
+            labelSecondary: .init { traits in
+                traits.isDarkMode ?
+                pallete.systemEBEBF5.withAlpha(0.6) :
+                pallete.system3C3C43.withAlpha(0.6)
+            },
+            labelTertiary: .init { traits in
+                traits.isDarkMode ?
+                pallete.systemEBEBF5.withAlpha(0.3) :
+                pallete.system3C3C43.withAlpha(0.3)
+            },
+            labelQuaternary: .init { traits in
+                traits.isDarkMode ?
+                pallete.systemEBEBF5.withAlpha(0.18) :
+                pallete.system3C3C43.withAlpha(0.18)
+            },
             buttonBackgroundPrimary: .init { traits in
-                traits.isDarkMode ? pallete.systemPink : pallete.systemBlue
+                traits.isDarkMode ?
+                pallete.systemBlack :
+                pallete.systemBlue
             },
             buttonPrimaryText: pallete.systemWhite,
             buttonBackgroundSecondary: .init { traits in
                 traits.isDarkMode ?
-                pallete.system787880.withAlpha(0.36) :
-                pallete.system787880.withAlpha(0.2)
+                pallete.system767680.withAlpha(0.24) :
+                pallete.system767680.withAlpha(0.12)
             },
-            buttonSecondaryText: pallete.systemWhite,
-            switchTint: pallete.systemEBEBF5.withAlpha(0.3),
-            switchTintDisabled: pallete.systemEBEBF5.withAlpha(0.6),
+            buttonSecondaryText: .init { traits in
+                traits.isDarkMode ?
+                pallete.systemWhite :
+                pallete.systemBlack
+            },
+            switchTint: pallete.systemWhite,
+            switchTintDisabled: .init { traits in
+                traits.isDarkMode ?
+                pallete.system48484A :
+                pallete.systemC7C7CC
+            },
             switchOnTint: pallete.systemOrange,
-            textFieldTextColour: pallete.systemWhite,
-            textFieldPlaceholderColour: pallete.systemEBEBF5.withAlpha(0.6),
-            segmentedControlBackground: pallete.systemEBEBF5.withAlpha(0.18),
-            segmentedControlBackgroundSelected: pallete.system767680,
-            segmentedControlText: pallete.systemWhite,
-            segmentedControlTextSelected: pallete.systemWhite,
-            cellBackground: pallete.systemEBEBF5.withAlpha(0.18),
+            textFieldTextColour: .init { traits in
+                traits.isDarkMode ?
+                pallete.systemWhite :
+                pallete.systemBlack
+            },
+            textFieldPlaceholderColour: .init { traits in
+                traits.isDarkMode ?
+                pallete.systemEBEBF5.withAlpha(0.6) :
+                pallete.system3C3C43.withAlpha(0.6)
+            },
+            segmentedControlBackground: .init { traits in
+                traits.isDarkMode ?
+                pallete.system767680.withAlpha(0.24) :
+                pallete.system767680.withAlpha(0.12)
+            },
+            segmentedControlBackgroundSelected: .init { traits in
+                traits.isDarkMode ?
+                pallete.system2C2C2E :
+                pallete.systemWhite
+            },
+            segmentedControlText: .init { traits in
+                traits.isDarkMode ?
+                pallete.systemWhite :
+                pallete.systemBlack
+            },
+            segmentedControlTextSelected: .init { traits in
+                traits.isDarkMode ?
+                pallete.systemWhite :
+                pallete.systemBlack
+            },
+            cellBackground: .init { traits in
+                traits.isDarkMode ?
+                pallete.system1C1C1E :
+                pallete.systemWhite
+            },
             keystoreEnumFill: pallete.systemBlue,
-            keystoreEnumText: pallete.systemBlack,
+            keystoreEnumText: pallete.systemWhite,
             priceUp: pallete.systemGreen,
             priceDown: pallete.systemRed,
             candleGreen: pallete.systemTeal,
@@ -108,7 +198,7 @@ struct ThemeA: Themable {
             caption2Bold: .systemFont(ofSize: 11, weight: .semibold), // line_height = 13
             footnote: .systemFont(ofSize: 13, weight: .regular), // line_height = 18
             footnoteBold: .systemFont(ofSize: 13, weight: .semibold), // line_height = 18
-            navTitle: .systemFont(ofSize: 18, weight: .regular), // line_height = 20
+            navTitle: .systemFont(ofSize: 20, weight: .regular), // line_height = 25
             tabBar: .systemFont(ofSize: 11, weight: .semibold), // line_height = 13
             networkTitle: .init(name: "NaokoAA-BlackItalic", size: 16)!,
             dashboardSectionFuel: .init(name: "NaokoAA-RegularItalic", size: 11)!,
@@ -135,7 +225,7 @@ struct ThemeA: Themable {
     }
 }
 
-private extension ThemeA {
+private extension ThemeIOS {
     
     struct ThemeColourPalette {
         
@@ -153,10 +243,17 @@ private extension ThemeA {
         let systemGray: UIColor
         let systemEBEBF5: UIColor
         let system1C1C1E: UIColor
-        let systemC6C6C8: UIColor
+        let system3C3C43: UIColor
         let systemF2F2F7: UIColor
+        let system38383A: UIColor
+        let systemC6C6C8: UIColor
+        let system545458: UIColor
         let system787880: UIColor
         let system767680: UIColor
+        let system747480: UIColor
+        let system48484A: UIColor
+        let systemC7C7CC: UIColor
+        let system2C2C2E: UIColor
         
         init(name: String = "themeA") {
                         
@@ -174,10 +271,17 @@ private extension ThemeA {
             self.systemYellow = .init(named: "\(name)-system-yellow")!
             self.systemEBEBF5 = .init(rgb: 0xEBEBF5)
             self.system1C1C1E = .init(rgb: 0x1C1C1E)
-            self.systemC6C6C8 = .init(rgb: 0xC6C6C8)
+            self.system3C3C43 = .init(rgb: 0x3C3C43)
             self.systemF2F2F7 = .init(rgb: 0xF2F2F7)
+            self.system38383A = .init(rgb: 0x38383A)
+            self.system545458 = .init(rgb: 0x545458)
+            self.systemC6C6C8 = .init(rgb: 0xC6C6C8)
             self.system787880 = .init(rgb: 0x787880)
             self.system767680 = .init(rgb: 0x767680)
+            self.system747480 = .init(rgb: 0x747480)
+            self.system48484A = .init(rgb: 0x48484A)
+            self.systemC7C7CC = .init(rgb: 0xC7C7CC)
+            self.system2C2C2E = .init(rgb: 0x2C2C2E)
         }
     }
 }

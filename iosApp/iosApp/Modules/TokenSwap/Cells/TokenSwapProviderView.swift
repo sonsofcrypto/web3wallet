@@ -59,7 +59,16 @@ extension TokenSwapProviderView {
         button.setTitle(viewModel.name, for: .normal)
         if let leftImage = viewModel.icon.pngImage {
             
-            button.setImage(leftImage.resize(to: .init(width: 24, height: 24)), for: .normal)
+            button.setImage(
+                leftImage.withRenderingMode(
+                    .alwaysTemplate
+                ).withTintColor(
+                    Theme.colour.buttonSecondaryText
+                ).resize(
+                    to: .init(width: 24, height: 24)
+                ),
+                for: .normal
+            )
         }
     }
 }

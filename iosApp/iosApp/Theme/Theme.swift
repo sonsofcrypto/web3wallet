@@ -4,7 +4,7 @@
 
 import UIKit
 
-var Theme: Themable = ThemeA()
+var Theme: Themable = ThemeIOS()
 
 protocol Themable {
     
@@ -60,16 +60,16 @@ extension ThemeStatusBarStyle {
 enum ThemeType {
     
     case themeA
-    case themeOG
+    case themeIOS
     
     var isThemeA: Bool {
         
         self == .themeA
     }
     
-    var isThemeOG: Bool {
+    var isThemeIOS: Bool {
         
-        self == .themeOG
+        self == .themeIOS
     }
 }
 
@@ -137,7 +137,9 @@ struct ThemeColour {
     let labelQuaternary: UIColor
     
     let buttonBackgroundPrimary: UIColor
+    let buttonPrimaryText: UIColor
     let buttonBackgroundSecondary: UIColor
+    let buttonSecondaryText: UIColor
         
     let switchTint: UIColor
     let switchTintDisabled: UIColor
@@ -145,10 +147,17 @@ struct ThemeColour {
     
     let textFieldTextColour: UIColor
     let textFieldPlaceholderColour: UIColor
-    
+
+    let segmentedControlBackground: UIColor
+    let segmentedControlBackgroundSelected: UIColor
+    let segmentedControlText: UIColor
+    let segmentedControlTextSelected: UIColor
+
     let cellBackground: UIColor
     
     let keystoreEnumFill: UIColor
+    let keystoreEnumText: UIColor
+    
     let priceUp: UIColor
     let priceDown: UIColor
     let candleGreen: UIColor

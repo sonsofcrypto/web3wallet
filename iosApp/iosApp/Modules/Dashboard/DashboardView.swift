@@ -137,13 +137,7 @@ private extension DashboardViewController {
                 
         switch Theme.type {
             
-        case .themeOG:
-            title = Localized("dashboard")
-            let overScrollView = (collectionView as? CollectionView)
-            overScrollView?.overScrollView.image = UIImage(named: "overscroll_pepe")
-            configureCollectionCardsLayout()
-            
-        case .themeA:
+        case .themeA, .themeIOS:
             title = Localized("web3wallet").uppercased()
             addCustomBackgroundGradientView()
             configureCollectionCardsLayout()

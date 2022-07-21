@@ -45,7 +45,7 @@ extension KeyStoreCell {
         let image = UIImage(systemName: "\(index + 1).square.fill")!
         let config = UIImage.SymbolConfiguration(
             paletteColors: [
-                Theme.colour.labelPrimary,
+                Theme.colour.keystoreEnumText,
                 Theme.colour.keystoreEnumFill
             ]
         )

@@ -421,6 +421,8 @@
 		1CE0064628899D15002D1EB3 /* AlertSheetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0064528899D15002D1EB3 /* AlertSheetPresentationController.swift */; };
 		1CE006482889A08A002D1EB3 /* Alert.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CE006472889A08A002D1EB3 /* Alert.storyboard */; };
 		1CE0064A2889C4D6002D1EB3 /* UITraitCollection+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE006492889C4D6002D1EB3 /* UITraitCollection+Extensions.swift */; };
+		1CE0064C2889E0E6002D1EB3 /* ThemeIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0064B2889E0E6002D1EB3 /* ThemeIOS.swift */; };
+		1CE0064E2889E604002D1EB3 /* Colours-ThemeIOS.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CE0064D2889E604002D1EB3 /* Colours-ThemeIOS.xcassets */; };
 		1CE66BCA2848EA9900AB6ACA /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BC92848EA9900AB6ACA /* ChatService.swift */; };
 		1CE66BCC2848EA9F00AB6ACA /* DefaultChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCB2848EA9F00AB6ACA /* DefaultChatService.swift */; };
 		1CE66BCE2848EAA600AB6ACA /* ChatServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */; };
@@ -932,6 +934,8 @@
 		1CE0064528899D15002D1EB3 /* AlertSheetPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertSheetPresentationController.swift; sourceTree = "<group>"; };
 		1CE006472889A08A002D1EB3 /* Alert.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Alert.storyboard; sourceTree = "<group>"; };
 		1CE006492889C4D6002D1EB3 /* UITraitCollection+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITraitCollection+Extensions.swift"; sourceTree = "<group>"; };
+		1CE0064B2889E0E6002D1EB3 /* ThemeIOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeIOS.swift; sourceTree = "<group>"; };
+		1CE0064D2889E604002D1EB3 /* Colours-ThemeIOS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Colours-ThemeIOS.xcassets"; sourceTree = "<group>"; };
 		1CE66BC92848EA9900AB6ACA /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		1CE66BCB2848EA9F00AB6ACA /* DefaultChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatService.swift; sourceTree = "<group>"; };
 		1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceAssembler.swift; sourceTree = "<group>"; };
@@ -2105,6 +2109,7 @@
 				D157F7D327B69B6400578FF8 /* Assets.xcassets */,
 				1C9E31AD287732A700DD2031 /* Assets-Old.xcassets */,
 				1C54DC342868204000E378F6 /* Colours-ThemeA.xcassets */,
+				1CE0064D2889E604002D1EB3 /* Colours-ThemeIOS.xcassets */,
 				D11A98F327B8615B00EDFDD0 /* Fonts */,
 				D157F7D527B69B6400578FF8 /* LaunchScreen.storyboard */,
 				D157F7D027B69B6300578FF8 /* Main.storyboard */,
@@ -2228,6 +2233,7 @@
 			children = (
 				1C54DC292868193300E378F6 /* Theme.swift */,
 				1C54DC692869D60D00E378F6 /* ThemeA.swift */,
+				1CE0064B2889E0E6002D1EB3 /* ThemeIOS.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -2444,6 +2450,7 @@
 				1C54DC5D28683DDA00E378F6 /* NaokoAA-Black.otf in Resources */,
 				D157F7D427B69B6400578FF8 /* Assets.xcassets in Resources */,
 				D11A990327B8615B00EDFDD0 /* GothicA1-Thin.ttf in Resources */,
+				1CE0064E2889E604002D1EB3 /* Colours-ThemeIOS.xcassets in Resources */,
 				1CD843EA287218C800E6D359 /* OCR-A Regular.ttf in Resources */,
 				D1976B14287EFAE10063FC9C /* MnemonicImport.storyboard in Resources */,
 				D11A990927B8615B00EDFDD0 /* GothicA1-SemiBold.ttf in Resources */,
@@ -2581,6 +2588,7 @@
 				1C60C321285724D1003BE25D /* AppsCell.swift in Sources */,
 				1C54DC152862351500E378F6 /* QRCodeScanViewModel.swift in Sources */,
 				1C6720122885D5AF00C5F044 /* TokenSwapSlippageView.swift in Sources */,
+				1CE0064C2889E0E6002D1EB3 /* ThemeIOS.swift in Sources */,
 				1C60C2A3285724D0003BE25D /* SettingsActionCell.swift in Sources */,
 				1C60C2D6285724D0003BE25D /* MnemonicNewWireframeFactory.swift in Sources */,
 				1C60C35B285724D1003BE25D /* DegenViewModel.swift in Sources */,
