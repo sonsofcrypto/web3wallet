@@ -65,6 +65,7 @@ kotlin {
                         strictly("${rootProject.ext["coroutines_version"]}")
                     }
                 }
+                implementation("com.ionspin.kotlin:bignum:${rootProject.ext["bignum_version"]}")
             }
         }
 

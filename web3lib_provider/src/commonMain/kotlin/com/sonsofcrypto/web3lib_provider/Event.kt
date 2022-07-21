@@ -3,44 +3,39 @@ package com.sonsofcrypto.web3lib_provider
 import com.sonsofcrypto.web3lib_core.AddressBytes
 import com.sonsofcrypto.web3lib_core.Network
 
-///** ProviderEvent */
-//sealed class ProviderEvent() {
-//
-//    /** Emitted when network is setup */
-//    sealed class Network(val network: Network) : ProviderEvent()
-//
-//    /** `BaseProvider` subclass does not support network detection */
-//    object networkDetectionNotSupported : ProviderError("provider does not support network detection")
-//    /** Unsuppored or invalid network */
-//    object unsupportedNetwork : ProviderError("Unsupported or invalid network")
-//}
+interface Event {
 
-interface ProviderEvent {}
+    companion object {
+        fun network(network: Network): EventNetwork = object : EventNetwork {
+            override val network: Network = network
+        }
+    }
+}
 
-interface ProviderEventNetwork {
+interface EventNetwork: Event {
     val network: Network
 }
 
-interface ProviderEventFilter: ProviderEvent {
+interface EventFilter: Event {
     val address: AddressBytes
     val topics: List<Any?>
 }
 
-interface Filter: ProviderEventFilter {
+interface Filter: EventFilter {
     val fromBlock: UInt?
     val toBlock: UInt?
 }
 
-interface FilterByBlockHash: ProviderEventFilter {
+interface FilterByBlockHash: EventFilter {
     val blockHash: String
 }
 
-open class ForkProviderEvent(
+open class ForkEvent(
     val expiry: UInt
-) : ProviderEvent
+) : Event
 
 
-class BlockForkProviderEvent : ForkProviderEvent {
+class BlockForkEvent : ForkEvent {
     val blockHash: String
 
     constructor(blockHash: String, exp: UInt?) : super(expiry = exp ?: 0u) {
@@ -53,7 +48,7 @@ class BlockForkProviderEvent : ForkProviderEvent {
     }
 }
 
-class TransactionForkProviderEvent: ForkProviderEvent {
+class TransactionForkEvent: ForkEvent {
     val hash: String
 
     constructor(hash: String, exp: UInt?)  : super(expiry = exp ?: 0u) {
@@ -66,7 +61,7 @@ class TransactionForkProviderEvent: ForkProviderEvent {
     }
 }
 
-class TransactionOrderForkProviderEvent: ForkProviderEvent {
+class TransactionOrderForkEvent: ForkEvent {
     val beforeHash: String
     val afterHash: String
 
@@ -84,6 +79,6 @@ class TransactionOrderForkProviderEvent: ForkProviderEvent {
     }
 }
 
-interface ProviderListener {
-    fun handle(event: ProviderEvent)
+interface Listener {
+    fun handle(event: Event)
 }

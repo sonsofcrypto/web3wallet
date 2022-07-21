@@ -6,13 +6,13 @@ interface Provider {
 
 }
 
-class TransactionRequest {
-
-}
-
-class TransactionResponse {
-
-}
+//class TransactionRequest {
+//
+//}
+//
+//class TransactionResponse {
+//
+//}
 
 interface Signer {
 
@@ -27,8 +27,8 @@ interface Signer {
     /** Signs a transaction and returns the fully serialized, signed transaction
      * The transaction MUST be signed, and NO additional properties to be added.
      */
-    @Throws(Exception::class)
-    suspend fun signTransaction(transaction: TransactionRequest): ByteArray
+//    @Throws(Exception::class)
+//    suspend fun signTransaction(transaction: TransactionRequest): ByteArray
 
     /** Returns a new instance of the Signer, connected to provider. */
     fun connect(provider: Provider): Signer;
@@ -40,14 +40,14 @@ interface Signer {
     suspend fun getTransactionCount(block: UInt): UInt
 
     /** Populates `from` if unspecified, and estimates the fee */
-    @Throws(Exception::class)
-    suspend fun estimateGas(transaction: TransactionRequest): BigInt
+//    @Throws(Exception::class)
+//    suspend fun estimateGas(transaction: TransactionRequest): BigInt
 
-    /** Populates "from" if unspecified, and calls with the transaction */
-    suspend fun call(transaction: TransactionRequest, block: UInt? = null): ByteArray
+//    /** Populates "from" if unspecified, and calls with the transaction */
+//    suspend fun call(transaction: TransactionRequest, block: UInt? = null): ByteArray
 
-    /** Populates all fields, signs and sends it to the network */
-    suspend fun sendTransaction(transaction: TransactionRequest): TransactionResponse
+//    /** Populates all fields, signs and sends it to the network */
+//    suspend fun sendTransaction(transaction: TransactionRequest): TransactionResponse
 
     suspend fun getChainId(): Unit
 

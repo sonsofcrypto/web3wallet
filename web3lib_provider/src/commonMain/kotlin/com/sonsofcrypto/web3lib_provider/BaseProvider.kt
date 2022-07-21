@@ -2,7 +2,6 @@ package com.sonsofcrypto.web3lib_provider
 
 import com.sonsofcrypto.web3lib_core.Address
 import com.sonsofcrypto.web3lib_core.Network
-import com.sonsofcrypto.web3lib_core.TransactionResponse
 import com.sonsofcrypto.web3lib_utils.BigInt
 import com.sonsofcrypto.web3lib_utils.Timer
 import kotlinx.coroutines.*
@@ -15,12 +14,12 @@ class BaseProvider : Provider  {
     private var network: Network? = null
     private var networkDeffered: Deferred<Network>? = null
 
-    private var events: MutableList<ProviderEvent> = mutableListOf<ProviderEvent>()
+    private var events: MutableList<Event> = mutableListOf<Event>()
     // TODO: See `BaseProvider` _emitted
-    private var emittedEvents: MutableList<ProviderEvent> = mutableListOf<ProviderEvent>()
+    private var emittedEvents: MutableList<Event> = mutableListOf<Event>()
 
     @OptIn(ExperimentalTime::class)
-    private var pollingInterval: Duration = 3.seconds
+    private var pollingInterval: Duration = 4.seconds
     private var poller: Timer? = null
     private var bootStrapPoll: Timer? = null
 
@@ -31,7 +30,7 @@ class BaseProvider : Provider  {
     private var fastBlockNumberPromise: Deferred<UInt>? = null
     private var fastQueryDate: UInt = 0u
 
-    private var maxInternalBlockNumber: UInt = 0u
+    private var maxInternalBlockNumber: UInt = 10u
     private var internalBlockNumber: Deferred<InternalBlock>? = null
 
     var anyNetwork: Boolean = true
@@ -45,14 +44,41 @@ class BaseProvider : Provider  {
         if (network != null) {
             this.network = network
             if (isKnown(network)) {
-                val event = object : ProviderEventNetwork { override val network = network }
-                this.emit(event)
+                this.emit(Event.network(network))
             } else throw Error.unsupportedNetwork
         } else {
             this.networkDeffered = scopeBg.async {
                return@async detectNetwork()
             }
         }
+    }
+
+    @Throws(Throwable::class)
+    private suspend fun ready(
+        network: Network?,
+        deferredNetwork: Deferred<Network>
+    ): Network {
+        if (network != null) {
+            return network
+        }
+
+        var network: Network? = null
+
+        if (deferredNetwork != null) {
+            network = deferredNetwork.await()
+        }
+
+        if (network == null) {
+            network = scopeBg.async {
+                return@async detectNetwork()
+            }.await()
+        }
+
+        if (network == null) {
+            throw Error.failedToDetectNetwork
+        }
+
+        return network
     }
 
     override suspend fun network(): Network {
@@ -127,31 +153,31 @@ class BaseProvider : Provider  {
         TODO("Not yet implemented")
     }
 
-    override fun on(event: ProviderEvent, providerListener: ProviderListener): Provider {
+    override fun on(event: Event, providerListener: Listener): Provider {
         TODO("Not yet implemented")
     }
 
-    override fun once(event: ProviderEvent, providerListener: ProviderListener): Provider {
+    override fun once(event: Event, providerListener: Listener): Provider {
         TODO("Not yet implemented")
     }
 
-    override fun emit(event: ProviderEvent): Boolean {
+    override fun emit(event: Event): Boolean {
         TODO("Not yet implemented")
     }
 
-    override fun listenerCount(event: ProviderEvent?): UInt {
+    override fun listenerCount(event: Event?): UInt {
         TODO("Not yet implemented")
     }
 
-    override fun listeners(event: ProviderEvent?): Array<ProviderListener> {
+    override fun listeners(event: Event?): Array<Listener> {
         TODO("Not yet implemented")
     }
 
-    override fun off(event: ProviderEvent, providerListener: ProviderListener?): Provider {
+    override fun off(event: Event, providerListener: Listener?): Provider {
         TODO("Not yet implemented")
     }
 
-    override fun removeAllListeners(event: ProviderEvent?): Provider {
+    override fun removeAllListeners(event: Event?): Provider {
         TODO("Not yet implemented")
     }
 
@@ -191,8 +217,10 @@ class BaseProvider : Provider  {
         constructor(cause: Throwable) : this(null, cause)
 
         /** `BaseProvider` subclass does not support network detection */
-        object networkDetectionNotSupported : ProviderError("provider does not support network detection")
+        object networkDetectionNotSupported : Error("provider does not support network detection")
         /** Unsuppored or invalid network */
-        object unsupportedNetwork : ProviderError("Unsupported or invalid network")
+        object unsupportedNetwork : Error("Unsupported or invalid network")
+        /** Failed to detect network during provider init */
+        object failedToDetectNetwork : Error("Failed to detect network")
     }
 }

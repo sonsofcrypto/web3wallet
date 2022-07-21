@@ -17,9 +17,13 @@ allprojects {
     ext["settings_version"] = "1.0.0-alpha01"
     ext["serialization_version"] = "1.3.3"
     ext["coroutines_version"] = "1.6.0-native-mt"
+    ext["ktor_version"] = "2.0.3"
+    ext["bignum_version"] = "0.3.6"
     repositories {
         google()
         mavenCentral()
+        uri("https://oss.sonatype.org/content/repositories/snapshots")
+
     }
 }
 
