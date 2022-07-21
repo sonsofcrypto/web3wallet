@@ -4,15 +4,22 @@
 
 import UIKit
 
-final class FeedPickerView: UIView {
+struct FeesPickerViewModel {
+    
+    let id: String
+    let name: String
+    let value: String
+}
+
+final class FeesPickerView: UIView {
     
     @IBOutlet weak var feesView: UIView!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var trailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var stackView: UIStackView!
     
-    private weak var presenter: TokenSendPresenter?
-    private var fees: [TokenSendViewModel.Fee] = []
+    private var fees: [FeesPickerViewModel] = []
+    private var onFeeSelected: ((FeesPickerViewModel) -> Void)?
     
     override func awakeFromNib() {
         
@@ -33,13 +40,14 @@ final class FeedPickerView: UIView {
     }
 
     func present(
-        with fees: [TokenSendViewModel.Fee],
-        presenter: TokenSendPresenter,
+        with fees: [FeesPickerViewModel],
+        onFeeSelected: @escaping (FeesPickerViewModel) -> Void,
         at topRightAnchor: CGPoint = .init(x: Theme.constant.padding, y: 96)
     ) {
-        self.presenter = presenter
+        self.fees = fees
+        self.onFeeSelected = onFeeSelected
         
-        topConstraint.constant = topRightAnchor.y + feesView.frame.height
+        topConstraint.constant = topRightAnchor.y - feesView.frame.height * 0.5
         trailingConstraint.constant = topRightAnchor.x
         
         update(fees: fees)
@@ -48,14 +56,12 @@ final class FeedPickerView: UIView {
     }
 }
 
-private extension FeedPickerView {
+private extension FeesPickerView {
     
-    func update(fees: [TokenSendViewModel.Fee]) {
+    func update(fees: [FeesPickerViewModel]) {
         
         assert(fees.count == 3, "Only 3 fees are supported")
-        
-        self.fees = fees
-        
+                
         for (index, fee) in fees.enumerated() {
             
             let stack = stackView.arrangedSubviews.first{ $0.tag == index } as? UIStackView
@@ -63,7 +69,7 @@ private extension FeedPickerView {
         }
     }
     
-    func updateItem(_ stackView: UIStackView?, with fee: TokenSendViewModel.Fee) {
+    func updateItem(_ stackView: UIStackView?, with fee: FeesPickerViewModel) {
         
         let nameLabel = stackView?.arrangedSubviews.first{ $0.tag == 1 } as? UILabel
         nameLabel?.font = Theme.font.body
@@ -79,7 +85,7 @@ private extension FeedPickerView {
     }
 }
 
-private extension FeedPickerView {
+private extension FeesPickerView {
     
     @objc func feeTapped(_ sender: UITapGestureRecognizer) {
         
@@ -87,7 +93,7 @@ private extension FeedPickerView {
         
         let fee = fees[tag]
         
-        presenter?.handle(.feeChanged(to: fee.id))
+        onFeeSelected?(fee)
         
         dismissPicker()
     }

@@ -86,7 +86,7 @@ extension DashboardButtonsCell {
 
     @IBAction func tradeTapped() {
         
-        presenter.handle(.tradeAction)
+        presenter.handle(.swapAction)
     }
 }
 

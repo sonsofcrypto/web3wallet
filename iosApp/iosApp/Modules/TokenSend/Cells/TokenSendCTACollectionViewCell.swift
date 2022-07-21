@@ -4,29 +4,22 @@
 
 final class TokenSendCTACollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var networkFeeView: TokenNetworkFeeView!
     @IBOutlet weak var button: Button!
     
-    @IBOutlet weak var networkTokenIcon: UIImageView!
-    @IBOutlet weak var networkEstimateFeeLabel: UILabel!
-    @IBOutlet weak var networkFeeButton: Button!
-    
-    private weak var presenter: TokenSendPresenter!
+    struct Handler {
+        let onNetworkFeesTapped: () -> Void
+        let onCTATapped: () -> Void
+    }
+
+    private var handler: Handler!
     
     override func awakeFromNib() {
         
         super.awakeFromNib()
                 
         button.style = .primary
-
-        networkTokenIcon.image = .init(named: "send-ethereum-token")
-
-        networkEstimateFeeLabel.font = Theme.font.caption2
-        networkEstimateFeeLabel.textColor = Theme.colour.labelPrimary
-        
-        networkFeeButton.style = .secondarySmall(
-            leftImage: .init(named: "dashboard-charging-station")
-        )
-        networkFeeButton.addTarget(self, action: #selector(changeNetworkFee), for: .touchUpInside)
+        button.addTarget(self, action: #selector(onSendTapped), for: .touchUpInside)
     }
 }
 
@@ -34,35 +27,29 @@ extension TokenSendCTACollectionViewCell {
     
     func update(
         with viewModel: TokenSendViewModel.Send,
-        presenter: TokenSendPresenter
+        handler: Handler
     ) {
         
-        self.presenter = presenter
+        self.handler = handler
         
         switch viewModel.buttonState {
         case .ready:
-            button.setTitle(Localized("tokenSend.cell.send.ready"), for: .normal)
+            button.setTitle(Localized("send"), for: .normal)
         case .insufficientFunds:
-            button.setTitle(Localized("tokenSend.cell.send.insufficientFunds"), for: .normal)
+            button.setTitle(Localized("insufficientFunds"), for: .normal)
         }
         
-        networkEstimateFeeLabel.text = viewModel.estimatedFee
-        
-        switch viewModel.feeType {
-        case .low:
-            networkFeeButton.setTitle(Localized("tokenSend.cell.send.fee.low"), for: .normal)
-        case .medium:
-            networkFeeButton.setTitle(Localized("tokenSend.cell.send.fee.medium"), for: .normal)
-        case .high:
-            networkFeeButton.setTitle(Localized("tokenSend.cell.send.fee.high"), for: .normal)
-        }
+        networkFeeView.update(
+            with: viewModel.tokenNetworkFeeViewModel,
+            handler: handler.onNetworkFeesTapped
+        )
     }
 }
 
 private extension TokenSendCTACollectionViewCell {
     
-    @objc func changeNetworkFee() {
+    @objc func onSendTapped() {
         
-        presenter.handle(.feeTapped)
+        handler.onCTATapped()
     }
 }

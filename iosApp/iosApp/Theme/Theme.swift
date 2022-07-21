@@ -108,15 +108,7 @@ struct ThemeFont {
 }
 
 struct ThemeColour {
-    
-    let navBarBackground: UIColor
-    let navBarTint: UIColor
-    let navBarTitle: UIColor
-
-    let tabBarBackground: UIColor
-    let tabBarTint: UIColor
-    let tabBarTintSelected: UIColor
-    
+        
     let gradientTop: UIColor
     let gradientBottom: UIColor
 
@@ -142,6 +134,19 @@ struct ThemeColour {
     let backgroundBaseTertiary: UIColor
     let backgroundElevatedPrimary: UIColor
     
+    let fillPrimary: UIColor
+    let fillSecondary: UIColor
+    let fillTertiary: UIColor
+    let fillQuaternary: UIColor
+    
+    let navBarBackground: UIColor
+    let navBarTint: UIColor
+    let navBarTitle: UIColor
+
+    let tabBarBackground: UIColor
+    let tabBarTint: UIColor
+    let tabBarTintSelected: UIColor
+        
     let labelPrimary: UIColor
     let labelSecondary: UIColor
     let labelTertiary: UIColor
@@ -151,18 +156,15 @@ struct ThemeColour {
     let buttonBackgroundSecondary: UIColor
     let separatorNoTransparency: UIColor
     let separatorWithTransparency: UIColor
-    
-    let fillPrimary: UIColor
-    let fillSecondary: UIColor
-    let fillTertiary: UIColor
-    let fillQuaternary: UIColor
-    
+        
     let switchTint: UIColor
     let switchTintDisabled: UIColor
     let switchOnTint: UIColor
     
     let textFieldTextColour: UIColor
     let textFieldPlaceholderColour: UIColor
+    
+    let cellBackground: UIColor
     
     init(themeName name: String) {
         
@@ -210,7 +212,7 @@ struct ThemeColour {
         self.switchOnTint = .init(named: "\(name)-switch-on-tint")!
         self.textFieldTextColour = .init(named: "\(name)-textField-text")!
         self.textFieldPlaceholderColour = .init(named: "\(name)-textField-placeholder")!
-
+        self.cellBackground = self.labelQuaternary
     }
 }
 

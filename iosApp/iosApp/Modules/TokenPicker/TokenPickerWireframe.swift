@@ -12,11 +12,14 @@ struct TokenPickerWireframeContext {
     enum Source {
         
         case receive
-        case send
         case multiSelectEdit(
             network: Web3Network?,
             selectedTokens: [Web3Token],
             onCompletion: (([Web3Token]) -> Void)
+        )
+        case select(
+            type: SelectionType,
+            onCompletion: (Web3Token) -> Void
         )
         
         var localizedValue: String {
@@ -24,20 +27,10 @@ struct TokenPickerWireframeContext {
             switch self {
             case .receive:
                 return "receive"
-            case .send:
-                return "send"
             case .multiSelectEdit:
                 return "multiSelectEdit"
-            }
-        }
-        
-        var isSend: Bool {
-            
-            switch self {
-            case .send:
-                return true
-            case .multiSelectEdit, .receive:
-                return false
+            case .select:
+                return "select"
             }
         }
         
@@ -46,7 +39,7 @@ struct TokenPickerWireframeContext {
             switch self {
             case .multiSelectEdit:
                 return true
-            case .receive, .send:
+            case .receive, .select:
                 return false
             }
         }
@@ -56,9 +49,14 @@ struct TokenPickerWireframeContext {
             switch self {
             case let .multiSelectEdit(network, _, _):
                 return network
-            case .receive, .send:
+            case .receive, .select:
                 return nil
             }
+        }
+        
+        enum SelectionType {
+            case myToken
+            case any
         }
     }
 }
@@ -66,7 +64,6 @@ struct TokenPickerWireframeContext {
 enum TokenPickerWireframeDestination {
     
     case tokenReceive(Web3Token)
-    case tokenSend(Web3Token)
     case addCustomToken
 }
 
@@ -81,7 +78,6 @@ final class DefaultTokenPickerWireframe {
     private weak var presentingIn: UIViewController!
     private let context: TokenPickerWireframeContext
     private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
-    private let tokenSendWireframeFactory: TokenSendWireframeFactory
     private let tokenAddWireframeFactory: TokenAddWireframeFactory
     private let web3Service: Web3Service
     
@@ -89,14 +85,12 @@ final class DefaultTokenPickerWireframe {
         presentingIn: UIViewController,
         context: TokenPickerWireframeContext,
         tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
-        tokenSendWireframeFactory: TokenSendWireframeFactory,
         tokenAddWireframeFactory: TokenAddWireframeFactory,
         web3Service: Web3Service
     ) {
         self.presentingIn = presentingIn
         self.context = context
         self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
-        self.tokenSendWireframeFactory = tokenSendWireframeFactory
         self.tokenAddWireframeFactory = tokenAddWireframeFactory
         self.web3Service = web3Service
     }
@@ -111,11 +105,7 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
         switch context.presentationStyle {
             
         case .embed:
-            guard let tabBarController = presentingIn as? TabBarController else {
-                return
-            }
-            let vcs = tabBarController.add(viewController: vc)
-            tabBarController.setViewControllers(vcs, animated: false)
+            fatalError("Not implemented")
             
         case .present:
             presentingIn.present(vc, animated: true)
@@ -138,17 +128,7 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
                 context: .init(presentationStyle: .push, web3Token: token)
             )
             wireframe.present()
-            
-        case let .tokenSend(token):
-            
-            guard let presentingIn = presentingIn.presentedViewController ?? presentingIn else { return }
-            
-            let wireframe = tokenSendWireframeFactory.makeWireframe(
-                presentingIn: presentingIn,
-                context: .init(presentationStyle: .push, web3Token: token)
-            )
-            wireframe.present()
-            
+                        
         case .addCustomToken:
             
             guard let presentingIn = presentingIn.presentedViewController else { return }
@@ -188,21 +168,16 @@ private extension DefaultTokenPickerWireframe {
         switch context.presentationStyle {
         case .embed:
             
+            fatalError("Not implemented")
+        case .present:
+                        
             let navigationController = NavigationController(rootViewController: vc)
-            navigationController.tabBarItem = UITabBarItem(
-                title: Localized("apps"),
-                image: UIImage(named: "tab_icon_apps"),
-                tag: 3
-            )
             return navigationController
-        case .present, .push:
+            
+        case .push:
             
             vc.hidesBottomBarWhenPushed = true
-            
-            guard !(presentingIn is NavigationController) else { return vc }
-            
-            let navigationController = NavigationController(rootViewController: vc)
-            return navigationController
+            return vc
         }
     }
 }

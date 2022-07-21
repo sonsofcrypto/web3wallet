@@ -10,15 +10,13 @@ protocol AuthenticateWireframe {
     func dismiss()
 }
 
-// MARK: - DefaultAuthenticateWireframe
-
-class DefaultAuthenticateWireframe {
-
-    private let context: AuthenticateContext
-    private let keyStoreService: KeyStoreService
+final class DefaultAuthenticateWireframe {
 
     private weak var parent: UIViewController?
-    private weak var vc: UIViewController?
+    private var context: AuthenticateContext
+    private let keyStoreService: KeyStoreService
+
+    private weak var navVc: NavigationController?
 
     init(
         parent: UIViewController,
@@ -31,41 +29,58 @@ class DefaultAuthenticateWireframe {
     }
 }
 
-// MARK: - AuthenticateWireframe
-
 extension DefaultAuthenticateWireframe: AuthenticateWireframe {
 
     func present() {
+        
         let interactor = DefaultAuthenticateInteractor(
             keyStoreService: keyStoreService
         )
+        
+        guard let keyStoreItemTarget = keyStoreItemTarget else { return }
+        
+        // NOTE: Update keyStoreItem in context to set selected one in case it needs to
+        context = .init(
+            title: context.title,
+            keyStoreItem: keyStoreItemTarget,
+            handler: context.handler
+        )
 
-        if interactor.canUnlockWithBio(context.keyStoreItem) {
+        guard
+            !interactor.canUnlockWithBio(keyStoreItemTarget)
+        else {
+            
             interactor.unlockWithBiometrics(
-                context.keyStoreItem,
+                keyStoreItemTarget,
                 title: context.title,
-                handler: { result in self.context.handler?(result)}
+                handler: { [weak self] result in self?.context.handler(result)}
             )
             return
         }
 
         let vc = wireUp(interactor)
-        self.vc = vc
         parent?.present(vc, animated: true)
     }
 
     func dismiss() {
-        vc?.dismiss(animated: true)
+        navVc?.dismiss(animated: true)
     }
 }
 
-extension DefaultAuthenticateWireframe {
+private extension DefaultAuthenticateWireframe {
+    
+    var keyStoreItemTarget: KeyStoreItem? {
+        
+        // TODO: @Annon Fix keyStoreService.selected, returning nil
+        context.keyStoreItem ?? keyStoreService.selected
+    }
 
-    private func wireUp(_ interactor: AuthenticateInteractor) -> UIViewController {
+    func wireUp(_ interactor: AuthenticateInteractor) -> UIViewController {
+        
         let vc: AuthenticateViewController = UIStoryboard(.authenticate).instantiate()
         let presenter = DefaultAuthenticatePresenter(
-            context: context,
             view: vc,
+            context: context,
             interactor: interactor,
             wireframe: self
         )
@@ -73,7 +88,8 @@ extension DefaultAuthenticateWireframe {
         vc.presenter = presenter
         let navVc = NavigationController(rootViewController: vc)
         navVc.modalPresentationStyle = .custom
-        navVc.transitioningDelegate = vc as? UIViewControllerTransitioningDelegate
+        navVc.transitioningDelegate = vc
+        self.navVc = navVc
         return navVc
     }
 }

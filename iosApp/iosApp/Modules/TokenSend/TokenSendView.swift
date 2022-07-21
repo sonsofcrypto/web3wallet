@@ -7,7 +7,7 @@ import UIKit
 protocol TokenSendView: AnyObject {
 
     func update(with viewModel: TokenSendViewModel)
-    func presentFeePicker(with fees: [TokenSendViewModel.Fee])
+    func presentFeePicker(with fees: [FeesPickerViewModel])
     func dismissKeyboard()
 }
 
@@ -16,7 +16,7 @@ final class TokenSendViewController: BaseViewController {
     var presenter: TokenSendPresenter!
 
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var feesPickerView: FeedPickerView!
+    @IBOutlet weak var feesPickerView: FeesPickerView!
     
     private var viewModel: TokenSendViewModel?
     
@@ -47,14 +47,24 @@ extension TokenSendViewController: TokenSendView {
         }
     }
     
-    func presentFeePicker(with fees: [TokenSendViewModel.Fee]) {
+    func presentFeePicker(with fees: [FeesPickerViewModel]) {
         
-        feesPickerView.present(with: fees, presenter: presenter)
-        
+        dismissKeyboard()
+                
         let cell = collectionView.visibleCells.first { $0 is TokenSendCTACollectionViewCell } as! TokenSendCTACollectionViewCell
-        
-        print(view.convert(cell.networkFeeButton.bounds, from: cell.networkFeeButton))
 
+        let fromFrame = feesPickerView.convert(
+            cell.networkFeeView.networkFeeButton.bounds,
+            from: cell.networkFeeView.networkFeeButton
+        )
+        feesPickerView.present(
+            with: fees,
+            onFeeSelected: makeOnFeeSelected(),
+            at: .init(
+                x: Theme.constant.padding,
+                y: fromFrame.midY
+            )
+        )
     }
     
     @objc func dismissKeyboard() {
@@ -91,13 +101,13 @@ extension TokenSendViewController: UICollectionViewDataSource {
         case let .token(token):
             
             let cell = collectionView.dequeue(TokenSendTokenCollectionViewCell.self, for: indexPath)
-            cell.update(with: token, presenter: presenter)
+            cell.update(with: token, handler: makeTokenSendTokenHandler())
             return cell
             
         case let .send(cta):
             
             let cell = collectionView.dequeue(TokenSendCTACollectionViewCell.self, for: indexPath)
-            cell.update(with: cta, presenter: presenter)
+            cell.update(with: cta, handler: makeTokenSendCTAHandler())
             return cell
         }
     }
@@ -134,6 +144,15 @@ private extension TokenSendViewController {
         )
         
         feesPickerView.isHidden = true
+    }
+    
+    func makeOnFeeSelected() -> ((FeesPickerViewModel) -> Void) {
+        
+        {
+            [weak self] item in
+            guard let self = self else { return }
+            self.presenter.handle(.feeChanged(to: item.id))
+        }
     }
     
     @objc func navBarLeftActionTapped() {
@@ -238,17 +257,72 @@ private extension TokenSendViewController {
             case let tokenCell as TokenSendTokenCollectionViewCell:
                 
                 guard let token = viewModel?.items.token else { return }
-                tokenCell.update(with: token, presenter: presenter)
+                tokenCell.update(with: token, handler: makeTokenSendTokenHandler())
                 
             case let ctaCell as TokenSendCTACollectionViewCell:
                 
                 guard let cta = viewModel?.items.send else { return }
-                ctaCell.update(with: cta, presenter: presenter)
+                ctaCell.update(with: cta, handler: makeTokenSendCTAHandler())
 
             default:
                 
                 fatalError()
             }
+        }
+    }
+}
+
+private extension TokenSendViewController {
+    
+    func makeTokenSendTokenHandler() -> TokenSendTokenCollectionViewCell.Handler {
+        
+        .init(
+            onTokenTapped: makeOnTokenTapped(),
+            onTokenChanged: makeOnTokenChanged()
+        )
+    }
+    
+    func makeOnTokenTapped() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.selectToken)
+        }
+    }
+    
+    func makeOnTokenChanged() -> (Double) -> Void {
+        
+        {
+            [weak self] value in
+            guard let self = self else { return }
+            self.presenter.handle(.tokenChanged(to: value))
+        }
+    }
+    
+    func makeTokenSendCTAHandler() -> TokenSendCTACollectionViewCell.Handler {
+        
+        .init(
+            onNetworkFeesTapped: makeOnNetworkFeesTapped(),
+            onCTATapped: makeOnCTATapped()
+        )
+    }
+    
+    func makeOnNetworkFeesTapped() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.feeTapped)
+        }
+    }
+    
+    func makeOnCTATapped() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.review)
         }
     }
 }

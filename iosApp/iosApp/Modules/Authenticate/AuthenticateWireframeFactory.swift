@@ -13,9 +13,7 @@ protocol AuthenticateWireframeFactory {
     ) -> AuthenticateWireframe
 }
 
-// MARK: - DefaultAuthenticateWireframeFactory
-
-class DefaultAuthenticateWireframeFactory {
+final class DefaultAuthenticateWireframeFactory {
 
     private let keyStoreService: KeyStoreService
 
@@ -24,30 +22,17 @@ class DefaultAuthenticateWireframeFactory {
     }
 }
 
-// MARK: - AuthenticateWireframeFactory
-
 extension DefaultAuthenticateWireframeFactory: AuthenticateWireframeFactory {
 
     func makeWireframe(
         _ parent: UIViewController,
         context: AuthenticateContext
     ) -> AuthenticateWireframe {
+        
         DefaultAuthenticateWireframe(
             parent: parent,
             context: context,
             keyStoreService: keyStoreService
         )
-    }
-}
-
-// MARK: - Assembler
-
-final class AuthenticateWireframeFactoryAssembler: AssemblerComponent {
-    func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .instance) { resolver -> AuthenticateWireframeFactory in
-            DefaultAuthenticateWireframeFactory(
-                keyStoreService: resolver.resolve()
-            )
-        }
     }
 }

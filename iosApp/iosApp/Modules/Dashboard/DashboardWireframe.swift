@@ -18,6 +18,7 @@ enum DashboardWireframeDestination {
         selectedTokens: [Web3Token],
         onCompletion: ([Web3Token]) -> Void
     )
+    case tokenSwap
 }
 
 protocol DashboardWireframe {
@@ -34,12 +35,16 @@ final class DefaultDashboardWireframe {
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
     private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
+    private let tokenSendWireframeFactory: TokenSendWireframeFactory
+    private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let onboardingService: OnboardingService
     private let web3Service: Web3Service
     private let priceHistoryService: PriceHistoryService
     private let nftsService: NFTsService
+    
+    private weak var navigationController: NavigationController!
 
     init(
         parent: UIViewController,
@@ -47,6 +52,8 @@ final class DefaultDashboardWireframe {
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
         tokenPickerWireframeFactory: TokenPickerWireframeFactory,
+        tokenSendWireframeFactory: TokenSendWireframeFactory,
+        tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         onboardingService: OnboardingService,
@@ -59,6 +66,8 @@ final class DefaultDashboardWireframe {
         self.alertWireframeFactory = alertWireframeFactory
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
         self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
+        self.tokenSendWireframeFactory = tokenSendWireframeFactory
+        self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.onboardingService = onboardingService
@@ -119,7 +128,14 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             
         case .sendCoins:
             
-            presentTokenPicker(with: .send)
+            let wireframe = tokenSendWireframeFactory.makeWireframe(
+                presentingIn: navigationController,
+                context: .init(
+                    presentationStyle: .present,
+                    web3Token: nil
+                )
+            )
+            wireframe.present()
             
         case let .scanQRCode(onCompletion):
             
@@ -158,6 +174,18 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 )
             )
             wireframe.present()
+            
+        case .tokenSwap:
+            
+            let wireframe = tokenSwapWireframeFactory.makeWireframe(
+                presentingIn: navigationController,
+                context: .init(
+                    presentationStyle: .present,
+                    tokenFrom: nil,
+                    tokenTo: nil
+                )
+            )
+            wireframe.present()
         }
     }
 }
@@ -179,7 +207,9 @@ private extension DefaultDashboardWireframe {
             onboardingService: onboardingService
         )
         vc.presenter = presenter
-        return NavigationController(rootViewController: vc)
+        let navigationController = NavigationController(rootViewController: vc)
+        self.navigationController = navigationController
+        return navigationController
     }
     
     func presentTokenPicker(

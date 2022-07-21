@@ -60,10 +60,19 @@ private extension Button {
         
         switch style {
         case .primary:
+            var configuration = UIButton.Configuration.plain()
+            configuration.titleTextAttributesTransformer = .init{ incoming in
+                var outgoing = incoming
+                outgoing.font = Theme.font.title3
+                return outgoing
+            }
+            configuration.titlePadding = Theme.constant.padding * 0.5
+            configuration.imagePadding = Theme.constant.padding * 0.5
+            self.configuration = configuration
+            updateConfiguration()
             backgroundColor = Theme.colour.buttonBackgroundPrimary
             tintColor = Theme.colour.labelPrimary
             layer.cornerRadius = Theme.constant.cornerRadiusSmall
-            titleLabel?.font = Theme.font.title3
             setTitleColor(Theme.colour.labelPrimary, for: .normal)
         case let .secondarySmall(leftImage):
             updateSecondaryStyle(leftImage: leftImage)

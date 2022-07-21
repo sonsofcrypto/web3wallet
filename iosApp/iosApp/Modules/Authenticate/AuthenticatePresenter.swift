@@ -21,27 +21,24 @@ protocol AuthenticatePresenter {
     func handle(_ event: AuthenticatePresenterEvent)
 }
 
-// MARK: - DefaultAuthenticatePresenter
+final class DefaultAuthenticatePresenter {
 
-class DefaultAuthenticatePresenter {
-
+    private weak var view: AuthenticateView?
     private let context: AuthenticateContext
     private let interactor: AuthenticateInteractor
     private let wireframe: AuthenticateWireframe
-
-    private weak var view: AuthenticateView?
 
     private var password: String = ""
     private var salt: String = ""
 
     init(
-        context: AuthenticateContext,
         view: AuthenticateView,
+        context: AuthenticateContext,
         interactor: AuthenticateInteractor,
         wireframe: AuthenticateWireframe
     ) {
-        self.context = context
         self.view = view
+        self.context = context
         self.interactor = interactor
         self.wireframe = wireframe
     }
@@ -51,30 +48,32 @@ class DefaultAuthenticatePresenter {
     }
 }
 
-// MARK: AuthenticatePresenter
-
 extension DefaultAuthenticatePresenter: AuthenticatePresenter {
 
     func present() {
+        
         updateView()
-        if context.keyStoreItem.passUnlockWithBio {
-            interactor.unlockWithBiometrics(
-                context.keyStoreItem,
-                title: "Unlock", // TODO(web3dgn): Localized context aware title
-                handler: { [weak self] result in
-                    switch result {
-                    case let .success(password, _):
-                        self?.password = password
-                        self?.updateView()
-                    default:
-                        ()
-                    }
+        
+        guard keyStoreItem.passUnlockWithBio else { return }
+        
+        interactor.unlockWithBiometrics(
+            keyStoreItem,
+            title: Localized("authenticate.title.unlock"),
+            handler: { [weak self] result in
+                switch result {
+                case let .success(password):
+                    self?.password = password.0
+                    self?.updateView()
+                default:
+                    ()
                 }
-            )
-        }
+            }
+        )
+        
     }
 
     func handle(_ event: AuthenticatePresenterEvent) {
+        
         switch event {
         case let .didChangePassword(text):
             password = text
@@ -82,12 +81,12 @@ extension DefaultAuthenticatePresenter: AuthenticatePresenter {
             salt = text
         case .didCancel:
             wireframe.dismiss()
-            context.handler?(
+            context.handler(
                 .failure(AuthenticatePresenterErrror.failedToAuthenticate)
             )
         case .didConfirm:
             guard interactor.isValid(
-                item: context.keyStoreItem,
+                item: keyStoreItem,
                 password: password,
                 salt: salt
             ) else {
@@ -95,33 +94,33 @@ extension DefaultAuthenticatePresenter: AuthenticatePresenter {
                 return
             }
             wireframe.dismiss()
-            context.handler?(.success((password, salt)))
+            context.handler(.success((password, salt)))
         }
     }
 }
 
-// MARK: - Event handling
-
 private extension DefaultAuthenticatePresenter {
-
-}
-
-// MARK: - WalletsViewModel utilities
-
-private extension DefaultAuthenticatePresenter {
-
+    
+    var keyStoreItem: KeyStoreItem {
+        
+        guard let keyStoreItem = context.keyStoreItem else {
+            
+            fatalError("This should never happen, the wireframe will guard against this")
+        }
+        
+        return keyStoreItem
+    }
+    
     func viewModel() -> AuthenticateViewModel {
-        // TODO(Sancho): Update, fix, localize, make sane
-        // Also view wise, I did no design just default elements
-        let item = context.keyStoreItem
-        return .init(
-            title: "Unlock",
+
+        .init(
+            title: Localized("authenticate.title.unlock"),
             password: password,
-            passwordPlaceholder: "Password",
+            passwordPlaceholder: Localized("authenticate.placeholder.password"),
             salt: salt,
-            saltPlaceholder: "Salt",
-            needsPassword: item.passwordType != .bio,
-            needsSalt: item.saltMnemonic
+            saltPlaceholder: Localized("authenticate.placeholder.salt"),
+            needsPassword: keyStoreItem.passwordType != .bio,
+            needsSalt: keyStoreItem.saltMnemonic
         )
     }
 }

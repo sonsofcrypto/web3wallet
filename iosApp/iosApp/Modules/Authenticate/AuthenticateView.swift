@@ -10,7 +10,7 @@ protocol AuthenticateView: AnyObject {
     func animateError()
 }
 
-class AuthenticateViewController: UIViewController, ModalDismissProtocol {
+final class AuthenticateViewController: UIViewController, ModalDismissProtocol {
 
     @IBOutlet weak var passwordTextField: TextField!
     @IBOutlet weak var saltTextField: TextField!
@@ -23,12 +23,14 @@ class AuthenticateViewController: UIViewController, ModalDismissProtocol {
     private var viewModel: AuthenticateViewModel?
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         configureUI()
         presenter?.present()
     }
+}
 
-    // MARK: - Actions
+extension AuthenticateViewController {
 
     @IBAction func dismissAction(_ sender: Any) {
         presenter.handle(.didCancel)
@@ -38,8 +40,6 @@ class AuthenticateViewController: UIViewController, ModalDismissProtocol {
         presenter.handle(.didConfirm)
     }
 }
-
-// MARK: - WalletsView
 
 extension AuthenticateViewController: AuthenticateView {
 
@@ -64,11 +64,10 @@ extension AuthenticateViewController: AuthenticateView {
     }
 }
 
-// MARK: - Configure UI
-
-extension AuthenticateViewController {
+private extension AuthenticateViewController {
     
     func configureUI() {
+        
         title = Localized("authenticate")
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             with: .init(systemName: "chevron.left"),
@@ -85,7 +84,8 @@ extension AuthenticateViewController: UIViewControllerTransitioningDelegate, Mod
         presenting: UIViewController?,
         source: UIViewController
     ) -> UIPresentationController? {
-        return PreferredSizePresentationController(
+        
+        PreferredSizePresentationController(
             presentedViewController: presented,
             presenting: presenting
         )
@@ -118,6 +118,7 @@ extension AuthenticateViewController: UITextFieldDelegate {
     }
 
     func updatePresenter(_ textField: UITextField) {
+        
         if textField == passwordTextField {
             presenter.handle(.didChangePassword(text: textField.text ?? ""))
         }

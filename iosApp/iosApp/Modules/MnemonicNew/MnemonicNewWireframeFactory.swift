@@ -46,16 +46,3 @@ extension DefaultMnemonicNewWireframeFactory: MnemonicNewWireframeFactory {
         )
     }
 }
-
-// MARK: - Assembler
-
-final class MnemonicNewWireframeFactoryAssembler: AssemblerComponent {
-    func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .instance) { resolver -> MnemonicNewWireframeFactory in
-            DefaultMnemonicNewWireframeFactory(
-                keyStoreService: resolver.resolve(),
-                settingsService: resolver.resolve()
-            )
-        }
-    }
-}

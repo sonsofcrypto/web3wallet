@@ -7,7 +7,7 @@ import Foundation
 enum DashboardPresenterEvent {
     case receiveAction
     case sendAction
-    case tradeAction
+    case swapAction
     case walletConnectionSettingsAction
     case didTapCollapse(network: String)
     case didTapExpand(network: String)
@@ -107,6 +107,10 @@ extension DefaultDashboardPresenter: DashboardPresenter {
                 )
             )
             
+        case .swapAction:
+            
+            wireframe.navigate(to: .tokenSwap)
+            
         default:
             print("Handle \(event)")
         }
@@ -198,8 +202,8 @@ private extension DefaultDashboardPresenter {
                             type: .send
                         ),
                         .init(
-                            title: Localized("dashboard.button.trade"),
-                            imageName: "trade-button",
+                            title: Localized("dashboard.button.swap"),
+                            imageName: "swap-button",
                             type: .swap
                         )
                     ]

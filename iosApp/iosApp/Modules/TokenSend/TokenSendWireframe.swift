@@ -7,12 +7,17 @@ import UIKit
 struct TokenSendWireframeContext {
     
     let presentationStyle: PresentationStyle
-    let web3Token: Web3Token
+    let web3Token: Web3Token?
 }
 
 enum TokenSendWireframeDestination {
     
-    case qrCodeScan(onCompletion: (String) -> Void)
+    case qrCodeScan(network: Web3Network, onCompletion: (String) -> Void)
+    case selectToken(onCompletion: (Web3Token) -> Void)
+    case confirmSend(
+        dataIn: ConfirmationWireframeContext.SendContext,
+        onSuccess: () -> Void
+    )
 }
 
 protocol TokenSendWireframe {
@@ -26,6 +31,8 @@ final class DefaultTokenSendWireframe {
     private weak var presentingIn: UIViewController!
     private let context: TokenSendWireframeContext
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
+    private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
+    private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let web3Service: Web3Service
     
     private weak var navigationController: NavigationController!
@@ -34,11 +41,15 @@ final class DefaultTokenSendWireframe {
         presentingIn: UIViewController,
         context: TokenSendWireframeContext,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
+        tokenPickerWireframeFactory: TokenPickerWireframeFactory,
+        confirmationWireframeFactory: ConfirmationWireframeFactory,
         web3Service: Web3Service
     ) {
         self.presentingIn = presentingIn
         self.context = context
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
+        self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
+        self.confirmationWireframeFactory = confirmationWireframeFactory
         self.web3Service = web3Service
     }
 }
@@ -66,15 +77,43 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
     func navigate(to destination: TokenSendWireframeDestination) {
         
         switch destination {
-        case let .qrCodeScan(onCompletion):
+            
+        case let .qrCodeScan(network, onCompletion):
             
             let wireframe = qrCodeScanWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(
                     presentationStyle: .push,
-                    type: .network(context.web3Token.network),
+                    type: .network(network),
                     onCompletion: onCompletion
                 )
+            )
+            wireframe.present()
+            
+        case let .selectToken(onCompletion):
+            
+            let wireframe = tokenPickerWireframeFactory.makeWireframe(
+                presentingIn: navigationController,
+                context: .init(
+                    presentationStyle: .present,
+                    source: .select(
+                        type: .myToken,
+                        onCompletion: onCompletion
+                    )
+                )
+            )
+            wireframe.present()
+            
+        case let .confirmSend(dataIn, onSuccess):
+            
+            guard let viewController = navigationController.topViewController else {
+                
+                return
+            }
+            
+            let wireframe = confirmationWireframeFactory.makeWireframe(
+                presentingIn: viewController,
+                context: .init(type: .send(dataIn), onSuccessHandler: onSuccess)
             )
             wireframe.present()
         }

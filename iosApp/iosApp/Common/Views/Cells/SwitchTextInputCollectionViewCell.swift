@@ -13,33 +13,19 @@ final class SwitchTextInputCollectionViewCell: CollectionViewCell {
     @IBOutlet weak var vStack: UIStackView!
     @IBOutlet weak var hStack: UIStackView!
 
-    var switchAction: ((Bool)->Void)?
-    var textChangeHandler: ((String)->Void)?
-    var descriptionAction: (()->Void)?
+    private var switchAction: ((Bool)->Void)?
+    private var textChangeHandler: ((String)->Void)?
+    private var descriptionAction: (()->Void)?
 
     override func awakeFromNib() {
+        
         super.awakeFromNib()
         configureUI()
     }
+}
 
-    func configureUI() {
-        
-        titleLabel.apply(style: .body)
-        textField.delegate = self
-        (textField as? TextField)?.textChangeHandler = { [weak self] text in
-            self?.textChangeHandler?(text ?? "")
-        }
-
-        descriptionLabel.addGestureRecognizer(
-            .init(target: self, action: #selector(descriptionAction(_:)))
-        )
-        onOffSwitch.addTarget(
-            self,
-            action: #selector(switchAction(_:)),
-            for: .valueChanged
-        )
-    }
-
+extension SwitchTextInputCollectionViewCell {
+    
     @objc func switchAction(_ sender: UISwitch) {
         switchAction?(sender.isOn)
     }
@@ -51,13 +37,17 @@ final class SwitchTextInputCollectionViewCell: CollectionViewCell {
 
 extension SwitchTextInputCollectionViewCell: UITextFieldDelegate {
 
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+
+        textChangeHandler?(textField.text ?? "")
+    }
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
         textField.resignFirstResponder()
         return false
     }
 }
-
-// MARK: - Update with viewModel
 
 extension SwitchTextInputCollectionViewCell {
 
@@ -122,9 +112,23 @@ extension SwitchTextInputCollectionViewCell {
     }
 }
 
-// MARK: - Utilities
-
 private extension SwitchTextInputCollectionViewCell {
+    
+    func configureUI() {
+        
+        titleLabel.apply(style: .body)
+        
+        textField.delegate = self
+
+        descriptionLabel.addGestureRecognizer(
+            .init(target: self, action: #selector(descriptionAction(_:)))
+        )
+        onOffSwitch.addTarget(
+            self,
+            action: #selector(switchAction(_:)),
+            for: .valueChanged
+        )
+    }
 
     func update(
         title: String,
@@ -141,7 +145,7 @@ private extension SwitchTextInputCollectionViewCell {
         onOffSwitch.setOn(onOff, animated: false)
         textField.text = text
 
-        (textField as? TextField)?.placeholderAttrText = placeholder
+        textField.placeholderAttrText = placeholder
 
         let attrStr = NSMutableAttributedString(
             string: description,

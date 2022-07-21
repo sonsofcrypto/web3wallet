@@ -79,14 +79,15 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
                 guard let token = tokens.findToken(matching: token.symbol) else { return }
                 wireframe.navigate(to: .tokenReceive(token))
 
-            case .send:
-                
-                guard let token = tokens.findToken(matching: token.symbol) else { return }
-                wireframe.navigate(to: .tokenSend(token))
-
             case .multiSelectEdit:
                 
                 handleTokenTappedOnMultiSelect(token: token)
+                
+            case let .select(_, onCompletion):
+                
+                guard let token = tokens.findToken(matching: token.symbol) else { return }
+                onCompletion(token)
+                wireframe.dismiss()
             }
             
         case .addCustomToken:
@@ -162,9 +163,17 @@ private extension DefaultTokenPickerPresenter {
                 guard let network = context.source.network else { return true }
                 return $0.network == network
             }
-        case .send:
-            tokens = interactor.allTokens.filter {
-                $0.balance > 0
+            
+        case let .select(type, _):
+            
+            switch type {
+                
+            case .myToken:
+                tokens = interactor.allTokens.filter {
+                    $0.balance > 0
+                }
+            case .any:
+                tokens = interactor.allTokens
             }
         }
     }
@@ -181,7 +190,7 @@ private extension DefaultTokenPickerPresenter {
                 sectionsDisplayed = makeSearchItems(for: searchTerm)
             }
             
-        case .send:
+        case .select:
             
             sectionsDisplayed = makeSearchItems(for: searchTerm)
         }
@@ -364,11 +373,6 @@ private extension DefaultTokenPickerPresenter {
                 
             case .receive:
                 type = .receive
-            case .send:
-                type = .send(
-                    tokens: token.balance.toString(decimals: 2),
-                    usdTotal: token.usdBalanceString
-                )
             case .multiSelectEdit:
                 let isSelected = selectedTokens?.contains(
                     where: {
@@ -376,6 +380,18 @@ private extension DefaultTokenPickerPresenter {
                     }
                 )
                 type = .multiSelect(isSelected: isSelected ?? false)
+            case let .select(selectionType, _):
+                
+                switch selectionType {
+                    
+                case .myToken:
+                    type = .send(
+                        tokens: token.balance.toString(decimals: 2),
+                        usdTotal: token.usdBalanceString
+                    )
+                case .any:
+                    type = .receive
+                }
             }
             
             let position: TokenPickerViewModel.Token.Position

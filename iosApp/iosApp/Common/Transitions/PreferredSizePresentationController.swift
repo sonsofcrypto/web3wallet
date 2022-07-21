@@ -4,17 +4,16 @@
 
 import UIKit
 
-import UIKit
-
+// TODO: @Annon: why `modalDismissDelegate` is needed, conforming to `ModalDismissDelegate` should be ok 🤔
 /// ModalDismissProtocol implement to support handeling of dismissal via tap on
 /// backgound chrome. Normally should be implemend by `presentedViewController`.
-@objc protocol ModalDismissProtocol: class {
+@objc protocol ModalDismissProtocol: AnyObject {
     weak var modalDismissDelegate: ModalDismissDelegate? { get set }
 }
 
 /// `ModalDismissDelegate` called by `ModalDismissProtocol`. Should be
 /// implemented by `presentingViewController`.
-@objc protocol ModalDismissDelegate: class {
+@objc protocol ModalDismissDelegate: AnyObject {
     func viewControllerDismissActionPressed(_ viewController: UIViewController?)
 }
 
@@ -64,7 +63,9 @@ class PreferredSizePresentationController: UIPresentationController {
     }
 
     override func presentationTransitionWillBegin() {
+        
         super.presentationTransitionWillBegin()
+        
         // Animate background
         let bgView = newBGView()
         containerView?.addSubview(bgView)
@@ -77,7 +78,9 @@ class PreferredSizePresentationController: UIPresentationController {
     }
 
     override func presentationTransitionDidEnd(_ completed: Bool) {
+        
         guard completed == true else { return }
+        
         // Add motion effects
         let offset = 12
         [
@@ -91,6 +94,7 @@ class PreferredSizePresentationController: UIPresentationController {
     }
 
     override func dismissalTransitionWillBegin() {
+        
         super.dismissalTransitionWillBegin()
 
         UIView.animate(withDuration: Constant.animDuration) {
@@ -99,6 +103,7 @@ class PreferredSizePresentationController: UIPresentationController {
     }
 
     override func dismissalTransitionDidEnd(_ completed: Bool) {
+        
         super.dismissalTransitionDidEnd(completed)
 
         guard !completed else {
@@ -112,7 +117,9 @@ class PreferredSizePresentationController: UIPresentationController {
     }
 
     override func containerViewWillLayoutSubviews() {
+        
         super.containerViewWillLayoutSubviews()
+        
         bgView?.frame = containerView?.bounds ?? .zero
         presentedViewController.view.frame = frameOfPresentedViewInContainerView
     }
@@ -120,32 +127,23 @@ class PreferredSizePresentationController: UIPresentationController {
     override func adaptivePresentationStyle(
         for traitCollection: UITraitCollection
     ) -> UIModalPresentationStyle {
-        return .custom
+        
+        .custom
     }
+}
 
-    @objc func tapAction(_ recognizer: UITapGestureRecognizer) {
-        if let vc = presentingViewController as? ModalDismissProtocol {
-            vc.modalDismissDelegate?.viewControllerDismissActionPressed(presentedViewController)
-        } else if let vc = presentedViewController as? ModalDismissDelegate {
-            vc.viewControllerDismissActionPressed(presentedViewController)
-        } else if let vc = presentedViewController as? UINavigationController,
-                  let childVc = vc.topViewController as? ModalDismissDelegate {
-            childVc.viewControllerDismissActionPressed(presentedViewController)
-        } else {
-            presentingViewController.dismiss(animated: true, completion: nil)
-        }
-    }
-
-    //  MARK: - Utilities
-
-    private func motionEffect(
+private extension PreferredSizePresentationController {
+    
+    func motionEffect(
         _ keyPath: String,
         type: UIInterpolatingMotionEffect.EffectType
     ) -> UIInterpolatingMotionEffect {
-        return UIInterpolatingMotionEffect(keyPath: keyPath, type: type)
+        
+        UIInterpolatingMotionEffect(keyPath: keyPath, type: type)
     }
 
-    private func newBGView() -> UIView {
+    func newBGView() -> UIView {
+        
         let bgView = UIVisualEffectView(effect: UIBlurEffect(style: .systemUltraThinMaterialDark))
         bgView.frame = containerViewBounds()
 //        let bgView = UIView(frame: containerViewBounds())
@@ -159,12 +157,28 @@ class PreferredSizePresentationController: UIPresentationController {
 //        bgView.addGestureRecognizer(tap)
         return bgView
     }
+    
+    @objc func tapAction(_ recognizer: UITapGestureRecognizer) {
+        
+        if let vc = presentingViewController as? ModalDismissProtocol {
+            vc.modalDismissDelegate?.viewControllerDismissActionPressed(presentedViewController)
+        } else if let vc = presentedViewController as? ModalDismissDelegate {
+            vc.viewControllerDismissActionPressed(presentedViewController)
+        } else if let vc = presentedViewController as? UINavigationController,
+                  let childVc = vc.topViewController as? ModalDismissDelegate {
+            childVc.viewControllerDismissActionPressed(presentedViewController)
+        } else {
+            presentingViewController.dismiss(animated: true, completion: nil)
+        }
+    }
 
-    private func containerViewBounds() -> CGRect {
+    func containerViewBounds() -> CGRect {
+        
         containerView?.bounds ?? presentingViewController.view.bounds
     }
 
     private struct Constant {
+        
         static let widthScaler: CGFloat = 0.91
         static let minWidth: CGFloat = 320
         static let margin: CGFloat = 16

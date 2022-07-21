@@ -25,8 +25,6 @@ protocol MnemonicUpdatePresenter {
     func handle(_ event: MnemonicUpdatePresenterEvent)
 }
 
-// MARK: - DefaultMnemonicPresenter
-
 final class DefaultMnemonicUpdatePresenter {
 
     private let context: MnemonicUpdateContext
@@ -56,17 +54,16 @@ final class DefaultMnemonicUpdatePresenter {
     }
 }
 
-// MARK: MnemonicPresenter
-
 extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
 
     func present() {
-        let start = Date()
+        
         updateView()
+        
         wireframe.navigate(
             to: .authenticate(
                 context: .init(
-                    title: "Unlock", // TODO(web3dgn): Title should for context dependent ie unlock, sign ...
+                    title: Localized("authenticate.title.unlock"),
                     keyStoreItem: context.keyStoreItem,
                     handler: handleAuthenticateResult
                 )
@@ -75,6 +72,7 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
     }
 
     func handle(_ event: MnemonicUpdatePresenterEvent) {
+        
         switch event {
         case .didTapMnemonic:
             let mnemonicStr = interactor.mnemonic.joined(separator: " ")
@@ -162,7 +160,7 @@ private extension DefaultMnemonicUpdatePresenter {
                 ),
                 .none
             ],
-            cta: Localized("newMnemonic.cta.new")
+            cta: Localized("newMnemonic.cta.update")
         )
     }
 

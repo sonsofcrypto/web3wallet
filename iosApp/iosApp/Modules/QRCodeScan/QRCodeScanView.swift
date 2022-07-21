@@ -69,13 +69,8 @@ extension QRCodeScanViewController: QRCodeScanView {
 private extension QRCodeScanViewController {
     
     func configureUI() {
-                
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: Localized("close"),
-            style: .plain,
-            target: self,
-            action: #selector(closeTapped)
-        )
+           
+        navigationItem.leftBarButtonItem = makeLeftBarButton()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: Localized("paste"),
@@ -88,6 +83,28 @@ private extension QRCodeScanViewController {
         
         addTopView()
         addActivityIndicatorView()
+    }
+    
+    func makeLeftBarButton() -> UIBarButtonItem {
+        
+        let showBackButton = (navigationController?.viewControllers.count ?? 0) > 1
+        
+        guard showBackButton else {
+            
+            return UIBarButtonItem(
+                title: Localized("close"),
+                style: .plain,
+                target: self,
+                action: #selector(closeTapped)
+            )
+        }
+        
+        return UIBarButtonItem(
+            image: .init(systemName: "chevron.left"),
+            style: .plain,
+            target: self,
+            action: #selector(closeTapped)
+        )
     }
     
     @objc func closeTapped() {

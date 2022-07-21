@@ -22,7 +22,7 @@ extension TokenSendViewModel {
     enum Item {
         
         case address(Address)
-        case token(Token)
+        case token(TokenEnterAmountViewModel)
         case send(Send)
     }
     
@@ -32,29 +32,10 @@ extension TokenSendViewModel {
         let isValid: Bool
     }
     
-    struct Token {
-        
-        let tokenAmount: Double?
-        let tokenSymbolIcon: Data
-        let tokenSymbol: String
-        let tokenMaxAmount: Double
-        let tokenMaxDecimals: Int
-        let currencyTokenPrice: Double
-        let shouldUpdateTextFields: Bool
-    }
-    
     struct Send {
         
-        let estimatedFee: String
-        let feeType: FeeType
+        let tokenNetworkFeeViewModel: TokenNetworkFeeViewModel
         let buttonState: State
-        
-        enum FeeType {
-            
-            case low
-            case medium
-            case high
-        }
         
         enum State {
             
@@ -80,9 +61,9 @@ extension Array where Element == TokenSendViewModel.Item {
         return address
     }
     
-    var token: TokenSendViewModel.Token? {
+    var token: TokenEnterAmountViewModel? {
         
-        var token: TokenSendViewModel.Token?
+        var token: TokenEnterAmountViewModel?
         forEach {
             
             if case let TokenSendViewModel.Item.token(value) = $0 {

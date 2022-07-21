@@ -9,10 +9,12 @@ enum TokenSendPresenterEvent {
     case dismiss
     case addressChanged(to: String)
     case pasteAddress
+    case selectToken
     case tokenChanged(to: Double)
     case feeChanged(to: String)
     case qrCodeScan
     case feeTapped
+    case review
 }
 
 protocol TokenSendPresenter: AnyObject {
@@ -29,6 +31,7 @@ final class DefaultTokenSendPresenter {
     private let context: TokenSendWireframeContext
     
     private var address: String?
+    private var token: Web3Token!
     private var amount: Double?
     private var fee: Web3NetworkFee = .low
     
@@ -45,6 +48,8 @@ final class DefaultTokenSendPresenter {
         self.interactor = interactor
         self.wireframe = wireframe
         self.context = context
+        
+        loadToken()
     }
 }
 
@@ -63,18 +68,21 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                 .token(
                     .init(
                         tokenAmount: nil,
-                        tokenSymbolIcon: interactor.tokenIcon(for: context.web3Token),
-                        tokenSymbol: context.web3Token.symbol.uppercased(),
-                        tokenMaxAmount: context.web3Token.balance,
-                        tokenMaxDecimals: context.web3Token.decimals,
-                        currencyTokenPrice: context.web3Token.usdPrice,
-                        shouldUpdateTextFields: false
+                        tokenSymbolIcon: interactor.tokenIcon(for: token),
+                        tokenSymbol: token.symbol.uppercased(),
+                        tokenMaxAmount: token.balance,
+                        tokenMaxDecimals: token.decimals,
+                        currencyTokenPrice: token.usdPrice,
+                        shouldUpdateTextFields: false,
+                        shouldBecomeFirstResponder: true
                     )
                 ),
                 .send(
                     .init(
-                        estimatedFee: makeEstimatedFee(),
-                        feeType: makeFeeType(),
+                        tokenNetworkFeeViewModel: .init(
+                            estimatedFee: makeEstimatedFee(),
+                            feeType: makeFeeType()
+                        ),
                         buttonState: .ready
                     )
                 )
@@ -94,21 +102,41 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
             
             view?.dismissKeyboard()
             let onQRCodeScanned = makeOnQRCodeScanned()
-            wireframe.navigate(to: .qrCodeScan(onCompletion: onQRCodeScanned))
+            wireframe.navigate(
+                to: .qrCodeScan(
+                    network: token.network,
+                    onCompletion: onQRCodeScanned
+                )
+            )
+            
+        case .selectToken:
+            
+            wireframe.navigate(
+                to: .selectToken(
+                    onCompletion: makeOnTokenToSelected()
+                )
+            )
             
         case let .addressChanged(address):
             
-            updateAddress(with: address)
+            if
+                let currentAddress = self.address,
+                let formattedAddress = formattedAddress,
+                formattedAddress.hasPrefix(address),
+                formattedAddress.count == (address.count + 1)
+            {
+                
+                updateAddress(with: String(currentAddress.prefix(currentAddress.length - 1)))
+            } else {
+                updateAddress(with: address)
+            }
             
         case .pasteAddress:
             
             let clipboard = UIPasteboard.general.string ?? ""
-            let isValid = interactor.isAddressValid(address: clipboard, network: context.web3Token.network)
+            let isValid = interactor.isAddressValid(address: clipboard, network: token.network)
             guard isValid else { return }
-            updateAddress(with: interactor.addressFormattedShort(
-                address: clipboard,
-                network: context.web3Token.network)
-            )
+            updateAddress(with: clipboard)
             
         case let .tokenChanged(amount):
             
@@ -125,17 +153,83 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
             view?.presentFeePicker(
                 with: makeFees()
             )
+            
+        case .review:
+            
+            guard let address = address else { return }
+            
+            wireframe.navigate(
+                to: .confirmSend(
+                    dataIn: .init(
+                        token: makeConfirmationSendToken(),
+                        destination: makeConfirmationSendDestination(to: address),
+                        estimatedFee: interactor.networkFeeInUSD(network: token.network, fee: fee)
+                    ),
+                    onSuccess: makeOnTokenTransactionSend()
+                    
+                )
+            )
         }
     }
 }
 
 private extension DefaultTokenSendPresenter {
     
+    func makeConfirmationSendToken() -> ConfirmationWireframeContext.SendContext.Token {
+        
+        .init(
+            icon: interactor.tokenIcon(for: token),
+            token: token,
+            value: amount ?? 0
+        )
+    }
+    
+    func makeConfirmationSendDestination(
+        to address: String
+    ) -> ConfirmationWireframeContext.SendContext.Destination {
+        
+        // TODO: @Annon: Select current wallet addres
+        let currentWalletAddress = "0xa7876hea0ba39494ce839613fffba74279579268"
+        return .init(
+            from: interactor.addressFormattedShort(
+                address: currentWalletAddress,
+                network: token.network
+            ),
+            to: interactor.addressFormattedShort(
+                address: address,
+                network: token.network
+            )
+        )
+    }
+    
+    func makeOnTokenTransactionSend() -> () -> Void {
+        
+        {
+            print("Transaction send!!!")
+        }
+    }
+
+    func loadToken() {
+        
+        token = context.web3Token ?? interactor.defaultToken
+    }
+    
+    func makeOnTokenToSelected() -> (Web3Token) -> Void {
+        
+        {
+            [weak self] token in
+            guard let self = self else { return }
+            self.token = token
+            let newAmount = min(self.amount ?? 0, token.balance)
+            self.updateToken(with: newAmount, shouldUpdateTextFields: true)
+        }
+    }
+    
     func updateView(with items: [TokenSendViewModel.Item]) {
         
         view?.update(
             with: .init(
-                title: Localized("tokenSend.title", arg: context.web3Token.symbol),
+                title: Localized("tokenSend.title", arg: token.symbol),
                 items: items
             )
         )
@@ -152,15 +246,21 @@ private extension DefaultTokenSendPresenter {
     
     func updateAddress(with address: String) {
         
-        self.address = address
+        if !address.contains("...") {
+            
+            self.address = address
+        }
         
-        let isValid = interactor.isAddressValid(address: address, network: context.web3Token.network)
-        
+        let isValid = interactor.isAddressValid(
+            address: self.address ?? "",
+            network: token.network
+        )
+                
         updateView(
             with: [
                 .address(
                     .init(
-                        value: address,
+                        value: formattedAddress ?? address,
                         isValid: isValid
                     )
                 )
@@ -168,6 +268,18 @@ private extension DefaultTokenSendPresenter {
         )
     }
     
+    var formattedAddress: String? {
+        
+        guard let address = address else { return nil }
+        
+        guard interactor.isAddressValid(address: address, network: token.network) else { return nil }
+        
+        return interactor.addressFormattedShort(
+            address: address,
+            network: token.network
+        )
+    }
+
     func updateToken(
         with amount: Double,
         shouldUpdateTextFields: Bool
@@ -175,25 +287,28 @@ private extension DefaultTokenSendPresenter {
         
         self.amount = amount
         
-        let insufficientFunds = amount > context.web3Token.balance
+        let insufficientFunds = amount > token.balance
         
         updateView(
             with: [
                 .token(
                     .init(
                         tokenAmount: amount,
-                        tokenSymbolIcon: interactor.tokenIcon(for: context.web3Token),
-                        tokenSymbol: context.web3Token.symbol.uppercased(),
-                        tokenMaxAmount: context.web3Token.balance,
-                        tokenMaxDecimals: context.web3Token.decimals,
-                        currencyTokenPrice: context.web3Token.usdPrice,
-                        shouldUpdateTextFields: shouldUpdateTextFields
+                        tokenSymbolIcon: interactor.tokenIcon(for: token),
+                        tokenSymbol: token.symbol.uppercased(),
+                        tokenMaxAmount: token.balance,
+                        tokenMaxDecimals: token.decimals,
+                        currencyTokenPrice: token.usdPrice,
+                        shouldUpdateTextFields: shouldUpdateTextFields,
+                        shouldBecomeFirstResponder: false
                     )
                 ),
                 .send(
                     .init(
-                        estimatedFee: makeEstimatedFee(),
-                        feeType: makeFeeType(),
+                        tokenNetworkFeeViewModel: .init(
+                            estimatedFee: self.makeEstimatedFee(),
+                            feeType: self.makeFeeType()
+                        ),
                         buttonState: insufficientFunds ? .insufficientFunds : .ready
                     )
                 )
@@ -203,8 +318,8 @@ private extension DefaultTokenSendPresenter {
     
     func makeEstimatedFee() -> String {
         
-        let amountInUSD = interactor.networkFeeInUSD(network: context.web3Token.network, fee: fee)
-        let timeInSeconds = interactor.networkFeeInSeconds(network: context.web3Token.network, fee: fee)
+        let amountInUSD = interactor.networkFeeInUSD(network: token.network, fee: fee)
+        let timeInSeconds = interactor.networkFeeInSeconds(network: token.network, fee: fee)
         
         let min: Double = Double(timeInSeconds) / Double(60)
         if min > 1 {
@@ -214,9 +329,9 @@ private extension DefaultTokenSendPresenter {
         }
     }
     
-    func makeFees() -> [TokenSendViewModel.Fee] {
+    func makeFees() -> [FeesPickerViewModel] {
         
-        let fees = interactor.networkFees(network: context.web3Token.network)
+        let fees = interactor.networkFees(network: token.network)
         self.fees = fees
         return fees.compactMap { [weak self] in
             guard let self = self else { return nil }
@@ -224,14 +339,14 @@ private extension DefaultTokenSendPresenter {
                 id: $0.rawValue,
                 name: $0.name,
                 value: self.interactor.networkFeeInNetworkToken(
-                    network: context.web3Token.network,
+                    network: token.network,
                     fee: $0
                 )
             )
         }
     }
     
-    func makeFeeType() -> TokenSendViewModel.Send.FeeType {
+    func makeFeeType() -> TokenNetworkFeeViewModel.FeeType {
         
         switch fee {
             
@@ -253,11 +368,11 @@ private extension Web3NetworkFee {
         
         switch self {
         case .low:
-            return Localized("tokenSend.cell.send.fee.low")
+            return Localized("low")
         case .medium:
-            return Localized("tokenSend.cell.send.fee.medium")
+            return Localized("medium")
         case .high:
-            return Localized("tokenSend.cell.send.fee.high")
+            return Localized("high")
         }
     }
 }

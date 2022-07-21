@@ -13,6 +13,18 @@ extension UIColor {
 
 extension UIColor {
     
+    func image(_ size: CGSize = CGSize(width: 1, height: 32)) -> UIImage {
+        
+        UIGraphicsImageRenderer(size: size).image { rendererContext in
+            self.setFill()
+            rendererContext.fill(CGRect(origin: .zero, size: size))
+        }
+    }
+}
+
+
+extension UIColor {
+    
    convenience init(red: Int, green: Int, blue: Int) {
        
        assert(red >= 0 && red <= 255, "Invalid red component")

@@ -207,7 +207,7 @@
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mlZ-c0-cNx">
+                                                                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mlZ-c0-cNx" customClass="SegmentedControl" customModule="iosApp" customModuleProvider="target">
                                                                             <rect key="frame" x="49.5" y="7.5" width="261.5" height="32"/>
                                                                             <segments>
                                                                                 <segment title="First"/>

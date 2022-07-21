@@ -15,18 +15,15 @@ protocol TokenPickerWireframeFactory {
 final class DefaultTokenPickerWireframeFactory {
 
     private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
-    private let tokenSendWireframeFactory: TokenSendWireframeFactory
     private let tokenAddWireframeFactory: TokenAddWireframeFactory
     private let web3Service: Web3Service
 
     init(
         tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
-        tokenSendWireframeFactory: TokenSendWireframeFactory,
         tokenAddWireframeFactory: TokenAddWireframeFactory,
         web3Service: Web3Service
     ) {
         self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
-        self.tokenSendWireframeFactory = tokenSendWireframeFactory
         self.tokenAddWireframeFactory = tokenAddWireframeFactory
         self.web3Service = web3Service
     }
@@ -43,7 +40,6 @@ extension DefaultTokenPickerWireframeFactory: TokenPickerWireframeFactory {
             presentingIn: presentingIn,
             context: context,
             tokenReceiveWireframeFactory: tokenReceiveWireframeFactory,
-            tokenSendWireframeFactory: tokenSendWireframeFactory,
             tokenAddWireframeFactory: tokenAddWireframeFactory,
             web3Service: web3Service
         )
