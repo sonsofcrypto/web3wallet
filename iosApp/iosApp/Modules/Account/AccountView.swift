@@ -39,8 +39,8 @@ extension AccountViewController: AccountView {
         let btnLabel = (navigationItem.rightBarButtonItem?.customView as? UILabel)
         btnLabel?.text = viewModel.header.pct
         btnLabel?.textColor = viewModel.header.pctUp
-            ? Theme.colour.systemGreen
-            : Theme.colour.systemRed
+            ? Theme.colour.priceUp
+            : Theme.colour.priceDown
     }
 }
 

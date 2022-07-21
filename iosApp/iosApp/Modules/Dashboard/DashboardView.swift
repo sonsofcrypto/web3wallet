@@ -135,19 +135,9 @@ private extension DashboardViewController {
 
         edgeCardsController?.delegate = self
                 
-        switch Theme.type {
-            
-        case .themeOG:
-            title = Localized("dashboard")
-            let overScrollView = (collectionView as? CollectionView)
-            overScrollView?.overScrollView.image = UIImage(named: "overscroll_pepe")
-            configureCollectionCardsLayout()
-            
-        case .themeA:
-            title = Localized("web3wallet").uppercased()
-            addCustomBackgroundGradientView()
-            configureCollectionCardsLayout()
-        }
+        title = Localized("web3wallet").uppercased()
+        addCustomBackgroundGradientView()
+        configureCollectionCardsLayout()
         
         navigationController?.tabBarItem = UITabBarItem(
             title: Localized("dashboard.tab.title"),

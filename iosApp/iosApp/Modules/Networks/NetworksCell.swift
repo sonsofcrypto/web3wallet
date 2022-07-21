@@ -24,7 +24,7 @@ final class NetworksCell: UICollectionViewCell {
         
         super.awakeFromNib()
         
-        contentView.backgroundColor = Theme.colour.labelQuaternary
+        contentView.backgroundColor = Theme.colour.cellBackground
         contentView.layer.cornerRadius = Theme.constant.cornerRadius
 
         iconImageView.layer.cornerRadius = iconImageView.frame.size.width * 0.5

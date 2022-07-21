@@ -33,7 +33,7 @@ final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
 
         imageView.superview?.layer.cornerRadius = Theme.constant.cornerRadius.half.half
-        imageView.superview?.backgroundColor = Theme.colour.labelQuaternary
+        imageView.superview?.backgroundColor = Theme.colour.cellBackground
         
         imageView.tintColor = Theme.colour.labelSecondary
         imageView.image = .init(systemName: "arrow.up.arrow.down")

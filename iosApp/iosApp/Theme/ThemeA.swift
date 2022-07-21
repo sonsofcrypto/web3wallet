@@ -15,7 +15,76 @@ struct ThemeA: Themable {
     
     var colour: ThemeColour {
         
-        .init(themeName: "themeA")
+        let pallete = ThemeColourPalette()
+        return .init(
+            gradientTop: .init { traits in
+                traits.isDarkMode ? pallete.systemPink : pallete.systemBlue
+            },
+            gradientBottom: .init { traits in
+                traits.isDarkMode ? pallete.systemPurple : pallete.systemYellow
+            },
+            navBarBackground: pallete.system1C1C1E,
+            navBarTint: pallete.systemOrange,
+            navBarTitle: pallete.systemWhite,
+            tabBarBackground: pallete.system1C1C1E,
+            tabBarTint: pallete.systemBlue,
+            tabBarTintSelected: pallete.systemPink,
+            backgroundBasePrimary: pallete.systemBlack,
+            backgroundBaseSecondary: .init { traits in
+                traits.isDarkMode ?
+                pallete.system1C1C1E :
+                pallete.systemF2F2F7
+            },
+            fillPrimary: .init { traits in
+                traits.isDarkMode ?
+                pallete.system787880.withAlpha(0.36) :
+                pallete.system787880.withAlpha(0.2)
+            },
+            fillSecondary: .init { traits in
+                traits.isDarkMode ?
+                pallete.system787880.withAlpha(0.32) :
+                pallete.system787880.withAlpha(0.16)
+            },
+            fillTertiary: pallete.system767680,
+            fillQuaternary: pallete.systemEBEBF5.withAlpha(0.18),
+            separatorNoTransparency: pallete.systemC6C6C8,
+            separatorWithTransparency: pallete.systemEBEBF5.withAlpha(0.3),
+            labelPrimary: pallete.systemWhite,
+            labelSecondary: pallete.systemEBEBF5.withAlpha(0.6),
+            labelTertiary: pallete.systemEBEBF5.withAlpha(0.3),
+            labelQuaternary: pallete.systemEBEBF5.withAlpha(0.18),
+            buttonBackgroundPrimary: .init { traits in
+                traits.isDarkMode ? pallete.systemPink : pallete.systemBlue
+            },
+            buttonPrimaryText: pallete.systemWhite,
+            buttonBackgroundSecondary: .init { traits in
+                traits.isDarkMode ?
+                pallete.system787880.withAlpha(0.36) :
+                pallete.system787880.withAlpha(0.2)
+            },
+            buttonSecondaryText: pallete.systemWhite,
+            switchTint: pallete.systemEBEBF5.withAlpha(0.3),
+            switchTintDisabled: pallete.systemEBEBF5.withAlpha(0.6),
+            switchOnTint: pallete.systemOrange,
+            textFieldTextColour: pallete.systemWhite,
+            textFieldPlaceholderColour: pallete.systemEBEBF5.withAlpha(0.6),
+            segmentedControlBackground: pallete.systemEBEBF5.withAlpha(0.18),
+            segmentedControlBackgroundSelected: .init { traits in
+                traits.isDarkMode ?
+                pallete.system767680.withAlpha(0.18) :
+                pallete.system767680.withAlpha(0.08)
+            },
+            segmentedControlText: pallete.systemWhite,
+            segmentedControlTextSelected: pallete.systemWhite,
+            cellBackground: pallete.systemEBEBF5.withAlpha(0.18),
+            keystoreEnumFill: pallete.systemBlue,
+            keystoreEnumText: pallete.systemBlack,
+            priceUp: pallete.systemGreen,
+            priceDown: pallete.systemRed,
+            candleGreen: pallete.systemTeal,
+            candleRed: pallete.systemPink,
+            dashboardTVCryptoBallance: pallete.systemOrange
+        )
     }
     
     var font: ThemeFont {
@@ -67,5 +136,52 @@ struct ThemeA: Themable {
             buttonSecondarySmallHeight: 24,
             buttonDashboardActionHeight: 32
         )
+    }
+}
+
+private extension ThemeA {
+    
+    struct ThemeColourPalette {
+        
+        let systemBlack: UIColor
+        let systemWhite: UIColor
+        let systemRed: UIColor
+        let systemOrange: UIColor
+        let systemYellow: UIColor
+        let systemGreen: UIColor
+        let systemTeal: UIColor
+        let systemBlue: UIColor
+        let systemMarine: UIColor
+        let systemPurple: UIColor
+        let systemPink: UIColor
+        let systemGray: UIColor
+        let systemEBEBF5: UIColor
+        let system1C1C1E: UIColor
+        let systemC6C6C8: UIColor
+        let systemF2F2F7: UIColor
+        let system787880: UIColor
+        let system767680: UIColor
+        
+        init(name: String = "themeA") {
+                        
+            self.systemBlack = .init(named: "\(name)-system-black")!
+            self.systemBlue = .init(named: "\(name)-system-blue")!
+            self.systemGreen = .init(named: "\(name)-system-green")!
+            self.systemGray = .init(named: "\(name)-system-gray")!
+            self.systemMarine = .init(named: "\(name)-system-marine")!
+            self.systemOrange = .init(named: "\(name)-system-orange")!
+            self.systemPurple = .init(named: "\(name)-system-purple")!
+            self.systemPink =  .init(named: "\(name)-system-pink")!
+            self.systemRed = .init(named: "\(name)-system-red")!
+            self.systemTeal = .init(named: "\(name)-system-teal")!
+            self.systemWhite = .init(named: "\(name)-system-white")!
+            self.systemYellow = .init(named: "\(name)-system-yellow")!
+            self.systemEBEBF5 = .init(rgb: 0xEBEBF5)
+            self.system1C1C1E = .init(rgb: 0x1C1C1E)
+            self.systemC6C6C8 = .init(rgb: 0xC6C6C8)
+            self.systemF2F2F7 = .init(rgb: 0xF2F2F7)
+            self.system787880 = .init(rgb: 0x787880)
+            self.system767680 = .init(rgb: 0x767680)
+        }
     }
 }

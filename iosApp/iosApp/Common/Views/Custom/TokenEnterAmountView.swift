@@ -41,7 +41,7 @@ final class TokenEnterAmountView: UIView {
         
         super.awakeFromNib()
         
-        backgroundColor = Theme.colour.labelQuaternary
+        backgroundColor = Theme.colour.cellBackground
         layer.cornerRadius = Theme.constant.cornerRadius
         
         sendCurrencySymbol.font = Theme.font.title3

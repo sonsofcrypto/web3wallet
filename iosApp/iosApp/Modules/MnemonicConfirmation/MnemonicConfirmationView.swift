@@ -127,7 +127,7 @@ private extension MnemonicConfirmationViewController {
             
             attributedText.setAttributes(
                 [
-                    .foregroundColor: Theme.colour.systemRed,
+                    .foregroundColor: Theme.colour.labelPrimary,
                     .font: Theme.font.body
                 ],
                 range: .init(
@@ -143,7 +143,7 @@ private extension MnemonicConfirmationViewController {
         textView.attributedText = attributedText
         
         textView.layer.borderWidth = hasInvalidWords ? 2 : 0
-        textView.layer.borderColor = hasInvalidWords ? Theme.colour.systemRed.cgColor : nil
+        textView.layer.borderColor = hasInvalidWords ? Theme.colour.labelPrimary.cgColor : nil
         
         textView.inputAccessoryView?.clearSubviews()
         addWords(viewModel.potentialWords, to: textView.inputAccessoryView)

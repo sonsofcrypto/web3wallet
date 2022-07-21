@@ -226,7 +226,7 @@ private extension NFTDetailViewController {
         let middleLabel = UILabel(with: .caption1)
         middleLabel.numberOfLines = 1
         middleLabel.text = item.value
-        middleLabel.textColor = Theme.colour.systemGreen
+        middleLabel.textColor = Theme.colour.labelPrimary
         middleLabel.textAlignment = .center
         view.addArrangedSubview(middleLabel)
 

@@ -103,7 +103,7 @@ final class GradientView: UIView {
     class func defaultShadowColors() -> [UIColor] {
         return [UIColor.black.withAlphaComponent(0), UIColor.black.withAlphaComponent(0.25)]
     }
-
+    
     override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
     }
@@ -114,15 +114,9 @@ private extension GradientView {
     func configureUI() {
         
         switch Theme.type {
-        case .themeOG:
-            let topColor = Theme.colour.backgroundBaseSecondary
-            let bottomColor = Theme.colour.backgroundBasePrimary
-            colors = [
-                topColor,
-                bottomColor
-            ]
-        case .themeA:
             
+        case .themeA:
+
             let topColor = Theme.colour.gradientTop
             let middleTopColor = isDarkMode ? UIColor(rgb: 0xDA3E9B) : UIColor(rgb: 0x4361BC).withAlpha(0.75)
             let middleColor = isDarkMode ? UIColor(rgb: 0xC939AA) : UIColor(rgb: 0xBE6CF4).withAlpha(0.75)
@@ -140,6 +134,11 @@ private extension GradientView {
                 ]
                 //(layer as? CAGradientLayer)?.locations = [0,0.3,0.5,0.75,1]
             }
+            
+        case .themeIOS:
+            colors = [
+                Theme.colour.gradientTop, Theme.colour.gradientBottom
+            ]
         }
     }
 }

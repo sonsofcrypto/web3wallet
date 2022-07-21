@@ -28,18 +28,25 @@ private extension SegmentedControl {
         setTitleTextAttributes(
             [
                 NSAttributedString.Key.font: Theme.font.footnote,
-                NSAttributedString.Key.foregroundColor: Theme.colour.labelPrimary
+                NSAttributedString.Key.foregroundColor: Theme.colour.segmentedControlText
             ],
             for: .normal
         )
+        setTitleTextAttributes(
+            [
+                NSAttributedString.Key.font: Theme.font.footnote,
+                NSAttributedString.Key.foregroundColor: Theme.colour.segmentedControlTextSelected
+            ],
+            for: .selected
+        )
 
         setBackgroundImage(
-            Theme.colour.fillQuaternary.image(),
+            Theme.colour.segmentedControlBackground.image(),
             for: .normal,
             barMetrics: .default
         )
         setBackgroundImage(
-            Theme.colour.fillTertiary.image(),
+            Theme.colour.segmentedControlBackgroundSelected.image(),
             for: .selected,
             barMetrics: .default
         )

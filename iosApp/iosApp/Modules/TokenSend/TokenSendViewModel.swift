@@ -30,6 +30,7 @@ extension TokenSendViewModel {
         
         let value: String?
         let isValid: Bool
+        let becomeFirstResponder: Bool
     }
     
     struct Send {
@@ -39,6 +40,8 @@ extension TokenSendViewModel {
         
         enum State {
             
+            case invalidDestination
+            case enterFunds
             case insufficientFunds
             case ready
         }

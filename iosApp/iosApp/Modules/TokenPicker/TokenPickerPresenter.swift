@@ -215,26 +215,27 @@ private extension DefaultTokenPickerPresenter {
     
     func makeFilters() -> [TokenPickerViewModel.Filter] {
         
-        guard context.source.network == nil else { return [] }
-        
-        var filters: [TokenPickerViewModel.Filter] = [
-            .init(
-                type: .all(name: Localized("tokenPicker.networks.all")),
-                isSelected: selectedNetworks.isEmpty
-            )
-        ]
-        let networkFilters: [TokenPickerViewModel.Filter] = tokens.networks.compactMap {
-            
-            .init(
-                type: .item(
-                    icon: interactor.networkIcon(for: $0),
-                    name: $0.name
-                ),
-                isSelected: selectedNetworks.hasNetwork(matching: $0.name)
-            )
-        }
-        filters.append(contentsOf: networkFilters)
-        return filters
+        return []
+//        guard context.source.network == nil else { return [] }
+//        
+//        var filters: [TokenPickerViewModel.Filter] = [
+//            .init(
+//                type: .all(name: Localized("tokenPicker.networks.all")),
+//                isSelected: selectedNetworks.isEmpty
+//            )
+//        ]
+//        let networkFilters: [TokenPickerViewModel.Filter] = tokens.networks.compactMap {
+//            
+//            .init(
+//                type: .item(
+//                    icon: interactor.networkIcon(for: $0),
+//                    name: $0.name
+//                ),
+//                isSelected: selectedNetworks.hasNetwork(matching: $0.name)
+//            )
+//        }
+//        filters.append(contentsOf: networkFilters)
+//        return filters
     }
     
     func makeEmptySearchSections() -> [TokenPickerViewModel.Section] {

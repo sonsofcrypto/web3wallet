@@ -35,8 +35,12 @@ extension TokenSendCTACollectionViewCell {
         switch viewModel.buttonState {
         case .ready:
             button.setTitle(Localized("send"), for: .normal)
+        case .enterFunds:
+            button.setTitle(Localized("enterFunds"), for: .normal)
         case .insufficientFunds:
             button.setTitle(Localized("insufficientFunds"), for: .normal)
+        case .invalidDestination:
+            button.setTitle(Localized("tokenSend.missing.address"), for: .normal)
         }
         
         networkFeeView.update(

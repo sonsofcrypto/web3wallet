@@ -173,6 +173,8 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                 return
             }
             
+            guard tokenFrom.balance >= (amountFrom ?? 0) else { return }
+            
             wireframe.navigate(
                 to: .confirmSwap(
                     dataIn: .init(

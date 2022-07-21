@@ -19,13 +19,7 @@ final class DashboardWalletCell: UICollectionViewCell {
         
         super.awakeFromNib()
                 
-        switch Theme.type {
-            
-        case .themeOG:
-            layer.cornerRadius = Theme.constant.cornerRadius * 2
-        case .themeA:
-            addThemeAScreen()
-        }
+        addScreen()
         
         imageView.layer.cornerRadius = imageView.frame.size.width * 0.5
         imageView.backgroundColor = Theme.colour.labelPrimary
@@ -39,10 +33,10 @@ final class DashboardWalletCell: UICollectionViewCell {
         currencyLabel.textColor = Theme.colour.labelPrimary
         
         pctChangeLabel.font = Theme.font.dashboardTVPct
-        pctChangeLabel.textColor = Theme.colour.systemGreen
+        pctChangeLabel.textColor = Theme.colour.priceUp
         
         cryptoBalanceLabel.font = Theme.font.dashboardTVTokenBalance
-        cryptoBalanceLabel.textColor = Theme.colour.systemOrange
+        cryptoBalanceLabel.textColor = Theme.colour.dashboardTVCryptoBallance
 
     }
 
@@ -64,8 +58,8 @@ extension DashboardWalletCell {
         fiatBalanceLabel.text = viewModel.fiatBalance
         pctChangeLabel.text = viewModel.pctChange
         pctChangeLabel.textColor = viewModel.priceUp
-            ? Theme.colour.systemGreen
-            : Theme.colour.systemRed
+            ? Theme.colour.priceUp
+            : Theme.colour.priceDown
         pctChangeLabel.layer.shadowColor = pctChangeLabel.textColor.cgColor
         charView.update(viewModel.candles)
         cryptoBalanceLabel.text = viewModel.cryptoBalance
@@ -74,7 +68,7 @@ extension DashboardWalletCell {
 
 private extension DashboardWalletCell {
     
-    func addThemeAScreen() {
+    func addScreen() {
         
         clipsToBounds = false
         

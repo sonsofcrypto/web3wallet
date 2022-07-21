@@ -27,7 +27,7 @@ final class TokenSendToCollectionViewCell: UICollectionViewCell {
         
         super.awakeFromNib()
         
-        textFieldView.backgroundColor = Theme.colour.labelQuaternary
+        textFieldView.backgroundColor = Theme.colour.cellBackground
         textFieldView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         qrCodeScanButton.setImage(
             .init(systemName: "qrcode.viewfinder"),
@@ -71,6 +71,11 @@ extension TokenSendToCollectionViewCell {
         
         pasteView.isHidden = address.isValid
         addContactView.isHidden = !address.isValid
+        
+        if address.becomeFirstResponder {
+            
+            textField.becomeFirstResponder()
+        }
     }
 }
 
