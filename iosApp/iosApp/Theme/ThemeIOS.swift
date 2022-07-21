@@ -105,11 +105,7 @@ struct ThemeIOS: Themable {
                 pallete.systemEBEBF5.withAlpha(0.18) :
                 pallete.system3C3C43.withAlpha(0.18)
             },
-            buttonBackgroundPrimary: .init { traits in
-                traits.isDarkMode ?
-                pallete.systemBlack :
-                pallete.systemBlue
-            },
+            buttonBackgroundPrimary: pallete.systemBlue,
             buttonPrimaryText: pallete.systemWhite,
             buttonBackgroundSecondary: .init { traits in
                 traits.isDarkMode ?

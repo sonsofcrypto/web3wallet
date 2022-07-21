@@ -4,7 +4,7 @@
 
 import UIKit
 
-var Theme: Themable = ThemeIOS()
+var Theme: Themable = ThemeA()
 
 protocol Themable {
     

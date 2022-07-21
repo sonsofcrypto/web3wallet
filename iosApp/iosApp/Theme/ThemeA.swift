@@ -69,7 +69,11 @@ struct ThemeA: Themable {
             textFieldTextColour: pallete.systemWhite,
             textFieldPlaceholderColour: pallete.systemEBEBF5.withAlpha(0.6),
             segmentedControlBackground: pallete.systemEBEBF5.withAlpha(0.18),
-            segmentedControlBackgroundSelected: pallete.system767680,
+            segmentedControlBackgroundSelected: .init { traits in
+                traits.isDarkMode ?
+                pallete.system767680.withAlpha(0.18) :
+                pallete.system767680.withAlpha(0.08)
+            },
             segmentedControlText: pallete.systemWhite,
             segmentedControlTextSelected: pallete.systemWhite,
             cellBackground: pallete.systemEBEBF5.withAlpha(0.18),

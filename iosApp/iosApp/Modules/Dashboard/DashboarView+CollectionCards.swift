@@ -282,8 +282,6 @@ private extension DashboardViewController {
         
     var nftSectionBottomOffset: CGFloat {
         
-        guard Theme.type == .themeA else { return 0 }
-        
         let sunsetImageWidth = view.frame.size.width - Theme.constant.padding * 2
         let sunsetImageHeight = sunsetImageWidth * 0.7
         return sunsetImageHeight - Theme.constant.padding * 4

@@ -135,13 +135,9 @@ private extension DashboardViewController {
 
         edgeCardsController?.delegate = self
                 
-        switch Theme.type {
-            
-        case .themeA, .themeIOS:
-            title = Localized("web3wallet").uppercased()
-            addCustomBackgroundGradientView()
-            configureCollectionCardsLayout()
-        }
+        title = Localized("web3wallet").uppercased()
+        addCustomBackgroundGradientView()
+        configureCollectionCardsLayout()
         
         navigationController?.tabBarItem = UITabBarItem(
             title: Localized("dashboard.tab.title"),

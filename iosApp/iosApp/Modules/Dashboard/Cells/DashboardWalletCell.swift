@@ -19,13 +19,7 @@ final class DashboardWalletCell: UICollectionViewCell {
         
         super.awakeFromNib()
                 
-        switch Theme.type {
-            
-        case .themeIOS:
-            layer.cornerRadius = Theme.constant.cornerRadius * 2
-        case .themeA:
-            addThemeAScreen()
-        }
+        addScreen()
         
         imageView.layer.cornerRadius = imageView.frame.size.width * 0.5
         imageView.backgroundColor = Theme.colour.labelPrimary
@@ -74,7 +68,7 @@ extension DashboardWalletCell {
 
 private extension DashboardWalletCell {
     
-    func addThemeAScreen() {
+    func addScreen() {
         
         clipsToBounds = false
         
