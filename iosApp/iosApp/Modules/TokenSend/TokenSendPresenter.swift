@@ -9,6 +9,7 @@ enum TokenSendPresenterEvent {
     case dismiss
     case addressChanged(to: String)
     case pasteAddress
+    case saveAddress
     case selectToken
     case tokenChanged(to: Double)
     case feeChanged(to: String)
@@ -116,6 +117,10 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                     onCompletion: makeOnTokenToSelected()
                 )
             )
+            
+        case .saveAddress:
+            
+            wireframe.navigate(to: .underConstructionAlert)
             
         case let .addressChanged(address):
             

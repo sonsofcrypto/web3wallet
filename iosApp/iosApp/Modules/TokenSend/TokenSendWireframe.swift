@@ -12,6 +12,7 @@ struct TokenSendWireframeContext {
 
 enum TokenSendWireframeDestination {
     
+    case underConstructionAlert
     case qrCodeScan(network: Web3Network, onCompletion: (String) -> Void)
     case selectToken(onCompletion: (Web3Token) -> Void)
     case confirmSend(
@@ -77,6 +78,14 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
     func navigate(to destination: TokenSendWireframeDestination) {
         
         switch destination {
+            
+        case .underConstructionAlert:
+            
+            let factory: AlertWireframeFactory = ServiceDirectory.assembler.resolve()
+            factory.makeWireframe(
+                navigationController,
+                context: .underConstructionAlert()
+            ).present()
             
         case let .qrCodeScan(network, onCompletion):
             

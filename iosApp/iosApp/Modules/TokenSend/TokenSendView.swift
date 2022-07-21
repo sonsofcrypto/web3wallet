@@ -96,7 +96,7 @@ extension TokenSendViewController: UICollectionViewDataSource {
         case let .address(value):
             
             let cell = collectionView.dequeue(TokenSendToCollectionViewCell.self, for: indexPath)
-            cell.update(with: value, presenter: presenter)
+            cell.update(with: value, handler: makeTokenSendTokenHandler())
             return cell
         case let .token(token):
             
@@ -252,7 +252,7 @@ private extension TokenSendViewController {
             case let addressCell as TokenSendToCollectionViewCell:
                 
                 guard let address = viewModel?.items.address else { return }
-                addressCell.update(with: address, presenter: presenter)
+                addressCell.update(with: address, handler: makeTokenSendTokenHandler())
 
             case let tokenCell as TokenSendTokenCollectionViewCell:
                 
@@ -273,6 +273,52 @@ private extension TokenSendViewController {
 }
 
 private extension TokenSendViewController {
+    
+    func makeTokenSendTokenHandler() -> TokenSendToCollectionViewCell.Handler {
+        
+        .init(
+            onAddressChanged: makeOnAddressChanged(),
+            onQRCodeScanTapped: makeOnQRCodeScanTapped(),
+            onPasteTapped: makeOnPasteTapped(),
+            onSaveTapped: makeOnSaveTapped()
+        )
+    }
+
+    func makeOnAddressChanged() -> (String) -> Void {
+        
+        {
+            [weak self] value in
+            guard let self = self else { return }
+            self.presenter.handle(.addressChanged(to: value))
+        }
+    }
+    
+    func makeOnQRCodeScanTapped() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.qrCodeScan)
+        }
+    }
+    
+    func makeOnPasteTapped() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.pasteAddress)
+        }
+    }
+    
+    func makeOnSaveTapped() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.saveAddress)
+        }
+    }
     
     func makeTokenSendTokenHandler() -> TokenSendTokenCollectionViewCell.Handler {
         

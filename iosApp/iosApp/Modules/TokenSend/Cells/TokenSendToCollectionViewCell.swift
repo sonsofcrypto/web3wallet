@@ -13,7 +13,15 @@ final class TokenSendToCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var addContactView: UIView!
     @IBOutlet weak var addContactIcon: UIImageView!
     
-    private weak var presenter: TokenSendPresenter!
+    struct Handler {
+        
+        let onAddressChanged: (String) -> Void
+        let onQRCodeScanTapped: () -> Void
+        let onPasteTapped: () -> Void
+        let onSaveTapped: () -> Void
+    }
+    
+    private var handler: Handler!
     
     override func awakeFromNib() {
         
@@ -40,6 +48,7 @@ final class TokenSendToCollectionViewCell: UICollectionViewCell {
         pasteLabel.text = Localized("paste")
         
         addContactView.isHidden = true
+        addContactView.add(.targetAction(.init(target: self, selector: #selector(saveTapped))))
         addContactIcon.tintColor = Theme.colour.labelPrimary
     }
     
@@ -53,10 +62,10 @@ extension TokenSendToCollectionViewCell {
     
     func update(
         with address: TokenSendViewModel.Address,
-        presenter: TokenSendPresenter
+        handler: Handler
     ) {
         
-        self.presenter = presenter
+        self.handler = handler
         
         textField.text = address.value
         
@@ -69,20 +78,25 @@ extension TokenSendToCollectionViewCell: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         
-        presenter.handle(.addressChanged(to: textField.text ?? ""))
+        handler.onAddressChanged(textField.text ?? "")
     }
 }
 
 private extension TokenSendToCollectionViewCell {
     
     @objc func pasteTapped() {
-        
-        presenter.handle(.pasteAddress)
+
+        handler.onPasteTapped()
     }
     
     @objc func qrCodeScanTapped() {
         
-        presenter.handle(.qrCodeScan)
+        handler.onQRCodeScanTapped()
+    }
+    
+    @objc func saveTapped() {
+        
+        handler.onSaveTapped()
     }
 }
 
