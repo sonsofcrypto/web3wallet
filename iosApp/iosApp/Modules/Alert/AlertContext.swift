@@ -8,6 +8,7 @@ struct AlertContext {
     let media: Media?
     let message: String?
     let actions: [Action]
+    let contentHeight: CGFloat
     
     enum Media {
         
@@ -36,7 +37,8 @@ extension AlertContext {
                     title: Localized("OK"),
                     action: onOkTapped
                 )
-            ]
+            ],
+            contentHeight: 500
         )
     }
 }

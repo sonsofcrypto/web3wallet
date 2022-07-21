@@ -36,10 +36,8 @@ extension DefaultAlertWireframe: AlertWireframe {
     func present() {
         
         let vc = makeViewController()
-        self.vc = vc
 
-        vc.modalPresentationStyle = .overCurrentContext
-//        view.transitioningDelegate = CardFlipAnimatedTransitioning() as! UIViewControllerTransitioningDelegate
+        self.vc = vc
 
         parent.present(vc, animated: true)
     }
@@ -59,14 +57,16 @@ private extension DefaultAlertWireframe {
 
     func makeViewController() -> UIViewController {
         
+        let vc: DefaultAlertView = UIStoryboard(.alert).instantiate()
         let presenter = DefaultAlertPresenter(
             context: context,
+            view: vc,
             wireframe: self
         )
-        let view = DefaultAlertView(
-            presenter: presenter
-        )
-        presenter.view = view
-        return view
+        vc.presenter = presenter
+        let navigationController = NavigationController(rootViewController: vc)
+        navigationController.modalPresentationStyle = .custom
+        navigationController.transitioningDelegate = vc
+        return navigationController
     }
 }

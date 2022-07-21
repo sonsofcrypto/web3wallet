@@ -58,7 +58,7 @@ extension UIView {
 extension UIView {
     
     class func vSpace(
-        height: CGFloat = 16
+        height: CGFloat = Theme.constant.padding
     ) -> UIView {
         
         let view = UIView()
@@ -73,7 +73,7 @@ extension UIView {
     }
     
     class func hSpace(
-        value: CGFloat = 16
+        value: CGFloat = Theme.constant.padding
     ) -> UIView {
         
         let view = UIView()

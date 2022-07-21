@@ -19,14 +19,16 @@ protocol AlertPresenter: AnyObject {
 final class DefaultAlertPresenter {
 
     private let context: AlertContext
-    weak var view: AlertView!
+    private weak var view: AlertView!
     private let wireframe: AlertWireframe
 
     init(
         context: AlertContext,
+        view: AlertView,
         wireframe: AlertWireframe
     ) {
         self.context = context
+        self.view = view
         self.wireframe = wireframe
     }
 }
