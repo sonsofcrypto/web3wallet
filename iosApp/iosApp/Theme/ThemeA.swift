@@ -24,8 +24,8 @@ struct ThemeA: Themable {
                 traits.isDarkMode ? pallete.systemYellow : pallete.systemPurple
             },
             navBarBackground: pallete.system1C1C1E,
-            navBarTint: pallete.systemWhite,
-            navBarTitle: pallete.systemOrange,
+            navBarTint: pallete.systemOrange,
+            navBarTitle: pallete.systemWhite,
             tabBarBackground: pallete.system1C1C1E,
             tabBarTint: pallete.systemBlue,
             tabBarTintSelected: pallete.systemPink,

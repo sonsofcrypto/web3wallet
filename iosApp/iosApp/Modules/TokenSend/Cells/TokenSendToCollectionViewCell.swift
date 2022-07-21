@@ -71,6 +71,11 @@ extension TokenSendToCollectionViewCell {
         
         pasteView.isHidden = address.isValid
         addContactView.isHidden = !address.isValid
+        
+        if address.becomeFirstResponder {
+            
+            textField.becomeFirstResponder()
+        }
     }
 }
 

@@ -25,6 +25,7 @@
 "sec" = "sec";
 "save" = "Save";
 "max" = "Max";
+"enterFunds" = "Enter Funds";
 "insufficientFunds" = "Insufficient Funds";
 "low" = "Low";
 "medium" = "Average";
@@ -193,6 +194,7 @@
 "tokenSend.cell.currency.placeholder" = "0.0";
 "tokenSend.cell.currency.label.usd" = "USD";
 "tokenSend.cell.balance" = "Balance: %@";
+"tokenSend.missing.address" = "Invalid address";
 
 "tokenSwap.title" = "Token Swap";
 "tokenSwap.segment.swap" = "Swap";

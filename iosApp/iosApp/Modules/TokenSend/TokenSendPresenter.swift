@@ -31,6 +31,7 @@ final class DefaultTokenSendPresenter {
     private let wireframe: TokenSendWireframe
     private let context: TokenSendWireframeContext
     
+    private var sendTapped = false
     private var address: String?
     private var token: Web3Token!
     private var amount: Double?
@@ -63,7 +64,8 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                 .address(
                     .init(
                         value: nil,
-                        isValid: false
+                        isValid: false,
+                        becomeFirstResponder: true
                     )
                 ),
                 .token(
@@ -75,7 +77,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                         tokenMaxDecimals: token.decimals,
                         currencyTokenPrice: token.usdPrice,
                         shouldUpdateTextFields: false,
-                        shouldBecomeFirstResponder: true
+                        shouldBecomeFirstResponder: false
                     )
                 ),
                 .send(
@@ -133,7 +135,11 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                 
                 updateAddress(with: String(currentAddress.prefix(currentAddress.length - 1)))
             } else {
-                updateAddress(with: address)
+                let isValid = interactor.isAddressValid(address: address, network: token.network)
+                updateView(
+                    address: address,
+                    shouldTokenBecomeFirstResponder: isValid
+                )
             }
             
         case .pasteAddress:
@@ -141,11 +147,17 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
             let clipboard = UIPasteboard.general.string ?? ""
             let isValid = interactor.isAddressValid(address: clipboard, network: token.network)
             guard isValid else { return }
-            updateAddress(with: clipboard)
+            updateView(
+                address: clipboard,
+                shouldTokenBecomeFirstResponder: isValid
+            )
             
         case let .tokenChanged(amount):
             
-            updateToken(with: amount, shouldUpdateTextFields: false)
+            updateView(
+                amount: amount,
+                shouldTokenUpdateTextFields: false
+            )
             
         case let .feeChanged(identifier):
             
@@ -161,8 +173,26 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
             
         case .review:
             
-            guard let address = address else { return }
+            sendTapped = true
             
+            let isValidAddress = interactor.isAddressValid(
+                address: address ?? "",
+                network: token.network
+            )
+            guard let address = address, isValidAddress  else {
+                updateView(
+                    shouldAddressBecomeFirstResponder: true
+                )
+                return
+            }
+            
+            guard let amount = amount, token.balance > amount, amount > 0 else {
+                updateView(
+                    shouldTokenBecomeFirstResponder: true
+                )
+                return
+            }
+                        
             wireframe.navigate(
                 to: .confirmSend(
                     dataIn: .init(
@@ -249,7 +279,32 @@ private extension DefaultTokenSendPresenter {
         }
     }
     
-    func updateAddress(with address: String) {
+    func updateView(
+        address: String? = nil,
+        shouldAddressBecomeFirstResponder: Bool = false,
+        amount: Double? = nil,
+        shouldTokenUpdateTextFields: Bool = false,
+        shouldTokenBecomeFirstResponder: Bool = false
+    ) {
+        
+        updateAddress(
+            with: address ?? self.address ?? "",
+            becomeFirstResponder: shouldAddressBecomeFirstResponder
+        )
+        
+        updateToken(
+            with: amount ?? self.amount ?? 0,
+            shouldUpdateTextFields: shouldTokenUpdateTextFields,
+            shouldBecomeFirstResponder: shouldTokenBecomeFirstResponder
+        )
+        
+        updateCTA()
+    }
+    
+    func updateAddress(
+        with address: String,
+        becomeFirstResponder: Bool = false
+    ) {
         
         if !address.contains("...") {
             
@@ -266,7 +321,8 @@ private extension DefaultTokenSendPresenter {
                 .address(
                     .init(
                         value: formattedAddress ?? address,
-                        isValid: isValid
+                        isValid: isValid,
+                        becomeFirstResponder: becomeFirstResponder
                     )
                 )
             ]
@@ -287,12 +343,11 @@ private extension DefaultTokenSendPresenter {
 
     func updateToken(
         with amount: Double,
-        shouldUpdateTextFields: Bool
+        shouldUpdateTextFields: Bool,
+        shouldBecomeFirstResponder: Bool = false
     ) {
         
         self.amount = amount
-        
-        let insufficientFunds = amount > token.balance
         
         updateView(
             with: [
@@ -305,16 +360,42 @@ private extension DefaultTokenSendPresenter {
                         tokenMaxDecimals: token.decimals,
                         currencyTokenPrice: token.usdPrice,
                         shouldUpdateTextFields: shouldUpdateTextFields,
-                        shouldBecomeFirstResponder: false
+                        shouldBecomeFirstResponder: shouldBecomeFirstResponder
                     )
-                ),
+                )
+            ]
+        )
+    }
+    
+    func updateCTA() {
+        
+        let isValidAddress = interactor.isAddressValid(
+            address: address ?? "",
+            network: token.network
+        )
+        
+        let buttonState: TokenSendViewModel.Send.State
+        if !sendTapped {
+            buttonState = .ready
+        } else if !isValidAddress {
+            buttonState = .invalidDestination
+        } else if (amount ?? 0) >= token.balance {
+            buttonState = .insufficientFunds
+        } else if (amount ?? 0) == 0 {
+            buttonState = .enterFunds
+        } else {
+            buttonState = .ready
+        }
+        
+        updateView(
+            with: [
                 .send(
                     .init(
                         tokenNetworkFeeViewModel: .init(
-                            estimatedFee: self.makeEstimatedFee(),
-                            feeType: self.makeFeeType()
+                            estimatedFee: makeEstimatedFee(),
+                            feeType: makeFeeType()
                         ),
-                        buttonState: insufficientFunds ? .insufficientFunds : .ready
+                        buttonState: buttonState
                     )
                 )
             ]
