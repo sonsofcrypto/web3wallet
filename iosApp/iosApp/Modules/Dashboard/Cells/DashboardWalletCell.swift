@@ -39,10 +39,10 @@ final class DashboardWalletCell: UICollectionViewCell {
         currencyLabel.textColor = Theme.colour.labelPrimary
         
         pctChangeLabel.font = Theme.font.dashboardTVPct
-        pctChangeLabel.textColor = Theme.colour.systemGreen
+        pctChangeLabel.textColor = Theme.colour.priceUp
         
         cryptoBalanceLabel.font = Theme.font.dashboardTVTokenBalance
-        cryptoBalanceLabel.textColor = Theme.colour.systemOrange
+        cryptoBalanceLabel.textColor = Theme.colour.dashboardTVCryptoBallance
 
     }
 
@@ -64,8 +64,8 @@ extension DashboardWalletCell {
         fiatBalanceLabel.text = viewModel.fiatBalance
         pctChangeLabel.text = viewModel.pctChange
         pctChangeLabel.textColor = viewModel.priceUp
-            ? Theme.colour.systemGreen
-            : Theme.colour.systemRed
+            ? Theme.colour.priceUp
+            : Theme.colour.priceDown
         pctChangeLabel.layer.shadowColor = pctChangeLabel.textColor.cgColor
         charView.update(viewModel.candles)
         cryptoBalanceLabel.text = viewModel.cryptoBalance

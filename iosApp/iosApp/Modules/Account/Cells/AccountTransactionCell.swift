@@ -30,8 +30,8 @@ extension AccountTransactionCell {
         amountLabel.text = viewModel?.amount
         addressLabel.text = viewModel?.address
         amountLabel.textColor = (viewModel?.isReceive ?? false)
-            ? Theme.colour.systemGreen
-            : Theme.colour.systemRed
+            ? Theme.colour.priceUp
+            : Theme.colour.priceDown
         //amountLabel.layer.shadowColor = amountLabel.textColor.cgColor
     }
 }

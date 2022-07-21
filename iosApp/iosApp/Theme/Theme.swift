@@ -112,36 +112,6 @@ struct ThemeColour {
     let gradientTop: UIColor
     let gradientBottom: UIColor
 
-    let systemWhite: UIColor
-    let systemRed: UIColor
-    let systemOrange: UIColor
-    let systemYellow: UIColor
-    let systemGreen: UIColor
-    let systemTeal: UIColor
-    let systemBlue: UIColor
-    let systemMarine: UIColor
-    let systemPurple: UIColor
-    let systemPink: UIColor
-    
-    let systemGray: UIColor
-    let systemGray02: UIColor
-    let systemGray03: UIColor
-    let systemGray04: UIColor
-    let systemGray05: UIColor
-    
-    let backgroundBasePrimary: UIColor
-    let backgroundBaseSecondary: UIColor
-    let backgroundBaseTertiary: UIColor
-    let backgroundElevatedPrimary: UIColor
-    
-    let fillPrimary: UIColor
-    let fillSecondary: UIColor
-    let fillTertiary: UIColor
-    let fillQuaternary: UIColor
-    
-    let separatorNoTransparency: UIColor
-    let separatorWithTransparency: UIColor
-    
     let navBarBackground: UIColor
     let navBarTint: UIColor
     let navBarTitle: UIColor
@@ -149,6 +119,17 @@ struct ThemeColour {
     let tabBarBackground: UIColor
     let tabBarTint: UIColor
     let tabBarTintSelected: UIColor
+    
+    let backgroundBasePrimary: UIColor
+    let backgroundBaseSecondary: UIColor
+    
+    let fillPrimary: UIColor
+    let fillSecondary: UIColor
+    let fillTertiary: UIColor
+    let fillQuaternary: UIColor
+
+    let separatorNoTransparency: UIColor
+    let separatorWithTransparency: UIColor
         
     let labelPrimary: UIColor
     let labelSecondary: UIColor
@@ -166,6 +147,13 @@ struct ThemeColour {
     let textFieldPlaceholderColour: UIColor
     
     let cellBackground: UIColor
+    
+    let keystoreEnumFill: UIColor
+    let priceUp: UIColor
+    let priceDown: UIColor
+    let candleGreen: UIColor
+    let candleRed: UIColor
+    let dashboardTVCryptoBallance: UIColor
 }
 
 struct ThemeConstant {

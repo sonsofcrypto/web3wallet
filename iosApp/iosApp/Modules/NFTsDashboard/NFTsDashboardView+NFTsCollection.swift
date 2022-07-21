@@ -219,7 +219,7 @@ private extension NFTsDashboardViewController {
             with: font,
             and: Theme.colour.labelPrimary,
             updating: [collection.author],
-            withColour: Theme.colour.systemRed,
+            withColour: Theme.colour.labelPrimary,
             andFont: font
         )
         authorLabel.layer.applyShadow(Theme.colour.fillSecondary)
