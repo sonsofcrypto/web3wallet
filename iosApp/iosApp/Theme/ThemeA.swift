@@ -21,7 +21,7 @@ struct ThemeA: Themable {
                 traits.isDarkMode ? pallete.systemPink : pallete.systemBlue
             },
             gradientBottom: .init { traits in
-                traits.isDarkMode ? pallete.systemYellow : pallete.systemPurple
+                traits.isDarkMode ? pallete.systemPurple : pallete.systemYellow
             },
             navBarBackground: pallete.system1C1C1E,
             navBarTint: pallete.systemOrange,
