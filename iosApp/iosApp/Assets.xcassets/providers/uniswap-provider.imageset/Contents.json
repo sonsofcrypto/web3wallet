@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "provider-1inch.png",
+      "filename" : "uniswap-icon.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "provider-1inch@2x.png",
+      "filename" : "uniswap-icon@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "provider-1inch@3x.png",
+      "filename" : "uniswap-icon@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -17,7 +17,7 @@ final class KeyStoreKeyValStoreServiceAssembler: AssemblerComponent {
 
 final class KeyStoreServiceAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .instance) { resolver -> KeyStoreService in
+        registry.register(scope: .singleton) { resolver -> KeyStoreService in
             DefaultKeyStoreService(
                 store: resolver.resolve(),
                 keyChainService: resolver.resolve()

@@ -76,6 +76,16 @@ extension Array where Element == UIView.Constraint {
         .layout(anchor: .trailingAnchor)
     ]
     
+    static func toEdges(padding: CGFloat) -> [UIView.Constraint] {
+        
+        [
+            .layout(anchor: .topAnchor, constant: .equalTo(constant: padding)),
+            .layout(anchor: .bottomAnchor, constant: .equalTo(constant: padding)),
+            .layout(anchor: .leadingAnchor, constant: .equalTo(constant: padding)),
+            .layout(anchor: .trailingAnchor, constant: .equalTo(constant: padding))
+        ]
+    }
+    
     func adding(_ constraint: UIView.Constraint) -> [UIView.Constraint] {
         
         var array = self

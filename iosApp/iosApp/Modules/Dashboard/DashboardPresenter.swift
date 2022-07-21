@@ -202,8 +202,8 @@ private extension DefaultDashboardPresenter {
                             type: .send
                         ),
                         .init(
-                            title: Localized("dashboard.button.trade"),
-                            imageName: "trade-button",
+                            title: Localized("dashboard.button.swap"),
+                            imageName: "swap-button",
                             type: .swap
                         )
                     ]

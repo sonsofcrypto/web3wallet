@@ -7,7 +7,9 @@ import Foundation
 enum TokenSwapPresenterEvent {
 
     case dismiss
+    case tokenFromTapped
     case tokenFromChanged(to: Double)
+    case tokenToTapped
     case tokenToChanged(to: Double)
     case swapFlip
     case feeChanged(to: String)
@@ -31,10 +33,10 @@ final class DefaultTokenSwapPresenter {
     private var items = [TokenSwapViewModel.Item]()
     private var fees = [Web3NetworkFee]()
     
-    private var amountFrom: Double?
     private var tokenFrom: Web3Token!
-    private var amountTo: Double?
+    private var amountFrom: Double?
     private var tokenTo: Web3Token!
+    private var amountTo: Double?
 
     private var fee: Web3NetworkFee = .low
 
@@ -103,10 +105,26 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
         case .dismiss:
             
             wireframe.dismiss()
+            
+        case .tokenFromTapped:
+            
+            wireframe.navigate(
+                to: .selectMyToken(
+                    onCompletion: makeOnTokenFromSelected()
+                )
+            )
         
         case let .tokenFromChanged(amount):
             
             updateSwap(amountFrom: amount, shouldUpdateTextFields: false)
+            
+        case .tokenToTapped:
+            
+            wireframe.navigate(
+                to: .selectToken(
+                    onCompletion: makeOnTokenToSelected()
+                )
+            )
             
         case let .tokenToChanged(amount):
             
@@ -155,8 +173,52 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                 return
             }
             
-            
+            wireframe.navigate(
+                to: .confirmSwap(
+                    dataIn: .init(
+                        tokenFrom: makeConfirmationSwapTokenFrom(),
+                        tokenTo: makeConfirmationSwapTokenTo(),
+                        provider: makeConfirmationProvider(),
+                        estimatedFee: interactor.networkFeeInUSD(network: tokenFrom.network, fee: fee)
+                    ),
+                    onSuccess: makeOnTokenTransactionSend()
+                )
+            )
         }
+    }
+    
+    func makeOnTokenTransactionSend() -> () -> Void {
+        
+        {
+            print("Transaction send!!!")
+        }
+    }
+    
+    func makeConfirmationSwapTokenFrom() -> ConfirmationWireframeContext.SwapContext.Token {
+        
+        .init(
+            icon: interactor.tokenIcon(for: tokenFrom),
+            token: tokenFrom,
+            value: amountFrom ?? 0
+        )
+    }
+    
+    func makeConfirmationSwapTokenTo() -> ConfirmationWireframeContext.SwapContext.Token {
+        
+        .init(
+            icon: interactor.tokenIcon(for: tokenTo),
+            token: tokenTo,
+            value: amountTo ?? 0
+        )
+    }
+    
+    func makeConfirmationProvider() -> ConfirmationWireframeContext.SwapContext.Provider {
+        
+        .init(
+            icon: makeSelectedProviderIcon(),
+            name: selectedProviderName,
+            slippage: selectedSlippage
+        )
     }
 }
 
@@ -326,7 +388,7 @@ private extension DefaultTokenSwapPresenter {
     
     func makeTokenSwapSlippageViewModel() -> TokenSwapSlippageViewModel {
         
-        .init(value: "1%")
+        .init(value: selectedSlippage)
     }
     
     func makeTokenPriceViewModel() -> TokenSwapPriceViewModel {
@@ -337,11 +399,36 @@ private extension DefaultTokenSwapPresenter {
     
     func makeSelectedProviderIcon() -> Data {
         
-        UIImage(named: "provider-\(selectedProviderName)")!.pngData()!
+        UIImage(named: "\(selectedProviderName)-provider")!.pngData()!
     }
     
     var selectedProviderName: String {
-        "1inch"
+        "uniswap"
+    }
+    
+    var selectedSlippage: String {
+        
+        "1%"
+    }
+    
+    func makeOnTokenFromSelected() -> (Web3Token) -> Void {
+        
+        {
+            [weak self] token in
+            guard let self = self else { return }
+            self.tokenFrom = token
+            self.refreshView(with: .init(amountFrom: 0, amountTo: 0))
+        }
+    }
+    
+    func makeOnTokenToSelected() -> (Web3Token) -> Void {
+        
+        {
+            [weak self] token in
+            guard let self = self else { return }
+            self.tokenTo = token
+            self.updateSwap(amountFrom: self.amountFrom ?? 0, shouldUpdateTextFields: false)
+        }
     }
 }
 

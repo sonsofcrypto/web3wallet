@@ -19,10 +19,9 @@ protocol KeyStorePresenter: AnyObject {
     func handle(_ event: KeyStorePresenterEvent)
 }
 
-// MARK: - DefaultKeyStorePresenter
-
 final class DefaultKeyStorePresenter {
 
+    private weak var view: KeyStoreView?
     private let interactor: KeyStoreInteractor
     private let wireframe: KeyStoreWireframe
     private let settingsService: SettingsService
@@ -32,9 +31,7 @@ final class DefaultKeyStorePresenter {
         buttons: ButtonSheetViewModel.compactButtons(),
         sheetMode: .compact
     )
-
-    private weak var view: KeyStoreView?
-
+    
     init(
         view: KeyStoreView,
         interactor: KeyStoreInteractor,
@@ -51,8 +48,6 @@ final class DefaultKeyStorePresenter {
         view?.update(with: viewModel())
     }
 }
-
-// MARK: WalletsPresenter
 
 extension DefaultKeyStorePresenter: KeyStorePresenter {
 
@@ -76,8 +71,6 @@ extension DefaultKeyStorePresenter: KeyStorePresenter {
     }
 }
 
-// MARK: - Event handling
-
 private extension DefaultKeyStorePresenter {
 
     func handleDidSelectItem(at idx: Int) {
@@ -88,12 +81,18 @@ private extension DefaultKeyStorePresenter {
     }
 
     func handleDidSelectAccessory(at idx: Int) {
+        
         targetView = .keyStoreItemAt(idx: idx)
         view?.updateTargetView(targetView)
+        
         let item = interactor.items[idx]
-        wireframe.navigate(to: .keyStoreItem(item: item) { [weak self] item in
-             self?.handleDidUpdateNewKeyStoreItem(item)
-        })
+        
+        wireframe.navigate(
+            to: .keyStoreItem(item: item) {
+                [weak self] item in
+                self?.handleDidUpdateNewKeyStoreItem(item)
+            }
+        )
     }
 
     func handleDidSelectErrorAction(at idx: Int) {
@@ -140,7 +139,7 @@ private extension DefaultKeyStorePresenter {
 
     func handleDidCreateNewKeyStoreItem(_ keyStoreItem: KeyStoreItem) {
         interactor.selected = keyStoreItem
-        if let idx = interactor.index(of: keyStoreItem) {
+        if let idx = interactor.items.firstIndex(of: keyStoreItem) {
             targetView = .keyStoreItemAt(idx: idx)
         }
 
@@ -157,7 +156,7 @@ private extension DefaultKeyStorePresenter {
     }
 
     func handleDidUpdateNewKeyStoreItem(_ keyStoreItem: KeyStoreItem) {
-        if let idx = interactor.index(of: keyStoreItem) {
+        if let idx = interactor.items.firstIndex(of: keyStoreItem) {
             targetView = .keyStoreItemAt(idx: idx)
         }
         view?.update(with: viewModel())
@@ -168,19 +167,17 @@ private extension DefaultKeyStorePresenter {
     }
 }
 
-// MARK: - WalletsViewModel utilities
-
 private extension DefaultKeyStorePresenter {
 
     func viewModel(_ state: KeyStoreViewModel.State = .loaded) -> KeyStoreViewModel {
-        let active = interactor.selected
-        return .init(
-            isEmpty: interactor.isEmpty,
+        
+        .init(
+            isEmpty: interactor.items.isEmpty,
             state: state,
             items: interactor.items.map {
                 KeyStoreViewModel.KeyStoreItem(title: $0.name)
             },
-            selectedIdxs: [interactor.index(of: interactor.selected)]
+            selectedIdxs: [interactor.items.firstIndex(of: interactor.selected)]
                 .compactMap{  $0 },
             buttons: buttonsViewModel,
             targetView: targetView,
@@ -191,7 +188,8 @@ private extension DefaultKeyStorePresenter {
     }
 
     func viewModel(from error: Error) -> KeyStoreViewModel {
-        return viewModel(
+        
+        viewModel(
             .error(
                 error: KeyStoreViewModel.Error(
                     title: "Error",
@@ -200,5 +198,13 @@ private extension DefaultKeyStorePresenter {
                 )
             )
         )
+    }
+}
+
+private extension Array where Element == KeyStoreItem {
+    
+    func firstIndex(of keyStoreItem: KeyStoreItem?) -> Int? {
+        
+        firstIndex(where: { $0.uuid == keyStoreItem?.uuid })
     }
 }

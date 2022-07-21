@@ -12,6 +12,6 @@ struct AuthenticateContext {
 
     // TODO(web3dgn): Title should for context dependent ie unlock, sign ...
     let title: String
-    let keyStoreItem: KeyStoreItem
-    let handler: Handler?
+    let keyStoreItem: KeyStoreItem?
+    let handler: Handler
 }

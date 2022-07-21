@@ -27,9 +27,6 @@ protocol MnemonicUpdateInteractor: AnyObject {
     /// Is custom derivation path valid
     func isDerivationPathValid(path: String) -> Bool
 
-    /// Creates new account at derivation path
-    func createAccountAddPath(path: String) throws -> KeyStoreItem
-
     /// Deletes `KeyStoreItem` as well as associated `SecretStorage`
     func delete(_ keyStoreItem: KeyStoreItem)
 }
@@ -80,6 +77,7 @@ extension DefaultMnemonicUpdateInteractor: MnemonicUpdateInteractor {
     }
 
     func update(for item: KeyStoreItem) throws -> KeyStoreItem {
+        
         guard let secretStorage = keyStoreService.secretStorage(
             item: item,
             password: password
@@ -112,22 +110,6 @@ extension DefaultMnemonicUpdateInteractor: MnemonicUpdateInteractor {
     func isDerivationPathValid(path: String) -> Bool {
         // TODO:
         return true
-    }
-
-    func createAccountAddPath(path: String) throws -> KeyStoreItem {
-        // TODO:
-        return KeyStoreItem(
-            uuid: UUID().uuidString,
-            name: name,
-            sortOrder: 0,
-            type: .mnemonic,
-            passUnlockWithBio: false,
-            iCloudSecretStorage: iCloudSecretStorage,
-            saltMnemonic: false,
-            passwordType: .bio,
-            derivationPath: derivationPath,
-            addresses: [:]
-        )
     }
 
     func delete(_ keyStoreItem: KeyStoreItem) {

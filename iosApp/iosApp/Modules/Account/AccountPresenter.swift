@@ -85,8 +85,8 @@ private extension DefaultAccountPresenter {
                         onTap: makeOnSendTap()
                     ),
                     .init(
-                        title: Localized("trade"),
-                        imageName: "trade-button",
+                        title: Localized("swap"),
+                        imageName: "swap-button",
                         onTap: makeOnSwapTap()
                     ),
                     .init(

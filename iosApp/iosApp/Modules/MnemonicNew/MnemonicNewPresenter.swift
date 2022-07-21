@@ -111,8 +111,9 @@ extension DefaultMnemonicNewPresenter: MnemonicNewPresenter {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
                     self.view?.dismiss(animated: true, completion: {})
                 }
-            } catch {
+            } catch let error {
                 // TODO: - Handle error
+                print("[ERROR]: Error creating KeyStoreItem, with: \(error)")
             }
         case .didSelectDismiss:
             view?.dismiss(animated: true, completion: {})

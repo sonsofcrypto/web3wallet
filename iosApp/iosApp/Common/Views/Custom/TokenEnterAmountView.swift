@@ -2,7 +2,7 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-struct TokenSwapTokenViewModel {
+struct TokenEnterAmountViewModel {
     
     let tokenAmount: Double?
     let tokenSymbolIcon: Data
@@ -14,7 +14,7 @@ struct TokenSwapTokenViewModel {
     let shouldBecomeFirstResponder: Bool
 }
 
-final class TokenSwapTokenView: UIView {
+final class TokenEnterAmountView: UIView {
     
     @IBOutlet weak var sendCurrencySymbol: UILabel!
     @IBOutlet weak var sendAmountTextField: TextField!
@@ -32,7 +32,8 @@ final class TokenSwapTokenView: UIView {
         case usd
     }
     
-    private var viewModel: TokenSwapTokenViewModel!
+    private var viewModel: TokenEnterAmountViewModel!
+    private var onTokenTapped: (() -> Void)?
     private var onTokenChanged: ((Double) -> Void)?
     private var mode: Mode = .token
     
@@ -66,6 +67,10 @@ final class TokenSwapTokenView: UIView {
         
         tokenView.backgroundColor = Theme.colour.labelQuaternary
         tokenView.layer.cornerRadius = Theme.constant.cornerRadius
+        let tapGesture = UITapGestureRecognizer(
+            target: self, action: #selector(tokenTapped)
+        )
+        tokenView.addGestureRecognizer(tapGesture)
         tokenIconImageView.layer.cornerRadius = tokenIconImageView.frame.size.width * 0.5
         tokenLabel.font = Theme.font.body
         tokenLabel.textColor = Theme.colour.labelPrimary
@@ -87,14 +92,16 @@ final class TokenSwapTokenView: UIView {
     }
 }
 
-extension TokenSwapTokenView {
+extension TokenEnterAmountView {
     
     func update(
-        with viewModel: TokenSwapTokenViewModel,
+        with viewModel: TokenEnterAmountViewModel,
+        onTokenTapped: (() -> Void)? = nil,
         onTokenChanged: ((Double) -> Void)? = nil
     ) {
         
         self.viewModel = viewModel
+        self.onTokenTapped = onTokenTapped
         self.onTokenChanged = onTokenChanged
         
         updateSendAmountTextField()
@@ -111,7 +118,7 @@ extension TokenSwapTokenView {
     }
 }
 
-extension TokenSwapTokenView: UITextFieldDelegate {
+extension TokenEnterAmountView: UITextFieldDelegate {
     
     func textField(
         _ textField: UITextField,
@@ -147,7 +154,7 @@ extension TokenSwapTokenView: UITextFieldDelegate {
     }
 }
 
-private extension TokenSwapTokenView {
+private extension TokenEnterAmountView {
     
     func makeTokenClearButton() -> UIButton {
         
@@ -173,9 +180,14 @@ private extension TokenSwapTokenView {
         
         onTokenChanged?(0)
     }
+    
+    @objc func tokenTapped() {
+        
+        onTokenTapped?()
+    }
 }
 
-private extension TokenSwapTokenView {
+private extension TokenEnterAmountView {
     
     @objc func tokenMaxAmountTapped() {
         

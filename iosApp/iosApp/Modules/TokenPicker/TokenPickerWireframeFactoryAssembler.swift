@@ -10,7 +10,6 @@ final class TokenPickerWireframeFactoryAssembler: AssemblerComponent {
             
             DefaultTokenPickerWireframeFactory(
                 tokenReceiveWireframeFactory: resolver.resolve(),
-                tokenSendWireframeFactory: resolver.resolve(),
                 tokenAddWireframeFactory: resolver.resolve(),
                 web3Service: resolver.resolve()
             )

@@ -20,8 +20,8 @@ extension TokenSwapViewModel {
     
     struct Swap {
         
-        let tokenFrom: TokenSwapTokenViewModel
-        let tokenTo: TokenSwapTokenViewModel
+        let tokenFrom: TokenEnterAmountViewModel
+        let tokenTo: TokenEnterAmountViewModel
         let tokenSwapProviderViewModel: TokenSwapProviderViewModel
         let tokenSwapPriceViewModel: TokenSwapPriceViewModel
         let tokenSwapSlippageViewModel: TokenSwapSlippageViewModel

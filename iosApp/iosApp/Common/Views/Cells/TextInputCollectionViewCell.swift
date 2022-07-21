@@ -15,7 +15,7 @@ final class TextInputCollectionViewCell: CollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var textField: TextField!
 
-    var textChangeHandler: ((String)->Void)?
+    private var textChangeHandler: ((String)->Void)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,11 +23,7 @@ final class TextInputCollectionViewCell: CollectionViewCell {
         titleLabel.font = Theme.font.body
         titleLabel.textColor = Theme.colour.labelPrimary
         
-        textField.textChangeHandler = { [weak self] text in
-            self?.textChangeHandler?(text ?? "")
-        }
         textField.delegate = self
-        textField.rightViewMode = .whileEditing
     }
     
     override func resignFirstResponder() -> Bool {
@@ -37,10 +33,10 @@ final class TextInputCollectionViewCell: CollectionViewCell {
 
 extension TextInputCollectionViewCell: UITextFieldDelegate {
     
-//    func textFieldDidChangeSelection(_ textField: UITextField) {
-//        
-//        print("[PRINT 1]: \(textField.text)")
-//    }
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+
+        textChangeHandler?(textField.text ?? "")
+    }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -48,51 +44,47 @@ extension TextInputCollectionViewCell: UITextFieldDelegate {
     }
 }
 
-// MARK: - Update view viewModel
-
 extension TextInputCollectionViewCell {
 
     func update(
         with viewModel: MnemonicNewViewModel.Name,
         textChangeHandler: ((String)->Void)? = nil
     ) -> Self {
+        
         update(
             title: viewModel.title,
             value: viewModel.value,
             placeholder: viewModel.placeholder,
             textChangeHandler: textChangeHandler
         )
-        return self
     }
 
     func update(
         with viewModel: MnemonicUpdateViewModel.Name,
         textChangeHandler: ((String)->Void)? = nil
     ) -> Self {
+        
         update(
             title: viewModel.title,
             value: viewModel.value,
             placeholder: viewModel.placeholder,
             textChangeHandler: textChangeHandler
         )
-        return self
     }
 
     func update(
         with viewModel: MnemonicImportViewModel.Name,
         textChangeHandler: ((String)->Void)? = nil
     ) -> Self {
+        
         update(
             title: viewModel.title,
             value: viewModel.value,
             placeholder: viewModel.placeholder,
             textChangeHandler: textChangeHandler
         )
-        return self
     }
 }
-
-// MARK: - Utilities
 
 private extension TextInputCollectionViewCell {
 

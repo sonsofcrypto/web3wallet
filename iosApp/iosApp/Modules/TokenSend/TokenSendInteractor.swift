@@ -6,6 +6,7 @@ import Foundation
 
 protocol TokenSendInteractor: AnyObject {
 
+    var defaultToken: Web3Token { get }
     func isAddressValid(
         address: String,
         network: Web3Network
@@ -36,6 +37,11 @@ final class DefaultTokenSendInteractor {
 }
 
 extension DefaultTokenSendInteractor: TokenSendInteractor {
+    
+    var defaultToken: Web3Token {
+        
+        web3Service.myTokens.first ?? web3Service.allTokens.first!
+    }
 
     func isAddressValid(
         address: String,

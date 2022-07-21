@@ -14,14 +14,17 @@ protocol TokenSwapWireframeFactory {
 
 final class DefaultTokenSwapWireframeFactory {
 
-    private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
+    private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
+    private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let web3Service: Web3Service
 
     init(
-        qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
+        tokenPickerWireframeFactory: TokenPickerWireframeFactory,
+        confirmationWireframeFactory: ConfirmationWireframeFactory,
         web3Service: Web3Service
     ) {
-        self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
+        self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
+        self.confirmationWireframeFactory = confirmationWireframeFactory
         self.web3Service = web3Service
     }
 }
@@ -36,7 +39,8 @@ extension DefaultTokenSwapWireframeFactory: TokenSwapWireframeFactory {
         DefaultTokenSwapWireframe(
             presentingIn: presentingIn,
             context: context,
-            qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
+            tokenPickerWireframeFactory: tokenPickerWireframeFactory,
+            confirmationWireframeFactory: confirmationWireframeFactory,
             web3Service: web3Service
         )
     }

@@ -5,6 +5,7 @@
 import Foundation
 
 struct AuthenticateViewModel {
+    
     let title: String
     let password: String
     let passwordPlaceholder: String

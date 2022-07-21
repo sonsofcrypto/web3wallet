@@ -9,7 +9,8 @@ final class TokenSwapWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> TokenSwapWireframeFactory in
             
             DefaultTokenSwapWireframeFactory(
-                qrCodeScanWireframeFactory: resolver.resolve(),
+                tokenPickerWireframeFactory: resolver.resolve(),
+                confirmationWireframeFactory: resolver.resolve(),
                 web3Service: resolver.resolve()
             )
         }

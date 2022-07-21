@@ -6,6 +6,7 @@ import Foundation
 import web3lib
 
 protocol AuthenticateInteractor: AnyObject {
+    
     func canUnlockWithBio(_ keyStoreItem: KeyStoreItem) -> Bool
     func unlockWithBiometrics(
         _ item: KeyStoreItem,
@@ -15,9 +16,7 @@ protocol AuthenticateInteractor: AnyObject {
     func isValid(item: KeyStoreItem, password: String, salt: String) -> Bool
 }
 
-// MARK: - DefaultAuthenticateInteractor
-
-class DefaultAuthenticateInteractor {
+final class DefaultAuthenticateInteractor {
 
     private var keyStoreService: KeyStoreService
 
@@ -25,8 +24,6 @@ class DefaultAuthenticateInteractor {
         self.keyStoreService = keyStoreService
     }
 }
-
-// MARK: - DefaultAuthenticateInteractor
 
 extension DefaultAuthenticateInteractor: AuthenticateInteractor {
 
@@ -55,6 +52,7 @@ extension DefaultAuthenticateInteractor: AuthenticateInteractor {
     }
 
     func isValid(item: KeyStoreItem, password: String, salt: String) -> Bool {
+        
         guard let secretStorage = keyStoreService.secretStorage(
             item: item,
             password: password

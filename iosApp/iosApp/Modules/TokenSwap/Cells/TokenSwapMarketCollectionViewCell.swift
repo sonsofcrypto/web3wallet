@@ -5,10 +5,10 @@
 final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var tokenFrom: TokenSwapTokenView!
+    @IBOutlet weak var tokenFrom: TokenEnterAmountView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var tokenTo: TokenSwapTokenView!
+    @IBOutlet weak var tokenTo: TokenEnterAmountView!
     @IBOutlet weak var tokenSwapProviderView: TokenSwapProviderView!
     @IBOutlet weak var tokenSwapPriceView: TokenSwapPriceView!
     @IBOutlet weak var tokenSwapSlippageView: TokenSwapSlippageView!
@@ -19,7 +19,9 @@ final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
     
     struct Handler {
 
+        let onTokenFromTapped: (() -> Void)
         let onTokenFromAmountChanged: ((Double) -> Void)?
+        let onTokenToTapped: (() -> Void)
         let onTokenToAmountChanged: ((Double) -> Void)?
         let onSwapFlip: (() -> Void)?
         let onNetworkFeesTapped: () -> Void
@@ -63,6 +65,13 @@ final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
         
         tokenFrom.resignFirstResponder() || tokenTo.resignFirstResponder()
     }
+    
+    func showLoading() {
+        
+        loadingIndicator.isHidden = false
+        loadingIndicator.startAnimating()
+        imageView.isHidden = true
+    }
 }
 
 extension TokenSwapMarketCollectionViewCell {
@@ -74,31 +83,29 @@ extension TokenSwapMarketCollectionViewCell {
         
         self.handler = handler
     
-        loadingIndicator.stopAnimating()
-        loadingIndicator.isHidden = true
-        imageView.isHidden = false
+        hideLoading()
 
         tokenFrom.update(
-            with: viewModel.tokenFrom
-        ) {
-            [weak self] amount in
-            guard let self = self else { return }
-            self.loadingIndicator.isHidden = false
-            self.loadingIndicator.startAnimating()
-            self.imageView.isHidden = true
-            handler.onTokenFromAmountChanged?(amount)
-        }
+            with: viewModel.tokenFrom,
+            onTokenTapped: handler.onTokenFromTapped,
+            onTokenChanged: {
+                [weak self] amount in
+                guard let self = self else { return }
+                self.showLoading()
+                handler.onTokenFromAmountChanged?(amount)
+            }
+        )
         
         tokenTo.update(
-            with: viewModel.tokenTo
-        ) {
-            [weak self] amount in
-            guard let self = self else { return }
-            self.loadingIndicator.isHidden = false
-            self.loadingIndicator.startAnimating()
-            self.imageView.isHidden = true
-            handler.onTokenToAmountChanged?(amount)
-        }
+            with: viewModel.tokenTo,
+            onTokenTapped: handler.onTokenToTapped,
+            onTokenChanged: {
+                [weak self] amount in
+                guard let self = self else { return }
+                self.showLoading()
+                handler.onTokenToAmountChanged?(amount)
+            }
+        )
         
         tokenSwapProviderView.update(
             with: viewModel.tokenSwapProviderViewModel
@@ -134,6 +141,13 @@ extension TokenSwapMarketCollectionViewCell {
 }
 
 private extension TokenSwapMarketCollectionViewCell {
+    
+    func hideLoading() {
+        
+        loadingIndicator.stopAnimating()
+        loadingIndicator.isHidden = true
+        imageView.isHidden = false
+    }
     
     @objc func flip() {
         

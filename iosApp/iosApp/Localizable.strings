@@ -15,7 +15,6 @@
 "settings" = "Settings";
 "receive" = "Receive";
 "send" = "Send";
-"trade" = "Trade";
 "more" = "More";
 "done" = "Done";
 "close" = "Close";
@@ -43,7 +42,7 @@
 "dashboard.tab.title" = "Wallet";
 "dashboard.button.receive" = "Receive";
 "dashboard.button.send" = "Send";
-"dashboard.button.trade" = "Trade";
+"dashboard.button.swap" = "Swap";
 "dashboard.section.nfts" = "NFestival";
 
 "degen.dappCategory.title.amm" = "Automated market makers";
@@ -148,6 +147,7 @@
 "tokenPicker.title.receive" = "Receive";
 "tokenPicker.title.send" = "Send";
 "tokenPicker.title.multiSelectEdit" = "Select";
+"tokenPicker.title.select" = "Select";
 "tokenPicker.networks.all" = "All networks";
 "tokenPicker.featured.title" = "Featured";
 "tokenPicker.popular.title" = "Popular";
@@ -194,9 +194,26 @@
 "tokenSend.cell.balance" = "Balance: %@";
 
 "tokenSwap.title" = "Token Swap";
+"tokenSwap.segment.swap" = "Swap";
+"tokenSwap.segment.limit" = "Limit";
 "tokenSwap.cell.balance" = "Balance: %@";
 "tokenSwap.cell.provider" = "Provider";
 "tokenSwap.cell.price" = "Price";
 "tokenSwap.cell.slippage" = "Slippage";
 "tokenSwap.cell.estimatedFee" = "Estimated Fee";
 "tokenSwap.cell.market.swap" = "Swap with";
+
+"authenticate.title.unlock" = "Unlock";
+"authenticate.title.swap" = "Swap";
+"authenticate.placeholder.password" = "Password";
+"authenticate.placeholder.salt" = "Salt";
+
+"confirmation.provider" = "Provider";
+"confirmation.slippage" = "Slippage";
+"confirmation.estimatedFee" = "Estimated Fee";
+"confirmation.from" = "From";
+"confirmation.to" = "To";
+"confirmation.swap.title" = "Confirm Transaction";
+"confirmation.swap.confirm" = "Authenticate & Swap";
+"confirmation.send.title" = "Confirm Transaction";
+"confirmation.send.confirm" = "Authenticate & Send";

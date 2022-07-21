@@ -16,8 +16,6 @@ protocol MnemonicUpdateWireframe {
     func navigate(to destination: MnemonicUpdateWireframeDestination)
 }
 
-// MARK: - class DefaultMnemonicWireframe {
-
 final class DefaultMnemonicUpdateWireframe {
 
     private weak var parent: UIViewController!
@@ -43,11 +41,10 @@ final class DefaultMnemonicUpdateWireframe {
     }
 }
 
-// MARK: - MnemonicWireframe
-
 extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
 
     func present() {
+        
         let vc = wireUp()
         let topVc = (parent as? UINavigationController)?.topViewController
 
@@ -67,14 +64,22 @@ extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
     }
 
     func navigate(to destination: MnemonicUpdateWireframeDestination) {
+        
         switch destination {
+            
         case .learnMoreSalt:
+            
             UIApplication.shared.open(Constant.saltExplanationURL)
+            
         case let .authenticate(context):
-            authenticateWireframeFactory
-                .makeWireframe(vc, context: context)
-                .present()
+            
+            authenticateWireframeFactory.makeWireframe(
+                vc,
+                context: context
+            ).present()
+            
         case .dismiss:
+            
             vc.dismiss(animated: true)
         }
     }
@@ -84,7 +89,9 @@ extension DefaultMnemonicUpdateWireframe {
 
     private func wireUp() -> UIViewController {
         
-        let interactor = DefaultMnemonicUpdateInteractor(keyStoreService)
+        let interactor = DefaultMnemonicUpdateInteractor(
+            keyStoreService
+        )
         let vc: MnemonicUpdateViewController = UIStoryboard(.mnemonicUpdate).instantiate()
         let presenter = DefaultMnemonicUpdatePresenter(
             context: context,
@@ -97,8 +104,6 @@ extension DefaultMnemonicUpdateWireframe {
         return NavigationController(rootViewController: vc)
     }
 }
-
-// MARK: - Constant
 
 extension DefaultMnemonicUpdateWireframe {
 

@@ -335,13 +335,23 @@
 		1C6720042880053E00C5F044 /* DashboardWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6720032880053E00C5F044 /* DashboardWireframeFactoryAssembler.swift */; };
 		1C6720062880059B00C5F044 /* MnemonicNewWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6720052880059B00C5F044 /* MnemonicNewWireframeFactoryAssembler.swift */; };
 		1C672008288005C300C5F044 /* MnemonicUpdateWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C672007288005C300C5F044 /* MnemonicUpdateWireframeFactoryAssembler.swift */; };
-		1C67200A2880193000C5F044 /* TokenSwapTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6720092880193000C5F044 /* TokenSwapTokenView.swift */; };
+		1C67200A2880193000C5F044 /* TokenEnterAmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6720092880193000C5F044 /* TokenEnterAmountView.swift */; };
 		1C67200C28849A2500C5F044 /* TokenNetworkFeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67200B28849A2500C5F044 /* TokenNetworkFeeView.swift */; };
 		1C67200E28849EE400C5F044 /* TokenSwapProviderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67200D28849EE400C5F044 /* TokenSwapProviderView.swift */; };
 		1C6720102884A9BF00C5F044 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67200F2884A9BF00C5F044 /* UIImage+Extension.swift */; };
 		1C6720122885D5AF00C5F044 /* TokenSwapSlippageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6720112885D5AF00C5F044 /* TokenSwapSlippageView.swift */; };
 		1C6720142885D78A00C5F044 /* TokenSwapPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6720132885D78A00C5F044 /* TokenSwapPriceView.swift */; };
 		1C6720162885E13500C5F044 /* TokenSwapLimitCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6720152885E13500C5F044 /* TokenSwapLimitCollectionViewCell.swift */; };
+		1C67201828867A0800C5F044 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67201728867A0800C5F044 /* SegmentedControl.swift */; };
+		1C67201B28870FCB00C5F044 /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67201A28870FCB00C5F044 /* ConfirmationView.swift */; };
+		1C67201D28870FD200C5F044 /* ConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67201C28870FD200C5F044 /* ConfirmationViewModel.swift */; };
+		1C67201F28870FDB00C5F044 /* ConfirmationWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67201E28870FDB00C5F044 /* ConfirmationWireframe.swift */; };
+		1C67202128870FE100C5F044 /* ConfirmationWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67202028870FE100C5F044 /* ConfirmationWireframeFactory.swift */; };
+		1C67202328870FEB00C5F044 /* ConfirmationWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67202228870FEB00C5F044 /* ConfirmationWireframeFactoryAssembler.swift */; };
+		1C67202528870FF400C5F044 /* ConfirmationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67202428870FF400C5F044 /* ConfirmationPresenter.swift */; };
+		1C6720292887106100C5F044 /* AuthenticateWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6720282887106100C5F044 /* AuthenticateWireframeFactoryAssembler.swift */; };
+		1C67202B2887EB7F00C5F044 /* Confirmation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C67202A2887EB7F00C5F044 /* Confirmation.storyboard */; };
+		1C67202D2887EECC00C5F044 /* ConfirmationWireframeContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67202C2887EECB00C5F044 /* ConfirmationWireframeContext.swift */; };
 		1C7E1F55286F129000E24811 /* NetworkHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7E1F54286F129000E24811 /* NetworkHeaderCell.swift */; };
 		1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46D92813DE4800F6C40B /* BaseViewController.swift */; };
 		1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1C9B46FA281427B800F6C40B /* under-construction.gif */; };
@@ -403,6 +413,11 @@
 		1CD843FC287423EB00E6D359 /* MnemonicNew.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CD843FB287423EB00E6D359 /* MnemonicNew.storyboard */; };
 		1CD843FE2874245400E6D359 /* SwitchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD843FD2874245400E6D359 /* SwitchCollectionViewCell.swift */; };
 		1CD844002874257500E6D359 /* SwitchTextInputCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD843FF2874257500E6D359 /* SwitchTextInputCollectionViewCell.swift */; };
+		1CE0063B288884D2002D1EB3 /* ConfirmationSwapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0063A288884D2002D1EB3 /* ConfirmationSwapView.swift */; };
+		1CE0063D288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0063C288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift */; };
+		1CE0064028894F41002D1EB3 /* ConfirmationSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0063F28894F41002D1EB3 /* ConfirmationSendView.swift */; };
+		1CE0064228894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0064128894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift */; };
+		1CE0064428894F72002D1EB3 /* ConfirmationViewModel+Send.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0064328894F72002D1EB3 /* ConfirmationViewModel+Send.swift */; };
 		1CE66BCA2848EA9900AB6ACA /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BC92848EA9900AB6ACA /* ChatService.swift */; };
 		1CE66BCC2848EA9F00AB6ACA /* DefaultChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCB2848EA9F00AB6ACA /* DefaultChatService.swift */; };
 		1CE66BCE2848EAA600AB6ACA /* ChatServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */; };
@@ -828,13 +843,23 @@
 		1C6720032880053E00C5F044 /* DashboardWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C6720052880059B00C5F044 /* MnemonicNewWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicNewWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C672007288005C300C5F044 /* MnemonicUpdateWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
-		1C6720092880193000C5F044 /* TokenSwapTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSwapTokenView.swift; sourceTree = "<group>"; };
+		1C6720092880193000C5F044 /* TokenEnterAmountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenEnterAmountView.swift; sourceTree = "<group>"; };
 		1C67200B28849A2500C5F044 /* TokenNetworkFeeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenNetworkFeeView.swift; sourceTree = "<group>"; };
 		1C67200D28849EE400C5F044 /* TokenSwapProviderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSwapProviderView.swift; sourceTree = "<group>"; };
 		1C67200F2884A9BF00C5F044 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		1C6720112885D5AF00C5F044 /* TokenSwapSlippageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSwapSlippageView.swift; sourceTree = "<group>"; };
 		1C6720132885D78A00C5F044 /* TokenSwapPriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSwapPriceView.swift; sourceTree = "<group>"; };
 		1C6720152885E13500C5F044 /* TokenSwapLimitCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSwapLimitCollectionViewCell.swift; sourceTree = "<group>"; };
+		1C67201728867A0800C5F044 /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
+		1C67201A28870FCB00C5F044 /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
+		1C67201C28870FD200C5F044 /* ConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationViewModel.swift; sourceTree = "<group>"; };
+		1C67201E28870FDB00C5F044 /* ConfirmationWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationWireframe.swift; sourceTree = "<group>"; };
+		1C67202028870FE100C5F044 /* ConfirmationWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationWireframeFactory.swift; sourceTree = "<group>"; };
+		1C67202228870FEB00C5F044 /* ConfirmationWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C67202428870FF400C5F044 /* ConfirmationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationPresenter.swift; sourceTree = "<group>"; };
+		1C6720282887106100C5F044 /* AuthenticateWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C67202A2887EB7F00C5F044 /* Confirmation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Confirmation.storyboard; sourceTree = "<group>"; };
+		1C67202C2887EECB00C5F044 /* ConfirmationWireframeContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationWireframeContext.swift; sourceTree = "<group>"; };
 		1C7E1F54286F129000E24811 /* NetworkHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHeaderCell.swift; sourceTree = "<group>"; };
 		1C9B46D92813DE4800F6C40B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1C9B46FA281427B800F6C40B /* under-construction.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "under-construction.gif"; sourceTree = "<group>"; };
@@ -896,6 +921,11 @@
 		1CD843FB287423EB00E6D359 /* MnemonicNew.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MnemonicNew.storyboard; sourceTree = "<group>"; };
 		1CD843FD2874245400E6D359 /* SwitchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchCollectionViewCell.swift; sourceTree = "<group>"; };
 		1CD843FF2874257500E6D359 /* SwitchTextInputCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTextInputCollectionViewCell.swift; sourceTree = "<group>"; };
+		1CE0063A288884D2002D1EB3 /* ConfirmationSwapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationSwapView.swift; sourceTree = "<group>"; };
+		1CE0063C288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationSheetPresentationController.swift; sourceTree = "<group>"; };
+		1CE0063F28894F41002D1EB3 /* ConfirmationSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationSendView.swift; sourceTree = "<group>"; };
+		1CE0064128894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmationViewModel+Swap.swift"; sourceTree = "<group>"; };
+		1CE0064328894F72002D1EB3 /* ConfirmationViewModel+Send.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmationViewModel+Send.swift"; sourceTree = "<group>"; };
 		1CE66BC92848EA9900AB6ACA /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		1CE66BCB2848EA9F00AB6ACA /* DefaultChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatService.swift; sourceTree = "<group>"; };
 		1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceAssembler.swift; sourceTree = "<group>"; };
@@ -1062,6 +1092,7 @@
 				1A4C3E976CBAB0A97E8AF408 /* CardFlipTransition.swift */,
 				1CE66BD12848ED4000AB6ACA /* PresentationStyle.swift */,
 				1A4C332FF69B880FCA444DE2 /* PreferredSizePresentationController.swift */,
+				1CE0063C288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift */,
 			);
 			path = Transitions;
 			sourceTree = "<group>";
@@ -1227,18 +1258,19 @@
 		1C60C1C7285724D0003BE25D /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				D1A12A58287D333900606FC8 /* Authenticate */,
 				1C60C244285724D0003BE25D /* Account */,
 				1C60C1FA285724D0003BE25D /* Alert */,
 				1C60C253285724D0003BE25D /* Apps */,
+				D1A12A58287D333900606FC8 /* Authenticate */,
 				1C60C1EE285724D0003BE25D /* Chat */,
+				1C67201928870FA900C5F044 /* Confirmation */,
 				1C60C20D285724D0003BE25D /* Dashboard */,
 				1C60C272285724D0003BE25D /* Degen */,
 				1C60C1E1285724D0003BE25D /* KeyStore */,
+				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
+				D1976B01287EFAE10063FC9C /* MnemonicImport */,
 				1C60C202285724D0003BE25D /* MnemonicNew */,
 				D1EF5BBC287BEE92004CAD82 /* MnemonicUpdate */,
-				D1976B01287EFAE10063FC9C /* MnemonicImport */,
-				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
 				1C54DBFB2860E59600E378F6 /* NetworkPicker */,
 				1C60C21C285724D0003BE25D /* Networks */,
 				1C60C225285724D0003BE25D /* NFTDetail */,
@@ -1767,8 +1799,6 @@
 			children = (
 				1C672000287FE11700C5F044 /* TokenSwapMarketCollectionViewCell.swift */,
 				1C6720152885E13500C5F044 /* TokenSwapLimitCollectionViewCell.swift */,
-				1C6720092880193000C5F044 /* TokenSwapTokenView.swift */,
-				1C67200B28849A2500C5F044 /* TokenNetworkFeeView.swift */,
 				1C67200D28849EE400C5F044 /* TokenSwapProviderView.swift */,
 				1C6720112885D5AF00C5F044 /* TokenSwapSlippageView.swift */,
 				1C6720132885D78A00C5F044 /* TokenSwapPriceView.swift */,
@@ -1782,6 +1812,24 @@
 				1C9E31AF28787A3000DD2031 /* FeesPickerView.swift */,
 			);
 			path = FeesPickerView;
+			sourceTree = "<group>";
+		};
+		1C67201928870FA900C5F044 /* Confirmation */ = {
+			isa = PBXGroup;
+			children = (
+				1CE00639288884C8002D1EB3 /* Views */,
+				1C67202A2887EB7F00C5F044 /* Confirmation.storyboard */,
+				1C67202428870FF400C5F044 /* ConfirmationPresenter.swift */,
+				1C67201A28870FCB00C5F044 /* ConfirmationView.swift */,
+				1C67201C28870FD200C5F044 /* ConfirmationViewModel.swift */,
+				1CE0064128894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift */,
+				1CE0064328894F72002D1EB3 /* ConfirmationViewModel+Send.swift */,
+				1C67201E28870FDB00C5F044 /* ConfirmationWireframe.swift */,
+				1C67202C2887EECB00C5F044 /* ConfirmationWireframeContext.swift */,
+				1C67202028870FE100C5F044 /* ConfirmationWireframeFactory.swift */,
+				1C67202228870FEB00C5F044 /* ConfirmationWireframeFactoryAssembler.swift */,
+			);
+			path = Confirmation;
 			sourceTree = "<group>";
 		};
 		1C9B46F92814279F00F6C40B /* Resources */ = {
@@ -1921,6 +1969,24 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		1CE00639288884C8002D1EB3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1CE0063A288884D2002D1EB3 /* ConfirmationSwapView.swift */,
+				1CE0063F28894F41002D1EB3 /* ConfirmationSendView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1CE0063E28893248002D1EB3 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				1C6720092880193000C5F044 /* TokenEnterAmountView.swift */,
+				1C67200B28849A2500C5F044 /* TokenNetworkFeeView.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
 		1CE66BC82848EA9000AB6ACA /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -2057,11 +2123,13 @@
 		D15B06C427B6D241008C3C62 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1CE0063E28893248002D1EB3 /* Custom */,
 				1A4C3378B5287B6A9BDE65CD /* Button.swift */,
 				D15B06C227B6D23C008C3C62 /* GradienView.swift */,
 				1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */,
 				1C47C0E4287BFC06008E0146 /* SeparatorView.swift */,
 				1A4C3DBA41AF75471C619124 /* TextField.swift */,
+				1C67201728867A0800C5F044 /* SegmentedControl.swift */,
 				1A4C3850817DBF09BB66090A /* CadlesView */,
 				D1EF5BBB287BEC58004CAD82 /* Cells */,
 				D1FA44A02805B52A00817274 /* CollectionView */,
@@ -2123,14 +2191,15 @@
 		D1A12A58287D333900606FC8 /* Authenticate */ = {
 			isa = PBXGroup;
 			children = (
-				D1A12A59287D333900606FC8 /* AuthenticateView.swift */,
+				1A4C39D6ADB830082AC3CEA6 /* Authenticate.storyboard */,
+				1A4C3B4D97107E875FCF5F38 /* AuthenticateContext.swift */,
 				D1A12A5A287D333900606FC8 /* AuthenticateInteractor.swift */,
 				D1A12A5C287D333900606FC8 /* AuthenticatePresenter.swift */,
-				D1A12A5D287D333900606FC8 /* AuthenticateWireframeFactory.swift */,
+				D1A12A59287D333900606FC8 /* AuthenticateView.swift */,
 				D1A12A5E287D333900606FC8 /* AuthenticateViewModel.swift */,
 				D1A12A5F287D333900606FC8 /* AuthenticateWireframe.swift */,
-				1A4C3B4D97107E875FCF5F38 /* AuthenticateContext.swift */,
-				1A4C39D6ADB830082AC3CEA6 /* Authenticate.storyboard */,
+				D1A12A5D287D333900606FC8 /* AuthenticateWireframeFactory.swift */,
+				1C6720282887106100C5F044 /* AuthenticateWireframeFactoryAssembler.swift */,
 			);
 			path = Authenticate;
 			sourceTree = "<group>";
@@ -2334,6 +2403,7 @@
 				1CAC55A4286DF26100CCB2B6 /* Networks.storyboard in Resources */,
 				1C54DC5828683DDA00E378F6 /* NaokoAA-BlackItalic.otf in Resources */,
 				1C54DC5E28683DDA00E378F6 /* NaokoAA-Medium-Italic.otf in Resources */,
+				1C67202B2887EB7F00C5F044 /* Confirmation.storyboard in Resources */,
 				1CAC560B286EFFC300CCB2B6 /* SFProDisplay-Semibold.otf in Resources */,
 				1CAC560A286EFFC300CCB2B6 /* SFProDisplay-Bold.otf in Resources */,
 				D11A990627B8615B00EDFDD0 /* OFL.txt in Resources */,
@@ -2463,6 +2533,7 @@
 				1C60C2F5285724D0003BE25D /* NFTDetailView.swift in Sources */,
 				1C671FF8287FDFF100C5F044 /* TokenSwapView.swift in Sources */,
 				1C60C2BB285724D0003BE25D /* ButtonsSheetViewCell.swift in Sources */,
+				1C6720292887106100C5F044 /* AuthenticateWireframeFactoryAssembler.swift in Sources */,
 				1C60C343285724D1003BE25D /* AMMsWireframe.swift in Sources */,
 				1A4C3EB4D429242923984C76 /* Button.swift in Sources */,
 				1CD843FA2874236C00E6D359 /* TextInputCollectionViewCell.swift in Sources */,
@@ -2470,6 +2541,7 @@
 				1C60C2A2285724D0003BE25D /* SettingsWireframe.swift in Sources */,
 				1C60C2CC285724D0003BE25D /* AlertWireframe.swift in Sources */,
 				1C60C2A6285724D0003BE25D /* SettingsView.swift in Sources */,
+				1C67202D2887EECC00C5F044 /* ConfirmationWireframeContext.swift in Sources */,
 				D1EF5BCA287BEE92004CAD82 /* MnemonicUpdateViewModel.swift in Sources */,
 				1C60C30B285724D1003BE25D /* RootPresenter.swift in Sources */,
 				1C60C2C3285724D0003BE25D /* ChatViewController.swift in Sources */,
@@ -2485,6 +2557,7 @@
 				1C60C33E285724D1003BE25D /* SwapView.swift in Sources */,
 				1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */,
 				1C60C2C1285724D0003BE25D /* KeyStoreView.swift in Sources */,
+				1C67202528870FF400C5F044 /* ConfirmationPresenter.swift in Sources */,
 				D11A991127B99D1800EDFDD0 /* AnyEncodable.swift in Sources */,
 				1C60C31B285724D1003BE25D /* AppsWireframeFactoryAssembler.swift in Sources */,
 				1C60C382285A5AE8003BE25D /* UICollectionViewCell+Extensions.swift in Sources */,
@@ -2522,6 +2595,7 @@
 				1C54DBE0285E1A0E00E378F6 /* Double+Extensions.swift in Sources */,
 				1C60C2EA285724D0003BE25D /* NetworksWireframeFactoryAssembler.swift in Sources */,
 				1C60C2E9285724D0003BE25D /* DashboardWireframe.swift in Sources */,
+				1C67202128870FE100C5F044 /* ConfirmationWireframeFactory.swift in Sources */,
 				1C60C2EF285724D0003BE25D /* NetworksWireframe.swift in Sources */,
 				D1EF5BC7287BEE92004CAD82 /* MnemonicUpdateCell.swift in Sources */,
 				1CE66BD72848F16A00AB6ACA /* UITabBarController+Extensions.swift in Sources */,
@@ -2531,6 +2605,7 @@
 				1C60C303285724D1003BE25D /* NFTsDashboardView+NFTs.swift in Sources */,
 				1C60C355285724D1003BE25D /* CultProposalsPresenter.swift in Sources */,
 				1C60C35E285724D1003BE25D /* DegenWireframeFactoryAssembler.swift in Sources */,
+				1C67201D28870FD200C5F044 /* ConfirmationViewModel.swift in Sources */,
 				1C60C33F285724D1003BE25D /* AMMsWireframeFactory.swift in Sources */,
 				1C60C326285724D1003BE25D /* MnemonicConfirmationPresenter.swift in Sources */,
 				1C6487162832DEFE0091A12D /* Reachability.swift in Sources */,
@@ -2561,6 +2636,7 @@
 				1C54DBF5285F32DC00E378F6 /* TokenAddInputView.swift in Sources */,
 				1C54DC682869BE6500E378F6 /* DashboardButtonsCell.swift in Sources */,
 				1C60C3632857C5E5003BE25D /* TokenReceivePresenter.swift in Sources */,
+				1CE0064228894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift in Sources */,
 				1C60C313285724D1003BE25D /* AccountSectionHeader.swift in Sources */,
 				1CB3A1EF2840D6B70092D667 /* UIStackView+Extensions.swift in Sources */,
 				1C60C33B285724D1003BE25D /* SwapInteractor.swift in Sources */,
@@ -2615,7 +2691,7 @@
 				1CD843FE2874245400E6D359 /* SwitchCollectionViewCell.swift in Sources */,
 				1C60C3672857C5F0003BE25D /* TokenReceiveView.swift in Sources */,
 				1CB3A1E52840D6B70092D667 /* CG+Extensions.swift in Sources */,
-				1C67200A2880193000C5F044 /* TokenSwapTokenView.swift in Sources */,
+				1C67200A2880193000C5F044 /* TokenEnterAmountView.swift in Sources */,
 				1C6487092832DC5F0091A12D /* Bootstrapper.swift in Sources */,
 				1C60C2AA285724D0003BE25D /* SettingsWireframeFactory.swift in Sources */,
 				1C60C2FC285724D0003BE25D /* NFTDetailView+Content+Image.swift in Sources */,
@@ -2691,7 +2767,9 @@
 				1A4C3C28443621328248F5A7 /* CandlesViewViewModel.swift in Sources */,
 				1C60C2AD285724D0003BE25D /* TokenPickerWireframe.swift in Sources */,
 				1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */,
+				1CE0063B288884D2002D1EB3 /* ConfirmationSwapView.swift in Sources */,
 				1C54DC6A2869D60D00E378F6 /* ThemeA.swift in Sources */,
+				1CE0064428894F72002D1EB3 /* ConfirmationViewModel+Send.swift in Sources */,
 				1C6720062880059B00C5F044 /* MnemonicNewWireframeFactoryAssembler.swift in Sources */,
 				1C60C2C9285724D0003BE25D /* ChatWireframeFactoryAssembler.swift in Sources */,
 				1C60C2ED285724D0003BE25D /* NetworksInteractor.swift in Sources */,
@@ -2716,6 +2794,8 @@
 				1C60C34F285724D1003BE25D /* CultProposalsWireframe.swift in Sources */,
 				1C60C352285724D1003BE25D /* CultProposalsWireframeFactory.swift in Sources */,
 				1C60C2AC285724D0003BE25D /* SettingsPresenter.swift in Sources */,
+				1CE0064028894F41002D1EB3 /* ConfirmationSendView.swift in Sources */,
+				1C67202328870FEB00C5F044 /* ConfirmationWireframeFactoryAssembler.swift in Sources */,
 				1C6487412832E7D10091A12D /* DefaultSettingsService.swift in Sources */,
 				1C9E31A1287580DE00DD2031 /* TokenSendInteractor.swift in Sources */,
 				1CB3A22128437C860092D667 /* UITableView+Extensions.swift in Sources */,
@@ -2724,6 +2804,7 @@
 				1C6720162885E13500C5F044 /* TokenSwapLimitCollectionViewCell.swift in Sources */,
 				1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */,
 				1C60C332285724D1003BE25D /* NFTsCollectionWireframeFactoryAssembler.swift in Sources */,
+				1C67201F28870FDB00C5F044 /* ConfirmationWireframe.swift in Sources */,
 				1C54DBEB285E833600E378F6 /* TokenAddView.swift in Sources */,
 				1C60C334285724D1003BE25D /* NFTsCollectionInteractor.swift in Sources */,
 				1C671FF6287FDFE100C5F044 /* TokenSwapWireframeFactoryAssembler.swift in Sources */,
@@ -2744,6 +2825,7 @@
 				1C60C31D285724D1003BE25D /* AppsCollectionViewCell.swift in Sources */,
 				1C60C305285724D1003BE25D /* NFTsDashboardWireframeFactoryAssembler.swift in Sources */,
 				D1A12A60287D333900606FC8 /* AuthenticateView.swift in Sources */,
+				1C67201828867A0800C5F044 /* SegmentedControl.swift in Sources */,
 				1C60C384285A649B003BE25D /* Web3ServiceLocalStorage.swift in Sources */,
 				D1976B10287EFAE10063FC9C /* MnemonicImportPresenter.swift in Sources */,
 				1C60C2D8285724D0003BE25D /* MnemonicNewInteractor.swift in Sources */,
@@ -2793,6 +2875,7 @@
 				1C54DBE3285E831B00E378F6 /* TokenAddWireframe.swift in Sources */,
 				1C60C324285724D1003BE25D /* AppsHeaderCollectionViewCell.swift in Sources */,
 				1C60C32B285724D1003BE25D /* MnemonicConfirmationWireframe.swift in Sources */,
+				1C67201B28870FCB00C5F044 /* ConfirmationView.swift in Sources */,
 				1C9E3199287580C700DD2031 /* TokenSendWireframeFactoryAssembler.swift in Sources */,
 				1C60C2D0285724D0003BE25D /* AlertPresenter.swift in Sources */,
 				1C60C2BA285724D0003BE25D /* KeyStoreViewModel.swift in Sources */,
@@ -2800,6 +2883,7 @@
 				1C64873E2832E76B0091A12D /* StoreAssembler.swift in Sources */,
 				1C60C2B8285724D0003BE25D /* KeyStoreWireframeFactory.swift in Sources */,
 				1C60C307285724D1003BE25D /* NFTsDashboardInteractor.swift in Sources */,
+				1CE0063D288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift in Sources */,
 				1C6720102884A9BF00C5F044 /* UIImage+Extension.swift in Sources */,
 				1C60C329285724D1003BE25D /* MnemonicConfirmationService.swift in Sources */,
 				D1A12A63287D333900606FC8 /* AuthenticatePresenter.swift in Sources */,
@@ -2992,17 +3076,18 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5K4DT22LXR;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = web3wallet;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We use the phone's camera to read QR codes";
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "Authenticate $(PRODUCT_NAME)";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Authenticate iosApp";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -3031,17 +3116,18 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5K4DT22LXR;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = web3wallet;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We use the phone's camera to read QR codes";
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "Authenticate $(PRODUCT_NAME)";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Authenticate iosApp";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

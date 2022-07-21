@@ -9,6 +9,7 @@ protocol TokenSwapView: AnyObject {
     func update(with viewModel: TokenSwapViewModel)
     func presentFeePicker(with fees: [FeesPickerViewModel])
     //func presentReviewSwap(with fees: [FeesPickerViewModel])
+    func loading()
     func dismissKeyboard()
 }
 
@@ -16,6 +17,7 @@ final class TokenSwapViewController: BaseViewController {
 
     var presenter: TokenSwapPresenter!
 
+    private weak var segmentControl: SegmentedControl!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var feesPickerView: FeesPickerView!
     
@@ -37,8 +39,6 @@ extension TokenSwapViewController: TokenSwapView {
 
         self.viewModel = viewModel
         
-        title = viewModel.title
-
         if collectionView.visibleCells.isEmpty {
             
             collectionView.reloadData()
@@ -66,6 +66,21 @@ extension TokenSwapViewController: TokenSwapView {
                 y: fromFrame.midY
             )
         )
+    }
+    
+    func loading() {
+        
+        collectionView.visibleCells.forEach {
+            
+            switch $0 {
+                
+            case let cell as TokenSwapMarketCollectionViewCell:
+                cell.showLoading()
+                
+            default:
+                break
+            }
+        }
     }
     
     @objc func dismissKeyboard() {
@@ -111,6 +126,24 @@ extension TokenSwapViewController: UICollectionViewDelegate {
         
         dismissKeyboard()
     }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        
+        collectionView.visibleCells.forEach { $0.resignFirstResponder() }
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didEndDisplaying cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        
+        segmentControl.selectedSegmentIndex = indexPath.row == 0 ? 1 : 0
+    }
 }
 
 private extension TokenSwapViewController {
@@ -123,6 +156,9 @@ private extension TokenSwapViewController {
             target: self,
             action: #selector(navBarLeftActionTapped)
         )
+        
+        let segmentControl = makeSegmentedControl()
+        navigationItem.titleView = segmentControl
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -149,9 +185,49 @@ private extension TokenSwapViewController {
         }
     }
     
+    @objc func segmentControlChanged(_ sender: SegmentedControl) {
+        
+        let targetIndexPath = IndexPath(row: sender.selectedSegmentIndex, section: 0)
+        collectionView.selectItem(
+            at: targetIndexPath,
+            animated: true,
+            scrollPosition: .centeredHorizontally
+        )
+    }
+    
     @objc func navBarLeftActionTapped() {
         
         presenter.handle(.dismiss)
+    }
+    
+    func makeSegmentedControl() -> SegmentedControl {
+        
+        let segmentControl = SegmentedControl(
+            frame: .init(
+                origin: .zero,
+                size: .init(width: view.frame.size.width * 0.6, height: 32)
+            )
+        )
+        segmentControl.insertSegment(
+            withTitle: Localized("tokenSwap.segment.swap"),
+            at: 0,
+            animated: false
+        )
+        segmentControl.insertSegment(
+            withTitle: Localized("tokenSwap.segment.limit"),
+            at: 1,
+            animated: false
+        )
+        segmentControl.selectedSegmentIndex = 0
+        segmentControl.addTarget(self, action: #selector(segmentControlChanged(_:)), for: .valueChanged)
+//        segmentControl.addConstraints(
+//            [
+//                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 150)),
+//                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 32))
+//            ]
+//        )
+        self.segmentControl = segmentControl
+        return segmentControl
     }
 }
 
@@ -238,9 +314,18 @@ private extension TokenSwapViewController {
             trailing: sectionInset
         )
         section.orthogonalScrollingBehavior = .groupPaging
+        section.visibleItemsInvalidationHandler = {
+            // [weak self] visibleItems, point, environment in
+            [weak self] (_, _, _) in
+            guard let self = self else { return }
+            self.dismissKeyboard()
+        }
                         
         return section
     }
+}
+
+private extension TokenSwapViewController {
     
     func updateCells() {
         
@@ -253,7 +338,7 @@ private extension TokenSwapViewController {
                 guard let swap = viewModel?.items.swap else { return }
                 tokenCell.update(with: swap, handler: makeTokenSwapHandler())
                 
-            case let _ as TokenSwapLimitCollectionViewCell:
+            case _ as TokenSwapLimitCollectionViewCell:
                 
                 break
 
@@ -263,16 +348,31 @@ private extension TokenSwapViewController {
             }
         }
     }
+}
+
+private extension TokenSwapViewController {
     
     func makeTokenSwapHandler() -> TokenSwapMarketCollectionViewCell.Handler {
         
         .init(
+            onTokenFromTapped: makeOnTokenFromTapped(),
             onTokenFromAmountChanged: makeOnTokenFromAmountChanged(),
+            onTokenToTapped: makeOnTokenToTapped(),
             onTokenToAmountChanged: makeOnTokenToAmountChanged(),
             onSwapFlip: makeOnSwapFlip(),
             onNetworkFeesTapped: makeOnNetworkFeesTapped(),
             onCTATapped: makeOnCTATapped()
         )
+    }
+    
+    func makeOnTokenFromTapped() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.dismissKeyboard()
+            self.presenter.handle(.tokenFromTapped)
+        }
     }
     
     func makeOnTokenFromAmountChanged() -> (Double) -> Void {
@@ -281,6 +381,16 @@ private extension TokenSwapViewController {
             [weak self] amount in
             guard let self = self else { return }
             self.presenter.handle(.tokenFromChanged(to: amount))
+        }
+    }
+    
+    func makeOnTokenToTapped() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.dismissKeyboard()
+            self.presenter.handle(.tokenToTapped)
         }
     }
     

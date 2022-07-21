@@ -14,6 +14,7 @@ final class DefaultDashboardWireframeFactory {
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
     private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
+    private let tokenSendWireframeFactory: TokenSendWireframeFactory
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
@@ -27,6 +28,7 @@ final class DefaultDashboardWireframeFactory {
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
         tokenPickerWireframeFactory: TokenPickerWireframeFactory,
+        tokenSendWireframeFactory: TokenSendWireframeFactory,
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
@@ -39,6 +41,7 @@ final class DefaultDashboardWireframeFactory {
         self.alertWireframeFactory = alertWireframeFactory
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
         self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
+        self.tokenSendWireframeFactory = tokenSendWireframeFactory
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
@@ -59,6 +62,7 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             alertWireframeFactory: alertWireframeFactory,
             mnemonicConfirmationWireframeFactory: mnemonicConfirmationWireframeFactory,
             tokenPickerWireframeFactory: tokenPickerWireframeFactory,
+            tokenSendWireframeFactory: tokenSendWireframeFactory,
             tokenSwapWireframeFactory: tokenSwapWireframeFactory,
             nftDetailWireframeFactory: nftDetailWireframeFactory,
             qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,

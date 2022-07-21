@@ -70,7 +70,8 @@ private extension AssemblerBootstrapper {
             TokenSendWireframeFactoryAssembler(),
             TokenSwapWireframeFactoryAssembler(),
             NetworkPickerWireframeFactoryAssembler(),
-            QRCodeScanWireframeFactoryAssembler()
+            QRCodeScanWireframeFactoryAssembler(),
+            ConfirmationWireframeFactoryAssembler()
         ]
     }
 }

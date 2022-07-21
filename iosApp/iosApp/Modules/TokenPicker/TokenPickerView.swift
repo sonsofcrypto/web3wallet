@@ -98,7 +98,7 @@ private extension TokenPickerViewController {
         
         searchContainerBox.backgroundColor = Theme.colour.navBarBackground
         
-        searchTextFieldBox.backgroundColor = Theme.colour.fillTertiary
+        searchTextFieldBox.backgroundColor = Theme.colour.fillQuaternary
         searchTextFieldBox.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         
         searchImageView.tintColor = Theme.colour.labelSecondary
@@ -439,7 +439,7 @@ private extension TokenPickerViewController {
         // Group
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(context.source.isSend ? 64 : 44)
+            heightDimension: .estimated(44)
         )
         let outerGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize, subitems: [item]

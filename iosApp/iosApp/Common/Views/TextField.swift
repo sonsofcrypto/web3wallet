@@ -5,16 +5,7 @@
 import UIKit
 
 class TextField: UITextField {
-
-    var textChangeHandler: ((String?)->Void)?
-
-    override var text: String? {
-        didSet {
-//            print("[PRINT 2]: \(text)")
-            textChangeHandler?(text)
-        }
-    }
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -24,8 +15,9 @@ class TextField: UITextField {
         super.init(coder: coder)
         configure()
     }
-
+    
     var placeholderAttrText: String? {
+        
         get { attributedPlaceholder?.string }
         set {
             attributedPlaceholder = NSAttributedString(
@@ -34,16 +26,17 @@ class TextField: UITextField {
             )
         }
     }
+}
+
+private extension TextField {
     
     func configure() {
         font = Theme.font.body
         textColor = Theme.colour.labelPrimary
         rightView = makeClearButton()
+        rightViewMode = .whileEditing
         clipsToBounds = true
     }
-}
-
-private extension TextField {
     
     func placeholder() -> [NSAttributedString.Key: Any] {
         [
