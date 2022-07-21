@@ -1,39 +1,27 @@
-// Created by web3d4v on 20/07/2022.
+// Created by web3d4v on 21/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import UIKit
 
-final class ConfirmationSheetPresentationController: UIPresentationController {
+final class AlertSheetPresentationController: UIPresentationController {
     
-    private var contentHeight: CGFloat!
-    
-    init(
-        presentedViewController: UIViewController,
-        presenting presentingViewController: UIViewController?,
-        contentHeight: CGFloat
-    ) {
-        self.contentHeight = contentHeight
-        
-        super.init(
-            presentedViewController: presentedViewController,
-            presenting: presentingViewController
-        )
-    }
-
     private weak var bgView: UIView?
 
     override var frameOfPresentedViewInContainerView: CGRect {
         
-        .init(
+        let contentHeight: CGFloat = 500
+        let size: CGSize = .init(
+            width: containerViewBounds().width - (Theme.constant.padding * 2),
+            height: contentHeight
+        )
+        let bounds = containerViewBounds()
+        return .init(
             origin: .init(
-                x: Theme.constant.padding,
-                y: containerViewBounds().height - contentHeight - presentingViewController.view.safeAreaInsets.bottom
+                x: (bounds.width - size.width) / 2,
+                y: (bounds.height - size.height) / 2
             ),
-            size: .init(
-                width: containerViewBounds().width - (Theme.constant.padding * 2),
-                height: contentHeight
-            )
+            size: size
         )
     }
 
@@ -48,7 +36,7 @@ final class ConfirmationSheetPresentationController: UIPresentationController {
         presentedView?.layer.cornerRadius = Theme.constant.cornerRadius
 
         UIView.animate(withDuration: Constant.animDuration) {
-            self.bgView?.alpha = Constant.bgAlpha
+            self.bgView?.alpha = 1.0
         }
     }
     
@@ -71,7 +59,7 @@ final class ConfirmationSheetPresentationController: UIPresentationController {
         }
 
         UIView.animate(withDuration: Constant.animDuration) {
-            self.bgView?.alpha = Constant.bgAlpha
+            self.bgView?.alpha = 1.0
         }
     }
 
@@ -91,7 +79,7 @@ final class ConfirmationSheetPresentationController: UIPresentationController {
     }
 }
 
-private extension ConfirmationSheetPresentationController {
+private extension AlertSheetPresentationController {
     
     func motionEffect(
         _ keyPath: String,
@@ -135,7 +123,6 @@ private extension ConfirmationSheetPresentationController {
 
     private struct Constant {
         
-        static let bgAlpha: CGFloat = 1.0
         static let animDuration: TimeInterval = 0.2
     }
 }

@@ -418,6 +418,8 @@
 		1CE0064028894F41002D1EB3 /* ConfirmationSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0063F28894F41002D1EB3 /* ConfirmationSendView.swift */; };
 		1CE0064228894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0064128894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift */; };
 		1CE0064428894F72002D1EB3 /* ConfirmationViewModel+Send.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0064328894F72002D1EB3 /* ConfirmationViewModel+Send.swift */; };
+		1CE0064628899D15002D1EB3 /* AlertSheetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0064528899D15002D1EB3 /* AlertSheetPresentationController.swift */; };
+		1CE006482889A08A002D1EB3 /* Alert.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CE006472889A08A002D1EB3 /* Alert.storyboard */; };
 		1CE66BCA2848EA9900AB6ACA /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BC92848EA9900AB6ACA /* ChatService.swift */; };
 		1CE66BCC2848EA9F00AB6ACA /* DefaultChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCB2848EA9F00AB6ACA /* DefaultChatService.swift */; };
 		1CE66BCE2848EAA600AB6ACA /* ChatServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */; };
@@ -926,6 +928,8 @@
 		1CE0063F28894F41002D1EB3 /* ConfirmationSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationSendView.swift; sourceTree = "<group>"; };
 		1CE0064128894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmationViewModel+Swap.swift"; sourceTree = "<group>"; };
 		1CE0064328894F72002D1EB3 /* ConfirmationViewModel+Send.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmationViewModel+Send.swift"; sourceTree = "<group>"; };
+		1CE0064528899D15002D1EB3 /* AlertSheetPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertSheetPresentationController.swift; sourceTree = "<group>"; };
+		1CE006472889A08A002D1EB3 /* Alert.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Alert.storyboard; sourceTree = "<group>"; };
 		1CE66BC92848EA9900AB6ACA /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		1CE66BCB2848EA9F00AB6ACA /* DefaultChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatService.swift; sourceTree = "<group>"; };
 		1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceAssembler.swift; sourceTree = "<group>"; };
@@ -1093,6 +1097,7 @@
 				1CE66BD12848ED4000AB6ACA /* PresentationStyle.swift */,
 				1A4C332FF69B880FCA444DE2 /* PreferredSizePresentationController.swift */,
 				1CE0063C288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift */,
+				1CE0064528899D15002D1EB3 /* AlertSheetPresentationController.swift */,
 			);
 			path = Transitions;
 			sourceTree = "<group>";
@@ -1393,6 +1398,7 @@
 		1C60C1FA285724D0003BE25D /* Alert */ = {
 			isa = PBXGroup;
 			children = (
+				1CE006472889A08A002D1EB3 /* Alert.storyboard */,
 				1C60C200285724D0003BE25D /* AlertContext.swift */,
 				1C60C1FF285724D0003BE25D /* AlertPresenter.swift */,
 				1C60C1FE285724D0003BE25D /* AlertView.swift */,
@@ -2428,6 +2434,7 @@
 				1C60C2B6285724D0003BE25D /* TokenPicker.storyboard in Resources */,
 				D14ECE3927B833E500228F90 /* Localizable.strings in Resources */,
 				D1EF5BCB287BEE92004CAD82 /* MnemonicUpdate.storyboard in Resources */,
+				1CE006482889A08A002D1EB3 /* Alert.storyboard in Resources */,
 				D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */,
 				D1123920284B423D00D39A0C /* cult_manifesto.pdf in Resources */,
 				1CAC5601286EFFC300CCB2B6 /* SFProText-Regular.otf in Resources */,
@@ -2548,6 +2555,7 @@
 				1C60C320285724D1003BE25D /* AppsInteractor.swift in Sources */,
 				1C60C2B7285724D0003BE25D /* KeyStoreInteractor.swift in Sources */,
 				1C60C2C6285724D0003BE25D /* ChatViewModel.swift in Sources */,
+				1CE0064628899D15002D1EB3 /* AlertSheetPresentationController.swift in Sources */,
 				D1976B0F287EFAE10063FC9C /* MnemonicImportViewModel.swift in Sources */,
 				1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */,
 				1C60C351285724D1003BE25D /* CultProposalsView.swift in Sources */,
