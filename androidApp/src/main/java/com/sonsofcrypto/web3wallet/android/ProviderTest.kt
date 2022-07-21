@@ -4,7 +4,6 @@ import com.sonsofcrypto.web3lib_core.Address
 import com.sonsofcrypto.web3lib_core.Network
 import kotlinx.coroutines.runBlocking
 import com.sonsofcrypto.web3lib_provider.*
-import com.sonsofcrypto.web3lib_utils.BigInt
 import com.sonsofcrypto.web3lib_utils.hexStringToByteArray
 import kotlinx.serialization.json.Json
 import java.lang.Exception
@@ -21,6 +20,7 @@ private val providerJson = Json {
 class ProviderTest {
 
     fun runAll() {
+        testQuantityHexString()
 //        testBlockNumber()
 //        testGasPrice()
 //        testGetBalance()
@@ -34,7 +34,6 @@ class ProviderTest {
 //        testGetBlockTransactionNumberCount()
 //        testGetUncleCount()
         testGetBlock()
-//        testQuantityHexString()
 
     }
 
@@ -44,6 +43,7 @@ class ProviderTest {
 
     fun testBlockNumber() = runBlocking {
         val provider = PocketProvider(Network.ethereum())
+
         val blockNumber = provider.blockNumber()
         println("block number $blockNumber")
     }
@@ -169,6 +169,7 @@ class ProviderTest {
 
     fun testQuantityHexString() {
         val str = "0xe78a3b" as QuantityHexString
+
         assertTrue(str.toIntQnt() == 15174203, "QuantityHexString toIntQnt")
         assertTrue(str.toUIntQnt() == 15174203u, "QuantityHexString toUIntQnt")
         assertTrue(str.toLongQnt() == 15174203L, "QuantityHexString toLongQnt")

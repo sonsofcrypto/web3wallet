@@ -73,30 +73,12 @@ class PocketProvider {
 
     @Throws(Throwable::class)
     suspend fun blockNumber(): ULong = withContext(dispatcher) {
-        try {
-            return@withContext providerJson
-                .decodeFromString<JsonRpcResponse<QuantityHexString>>(
-                    perfrom(JsonRpcRequest.with(Method.BLOCK_NUMBER))
-                )
-                .result
-                .toULongQnt()
-        } catch (err: Throwable) {
-            throw processJsonRpcError(err)
-        }
+        return@withContext performGetStrResult(Method.BLOCK_NUMBER).toULongQnt()
     }
 
     @Throws(Throwable::class)
     suspend fun gasPrice(): BigInt = withContext(dispatcher) {
-        try {
-            return@withContext providerJson
-                .decodeFromString<JsonRpcResponse<QuantityHexString>>(
-                    perfrom(JsonRpcRequest.with(Method.GAS_PRICE))
-                )
-                .result
-                .toBigIntQnt()
-        } catch (err: Throwable) {
-            throw processJsonRpcError(err)
-        }
+        return@withContext performGetStrResult(Method.GAS_PRICE).toBigIntQnt()
     }
 
 //    suspend fun sendRawTransaction(): ULong = withContext(dispatcher) {
@@ -112,18 +94,10 @@ class PocketProvider {
         address: Address,
         block: BlockTag = BlockTag.Latest
     ): ULong = withContext(dispatcher) {
-        try {
-            val req = JsonRpcRequest.with(
-                method = Method.GET_BALANCE,
-                params = listOf(address.jsonPrimitive(), block.jsonPrimitive())
-            )
-            return@withContext providerJson
-                .decodeFromString<JsonRpcResponse<QuantityHexString>>(perfrom(req))
-                .result
-                .toULongQnt()
-        } catch (err: Throwable) {
-            throw processJsonRpcError(err)
-        }
+        return@withContext performGetStrResult(
+            method = Method.GET_BALANCE,
+            params = listOf(address.jsonPrimitive(), block.jsonPrimitive())
+        ).toULongQnt()
     }
 
     @Throws(Throwable::class)
@@ -132,21 +106,14 @@ class PocketProvider {
         position: ULong,
         block: BlockTag = BlockTag.Latest
     ): DataHexString = withContext(dispatcher) {
-        try {
-            val req = JsonRpcRequest.with(
-                method = Method.GET_STORAGE_AT,
-                params = listOf(
-                    address.jsonPrimitive(),
-                    QuantityHexString(position).jsonPrimitive(),
-                    block.jsonPrimitive()
-                )
+        return@withContext performGetStrResult(
+            method = Method.GET_STORAGE_AT,
+            params = listOf(
+                address.jsonPrimitive(),
+                QuantityHexString(position).jsonPrimitive(),
+                block.jsonPrimitive()
             )
-            return@withContext providerJson
-                .decodeFromString<JsonRpcResponse<DataHexString>>(perfrom(req))
-                .result
-        } catch (err: Throwable) {
-            throw processJsonRpcError(err)
-        }
+        )
     }
 
     @Throws(Throwable::class)
@@ -154,18 +121,10 @@ class PocketProvider {
         address: Address,
         block: BlockTag = BlockTag.Latest
     ): ULong = withContext(dispatcher) {
-        try {
-            val req = JsonRpcRequest.with(
-                method = Method.GET_TRANSACTION_COUNT,
-                params = listOf(address.jsonPrimitive(), block.jsonPrimitive())
-            )
-            return@withContext providerJson
-                .decodeFromString<JsonRpcResponse<QuantityHexString>>(perfrom(req))
-                .result
-                .toULongQnt()
-        } catch (err: Throwable) {
-            throw processJsonRpcError(err)
-        }
+        return@withContext performGetStrResult(
+            method = Method.GET_TRANSACTION_COUNT,
+            params = listOf(address.jsonPrimitive(), block.jsonPrimitive())
+        ).toULongQnt()
     }
 
     @Throws(Throwable::class)
@@ -173,17 +132,10 @@ class PocketProvider {
         address: Address,
         block: BlockTag = BlockTag.Latest
     ): DataHexString = withContext(dispatcher) {
-        try {
-            val req = JsonRpcRequest.with(
-                method = Method.GET_CODE,
-                params = listOf(address.jsonPrimitive(), block.jsonPrimitive())
-            )
-            return@withContext providerJson
-                .decodeFromString<JsonRpcResponse<DataHexString>>(perfrom(req))
-                .result
-        } catch (err: Throwable) {
-            throw processJsonRpcError(err)
-        }
+        return@withContext performGetStrResult(
+            method = Method.GET_CODE,
+            params = listOf(address.jsonPrimitive(), block.jsonPrimitive())
+        )
     }
 
     @Throws(Throwable::class)
@@ -191,35 +143,20 @@ class PocketProvider {
         transation: TransactionRequest,
         block: BlockTag = BlockTag.Latest
     ): DataHexString = withContext(dispatcher) {
-        try {
-            val req = JsonRpcRequest.with(
-                method = Method.CALL,
-                params = listOf(transation.JsonRpc(), block.jsonPrimitive())
-            )
-            return@withContext providerJson
-                .decodeFromString<JsonRpcResponse<DataHexString>>(perfrom(req))
-                .result
-        } catch (err: Throwable) {
-            throw processJsonRpcError(err)
-        }
+        return@withContext performGetStrResult(
+            method = Method.CALL,
+            params = listOf(transation.JsonRpc(), block.jsonPrimitive())
+        )
     }
 
     @Throws(Throwable::class)
     suspend fun estimateGas(
         transation: TransactionRequest,
     ): BigInt = withContext(dispatcher) {
-        try {
-            val req = JsonRpcRequest.with(
-                method = Method.ESTIMATE_GAS,
-                params = listOf(transation.JsonRpc())
-            )
-            return@withContext providerJson
-                .decodeFromString<JsonRpcResponse<QuantityHexString>>(perfrom(req))
-                .result
-                .toBigIntQnt()
-        } catch (err: Throwable) {
-            throw processJsonRpcError(err)
-        }
+        return@withContext performGetStrResult(
+            method = Method.ESTIMATE_GAS,
+            params = listOf(transation.JsonRpc())
+        ).toBigIntQnt()
     }
 
     /** History */
@@ -228,42 +165,26 @@ class PocketProvider {
     suspend fun getBlockTransactionCount(
         block: BlockTag
     ): ULong = withContext(dispatcher) {
-        try {
-            val req = JsonRpcRequest.with(
-                method = when(block) {
-                    is BlockTag.Hash -> { Method.GET_BLOCK_TRANSACTION_COUNT_BY_HASH }
-                    else -> Method.GET_BLOCK_TRANSACTION_COUNT_BY_NUMBER
-                },
-                params = listOf(block.jsonPrimitive())
-            )
-            return@withContext providerJson
-                .decodeFromString<JsonRpcResponse<QuantityHexString>>(perfrom(req))
-                .result
-                .toULongQnt()
-        } catch (err: Throwable) {
-            throw processJsonRpcError(err)
-        }
+        return@withContext performGetStrResult(
+            method = when(block) {
+                is BlockTag.Hash -> { Method.GET_BLOCK_TRANSACTION_COUNT_BY_HASH }
+                else -> Method.GET_BLOCK_TRANSACTION_COUNT_BY_NUMBER
+            },
+            params = listOf(block.jsonPrimitive())
+        ).toULongQnt()
     }
 
     @Throws(Throwable::class)
     suspend fun getUncleCount(
         block: BlockTag
     ): ULong = withContext(dispatcher) {
-        try {
-            val req = JsonRpcRequest.with(
-                method = when(block) {
-                    is BlockTag.Hash -> { Method.GET_UNCLE_COUNT_BY_HASH }
-                    else -> Method.GET_UNCLE_COUNT_BY_NUMBER
-                },
-                params = listOf(block.jsonPrimitive())
-            )
-            return@withContext providerJson
-                .decodeFromString<JsonRpcResponse<QuantityHexString>>(perfrom(req))
-                .result
-                .toULongQnt()
-        } catch (err: Throwable) {
-            throw processJsonRpcError(err)
-        }
+        return@withContext performGetStrResult(
+            method = when(block) {
+                is BlockTag.Hash -> { Method.GET_UNCLE_COUNT_BY_HASH }
+                else -> Method.GET_UNCLE_COUNT_BY_NUMBER
+            },
+            params = listOf(block.jsonPrimitive())
+        ).toULongQnt()
     }
 
     @Throws(Throwable::class)
@@ -271,31 +192,70 @@ class PocketProvider {
         block: BlockTag,
         full: Boolean = false
     ): Block = withContext(dispatcher) {
-        try {
-            val req = JsonRpcRequest.with(
-                method = when(block) {
-                    is BlockTag.Hash -> { Method.GET_BLOCK_BY_HASH }
-                    else -> Method.GET_BLOCK_BY_NUMBER
-                },
-                params = listOf(block.jsonPrimitive(), JsonPrimitive(full))
-            )
-            val result = providerJson
-                .decodeFromString<JsonRpcResponse<JsonObject>>(perfrom(req))
-                .result
-            return@withContext Block.fromHexified(result)
-        } catch (err: Throwable) {
-            throw processJsonRpcError(err)
-        }
+        val result = performGetObjResult(
+            method = when(block) {
+                is BlockTag.Hash -> { Method.GET_BLOCK_BY_HASH }
+                else -> Method.GET_BLOCK_BY_NUMBER
+            },
+            params = listOf(block.jsonPrimitive(), JsonPrimitive(full))
+        )
+        return@withContext Block.fromHexified(result)
     }
 
     /** Utilities */
 
     @Throws(Throwable::class)
-    suspend fun perfrom(req: JsonRpcRequest): String = withContext(dispatcher) {
+    suspend fun performOld(req: JsonRpcRequest): String = withContext(dispatcher) {
         return@withContext client.post(url()) {
             contentType(ContentType.Application.Json)
             setBody(providerJson.encodeToString(req))
         }.bodyAsText()
+    }
+
+    @Throws(Throwable::class)
+    suspend fun performGetStrResult(
+        method: Method,
+        params: List<JsonElement> = listOf()
+    ): String = withContext(dispatcher) {
+        return@withContext performGetStrResult(JsonRpcRequest.with(method, params))
+    }
+
+    @Throws(Throwable::class)
+    suspend fun performGetObjResult(
+        method: Method,
+        params: List<JsonElement> = listOf()
+    ): JsonObject = withContext(dispatcher) {
+        return@withContext performGetObjResult(JsonRpcRequest.with(method, params))
+    }
+
+    @Throws(Throwable::class)
+    suspend fun performGetStrResult(
+        req: JsonRpcRequest
+    ): String = withContext(dispatcher) {
+        return@withContext (perform(req).result as JsonPrimitive).content
+    }
+
+    @Throws(Throwable::class)
+    suspend fun performGetObjResult(
+        req: JsonRpcRequest
+    ): JsonObject = withContext(dispatcher) {
+        return@withContext perform(req).result as JsonObject
+    }
+
+    @Throws(Throwable::class)
+    suspend fun perform(
+        req: JsonRpcRequest
+    ): JsonRpcResponse2 = withContext(dispatcher) {
+        try {
+            return@withContext providerJson.decodeFromString(
+                client.post(url()) {
+                    contentType(ContentType.Application.Json)
+                    setBody(providerJson.encodeToString(req))
+                }.bodyAsText()
+            )
+        } catch (err: Throwable) {
+            throw processJsonRpcError(err)
+        }
     }
 
     private fun processJsonRpcError(error: Throwable): Throwable {
@@ -354,3 +314,4 @@ class PocketProvider {
     }
 }
 
+fun JsonPrimitive.str(): String = content

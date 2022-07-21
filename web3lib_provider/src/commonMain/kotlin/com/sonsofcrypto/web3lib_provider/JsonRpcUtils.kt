@@ -39,7 +39,7 @@ fun QuantityHexString.addPrefixPad(): String {
 }
 
 fun QuantityHexString.addPrefix(): String {
-    return if (length > 1 && substring(0, 2) != "0x") "0x" + this else this
+    return if (length == 1 || (length > 1 && substring(0, 2) != "0x")) "0x" + this else this
 }
 
 fun QuantityHexString.jsonPrimitive(): JsonPrimitive = JsonPrimitive(this)
