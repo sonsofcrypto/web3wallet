@@ -78,7 +78,7 @@ struct ThemeA: Themable {
             segmentedControlTextSelected: pallete.systemWhite,
             cellBackground: pallete.systemEBEBF5.withAlpha(0.18),
             keystoreEnumFill: pallete.systemBlue,
-            keystoreEnumText: pallete.systemBlack,
+            keystoreEnumText: pallete.systemWhite,
             priceUp: pallete.systemGreen,
             priceDown: pallete.systemRed,
             candleGreen: pallete.systemTeal,
