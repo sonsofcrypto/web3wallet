@@ -91,7 +91,7 @@ extension DegenViewController: UICollectionViewDataSource {
         case let .group(items):
             let item = items[indexPath.item]
             let cell = collectionView.dequeue(DegenViewCell.self, for: indexPath)
-            cell.update(with: item)
+            cell.update(with: item, showSeparator: items.last != item)
             return cell
         }
     }

@@ -23,7 +23,7 @@ extension DegenViewModel {
         let isEnabled: Bool
     }
 
-    struct Item {
+    struct Item: Equatable {
         
         let icon: Data
         let title: String
