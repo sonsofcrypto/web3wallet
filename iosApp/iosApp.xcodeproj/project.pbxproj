@@ -254,8 +254,8 @@
 		1C60C353285724D1003BE25D /* CultProposalsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C295285724D0003BE25D /* CultProposalsViewModel.swift */; };
 		1C60C354285724D1003BE25D /* CultProposalsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C296285724D0003BE25D /* CultProposalsInteractor.swift */; };
 		1C60C355285724D1003BE25D /* CultProposalsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C297285724D0003BE25D /* CultProposalsPresenter.swift */; };
-		1C60C356285724D1003BE25D /* DegenSectionTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C299285724D0003BE25D /* DegenSectionTitleView.swift */; };
-		1C60C357285724D1003BE25D /* DegenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C29A285724D0003BE25D /* DegenCell.swift */; };
+		1C60C356285724D1003BE25D /* DegenSectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C299285724D0003BE25D /* DegenSectionViewCell.swift */; };
+		1C60C357285724D1003BE25D /* DegenViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C29A285724D0003BE25D /* DegenViewCell.swift */; };
 		1C60C358285724D1003BE25D /* DegenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C29B285724D0003BE25D /* DegenView.swift */; };
 		1C60C359285724D1003BE25D /* DegenWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C29C285724D0003BE25D /* DegenWireframe.swift */; };
 		1C60C35A285724D1003BE25D /* DegenInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C29D285724D0003BE25D /* DegenInteractor.swift */; };
@@ -385,6 +385,7 @@
 		1CB3A22128437C860092D667 /* UITableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB3A22028437C860092D667 /* UITableView+Extensions.swift */; };
 		1CB8B0A4288A7E7800024E7C /* NSDirectionalEdgeInsets+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0A3288A7E7800024E7C /* NSDirectionalEdgeInsets+Extensions.swift */; };
 		1CB8B0A6288A824C00024E7C /* Degen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CB8B0A5288A824C00024E7C /* Degen.storyboard */; };
+		1CB8B0A9288AA3B600024E7C /* DgenCellBackgroundSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0A8288AA3B600024E7C /* DgenCellBackgroundSupplementaryView.swift */; };
 		1CBB9CBC286DA9E90007E2D4 /* DashboarView+CollectionCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBB9CBB286DA9E90007E2D4 /* DashboarView+CollectionCards.swift */; };
 		1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */; };
 		1CD3FE20284D5840008312DE /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD3FE1F284D5840008312DE /* FeatureFlags.swift */; };
@@ -753,8 +754,8 @@
 		1C60C295285724D0003BE25D /* CultProposalsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalsViewModel.swift; sourceTree = "<group>"; };
 		1C60C296285724D0003BE25D /* CultProposalsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalsInteractor.swift; sourceTree = "<group>"; };
 		1C60C297285724D0003BE25D /* CultProposalsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalsPresenter.swift; sourceTree = "<group>"; };
-		1C60C299285724D0003BE25D /* DegenSectionTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenSectionTitleView.swift; sourceTree = "<group>"; };
-		1C60C29A285724D0003BE25D /* DegenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenCell.swift; sourceTree = "<group>"; };
+		1C60C299285724D0003BE25D /* DegenSectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenSectionViewCell.swift; sourceTree = "<group>"; };
+		1C60C29A285724D0003BE25D /* DegenViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenViewCell.swift; sourceTree = "<group>"; };
 		1C60C29B285724D0003BE25D /* DegenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenView.swift; sourceTree = "<group>"; };
 		1C60C29C285724D0003BE25D /* DegenWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenWireframe.swift; sourceTree = "<group>"; };
 		1C60C29D285724D0003BE25D /* DegenInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenInteractor.swift; sourceTree = "<group>"; };
@@ -884,6 +885,7 @@
 		1CB3A22028437C860092D667 /* UITableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extensions.swift"; sourceTree = "<group>"; };
 		1CB8B0A3288A7E7800024E7C /* NSDirectionalEdgeInsets+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDirectionalEdgeInsets+Extensions.swift"; sourceTree = "<group>"; };
 		1CB8B0A5288A824C00024E7C /* Degen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Degen.storyboard; sourceTree = "<group>"; };
+		1CB8B0A8288AA3B600024E7C /* DgenCellBackgroundSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DgenCellBackgroundSupplementaryView.swift; sourceTree = "<group>"; };
 		1CBB9CBB286DA9E90007E2D4 /* DashboarView+CollectionCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboarView+CollectionCards.swift"; sourceTree = "<group>"; };
 		1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetActionViewModel.swift; sourceTree = "<group>"; };
 		1CD3FE1F284D5840008312DE /* FeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
@@ -1638,15 +1640,14 @@
 			isa = PBXGroup;
 			children = (
 				1CB8B0A5288A824C00024E7C /* Degen.storyboard */,
-				1C60C29A285724D0003BE25D /* DegenCell.swift */,
 				1C60C29D285724D0003BE25D /* DegenInteractor.swift */,
 				1C60C29F285724D0003BE25D /* DegenPresenter.swift */,
-				1C60C299285724D0003BE25D /* DegenSectionTitleView.swift */,
 				1C60C29B285724D0003BE25D /* DegenView.swift */,
 				1C60C29E285724D0003BE25D /* DegenViewModel.swift */,
 				1C60C29C285724D0003BE25D /* DegenWireframe.swift */,
 				1C60C2A0285724D0003BE25D /* DegenWireframeFactory.swift */,
 				1C60C2A1285724D0003BE25D /* DegenWireframeFactoryAssembler.swift */,
+				1CB8B0A7288AA3A700024E7C /* Cells */,
 			);
 			path = Degen;
 			sourceTree = "<group>";
@@ -1884,6 +1885,16 @@
 				1C60C37A2859BDD9003BE25D /* UIView+Toast+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1CB8B0A7288AA3A700024E7C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				1C60C29A285724D0003BE25D /* DegenViewCell.swift */,
+				1C60C299285724D0003BE25D /* DegenSectionViewCell.swift */,
+				1CB8B0A8288AA3B600024E7C /* DgenCellBackgroundSupplementaryView.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		1CBFDAF628113D180054B276 /* ViewModels */ = {
@@ -2468,7 +2479,7 @@
 				1C60C316285724D1003BE25D /* AccountViewModel.swift in Sources */,
 				D157F7CD27B69B6300578FF8 /* SceneDelegate.swift in Sources */,
 				1CD3FE342851D2A0008312DE /* UIView+Animations+Chat.swift in Sources */,
-				1C60C357285724D1003BE25D /* DegenCell.swift in Sources */,
+				1C60C357285724D1003BE25D /* DegenViewCell.swift in Sources */,
 				1CE66BD22848ED4000AB6ACA /* PresentationStyle.swift in Sources */,
 				1C60C3752857DC71003BE25D /* TokenReceiveActionButton.swift in Sources */,
 				1CB3A1E32840D6B70092D667 /* Array+Extensions.swift in Sources */,
@@ -2653,6 +2664,7 @@
 				1CB3A1EE2840D6B70092D667 /* Formatter+Extensions.swift in Sources */,
 				1C60C2FD285724D0003BE25D /* NFTDetailView+Shared.swift in Sources */,
 				1A4C37AEF66358EA9CA0CA59 /* AccountService.swift in Sources */,
+				1CB8B0A9288AA3B600024E7C /* DgenCellBackgroundSupplementaryView.swift in Sources */,
 				1C60C349285724D1003BE25D /* CultProposalViewModel.swift in Sources */,
 				1C60C38C285B9F71003BE25D /* PriceHistoryService.swift in Sources */,
 				1C60C30F285724D1003BE25D /* AccountChartCell.swift in Sources */,
@@ -2741,7 +2753,7 @@
 				1A4C3AD382E8BADCBE160CBC /* DApp.swift in Sources */,
 				1C60C2C2285724D0003BE25D /* ChatWireframe.swift in Sources */,
 				1CB3A1F32840D6B70092D667 /* UILabel+Extensions.swift in Sources */,
-				1C60C356285724D1003BE25D /* DegenSectionTitleView.swift in Sources */,
+				1C60C356285724D1003BE25D /* DegenSectionViewCell.swift in Sources */,
 				1C60C34F285724D1003BE25D /* CultProposalsWireframe.swift in Sources */,
 				1C60C352285724D1003BE25D /* CultProposalsWireframeFactory.swift in Sources */,
 				1C60C2AC285724D0003BE25D /* SettingsPresenter.swift in Sources */,

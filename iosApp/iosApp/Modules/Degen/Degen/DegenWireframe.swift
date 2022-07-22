@@ -5,8 +5,10 @@
 import UIKit
 
 enum DegenWireframeDestination {
+    
     case swap
     case cult
+    case comingSoon
 }
 
 protocol DegenWireframe {
@@ -17,19 +19,25 @@ protocol DegenWireframe {
 final class DefaultDegenWireframe {
 
     private weak var parent: TabBarController!
-    private let degenService: DegenService
+    private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let cultProposalsWireframeFactory: CultProposalsWireframeFactory
+    private let alertWireframeFactory: AlertWireframeFactory
+    private let degenService: DegenService
 
     private weak var navigationController: NavigationController!
 
     init(
         parent: TabBarController,
+        tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         cultProposalsWireframeFactory: CultProposalsWireframeFactory,
+        alertWireframeFactory: AlertWireframeFactory,
         degenService: DegenService
     ) {
         
         self.parent = parent
+        self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.cultProposalsWireframeFactory = cultProposalsWireframeFactory
+        self.alertWireframeFactory = alertWireframeFactory
         self.degenService = degenService
     }
 }
@@ -47,11 +55,24 @@ extension DefaultDegenWireframe: DegenWireframe {
 
         switch destination {
         case .swap:
-            break
+            tokenSwapWireframeFactory.makeWireframe(
+                presentingIn: navigationController,
+                context: .init(
+                    presentationStyle: .present,
+                    tokenFrom: nil,
+                    tokenTo: nil
+                )
+            ).present()
         case .cult:
             cultProposalsWireframeFactory.makeWireframe(
                 navigationController
             ).present()
+        case .comingSoon:
+            let wireframe = alertWireframeFactory.makeWireframe(
+                navigationController,
+                context: .underConstructionAlert()
+            )
+            wireframe.present()
         }
     }
 }

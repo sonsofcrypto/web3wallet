@@ -11,14 +11,20 @@ protocol DegenWireframeFactory {
 
 final class DefaultDegenWireframeFactory {
 
+    private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let cultProposalsWireframeFactory: CultProposalsWireframeFactory
+    private let alertWireframeFactory: AlertWireframeFactory
     private let degenService: DegenService
 
     init(
+        tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         cultProposalsWireframeFactory: CultProposalsWireframeFactory,
+        alertWireframeFactory: AlertWireframeFactory,
         degenService: DegenService
     ) {
+        self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.cultProposalsWireframeFactory = cultProposalsWireframeFactory
+        self.alertWireframeFactory = alertWireframeFactory
         self.degenService = degenService
     }
 }
@@ -29,7 +35,9 @@ extension DefaultDegenWireframeFactory: DegenWireframeFactory {
         
         DefaultDegenWireframe(
             parent: parent,
+            tokenSwapWireframeFactory: tokenSwapWireframeFactory,
             cultProposalsWireframeFactory: cultProposalsWireframeFactory,
+            alertWireframeFactory: alertWireframeFactory,
             degenService: degenService
         )
     }

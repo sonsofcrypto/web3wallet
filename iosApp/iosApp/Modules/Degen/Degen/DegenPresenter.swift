@@ -3,9 +3,11 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import UIKit
 
 enum DegenPresenterEvent {
     case didSelectCategory(idx: Int)
+    case comingSoon
 }
 
 protocol DegenPresenter {
@@ -13,8 +15,6 @@ protocol DegenPresenter {
     func present()
     func handle(_ event: DegenPresenterEvent)
 }
-
-// MARK: - DefaultDegenPresenter
 
 final class DefaultDegenPresenter {
 
@@ -34,23 +34,27 @@ final class DefaultDegenPresenter {
     }
 }
 
-// MARK: DegenPresenter
-
 extension DefaultDegenPresenter: DegenPresenter {
 
     func present() {
-        view?.update(with: viewModel(categories: interactor.categories()))
+        
+        view?.update(
+            with: viewModel()
+        )
     }
 
     func handle(_ event: DegenPresenterEvent) {
+        
         switch event {
+            
         case let .didSelectCategory(idx):
             handleDidSelectCategory(at: idx)
+            
+        case .comingSoon:
+            wireframe.navigate(to: .comingSoon)
         }
     }
 }
-
-// MARK: - Event handling
 
 private extension DefaultDegenPresenter {
 
@@ -58,7 +62,7 @@ private extension DefaultDegenPresenter {
         switch idx {
         case 0:
             wireframe.navigate(to: .swap)
-        case 5:
+        case 1:
             wireframe.navigate(to: .cult)
         default:
             print("DefaultDegenPresenter unknown category index", idx)
@@ -66,16 +70,99 @@ private extension DefaultDegenPresenter {
     }
 }
 
-// MARK: - WalletsViewModel utilities
-
 private extension DefaultDegenPresenter {
 
-    func viewModel(categories: [DAppCategory]) -> DegenViewModel {
+    func viewModel() -> DegenViewModel {
+        
         .init(
-            sectionTitle: Localized("degen.section.title"),
-            items: categories.map {
-                .init(title: $0.title, subtitle: $0.subTitle)
-            }
+            sections: [
+                .header(
+                    header: .init(
+                        title: Localized("degen.section.title"),
+                        isEnabled: true
+                    )
+                ),
+                .group(
+                    items: makeItems(
+                        from: interactor.categoriesActive,
+                        isEnabled: true
+                    )
+                ),
+                .header(
+                    header: .init(
+                        title: Localized("comingSoon"),
+                        isEnabled: false
+                    )
+                ),
+                .group(
+                    items: makeItems(
+                        from: interactor.categoriesInactive,
+                        isEnabled: false
+                    )
+                )
+            ]
         )
+    }
+    
+    func makeItems(
+        from categories: [DAppCategory],
+        isEnabled: Bool
+    ) -> [DegenViewModel.Item] {
+        
+        categories.compactMap {
+            
+            .init(
+                icon: makeIcon(from: $0),
+                title: $0.title,
+                subtitle: $0.subTitle,
+                isEnabled: isEnabled
+            )
+        }
+    }
+    
+    func makeIcon(from category: DAppCategory) -> Data {
+        
+        let config = UIImage.SymbolConfiguration(
+            paletteColors: [
+                Theme.colour.labelPrimary,
+                .clear
+            ]
+        )
+
+        switch category {
+        case .swap:
+            return UIImage(named: "degen-trade-icon")!.pngData()!
+        case .cult:
+            return UIImage(named: "degen-cult-icon")!.pngData()!
+        case .stakeYield:
+            return UIImage(systemName: "s.circle.fill")!
+                .applyingSymbolConfiguration(config)!
+                .pngData()!
+        case .landBorrow:
+            return UIImage(systemName: "l.circle.fill")!
+                .applyingSymbolConfiguration(config)!
+                .pngData()!
+
+        case .derivative:
+            return UIImage(systemName: "d.circle.fill")!
+                .applyingSymbolConfiguration(config)!
+                .pngData()!
+
+        case .bridge:
+            return UIImage(systemName: "b.circle.fill")!
+                .applyingSymbolConfiguration(config)!
+                .pngData()!
+
+        case .mixer:
+            return UIImage(systemName: "m.circle.fill")!
+                .applyingSymbolConfiguration(config)!
+                .pngData()!
+
+        case .governance:
+            return UIImage(systemName: "g.circle.fill")!
+                .applyingSymbolConfiguration(config)!
+                .pngData()!
+
+        }
     }
 }

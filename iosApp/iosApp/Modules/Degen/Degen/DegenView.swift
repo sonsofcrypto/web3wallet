@@ -51,8 +51,27 @@ extension DegenViewController: DegenView {
 
 extension DegenViewController: UICollectionViewDataSource {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel?.items.count ?? 0
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        
+        viewModel?.sections.count ?? 0
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        
+        guard let section = viewModel?.sections[section] else {
+            
+            return 0
+        }
+        
+        switch section {
+        case .header:
+            return 1
+        case let .group(items):
+            return items.count
+        }
     }
 
     func collectionView(
@@ -60,64 +79,46 @@ extension DegenViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeue(DegenCell.self, for: indexPath)
-        cell.update(with: viewModel?.items[indexPath.row])
-        return cell
-    }
-
-    public func collectionView(
-        _ collectionView: UICollectionView,
-        viewForSupplementaryElementOfKind kind: String,
-        at indexPath: IndexPath
-    ) -> UICollectionReusableView {
+        guard let section = viewModel?.sections[indexPath.section] else { fatalError() }
         
-        if kind == UICollectionView.elementKindSectionHeader {
-            let supplementary = collectionView.dequeue(
-                DegenSectionTitleView.self,
-                for: indexPath,
-                kind: kind
-            )
-            supplementary.update(with: viewModel)
-            return supplementary
+        switch section {
+            
+        case let .header(header):
+            let cell = collectionView.dequeue(DegenSectionViewCell.self, for: indexPath)
+            cell.update(with: header)
+            return cell
+            
+        case let .group(items):
+            let item = items[indexPath.item]
+            let cell = collectionView.dequeue(DegenViewCell.self, for: indexPath)
+            cell.update(with: item)
+            return cell
         }
-
-        fatalError("Unexpected supplementary \(kind) \(indexPath)")
     }
 }
 
-//extension DegenViewController: UICollectionViewDelegateFlowLayout {
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(
-//            width: view.bounds.width - Theme.constant.padding * 2,
-//            height: Constant.cellHeight
-//        )
-//    }
-//
-//    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        return CGSize(
-//            width: view.bounds.width - Theme.constant.padding * 2,
-//            height: Constant.headerHeight
-//        )
-//    }
-//}
-
 extension DegenViewController: UICollectionViewDelegate {
 
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presenter.handle(.didSelectCategory(idx: indexPath.item))
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+
+        guard let section = viewModel?.sections[indexPath.section] else { return }
+        
+        guard case let DegenViewModel.Section.group(items) = section else { return }
+        
+        if items[indexPath.row].isEnabled {
+            presenter.handle(.didSelectCategory(idx: indexPath.item))
+        } else {
+            presenter.handle(.comingSoon)
+        }
     }
 }
 
 extension DegenViewController {
     
     func configureUI() {
-        
-//        navigationItem.backButtonTitle = ""
-//
-//        var insets = collectionView.contentInset
-//        insets.bottom += Theme.constant.padding
-//        collectionView.contentInset = insets
         
         collectionView.setCollectionViewLayout(
             makeCompositionalLayout(),
@@ -136,12 +137,38 @@ extension DegenViewController {
     
     func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
         
-        UICollectionViewCompositionalLayout(
-            section: makeCollectionLayoutSection()
+        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, environment in
+            
+            guard let self = self else { return nil }
+            
+            guard let viewModel = self.viewModel else { return nil }
+            
+            switch viewModel.sections[sectionIndex] {
+                
+            case .header:
+                return self.makeCollectionLayoutSection(
+                    withBackgroundDecoratorView: false,
+                    sectionIndex: sectionIndex
+                )
+
+            case .group:
+                return self.makeCollectionLayoutSection(
+                    withBackgroundDecoratorView: true,
+                    sectionIndex: sectionIndex
+                )
+            }
+        }
+        layout.register(
+            DgenCellBackgroundSupplementaryView.self,
+            forDecorationViewOfKind: "background"
         )
+        return layout
     }
-    
-    func makeCollectionLayoutSection() -> NSCollectionLayoutSection {
+  
+    func makeCollectionLayoutSection(
+        withBackgroundDecoratorView addBackgroundDecorator: Bool,
+        sectionIndex: Int
+    ) -> NSCollectionLayoutSection {
         
         // Item
         let itemSize = NSCollectionLayoutSize(
@@ -163,8 +190,19 @@ extension DegenViewController {
         
         // Section
         let section = NSCollectionLayoutSection(group: outerGroup)
-        section.contentInsets = .paddingDefault
-        section.interGroupSpacing = Theme.constant.padding
+        section.contentInsets = sectionIndex.isMultiple(of: 2) ?
+            .init(
+                top: sectionIndex == 0 ? Theme.constant.padding : 0,
+                leading: Theme.constant.padding,
+                bottom: 0,
+                trailing: Theme.constant.padding
+            ) :
+            .init(
+                top: Theme.constant.padding,
+                leading: Theme.constant.padding,
+                bottom: sectionIndex == 0 ? 0 : Theme.constant.padding,
+                trailing: Theme.constant.padding
+            )
         
         let headerItemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
@@ -176,6 +214,15 @@ extension DegenViewController {
             alignment: .top
         )
         section.boundarySupplementaryItems = [headerItem]
+        
+        if addBackgroundDecorator {
+
+            let backgroundItem = NSCollectionLayoutDecorationItem.background(
+                elementKind: "background"
+            )
+            backgroundItem.contentInsets = .paddingDefault
+            section.decorationItems = [backgroundItem]
+        }
         
         return section
     }

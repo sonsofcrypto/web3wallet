@@ -9,7 +9,9 @@ final class DegenWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> DegenWireframeFactory in
             
             DefaultDegenWireframeFactory(
+                tokenSwapWireframeFactory: resolver.resolve(),
                 cultProposalsWireframeFactory: resolver.resolve(),
+                alertWireframeFactory: resolver.resolve(),
                 degenService: resolver.resolve()
             )
         }

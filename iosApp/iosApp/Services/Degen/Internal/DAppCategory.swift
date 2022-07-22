@@ -5,17 +5,21 @@
 import Foundation
 
 enum DAppCategory {
-    case amm
+    case swap
+    case cult
     case stakeYield
     case landBorrow
     case derivative
     case bridge
-    case cult
     case mixer
     case governance
 
-    static func all() -> [DAppCategory] {
-        [amm, stakeYield, landBorrow, derivative, bridge, cult, mixer, governance]
+    static var active: [DAppCategory] {
+        [.swap, .cult]
+    }
+    
+    static var inactive: [DAppCategory] {
+        [.stakeYield, .landBorrow, .derivative, .bridge, .mixer, .governance]
     }
 }
 
