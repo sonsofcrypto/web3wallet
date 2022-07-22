@@ -21,46 +21,21 @@ final class CultProposalNewSupplementaryView: UICollectionReusableView {
     
     func configureUI() {
         
+        backgroundColor = Theme.colour.candleGreen
+        layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        
         let label = UILabel()
-        label.apply(style: .title3, weight: .bold)
+        label.apply(style: .callout, weight: .bold)
+        label.text = "NEW"
         self.addSubview(label)
         self.label = label
         label.addConstraints(
             [
-                .layout(
-                    anchor: .trailingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
-                ),
-                .layout(
-                    anchor: .topAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
-                )
+                .layout(anchor: .topAnchor, constant: .equalTo(constant: 4)),
+                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: 4)),
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 8)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 8))
             ]
         )
-        layoutConstraintBottom = bottomAnchor.constraint(
-            equalTo: label.bottomAnchor
-        )
-        layoutConstraintBottom.isActive = true
-        layoutConstraintLeading = label.leadingAnchor.constraint(
-            equalTo: leadingAnchor,
-            constant: Theme.constant.padding
-        )
-        layoutConstraintLeading.isActive = true
-    }
-}
-
-extension CultProposalNewSupplementaryView {
-
-    func update(with viewModel: CultProposalsViewModel.Section) {
-        
-        label.text = viewModel.title
-        
-        layoutConstraintLeading.constant = viewModel.horizontalScrolling ?
-        Theme.constant.padding :
-        Theme.constant.padding + Theme.constant.padding.half
-        
-        layoutConstraintBottom.constant = viewModel.horizontalScrolling ?
-        0 :
-        Theme.constant.padding.half
     }
 }

@@ -5,7 +5,10 @@
 import Foundation
 
 enum CultProposalsPresenterEvent {
-    case didSelectProposal(id: String)
+    
+    case approveProposal(id: String)
+    case rejectProposal(id: String)
+    case selectProposal(id: String)
 }
 
 protocol CultProposalsPresenter {
@@ -46,13 +49,18 @@ extension DefaultCultProposalsPresenter: CultProposalsPresenter {
 
     func handle(_ event: CultProposalsPresenterEvent) {
         
-//        switch event {
-//
-//        case let .didSelectItemAt(idx):
-//            wireframe.navigate(
-//                to: .proposal(proposal: interactor.closedProposals()[idx])
-//            )
-//        }
+        switch event {
+
+        case let .selectProposal(id):
+            
+            guard let proposal = findProposal(with: id) else { return }
+            
+            wireframe.navigate(to: .proposal(proposal: proposal))
+            
+        case .approveProposal, .rejectProposal:
+            
+            wireframe.navigate(to: .comingSoon)
+        }
     }
 }
 
@@ -60,8 +68,9 @@ private extension DefaultCultProposalsPresenter {
 
     func viewModel() -> CultProposalsViewModel {
         
-        let pendingProposals = interactor.pendingProposals
-        let closedProposals = interactor.closedProposals
+        pendingProposals = interactor.pendingProposals
+        closedProposals = interactor.closedProposals
+        
         return .loaded(
             sections: [
                 .init(
@@ -95,7 +104,22 @@ private extension DefaultCultProposalsPresenter {
             ),
             approveButtonTitle: Localized("approve"),
             rejectButtonTitle: Localized("reject"),
+            isNew: cultProposal.isNew,
             date: cultProposal.endDate
         )
+    }
+    
+    func findProposal(with id: String) -> CultProposal? {
+     
+        if let proposal = closedProposals.first(where: { $0.id.stringValue == id }) {
+            
+            return proposal
+        } else if let proposal = pendingProposals.first(where: { $0.id.stringValue == id }) {
+            
+            return proposal
+        } else {
+            
+            return nil
+        }
     }
 }

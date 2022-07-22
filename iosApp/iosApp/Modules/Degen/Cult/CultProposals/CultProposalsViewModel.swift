@@ -27,6 +27,7 @@ extension CultProposalsViewModel {
         let rejected: Vote
         let approveButtonTitle: String
         let rejectButtonTitle: String
+        let isNew: Bool
         let date: Date
         
         struct Vote {

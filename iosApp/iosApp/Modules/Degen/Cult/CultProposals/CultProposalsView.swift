@@ -64,7 +64,7 @@ extension CultProposalsViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeue(CultProposalCell.self, for: indexPath)
         guard let section = viewModel?.sections[indexPath.section] else { fatalError() }
         let viewModel = section.items[indexPath.item]
-        cell.update(with: viewModel)
+        cell.update(with: viewModel, handler: makeCultProposalCellHandler())
         return cell
     }
     
@@ -93,10 +93,12 @@ extension CultProposalsViewController: UICollectionViewDataSource {
         case "new-banner":
             let bannerView = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
-                withReuseIdentifier: "NewBannerSupplementaryView",
+                withReuseIdentifier: String(describing: CultProposalNewSupplementaryView.self),
                 for: indexPath
             )
-            bannerView.isHidden = indexPath.row % 5 != 0 // show on every 5th item
+            guard let section = viewModel?.sections[indexPath.section] else { fatalError() }
+            let item = section.items[indexPath.item]
+            bannerView.isHidden = !item.isNew
             return bannerView
             
         default:
@@ -115,7 +117,7 @@ extension CultProposalsViewController: UICollectionViewDelegate {
         
         guard let section = viewModel?.sections[indexPath.section] else { return }
         let item = section.items[indexPath.row]
-        presenter.handle(.didSelectProposal(id: item.id))
+        presenter.handle(.selectProposal(id: item.id))
     }
 }
 
@@ -131,6 +133,11 @@ private extension CultProposalsViewController {
             CultProposalHeaderSupplementaryView.self,
             forSupplementaryViewOfKind: "header",
             withReuseIdentifier: String(describing: CultProposalHeaderSupplementaryView.self)
+        )
+        collectionView.register(
+            CultProposalNewSupplementaryView.self,
+            forSupplementaryViewOfKind: "new-banner",
+            withReuseIdentifier: String(describing: CultProposalNewSupplementaryView.self)
         )
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -158,12 +165,33 @@ private extension CultProposalsViewController {
         
         let padding = Theme.constant.padding
 
+        let layoutSize = NSCollectionLayoutSize(
+            widthDimension: .estimated(10),
+            heightDimension: .absolute(Theme.constant.padding * 2)
+        )
+        let containerAnchor = NSCollectionLayoutAnchor(
+            edges: [.top, .trailing],
+            absoluteOffset: CGPoint(
+                x: -Theme.constant.padding,
+                y: -Theme.constant.padding.half
+            )
+        )
+        let supplementaryItem = NSCollectionLayoutSupplementaryItem(
+            layoutSize: layoutSize,
+            elementKind: "new-banner",
+            containerAnchor: containerAnchor
+        )
+        supplementaryItem.zIndex = 0
+
         // Item
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(1)
         )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let item = NSCollectionLayoutItem(
+            layoutSize: itemSize,
+            supplementaryItems: [supplementaryItem]
+        )
         item.contentInsets = .init(
             top: padding.half,
             leading: isHorizontalScrolling ? 0 : padding.half,
@@ -217,4 +245,32 @@ private extension CultProposalsViewController {
     }
 }
 
- 
+private extension CultProposalsViewController {
+
+    func makeCultProposalCellHandler() -> CultProposalCell.Handler {
+        
+        .init(
+            approveProposal: makeApproveProposal(),
+            rejectProposal: makeRejectProposal()
+        )
+    }
+    
+    func makeApproveProposal() -> (String) -> Void {
+        
+        {
+            [weak self] id in
+            guard let self = self else { return }
+            self.presenter.handle(.approveProposal(id: id))
+        }
+    }
+    
+    func makeRejectProposal() -> (String) -> Void {
+        
+        {
+            [weak self] id in
+            guard let self = self else { return }
+            self.presenter.handle(.rejectProposal(id: id))
+        }
+    }
+
+}

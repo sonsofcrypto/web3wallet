@@ -11,25 +11,30 @@ protocol CultProposalsWireframeFactory {
 
 final class DefaultCultProposalsWireframeFactory {
 
-    private let service: CultService
-    private let factory: CultProposalWireframeFactory
+    private let cultProposalWireframeFactory: CultProposalWireframeFactory
+    private let alertWireframeFactory: AlertWireframeFactory
+    private let cultService: CultService
 
     init(
-        service: CultService,
-        cultProposalWireframeFactory: CultProposalWireframeFactory
+        cultProposalWireframeFactory: CultProposalWireframeFactory,
+        alertWireframeFactory: AlertWireframeFactory,
+        cultService: CultService
     ) {
-        self.service = service
-        self.factory = cultProposalWireframeFactory
+        self.cultProposalWireframeFactory = cultProposalWireframeFactory
+        self.alertWireframeFactory = alertWireframeFactory
+        self.cultService = cultService
     }
 }
 
 extension DefaultCultProposalsWireframeFactory: CultProposalsWireframeFactory {
 
     func makeWireframe(_ parent: UIViewController) -> CultProposalsWireframe {
+        
         DefaultCultProposalsWireframe(
-            interactor: DefaultCultProposalsInteractor(service),
             parent: parent,
-            factory: factory
+            cultProposalWireframeFactory: cultProposalWireframeFactory,
+            alertWireframeFactory: alertWireframeFactory,
+            cultService: cultService
         )
     }
 }

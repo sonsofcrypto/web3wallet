@@ -25,11 +25,12 @@ struct CultProposal {
     let cultReward: Float
     let rewardDistributions: Float
     let wallet: String
+    let isNew: Bool
 }
 
 extension CultProposal {
 
-    static func mock(with title: String, id: Int) -> CultProposal {
+    static func mock(with title: String, id: Int, isNew: Bool = false) -> CultProposal {
         .init(
             id: id,
             title: title,
@@ -53,7 +54,8 @@ extension CultProposal {
             audits: "Not done yet, this is presale, of course quality audits will be done. But here is link to contract: https://github.com/sonsofcrypto/w3t",
             cultReward: 1,
             rewardDistributions: 6.25,
-            wallet: "0x9aA80dCeD760224d59BEFe358c7C66C45e3BEA1C"
+            wallet: "0x9aA80dCeD760224d59BEFe358c7C66C45e3BEA1C",
+            isNew: isNew
         )
     }
 
@@ -70,9 +72,9 @@ extension CultProposal {
     static func pendingProposals() -> [CultProposal] {
         
         [
-            mock(with: "Pending 1", id: 41),
+            mock(with: "Pending 1", id: 41, isNew: true),
             mock(with: "Pending 2", id: 42),
-            mock(with: "Pending 3", id: 43)
+            mock(with: "Pending 3", id: 43, isNew: true)
         ]
     }
 }

@@ -17,6 +17,15 @@ final class CultProposalCell: CollectionViewCell {
     private var timer: Timer? = nil
     private var date: Date = .distantPast
     
+    private var viewModel: CultProposalsViewModel.Item!
+    private var handler: Handler!
+    
+    struct Handler {
+        
+        let approveProposal: (String) -> Void
+        let rejectProposal: (String) -> Void
+    }
+    
     override func awakeFromNib() {
         
         super.awakeFromNib()
@@ -26,10 +35,17 @@ final class CultProposalCell: CollectionViewCell {
         chevronImageView.tintColor = Theme.colour.labelPrimary
         
         approveButton.style = .primary
+        approveButton.addTarget(self, action: #selector(approveProposal), for: .touchUpInside)
         rejectButton.style = .primary
+        rejectButton.addTarget(self, action: #selector(rejectProposal), for: .touchUpInside)
     }
     
-    func update(with viewModel: CultProposalsViewModel.Item) {
+    func update(
+        with viewModel: CultProposalsViewModel.Item,
+        handler: Handler
+    ) {
+        self.viewModel = viewModel
+        self.handler = handler
         
         titleLabel.text = viewModel.title
         approvedVoteView.update(
@@ -81,5 +97,15 @@ private extension CultProposalCell  {
         statusLabel.text = String(
             format: "%02d:%02d:%02d:%02d", days, hours, minutes, seconds
         )
+    }
+    
+    @objc func approveProposal() {
+        
+        handler.approveProposal(viewModel.id)
+    }
+
+    @objc func rejectProposal() {
+        
+        handler.rejectProposal(viewModel.id)
     }
 }
