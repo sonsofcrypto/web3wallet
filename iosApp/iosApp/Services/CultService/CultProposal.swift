@@ -5,6 +5,7 @@
 import Foundation
 
 struct CultProposal {
+    
     let title: String
     let id: Int
     let approved: Float
