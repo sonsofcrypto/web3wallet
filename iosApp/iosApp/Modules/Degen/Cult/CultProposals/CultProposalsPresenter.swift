@@ -5,7 +5,7 @@
 import Foundation
 
 enum CultProposalsPresenterEvent {
-    case didSelectItemAt(idx: Int)
+    case didSelectProposal(id: String)
 }
 
 protocol CultProposalsPresenter {
@@ -14,14 +14,15 @@ protocol CultProposalsPresenter {
     func handle(_ event: CultProposalsPresenterEvent)
 }
 
-// MARK: - DefaultCultProposalsPresenter
-
-class DefaultCultProposalsPresenter {
+final class DefaultCultProposalsPresenter {
 
     private let interactor: CultProposalsInteractor
     private let wireframe: CultProposalsWireframe
 
     private weak var view: CultProposalsView?
+    
+    private var pendingProposals = [CultProposal]()
+    private var closedProposals = [CultProposal]()
 
     init(
         view: CultProposalsView,
@@ -34,50 +35,66 @@ class DefaultCultProposalsPresenter {
     }
 }
 
-// MARK: TemplatePresenter
-
 extension DefaultCultProposalsPresenter: CultProposalsPresenter {
 
     func present() {
+        
         view?.update(
-            with: viewModel(from: interactor.closedProposals())
+            with: viewModel()
         )
     }
 
     func handle(_ event: CultProposalsPresenterEvent) {
-        switch event {
-        case let .didSelectItemAt(idx):
-            wireframe.navigate(
-                to: .proposal(proposal: interactor.closedProposals()[idx])
-            )
-        }
+        
+//        switch event {
+//
+//        case let .didSelectItemAt(idx):
+//            wireframe.navigate(
+//                to: .proposal(proposal: interactor.closedProposals()[idx])
+//            )
+//        }
     }
 }
 
-// MARK: - Event handling
-
 private extension DefaultCultProposalsPresenter {
 
-}
-
-// MARK: - WalletsViewModel utilities
-
-private extension DefaultCultProposalsPresenter {
-
-    func viewModel(from cultProposals: [CultProposal]) -> CultProposalsViewModel {
-        .loaded(
-            items: cultProposals.map { viewModel(from: $0) },
-            selectedIdx: 0
+    func viewModel() -> CultProposalsViewModel {
+        
+        let pendingProposals = interactor.pendingProposals
+        let closedProposals = interactor.closedProposals
+        return .loaded(
+            sections: [
+                .init(
+                    title: "(\(pendingProposals.count)) " + Localized("cult.proposals.pending.title"),
+                    horizontalScrolling: true,
+                    items: pendingProposals.compactMap { viewModel(from: $0) }
+                ),
+                .init(
+                    title: "(\(closedProposals.count)) " + Localized("cult.proposals.closed.title"),
+                    horizontalScrolling: false,
+                    items: closedProposals.compactMap { viewModel(from: $0) }
+                )
+            ]
         )
     }
 
     func viewModel(from cultProposal: CultProposal) -> CultProposalsViewModel.Item {
+        
         let approved = Float.random(in: 0.0...100.0) / 100.0
 
-        return CultProposalsViewModel.Item(
+        return .init(
+            id: cultProposal.id.stringValue,
             title: String(format: "Proposal: %d %@", cultProposal.id, cultProposal.title),
-            approved: approved,
-            rejected: 1 - approved,
+            approved: .init(
+                name: Localized("approved"),
+                value: approved
+            ),
+            rejected: .init(
+                name: Localized("rejected"),
+                value: 1 - approved
+            ),
+            approveButtonTitle: Localized("approve"),
+            rejectButtonTitle: Localized("reject"),
             date: cultProposal.endDate
         )
     }

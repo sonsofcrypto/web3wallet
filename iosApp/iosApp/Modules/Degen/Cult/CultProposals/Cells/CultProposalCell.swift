@@ -4,43 +4,53 @@
 
 import UIKit
 
-class CultProposalCell: CollectionViewCell {
+final class CultProposalCell: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var approvedVoteView: CultProposalVoteView!
     @IBOutlet weak var rejectedVoteView: CultProposalVoteView!
     @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var chevronImageView: UIImageView!
+    @IBOutlet weak var approveButton: Button!
+    @IBOutlet weak var rejectButton: Button!
 
     private var timer: Timer? = nil
     private var date: Date = .distantPast
     
     override func awakeFromNib() {
+        
         super.awakeFromNib()
-        titleLabel.textColor = Theme.colour.labelPrimary
-        titleLabel.font = Theme.font.callout
-        titleLabel.layer.shadowColor = Theme.colour.fillSecondary.cgColor
-        titleLabel.layer.shadowOffset = .zero
-        titleLabel.layer.shadowRadius = Theme.constant.cornerRadiusSmall.half
-        titleLabel.layer.shadowOpacity = 1
+
+        titleLabel.apply(style: .body, weight: .bold)
+        
+        chevronImageView.tintColor = Theme.colour.labelPrimary
+        
+        approveButton.style = .primary
+        rejectButton.style = .primary
     }
     
-    func update(with viewModel: CultProposalsViewModel.Item?) {
-        titleLabel.text = viewModel?.title
+    func update(with viewModel: CultProposalsViewModel.Item) {
+        
+        titleLabel.text = viewModel.title
         approvedVoteView.update(
-            title: "Approved",
-            pct: viewModel?.approved ?? 0
+            viewModel: viewModel.approved
         )
         rejectedVoteView.update(
-            title: "Rejected",
-            pct: viewModel?.rejected ?? 0
+            viewModel: viewModel.rejected
         )
         statusLabel.text = "Proposal status"
-        date = viewModel?.date ?? .distantPast
+        date = viewModel.date
+        
+        approveButton.setTitle(viewModel.approveButtonTitle, for: .normal)
+        rejectButton.setTitle(viewModel.rejectButtonTitle, for: .normal)
+        
         updateDate()
     }
 
     override func didMoveToWindow() {
+        
         super.didMoveToWindow()
+        
         if let _ = window, timer == nil {
             let timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
                 self?.updateDate()
@@ -52,8 +62,12 @@ class CultProposalCell: CollectionViewCell {
             timer = nil
         }
     }
+}
 
-    private func updateDate() {
+private extension CultProposalCell  {
+    
+    func updateDate() {
+        
         let comps = Calendar.current.dateComponents(
             [.day, .hour, .minute, .second],
             from: Date(),
@@ -63,6 +77,7 @@ class CultProposalCell: CollectionViewCell {
         let hours = comps.hour ?? 0
         let minutes = comps.minute ?? 0
         let seconds = comps.second ?? 0
+        
         statusLabel.text = String(
             format: "%02d:%02d:%02d:%02d", days, hours, minutes, seconds
         )

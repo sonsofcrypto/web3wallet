@@ -31,6 +31,10 @@
 "medium" = "Average";
 "high" = "Fast";
 "comingSoon" = "Coming Soon";
+"approved" = "Approved";
+"approve" = "Approve";
+"rejected" = "Rejected";
+"reject" = "Reject";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";
@@ -220,3 +224,7 @@
 "confirmation.swap.confirm" = "Authenticate & Swap";
 "confirmation.send.title" = "Confirm Transaction";
 "confirmation.send.confirm" = "Authenticate & Send";
+
+"cult.proposals.title" = "Cult.DAO Proposals";
+"cult.proposals.pending.title" = "Pending Proposals";
+"cult.proposals.closed.title" = "Closed Proposals";

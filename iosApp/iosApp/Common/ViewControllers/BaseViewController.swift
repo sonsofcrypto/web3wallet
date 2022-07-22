@@ -16,4 +16,11 @@ class BaseViewController: UIViewController {
         
         edgesForExtendedLayout = []
     }
+    
+    deinit {
+        
+        #if DEBUG
+        print("[DEBUG] deinit \(String(describing: self))")
+        #endif
+    }
 }

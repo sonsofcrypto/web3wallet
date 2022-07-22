@@ -9,9 +9,7 @@ protocol CultProposalsWireframeFactory {
     func makeWireframe(_ parent: UIViewController) -> CultProposalsWireframe
 }
 
-// MARK: - DefaultTemplateWireframeFactory
-
-class DefaultCultProposalsWireframeFactory {
+final class DefaultCultProposalsWireframeFactory {
 
     private let service: CultService
     private let factory: CultProposalWireframeFactory
@@ -24,8 +22,6 @@ class DefaultCultProposalsWireframeFactory {
         self.factory = cultProposalWireframeFactory
     }
 }
-
-// MARK: - TemplateWireframeFactory
 
 extension DefaultCultProposalsWireframeFactory: CultProposalsWireframeFactory {
 

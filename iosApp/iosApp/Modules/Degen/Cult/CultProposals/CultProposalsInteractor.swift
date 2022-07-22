@@ -6,30 +6,29 @@ import Foundation
 
 protocol CultProposalsInteractor: AnyObject {
 
-    func closedProposals() -> [CultProposal]
-    func pendingProposals() -> [CultProposal]
+    var closedProposals: [CultProposal] { get }
+    var pendingProposals: [CultProposal] { get }
 }
 
-// MARK: - DefaultCultProposalsInteractor
+final class DefaultCultProposalsInteractor {
 
-class DefaultCultProposalsInteractor {
-
-    private var cultService: CultService
+    private let cultService: CultService
 
     init(_ cultService: CultService) {
+        
         self.cultService = cultService
     }
 }
 
-// MARK: - CultProposalsInteractor
-
 extension DefaultCultProposalsInteractor: CultProposalsInteractor {
 
-    func closedProposals() -> [CultProposal] {
-        return cultService.closedProposals
+    var closedProposals: [CultProposal] {
+        
+        cultService.closedProposals
     }
 
-    func pendingProposals() -> [CultProposal] {
-        return cultService.pendingProposals
+    var pendingProposals: [CultProposal] {
+        
+        cultService.pendingProposals
     }
 }

@@ -13,9 +13,7 @@ protocol CultProposalsWireframe {
     func navigate(to destination: CultProposalsWireframeDestination)
 }
 
-// MARK: - DefaultCultProposalsWireframe
-
-class DefaultCultProposalsWireframe {
+final class DefaultCultProposalsWireframe {
 
     private let interactor: CultProposalsInteractor
     private let factory: CultProposalWireframeFactory
@@ -33,8 +31,6 @@ class DefaultCultProposalsWireframe {
         self.factory = factory
     }
 }
-
-// MARK: - CultProposalsWireframe
 
 extension DefaultCultProposalsWireframe: CultProposalsWireframe {
 
@@ -59,7 +55,9 @@ extension DefaultCultProposalsWireframe: CultProposalsWireframe {
 extension DefaultCultProposalsWireframe {
 
     private func wireUp() -> UIViewController {
-        let vc: CultProposalsViewController = UIStoryboard(.main).instantiate()
+        let vc: CultProposalsViewController = UIStoryboard(
+            .cultProposals
+        ).instantiate()
         let presenter = DefaultCultProposalsPresenter(
             view: vc,
             interactor: interactor,
