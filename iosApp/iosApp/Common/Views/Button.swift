@@ -10,10 +10,6 @@ class Button: UIButton {
         didSet { configure(for: style) }
     }
 
-//    override var isHighlighted: Bool {
-//        didSet { layer.applyHighlighted(isHighlighted) }
-//    }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure(for: style)
@@ -24,13 +20,17 @@ class Button: UIButton {
         configure(for: style)
     }
     
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        layer.applyShadowPath(bounds)
-//    }
-
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        configure(for: style)
+    }
+    
     override var intrinsicContentSize: CGSize {
+        
         var size = super.intrinsicContentSize
+        
         switch style {
         case .primary:
             size.height = Theme.constant.buttonPrimaryHeight
@@ -39,6 +39,7 @@ class Button: UIButton {
         case .dashboardAction:
             size.height = Theme.constant.buttonDashboardActionHeight
         }
+        
         return size
     }
 }
@@ -51,8 +52,6 @@ extension Button {
         case dashboardAction(leftImage: UIImage?)
     }
 }
-
-// MARK: - Constants
 
 private extension Button {
     
@@ -202,7 +201,7 @@ final class VerticalButton: Button {
         imageView.center.x = bounds.width / 2
         imageView.center.y = bounds.height * 0.3333
 
-        // TODO: Remove this hack. Itroduced coz color and font were on being
+        // TODO: Remove this hack. Introduced coz color and font were on being
         // set when setting from `AccountHeaderCell`
         label.apply(style: .footnote)
         label.textAlignment = .center

@@ -7,29 +7,42 @@ import UIKit
 final class ButtonsSheetViewCell: UICollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
-}
+    
+    private var viewModel: ButtonSheetViewModel.Button?
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
 
-// MARK: - ButtonsSheetViewModel
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        updateButtonStyle()
+    }
+}
 
 extension ButtonsSheetViewCell {
     
     func update(with viewModel: ButtonSheetViewModel.Button?) -> ButtonsSheetViewCell {
         
+        self.viewModel = viewModel
+        
         titleLabel.text = viewModel?.title ?? ""
         
-        switch viewModel?.type {
-            
-        case .newMnemonic:
-            applyPrimary()
-        default:
-            applySecondary()
-        }
+        updateButtonStyle()
         
         return self
     }
 }
 
 private extension ButtonsSheetViewCell {
+    
+    func updateButtonStyle() {
+        
+        switch viewModel?.type {
+        case .newMnemonic:
+            applyPrimary()
+        default:
+            applySecondary()
+        }
+    }
     
     func applyPrimary() {
         
