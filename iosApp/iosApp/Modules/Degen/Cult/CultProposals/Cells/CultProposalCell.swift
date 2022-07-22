@@ -13,6 +13,7 @@ final class CultProposalCell: CollectionViewCell {
     @IBOutlet weak var chevronImageView: UIImageView!
     @IBOutlet weak var approveButton: Button!
     @IBOutlet weak var rejectButton: Button!
+    private weak var labelView: LabelView!
 
     private var timer: Timer? = nil
     private var date: Date = .distantPast
@@ -38,6 +39,26 @@ final class CultProposalCell: CollectionViewCell {
         approveButton.addTarget(self, action: #selector(approveProposal), for: .touchUpInside)
         rejectButton.style = .primary
         rejectButton.addTarget(self, action: #selector(rejectProposal), for: .touchUpInside)
+        
+        clipsToBounds = false
+        
+        let labelView = LabelView()
+        addSubview(labelView)
+        self.labelView = labelView
+        labelView.addConstraints(
+            [
+                .layout(
+                    anchor: .topAnchor,
+                    constant: .equalTo(constant: -8)
+                ),
+                .layout(
+                    anchor: .trailingAnchor,
+                    constant: .equalTo(
+                        constant: Theme.constant.padding
+                    )
+                )
+            ]
+        )
     }
     
     func update(
@@ -46,6 +67,8 @@ final class CultProposalCell: CollectionViewCell {
     ) {
         self.viewModel = viewModel
         self.handler = handler
+        
+        labelView.isHidden = !viewModel.isNew
         
         titleLabel.text = viewModel.title
         approvedVoteView.update(
@@ -107,5 +130,49 @@ private extension CultProposalCell  {
     @objc func rejectProposal() {
         
         handler.rejectProposal(viewModel.id)
+    }
+}
+
+private final class LabelView: UIView {
+    
+    private weak var label: UILabel!
+    
+    override init(frame: CGRect) {
+        
+        super.init(frame: frame)
+        
+        configureUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configureUI() {
+        
+        backgroundColor = Theme.colour.candleGreen
+        layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        
+        let label = UILabel()
+        label.apply(style: .callout, weight: .bold)
+        label.text = Localized("new").uppercased()
+        self.addSubview(label)
+        self.label = label
+        label.addConstraints(
+            [
+                .layout(anchor: .topAnchor, constant: .equalTo(constant: 4)),
+                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: 4)),
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 8)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 8))
+            ]
+        )
+    }
+    
+    override func layoutSubviews() {
+        
+        super.layoutSubviews()
+        
+        guard let superview = superview else { return }
+        sendSubviewToBack(superview)
     }
 }

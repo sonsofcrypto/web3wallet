@@ -35,6 +35,7 @@
 "approve" = "Approve";
 "rejected" = "Rejected";
 "reject" = "Reject";
+"new" = "New";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";

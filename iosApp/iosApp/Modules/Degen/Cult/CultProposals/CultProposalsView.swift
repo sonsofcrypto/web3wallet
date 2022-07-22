@@ -90,17 +90,6 @@ extension CultProposalsViewController: UICollectionViewDataSource {
             headerView.update(with: section)
             return headerView
             
-        case "new-banner":
-            let bannerView = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: String(describing: CultProposalNewSupplementaryView.self),
-                for: indexPath
-            )
-            guard let section = viewModel?.sections[indexPath.section] else { fatalError() }
-            let item = section.items[indexPath.item]
-            bannerView.isHidden = !item.isNew
-            return bannerView
-            
         default:
             assertionFailure("Unexpected element kind: \(kind).")
             return UICollectionReusableView()
@@ -134,11 +123,6 @@ private extension CultProposalsViewController {
             forSupplementaryViewOfKind: "header",
             withReuseIdentifier: String(describing: CultProposalHeaderSupplementaryView.self)
         )
-        collectionView.register(
-            CultProposalNewSupplementaryView.self,
-            forSupplementaryViewOfKind: "new-banner",
-            withReuseIdentifier: String(describing: CultProposalNewSupplementaryView.self)
-        )
         collectionView.dataSource = self
         collectionView.delegate = self
     }
@@ -165,32 +149,13 @@ private extension CultProposalsViewController {
         
         let padding = Theme.constant.padding
 
-        let layoutSize = NSCollectionLayoutSize(
-            widthDimension: .estimated(10),
-            heightDimension: .absolute(Theme.constant.padding * 2)
-        )
-        let containerAnchor = NSCollectionLayoutAnchor(
-            edges: [.top, .trailing],
-            absoluteOffset: CGPoint(
-                x: -Theme.constant.padding,
-                y: -Theme.constant.padding.half
-            )
-        )
-        let supplementaryItem = NSCollectionLayoutSupplementaryItem(
-            layoutSize: layoutSize,
-            elementKind: "new-banner",
-            containerAnchor: containerAnchor
-        )
-        supplementaryItem.zIndex = 0
-
         // Item
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(1)
         )
         let item = NSCollectionLayoutItem(
-            layoutSize: itemSize,
-            supplementaryItems: [supplementaryItem]
+            layoutSize: itemSize
         )
         item.contentInsets = .init(
             top: padding.half,
