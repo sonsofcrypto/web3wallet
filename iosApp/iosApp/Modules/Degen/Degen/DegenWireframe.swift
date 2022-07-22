@@ -5,8 +5,10 @@
 import UIKit
 
 enum DegenWireframeDestination {
-    case amms
+    
+    case swap
     case cult
+    case comingSoon
 }
 
 protocol DegenWireframe {
@@ -14,32 +16,31 @@ protocol DegenWireframe {
     func navigate(to destination: DegenWireframeDestination)
 }
 
-// MARK: - DefaultDegenWireframe
-
 final class DefaultDegenWireframe {
 
     private weak var parent: TabBarController!
-    private weak var vc: UIViewController?
-    private let degenService: DegenService
-    private let ammsWireframeFactory: AMMsWireframeFactory
+    private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let cultProposalsWireframeFactory: CultProposalsWireframeFactory
+    private let alertWireframeFactory: AlertWireframeFactory
+    private let degenService: DegenService
 
     private weak var navigationController: NavigationController!
 
     init(
         parent: TabBarController,
-        degenService: DegenService,
-        ammsWireframeFactory: AMMsWireframeFactory,
-        cultProposalsWireframeFactory: CultProposalsWireframeFactory
+        tokenSwapWireframeFactory: TokenSwapWireframeFactory,
+        cultProposalsWireframeFactory: CultProposalsWireframeFactory,
+        alertWireframeFactory: AlertWireframeFactory,
+        degenService: DegenService
     ) {
+        
         self.parent = parent
-        self.degenService = degenService
-        self.ammsWireframeFactory = ammsWireframeFactory
+        self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.cultProposalsWireframeFactory = cultProposalsWireframeFactory
+        self.alertWireframeFactory = alertWireframeFactory
+        self.degenService = degenService
     }
 }
-
-// MARK: - DegenWireframe
 
 extension DefaultDegenWireframe: DegenWireframe {
 
@@ -53,12 +54,25 @@ extension DefaultDegenWireframe: DegenWireframe {
     func navigate(to destination: DegenWireframeDestination) {
 
         switch destination {
-        case .amms:
-            ammsWireframeFactory.makeWireframe(navigationController).present()
+        case .swap:
+            tokenSwapWireframeFactory.makeWireframe(
+                presentingIn: navigationController,
+                context: .init(
+                    presentationStyle: .present,
+                    tokenFrom: nil,
+                    tokenTo: nil
+                )
+            ).present()
         case .cult:
             cultProposalsWireframeFactory.makeWireframe(
-                vc ?? navigationController
+                navigationController
             ).present()
+        case .comingSoon:
+            let wireframe = alertWireframeFactory.makeWireframe(
+                navigationController,
+                context: .underConstructionAlert()
+            )
+            wireframe.present()
         }
     }
 }
@@ -68,7 +82,7 @@ private extension DefaultDegenWireframe {
     func wireUp() -> UIViewController {
         
         let interactor = DefaultDegenInteractor(degenService)
-        let vc: DegenViewController = UIStoryboard(.main).instantiate()
+        let vc: DegenViewController = UIStoryboard(.degen).instantiate()
         let presenter = DefaultDegenPresenter(
             view: vc,
             interactor: interactor,
@@ -76,6 +90,7 @@ private extension DefaultDegenWireframe {
         )
 
         vc.presenter = presenter
+        
         let navigationController = NavigationController(rootViewController: vc)
         self.navigationController = navigationController
         

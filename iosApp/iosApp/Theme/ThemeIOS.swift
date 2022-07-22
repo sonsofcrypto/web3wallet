@@ -117,13 +117,23 @@ struct ThemeIOS: Themable {
                 pallete.systemWhite :
                 pallete.systemBlack
             },
-            switchTint: pallete.systemWhite,
-            switchTintDisabled: .init { traits in
+            switchThumbTintColor: pallete.systemWhite,
+            switchBackgroundColor: .init { traits in
+                traits.isDarkMode ?
+                pallete.systemEBEBF5.withAlpha(0.6) :
+                pallete.system3C3C43.withAlpha(0.3)
+            },
+            switchOnTint: pallete.systemOrange,
+            switchDisabledThumbTint: .init { traits in
                 traits.isDarkMode ?
                 pallete.system48484A :
                 pallete.systemC7C7CC
             },
-            switchOnTint: pallete.systemOrange,
+            switchDisabledBackgroundColor: .init { traits in
+                traits.isDarkMode ?
+                pallete.system767680.withAlpha(0.24) :
+                pallete.system767680.withAlpha(0.12)
+            },
             textFieldTextColour: .init { traits in
                 traits.isDarkMode ?
                 pallete.systemWhite :

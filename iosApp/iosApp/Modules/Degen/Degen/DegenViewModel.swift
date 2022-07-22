@@ -5,28 +5,42 @@
 import Foundation
 
 struct DegenViewModel {
-    let sectionTitle: String
-    let items: [Item]
+    
+    let sections: [Section]
 }
-
-// MARK - Item
 
 extension DegenViewModel {
+    
+    enum Section {
+        
+        case header(header: Header)
+        case group(items: [Item])
+    }
+    
+    struct Header {
+        
+        let title: String
+        let isEnabled: Bool
+    }
 
-    struct Item {
+    struct Item: Equatable {
+        
+        let icon: Data
         let title: String
         let subtitle: String
+        let isEnabled: Bool
     }
 }
-
-// MARK: - DAppCategory
 
 extension DAppCategory {
 
     var title: String {
+        
         switch self {
-        case .amm:
-            return Localized("degen.dappCategory.title.amm")
+        case .swap:
+            return Localized("degen.dappCategory.title.swap")
+        case .cult:
+            return Localized("degen.dappCategory.title.cult")
         case .stakeYield:
             return Localized("degen.dappCategory.title.stakeYield")
         case .landBorrow:
@@ -35,8 +49,6 @@ extension DAppCategory {
             return Localized("degen.dappCategory.title.derivative")
         case .bridge:
             return Localized("degen.dappCategory.title.bridge")
-        case .cult:
-            return Localized("degen.dappCategory.title.cult")
         case .mixer:
             return Localized("degen.dappCategory.title.mixer")
         case .governance:
@@ -47,8 +59,10 @@ extension DAppCategory {
     var subTitle: String {
 
         switch self {
-        case .amm:
-            return Localized("degen.dappCategory.subTitle.amm")
+        case .swap:
+            return Localized("degen.dappCategory.subTitle.swap")
+        case .cult:
+            return Localized("degen.dappCategory.subTitle.cult")
         case .stakeYield:
             return Localized("degen.dappCategory.subTitle.stakeYield")
         case .landBorrow:
@@ -57,8 +71,6 @@ extension DAppCategory {
             return Localized("degen.dappCategory.subTitle.derivative")
         case .bridge:
             return Localized("degen.dappCategory.subTitle.bridge")
-        case .cult:
-            return Localized("degen.dappCategory.subTitle.cult")
         case .mixer:
             return Localized("degen.dappCategory.subTitle.mixer")
         case .governance:

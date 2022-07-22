@@ -10,7 +10,7 @@ class SegmentWithTextAndSwitchCell: CollectionViewCell {
     @IBOutlet weak var segmentControl: SegmentedControl!
     @IBOutlet weak var textField: TextField!
     @IBOutlet weak var switchLabel: UILabel!
-    @IBOutlet weak var onOffSwitch: UISwitch!
+    @IBOutlet weak var onOffSwitch: OnOffSwitch!
     @IBOutlet weak var vStack: UIStackView!
     @IBOutlet weak var hStack: UIStackView!
     @IBOutlet weak var group1: UIView!

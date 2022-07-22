@@ -6,6 +6,6 @@ import Foundation
 
 protocol DegenService: AnyObject {
 
-    func categories() -> [DAppCategory]
-    func dapps(for category: DAppCategory) -> [DApp]
+    var categoriesActive: [DAppCategory] { get }
+    var categoriesInactive: [DAppCategory] { get }
 }

@@ -6,10 +6,9 @@ import Foundation
 
 protocol DegenInteractor: AnyObject {
 
-    func categories() -> [DAppCategory]
+    var categoriesActive: [DAppCategory] { get }
+    var categoriesInactive: [DAppCategory] { get }
 }
-
-// MARK: - DefaultDegenInteractor
 
 final class DefaultDegenInteractor {
 
@@ -17,15 +16,20 @@ final class DefaultDegenInteractor {
     private var degenService: DegenService
 
     init(_ degenService: DegenService) {
+        
         self.degenService = degenService
     }
 }
 
-// MARK: - DefaultDegenInteractor
-
 extension DefaultDegenInteractor: DegenInteractor {
 
-    func categories() -> [DAppCategory] {
-        degenService.categories()
+    var categoriesActive: [DAppCategory] {
+        
+        degenService.categoriesActive
+    }
+
+    var categoriesInactive: [DAppCategory] {
+        
+        degenService.categoriesInactive
     }
 }

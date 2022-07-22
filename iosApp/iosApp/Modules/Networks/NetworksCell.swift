@@ -11,7 +11,7 @@ final class NetworksCell: UICollectionViewCell {
     
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var switchControl: UISwitch!
+    @IBOutlet weak var switchControl: OnOffSwitch!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var connectionTitleLabel: UILabel!
     @IBOutlet weak var statusTitleLabel: UILabel!
@@ -77,18 +77,16 @@ extension NetworksCell {
         self.idx = idx
         
         iconImageView.image = viewModel?.icon.pngImage
+        
         titleLabel.text = viewModel?.name ?? "-"
+        
         switchControl.isOn = viewModel?.connected ?? false
-        if viewModel?.connected == nil {
-            switchControl.isEnabled = false
-            switchControl.backgroundColor = Theme.colour.switchTintDisabled
-        } else {
-            switchControl.isEnabled = true
-            switchControl.onTintColor = Theme.colour.switchOnTint
-            switchControl.backgroundColor = Theme.colour.switchTint
-        }
+        switchControl.isEnabled = viewModel?.connected != nil
+        
         connectionLabel.text = viewModel?.connectionType ?? "-"
+        
         statusLabel.text = viewModel?.status ?? "-"
+        
         explorerLabel.text = viewModel?.explorer ?? "-"
     }
 }

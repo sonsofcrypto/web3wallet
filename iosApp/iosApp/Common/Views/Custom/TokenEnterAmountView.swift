@@ -2,6 +2,8 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
+import UIKit
+
 struct TokenEnterAmountViewModel {
     
     let tokenAmount: Double?
@@ -135,12 +137,7 @@ extension TokenEnterAmountView: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         
-        if textField == sendAmountTextField, viewModel.tokenMaxDecimals > 0 {
-            
-            if textField.text == "." {
-                textField.text = "0."
-            }
-        }
+        applyTextValidation(to: textField)
         
         let double = Double(textField.text ?? "0") ?? 0
         
@@ -155,6 +152,37 @@ extension TokenEnterAmountView: UITextFieldDelegate {
 }
 
 private extension TokenEnterAmountView {
+    
+    func applyTextValidation(to textField: UITextField) {
+        
+        if
+            textField == sendAmountTextField,
+            viewModel.tokenMaxDecimals > 0,
+            textField.text == "."
+        {
+            textField.text = "0."
+        }
+        
+        if
+            viewModel.tokenMaxDecimals == 0,
+            textField.text == "0"
+        {
+            textField.text = ""
+        } else if
+            viewModel.tokenMaxDecimals > 0,
+            textField.text == "00"
+        {
+            textField.text = "0"
+        } else if
+            viewModel.tokenMaxDecimals > 0,
+            let text = textField.text,
+            text.count == 2,
+            text[0] == "0",
+            text[1] != "."
+        {
+            textField.text = text[0] + "." + text[1]
+        }
+    }
     
     func makeTokenClearButton() -> UIButton {
         

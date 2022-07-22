@@ -84,7 +84,7 @@
                                                                                 <constraint firstAttribute="height" constant="31" id="gW2-g5-HqO"/>
                                                                             </constraints>
                                                                         </view>
-                                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OaH-fe-Awd">
+                                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OaH-fe-Awd" customClass="OnOffSwitch" customModule="iosApp" customModuleProvider="target">
                                                                             <rect key="frame" x="216" y="0.0" width="51" height="31"/>
                                                                         </switch>
                                                                     </subviews>

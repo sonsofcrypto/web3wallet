@@ -7,7 +7,7 @@ import UIKit
 final class SwitchTextInputCollectionViewCell: CollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var onOffSwitch: UISwitch!
+    @IBOutlet weak var onOffSwitch: OnOffSwitch!
     @IBOutlet weak var textField: TextField!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var vStack: UIStackView!

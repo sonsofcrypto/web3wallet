@@ -30,7 +30,7 @@
 "low" = "Low";
 "medium" = "Average";
 "high" = "Fast";
-"comingSoon" = "Coming soon";
+"comingSoon" = "Coming Soon";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";
@@ -47,21 +47,21 @@
 "dashboard.button.swap" = "Swap";
 "dashboard.section.nfts" = "NFestival";
 
-"degen.dappCategory.title.amm" = "Automated market makers";
+"degen.dappCategory.title.swap" = "Swap";
+"degen.dappCategory.title.cult" = "Cult.DAO";
 "degen.dappCategory.title.stakeYield" = "Staking and Yield farms";
 "degen.dappCategory.title.landBorrow" = "Landing / Borrowing";
 "degen.dappCategory.title.derivative" = "Derivatives";
 "degen.dappCategory.title.bridge" = "Bridges";
-"degen.dappCategory.title.cult" = "Cult";
 "degen.dappCategory.title.mixer" = "Mixers";
 "degen.dappCategory.title.governance" = "Governanece";
 
-"degen.dappCategory.subTitle.amm" = "Trade trustlessly on chain via AMMs";
+"degen.dappCategory.subTitle.swap" = "Swap like a Degen";
+"degen.dappCategory.subTitle.cult" = "Decentralization revolution";
 "degen.dappCategory.subTitle.stakeYield" = "Stake your coins and recieve rewards";
 "degen.dappCategory.subTitle.landBorrow" = "Borrow or your land coins to earn interest";
 "degen.dappCategory.subTitle.derivative" = "Futures, perpetual and other derivatives";
 "degen.dappCategory.subTitle.bridge" = "Bridge beween L1s and L2s";
-"degen.dappCategory.subTitle.cult" = "Decentralization revolution";
 "degen.dappCategory.subTitle.mixer" = "Regain your privacy";
 "degen.dappCategory.subTitle.governance" = "Participate in governance decisions";
 
