@@ -41,8 +41,6 @@ final class DegenViewController: BaseViewController {
     }
 }
 
-// MARK: - DegenView
-
 extension DegenViewController: DegenView {
 
     func update(with viewModel: DegenViewModel) {
@@ -51,21 +49,28 @@ extension DegenViewController: DegenView {
     }
 }
 
-// MARK: - UICollectionViewDataSource
-
 extension DegenViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return  viewModel?.items.count ?? 0
+        viewModel?.items.count ?? 0
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeue(DegenCell.self, for: indexPath)
         cell.update(with: viewModel?.items[indexPath.row])
         return cell
     }
 
-    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    public func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        
         if kind == UICollectionView.elementKindSectionHeader {
             let supplementary = collectionView.dequeue(
                 DegenSectionTitleView.self,
@@ -80,24 +85,22 @@ extension DegenViewController: UICollectionViewDataSource {
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
-
-extension DegenViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(
-            width: view.bounds.width - Theme.constant.padding * 2,
-            height: Constant.cellHeight
-        )
-    }
-
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(
-            width: view.bounds.width - Theme.constant.padding * 2,
-            height: Constant.headerHeight
-        )
-    }
-}
+//extension DegenViewController: UICollectionViewDelegateFlowLayout {
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        return CGSize(
+//            width: view.bounds.width - Theme.constant.padding * 2,
+//            height: Constant.cellHeight
+//        )
+//    }
+//
+//    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+//        return CGSize(
+//            width: view.bounds.width - Theme.constant.padding * 2,
+//            height: Constant.headerHeight
+//        )
+//    }
+//}
 
 extension DegenViewController: UICollectionViewDelegate {
 
@@ -106,16 +109,20 @@ extension DegenViewController: UICollectionViewDelegate {
     }
 }
 
-// MARK: - Configure UI
-
 extension DegenViewController {
     
     func configureUI() {
-        navigationItem.backButtonTitle = ""
-
-        var insets = collectionView.contentInset
-        insets.bottom += Theme.constant.padding
-        collectionView.contentInset = insets
+        
+//        navigationItem.backButtonTitle = ""
+//
+//        var insets = collectionView.contentInset
+//        insets.bottom += Theme.constant.padding
+//        collectionView.contentInset = insets
+        
+        collectionView.setCollectionViewLayout(
+            makeCompositionalLayout(),
+            animated: false
+        )
 
         let overScrollView = (collectionView as? CollectionView)
         overScrollView?.overScrollView.image = UIImage(named: "overscroll_degen")
@@ -126,15 +133,50 @@ extension DegenViewController {
     func configureNavAndTabBarItem() {
         title = Localized("degen")
     }
-}
-
-// MARK: - Constant
-
-private extension DegenViewController {
-
-    enum Constant {
-        static let cellHeight: CGFloat = 78
-        static let headerHeight: CGFloat = 86
+    
+    func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
+        
+        UICollectionViewCompositionalLayout(
+            section: makeCollectionLayoutSection()
+        )
     }
-
+    
+    func makeCollectionLayoutSection() -> NSCollectionLayoutSection {
+        
+        // Item
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        //item.contentInsets = .paddingHalf
+        
+        // Group
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(1)
+        )
+        let outerGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize, subitems: [item]
+        )
+        //outerGroup.contentInsets = .paddingHalf
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: outerGroup)
+        section.contentInsets = .paddingDefault
+        section.interGroupSpacing = Theme.constant.padding
+        
+        let headerItemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(1)
+        )
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerItemSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.boundarySupplementaryItems = [headerItem]
+        
+        return section
+    }
 }

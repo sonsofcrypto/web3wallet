@@ -9,8 +9,6 @@ struct DegenViewModel {
     let items: [Item]
 }
 
-// MARK - Item
-
 extension DegenViewModel {
 
     struct Item {
@@ -18,8 +16,6 @@ extension DegenViewModel {
         let subtitle: String
     }
 }
-
-// MARK: - DAppCategory
 
 extension DAppCategory {
 

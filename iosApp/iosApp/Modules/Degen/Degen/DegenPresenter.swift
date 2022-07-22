@@ -57,7 +57,7 @@ private extension DefaultDegenPresenter {
     func handleDidSelectCategory(at idx: Int) {
         switch idx {
         case 0:
-            wireframe.navigate(to: .amms)
+            wireframe.navigate(to: .swap)
         case 5:
             wireframe.navigate(to: .cult)
         default:

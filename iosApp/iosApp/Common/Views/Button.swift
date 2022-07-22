@@ -118,66 +118,6 @@ private extension Button {
     }
 }
 
-final class LeftImageButton: Button {
-
-    var padding: CGFloat = 4
-    var titleLabelXOffset: CGFloat = -4
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        guard let imageView = self.imageView, let label = self.titleLabel else {
-            return
-        }
-
-        imageView.center.x = (imageView.bounds.width / 2) + padding
-        label.frame = CGRect(
-            x: imageView.frame.maxX + titleLabelXOffset,
-            y: 0 + padding,
-            width: bounds.width - imageView.frame.maxX - (padding * 2),
-            height: bounds.height - (padding * 2)
-        )
-    }
-}
-
-final class LeftRightImageButton: Button {
-
-    var padding: CGFloat = 4
-    var titleLabelXOffset: CGFloat = 0
-
-    var rightImageView: UIImageView = .init()
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        if rightImageView.superview == nil {
-            addSubview(rightImageView)
-        }
-
-        guard let imageView = self.imageView, let label = self.titleLabel else {
-            return
-        }
-
-        let length = min(bounds.width, bounds.height) - padding * 2
-        imageView.bounds.size = CGSize(width: length, height: length)
-
-        rightImageView.sizeToFit()
-
-        imageView.center.x = (imageView.bounds.width / 2) + padding
-        imageView.center.y = bounds.height / 2
-
-        rightImageView.center.x = bounds.width - ((imageView.bounds.width / 2) + padding)
-        rightImageView.center.y = bounds.height / 2
-
-        label.frame = CGRect(
-            x: imageView.frame.maxX + titleLabelXOffset + padding,
-            y: 0 + padding,
-            width: rightImageView.frame.minX - padding * 2 - imageView.frame.maxX,
-            height: bounds.height - (padding * 2)
-        )
-    }
-}
-
 final class VerticalButton: Button {
     
     override var style: Button.Style {

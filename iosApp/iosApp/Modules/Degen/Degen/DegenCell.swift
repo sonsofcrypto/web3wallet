@@ -9,19 +9,19 @@ final class DegenCell: CollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
     
-
     override func awakeFromNib() {
+        
         super.awakeFromNib()
-        titleLabel.apply(style: .callout)
-        subTitleLabel.apply(style: .subheadline)
+        
+        titleLabel.apply(style: .body, weight: .bold)
+        subTitleLabel.apply(style: .subheadline, weight: .bold)
     }
 }
-
-// MARK: - Extension
 
 extension DegenCell {
 
     func update(with viewModel: DegenViewModel.Item?) {
+        
         titleLabel.text = viewModel?.title
         subTitleLabel.text = viewModel?.subtitle
     }

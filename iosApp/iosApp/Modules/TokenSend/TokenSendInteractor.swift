@@ -56,7 +56,7 @@ extension DefaultTokenSendInteractor: TokenSendInteractor {
         network: Web3Network
     ) -> String {
         
-        let total = 5
+        let total = 8
 
         switch network.name.lowercased() {
             

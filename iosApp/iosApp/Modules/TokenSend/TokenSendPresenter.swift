@@ -186,7 +186,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                 return
             }
             
-            guard let amount = amount, token.balance > amount, amount > 0 else {
+            guard let amount = amount, token.balance >= amount, amount > 0 else {
                 updateView(
                     shouldTokenBecomeFirstResponder: true
                 )
@@ -379,7 +379,7 @@ private extension DefaultTokenSendPresenter {
             buttonState = .ready
         } else if !isValidAddress {
             buttonState = .invalidDestination
-        } else if (amount ?? 0) >= token.balance {
+        } else if (amount ?? 0) > token.balance {
             buttonState = .insufficientFunds
         } else if (amount ?? 0) == 0 {
             buttonState = .enterFunds
