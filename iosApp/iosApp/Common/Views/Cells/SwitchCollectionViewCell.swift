@@ -7,7 +7,7 @@ import UIKit
 final class SwitchCollectionViewCell: CollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var onOffSwitch: UISwitch!
+    @IBOutlet weak var onOffSwitch: OnOffSwitch!
 
     var switchChangeHandler: ((Bool)->Void)?
 

@@ -4,7 +4,7 @@
 
 import UIKit
 
-var Theme: Themable = ThemeA()
+var Theme: Themable = ThemeIOS()
 
 protocol Themable {
     
@@ -141,10 +141,12 @@ struct ThemeColour {
     let buttonBackgroundSecondary: UIColor
     let buttonSecondaryText: UIColor
         
-    let switchTint: UIColor
-    let switchTintDisabled: UIColor
+    let switchThumbTintColor: UIColor
+    let switchBackgroundColor: UIColor
     let switchOnTint: UIColor
-    
+    let switchDisabledThumbTint: UIColor
+    let switchDisabledBackgroundColor: UIColor
+
     let textFieldTextColour: UIColor
     let textFieldPlaceholderColour: UIColor
 

@@ -63,9 +63,15 @@ struct ThemeA: Themable {
                 pallete.system787880.withAlpha(0.2)
             },
             buttonSecondaryText: pallete.systemWhite,
-            switchTint: pallete.systemEBEBF5.withAlpha(0.3),
-            switchTintDisabled: pallete.systemEBEBF5.withAlpha(0.6),
+            switchThumbTintColor: pallete.systemWhite,
+            switchBackgroundColor: pallete.systemEBEBF5.withAlpha(0.3),
             switchOnTint: pallete.systemOrange,
+            switchDisabledThumbTint: pallete.systemEBEBF5.withAlpha(0.6),
+            switchDisabledBackgroundColor: .init { traits in
+                traits.isDarkMode ?
+                pallete.system787880.withAlpha(0.32) :
+                pallete.system787880.withAlpha(0.16)
+            },
             textFieldTextColour: pallete.systemWhite,
             textFieldPlaceholderColour: pallete.systemEBEBF5.withAlpha(0.6),
             segmentedControlBackground: pallete.systemEBEBF5.withAlpha(0.18),

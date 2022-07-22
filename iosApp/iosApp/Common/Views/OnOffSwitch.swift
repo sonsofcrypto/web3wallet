@@ -10,17 +10,40 @@ class OnOffSwitch: UISwitch {
         
         super.init(frame: frame)
         
-        layer.cornerRadius = 16
-        onTintColor = Theme.colour.switchOnTint
-        backgroundColor = Theme.colour.switchTint
+        configureUI()
     }
 
     required init?(coder: NSCoder) {
         
         super.init(coder: coder)
         
+        configureUI()
+    }
+    
+    override var isEnabled: Bool {
+        
+        didSet {
+            
+            configureUI()
+        }
+    }
+}
+
+private extension OnOffSwitch {
+    
+    func configureUI() {
+        
         layer.cornerRadius = 16
-        onTintColor = Theme.colour.switchOnTint
-        backgroundColor = Theme.colour.switchTint
+        
+        if isEnabled {
+            
+            thumbTintColor = Theme.colour.switchThumbTintColor
+            onTintColor = Theme.colour.switchOnTint
+            backgroundColor = Theme.colour.switchBackgroundColor
+        } else {
+            
+            onTintColor = Theme.colour.switchDisabledThumbTint
+            backgroundColor = Theme.colour.switchDisabledBackgroundColor
+        }
     }
 }
