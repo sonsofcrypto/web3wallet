@@ -3,12 +3,11 @@ package com.sonsofcrypto.web3lib_provider
 import com.sonsofcrypto.web3lib_core.Address
 import com.sonsofcrypto.web3lib_core.Network
 import com.sonsofcrypto.web3lib_utils.BigInt
-import io.ktor.client.*
 import kotlinx.coroutines.Deferred
 import kotlin.time.Duration
 
 
-open class JsonRpcProvider(
+open class ProviderJsonRpc(
     val network: Network,
 ) : Provider() {
 

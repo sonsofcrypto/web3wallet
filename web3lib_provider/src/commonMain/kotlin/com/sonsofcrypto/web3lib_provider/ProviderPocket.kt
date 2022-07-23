@@ -37,7 +37,7 @@ private val providerJson = Json {
     prettyPrint = true
 }
 
-class PocketProvider {
+class ProviderPocket {
 
     private val apiKeys: ApiKeys
     private val network: Network
@@ -227,6 +227,16 @@ class PocketProvider {
             )
         )
         return@withContext Transaction.fromHexifiedJsonObject(result)
+    }
+
+    suspend fun getTransactionReceipt(
+        hash: String
+    ): TransactionReceipt = withContext(dispatcher) {
+        val result = performGetObjResult(
+            method = Method.GET_TRANSACTION_RECEIPT,
+            params = listOf(JsonPrimitive(hash))
+        )
+        return@withContext TransactionReceipt.fromHexifiedJsonObject(result)
     }
 
     /** Utilities */

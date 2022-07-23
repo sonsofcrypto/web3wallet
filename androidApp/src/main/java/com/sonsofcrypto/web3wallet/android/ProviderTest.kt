@@ -38,7 +38,8 @@ class ProviderTest {
 //        testGetUncleCount()
 //        testGetBlock()
 //        testGetTransaction()
-        testGetTransactionByBlockIndex()
+//        testGetTransactionByBlockIndex()
+        testGetTransactionReceipt()
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
@@ -46,20 +47,20 @@ class ProviderTest {
     }
 
     fun testBlockNumber() = runBlocking {
-        val provider = PocketProvider(Network.ethereum())
+        val provider = ProviderPocket(Network.ethereum())
 
         val blockNumber = provider.blockNumber()
         println("block number $blockNumber")
     }
 
     fun testGasPrice() = runBlocking {
-        val provider = PocketProvider(Network.ethereum())
+        val provider = ProviderPocket(Network.ethereum())
         val gasPrice = provider.blockNumber()
         println("gas price ${gasPrice.toString()}")
     }
 
     fun testGetBalance() = runBlocking {
-        val provider = PocketProvider(Network.ethereum())
+        val provider = ProviderPocket(Network.ethereum())
         val balance = provider.getBalance(
             Address.HexString("0x9fFd5aEFd25E18bb8AaA171b8eC619d94AD6AAf0")
         )
@@ -67,7 +68,7 @@ class ProviderTest {
     }
 
     fun testGetStorageAt() = runBlocking {
-        val provider = PocketProvider(Network.ethereum())
+        val provider = ProviderPocket(Network.ethereum())
         val storage = provider.getStorageAt(
             Address.HexString("0x295a70b2de5e3953354a6a8344e616ed314d7251"),
             0uL,
@@ -77,7 +78,7 @@ class ProviderTest {
     }
 
     fun testGetTransactionCount() = runBlocking {
-        val provider = PocketProvider(Network.ethereum())
+        val provider = ProviderPocket(Network.ethereum())
         val storage = provider.getTransactionCount(
             Address.HexString("0x9fFd5aEFd25E18bb8AaA171b8eC619d94AD6AAf0"),
             BlockTag.Latest
@@ -86,7 +87,7 @@ class ProviderTest {
     }
 
     fun testGetCode() = runBlocking {
-        val provider = PocketProvider(Network.ethereum())
+        val provider = ProviderPocket(Network.ethereum())
         val code = provider.getCode(
             Address.HexString("0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b"),
             BlockTag.Latest
@@ -97,7 +98,7 @@ class ProviderTest {
     fun testCall() = runBlocking {
         val expected = "0x00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000004000000000000000000000000d9c9cd5f6779558b6e0ed4e6acf6b1947e7fa1f300000000000000000000000078d1ad571a1a09d60d9bbf25894b44e4c8859595000000000000000000000000286834935f4a8cfb4ff4c77d5770c2775ae2b0e7000000000000000000000000b86e2b0ab5a4b1373e40c51a7c712c70ba2f9f8e"
         val data = "0x45848dfc".hexStringToByteArray()
-        val provider = PocketProvider(Network.rinkeby())
+        val provider = ProviderPocket(Network.rinkeby())
         val transaction = TransactionRequest(
             to = Address.HexString("0xebe8efa441b9302a0d7eaecc277c09d20d684540"),
             data = data,
@@ -111,7 +112,7 @@ class ProviderTest {
 
     fun testEstimateGas() = runBlocking {
         val data = "0x45848dfc".hexStringToByteArray()
-        val provider = PocketProvider(Network.rinkeby())
+        val provider = ProviderPocket(Network.rinkeby())
         val transaction = TransactionRequest(
             to = Address.HexString("0xebe8efa441b9302a0d7eaecc277c09d20d684540"),
             data = data,
@@ -121,7 +122,7 @@ class ProviderTest {
     }
 
     fun testGetBlockTransactionHashCount() = runBlocking {
-        val provider = PocketProvider(Network.ethereum())
+        val provider = ProviderPocket(Network.ethereum())
         val result = provider.getBlockTransactionCount(
             BlockTag.Hash("0x4848a3b125c6ae2d2bdfc1537eebe09fe115fe8feac552bbc1f2d4b8ba1d61c6")
         )
@@ -129,7 +130,7 @@ class ProviderTest {
     }
 
     fun testGetBlockTransactionNumberCount() = runBlocking {
-        val provider = PocketProvider(Network.ethereum())
+        val provider = ProviderPocket(Network.ethereum())
         val result = provider.getBlockTransactionCount(
             BlockTag.Number(15185387)
         )
@@ -137,7 +138,7 @@ class ProviderTest {
     }
 
     fun testGetUncleCount() = runBlocking {
-        val provider = PocketProvider(Network.ethereum())
+        val provider = ProviderPocket(Network.ethereum())
         val resultByHash = provider.getUncleCount(
             BlockTag.Hash("0x78d47648352914d688272ef743a493f1952b10b12831704764a3c6a3119371cc")
         )
@@ -150,7 +151,7 @@ class ProviderTest {
     }
 
     fun testGetBlock() = runBlocking {
-        val provider = PocketProvider(Network.ethereum())
+        val provider = ProviderPocket(Network.ethereum())
         val result = provider.getBlock(
             BlockTag.Hash("0xb6e1f102c04bc9343afd7be8703b243066ed342316966dcf72fc65f98072becf")
         )
@@ -299,7 +300,7 @@ class ProviderTest {
             )
         )
 
-        val provider = PocketProvider(Network.ethereum())
+        val provider = ProviderPocket(Network.ethereum())
 
 
         for (i in 0..datas.count()-1) {
@@ -402,7 +403,7 @@ class ProviderTest {
             maxFeePerGas = BigInt.from(19266925930),
         )
 
-        val provider = PocketProvider(Network.ethereum())
+        val provider = ProviderPocket(Network.ethereum())
         val result = provider.getTransaction(
             BlockTag.Hash("0xb6e1f102c04bc9343afd7be8703b243066ed342316966dcf72fc65f98072becf"),
             BigInt.Companion.from(35)
@@ -474,6 +475,102 @@ class ProviderTest {
         )
     }
 
+    @OptIn(ExperimentalTime::class)
+    fun testGetTransactionReceipt() = CoroutineScope(Dispatchers.Default).launch {
+        val data = """
+            {"blockHash":"0xcadc083149162766ffa7d4087313013aef990057e91bee707919b68d0d3f5cec","blockNumber":"0xe7be7b","contractAddress":null,"cumulativeGasUsed":"0x2d082","effectiveGasPrice":"0x2f0bc39df","from":"0x26ce7c1976c5eec83ea6ac22d83cb341b08850af","gasUsed":"0x2d082","logs":[{"address":"0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2","blockHash":"0xcadc083149162766ffa7d4087313013aef990057e91bee707919b68d0d3f5cec","blockNumber":"0xe7be7b","data":"0x0000000000000000000000000000000000000000000000023482399000000000","logIndex":"0x0","removed":false,"topics":["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef","0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40","0x000000000000000000000000454f11d58e27858926d7a4ece8bfea2c33e97b13"],"transactionHash":"0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0","transactionIndex":"0x0"},{"address":"0x5a98fcbea516cf06857215779fd812ca3bef1b32","blockHash":"0xcadc083149162766ffa7d4087313013aef990057e91bee707919b68d0d3f5cec","blockNumber":"0xe7be7b","data":"0x0000000000000000000000000000000000000000000004dc6716096283f2386e","logIndex":"0x1","removed":false,"topics":["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef","0x000000000000000000000000454f11d58e27858926d7a4ece8bfea2c33e97b13","0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40"],"transactionHash":"0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0","transactionIndex":"0x0"},{"address":"0x454f11d58e27858926d7a4ece8bfea2c33e97b13","blockHash":"0xcadc083149162766ffa7d4087313013aef990057e91bee707919b68d0d3f5cec","blockNumber":"0xe7be7b","data":"0x00000000000000000000000000000000000000000000065b908fbfa84299fddb000000000000000000000000000000000000000000000005149e8e76220a421d","logIndex":"0x2","removed":false,"topics":["0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1"],"transactionHash":"0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0","transactionIndex":"0x0"},{"address":"0x454f11d58e27858926d7a4ece8bfea2c33e97b13","blockHash":"0xcadc083149162766ffa7d4087313013aef990057e91bee707919b68d0d3f5cec","blockNumber":"0xe7be7b","data":"0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000234823990000000000000000000000000000000000000000000000000000004dc6716096283f2386e0000000000000000000000000000000000000000000000000000000000000000","logIndex":"0x3","removed":false,"topics":["0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822","0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40","0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40"],"transactionHash":"0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0","transactionIndex":"0x0"}],"logsBloom":"0x00200000000000000000000080000000000000000000000000000000000000000000000000000000000000000000000002000100080008000000000000000000000000000000000010000008000000200000000000000000000000000000000010000040000000000000000000000000000000000000400000000010000000000000000000000000000000000000000000000000000000080000006000000000000000000000000000000040000000000000004000000000000000000000000000000006000000000000000000000000000000000000001000000000000000000000200000000000000100000000000000000000000000000000000000000020","status":"0x1","to":"0x00000000003b3cc22af3ae1eac0440bcee416b40","transactionHash":"0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0","transactionIndex":"0x0","type":"0x2"}
+        """.trimIndent()
+
+
+        val expected = TransactionReceipt(
+            to = Address.HexString("0x00000000003b3cc22af3ae1eac0440bcee416b40"),
+            from = Address.HexString("0x26ce7c1976c5eec83ea6ac22d83cb341b08850af"),
+            contractAddress = null,
+            transactionIndex = BigInt.from(0),
+            gasUsed = BigInt.from(184450),
+            logsBloom = "0x00200000000000000000000080000000000000000000000000000000000000000000000000000000000000000000000002000100080008000000000000000000000000000000000010000008000000200000000000000000000000000000000010000040000000000000000000000000000000000000400000000010000000000000000000000000000000000000000000000000000000080000006000000000000000000000000000000040000000000000004000000000000000000000000000000006000000000000000000000000000000000000001000000000000000000000200000000000000100000000000000000000000000000000000000000020",
+            blockHash = "0xcadc083149162766ffa7d4087313013aef990057e91bee707919b68d0d3f5cec",
+            transactionHash = "0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0",
+            logs = listOf(
+                Log(
+                    blockNumber = BigInt.from(15187579),
+                    blockHash = "0xcadc083149162766ffa7d4087313013aef990057e91bee707919b68d0d3f5cec",
+                    transactionIndex = BigInt.from(0),
+                    removed = false,
+                    address = Address.HexString("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"),
+                    data = "0x0000000000000000000000000000000000000000000000023482399000000000",
+                    topics = listOf(
+                        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+                        "0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40",
+                        "0x000000000000000000000000454f11d58e27858926d7a4ece8bfea2c33e97b13"
+                    ),
+                    transactionHash = "0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0",
+                    logIndex = BigInt.from(0),
+                ),
+                Log(
+                    blockNumber = BigInt.from(15187579),
+                    blockHash = "0xcadc083149162766ffa7d4087313013aef990057e91bee707919b68d0d3f5cec",
+                    transactionIndex = BigInt.from(0),
+                    removed = false,
+                    address = Address.HexString("0x5a98fcbea516cf06857215779fd812ca3bef1b32"),
+                    data = "0x0000000000000000000000000000000000000000000004dc6716096283f2386e",
+                    topics = listOf(
+                        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+                        "0x000000000000000000000000454f11d58e27858926d7a4ece8bfea2c33e97b13",
+                        "0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40"
+                    ),
+                    transactionHash = "0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0",
+                    logIndex = BigInt.from(1),
+                ),
+                Log(
+                    blockNumber = BigInt.from(15187579),
+                    blockHash = "0xcadc083149162766ffa7d4087313013aef990057e91bee707919b68d0d3f5cec",
+                    transactionIndex = BigInt.from(0),
+                    removed = false,
+                    address = Address.HexString("0x454f11d58e27858926d7a4ece8bfea2c33e97b13"),
+                    data = "0x00000000000000000000000000000000000000000000065b908fbfa84299fddb000000000000000000000000000000000000000000000005149e8e76220a421d",
+                    topics = listOf(
+                        "0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1"
+                    ),
+                    transactionHash = "0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0",
+                    logIndex = BigInt.from(2),
+                ),
+                Log(
+                    blockNumber = BigInt.from(15187579),
+                    blockHash = "0xcadc083149162766ffa7d4087313013aef990057e91bee707919b68d0d3f5cec",
+                    transactionIndex = BigInt.from(0),
+                    removed = false,
+                    address = Address.HexString("0x454f11d58e27858926d7a4ece8bfea2c33e97b13"),
+                    data = "0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000234823990000000000000000000000000000000000000000000000000000004dc6716096283f2386e0000000000000000000000000000000000000000000000000000000000000000",
+                    topics = listOf(
+                        "0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822",
+                        "0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40",
+                        "0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40"
+                    ),
+                    transactionHash = "0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0",
+                    logIndex = BigInt.from(3),
+                ),
+            ),
+            blockNumber = BigInt.from(15187579),
+            confirmations = null,
+            cumulativeGasUsed = BigInt.from(184450),
+            effectiveGasPrice = BigInt.from(12628802015),
+            root = null,
+            type = TransactionType.EIP1559,
+            status = 1,
+        )
+
+//        val json = Json.decodeFromString(JsonObject.serializer(), data)
+//        val result = TransactionReceipt.fromHexifiedJsonObject(json)
+        val provider = ProviderPocket(Network.ethereum())
+        val result = provider.getTransactionReceipt(
+            "0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0"
+        )
+        assertTrue(
+            expected == result,
+            "testGetTransactionReceipt unexpected $result"
+        )
+    }
 
     fun testErrorHandling() {
         val errorString = """
@@ -483,7 +580,7 @@ class ProviderTest {
             JsonRpcErrorResponse.Error(-32602, "test"),
             2101504395
         )
-        val provider = PocketProvider(Network.ethereum())
+        val provider = ProviderPocket(Network.ethereum())
         val error =provider.decode<JsonRpcErrorResponse>(errorString, providerJson)
         assertTrue(error == expected, "Unexpected error $error")
     }

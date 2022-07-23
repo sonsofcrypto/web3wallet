@@ -12,7 +12,9 @@ sealed class Address() {
 
     companion object {
         fun fromHexString(hexString: String?): Address.HexString? {
-            return if (hexString != null) { HexString(hexString) } else null
+            return if (hexString != null && hexString != "null") {
+                HexString(hexString)
+            } else null
         }
     }
 }

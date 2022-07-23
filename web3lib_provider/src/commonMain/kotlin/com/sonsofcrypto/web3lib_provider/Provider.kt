@@ -24,6 +24,9 @@ sealed class BlockTag() {
     }
 }
 
+
+interface SignedTransaction {}
+
 /** Abstract Provider */
 abstract class Provider {
 
