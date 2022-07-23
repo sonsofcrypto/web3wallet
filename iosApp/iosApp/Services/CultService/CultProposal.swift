@@ -110,7 +110,7 @@ extension CultProposal {
         [
             mock(
                 id: 41,
-                with: "Proposal(104): ChainLink",
+                with: "Proposal 42: ChainLink",
                 approved: 38126112668.969,
                 rejected: 6583879978.515,
                 endDate: Date().addingTimeInterval(16*24*60*60),
@@ -118,7 +118,7 @@ extension CultProposal {
             ),
             mock(
                 id: 42,
-                with: "Proposal(105): History (token)",
+                with: "Proposal 43: History (token)",
                 approved: 28126112668.969,
                 rejected: 66583879978.515,
                 endDate: Date().addingTimeInterval(15*24*60*60),
@@ -126,7 +126,7 @@ extension CultProposal {
             ),
             mock(
                 id: 43,
-                with: "Proposal(106): Verasity - Allocation #1",
+                with: "Proposal 44: Verasity - Allocation #1",
                 approved: 12058527010.969,
                 rejected: 2058527010.515,
                 endDate: Date().addingTimeInterval(2*24*60*60)
