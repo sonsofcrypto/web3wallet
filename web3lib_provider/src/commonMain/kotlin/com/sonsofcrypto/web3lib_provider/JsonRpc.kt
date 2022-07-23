@@ -4,6 +4,7 @@ import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonElement
 import kotlin.random.Random
+import kotlin.random.nextUInt
 import kotlin.random.nextULong
 
 /** Standard Json Rpc request
@@ -14,7 +15,7 @@ data class JsonRpcRequest(
     val jsonrpc: String = "2.0",
     val method: String,
     val params: List<JsonElement> = listOf(),
-    val id: ULong = Random.nextULong(),
+    val id: UInt = Random.nextUInt(),
 ) {
     companion object {
         fun with(method: Method, params: List<JsonElement> = listOf()): JsonRpcRequest {
@@ -69,26 +70,16 @@ data class JsonRpcRequest(
  * SEE: https://ethereum.org/en/developers/docs/apis/json-rpc
  */
 @Serializable
-data class JsonRpcResponse<T>(
-    val jsonrpc: String,
-    val result: @Contextual T,
-    val id: ULong
-)
-
-/** Standard Json Rpc response
- * SEE: https://ethereum.org/en/developers/docs/apis/json-rpc
- */
-@Serializable
-data class JsonRpcResponse2(
+data class JsonRpcResponse(
     val jsonrpc: String,
     val result: JsonElement,
-    val id: ULong
+    val id: UInt
 )
 
 @Serializable
 data class JsonRpcErrorResponse(
     val error: Error,
-    val id: Int
+    val id: UInt
 ) {
     @Serializable
     data class Error(

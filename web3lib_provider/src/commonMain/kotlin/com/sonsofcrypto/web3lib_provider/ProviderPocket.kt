@@ -29,6 +29,7 @@ import kotlin.native.concurrent.SharedImmutable
 
 @SharedImmutable
 private val providerJson = Json {
+    encodeDefaults = true
     isLenient = true
     ignoreUnknownKeys = true
     coerceInputValues = true
@@ -59,6 +60,10 @@ class ProviderPocket {
                     providerJson,
                     ContentType.Application.Json.withCharset(UTF_8)
                 )
+            }
+            install(HttpTimeout) {
+                requestTimeoutMillis = 30000
+                socketTimeoutMillis = 30000
             }
             install(Auth) {
                 basic {
@@ -202,6 +207,7 @@ class ProviderPocket {
         return@withContext Block.fromHexifiedJsonObject(result)
     }
 
+    @Throws(Throwable::class)
     suspend fun getTransaction(
         hash: DataHexString,
     ): Transaction = withContext(dispatcher) {
@@ -212,6 +218,7 @@ class ProviderPocket {
         return@withContext Transaction.fromHexifiedJsonObject(result)
     }
 
+    @Throws(Throwable::class)
     suspend fun getTransaction(
         block: BlockTag,
         index: BigInt
@@ -229,6 +236,7 @@ class ProviderPocket {
         return@withContext Transaction.fromHexifiedJsonObject(result)
     }
 
+    @Throws(Throwable::class)
     suspend fun getTransactionReceipt(
         hash: String
     ): TransactionReceipt = withContext(dispatcher) {
@@ -239,6 +247,7 @@ class ProviderPocket {
         return@withContext TransactionReceipt.fromHexifiedJsonObject(result)
     }
 
+    @Throws(Throwable::class)
     suspend fun getUncleBlock(
         block: BlockTag,
         index: BigInt
@@ -254,6 +263,75 @@ class ProviderPocket {
             )
         )
         return@withContext Block.fromHexifiedJsonObject(result)
+    }
+
+    @Throws(Throwable::class)
+    suspend fun getLogs(
+        filterRequest: FilterRequest
+    ): List<Any> = withContext(dispatcher) {
+        val result = performGetArrResult(
+            method =  Method.GET_LOGS,
+            params = listOf(filterRequest.toHexifiedJsonObject())
+        )
+        return@withContext Log.fromHexifiedJsonObject(result)
+    }
+
+    @Throws(Throwable::class)
+    suspend fun newFilter(
+        filterRequest: FilterRequest
+    ): QuantityHexString = withContext(dispatcher) {
+        val result = performGetStrResult(
+            method =  Method.NEW_FILTER,
+            params = listOf(filterRequest.toHexifiedJsonObject())
+        )
+        return@withContext result
+    }
+
+    @Throws(Throwable::class)
+    suspend fun newBlockFilter(): QuantityHexString = withContext(dispatcher) {
+        val result = performGetStrResult(method =  Method.NEW_BLOCK_FILTER)
+        return@withContext result
+    }
+
+    @Throws(Throwable::class)
+    suspend fun newPendingTransactionFilter(): QuantityHexString = withContext(dispatcher) {
+        val result = performGetStrResult(method =  Method.NEW_PENDING_TRANSACTION_FILTER)
+        return@withContext result
+    }
+
+    @Throws(Throwable::class)
+    suspend fun getFilterChanges(
+        id: QuantityHexString
+    ): JsonObject = withContext(dispatcher) {
+        val result = performGetObjResult(
+            method = Method.GET_FILTER_CHANGES,
+            params = listOf(id.jsonPrimitive())
+        )
+        // TODO: Does not work over HTTPs. Implement responses once Websockets
+        return@withContext result
+    }
+
+    @Throws(Throwable::class)
+    suspend fun getFilterLogs(
+        id: QuantityHexString
+    ): JsonObject = withContext(dispatcher) {
+        val result = performGetObjResult(
+            method = Method.GET_FILTER_LOGS,
+            params = listOf(id.jsonPrimitive())
+        )
+        // TODO: Does not work over HTTPs. Implement responses once Websockets
+        return@withContext result
+    }
+
+    @Throws(Throwable::class)
+    suspend fun uninstallFilter(
+        id: QuantityHexString
+    ): Boolean = withContext(dispatcher) {
+        val result = performGetStrResult(
+            method =  Method.UNINTALL_FILTER,
+            params = listOf(id.jsonPrimitive())
+        )
+        return@withContext result.toBoolean()
     }
 
     /** Utilities */
@@ -275,6 +353,14 @@ class ProviderPocket {
     }
 
     @Throws(Throwable::class)
+    suspend fun performGetArrResult(
+        method: Method,
+        params: List<JsonElement> = listOf()
+    ): JsonArray = withContext(dispatcher) {
+        return@withContext performGetArrResult(JsonRpcRequest.with(method, params))
+    }
+
+    @Throws(Throwable::class)
     suspend fun performGetStrResult(
         req: JsonRpcRequest
     ): String = withContext(dispatcher) {
@@ -289,32 +375,42 @@ class ProviderPocket {
     }
 
     @Throws(Throwable::class)
+    suspend fun performGetArrResult(
+        req: JsonRpcRequest
+    ): JsonArray = withContext(dispatcher) {
+        return@withContext perform(req).result as JsonArray
+    }
+
+    @Throws(Throwable::class)
     suspend fun perform(
         req: JsonRpcRequest
-    ): JsonRpcResponse2 = withContext(dispatcher) {
+    ): JsonRpcResponse = withContext(dispatcher) {
+        var respBody = ""
         try {
-            return@withContext providerJson.decodeFromString(
-                client.post(url()) {
-                    contentType(ContentType.Application.Json)
-                    setBody(providerJson.encodeToString(req))
-                }.bodyAsText()
-            )
+            respBody = client.post(url()) {
+                contentType(ContentType.Application.Json)
+                setBody(providerJson.encodeToString(req))
+            }.bodyAsText()
+            return@withContext providerJson.decodeFromString(respBody)
         } catch (err: Throwable) {
-            throw processJsonRpcError(err)
+            throw processJsonRpcError(err, respBody)
         }
     }
 
-    private fun processJsonRpcError(error: Throwable): Throwable {
-        val response = (error as? ResponseException)?.response
-        val bodyText =  runBlocking { response?.bodyAsText() }
-        if (bodyText == null) {
+    private fun processJsonRpcError(error: Throwable, respBody: String): Throwable {
+        var jsonRpcErrorResponse: JsonRpcErrorResponse? = null
+        if (respBody.isEmpty()) {
             throw error
         }
-        val jsonRpcErrorResponse = decode<JsonRpcErrorResponse>(
-            bodyText ?: error.message.orEmpty(),
-            providerJson
-        )
-        throw jsonRpcErrorResponse.error ?: error
+        try {
+            jsonRpcErrorResponse = decode<JsonRpcErrorResponse>(
+                respBody,
+                providerJson
+            )
+        } catch (e: Throwable) {
+            println(e)
+        }
+        throw jsonRpcErrorResponse?.error ?: error
     }
 
     @OptIn(InternalSerializationApi::class)

@@ -5,9 +5,10 @@ import com.sonsofcrypto.web3lib_core.Network
 import com.sonsofcrypto.web3lib_provider.*
 import com.sonsofcrypto.web3lib_utils.BigInt
 import com.sonsofcrypto.web3lib_utils.hexStringToByteArray
+import com.sonsofcrypto.web3lib_utils.keccak256
 import kotlinx.coroutines.*
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonArray
 import java.lang.Exception
 import kotlin.time.ExperimentalTime
 
@@ -40,7 +41,9 @@ class ProviderTest {
 //        testGetTransaction()
 //        testGetTransactionByBlockIndex()
 //        testGetTransactionReceipt()
-          testGetUncleBlock()
+//        testGetUncleBlock()
+          testGetLogs()
+//          testNewFilter()
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
@@ -501,9 +504,9 @@ class ProviderTest {
                     address = Address.HexString("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"),
                     data = "0x0000000000000000000000000000000000000000000000023482399000000000",
                     topics = listOf(
-                        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-                        "0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40",
-                        "0x000000000000000000000000454f11d58e27858926d7a4ece8bfea2c33e97b13"
+                        Topic.TopicValue("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"),
+                        Topic.TopicValue("0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40"),
+                        Topic.TopicValue("0x000000000000000000000000454f11d58e27858926d7a4ece8bfea2c33e97b13"),
                     ),
                     transactionHash = "0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0",
                     logIndex = BigInt.from(0),
@@ -516,9 +519,9 @@ class ProviderTest {
                     address = Address.HexString("0x5a98fcbea516cf06857215779fd812ca3bef1b32"),
                     data = "0x0000000000000000000000000000000000000000000004dc6716096283f2386e",
                     topics = listOf(
-                        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-                        "0x000000000000000000000000454f11d58e27858926d7a4ece8bfea2c33e97b13",
-                        "0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40"
+                        Topic.TopicValue("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"),
+                        Topic.TopicValue("0x000000000000000000000000454f11d58e27858926d7a4ece8bfea2c33e97b13"),
+                        Topic.TopicValue("0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40"),
                     ),
                     transactionHash = "0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0",
                     logIndex = BigInt.from(1),
@@ -531,7 +534,7 @@ class ProviderTest {
                     address = Address.HexString("0x454f11d58e27858926d7a4ece8bfea2c33e97b13"),
                     data = "0x00000000000000000000000000000000000000000000065b908fbfa84299fddb000000000000000000000000000000000000000000000005149e8e76220a421d",
                     topics = listOf(
-                        "0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1"
+                        Topic.TopicValue("0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1")
                     ),
                     transactionHash = "0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0",
                     logIndex = BigInt.from(2),
@@ -544,9 +547,9 @@ class ProviderTest {
                     address = Address.HexString("0x454f11d58e27858926d7a4ece8bfea2c33e97b13"),
                     data = "0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000234823990000000000000000000000000000000000000000000000000000004dc6716096283f2386e0000000000000000000000000000000000000000000000000000000000000000",
                     topics = listOf(
-                        "0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822",
-                        "0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40",
-                        "0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40"
+                        Topic.TopicValue("0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822"),
+                        Topic.TopicValue("0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40"),
+                        Topic.TopicValue("0x00000000000000000000000000000000003b3cc22af3ae1eac0440bcee416b40"),
                     ),
                     transactionHash = "0xc703ec0e22b6ede8846d76d0bf500a806ade95ba74e09d714e3688a86c3b15c0",
                     logIndex = BigInt.from(3),
@@ -590,16 +593,62 @@ class ProviderTest {
         println("=== result $result")
     }
 
+    fun testGetLogs() = runBlocking {
+        val provider = ProviderPocket(Network.ethereum())
+        val hash = keccak256("Transfer(address,address,uint256)".toByteArray())
+        // 0xddf252ad
+        //   ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+        val signature = DataHexString(hash) // DataHexString(hash.copyOfRange(0, 4))
+        println("=== signarure $signature")
+        val result = provider.getLogs(
+            FilterRequest(
+                BlockTag.Number(15201128),
+                BlockTag.Number(15201130),
+                Address.HexString("0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce"),
+                listOf(
+                    Topic.TopicValue(signature),
+                    Topic.TopicValue(null),
+                    Topic.TopicValue(null),
+                ),
+            )
+        )
+
+//        val data = """
+//            [{"address":"0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce","topics":["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef","0x0000000000000000000000001522900b6dafac587d499a862861c0869be6e428","0x0000000000000000000000002fe25e374a43caa1552d6a10d60eddf962b69a38"],"data":"0x00000000000000000000000000000000000000000022e66ecc0194fefd880000","blockNumber":"0xe7f368","transactionHash":"0xb54673b5e8a9ffd573589f2f9674fec1978f6be02059f536d27de6e34dad422f","transactionIndex":"0x52","blockHash":"0xbeb188e6a41562b812ff32c82432f0fc48675e28eef17c098af7bfb25327b14b","logIndex":"0xa0","removed":false}]
+//        """.trimIndent()
+//        val json = Json.decodeFromString(JsonArray.serializer(), data)
+//        val result = Log.fromHexifiedJsonObject(json)
+        println("=== result $result")
+    }
+
+    fun testNewFilter() = runBlocking {
+        val provider = ProviderPocket(Network.ethereum())
+
+        // 0x1f75d3e737ccf5f7d268360201fd39a
+//        val resultBlock = provider.newBlockFilter()
+//        println("=== result $resultBlock")
+
+        // 0x1edb8f4b44166a87f834ab04743f8099
+//        val result = provider.newPendingTransactionFilter()
+//        println("=== result $result")
+
+//        val result = provider.getFilterChanges("0x1edb8f4b44166a87f834ab04743f8099")
+//        println("=== result $result")
+
+//        val resultUninstal = provider.uninstallFilter(result)
+//        println("=== result $resultUninstal")
+    }
+
     fun testErrorHandling() {
         val errorString = """
             {"error":{"code":-32602,"message":"test"},"id":2101504395,"jsonrpc":"2.0"}
         """.trimIndent().replace("\n", "")
         val expected = JsonRpcErrorResponse(
             JsonRpcErrorResponse.Error(-32602, "test"),
-            2101504395
+            2101504395u
         )
         val provider = ProviderPocket(Network.ethereum())
-        val error =provider.decode<JsonRpcErrorResponse>(errorString, providerJson)
+        val error = provider.decode<JsonRpcErrorResponse>(errorString, providerJson)
         assertTrue(error == expected, "Unexpected error $error")
     }
 

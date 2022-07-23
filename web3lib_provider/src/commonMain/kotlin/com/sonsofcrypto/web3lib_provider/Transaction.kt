@@ -96,8 +96,6 @@ data class Transaction(
         }
     }
 
-    // TODO: Add transaciton index
-
     companion object {
 
         @Throws(Throwable::class)
