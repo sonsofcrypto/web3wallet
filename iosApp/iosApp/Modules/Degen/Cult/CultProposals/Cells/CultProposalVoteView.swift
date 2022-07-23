@@ -16,7 +16,6 @@ final class CultProposalVoteView: UIView {
 
     private lazy var progressView: UIView = {
         let view = UIView(frame: bounds)
-        view.backgroundColor = Theme.colour.navBarTint
         view.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         insertSubview(view, at: 0)
         return view
@@ -41,6 +40,16 @@ final class CultProposalVoteView: UIView {
         textLabel.text = viewModel.name
         pctLabel.text = NumberFormatter.pct.string(from: viewModel.value)
         progress = viewModel.value
+        
+        switch viewModel.type {
+            
+        case .approved:
+            progressView.backgroundColor = Theme.colour.candleGreen
+        case .rejected:
+            progressView.backgroundColor = Theme.colour.candleRed
+        }
+        
+
     }
 
     override func layoutSubviews() {

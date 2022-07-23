@@ -15,8 +15,13 @@ extension CultProposalsViewModel {
     struct Section {
         
         let title: String
-        let horizontalScrolling: Bool
+        let type: `Type`
         let items: [Item]
+        
+        enum `Type` {
+            case pending
+            case closed
+        }
     }
 
     struct Item {
@@ -28,12 +33,20 @@ extension CultProposalsViewModel {
         let approveButtonTitle: String
         let rejectButtonTitle: String
         let isNew: Bool
-        let date: Date
+        let endDate: Date
         
         struct Vote {
             
             let name: String
             let value: Float
+            let total: Float
+            let type: `Type`
+            
+            enum `Type` {
+                
+                case approved
+                case rejected
+            }
         }
     }
 }

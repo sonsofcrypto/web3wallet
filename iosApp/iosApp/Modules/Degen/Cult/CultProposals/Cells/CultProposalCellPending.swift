@@ -4,16 +4,17 @@
 
 import UIKit
 
-final class CultProposalCell: CollectionViewCell {
+final class CultProposalCellPending: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var approvedVoteView: CultProposalVoteView!
+    @IBOutlet weak var approvedVotes: UILabel!
     @IBOutlet weak var rejectedVoteView: CultProposalVoteView!
-    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var rejectedVotes: UILabel!
     @IBOutlet weak var chevronImageView: UIImageView!
     @IBOutlet weak var approveButton: Button!
     @IBOutlet weak var rejectButton: Button!
-    private weak var labelView: LabelView!
+    private weak var statusView: StatusView!
 
     private var timer: Timer? = nil
     private var date: Date = .distantPast
@@ -32,7 +33,9 @@ final class CultProposalCell: CollectionViewCell {
         super.awakeFromNib()
         
         titleLabel.apply(style: .body, weight: .bold)
-        
+        approvedVotes.apply(style: .footnote)
+        rejectedVotes.apply(style: .footnote)
+
         chevronImageView.tintColor = Theme.colour.labelPrimary
         
         approveButton.style = .primary
@@ -42,14 +45,14 @@ final class CultProposalCell: CollectionViewCell {
         
         clipsToBounds = false
         
-        let labelView = LabelView()
-        addSubview(labelView)
-        self.labelView = labelView
-        labelView.addConstraints(
+        let statusView = StatusView()
+        addSubview(statusView)
+        self.statusView = statusView
+        statusView.addConstraints(
             [
                 .layout(
                     anchor: .topAnchor,
-                    constant: .equalTo(constant: -8)
+                    constant: .equalTo(constant: -Theme.constant.padding * 0.75)
                 ),
                 .layout(
                     anchor: .trailingAnchor,
@@ -63,31 +66,6 @@ final class CultProposalCell: CollectionViewCell {
         bottomSeparatorView.isHidden = true
     }
     
-    func update(
-        with viewModel: CultProposalsViewModel.Item,
-        handler: Handler
-    ) {
-        self.viewModel = viewModel
-        self.handler = handler
-        
-        labelView.isHidden = !viewModel.isNew
-        
-        titleLabel.text = viewModel.title
-        approvedVoteView.update(
-            viewModel: viewModel.approved
-        )
-        rejectedVoteView.update(
-            viewModel: viewModel.rejected
-        )
-        statusLabel.text = "Proposal status"
-        date = viewModel.date
-        
-        approveButton.setTitle(viewModel.approveButtonTitle, for: .normal)
-        rejectButton.setTitle(viewModel.rejectButtonTitle, for: .normal)
-        
-        updateDate()
-    }
-
     override func didMoveToWindow() {
         
         super.didMoveToWindow()
@@ -103,9 +81,35 @@ final class CultProposalCell: CollectionViewCell {
             timer = nil
         }
     }
+    
+    func update(
+        with viewModel: CultProposalsViewModel.Item,
+        handler: Handler
+    ) -> Self {
+        self.viewModel = viewModel
+        self.handler = handler
+        
+        titleLabel.text = viewModel.title
+        approvedVoteView.update(
+            viewModel: viewModel.approved
+        )
+        approvedVotes.text = viewModel.approved.total.thowsandsFormatted()
+        rejectedVoteView.update(
+            viewModel: viewModel.rejected
+        )
+        rejectedVotes.text = viewModel.rejected.total.thowsandsFormatted()
+        date = viewModel.endDate
+        
+        approveButton.setTitle(viewModel.approveButtonTitle, for: .normal)
+        rejectButton.setTitle(viewModel.rejectButtonTitle, for: .normal)
+        
+        updateDate()
+        
+        return self
+    }
 }
 
-private extension CultProposalCell  {
+private extension CultProposalCellPending  {
     
     func updateDate() {
         
@@ -119,9 +123,42 @@ private extension CultProposalCell  {
         let minutes = comps.minute ?? 0
         let seconds = comps.second ?? 0
         
-        statusLabel.text = String(
-            format: "%02d:%02d:%02d:%02d", days, hours, minutes, seconds
-        )
+        var dateString = ""
+        
+        if days > 0 {
+            dateString += Localized("time.until.day.shortest", arg: days.stringValue)
+        }
+        
+        if hours > 0 || !dateString.isEmpty {
+            let hoursFormatted = String(
+                format: "%02d", hours
+            )
+            dateString += dateString.isEmpty ? "" : " "
+            dateString += Localized("time.until.hour.shortest", arg: hoursFormatted)
+        }
+
+        if minutes > 0 || !dateString.isEmpty {
+            let minutesFormatted = String(
+                format: "%02d", minutes
+            )
+            dateString += dateString.isEmpty ? "" : " "
+            dateString += Localized("time.until.min.shortest", arg: minutesFormatted)
+        }
+
+        if seconds > 0 || !dateString.isEmpty {
+            let secondsFormatted = String(
+                format: "%02d", seconds
+            )
+            dateString += dateString.isEmpty ? "" : " "
+            dateString += Localized("time.until.sec.shortest", arg: secondsFormatted)
+        }
+        
+        if dateString.isEmpty {
+            
+            dateString = Localized("cult.proposals.pending.processing")
+        }
+
+        statusView.text = dateString
     }
     
     @objc func approveProposal() {
@@ -135,9 +172,17 @@ private extension CultProposalCell  {
     }
 }
 
-private final class LabelView: UIView {
+private final class StatusView: UIView {
     
     private weak var label: UILabel!
+    
+    var text: String = "" {
+        
+        didSet {
+            
+            label.text = text
+        }
+    }
     
     override init(frame: CGRect) {
         
@@ -152,29 +197,20 @@ private final class LabelView: UIView {
     
     func configureUI() {
         
-        backgroundColor = Theme.colour.candleGreen
+        backgroundColor = Theme.colour.navBarTint
         layer.cornerRadius = Theme.constant.cornerRadiusSmall
         
         let label = UILabel()
         label.apply(style: .callout, weight: .bold)
-        label.text = Localized("new").uppercased()
         self.addSubview(label)
         self.label = label
         label.addConstraints(
             [
-                .layout(anchor: .topAnchor, constant: .equalTo(constant: 4)),
-                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: 4)),
+                .layout(anchor: .topAnchor, constant: .equalTo(constant: 2)),
+                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: 2)),
                 .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 8)),
                 .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 8))
             ]
         )
-    }
-    
-    override func layoutSubviews() {
-        
-        super.layoutSubviews()
-        
-        guard let superview = superview else { return }
-        sendSubviewToBack(superview)
     }
 }

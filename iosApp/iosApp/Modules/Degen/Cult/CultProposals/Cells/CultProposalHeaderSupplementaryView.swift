@@ -57,11 +57,11 @@ extension CultProposalHeaderSupplementaryView {
         
         label.text = viewModel.title
         
-        layoutConstraintLeading.constant = viewModel.horizontalScrolling ?
+        layoutConstraintLeading.constant = viewModel.type == .pending ?
         Theme.constant.padding :
         Theme.constant.padding + Theme.constant.padding.half
         
-        layoutConstraintBottom.constant = viewModel.horizontalScrolling ?
+        layoutConstraintBottom.constant = viewModel.type == .pending ?
         0 :
         Theme.constant.padding.half
     }

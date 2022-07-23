@@ -25,19 +25,31 @@ struct CultProposal {
     let cultReward: Float
     let rewardDistributions: Float
     let wallet: String
-    let isNew: Bool
+    let category: Category
+    
+    enum Category {
+        case none
+        case new
+    }
 }
 
 extension CultProposal {
 
-    static func mock(with title: String, id: Int, isNew: Bool = false) -> CultProposal {
+    static func mock(
+        id: Int,
+        with title: String,
+        approved: Float = 28126112668.969,
+        rejected: Float = 16583879978.515,
+        endDate: Date = Date().addingTimeInterval(Double.random(in: 0..<1000000)),
+        category: Category = .none
+    ) -> CultProposal {
         .init(
             id: id,
             title: title,
-            approved: 28126112668.969,
-            rejeceted: 16583879978.515,
-            totalVotes: 44709992647.485,
-            endDate: Date().addingTimeInterval(Double.random(in: 0..<1000000)),
+            approved: approved,
+            rejeceted: rejected,
+            totalVotes: approved + rejected,
+            endDate: endDate,
             guardianName: "Kely Chasse",
             guardianSocial: "@kyle_chasse",
             guardianWallet: "0x5B8235604885B9Fb34e6DDe5d8b47fb92C0371A9",
@@ -55,26 +67,70 @@ extension CultProposal {
             cultReward: 1,
             rewardDistributions: 6.25,
             wallet: "0x9aA80dCeD760224d59BEFe358c7C66C45e3BEA1C",
-            isNew: isNew
+            category: category
         )
     }
 
     static func closedMocks() -> [CultProposal] {
         
         [
-            mock(with: "Mock proposal", id: 61),
-            mock(with: "Web3 wallet", id: 60),
-            mock(with: "Another proposal", id: 39),
-            mock(with: "Mock project", id: 38),
+            mock(
+                id: 61,
+                with: "Proposal 41: Giveth Regen Farm",
+                approved: 16848805234.234,
+                rejected: 13347199621.322,
+                endDate: Date().addingTimeInterval(-16*24*60*60)
+            ),
+            mock(
+                id: 62,
+                with: "Proposal 40: Web3 wallet",
+                approved: 28126112668.969,
+                rejected: 16583879978.515,
+                endDate: Date().addingTimeInterval(-19*24*60*60)
+            ),
+            mock(
+                id: 63,
+                with: "Proposal 39: Giveth Regen Farm",
+                approved: 18126112668.969,
+                rejected: 60583879978.515,
+                endDate: Date().addingTimeInterval(-25*24*60*60)
+            ),
+            mock(
+                id: 64,
+                with: "Proposal 38: Inverse Finance Yield Farming",
+                approved: 19213120713.966,
+                rejected: 17674640646.963,
+                endDate: Date().addingTimeInterval(-30*24*60*60)
+            )
         ]
     }
 
     static func pendingProposals() -> [CultProposal] {
         
         [
-            mock(with: "Pending 1", id: 41, isNew: true),
-            mock(with: "Pending 2", id: 42),
-            mock(with: "Pending 3", id: 43, isNew: true)
+            mock(
+                id: 41,
+                with: "Proposal(104): ChainLink",
+                approved: 38126112668.969,
+                rejected: 6583879978.515,
+                endDate: Date().addingTimeInterval(16*24*60*60),
+                category: .new
+            ),
+            mock(
+                id: 42,
+                with: "Proposal(105): History (token)",
+                approved: 28126112668.969,
+                rejected: 66583879978.515,
+                endDate: Date().addingTimeInterval(15*24*60*60),
+                category: .new
+            ),
+            mock(
+                id: 43,
+                with: "Proposal(106): Verasity - Allocation #1",
+                approved: 12058527010.969,
+                rejected: 2058527010.515,
+                endDate: Date().addingTimeInterval(2*24*60*60)
+            )
         ]
     }
 }

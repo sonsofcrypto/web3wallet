@@ -61,11 +61,17 @@ extension CultProposalsViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeue(CultProposalCell.self, for: indexPath)
         guard let section = viewModel?.sections[indexPath.section] else { fatalError() }
         let viewModel = section.items[indexPath.item]
-        cell.update(with: viewModel, handler: makeCultProposalCellHandler())
-        return cell
+        
+        switch section.type {
+        case .pending:
+            let cell = collectionView.dequeue(CultProposalCellPending.self, for: indexPath)
+            return cell.update(with: viewModel, handler: makeCultProposalCellPendingHandler())
+        case .closed:
+            let cell = collectionView.dequeue(CultProposalCellClosed.self, for: indexPath)
+            return cell.update(with: viewModel)
+        }
     }
     
     func collectionView(
@@ -138,7 +144,7 @@ private extension CultProposalsViewController {
             let section = sections[sectionIndex]
             
             return self.makeCollectionLayoutSection(
-                isHorizontalScrolling: section.horizontalScrolling
+                isHorizontalScrolling: section.type == .pending
             )
         }
     }
@@ -189,7 +195,10 @@ private extension CultProposalsViewController {
                 trailing: Theme.constant.padding
             ) :
             .paddingHalf
-        section.interGroupSpacing = Theme.constant.padding.half
+        section.interGroupSpacing = isHorizontalScrolling ?
+        Theme.constant.padding.half :
+        Theme.constant.padding
+        
         if isHorizontalScrolling {
             section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         }
@@ -212,7 +221,7 @@ private extension CultProposalsViewController {
 
 private extension CultProposalsViewController {
 
-    func makeCultProposalCellHandler() -> CultProposalCell.Handler {
+    func makeCultProposalCellPendingHandler() -> CultProposalCellPending.Handler {
         
         .init(
             approveProposal: makeApproveProposal(),

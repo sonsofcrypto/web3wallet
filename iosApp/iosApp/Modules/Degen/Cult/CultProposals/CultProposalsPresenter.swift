@@ -68,19 +68,19 @@ private extension DefaultCultProposalsPresenter {
 
     func viewModel() -> CultProposalsViewModel {
         
-        pendingProposals = interactor.pendingProposals
-        closedProposals = interactor.closedProposals
+        pendingProposals = interactor.pendingProposals.sorted { $0.endDate < $1.endDate }
+        closedProposals = interactor.closedProposals.sorted { $0.endDate > $1.endDate }
         
         return .loaded(
             sections: [
                 .init(
                     title: Localized("cult.proposals.pending.title") + " (\(pendingProposals.count))",
-                    horizontalScrolling: true,
+                    type: .pending,
                     items: pendingProposals.compactMap { viewModel(from: $0) }
                 ),
                 .init(
                     title: Localized("cult.proposals.closed.title") + " (\(closedProposals.count))",
-                    horizontalScrolling: false,
+                    type: .closed,
                     items: closedProposals.compactMap { viewModel(from: $0) }
                 )
             ]
@@ -89,23 +89,27 @@ private extension DefaultCultProposalsPresenter {
 
     func viewModel(from cultProposal: CultProposal) -> CultProposalsViewModel.Item {
         
-        let approved = Float.random(in: 0.0...100.0) / 100.0
+        let approved = cultProposal.approved / (cultProposal.approved + cultProposal.rejeceted)
 
         return .init(
             id: cultProposal.id.stringValue,
-            title: String(format: "Proposal: %d %@", cultProposal.id, cultProposal.title),
+            title: cultProposal.title,
             approved: .init(
                 name: Localized("approved"),
-                value: approved
+                value: approved,
+                total: cultProposal.approved,
+                type: .approved
             ),
             rejected: .init(
                 name: Localized("rejected"),
-                value: 1 - approved
+                value: 1 - approved,
+                total: cultProposal.rejeceted,
+                type: .rejected
             ),
             approveButtonTitle: Localized("approve"),
             rejectButtonTitle: Localized("reject"),
-            isNew: cultProposal.isNew,
-            date: cultProposal.endDate
+            isNew: cultProposal.category.isNew,
+            endDate: cultProposal.endDate
         )
     }
     
@@ -121,5 +125,13 @@ private extension DefaultCultProposalsPresenter {
             
             return nil
         }
+    }
+}
+
+private extension CultProposal.Category {
+    
+    var isNew: Bool {
+        
+        self == .new
     }
 }

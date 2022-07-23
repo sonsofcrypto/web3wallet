@@ -36,6 +36,19 @@
 "rejected" = "Rejected";
 "reject" = "Reject";
 "new" = "New";
+"time.ago.day" = "%@day ago";
+"time.ago.days" = "%@days ago";
+"time.ago.hour" = "%@hour ago";
+"time.ago.hours" = "%@hours ago";
+"time.ago.min" = "%@minute ago";
+"time.ago.mins" = "%@minutes ago";
+"time.ago.day.short" = "%@d ago";
+"time.ago.hour.short" = "%@h ago";
+"time.ago.min.short" = "%@min ago";
+"time.until.day.shortest" = "%@d";
+"time.until.hour.shortest" = "%@h";
+"time.until.min.shortest" = "%@m";
+"time.until.sec.shortest" = "%@s";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";
@@ -228,4 +241,9 @@
 
 "cult.proposals.title" = "Cult.DAO Proposals";
 "cult.proposals.pending.title" = "Pending Proposals";
+"cult.proposals.pending.processing" = "Processing";
 "cult.proposals.closed.title" = "Closed Proposals";
+"cult.proposals.closed.totalVotes" = "Total Votes: %@";
+"cult.proposals.result" = "Result: %@";
+"cult.proposals.result.executed" = "Executed";
+"cult.proposals.result.defeated" = "Defeated";
