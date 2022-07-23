@@ -153,13 +153,13 @@ private final class StatusView: UIView {
         layer.borderColor = Theme.colour.fillQuaternary.cgColor
         
         let label = UILabel()
-        label.apply(style: .callout, weight: .bold)
+        label.apply(style: .footnote, weight: .bold)
         self.addSubview(label)
         self.label = label
         label.addConstraints(
             [
-                .layout(anchor: .topAnchor, constant: .equalTo(constant: 2)),
-                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: 2)),
+                .layout(anchor: .topAnchor, constant: .equalTo(constant: 4)),
+                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: 4)),
                 .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 8)),
                 .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 8))
             ]

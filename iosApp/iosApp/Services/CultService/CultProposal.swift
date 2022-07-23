@@ -18,18 +18,29 @@ struct CultProposal {
     let guardianWallet: String
 
     let projectSummary: String
-    let whitepaper: URL?
-    let socials: [URL]
-    let audits: String
+    let projectDocuments: [ProjectDocuments]
     
-    let cultReward: Float
-    let rewardDistributions: Float
+    let cultReward: String
+    let rewardDistributions: String
     let wallet: String
     let category: Category
     
     enum Category {
         case none
         case new
+    }
+    
+    struct ProjectDocuments {
+        
+        let name: String
+        let note: String?
+        let documents: [Document]
+        
+        struct Document {
+            
+            let displayName: String
+            let url: URL
+        }
     }
 }
 
@@ -56,16 +67,47 @@ extension CultProposal {
             projectSummary: """
                             Note : This was provided to me by team, I am NOT part of the team, just a very excited supporter. Description: First truly web3 wallet, that does not compromise an iota on crypto ideals. By degens for degens. - Virtually all the wallets connect to networks via web2 services. That's flat out embarrassing. We are putting an end to that. - Anything web3 / DeFi sucks on mobile and is indeed out of reach for non crypto natives. Normies do everything on mobile. There is an easy 10x for whole space once it is easy to use on mobile. We are building in large directory of all the categories of DeFi products. - All the fees generated in apps will go to token LP stakers trustlessly via yield farm. Hence giving token a floor price which is a function of usage of the apps. - Fair launch, not presale, team only gets rich if product has wide adoption and usage. - All the code is open source MIT licensed Kyle's comments on investment opportunity: - NO VCs - CULT will be the only pre-sale in the world at an amazing Valuation of only $4,000,000 FDV. Netting us nearly 1% of the total supply, imagine if metamask had a token with excellent tokenomics and CULT had 1%
                             """,
-            whitepaper: URL(string: "https://sonsofcrypto.com/web3token_whitepaper.pdf")!,
-            socials: [
-                URL(string: "https://twitter.com/sonsofcryptolab")!,
-                URL(string: "https://discord.gg/ptJGvwGkEj")!,
-                URL(string: "https://t.me/+osHUInXKmwMyZjQ0")!,
-                URL(string: "https://github.com/sonsofcrypto")!,
+            projectDocuments: [
+                .init(
+                    name: "Lite/Whitepaper",
+                    note: nil,
+                    documents: [
+                        .init(
+                            displayName: "https://sonsofcrypto.com/web3token_whitepaper.pdf",
+                            url: URL(string: "https://sonsofcrypto.com/web3token_whitepaper.pdf")!
+                        )
+                    ]
+                ),
+                .init(
+                    name: "Social Docs",
+                    note: nil,
+                    documents: [
+                        .init(
+                            displayName: "Twitter",
+                            url: URL(string: "https://twitter.com/sonsofcryptolab")!
+                        ),
+                        .init(
+                            displayName: "Discord",
+                            url: URL(string: "https://discord.gg/ptJGvwGkEj")!
+                        ),
+                        .init(
+                            displayName: "Telegram",
+                            url: URL(string: "https://t.me/+osHUInXKmwMyZjQ0")!
+                        ),
+                        .init(
+                            displayName: "GitHub",
+                            url: URL(string: "https://github.com/sonsofcrypto")!
+                        )
+                    ]
+                ),
+                .init(
+                    name: "Audits",
+                    note: "Not done yet, this is presale, of course quality audits will be done. But here is link to contract: https://github.com/sonsofcrypto/w3t",
+                    documents: []
+                )
             ],
-            audits: "Not done yet, this is presale, of course quality audits will be done. But here is link to contract: https://github.com/sonsofcrypto/w3t",
-            cultReward: 1,
-            rewardDistributions: 6.25,
+            cultReward: "1% of Total Supply",
+            rewardDistributions: "6.25% per Month.",
             wallet: "0x9aA80dCeD760224d59BEFe358c7C66C45e3BEA1C",
             category: category
         )

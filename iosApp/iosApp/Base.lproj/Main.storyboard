@@ -189,49 +189,6 @@
             </objects>
             <point key="canvasLocation" x="3299" y="874"/>
         </scene>
-        <!--iosApp-->
-        <scene sceneID="OOs-fl-WRE">
-            <objects>
-                <viewController storyboardIdentifier="CultProposalViewController" title="iosApp" id="val-pv-NKK" customClass="CultProposalViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="uzh-Ef-k8F" customClass="GradientView" customModule="iosApp" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="da1-gL-Gm5">
-                                <rect key="frame" x="16" y="44" width="343" height="734"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <color key="textColor" name="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="nFW-rr-ezi"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="nFW-rr-ezi" firstAttribute="bottom" secondItem="da1-gL-Gm5" secondAttribute="bottom" id="5FD-we-Wxt"/>
-                            <constraint firstItem="da1-gL-Gm5" firstAttribute="leading" secondItem="nFW-rr-ezi" secondAttribute="leading" constant="16" id="MTZ-rr-8dA"/>
-                            <constraint firstItem="nFW-rr-ezi" firstAttribute="trailing" secondItem="da1-gL-Gm5" secondAttribute="trailing" constant="16" id="koy-aB-xvM"/>
-                            <constraint firstItem="da1-gL-Gm5" firstAttribute="top" secondItem="nFW-rr-ezi" secondAttribute="top" id="wii-yx-7Z9"/>
-                        </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="defaultTopColor">
-                                <color key="value" name="bgGradientTop"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="color" keyPath="defaultBottomColor">
-                                <color key="value" name="bgGradientBottom"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                    </view>
-                    <navigationItem key="navigationItem" title="wallets" id="cGo-0v-8ap"/>
-                    <connections>
-                        <outlet property="textView" destination="da1-gL-Gm5" id="tWr-Ae-zNu"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3bb-Xc-IZc" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1079" y="3658"/>
-        </scene>
     </scenes>
     <color key="tintColor" name="tintPrimary"/>
     <resources>
@@ -242,9 +199,6 @@
         </namedColor>
         <namedColor name="bgGradientTop">
             <color red="0.1289999932050705" green="0.11800000071525574" blue="0.23899999260902405" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="textColor">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="tintPrimary">
             <color red="0.90600001811981201" green="0.21600000560283661" blue="0.58399999141693115" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

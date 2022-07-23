@@ -7,31 +7,42 @@ import Foundation
 struct CultProposalViewModel {
 
     let title: String
-    let guardian: String
-    let summary: String
-    let wallet: String
+    let proposals: [ProposalDetails]
+    let selectedIndex: Int
 
-    init(_ proposal: CultProposal) {
-        title = "Proposal \(proposal.id): \(proposal.title)"
-
-        guardian = """
-                   name: \(proposal.guardianName)
-                   social: \(proposal.guardianSocial)
-                   wallet: \(proposal.guardianName)
-                   """
-
-        summary = """
-                  \(proposal.projectSummary) \n
-                  \(proposal.socials)
-                  """ + proposal.socials
-                    .map { $0.relativeString }
-                    .reduce("", { $0 + $1 + "\n" })
-                  + "\n" + proposal.audits
-
-        wallet = """
-                 cult reward: \(proposal.cultReward)
-                 distribution: \(proposal.rewardDistributions)
-                 wallet: \(proposal.wallet)
-                 """
+    struct ProposalDetails {
+        
+        let name: String
+        let guardianInfo: GuardianInfo
+        let summary: String
+        let documents: [DocumentsInfo]
+        let rewardAllocation: String
+        let rewardDistribution: String
+        let projectETHWallet: String
+        
+        struct GuardianInfo {
+            
+            let name: String
+            let socialHandle: String
+            let wallet: String
+        }
+        
+        struct DocumentsInfo {
+            
+            let name: String
+            let note: String?
+            let documents: [Document]
+            
+            struct Document {
+                
+                let displayName: String
+                let url: URL
+            }
+        }
+    }
+    
+    var titleIcon: Data {
+        
+        UIImage(named: "degen-cult-icon")!.pngData()!
     }
 }

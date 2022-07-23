@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import UIKit
 
 enum CultProposalsViewModel {
     case loading
@@ -65,6 +66,11 @@ extension CultProposalsViewModel {
     
     var title: String {
         Localized("cult.proposals.title")
+    }
+    
+    var titleIcon: Data {
+        
+        UIImage(named: "degen-cult-icon")!.pngData()!
     }
 
     var sections: [CultProposalsViewModel.Section] {

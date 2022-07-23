@@ -13,7 +13,7 @@ final class CultProposalsViewController: BaseViewController {
 
     var presenter: CultProposalsPresenter!
 
-    private var viewModel: CultProposalsViewModel?
+    private var viewModel: CultProposalsViewModel!
     
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -33,7 +33,7 @@ extension CultProposalsViewController: CultProposalsView {
         
         self.viewModel = viewModel
         
-        title = viewModel.title
+        setTitle()
         
         collectionView.reloadData()
     }
@@ -43,7 +43,7 @@ extension CultProposalsViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         
-        viewModel?.sections.count ?? 0
+        viewModel.sections.count
     }
     
     func collectionView(
@@ -51,8 +51,7 @@ extension CultProposalsViewController: UICollectionViewDataSource {
         numberOfItemsInSection section: Int
     ) -> Int {
         
-        guard let section = viewModel?.sections[section] else { return 0 }
-        return section.items.count
+        viewModel.sections[section].items.count
     }
     
 
@@ -61,7 +60,7 @@ extension CultProposalsViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         
-        guard let section = viewModel?.sections[indexPath.section] else { fatalError() }
+        let section = viewModel.sections[indexPath.section]
         let viewModel = section.items[indexPath.item]
         
         switch section.type {
@@ -92,7 +91,7 @@ extension CultProposalsViewController: UICollectionViewDataSource {
                 return CultProposalHeaderSupplementaryView()
             }
             
-            guard let section = viewModel?.sections[indexPath.section] else { fatalError() }
+            let section = viewModel.sections[indexPath.section]
             headerView.update(with: section)
             return headerView
             
@@ -110,13 +109,27 @@ extension CultProposalsViewController: UICollectionViewDelegate {
         didSelectItemAt indexPath: IndexPath
     ) {
         
-        guard let section = viewModel?.sections[indexPath.section] else { return }
+        let section = viewModel.sections[indexPath.section]
         let item = section.items[indexPath.row]
         presenter.handle(.selectProposal(id: item.id))
     }
 }
 
 private extension CultProposalsViewController {
+    
+    func setTitle() {
+        
+        let cultIcon = viewModel.titleIcon.pngImage!.resize(to: .init(width: 32, height: 32))
+        let imageView = UIImageView(image: cultIcon)
+        let titleLabel = UILabel()
+        titleLabel.text = viewModel.title
+        titleLabel.apply(style: .navTitle)
+        
+        let stackView = HStackView([imageView, titleLabel])
+        stackView.spacing = 4
+        
+        navigationItem.titleView = stackView
+    }
     
     func configureUI() {
         
@@ -139,9 +152,9 @@ private extension CultProposalsViewController {
             
             [weak self] sectionIndex, _ in
             
-            guard let self = self, let sections = self.viewModel?.sections else { return nil }
+            guard let self = self else { return nil }
             
-            let section = sections[sectionIndex]
+            let section = self.viewModel.sections[sectionIndex]
             
             return self.makeCollectionLayoutSection(
                 isHorizontalScrolling: section.type == .pending

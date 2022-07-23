@@ -247,3 +247,6 @@
 "cult.proposals.result" = "Result: %@";
 "cult.proposals.result.executed" = "Executed";
 "cult.proposals.result.defeated" = "Defeated";
+
+"cult.proposal.title" = "Proposal";
+"cult.proposal.title.of" = "of";

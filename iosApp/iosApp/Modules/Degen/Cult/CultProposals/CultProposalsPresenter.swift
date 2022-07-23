@@ -55,7 +55,12 @@ extension DefaultCultProposalsPresenter: CultProposalsPresenter {
             
             guard let proposal = findProposal(with: id) else { return }
             
-            wireframe.navigate(to: .proposal(proposal: proposal))
+            wireframe.navigate(
+                to: .proposal(
+                    proposal: proposal,
+                    proposals: pendingProposals + closedProposals
+                )
+            )
             
         case .approveProposal, .rejectProposal:
             
