@@ -74,12 +74,12 @@ private extension DefaultCultProposalsPresenter {
         return .loaded(
             sections: [
                 .init(
-                    title: "(\(pendingProposals.count)) " + Localized("cult.proposals.pending.title"),
+                    title: Localized("cult.proposals.pending.title") + " (\(pendingProposals.count))",
                     horizontalScrolling: true,
                     items: pendingProposals.compactMap { viewModel(from: $0) }
                 ),
                 .init(
-                    title: "(\(closedProposals.count)) " + Localized("cult.proposals.closed.title"),
+                    title: Localized("cult.proposals.closed.title") + " (\(closedProposals.count))",
                     horizontalScrolling: false,
                     items: closedProposals.compactMap { viewModel(from: $0) }
                 )
