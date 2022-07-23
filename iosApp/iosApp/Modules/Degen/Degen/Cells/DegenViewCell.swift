@@ -4,14 +4,13 @@
 
 import UIKit
 
-final class DegenViewCell: UICollectionViewCell {
+final class DegenViewCell: CollectionViewCell {
     
     @IBOutlet weak var iconImageViewWrapper: UIView!
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subTitleLabel: UILabel!
     @IBOutlet weak var chevronImage: UIImageView!
-    @IBOutlet weak var separatorLine: UIView!
     
     override func awakeFromNib() {
         
@@ -29,8 +28,6 @@ final class DegenViewCell: UICollectionViewCell {
         subTitleLabel.textColor = Theme.colour.labelSecondary
         
         chevronImage.tintColor = Theme.colour.labelSecondary
-        
-        separatorLine.backgroundColor = Theme.colour.separatorNoTransparency
     }
 }
 
@@ -50,6 +47,6 @@ extension DegenViewCell {
         
         subTitleLabel.text = viewModel.subtitle
         
-        separatorLine.isHidden = !showSeparator
+        bottomSeparatorView.isHidden = !showSeparator
     }
 }

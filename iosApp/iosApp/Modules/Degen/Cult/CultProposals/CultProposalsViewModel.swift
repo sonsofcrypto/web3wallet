@@ -6,52 +6,74 @@ import Foundation
 
 enum CultProposalsViewModel {
     case loading
-    case loaded(items: [Item], selectedIdx: Int)
+    case loaded(sections: [Section])
     case error(error: AppsViewModel.Error)
 }
 
-// MARK - Item
-
 extension CultProposalsViewModel {
+    
+    struct Section {
+        
+        let title: String
+        let type: `Type`
+        let items: [Item]
+        
+        enum `Type` {
+            case pending
+            case closed
+        }
+    }
 
     struct Item {
+        
+        let id: String
         let title: String
-        let approved: Float
-        let rejected: Float
-        let date: Date
+        let approved: Vote
+        let rejected: Vote
+        let approveButtonTitle: String
+        let rejectButtonTitle: String
+        let isNew: Bool
+        let endDate: Date
+        
+        struct Vote {
+            
+            let name: String
+            let value: Float
+            let total: Float
+            let type: `Type`
+            
+            enum `Type` {
+                
+                case approved
+                case rejected
+            }
+        }
     }
 }
-
-// MARK: - Error
 
 extension CultProposalsViewModel {
 
     struct Error {
+        
         let title: String
         let body: String
         let actions: [String]
     }
 }
 
-// MARK: - Utility
-
 extension CultProposalsViewModel {
-
-    func items() -> [CultProposalsViewModel.Item] {
-        switch self {
-        case let .loaded(items, _):
-            return items
-        default:
-            return []
-        }
+    
+    var title: String {
+        Localized("cult.proposals.title")
     }
 
-    func selectedIdx() -> Int? {
+    var sections: [CultProposalsViewModel.Section] {
+        
         switch self {
-        case let .loaded(_, idx):
-            return idx
+        case let .loaded(sections):
+            return sections
         default:
-            return nil
+            return []
         }
     }
 }

@@ -5,20 +5,22 @@
 import Foundation
 
 protocol CultService {
+    
     var pendingProposals: [CultProposal] { get }
     var closedProposals: [CultProposal] { get }
 }
 
-// MARK: - DefaultCultService
-
-final class DefaultCultService {
-
-    var pendingProposals: [CultProposal] = CultProposal.pendingProposals()
-    var closedProposals: [CultProposal] = CultProposal.closedMocks()
-}
-
-// MARK: - CultService
+final class DefaultCultService {}
 
 extension DefaultCultService: CultService {
 
+    var pendingProposals: [CultProposal] {
+     
+        CultProposal.pendingProposals()
+    }
+    
+    var closedProposals: [CultProposal] {
+       
+        CultProposal.closedMocks()
+    }
 }

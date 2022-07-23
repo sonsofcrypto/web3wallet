@@ -118,22 +118,12 @@
                                                         </imageView>
                                                     </subviews>
                                                 </stackView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Ms-1s-vtt">
-                                                    <rect key="frame" x="16" y="77.5" width="330" height="0.5"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="0.5" id="Mc4-SW-qJ5"/>
-                                                    </constraints>
-                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="7Ms-1s-vtt" secondAttribute="bottom" id="8k2-6s-7nk"/>
                                                 <constraint firstAttribute="trailing" secondItem="pHz-FB-YFS" secondAttribute="trailing" constant="16" id="Bqy-UR-tJR"/>
                                                 <constraint firstItem="pHz-FB-YFS" firstAttribute="leading" secondItem="6mc-o5-0z7" secondAttribute="leading" constant="16" id="Cuy-6R-eGD"/>
-                                                <constraint firstItem="7Ms-1s-vtt" firstAttribute="leading" secondItem="6mc-o5-0z7" secondAttribute="leading" constant="16" id="I8K-u0-h2Z"/>
                                                 <constraint firstItem="pHz-FB-YFS" firstAttribute="top" secondItem="6mc-o5-0z7" secondAttribute="top" constant="16" id="LSh-nw-y6L"/>
-                                                <constraint firstAttribute="trailing" secondItem="7Ms-1s-vtt" secondAttribute="trailing" id="Oid-Kw-tl4"/>
                                                 <constraint firstAttribute="bottom" secondItem="pHz-FB-YFS" secondAttribute="bottom" constant="16" id="Oru-6w-3IO"/>
                                             </constraints>
                                         </collectionViewCellContentView>
@@ -143,7 +133,6 @@
                                             <outlet property="chevronImage" destination="4cC-DP-zda" id="otM-Ow-cUA"/>
                                             <outlet property="iconImageView" destination="s10-wt-p1h" id="Vaj-7a-3GW"/>
                                             <outlet property="iconImageViewWrapper" destination="XFY-Pu-2es" id="cAl-zY-noU"/>
-                                            <outlet property="separatorLine" destination="7Ms-1s-vtt" id="0M3-bD-35a"/>
                                             <outlet property="subTitleLabel" destination="wNn-Xt-KqK" id="ARr-03-6B7"/>
                                             <outlet property="titleLabel" destination="OmF-2T-4iN" id="hv6-Du-O98"/>
                                         </connections>

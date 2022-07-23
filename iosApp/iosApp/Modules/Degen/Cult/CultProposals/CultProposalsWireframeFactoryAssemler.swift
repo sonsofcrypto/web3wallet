@@ -11,8 +11,9 @@ final class CultProposalsWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> CultProposalsWireframeFactory in
 
             DefaultCultProposalsWireframeFactory(
-                service: resolver.resolve(),
-                cultProposalWireframeFactory: resolver.resolve()
+                cultProposalWireframeFactory: resolver.resolve(),
+                alertWireframeFactory: resolver.resolve(),
+                cultService: resolver.resolve()
             )
         }
     }

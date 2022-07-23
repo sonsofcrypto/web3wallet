@@ -4,7 +4,7 @@
 
 import UIKit
 
-class CultProposalVoteView: UIView {
+final class CultProposalVoteView: UIView {
 
     // From 0.0 - 1.0
     private(set) var progress: Float = 0.5 {
@@ -16,8 +16,6 @@ class CultProposalVoteView: UIView {
 
     private lazy var progressView: UIView = {
         let view = UIView(frame: bounds)
-        view.backgroundColor = Theme.colour.fillTertiary
-        view.layer.applyBorder(Theme.colour.fillTertiary)
         view.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         insertSubview(view, at: 0)
         return view
@@ -30,21 +28,36 @@ class CultProposalVoteView: UIView {
     }()
 
     override func awakeFromNib() {
+        
         super.awakeFromNib()
-        backgroundColor = Theme.colour.backgroundBaseSecondary
-        layer.applyBorder(Theme.colour.fillTertiary)
+        
+        backgroundColor = Theme.colour.fillQuaternary
         layer.cornerRadius = Theme.constant.cornerRadiusSmall
     }
 
-    func update(title: String, pct: Float) {
-        textLabel.text = title
-        pctLabel.text = NumberFormatter.pct.string(from: pct)
-        progress = pct
+    func update(viewModel: CultProposalsViewModel.Item.Vote) {
+        
+        textLabel.text = viewModel.name
+        pctLabel.text = NumberFormatter.pct.string(from: viewModel.value)
+        progress = viewModel.value
+        
+        switch viewModel.type {
+            
+        case .approved:
+            progressView.backgroundColor = Theme.colour.candleGreen
+        case .rejected:
+            progressView.backgroundColor = Theme.colour.candleRed
+        }
+        
+
     }
 
     override func layoutSubviews() {
+        
         super.layoutSubviews()
+        
         stack.frame = bounds.insetBy(dx: Theme.constant.padding, dy: 0)
+        
         progressView.frame = CGRect(
             origin: .zero,
             size: CGSize(

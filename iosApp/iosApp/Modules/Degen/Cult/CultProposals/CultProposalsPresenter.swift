@@ -5,7 +5,10 @@
 import Foundation
 
 enum CultProposalsPresenterEvent {
-    case didSelectItemAt(idx: Int)
+    
+    case approveProposal(id: String)
+    case rejectProposal(id: String)
+    case selectProposal(id: String)
 }
 
 protocol CultProposalsPresenter {
@@ -14,14 +17,15 @@ protocol CultProposalsPresenter {
     func handle(_ event: CultProposalsPresenterEvent)
 }
 
-// MARK: - DefaultCultProposalsPresenter
-
-class DefaultCultProposalsPresenter {
+final class DefaultCultProposalsPresenter {
 
     private let interactor: CultProposalsInteractor
     private let wireframe: CultProposalsWireframe
 
     private weak var view: CultProposalsView?
+    
+    private var pendingProposals = [CultProposal]()
+    private var closedProposals = [CultProposal]()
 
     init(
         view: CultProposalsView,
@@ -34,51 +38,100 @@ class DefaultCultProposalsPresenter {
     }
 }
 
-// MARK: TemplatePresenter
-
 extension DefaultCultProposalsPresenter: CultProposalsPresenter {
 
     func present() {
+        
         view?.update(
-            with: viewModel(from: interactor.closedProposals())
+            with: viewModel()
         )
     }
 
     func handle(_ event: CultProposalsPresenterEvent) {
+        
         switch event {
-        case let .didSelectItemAt(idx):
-            wireframe.navigate(
-                to: .proposal(proposal: interactor.closedProposals()[idx])
-            )
+
+        case let .selectProposal(id):
+            
+            guard let proposal = findProposal(with: id) else { return }
+            
+            wireframe.navigate(to: .proposal(proposal: proposal))
+            
+        case .approveProposal, .rejectProposal:
+            
+            wireframe.navigate(to: .comingSoon)
         }
     }
 }
 
-// MARK: - Event handling
-
 private extension DefaultCultProposalsPresenter {
 
-}
-
-// MARK: - WalletsViewModel utilities
-
-private extension DefaultCultProposalsPresenter {
-
-    func viewModel(from cultProposals: [CultProposal]) -> CultProposalsViewModel {
-        .loaded(
-            items: cultProposals.map { viewModel(from: $0) },
-            selectedIdx: 0
+    func viewModel() -> CultProposalsViewModel {
+        
+        pendingProposals = interactor.pendingProposals.sorted { $0.endDate < $1.endDate }
+        closedProposals = interactor.closedProposals.sorted { $0.endDate > $1.endDate }
+        
+        return .loaded(
+            sections: [
+                .init(
+                    title: Localized("cult.proposals.pending.title") + " (\(pendingProposals.count))",
+                    type: .pending,
+                    items: pendingProposals.compactMap { viewModel(from: $0) }
+                ),
+                .init(
+                    title: Localized("cult.proposals.closed.title") + " (\(closedProposals.count))",
+                    type: .closed,
+                    items: closedProposals.compactMap { viewModel(from: $0) }
+                )
+            ]
         )
     }
 
     func viewModel(from cultProposal: CultProposal) -> CultProposalsViewModel.Item {
-        let approved = Float.random(in: 0.0...100.0) / 100.0
+        
+        let approved = cultProposal.approved / (cultProposal.approved + cultProposal.rejeceted)
 
-        return CultProposalsViewModel.Item(
-            title: String(format: "Proposal: %d %@", cultProposal.id, cultProposal.title),
-            approved: approved,
-            rejected: 1 - approved,
-            date: cultProposal.endDate
+        return .init(
+            id: cultProposal.id.stringValue,
+            title: cultProposal.title,
+            approved: .init(
+                name: Localized("approved"),
+                value: approved,
+                total: cultProposal.approved,
+                type: .approved
+            ),
+            rejected: .init(
+                name: Localized("rejected"),
+                value: 1 - approved,
+                total: cultProposal.rejeceted,
+                type: .rejected
+            ),
+            approveButtonTitle: Localized("approve"),
+            rejectButtonTitle: Localized("reject"),
+            isNew: cultProposal.category.isNew,
+            endDate: cultProposal.endDate
         )
+    }
+    
+    func findProposal(with id: String) -> CultProposal? {
+     
+        if let proposal = closedProposals.first(where: { $0.id.stringValue == id }) {
+            
+            return proposal
+        } else if let proposal = pendingProposals.first(where: { $0.id.stringValue == id }) {
+            
+            return proposal
+        } else {
+            
+            return nil
+        }
+    }
+}
+
+private extension CultProposal.Category {
+    
+    var isNew: Bool {
+        
+        self == .new
     }
 }

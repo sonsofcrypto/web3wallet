@@ -5,6 +5,8 @@
 import UIKit
 
 enum CultProposalsWireframeDestination {
+    
+    case comingSoon
     case proposal(proposal: CultProposal)
 }
 
@@ -13,45 +15,54 @@ protocol CultProposalsWireframe {
     func navigate(to destination: CultProposalsWireframeDestination)
 }
 
-// MARK: - DefaultCultProposalsWireframe
+final class DefaultCultProposalsWireframe {
 
-class DefaultCultProposalsWireframe {
+    private weak var parent: UIViewController!
+    private let cultProposalWireframeFactory: CultProposalWireframeFactory
+    private let alertWireframeFactory: AlertWireframeFactory
+    private let cultService: CultService
 
-    private let interactor: CultProposalsInteractor
-    private let factory: CultProposalWireframeFactory
-
-    private weak var parent: UIViewController?
-    private weak var vc: UIViewController?
+    private weak var vc: UIViewController!
 
     init(
-        interactor: CultProposalsInteractor,
         parent: UIViewController,
-        factory: CultProposalWireframeFactory
+        cultProposalWireframeFactory: CultProposalWireframeFactory,
+        alertWireframeFactory: AlertWireframeFactory,
+        cultService: CultService
     ) {
-        self.interactor = interactor
         self.parent = parent
-        self.factory = factory
+        self.cultProposalWireframeFactory = cultProposalWireframeFactory
+        self.alertWireframeFactory = alertWireframeFactory
+        self.cultService = cultService
     }
 }
-
-// MARK: - CultProposalsWireframe
 
 extension DefaultCultProposalsWireframe: CultProposalsWireframe {
 
     func present() {
+        
         let vc = wireUp()
         self.vc = vc
-        parent?.show(vc, sender: self)
+        parent.show(vc, sender: self)
     }
 
     func navigate(to destination: CultProposalsWireframeDestination) {
-        print("navigate to \(destination)")
+
         switch destination {
+            
         case let .proposal(proposal):
-            guard let vc = vc ?? parent else {
-                return
-            }
-            factory.makeWireframe(proposal, parent: vc).present()
+            
+            cultProposalWireframeFactory.makeWireframe(
+                proposal,
+                parent: vc
+            ).present()
+            
+        case .comingSoon:
+            
+            alertWireframeFactory.makeWireframe(
+                vc,
+                context: .underConstructionAlert()
+            ).present()
         }
     }
 }
@@ -59,7 +70,15 @@ extension DefaultCultProposalsWireframe: CultProposalsWireframe {
 extension DefaultCultProposalsWireframe {
 
     private func wireUp() -> UIViewController {
-        let vc: CultProposalsViewController = UIStoryboard(.main).instantiate()
+        
+        let vc: CultProposalsViewController = UIStoryboard(
+            .cultProposals
+        ).instantiate()
+        
+        let interactor = DefaultCultProposalsInteractor(
+            cultService
+        )
+        
         let presenter = DefaultCultProposalsPresenter(
             view: vc,
             interactor: interactor,
