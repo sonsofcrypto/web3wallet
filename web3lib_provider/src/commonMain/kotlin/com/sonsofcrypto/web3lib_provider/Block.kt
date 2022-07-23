@@ -26,7 +26,7 @@ data class Block(
     companion object {
 
         @Throws(Throwable::class)
-        fun fromHexified(jsonObject: JsonObject): Block {
+        fun fromHexifiedJsonObject(jsonObject: JsonObject): Block {
             return Block(
                 hash = jsonObject.get("hash")!!.stringValue(),
                 parentHash = jsonObject.get("parentHash")!!.stringValue(),
@@ -39,14 +39,14 @@ data class Block(
                 miner = jsonObject.get("miner")!!.stringValue(),
                 extraData = jsonObject.get("extraData")!!.stringValue(),
                 baseFeePerGas = jsonObject.get("baseFeePerGas")?.stringValue()?.toBigIntQnt(),
-                transactions = (jsonObject.get("transactions") as JsonArray).map {
+                transactions = (jsonObject.get("transactions") as? JsonArray)?.map {
                     when (it) {
                         is JsonObject -> BlockTransaction.Object(
                             Transaction.fromHexifiedJsonObject(it)
                         )
                         else -> BlockTransaction.Hash(it.stringValue())
                     }
-                }
+                } ?: listOf()
             )
         }
     }

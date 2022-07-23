@@ -39,7 +39,8 @@ class ProviderTest {
 //        testGetBlock()
 //        testGetTransaction()
 //        testGetTransactionByBlockIndex()
-        testGetTransactionReceipt()
+//        testGetTransactionReceipt()
+          testGetUncleBlock()
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
@@ -570,6 +571,23 @@ class ProviderTest {
             expected == result,
             "testGetTransactionReceipt unexpected $result"
         )
+    }
+
+    fun testGetUncleBlock() = runBlocking {
+        val provider = ProviderPocket(Network.ethereum())
+        val result = provider.getUncleBlock(
+            BlockTag.Hash("0x4fafadf15c7dee7da50b9ff1d2ec4f31de422a196e334c699749839cc7db41a1"),
+            BigInt.from(0)
+        )
+
+        val data = """
+            {"baseFeePerGas":"0x39d39afcf","difficulty":"0x2b2a48781d6ff1","extraData":"0x457468657265756d50504c4e532f326d696e6572735f4153494134","gasLimit":"0x1c9c380","gasUsed":"0x147711","hash":"0xdec21564875f2d0232c1a1ddbb09fc5b209b4d5d65626f5763e9a09e0c78eca5","logsBloom":"0x082000008000008840480000800001000000000000110002000400000000180000000002040000000900010200000121020000000820200000000000002000040700060004010018280000080000002020000000008010000000000080200202020800001a0280020000000080000800008500c000081000320000100008400400500000008000000018008000020010400000010100000800000040201000000211010801c860000000088000200800000000002010000000000c820000000000001882010000000000200001000000004080100021001002002980000020200010248800000000000000100001080800000000000000400000028000000800","miner":"0x00192fb10df37c9fb26829eb2cc623cd1bf599e8","mixHash":"0x68f574bbae1847c69e61194c99a98f47d2ca74b572ce6441df39bc701b857de6","nonce":"0xd482b0266a625cd9","number":"0xe7ecdf","parentHash":"0xe6f5ec355764c5d11b51c1000d3062f2dc1e802b4df37696bf9f9f1aee9dfe31","receiptsRoot":"0x05a5587aa968c7f251475354cb6c8185945c8c923779621d6fcc9681a7fb4ac3","sha3Uncles":"0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347","size":"0x22b","stateRoot":"0xf716aa2ba8917562334e70ca106af1acdb62586fed7032a3e71887cf3f96815b","timestamp":"0x62dc05a7","transactionsRoot":"0x6bec08c4b519d9b271eacf7d3d216c0f933ec69dcbd7922a6e6424c8e9685db4","uncles":[]}
+        """.trimIndent()
+
+//        val json = Json.decodeFromString(JsonObject.serializer(), data)
+//        val result = Block.fromHexifiedJsonObject(json)
+
+        println("=== result $result")
     }
 
     fun testErrorHandling() {

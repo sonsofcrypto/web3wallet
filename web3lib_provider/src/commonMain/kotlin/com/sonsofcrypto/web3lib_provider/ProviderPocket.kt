@@ -199,7 +199,7 @@ class ProviderPocket {
             },
             params = listOf(block.jsonPrimitive(), JsonPrimitive(full))
         )
-        return@withContext Block.fromHexified(result)
+        return@withContext Block.fromHexifiedJsonObject(result)
     }
 
     suspend fun getTransaction(
@@ -237,6 +237,23 @@ class ProviderPocket {
             params = listOf(JsonPrimitive(hash))
         )
         return@withContext TransactionReceipt.fromHexifiedJsonObject(result)
+    }
+
+    suspend fun getUncleBlock(
+        block: BlockTag,
+        index: BigInt
+    ): Block = withContext(dispatcher) {
+        val result = performGetObjResult(
+            method =  when(block) {
+                is BlockTag.Hash -> { Method.GET_UNCLE_BY_BLOCK_BY_HASH_AND_INDEX }
+                else -> Method.GET_UNCLE_BY_BLOCK_BY_NUMBER_AND_INDEX
+            },
+            params = listOf(
+                block.jsonPrimitive(),
+                JsonPrimitive(QuantityHexString(index))
+            )
+        )
+        return@withContext Block.fromHexifiedJsonObject(result)
     }
 
     /** Utilities */
