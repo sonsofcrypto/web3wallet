@@ -16,11 +16,11 @@ data class Block(
     val miner: DataHexString,
     val extraData: DataHexString,
     val baseFeePerGas: BigInt?,
-    val transactions: List<Block.Transaction>,
+    val transactions: List<BlockTransaction>,
 ) {
-    sealed class Transaction {
-        data class Hash(val value: DataHexString) : Transaction()
-        data class TransactionResponse(val value: TransactionResponseTmp) : Transaction()
+    sealed class BlockTransaction {
+        data class Hash(val value: DataHexString) : BlockTransaction()
+        data class Object(val value: Transaction) : BlockTransaction()
     }
 
     companion object {
@@ -28,27 +28,28 @@ data class Block(
         @Throws(Throwable::class)
         fun fromHexified(jsonObject: JsonObject): Block {
             return Block(
-                hash = jsonObject.get("hash")!!.toString(),
-                parentHash = jsonObject.get("parentHash")!!.toString(),
-                number = jsonObject.get("number")!!.toString().toLongQnt(),
-                timestamp = jsonObject.get("timestamp")!!.toString().toULongQnt(),
-                nonce = jsonObject.get("nonce")!!.toString().toULongQnt(),
-                difficulty = jsonObject.get("difficulty")!!.toString().toULongQnt(),
-                gasLimit = jsonObject.get("gasLimit")!!.toString().toBigIntQnt(),
-                gasUsed = jsonObject.get("gasUsed")!!.toString().toBigIntQnt(),
-                miner = jsonObject.get("miner")!!.toString(),
-                extraData = jsonObject.get("extraData")!!.toString(),
-                baseFeePerGas = jsonObject.get("baseFeePerGas")?.toString()?.toBigIntQnt(),
+                hash = jsonObject.get("hash")!!.stringValue(),
+                parentHash = jsonObject.get("parentHash")!!.stringValue(),
+                number = jsonObject.get("number")!!.stringValue().toLongQnt(),
+                timestamp = jsonObject.get("timestamp")!!.stringValue().toULongQnt(),
+                nonce = jsonObject.get("nonce")!!.stringValue().toULongQnt(),
+                difficulty = jsonObject.get("difficulty")!!.stringValue().toULongQnt(),
+                gasLimit = jsonObject.get("gasLimit")!!.stringValue().toBigIntQnt(),
+                gasUsed = jsonObject.get("gasUsed")!!.stringValue().toBigIntQnt(),
+                miner = jsonObject.get("miner")!!.stringValue(),
+                extraData = jsonObject.get("extraData")!!.stringValue(),
+                baseFeePerGas = jsonObject.get("baseFeePerGas")?.stringValue()?.toBigIntQnt(),
                 transactions = (jsonObject.get("transactions") as JsonArray).map {
                     when (it) {
-                        is JsonObject -> Transaction.TransactionResponse(
-                            TransactionResponseTmp.fromHexified(it)
+                        is JsonObject -> BlockTransaction.Object(
+                            Transaction.fromHexifiedJsonObject(it)
                         )
-                        else -> Transaction.Hash(it.toString())
+                        else -> BlockTransaction.Hash(it.stringValue())
                     }
                 }
             )
         }
     }
 }
+
 

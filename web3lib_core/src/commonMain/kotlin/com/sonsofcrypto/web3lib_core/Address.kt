@@ -6,13 +6,19 @@ typealias AddressBytes = ByteArray
 
 /** Address */
 sealed class Address() {
-    data class BytesAddress(val data: AddressBytes) : Address()
-    data class HexStringAddress(val hexString: String) : Address()
-    data class NameAddress(val name: String) : Address()
+    data class Bytes(val data: AddressBytes) : Address()
+    data class HexString(val hexString: String) : Address()
+    data class Name(val name: String) : Address()
+
+    companion object {
+        fun fromHexString(hexString: String?): Address.HexString? {
+            return if (hexString != null) { HexString(hexString) } else null
+        }
+    }
 }
 
 fun Address.jsonPrimitive(): JsonPrimitive = when (this) {
-    is Address.HexStringAddress -> JsonPrimitive(hexString)
-    is Address.BytesAddress -> TODO("Convert to hex string format")
+    is Address.HexString -> JsonPrimitive(hexString)
+    is Address.Bytes -> TODO("Convert to hex string format")
     else -> JsonPrimitive("")
 }

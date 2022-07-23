@@ -2,6 +2,7 @@ package com.sonsofcrypto.web3lib_provider
 
 import com.sonsofcrypto.web3lib_utils.BigInt
 import com.sonsofcrypto.web3lib_utils.toHexString
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonPrimitive
 
 /** SEE: https://ethereum.org/en/developers/docs/apis/json-rpc/#quantities-encoding */
@@ -48,3 +49,5 @@ fun QuantityHexString.jsonPrimitive(): JsonPrimitive = JsonPrimitive(this)
 typealias DataHexString = String
 
 fun DataHexString(byteArray: ByteArray): DataHexString = byteArray.toHexString(true)
+
+fun JsonElement.stringValue(): String = (this as JsonPrimitive).content

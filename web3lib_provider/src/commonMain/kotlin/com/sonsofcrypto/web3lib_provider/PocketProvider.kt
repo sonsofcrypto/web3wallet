@@ -202,15 +202,34 @@ class PocketProvider {
         return@withContext Block.fromHexified(result)
     }
 
-    /** Utilities */
-
-    @Throws(Throwable::class)
-    suspend fun performOld(req: JsonRpcRequest): String = withContext(dispatcher) {
-        return@withContext client.post(url()) {
-            contentType(ContentType.Application.Json)
-            setBody(providerJson.encodeToString(req))
-        }.bodyAsText()
+    suspend fun getTransaction(
+        hash: DataHexString,
+    ): Transaction = withContext(dispatcher) {
+        val result = performGetObjResult(
+            method = Method.GET_TRANSACTION_BY_HASH,
+            params = listOf(JsonPrimitive(hash))
+        )
+        return@withContext Transaction.fromHexifiedJsonObject(result)
     }
+
+    suspend fun getTransaction(
+        block: BlockTag,
+        index: BigInt
+    ): Transaction = withContext(dispatcher) {
+        val result = performGetObjResult(
+            method = when(block) {
+                is BlockTag.Hash -> { Method.GET_TRANSACTION_BY_BLOCK_HASH_AND_INDEX }
+                else -> Method.GET_TRANSACTION_BY_BLOCK_NUMBER_AND_INDEX
+            },
+            params = listOf(
+                block.jsonPrimitive(),
+                JsonPrimitive(QuantityHexString(index))
+            )
+        )
+        return@withContext Transaction.fromHexifiedJsonObject(result)
+    }
+
+    /** Utilities */
 
     @Throws(Throwable::class)
     suspend fun performGetStrResult(
@@ -313,5 +332,3 @@ class PocketProvider {
             Error("Unsupported network $network")
     }
 }
-
-fun JsonPrimitive.str(): String = content

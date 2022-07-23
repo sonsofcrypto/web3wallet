@@ -2,6 +2,7 @@ package com.sonsofcrypto.web3lib_utils
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import com.ionspin.kotlin.bignum.integer.Sign
+import kotlinx.serialization.Serializable
 
 class BigInt {
 
@@ -18,7 +19,11 @@ class BigInt {
     fun toHexString(): String = storage.toString(16)
     override fun toString(): String = storage.toString(10)
 
-    companion object {
+    override fun equals(other: Any?): Boolean  {
+        return storage == (other as? BigInt)?.storage
+    }
+
+        companion object {
 
         fun from(string: String, base: Int = 10): BigInt {
             return BigInt(BigInteger.parseString(string, base))

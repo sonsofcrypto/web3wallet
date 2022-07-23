@@ -16,16 +16,3 @@ interface TransactionResponse {
     val gasPrice: BigInt?
 }
 
-data class TransactionResponseTmp(
-    val hash: DataHexString,
-    val address: Address
-) {
-    companion object {
-
-        @Throws(Throwable::class)
-        fun fromHexified(jsonObject: JsonObject): TransactionResponseTmp = TransactionResponseTmp(
-            hash = jsonObject.get("hash")!!.toString(),
-            address = Address.HexStringAddress(jsonObject.get("address")!!.toString())
-        )
-    }
-}

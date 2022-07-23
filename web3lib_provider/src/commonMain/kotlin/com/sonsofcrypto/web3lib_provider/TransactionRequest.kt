@@ -81,9 +81,9 @@ fun TransactionRequest.JsonRpcResolveAddress(
         return null
     }
     return when (address) {
-        is Address.HexStringAddress -> address
-        is Address.BytesAddress -> TODO("Convert to hex string format")
-        is Address.NameAddress -> if (nameService != null) {
+        is Address.HexString -> address
+        is Address.Bytes -> TODO("Convert to hex string format")
+        is Address.Name -> if (nameService != null) {
             runBlocking { nameService.resolve(address.name) }
         } else null
     }
