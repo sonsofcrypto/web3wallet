@@ -30,7 +30,7 @@ final class CultProposalCell: CollectionViewCell {
     override func awakeFromNib() {
         
         super.awakeFromNib()
-
+        
         titleLabel.apply(style: .body, weight: .bold)
         
         chevronImageView.tintColor = Theme.colour.labelPrimary
@@ -59,6 +59,8 @@ final class CultProposalCell: CollectionViewCell {
                 )
             ]
         )
+        
+        bottomSeparatorView.isHidden = true
     }
     
     func update(

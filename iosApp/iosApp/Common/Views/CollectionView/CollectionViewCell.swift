@@ -6,84 +6,60 @@ import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
     
-    var bottomSeparatorView: UIView!
+    private (set) var bottomSeparatorView: UIView!
     
-    override func awakeFromNib() {
-        
-        super.awakeFromNib()
-        
-        let separator = UIView()
-        separator.backgroundColor = Theme.colour.separatorWithTransparency
-        contentView.addSubview(separator)
-        separator.addConstraints(
-            [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .trailingAnchor),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 0.5)),
-                .layout(anchor: .bottomAnchor)
-            ]
-        )
-        self.bottomSeparatorView = separator
-    }
-
-    var cornerStyle: Style = .single {
-        didSet { update(for: cornerStyle) }
-    }
-
-//    override var isSelected: Bool {
-//        didSet {
-//            UIView.animate(withDuration: 0.1) { [weak self] in
-//                self?.layer.applyHighlighted(self?.isSelected ?? false)
-//            }
-//        }
-//    }
-
-//    override var isHighlighted: Bool {
-//        didSet {
-//            UIView.animate(withDuration: 0.01) { [weak self] in
-//                self?.layer.applyHighlighted(self?.isHighlighted ?? false)
-//            }
-//        }
-//    }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
     }
 
     required init?(coder: NSCoder) {
+        
         super.init(coder: coder)
         configureUI()
     }
-
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        //layer.applyShadowPath(bounds, radius: layer.cornerRadius)
-//    }
-
-    private func configureUI() {
+    
+    var cornerStyle: Style = .single {
         
-        layer.cornerRadius = Theme.constant.cornerRadius
-        backgroundColor = Theme.colour.cellBackground
-        //layer.applyRectShadow()
-        //layer.applyBorder()
-        //configure(for: false)
+        didSet { update(for: cornerStyle) }
     }
-
-//    private func configure(for selected: Bool) {
-//        layer.shadowOpacity = selected ? 1 : 0
-//        layer.borderColor = ( selected
-//            ? Theme.colour.fillPrimary
-//            : Theme.colour.fillTertiary
-//        ).cgColor
-//    }
 }
 
-// MARK: - Style
+private extension CollectionViewCell {
+    
+    func configureUI() {
+        
+        clipsToBounds = false
+        backgroundColor = Theme.colour.cellBackground
+        layer.cornerRadius = Theme.constant.cornerRadius
+        
+        configureSeparator()
+    }
+    
+    func configureSeparator() {
+        
+        let separator = UIView()
+        separator.backgroundColor = Theme.colour.separatorWithTransparency
+        contentView.addSubview(separator)
+        separator.addConstraints(
+            [
+                .layout(
+                    anchor: .leadingAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding)
+                ),
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 0.5)),
+                .layout(anchor: .bottomAnchor),
+                .layout(anchor: .trailingAnchor)
+            ]
+        )
+        self.bottomSeparatorView = separator
+    }
+}
 
 extension CollectionViewCell {
 
     enum Style {
+        
         case top
         case bottom
         case middle
@@ -91,6 +67,7 @@ extension CollectionViewCell {
     }
 
     func update(for style: CollectionViewCell.Style) {
+        
         switch style {
         case .top:
             layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]

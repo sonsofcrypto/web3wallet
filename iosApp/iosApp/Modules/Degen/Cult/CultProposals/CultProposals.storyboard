@@ -140,7 +140,6 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
-                    <navigationItem key="navigationItem" title="wallets" id="pUk-Ir-jCJ"/>
                     <connections>
                         <outlet property="collectionView" destination="uJY-zJ-XG9" id="Hnn-ki-IAx"/>
                     </connections>
