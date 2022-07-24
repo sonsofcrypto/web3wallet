@@ -49,6 +49,8 @@
 "time.until.hour.shortest" = "%@h";
 "time.until.min.shortest" = "%@m";
 "time.until.sec.shortest" = "%@s";
+"pending" = "Pending";
+"closed" = "Closed";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";
@@ -240,9 +242,7 @@
 "confirmation.send.confirm" = "Authenticate & Send";
 
 "cult.proposals.title" = "Cult.DAO Proposals";
-"cult.proposals.pending.title" = "Pending";
 "cult.proposals.pending.processing" = "Processing";
-"cult.proposals.closed.title" = "Closed";
 "cult.proposals.closed.totalVotes" = "Total Votes: %@";
 "cult.proposals.result" = "Result: %@";
 "cult.proposals.result.executed" = "Executed";
@@ -255,6 +255,7 @@
 "cult.proposal.guardian.socialHandle" = "SocialHandle";
 "cult.proposal.guardian.wallet" = "Wallet";
 "cult.proposal.summary.header" = "Project Summary";
+"cult.proposal.docs.header"="Project Docs";
 "cult.proposal.tokenomics.header"="Other Information";
 "cult.proposal.tokenomics.rewardAllocation" = "CULT Reward Allocation";
 "cult.proposal.tokenomics.rewardDistribution" = "Reward Distribution Terms";

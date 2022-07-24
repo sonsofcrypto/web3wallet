@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import UIKit
 
 struct CultProposalViewModel {
 
@@ -13,9 +14,10 @@ struct CultProposalViewModel {
     struct ProposalDetails {
         
         let name: String
+        let status: Status
         let guardianInfo: GuardianInfo
         let summary: Summary
-        let documents: [DocumentsInfo]
+        let documentsInfo: DocumentsInfo
         let tokenomics: Tokenomics
         
         struct GuardianInfo {
@@ -29,6 +31,12 @@ struct CultProposalViewModel {
             let walletValue: String
         }
         
+        struct Status {
+            
+            let title: String
+            let color: UIColor // HEX
+        }
+        
         struct Summary {
             
             let title: String
@@ -37,14 +45,19 @@ struct CultProposalViewModel {
         
         struct DocumentsInfo {
             
-            let name: String
-            let note: String?
+            let title: String
             let documents: [Document]
             
             struct Document {
                 
-                let displayName: String
-                let url: URL
+                let title: String
+                let items: [Item]
+                
+                enum Item {
+                    
+                    case link(displayName: String, url: URL)
+                    case note(String)
+                }
             }
         }
         

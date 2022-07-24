@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import UIKit
 
 enum CultProposalPresenterEvent {
 
@@ -73,6 +74,10 @@ private extension DefaultCultProposalPresenter {
             
             .init(
                 name: $0.title,
+                status: .init(
+                    title: makeStatus(from: $0),
+                    color: makeStatusColor(from: $0)
+                ),
                 guardianInfo: .init(
                     title: Localized("cult.proposal.guardian.header"),
                     name: Localized("cult.proposal.guardian.name"),
@@ -86,8 +91,11 @@ private extension DefaultCultProposalPresenter {
                     title: Localized("cult.proposal.summary.header"),
                     summary: $0.projectSummary
                 ),
-                documents: makeDocuments(
-                    from: $0.projectDocuments
+                documentsInfo: .init(
+                    title: Localized("cult.proposal.docs.header"),
+                    documents: makeDocuments(
+                        from: $0.projectDocuments
+                    )
                 ),
                 tokenomics: .init(
                     title: Localized("cult.proposal.tokenomics.header"),
@@ -102,18 +110,59 @@ private extension DefaultCultProposalPresenter {
         }
     }
     
+    func makeStatus(
+        from proposal: CultProposal
+    ) -> String {
+        
+        switch proposal.status {
+            
+        case .pending:
+            return Localized("pending")
+        case .closed:
+            return Localized("closed")
+        }
+    }
+    
+    func makeStatusColor(
+        from proposal: CultProposal
+    ) -> UIColor {
+        
+        switch proposal.status {
+            
+        case .pending:
+            return Theme.colour.navBarTint
+        case .closed:
+            return Theme.colour.separatorNoTransparency
+        }
+    }
+    
     func makeDocuments(
         from projectDocuments: [CultProposal.ProjectDocuments]
-    ) -> [CultProposalViewModel.ProposalDetails.DocumentsInfo] {
+    ) -> [CultProposalViewModel.ProposalDetails.DocumentsInfo.Document] {
         
         projectDocuments.compactMap {
             .init(
-                name: $0.name,
-                note: $0.note,
-                documents: $0.documents.compactMap {
-                    .init(displayName: $0.displayName, url: $0.url)
+                title: $0.name,
+                items: $0.documents.compactMap {
+                    makeDocumentItem(from: $0)
                 }
             )
+        }
+    }
+    
+    func makeDocumentItem(
+        from document: CultProposal.ProjectDocuments.Document
+    ) -> CultProposalViewModel.ProposalDetails.DocumentsInfo.Document.Item {
+        
+        switch document {
+            
+        case let .link(displayName, url):
+            
+            return .link(displayName: displayName, url: url)
+            
+        case let .note(note):
+            
+            return .note(note)
         }
     }
 }

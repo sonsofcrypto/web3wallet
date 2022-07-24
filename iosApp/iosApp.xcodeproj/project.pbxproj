@@ -396,6 +396,8 @@
 		1CB8B0BC288DBEF000024E7C /* CultProposalDetailGuardianView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0BB288DBEF000024E7C /* CultProposalDetailGuardianView.swift */; };
 		1CB8B0BE288DBEFA00024E7C /* CultProposalDetailDocsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0BD288DBEFA00024E7C /* CultProposalDetailDocsView.swift */; };
 		1CB8B0C0288DBEFF00024E7C /* CultProposalDetailSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0BF288DBEFF00024E7C /* CultProposalDetailSummaryView.swift */; };
+		1CB8B0C2288DD94B00024E7C /* CultProposalDetailStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0C1288DD94B00024E7C /* CultProposalDetailStatusView.swift */; };
+		1CB8B0C4288DD97300024E7C /* CultProposalStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0C3288DD97300024E7C /* CultProposalStatus.swift */; };
 		1CBB9CBC286DA9E90007E2D4 /* DashboarView+CollectionCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBB9CBB286DA9E90007E2D4 /* DashboarView+CollectionCards.swift */; };
 		1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */; };
 		1CD3FE20284D5840008312DE /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD3FE1F284D5840008312DE /* FeatureFlags.swift */; };
@@ -906,6 +908,8 @@
 		1CB8B0BB288DBEF000024E7C /* CultProposalDetailGuardianView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalDetailGuardianView.swift; sourceTree = "<group>"; };
 		1CB8B0BD288DBEFA00024E7C /* CultProposalDetailDocsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalDetailDocsView.swift; sourceTree = "<group>"; };
 		1CB8B0BF288DBEFF00024E7C /* CultProposalDetailSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalDetailSummaryView.swift; sourceTree = "<group>"; };
+		1CB8B0C1288DD94B00024E7C /* CultProposalDetailStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalDetailStatusView.swift; sourceTree = "<group>"; };
+		1CB8B0C3288DD97300024E7C /* CultProposalStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalStatus.swift; sourceTree = "<group>"; };
 		1CBB9CBB286DA9E90007E2D4 /* DashboarView+CollectionCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboarView+CollectionCards.swift"; sourceTree = "<group>"; };
 		1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetActionViewModel.swift; sourceTree = "<group>"; };
 		1CD3FE1F284D5840008312DE /* FeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
@@ -1927,6 +1931,7 @@
 			isa = PBXGroup;
 			children = (
 				1CB8B0BD288DBEFA00024E7C /* CultProposalDetailDocsView.swift */,
+				1CB8B0C1288DD94B00024E7C /* CultProposalDetailStatusView.swift */,
 				1CB8B0BB288DBEF000024E7C /* CultProposalDetailGuardianView.swift */,
 				1CB8B0BF288DBEFF00024E7C /* CultProposalDetailSummaryView.swift */,
 				1CB8B0B9288DBEE700024E7C /* CultProposalDetailTokenomicsView.swift */,
@@ -1987,6 +1992,7 @@
 			children = (
 				1C6720092880193000C5F044 /* TokenEnterAmountView.swift */,
 				1C67200B28849A2500C5F044 /* TokenNetworkFeeView.swift */,
+				1CB8B0C3288DD97300024E7C /* CultProposalStatus.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -2833,6 +2839,7 @@
 				1CD843F62874215F00E6D359 /* SectionLabelFooter.swift in Sources */,
 				1C60C31D285724D1003BE25D /* AppsCollectionViewCell.swift in Sources */,
 				1C60C305285724D1003BE25D /* NFTsDashboardWireframeFactoryAssembler.swift in Sources */,
+				1CB8B0C2288DD94B00024E7C /* CultProposalDetailStatusView.swift in Sources */,
 				D1A12A60287D333900606FC8 /* AuthenticateView.swift in Sources */,
 				1C67201828867A0800C5F044 /* SegmentedControl.swift in Sources */,
 				1C60C384285A649B003BE25D /* Web3ServiceLocalStorage.swift in Sources */,
@@ -2905,6 +2912,7 @@
 				1A4C3001CAC79A77987DA8AE /* Error+Extensions.swift in Sources */,
 				1A4C30D6ED56A03136C4CA71 /* Kotlin+Extensions.swift in Sources */,
 				1A4C31D59C7D2B84D247FDDD /* TransformView.swift in Sources */,
+				1CB8B0C4288DD97300024E7C /* CultProposalStatus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

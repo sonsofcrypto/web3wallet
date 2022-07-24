@@ -7,8 +7,10 @@ import UIKit
 final class CultProposalDetailViewCell: UICollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var statusView: CultProposalDetailStatusView!
     @IBOutlet weak var guardianView: CultProposalDetailGuardianView!
     @IBOutlet weak var summaryView: CultProposalDetailSummaryView!
+    @IBOutlet weak var docsView: CultProposalDetailDocsView!
     @IBOutlet weak var tokenomicsView: CultProposalDetailTokenomicsView!
 
     private var viewModel: CultProposalViewModel.ProposalDetails!
@@ -28,8 +30,10 @@ final class CultProposalDetailViewCell: UICollectionViewCell {
         
         titleLabel.text = viewModel.name
         
+        statusView.update(with: viewModel.status)
         guardianView.update(with: viewModel.guardianInfo)
         summaryView.update(with: viewModel.summary)
+        docsView.update(with: viewModel.documentsInfo)
         tokenomicsView.update(with: viewModel.tokenomics)
         
         return self

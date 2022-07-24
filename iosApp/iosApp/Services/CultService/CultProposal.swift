@@ -23,24 +23,23 @@ struct CultProposal {
     let cultReward: String
     let rewardDistributions: String
     let wallet: String
-    let category: Category
-    
-    enum Category {
-        case none
-        case new
-    }
-    
+    let status: Status
+        
     struct ProjectDocuments {
         
         let name: String
-        let note: String?
         let documents: [Document]
         
-        struct Document {
-            
-            let displayName: String
-            let url: URL
+        enum Document {
+
+            case link(displayName: String, url: URL)
+            case note(String)
         }
+    }
+    
+    enum Status {
+        case pending
+        case closed
     }
 }
 
@@ -52,8 +51,9 @@ extension CultProposal {
         approved: Float = 28126112668.969,
         rejected: Float = 16583879978.515,
         endDate: Date = Date().addingTimeInterval(Double.random(in: 0..<1000000)),
-        category: Category = .none
+        status: Status = .closed
     ) -> CultProposal {
+        
         .init(
             id: id,
             title: title,
@@ -70,9 +70,8 @@ extension CultProposal {
             projectDocuments: [
                 .init(
                     name: "Lite/Whitepaper",
-                    note: nil,
                     documents: [
-                        .init(
+                        .link(
                             displayName: "https://sonsofcrypto.com/web3token_whitepaper.pdf",
                             url: URL(string: "https://sonsofcrypto.com/web3token_whitepaper.pdf")!
                         )
@@ -80,36 +79,38 @@ extension CultProposal {
                 ),
                 .init(
                     name: "Social Docs",
-                    note: nil,
                     documents: [
-                        .init(
-                            displayName: "Twitter",
+                        .link(
+                            displayName: "https://twitter.com/sonsofcryptolab",
                             url: URL(string: "https://twitter.com/sonsofcryptolab")!
                         ),
-                        .init(
-                            displayName: "Discord",
+                        .link(
+                            displayName: "https://discord.gg/ptJGvwGkEj",
                             url: URL(string: "https://discord.gg/ptJGvwGkEj")!
                         ),
-                        .init(
-                            displayName: "Telegram",
+                        .link(
+                            displayName: "https://t.me/+osHUInXKmwMyZjQ0",
                             url: URL(string: "https://t.me/+osHUInXKmwMyZjQ0")!
                         ),
-                        .init(
-                            displayName: "GitHub",
+                        .link(
+                            displayName: "https://github.com/sonsofcrypto",
                             url: URL(string: "https://github.com/sonsofcrypto")!
                         )
                     ]
                 ),
                 .init(
                     name: "Audits",
-                    note: "Not done yet, this is presale, of course quality audits will be done. But here is link to contract: https://github.com/sonsofcrypto/w3t",
-                    documents: []
+                    documents: [
+                        .note(
+                            "Not done yet, this is presale, of course quality audits will be done. But here is link to contract: https://github.com/sonsofcrypto/w3t"
+                        )
+                    ]
                 )
             ],
             cultReward: "1% of Total Supply",
             rewardDistributions: "6.25% per Month.",
             wallet: "0x9aA80dCeD760224d59BEFe358c7C66C45e3BEA1C",
-            category: category
+            status: status
         )
     }
 
@@ -156,7 +157,7 @@ extension CultProposal {
                 approved: 38126112668.969,
                 rejected: 6583879978.515,
                 endDate: Date().addingTimeInterval(16*24*60*60),
-                category: .new
+                status: .pending
             ),
             mock(
                 id: 42,
@@ -164,14 +165,15 @@ extension CultProposal {
                 approved: 28126112668.969,
                 rejected: 66583879978.515,
                 endDate: Date().addingTimeInterval(15*24*60*60),
-                category: .new
+                status: .pending
             ),
             mock(
                 id: 43,
                 with: "Proposal 44: Verasity - Allocation #1",
                 approved: 12058527010.969,
                 rejected: 2058527010.515,
-                endDate: Date().addingTimeInterval(2*24*60*60)
+                endDate: Date().addingTimeInterval(2*24*60*60),
+                status: .pending
             )
         ]
     }

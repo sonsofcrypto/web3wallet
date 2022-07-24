@@ -139,7 +139,6 @@ private extension DefaultCultProposalsPresenter {
             ),
             approveButtonTitle: Localized("approve"),
             rejectButtonTitle: Localized("reject"),
-            isNew: cultProposal.category.isNew,
             endDate: cultProposal.endDate
         )
     }
@@ -156,13 +155,5 @@ private extension DefaultCultProposalsPresenter {
             
             return nil
         }
-    }
-}
-
-private extension CultProposal.Category {
-    
-    var isNew: Bool {
-        
-        self == .new
     }
 }
