@@ -18,18 +18,28 @@ struct CultProposal {
     let guardianWallet: String
 
     let projectSummary: String
-    let whitepaper: URL?
-    let socials: [URL]
-    let audits: String
+    let projectDocuments: [ProjectDocuments]
     
-    let cultReward: Float
-    let rewardDistributions: Float
+    let cultReward: String
+    let rewardDistributions: String
     let wallet: String
-    let category: Category
+    let status: Status
+        
+    struct ProjectDocuments {
+        
+        let name: String
+        let documents: [Document]
+        
+        enum Document {
+
+            case link(displayName: String, url: URL)
+            case note(String)
+        }
+    }
     
-    enum Category {
-        case none
-        case new
+    enum Status {
+        case pending
+        case closed
     }
 }
 
@@ -41,8 +51,9 @@ extension CultProposal {
         approved: Float = 28126112668.969,
         rejected: Float = 16583879978.515,
         endDate: Date = Date().addingTimeInterval(Double.random(in: 0..<1000000)),
-        category: Category = .none
+        status: Status = .closed
     ) -> CultProposal {
+        
         .init(
             id: id,
             title: title,
@@ -56,18 +67,50 @@ extension CultProposal {
             projectSummary: """
                             Note : This was provided to me by team, I am NOT part of the team, just a very excited supporter. Description: First truly web3 wallet, that does not compromise an iota on crypto ideals. By degens for degens. - Virtually all the wallets connect to networks via web2 services. That's flat out embarrassing. We are putting an end to that. - Anything web3 / DeFi sucks on mobile and is indeed out of reach for non crypto natives. Normies do everything on mobile. There is an easy 10x for whole space once it is easy to use on mobile. We are building in large directory of all the categories of DeFi products. - All the fees generated in apps will go to token LP stakers trustlessly via yield farm. Hence giving token a floor price which is a function of usage of the apps. - Fair launch, not presale, team only gets rich if product has wide adoption and usage. - All the code is open source MIT licensed Kyle's comments on investment opportunity: - NO VCs - CULT will be the only pre-sale in the world at an amazing Valuation of only $4,000,000 FDV. Netting us nearly 1% of the total supply, imagine if metamask had a token with excellent tokenomics and CULT had 1%
                             """,
-            whitepaper: URL(string: "https://sonsofcrypto.com/web3token_whitepaper.pdf")!,
-            socials: [
-                URL(string: "https://twitter.com/sonsofcryptolab")!,
-                URL(string: "https://discord.gg/ptJGvwGkEj")!,
-                URL(string: "https://t.me/+osHUInXKmwMyZjQ0")!,
-                URL(string: "https://github.com/sonsofcrypto")!,
+            projectDocuments: [
+                .init(
+                    name: "Lite/Whitepaper",
+                    documents: [
+                        .link(
+                            displayName: "https://sonsofcrypto.com/web3token_whitepaper.pdf",
+                            url: URL(string: "https://sonsofcrypto.com/web3token_whitepaper.pdf")!
+                        )
+                    ]
+                ),
+                .init(
+                    name: "Social Docs",
+                    documents: [
+                        .link(
+                            displayName: "https://twitter.com/sonsofcryptolab",
+                            url: URL(string: "https://twitter.com/sonsofcryptolab")!
+                        ),
+                        .link(
+                            displayName: "https://discord.gg/ptJGvwGkEj",
+                            url: URL(string: "https://discord.gg/ptJGvwGkEj")!
+                        ),
+                        .link(
+                            displayName: "https://t.me/+osHUInXKmwMyZjQ0",
+                            url: URL(string: "https://t.me/+osHUInXKmwMyZjQ0")!
+                        ),
+                        .link(
+                            displayName: "https://github.com/sonsofcrypto",
+                            url: URL(string: "https://github.com/sonsofcrypto")!
+                        )
+                    ]
+                ),
+                .init(
+                    name: "Audits",
+                    documents: [
+                        .note(
+                            "Not done yet, this is presale, of course quality audits will be done. But here is link to contract: https://github.com/sonsofcrypto/w3t"
+                        )
+                    ]
+                )
             ],
-            audits: "Not done yet, this is presale, of course quality audits will be done. But here is link to contract: https://github.com/sonsofcrypto/w3t",
-            cultReward: 1,
-            rewardDistributions: 6.25,
+            cultReward: "1% of Total Supply",
+            rewardDistributions: "6.25% per Month.",
             wallet: "0x9aA80dCeD760224d59BEFe358c7C66C45e3BEA1C",
-            category: category
+            status: status
         )
     }
 
@@ -114,7 +157,7 @@ extension CultProposal {
                 approved: 38126112668.969,
                 rejected: 6583879978.515,
                 endDate: Date().addingTimeInterval(16*24*60*60),
-                category: .new
+                status: .pending
             ),
             mock(
                 id: 42,
@@ -122,14 +165,15 @@ extension CultProposal {
                 approved: 28126112668.969,
                 rejected: 66583879978.515,
                 endDate: Date().addingTimeInterval(15*24*60*60),
-                category: .new
+                status: .pending
             ),
             mock(
                 id: 43,
                 with: "Proposal 44: Verasity - Allocation #1",
                 approved: 12058527010.969,
                 rejected: 2058527010.515,
-                endDate: Date().addingTimeInterval(2*24*60*60)
+                endDate: Date().addingTimeInterval(2*24*60*60),
+                status: .pending
             )
         ]
     }

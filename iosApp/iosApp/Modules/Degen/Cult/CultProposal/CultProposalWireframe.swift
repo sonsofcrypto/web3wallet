@@ -4,6 +4,12 @@
 
 import UIKit
 
+struct CultProposalWireframeContext {
+    
+    let proposal: CultProposal
+    let proposals: [CultProposal]
+}
+
 enum CultProposalWireframeDestination {
 
 }
@@ -13,28 +19,24 @@ protocol CultProposalWireframe {
     func navigate(to destination: CultProposalWireframeDestination)
 }
 
-// MARK: - DefaultCultProposalWireframe
-
-class DefaultCultProposalWireframe {
+final class DefaultCultProposalWireframe {
 
     private weak var parent: UIViewController?
-
-    private let proposal: CultProposal
+    private let context: CultProposalWireframeContext
 
     init(
-        proposal: CultProposal,
-        parent: UIViewController
+        parent: UIViewController,
+        context: CultProposalWireframeContext
     ) {
-        self.proposal = proposal
         self.parent = parent
+        self.context = context
     }
 }
-
-// MARK: - CultProposalWireframe
 
 extension DefaultCultProposalWireframe: CultProposalWireframe {
 
     func present() {
+        
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
@@ -44,14 +46,15 @@ extension DefaultCultProposalWireframe: CultProposalWireframe {
     }
 }
 
-extension DefaultCultProposalWireframe {
+private extension DefaultCultProposalWireframe {
 
-    private func wireUp() -> UIViewController {
-        let vc: CultProposalViewController = UIStoryboard(.main).instantiate()
+    func wireUp() -> UIViewController {
+        
+        let vc: CultProposalViewController = UIStoryboard(.cultProposal).instantiate()
         let presenter = DefaultCultProposalPresenter(
-            proposal: proposal,
             view: vc,
-            wireframe: self
+            wireframe: self,
+            context: context
         )
 
         vc.presenter = presenter

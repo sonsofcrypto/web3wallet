@@ -7,19 +7,21 @@ import UIKit
 protocol CultProposalWireframeFactory {
 
     func makeWireframe(
-        _ proposal: CultProposal,
-        parent: UIViewController
+        parent: UIViewController,
+        context: CultProposalWireframeContext
     ) -> CultProposalWireframe
 }
 
-// MARK: - DefaultCultProposalWireframeFactory
-
-class DefaultCultProposalWireframeFactory: CultProposalWireframeFactory {
+final class DefaultCultProposalWireframeFactory: CultProposalWireframeFactory {
 
     func makeWireframe(
-        _ proposal: CultProposal,
-        parent: UIViewController
+        parent: UIViewController,
+        context: CultProposalWireframeContext
     ) -> CultProposalWireframe {
-        DefaultCultProposalWireframe(proposal: proposal, parent: parent)
+        
+        DefaultCultProposalWireframe(
+            parent: parent,
+            context: context
+        )
     }
 }

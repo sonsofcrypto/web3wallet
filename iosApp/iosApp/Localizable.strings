@@ -36,12 +36,12 @@
 "rejected" = "Rejected";
 "reject" = "Reject";
 "new" = "New";
-"time.ago.day" = "%@day ago";
-"time.ago.days" = "%@days ago";
-"time.ago.hour" = "%@hour ago";
-"time.ago.hours" = "%@hours ago";
-"time.ago.min" = "%@minute ago";
-"time.ago.mins" = "%@minutes ago";
+"time.ago.day" = "%@ day ago";
+"time.ago.days" = "%@ days ago";
+"time.ago.hour" = "%@ hour ago";
+"time.ago.hours" = "%@ hours ago";
+"time.ago.min" = "%@ minute ago";
+"time.ago.mins" = "%@ minutes ago";
 "time.ago.day.short" = "%@d ago";
 "time.ago.hour.short" = "%@h ago";
 "time.ago.min.short" = "%@min ago";
@@ -49,6 +49,8 @@
 "time.until.hour.shortest" = "%@h";
 "time.until.min.shortest" = "%@m";
 "time.until.sec.shortest" = "%@s";
+"pending" = "Pending";
+"closed" = "Closed";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";
@@ -240,10 +242,21 @@
 "confirmation.send.confirm" = "Authenticate & Send";
 
 "cult.proposals.title" = "Cult.DAO Proposals";
-"cult.proposals.pending.title" = "Pending Proposals";
 "cult.proposals.pending.processing" = "Processing";
-"cult.proposals.closed.title" = "Closed Proposals";
 "cult.proposals.closed.totalVotes" = "Total Votes: %@";
 "cult.proposals.result" = "Result: %@";
 "cult.proposals.result.executed" = "Executed";
 "cult.proposals.result.defeated" = "Defeated";
+
+"cult.proposal.title" = "Proposal";
+"cult.proposal.title.of" = "of";
+"cult.proposal.guardian.header"="Guardian Information";
+"cult.proposal.guardian.name" = "Name";
+"cult.proposal.guardian.socialHandle" = "SocialHandle";
+"cult.proposal.guardian.wallet" = "Wallet";
+"cult.proposal.summary.header" = "Project Summary";
+"cult.proposal.docs.header"="Project Docs";
+"cult.proposal.tokenomics.header"="Other Information";
+"cult.proposal.tokenomics.rewardAllocation" = "CULT Reward Allocation";
+"cult.proposal.tokenomics.rewardDistribution" = "Reward Distribution Terms";
+"cult.proposal.tokenomics.projectEthWallet" = "Project Ethereum Wallet";

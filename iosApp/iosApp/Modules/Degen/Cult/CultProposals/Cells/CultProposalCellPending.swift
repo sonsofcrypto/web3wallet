@@ -14,7 +14,7 @@ final class CultProposalCellPending: CollectionViewCell {
     @IBOutlet weak var chevronImageView: UIImageView!
     @IBOutlet weak var approveButton: Button!
     @IBOutlet weak var rejectButton: Button!
-    private weak var statusView: StatusView!
+    private weak var statusView: CultProposalStatus!
 
     private var timer: Timer? = nil
     private var date: Date = .distantPast
@@ -45,14 +45,15 @@ final class CultProposalCellPending: CollectionViewCell {
         
         clipsToBounds = false
         
-        let statusView = StatusView()
+        let statusView = CultProposalStatus()
+        statusView.backgroundColor = Theme.colour.navBarTint
         addSubview(statusView)
         self.statusView = statusView
         statusView.addConstraints(
             [
                 .layout(
                     anchor: .topAnchor,
-                    constant: .equalTo(constant: -Theme.constant.padding * 0.75)
+                    constant: .equalTo(constant: -12)
                 ),
                 .layout(
                     anchor: .trailingAnchor,
@@ -169,48 +170,5 @@ private extension CultProposalCellPending  {
     @objc func rejectProposal() {
         
         handler.rejectProposal(viewModel.id)
-    }
-}
-
-private final class StatusView: UIView {
-    
-    private weak var label: UILabel!
-    
-    var text: String = "" {
-        
-        didSet {
-            
-            label.text = text
-        }
-    }
-    
-    override init(frame: CGRect) {
-        
-        super.init(frame: frame)
-        
-        configureUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configureUI() {
-        
-        backgroundColor = Theme.colour.navBarTint
-        layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        
-        let label = UILabel()
-        label.apply(style: .callout, weight: .bold)
-        self.addSubview(label)
-        self.label = label
-        label.addConstraints(
-            [
-                .layout(anchor: .topAnchor, constant: .equalTo(constant: 2)),
-                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: 2)),
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 8)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 8))
-            ]
-        )
     }
 }

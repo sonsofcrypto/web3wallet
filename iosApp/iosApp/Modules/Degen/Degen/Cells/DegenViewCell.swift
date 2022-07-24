@@ -16,6 +16,8 @@ final class DegenViewCell: CollectionViewCell {
         
         super.awakeFromNib()
         
+        backgroundColor = .clear
+        
         iconImageViewWrapper.backgroundColor = Theme.colour.navBarTint
         iconImageViewWrapper.layer.cornerRadius = iconImageViewWrapper.frame.size.width.half
         iconImageViewWrapper.clipsToBounds = true

@@ -145,6 +145,7 @@ extension UILabel {
             
         case .navTitle:
             font = Theme.font.navTitle
+            textColor = Theme.colour.navBarTitle
             
         case .tabBar:
             font = Theme.font.tabBar

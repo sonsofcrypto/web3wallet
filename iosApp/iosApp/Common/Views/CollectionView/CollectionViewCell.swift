@@ -53,6 +53,8 @@ private extension CollectionViewCell {
             ]
         )
         self.bottomSeparatorView = separator
+        
+        separator.isHidden = true
     }
 }
 

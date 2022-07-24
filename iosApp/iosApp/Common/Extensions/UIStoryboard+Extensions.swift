@@ -28,6 +28,7 @@ extension UIStoryboard {
         case alert = "Alert"
         case degen = "Degen"
         case cultProposals = "CultProposals"
+        case cultProposal = "CultProposal"
         case keyStore = "KeyStore"
         case mnemonicNew = "MnemonicNew"
         case mnemonicUpdate = "MnemonicUpdate"

@@ -7,7 +7,7 @@ import UIKit
 enum CultProposalsWireframeDestination {
     
     case comingSoon
-    case proposal(proposal: CultProposal)
+    case proposal(proposal: CultProposal, proposals: [CultProposal])
 }
 
 protocol CultProposalsWireframe {
@@ -50,11 +50,11 @@ extension DefaultCultProposalsWireframe: CultProposalsWireframe {
 
         switch destination {
             
-        case let .proposal(proposal):
+        case let .proposal(proposal, proposals):
             
             cultProposalWireframeFactory.makeWireframe(
-                proposal,
-                parent: vc
+                parent: vc,
+                context: .init(proposal: proposal, proposals: proposals)
             ).present()
             
         case .comingSoon:

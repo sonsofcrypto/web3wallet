@@ -14,7 +14,7 @@ final class CultProposalCellClosed: CollectionViewCell {
     @IBOutlet weak var chevronImageView: UIImageView!
     @IBOutlet weak var result1Label: UILabel!
     @IBOutlet weak var result2Label: UILabel!
-    private weak var statusView: StatusView!
+    private weak var statusView: CultProposalStatus!
 
     private var viewModel: CultProposalsViewModel.Item!
     
@@ -34,7 +34,8 @@ final class CultProposalCellClosed: CollectionViewCell {
         result1Label.apply(style: .callout, weight: .bold)
         result2Label.apply(style: .callout)
         
-        let statusView = StatusView()
+        let statusView = CultProposalStatus()
+        statusView.backgroundColor = Theme.colour.separatorNoTransparency
         addSubview(statusView)
         self.statusView = statusView
         statusView.addConstraints(
@@ -119,50 +120,5 @@ private extension CultProposalCellClosed  {
             dateString += Localized("time.ago.day", arg: "1")
         }
         statusView.text = dateString
-    }
-}
-
-private final class StatusView: UIView {
-    
-    private weak var label: UILabel!
-    
-    var text: String = "" {
-        
-        didSet {
-            
-            label.text = text
-        }
-    }
-    
-    override init(frame: CGRect) {
-        
-        super.init(frame: frame)
-        
-        configureUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configureUI() {
-        
-        backgroundColor = Theme.colour.separatorNoTransparency
-        layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        layer.borderWidth = 0.5
-        layer.borderColor = Theme.colour.fillQuaternary.cgColor
-        
-        let label = UILabel()
-        label.apply(style: .callout, weight: .bold)
-        self.addSubview(label)
-        self.label = label
-        label.addConstraints(
-            [
-                .layout(anchor: .topAnchor, constant: .equalTo(constant: 2)),
-                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: 2)),
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 8)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 8))
-            ]
-        )
     }
 }
