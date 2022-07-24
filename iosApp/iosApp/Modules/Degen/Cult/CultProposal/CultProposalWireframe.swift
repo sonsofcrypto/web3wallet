@@ -12,6 +12,7 @@ struct CultProposalWireframeContext {
 
 enum CultProposalWireframeDestination {
 
+    case dismiss
 }
 
 protocol CultProposalWireframe {
@@ -21,7 +22,7 @@ protocol CultProposalWireframe {
 
 final class DefaultCultProposalWireframe {
 
-    private weak var parent: UIViewController?
+    private weak var parent: UIViewController!
     private let context: CultProposalWireframeContext
 
     init(
@@ -38,11 +39,17 @@ extension DefaultCultProposalWireframe: CultProposalWireframe {
     func present() {
         
         let vc = wireUp()
-        parent?.show(vc, sender: self)
+        parent.show(vc, sender: self)
     }
 
     func navigate(to destination: CultProposalWireframeDestination) {
 
+        switch destination {
+            
+        case .dismiss:
+            
+            parent.navigationController?.popViewController(animated: true)
+        }
     }
 }
 

@@ -123,12 +123,24 @@ private extension CultProposalViewController {
     
     func configureUI() {
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: .init(systemName: "chevron.left"),
+            style: .plain,
+            target: self,
+            action: #selector(dismissTapped)
+        )
+        
         collectionView.setCollectionViewLayout(
             makeCompositionalLayout(),
             animated: false
         )
         collectionView.dataSource = self
         collectionView.delegate = self
+    }
+    
+    @objc func dismissTapped() {
+        
+        presenter.handle(.dismiss)
     }
     
     func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {

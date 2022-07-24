@@ -7,6 +7,7 @@ import UIKit
 
 enum CultProposalPresenterEvent {
 
+    case dismiss
 }
 
 protocol CultProposalPresenter {
@@ -45,6 +46,12 @@ extension DefaultCultProposalPresenter: CultProposalPresenter {
 
     func handle(_ event: CultProposalPresenterEvent) {
 
+        switch event {
+            
+        case .dismiss:
+            
+            wireframe.navigate(to: .dismiss)
+        }
     }
 }
 
