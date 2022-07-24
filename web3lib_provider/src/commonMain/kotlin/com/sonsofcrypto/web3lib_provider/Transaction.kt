@@ -49,6 +49,10 @@ data class Transaction(
     val transactionIndex: BigInt? = null
 ) {
 
+    fun transactionData(): DataHexString {
+
+    }
+
     fun toHexifiedJsonObject(): JsonObject = buildJsonObject {
         if (hash != null) {
             put("hash", JsonPrimitive(hash))

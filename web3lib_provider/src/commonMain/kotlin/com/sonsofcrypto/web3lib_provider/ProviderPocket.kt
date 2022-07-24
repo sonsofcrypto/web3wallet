@@ -86,11 +86,15 @@ class ProviderPocket {
         return@withContext performGetStrResult(Method.GAS_PRICE).toBigIntQnt()
     }
 
-//    suspend fun sendRawTransaction(): ULong = withContext(dispatcher) {
-//        return@withContext perfrom<QuantityHexString>(
-//            JsonRpcRequest(method = Method.BLOCK_NUMBER)
-//        ).result.toULongQnt()
-//    }
+    @Throws(Throwable::class)
+    suspend fun sendRawTransaction(
+        transaction: Transaction
+    ): DataHexString = withContext(dispatcher) {
+        return@withContext performGetStrResult(
+            Method.SEND_RAW_TRANSACTION,
+            listOf(transaction.transactionData().jsonPrimitive())
+        )
+    }
 
     /** State */
 
@@ -112,8 +116,8 @@ class ProviderPocket {
         block: BlockTag = BlockTag.Latest
     ): DataHexString = withContext(dispatcher) {
         return@withContext performGetStrResult(
-            method = Method.GET_STORAGE_AT,
-            params = listOf(
+            Method.GET_STORAGE_AT,
+            listOf(
                 address.jsonPrimitive(),
                 QuantityHexString(position).jsonPrimitive(),
                 block.jsonPrimitive()
@@ -127,8 +131,8 @@ class ProviderPocket {
         block: BlockTag = BlockTag.Latest
     ): ULong = withContext(dispatcher) {
         return@withContext performGetStrResult(
-            method = Method.GET_TRANSACTION_COUNT,
-            params = listOf(address.jsonPrimitive(), block.jsonPrimitive())
+            Method.GET_TRANSACTION_COUNT,
+            listOf(address.jsonPrimitive(), block.jsonPrimitive())
         ).toULongQnt()
     }
 
@@ -138,8 +142,8 @@ class ProviderPocket {
         block: BlockTag = BlockTag.Latest
     ): DataHexString = withContext(dispatcher) {
         return@withContext performGetStrResult(
-            method = Method.GET_CODE,
-            params = listOf(address.jsonPrimitive(), block.jsonPrimitive())
+            Method.GET_CODE,
+            listOf(address.jsonPrimitive(), block.jsonPrimitive())
         )
     }
 
@@ -149,8 +153,7 @@ class ProviderPocket {
         block: BlockTag = BlockTag.Latest
     ): DataHexString = withContext(dispatcher) {
         return@withContext performGetStrResult(
-            method = Method.CALL,
-            params = listOf(transation.JsonRpc(), block.jsonPrimitive())
+            Method.CALL, listOf(transation.JsonRpc(), block.jsonPrimitive())
         )
     }
 
@@ -159,8 +162,7 @@ class ProviderPocket {
         transation: TransactionRequest,
     ): BigInt = withContext(dispatcher) {
         return@withContext performGetStrResult(
-            method = Method.ESTIMATE_GAS,
-            params = listOf(transation.JsonRpc())
+            Method.ESTIMATE_GAS, listOf(transation.JsonRpc())
         ).toBigIntQnt()
     }
 
@@ -171,11 +173,11 @@ class ProviderPocket {
         block: BlockTag
     ): ULong = withContext(dispatcher) {
         return@withContext performGetStrResult(
-            method = when(block) {
+            when(block) {
                 is BlockTag.Hash -> { Method.GET_BLOCK_TRANSACTION_COUNT_BY_HASH }
                 else -> Method.GET_BLOCK_TRANSACTION_COUNT_BY_NUMBER
             },
-            params = listOf(block.jsonPrimitive())
+            listOf(block.jsonPrimitive())
         ).toULongQnt()
     }
 
@@ -184,11 +186,11 @@ class ProviderPocket {
         block: BlockTag
     ): ULong = withContext(dispatcher) {
         return@withContext performGetStrResult(
-            method = when(block) {
+            when(block) {
                 is BlockTag.Hash -> { Method.GET_UNCLE_COUNT_BY_HASH }
                 else -> Method.GET_UNCLE_COUNT_BY_NUMBER
             },
-            params = listOf(block.jsonPrimitive())
+            listOf(block.jsonPrimitive())
         ).toULongQnt()
     }
 
@@ -198,11 +200,11 @@ class ProviderPocket {
         full: Boolean = false
     ): Block = withContext(dispatcher) {
         val result = performGetObjResult(
-            method = when(block) {
+            when(block) {
                 is BlockTag.Hash -> { Method.GET_BLOCK_BY_HASH }
                 else -> Method.GET_BLOCK_BY_NUMBER
             },
-            params = listOf(block.jsonPrimitive(), JsonPrimitive(full))
+            listOf(block.jsonPrimitive(), JsonPrimitive(full))
         )
         return@withContext Block.fromHexifiedJsonObject(result)
     }
@@ -212,8 +214,7 @@ class ProviderPocket {
         hash: DataHexString,
     ): Transaction = withContext(dispatcher) {
         val result = performGetObjResult(
-            method = Method.GET_TRANSACTION_BY_HASH,
-            params = listOf(JsonPrimitive(hash))
+            Method.GET_TRANSACTION_BY_HASH, listOf(JsonPrimitive(hash))
         )
         return@withContext Transaction.fromHexifiedJsonObject(result)
     }
@@ -224,11 +225,11 @@ class ProviderPocket {
         index: BigInt
     ): Transaction = withContext(dispatcher) {
         val result = performGetObjResult(
-            method = when(block) {
+            when(block) {
                 is BlockTag.Hash -> { Method.GET_TRANSACTION_BY_BLOCK_HASH_AND_INDEX }
                 else -> Method.GET_TRANSACTION_BY_BLOCK_NUMBER_AND_INDEX
             },
-            params = listOf(
+            listOf(
                 block.jsonPrimitive(),
                 JsonPrimitive(QuantityHexString(index))
             )
@@ -241,8 +242,7 @@ class ProviderPocket {
         hash: String
     ): TransactionReceipt = withContext(dispatcher) {
         val result = performGetObjResult(
-            method = Method.GET_TRANSACTION_RECEIPT,
-            params = listOf(JsonPrimitive(hash))
+            Method.GET_TRANSACTION_RECEIPT, listOf(JsonPrimitive(hash))
         )
         return@withContext TransactionReceipt.fromHexifiedJsonObject(result)
     }
@@ -253,11 +253,11 @@ class ProviderPocket {
         index: BigInt
     ): Block = withContext(dispatcher) {
         val result = performGetObjResult(
-            method =  when(block) {
+            when(block) {
                 is BlockTag.Hash -> { Method.GET_UNCLE_BY_BLOCK_BY_HASH_AND_INDEX }
                 else -> Method.GET_UNCLE_BY_BLOCK_BY_NUMBER_AND_INDEX
             },
-            params = listOf(
+            listOf(
                 block.jsonPrimitive(),
                 JsonPrimitive(QuantityHexString(index))
             )
@@ -270,8 +270,7 @@ class ProviderPocket {
         filterRequest: FilterRequest
     ): List<Any> = withContext(dispatcher) {
         val result = performGetArrResult(
-            method =  Method.GET_LOGS,
-            params = listOf(filterRequest.toHexifiedJsonObject())
+            Method.GET_LOGS, listOf(filterRequest.toHexifiedJsonObject())
         )
         return@withContext Log.fromHexifiedJsonObject(result)
     }
@@ -281,21 +280,19 @@ class ProviderPocket {
         filterRequest: FilterRequest
     ): QuantityHexString = withContext(dispatcher) {
         val result = performGetStrResult(
-            method =  Method.NEW_FILTER,
-            params = listOf(filterRequest.toHexifiedJsonObject())
+            Method.NEW_FILTER, listOf(filterRequest.toHexifiedJsonObject())
         )
         return@withContext result
     }
 
     @Throws(Throwable::class)
     suspend fun newBlockFilter(): QuantityHexString = withContext(dispatcher) {
-        val result = performGetStrResult(method =  Method.NEW_BLOCK_FILTER)
-        return@withContext result
+        return@withContext performGetStrResult(Method.NEW_BLOCK_FILTER)
     }
 
     @Throws(Throwable::class)
     suspend fun newPendingTransactionFilter(): QuantityHexString = withContext(dispatcher) {
-        val result = performGetStrResult(method =  Method.NEW_PENDING_TRANSACTION_FILTER)
+        val result = performGetStrResult(Method.NEW_PENDING_TRANSACTION_FILTER)
         return@withContext result
     }
 
@@ -303,35 +300,29 @@ class ProviderPocket {
     suspend fun getFilterChanges(
         id: QuantityHexString
     ): JsonObject = withContext(dispatcher) {
-        val result = performGetObjResult(
-            method = Method.GET_FILTER_CHANGES,
-            params = listOf(id.jsonPrimitive())
-        )
         // TODO: Does not work over HTTPs. Implement responses once Websockets
-        return@withContext result
+        return@withContext performGetObjResult(
+            Method.GET_FILTER_CHANGES, listOf(id.jsonPrimitive())
+        )
     }
 
     @Throws(Throwable::class)
     suspend fun getFilterLogs(
         id: QuantityHexString
     ): JsonObject = withContext(dispatcher) {
-        val result = performGetObjResult(
-            method = Method.GET_FILTER_LOGS,
-            params = listOf(id.jsonPrimitive())
-        )
         // TODO: Does not work over HTTPs. Implement responses once Websockets
-        return@withContext result
+        return@withContext performGetObjResult(
+            Method.GET_FILTER_LOGS, listOf(id.jsonPrimitive())
+        )
     }
 
     @Throws(Throwable::class)
     suspend fun uninstallFilter(
         id: QuantityHexString
     ): Boolean = withContext(dispatcher) {
-        val result = performGetStrResult(
-            method =  Method.UNINTALL_FILTER,
-            params = listOf(id.jsonPrimitive())
-        )
-        return@withContext result.toBoolean()
+        return@withContext performGetStrResult(
+            Method.UNINTALL_FILTER, listOf(id.jsonPrimitive())
+        ).toBoolean()
     }
 
     /** Utilities */
