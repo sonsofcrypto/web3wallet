@@ -240,9 +240,9 @@
 "confirmation.send.confirm" = "Authenticate & Send";
 
 "cult.proposals.title" = "Cult.DAO Proposals";
-"cult.proposals.pending.title" = "Pending Proposals";
+"cult.proposals.pending.title" = "Pending";
 "cult.proposals.pending.processing" = "Processing";
-"cult.proposals.closed.title" = "Closed Proposals";
+"cult.proposals.closed.title" = "Closed";
 "cult.proposals.closed.totalVotes" = "Total Votes: %@";
 "cult.proposals.result" = "Result: %@";
 "cult.proposals.result.executed" = "Executed";
@@ -250,3 +250,12 @@
 
 "cult.proposal.title" = "Proposal";
 "cult.proposal.title.of" = "of";
+"cult.proposal.guardian.header"="Guardian Information";
+"cult.proposal.guardian.name" = "Name";
+"cult.proposal.guardian.socialHandle" = "SocialHandle";
+"cult.proposal.guardian.wallet" = "Wallet";
+"cult.proposal.summary.header" = "Project Summary";
+"cult.proposal.tokenomics.header"="Other Information";
+"cult.proposal.tokenomics.rewardAllocation" = "CULT Reward Allocation";
+"cult.proposal.tokenomics.rewardDistribution" = "Reward Distribution Terms";
+"cult.proposal.tokenomics.projectEthWallet" = "Project Ethereum Wallet";

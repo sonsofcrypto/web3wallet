@@ -74,17 +74,30 @@ private extension DefaultCultProposalPresenter {
             .init(
                 name: $0.title,
                 guardianInfo: .init(
-                    name: $0.guardianName,
-                    socialHandle: $0.guardianSocial,
-                    wallet: $0.guardianWallet
+                    title: Localized("cult.proposal.guardian.header"),
+                    name: Localized("cult.proposal.guardian.name"),
+                    nameValue: $0.guardianName,
+                    socialHandle: Localized("cult.proposal.guardian.socialHandle"),
+                    socialHandleValue: $0.guardianSocial,
+                    wallet: Localized("cult.proposal.guardian.wallet"),
+                    walletValue: $0.guardianWallet
                 ),
-                summary: $0.projectSummary,
+                summary: .init(
+                    title: Localized("cult.proposal.summary.header"),
+                    summary: $0.projectSummary
+                ),
                 documents: makeDocuments(
                     from: $0.projectDocuments
                 ),
-                rewardAllocation: $0.cultReward,
-                rewardDistribution: $0.rewardDistributions,
-                projectETHWallet: $0.wallet
+                tokenomics: .init(
+                    title: Localized("cult.proposal.tokenomics.header"),
+                    rewardAllocation: Localized("cult.proposal.tokenomics.rewardAllocation"),
+                    rewardAllocationValue: $0.cultReward,
+                    rewardDistribution: Localized("cult.proposal.tokenomics.rewardDistribution"),
+                    rewardDistributionValue: $0.rewardDistributions,
+                    projectETHWallet: Localized("cult.proposal.tokenomics.projectEthWallet"),
+                    projectETHWalletValue: $0.wallet
+                )
             )
         }
     }

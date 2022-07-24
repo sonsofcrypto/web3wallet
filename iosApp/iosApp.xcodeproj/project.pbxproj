@@ -392,6 +392,10 @@
 		1CB8B0B3288BD6EC00024E7C /* Float+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0B2288BD6EC00024E7C /* Float+Extensions.swift */; };
 		1CB8B0B5288C34B900024E7C /* CultProposal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CB8B0B4288C34B900024E7C /* CultProposal.storyboard */; };
 		1CB8B0B8288C351A00024E7C /* CultProposalDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0B7288C351A00024E7C /* CultProposalDetailViewCell.swift */; };
+		1CB8B0BA288DBEE700024E7C /* CultProposalDetailTokenomicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0B9288DBEE700024E7C /* CultProposalDetailTokenomicsView.swift */; };
+		1CB8B0BC288DBEF000024E7C /* CultProposalDetailGuardianView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0BB288DBEF000024E7C /* CultProposalDetailGuardianView.swift */; };
+		1CB8B0BE288DBEFA00024E7C /* CultProposalDetailDocsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0BD288DBEFA00024E7C /* CultProposalDetailDocsView.swift */; };
+		1CB8B0C0288DBEFF00024E7C /* CultProposalDetailSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0BF288DBEFF00024E7C /* CultProposalDetailSummaryView.swift */; };
 		1CBB9CBC286DA9E90007E2D4 /* DashboarView+CollectionCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBB9CBB286DA9E90007E2D4 /* DashboarView+CollectionCards.swift */; };
 		1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */; };
 		1CD3FE20284D5840008312DE /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD3FE1F284D5840008312DE /* FeatureFlags.swift */; };
@@ -898,6 +902,10 @@
 		1CB8B0B2288BD6EC00024E7C /* Float+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Float+Extensions.swift"; sourceTree = "<group>"; };
 		1CB8B0B4288C34B900024E7C /* CultProposal.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CultProposal.storyboard; sourceTree = "<group>"; };
 		1CB8B0B7288C351A00024E7C /* CultProposalDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalDetailViewCell.swift; sourceTree = "<group>"; };
+		1CB8B0B9288DBEE700024E7C /* CultProposalDetailTokenomicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalDetailTokenomicsView.swift; sourceTree = "<group>"; };
+		1CB8B0BB288DBEF000024E7C /* CultProposalDetailGuardianView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalDetailGuardianView.swift; sourceTree = "<group>"; };
+		1CB8B0BD288DBEFA00024E7C /* CultProposalDetailDocsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalDetailDocsView.swift; sourceTree = "<group>"; };
+		1CB8B0BF288DBEFF00024E7C /* CultProposalDetailSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalDetailSummaryView.swift; sourceTree = "<group>"; };
 		1CBB9CBB286DA9E90007E2D4 /* DashboarView+CollectionCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboarView+CollectionCards.swift"; sourceTree = "<group>"; };
 		1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetActionViewModel.swift; sourceTree = "<group>"; };
 		1CD3FE1F284D5840008312DE /* FeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
@@ -1918,6 +1926,10 @@
 		1CB8B0B6288C350200024E7C /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				1CB8B0BD288DBEFA00024E7C /* CultProposalDetailDocsView.swift */,
+				1CB8B0BB288DBEF000024E7C /* CultProposalDetailGuardianView.swift */,
+				1CB8B0BF288DBEFF00024E7C /* CultProposalDetailSummaryView.swift */,
+				1CB8B0B9288DBEE700024E7C /* CultProposalDetailTokenomicsView.swift */,
 				1CB8B0B7288C351A00024E7C /* CultProposalDetailViewCell.swift */,
 			);
 			name = Cells;
@@ -2547,6 +2559,7 @@
 				1C60C2C6285724D0003BE25D /* ChatViewModel.swift in Sources */,
 				1CE0064628899D15002D1EB3 /* AlertSheetPresentationController.swift in Sources */,
 				D1976B0F287EFAE10063FC9C /* MnemonicImportViewModel.swift in Sources */,
+				1CB8B0BE288DBEFA00024E7C /* CultProposalDetailDocsView.swift in Sources */,
 				1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */,
 				1C60C351285724D1003BE25D /* CultProposalsView.swift in Sources */,
 				1C60C2FA285724D0003BE25D /* NFTDetailView+Content+Price.swift in Sources */,
@@ -2626,6 +2639,7 @@
 				1C60C2E3285724D0003BE25D /* AnimatedTextBarButton.swift in Sources */,
 				1C60C2B9285724D0003BE25D /* KeyStorePresenter.swift in Sources */,
 				1C60C347285724D1003BE25D /* CultProposalWireframeFactoryAssembler.swift in Sources */,
+				1CB8B0BA288DBEE700024E7C /* CultProposalDetailTokenomicsView.swift in Sources */,
 				1C60C2FB285724D0003BE25D /* NFTDetailWireframeFactoryAssembler.swift in Sources */,
 				1C54DBF5285F32DC00E378F6 /* TokenAddInputView.swift in Sources */,
 				1C54DC682869BE6500E378F6 /* DashboardButtonsCell.swift in Sources */,
@@ -2742,6 +2756,7 @@
 				1C60C35A285724D1003BE25D /* DegenInteractor.swift in Sources */,
 				1C60C2EE285724D0003BE25D /* NetworksWireframeFactory.swift in Sources */,
 				1A4C3735189D6616D915D851 /* TabBarController.swift in Sources */,
+				1CB8B0BC288DBEF000024E7C /* CultProposalDetailGuardianView.swift in Sources */,
 				1C9E31B028787A3000DD2031 /* FeesPickerView.swift in Sources */,
 				1C60C2AF285724D0003BE25D /* TokenPickerItemCell.swift in Sources */,
 				1CB8B0B1288BD08A00024E7C /* CultProposalCellClosed.swift in Sources */,
@@ -2767,6 +2782,7 @@
 				1CE0064A2889C4D6002D1EB3 /* UITraitCollection+Extensions.swift in Sources */,
 				1C60C2ED285724D0003BE25D /* NetworksInteractor.swift in Sources */,
 				1C64873C2832E7640091A12D /* DefaultStore.swift in Sources */,
+				1CB8B0C0288DBEFF00024E7C /* CultProposalDetailSummaryView.swift in Sources */,
 				1C60C336285724D1003BE25D /* NFTsCollectionPresenter.swift in Sources */,
 				1C60C2CD285724D0003BE25D /* AlertWireframeFactory.swift in Sources */,
 				1C60C2F1285724D0003BE25D /* NetworksPresenter.swift in Sources */,

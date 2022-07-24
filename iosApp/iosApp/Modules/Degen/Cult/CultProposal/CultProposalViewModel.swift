@@ -14,17 +14,25 @@ struct CultProposalViewModel {
         
         let name: String
         let guardianInfo: GuardianInfo
-        let summary: String
+        let summary: Summary
         let documents: [DocumentsInfo]
-        let rewardAllocation: String
-        let rewardDistribution: String
-        let projectETHWallet: String
+        let tokenomics: Tokenomics
         
         struct GuardianInfo {
             
+            let title: String
             let name: String
+            let nameValue: String
             let socialHandle: String
+            let socialHandleValue: String
             let wallet: String
+            let walletValue: String
+        }
+        
+        struct Summary {
+            
+            let title: String
+            let summary: String
         }
         
         struct DocumentsInfo {
@@ -38,6 +46,17 @@ struct CultProposalViewModel {
                 let displayName: String
                 let url: URL
             }
+        }
+        
+        struct Tokenomics {
+            
+            let title: String
+            let rewardAllocation: String
+            let rewardAllocationValue: String
+            let rewardDistribution: String
+            let rewardDistributionValue: String
+            let projectETHWallet: String
+            let projectETHWalletValue: String
         }
     }
     

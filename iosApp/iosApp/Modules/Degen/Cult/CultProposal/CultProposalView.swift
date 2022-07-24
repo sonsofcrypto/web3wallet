@@ -16,6 +16,7 @@ final class CultProposalViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
 
     private var viewModel: CultProposalViewModel!
+    private var endDisplayFirstTimeCalled = false
     
     override func viewDidLoad() {
         
@@ -36,11 +37,8 @@ extension CultProposalViewController: CultProposalView {
         setTitle(with: viewModel.selectedIndex + 1)
         
         collectionView.reloadData()
-        collectionView.scrollToItem(
-            at: .init(item: viewModel.selectedIndex, section: 0),
-            at: .centeredHorizontally,
-            animated: false
-        )
+        
+        scrollToSelectedItem()
     }
 }
 
@@ -72,6 +70,10 @@ extension CultProposalViewController: UICollectionViewDelegate {
         willDisplay cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath
     ) {
+        // NOTE: Adding a flag here since will display gets called a few times before scrolling
+        // to the selected item without an animation and this causes the navigation bar title
+        // to change
+        guard endDisplayFirstTimeCalled else { return }
         setTitle(with: indexPath.item + 1)
     }
     
@@ -81,6 +83,7 @@ extension CultProposalViewController: UICollectionViewDelegate {
         forItemAt indexPath: IndexPath
     ) {
 
+        endDisplayFirstTimeCalled = true
         guard let visibleCell = collectionView.visibleCells.first else { return }
         guard let currentIndexPath = collectionView.indexPath(for: visibleCell) else { return }
         setTitle(with: currentIndexPath.item + 1)
@@ -88,6 +91,21 @@ extension CultProposalViewController: UICollectionViewDelegate {
 }
 
 private extension CultProposalViewController {
+    
+    func scrollToSelectedItem() {
+        
+        // NOTE: Dispatching async otherwise the scroll does not position the view
+        // properly
+        DispatchQueue.main.async {
+            [weak self] in
+            guard let self = self else { return }
+            self.collectionView.scrollToItem(
+                at: .init(item: self.viewModel.selectedIndex, section: 0),
+                at: .centeredHorizontally,
+                animated: false
+            )
+        }
+    }
     
     func setTitle(with index: Int) {
         
@@ -143,7 +161,8 @@ private extension CultProposalViewController {
 
         // Section
         let section = NSCollectionLayoutSection(group: outerGroup)
-        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+        section.orthogonalScrollingBehavior = .groupPagingCentered
+        //section.interGroupSpacing = Theme.constant.padding * 0.25
         
         return section
     }

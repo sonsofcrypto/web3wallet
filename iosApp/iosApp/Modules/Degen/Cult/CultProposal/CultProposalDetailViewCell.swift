@@ -4,9 +4,12 @@
 
 import UIKit
 
-final class CultProposalDetailViewCell: CollectionViewCell {
+final class CultProposalDetailViewCell: UICollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var guardianView: CultProposalDetailGuardianView!
+    @IBOutlet weak var summaryView: CultProposalDetailSummaryView!
+    @IBOutlet weak var tokenomicsView: CultProposalDetailTokenomicsView!
 
     private var viewModel: CultProposalViewModel.ProposalDetails!
     
@@ -14,7 +17,7 @@ final class CultProposalDetailViewCell: CollectionViewCell {
         
         super.awakeFromNib()
         
-        titleLabel.apply(style: .body, weight: .bold)
+        titleLabel.apply(style: .title3)
     }
     
     func update(
@@ -24,6 +27,10 @@ final class CultProposalDetailViewCell: CollectionViewCell {
         self.viewModel = viewModel
         
         titleLabel.text = viewModel.name
+        
+        guardianView.update(with: viewModel.guardianInfo)
+        summaryView.update(with: viewModel.summary)
+        tokenomicsView.update(with: viewModel.tokenomics)
         
         return self
     }

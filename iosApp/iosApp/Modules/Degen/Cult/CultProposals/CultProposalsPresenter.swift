@@ -6,6 +6,7 @@ import Foundation
 
 enum CultProposalsPresenterEvent {
     
+    case filterBy(text: String)
     case approveProposal(id: String)
     case rejectProposal(id: String)
     case selectProposal(id: String)
@@ -26,6 +27,8 @@ final class DefaultCultProposalsPresenter {
     
     private var pendingProposals = [CultProposal]()
     private var closedProposals = [CultProposal]()
+    
+    private var filterText: String = ""
 
     init(
         view: CultProposalsView,
@@ -42,14 +45,19 @@ extension DefaultCultProposalsPresenter: CultProposalsPresenter {
 
     func present() {
         
-        view?.update(
-            with: viewModel()
-        )
+        pendingProposals = interactor.pendingProposals.sorted { $0.endDate < $1.endDate }
+        closedProposals = interactor.closedProposals.sorted { $0.endDate > $1.endDate }
+        updateView()
     }
 
     func handle(_ event: CultProposalsPresenterEvent) {
         
         switch event {
+            
+        case let .filterBy(text):
+            
+            self.filterText = text
+            updateView()
 
         case let .selectProposal(id):
             
@@ -70,11 +78,29 @@ extension DefaultCultProposalsPresenter: CultProposalsPresenter {
 }
 
 private extension DefaultCultProposalsPresenter {
+    
+    func updateView() {
+        
+        view?.update(
+            with: viewModel()
+        )
+    }
 
     func viewModel() -> CultProposalsViewModel {
         
-        pendingProposals = interactor.pendingProposals.sorted { $0.endDate < $1.endDate }
-        closedProposals = interactor.closedProposals.sorted { $0.endDate > $1.endDate }
+        let pendingProposals = interactor.pendingProposals.filter {
+            [weak self] in
+            guard let self = self else { return false }
+            guard !self.filterText.isEmpty else { return true }
+            return $0.title.contains(self.filterText)
+        }.sorted { $0.endDate < $1.endDate }
+        
+        let closedProposals = interactor.closedProposals.filter {
+            [weak self] in
+            guard let self = self else { return false }
+            guard !self.filterText.isEmpty else { return true }
+            return $0.title.contains(self.filterText)
+        }.sorted { $0.endDate > $1.endDate }
         
         return .loaded(
             sections: [

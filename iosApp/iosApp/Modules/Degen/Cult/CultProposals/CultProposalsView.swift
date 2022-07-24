@@ -10,10 +10,13 @@ protocol CultProposalsView: AnyObject {
 }
 
 final class CultProposalsViewController: BaseViewController {
+    
+    //let searchController = UISearchController()
 
     var presenter: CultProposalsPresenter!
 
     private var viewModel: CultProposalsViewModel!
+    private var horizontalScrollingForPendingEnabled = false
     
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -113,6 +116,11 @@ extension CultProposalsViewController: UICollectionViewDelegate {
         let item = section.items[indexPath.row]
         presenter.handle(.selectProposal(id: item.id))
     }
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//
+//        searchController.searchBar.resignFirstResponder()
+//    }
 }
 
 private extension CultProposalsViewController {
@@ -144,6 +152,9 @@ private extension CultProposalsViewController {
         )
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+//        navigationItem.searchController = searchController
+//        searchController.searchResultsUpdater = self
     }
     
     func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
@@ -197,7 +208,7 @@ private extension CultProposalsViewController {
         )
 
         //outerGroup.contentInsets = .paddingHalf
-        
+                
         // Section
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = isHorizontalScrolling ?
@@ -208,11 +219,11 @@ private extension CultProposalsViewController {
                 trailing: Theme.constant.padding
             ) :
             .paddingHalf
-        section.interGroupSpacing = isHorizontalScrolling ?
+        section.interGroupSpacing = isHorizontalScrolling && horizontalScrollingForPendingEnabled ?
         Theme.constant.padding.half :
         Theme.constant.padding
         
-        if isHorizontalScrolling {
+        if isHorizontalScrolling && horizontalScrollingForPendingEnabled {
             section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         }
         
@@ -261,3 +272,13 @@ private extension CultProposalsViewController {
     }
 
 }
+
+//extension CultProposalsViewController: UISearchResultsUpdating {
+//    
+//    func updateSearchResults(for searchController: UISearchController) {
+//        
+//        guard let text = searchController.searchBar.text else { return }
+//        
+//        presenter.handle(.filterBy(text: text))
+//    }
+//}

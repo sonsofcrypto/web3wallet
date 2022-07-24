@@ -8,6 +8,7 @@ final class CultProposalHeaderSupplementaryView: UICollectionReusableView {
     
     private weak var label: UILabel!
     private weak var layoutConstraintLeading: NSLayoutConstraint!
+    private weak var layoutConstraintTop: NSLayoutConstraint!
     private weak var layoutConstraintBottom: NSLayoutConstraint!
     
     override init(frame: CGRect) {
@@ -32,13 +33,13 @@ final class CultProposalHeaderSupplementaryView: UICollectionReusableView {
                 .layout(
                     anchor: .trailingAnchor,
                     constant: .equalTo(constant: Theme.constant.padding)
-                ),
-                .layout(
-                    anchor: .topAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
                 )
             ]
         )
+        layoutConstraintTop = label.topAnchor.constraint(
+            equalTo: topAnchor
+        )
+        layoutConstraintTop.isActive = true
         layoutConstraintBottom = bottomAnchor.constraint(
             equalTo: label.bottomAnchor
         )
@@ -61,6 +62,10 @@ extension CultProposalHeaderSupplementaryView {
         Theme.constant.padding :
         Theme.constant.padding + Theme.constant.padding.half
         
+        layoutConstraintTop.constant = viewModel.type == .pending ?
+        Theme.constant.padding.half :
+        Theme.constant.padding
+
         layoutConstraintBottom.constant = viewModel.type == .pending ?
         0 :
         Theme.constant.padding.half
