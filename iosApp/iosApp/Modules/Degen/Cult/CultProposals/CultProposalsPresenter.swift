@@ -105,12 +105,12 @@ private extension DefaultCultProposalsPresenter {
         return .loaded(
             sections: [
                 .init(
-                    title: Localized("cult.proposals.pending.title") + " (\(pendingProposals.count))",
+                    title: Localized("pending") + " (\(pendingProposals.count))",
                     type: .pending,
                     items: pendingProposals.compactMap { viewModel(from: $0) }
                 ),
                 .init(
-                    title: Localized("cult.proposals.closed.title") + " (\(closedProposals.count))",
+                    title: Localized("closed") + " (\(closedProposals.count))",
                     type: .closed,
                     items: closedProposals.compactMap { viewModel(from: $0) }
                 )

@@ -182,8 +182,47 @@
                                                                 <outlet property="titleLabel" destination="x08-fd-LBY" id="eg8-kN-nVM"/>
                                                             </connections>
                                                         </view>
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1vC-4M-rVx" customClass="CultProposalDetailDocsView" customModule="iosApp" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="246" width="382" height="114"/>
+                                                            <subviews>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Pqm-CS-HZm">
+                                                                    <rect key="frame" x="16" y="0.0" width="350" height="82"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jv5-9h-fWN">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="350" height="15.5"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SHU-Mm-nfn">
+                                                                            <rect key="frame" x="0.0" y="23.5" width="350" height="0.5"/>
+                                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="0.5" id="X9W-T0-7GG"/>
+                                                                            </constraints>
+                                                                        </view>
+                                                                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="2ad-lL-9PZ">
+                                                                            <rect key="frame" x="0.0" y="32" width="350" height="50"/>
+                                                                        </stackView>
+                                                                    </subviews>
+                                                                </stackView>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstItem="Pqm-CS-HZm" firstAttribute="top" secondItem="1vC-4M-rVx" secondAttribute="top" constant="16" id="2us-PU-OsR"/>
+                                                                <constraint firstItem="Pqm-CS-HZm" firstAttribute="leading" secondItem="1vC-4M-rVx" secondAttribute="leading" constant="16" id="84U-d9-dRo"/>
+                                                                <constraint firstAttribute="bottom" secondItem="Pqm-CS-HZm" secondAttribute="bottom" constant="16" id="Hd8-7p-EJx"/>
+                                                                <constraint firstAttribute="trailing" secondItem="Pqm-CS-HZm" secondAttribute="trailing" constant="16" id="d21-p2-NE6"/>
+                                                            </constraints>
+                                                            <connections>
+                                                                <outlet property="docsStackView" destination="2ad-lL-9PZ" id="1ta-2b-J1h"/>
+                                                                <outlet property="separatorView" destination="SHU-Mm-nfn" id="W6W-5e-sdK"/>
+                                                                <outlet property="stackView" destination="Pqm-CS-HZm" id="5gT-Pi-VCT"/>
+                                                                <outlet property="titleLabel" destination="Jv5-9h-fWN" id="aA0-68-BUY"/>
+                                                            </connections>
+                                                        </view>
                                                         <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f6Q-Jm-C8E" customClass="CultProposalDetailTokenomicsView" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="246" width="382" height="92"/>
+                                                            <rect key="frame" x="0.0" y="376" width="382" height="92"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="XyK-zg-NLc">
                                                                     <rect key="frame" x="16" y="0.0" width="350" height="60"/>
@@ -272,45 +311,6 @@
                                                                 <outlet property="titleLabel" destination="cOa-vI-mOz" id="dxN-IT-6Dv"/>
                                                                 <outlet property="walletLabel" destination="SL1-JY-BMP" id="O6v-WU-xwl"/>
                                                                 <outlet property="walletValueLabel" destination="r6r-vs-K2l" id="DFc-qi-xdK"/>
-                                                            </connections>
-                                                        </view>
-                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1vC-4M-rVx" customClass="CultProposalDetailDocsView" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="354" width="382" height="114"/>
-                                                            <subviews>
-                                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Pqm-CS-HZm">
-                                                                    <rect key="frame" x="16" y="0.0" width="350" height="82"/>
-                                                                    <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jv5-9h-fWN">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="350" height="15.5"/>
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                            <nil key="textColor"/>
-                                                                            <nil key="highlightedColor"/>
-                                                                        </label>
-                                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SHU-Mm-nfn">
-                                                                            <rect key="frame" x="0.0" y="23.5" width="350" height="0.5"/>
-                                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="height" constant="0.5" id="X9W-T0-7GG"/>
-                                                                            </constraints>
-                                                                        </view>
-                                                                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="2ad-lL-9PZ">
-                                                                            <rect key="frame" x="0.0" y="32" width="350" height="50"/>
-                                                                        </stackView>
-                                                                    </subviews>
-                                                                </stackView>
-                                                            </subviews>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <constraints>
-                                                                <constraint firstItem="Pqm-CS-HZm" firstAttribute="top" secondItem="1vC-4M-rVx" secondAttribute="top" constant="16" id="2us-PU-OsR"/>
-                                                                <constraint firstItem="Pqm-CS-HZm" firstAttribute="leading" secondItem="1vC-4M-rVx" secondAttribute="leading" constant="16" id="84U-d9-dRo"/>
-                                                                <constraint firstAttribute="bottom" secondItem="Pqm-CS-HZm" secondAttribute="bottom" constant="16" id="Hd8-7p-EJx"/>
-                                                                <constraint firstAttribute="trailing" secondItem="Pqm-CS-HZm" secondAttribute="trailing" constant="16" id="d21-p2-NE6"/>
-                                                            </constraints>
-                                                            <connections>
-                                                                <outlet property="docsStackView" destination="2ad-lL-9PZ" id="1ta-2b-J1h"/>
-                                                                <outlet property="separatorView" destination="SHU-Mm-nfn" id="W6W-5e-sdK"/>
-                                                                <outlet property="stackView" destination="Pqm-CS-HZm" id="5gT-Pi-VCT"/>
-                                                                <outlet property="titleLabel" destination="Jv5-9h-fWN" id="aA0-68-BUY"/>
                                                             </connections>
                                                         </view>
                                                     </subviews>
