@@ -88,11 +88,11 @@ class ProviderPocket {
 
     @Throws(Throwable::class)
     suspend fun sendRawTransaction(
-        transaction: Transaction
+        transaction: DataHexString
     ): DataHexString = withContext(dispatcher) {
         return@withContext performGetStrResult(
             Method.SEND_RAW_TRANSACTION,
-            listOf(transaction.transactionData().jsonPrimitive())
+            listOf(transaction.jsonPrimitive())
         )
     }
 

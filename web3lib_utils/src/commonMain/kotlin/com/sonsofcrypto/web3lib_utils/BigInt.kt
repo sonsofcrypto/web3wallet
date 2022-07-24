@@ -23,7 +23,9 @@ class BigInt {
         return storage == (other as? BigInt)?.storage
     }
 
-        companion object {
+    companion object {
+
+        fun zero(): BigInt = BigInt.from(0)
 
         fun from(string: String, base: Int = 10): BigInt {
             return BigInt(BigInteger.parseString(string, base))

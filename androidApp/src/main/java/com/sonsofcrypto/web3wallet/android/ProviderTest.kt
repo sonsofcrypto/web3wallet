@@ -6,10 +6,11 @@ import com.sonsofcrypto.web3lib_provider.*
 import com.sonsofcrypto.web3lib_utils.BigInt
 import com.sonsofcrypto.web3lib_utils.hexStringToByteArray
 import com.sonsofcrypto.web3lib_utils.keccak256
+import com.sonsofcrypto.web3lib_utils.toHexString
 import kotlinx.coroutines.*
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonArray
 import java.lang.Exception
+import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
 private val providerJson = Json {
@@ -42,7 +43,8 @@ class ProviderTest {
 //        testGetTransactionByBlockIndex()
 //        testGetTransactionReceipt()
 //        testGetUncleBlock()
-          testGetLogs()
+//          testGetLogs()
+          testSendTransaction()
 //          testNewFilter()
     }
 
@@ -637,6 +639,46 @@ class ProviderTest {
 
 //        val resultUninstal = provider.uninstallFilter(result)
 //        println("=== result $resultUninstal")
+    }
+
+    @OptIn(ExperimentalTime::class)
+    fun testSendTransaction() =  CoroutineScope(Dispatchers.Default).launch {
+//        print("=== about to sleep")
+//        var cnt = 3
+//        while (cnt > 0) {
+//            cnt -= 1
+//            println("=== $cnt")
+//            delay(Duration.seconds(1))
+//        }
+        val transaction = Transaction(
+            hash = null,
+            to = Address.HexString("0x789f1263215d4bcB7a109dE72b4c87116CFac5c4"),
+            from = Address.HexString("0x9fFd5aEFd25E18bb8AaA171b8eC619d94AD6AAf0"),
+            nonce = BigInt.from(1),
+            gasLimit = BigInt.from(21000),
+            gasPrice = null,
+            input = "",
+            value = BigInt.from(50000000000000000),
+            chainId = BigInt.from(3),
+            type = TransactionType.EIP1559,
+            r = null,
+            s = null,
+            v = null,
+            accessList = null,
+            maxPriorityFeePerGas = BigInt.from(1500000000),
+            maxFeePerGas = BigInt.from(1500000016),
+        )
+
+        try {
+            val data = transaction.encodeEIP1559()
+            val hexString = data.toHexString()
+            println("=== hexString $hexString")
+        } catch (e: Throwable) {
+            println("=== error $e")
+        }
+
+//        const signature = this._signingKey().signDigest(keccak256(serialize(<UnsignedTransaction>tx)));
+//        return serialize(<UnsignedTransaction>tx, signature);
     }
 
     fun testErrorHandling() {
