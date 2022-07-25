@@ -38,8 +38,8 @@ extension CultProposalsViewModel {
         struct Vote {
             
             let name: String
-            let value: Float
-            let total: Float
+            let value: Double
+            let total: Double
             let type: `Type`
             
             enum `Type` {

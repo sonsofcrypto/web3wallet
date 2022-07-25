@@ -9,6 +9,17 @@ extension Double {
         String(format: "%.\(decimals)f", self)
     }
     
+    func format(
+        maximumFractionDigits: Int = 2
+    ) -> String? {
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = maximumFractionDigits
+        
+        return formatter.string(from: Double(self) as NSNumber)
+    }
+    
     func formatCurrency(
         with currencyCode: String = "USD",
         maximumFractionDigits: Int = 2

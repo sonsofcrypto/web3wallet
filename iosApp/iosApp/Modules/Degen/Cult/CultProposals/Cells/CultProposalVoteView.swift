@@ -38,8 +38,8 @@ final class CultProposalVoteView: UIView {
     func update(viewModel: CultProposalsViewModel.Item.Vote) {
         
         textLabel.text = viewModel.name
-        pctLabel.text = NumberFormatter.pct.string(from: viewModel.value)
-        progress = viewModel.value
+        pctLabel.text = NumberFormatter.pct.string(from: Float(viewModel.value))
+        progress = Float(viewModel.value)
         
         switch viewModel.type {
             

@@ -8,8 +8,8 @@ struct CultProposal {
     
     let id: String
     let title: String
-    let approved: Float
-    let rejeceted: Float
+    let approved: Double
+    let rejeceted: Double
     let endDate: Date
     
     let guardianInfo: GuardianInfo?
@@ -52,8 +52,8 @@ extension CultProposal {
     static func mock(
         id: String,
         with title: String,
-        approved: Float = 28126112668.969,
-        rejected: Float = 16583879978.515,
+        approved: Double = 28126112668.969,
+        rejected: Double = 16583879978.515,
         endDate: Date = Date().addingTimeInterval(Double.random(in: 0..<1000000)),
         status: Status = .closed
     ) -> CultProposal {

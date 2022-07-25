@@ -142,16 +142,16 @@ private extension DefaultCultService {
     
     func makeApprovedVotes(
         from proposal: CultProposalJSON
-    ) -> Float {
+    ) -> Double {
         
-        (Float(proposal.forVotes) ?? 0) * 0.000000000000000001
+        (Double(proposal.forVotes) ?? 0) * 0.000000000000000001
     }
 
     func makeRejectedVotes(
         from proposal: CultProposalJSON
-    ) -> Float {
+    ) -> Double {
         
-        (Float(proposal.againstVotes) ?? 0) * 0.000000000000000001
+        (Double(proposal.againstVotes) ?? 0) * 0.000000000000000001
     }
 
     func makeEndDate(
