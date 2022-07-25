@@ -6,8 +6,9 @@ import Foundation
 
 protocol CultProposalsInteractor: AnyObject {
 
-    var closedProposals: [CultProposal] { get }
-    var pendingProposals: [CultProposal] { get }
+    func fetchProposals(
+        onCompletion: @escaping (Result<[CultProposal], Error>) -> Void
+    )
 }
 
 final class DefaultCultProposalsInteractor {
@@ -22,13 +23,10 @@ final class DefaultCultProposalsInteractor {
 
 extension DefaultCultProposalsInteractor: CultProposalsInteractor {
 
-    var closedProposals: [CultProposal] {
+    func fetchProposals(
+        onCompletion: @escaping (Result<[CultProposal], Error>) -> Void
+    ) {
         
-        cultService.closedProposals
-    }
-
-    var pendingProposals: [CultProposal] {
-        
-        cultService.pendingProposals
+        cultService.fetchProposals(onCompletion: onCompletion)
     }
 }

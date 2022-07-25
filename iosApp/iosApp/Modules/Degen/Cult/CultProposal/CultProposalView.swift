@@ -82,15 +82,30 @@ extension CultProposalViewController: UICollectionViewDelegate {
         didEndDisplaying cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath
     ) {
-
+        
         endDisplayFirstTimeCalled = true
-        guard let visibleCell = collectionView.visibleCells.first else { return }
+        guard let visibleCell = collectionView.visibleCells.first else {
+            scrollToTop()
+            return
+        }
         guard let currentIndexPath = collectionView.indexPath(for: visibleCell) else { return }
         setTitle(with: currentIndexPath.item + 1)
+        
+        scrollToTop()
     }
 }
 
 private extension CultProposalViewController {
+    
+    func scrollToTop() {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.collectionView.scrollRectToVisible(
+                .init(origin: .init(x: 0, y: 0), size: self.collectionView.visibleSize),
+                animated: true
+            )
+        }
+    }
     
     func scrollToSelectedItem() {
         

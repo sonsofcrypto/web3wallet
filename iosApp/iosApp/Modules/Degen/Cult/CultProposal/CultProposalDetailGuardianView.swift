@@ -16,6 +16,8 @@ final class CultProposalDetailGuardianView: UIView {
     @IBOutlet weak var walletLabel: UILabel!
     @IBOutlet weak var walletValueLabel: UILabel!
     
+    private var viewModel: CultProposalViewModel.ProposalDetails.GuardianInfo!
+    
     override func awakeFromNib() {
         
         super.awakeFromNib()
@@ -36,6 +38,7 @@ final class CultProposalDetailGuardianView: UIView {
         socialLabel.apply(style: .subheadline)
         socialLabel.textColor = Theme.colour.labelSecondary
         socialValueLabel.apply(style: .subheadline, weight: .bold)
+//        socialValueLabel.add(.targetAction(.init(target: self, selector: #selector(discordTapped))))
         
         walletLabel.apply(style: .subheadline)
         walletLabel.textColor = Theme.colour.labelSecondary
@@ -45,6 +48,8 @@ final class CultProposalDetailGuardianView: UIView {
     func update(
         with guardianInfo: CultProposalViewModel.ProposalDetails.GuardianInfo
     ) {
+        
+        self.viewModel = guardianInfo
         
         titleLabel.text = guardianInfo.title
         
@@ -56,5 +61,16 @@ final class CultProposalDetailGuardianView: UIView {
 
         walletLabel.text = guardianInfo.wallet
         walletValueLabel.text = guardianInfo.walletValue
+    }
+}
+
+private extension CultProposalDetailGuardianView {
+    
+    // TODO: Connect to discord, the code below does not seem to work
+    @objc func discordTapped() {
+        
+        let user = viewModel.socialHandle.replacingOccurrences(of: "@", with: "")
+        guard let discordURL = "https://discord.gg/users/\(user))".url else { return }
+        UIApplication.shared.open(discordURL)
     }
 }

@@ -146,5 +146,11 @@ extension DefaultWeb3Service: Web3Service {
             return "18 gwei"
         }
     }
+    
+    
+    var currentEthBlock: String {
+        
+        return "15211116"
+    }
 
 }

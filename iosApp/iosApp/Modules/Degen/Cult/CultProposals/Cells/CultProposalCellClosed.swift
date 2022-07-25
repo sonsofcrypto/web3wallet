@@ -65,11 +65,11 @@ final class CultProposalCellClosed: CollectionViewCell {
         approvedVoteView.update(
             viewModel: viewModel.approved
         )
-        approvedVotes.text = viewModel.approved.total.thowsandsFormatted()
+        approvedVotes.text = viewModel.approved.total.format(maximumFractionDigits: 3)
         rejectedVoteView.update(
             viewModel: viewModel.rejected
         )
-        rejectedVotes.text = viewModel.rejected.total.thowsandsFormatted()
+        rejectedVotes.text = viewModel.rejected.total.format(maximumFractionDigits: 3)
         
         if viewModel.approved.total > viewModel.rejected.total {
             
@@ -92,7 +92,7 @@ final class CultProposalCellClosed: CollectionViewCell {
         let totalVotes = viewModel.approved.total + viewModel.rejected.total
         result2Label.text = Localized(
             "cult.proposals.closed.totalVotes",
-            arg: totalVotes.thowsandsFormatted()
+            arg: totalVotes.format(maximumFractionDigits: 3) ?? "-"
         )
         
         updateDate()

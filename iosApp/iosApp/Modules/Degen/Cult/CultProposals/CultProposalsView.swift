@@ -12,13 +12,14 @@ protocol CultProposalsView: AnyObject {
 final class CultProposalsViewController: BaseViewController {
     
     //let searchController = UISearchController()
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    private let refreshControl = UIRefreshControl()
 
     var presenter: CultProposalsPresenter!
 
     private var viewModel: CultProposalsViewModel!
     private var horizontalScrollingForPendingEnabled = false
-    
-    @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
         
@@ -35,10 +36,22 @@ extension CultProposalsViewController: CultProposalsView {
     func update(with viewModel: CultProposalsViewModel) {
         
         self.viewModel = viewModel
-        
-        setTitle()
-        
-        collectionView.reloadData()
+                
+        switch viewModel {
+            
+        case .loading:
+            showLoading()
+            
+        case .loaded:
+            hideLoading()
+            setTitle()
+            collectionView.reloadData()
+            refreshControl.endRefreshing()
+
+        case .error:
+            hideLoading()
+            //showError()
+        }
     }
 }
 
@@ -57,7 +70,6 @@ extension CultProposalsViewController: UICollectionViewDataSource {
         viewModel.sections[section].items.count
     }
     
-
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -125,6 +137,18 @@ extension CultProposalsViewController: UICollectionViewDelegate {
 
 private extension CultProposalsViewController {
     
+    func showLoading() {
+        
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+    
+    func hideLoading() {
+        
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
+    }
+    
     func setTitle() {
         
         let cultIcon = viewModel.titleIcon.pngImage!.resize(to: .init(width: 32, height: 32))
@@ -141,6 +165,8 @@ private extension CultProposalsViewController {
     
     func configureUI() {
         
+        activityIndicator.color = Theme.colour.navBarTint
+        
         collectionView.setCollectionViewLayout(
             makeCompositionalLayout(),
             animated: false
@@ -153,8 +179,19 @@ private extension CultProposalsViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         
+        collectionView.alwaysBounceVertical = true
+        collectionView.refreshControl = refreshControl
+        
+        refreshControl.tintColor = Theme.colour.navBarTint
+        refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
+
 //        navigationItem.searchController = searchController
 //        searchController.searchResultsUpdater = self
+    }
+    
+    @objc func didPullToRefresh(_ sender: Any) {
+
+        presenter.present()
     }
     
     func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {

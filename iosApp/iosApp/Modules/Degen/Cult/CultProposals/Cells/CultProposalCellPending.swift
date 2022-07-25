@@ -94,11 +94,11 @@ final class CultProposalCellPending: CollectionViewCell {
         approvedVoteView.update(
             viewModel: viewModel.approved
         )
-        approvedVotes.text = viewModel.approved.total.thowsandsFormatted()
+        approvedVotes.text = viewModel.approved.total.format(maximumFractionDigits: 3)
         rejectedVoteView.update(
             viewModel: viewModel.rejected
         )
-        rejectedVotes.text = viewModel.rejected.total.thowsandsFormatted()
+        rejectedVotes.text = viewModel.rejected.total.format(maximumFractionDigits: 3)
         date = viewModel.endDate
         
         approveButton.setTitle(viewModel.approveButtonTitle, for: .normal)

@@ -45,9 +45,33 @@ extension DefaultCultProposalsPresenter: CultProposalsPresenter {
 
     func present() {
         
-        pendingProposals = interactor.pendingProposals.sorted { $0.endDate < $1.endDate }
-        closedProposals = interactor.closedProposals.sorted { $0.endDate > $1.endDate }
-        updateView()
+        if pendingProposals.isEmpty && closedProposals.isEmpty {
+            
+            view?.update(with: .loading)
+        }
+        
+        interactor.fetchProposals { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+                
+            case let .success(proposals):
+                self.prepareProposals(with: proposals)
+                self.updateView()
+                
+            case let .failure(error):
+                self.view?.update(
+                    with: .error(
+                        error: .init(
+                            title: Localized("Error"),
+                            body: error.localizedDescription,
+                            actions: [
+                                Localized("ok")
+                            ]
+                        )
+                    )
+                )
+            }
+        }
     }
 
     func handle(_ event: CultProposalsPresenterEvent) {
@@ -79,6 +103,23 @@ extension DefaultCultProposalsPresenter: CultProposalsPresenter {
 
 private extension DefaultCultProposalsPresenter {
     
+    func prepareProposals(
+        with proposals: [CultProposal]
+    ) {
+        
+        pendingProposals = proposals.filter {
+            $0.status == .pending
+        }.sorted {
+            $0.endDate < $1.endDate
+        }
+        closedProposals = proposals.filter {
+            $0.status == .closed
+        }.sorted {
+            $0.endDate > $1.endDate
+        }
+        updateView()
+    }
+    
     func updateView() {
         
         view?.update(
@@ -88,14 +129,14 @@ private extension DefaultCultProposalsPresenter {
 
     func viewModel() -> CultProposalsViewModel {
         
-        let pendingProposals = interactor.pendingProposals.filter {
+        let pendingProposals = pendingProposals.filter {
             [weak self] in
             guard let self = self else { return false }
             guard !self.filterText.isEmpty else { return true }
             return $0.title.contains(self.filterText)
         }.sorted { $0.endDate < $1.endDate }
         
-        let closedProposals = interactor.closedProposals.filter {
+        let closedProposals = closedProposals.filter {
             [weak self] in
             guard let self = self else { return false }
             guard !self.filterText.isEmpty else { return true }
@@ -120,10 +161,11 @@ private extension DefaultCultProposalsPresenter {
 
     func viewModel(from cultProposal: CultProposal) -> CultProposalsViewModel.Item {
         
-        let approved = cultProposal.approved / (cultProposal.approved + cultProposal.rejeceted)
+        let total = cultProposal.approved + cultProposal.rejeceted
+        let approved = total == 0 ? 0 : cultProposal.approved / total
 
         return .init(
-            id: cultProposal.id.stringValue,
+            id: cultProposal.id,
             title: cultProposal.title,
             approved: .init(
                 name: Localized("approved"),
@@ -133,7 +175,7 @@ private extension DefaultCultProposalsPresenter {
             ),
             rejected: .init(
                 name: Localized("rejected"),
-                value: 1 - approved,
+                value: approved == 0 ? 0 : 1 - approved,
                 total: cultProposal.rejeceted,
                 type: .rejected
             ),
@@ -145,10 +187,10 @@ private extension DefaultCultProposalsPresenter {
     
     func findProposal(with id: String) -> CultProposal? {
      
-        if let proposal = closedProposals.first(where: { $0.id.stringValue == id }) {
+        if let proposal = closedProposals.first(where: { $0.id == id }) {
             
             return proposal
-        } else if let proposal = pendingProposals.first(where: { $0.id.stringValue == id }) {
+        } else if let proposal = pendingProposals.first(where: { $0.id == id }) {
             
             return proposal
         } else {
