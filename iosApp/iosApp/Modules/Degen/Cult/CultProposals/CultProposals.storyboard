@@ -18,6 +18,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="9CY-Ar-PIG">
+                                <rect key="frame" x="207" y="448" width="0.0" height="0.0"/>
+                            </activityIndicatorView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uJY-zJ-XG9">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -247,9 +250,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Pj4-Dw-4xQ" firstAttribute="bottom" secondItem="uJY-zJ-XG9" secondAttribute="bottom" id="94F-HQ-BsM"/>
+                            <constraint firstItem="9CY-Ar-PIG" firstAttribute="top" secondItem="Xez-Ps-xQi" secondAttribute="top" constant="32" id="Mkr-Hx-laN"/>
                             <constraint firstItem="uJY-zJ-XG9" firstAttribute="leading" secondItem="Pj4-Dw-4xQ" secondAttribute="leading" id="WBa-9A-Zg0"/>
                             <constraint firstItem="uJY-zJ-XG9" firstAttribute="trailing" secondItem="Pj4-Dw-4xQ" secondAttribute="trailing" id="nRs-ZK-dC7"/>
                             <constraint firstItem="uJY-zJ-XG9" firstAttribute="top" secondItem="Xez-Ps-xQi" secondAttribute="top" id="u0g-1l-jcr"/>
+                            <constraint firstItem="9CY-Ar-PIG" firstAttribute="centerX" secondItem="Xez-Ps-xQi" secondAttribute="centerX" id="w15-GW-hWl"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="defaultTopColor">
@@ -261,6 +266,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="9CY-Ar-PIG" id="EbZ-XH-0Ez"/>
                         <outlet property="collectionView" destination="uJY-zJ-XG9" id="Hnn-ki-IAx"/>
                     </connections>
                 </viewController>

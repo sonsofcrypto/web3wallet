@@ -82,7 +82,7 @@ private extension DefaultCultService {
         
         return .init(
             id: proposal.id,
-            title: proposal.description.projectName,
+            title: "#" + proposal.id + " " + proposal.description.projectName,
             approved: makeApprovedVotes(from: proposal),
             rejeceted: makeRejectedVotes(from: proposal),
             endDate: makeEndDate(from: proposal),
@@ -137,7 +137,63 @@ private extension DefaultCultService {
         from proposal: CultProposalJSON
     ) -> [CultProposal.ProjectDocuments] {
      
-        []
+        var documents = [CultProposal.ProjectDocuments]()
+        
+        if let fileURL = proposal.description.file.url {
+        
+            documents.append(
+                .init(
+                    name: Localized("cult.proposals.result.liteWhitepaper"),
+                    documents: [
+                        .link(
+                            displayName: proposal.description.file,
+                            url: fileURL
+                        )
+                    ]
+                )
+            )
+        }
+        
+        let socialDocs = proposal.description.socialChannel.replacingOccurrences(
+            of: "\n", with: " "
+        )
+        let socialDocsUrls = socialDocs.split(separator: " ").compactMap { String($0).url }
+        
+        if !socialDocsUrls.isEmpty {
+            
+            documents.append(
+                .init(
+                    name: Localized("cult.proposals.result.socialDocs"),
+                    documents: socialDocsUrls.compactMap {
+                        .link(displayName: $0.absoluteString, url: $0)
+                    }
+                )
+            )
+        }
+
+        if let linkURL = proposal.description.links.url {
+            
+            documents.append(
+                .init(
+                    name: Localized("cult.proposals.result.audits"),
+                    documents: [
+                        .link(displayName: linkURL.absoluteString, url: linkURL)
+                    ]
+                )
+            )
+        } else if !proposal.description.links.isEmpty {
+            
+            documents.append(
+                .init(
+                    name: Localized("cult.proposals.result.audits"),
+                    documents: [
+                        .note(proposal.description.links)
+                    ]
+                )
+            )
+        }
+        
+        return documents
     }
     
     func makeApprovedVotes(
@@ -172,7 +228,7 @@ private extension DefaultCultService {
             "cult.proposal.parsing.cultRewardAllocation",
             arg: description.range.toString(
                 decimals: 2
-            )
+            ).replacingOccurrences(of: ".00", with: "")
         )
     }
     
@@ -182,6 +238,6 @@ private extension DefaultCultService {
         
         let perString = Localized("cult.proposal.parsing.rewardDistribution.per")
         let rate = description.rate.replacingOccurrences(of: "%", with: "")
-        return rate + "%" + perString + " " + description.time
+        return rate + "% " + perString + " " + description.time
     }
 }

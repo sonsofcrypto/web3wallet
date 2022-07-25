@@ -7,6 +7,11 @@ import Foundation
 // MARK: - Extracting number from string
 
 extension String {
+    
+    var url: URL? {
+        
+        URL(string: self)
+    }
 
     func int() throws  -> Int {
         guard let num = Int(self) else {

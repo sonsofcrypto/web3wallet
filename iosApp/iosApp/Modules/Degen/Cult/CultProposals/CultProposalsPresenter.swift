@@ -45,7 +45,10 @@ extension DefaultCultProposalsPresenter: CultProposalsPresenter {
 
     func present() {
         
-        view?.update(with: .loading)
+        if pendingProposals.isEmpty && closedProposals.isEmpty {
+            
+            view?.update(with: .loading)
+        }
         
         interactor.fetchProposals { [weak self] result in
             guard let self = self else { return }

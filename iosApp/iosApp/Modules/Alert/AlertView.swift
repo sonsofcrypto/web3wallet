@@ -135,6 +135,8 @@ private extension DefaultAlertView {
         let webView = WKWebView()
         webView.backgroundColor = .clear
         webView.scrollView.isScrollEnabled = false
+        webView.clipsToBounds = true
+        webView.layer.cornerRadius = Theme.constant.cornerRadius
         webView.loadFileURL(url, allowingReadAccessTo: url)
         let request = URLRequest(url: url)
         webView.load(request)
