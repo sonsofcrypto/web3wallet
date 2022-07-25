@@ -15,7 +15,7 @@ struct CultProposalViewModel {
         
         let name: String
         let status: Status
-        let guardianInfo: GuardianInfo
+        let guardianInfo: GuardianInfo?
         let summary: Summary
         let documentsInfo: DocumentsInfo
         let tokenomics: Tokenomics

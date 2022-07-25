@@ -85,15 +85,7 @@ private extension DefaultCultProposalPresenter {
                     title: makeStatus(from: $0),
                     color: makeStatusColor(from: $0)
                 ),
-                guardianInfo: .init(
-                    title: Localized("cult.proposal.guardian.header"),
-                    name: Localized("cult.proposal.guardian.name"),
-                    nameValue: $0.guardianName,
-                    socialHandle: Localized("cult.proposal.guardian.socialHandle"),
-                    socialHandleValue: $0.guardianSocial,
-                    wallet: Localized("cult.proposal.guardian.wallet"),
-                    walletValue: $0.guardianWallet
-                ),
+                guardianInfo: makeGuardianInfo(from: $0),
                 summary: .init(
                     title: Localized("cult.proposal.summary.header"),
                     summary: $0.projectSummary
@@ -141,6 +133,22 @@ private extension DefaultCultProposalPresenter {
         case .closed:
             return Theme.colour.separatorNoTransparency
         }
+    }
+    
+    func makeGuardianInfo(
+        from proposal: CultProposal
+    ) -> CultProposalViewModel.ProposalDetails.GuardianInfo? {
+        
+        guard let guardianInfo = proposal.guardianInfo else { return nil }
+        return .init(
+            title: Localized("cult.proposal.guardian.header"),
+            name: Localized("cult.proposal.guardian.name"),
+            nameValue: guardianInfo.proposal,
+            socialHandle: Localized("cult.proposal.guardian.discordHandle"),
+            socialHandleValue: guardianInfo.discord,
+            wallet: Localized("cult.proposal.guardian.wallet"),
+            walletValue: guardianInfo.address
+        )
     }
     
     func makeDocuments(

@@ -51,6 +51,7 @@
 "time.until.sec.shortest" = "%@s";
 "pending" = "Pending";
 "closed" = "Closed";
+"error" = "Error";
 
 "wallets.tile" = "wallet";
 "wallets.createNew" = "Import wallet";
@@ -252,7 +253,7 @@
 "cult.proposal.title.of" = "of";
 "cult.proposal.guardian.header"="Guardian Information";
 "cult.proposal.guardian.name" = "Name";
-"cult.proposal.guardian.socialHandle" = "SocialHandle";
+"cult.proposal.guardian.discordHandle" = "Discord";
 "cult.proposal.guardian.wallet" = "Wallet";
 "cult.proposal.summary.header" = "Project Summary";
 "cult.proposal.docs.header"="Project Docs";
@@ -260,3 +261,5 @@
 "cult.proposal.tokenomics.rewardAllocation" = "CULT Reward Allocation";
 "cult.proposal.tokenomics.rewardDistribution" = "Reward Distribution Terms";
 "cult.proposal.tokenomics.projectEthWallet" = "Project Ethereum Wallet";
+"cult.proposal.parsing.rewardDistribution.per" = "per";
+"cult.proposal.parsing.cultRewardAllocation" = "%@% of Total Supply";

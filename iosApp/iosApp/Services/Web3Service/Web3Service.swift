@@ -29,6 +29,8 @@ protocol Web3Service: AnyObject {
     func networkFeeInUSD(network: Web3Network, fee: Web3NetworkFee) -> Double
     func networkFeeInSeconds(network: Web3Network, fee: Web3NetworkFee) -> Int
     func networkFeeInNetworkToken(network: Web3Network, fee: Web3NetworkFee) -> String
+    
+    var currentEthBlock: String { get }
 }
 
 enum Web3NetworkFee: String {

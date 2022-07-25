@@ -31,7 +31,12 @@ final class CultProposalDetailViewCell: UICollectionViewCell {
         titleLabel.text = viewModel.name
         
         statusView.update(with: viewModel.status)
-        guardianView.update(with: viewModel.guardianInfo)
+        if let guardianInfo = viewModel.guardianInfo {
+            guardianView.update(with: guardianInfo)
+            guardianView.isHidden = false
+        } else {
+            guardianView.isHidden = true
+        }
         summaryView.update(with: viewModel.summary)
         docsView.update(with: viewModel.documentsInfo)
         tokenomicsView.update(with: viewModel.tokenomics)
