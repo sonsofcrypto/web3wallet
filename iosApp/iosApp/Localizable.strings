@@ -133,10 +133,14 @@
 
 "settings.root.group.settings" = "Settings";
 "settings.root.group.actions" = "Actions";
-"settings.action.resetKeyStore" = "Reset keystore";
 "settings.theme" = "Theme";
 "settings.theme.miami" = "Theme Miami";
 "settings.theme.ios" = "Theme IOS";
+"settings.providers" = "Service Providers";
+"settings.providers.nfts" = "NFTs";
+"settings.providers.nfts.openSea" = "OpenSea";
+"settings.providers.nfts.mock" = "Dummy Data";
+"settings.resetKeyStore" = "Reset keystore";
 "settings.newSeedTransitionType" = "New seed transition type";
 "settings.onboardingMode" = "Onboarding mode";
 

@@ -13,23 +13,16 @@ protocol MnemonicImportWireframeFactory {
     ) -> MnemonicImportWireframe
 }
 
-// MARK: - DefaultMnemonicWireframeFactory
-
 final class DefaultMnemonicImportWireframeFactory {
 
     private let keyStoreService: KeyStoreService
-    private let settingsService: SettingsService
 
     init(
-        keyStoreService: KeyStoreService,
-        settingsService: SettingsService
+        keyStoreService: KeyStoreService
     ) {
         self.keyStoreService = keyStoreService
-        self.settingsService = settingsService
     }
 }
-
-// MARK: - MnemonicWireframeFactory
 
 extension DefaultMnemonicImportWireframeFactory: MnemonicImportWireframeFactory {
 
@@ -41,21 +34,8 @@ extension DefaultMnemonicImportWireframeFactory: MnemonicImportWireframeFactory 
         DefaultMnemonicImportWireframe(
             parent: parent,
             context: context,
-            keyStoreService: keyStoreService,
-            settingsService: settingsService
+            keyStoreService: keyStoreService
         )
     }
 }
 
-// MARK: - Assembler
-
-final class MnemonicImportWireframeFactoryAssembler: AssemblerComponent {
-    func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .instance) { resolver -> MnemonicImportWireframeFactory in
-            DefaultMnemonicImportWireframeFactory(
-                keyStoreService: resolver.resolve(),
-                settingsService: resolver.resolve()
-            )
-        }
-    }
-}

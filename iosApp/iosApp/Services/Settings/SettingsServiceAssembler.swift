@@ -8,9 +8,19 @@ final class SettingsServiceAssembler: AssemblerComponent {
         
         registry.register(scope: .singleton) { resolver -> SettingsService in
             
-            DefaultSettingsService(
-                defaults: .standard
+            let service = DefaultSettingsService(
+                defaults: .standard,
+                keyStoreService: resolver.resolve()
             )
+            if !service.isInitialized(item: .theme) {
+                
+                service.didSelect(item: .theme, action: .themeMiami, fireAction: false)
+            }
+            if !service.isInitialized(item: .providersNFTs) {
+                
+                service.didSelect(item: .providersNFTs, action: .providersNFTsMock, fireAction: false)
+            }
+            return service
         }
     }
 }

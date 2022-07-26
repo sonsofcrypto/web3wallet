@@ -18,16 +18,13 @@ protocol MnemonicUpdateWireframeFactory {
 final class DefaultMnemonicUpdateWireframeFactory {
 
     private let keyStoreService: KeyStoreService
-    private let settingsService: SettingsService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
 
     init(
         keyStoreService: KeyStoreService,
-        settingsService: SettingsService,
         authenticateWireframeFactory: AuthenticateWireframeFactory
     ) {
         self.keyStoreService = keyStoreService
-        self.settingsService = settingsService
         self.authenticateWireframeFactory = authenticateWireframeFactory
     }
 }
@@ -44,7 +41,6 @@ extension DefaultMnemonicUpdateWireframeFactory: MnemonicUpdateWireframeFactory 
             parent: parent,
             context: context,
             keyStoreService: keyStoreService,
-            settingsService: settingsService,
             authenticateWireframeFactory: authenticateWireframeFactory
         )
     }

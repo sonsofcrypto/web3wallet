@@ -181,9 +181,7 @@ private extension DefaultKeyStorePresenter {
                 .compactMap{  $0 },
             buttons: buttonsViewModel,
             targetView: targetView,
-            transitionStyle: KeyStoreViewModel.TransitionStyle.style(
-                from: settingsService.createWalletTransitionType
-            )
+            transitionStyle: ServiceDirectory.transitionStyle
         )
     }
 

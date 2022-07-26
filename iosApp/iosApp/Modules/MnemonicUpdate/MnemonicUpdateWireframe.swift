@@ -21,7 +21,6 @@ final class DefaultMnemonicUpdateWireframe {
     private weak var parent: UIViewController!
     private let context: MnemonicUpdateContext
     private let keyStoreService: KeyStoreService
-    private let settingsService: SettingsService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
 
     private weak var vc: UIViewController!
@@ -30,13 +29,11 @@ final class DefaultMnemonicUpdateWireframe {
         parent: UIViewController?,
         context: MnemonicUpdateContext,
         keyStoreService: KeyStoreService,
-        settingsService: SettingsService,
         authenticateWireframeFactory: AuthenticateWireframeFactory
     ) {
         self.parent = parent
         self.context = context
         self.keyStoreService = keyStoreService
-        self.settingsService = settingsService
         self.authenticateWireframeFactory = authenticateWireframeFactory
     }
 }
@@ -52,7 +49,7 @@ extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
             vc.transitioningDelegate = transitionDelegate
         }
 
-        switch settingsService.createWalletTransitionType {
+        switch ServiceDirectory.transitionStyle {
         case .cardFlip:
             vc.modalPresentationStyle = .overCurrentContext
         case .sheet:

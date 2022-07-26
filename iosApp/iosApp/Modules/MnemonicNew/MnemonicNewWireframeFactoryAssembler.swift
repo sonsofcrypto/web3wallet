@@ -9,8 +9,7 @@ final class MnemonicNewWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> MnemonicNewWireframeFactory in
             
             DefaultMnemonicNewWireframeFactory(
-                keyStoreService: resolver.resolve(),
-                settingsService: resolver.resolve()
+                keyStoreService: resolver.resolve()
             )
         }
     }

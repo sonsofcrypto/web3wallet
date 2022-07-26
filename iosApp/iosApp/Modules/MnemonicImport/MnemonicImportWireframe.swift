@@ -21,20 +21,17 @@ final class DefaultMnemonicImportWireframe {
     private weak var parent: UIViewController!
     private let context: MnemonicImportContext
     private let keyStoreService: KeyStoreService
-    private let settingsService: SettingsService
 
     private weak var vc: UIViewController!
 
     init(
         parent: UIViewController?,
         context: MnemonicImportContext,
-        keyStoreService: KeyStoreService,
-        settingsService: SettingsService
+        keyStoreService: KeyStoreService
     ) {
         self.parent = parent
         self.context = context
         self.keyStoreService = keyStoreService
-        self.settingsService = settingsService
     }
 }
 
@@ -50,7 +47,7 @@ extension DefaultMnemonicImportWireframe: MnemonicImportWireframe {
             vc.transitioningDelegate = transitionDelegate
         }
 
-        switch settingsService.createWalletTransitionType {
+        switch ServiceDirectory.transitionStyle {
         case .cardFlip:
             vc.modalPresentationStyle = .overCurrentContext
         case .sheet:

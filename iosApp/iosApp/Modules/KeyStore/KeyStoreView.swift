@@ -29,6 +29,7 @@ final class KeyStoreViewController: BaseViewController {
     @IBOutlet weak var buttonHandleView: UIView!
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -356,8 +357,6 @@ extension KeyStoreViewController {
     }
 }
 
-// MARK: - UIViewControllerTransitioningDelegate
-
 extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
 
     func animationController(
@@ -366,7 +365,7 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
         source: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
         
-        guard viewModel?.transitionStyle == .flip else {
+        guard viewModel?.transitionStyle == .cardFlip else {
             return nil
         }
 
@@ -389,7 +388,7 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
     }
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        guard viewModel?.transitionStyle == .flip else {
+        guard viewModel?.transitionStyle == .cardFlip else {
             return nil
         }
 

@@ -5,4 +5,25 @@
 struct ServiceDirectory {
     
     static var assembler: Assembler!
+    
+    // TODO: Review
+    static var transitionStyle: TransitionStyle = .cardFlip
+    enum TransitionStyle {
+        
+        case cardFlip
+        case sheet
+    }
+    
+    // TODO: Review
+    static var onboardingMode: OnboardingMode = .oneTap
+    enum OnboardingMode {
+        case oneTap
+        case twoTap
+    }
+    
+    static func rebootApp() {
+        
+        guard let window = SceneDelegateHelper().window else { return }
+        MainBootstrapper(window: window).boot()
+    }
 }

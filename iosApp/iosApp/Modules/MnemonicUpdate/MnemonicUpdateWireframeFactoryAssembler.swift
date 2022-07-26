@@ -10,7 +10,6 @@ final class MnemonicUpdateWireframeFactoryAssembler: AssemblerComponent {
             
             DefaultMnemonicUpdateWireframeFactory(
                 keyStoreService: resolver.resolve(),
-                settingsService: resolver.resolve(),
                 authenticateWireframeFactory: resolver.resolve()
             )
         }

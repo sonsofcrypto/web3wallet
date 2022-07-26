@@ -23,10 +23,14 @@ final class SettingsCell: CollectionViewCell {
         
         didSet {
             
-            guard let viewModel = viewModel else { return }
-            guard case SettingsViewModel.Item.selectableOption = viewModel else { return }
+            guard
+                let viewModel = viewModel,
+                case let Setting.`Type`.action(_, _, canSelect) = viewModel.setting.type,
+                canSelect
+            else { return }
             
             UIView.animate(withDuration: 0.1) { [weak self] in
+                
                 guard let self = self else { return }
                 self.rightImageView.alpha = self.isSelected ? 1 : 0
             }
@@ -42,19 +46,22 @@ extension SettingsCell {
         
         self.viewModel = viewModel
         
-        titleLabel.text = viewModel.title()
+        titleLabel.text = viewModel.title
         
-        switch viewModel {
-        case .setting:
+        switch viewModel.setting.type {
+            
+        case .item:
             rightImageView.alpha = 1
             rightImageView.image = UIImage(systemName: "chevron.right")
 
-        case let .selectableOption(_, selected):
-            rightImageView.image = UIImage(systemName: "checkmark")
-            rightImageView.alpha = selected ? 1 : 0
-
-        case .action:
-            rightImageView.alpha = 0
+        case let .action(_, _, showTickOnSelected):
+            
+            if showTickOnSelected {
+                rightImageView.image = UIImage(systemName: "checkmark")
+                rightImageView.alpha = (viewModel.isSelected ?? false) ? 1 : 0
+            } else {
+                rightImageView.alpha = 0
+            }
         }
 
         return self

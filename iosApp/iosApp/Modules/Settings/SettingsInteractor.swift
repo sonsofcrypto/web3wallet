@@ -7,95 +7,55 @@ import web3lib
 
 protocol SettingsInteractor: AnyObject {
 
-    func settingsItem(for setting: Setting) -> [SettingsItem]
-    func didSelectSettingOption(at idx: Int, forSetting setting: Setting)
-    func handleActionIfPossible(_ action: SettingsItem.ActionType) -> Bool
+    func settings(
+        for setting: Setting.ItemIdentifier
+    ) -> [Setting]
+    
+    func didSelect(
+        item: Setting.ItemIdentifier?,
+        action: Setting.ActionIdentifier
+    )
+    
+    func isSelected(
+        item: Setting.ItemIdentifier,
+        action: Setting.ActionIdentifier
+    ) -> Bool
 }
 
 final class DefaultSettingsInteractor {
 
     private let settingsService: SettingsService
-    private let keyStoreService: KeyStoreService
 
     init(
-        _ settingsService: SettingsService,
-        keyStoreService: KeyStoreService
+        _ settingsService: SettingsService
     ) {
         
         self.settingsService = settingsService
-        self.keyStoreService = keyStoreService
     }
 }
 
 extension DefaultSettingsInteractor: SettingsInteractor {
 
-    func settingsItem(for setting: Setting) -> [SettingsItem] {
+    func settings(
+        for setting: Setting.ItemIdentifier
+    ) -> [Setting] {
         
-        switch setting {
-            
-        case .onboardingMode:
-            let idx = Setting.OnboardingModeOptions.allCases.firstIndex(
-                of: settingsService.onboardingMode
-            )
-            return [
-                .group(
-                    title: setting.rawValue,
-                    items: Setting.OnboardingModeOptions.allCases.enumerated().map {
-                        SettingsItem.selectableOption(
-                            setting: setting,
-                            optIdx: $0.0,
-                            optTitle: "\($0.1)",
-                            selected: idx == $0.0
-                        )
-                    }
-                )
-            ]
-            
-        case .createWalletTransitionType:
-            let idx = Setting.CreateWalletTransitionTypeOptions.allCases.firstIndex(
-                of: settingsService.createWalletTransitionType
-            )
-            return [
-                .group(
-                    title: setting.rawValue,
-                    items: Setting.CreateWalletTransitionTypeOptions.allCases.enumerated().map {
-                        SettingsItem.selectableOption(
-                            setting: setting,
-                            optIdx: $0.0,
-                            optTitle: "\($0.1)",
-                            selected: idx == $0.0
-                        )
-                    }
-                )
-            ]
-            
-        case .theme:
-            return SettingsItem.themeItems
-        }
+        settingsService.settings(for: setting)
     }
-
-    func didSelectSettingOption(at idx: Int, forSetting setting: Setting) {
+    
+    func didSelect(
+        item: Setting.ItemIdentifier?,
+        action: Setting.ActionIdentifier
+    ) {
         
-        switch setting {
-        case .onboardingMode:
-            settingsService.onboardingMode = Setting.OnboardingModeOptions.allCases[idx]
-        case .createWalletTransitionType:
-            let val = Setting.CreateWalletTransitionTypeOptions.allCases[idx]
-            settingsService.createWalletTransitionType = val
-        case .theme:
-            settingsService.theme = Setting.ThemeTypeOptions.allCases[idx]
-        }
+        settingsService.didSelect(item: item, action: action)
     }
-
-    func handleActionIfPossible(_ action: SettingsItem.ActionType) -> Bool {
+    
+    func isSelected(
+        item: Setting.ItemIdentifier,
+        action: Setting.ActionIdentifier
+    ) -> Bool {
         
-        switch action {
-        case .resetKeyStore:
-            keyStoreService.items().forEach {
-                keyStoreService.remove(item: $0)
-            }
-            // fatalError("Killing app after keyStore reset")
-            return true
-        }
+        settingsService.isSelected(item: item, action: action)
     }
 }
