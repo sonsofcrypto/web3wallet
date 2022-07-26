@@ -3,13 +3,63 @@ package coreCrypto
 import (
 	"crypto/aes"
 	"crypto/cipher"
+	"crypto/ecdsa"
+	"crypto/elliptic"
 	"errors"
+	"fmt"
+	"github.com/ethereum/go-ethereum/common/math"
+	"github.com/ethereum/go-ethereum/crypto/secp256k1"
 	"log"
+	"math/big"
 )
 
 var (
 	ErrDecrypt = errors.New("could not decrypt key with given password")
 )
+
+// DigestLength sets the signature digest exact length
+const DigestLength = 32
+
+func Sign(digestHash []byte, prv []byte, curve int) (sig []byte, err error) {
+	key := priv(prv, curveFor(curve))
+	return _sign(digestHash, key)
+}
+
+func SignEmptyOnError(digestHash []byte, prv []byte, curve int) []byte {
+	sig, err := Sign(digestHash, prv, curve)
+	if err != nil {
+		log.Println(err)
+		return make([]byte, 0)
+	}
+	return sig
+}
+
+func _sign(digestHash []byte, prv *ecdsa.PrivateKey) (sig []byte, err error) {
+	if len(digestHash) != DigestLength {
+		return nil, fmt.Errorf(
+			"required hash is %d bytes (%d)",
+			DigestLength, len(digestHash),
+		)
+	}
+	seckey := math.PaddedBigBytes(prv.D, prv.Params().BitSize/8)
+	defer zeroBytes(seckey)
+	return secp256k1.Sign(digestHash, seckey)
+}
+
+func priv(keyBytes []byte, c elliptic.Curve) *ecdsa.PrivateKey {
+	k := new(big.Int).SetBytes(keyBytes)
+	priv := new(ecdsa.PrivateKey)
+	priv.PublicKey.Curve = c
+	priv.D = k
+	priv.PublicKey.X, priv.PublicKey.Y = c.ScalarBaseMult(k.Bytes())
+	return priv
+}
+
+func zeroBytes(bytes []byte) {
+	for i := range bytes {
+		bytes[i] = 0
+	}
+}
 
 func AESCTRXOR(key, inText, iv []byte) ([]byte, error) {
 	// AES-128 is selected due to size of encryptKey.
@@ -26,31 +76,6 @@ func AESCTRXOR(key, inText, iv []byte) ([]byte, error) {
 
 func AESCTRXOREmptyOnError(key, inText, iv []byte) []byte {
 	data, err := AESCTRXOR(key, inText, iv)
-	if err != nil {
-		return make([]byte, 0)
-	}
-	return data
-}
-
-func AESCBCDecrypt(key, cipherText, iv []byte) ([]byte, error) {
-	aesBlock, err := aes.NewCipher(key)
-	if err != nil {
-		log.Println("=== Returning err 2:", err, "key len:", len(key))
-		return nil, err
-	}
-	decrypter := cipher.NewCBCDecrypter(aesBlock, iv)
-	paddedPlaintext := make([]byte, len(cipherText))
-	decrypter.CryptBlocks(paddedPlaintext, cipherText)
-	plaintext := pkcs7Unpad(paddedPlaintext)
-	if plaintext == nil {
-		log.Println("=== Returning err 2:", err, "key len:", len(key))
-		return nil, ErrDecrypt
-	}
-	return plaintext, err
-}
-
-func AESCBCDecryptEmptyOnError(key, cipherText, iv []byte) []byte {
-	data, err := AESCBCDecrypt(key, cipherText, iv)
 	if err != nil {
 		return make([]byte, 0)
 	}

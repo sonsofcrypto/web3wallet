@@ -2,16 +2,20 @@ package com.sonsofcrypto.web3lib_provider
 
 import com.sonsofcrypto.web3lib_core.Address
 import com.sonsofcrypto.web3lib_core.jsonPrimitive
+import com.sonsofcrypto.web3lib_provider.model.BlockTag
+import com.sonsofcrypto.web3lib_provider.model.stringValue
 import kotlinx.serialization.json.*
 
 sealed class Topic {
     data class TopicList(val list: List<Topic>): Topic() {
 
+        @Throws(Throwable::class)
         fun jsonPrimitive(): JsonArray = JsonArray(
             list.map {
                 when(it) {
                     is TopicValue -> it.jsonPrimitive()
                     is TopicList -> it.jsonPrimitive()
+                    else -> throw Error("Unexpected `Topic`")
                 }
             }
         )
@@ -57,6 +61,7 @@ data class FilterRequest(
     val topics: List<Topic>?
 ) {
 
+    @Throws(Throwable::class)
     fun toHexifiedJsonObject() : JsonObject = buildJsonObject {
         if (fromBlock != null) {
             put("fromBlock", fromBlock.jsonPrimitive())
@@ -72,6 +77,7 @@ data class FilterRequest(
                 when (it) {
                     is Topic.TopicValue -> it.jsonPrimitive()
                     is Topic.TopicList -> it.jsonPrimitive()
+                    else -> throw Error("Unexpected `Topic`")
                 }
             }
             put("topics", JsonArray(encoded))

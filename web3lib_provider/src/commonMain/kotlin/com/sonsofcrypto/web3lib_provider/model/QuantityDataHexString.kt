@@ -54,5 +54,3 @@ typealias DataHexString = String
 fun DataHexString(byteArray: ByteArray): DataHexString = byteArray.toHexString(true)
 
 fun DataHexString.toByteArrayData(): ByteArray = hexStringToByteArray()
-
-fun JsonElement.stringValue(): String = (this as JsonPrimitive).content

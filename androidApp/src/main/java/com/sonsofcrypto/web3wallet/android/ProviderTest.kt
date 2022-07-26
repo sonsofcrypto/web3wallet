@@ -1,16 +1,13 @@
 package com.sonsofcrypto.web3wallet.android
 
-import com.sonsofcrypto.web3lib_core.Address
-import com.sonsofcrypto.web3lib_core.Network
+import com.sonsofcrypto.web3lib_core.*
 import com.sonsofcrypto.web3lib_provider.*
-import com.sonsofcrypto.web3lib_utils.BigInt
-import com.sonsofcrypto.web3lib_utils.hexStringToByteArray
-import com.sonsofcrypto.web3lib_utils.keccak256
-import com.sonsofcrypto.web3lib_utils.toHexString
+import com.sonsofcrypto.web3lib_provider.Provider
+import com.sonsofcrypto.web3lib_provider.model.BlockTag
+import com.sonsofcrypto.web3lib_utils.*
 import kotlinx.coroutines.*
 import kotlinx.serialization.json.Json
 import java.lang.Exception
-import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
 private val providerJson = Json {
@@ -43,9 +40,11 @@ class ProviderTest {
 //        testGetTransactionByBlockIndex()
 //        testGetTransactionReceipt()
 //        testGetUncleBlock()
-//          testGetLogs()
-          testSendTransaction()
-//          testNewFilter()
+//        testGetLogs()
+//        testSendTransaction()
+//        testNewFilter()
+        testSendTransaction2()
+//        testGetTransactionReceipt2()
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
@@ -116,16 +115,16 @@ class ProviderTest {
         assertTrue(result == expected, "Unexpected data received")
     }
 
-    fun testEstimateGas() = runBlocking {
-        val data = "0x45848dfc".hexStringToByteArray()
-        val provider = ProviderPocket(Network.rinkeby())
-        val transaction = TransactionRequest(
-            to = Address.HexString("0xebe8efa441b9302a0d7eaecc277c09d20d684540"),
-            data = data,
-        )
-        val result = provider.estimateGas(transaction)
-        assertTrue(result.toString() == "34312" , "Unexpected estimateGas")
-    }
+//    fun testEstimateGas() = runBlocking {
+//        val data = "0x45848dfc".hexStringToByteArray()
+//        val provider = ProviderPocket(Network.rinkeby())
+//        val transaction = Transaction(
+//            to = Address.HexString("0xebe8efa441b9302a0d7eaecc277c09d20d684540"),
+//            input = DataHexString(data),
+//        )
+//        val result = provider.estimateGas(transaction)
+//        assertTrue(result.toString() == "34312" , "Unexpected estimateGas")
+//    }
 
     fun testGetBlockTransactionHashCount() = runBlocking {
         val provider = ProviderPocket(Network.ethereum())
@@ -164,10 +163,10 @@ class ProviderTest {
         val expected = Block(
             hash = "0xb6e1f102c04bc9343afd7be8703b243066ed342316966dcf72fc65f98072becf",
             parentHash = "0x8898083e9d18e94fbb5c70d0b7e180cc108692c779d6a3c4e470c27b3c02d26a",
-            number = 15187562,
+            number = BigInt.from(15187562),
             timestamp = 1658428243uL,
-            nonce = 3150077335410336130uL,
-            difficulty = 11687357864100167uL,
+            nonce = BigInt.from(3150077335410336130uL),
+            difficulty = BigInt.from(11687357864100167uL),
             gasLimit = BigInt.from(30029295uL),
             gasUsed = BigInt.from(5430091uL),
             miner = "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
@@ -642,7 +641,7 @@ class ProviderTest {
     }
 
     @OptIn(ExperimentalTime::class)
-    fun testSendTransaction() =  CoroutineScope(Dispatchers.Default).launch {
+    fun testSendTransaction() = CoroutineScope(Dispatchers.Default).launch {
 //        print("=== about to sleep")
 //        var cnt = 3
 //        while (cnt > 0) {
@@ -669,16 +668,124 @@ class ProviderTest {
             maxFeePerGas = BigInt.from(1500000016),
         )
 
-        try {
-            val data = transaction.encodeEIP1559()
-            val hexString = data.toHexString()
-            println("=== hexString $hexString")
-        } catch (e: Throwable) {
-            println("=== error $e")
-        }
+        val rlpData = transaction.encodeEIP1559()
+        val rlpHextString = rlpData.toHexString()
+
+        assertTrue(
+             rlpHextString == "02ee03018459682f008459682f1082520894789f1263215d4bcb7a109de72b4c87116cfac5c487b1a2bc2ec5000080c0",
+            "Unexpected rlp hex data $rlpHextString"
+        )
+
+        println("=== rlp encoded $rlpHextString")
+
+        val digest = keccak256(rlpData)
+        val bip39 = Bip39(
+            listOf("train", "muscle", "portion", "small", "another", "head", "tiger", "model", "subject", "eternal", "admit", "pudding"),
+            "",
+            WordList.ENGLISH
+        )
+        val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
+        val key = bip44.deviceChildKey("m/44'/60'/0'/0/0")
+        val signature = sign(digest, key.key)
+
+        println("signature ${signature.toHexString()}")
+
+        val signedTransaction = transaction.copy(
+            r = BigInt.from(signature.copyOfRange(0, 32)),
+            s = BigInt.from(signature.copyOfRange(32, 64)),
+            v = BigInt.from(signature[64].toInt()),
+        )
+
+        println("r ${signedTransaction.r?.toByteArray()?.toHexString(true)}")
+        println("s ${signedTransaction.s?.toByteArray()?.toHexString(true)}")
+        println("v ${signedTransaction.v?.toByteArray()?.toHexString(true)}")
+
+        println(signedTransaction)
+
+        val rlpDataSigned = signedTransaction.encodeEIP1559()
+        val rlpHexStringSigned = rlpDataSigned.toHexString()
+        println("=== rlp2 signed encoded $rlpHexStringSigned")
+
+        val provider = ProviderPocket(Network.ropsten())
+        val result = provider.sendRawTransaction(DataHexString(rlpDataSigned))
+        println("=== $result")
 
 //        const signature = this._signingKey().signDigest(keccak256(serialize(<UnsignedTransaction>tx)));
 //        return serialize(<UnsignedTransaction>tx, signature);
+
+//        R: sig[:32],
+//        S: sig[32:64],
+//        V: []byte{sig[64]},
+    }
+
+    @OptIn(ExperimentalTime::class)
+    fun testSendTransaction2() = CoroutineScope(Dispatchers.Default).launch {
+        val provider = ProviderPocket(Network.ropsten())
+        val bip39 = Bip39(
+            listOf("welcome", "special", "river", "traffic", "spell", "chapter", "pond", "despair", "speed", "flee", "business", "approve"),
+            "",
+            WordList.ENGLISH
+        )
+        val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
+        val key = bip44.deviceChildKey("m/44'/60'/0'/0/0")
+        val feeData = provider.feeData()
+        println("=== feeData $feeData")
+        val nonce = provider.getTransactionCount(
+            Address.HexString("0x13d32628Cb60EeaBC55c62Db770A27355a3F86b2"),
+            BlockTag.Latest
+        )
+        println("=== nonce $nonce")
+        val transaction = Transaction(
+            hash = null,
+            to = Address.HexString("0x789f1263215d4bcB7a109dE72b4c87116CFac5c4"),
+            from = Address.HexString("0x13d32628Cb60EeaBC55c62Db770A27355a3F86b2"),
+            nonce = nonce,
+            gasLimit = BigInt.zero(),
+            gasPrice = null,
+            input = "",
+            value = BigInt.from("1400000000000000"),
+            chainId = BigInt.from(provider.network.chainId),
+            type = TransactionType.EIP1559,
+            r = null,
+            s = null,
+            v = null,
+            accessList = null,
+            maxPriorityFeePerGas = BigInt.zero(),
+            maxFeePerGas = BigInt.zero(),
+        )
+        val populatedTx = transaction.copy(
+            maxPriorityFeePerGas = feeData.maxPriorityFeePerGas,
+            maxFeePerGas = feeData.maxFeePerGas,
+        )
+        val gasEstimate = provider.estimateGas(populatedTx)
+        println("=== gasEstimate $gasEstimate")
+        val populatedTxWithGasLimit = populatedTx.copy(gasLimit = gasEstimate)
+        val rlpData = populatedTxWithGasLimit.encodeEIP1559()
+        val digest = keccak256(rlpData)
+        val signature = sign(digest, key.key)
+
+        println("=== signature ${signature.toHexString()}")
+
+        val signedTransaction = populatedTxWithGasLimit.copy(
+            r = BigInt.from(signature.copyOfRange(0, 32)),
+            s = BigInt.from(signature.copyOfRange(32, 64)),
+            v = BigInt.from(signature[64].toInt()),
+        )
+
+        println("=== signed transaction $signedTransaction")
+
+        val rlpDataSigned = signedTransaction.encodeEIP1559()
+        val rlpHexStringSigned = rlpDataSigned.toHexString()
+        println("=== rlp2 signed encoded $rlpHexStringSigned")
+
+        val result = provider.sendRawTransaction(DataHexString(rlpDataSigned))
+        println("=== $result")
+    }
+
+    fun testGetTransactionReceipt2() = CoroutineScope(Dispatchers.Default).launch {
+        val provider = ProviderPocket(Network.ethereum())
+        val result = provider.getTransactionReceipt("0x35da27fad7ed4af1dcaf336c2a166d2949d05d15a6d89409a45c05a09064899d")
+        println("=== r $result")
     }
 
     fun testErrorHandling() {

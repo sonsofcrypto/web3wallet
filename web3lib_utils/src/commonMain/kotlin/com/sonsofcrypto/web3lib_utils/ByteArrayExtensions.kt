@@ -60,3 +60,12 @@ fun BooleanArray.toByteArray(len : Int = this.size / 8): ByteArray {
             }
     return byteArray
 }
+
+/** - */
+
+fun ByteArray.byteArrayWithByteAt(idx: Int): ByteArray {
+    val array = ByteArray(1)
+    array.set(0, this[idx])
+    return array
+}
+

@@ -32,7 +32,7 @@ class BigInt {
         }
 
         fun from(byteArray: ByteArray): BigInt = BigInt(
-            BigInteger.fromByteArray(byteArray, Sign.ZERO)
+            BigInteger.fromByteArray(byteArray, Sign.POSITIVE)
         )
 
         fun from(int: Int): BigInt = BigInt(BigInteger.fromInt(int))

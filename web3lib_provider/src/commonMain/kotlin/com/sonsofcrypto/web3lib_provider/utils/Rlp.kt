@@ -19,11 +19,13 @@ data class RlpItem(val bytes: ByteArray) : Rlp() {
 
 data class RlpList(val element: List<Rlp>) : Rlp()
 
+@Throws(Throwable::class)
 fun Rlp.encode(): ByteArray = when (this) {
     is RlpItem -> bytes.encodeRlp(ELEM_OFFSET)
     is RlpList -> element.asSequence().map { it.encode() }
         .fold(ByteArray(0)) { acc, bytes -> acc + bytes }
         .encodeRlp(LIST_OFFSET)
+    else -> throw Error("Unexpected `Rlp`")
 }
 
 private fun ByteArray.encodeRlp(offset: Int) = when {

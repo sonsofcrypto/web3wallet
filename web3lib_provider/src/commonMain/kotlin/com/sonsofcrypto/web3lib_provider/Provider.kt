@@ -2,118 +2,105 @@ package com.sonsofcrypto.web3lib_provider
 
 import com.sonsofcrypto.web3lib_core.Address
 import com.sonsofcrypto.web3lib_core.Network
+import com.sonsofcrypto.web3lib_provider.model.BlockTag
+import com.sonsofcrypto.web3lib_provider.model.BlockTag.Latest
 import com.sonsofcrypto.web3lib_utils.BigInt
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import kotlinx.serialization.json.JsonPrimitive
-
-/** Block tag */
-sealed class BlockTag() {
-    object Earliest : BlockTag()
-    object Latest : BlockTag()
-    object Pending : BlockTag()
-    data class Number(val number: Long) : BlockTag()
-    data class Hash(val hash: String) : BlockTag()
-
-    fun jsonPrimitive(): JsonPrimitive = when (this) {
-        Earliest -> JsonPrimitive("earliest")
-        Latest -> JsonPrimitive("latest")
-        Pending -> JsonPrimitive("pending")
-        is Number -> JsonPrimitive(QuantityHexString(number))
-        is Hash -> JsonPrimitive(hash)
-    }
-}
-
+import kotlinx.serialization.json.JsonObject
 
 interface SignedTransaction {}
 
-/** Abstract Provider */
+/** Abstract Provider web3 JSON-RPC API */
 abstract class Provider {
 
-    /** Network */
+    abstract val network: Network
 
-    abstract suspend fun network(): Network
-    abstract suspend fun blockNumber(): UInt
-    abstract suspend fun gasPrice(): BigInt
+    /** Gossip */
 
     @Throws(Throwable::class)
-    suspend fun feeData(): FeeData = coroutineScope {
-        val blockAsync = async { block() }
-        val gasPriceAsync = async { gasPrice() }
+    abstract suspend fun blockNumber(): BigInt
 
-        val block = blockAsync.await()
-        val gasPrice = gasPriceAsync.await()
+    @Throws(Throwable::class)
+    abstract suspend fun gasPrice(): BigInt
 
-        if (block.baseFeePerGas == null) {
-            throw Error.feeDataNullBaseFeePerGas
-        }
+    @Throws(Throwable::class) abstract suspend
+    fun sendRawTransaction(transaction: DataHexString): DataHexString
 
-        // TODO: We may want to compute this more accurately in the future,
-        // using the formula "check if the base fee is correct".
-        // See: https://eips.ethereum.org/EIPS/eip-1559
-        val maxPriorityFeePerGas = BigInt.from("1500000000")
-        val maxFeePerGas = block.baseFeePerGas!!
-            .mul(BigInt.from(2))
-            .add(maxPriorityFeePerGas)
-        return@coroutineScope object: FeeData {
-            override val maxFeePerGas = maxFeePerGas
-            override val maxPriorityFeePerGas = maxPriorityFeePerGas
-            override val gasPrice = gasPrice
-        }
-    }
+    /** State */
 
-    /** Account */
+    @Throws(Throwable::class) abstract suspend
+    fun getBalance(address: Address, block: BlockTag = Latest): BigInt
 
-    abstract suspend fun balance(
-        address: Address,
-        block: BlockTag = BlockTag.Latest
-    ): BigInt
+    @Throws(Throwable::class) abstract suspend
+    fun getStorageAt(address: Address, position: ULong, block: BlockTag = Latest): DataHexString
 
-    abstract suspend fun transactionCount(
-        address: Address,
-        block: BlockTag = BlockTag.Latest
-    ): UInt
+    @Throws(Throwable::class) abstract suspend
+    fun getTransactionCount(address: Address, block: BlockTag = Latest): BigInt
 
-    abstract suspend fun code(
-        address: Address,
-        block: BlockTag = BlockTag.Latest
-    ): String
+    @Throws(Throwable::class) abstract suspend
+    fun getCode(address: Address, block: BlockTag = Latest): DataHexString
 
-    abstract suspend fun storageAt(
-        address: Address,
-        position: BigInt,
-        block: BlockTag = BlockTag.Latest
-    ): String
+    @Throws(Throwable::class) abstract suspend
+    fun call(transaction: TransactionRequest, block: BlockTag = Latest): DataHexString
 
-    /** Execution */
+    @Throws(Throwable::class) abstract suspend
+    fun estimateGas(transaction: Transaction): BigInt
 
-    abstract suspend fun send(transaction: SignedTransaction): TransactionResponse
+    @Throws(Throwable::class) abstract suspend
+    fun feeData(): FeeData
 
-    abstract suspend fun call(
-        transaction: TransactionRequest,
-        block: BlockTag = BlockTag.Latest
-    ): String
+    /** History */
 
-    abstract suspend fun estimateGas(transaction: TransactionRequest): BigInt
+    @Throws(Throwable::class) abstract suspend
+    fun getBlockTransactionCount(block: BlockTag): ULong
 
-    /** Queries */
+    @Throws(Throwable::class) abstract suspend
+    fun getUncleCount(block: BlockTag): ULong
 
-    abstract suspend fun block(block: BlockTag = BlockTag.Latest): Block
+    @Throws(Throwable::class) abstract suspend
+    fun getBlock(block: BlockTag, full: Boolean = false): Block
 
-    abstract suspend fun blockWithTransactions(
-        block: BlockTag = BlockTag.Latest
-    ): Block
+    @Throws(Throwable::class) abstract suspend
+    fun getTransaction(hash: DataHexString): Transaction
 
-    abstract suspend fun transaction(hash: String): TransactionResponse
+    @Throws(Throwable::class) abstract suspend
+    fun getTransaction(block: BlockTag, index: BigInt): Transaction
 
-    abstract suspend fun transactionReceipt(hash: String): TransactionReceipt
+    @Throws(Throwable::class) abstract suspend
+    fun getTransactionReceipt(hash: String): TransactionReceipt
 
-    /** Bloom-filter queries */
-    abstract suspend fun logs(filter: Filter): List<Log>
+    @Throws(Throwable::class) abstract suspend
+    fun getUncleBlock(block: BlockTag, index: BigInt): Block
+
+    @Throws(Throwable::class) abstract suspend
+    fun getLogs(filterRequest: FilterRequest): List<Any>
+
+    @Throws(Throwable::class) abstract suspend
+    fun newFilter(filterRequest: FilterRequest): QuantityHexString
+
+    @Throws(Throwable::class) abstract suspend
+    fun newBlockFilter(): QuantityHexString
+
+    @Throws(Throwable::class) abstract suspend
+    fun newPendingTransactionFilter(): QuantityHexString
+
+    @Throws(Throwable::class) abstract suspend
+    fun getFilterChanges(id: QuantityHexString): JsonObject
+
+    @Throws(Throwable::class) abstract suspend
+    fun getFilterLogs(id: QuantityHexString): JsonObject
+
+    @Throws(Throwable::class) abstract suspend
+    fun uninstallFilter(id: QuantityHexString): Boolean
 
     /** Name service */
-    abstract suspend fun resolveName(name: String): String?
-    abstract suspend fun lookupAddress(address: Address): String?
+
+    @Throws(Throwable::class) abstract suspend
+    fun resolveName(name: String): String?
+
+    @Throws(Throwable::class) abstract suspend
+    fun lookupAddress(address: Address): String?
 
     /** Event emitter */
 
@@ -124,12 +111,6 @@ abstract class Provider {
     abstract fun listeners(event: Event? = null): Array<Listener>
     abstract fun off(event: Event, providerListener: Listener? = null): Provider
     abstract fun removeAllListeners(event: Event? = null): Provider
-
-    abstract suspend fun waitForTransaction(
-        transactionHash: String,
-        confirmations: UInt?,
-        timeout: Double)
-            : TransactionReceipt
 
     /** Errors */
     sealed class Error(
@@ -142,5 +123,9 @@ abstract class Provider {
         /** Unable to compute `FeeData` due to missing `Block.baseFeePerGas` */
         object feeDataNullBaseFeePerGas :
             Error("Unable to compute `FeeData` due to missing `Block.baseFeePerGas`")
+
+        /** Initialized provider with unsupported network */
+        data class UnsupportedNetwork(val network: Network) :
+            Error("Unsupported network $network")
     }
 }
