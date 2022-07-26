@@ -111,14 +111,21 @@ private extension DefaultDeepLinkHandler {
         
         guard let settingsVC = settingsVC else { return }
         
-        guard settingsVC.title != Localized(Setting.theme.rawValue) else { return }
+        guard settingsVC.title != Localized("settings.theme") else { return }
+        
+        let settingsService: SettingsService = ServiceDirectory.assembler.resolve()
         
         let wireframe: SettingsWireframeFactory = ServiceDirectory.assembler.resolve()
         wireframe.makeWireframe(
             settingsVC,
             context: .init(
-                title: Localized(Setting.theme.rawValue),
-                settings: SettingsItem.themeItems
+                title: Localized("settings.theme"),
+                groups: [
+                    .init(
+                        title: nil,
+                        items: settingsService.settings(for: .theme)
+                    )
+                ]
             )
         ).present()
     }

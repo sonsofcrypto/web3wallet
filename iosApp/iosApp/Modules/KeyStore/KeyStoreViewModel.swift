@@ -11,10 +11,8 @@ struct KeyStoreViewModel {
     let selectedIdxs: [Int]
     let buttons: ButtonSheetViewModel
     let targetView: TransitionTargetView
-    let transitionStyle: TransitionStyle
+    let transitionStyle: ServiceDirectory.TransitionStyle
 }
-
-// MARK - State
 
 extension KeyStoreViewModel {
 
@@ -33,8 +31,6 @@ extension KeyStoreViewModel {
     }
 }
 
-// MARK: - Error
-
 extension KeyStoreViewModel {
 
     struct Error {
@@ -44,8 +40,6 @@ extension KeyStoreViewModel {
     }
 }
 
-// MARK: - TransitionTargetView
-
 extension KeyStoreViewModel {
 
     enum TransitionTargetView {
@@ -53,22 +47,4 @@ extension KeyStoreViewModel {
         case buttonAt(idx: Int)
         case none
     }
-
-    enum TransitionStyle {
-        case flip
-        case sheet
-
-        static func style(
-            from optionType: Setting.CreateWalletTransitionTypeOptions
-        ) -> TransitionStyle {
-            switch optionType {
-            case .cardFlip:
-                return .flip
-            case .sheet:
-                return sheet
-            }
-        }
-    }
-
-
 }

@@ -13,22 +13,15 @@ final class SettingsViewController: BaseViewController {
 
     var presenter: SettingsPresenter!
 
-    private var viewModel: SettingsViewModel?
-    
     @IBOutlet weak var collectionView: UICollectionView!
+
+    private var viewModel: SettingsViewModel!
 
     override func viewDidLoad() {
 
         super.viewDidLoad()
         
-        presenter?.present()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        
-        super.viewDidAppear(animated)
-        
-        collectionView.deselectAllExcept(viewModel?.selectedIdxPaths())
+        presenter.present()
     }
 }
 
@@ -59,7 +52,6 @@ extension SettingsViewController: SettingsView {
         }
         
         collectionView.reloadData()
-        collectionView.deselectAllExcept(viewModel.selectedIdxPaths())
     }
 }
 
@@ -67,7 +59,7 @@ extension SettingsViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         
-        viewModel?.sections.count ?? 0
+        viewModel.sections.count
     }
 
     func collectionView(
@@ -75,7 +67,7 @@ extension SettingsViewController: UICollectionViewDataSource {
         numberOfItemsInSection section: Int
     ) -> Int {
         
-        viewModel?.sections[section].items.count ?? 0
+        viewModel.sections[section].items.count
     }
 
     func collectionView(
@@ -83,16 +75,13 @@ extension SettingsViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         
-        guard let viewModel = viewModel?.item(at: indexPath) else {
-            fatalError("Missing viewModel \(indexPath)")
-        }
-        
-        return collectionView.dequeue(
+        collectionView.dequeue(
             SettingsCell.self,
             for: indexPath
-        ).update(with: viewModel)
+        ).update(
+            with: viewModel.item(at: indexPath)
+        )
     }
-
 }
 
 extension SettingsViewController: UICollectionViewDelegate {
@@ -102,7 +91,8 @@ extension SettingsViewController: UICollectionViewDelegate {
         didSelectItemAt indexPath: IndexPath
     ) {
         
-        presenter.handle(.didSelectItemAt(idxPath: indexPath))
+        let item = viewModel.item(at: indexPath)
+        presenter.handle(.didSelect(setting: item.setting))
     }
 }
 

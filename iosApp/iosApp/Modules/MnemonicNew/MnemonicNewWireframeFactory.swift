@@ -13,23 +13,16 @@ protocol MnemonicNewWireframeFactory {
     ) -> MnemonicNewWireframe
 }
 
-// MARK: - DefaultMnemonicWireframeFactory
-
 final class DefaultMnemonicNewWireframeFactory {
 
     private let keyStoreService: KeyStoreService
-    private let settingsService: SettingsService
-
+    
     init(
-        keyStoreService: KeyStoreService,
-        settingsService: SettingsService
+        keyStoreService: KeyStoreService
     ) {
         self.keyStoreService = keyStoreService
-        self.settingsService = settingsService
     }
 }
-
-// MARK: - MnemonicWireframeFactory
 
 extension DefaultMnemonicNewWireframeFactory: MnemonicNewWireframeFactory {
 
@@ -41,8 +34,7 @@ extension DefaultMnemonicNewWireframeFactory: MnemonicNewWireframeFactory {
         DefaultMnemonicNewWireframe(
             parent: parent,
             context: context,
-            keyStoreService: keyStoreService,
-            settingsService: settingsService
+            keyStoreService: keyStoreService
         )
     }
 }

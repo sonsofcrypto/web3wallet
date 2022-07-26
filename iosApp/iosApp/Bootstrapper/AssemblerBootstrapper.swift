@@ -22,6 +22,7 @@ private extension AssemblerBootstrapper {
 
         [
             // Services
+            SettingsServiceAssembler(), // needs to be the first one to initialise
             KeyStoreKeyValStoreServiceAssembler(),
             KeyStoreServiceAssembler(),
             KeyChainServiceAssembler(),
@@ -34,7 +35,6 @@ private extension AssemblerBootstrapper {
             NFTsServiceAssembler(),
             OnboardingServiceAssembler(),
             ReachabilityServiceAssembler(),
-            SettingsServiceAssembler(),
             StoreAssembler(),
             ChatServiceAssembler(),
             CultServiceAssembler(),

@@ -8,8 +8,7 @@ final class SettingsWireframeFactoryAssembler: AssemblerComponent {
         
         registry.register(scope: .instance) { resolver -> SettingsWireframeFactory in
             DefaultSettingsWireframeFactory(
-                settingsService: resolver.resolve(),
-                keyStoreService: resolver.resolve()
+                settingsService: resolver.resolve()
             )
         }
     }

@@ -5,10 +5,22 @@
 import Foundation
 
 protocol SettingsService: AnyObject {
-
-    var onboardingMode: Setting.OnboardingModeOptions { get set }
-    var theme: Setting.ThemeTypeOptions { get set }
-    var createWalletTransitionType: Setting.CreateWalletTransitionTypeOptions { get set }
-
-    func settings() -> [Setting]
+    
+    func settings(
+        for setting: Setting.ItemIdentifier
+    ) -> [Setting]
+    
+    func didSelect(
+        item: Setting.ItemIdentifier?,
+        action: Setting.ActionIdentifier
+    )
+    
+    func isInitialized(
+        item: Setting.ItemIdentifier
+    ) -> Bool
+    
+    func isSelected(
+        item: Setting.ItemIdentifier,
+        action: Setting.ActionIdentifier
+    ) -> Bool
 }

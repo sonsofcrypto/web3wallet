@@ -3,46 +3,58 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-import web3lib
 
 struct SettingsWireframeContext {
     
     let title: String
-    let settings: [SettingsItem]
+    let groups: [Group]
     
-    static var `default`: Self {
+    struct Group {
         
-        .init(
-            title: Localized("settings"),
-            settings: rootSettings
-        )
+        let title: String?
+        let items: [Setting]
     }
     
-    private static var rootSettings: [SettingsItem] {
+    static var `default`: SettingsWireframeContext {
         
-        [
-            .group(
-                title: Localized("settings.root.group.settings"),
-                items: [
-                    //.setting(setting: .onboardingMode),
-                    //.setting(setting: .createWalletTransitionType),
-                    .setting(setting: .theme)
-                ]
-            ),
-            .group(
-                title: Localized("settings.root.group.actions"),
-                items: [
-                    .action(type: .resetKeyStore)
-                ]
-            )
-        ]
+        .init(
+            title: Localized("settings.root.group.settings"),
+            groups: [
+                .init(
+                    title: Localized("settings.root.group.settings"),
+                    items: [
+                        .init(
+                            title: Localized("settings.providers"),
+                            type: .item(.providers)
+                        ),
+                        .init(
+                            title: Localized("settings.theme"),
+                            type: .item(.theme)
+                        )
+                    ]
+                ),
+                .init(
+                    title: Localized("settings.root.group.actions"),
+                    items: [
+                        .init(
+                            title: Localized("settings.resetKeyStore"),
+                            type: .action(
+                                item: nil,
+                                action: .resetKeystore,
+                                showTickOnSelected: false
+                            )
+                        )
+                    ]
+                )
+            ]
+        )
     }
 }
 
 enum SettingsWireframeDestination {
     
     case dismiss
-    case settings(title: String, settings: [SettingsItem])
+    case settings(context: SettingsWireframeContext)
 }
 
 protocol SettingsWireframe {
@@ -56,20 +68,17 @@ final class DefaultSettingsWireframe {
     private weak var parent: UIViewController!
     private let context: SettingsWireframeContext
     private let settingsService: SettingsService
-    private let keyStoreService: KeyStoreService
     
     private weak var navigationController: NavigationController!
 
     init(
         parent: UIViewController,
         context: SettingsWireframeContext,
-        settingsService: SettingsService,
-        keyStoreService: KeyStoreService
+        settingsService: SettingsService
     ) {
         self.parent = parent
         self.context = context
         self.settingsService = settingsService
-        self.keyStoreService = keyStoreService
     }
 }
 
@@ -103,14 +112,9 @@ extension DefaultSettingsWireframe: SettingsWireframe {
             
             navigationController.popViewController(animated: true)
             
-        case let .settings(title, settings):
+        case let .settings(context):
             
-            pushSettingsVC(
-                with: .init(
-                    title: title,
-                    settings: settings
-                )
-            )
+            pushSettingsVC(with: context)
         }
     }
 }
@@ -145,8 +149,7 @@ private extension DefaultSettingsWireframe {
     func wireUp(with context: SettingsWireframeContext) -> UIViewController {
         
         let interactor = DefaultSettingsInteractor(
-            settingsService,
-            keyStoreService: keyStoreService
+            settingsService
         )
         let vc: SettingsViewController = UIStoryboard(.settings).instantiate()
         let presenter = DefaultSettingsPresenter(

@@ -7,7 +7,7 @@ import Foundation
 enum SettingsPresenterEvent {
     
     case dismiss
-    case didSelectItemAt(idxPath: IndexPath)
+    case didSelect(setting: Setting)
 }
 
 protocol SettingsPresenter {
@@ -22,8 +22,6 @@ final class DefaultSettingsPresenter {
     private let interactor: SettingsInteractor
     private let wireframe: SettingsWireframe
     private let context: SettingsWireframeContext
-
-    private var items: [SettingsItem] = []
 
     init(
         view: SettingsView,
@@ -42,7 +40,6 @@ extension DefaultSettingsPresenter: SettingsPresenter {
 
     func present() {
         
-        items = context.settings
         updateView(with: viewModel())
     }
 
@@ -53,34 +50,28 @@ extension DefaultSettingsPresenter: SettingsPresenter {
         case .dismiss:
             wireframe.navigate(to: .dismiss)
             
-        case let .didSelectItemAt(idxPath):
-            handleDidSelectItem(at: idxPath)
-        }
-    }
-}
-
-private extension DefaultSettingsPresenter {
-
-    func handleDidSelectItem(at idxPath: IndexPath) {
-        
-        switch item(at: idxPath) {
+        case let .didSelect(setting):
             
-        case let .group(title, items):
-            wireframe.navigate(to: .settings(title: title, settings: items))
-            
-        case let .setting(setting):
-            let title = Localized(setting.rawValue)
-            let items = interactor.settingsItem(for: setting)
-            wireframe.navigate(to: .settings(title: title, settings: items))
-            
-        case let .selectableOption(setting, optIdx, _, _):
-            interactor.didSelectSettingOption(at: optIdx, forSetting: setting)
-            //items = interactor.items
-            //updateView(with: viewModel())
-            
-        case let .action(actionType):
-            if !interactor.handleActionIfPossible(actionType) {
-                print("handle", actionType)
+            switch setting.type {
+                
+            case let .item(identifier):
+                
+                let items = interactor.settings(for: identifier)
+                let context = SettingsWireframeContext(
+                    title: setting.title,
+                    groups: [
+                        .init(title: nil, items: items)
+                    ]
+                )
+                wireframe.navigate(to: .settings(context: context))
+                
+            case let .action(item, action, _):
+                
+                interactor.didSelect(
+                    item: item,
+                    action: action
+                )
+                present()
             }
         }
     }
@@ -97,48 +88,32 @@ private extension DefaultSettingsPresenter {
         
         .init(
             title: context.title,
-            sections: items.map { topLevelItem in
+            sections: context.groups.map {
                 .init(
-                    title: firstItemTitle(topLevelItem),
-                    items: topLevelItem.isGroup()
-                        ? topLevelItem.items().map { self.viewModel(for: $0) }
-                        : [viewModel(for: topLevelItem)]
+                    title: $0.title,
+                    items: $0.items.compactMap {
+                        .init(
+                            title: $0.title,
+                            setting: $0,
+                            isSelected: isTypeSelected($0.type)
+                        )
+                    }
                 )
             }
         )
     }
-
-    func viewModel(for item: SettingsItem) -> SettingsViewModel.Item {
+    
+    func isTypeSelected(
+        _ type: Setting.`Type`
+    ) -> Bool {
         
-        switch item {
-            case let .group(title, _):
-                return .setting(title: Localized(title))
-            case let .setting(setting):
-                return .setting(title: Localized(setting.rawValue))
-            case let .selectableOption(_, _, optTitle, selected):
-                return .selectableOption(title: Localized(optTitle), selected: selected)
-            case let .action(actionType):
-                return .action(title: Localized(actionType.rawValue))
-        }
-    }
-
-    func firstItemTitle(_ item: SettingsItem) -> String? {
+        guard case let Setting.`Type`.action(item, action, _) = type else { return false }
         
-        switch item {
-        case let .group(title, _):
-            return title
-        default:
-            return nil
-        }
-    }
-
-    func item(at idxPath: IndexPath) -> SettingsItem {
-
-        switch items[idxPath.section] {
-        case let .group(_, items):
-            return items[idxPath.item]
-        default:
-            return items[idxPath.item]
-        }
+        guard let item = item else { return false }
+        
+        return interactor.isSelected(
+            item: item,
+            action: action
+        )
     }
 }

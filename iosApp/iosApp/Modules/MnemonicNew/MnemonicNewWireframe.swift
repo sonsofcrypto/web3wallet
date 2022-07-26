@@ -21,20 +21,17 @@ final class DefaultMnemonicNewWireframe {
     private weak var parent: UIViewController!
     private let context: MnemonicNewContext
     private let keyStoreService: KeyStoreService
-    private let settingsService: SettingsService
 
     private weak var vc: UIViewController!
 
     init(
         parent: UIViewController?,
         context: MnemonicNewContext,
-        keyStoreService: KeyStoreService,
-        settingsService: SettingsService
+        keyStoreService: KeyStoreService
     ) {
         self.parent = parent
         self.context = context
         self.keyStoreService = keyStoreService
-        self.settingsService = settingsService
     }
 }
 
@@ -50,7 +47,7 @@ extension DefaultMnemonicNewWireframe: MnemonicNewWireframe {
             vc.transitioningDelegate = transitionDelegate
         }
 
-        switch settingsService.createWalletTransitionType {
+        switch ServiceDirectory.transitionStyle {
         case .cardFlip:
             vc.modalPresentationStyle = .overCurrentContext
         case .sheet:

@@ -6,10 +6,22 @@ final class NFTsServiceAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
         
-        registry.register(scope: .singleton) { _ -> NFTsService in
+        registry.register(scope: .singleton) { resolver -> NFTsService in
             
-            //OpenSeaNFTsService()
-            DefaultNFTsService()
+            let settingsService: SettingsService = resolver.resolve()
+            
+            if settingsService.isSelected(item: .providersNFTs, action: .providersNFTsMock) {
+                
+                return DefaultNFTsService()
+                
+            } else if settingsService.isSelected(item: .providersNFTs, action: .providersNFTsOpenSea) {
+                
+                return OpenSeaNFTsService()
+                
+            } else {
+                
+                return DefaultNFTsService()
+            }
         }
     }
 }

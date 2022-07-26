@@ -16,18 +16,15 @@ protocol OnboardingService: AnyObject {
 
 final class DefaultOnboardingService {
 
-    let settings: SettingsService
     let defaults: UserDefaults
     let keyStoreService: KeyStoreService
     let keyChainService: KeyChainService
 
     init(
-        settings: SettingsService,
         defaults: UserDefaults,
         keyStoreService: KeyStoreService,
         keyChainService: KeyChainService
     ) {
-        self.settings = settings
         self.defaults = defaults
         self.keyStoreService = keyStoreService
         self.keyChainService = keyChainService
@@ -49,16 +46,16 @@ final class DefaultOnboardingService {
 extension DefaultOnboardingService: OnboardingService {
 
     func shouldCreateWalletAtFirstLaunch() -> Bool {
-        return settings.onboardingMode == .oneTap
+        return ServiceDirectory.onboardingMode == .oneTap
     }
 
     func shouldShowOnboardingButton() -> Bool {
         let didInteract = defaults.bool(forKey: Constant.didInteractCardSwitcher)
-        return settings.onboardingMode == .oneTap && !didInteract
+        return ServiceDirectory.onboardingMode == .oneTap && !didInteract
     }
 
     func markDidInteractCardSwitcher() {
-        guard settings.onboardingMode == .oneTap else {
+        guard ServiceDirectory.onboardingMode == .oneTap else {
             return
         }
         defaults.set(true, forKey: Constant.didInteractCardSwitcher)
@@ -145,21 +142,5 @@ private extension DefaultOnboardingService {
 
     enum Constant {
         static let didInteractCardSwitcher = "didInteractCardSwitcherKey"
-    }
-}
-
-// MARK: - Assembler
-
-final class OnboardingServiceAssembler: AssemblerComponent {
-
-    func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .singleton) { resolver -> OnboardingService in
-            DefaultOnboardingService(
-                settings: resolver.resolve(),
-                defaults: .standard,
-                keyStoreService: resolver.resolve(),
-                keyChainService: resolver.resolve()
-            )
-        }
     }
 }

@@ -6,22 +6,21 @@ import UIKit
 
 var Theme: Themable = appTheme {
     
-    didSet {
-    
-        guard let window = SceneDelegateHelper().window else { return }
-        UIBootstrapper(window: window).boot()
-    }
+    didSet { ServiceDirectory.rebootApp() }
 }
 
 var appTheme: Themable {
     
     let service: SettingsService = ServiceDirectory.assembler.resolve()
-    switch service.theme {
+    
+    if service.isSelected(item: .theme, action: .themeMiami) {
         
-    case .themeMiami:
         return ThemeA()
+    } else if service.isSelected(item: .theme, action: .themeIOS) {
         
-    case .themeIOS:
+        return ThemeIOS()
+    } else {
+        
         return ThemeIOS()
     }
 }
