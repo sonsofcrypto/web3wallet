@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="9CY-Ar-PIG">
-                                <rect key="frame" x="207" y="448" width="0.0" height="0.0"/>
+                                <rect key="frame" x="206.5" y="447.5" width="0.0" height="0.0"/>
                             </activityIndicatorView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uJY-zJ-XG9">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
@@ -250,7 +250,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Pj4-Dw-4xQ" firstAttribute="bottom" secondItem="uJY-zJ-XG9" secondAttribute="bottom" id="94F-HQ-BsM"/>
-                            <constraint firstItem="9CY-Ar-PIG" firstAttribute="top" secondItem="Xez-Ps-xQi" secondAttribute="top" constant="32" id="Mkr-Hx-laN"/>
+                            <constraint firstItem="9CY-Ar-PIG" firstAttribute="top" secondItem="Xez-Ps-xQi" secondAttribute="top" constant="16" id="Mkr-Hx-laN"/>
                             <constraint firstItem="uJY-zJ-XG9" firstAttribute="leading" secondItem="Pj4-Dw-4xQ" secondAttribute="leading" id="WBa-9A-Zg0"/>
                             <constraint firstItem="uJY-zJ-XG9" firstAttribute="trailing" secondItem="Pj4-Dw-4xQ" secondAttribute="trailing" id="nRs-ZK-dC7"/>
                             <constraint firstItem="uJY-zJ-XG9" firstAttribute="top" secondItem="Xez-Ps-xQi" secondAttribute="top" id="u0g-1l-jcr"/>

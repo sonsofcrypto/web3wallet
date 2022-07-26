@@ -175,7 +175,12 @@ struct ThemeIOS: Themable {
             priceDown: pallete.systemRed,
             candleGreen: pallete.systemTeal,
             candleRed: pallete.systemPink,
-            dashboardTVCryptoBallance: pallete.systemOrange
+            dashboardTVCryptoBallance: pallete.systemOrange,
+            activityIndicator: .init { traits in
+                traits.isDarkMode ?
+                pallete.systemWhite :
+                pallete.systemBlack
+            }
         )
     }
     

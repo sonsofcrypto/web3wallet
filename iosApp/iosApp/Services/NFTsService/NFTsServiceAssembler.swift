@@ -8,6 +8,7 @@ final class NFTsServiceAssembler: AssemblerComponent {
         
         registry.register(scope: .singleton) { _ -> NFTsService in
             
+            //OpenSeaNFTsService()
             DefaultNFTsService()
         }
     }

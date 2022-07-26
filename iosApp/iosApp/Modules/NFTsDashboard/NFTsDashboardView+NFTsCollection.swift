@@ -24,7 +24,7 @@ extension NFTsDashboardViewController {
 
         var rows: [UIView] = []
         
-        let titleLabel = UILabel(with: .body)
+        let titleLabel = UILabel(with: .title3)
         titleLabel.numberOfLines = 1
         titleLabel.text = Localized("nfts.dashboard.collection.title")
         //titleLabel.textColor = Theme.colour.systemRed
@@ -59,8 +59,6 @@ extension NFTsDashboardViewController {
             )
         }
         
-        rows.append(.vSpace(height: Theme.constant.padding))
-                
         return VStackView(rows, spacing: Theme.constant.padding)
     }
     
@@ -73,7 +71,7 @@ extension NFTsDashboardViewController {
         content.addConstraints(
             [
                 .layout(anchor: .topAnchor),
-                .layout(anchor: .bottomAnchor),
+                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: Theme.constant.padding)),
                 .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
                 .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding))
             ]
@@ -128,39 +126,12 @@ private extension NFTsDashboardViewController {
             ]
         )
 
-        view.layer.cornerRadius = 16
+        view.layer.cornerRadius = Theme.constant.cornerRadius
         view.layer.borderWidth = 1
         view.layer.borderColor = Theme.colour.fillTertiary.cgColor
+        view.backgroundColor = Theme.colour.backgroundBasePrimary
         view.clipsToBounds = true
         
-//        let imageDiameter: CGFloat = 80
-//        let imageView = UIImageView()
-//        imageView.clipsToBounds = true
-//        imageView.contentMode = .scaleAspectFill
-//        imageView.layer.cornerRadius = imageDiameter * 0.5
-//        imageView.layer.borderWidth = 3
-//        imageView.layer.borderColor = Theme.colour.fillPrimary.cgColor
-//        imageView.load(url: collection.authorImage)
-//        view.addSubview(imageView)
-//        imageView.addConstraints(
-//            [
-//                .layout(
-//                    anchor: .topAnchor,
-//                    constant: .equalTo(
-//                        constant: (collectionItemSize.width * 0.6) - (imageDiameter * 0.5)
-//                    )
-//                ),
-//                .layout(anchor: .centerXAnchor),
-//                .layout(
-//                    anchor: .widthAnchor,
-//                    constant: .equalTo(constant: imageDiameter)
-//                ),
-//                .layout(
-//                    anchor: .heightAnchor,
-//                    constant: .equalTo(constant: imageDiameter)
-//                )
-//            ]
-//        )
         view.tag = item.index
         view.add(
             .targetAction(
@@ -194,12 +165,10 @@ private extension NFTsDashboardViewController {
             [
                 .layout(
                     anchor: .heightAnchor,
-                    constant: .equalTo(constant: collectionItemSize.width * 0.6)
+                    constant: .equalTo(constant: collectionItemSize.width * 0.7)
                 )
             ]
         )
-        
-        view.addArrangedSubview(.vSpace(height: 8))
         
         let font = UIFont.font(.gothicA1, style: .medium, size: .caption2)
         

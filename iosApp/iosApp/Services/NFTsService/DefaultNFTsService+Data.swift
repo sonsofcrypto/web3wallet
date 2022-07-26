@@ -9,7 +9,7 @@ extension DefaultNFTsService {
             identifier: "web3wallet NFT #235",
             collectionIdentifier: "0-web3wallet NFT",
             name: "web3wallet NFT #235",
-            ethPrice: 205,
+            // ethPrice: 205,
             properties: [
                 .init(
                     name: "BACKGROUND SUPER RARE",
@@ -34,7 +34,7 @@ extension DefaultNFTsService {
             identifier: "web3wallet NFT #430",
             collectionIdentifier: "0-web3wallet NFT",
             name: "web3wallet NFT #430",
-            ethPrice: 135,
+            // ethPrice: 135,
             properties: [
                 .init(
                     name: "BACKGROUND RARE",
@@ -59,7 +59,7 @@ extension DefaultNFTsService {
             identifier: "#53337",
             collectionIdentifier: "Otherdeed for Otherside",
             name: "#53337",
-            ethPrice: 2.067,
+            // ethPrice: 2.067,
             properties: [
                 .init(name: "ARTIFACT?", value: "No", info: "79% have this trait"),
                 .init(name: "CATEGORY", value: "Mineral", info: "12% have this trait"),
@@ -74,7 +74,7 @@ extension DefaultNFTsService {
             identifier: "#97097",
             collectionIdentifier: "Otherdeed for Otherside",
             name: "#97097",
-            ethPrice: 2.367,
+            // ethPrice: 2.367,
             properties: [
                 .init(name: "ARTIFACT?", value: "No", info: "79% have this trait"),
                 .init(name: "CATEGORY", value: "Harsh", info: "18% have this trait"),
@@ -88,7 +88,7 @@ extension DefaultNFTsService {
             identifier: "#50315",
             collectionIdentifier: "Otherdeed for Otherside",
             name: "#50315",
-            ethPrice: 2.967,
+            // ethPrice: 2.967,
             properties: [
                 .init(name: "ARTIFACT?", value: "No", info: "79% have this trait"),
                 .init(name: "CATEGORY", value: "Volcanic", info: "15% have this trait"),
@@ -104,7 +104,7 @@ extension DefaultNFTsService {
             identifier: "#73065",
             collectionIdentifier: "Otherdeed for Otherside",
             name: "#73065",
-            ethPrice: 2.817,
+            // ethPrice: 2.817,
             properties: [
                 .init(name: "ARTIFACT?", value: "No", info: "79% have this trait"),
                 .init(name: "CATEGORY", value: "Psychedelic", info: "9% have this trait"),
@@ -120,7 +120,7 @@ extension DefaultNFTsService {
             identifier: "goblintown #4768",
             collectionIdentifier: "goblintown.wtf",
             name: "goblintown #4768",
-            ethPrice: 2.25,
+            // ethPrice: 2.25,
             properties: [
                 .init(name: "BODDE", value: "Wekkum Tarbys", info: "5% have this trait"),
                 .init(name: "EERS", value: "Eirs", info: "6% have this trait"),
@@ -137,7 +137,7 @@ extension DefaultNFTsService {
             identifier: "#8520",
             collectionIdentifier: "Bored Ape Yacht Club",
             name: "#8520",
-            ethPrice: 60,
+            // ethPrice: 60,
             properties: [
                 .init(name: "BACKGROUND", value: "Gray", info: "12% have this trait"),
                 .init(name: "CLOTHES", value: "Prom Dress", info: "1% have this trait"),
@@ -152,7 +152,7 @@ extension DefaultNFTsService {
             identifier: "web3wallet NFT #1038",
             collectionIdentifier: "0-web3wallet NFT",
             name: "web3wallet NFT #1038",
-            ethPrice: 105,
+            // ethPrice: 105,
             properties: [
                 .init(
                     name: "BACKGROUND BRONZE",
@@ -177,7 +177,7 @@ extension DefaultNFTsService {
             identifier: "#3368",
             collectionIdentifier: "Bored Ape Yacht Club",
             name: "#3368",
-            ethPrice: 77.489,
+            // ethPrice: 77.489,
             properties: [
                 .init(name: "BACKGROUND", value: "Orange", info: "13% have this trait"),
                 .init(name: "EYES", value: "Angry", info: "4% have this trait"),
@@ -191,7 +191,7 @@ extension DefaultNFTsService {
             identifier: "Chimpers #2501",
             collectionIdentifier: "Chimpers",
             name: "Chimpers #2501",
-            ethPrice: 1.489,
+            // ethPrice: 1.489,
             properties: [
                 .init(name: "BACK", value: "Dragonslayer Blade", info: "2% have this trait"),
                 .init(name: "BACKGROUND", value: "Papaya Orange", info: "22% have this trait"),
@@ -206,7 +206,7 @@ extension DefaultNFTsService {
             identifier: "Chimpers #4799",
             collectionIdentifier: "Chimpers",
             name: "Chimpers #4799",
-            ethPrice: 1.79,
+            // ethPrice: 1.79,
             properties: [
                 .init(name: "BACK", value: "Fishing Rod", info: "7% have this trait"),
                 .init(name: "BACKGROUND", value: "Breezy Blue", info: "21% have this trait"),
@@ -221,7 +221,7 @@ extension DefaultNFTsService {
             identifier: "Chimpers #5440",
             collectionIdentifier: "Chimpers",
             name: "Chimpers #5440",
-            ethPrice: 1.9,
+            // ethPrice: 1.9,
             properties: [
                 .init(name: "BACK", value: "Guiding Lanterns", info: "7% have this trait"),
                 .init(name: "BACKGROUND", value: "Breezy Blue", info: "21% have this trait"),
@@ -236,7 +236,7 @@ extension DefaultNFTsService {
             identifier: "#3929",
             collectionIdentifier: "Bored Ape Yacht Club",
             name: "#3929",
-            ethPrice: 88.8284,
+            // ethPrice: 88.8284,
             properties: [
                 .init(name: "BACKGROUND", value: "Purple", info: "13% have this trait"),
                 .init(name: "CLOTHES", value: "Tanktop", info: "2% have this trait"),
@@ -251,7 +251,7 @@ extension DefaultNFTsService {
             identifier: "#687",
             collectionIdentifier: "Bored Ape Yacht Club",
             name: "#687",
-            ethPrice: 89.84,
+            // ethPrice: 89.84,
             properties: [
                 .init(name: "BACKGROUND", value: "Aquamarine", info: "13% have this trait"),
                 .init(name: "CLOTHES", value: "Leather Jacket", info: "2% have this trait"),
@@ -266,7 +266,7 @@ extension DefaultNFTsService {
             identifier: "#2901",
             collectionIdentifier: "Bored Ape Yacht Club",
             name: "#2901",
-            ethPrice: 90,
+            // ethPrice: 90,
             properties: [
                 .init(name: "BACKGROUND", value: "New Punk Blue", info: "12% have this trait"),
                 .init(name: "CLOTHES", value: "Puffy Vest", info: "2% have this trait"),
@@ -281,7 +281,7 @@ extension DefaultNFTsService {
             identifier: "#7987",
             collectionIdentifier: "Bored Ape Yacht Club",
             name: "#7987",
-            ethPrice: 88,
+            // ethPrice: 88,
             properties: [
                 .init(name: "BACKGROUND", value: "Gray", info: "12% have this trait"),
                 .init(name: "CLOTHES", value: "Prison Jumpsuit", info: "2% have this trait"),
@@ -296,7 +296,7 @@ extension DefaultNFTsService {
             identifier: "#7151",
             collectionIdentifier: "Bored Ape Yacht Club",
             name: "#7151",
-            ethPrice: 91,
+            // ethPrice: 91,
             properties: [
                 .init(name: "BACKGROUND", value: "Army Green", info: "12% have this trait"),
                 .init(name: "CLOTHES", value: "Work Vest", info: "2% have this trait"),
@@ -311,7 +311,7 @@ extension DefaultNFTsService {
             identifier: "#1004",
             collectionIdentifier: "Bored Ape Yacht Club",
             name: "#1004",
-            ethPrice: 90,
+            // ethPrice: 90,
             properties: [
                 .init(name: "BACKGROUND", value: "Purple", info: "13% have this trait"),
                 .init(name: "CLOTHES", value: "Sailor Shirt", info: "3% have this trait"),
@@ -327,7 +327,7 @@ extension DefaultNFTsService {
             identifier: "#3735",
             collectionIdentifier: "Bored Ape Yacht Club",
             name: "#3735",
-            ethPrice: 92,
+            // ethPrice: 92,
             properties: [
                 .init(name: "BACKGROUND", value: "New Punk Blue", info: "12% have this trait"),
                 .init(name: "CLOTHES", value: "Stripe Tee", info: "4% have this trait"),
@@ -341,7 +341,7 @@ extension DefaultNFTsService {
             identifier: "#2157",
             collectionIdentifier: "Bored Ape Yacht Club",
             name: "#2157",
-            ethPrice: 96,
+            // ethPrice: 96,
             properties: [
                 .init(name: "BACKGROUND", value: "Gray", info: "12% have this trait"),
                 .init(name: "CLOTHES", value: "Blue Dress", info: "0.95% have this trait"),
@@ -356,7 +356,7 @@ extension DefaultNFTsService {
             identifier: "#648",
             collectionIdentifier: "Bored Ape Yacht Club",
             name: "#648",
-            ethPrice: 18800,
+            // ethPrice: 18800,
             properties: [
                 .init(name: "BACKGROUND", value: "Aquamarine", info: "13% have this trait"),
                 .init(name: "CLOTHES", value: "Hip Hop", info: "0.95% have this trait"),
@@ -371,7 +371,7 @@ extension DefaultNFTsService {
         guard $0.collectionIdentifier == $1.collectionIdentifier else {
             return $0.collectionIdentifier < $1.collectionIdentifier
         }
-        return $0.ethPrice > $1.ethPrice
+        return true//$0.ethPrice > $1.ethPrice
     }
     
     static var yourNFTCollections: [NFTCollection] = [

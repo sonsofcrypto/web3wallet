@@ -156,10 +156,11 @@ extension DefaultDashboardWireframe: DashboardWireframe {
         case let .nftItem(nftItem):
             
             nftDetailWireframeFactory.makeWireframe(
-                parent,
+                navigationController,
                 context: .init(
                     nftIdentifier: nftItem.identifier,
-                    nftCollectionIdentifier: nftItem.collectionIdentifier
+                    nftCollectionIdentifier: nftItem.collectionIdentifier,
+                    presentationStyle: .push
                 )
             ).present()
             

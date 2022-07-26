@@ -30,7 +30,7 @@ extension NFTsDashboardViewController: iCarouselDataSource {
         imageView.configure(with: item)
         let length = min(
             carousel.bounds.width, carousel.bounds.height
-        ) * 0.9
+        )
         imageView.bounds.size = CGSize(width: length, height: length)
         
         return imageView
@@ -72,6 +72,8 @@ private extension NFTLoadingView {
     func commonInit() {
         
         backgroundColor = Theme.colour.backgroundBaseSecondary
+        layer.cornerRadius = Theme.constant.cornerRadius
+        clipsToBounds = true
         
         let imageView = UIImageView()
         addSubview(imageView)

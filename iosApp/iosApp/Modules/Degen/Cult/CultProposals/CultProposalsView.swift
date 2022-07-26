@@ -165,7 +165,7 @@ private extension CultProposalsViewController {
     
     func configureUI() {
         
-        activityIndicator.color = Theme.colour.navBarTint
+        activityIndicator.color = Theme.colour.activityIndicator
         
         collectionView.setCollectionViewLayout(
             makeCompositionalLayout(),
@@ -182,7 +182,7 @@ private extension CultProposalsViewController {
         collectionView.alwaysBounceVertical = true
         collectionView.refreshControl = refreshControl
         
-        refreshControl.tintColor = Theme.colour.navBarTint
+        refreshControl.tintColor = Theme.colour.activityIndicator
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
 
 //        navigationItem.searchController = searchController

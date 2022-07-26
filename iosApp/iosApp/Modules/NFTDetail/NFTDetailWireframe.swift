@@ -8,6 +8,7 @@ struct NFTDetailWireframeContext {
     
     let nftIdentifier: String
     let nftCollectionIdentifier: String
+    let presentationStyle: PresentationStyle
 }
 
 enum NFTDetailWireframeDestination {
@@ -45,17 +46,26 @@ extension DefaultNFTDetailWireframe: NFTDetailWireframe {
         
         let vc = makeViewController()
         
-        //        if let navigationController = parent as? NavigationController {
-        //
-        //            self.navigationController = navigationController
-        //
-        //            navigationController.pushViewController(vc, animated: true)
-        //        } else {
-        //
-        let navigationController = NavigationController(rootViewController: vc)
-        self.navigationController = navigationController
-        parent.present(navigationController, animated: true)
-        //        }
+        switch context.presentationStyle {
+            
+        case .embed:
+            fatalError()
+            
+        case .present:
+            
+            let navigationController = NavigationController(rootViewController: vc)
+            self.navigationController = navigationController
+            parent.present(navigationController, animated: true)
+
+        case .push:
+            
+            guard let navigationController = parent as? NavigationController else {
+                
+                return
+            }
+            self.navigationController = navigationController
+            navigationController.pushViewController(vc, animated: true)
+        }
     }
     
     func navigate(to destination: NFTDetailWireframeDestination) {
@@ -63,7 +73,18 @@ extension DefaultNFTDetailWireframe: NFTDetailWireframe {
         switch destination {
             
         case .dismiss:
-            parent.presentedViewController?.dismiss(animated: true)
+            
+            switch context.presentationStyle {
+                
+            case .embed:
+                fatalError()
+                
+            case .present:
+                parent.presentedViewController?.dismiss(animated: true)
+                
+            case .push:
+                navigationController.popViewController(animated: true)
+            }
         }
     }
 }
@@ -72,7 +93,9 @@ private extension DefaultNFTDetailWireframe {
     
     func makeViewController() -> UIViewController {
         
-        let view = NFTDetailViewController()
+        let view: NFTDetailViewController = UIStoryboard(
+            .nftDetail
+        ).instantiate()
         let interactor = DefaultNFTDetailInteractor(
             service: nftsService
         )

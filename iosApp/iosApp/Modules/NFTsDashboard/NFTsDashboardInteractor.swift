@@ -7,7 +7,7 @@ import Foundation
 protocol NFTsDashboardInteractor: AnyObject {
 
     func fetchYourNFTs(
-        onCompletion: (Result<[NFTItem], Error>) -> Void
+        onCompletion: @escaping (Result<[NFTItem], Error>) -> Void
     )
     func fetchYourNFTsCollections(
         onCompletion: (Result<[NFTCollection], Error>) -> Void
@@ -26,7 +26,7 @@ final class DefaultNFTsDashboardInteractor {
 
 extension DefaultNFTsDashboardInteractor: NFTsDashboardInteractor {
     
-    func fetchYourNFTs(onCompletion: (Result<[NFTItem], Error>) -> Void) {
+    func fetchYourNFTs(onCompletion: @escaping (Result<[NFTItem], Error>) -> Void) {
         
         service.yourNFTs(onCompletion: onCompletion)
     }

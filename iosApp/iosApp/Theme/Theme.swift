@@ -185,6 +185,8 @@ struct ThemeColour {
     let candleGreen: UIColor
     let candleRed: UIColor
     let dashboardTVCryptoBallance: UIColor
+    
+    let activityIndicator: UIColor
 }
 
 struct ThemeConstant {

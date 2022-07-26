@@ -226,7 +226,7 @@ private extension AccountViewController {
             image: .init(systemName: "chevron.left"),
             style: .plain,
             target: self,
-            action: #selector(dismissAction(_:))
+            action: #selector(dismissAction)
         )
 
         var insets = collectionView.contentInset
@@ -234,7 +234,7 @@ private extension AccountViewController {
         collectionView.contentInset = insets
     }
     
-    @objc func dismissAction(_ sender: Any) {
+    @objc func dismissAction() {
         
         dismiss(animated: true)
     }
