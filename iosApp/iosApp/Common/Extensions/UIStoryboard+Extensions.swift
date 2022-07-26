@@ -49,5 +49,7 @@ extension UIStoryboard {
         case qrCodeScan = "QRCodeScan"
         case authenticate = "Authenticate"
         case confirmation = "Confirmation"
+        case nftsDashboard = "NFTsDashboard"
+        case nftsCollection = "NFTsCollection"
     }
 }

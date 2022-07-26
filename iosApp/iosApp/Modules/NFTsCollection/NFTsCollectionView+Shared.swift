@@ -20,11 +20,12 @@ extension NFTsCollectionViewController {
             [
                 .layout(
                     anchor: .topAnchor,
-                    constant: .equalTo(
-                        constant: Theme.constant.padding
-                    )
+                    constant: .equalTo(constant: Theme.constant.padding)
                 ),
-                .layout(anchor: .bottomAnchor),
+                .layout(
+                    anchor: .bottomAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding)
+                ),
                 .layout(anchor: .centerXAnchor),
                 .layout(anchor: .widthAnchor)
             ]

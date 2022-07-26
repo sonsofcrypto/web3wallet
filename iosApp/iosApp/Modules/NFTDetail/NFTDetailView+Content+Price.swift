@@ -31,11 +31,11 @@ extension NFTDetailViewController {
         )
         hStackView.addArrangedSubview(iconImage)
         
-        let ethPrice = UILabel(with: .headline)
-        ethPrice.textAlignment = .center
-        ethPrice.text = "\(item.ethPrice)"
-        
-        hStackView.addArrangedSubview(ethPrice)
+//        let ethPrice = UILabel(with: .headline)
+//        ethPrice.textAlignment = .center
+//        ethPrice.text = "\(item.ethPrice)"
+//        
+//        hStackView.addArrangedSubview(ethPrice)
         
         let groupView = UIView()
         groupView.addSubview(hStackView)

@@ -7,6 +7,7 @@ import UIKit
 struct NFTsCollectionWireframeContext {
     
     let nftCollectionIdentifier: String
+    let presentationStyle: PresentationStyle
 }
 
 enum NFTsCollectionWireframeDestination {
@@ -47,9 +48,27 @@ extension DefaultNFTsCollectionWireframe: NFTsCollectionWireframe {
     func present() {
         
         let vc = makeViewController()
-        let navigationController = NavigationController(rootViewController: vc)
-        self.navigationController = navigationController
-        parent.present(navigationController, animated: true)
+        
+        switch context.presentationStyle {
+            
+        case .embed:
+            fatalError()
+            
+        case .present:
+            
+            let navigationController = NavigationController(rootViewController: vc)
+            self.navigationController = navigationController
+            parent.present(navigationController, animated: true)
+            
+        case .push:
+            
+            guard let navigationController = parent as? NavigationController else {
+                
+                return
+            }
+            self.navigationController = navigationController
+            navigationController.pushViewController(vc, animated: true)
+        }
     }
 
     func navigate(to destination: NFTsCollectionWireframeDestination) {
@@ -58,13 +77,23 @@ extension DefaultNFTsCollectionWireframe: NFTsCollectionWireframe {
             
         case .dismiss:
             
-            parent.presentedViewController?.dismiss(animated: true)
+            switch context.presentationStyle {
+                
+            case .embed:
+                fatalError()
+                
+            case .present:
+                parent.presentedViewController?.dismiss(animated: true)
+                
+            case .push:
+                navigationController.popViewController(animated: true)
+            }
+            
             
         case let .nftDetail(identifier):
             
-            let parent: UIViewController = parent.presentedViewController ?? parent
             let wireframe = nftDetailWireframeFactory.makeWireframe(
-                parent,
+                navigationController,
                 context: .init(
                     nftIdentifier: identifier,
                     nftCollectionIdentifier: context.nftCollectionIdentifier
@@ -79,7 +108,9 @@ private extension DefaultNFTsCollectionWireframe {
 
     func makeViewController() -> UIViewController {
         
-        let view = NFTsCollectionViewController()
+        let view: NFTsCollectionViewController = UIStoryboard(
+            .nftsCollection
+        ).instantiate()
         let interactor = DefaultNFTsCollectionInteractor(
             service: nftsService
         )

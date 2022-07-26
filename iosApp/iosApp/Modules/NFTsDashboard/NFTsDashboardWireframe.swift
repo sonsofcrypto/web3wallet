@@ -63,7 +63,7 @@ extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
         case let .viewNFT(nftItem):
             
             let wireframe = nftDetailWireframeFactory.makeWireframe(
-                parent,
+                navigationController,
                 context: .init(
                     nftIdentifier: nftItem.identifier,
                     nftCollectionIdentifier: nftItem.collectionIdentifier
@@ -74,8 +74,11 @@ extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
         case let .viewCollectionNFTs(collectionId):
             
             let wireframe = nftsCollectionWireframeFactory.makeWireframe(
-                parent,
-                context: .init(nftCollectionIdentifier: collectionId)
+                navigationController,
+                context: .init(
+                    nftCollectionIdentifier: collectionId,
+                    presentationStyle: .push
+                )
             )
             wireframe.present()
         }
@@ -86,7 +89,9 @@ private extension DefaultNFTsDashboardWireframe {
 
     func makeViewController() -> UIViewController {
         
-        let view = NFTsDashboardViewController()
+        let view: NFTsDashboardViewController = UIStoryboard(
+            .nftsDashboard
+        ).instantiate()
         let interactor = DefaultNFTsDashboardInteractor(
             service: nftsService
         )

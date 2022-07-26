@@ -18,12 +18,6 @@ final class NFTsCollectionViewController: BaseViewController {
 
     private (set) var viewModel: NFTsCollectionViewModel?
     
-    init() { super.init(nibName: nil, bundle: nil) }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -69,22 +63,21 @@ private extension NFTsCollectionViewController {
         
         title = Localized("nfts")
         
-        view = GradientView()
-        
         let mainScrollView = makeMainScrollView()
         view.addSubview(mainScrollView)
         self.mainScrollView = mainScrollView
         mainScrollView.addConstraints(.toEdges)
         
+        let showBack = (navigationController?.viewControllers.count ?? 0) > 1
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: Localized("close"),
+            image: UIImage(systemName: showBack ? "chevron.left" : "xmark"),
             style: .plain,
             target: self,
-            action: #selector(closeTapped)
+            action: #selector(dismissTapped)
         )
     }
     
-    @objc func closeTapped() {
+    @objc func dismissTapped() {
         
         presenter.handle(.dismiss)
     }

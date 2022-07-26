@@ -168,9 +168,11 @@ private extension DefaultDashboardPresenter {
                 )
             )
             
-            nfts.append(
-                contentsOf: makeDashboardViewModelNFts(from: interactor.nfts(for: network))
-            )
+            // TODO: @Annon check if we really wanna have 2 sections of NFTs feels like we should
+            // not be duplicating data for the sake of filling things up
+//            nfts.append(
+//                contentsOf: makeDashboardViewModelNFts(from: interactor.nfts(for: network))
+//            )
         }
         
         sections = addMissingSectionsIfNeeded(to: sections)

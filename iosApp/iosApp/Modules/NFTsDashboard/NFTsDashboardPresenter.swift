@@ -45,12 +45,6 @@ extension DefaultNFTsDashboardPresenter: NFTsDashboardPresenter {
             
             self.handleYourNFTsResponse(with: result)
         }
-        interactor.fetchYourNFTsCollections { [weak self] result in
-            
-            guard let self = self else { return }
-            
-            self.handleCollectionsResponse(with: result)
-        }
     }
 
     func handle(_ event: NFTsDashboardPresenterEvent) {
@@ -82,12 +76,22 @@ private extension DefaultNFTsDashboardPresenter {
         case let .success(nfts):
             
             latestNFTs = nfts
-            refreshView()
+            fetchNFTsCollections()
             
         case .failure:
             // We will handle failures in the future when connecting for real,
             // right now all data will be mocked and we know it won't return any errors.
             break
+        }
+    }
+    
+    func fetchNFTsCollections() {
+        
+        interactor.fetchYourNFTsCollections { [weak self] result in
+            
+            guard let self = self else { return }
+            
+            self.handleCollectionsResponse(with: result)
         }
     }
     
