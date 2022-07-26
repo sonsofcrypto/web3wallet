@@ -96,7 +96,8 @@ extension DefaultNFTsCollectionWireframe: NFTsCollectionWireframe {
                 navigationController,
                 context: .init(
                     nftIdentifier: identifier,
-                    nftCollectionIdentifier: context.nftCollectionIdentifier
+                    nftCollectionIdentifier: context.nftCollectionIdentifier,
+                    presentationStyle: .push
                 )
             )
             wireframe.present()

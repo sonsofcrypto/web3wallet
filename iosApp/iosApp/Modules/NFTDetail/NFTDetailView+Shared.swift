@@ -9,7 +9,7 @@ extension NFTDetailViewController {
         let mainScrollView = UIScrollView()
         mainScrollView.showsVerticalScrollIndicator = false
         let refreshControl = UIRefreshControl()
-        refreshControl.tintColor = Theme.colour.fillTertiary
+        refreshControl.tintColor = Theme.colour.activityIndicator
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         mainScrollView.refreshControl = refreshControl
         
@@ -31,22 +31,5 @@ extension NFTDetailViewController {
         )
         
         return mainScrollView
-    }
-    
-    func makeSectionTextInHorizontalStack(with text: String) -> UIView {
-        
-        let hStack = HStackView()
-        
-        hStack.addArrangedSubview(.hSpace(value: Theme.constant.padding))
-        
-        let label = UILabel(with: .body)
-        label.text = text
-        label.textColor = Theme.colour.labelPrimary
-        label.numberOfLines = 0
-        hStack.addArrangedSubview(label)
-
-        hStack.addArrangedSubview(.hSpace(value: Theme.constant.padding))
-        
-        return hStack
     }
 }

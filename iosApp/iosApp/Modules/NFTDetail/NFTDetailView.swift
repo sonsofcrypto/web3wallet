@@ -18,12 +18,6 @@ final class NFTDetailViewController: BaseViewController {
 
     private (set) var viewModel: NFTDetailViewModel?
     
-    init() { super.init(nibName: nil, bundle: nil) }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -68,29 +62,22 @@ private extension NFTDetailViewController {
     func configureUI() {
         
         title = Localized("nfts")
-        
-        view = GradientView()
-        //view.addConstraints(.toEdges)
-        
-        (view as? GradientView)?.colors = [
-            Theme.colour.backgroundBaseSecondary,
-            Theme.colour.backgroundBasePrimary
-        ]
-        
+                
         let mainScrollView = makeMainScrollView()
         view.addSubview(mainScrollView)
         self.mainScrollView = mainScrollView
         mainScrollView.addConstraints(.toEdges)
         
+        let showBack = (navigationController?.viewControllers.count ?? 0) > 1
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: .init(systemName: "chevron.left"),
+            image: UIImage(systemName: showBack ? "chevron.left" : "xmark"),
             style: .plain,
             target: self,
-            action: #selector(navBarLeftActionTapped)
+            action: #selector(dismissTapped)
         )
     }
     
-    @objc func navBarLeftActionTapped() {
+    @objc func dismissTapped() {
         
         presenter.handle(.dismiss)
     }

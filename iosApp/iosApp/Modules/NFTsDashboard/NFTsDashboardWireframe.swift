@@ -66,7 +66,8 @@ extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
                 navigationController,
                 context: .init(
                     nftIdentifier: nftItem.identifier,
-                    nftCollectionIdentifier: nftItem.collectionIdentifier
+                    nftCollectionIdentifier: nftItem.collectionIdentifier,
+                    presentationStyle: .push
                 )
             )
             wireframe.present()

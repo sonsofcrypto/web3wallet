@@ -89,7 +89,8 @@ struct ThemeA: Themable {
             priceDown: pallete.systemRed,
             candleGreen: pallete.systemTeal,
             candleRed: pallete.systemPink,
-            dashboardTVCryptoBallance: pallete.systemOrange
+            dashboardTVCryptoBallance: pallete.systemOrange,
+            activityIndicator: pallete.systemWhite
         )
     }
     

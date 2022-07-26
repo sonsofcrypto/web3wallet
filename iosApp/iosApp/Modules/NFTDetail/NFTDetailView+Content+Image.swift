@@ -10,12 +10,10 @@ extension NFTDetailViewController {
                 
         var views = [UIView]()
         
-        views.append(.vSpace(height: Theme.constant.padding))
-        
-        let headerImage = makeEthPrice(with: item)
-        views.append(headerImage)
-        
-        views.append(.vSpace(height: Theme.constant.padding))
+        //views.append(.vSpace(height: Theme.constant.padding))
+//        let headerImage = makeEthPrice(with: item)
+//        views.append(headerImage)
+//        views.append(.vSpace(height: Theme.constant.padding))
         
         let imageView = UIImageView()
         imageView.clipsToBounds = true
@@ -48,8 +46,7 @@ extension NFTDetailViewController {
         )
         
         vStackView.backgroundColor = Theme.colour.backgroundBasePrimary
-        vStackView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        vStackView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        vStackView.layer.cornerRadius = Theme.constant.cornerRadius
         vStackView.layer.borderWidth = 1
         vStackView.layer.borderColor = Theme.colour.fillTertiary.cgColor
 
@@ -71,14 +68,14 @@ private extension NFTDetailViewController {
         
         let width: CGFloat
         if let view = navigationController?.view {
-            width = view.frame.size.width - Theme.constant.padding * 3
+            width = view.frame.size.width - Theme.constant.padding * 2
         } else {
             width = 220
         }
         
         return .init(
-            width: width * 0.9,
-            height: width * 0.9
+            width: width * 0.7,
+            height: width * 0.7
         )
     }
 }

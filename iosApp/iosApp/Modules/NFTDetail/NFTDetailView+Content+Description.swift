@@ -11,11 +11,10 @@ extension NFTDetailViewController {
             
         let content = makeDescriptionContent(with: item.description)
         view.addSubview(content)
-        content.addConstraints(.toEdges)
+        content.addConstraints(.toEdges(padding: Theme.constant.padding))
         
-        view.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        view.layer.borderWidth = 1
-        view.layer.borderColor = Theme.colour.fillTertiary.cgColor
+        view.layer.cornerRadius = Theme.constant.cornerRadius
+        view.backgroundColor = Theme.colour.cellBackground
 
         return view
     }
@@ -27,42 +26,24 @@ private extension NFTDetailViewController {
         
         let vStack = VStackView()
         
-        vStack.addArrangedSubview(.vSpace(height: Theme.constant.padding))
-        
-        let sectionTitle = makeSectionTextInHorizontalStack(
-            with: Localized("nft.detail.section.title.description")
-        )
+        let sectionTitle = UILabel()
+        sectionTitle.apply(style: .headline, weight: .bold)
+        sectionTitle.text = Localized("nft.detail.section.title.description")
+        sectionTitle.numberOfLines = 0
         vStack.addArrangedSubview(sectionTitle)
         
-        vStack.addArrangedSubview(.vSpace(height: Theme.constant.padding))
         vStack.addArrangedSubview(
-            .dividerLine(backgroundColor: Theme.colour.fillTertiary)
+            .dividerLine(backgroundColor: Theme.colour.separatorNoTransparency)
         )
-        vStack.addArrangedSubview(.vSpace(height: Theme.constant.padding))
         
-        let sectionContent = makeTextInHorizontalStack(with: description)
+        let sectionContent = UILabel()
+        sectionContent.apply(style: .body)
+        sectionContent.text = description
+        sectionContent.numberOfLines = 0
         vStack.addArrangedSubview(sectionContent)
-
-        vStack.addArrangedSubview(.vSpace(height: Theme.constant.padding))
+        
+        vStack.spacing = Theme.constant.padding * 0.5
                 
         return vStack
-    }
-    
-    func makeTextInHorizontalStack(with text: String) -> UIView {
-        
-        let hStack = HStackView()
-        
-        hStack.addArrangedSubview(.hSpace(value: Theme.constant.padding))
-        
-        let label = UILabel()
-        label.text = text
-        label.textColor = Theme.colour.labelPrimary
-        label.numberOfLines = 0
-        label.apply(style: .body)
-        hStack.addArrangedSubview(label)
-
-        hStack.addArrangedSubview(.hSpace(value: Theme.constant.padding))
-        
-        return hStack
     }
 }

@@ -59,8 +59,6 @@ extension NFTsDashboardViewController {
             )
         }
         
-        rows.append(.vSpace(height: Theme.constant.padding))
-                
         return VStackView(rows, spacing: Theme.constant.padding)
     }
     
@@ -73,7 +71,7 @@ extension NFTsDashboardViewController {
         content.addConstraints(
             [
                 .layout(anchor: .topAnchor),
-                .layout(anchor: .bottomAnchor),
+                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: Theme.constant.padding)),
                 .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
                 .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding))
             ]
@@ -128,7 +126,7 @@ private extension NFTsDashboardViewController {
             ]
         )
 
-        view.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        view.layer.cornerRadius = Theme.constant.cornerRadius
         view.layer.borderWidth = 1
         view.layer.borderColor = Theme.colour.fillTertiary.cgColor
         view.backgroundColor = Theme.colour.backgroundBasePrimary

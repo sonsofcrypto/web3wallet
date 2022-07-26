@@ -51,5 +51,6 @@ extension UIStoryboard {
         case confirmation = "Confirmation"
         case nftsDashboard = "NFTsDashboard"
         case nftsCollection = "NFTsCollection"
+        case nftDetail = "NFTDetail"
     }
 }

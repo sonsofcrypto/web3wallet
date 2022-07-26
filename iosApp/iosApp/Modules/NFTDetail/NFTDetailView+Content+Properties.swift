@@ -4,241 +4,67 @@
 
 extension NFTDetailViewController {
     
-    enum PropertyLayout {
+    func makeProperties(with item: NFTItem) -> [UIView] {
         
-        case option1
-        case option2
-    }
-    
-    func makeProperties(with item: NFTItem) -> UIView? {
-        
-        guard !item.properties.isEmpty else { return nil }
+        guard !item.properties.isEmpty else { return [] }
         
         let view = UIView()
         view.backgroundColor = .clear
             
         let content = makePropertiesContent(
-            with: item.properties,
-            layout: .option2
+            with: item.properties
         )
         view.addSubview(content)
-        content.addConstraints(.toEdges)
+        content.addConstraints(.toEdges(padding: Theme.constant.padding))
         
-        view.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        view.layer.borderWidth = 1
-        view.layer.borderColor = Theme.colour.fillTertiary.cgColor
+        view.layer.cornerRadius = Theme.constant.cornerRadius
+        view.backgroundColor = Theme.colour.cellBackground
 
-        return view
+        return [view]
     }
 }
 
 private extension NFTDetailViewController {
     
     func makePropertiesContent(
-        with properties: [NFTItem.Property],
-        layout: PropertyLayout
+        with properties: [NFTItem.Property]
     ) -> UIView {
         
         var rows: [UIView] = []
         
-        rows.append(.vSpace(height: Theme.constant.padding))
-        
-        let titleLabel = makeSectionTextInHorizontalStack(
-            with: Localized("nft.detail.section.title.properties")
-        )
+        let titleLabel = UILabel()
+        titleLabel.apply(style: .headline, weight: .bold)
+        titleLabel.text = Localized("nft.detail.section.title.properties")
+        titleLabel.numberOfLines = 0
         rows.append(titleLabel)
         
-        rows.append(.vSpace(height: Theme.constant.padding))
-        rows.append(
-            .dividerLine(backgroundColor: Theme.colour.fillTertiary)
-        )
-        rows.append(.vSpace(height: Theme.constant.padding))
-
-        switch layout {
-        case .option1:
+        rows.append(.dividerLine())
+        
+        properties.forEach {
             
-            var index = 0
-            while true {
-                
-                var item1: NFTItem.Property?
-                var item2: NFTItem.Property?
-
-                if index < properties.count {
-                    
-                    item1 = properties[index]
-                    index += 1
-                }
-                
-                if index < properties.count {
-                    
-                    item2 = properties[index]
-                    index += 1
-                }
-                
-                guard let item1 = item1 else { break }
-
-                rows.append(
-                    makePropertiesRow(
-                        with: item1,
-                        and: item2
-                    )
-                )
-                rows.append(.vSpace(height: Theme.constant.padding))
-            }
+            let propertyName = UILabel()
+            propertyName.numberOfLines = 1
+            propertyName.apply(style: .subheadline)
+            propertyName.textColor = Theme.colour.labelSecondary
+            propertyName.textAlignment = .left
+            propertyName.text = $0.name
             
-        case .option2:
-                        
-            properties.forEach {
-                
-                let containerView = UIView()
-                containerView.backgroundColor = .clear
-                let item = makePropertyContent(with: $0, layout: .option2)
-                containerView.addSubview(item)
-                item.addConstraints(
-                    [
-                        .layout(anchor: .topAnchor),
-                        .layout(anchor: .bottomAnchor),
-                        .layout(
-                            anchor: .widthAnchor,
-                            constant: .equalTo(constant: propertyItemSize.width)
-                        ),
-                        .layout(anchor: .centerXAnchor)
-                    ]
-                )
-                
-                rows.append(containerView)
+            let propertyValue = UILabel()
+            propertyValue.numberOfLines = 1
+            propertyValue.apply(style: .subheadline, weight: .bold)
+            propertyValue.textAlignment = .left
+            propertyValue.text = $0.value
 
-                rows.append(.vSpace(height: Theme.constant.padding))
-            }
+            let hStack = HStackView([propertyName, propertyValue])
+            hStack.spacing = Theme.constant.padding.half
+            
+            propertyName.setContentHuggingPriority(.required, for: .horizontal)
+            
+            rows.append(hStack)
         }
         
-        return VStackView(rows)
-    }
-}
-
-private extension NFTDetailViewController {
-    
-    var propertyItemSize: CGSize {
-        
-        let width: CGFloat
-        if let view = navigationController?.view {
-            width = view.frame.size.width
-        } else {
-            width = 220
-        }
-        
-        return .init(
-            width: (width - Theme.constant.padding * 9),
-            height: 80
-        )
-    }
-    
-    func makePropertiesRow(
-        with item1: NFTItem.Property,
-        and item2: NFTItem.Property?
-    ) -> UIView {
-        
-        var views = [UIView]()
-        
-        views.append(makePropertyContent(with: item1, layout: .option1))
-        if let item2 = item2 {
-            views.append(makePropertyContent(with: item2, layout: .option1))
-        } else {
-            views.append(UIView())
-        }
-        
-        let hStack = HStackView(views, spacing: Theme.constant.padding)
-        
-        let view = UIView()
-        view.backgroundColor = .clear
-        view.addSubview(hStack)
-        hStack.addConstraints(
-            [
-                .layout(anchor: .centerXAnchor),
-                .layout(anchor: .topAnchor),
-                .layout(anchor: .bottomAnchor)
-            ]
-        )
-        
-        return view
-    }
-    
-    func makePropertyContent(
-        with item: NFTItem.Property,
-        layout: PropertyLayout
-    ) -> UIView {
-        
-        let view = UIView()
-        
-        let stackView = makeVerticalStack(with: item)
-        view.addSubview(stackView)
-        switch layout {
-        case .option1:
-            stackView.addConstraints(
-                [
-                    .layout(anchor: .centerXAnchor),
-                    .layout(anchor: .centerYAnchor)
-                ]
-            )
-        case .option2:
-            stackView.addConstraints(
-                [
-                    .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                    .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                    .layout(anchor: .topAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                    .layout(anchor: .bottomAnchor, constant: .equalTo(constant: Theme.constant.padding))
-                ]
-            )
-        }
-        
-//        view.addConstraints(
-//            [
-//                .layout(
-//                    anchor: .widthAnchor,
-//                    constant: .equalTo(constant: propertyItemSize.width)
-//                )
-//            ]
-//        )
-
-        view.layer.cornerRadius = 16
-        view.layer.borderWidth = 1
-        view.layer.borderColor = Theme.colour.fillTertiary.cgColor
-        view.clipsToBounds = true
-        view.backgroundColor = Theme.colour.backgroundBasePrimary
-        return view
-    }
-    
-    func makeVerticalStack(
-        with item: NFTItem.Property
-    ) -> UIView {
-        
-        let view = VStackView()
-        
-        let topLabel = UILabel(with: .caption1)
-        topLabel.numberOfLines = 1
-        topLabel.text = item.name
-        topLabel.textColor = Theme.colour.labelPrimary
-        topLabel.textAlignment = .center
-        view.addArrangedSubview(topLabel)
-        
-        view.addArrangedSubview(.vSpace(height: 8))
-        
-        let middleLabel = UILabel(with: .caption1)
-        middleLabel.numberOfLines = 1
-        middleLabel.text = item.value
-        middleLabel.textColor = Theme.colour.labelPrimary
-        middleLabel.textAlignment = .center
-        view.addArrangedSubview(middleLabel)
-
-        view.addArrangedSubview(.vSpace(height: 8))
-        
-        let bottomLabel = UILabel(with: .caption1)
-        bottomLabel.numberOfLines = 1
-        bottomLabel.text = item.info
-        bottomLabel.textColor = Theme.colour.labelPrimary
-        bottomLabel.textAlignment = .center
-        view.addArrangedSubview(bottomLabel)
-                
-        return view
+        let vStack = VStackView(rows)
+        vStack.spacing = Theme.constant.padding.half
+        return vStack
     }
 }
