@@ -5,36 +5,34 @@
 import Foundation
 
 struct SettingsViewModel {
+    
     let title: String
     let sections: [SettingsViewModel.Section]
 }
 
-// MARK: - Section
-
 extension SettingsViewModel {
 
     struct Section {
+        
         let title: String?
         let items: [Item]
     }
 }
 
-// MARK: - Item
-
 extension SettingsViewModel {
 
     enum Item {
+        
         case setting(title: String)
         case selectableOption(title: String, selected: Bool)
         case action(title: String)
     }
 }
 
-// MARK: - Item type
-
 extension SettingsViewModel.Item {
 
     func title() -> String {
+        
         switch self {
         case let .setting(title):
             return title
@@ -46,6 +44,7 @@ extension SettingsViewModel.Item {
     }
 
     func isSelected() -> Bool {
+        
         switch self {
         case let .selectableOption(_, selected):
             return selected
@@ -55,15 +54,15 @@ extension SettingsViewModel.Item {
     }
 }
 
-// MARK: - Utilities
-
 extension SettingsViewModel {
 
     func item(at idxPath: IndexPath) -> SettingsViewModel.Item {
+        
         sections[idxPath.section].items[idxPath.item]
     }
 
     func selectedIdxPaths() -> [IndexPath] {
+        
         var idxPaths = [IndexPath]()
 
         for section in 0..<sections.count {

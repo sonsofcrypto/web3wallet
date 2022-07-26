@@ -4,11 +4,14 @@
 
 enum FeatureFlag {
     
+    case showAppsTab
     case embedChatInTab
     
     var isEnabled: Bool {
         
         switch self {
+        case .showAppsTab:
+            return false
         case .embedChatInTab:
             return false
         }

@@ -159,18 +159,18 @@ extension DefaultWeb3Service: Web3Service {
             .init(
                 id: "1",
                 image: makeSecurityImageData(),
-                title: "Confirm Mnemonic",
-                body: "Please confirm your mnemonic",
-                deepLink: "mnemonic.confirmation",
+                title: "Mnemonic",
+                body: "Confirm your mnemonic",
+                deepLink: "modal.mnemonic.confirmation",
                 canDismiss: false,
                 order: 1
             ),
             .init(
                 id: "2",
                 image: makeSecurityImageData(),
-                title: "Swap Themes",
-                body: "You can now change themes",
-                deepLink: "theme.change",
+                title: "App Themes",
+                body: "Fancy a new look?",
+                deepLink: "settings.themes",
                 canDismiss: false,
                 order: 2
             ),

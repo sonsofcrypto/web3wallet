@@ -17,29 +17,28 @@ final class SettingsViewController: BaseViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
 
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-
     override func viewDidLoad() {
 
         super.viewDidLoad()
+        
         presenter?.present()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
+        
         collectionView.deselectAllExcept(viewModel?.selectedIdxPaths())
-
     }
 }
 
-// MARK: - WalletsView
+extension SettingsViewController {
+    
+    @objc func dismissAction() {
+        
+        presenter.handle(.dismiss)
+    }
+}
 
 extension SettingsViewController: SettingsView {
 
@@ -48,39 +47,50 @@ extension SettingsViewController: SettingsView {
         self.viewModel = viewModel
         
         title = viewModel.title
+        
+        if (navigationController?.viewControllers.count ?? 0) > 1 {
+            
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                image: .init(systemName: "chevron.left"),
+                style: .plain,
+                target: self,
+                action: #selector(dismissAction)
+            )
+        }
+        
         collectionView.reloadData()
         collectionView.deselectAllExcept(viewModel.selectedIdxPaths())
     }
 }
 
-// MARK: - UICollectionViewDataSource
-
 extension SettingsViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return viewModel?.sections.count ?? 0
+        
+        viewModel?.sections.count ?? 0
     }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.sections[section].items.count ?? 0
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        
+        viewModel?.sections[section].items.count ?? 0
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        
         guard let viewModel = viewModel?.item(at: indexPath) else {
             fatalError("Missing viewModel \(indexPath)")
         }
-
-        switch viewModel {
-        case .selectableOption:
-            return collectionView.dequeue(SettingsListSelectCell.self, for: indexPath)
-                .update(with: viewModel)
-        case .action:
-            return collectionView.dequeue(SettingsActionCell.self, for: indexPath)
-                .update(with: viewModel)
-        default:
-            return collectionView.dequeue(SettingsCell.self, for: indexPath)
-                .update(with: viewModel)
-        }
+        
+        return collectionView.dequeue(
+            SettingsCell.self,
+            for: indexPath
+        ).update(with: viewModel)
     }
 
 }

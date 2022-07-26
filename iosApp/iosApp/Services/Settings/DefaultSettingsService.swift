@@ -9,6 +9,7 @@ final class DefaultSettingsService {
     let defaults: UserDefaults
 
     init(defaults: UserDefaults) {
+        
         self.defaults = defaults
     }
 }
@@ -47,12 +48,13 @@ extension DefaultSettingsService: SettingsService {
 
     var theme: Setting.ThemeTypeOptions {
         get {
-            let val = defaults.string(forKey: "\(Setting.theme.self)")
-            return .init(rawValue: val ?? "") ?? .primary
+            let val = defaults.string(forKey: "\(Setting.theme.rawValue)")
+            return .init(rawValue: val ?? "") ?? .themeMiami
         }
         set {
-            defaults.set(newValue.rawValue, forKey: "\(Setting.theme.self)")
+            defaults.set(newValue.rawValue, forKey: "\(Setting.theme.rawValue)")
             defaults.synchronize()
+            Theme = appTheme
         }
     }
 }

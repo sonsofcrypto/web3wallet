@@ -190,12 +190,18 @@ private extension DashboardViewController {
             heightDimension: .fractionalHeight(1)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = .init(
+            top: 0,
+            leading: Theme.constant.padding.half,
+            bottom: 0,
+            trailing: Theme.constant.padding.half
+        )
         
         // Group
-        let screenWidth: CGFloat = (view.bounds.width - Theme.constant.padding * 2)
+        let screenWidth: CGFloat = (view.bounds.width - Theme.constant.padding)
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(screenWidth * 0.5),
-            heightDimension: .absolute(screenWidth * 0.2)
+            heightDimension: .absolute(64)
         )
         let outerGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize, subitems: [item]
@@ -222,7 +228,6 @@ private extension DashboardViewController {
 //        )
 //        section.boundarySupplementaryItems = [headerItem]
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-        section.interGroupSpacing = Theme.constant.padding
                 
         return section
     }

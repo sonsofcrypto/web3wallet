@@ -131,12 +131,14 @@
 "newMnemonic.defaultWalletName" = "Default wallet";
 "newMnemonic.defaultNthWalletName" = "Wallet %d";
 
-"setting.action.resetKeyStore" = "Reset keystore";
-"setting.theme" = "Theme";
-"setting.theme.default" = "Default";
-"setting.theme.alt" = "Alternative";
-"setting.newSeedTransitionType" = "New seed transition type";
-"setting.onboardingMode" = "Onboarding mode";
+"settings.root.group.settings" = "Settings";
+"settings.root.group.actions" = "Actions";
+"settings.action.resetKeyStore" = "Reset keystore";
+"settings.theme" = "Theme";
+"settings.theme.miami" = "Theme Miami";
+"settings.theme.ios" = "Theme IOS";
+"settings.newSeedTransitionType" = "New seed transition type";
+"settings.onboardingMode" = "Onboarding mode";
 
 "alert.underConstruction.title" = "Under construction";
 "alert.underConstruction.message" = "App is under very active development and this corner is not quite ready yet. Check back soon.";

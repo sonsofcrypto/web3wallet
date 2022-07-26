@@ -218,8 +218,8 @@
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xkM-AO-LPE">
                                                                     <rect key="frame" x="20" y="20" width="343" height="162"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="32" id="5Lo-vs-3GE"/>
-                                                                        <constraint firstAttribute="width" constant="32" id="kVH-Oj-BxY"/>
+                                                                        <constraint firstAttribute="height" constant="28" id="5Lo-vs-3GE"/>
+                                                                        <constraint firstAttribute="width" constant="28" id="kVH-Oj-BxY"/>
                                                                     </constraints>
                                                                 </imageView>
                                                             </subviews>
@@ -272,7 +272,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="83P-75-rMK" secondAttribute="trailing" constant="16" id="2dr-oy-Bft"/>
-                                                <constraint firstItem="83P-75-rMK" firstAttribute="top" secondItem="KxP-6q-5Gx" secondAttribute="top" constant="16" id="cGm-QO-6mH"/>
+                                                <constraint firstItem="83P-75-rMK" firstAttribute="top" secondItem="KxP-6q-5Gx" secondAttribute="top" constant="8" id="kHZ-bO-gkY"/>
                                                 <constraint firstItem="83P-75-rMK" firstAttribute="leading" secondItem="KxP-6q-5Gx" secondAttribute="leading" constant="16" id="ncn-nw-wcF"/>
                                             </constraints>
                                         </collectionViewCellContentView>

@@ -29,7 +29,7 @@ final class DashboardNotificationCell: CollectionViewCell {
         
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = Theme.colour.navBarTint
-        imageView.layer.cornerRadius = 16
+        imageView.layer.cornerRadius = 14
         
         titleLabel.apply(style: .footnote)
         bodyLabel.apply(style: .caption1)
