@@ -153,4 +153,53 @@ extension DefaultWeb3Service: Web3Service {
         return "15211116"
     }
 
+    var dashboardNotifications: [Web3Notification] {
+        
+        [
+            .init(
+                id: "1",
+                image: makeSecurityImageData(),
+                title: "Confirm Mnemonic",
+                body: "Please confirm your mnemonic",
+                deepLink: "mnemonic.confirmation",
+                canDismiss: false,
+                order: 1
+            ),
+            .init(
+                id: "2",
+                image: makeSecurityImageData(),
+                title: "Swap Themes",
+                body: "You can now change themes",
+                deepLink: "theme.change",
+                canDismiss: false,
+                order: 2
+            ),
+            .init(
+                id: "3",
+                image: makeSecurityImageData(),
+                title: "Share Us",
+                body: "Share on twitter",
+                deepLink: "share.twitter",
+                canDismiss: false,
+                order: 3
+            )
+        ]
+    }
+}
+
+private extension DefaultWeb3Service {
+    
+    func makeSecurityImageData() -> Data {
+        
+        let config = UIImage.SymbolConfiguration(
+            paletteColors: [
+                Theme.colour.labelPrimary,
+                .clear
+            ]
+        )
+
+        return UIImage(systemName: "s.circle.fill")!
+            .applyingSymbolConfiguration(config)!
+            .pngData()!
+    }
 }

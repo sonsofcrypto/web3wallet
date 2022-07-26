@@ -399,6 +399,7 @@
 		1CB8B0C2288DD94B00024E7C /* CultProposalDetailStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0C1288DD94B00024E7C /* CultProposalDetailStatusView.swift */; };
 		1CB8B0C4288DD97300024E7C /* CultProposalStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0C3288DD97300024E7C /* CultProposalStatus.swift */; };
 		1CB8B0C6288E7C0500024E7C /* CultProposalJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0C5288E7C0500024E7C /* CultProposalJSON.swift */; };
+		1CB8B0C8288F30DA00024E7C /* DashboardNotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0C7288F30DA00024E7C /* DashboardNotificationCell.swift */; };
 		1CBB9CBC286DA9E90007E2D4 /* DashboarView+CollectionCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBB9CBB286DA9E90007E2D4 /* DashboarView+CollectionCards.swift */; };
 		1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */; };
 		1CD3FE20284D5840008312DE /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD3FE1F284D5840008312DE /* FeatureFlags.swift */; };
@@ -912,6 +913,7 @@
 		1CB8B0C1288DD94B00024E7C /* CultProposalDetailStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalDetailStatusView.swift; sourceTree = "<group>"; };
 		1CB8B0C3288DD97300024E7C /* CultProposalStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalStatus.swift; sourceTree = "<group>"; };
 		1CB8B0C5288E7C0500024E7C /* CultProposalJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalJSON.swift; sourceTree = "<group>"; };
+		1CB8B0C7288F30DA00024E7C /* DashboardNotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardNotificationCell.swift; sourceTree = "<group>"; };
 		1CBB9CBB286DA9E90007E2D4 /* DashboarView+CollectionCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboarView+CollectionCards.swift"; sourceTree = "<group>"; };
 		1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetActionViewModel.swift; sourceTree = "<group>"; };
 		1CD3FE1F284D5840008312DE /* FeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
@@ -1460,6 +1462,7 @@
 				1C60C211285724D0003BE25D /* DashboardHeaderNameView.swift */,
 				1C60C210285724D0003BE25D /* DashboardNFTCell.swift */,
 				1C60C212285724D0003BE25D /* DashboardWalletCell.swift */,
+				1CB8B0C7288F30DA00024E7C /* DashboardNotificationCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2863,6 +2866,7 @@
 				1A4C373BF33DAF794F261056 /* CardFlipAnimatedTransitioning2.swift in Sources */,
 				1C47C0E5287BFC06008E0146 /* SeparatorView.swift in Sources */,
 				1A4C31E84A86A69FFC7C3E0F /* Setting.swift in Sources */,
+				1CB8B0C8288F30DA00024E7C /* DashboardNotificationCell.swift in Sources */,
 				1CD843F72874215F00E6D359 /* SegmentWithTextAndSwitchCell.swift in Sources */,
 				1C60C386285AFB20003BE25D /* Web3ServiceLocalStorageAssembler.swift in Sources */,
 				1C60C301285724D1003BE25D /* NFTsDashboardView.swift in Sources */,

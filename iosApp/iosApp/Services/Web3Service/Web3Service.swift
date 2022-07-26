@@ -31,6 +31,8 @@ protocol Web3Service: AnyObject {
     func networkFeeInNetworkToken(network: Web3Network, fee: Web3NetworkFee) -> String
     
     var currentEthBlock: String { get }
+    
+    var dashboardNotifications: [Web3Notification] { get }
 }
 
 enum Web3NetworkFee: String {
@@ -177,4 +179,15 @@ extension Array where Element == Web3Token {
             return result
         }
     }
+}
+
+struct Web3Notification: Codable, Equatable {
+    
+    let id: String
+    let image: Data // Security, Social, etc
+    let title: String
+    let body: String
+    let deepLink: String
+    let canDismiss: Bool
+    let order: Int // 1, 2, 3, 4...(left to right)
 }

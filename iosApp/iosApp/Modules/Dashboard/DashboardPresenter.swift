@@ -17,6 +17,8 @@ enum DashboardPresenterEvent {
     case didTapNetwork
     case didScanQRCode
     case didTapEditTokens(network: String)
+    case didTapNotification(id: String)
+    case didTapDismissNotification(id: String)
 }
 
 protocol DashboardPresenter: AnyObject {
@@ -33,6 +35,7 @@ final class DefaultDashboardPresenter {
     private let onboardingService: OnboardingService
     
     var expandedNetworks = [String]()
+    var notifications = [Web3Notification]()
     var myTokens = [Web3Token]()
     
     init(
@@ -54,7 +57,7 @@ extension DefaultDashboardPresenter: DashboardPresenter {
     
     func present() {
         
-        fetchMyTokens()
+        fetchData()
     }
     
     func handle(_ event: DashboardPresenterEvent) {
@@ -111,6 +114,12 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             
             wireframe.navigate(to: .tokenSwap)
             
+        case .didTapNotification:
+            break
+            
+        case .didTapDismissNotification:
+            break
+            
         default:
             print("Handle \(event)")
         }
@@ -119,8 +128,9 @@ extension DefaultDashboardPresenter: DashboardPresenter {
 
 private extension DefaultDashboardPresenter {
     
-    func fetchMyTokens() {
+    func fetchData() {
         
+        self.notifications = interactor.notifications
         let myTokens = interactor.myTokens
         guard self.myTokens != myTokens else { return }
         self.myTokens = myTokens
@@ -212,10 +222,35 @@ private extension DefaultDashboardPresenter {
             at: 0
         )
         
+        sections.insert(
+            .init(
+                name: Localized("dashboard.section.notifications"),
+                fuelCost: nil,
+                rightActionTitle: nil,
+                isCollapsed: nil,
+                items: makeNotificationItems()
+            ),
+            at: 1
+        )
+        
         return .init(
             shouldAnimateCardSwitcher: onboardingService.shouldShowOnboardingButton(),
             sections: sections
         )
+    }
+    
+    func makeNotificationItems() -> DashboardViewModel.Section.Items {
+        
+        let items: [DashboardViewModel.Notification] = notifications.compactMap {
+            .init(
+                id: $0.id,
+                image: $0.image,
+                title: $0.title,
+                body: $0.body,
+                canDismiss: $0.canDismiss
+            )
+        }
+        return .notifications(items)
     }
     
     func addMissingSectionsIfNeeded(
@@ -335,7 +370,7 @@ extension DefaultDashboardPresenter: Web3ServiceWalletListener {
     
     func tokensChanged() {
         
-        fetchMyTokens()
+        fetchData()
     }
 }
 

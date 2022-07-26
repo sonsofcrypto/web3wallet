@@ -20,6 +20,7 @@ extension DashboardViewModel {
         
         enum Items {
             case actions([DashboardViewModel.Action])
+            case notifications([DashboardViewModel.Notification])
             case wallets([DashboardViewModel.Wallet])
             case nfts([DashboardViewModel.NFT])
             
@@ -27,6 +28,8 @@ extension DashboardViewModel {
                 switch self {
                 case .actions:
                     return 1
+                case let .notifications(notifications):
+                    return notifications.count
                 case let .wallets(wallets):
                     return wallets.count
                 case let .nfts(nfts):
@@ -39,24 +42,52 @@ extension DashboardViewModel {
                 return actions
             }
             
+            func notifications(at index: Int) -> DashboardViewModel.Notification? {
+                guard case let Items.notifications(notifications) = self else { return nil }
+                return notifications[safe: index]
+            }
+            
             func wallet(at index: Int) -> DashboardViewModel.Wallet? {
                 
                 guard case let Items.wallets(wallets) = self else { return nil }
-                
-                guard wallets.count > index else { return nil }
-                
-                return wallets[index]
+                return wallets[safe: index]
             }
 
             func nft(at index: Int) -> DashboardViewModel.NFT? {
                 
                 guard case let Items.nfts(nfts) = self else { return nil }
-                
-                guard nfts.count > index else { return nil }
-                
-                return nfts[index]
+                return nfts[safe: index]
             }
         }
+    }
+}
+
+extension DashboardViewModel {
+
+    struct Action {
+        
+        let title: String
+        let imageName: String
+        let type: `Type`
+        
+        enum `Type` {
+            
+            case send
+            case receive
+            case swap
+        }
+    }
+}
+
+extension DashboardViewModel {
+
+    struct Notification {
+        
+        let id: String
+        let image: Data
+        let title: String
+        let body: String
+        let canDismiss: Bool
     }
 }
 
@@ -81,22 +112,5 @@ extension DashboardViewModel {
     struct NFT {
         let image: String
         let onSelected: () -> Void
-    }
-}
-
-extension DashboardViewModel {
-
-    struct Action {
-        
-        let title: String
-        let imageName: String
-        let type: `Type`
-        
-        enum `Type` {
-            
-            case send
-            case receive
-            case swap
-        }
     }
 }
