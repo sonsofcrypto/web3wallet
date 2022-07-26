@@ -10,8 +10,6 @@ protocol RootPresenter {
     func present()
 }
 
-// MARK: - DefaultRootPresenter
-
 final class DefaultRootPresenter {
 
     private weak var view: RootView?
@@ -28,8 +26,6 @@ final class DefaultRootPresenter {
         self.keyStoreService = keyStoreService
     }
 }
-
-// MARK: RootPresenter
 
 extension DefaultRootPresenter: RootPresenter {
 

@@ -19,6 +19,7 @@ enum DashboardWireframeDestination {
         onCompletion: ([Web3Token]) -> Void
     )
     case tokenSwap
+    case deepLink(DeepLink)
 }
 
 protocol DashboardWireframe {
@@ -40,6 +41,7 @@ final class DefaultDashboardWireframe {
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let onboardingService: OnboardingService
+    private let deepLinkHandler: DeepLinkHandler
     private let web3Service: Web3Service
     private let priceHistoryService: PriceHistoryService
     private let nftsService: NFTsService
@@ -57,6 +59,7 @@ final class DefaultDashboardWireframe {
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         onboardingService: OnboardingService,
+        deepLinkHandler: DeepLinkHandler,
         web3Service: Web3Service,
         priceHistoryService: PriceHistoryService,
         nftsService: NFTsService
@@ -71,6 +74,7 @@ final class DefaultDashboardWireframe {
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.onboardingService = onboardingService
+        self.deepLinkHandler = deepLinkHandler
         self.web3Service = web3Service
         self.priceHistoryService = priceHistoryService
         self.nftsService = nftsService
@@ -186,6 +190,10 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 )
             )
             wireframe.present()
+            
+        case let .deepLink(deepLink):
+            
+            deepLinkHandler.handle(deepLink: deepLink)
         }
     }
 }

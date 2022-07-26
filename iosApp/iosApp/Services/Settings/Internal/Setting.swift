@@ -6,12 +6,10 @@ import Foundation
 
 enum Setting: String, CaseIterable {
 
-    case onboardingMode = "setting.onboardingMode"
-    case createWalletTransitionType = "setting.newSeedTransitionType"
-    case theme = "setting.theme"
+    case onboardingMode = "settings.onboardingMode"
+    case createWalletTransitionType = "settings.newSeedTransitionType"
+    case theme = "settings.theme"
 }
-
-// MARK: - OnboardingModeOptions
 
 extension Setting {
 
@@ -21,8 +19,6 @@ extension Setting {
     }
 }
 
-// MARK: - createWalletTransitionType
-
 extension Setting {
 
     enum CreateWalletTransitionTypeOptions: Int, CaseIterable, Codable, Equatable {
@@ -31,12 +27,11 @@ extension Setting {
     }
 }
 
-// MARK: - theme
-
 extension Setting {
 
     enum ThemeTypeOptions: String, CaseIterable, Codable, Equatable {
-        case primary = "setting.theme.default"
-        case alternative = "setting.theme.alt"
+        
+        case themeMiami = "settings.theme.miami"
+        case themeIOS = "settings.theme.ios"
     }
 }

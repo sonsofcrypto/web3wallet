@@ -60,8 +60,6 @@ final class DefaultRootWireframe {
     }
 }
 
-// MARK: - RootWireframe
-
 extension DefaultRootWireframe: RootWireframe {
 
     func present() {
@@ -74,17 +72,13 @@ extension DefaultRootWireframe: RootWireframe {
         dashboardWireframeFactory.makeWireframe(tabVc).present()
         degenWireframeFactory.makeWireframe(tabVc).present()
         nftsDashboardWireframeFactory.makeWireframe(tabVc).present()
-        if FeatureFlag.embedChatInTab.isEnabled {
-            
-            let chatWireframeFactory: ChatWireframeFactory = ServiceDirectory.assembler.resolve()
-            chatWireframeFactory.makeWireframe(
-                presentingIn: tabVc,
-                context: .init(presentationStyle: .embed)
-            ).present()
-        } else {
-            appsWireframeFactory.makeWireframe(tabVc).present()
-        }
-        settingsWireframeFactory.makeWireframe(tabVc).present()
+        
+        presentAppsTabIfNeeded()
+        
+        settingsWireframeFactory.makeWireframe(
+            tabVc,
+            context: .default
+        ).present()
         
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
@@ -100,9 +94,25 @@ extension DefaultRootWireframe: RootWireframe {
     }
 }
 
-extension DefaultRootWireframe {
+private extension DefaultRootWireframe {
+    
+    func presentAppsTabIfNeeded() {
+        
+        guard FeatureFlag.showAppsTab.isEnabled else { return }
+        
+        if FeatureFlag.embedChatInTab.isEnabled {
+            
+            let chatWireframeFactory: ChatWireframeFactory = ServiceDirectory.assembler.resolve()
+            chatWireframeFactory.makeWireframe(
+                presentingIn: tabVc,
+                context: .init(presentationStyle: .embed)
+            ).present()
+        } else {
+            appsWireframeFactory.makeWireframe(tabVc).present()
+        }
+    }
 
-    private func wireUp() -> UIViewController {
+    func wireUp() -> UIViewController {
         
         let vc: RootViewController = UIStoryboard(.main).instantiate()
         let tabVc = TabBarController()
@@ -119,8 +129,6 @@ extension DefaultRootWireframe {
         return vc
     }
 }
-
-// MARK: - RootWireframeDestination to EdgeCardsController.DisplayMode
 
 private extension RootWireframeDestination {
 

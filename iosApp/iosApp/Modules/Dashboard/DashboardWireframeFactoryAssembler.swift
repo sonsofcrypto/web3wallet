@@ -7,6 +7,7 @@ final class DashboardWireframeFactoryAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
         
         registry.register(scope: .instance) { resolver -> DashboardWireframeFactory in
+            
             DefaultDashboardWireframeFactory(
                 accountWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
@@ -17,6 +18,7 @@ final class DashboardWireframeFactoryAssembler: AssemblerComponent {
                 nftDetailWireframeFactory: resolver.resolve(),
                 qrCodeScanWireframeFactory: resolver.resolve(),
                 onboardingService: resolver.resolve(),
+                deepLinkHandler: resolver.resolve(),
                 web3Service: resolver.resolve(),
                 priceHistoryService: resolver.resolve(),
                 nftsService: resolver.resolve()

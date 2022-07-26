@@ -19,6 +19,7 @@ final class DefaultDashboardWireframeFactory {
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let onboardingService: OnboardingService
+    private let deepLinkHandler: DeepLinkHandler
     private let web3Service: Web3Service
     private let priceHistoryService: PriceHistoryService
     private let nftsService: NFTsService
@@ -33,6 +34,7 @@ final class DefaultDashboardWireframeFactory {
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         onboardingService: OnboardingService,
+        deepLinkHandler: DeepLinkHandler,
         web3Service: Web3Service,
         priceHistoryService: PriceHistoryService,
         nftsService: NFTsService
@@ -46,6 +48,7 @@ final class DefaultDashboardWireframeFactory {
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.onboardingService = onboardingService
+        self.deepLinkHandler = deepLinkHandler
         self.web3Service = web3Service
         self.priceHistoryService = priceHistoryService
         self.nftsService = nftsService
@@ -67,6 +70,7 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             nftDetailWireframeFactory: nftDetailWireframeFactory,
             qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
             onboardingService: onboardingService,
+            deepLinkHandler: deepLinkHandler,
             web3Service: web3Service,
             priceHistoryService: priceHistoryService,
             nftsService: nftsService

@@ -210,6 +210,11 @@ extension DashboardViewController: UICollectionViewDataSource {
             let cell = collectionView.dequeue(DashboardButtonsCell.self, for: indexPath)
             cell.update(with: actions, presenter: presenter)
             return cell
+        } else if let notification = section.items.notifications(at: indexPath.row) {
+            
+            let cell = collectionView.dequeue(DashboardNotificationCell.self, for: indexPath)
+            cell.update(with: notification, handler: makeNotificationHandler())
+            return cell
         } else if let wallet = section.items.wallet(at: indexPath.row) {
             
             let cell = collectionView.dequeue(DashboardWalletCell.self, for: indexPath)
@@ -253,6 +258,9 @@ extension DashboardViewController: UICollectionViewDelegate {
         switch section.items {
         case .actions:
             break
+        case let .notifications(notifications):
+            let notification = notifications[indexPath.item]
+            presenter.handle(.didTapNotification(id: notification.id))
         case let .wallets(wallets):
             let wallet = wallets[indexPath.item]
             presenter.handle(.didSelectWallet(network: section.name, symbol: wallet.ticker))
@@ -317,5 +325,17 @@ private extension DashboardViewController {
             supplementary.update(with: section, presenter: presenter)
             return supplementary
         }
+    }
+    
+    func makeNotificationHandler() -> DashboardNotificationCell.Handler {
+        
+        let onDismiss: (String) -> Void = { [weak self] id in
+            guard let self = self else { return }
+            self.presenter.handle(.didTapDismissNotification(id: id))
+        }
+        
+        return .init(
+            onDismiss: onDismiss
+        )
     }
 }

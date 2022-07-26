@@ -133,7 +133,7 @@ extension DashboardHeaderNameView {
         case .wallets:
             rightAction.isHidden = false
             rightAction.text = viewModel.rightActionTitle
-        case .nfts, .actions:
+        case .nfts, .actions, .notifications:
             rightAction.isHidden = true
         }
         

@@ -25,6 +25,7 @@ extension UIStoryboard {
 
     enum Id: String {
         case main = "Main"
+        case settings = "Settings"
         case alert = "Alert"
         case degen = "Degen"
         case cultProposals = "CultProposals"

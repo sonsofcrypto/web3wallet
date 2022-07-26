@@ -7,70 +7,39 @@ import web3lib
 
 protocol SettingsInteractor: AnyObject {
 
-    var title: String { get }
-    var items: [SettingsItem] { get }
-
     func settingsItem(for setting: Setting) -> [SettingsItem]
     func didSelectSettingOption(at idx: Int, forSetting setting: Setting)
     func handleActionIfPossible(_ action: SettingsItem.ActionType) -> Bool
 }
 
-// MARK: - DefaultSettingsInteractor
-
 final class DefaultSettingsInteractor {
 
-    private var settingsService: SettingsService
-    private var keyStoreService: KeyStoreService
-
-    private(set) var title: String
-    private(set) var items: [SettingsItem]
+    private let settingsService: SettingsService
+    private let keyStoreService: KeyStoreService
 
     init(
         _ settingsService: SettingsService,
-        keyStoreService: KeyStoreService,
-        title: String = "settings",
-        settings: [SettingsItem] = DefaultSettingsInteractor.rootSettings()
+        keyStoreService: KeyStoreService
     ) {
+        
         self.settingsService = settingsService
         self.keyStoreService = keyStoreService
-        self.title = title.isEmpty ? "settings" : title
-        self.items = settings.isEmpty
-            ? DefaultSettingsInteractor.rootSettings()
-            : settings
-    }
-
-    static func rootSettings() -> [SettingsItem] {
-        [
-            .group(
-                items: [
-                    .setting(setting: .onboardingMode),
-                    .setting(setting: .createWalletTransitionType),
-                    .setting(setting: .theme)
-                ],
-                title: "settings"
-            ),
-            .group(
-                items: [
-                    .action(type: .resetKeyStore)
-                ],
-                title: "Actions"
-            )
-        ]
     }
 }
-
-// MARK: - DefaultSettingsInteractor
 
 extension DefaultSettingsInteractor: SettingsInteractor {
 
     func settingsItem(for setting: Setting) -> [SettingsItem] {
+        
         switch setting {
+            
         case .onboardingMode:
             let idx = Setting.OnboardingModeOptions.allCases.firstIndex(
                 of: settingsService.onboardingMode
             )
             return [
                 .group(
+                    title: setting.rawValue,
                     items: Setting.OnboardingModeOptions.allCases.enumerated().map {
                         SettingsItem.selectableOption(
                             setting: setting,
@@ -78,16 +47,17 @@ extension DefaultSettingsInteractor: SettingsInteractor {
                             optTitle: "\($0.1)",
                             selected: idx == $0.0
                         )
-                    },
-                    title: setting.rawValue
+                    }
                 )
             ]
+            
         case .createWalletTransitionType:
             let idx = Setting.CreateWalletTransitionTypeOptions.allCases.firstIndex(
                 of: settingsService.createWalletTransitionType
             )
             return [
                 .group(
+                    title: setting.rawValue,
                     items: Setting.CreateWalletTransitionTypeOptions.allCases.enumerated().map {
                         SettingsItem.selectableOption(
                             setting: setting,
@@ -95,29 +65,17 @@ extension DefaultSettingsInteractor: SettingsInteractor {
                             optTitle: "\($0.1)",
                             selected: idx == $0.0
                         )
-                    },
-                    title: setting.rawValue
+                    }
                 )
             ]
+            
         case .theme:
-            let idx = Setting.ThemeTypeOptions.allCases.firstIndex(of: settingsService.theme)
-            return [
-                .group(
-                    items: Setting.ThemeTypeOptions.allCases.enumerated().map {
-                        SettingsItem.selectableOption(
-                            setting: setting,
-                            optIdx: $0.0,
-                            optTitle: Localized($0.1.rawValue),
-                            selected: idx == $0.0
-                        )
-                    },
-                    title: setting.rawValue
-                )
-            ]
+            return SettingsItem.themeItems
         }
     }
 
     func didSelectSettingOption(at idx: Int, forSetting setting: Setting) {
+        
         switch setting {
         case .onboardingMode:
             settingsService.onboardingMode = Setting.OnboardingModeOptions.allCases[idx]
@@ -127,28 +85,10 @@ extension DefaultSettingsInteractor: SettingsInteractor {
         case .theme:
             settingsService.theme = Setting.ThemeTypeOptions.allCases[idx]
         }
-
-        reloadItems(for: setting)
-    }
-
-    func reloadItems(for setting: Setting) {
-        var reloadIdx = 0
-        for (idx, item) in items.enumerated() {
-            switch item {
-            case let .group(_, title):
-                if title == setting.rawValue {
-                   reloadIdx = idx
-                }
-            default:
-                // TODO: Handle cases where group is not settings value container
-                ()
-            }
-        }
-
-        items[reloadIdx] = settingsItem(for: setting)[0]
     }
 
     func handleActionIfPossible(_ action: SettingsItem.ActionType) -> Bool {
+        
         switch action {
         case .resetKeyStore:
             keyStoreService.items().forEach {

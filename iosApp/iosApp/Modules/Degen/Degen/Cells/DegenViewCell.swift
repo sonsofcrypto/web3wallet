@@ -26,7 +26,7 @@ final class DegenViewCell: CollectionViewCell {
         
         titleLabel.apply(style: .body, weight: .bold)
         
-        subTitleLabel.apply(style: .subheadline, weight: .bold)
+        subTitleLabel.apply(style: .subheadline)
         subTitleLabel.textColor = Theme.colour.labelSecondary
         
         chevronImage.tintColor = Theme.colour.labelSecondary

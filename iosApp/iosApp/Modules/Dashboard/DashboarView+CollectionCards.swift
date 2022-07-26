@@ -120,7 +120,10 @@ private extension DashboardViewController {
                 
             case .actions:
                 return self.makeButtonsCollectionLayoutSection()
-                
+
+            case .notifications:
+                return self.makeNotificationsCollectionLayoutSection()
+
             case .nfts:
                 return self.makeNFTsCollectionLayoutSection()
                 
@@ -174,6 +177,56 @@ private extension DashboardViewController {
             alignment: .top
         )
         section.boundarySupplementaryItems = [headerItem]
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+                
+        return section
+    }
+    
+    func makeNotificationsCollectionLayoutSection() -> NSCollectionLayoutSection {
+        
+        // Item
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = .init(
+            top: 0,
+            leading: Theme.constant.padding.half,
+            bottom: 0,
+            trailing: Theme.constant.padding.half
+        )
+        
+        // Group
+        let screenWidth: CGFloat = (view.bounds.width - Theme.constant.padding)
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .absolute(screenWidth * 0.5),
+            heightDimension: .absolute(64)
+        )
+        let outerGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize, subitems: [item]
+        )
+        
+        // Section
+        let sectionInset: CGFloat = Theme.constant.padding * 0.5
+        let section = NSCollectionLayoutSection(group: outerGroup)
+        section.contentInsets = .init(
+            top: sectionInset,
+            leading: sectionInset,
+            bottom: sectionInset * 3,
+            trailing: sectionInset
+        )
+        
+//        let headerItemSize = NSCollectionLayoutSize(
+//            widthDimension: .fractionalWidth(1),
+//            heightDimension: .estimated(100)
+//        )
+//        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+//            layoutSize: headerItemSize,
+//            elementKind: UICollectionView.elementKindSectionHeader,
+//            alignment: .top
+//        )
+//        section.boundarySupplementaryItems = [headerItem]
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
                 
         return section

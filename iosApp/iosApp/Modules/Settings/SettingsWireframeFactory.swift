@@ -8,11 +8,10 @@ import web3lib
 protocol SettingsWireframeFactory {
 
     func makeWireframe(
-        _ parent: UITabBarController
+        _ parent: UIViewController,
+        context: SettingsWireframeContext
     ) -> SettingsWireframe
 }
-
-// MARK: - DefaultSettingsWireframeFactory
 
 final class DefaultSettingsWireframeFactory {
 
@@ -23,37 +22,24 @@ final class DefaultSettingsWireframeFactory {
         settingsService: SettingsService,
         keyStoreService: KeyStoreService
     ) {
+        
         self.settingsService = settingsService
         self.keyStoreService = keyStoreService
     }
 }
 
-// MARK: - SettingsWireframeFactory
-
 extension DefaultSettingsWireframeFactory: SettingsWireframeFactory {
 
     func makeWireframe(
-        _ parent: UITabBarController
+        _ parent: UIViewController,
+        context: SettingsWireframeContext
     ) -> SettingsWireframe {
         
         DefaultSettingsWireframe(
             parent: parent,
+            context: context,
             settingsService: settingsService,
             keyStoreService: keyStoreService
         )
-    }
-}
-
-// MARK: - Assembler
-
-final class SettingsWireframeFactoryAssembler: AssemblerComponent {
-
-    func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .instance) { resolver -> SettingsWireframeFactory in
-            DefaultSettingsWireframeFactory(
-                settingsService: resolver.resolve(),
-                keyStoreService: resolver.resolve()
-            )
-        }
     }
 }

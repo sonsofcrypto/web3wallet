@@ -4,7 +4,27 @@
 
 import UIKit
 
-var Theme: Themable = ThemeIOS()
+var Theme: Themable = appTheme {
+    
+    didSet {
+    
+        guard let window = SceneDelegateHelper().window else { return }
+        UIBootstrapper(window: window).boot()
+    }
+}
+
+var appTheme: Themable {
+    
+    let service: SettingsService = ServiceDirectory.assembler.resolve()
+    switch service.theme {
+        
+    case .themeMiami:
+        return ThemeA()
+        
+    case .themeIOS:
+        return ThemeIOS()
+    }
+}
 
 protocol Themable {
     
