@@ -7,6 +7,7 @@ import UniformTypeIdentifiers
 
 enum MnemonicConfirmationPresenterEvent {
     
+    case dismiss
     case mnemonicChanged(
         to: String,
         selectedLocation: Int
@@ -25,6 +26,10 @@ final class DefaultMnemonicConfirmationPresenter {
     private let view: MnemonicConfirmationView
     private let wireframe: MnemonicConfirmationWireframe
     private let service: MnemonicConfirmationService
+    
+    private var ctaTapped = false
+    private var mnemonic = ""
+    private var selectedLocation = 0
 
     init(
         view: MnemonicConfirmationView,
@@ -41,23 +46,41 @@ extension DefaultMnemonicConfirmationPresenter: MnemonicConfirmationPresenter {
 
     func present() {
         
-        let viewModel = makeViewModel(for: "", selectedLocation: 0)
-        view.update(with: viewModel)
+        refresh()
     }
 
     func handle(_ event: MnemonicConfirmationPresenterEvent) {
         
         switch event {
             
-        case let .mnemonicChanged(mnemonic, selectedLocation):
+        case .dismiss:
             
-            let viewModel = makeViewModel(
-                for: mnemonic,
-                selectedLocation: selectedLocation
-            )
-            view.update(with: viewModel)
+            wireframe.navigate(to: .dismiss)
+            
+        case let .mnemonicChanged(mnemonicIn, selectedLocationIn):
+            
+            let tuple = clearBlanksFromFrontOf(mnemonicIn, with: selectedLocationIn)
+            
+            self.mnemonic = tuple.mnemonic
+            self.selectedLocation = tuple.selectedLocation
+            refresh(updateMnemonic: mnemonicIn != mnemonic)
 
         case .confirm:
+            
+            guard ctaTapped else {
+                
+                ctaTapped = true
+                refresh()
+                return
+            }
+            
+            ctaTapped = true
+
+            guard service.isMnemonicValid(mnemonic) else {
+                
+                refresh()
+                return
+            }
             
             wireframe.navigate(to: .dismiss)
         }
@@ -66,9 +89,33 @@ extension DefaultMnemonicConfirmationPresenter: MnemonicConfirmationPresenter {
 
 private extension DefaultMnemonicConfirmationPresenter {
     
+    func clearBlanksFromFrontOf(
+        _ mnemonic: String,
+        with selectedLocation: Int
+    ) -> (mnemonic: String, selectedLocation: Int) {
+        
+        let initialCount = mnemonic.count
+        
+        var mnemonic = mnemonic
+        if let c = (mnemonic.first { !($0 == " " || $0 == "\t" || $0 == "\n") }) {
+            if let nonWhiteSpaceIndex = mnemonic.firstIndex(of: c) {
+                mnemonic.replaceSubrange(mnemonic.startIndex ..< nonWhiteSpaceIndex, with: "")
+            }
+        }
+        
+        let finalCount = mnemonic.count
+        
+        return (mnemonic, selectedLocation - (initialCount - finalCount))
+    }
+    
+    func refresh(updateMnemonic: Bool = false) {
+        
+        let viewModel = makeViewModel(updateMnemonic: updateMnemonic)
+        view.update(with: viewModel)
+    }
+    
     func makeViewModel(
-        for mnemonic: String,
-        selectedLocation: Int
+        updateMnemonic: Bool
     ) -> MnemonicConfirmationViewModel {
         
         let prefixForPotentialwords = findPrefixForPotentialWords(
@@ -84,12 +131,15 @@ private extension DefaultMnemonicConfirmationPresenter {
             with: prefixForPotentialwords,
             at: selectedLocation
         )
-        let isMnemonicValid = service.isMnemonicValid(mnemonic)
+        let isMnemonicValid = service.isMnemonicValid(
+            mnemonic.trimmingCharacters(in: .whitespaces)
+        )
         
         return .init(
             potentialWords: potentialWords,
             wordsInfo: wordsInfo,
-            isValid: isMnemonicValid
+            isValid: ctaTapped ? isMnemonicValid : nil,
+            mnemonicToUpdate: updateMnemonic ? mnemonic : nil
         )
     }
     
@@ -134,25 +184,29 @@ private extension DefaultMnemonicConfirmationPresenter {
         var location = 0
         var wordUpdated = false
         
-        wordsInfo.forEach {
+        for (index, wordInfo) in wordsInfo.enumerated() {
             
-            location += $0.word.count
+            location += wordInfo.word.count
             
             if selectedLocation <= location, !wordUpdated {
                 
-                if $0.word == prefixForPotentialwords {
+                if wordInfo.word == prefixForPotentialwords {
+                    
+                    let isInvalid = index > 11
+                    ? wordInfo.isInvalid
+                    : !service.isValidPrefix(wordInfo.word)
                     
                     updatedWords.append(
                         .init(
-                            word: $0.word,
-                            isInvalid: !service.isValidPrefix($0.word)
+                            word: wordInfo.word,
+                            isInvalid: isInvalid
                         )
                     )
                 }
                 wordUpdated = true
             } else {
                 
-                updatedWords.append($0)
+                updatedWords.append(wordInfo)
             }
             
             location += 1

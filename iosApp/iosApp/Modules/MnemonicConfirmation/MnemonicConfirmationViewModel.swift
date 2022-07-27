@@ -6,7 +6,8 @@ struct MnemonicConfirmationViewModel {
     
     let potentialWords: [String]
     let wordsInfo: [WordInfo]
-    let isValid: Bool
+    let isValid: Bool?
+    let mnemonicToUpdate: String?
     
     struct WordInfo {
         
