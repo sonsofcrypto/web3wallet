@@ -25,7 +25,7 @@ final class CultProposalDetailTokenomicsView: UIView {
                 
         titleLabel.apply(style: .headline, weight: .bold)
         
-        separatorView.backgroundColor = Theme.colour.separatorNoTransparency
+        separatorView.backgroundColor = Theme.colour.separatorWithTransparency
         stackView.setCustomSpacing(Theme.constant.padding * 0.75, after: titleLabel)
         stackView.setCustomSpacing(Theme.constant.padding * 0.75, after: separatorView)
 

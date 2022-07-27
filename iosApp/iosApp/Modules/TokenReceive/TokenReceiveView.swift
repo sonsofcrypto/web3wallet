@@ -69,18 +69,15 @@ private extension TokenReceiveViewController {
             action: #selector(navBarLeftActionTapped)
         )
         
-        cardView.backgroundColor = Theme.colour.backgroundBasePrimary
+        cardView.backgroundColor = Theme.colour.cellBackground
         cardView.layer.cornerRadius = Theme.constant.cornerRadius
         
-        nameLabel.font = Theme.font.body
-        nameLabel.textColor = Theme.colour.labelPrimary
+        nameLabel.apply(style: .body)
         
-        addressLabel.font = Theme.font.body
-        addressLabel.textColor = Theme.colour.labelPrimary
+        addressLabel.apply(style: .body)
         addressLabel.textAlignment = .center
 
-        disclaimerLabel.font = Theme.font.body
-        disclaimerLabel.textColor = Theme.colour.labelPrimary
+        disclaimerLabel.apply(style: .body)
         
         copyButton.update(
             with: .init(

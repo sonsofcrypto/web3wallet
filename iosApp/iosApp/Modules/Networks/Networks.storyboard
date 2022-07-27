@@ -57,7 +57,7 @@
                                                                 <constraint firstAttribute="width" constant="30" id="xe3-ps-esX"/>
                                                             </constraints>
                                                         </view>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="mNK-7H-Arb">
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="mNK-7H-Arb">
                                                             <rect key="frame" x="46" y="0.0" width="265" height="101"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0Cv-dJ-6lZ">
@@ -95,17 +95,17 @@
                                                                     </constraints>
                                                                 </stackView>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qWd-03-bRn" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="35" width="265" height="0.5"/>
+                                                                    <rect key="frame" x="0.0" y="39" width="265" height="1"/>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="height" constant="0.5" id="JGT-Tq-Hi0"/>
+                                                                        <constraint firstAttribute="height" constant="1" id="JGT-Tq-Hi0"/>
                                                                     </constraints>
                                                                     <connections>
                                                                         <outlet property="heightConstraint" destination="JGT-Tq-Hi0" id="cu8-yu-M2n"/>
                                                                     </connections>
                                                                 </view>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="GXC-A4-ytl">
-                                                                    <rect key="frame" x="0.0" y="39.5" width="265" height="61.5"/>
+                                                                    <rect key="frame" x="0.0" y="48" width="265" height="53"/>
                                                                     <subviews>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="rCU-bv-kz8">
                                                                             <rect key="frame" x="0.0" y="0.0" width="265" height="20.5"/>
@@ -142,16 +142,16 @@
                                                                             </subviews>
                                                                         </stackView>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="da2-2M-87H">
-                                                                            <rect key="frame" x="0.0" y="49" width="265" height="12.5"/>
+                                                                            <rect key="frame" x="0.0" y="49" width="265" height="4"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8po-cq-n6E">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="41.5" height="12.5"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="41.5" height="4"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uJg-7T-RiJ">
-                                                                                    <rect key="frame" x="49.5" y="0.0" width="215.5" height="12.5"/>
+                                                                                    <rect key="frame" x="49.5" y="0.0" width="215.5" height="4"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>

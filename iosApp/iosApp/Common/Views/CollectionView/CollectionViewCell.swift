@@ -47,7 +47,7 @@ private extension CollectionViewCell {
                     anchor: .leadingAnchor,
                     constant: .equalTo(constant: Theme.constant.padding)
                 ),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 0.5)),
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 1)),
                 .layout(anchor: .bottomAnchor),
                 .layout(anchor: .trailingAnchor)
             ]

@@ -180,13 +180,13 @@ private extension TokenAddInputView {
                 )
             )
         )
-        view.backgroundColor = Theme.colour.backgroundBasePrimary
+        view.backgroundColor = Theme.colour.cellBackground
         
         let doneAction = UIButton(type: .custom)
-        doneAction.titleLabel?.font = Theme.font.body
+        doneAction.titleLabel?.font = Theme.font.bodyBold
         doneAction.titleLabel?.textAlignment = .right
         doneAction.setTitle(Localized("done"), for: .normal)
-        doneAction.setTitleColor(Theme.colour.navBarTint, for: .normal)
+        doneAction.setTitleColor(Theme.colour.labelPrimary, for: .normal)
         doneAction.addTarget(self, action: #selector(dismissKeyboard), for: .touchUpInside)
         view.addSubview(doneAction)
         doneAction.addConstraints(

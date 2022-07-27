@@ -35,6 +35,11 @@ final class TokenAddCollectionViewCell: UICollectionViewCell {
         tokenDetailsView.backgroundColor = Theme.colour.cellBackground
         tokenDetailsView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         
+        (tokenDetailsView.subviews.first as? UIStackView)?.arrangedSubviews.forEach {
+            
+            if $0.tag == 10 { $0.backgroundColor = Theme.colour.separatorWithTransparency }
+        }
+        
         saveButton.style = .primary
         saveButton.addTarget(self, action: #selector(addTokenTapped), for: .touchUpInside)
     }
