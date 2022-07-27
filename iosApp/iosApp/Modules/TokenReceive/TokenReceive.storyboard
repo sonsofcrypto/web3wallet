@@ -3,7 +3,6 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -66,7 +65,7 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WI4-Zv-sCN">
                                                 <rect key="frame" x="0.0" y="502.5" width="331" height="72"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="36" translatesAutoresizingMaskIntoConstraints="NO" id="8wg-2O-LVj">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="8wg-2O-LVj">
                                                         <rect key="frame" x="9.5" y="0.0" width="312" height="72"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5a8-s7-CHy" customClass="TokenReceiveActionButton" customModule="iosApp" customModuleProvider="target">
@@ -92,7 +91,8 @@
                                                                     <constraint firstItem="fWZ-66-za8" firstAttribute="leading" secondItem="5a8-s7-CHy" secondAttribute="leading" constant="8" id="Aua-Bf-Rgl"/>
                                                                     <constraint firstItem="cfW-6R-9nB" firstAttribute="centerX" secondItem="5a8-s7-CHy" secondAttribute="centerX" id="Bgi-I0-CgG"/>
                                                                     <constraint firstAttribute="trailing" secondItem="fWZ-66-za8" secondAttribute="trailing" constant="8" id="ZRY-bD-Mkv"/>
-                                                                    <constraint firstItem="cfW-6R-9nB" firstAttribute="top" secondItem="5a8-s7-CHy" secondAttribute="top" constant="8" id="ice-bN-sWA"/>
+                                                                    <constraint firstItem="cfW-6R-9nB" firstAttribute="top" secondItem="5a8-s7-CHy" secondAttribute="top" constant="12" id="ice-bN-sWA"/>
+                                                                    <constraint firstAttribute="width" constant="72" id="vS8-CE-cis"/>
                                                                 </constraints>
                                                                 <connections>
                                                                     <outlet property="iconImageView" destination="cfW-6R-9nB" id="Yj2-k8-j5c"/>
@@ -119,7 +119,8 @@
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="trailing" secondItem="ocM-mk-vVE" secondAttribute="trailing" constant="8" id="0VM-NA-4UO"/>
-                                                                    <constraint firstItem="FVd-66-SUx" firstAttribute="top" secondItem="e3L-zP-54K" secondAttribute="top" constant="8" id="b1M-c7-VbA"/>
+                                                                    <constraint firstItem="FVd-66-SUx" firstAttribute="top" secondItem="e3L-zP-54K" secondAttribute="top" constant="12" id="b1M-c7-VbA"/>
+                                                                    <constraint firstAttribute="width" constant="72" id="cxO-yW-pdr"/>
                                                                     <constraint firstItem="ocM-mk-vVE" firstAttribute="leading" secondItem="e3L-zP-54K" secondAttribute="leading" constant="8" id="iUg-Mq-Vg8"/>
                                                                     <constraint firstItem="FVd-66-SUx" firstAttribute="centerX" secondItem="e3L-zP-54K" secondAttribute="centerX" id="oBT-FG-ZuW"/>
                                                                     <constraint firstAttribute="bottom" secondItem="ocM-mk-vVE" secondAttribute="bottom" constant="8" id="yVc-9w-jG5"/>
@@ -127,37 +128,6 @@
                                                                 <connections>
                                                                     <outlet property="iconImageView" destination="FVd-66-SUx" id="t9e-gH-pI5"/>
                                                                     <outlet property="nameLabel" destination="ocM-mk-vVE" id="LuN-io-7Tf"/>
-                                                                </connections>
-                                                            </view>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EHa-JP-XO2" customClass="TokenReceiveActionButton" customModule="iosApp" customModuleProvider="target">
-                                                                <rect key="frame" x="232" y="0.0" width="80" height="72"/>
-                                                                <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus_icon" translatesAutoresizingMaskIntoConstraints="NO" id="283-7F-yhm">
-                                                                        <rect key="frame" x="28" y="8" width="24" height="24"/>
-                                                                        <color key="tintColor" name="tintSecondary"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="24" id="Gd0-qb-0Zs"/>
-                                                                            <constraint firstAttribute="height" constant="24" id="Tzw-7A-Hft"/>
-                                                                        </constraints>
-                                                                    </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zO-BX-ZhK">
-                                                                        <rect key="frame" x="8" y="43.5" width="64" height="20.5"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                </subviews>
-                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="trailing" secondItem="4zO-BX-ZhK" secondAttribute="trailing" constant="8" id="Apf-Cz-zmr"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="4zO-BX-ZhK" secondAttribute="bottom" constant="8" id="VdY-qT-7B8"/>
-                                                                    <constraint firstItem="283-7F-yhm" firstAttribute="centerX" secondItem="EHa-JP-XO2" secondAttribute="centerX" id="Z6M-Rd-ocD"/>
-                                                                    <constraint firstItem="283-7F-yhm" firstAttribute="top" secondItem="EHa-JP-XO2" secondAttribute="top" constant="8" id="i59-nL-h84"/>
-                                                                    <constraint firstItem="4zO-BX-ZhK" firstAttribute="leading" secondItem="EHa-JP-XO2" secondAttribute="leading" constant="8" id="iPP-7w-aka"/>
-                                                                </constraints>
-                                                                <connections>
-                                                                    <outlet property="iconImageView" destination="283-7F-yhm" id="hVM-Kk-HCa"/>
-                                                                    <outlet property="nameLabel" destination="4zO-BX-ZhK" id="keK-YE-wtr"/>
                                                                 </connections>
                                                             </view>
                                                         </subviews>
@@ -198,7 +168,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="addButton" destination="EHa-JP-XO2" id="q6d-90-TJM"/>
                         <outlet property="addressLabel" destination="PXR-kb-IY5" id="sFe-gO-vjZ"/>
                         <outlet property="cardView" destination="aVI-ho-kAy" id="GOJ-px-KYd"/>
                         <outlet property="copyButton" destination="5a8-s7-CHy" id="fQu-bB-4LZ"/>
@@ -214,10 +183,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="plus_icon" width="512" height="512"/>
-        <namedColor name="tintSecondary">
-            <color red="0.51399999856948853" green="0.80800002813339233" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

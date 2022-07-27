@@ -21,7 +21,6 @@ final class TokenReceiveViewController: BaseViewController {
     
     @IBOutlet weak var copyButton: TokenReceiveActionButton!
     @IBOutlet weak var shareButton: TokenReceiveActionButton!
-    @IBOutlet weak var addButton: TokenReceiveActionButton!
 
     private var viewModel: TokenReceiveViewModel?
     private lazy var filter = CIFilter(name: "CIQRCodeGenerator")
@@ -82,6 +81,8 @@ private extension TokenReceiveViewController {
         disclaimerLabel.font = Theme.font.body
         disclaimerLabel.textColor = Theme.colour.labelPrimary
         
+        copyButton.backgroundColor = Theme.colour.cellBackground
+        copyButton.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         copyButton.update(
             with: Localized("tokenReceive.action.copy"),
             and: UIImage(systemName: "square.on.square"),
@@ -89,24 +90,14 @@ private extension TokenReceiveViewController {
         )
         copyButton.tintColor = Theme.colour.labelPrimary
 
+        shareButton.backgroundColor = Theme.colour.cellBackground
+        shareButton.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         shareButton.update(
             with: Localized("tokenReceive.action.share"),
             and: UIImage(systemName: "square.and.arrow.up"),
             onTap: makeShareAction()
         )
         shareButton.tintColor = Theme.colour.labelPrimary
-        
-        let image = UIImage(systemName: "plus")!
-        let config = UIImage.SymbolConfiguration(
-            paletteColors: [
-                Theme.colour.labelPrimary
-            ]
-        )
-        addButton.update(
-            with: Localized("tokenReceive.action.add"),
-            and: image.applyingSymbolConfiguration(config),
-            onTap: makeAddAction()
-        )
     }
     
     @objc func navBarLeftActionTapped() {
@@ -147,25 +138,6 @@ private extension TokenReceiveViewController {
                 ],
                 presentingIn: self
             )
-        }
-    }
-    
-    func makeAddAction() -> (() -> Void) {
-        
-        {
-            [weak self] in
-            guard let self = self else { return }
-            self.presenter.handle(.addCoins(onCompletion: self.makeCoinsAddedToast()))
-        }
-    }
-    
-    func makeCoinsAddedToast() -> (Double) -> () {
-        
-        {
-            [weak self] coins in
-            guard let self = self else { return }
-            let arg = coins.toString(decimals: 2)
-            self.view.presentToastAlert(with: Localized("tokenReceive.action.add.toast", arg: arg))
         }
     }
 }
