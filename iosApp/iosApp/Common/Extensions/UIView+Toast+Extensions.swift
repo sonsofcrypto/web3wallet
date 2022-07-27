@@ -4,12 +4,26 @@
 
 extension UIView {
     
+    private static let toastViewTag = 4323425234
+    
+    var isToastFailurePresented: Bool {
+        
+        subviews.first { $0.tag == Self.toastViewTag } != nil
+    }
+    
     func presentToastAlert(
         with message: String,
+        textAlignment: NSTextAlignment = .center,
+        duration: TimeInterval = 1.0,
         bottomOffset: CGFloat = 48
     ) {
+        subviews.forEach {
+            
+            if $0.tag == Self.toastViewTag { $0.removeFromSuperview() }
+        }
         
         let toastView = UIView()
+        toastView.tag = Self.toastViewTag
         toastView.alpha = 0.0
 
         let backgroundView = UIView()
@@ -20,30 +34,60 @@ extension UIView {
             [
                 .layout(anchor: .centerXAnchor),
                 .layout(anchor: .topAnchor),
-                .layout(anchor: .bottomAnchor)
+                .layout(anchor: .bottomAnchor),
+                .layout(
+                    anchor: .leadingAnchor,
+                    constant: .greaterThanOrEqualTo(
+                        constant: Theme.constant.padding
+                    ),
+                    priority: .defaultHigh
+                ),
+                .layout(
+                    anchor: .trailingAnchor,
+                    constant: .greaterThanOrEqualTo(constant: Theme.constant.padding),
+                    priority: .defaultHigh
+                )
             ]
         )
 
         let label = UILabel()
-        label.font = Theme.font.body
+        label.apply(style: .subheadline)
         label.textColor = Theme.colour.labelPrimary
+        label.textAlignment = textAlignment
         label.numberOfLines = 0
         label.text = message
         backgroundView.addSubview(label)
         label.addConstraints(
             [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 16)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 16)),
-                .layout(anchor: .topAnchor, constant: .equalTo(constant: 12)),
-                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: 12))
+                .layout(
+                    anchor: .leadingAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding)
+                ),
+                .layout(
+                    anchor: .trailingAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding)
+                ),
+                .layout(
+                    anchor: .topAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding * 0.75)),
+                .layout(
+                    anchor: .bottomAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding * 0.75)
+                )
             ]
         )
             
         addSubview(toastView)
         toastView.addConstraints(
             [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 16)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 16)),
+                .layout(
+                    anchor: .leadingAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding)
+                ),
+                .layout(
+                    anchor: .trailingAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding)
+                ),
                 .layout(anchor: .bottomAnchor, constant: .equalTo(constant: bottomOffset))
             ]
         )
@@ -55,7 +99,7 @@ extension UIView {
             },
             completion: { _ in
                 
-                toastView.animateOut()
+                toastView.animateOut(with: duration)
             }
         )
     }
@@ -63,11 +107,11 @@ extension UIView {
 
 private extension UIView {
     
-    func animateOut() {
+    func animateOut(with duration: TimeInterval) {
         
         UIView.animate(
             withDuration: 0.3,
-            delay: 1.0,
+            delay: duration,
             options: .curveEaseInOut,
             animations: { [weak self] in
                 guard let self = self else { return }

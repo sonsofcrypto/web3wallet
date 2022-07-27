@@ -6,7 +6,7 @@ import Foundation
 
 protocol QRCodeScanInteractor: AnyObject {
 
-    func isValid(address: String, for network: Web3Network) -> Bool
+    func validateAddress(address: String, for network: Web3Network) -> String?
 }
 
 final class DefaultQRCodeScanInteractor {
@@ -23,9 +23,21 @@ final class DefaultQRCodeScanInteractor {
 
 extension DefaultQRCodeScanInteractor: QRCodeScanInteractor {
     
-    func isValid(address: String, for network: Web3Network) -> Bool {
+    func validateAddress(address: String, for network: Web3Network) -> String? {
         
-        web3Service.isValid(address: address, forNetwork: network)
+        // TODO: @Annon check this is ok. When scanning metamask we get back:
+        // eg: "ethereum:0x887jui787dFF1500232E9E2De16d599329C6e65b"
+        let address = address.replacingOccurrences(
+            of: "\(network.name.lowercased()):",
+            with: ""
+        )
+        
+        guard web3Service.isValid(address: address, forNetwork: network) else {
+            
+            return nil
+        }
+        
+        return address
     }
 
 }

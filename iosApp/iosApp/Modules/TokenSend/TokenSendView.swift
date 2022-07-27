@@ -274,7 +274,7 @@ private extension TokenSendViewController {
 
 private extension TokenSendViewController {
     
-    func makeTokenSendTokenHandler() -> TokenSendToCollectionViewCell.Handler {
+    func makeTokenSendTokenHandler() -> TokenEnterAddressView.Handler {
         
         .init(
             onAddressChanged: makeOnAddressChanged(),
