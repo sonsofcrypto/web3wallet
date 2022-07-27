@@ -4,7 +4,7 @@
 
 import UIKit
 
-class SegmentedControl: UISegmentedControl {
+final class SegmentedControl: UISegmentedControl {
     
     convenience init() {
         
@@ -28,6 +28,13 @@ class SegmentedControl: UISegmentedControl {
     required init?(coder: NSCoder) {
         
         super.init(coder: coder)
+        
+        configureUI()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        
+        super.traitCollectionDidChange(previousTraitCollection)
         
         configureUI()
     }
