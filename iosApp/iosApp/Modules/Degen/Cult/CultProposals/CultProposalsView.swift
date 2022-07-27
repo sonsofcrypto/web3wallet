@@ -19,7 +19,6 @@ final class CultProposalsViewController: BaseViewController {
     var presenter: CultProposalsPresenter!
 
     private var viewModel: CultProposalsViewModel!
-    private var horizontalScrollingForPendingEnabled = false
 
     override func viewDidLoad() {
         
@@ -270,26 +269,13 @@ private extension CultProposalsViewController {
     
     func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
         
-        UICollectionViewCompositionalLayout {
-            
-            [weak self] sectionIndex, _ in
-            
-            guard let self = self else { return nil }
-            
-            let section = self.viewModel.sections[sectionIndex]
-            
-            return self.makeCollectionLayoutSection(
-                isHorizontalScrolling: section.type == .pending
-            )
-        }
+        UICollectionViewCompositionalLayout(
+            section: makeCollectionLayoutSection()
+        )
     }
   
-    func makeCollectionLayoutSection(
-        isHorizontalScrolling: Bool
-    ) -> NSCollectionLayoutSection {
+    func makeCollectionLayoutSection() -> NSCollectionLayoutSection {
         
-        let padding = Theme.constant.padding
-
         // Item
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
@@ -298,19 +284,11 @@ private extension CultProposalsViewController {
         let item = NSCollectionLayoutItem(
             layoutSize: itemSize
         )
-        item.contentInsets = .init(
-            top: padding.half,
-            leading: isHorizontalScrolling ? 0 : padding.half,
-            bottom: padding.half,
-            trailing: isHorizontalScrolling ? 0 : padding.half
-        )
         
         // Group
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(
-                isHorizontalScrolling ?
-                view.frame.size.width - Theme.constant.padding * 2 :
-                view.frame.size.width - Theme.constant.padding
+                view.frame.size.width - Theme.constant.padding * 2
             ),
             heightDimension: .estimated(100)
         )
@@ -318,25 +296,10 @@ private extension CultProposalsViewController {
             layoutSize: groupSize, subitems: [item]
         )
 
-        //outerGroup.contentInsets = .paddingHalf
-                
         // Section
         let section = NSCollectionLayoutSection(group: outerGroup)
-        section.contentInsets = isHorizontalScrolling ?
-            .init(
-                top: Theme.constant.padding,
-                leading: Theme.constant.padding,
-                bottom: 0,
-                trailing: Theme.constant.padding
-            ) :
-            .paddingHalf
-        section.interGroupSpacing = isHorizontalScrolling && horizontalScrollingForPendingEnabled ?
-        Theme.constant.padding.half :
-        Theme.constant.padding
-        
-        if isHorizontalScrolling && horizontalScrollingForPendingEnabled {
-            section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-        }
+        section.contentInsets = .paddingDefault
+        section.interGroupSpacing = Theme.constant.padding
         
         let headerItemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),

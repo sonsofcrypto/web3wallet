@@ -7,9 +7,6 @@ import UIKit
 final class CultProposalHeaderSupplementaryView: UICollectionReusableView {
     
     private weak var label: UILabel!
-    private weak var layoutConstraintLeading: NSLayoutConstraint!
-    private weak var layoutConstraintTop: NSLayoutConstraint!
-    private weak var layoutConstraintBottom: NSLayoutConstraint!
     
     override init(frame: CGRect) {
         
@@ -31,24 +28,20 @@ final class CultProposalHeaderSupplementaryView: UICollectionReusableView {
         label.addConstraints(
             [
                 .layout(
+                    anchor: .topAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding)
+                ),
+                .layout(
+                    anchor: .leadingAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding)
+                ),
+                .layout(
                     anchor: .trailingAnchor,
                     constant: .equalTo(constant: Theme.constant.padding)
-                )
+                ),
+                .layout(anchor: .bottomAnchor)
             ]
         )
-        layoutConstraintTop = label.topAnchor.constraint(
-            equalTo: topAnchor
-        )
-        layoutConstraintTop.isActive = true
-        layoutConstraintBottom = bottomAnchor.constraint(
-            equalTo: label.bottomAnchor
-        )
-        layoutConstraintBottom.isActive = true
-        layoutConstraintLeading = label.leadingAnchor.constraint(
-            equalTo: leadingAnchor,
-            constant: Theme.constant.padding
-        )
-        layoutConstraintLeading.isActive = true
     }
 }
 
@@ -57,17 +50,5 @@ extension CultProposalHeaderSupplementaryView {
     func update(with viewModel: CultProposalsViewModel.Section) {
         
         label.text = viewModel.title
-        
-        layoutConstraintLeading.constant = viewModel.type == .pending ?
-        Theme.constant.padding :
-        Theme.constant.padding + Theme.constant.padding.half
-        
-        layoutConstraintTop.constant = viewModel.type == .pending ?
-        Theme.constant.padding.half :
-        Theme.constant.padding
-
-        layoutConstraintBottom.constant = viewModel.type == .pending ?
-        0 :
-        Theme.constant.padding.half
     }
 }
