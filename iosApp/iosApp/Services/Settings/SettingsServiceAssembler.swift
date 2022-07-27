@@ -16,9 +16,13 @@ final class SettingsServiceAssembler: AssemblerComponent {
                 
                 service.didSelect(item: .theme, action: .themeMiami, fireAction: false)
             }
-            if !service.isInitialized(item: .providersNFTs) {
+            if !service.isInitialized(item: .debugAPIsNFTs) {
                 
-                service.didSelect(item: .providersNFTs, action: .providersNFTsMock, fireAction: false)
+                service.didSelect(
+                    item: .debugAPIsNFTs,
+                    action: .debugAPIsNFTsMock,
+                    fireAction: false
+                )
             }
             return service
         }

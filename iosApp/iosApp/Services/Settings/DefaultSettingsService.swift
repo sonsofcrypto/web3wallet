@@ -74,31 +74,40 @@ extension DefaultSettingsService: SettingsService {
                 )
             ]
             
-        case .providers:
+        case .debug:
             
             return [
                 .init(
-                    title: Localized("settings.providers.nfts"),
-                    type: .item(.providersNFTs)
+                    title: Localized("settings.debug.apis"),
+                    type: .item(.debugAPIs)
+                )
+            ]
+
+        case .debugAPIs:
+            
+            return [
+                .init(
+                    title: Localized("settings.debug.apis.nfts"),
+                    type: .item(.debugAPIsNFTs)
                 )
             ]
             
-        case .providersNFTs:
+        case .debugAPIsNFTs:
             
             return [
                 .init(
-                    title: Localized("settings.providers.nfts.openSea"),
+                    title: Localized("settings.debug.apis.nfts.openSea"),
                     type: .action(
-                        item: .providersNFTs,
-                        action: .providersNFTsOpenSea,
+                        item: .debugAPIsNFTs,
+                        action: .debugAPIsNFTsOpenSea,
                         showTickOnSelected: true
                     )
                 ),
                 .init(
-                    title: Localized("settings.providers.nfts.mock"),
+                    title: Localized("settings.debug.apis.nfts.mock"),
                     type: .action(
-                        item: .providersNFTs,
-                        action: .providersNFTsMock,
+                        item: .debugAPIsNFTs,
+                        action: .debugAPIsNFTsMock,
                         showTickOnSelected: true
                     )
                 )
@@ -131,7 +140,7 @@ private extension DefaultSettingsService {
         
         switch action {
             
-        case .providersNFTsOpenSea, .providersNFTsMock:
+        case .debugAPIsNFTsOpenSea, .debugAPIsNFTsMock:
             ServiceDirectory.rebootApp()
             
         case .themeIOS, .themeMiami:
