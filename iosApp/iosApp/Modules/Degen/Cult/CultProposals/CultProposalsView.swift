@@ -37,6 +37,8 @@ extension CultProposalsViewController: CultProposalsView {
         
         self.viewModel = viewModel
                 
+        setTitle()
+
         switch viewModel {
             
         case .loading:
@@ -44,7 +46,6 @@ extension CultProposalsViewController: CultProposalsView {
             
         case .loaded:
             hideLoading()
-            setTitle()
             collectionView.reloadData()
             refreshControl.endRefreshing()
 
@@ -151,6 +152,20 @@ private extension CultProposalsViewController {
     
     func setTitle() {
         
+        switch viewModel {
+            
+        case .loading, .error, .none:
+            
+            setDefaultTitle()
+
+        case .loaded:
+            
+            setSegmentedTitle()
+        }
+    }
+    
+    func setDefaultTitle() {
+        
         let cultIcon = viewModel.titleIcon.pngImage!.resize(to: .init(width: 32, height: 32))
         let imageView = UIImageView(image: cultIcon)
         let titleLabel = UILabel()
@@ -161,6 +176,45 @@ private extension CultProposalsViewController {
         stackView.spacing = 4
         
         navigationItem.titleView = stackView
+    }
+    
+    func setSegmentedTitle() {
+        
+        let segmentControl = SegmentedControl()
+        segmentControl.insertSegment(
+            withTitle: Localized("cult.proposals.segmentedControl.pending"),
+            at: 0,
+            animated: false
+        )
+        segmentControl.insertSegment(
+            withTitle: Localized("cult.proposals.segmentedControl.closed"),
+            at: 1,
+            animated: false
+        )
+        
+        switch viewModel.selectedSectionType {
+            
+        case .pending:
+            segmentControl.selectedSegmentIndex = 0
+        case .closed:
+            segmentControl.selectedSegmentIndex = 1
+        }
+        
+        segmentControl.addTarget(
+            self,
+            action: #selector(segmentControlChanged(_:)),
+            for: .valueChanged
+        )
+        navigationItem.titleView = segmentControl
+    }
+    
+    @objc func segmentControlChanged(_ sender: SegmentedControl) {
+        
+        presenter.handle(
+            .filterBySection(
+                sectionType: sender.selectedSegmentIndex == 0 ? .pending : .closed
+            )
+        )
     }
     
     func configureUI() {

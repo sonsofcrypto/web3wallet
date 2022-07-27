@@ -250,6 +250,8 @@
 "confirmation.send.confirm" = "Authenticate & Send";
 
 "cult.proposals.title" = "Cult.DAO Proposals";
+"cult.proposals.segmentedControl.pending" = "Pending";
+"cult.proposals.segmentedControl.closed" = "Closed";
 "cult.proposals.pending.processing" = "Processing";
 "cult.proposals.closed.totalVotes" = "Total Votes: %@";
 "cult.proposals.result" = "Result: %@";

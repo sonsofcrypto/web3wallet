@@ -6,6 +6,7 @@ import Foundation
 
 enum CultProposalsPresenterEvent {
     
+    case filterBySection(sectionType: CultProposalsViewModel.Section.`Type`)
     case filterBy(text: String)
     case approveProposal(id: String)
     case rejectProposal(id: String)
@@ -28,6 +29,7 @@ final class DefaultCultProposalsPresenter {
     private var pendingProposals = [CultProposal]()
     private var closedProposals = [CultProposal]()
     
+    private var filterSectionType: CultProposalsViewModel.Section.`Type` = .pending
     private var filterText: String = ""
 
     init(
@@ -78,6 +80,11 @@ extension DefaultCultProposalsPresenter: CultProposalsPresenter {
         
         switch event {
             
+        case let .filterBySection(sectionType):
+            
+            self.filterSectionType = sectionType
+            updateView()
+            
         case let .filterBy(text):
             
             self.filterText = text
@@ -87,10 +94,12 @@ extension DefaultCultProposalsPresenter: CultProposalsPresenter {
             
             guard let proposal = findProposal(with: id) else { return }
             
+            let proposals = filterSectionType == .pending ? pendingProposals : closedProposals
+            
             wireframe.navigate(
                 to: .proposal(
                     proposal: proposal,
-                    proposals: pendingProposals + closedProposals
+                    proposals: proposals
                 )
             )
             
@@ -143,19 +152,28 @@ private extension DefaultCultProposalsPresenter {
             return $0.title.contains(self.filterText)
         }.sorted { $0.endDate > $1.endDate }
         
+        let pendingSection: CultProposalsViewModel.Section = .init(
+            title: Localized("pending") + " (\(pendingProposals.count))",
+            type: .pending,
+            items: pendingProposals.compactMap { viewModel(from: $0) }
+        )
+        let closedSection: CultProposalsViewModel.Section = .init(
+            title: Localized("closed") + " (\(closedProposals.count))",
+            type: .closed,
+            items: closedProposals.compactMap { viewModel(from: $0) }
+        )
+        
+        let section: CultProposalsViewModel.Section
+        switch filterSectionType {
+        case .pending:
+            section = pendingSection
+        case .closed:
+            section = closedSection
+        }
+        
         return .loaded(
-            sections: [
-                .init(
-                    title: Localized("pending") + " (\(pendingProposals.count))",
-                    type: .pending,
-                    items: pendingProposals.compactMap { viewModel(from: $0) }
-                ),
-                .init(
-                    title: Localized("closed") + " (\(closedProposals.count))",
-                    type: .closed,
-                    items: closedProposals.compactMap { viewModel(from: $0) }
-                )
-            ]
+            sections: [section],
+            selectedSectionType: filterSectionType
         )
     }
 

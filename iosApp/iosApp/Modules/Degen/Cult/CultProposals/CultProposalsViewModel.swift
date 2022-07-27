@@ -7,7 +7,7 @@ import UIKit
 
 enum CultProposalsViewModel {
     case loading
-    case loaded(sections: [Section])
+    case loaded(sections: [Section], selectedSectionType: Section.`Type`)
     case error(error: AppsViewModel.Error)
 }
 
@@ -75,10 +75,20 @@ extension CultProposalsViewModel {
     var sections: [CultProposalsViewModel.Section] {
         
         switch self {
-        case let .loaded(sections):
+        case let .loaded(sections, _):
             return sections
         default:
             return []
+        }
+    }
+    
+    var selectedSectionType: CultProposalsViewModel.Section.`Type` {
+        
+        switch self {
+        case let .loaded(_, type):
+            return type
+        default:
+            return .pending
         }
     }
 }

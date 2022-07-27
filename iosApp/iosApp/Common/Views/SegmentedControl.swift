@@ -6,6 +6,18 @@ import UIKit
 
 class SegmentedControl: UISegmentedControl {
     
+    convenience init() {
+        
+        let windowWidth = SceneDelegateHelper().window?.frame.width ?? 0
+        
+        let frame: CGRect = .init(
+            origin: .zero,
+            size: .init(width: windowWidth * 0.6, height: 32)
+        )
+
+        self.init(frame: frame)
+    }
+    
     override init(frame: CGRect) {
         
         super.init(frame: frame)

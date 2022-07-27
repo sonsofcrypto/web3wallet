@@ -150,7 +150,7 @@ extension DefaultWeb3Service: Web3Service {
     
     var currentEthBlock: String {
         
-        return "15211116"
+        return "15223502"
     }
 
     var dashboardNotifications: [Web3Notification] {

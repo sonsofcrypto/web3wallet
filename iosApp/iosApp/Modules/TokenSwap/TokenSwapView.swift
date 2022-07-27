@@ -202,12 +202,7 @@ private extension TokenSwapViewController {
     
     func makeSegmentedControl() -> SegmentedControl {
         
-        let segmentControl = SegmentedControl(
-            frame: .init(
-                origin: .zero,
-                size: .init(width: view.frame.size.width * 0.6, height: 32)
-            )
-        )
+        let segmentControl = SegmentedControl()
         segmentControl.insertSegment(
             withTitle: Localized("tokenSwap.segment.swap"),
             at: 0,
@@ -220,13 +215,9 @@ private extension TokenSwapViewController {
         )
         segmentControl.selectedSegmentIndex = 0
         segmentControl.addTarget(self, action: #selector(segmentControlChanged(_:)), for: .valueChanged)
-//        segmentControl.addConstraints(
-//            [
-//                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 150)),
-//                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 32))
-//            ]
-//        )
+
         self.segmentControl = segmentControl
+        
         return segmentControl
     }
 }
