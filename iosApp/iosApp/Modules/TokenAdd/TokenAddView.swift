@@ -7,6 +7,7 @@ import UIKit
 protocol TokenAddView: AnyObject {
 
     func update(with viewModel: TokenAddViewModel)
+    func dismissKeyboard()
 }
 
 final class TokenAddViewController: BaseViewController {
@@ -39,12 +40,18 @@ extension TokenAddViewController: TokenAddView {
          
             visibleCell.update(
                 with: viewModel,
+                handler: makeTokenAddCollectionViewCellHandler(),
                 and: collectionView.frame.size.width
             )
             collectionView.collectionViewLayout.invalidateLayout()
         } else {
             collectionView.reloadData()
         }
+    }
+    
+    func dismissKeyboard() {
+        
+        collectionView.visibleCells.forEach { $0.resignFirstResponder() }
     }
 }
 
@@ -59,13 +66,6 @@ extension TokenAddViewController {
            style: .plain,
            target: self,
            action: #selector(navBarLeftActionTapped)
-       )
-       
-       navigationItem.rightBarButtonItem = UIBarButtonItem(
-           title: Localized("save"),
-           style: .plain,
-           target: self,
-           action: #selector(addTokenTapped)
        )
    }
     
@@ -87,14 +87,6 @@ extension TokenAddViewController {
         presenter.handle(.dismiss)
     }
     
-    @objc func addTokenTapped() {
-        
-        if let visibleCell = collectionView.visibleCells.first as? TokenAddCollectionViewCell {
-            
-            visibleCell.resignFirstResponder()
-        }
-        presenter.handle(.addToken)
-    }
 }
 
 extension TokenAddViewController: UICollectionViewDataSource {
@@ -122,6 +114,7 @@ extension TokenAddViewController: UICollectionViewDataSource {
         )
         cell.update(
             with: viewModel,
+            handler: makeTokenAddCollectionViewCellHandler(),
             and: collectionView.frame.size.width
         )
         return cell
@@ -137,5 +130,67 @@ extension TokenAddViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
                 
         .init(width: collectionView.frame.width, height: 56)
+    }
+}
+
+private extension TokenAddViewController {
+    
+    func makeTokenAddCollectionViewCellHandler() -> TokenAddCollectionViewCell.Handler {
+        
+        .init(
+            addressHandler: makeAddressHandler(),
+            addTokenHandler: makeAddTokenHandler()
+        )
+    }
+    
+    func makeAddressHandler() -> TokenEnterAddressView.Handler {
+        
+        .init(
+            onAddressChanged: makeOnAddressChanged(),
+            onQRCodeScanTapped: makeOnQRCodeScanTapped(),
+            onPasteTapped: makeOnPasteTapped(),
+            onSaveTapped: makeOnSaveTapped()
+        )
+    }
+    
+    func makeOnAddressChanged() -> (String) -> Void {
+        
+        {
+            [weak self] value in
+            guard let self = self else { return }
+            self.presenter.handle(.addressChanged(to: value))
+        }
+    }
+    
+    func makeOnQRCodeScanTapped() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.qrCodeScan)
+        }
+    }
+    
+    func makeOnPasteTapped() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.pasteAddress)
+        }
+    }
+    
+    func makeOnSaveTapped() -> () -> Void {
+        
+        {}
+    }
+    
+    func makeAddTokenHandler() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.addToken)
+        }
     }
 }

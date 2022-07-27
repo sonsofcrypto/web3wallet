@@ -16,10 +16,11 @@ struct TokenAddViewModel {
     
     let title: String
     let network: NetworkItem
-    let contractAddress: TextFieldItem
+    let address: TokenEnterAddressViewModel
     let name: TextFieldItem
     let symbol: TextFieldItem
     let decimals: TextFieldItem
+    let saveButtonTitle: String
     
     struct Item {
         
@@ -41,7 +42,6 @@ struct TokenAddViewModel {
         let tag: Int
         let onTextChanged: (TextFieldType, String) -> Void
         let onReturnTapped: (TextFieldType) -> Void
-        let onScanAction: ((TextFieldType) -> Void)?
         let isFirstResponder: Bool
     }
 }

@@ -11,7 +11,6 @@ final class TokenAddInputView: UIView {
     private var hintLabel: UILabel!
     private var actionsView: UIView!
     private var pasteAction: UIButton!
-    private var scanAction: UIButton!
     
     private var viewModel: TokenAddViewModel.TextFieldItem!
     
@@ -26,8 +25,7 @@ final class TokenAddInputView: UIView {
         with viewModel: TokenAddViewModel.TextFieldItem,
         keyboardType: UIKeyboardType = .default,
         returnType: UIReturnKeyType = .next,
-        autocapitalizationType: UITextAutocapitalizationType = .none,
-        showScanAction: Bool = false
+        autocapitalizationType: UITextAutocapitalizationType = .none
     ) {
         
         self.viewModel = viewModel
@@ -55,8 +53,6 @@ final class TokenAddInputView: UIView {
             
             hintLabel.isHidden = true
         }
-        
-        scanAction.isHidden = viewModel.onScanAction == nil
     }
     
     @discardableResult
@@ -78,7 +74,7 @@ private extension TokenAddInputView {
         
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.spacing = 16
+        stackView.spacing = Theme.constant.padding.half
         stackView.addArrangedSubview(inputStack)
         stackView.addArrangedSubview(actionsView)
         
@@ -101,11 +97,11 @@ private extension TokenAddInputView {
                 
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 8
+        stackView.spacing = Theme.constant.padding.half.half
         
         let nameLabel = UILabel()
         nameLabel.font =  Theme.font.footnote
-        nameLabel.textColor = Theme.colour.labelPrimary
+        nameLabel.textColor = Theme.colour.labelSecondary
         stackView.addArrangedSubview(nameLabel)
         self.nameLabel = nameLabel
 
@@ -122,7 +118,7 @@ private extension TokenAddInputView {
 
         let hintLabel = UILabel()
         hintLabel.font = Theme.font.caption1
-        hintLabel.textColor = Theme.colour.labelPrimary
+        hintLabel.textColor = Theme.colour.navBarTint
         hintLabel.isHidden = true
         stackView.addArrangedSubview(hintLabel)
         self.hintLabel = hintLabel
@@ -137,31 +133,19 @@ private extension TokenAddInputView {
         stackView.spacing = 16
         
         let pasteAction = UIButton(type: .custom)
-        pasteAction.setImage(.init(systemName: "doc.on.clipboard"), for: .normal)
-        pasteAction.tintColor = Theme.colour.labelPrimary
+        pasteAction.setTitle(Localized("paste"), for: .normal)
+        pasteAction.titleLabel?.font = Theme.font.subheadlineBold
+        pasteAction.setTitleColor(Theme.colour.labelPrimary, for: .normal)
         pasteAction.addTarget(self, action: #selector(pasteActionTapped), for: .touchUpInside)
         pasteAction.addConstraints(
             [
-                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
+                .hugging(layoutAxis: .horizontal, priority: .required),
+                .compression(layoutAxis: .horizontal, priority: .required)
             ]
         )
         stackView.addArrangedSubview(pasteAction)
         self.pasteAction = pasteAction
         
-        let scanAction = UIButton(type: .custom)
-        scanAction.setImage(.init(systemName: "qrcode.viewfinder"), for: .normal)
-        scanAction.tintColor = Theme.colour.labelPrimary
-        scanAction.addTarget(self, action: #selector(scanActionTapped), for: .touchUpInside)
-        scanAction.addConstraints(
-            [
-                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
-            ]
-        )
-        stackView.addArrangedSubview(scanAction)
-        self.scanAction = scanAction
-
         let view = UIView()
         view.backgroundColor = .clear
         view.addSubview(stackView)
@@ -185,12 +169,6 @@ private extension TokenAddInputView {
         viewModel.onTextChanged(textFieldType, textField.text ?? "")
     }
     
-    @objc func scanActionTapped() {
-        
-        guard let textFieldType = TokenAddViewModel.TextFieldType(rawValue: textField.tag) else { return }
-        viewModel.onScanAction?(textFieldType)
-    }
-    
     func makeInputAccessoryView() -> UIView {
         
         let view = UIView(
@@ -208,7 +186,7 @@ private extension TokenAddInputView {
         doneAction.titleLabel?.font = Theme.font.body
         doneAction.titleLabel?.textAlignment = .right
         doneAction.setTitle(Localized("done"), for: .normal)
-        doneAction.setTitleColor(Theme.colour.fillPrimary, for: .normal)
+        doneAction.setTitleColor(Theme.colour.navBarTint, for: .normal)
         doneAction.addTarget(self, action: #selector(dismissKeyboard), for: .touchUpInside)
         view.addSubview(doneAction)
         doneAction.addConstraints(

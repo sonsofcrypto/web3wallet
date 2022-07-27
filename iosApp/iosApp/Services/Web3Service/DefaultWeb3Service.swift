@@ -106,6 +106,23 @@ extension DefaultWeb3Service: Web3Service {
         }
     }
     
+    func addressFormattedShort(
+        address: String,
+        network: Web3Network
+    ) -> String {
+        
+        let total = 8
+
+        switch network.name.lowercased() {
+            
+        case "ethereum":
+            return address.prefix(2 + total) + "..." + address.suffix(total)
+
+        default:
+            return address.prefix(total) + "..." + address.suffix(total)
+        }
+    }
+    
     func update(network: Web3Network, active: Bool) {
         
         web3ServiceLocalStorage.update(network: network, active: active)

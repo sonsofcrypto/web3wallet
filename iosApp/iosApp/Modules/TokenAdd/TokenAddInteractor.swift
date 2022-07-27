@@ -4,13 +4,30 @@
 
 import Foundation
 
-protocol TokenAddInteractor: AnyObject {
+struct TokenAddInteractorNewToken {
+    
+    let address: String
+    let name: String
+    let symbol: String
+    let decimals: Int
+}
 
+protocol TokenAddInteractor: AnyObject {
+    
     var defaultNetwork: Web3Network { get }
     func isValid(address: String, forNetwork: Web3Network) -> Bool
+    func addressFormattedShort(
+        address: String,
+        network: Web3Network
+    ) -> String
+    func addToken(
+        _ newToken: TokenAddInteractorNewToken,
+        onCompletion: @escaping () -> Void
+    )
 }
 
 final class DefaultTokenAddInteractor {
+    
 
     private let web3Service: Web3Service
     
@@ -39,4 +56,22 @@ extension DefaultTokenAddInteractor: TokenAddInteractor {
         
         web3Service.isValid(address: address, forNetwork: network)
     }
+    
+    func addressFormattedShort(
+        address: String,
+        network: Web3Network
+    ) -> String {
+        
+        web3Service.addressFormattedShort(address: address, network: network)
+    }
+    
+    func addToken(
+        _ newToken: TokenAddInteractorNewToken,
+        onCompletion: @escaping () -> Void
+    ) {
+        
+        // TODO: @Annon to connect and add new token
+        onCompletion()
+    }
+
 }

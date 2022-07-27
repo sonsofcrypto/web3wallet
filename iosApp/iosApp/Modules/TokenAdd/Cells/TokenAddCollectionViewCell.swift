@@ -9,28 +9,39 @@ final class TokenAddCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var networkDetailsView: TokenAddNetworkView!
 
     @IBOutlet weak var tokenDetailsView: UIView!
-    @IBOutlet weak var contractAddressView: TokenAddInputView!
+    @IBOutlet weak var addressView: TokenEnterAddressView!
     @IBOutlet weak var nameView: TokenAddInputView!
     @IBOutlet weak var symbolView: TokenAddInputView!
     @IBOutlet weak var decimalView: TokenAddInputView!
+    @IBOutlet weak var saveButton: Button!
     
     @IBOutlet weak var widthLayoutConstraint: NSLayoutConstraint!
+    
+    struct Handler {
+        
+        let addressHandler: TokenEnterAddressView.Handler
+        let addTokenHandler: () -> Void
+    }
+    
+    private var handler: Handler!
 
     override func awakeFromNib() {
         
         super.awakeFromNib()
-
-        networkDetailsView.backgroundColor = Theme.colour.labelQuaternary
+        
+        networkDetailsView.backgroundColor = Theme.colour.cellBackground
         networkDetailsView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
 
-        tokenDetailsView.backgroundColor = Theme.colour.labelQuaternary
+        tokenDetailsView.backgroundColor = Theme.colour.cellBackground
         tokenDetailsView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        
+        saveButton.style = .primary
+        saveButton.addTarget(self, action: #selector(addTokenTapped), for: .touchUpInside)
     }
     
     @discardableResult
     override func resignFirstResponder() -> Bool {
         
-        contractAddressView.resignFirstResponder()
         nameView.resignFirstResponder()
         symbolView.resignFirstResponder()
         decimalView.resignFirstResponder()
@@ -40,16 +51,19 @@ final class TokenAddCollectionViewCell: UICollectionViewCell {
     
     func update(
         with viewModel: TokenAddViewModel,
+        handler: Handler,
         and width: CGFloat
     ) {
         
+        self.handler = handler
+        
         networkDetailsView.update(with: viewModel.network)
 
-        contractAddressView.update(
-            with: viewModel.contractAddress,
-            autocapitalizationType: .none,
-            showScanAction: true
+        addressView.update(
+            with: viewModel.address,
+            handler: handler.addressHandler
         )
+        
         nameView.update(
             with: viewModel.name,
             autocapitalizationType: .words
@@ -63,6 +77,16 @@ final class TokenAddCollectionViewCell: UICollectionViewCell {
             keyboardType: .numberPad
         )
         
+        saveButton.setTitle(viewModel.saveButtonTitle, for: .normal)
+        
         widthLayoutConstraint.constant = width - Theme.constant.padding * 2
+    }
+}
+
+private extension TokenAddCollectionViewCell {
+    
+    @objc func addTokenTapped() {
+        
+        handler.addTokenHandler()
     }
 }

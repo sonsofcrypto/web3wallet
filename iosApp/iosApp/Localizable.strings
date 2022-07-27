@@ -209,6 +209,9 @@
 "tokenAdd.validation.field.address.solana.invalid" = "Invalid Solana address";
 "tokenAdd.validation.field.decimal.int" = "This must be a valid Int";
 "tokenAdd.validation.field.decimal.range" = "Number should be between 0 and 32";
+"tokenAdd.cta.valid" = "Add token";
+"tokenAdd.cta.invalid.address" = "Invalid address";
+"tokenAdd.cta.invalid" = "Invalid data";
 
 "networkPicker.title" = "Select network";
 "networkPicker.noResults" = "No results";

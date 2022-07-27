@@ -24,6 +24,10 @@ protocol Web3Service: AnyObject {
     func removeWalletListener(_ listener: Web3ServiceWalletListener)
     
     func isValid(address: String, forNetwork network: Web3Network) -> Bool
+    func addressFormattedShort(
+        address: String,
+        network: Web3Network
+    ) -> String
     
     func update(network: Web3Network, active: Bool)
     func networkFeeInUSD(network: Web3Network, fee: Web3NetworkFee) -> Double
