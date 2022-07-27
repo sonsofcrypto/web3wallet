@@ -260,6 +260,7 @@
 "cult.proposals.result.liteWhitepaper" = "Lite/Whitepaper";
 "cult.proposals.result.socialDocs" = "Social Docs";
 "cult.proposals.result.audits" = "Audits";
+"cult.proposals.footer.text" = "Cult.DAO";
 
 "cult.proposal.title" = "Proposal";
 "cult.proposal.title.of" = "of";

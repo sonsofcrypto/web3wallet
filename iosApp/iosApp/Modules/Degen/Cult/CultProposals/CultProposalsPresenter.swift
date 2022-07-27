@@ -155,12 +155,20 @@ private extension DefaultCultProposalsPresenter {
         let pendingSection: CultProposalsViewModel.Section = .init(
             title: Localized("pending") + " (\(pendingProposals.count))",
             type: .pending,
-            items: pendingProposals.compactMap { viewModel(from: $0) }
+            items: pendingProposals.compactMap { viewModel(from: $0) },
+            footer: .init(
+                image: UIImage(named: "degen-cult-icon")!.pngData()!,
+                text: Localized("cult.proposals.footer.text")
+            )
         )
         let closedSection: CultProposalsViewModel.Section = .init(
             title: Localized("closed") + " (\(closedProposals.count))",
             type: .closed,
-            items: closedProposals.compactMap { viewModel(from: $0) }
+            items: closedProposals.compactMap { viewModel(from: $0) },
+            footer: .init(
+                image: UIImage(named: "degen-cult-icon")!.pngData()!,
+                text: Localized("cult.proposals.footer.text")
+            )
         )
         
         let section: CultProposalsViewModel.Section

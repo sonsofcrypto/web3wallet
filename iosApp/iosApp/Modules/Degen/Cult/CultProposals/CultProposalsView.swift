@@ -111,6 +111,21 @@ extension CultProposalsViewController: UICollectionViewDataSource {
             headerView.update(with: section)
             return headerView
             
+        case "footer":
+            
+            guard let footerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: String(describing: CultProposalFooterSupplementaryView.self),
+                for: indexPath
+            ) as? CultProposalFooterSupplementaryView else {
+                
+                return CultProposalFooterSupplementaryView()
+            }
+            
+            let section = viewModel.sections[indexPath.section]
+            footerView.update(with: section.footer)
+            return footerView
+            
         default:
             assertionFailure("Unexpected element kind: \(kind).")
             return UICollectionReusableView()
@@ -230,6 +245,11 @@ private extension CultProposalsViewController {
             forSupplementaryViewOfKind: "header",
             withReuseIdentifier: String(describing: CultProposalHeaderSupplementaryView.self)
         )
+        collectionView.register(
+            CultProposalFooterSupplementaryView.self,
+            forSupplementaryViewOfKind: "footer",
+            withReuseIdentifier: String(describing: CultProposalFooterSupplementaryView.self)
+        )
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -327,8 +347,17 @@ private extension CultProposalsViewController {
             elementKind: "header",
             alignment: .top
         )
+        let footerItemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(100)
+        )
+        let footerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: footerItemSize,
+            elementKind: "footer",
+            alignment: .bottom
+        )
         
-        section.boundarySupplementaryItems = [headerItem]
+        section.boundarySupplementaryItems = [headerItem, footerItem]
         
         return section
     }

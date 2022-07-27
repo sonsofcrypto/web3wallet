@@ -18,10 +18,17 @@ extension CultProposalsViewModel {
         let title: String
         let type: `Type`
         let items: [Item]
+        let footer: Footer
         
         enum `Type` {
             case pending
             case closed
+        }
+        
+        struct Footer {
+            
+            let image: Data
+            let text: String
         }
     }
 
