@@ -150,7 +150,7 @@ private extension NetworksViewController {
         let screenWidth: CGFloat = (view.bounds.width - Theme.constant.padding * 1.5)
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(screenWidth),
-            heightDimension: .absolute(148)
+            heightDimension: .absolute(156)
         )
         let outerGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize, subitems: [item]

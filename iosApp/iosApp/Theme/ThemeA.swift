@@ -94,7 +94,8 @@ struct ThemeA: Themable {
             candleGreen: pallete.systemTeal,
             candleRed: pallete.systemPink,
             dashboardTVCryptoBallance: pallete.systemOrange,
-            activityIndicator: pallete.systemWhite
+            activityIndicator: pallete.systemWhite,
+            toastAlertBackgroundColor: pallete.system1C1C1E
         )
     }
     

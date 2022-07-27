@@ -185,6 +185,11 @@ struct ThemeIOS: Themable {
                 traits.isDarkMode ?
                 pallete.systemWhite :
                 pallete.systemBlack
+            },
+            toastAlertBackgroundColor: .init { traits in
+                traits.isDarkMode ?
+                pallete.systemWhite :
+                pallete.systemBlack
             }
         )
     }

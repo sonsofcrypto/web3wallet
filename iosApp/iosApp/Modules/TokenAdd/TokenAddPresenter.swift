@@ -6,6 +6,9 @@ import Foundation
 
 enum TokenAddPresenterEvent {
 
+    case addressChanged(to: String)
+    case qrCodeScan
+    case pasteAddress
     case addToken
     case dismiss
 }
@@ -61,10 +64,78 @@ extension DefaultTokenAddPresenter: TokenAddPresenter {
 
         switch event {
             
+        case let .addressChanged(address):
+            
+            if
+                let formattedAddress = formattedAddress,
+                address.hasPrefix(formattedAddress),
+                address.count == (formattedAddress.count + 1)
+            {
+                
+                refresh()
+            } else if formattedAddress == address {
+                
+                refresh()
+            } else if
+                let formattedAddress = formattedAddress,
+                formattedAddress.hasPrefix(address),
+                address.count == (formattedAddress.count - 1)
+            {
+                
+                contractAddress?.removeLast()
+                refresh()
+            } else {
+                
+                contractAddress = address
+                refresh()
+            }
+            
+        case .qrCodeScan:
+            
+            view?.dismissKeyboard()
+            
+            wireframe.navigate(
+                to: .qrCodeScan(
+                    network: network,
+                    onCompletion: makeOnQRScanned()
+                )
+            )
+
+        case .pasteAddress:
+            
+            let clipboard = UIPasteboard.general.string ?? ""
+            let isValid = interactor.isValid(address: clipboard, forNetwork: network)
+            guard isValid else { return }
+            contractAddress = clipboard
+            refresh(
+                firstResponder: makeNextFirstResponder()
+            )
+            
         case .addToken:
             
             addTokenTapped = true
-            refresh()
+            
+            validateFields()
+            
+            if areAllFieldsValid() {
+                
+                interactor.addToken(
+                    .init(
+                        address: contractAddress ?? "",
+                        name: name ?? "",
+                        symbol: symbol ?? "",
+                        decimals: Int(decimals ?? "0") ?? 0
+                    )
+                ) { [weak self] in
+                    
+                    guard let self = self else { return }
+                    self.view?.dismissKeyboard()
+                    self.wireframe.dismiss()
+                }
+            } else {
+                
+                refresh()
+            }
             
         case .dismiss:
             
@@ -75,15 +146,48 @@ extension DefaultTokenAddPresenter: TokenAddPresenter {
 
 private extension DefaultTokenAddPresenter {
     
+    func makeNextFirstResponder() -> TokenAddViewModel.TextFieldType? {
+        
+        validateFields()
+        
+        if contractAddressValidationError != nil {
+            
+            return .contractAddress
+        } else if nameValidationError != nil {
+            
+            return .name
+        } else if symbolValidationError != nil {
+            
+            return .symbol
+        } else if decimalsValidationError != nil {
+            
+            return .decimals
+        } else {
+            
+            view?.dismissKeyboard()
+            return nil
+        }
+    }
+    
+    var formattedAddress: String? {
+        
+        guard let address = contractAddress else { return nil }
+        
+        guard interactor.isValid(address: address, forNetwork: network) else { return nil }
+        
+        return interactor.addressFormattedShort(
+            address: address,
+            network: network
+        )
+    }
+    
     func refresh(
-        firstResponder: TokenAddViewModel.TextFieldType? = nil,
-        customToken: String? = nil
+        firstResponder: TokenAddViewModel.TextFieldType? = nil
     ) {
         
         validateFields()
         
         let viewModel = makeViewModel(
-            customToken: customToken,
             firstResponder: firstResponder
         )
         view?.update(with: viewModel)
@@ -93,10 +197,6 @@ private extension DefaultTokenAddPresenter {
     }
     
     func makeViewModel(
-        customToken: String? = nil,
-        name: String? = nil,
-        symbol: String? = nil,
-        decimals: String? = nil,
         firstResponder: TokenAddViewModel.TextFieldType?
     ) -> TokenAddViewModel {
         
@@ -112,18 +212,10 @@ private extension DefaultTokenAddPresenter {
                 ),
                 onTapped: makeNetworkOnTapped()
             ),
-            contractAddress: .init(
-                item: .init(
-                    name: Localized("tokenAdd.contractAddress.title"),
-                    value: customToken
-                ),
-                placeholder: Localized("tokenAdd.contractAddress.placeholder"),
-                hint: contractAddressValidationError,
-                tag: TokenAddViewModel.TextFieldType.contractAddress.rawValue,
-                onTextChanged: onTextChangedAction,
-                onReturnTapped: onReturnTappedAction,
-                onScanAction: makeScanAction(),
-                isFirstResponder: firstResponder == .contractAddress
+            address: .init(
+                value: formattedAddress ?? contractAddress,
+                isValid: false,
+                becomeFirstResponder: firstResponder == .contractAddress
             ),
             name: .init(
                 item: .init(
@@ -131,11 +223,10 @@ private extension DefaultTokenAddPresenter {
                     value: name
                 ),
                 placeholder: Localized("tokenAdd.name.placeholder"),
-                hint: nameValidationError,
+                hint: addTokenTapped ? nameValidationError : nil,
                 tag: TokenAddViewModel.TextFieldType.name.rawValue,
                 onTextChanged: onTextChangedAction,
                 onReturnTapped: onReturnTappedAction,
-                onScanAction: nil,
                 isFirstResponder: firstResponder == .name
             ),
             symbol: .init(
@@ -144,11 +235,10 @@ private extension DefaultTokenAddPresenter {
                     value: symbol
                 ),
                 placeholder: Localized("tokenAdd.symbol.placeholder"),
-                hint: symbolValidationError,
+                hint: addTokenTapped ? symbolValidationError : nil,
                 tag: TokenAddViewModel.TextFieldType.symbol.rawValue,
                 onTextChanged: onTextChangedAction,
                 onReturnTapped: onReturnTappedAction,
-                onScanAction: nil,
                 isFirstResponder: firstResponder == .symbol
             ),
             decimals: .init(
@@ -157,14 +247,51 @@ private extension DefaultTokenAddPresenter {
                     value: decimals
                 ),
                 placeholder: Localized("tokenAdd.decimals.placeholder"),
-                hint: decimalsValidationError,
+                hint: addTokenTapped ? decimalsValidationError : nil,
                 tag: TokenAddViewModel.TextFieldType.decimals.rawValue,
                 onTextChanged: onTextChangedAction,
                 onReturnTapped: onReturnTappedAction,
-                onScanAction: nil,
                 isFirstResponder: firstResponder == .decimals
-            )
+            ),
+            saveButtonTitle: makeSaveButtonTitle()
         )
+    }
+    
+    func makeSaveButtonTitle() -> String {
+        
+        let validTitle = Localized("tokenAdd.cta.valid")
+        
+        guard addTokenTapped else {
+            
+            return validTitle
+        }
+        
+        guard contractAddressValidationError == nil else {
+            
+            return Localized("tokenAdd.cta.invalid.address")
+        }
+        
+        guard areAllFieldsValid() else {
+            
+            return Localized("tokenAdd.cta.invalid")
+        }
+        
+        return validTitle
+    }
+    
+    func areAllFieldsValid() -> Bool {
+        
+        guard
+            contractAddressValidationError == nil,
+            nameValidationError == nil,
+            symbolValidationError == nil,
+            decimalsValidationError == nil
+        else {
+            
+            return false
+        }
+        
+        return true
     }
     
     func makeOnTextChangedAction() -> ((TokenAddViewModel.TextFieldType, String) -> Void) {
@@ -227,8 +354,6 @@ private extension DefaultTokenAddPresenter {
 
     func validateContractAddress() {
         
-        guard addTokenTapped else { return }
-        
         guard !interactor.isValid(address: contractAddress ?? "", forNetwork: network) else {
             
             contractAddressValidationError = nil
@@ -242,8 +367,6 @@ private extension DefaultTokenAddPresenter {
         
     func validateName() {
         
-        guard addTokenTapped else { return }
-        
         guard name?.isEmpty ?? true else {
             
             nameValidationError = nil
@@ -254,8 +377,6 @@ private extension DefaultTokenAddPresenter {
     }
 
     func validateSymbol() {
-        
-        guard addTokenTapped else { return }
         
         guard symbol?.isEmpty ?? true else {
             
@@ -268,8 +389,6 @@ private extension DefaultTokenAddPresenter {
     }
 
     func validateDecimals() {
-        
-        guard addTokenTapped else { return }
         
         guard !(decimals?.isEmpty ?? true) else {
          
@@ -292,37 +411,15 @@ private extension DefaultTokenAddPresenter {
         decimalsValidationError = nil
     }
     
-    func makeScanAction() -> (TokenAddViewModel.TextFieldType) -> Void {
-        
-        {
-            [weak self] textFieldType in
-            
-            guard let self = self else { return }
-            
-            switch textFieldType {
-                
-            case .contractAddress:
-                
-                self.wireframe.navigate(
-                    to: .qrCodeScan(
-                        network: self.network,
-                        onCompletion: self.makeOnQRScanned()
-                    )
-                )
-                
-            default:
-                break
-            }
-        }
-    }
-    
     func makeOnQRScanned() -> (String) -> Void {
         
         {
             [weak self] address in
             guard let self = self else { return }
             self.contractAddress = address
-            self.refresh(customToken: self.contractAddress)
+            self.refresh(
+                firstResponder: self.makeNextFirstResponder()
+            )
         }
     }
 

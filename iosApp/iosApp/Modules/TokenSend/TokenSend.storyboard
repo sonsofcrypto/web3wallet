@@ -70,35 +70,6 @@
                                                                         <constraint firstItem="qKW-xc-SBl" firstAttribute="leading" secondItem="NVb-pb-KwR" secondAttribute="leading" constant="8" id="uhk-qX-iF3"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <view contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="x1z-UV-idE">
-                                                                    <rect key="frame" x="314.5" y="0.0" width="68.5" height="46"/>
-                                                                    <subviews>
-                                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="cUZ-SL-8be">
-                                                                            <rect key="frame" x="0.0" y="12" width="68.5" height="22"/>
-                                                                            <subviews>
-                                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wand.and.stars.inverse" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="wI5-Hu-HJm">
-                                                                                    <rect key="frame" x="0.0" y="0.5" width="22" height="21"/>
-                                                                                    <constraints>
-                                                                                        <constraint firstAttribute="height" constant="22" id="kAH-TO-ZOQ"/>
-                                                                                        <constraint firstAttribute="width" constant="22" id="km9-J0-nlC"/>
-                                                                                    </constraints>
-                                                                                </imageView>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Paste" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9x-wg-Frk">
-                                                                                    <rect key="frame" x="26" y="0.0" width="42.5" height="22"/>
-                                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                                    <nil key="textColor"/>
-                                                                                    <nil key="highlightedColor"/>
-                                                                                </label>
-                                                                            </subviews>
-                                                                        </stackView>
-                                                                    </subviews>
-                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <constraints>
-                                                                        <constraint firstItem="cUZ-SL-8be" firstAttribute="centerY" secondItem="x1z-UV-idE" secondAttribute="centerY" id="HAo-3u-Hjb"/>
-                                                                        <constraint firstItem="cUZ-SL-8be" firstAttribute="leading" secondItem="x1z-UV-idE" secondAttribute="leading" id="n7e-GK-Jg6"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="cUZ-SL-8be" secondAttribute="trailing" id="pJO-OT-4yV"/>
-                                                                    </constraints>
-                                                                </view>
                                                                 <view contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="3Bo-2J-bdY">
                                                                     <rect key="frame" x="391" y="0.0" width="22" height="46"/>
                                                                     <subviews>
@@ -125,7 +96,6 @@
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="46" id="13K-FH-H76"/>
-                                                                <constraint firstItem="x1z-UV-idE" firstAttribute="height" secondItem="NVb-pb-KwR" secondAttribute="height" id="352-iI-D4Y"/>
                                                                 <constraint firstItem="NVb-pb-KwR" firstAttribute="centerY" secondItem="v8M-WP-eFZ" secondAttribute="centerY" id="t2e-TH-35e"/>
                                                             </constraints>
                                                         </stackView>
@@ -140,9 +110,6 @@
                                                     <connections>
                                                         <outlet property="addContactIcon" destination="25b-Px-3LK" id="kxh-pq-VDV"/>
                                                         <outlet property="addContactView" destination="3Bo-2J-bdY" id="Vx3-fx-dFg"/>
-                                                        <outlet property="pasteIcon" destination="wI5-Hu-HJm" id="NXa-9L-8fJ"/>
-                                                        <outlet property="pasteLabel" destination="f9x-wg-Frk" id="XxC-G9-MgV"/>
-                                                        <outlet property="pasteView" destination="x1z-UV-idE" id="dfY-fW-9dV"/>
                                                         <outlet property="qrCodeScanButton" destination="zQp-cn-ChD" id="6M6-5L-Xo5"/>
                                                         <outlet property="textField" destination="jd0-SM-dpq" id="4xG-xd-ecD"/>
                                                         <outlet property="textFieldView" destination="NVb-pb-KwR" id="uio-08-NjU"/>
@@ -525,7 +492,6 @@
     </scenes>
     <resources>
         <image name="person.fill.badge.plus" catalog="system" width="128" height="124"/>
-        <image name="wand.and.stars.inverse" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

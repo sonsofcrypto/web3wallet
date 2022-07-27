@@ -33,7 +33,7 @@ private extension NFTDetailViewController {
         vStack.addArrangedSubview(sectionTitle)
         
         vStack.addArrangedSubview(
-            .dividerLine(backgroundColor: Theme.colour.separatorNoTransparency)
+            .dividerLine()
         )
         
         let sectionContent = UILabel()

@@ -27,8 +27,8 @@ extension UIView {
         toastView.alpha = 0.0
 
         let backgroundView = UIView()
-        backgroundView.layer.cornerRadius = 8
-        backgroundView.backgroundColor = Theme.colour.navBarBackground
+        backgroundView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        backgroundView.backgroundColor = Theme.colour.toastAlertBackgroundColor
         toastView.addSubview(backgroundView)
         backgroundView.addConstraints(
             [

@@ -187,6 +187,8 @@ struct ThemeColour {
     let dashboardTVCryptoBallance: UIColor
     
     let activityIndicator: UIColor
+    
+    let toastAlertBackgroundColor: UIColor
 }
 
 struct ThemeConstant {

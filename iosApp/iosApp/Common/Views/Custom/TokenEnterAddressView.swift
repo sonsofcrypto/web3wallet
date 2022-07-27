@@ -14,9 +14,7 @@ final class TokenEnterAddressView: UIView {
     @IBOutlet weak var textFieldView: UIView!
     @IBOutlet weak var qrCodeScanButton: UIButton!
     @IBOutlet weak var textField: TextField!
-    @IBOutlet weak var pasteView: UIView!
-    @IBOutlet weak var pasteIcon: UIImageView!
-    @IBOutlet weak var pasteLabel: UILabel!
+    private weak var pasteButton: UIButton!
     @IBOutlet weak var addContactView: UIView!
     @IBOutlet weak var addContactIcon: UIImageView!
     
@@ -48,12 +46,23 @@ final class TokenEnterAddressView: UIView {
         textField.rightView = makeClearButton()
         textField.rightViewMode = .whileEditing
 
-        pasteView.add(.targetAction(.init(target: self, selector: #selector(pasteTapped))))
-        pasteIcon.tintColor = Theme.colour.labelPrimary
-        pasteLabel.font = Theme.font.bodyBold
-        pasteLabel.textColor = Theme.colour.labelPrimary
-        pasteLabel.text = Localized("paste")
         
+        let pasteAction = UIButton(type: .custom)
+        pasteAction.setTitle(Localized("paste"), for: .normal)
+        pasteAction.titleLabel?.font = Theme.font.subheadlineBold
+        pasteAction.setTitleColor(Theme.colour.labelPrimary, for: .normal)
+        pasteAction.addTarget(self, action: #selector(pasteTapped), for: .touchUpInside)
+        pasteAction.addConstraints(
+            [
+                .hugging(layoutAxis: .horizontal, priority: .required),
+                .compression(layoutAxis: .horizontal, priority: .required)
+            ]
+        )
+        if let stackView = textField.superview as? UIStackView {
+            stackView.addArrangedSubview(pasteAction)
+        }
+        self.pasteButton = pasteAction
+
         addContactView.isHidden = true
         addContactView.add(.targetAction(.init(target: self, selector: #selector(saveTapped))))
         addContactIcon.tintColor = Theme.colour.labelPrimary
@@ -76,7 +85,7 @@ extension TokenEnterAddressView {
         
         textField.text = address.value
         
-        pasteView.isHidden = address.isValid
+        pasteButton.isHidden = address.isValid
         addContactView.isHidden = !address.isValid
         
         if address.becomeFirstResponder {
@@ -125,8 +134,8 @@ private extension TokenEnterAddressView {
         button.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
         button.addConstraints(
             [
-                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
+                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 20)),
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 20))
             ]
         )
         return button
