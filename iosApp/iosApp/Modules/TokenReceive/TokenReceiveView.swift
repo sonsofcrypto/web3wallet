@@ -82,8 +82,6 @@ private extension TokenReceiveViewController {
         disclaimerLabel.font = Theme.font.body
         disclaimerLabel.textColor = Theme.colour.labelPrimary
         
-        copyButton.backgroundColor = Theme.colour.cellBackground
-        copyButton.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         copyButton.update(
             with: .init(
                 title: Localized("tokenReceive.action.copy"),
@@ -92,8 +90,6 @@ private extension TokenReceiveViewController {
             )
         )
 
-        shareButton.backgroundColor = Theme.colour.cellBackground
-        shareButton.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         shareButton.update(
             with: .init(
                 title: Localized("tokenReceive.action.share"),
