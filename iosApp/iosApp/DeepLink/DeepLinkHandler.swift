@@ -9,6 +9,7 @@ enum DeepLink: String {
     
     case mnemonicConfirmation = "modal.mnemonic.confirmation"
     case themesList = "settings.themes"
+    case degen = "degen"
 }
 
 protocol DeepLinkHandler: AnyObject {
@@ -20,6 +21,9 @@ final class DefaultDeepLinkHandler {
     
     enum DestinationTab {
         
+        case dashboard
+        case degen
+        case nfts
         case settings
     }
 }
@@ -27,39 +31,57 @@ final class DefaultDeepLinkHandler {
 extension DefaultDeepLinkHandler: DeepLinkHandler {
     
     func handle(deepLink: DeepLink) {
-
-        dismissAnyModals()
         
-        switch deepLink {
-        case .mnemonicConfirmation:
-            break
-        case .themesList:
-            navigate(to: .settings)
-            openThemeMenu()
+        let completion: () -> Void = { [weak self] in
+            
+            guard let self = self else { return }
+            
+            switch deepLink {
+            case .mnemonicConfirmation:
+                break
+            case .themesList:
+                self.navigate(to: .settings)
+                self.openThemeMenu()
+                
+            case .degen:
+                self.navigate(to: .degen)
+            }
         }
+
+        dismissAnyModals(completion: completion)
     }
 }
 
 private extension DefaultDeepLinkHandler {
     
-    func dismissAnyModals() {
+    func dismissAnyModals(
+        completion: @escaping (() -> Void)
+    ) {
         
-        guard let rootVC = SceneDelegateHelper().rootVC else { return }
+        guard let rootVC = SceneDelegateHelper().rootVC else {
+            completion()
+            return
+        }
         
-        dismissPresentedVCs(for: rootVC.presentedViewController, animated: false)
+        dismissPresentedVCs(
+            for: rootVC.presentedViewController,
+            completion: completion,
+            animated: true
+        )
     }
     
     func dismissPresentedVCs(
         for viewController: UIViewController?,
+        completion: @escaping (() -> Void),
         animated: Bool = false
     ) {
         
         if let presentedVC = viewController?.presentedViewController {
             
-            dismissPresentedVCs(for: presentedVC)
+            dismissPresentedVCs(for: presentedVC, completion: completion)
         }
         
-        viewController?.dismiss(animated: animated)
+        viewController?.dismiss(animated: animated, completion: completion)
     }
     
     func navigate(to destination: DestinationTab) {
@@ -67,6 +89,16 @@ private extension DefaultDeepLinkHandler {
         guard let tabBarVC = tabBarController else { return }
         
         switch destination {
+            
+        case .dashboard:
+            
+            tabBarVC.selectedIndex = 0
+        case .degen:
+            
+            tabBarVC.selectedIndex = 1
+        case .nfts:
+            
+            tabBarVC.selectedIndex = 3
         case .settings:
             
             tabBarVC.selectedIndex = FeatureFlag.showAppsTab.isEnabled ? 4 : 3

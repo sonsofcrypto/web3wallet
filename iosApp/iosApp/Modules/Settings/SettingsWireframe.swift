@@ -24,8 +24,8 @@ struct SettingsWireframeContext {
                     title: Localized("settings.root.group.settings"),
                     items: [
                         .init(
-                            title: Localized("settings.providers"),
-                            type: .item(.providers)
+                            title: Localized("settings.debug"),
+                            type: .item(.debug)
                         ),
                         .init(
                             title: Localized("settings.theme"),

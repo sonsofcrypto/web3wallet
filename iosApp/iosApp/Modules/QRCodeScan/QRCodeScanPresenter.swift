@@ -40,8 +40,7 @@ extension DefaultQRCodeScanPresenter: QRCodeScanPresenter {
 
     func present() {
 
-        let viewModel = QRCodeScanViewModel(title: Localized("qrCodeScan.title"))
-        view?.update(with: viewModel)
+        updateView(with: nil)
     }
 
     func handle(_ event: QRCodeScanPresenterEvent) {
@@ -57,13 +56,41 @@ extension DefaultQRCodeScanPresenter: QRCodeScanPresenter {
                 
             case let .network(network):
                 
-                guard interactor.isValid(address: qrCode, for: network) else { return }
-                wireframe.navigate(to: .qrCode(qrCode))
+                guard let address = interactor.validateAddress(
+                    address: qrCode,
+                    for: network
+                ) else {
+                    
+                    let failureMessage = makeFailureMessage(for: qrCode, and: network)
+                    updateView(with: failureMessage)
+                    return
+                }
+                wireframe.navigate(to: .qrCode(address))
             }
             
         case .dismiss:
             
             wireframe.dismiss()
         }
+    }
+}
+
+private extension DefaultQRCodeScanPresenter {
+    
+    func updateView(with failure: String?) {
+        
+        let viewModel = QRCodeScanViewModel(
+            title: Localized("qrCodeScan.title"),
+            failure: failure
+        )
+        view?.update(with: viewModel)
+    }
+    
+    func makeFailureMessage(
+        for qrCode: String,
+        and network: Web3Network
+    ) -> String {
+        
+        "\(qrCode)\nis not a valid \(network.name) address"
     }
 }

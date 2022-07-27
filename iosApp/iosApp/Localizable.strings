@@ -136,10 +136,11 @@
 "settings.theme" = "Theme";
 "settings.theme.miami" = "Theme Miami";
 "settings.theme.ios" = "Theme IOS";
-"settings.providers" = "Service Providers";
-"settings.providers.nfts" = "NFTs";
-"settings.providers.nfts.openSea" = "OpenSea";
-"settings.providers.nfts.mock" = "Dummy Data";
+"settings.debug" = "Debug";
+"settings.debug.apis" = "APIs";
+"settings.debug.apis.nfts" = "NFTs";
+"settings.debug.apis.nfts.openSea" = "OpenSea";
+"settings.debug.apis.nfts.mock" = "Dummy Data";
 "settings.resetKeyStore" = "Reset keystore";
 "settings.newSeedTransitionType" = "New seed transition type";
 "settings.onboardingMode" = "Onboarding mode";
@@ -250,6 +251,8 @@
 "confirmation.send.confirm" = "Authenticate & Send";
 
 "cult.proposals.title" = "Cult.DAO Proposals";
+"cult.proposals.segmentedControl.pending" = "Pending";
+"cult.proposals.segmentedControl.closed" = "Closed";
 "cult.proposals.pending.processing" = "Processing";
 "cult.proposals.closed.totalVotes" = "Total Votes: %@";
 "cult.proposals.result" = "Result: %@";
@@ -258,6 +261,7 @@
 "cult.proposals.result.liteWhitepaper" = "Lite/Whitepaper";
 "cult.proposals.result.socialDocs" = "Social Docs";
 "cult.proposals.result.audits" = "Audits";
+"cult.proposals.footer.text" = "Cult.DAO";
 
 "cult.proposal.title" = "Proposal";
 "cult.proposal.title.of" = "of";

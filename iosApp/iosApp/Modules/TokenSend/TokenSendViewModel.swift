@@ -21,16 +21,9 @@ extension TokenSendViewModel {
     
     enum Item {
         
-        case address(Address)
+        case address(TokenEnterAddressViewModel)
         case token(TokenEnterAmountViewModel)
         case send(Send)
-    }
-    
-    struct Address {
-        
-        let value: String?
-        let isValid: Bool
-        let becomeFirstResponder: Bool
     }
     
     struct Send {
@@ -50,9 +43,9 @@ extension TokenSendViewModel {
 
 extension Array where Element == TokenSendViewModel.Item {
     
-    var address: TokenSendViewModel.Address? {
+    var address: TokenEnterAddressViewModel? {
         
-        var address: TokenSendViewModel.Address?
+        var address: TokenEnterAddressViewModel?
         forEach {
             
             if case let TokenSendViewModel.Item.address(value) = $0 {

@@ -6,6 +6,11 @@ import UIKit
 
 struct ThemeIOS: Themable {
     
+    var name: String {
+        
+        "themeIOS"
+    }
+    
     var statusBarStyle: ThemeStatusBarStyle {
         
         .init(lightMode: .dark, darkMode: .light)
@@ -15,7 +20,7 @@ struct ThemeIOS: Themable {
     
     var colour: ThemeColour {
         
-        let pallete = ThemeColourPalette()
+        let pallete = ThemeColourPalette(name: name)
         return .init(
             gradientTop: .init { traits in
                 traits.isDarkMode ?
@@ -266,7 +271,7 @@ private extension ThemeIOS {
         let systemC7C7CC: UIColor
         let system2C2C2E: UIColor
         
-        init(name: String = "themeA") {
+        init(name: String) {
                         
             self.systemBlack = .init(named: "\(name)-system-black")!
             self.systemBlue = .init(named: "\(name)-system-blue")!

@@ -10,11 +10,17 @@ final class NFTsServiceAssembler: AssemblerComponent {
             
             let settingsService: SettingsService = resolver.resolve()
             
-            if settingsService.isSelected(item: .providersNFTs, action: .providersNFTsMock) {
+            if settingsService.isSelected(
+                item: .debugAPIsNFTs,
+                action: .debugAPIsNFTsMock
+            ) {
                 
                 return DefaultNFTsService()
                 
-            } else if settingsService.isSelected(item: .providersNFTs, action: .providersNFTsOpenSea) {
+            } else if settingsService.isSelected(
+                item: .debugAPIsNFTs,
+                action: .debugAPIsNFTsOpenSea
+            ) {
                 
                 return OpenSeaNFTsService()
                 

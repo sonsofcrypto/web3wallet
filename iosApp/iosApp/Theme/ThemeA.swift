@@ -6,6 +6,10 @@ import UIKit
 
 struct ThemeA: Themable {
     
+    var name: String {
+        "themeA"
+    }
+    
     var statusBarStyle: ThemeStatusBarStyle {
         
         .init(lightMode: .light, darkMode: .light)
@@ -15,7 +19,7 @@ struct ThemeA: Themable {
     
     var colour: ThemeColour {
         
-        let pallete = ThemeColourPalette()
+        let pallete = ThemeColourPalette(name: name)
         return .init(
             gradientTop: .init { traits in
                 traits.isDarkMode ? pallete.systemPink : pallete.systemBlue
@@ -74,12 +78,12 @@ struct ThemeA: Themable {
             },
             textFieldTextColour: pallete.systemWhite,
             textFieldPlaceholderColour: pallete.systemEBEBF5.withAlpha(0.6),
-            segmentedControlBackground: pallete.systemEBEBF5.withAlpha(0.18),
-            segmentedControlBackgroundSelected: .init { traits in
+            segmentedControlBackground: .init { traits in
                 traits.isDarkMode ?
                 pallete.system767680.withAlpha(0.18) :
                 pallete.system767680.withAlpha(0.08)
             },
+            segmentedControlBackgroundSelected: pallete.systemEBEBF5.withAlpha(0.18),
             segmentedControlText: pallete.systemWhite,
             segmentedControlTextSelected: pallete.systemWhite,
             cellBackground: pallete.systemEBEBF5.withAlpha(0.18),
@@ -169,7 +173,7 @@ private extension ThemeA {
         let system787880: UIColor
         let system767680: UIColor
         
-        init(name: String = "themeA") {
+        init(name: String) {
                         
             self.systemBlack = .init(named: "\(name)-system-black")!
             self.systemBlue = .init(named: "\(name)-system-blue")!

@@ -18,10 +18,10 @@ final class TokenReceiveViewController: BaseViewController {
     @IBOutlet weak var qrCodePngImageView: UIImageView!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var disclaimerLabel: UILabel!
-    
-    @IBOutlet weak var copyButton: TokenReceiveActionButton!
-    @IBOutlet weak var shareButton: TokenReceiveActionButton!
-    @IBOutlet weak var addButton: TokenReceiveActionButton!
+    @IBOutlet weak var buttonsStackView: UIStackView!
+    @IBOutlet weak var buttonsStackViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var copyButton: CustomVerticalButton!
+    @IBOutlet weak var shareButton: CustomVerticalButton!
 
     private var viewModel: TokenReceiveViewModel?
     private lazy var filter = CIFilter(name: "CIQRCodeGenerator")
@@ -83,30 +83,27 @@ private extension TokenReceiveViewController {
         disclaimerLabel.textColor = Theme.colour.labelPrimary
         
         copyButton.update(
-            with: Localized("tokenReceive.action.copy"),
-            and: UIImage(systemName: "square.on.square"),
-            onTap: makeCopyAction()
+            with: .init(
+                title: Localized("tokenReceive.action.copy"),
+                imageName: "square.on.square",
+                onTap: makeCopyAction()
+            )
         )
-        copyButton.tintColor = Theme.colour.labelPrimary
 
         shareButton.update(
-            with: Localized("tokenReceive.action.share"),
-            and: UIImage(systemName: "square.and.arrow.up"),
-            onTap: makeShareAction()
+            with: .init(
+                title: Localized("tokenReceive.action.share"),
+                imageName: "square.and.arrow.up",
+                onTap: makeShareAction()
+            )
         )
-        shareButton.tintColor = Theme.colour.labelPrimary
         
-        let image = UIImage(systemName: "plus")!
-        let config = UIImage.SymbolConfiguration(
-            paletteColors: [
-                Theme.colour.labelPrimary
-            ]
-        )
-        addButton.update(
-            with: Localized("tokenReceive.action.add"),
-            and: image.applyingSymbolConfiguration(config),
-            onTap: makeAddAction()
-        )
+        let spacingBetweenButtons = Theme.constant.padding * CGFloat(5)
+        let windowWidth = SceneDelegateHelper().window?.frame.width ?? 0
+        let height = (windowWidth - spacingBetweenButtons) / CGFloat(4)
+        buttonsStackViewHeightConstraint.constant = CGFloat(height)
+        copyButton.widthConstraint?.constant = CGFloat(height)
+        shareButton.widthConstraint?.constant = CGFloat(height)
     }
     
     @objc func navBarLeftActionTapped() {
@@ -147,25 +144,6 @@ private extension TokenReceiveViewController {
                 ],
                 presentingIn: self
             )
-        }
-    }
-    
-    func makeAddAction() -> (() -> Void) {
-        
-        {
-            [weak self] in
-            guard let self = self else { return }
-            self.presenter.handle(.addCoins(onCompletion: self.makeCoinsAddedToast()))
-        }
-    }
-    
-    func makeCoinsAddedToast() -> (Double) -> () {
-        
-        {
-            [weak self] coins in
-            guard let self = self else { return }
-            let arg = coins.toString(decimals: 2)
-            self.view.presentToastAlert(with: Localized("tokenReceive.action.add.toast", arg: arg))
         }
     }
 }

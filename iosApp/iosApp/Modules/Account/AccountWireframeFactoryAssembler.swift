@@ -10,6 +10,9 @@ final class AccountWireframeFactoryAssembler: AssemblerComponent {
             
             DefaultAccountWireframeFactory(
                 tokenReceiveWireframeFactory: resolver.resolve(),
+                tokenSendWireframeFactory: resolver.resolve(),
+                tokenSwapWireframeFactory: resolver.resolve(),
+                deepLinkHandler: resolver.resolve(),
                 priceHistoryService: resolver.resolve()
             )
         }

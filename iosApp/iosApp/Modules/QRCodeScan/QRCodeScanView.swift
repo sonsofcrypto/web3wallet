@@ -63,6 +63,15 @@ extension QRCodeScanViewController: QRCodeScanView {
         self.viewModel = viewModel
         
         title = viewModel.title.uppercased()
+        
+        if let failure = viewModel.failure {
+            
+            view.presentToastAlert(
+                with: failure,
+                duration: 3.0,
+                bottomOffset: view.frame.height * 0.15
+            )
+        }
     }
 }
 
@@ -202,7 +211,7 @@ private extension QRCodeScanViewController {
         let size: CGFloat = self.view.bounds.width * 0.8
         let rect = CGRect(
             x: self.view.bounds.width * 0.5 - size * 0.5,
-            y: self.view.bounds.height * 0.475 - size * 0.5,
+            y: self.view.bounds.height * 0.375 - size * 0.5,
             width: size,
             height: size
         )
@@ -262,6 +271,9 @@ extension QRCodeScanViewController: AVCaptureMetadataOutputObjectsDelegate {
         guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
         
         guard let qrCode = readableObject.stringValue else { return }
+        
+        // NOTE: We ignore if we keep detecting the same code over whist a failure toast is presented
+        guard !view.isToastFailurePresented else { return }
         
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
         

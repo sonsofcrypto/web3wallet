@@ -22,13 +22,7 @@ extension AccountViewModel {
         let fiatBalance: String
         let pct: String
         let pctUp: Bool
-        let buttons: [AccountViewModel.Header.Button]
-
-        struct Button {
-            let title: String
-            let imageName: String
-            let onTap: () -> Void
-        }
+        let buttons: [CustomVerticalButton.ViewModel]
     }
 }
 

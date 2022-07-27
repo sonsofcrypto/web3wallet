@@ -19,7 +19,6 @@ final class CultProposalsViewController: BaseViewController {
     var presenter: CultProposalsPresenter!
 
     private var viewModel: CultProposalsViewModel!
-    private var horizontalScrollingForPendingEnabled = false
 
     override func viewDidLoad() {
         
@@ -37,6 +36,8 @@ extension CultProposalsViewController: CultProposalsView {
         
         self.viewModel = viewModel
                 
+        setTitle()
+
         switch viewModel {
             
         case .loading:
@@ -44,7 +45,6 @@ extension CultProposalsViewController: CultProposalsView {
             
         case .loaded:
             hideLoading()
-            setTitle()
             collectionView.reloadData()
             refreshControl.endRefreshing()
 
@@ -110,6 +110,21 @@ extension CultProposalsViewController: UICollectionViewDataSource {
             headerView.update(with: section)
             return headerView
             
+        case "footer":
+            
+            guard let footerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: String(describing: CultProposalFooterSupplementaryView.self),
+                for: indexPath
+            ) as? CultProposalFooterSupplementaryView else {
+                
+                return CultProposalFooterSupplementaryView()
+            }
+            
+            let section = viewModel.sections[indexPath.section]
+            footerView.update(with: section.footer)
+            return footerView
+            
         default:
             assertionFailure("Unexpected element kind: \(kind).")
             return UICollectionReusableView()
@@ -151,6 +166,20 @@ private extension CultProposalsViewController {
     
     func setTitle() {
         
+        switch viewModel {
+            
+        case .loading, .error, .none:
+            
+            setDefaultTitle()
+
+        case .loaded:
+            
+            setSegmentedTitle()
+        }
+    }
+    
+    func setDefaultTitle() {
+        
         let cultIcon = viewModel.titleIcon.pngImage!.resize(to: .init(width: 32, height: 32))
         let imageView = UIImageView(image: cultIcon)
         let titleLabel = UILabel()
@@ -161,6 +190,45 @@ private extension CultProposalsViewController {
         stackView.spacing = 4
         
         navigationItem.titleView = stackView
+    }
+    
+    func setSegmentedTitle() {
+        
+        let segmentControl = SegmentedControl()
+        segmentControl.insertSegment(
+            withTitle: Localized("cult.proposals.segmentedControl.pending"),
+            at: 0,
+            animated: false
+        )
+        segmentControl.insertSegment(
+            withTitle: Localized("cult.proposals.segmentedControl.closed"),
+            at: 1,
+            animated: false
+        )
+        
+        switch viewModel.selectedSectionType {
+            
+        case .pending:
+            segmentControl.selectedSegmentIndex = 0
+        case .closed:
+            segmentControl.selectedSegmentIndex = 1
+        }
+        
+        segmentControl.addTarget(
+            self,
+            action: #selector(segmentControlChanged(_:)),
+            for: .valueChanged
+        )
+        navigationItem.titleView = segmentControl
+    }
+    
+    @objc func segmentControlChanged(_ sender: SegmentedControl) {
+        
+        presenter.handle(
+            .filterBySection(
+                sectionType: sender.selectedSegmentIndex == 0 ? .pending : .closed
+            )
+        )
     }
     
     func configureUI() {
@@ -175,6 +243,11 @@ private extension CultProposalsViewController {
             CultProposalHeaderSupplementaryView.self,
             forSupplementaryViewOfKind: "header",
             withReuseIdentifier: String(describing: CultProposalHeaderSupplementaryView.self)
+        )
+        collectionView.register(
+            CultProposalFooterSupplementaryView.self,
+            forSupplementaryViewOfKind: "footer",
+            withReuseIdentifier: String(describing: CultProposalFooterSupplementaryView.self)
         )
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -196,26 +269,13 @@ private extension CultProposalsViewController {
     
     func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
         
-        UICollectionViewCompositionalLayout {
-            
-            [weak self] sectionIndex, _ in
-            
-            guard let self = self else { return nil }
-            
-            let section = self.viewModel.sections[sectionIndex]
-            
-            return self.makeCollectionLayoutSection(
-                isHorizontalScrolling: section.type == .pending
-            )
-        }
+        UICollectionViewCompositionalLayout(
+            section: makeCollectionLayoutSection()
+        )
     }
   
-    func makeCollectionLayoutSection(
-        isHorizontalScrolling: Bool
-    ) -> NSCollectionLayoutSection {
+    func makeCollectionLayoutSection() -> NSCollectionLayoutSection {
         
-        let padding = Theme.constant.padding
-
         // Item
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
@@ -224,19 +284,11 @@ private extension CultProposalsViewController {
         let item = NSCollectionLayoutItem(
             layoutSize: itemSize
         )
-        item.contentInsets = .init(
-            top: padding.half,
-            leading: isHorizontalScrolling ? 0 : padding.half,
-            bottom: padding.half,
-            trailing: isHorizontalScrolling ? 0 : padding.half
-        )
         
         // Group
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(
-                isHorizontalScrolling ?
-                view.frame.size.width - Theme.constant.padding * 2 :
-                view.frame.size.width - Theme.constant.padding
+                view.frame.size.width - Theme.constant.padding * 2
             ),
             heightDimension: .estimated(100)
         )
@@ -244,25 +296,10 @@ private extension CultProposalsViewController {
             layoutSize: groupSize, subitems: [item]
         )
 
-        //outerGroup.contentInsets = .paddingHalf
-                
         // Section
         let section = NSCollectionLayoutSection(group: outerGroup)
-        section.contentInsets = isHorizontalScrolling ?
-            .init(
-                top: Theme.constant.padding,
-                leading: Theme.constant.padding,
-                bottom: 0,
-                trailing: Theme.constant.padding
-            ) :
-            .paddingHalf
-        section.interGroupSpacing = isHorizontalScrolling && horizontalScrollingForPendingEnabled ?
-        Theme.constant.padding.half :
-        Theme.constant.padding
-        
-        if isHorizontalScrolling && horizontalScrollingForPendingEnabled {
-            section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-        }
+        section.contentInsets = .paddingDefault
+        section.interGroupSpacing = Theme.constant.padding * 1.5
         
         let headerItemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
@@ -273,8 +310,17 @@ private extension CultProposalsViewController {
             elementKind: "header",
             alignment: .top
         )
+        let footerItemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(100)
+        )
+        let footerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: footerItemSize,
+            elementKind: "footer",
+            alignment: .bottom
+        )
         
-        section.boundarySupplementaryItems = [headerItem]
+        section.boundarySupplementaryItems = [headerItem, footerItem]
         
         return section
     }

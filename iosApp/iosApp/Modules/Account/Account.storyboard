@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Vbu-A3-ojv">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Vbu-A3-ojv">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="hkq-Kd-66e">
@@ -57,35 +57,28 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="343" placeholderIntrinsicHeight="60" distribution="fillEqually" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="KZY-5b-zIp">
-                                                            <rect key="frame" x="0.0" y="112" width="343" height="60"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="7II-i7-8uf">
+                                                            <rect key="frame" x="15.5" y="50" width="312" height="72"/>
                                                             <subviews>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dYP-b2-TIb" customClass="VerticalButton" customModule="iosApp" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="68.5" height="60"/>
-                                                                    <state key="normal" title="Button"/>
-                                                                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                                                    <connections>
-                                                                        <action selector="receiveAction:" destination="8W1-Hj-gqe" eventType="touchUpInside" id="6Mi-7X-2MJ"/>
-                                                                    </connections>
-                                                                </button>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PJm-0d-tM8" customClass="VerticalButton" customModule="iosApp" customModuleProvider="target">
-                                                                    <rect key="frame" x="91.5" y="0.0" width="68.5" height="60"/>
-                                                                    <state key="normal" title="Button"/>
-                                                                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                                                </button>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hqq-M2-ZZz" customClass="VerticalButton" customModule="iosApp" customModuleProvider="target">
-                                                                    <rect key="frame" x="183" y="0.0" width="68.5" height="60"/>
-                                                                    <state key="normal" title="Button"/>
-                                                                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                                                </button>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RML-Va-8WQ" customClass="VerticalButton" customModule="iosApp" customModuleProvider="target">
-                                                                    <rect key="frame" x="274.5" y="0.0" width="68.5" height="60"/>
-                                                                    <state key="normal" title="Button"/>
-                                                                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
-                                                                </button>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ywh-EX-shd" customClass="CustomVerticalButton" customModule="iosApp" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="72"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </view>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4YI-Qp-GcI" customClass="CustomVerticalButton" customModule="iosApp" customModuleProvider="target">
+                                                                    <rect key="frame" x="116" y="0.0" width="80" height="72"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </view>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lwx-vg-7Y2" customClass="CustomVerticalButton" customModule="iosApp" customModuleProvider="target">
+                                                                    <rect key="frame" x="116" y="0.0" width="80" height="72"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </view>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OR9-vr-mIX" customClass="CustomVerticalButton" customModule="iosApp" customModuleProvider="target">
+                                                                    <rect key="frame" x="116" y="0.0" width="80" height="72"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </view>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="60" id="LOD-hp-IP2"/>
+                                                                <constraint firstAttribute="height" constant="72" id="omh-7m-TyE"/>
                                                             </constraints>
                                                         </stackView>
                                                     </subviews>
@@ -102,11 +95,13 @@
                                         <connections>
                                             <outlet property="balanceFiatLabel" destination="frE-mH-NxF" id="pV5-Ly-bzj"/>
                                             <outlet property="balanceLabel" destination="wXg-oV-Iuc" id="IGd-6G-TZd"/>
+                                            <outlet property="buttonsStackView" destination="7II-i7-8uf" id="d90-HY-NkQ"/>
+                                            <outlet property="buttonsStackViewHeightConstraint" destination="omh-7m-TyE" id="rdW-Te-PFg"/>
                                             <outlet property="containerStack" destination="gyr-ex-ozb" id="utc-oR-fRb"/>
-                                            <outlet property="moreButton" destination="RML-Va-8WQ" id="zfE-OD-Q7i"/>
-                                            <outlet property="receiveButton" destination="dYP-b2-TIb" id="iFX-Xk-KKU"/>
-                                            <outlet property="sendButton" destination="PJm-0d-tM8" id="TVj-eE-dkY"/>
-                                            <outlet property="tradeButton" destination="hqq-M2-ZZz" id="qRs-zR-MAW"/>
+                                            <outlet property="moreButton" destination="OR9-vr-mIX" id="o4y-E4-avJ"/>
+                                            <outlet property="receiveButton" destination="Ywh-EX-shd" id="1oJ-Vp-Sug"/>
+                                            <outlet property="sendButton" destination="4YI-Qp-GcI" id="rOy-Dh-xD0"/>
+                                            <outlet property="tradeButton" destination="Lwx-vg-7Y2" id="J7N-5s-wwS"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AccountChartCell" id="ZhV-w9-hbX" customClass="AccountChartCell" customModule="iosApp" customModuleProvider="target">

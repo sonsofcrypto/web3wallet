@@ -11,6 +11,8 @@ enum OpenSeaNFTsServiceError: Error {
 
 final class OpenSeaNFTsService {
     
+    private let API_KEY = ""
+    
     private var nfts = [NFTItem]()
     private var collections = [NFTCollection]()
 }
@@ -62,13 +64,13 @@ extension OpenSeaNFTsService: NFTsService {
         // TODO: @Annon: Connect here current wallet address
         let address = "0x0C37f1FC90BF56387B59615508bbd975D448856F"
         
-        guard let url = makeURL(for: .assets(owner: address)) else {
+        guard let urlRequest = makeURLRequest(for: .assets(owner: address)) else {
             
             onCompletion(.failure(OpenSeaNFTsServiceError.unableToConstructURL))
             return
         }
         
-        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+        URLSession.shared.dataTask(with: urlRequest) { [weak self] data, _, error in
             
             guard let self = self else { return }
             
@@ -113,9 +115,9 @@ private extension OpenSeaNFTsService {
         }
     }
     
-    func makeURL(
+    func makeURLRequest(
         for details: Details
-    ) -> URL? {
+    ) -> URLRequest? {
         
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -135,7 +137,14 @@ private extension OpenSeaNFTsService {
             ]
         }
         
-        return urlComponents.url
+        guard let url = urlComponents.url else { return nil }
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.allHTTPHeaderFields = [
+            "X-API-KEY": API_KEY
+        ]
+        
+        return urlRequest
     }
 }
 

@@ -12,6 +12,9 @@ struct AccountWireframeContext {
 enum AccountWireframeDestination {
 
     case receive
+    case send
+    case swap
+    case more
 }
 
 protocol AccountWireframe {
@@ -24,6 +27,9 @@ final class DefaultAccountWireframe {
     private weak var presentingIn: UIViewController?
     private let context: AccountWireframeContext
     private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
+    private let tokenSendWireframeFactory: TokenSendWireframeFactory
+    private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
+    private let deepLinkHandler: DeepLinkHandler
     private let priceHistoryService: PriceHistoryService
     
     private weak var navigationController: NavigationController!
@@ -32,11 +38,17 @@ final class DefaultAccountWireframe {
         presentingIn: UIViewController,
         context: AccountWireframeContext,
         tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
+        tokenSendWireframeFactory: TokenSendWireframeFactory,
+        tokenSwapWireframeFactory: TokenSwapWireframeFactory,
+        deepLinkHandler: DeepLinkHandler,
         priceHistoryService: PriceHistoryService
     ) {
         self.presentingIn = presentingIn
         self.context = context
         self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
+        self.tokenSendWireframeFactory = tokenSendWireframeFactory
+        self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
+        self.deepLinkHandler = deepLinkHandler
         self.priceHistoryService = priceHistoryService
     }
 }
@@ -67,6 +79,28 @@ extension DefaultAccountWireframe: AccountWireframe {
                 context: .init(presentationStyle: .present, web3Token: context.web3Token)
             )
             wireframe.present()
+            
+        case .send:
+            
+            tokenSendWireframeFactory.makeWireframe(
+                presentingIn: navigationController,
+                context: .init(presentationStyle: .present, web3Token: context.web3Token)
+            ).present()
+            
+        case .swap:
+            
+            tokenSwapWireframeFactory.makeWireframe(
+                presentingIn: navigationController,
+                context: .init(
+                    presentationStyle: .present,
+                    tokenFrom: context.web3Token,
+                    tokenTo: nil
+                )
+            ).present()
+            
+        case .more:
+            
+            deepLinkHandler.handle(deepLink: .degen)
         }
     }
 }
