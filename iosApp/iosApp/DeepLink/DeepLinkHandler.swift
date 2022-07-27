@@ -38,7 +38,7 @@ extension DefaultDeepLinkHandler: DeepLinkHandler {
             
             switch deepLink {
             case .mnemonicConfirmation:
-                break
+                self.openMnemonicConfirmation()
             case .themesList:
                 self.navigate(to: .settings)
                 self.openThemeMenu()
@@ -81,7 +81,12 @@ private extension DefaultDeepLinkHandler {
             dismissPresentedVCs(for: presentedVC, completion: completion)
         }
         
-        viewController?.dismiss(animated: animated, completion: completion)
+        guard let viewController = viewController else {
+            completion()
+            return
+        }
+
+        viewController.dismiss(animated: animated, completion: completion)
     }
     
     func navigate(to destination: DestinationTab) {
@@ -115,6 +120,25 @@ private extension DefaultDeepLinkHandler {
         return rootVC.children.first(
             where: { $0 is TabBarController }
         ) as? TabBarController
+    }
+    
+    var dashboardVC: DashboardViewController? {
+        
+        guard let navigationController = tabBarController?.children.first(
+            where: {
+                guard let navigationController = $0 as? NavigationController else {
+                    return false
+                }
+                guard navigationController.topViewController is DashboardViewController else {
+                    return false
+                }
+                return true
+            }
+        ) as? NavigationController else {
+            return nil
+        }
+        
+        return navigationController.topViewController as? DashboardViewController
     }
     
     var settingsVC: SettingsViewController? {
@@ -160,5 +184,12 @@ private extension DefaultDeepLinkHandler {
                 ]
             )
         ).present()
+    }
+    
+    func openMnemonicConfirmation() {
+        
+        guard let dashboardVC = dashboardVC else { return }
+        let wireframe: MnemonicConfirmationWireframeFactory = ServiceDirectory.assembler.resolve()
+        wireframe.makeWireframe(dashboardVC).present()
     }
 }

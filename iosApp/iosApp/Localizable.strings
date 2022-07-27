@@ -150,7 +150,9 @@
 
 "mnemonicConfirmation.title" = "Confirm Mnemonic";
 "mnemonicConfirmation.confirm.wallet" = "Please enter the 12 word phrase you were given when you created your wallet.";
-"mnemonicConfirmation.cta" = "Confirm";
+"mnemonicConfirmation.cta" = "Validate";
+"mnemonicConfirmation.cta.invalid" = "Invalid mnemonic";
+"mnemonicConfirmation.cta.congratulations" = "Tap to confirm! 🥳";
 
 "nfts.dashboard.collection.title" = "Your Collections";
 "nfts.dashboard.collection.popular.author" = "Created by %@";

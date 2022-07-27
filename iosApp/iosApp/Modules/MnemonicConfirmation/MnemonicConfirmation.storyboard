@@ -17,30 +17,39 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="hjB-69-gtF">
-                                <rect key="frame" x="16" y="60" width="382" height="216.5"/>
+                                <rect key="frame" x="16" y="60" width="382" height="215.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I7k-3K-wN1">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I7k-3K-wN1">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NYb-q7-S9h">
-                                        <rect key="frame" x="0.0" y="36.5" width="382" height="100"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4gJ-wk-tg5">
+                                        <rect key="frame" x="0.0" y="36.5" width="382" height="132"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NYb-q7-S9h">
+                                                <rect key="frame" x="16" y="16" width="350" height="100"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="M9i-Rb-GEj"/>
+                                                </constraints>
+                                                <inset key="scrollIndicatorInsets" minX="16" minY="16" maxX="16" maxY="16"/>
+                                                <color key="textColor" systemColor="labelColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                            </textView>
+                                        </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="M9i-Rb-GEj"/>
+                                            <constraint firstItem="NYb-q7-S9h" firstAttribute="top" secondItem="4gJ-wk-tg5" secondAttribute="top" constant="16" id="QQz-jx-1JT"/>
+                                            <constraint firstAttribute="bottom" secondItem="NYb-q7-S9h" secondAttribute="bottom" constant="16" id="UkL-P7-dMZ"/>
+                                            <constraint firstItem="NYb-q7-S9h" firstAttribute="leading" secondItem="4gJ-wk-tg5" secondAttribute="leading" constant="16" id="XME-ql-qvl"/>
+                                            <constraint firstAttribute="trailing" secondItem="NYb-q7-S9h" secondAttribute="trailing" constant="16" id="odZ-5n-jDC"/>
                                         </constraints>
-                                        <inset key="scrollIndicatorInsets" minX="16" minY="16" maxX="16" maxY="16"/>
-                                        <color key="textColor" systemColor="labelColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
-                                    </textView>
+                                    </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vtj-V4-X6d" customClass="Button" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="152.5" width="382" height="64"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="64" id="vhb-5x-eAU"/>
-                                        </constraints>
+                                        <rect key="frame" x="0.0" y="184.5" width="382" height="31"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                         <connections>
@@ -49,27 +58,28 @@
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="NYb-q7-S9h" firstAttribute="leading" secondItem="hjB-69-gtF" secondAttribute="leading" id="13l-u6-n0g"/>
-                                    <constraint firstItem="I7k-3K-wN1" firstAttribute="leading" secondItem="hjB-69-gtF" secondAttribute="leading" id="5h8-Um-N23"/>
-                                    <constraint firstAttribute="trailing" secondItem="NYb-q7-S9h" secondAttribute="trailing" id="Flf-31-kK8"/>
-                                    <constraint firstAttribute="trailing" secondItem="Vtj-V4-X6d" secondAttribute="trailing" id="dEy-DK-gwk"/>
-                                    <constraint firstItem="Vtj-V4-X6d" firstAttribute="leading" secondItem="hjB-69-gtF" secondAttribute="leading" id="nVm-bh-r9w"/>
-                                    <constraint firstAttribute="trailing" secondItem="I7k-3K-wN1" secondAttribute="trailing" id="xlN-yE-2cR"/>
+                                    <constraint firstAttribute="trailing" secondItem="4gJ-wk-tg5" secondAttribute="trailing" id="2mb-Kf-UWM"/>
+                                    <constraint firstAttribute="trailing" secondItem="Vtj-V4-X6d" secondAttribute="trailing" id="2pU-8R-qv1"/>
+                                    <constraint firstAttribute="trailing" secondItem="I7k-3K-wN1" secondAttribute="trailing" id="9gR-Cw-ykw"/>
+                                    <constraint firstItem="4gJ-wk-tg5" firstAttribute="leading" secondItem="hjB-69-gtF" secondAttribute="leading" id="KX7-6f-Grf"/>
+                                    <constraint firstItem="I7k-3K-wN1" firstAttribute="leading" secondItem="hjB-69-gtF" secondAttribute="leading" id="fdL-83-bCb"/>
+                                    <constraint firstItem="Vtj-V4-X6d" firstAttribute="leading" secondItem="hjB-69-gtF" secondAttribute="leading" id="oes-aq-aUu"/>
                                 </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="hjB-69-gtF" secondAttribute="trailing" constant="16" id="5ak-yg-uC9"/>
-                            <constraint firstItem="hjB-69-gtF" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" constant="16" id="C8O-jb-Nex"/>
-                            <constraint firstItem="hjB-69-gtF" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="16" id="qNL-Cl-dCb"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="hjB-69-gtF" secondAttribute="trailing" constant="16" id="Aho-1N-Jo2"/>
+                            <constraint firstItem="hjB-69-gtF" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="16" id="MyQ-yN-SHq"/>
+                            <constraint firstItem="hjB-69-gtF" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="sZn-lR-Cql"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="button" destination="Vtj-V4-X6d" id="t7u-ex-rkd"/>
                         <outlet property="statusLabel" destination="I7k-3K-wN1" id="18M-Gh-cGX"/>
                         <outlet property="textView" destination="NYb-q7-S9h" id="H63-R5-Uaf"/>
+                        <outlet property="textViewContainer" destination="4gJ-wk-tg5" id="Tik-K9-6Tb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

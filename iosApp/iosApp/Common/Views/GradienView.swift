@@ -85,15 +85,15 @@ final class GradientView: UIView {
         }
     }
     
-    @IBInspectable
-    var defaultTopColor: UIColor = defaultShadowColors().first! {
-        didSet { colors = [defaultTopColor, defaultBottomColor] }
-    }
-    
-    @IBInspectable
-    var defaultBottomColor: UIColor = defaultShadowColors().last! {
-        didSet { colors = [defaultTopColor, defaultBottomColor] }
-    }
+//    @IBInspectable
+//    var defaultTopColor: UIColor = defaultShadowColors().first! {
+//        didSet { colors = [defaultTopColor, defaultBottomColor] }
+//    }
+//    
+//    @IBInspectable
+//    var defaultBottomColor: UIColor = defaultShadowColors().last! {
+//        didSet { colors = [defaultTopColor, defaultBottomColor] }
+//    }
     
     override class var layerClass: AnyClass {
         return CAGradientLayer.self

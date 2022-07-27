@@ -12,14 +12,16 @@ protocol MnemonicConfirmationView: AnyObject {
 
 final class MnemonicConfirmationViewController: UIViewController {
     
-    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var textViewContainer: UIView!
+    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var button: Button!
 
     var presenter: MnemonicConfirmationPresenter!
     
     private var viewModel: MnemonicConfirmationViewModel!
     private let inputAccessoryViewHeight: CGFloat = 40
+    private var firstTime = true
         
     override func viewDidLoad() {
         
@@ -46,6 +48,12 @@ extension MnemonicConfirmationViewController: MnemonicConfirmationView {
         self.viewModel = viewModel
         
         refresh()
+        
+        if firstTime {
+            
+            firstTime = false
+            textView.becomeFirstResponder()
+        }
     }
 }
 
@@ -69,29 +77,37 @@ private extension MnemonicConfirmationViewController {
         view.add(.targetAction(.init(target: self, selector: #selector(dismissKeyboard))))
         
         title = Localized("mnemonicConfirmation.title")
-        (view as? GradientView)?.colors = [
-            Theme.colour.backgroundBaseSecondary,
-            Theme.colour.backgroundBasePrimary
-        ]
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: Localized("close"),
+            style: .plain,
+            target: self,
+            action: #selector(dismissTapped)
+        )
         
         statusLabel.text = Localized("mnemonicConfirmation.confirm.wallet")
         statusLabel.font = Theme.font.body
         statusLabel.textColor = Theme.colour.labelPrimary
         
+        textViewContainer.backgroundColor = Theme.colour.cellBackground
+        textViewContainer.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        
         textView.delegate = self
-        textView.backgroundColor = Theme.colour.backgroundBaseSecondary.withAlpha(0.8)
-        textView.font = Theme.font.body
-        textView.textColor = Theme.colour.labelPrimary
+        textView.applyStyle(.body)
         textView.inputAccessoryView = makeInputAccessoryView()
 
-        button.setTitle(Localized("mnemonicConfirmation.title"), for: .normal)
-        button.setTitle(Localized("mnemonicConfirmation.title"), for: .disabled)
-        button.isEnabled = false
+        button.style = .primary
+        button.setTitle(Localized("mnemonicConfirmation.cta"), for: .normal)
     }
     
     @objc func dismissKeyboard() {
         
         textView.resignFirstResponder()
+    }
+
+    @objc func dismissTapped() {
+        
+        presenter.handle(.dismiss)
     }
 }
 
@@ -104,6 +120,10 @@ private extension MnemonicConfirmationViewController {
     }
     
     func refreshTextView() {
+        
+        if let text = viewModel.mnemonicToUpdate {
+            textView.text = text
+        }
         
         let selectedRange = textView.selectedRange
                         
@@ -127,7 +147,7 @@ private extension MnemonicConfirmationViewController {
             
             attributedText.setAttributes(
                 [
-                    .foregroundColor: Theme.colour.labelPrimary,
+                    .foregroundColor: Theme.colour.navBarTint,
                     .font: Theme.font.body
                 ],
                 range: .init(
@@ -142,8 +162,8 @@ private extension MnemonicConfirmationViewController {
         
         textView.attributedText = attributedText
         
-        textView.layer.borderWidth = hasInvalidWords ? 2 : 0
-        textView.layer.borderColor = hasInvalidWords ? Theme.colour.labelPrimary.cgColor : nil
+        textViewContainer.layer.borderWidth = hasInvalidWords ? 2 : 0
+        textViewContainer.layer.borderColor = hasInvalidWords ? Theme.colour.navBarTint.cgColor : nil
         
         textView.inputAccessoryView?.clearSubviews()
         addWords(viewModel.potentialWords, to: textView.inputAccessoryView)
@@ -153,7 +173,19 @@ private extension MnemonicConfirmationViewController {
     
     func refreshCTA() {
         
-        button.isEnabled = viewModel.isValid
+        guard let isValid = viewModel.isValid else {
+            
+            button.setTitle(Localized("mnemonicConfirmation.cta"), for: .normal)
+            return
+        }
+        
+        if isValid {
+            
+            button.setTitle(Localized("mnemonicConfirmation.cta.congratulations"), for: .normal)
+        } else {
+            
+            button.setTitle(Localized("mnemonicConfirmation.cta.invalid"), for: .normal)
+        }
     }
 }
 
@@ -170,7 +202,7 @@ private extension MnemonicConfirmationViewController {
                 )
             )
         )
-        scrollView.backgroundColor = Theme.colour.backgroundBaseSecondary.withAlpha(0.8)
+        scrollView.backgroundColor = Theme.colour.cellBackground
         addWords([], to: scrollView)
         return scrollView
     }
