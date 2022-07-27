@@ -68,66 +68,24 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="8wg-2O-LVj">
                                                         <rect key="frame" x="9.5" y="0.0" width="312" height="72"/>
                                                         <subviews>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5a8-s7-CHy" customClass="TokenReceiveActionButton" customModule="iosApp" customModuleProvider="target">
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5a8-s7-CHy" customClass="CustomVerticalButton" customModule="iosApp" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="80" height="72"/>
-                                                                <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cfW-6R-9nB">
-                                                                        <rect key="frame" x="28" y="8" width="24" height="24"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="24" id="4ge-43-Hl2"/>
-                                                                            <constraint firstAttribute="height" constant="24" id="AXm-11-2sE"/>
-                                                                        </constraints>
-                                                                    </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWZ-66-za8">
-                                                                        <rect key="frame" x="8" y="43.5" width="64" height="20.5"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="bottom" secondItem="fWZ-66-za8" secondAttribute="bottom" constant="8" id="45a-Sw-mND"/>
-                                                                    <constraint firstItem="fWZ-66-za8" firstAttribute="leading" secondItem="5a8-s7-CHy" secondAttribute="leading" constant="8" id="Aua-Bf-Rgl"/>
-                                                                    <constraint firstItem="cfW-6R-9nB" firstAttribute="centerX" secondItem="5a8-s7-CHy" secondAttribute="centerX" id="Bgi-I0-CgG"/>
-                                                                    <constraint firstAttribute="trailing" secondItem="fWZ-66-za8" secondAttribute="trailing" constant="8" id="ZRY-bD-Mkv"/>
-                                                                    <constraint firstItem="cfW-6R-9nB" firstAttribute="top" secondItem="5a8-s7-CHy" secondAttribute="top" constant="12" id="ice-bN-sWA"/>
                                                                     <constraint firstAttribute="width" constant="72" id="vS8-CE-cis"/>
                                                                 </constraints>
                                                                 <connections>
-                                                                    <outlet property="iconImageView" destination="cfW-6R-9nB" id="Yj2-k8-j5c"/>
-                                                                    <outlet property="nameLabel" destination="fWZ-66-za8" id="ici-83-zel"/>
+                                                                    <outlet property="widthConstraint" destination="vS8-CE-cis" id="Cmj-DC-UnG"/>
                                                                 </connections>
                                                             </view>
-                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e3L-zP-54K" customClass="TokenReceiveActionButton" customModule="iosApp" customModuleProvider="target">
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e3L-zP-54K" customClass="CustomVerticalButton" customModule="iosApp" customModuleProvider="target">
                                                                 <rect key="frame" x="116" y="0.0" width="80" height="72"/>
-                                                                <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FVd-66-SUx">
-                                                                        <rect key="frame" x="28" y="8" width="24" height="24"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="24" id="GQ8-vd-tNE"/>
-                                                                            <constraint firstAttribute="height" constant="24" id="wGt-qm-nLq"/>
-                                                                        </constraints>
-                                                                    </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ocM-mk-vVE">
-                                                                        <rect key="frame" x="8" y="43.5" width="64" height="20.5"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="trailing" secondItem="ocM-mk-vVE" secondAttribute="trailing" constant="8" id="0VM-NA-4UO"/>
-                                                                    <constraint firstItem="FVd-66-SUx" firstAttribute="top" secondItem="e3L-zP-54K" secondAttribute="top" constant="12" id="b1M-c7-VbA"/>
                                                                     <constraint firstAttribute="width" constant="72" id="cxO-yW-pdr"/>
-                                                                    <constraint firstItem="ocM-mk-vVE" firstAttribute="leading" secondItem="e3L-zP-54K" secondAttribute="leading" constant="8" id="iUg-Mq-Vg8"/>
-                                                                    <constraint firstItem="FVd-66-SUx" firstAttribute="centerX" secondItem="e3L-zP-54K" secondAttribute="centerX" id="oBT-FG-ZuW"/>
-                                                                    <constraint firstAttribute="bottom" secondItem="ocM-mk-vVE" secondAttribute="bottom" constant="8" id="yVc-9w-jG5"/>
                                                                 </constraints>
                                                                 <connections>
-                                                                    <outlet property="iconImageView" destination="FVd-66-SUx" id="t9e-gH-pI5"/>
-                                                                    <outlet property="nameLabel" destination="ocM-mk-vVE" id="LuN-io-7Tf"/>
+                                                                    <outlet property="widthConstraint" destination="cxO-yW-pdr" id="6QD-EX-7pa"/>
                                                                 </connections>
                                                             </view>
                                                         </subviews>
@@ -169,6 +127,8 @@
                     </view>
                     <connections>
                         <outlet property="addressLabel" destination="PXR-kb-IY5" id="sFe-gO-vjZ"/>
+                        <outlet property="buttonsStackView" destination="8wg-2O-LVj" id="uNU-mr-b90"/>
+                        <outlet property="buttonsStackViewHeightConstraint" destination="V0S-ef-66v" id="jjB-IO-hCj"/>
                         <outlet property="cardView" destination="aVI-ho-kAy" id="GOJ-px-KYd"/>
                         <outlet property="copyButton" destination="5a8-s7-CHy" id="fQu-bB-4LZ"/>
                         <outlet property="disclaimerLabel" destination="NbQ-kw-cQW" id="7oA-Vi-KtP"/>

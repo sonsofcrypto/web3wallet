@@ -269,7 +269,6 @@
 		1C60C36D2857C605003BE25D /* TokenReceiveWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C36C2857C605003BE25D /* TokenReceiveWireframeFactoryAssembler.swift */; };
 		1C60C36F2857C613003BE25D /* TokenReceiveInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C36E2857C613003BE25D /* TokenReceiveInteractor.swift */; };
 		1C60C3712857CEB5003BE25D /* TokenReceive.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C60C3702857CEB5003BE25D /* TokenReceive.storyboard */; };
-		1C60C3752857DC71003BE25D /* TokenReceiveActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3742857DC71003BE25D /* TokenReceiveActionButton.swift */; };
 		1C60C3772858634A003BE25D /* DefaultWeb3Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3762858634A003BE25D /* DefaultWeb3Service.swift */; };
 		1C60C37928588147003BE25D /* TokenPickerFilterAllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C37828588147003BE25D /* TokenPickerFilterAllCell.swift */; };
 		1C60C37B2859BDD9003BE25D /* UIView+Toast+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C37A2859BDD9003BE25D /* UIView+Toast+Extensions.swift */; };
@@ -410,6 +409,7 @@
 		1CB8B0E228907D8D00024E7C /* OnboardingServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0E128907D8D00024E7C /* OnboardingServiceAssembler.swift */; };
 		1CB8B0E42891040500024E7C /* TokenEnterAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0E32891040500024E7C /* TokenEnterAddressView.swift */; };
 		1CB8B0E62891346B00024E7C /* CultProposalFooterSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0E52891346B00024E7C /* CultProposalFooterSupplementaryView.swift */; };
+		1CB8B0E828916AA900024E7C /* Assets-ThemeIOS.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CB8B0E728916AA900024E7C /* Assets-ThemeIOS.xcassets */; };
 		1CBB9CBC286DA9E90007E2D4 /* DashboarView+CollectionCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBB9CBB286DA9E90007E2D4 /* DashboarView+CollectionCards.swift */; };
 		1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */; };
 		1CD3FE20284D5840008312DE /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD3FE1F284D5840008312DE /* FeatureFlags.swift */; };
@@ -793,7 +793,6 @@
 		1C60C36C2857C605003BE25D /* TokenReceiveWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReceiveWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C60C36E2857C613003BE25D /* TokenReceiveInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReceiveInteractor.swift; sourceTree = "<group>"; };
 		1C60C3702857CEB5003BE25D /* TokenReceive.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TokenReceive.storyboard; sourceTree = "<group>"; };
-		1C60C3742857DC71003BE25D /* TokenReceiveActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReceiveActionButton.swift; sourceTree = "<group>"; };
 		1C60C3762858634A003BE25D /* DefaultWeb3Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultWeb3Service.swift; sourceTree = "<group>"; };
 		1C60C37828588147003BE25D /* TokenPickerFilterAllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenPickerFilterAllCell.swift; sourceTree = "<group>"; };
 		1C60C37A2859BDD9003BE25D /* UIView+Toast+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Toast+Extensions.swift"; sourceTree = "<group>"; };
@@ -934,6 +933,7 @@
 		1CB8B0E128907D8D00024E7C /* OnboardingServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingServiceAssembler.swift; sourceTree = "<group>"; };
 		1CB8B0E32891040500024E7C /* TokenEnterAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenEnterAddressView.swift; sourceTree = "<group>"; };
 		1CB8B0E52891346B00024E7C /* CultProposalFooterSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalFooterSupplementaryView.swift; sourceTree = "<group>"; };
+		1CB8B0E728916AA900024E7C /* Assets-ThemeIOS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets-ThemeIOS.xcassets"; sourceTree = "<group>"; };
 		1CBB9CBB286DA9E90007E2D4 /* DashboarView+CollectionCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboarView+CollectionCards.swift"; sourceTree = "<group>"; };
 		1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetActionViewModel.swift; sourceTree = "<group>"; };
 		1CD3FE1F284D5840008312DE /* FeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
@@ -1718,7 +1718,6 @@
 				1C60C36E2857C613003BE25D /* TokenReceiveInteractor.swift */,
 				1C60C3622857C5E5003BE25D /* TokenReceivePresenter.swift */,
 				1C60C3662857C5F0003BE25D /* TokenReceiveView.swift */,
-				1C60C3742857DC71003BE25D /* TokenReceiveActionButton.swift */,
 				1C60C3642857C5EC003BE25D /* TokenReceiveViewModel.swift */,
 				1C60C3682857C5F8003BE25D /* TokenReceiveWireframe.swift */,
 				1C60C36A2857C5FE003BE25D /* TokenReceiveWireframeFactory.swift */,
@@ -2139,6 +2138,7 @@
 				D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */,
 				1C9E31AD287732A700DD2031 /* Assets-Old.xcassets */,
 				1C54DC73286A1D4B00E378F6 /* Assets-ThemeA.xcassets */,
+				1CB8B0E728916AA900024E7C /* Assets-ThemeIOS.xcassets */,
 				D157F7D327B69B6400578FF8 /* Assets.xcassets */,
 				1C54DC342868204000E378F6 /* Colours-ThemeA.xcassets */,
 				1CE0064D2889E604002D1EB3 /* Colours-ThemeIOS.xcassets */,
@@ -2466,6 +2466,7 @@
 				1CAC560A286EFFC300CCB2B6 /* SFProDisplay-Bold.otf in Resources */,
 				D11A990627B8615B00EDFDD0 /* OFL.txt in Resources */,
 				1C54DC5928683DDA00E378F6 /* NaokoAA-Light.otf in Resources */,
+				1CB8B0E828916AA900024E7C /* Assets-ThemeIOS.xcassets in Resources */,
 				1CAC55A8286E119500CCB2B6 /* KeyStore.storyboard in Resources */,
 				1C54DBEF285E835400E378F6 /* TokenAdd.storyboard in Resources */,
 				1C54DC5428683DDA00E378F6 /* NaokoAA-Bold-Italic.otf in Resources */,
@@ -2575,7 +2576,6 @@
 				1CD3FE342851D2A0008312DE /* UIView+Animations+Chat.swift in Sources */,
 				1C60C357285724D1003BE25D /* DegenViewCell.swift in Sources */,
 				1CE66BD22848ED4000AB6ACA /* PresentationStyle.swift in Sources */,
-				1C60C3752857DC71003BE25D /* TokenReceiveActionButton.swift in Sources */,
 				1CB3A1E32840D6B70092D667 /* Array+Extensions.swift in Sources */,
 				1CB3A1F22840D6B70092D667 /* Data+Extension.swift in Sources */,
 				1CB8B0D2288FBAA100024E7C /* SettingsWireframeFactoryAssembler.swift in Sources */,

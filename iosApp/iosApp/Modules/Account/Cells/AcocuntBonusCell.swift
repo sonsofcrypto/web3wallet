@@ -13,7 +13,7 @@ final class AccountBonusCell: CollectionViewCell {
         
         super.awakeFromNib()
         
-        titleLabel.apply(style: .callout)
+        titleLabel.apply(style: .callout, weight: .bold)
         layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
         
         chevronImage.tintColor = Theme.colour.labelPrimary

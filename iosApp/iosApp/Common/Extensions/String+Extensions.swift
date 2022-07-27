@@ -8,6 +8,11 @@ import Foundation
 
 extension String {
     
+    var themeImage: String {
+        
+        Theme.name + "-" + self
+    }
+    
     var url: URL? {
         
         URL(string: self)

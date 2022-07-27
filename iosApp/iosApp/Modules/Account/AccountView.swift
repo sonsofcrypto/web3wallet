@@ -14,7 +14,7 @@ final class AccountViewController: BaseViewController {
 
     var presenter: AccountPresenter!
 
-    private var viewModel: AccountViewModel?
+    private var viewModel: AccountViewModel!
     
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -66,29 +66,29 @@ extension AccountViewController: UICollectionViewDataSource {
         switch Section(rawValue: indexPath.section)! {
         case .header:
             let cell = collectionView.dequeue(AccountHeaderCell.self, for: indexPath)
-            cell.update(with: viewModel?.header)
+            cell.update(with: viewModel.header)
             return cell
         case .chart:
             let cell = collectionView.dequeue(AccountChartCell.self, for: indexPath)
-            cell.update(with: viewModel?.candles)
+            cell.update(with: viewModel.candles)
             return cell
         case .marketInfo:
             if indexPath.item == 1 {
                 let cell = collectionView.dequeue(AccountBonusCell.self, for: indexPath)
-                cell.titleLabel.text = viewModel?.bonusAction?.title ?? ""
+                cell.titleLabel.text = viewModel.bonusAction?.title ?? ""
                 return cell
             }
             let cell = collectionView.dequeue(AccountMarketInfoCell.self, for: indexPath)
-            cell.update(with: viewModel?.marketInfo)
+            cell.update(with: viewModel.marketInfo)
             return cell
         case .transactions:
             let cell = collectionView.dequeue(AccountTransactionCell.self, for: indexPath)
-            cell.update(with: viewModel?.transactions[indexPath.item])
-            if viewModel?.transactions.count == 1 {
+            cell.update(with: viewModel.transactions[indexPath.item])
+            if viewModel.transactions.count == 1 {
                 cell.update(for: .single)
             } else if indexPath.item == 0 {
                 cell.update(for: .top)
-            } else if indexPath.item == (viewModel?.transactions.count ?? 0) - 1 {
+            } else if indexPath.item == (viewModel.transactions.count) - 1 {
                 cell.update(for: .bottom)
             } else {
                 cell.update(for: .middle)
@@ -194,10 +194,7 @@ extension AccountViewController {
         case marketInfo
         case transactions
 
-        func cellCount(_ viewModel: AccountViewModel?) -> Int {
-            guard let viewModel = viewModel else {
-                return 0
-            }
+        func cellCount(_ viewModel: AccountViewModel) -> Int {
 
             switch self {
             case .marketInfo:

@@ -18,9 +18,10 @@ final class TokenReceiveViewController: BaseViewController {
     @IBOutlet weak var qrCodePngImageView: UIImageView!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var disclaimerLabel: UILabel!
-    
-    @IBOutlet weak var copyButton: TokenReceiveActionButton!
-    @IBOutlet weak var shareButton: TokenReceiveActionButton!
+    @IBOutlet weak var buttonsStackView: UIStackView!
+    @IBOutlet weak var buttonsStackViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var copyButton: CustomVerticalButton!
+    @IBOutlet weak var shareButton: CustomVerticalButton!
 
     private var viewModel: TokenReceiveViewModel?
     private lazy var filter = CIFilter(name: "CIQRCodeGenerator")
@@ -81,23 +82,28 @@ private extension TokenReceiveViewController {
         disclaimerLabel.font = Theme.font.body
         disclaimerLabel.textColor = Theme.colour.labelPrimary
         
-        copyButton.backgroundColor = Theme.colour.cellBackground
-        copyButton.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         copyButton.update(
-            with: Localized("tokenReceive.action.copy"),
-            and: UIImage(systemName: "square.on.square"),
-            onTap: makeCopyAction()
+            with: .init(
+                title: Localized("tokenReceive.action.copy"),
+                imageName: "square.on.square",
+                onTap: makeCopyAction()
+            )
         )
-        copyButton.tintColor = Theme.colour.labelPrimary
 
-        shareButton.backgroundColor = Theme.colour.cellBackground
-        shareButton.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         shareButton.update(
-            with: Localized("tokenReceive.action.share"),
-            and: UIImage(systemName: "square.and.arrow.up"),
-            onTap: makeShareAction()
+            with: .init(
+                title: Localized("tokenReceive.action.share"),
+                imageName: "square.and.arrow.up",
+                onTap: makeShareAction()
+            )
         )
-        shareButton.tintColor = Theme.colour.labelPrimary
+        
+        let spacingBetweenButtons = Theme.constant.padding * CGFloat(5)
+        let windowWidth = SceneDelegateHelper().window?.frame.width ?? 0
+        let height = (windowWidth - spacingBetweenButtons) / CGFloat(4)
+        buttonsStackViewHeightConstraint.constant = CGFloat(height)
+        copyButton.widthConstraint?.constant = CGFloat(height)
+        shareButton.widthConstraint?.constant = CGFloat(height)
     }
     
     @objc func navBarLeftActionTapped() {

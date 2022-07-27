@@ -9,12 +9,14 @@ final class AccountHeaderCell: UICollectionViewCell {
     @IBOutlet weak var containerStack: UIStackView!
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var balanceFiatLabel: UILabel!
-    @IBOutlet weak var receiveButton: VerticalButton!
-    @IBOutlet weak var sendButton: VerticalButton!
-    @IBOutlet weak var tradeButton: VerticalButton!
-    @IBOutlet weak var moreButton: VerticalButton!
+    @IBOutlet weak var buttonsStackView: UIStackView!
+    @IBOutlet weak var buttonsStackViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var receiveButton: CustomVerticalButton!
+    @IBOutlet weak var sendButton: CustomVerticalButton!
+    @IBOutlet weak var tradeButton: CustomVerticalButton!
+    @IBOutlet weak var moreButton: CustomVerticalButton!
     
-    private var viewModel: AccountViewModel.Header?
+    private var viewModel: AccountViewModel.Header!
     
     override func awakeFromNib() {
         
@@ -29,44 +31,57 @@ final class AccountHeaderCell: UICollectionViewCell {
         )
         containerStack.bringSubviewToFront(balanceLabel)
         balanceLabel.clipsToBounds = false
+        
+        let spacingBetweenButtons = Theme.constant.padding * CGFloat(5)
+        let windowWidth = SceneDelegateHelper().window?.frame.width ?? 0
+        let height = (windowWidth - spacingBetweenButtons) / CGFloat(4)
+        buttonsStackViewHeightConstraint.constant = CGFloat(height)
     }
 }
 
 extension AccountHeaderCell {
     
-    @IBAction func receiveAction(_ sender: Any) {
+    @IBAction func receiveAction() {
 
-        viewModel?.buttons[0].onTap()
+        viewModel.buttons[0].onTap()
     }
 
-    @IBAction func sendAction(_ sender: Any) {
+    @IBAction func sendAction() {
 
+        viewModel.buttons[1].onTap()
     }
 
-    @IBAction func tradeAction(_ sender: Any) {
+    @IBAction func tradeAction() {
 
+        viewModel.buttons[2].onTap()
     }
 
-    @IBAction func moreAction(_ sender: Any) {
+    @IBAction func moreAction() {
 
+        viewModel.buttons[3].onTap()
     }
 }
 
 extension AccountHeaderCell {
 
-    func update(with viewModel: AccountViewModel.Header?) {
+    func update(with viewModel: AccountViewModel.Header) {
         
         self.viewModel = viewModel
         
-        balanceLabel.text = viewModel?.balance
-        balanceFiatLabel.text = viewModel?.fiatBalance
+        balanceLabel.text = viewModel.balance
+        balanceFiatLabel.text = viewModel.fiatBalance
         
-        [receiveButton, sendButton, tradeButton, moreButton].enumerated().forEach {
-            let button = viewModel?.buttons[$0.0]
-            let imageName = button?.imageName ?? ""
-            $0.1?.setImage(
-                .init(named: imageName) ?? .init(systemName: imageName), for: .normal)
-            $0.1?.setTitle(button?.title, for: .normal)
-        }
+        receiveButton.update(
+            with: viewModel.buttons[0]
+        )
+        sendButton.update(
+            with: viewModel.buttons[1]
+        )
+        tradeButton.update(
+            with: viewModel.buttons[2]
+        )
+        moreButton.update(
+            with: viewModel.buttons[3]
+        )
     }
 }

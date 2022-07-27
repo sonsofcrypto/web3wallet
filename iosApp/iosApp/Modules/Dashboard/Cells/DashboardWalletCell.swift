@@ -96,7 +96,7 @@ private extension DashboardWalletCell {
         )
 
         // Add mask
-        let maskImage = UIImage(named: "themA-dashboard-mask")!
+        let maskImage = UIImage(named: "themeA-dashboard-mask")!
         let maskView = UIImageView(
             image: maskImage
         )

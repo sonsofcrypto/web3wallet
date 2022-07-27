@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import UIKit
 
 enum AccountPresenterEvent {
 
@@ -50,11 +51,11 @@ extension DefaultAccountPresenter: AccountPresenter {
         case .receive:
             wireframe.navigate(to: .receive)
         case .send:
-            break
+            wireframe.navigate(to: .send)
         case .swap:
-            break
+            wireframe.navigate(to: .swap)
         case .more:
-            break
+            wireframe.navigate(to: .more)
         }
     }
 }
@@ -66,6 +67,7 @@ private extension DefaultAccountPresenter {
 private extension DefaultAccountPresenter {
 
     func viewModel(token: Web3Token) -> AccountViewModel {
+        
         .init(
             currencyName: token.name,
             header: .init(
@@ -73,28 +75,7 @@ private extension DefaultAccountPresenter {
                 fiatBalance: "$6,900",
                 pct: "+4.5%",
                 pctUp: true,
-                buttons: [
-                    .init(
-                        title: Localized("receive"),
-                        imageName: "receive-button",
-                        onTap: makeOnReceieveTap()
-                    ),
-                    .init(
-                        title: Localized("send"),
-                        imageName: "arrow.forward",
-                        onTap: makeOnSendTap()
-                    ),
-                    .init(
-                        title: Localized("swap"),
-                        imageName: "swap-button",
-                        onTap: makeOnSwapTap()
-                    ),
-                    .init(
-                        title: Localized("more"),
-                        imageName: "button_more",
-                        onTap: makeOnMoreTap()
-                    )
-                ]
+                buttons: makeButtons()
             ),
             candles: .loaded(interactor.priceData(for: token).toCandlesViewModelCandle),
             marketInfo: .init(
@@ -122,6 +103,32 @@ private extension DefaultAccountPresenter {
 }
 
 private extension DefaultAccountPresenter {
+    
+    func makeButtons() -> [CustomVerticalButton.ViewModel] {
+        
+        [
+            .init(
+                title: Localized("receive"),
+                imageName: "receive-button".themeImage,
+                onTap: makeOnReceieveTap()
+            ),
+            .init(
+                title: Localized("send"),
+                imageName: "send-button".themeImage,
+                onTap: makeOnSendTap()
+            ),
+            .init(
+                title: Localized("swap"),
+                imageName: "swap-button".themeImage,
+                onTap: makeOnSwapTap()
+            ),
+            .init(
+                title: Localized("more"),
+                imageName: "more-button".themeImage,
+                onTap: makeOnMoreTap()
+            )
+        ]
+    }
     
     func makeOnReceieveTap() -> () -> Void {
         

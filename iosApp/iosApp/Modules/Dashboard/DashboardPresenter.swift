@@ -208,17 +208,17 @@ private extension DefaultDashboardPresenter {
                     [
                         .init(
                             title: Localized("dashboard.button.receive"),
-                            imageName: "receive-button",
+                            imageName: "receive-button".themeImage,
                             type: .receive
                         ),
                         .init(
                             title: Localized("dashboard.button.send"),
-                            imageName: "send-button",
+                            imageName: "send-button".themeImage,
                             type: .send
                         ),
                         .init(
                             title: Localized("dashboard.button.swap"),
-                            imageName: "swap-button",
+                            imageName: "swap-button".themeImage,
                             type: .swap
                         )
                     ]

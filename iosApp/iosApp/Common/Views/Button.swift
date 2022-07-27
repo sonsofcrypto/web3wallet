@@ -140,6 +140,7 @@ final class VerticalButton: Button {
 
         imageView.center.x = bounds.width / 2
         imageView.center.y = bounds.height * 0.3333
+        imageView.contentMode = .center
 
         // TODO: Remove this hack. Introduced coz color and font were on being
         // set when setting from `AccountHeaderCell`
@@ -150,5 +151,87 @@ final class VerticalButton: Button {
         label.bounds.size.height = bounds.height * 0.3333
         label.center.x = bounds.width / 2
         label.center.y = bounds.height - label.bounds.height / 2 - 4
+    }
+}
+
+final class CustomVerticalButton: UIView {
+    
+    struct ViewModel {
+        
+        let title: String
+        let imageName: String
+        let onTap: () -> Void
+    }
+    
+    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var widthConstraint: NSLayoutConstraint?
+    
+    private var onTap: (() -> Void)?
+    
+    override func awakeFromNib() {
+
+        super.awakeFromNib()
+        
+        backgroundColor = Theme.colour.cellBackground
+        layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        tintColor = Theme.colour.labelPrimary
+        
+        let wrapperView = UIView()
+        wrapperView.backgroundColor = .clear
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = Theme.colour.labelPrimary
+        self.iconImageView = imageView
+        wrapperView.addSubview(imageView)
+        imageView.addConstraints(
+            [
+                .layout(anchor: .topAnchor),
+                .layout(anchor: .bottomAnchor),
+                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 24)),
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24)),
+                .layout(anchor: .centerXAnchor),
+                .layout(anchor: .centerYAnchor)
+            ]
+        )
+        
+        let nameLabel = UILabel()
+        nameLabel.apply(style: .subheadline)
+        nameLabel.textAlignment = .center
+        self.nameLabel = nameLabel
+        
+        let vStack = VStackView([wrapperView, nameLabel])
+        vStack.spacing = Theme.constant.padding.half
+        addSubview(vStack)
+        
+        vStack.addConstraints(
+            [
+                .layout(anchor: .centerXAnchor),
+                .layout(anchor: .centerYAnchor)
+            ]
+        )
+        
+        guard gestureRecognizers?.isEmpty ?? true else { return }
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+        addGestureRecognizer(tapGesture)
+    }
+    
+    func update(
+        with viewModel: ViewModel
+    ) {
+        
+        nameLabel.text = viewModel.title
+        iconImageView.image = UIImage(named: viewModel.imageName)
+        ?? UIImage(systemName: viewModel.imageName)
+        
+        self.onTap = viewModel.onTap
+    }
+}
+
+private extension CustomVerticalButton {
+    
+    @objc func viewTapped() {
+        
+        onTap?()
     }
 }

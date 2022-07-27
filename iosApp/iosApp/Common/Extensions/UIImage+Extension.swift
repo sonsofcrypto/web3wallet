@@ -6,6 +6,11 @@ import UIKit
 
 extension UIImage {
     
+    static func themeImage(named: String) -> UIImage? {
+        
+        return UIImage(named: "\(Theme.name)-\(named)")
+    }
+    
     func resize(to size: CGSize) -> UIImage {
         
         UIGraphicsImageRenderer(size: size).image { _ in

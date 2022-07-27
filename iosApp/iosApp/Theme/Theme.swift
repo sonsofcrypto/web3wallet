@@ -27,6 +27,7 @@ var appTheme: Themable {
 
 protocol Themable {
     
+    var name: String { get }
     var statusBarStyle: ThemeStatusBarStyle { get }
     var type: ThemeType { get }
     var font: ThemeFont { get }
