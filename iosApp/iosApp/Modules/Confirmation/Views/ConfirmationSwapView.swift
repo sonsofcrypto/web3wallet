@@ -111,7 +111,7 @@ private extension ConfirmationSwapView {
     
     func makeArrowDown() -> UIView {
         
-        let imageView = UIImageView(image: .init(systemName: "arrow.down"))
+        let imageView = UIImageView(image: "arrow.down".assetImage)
         imageView.tintColor = Theme.colour.labelPrimary
         
         let backgroundView = UIView()

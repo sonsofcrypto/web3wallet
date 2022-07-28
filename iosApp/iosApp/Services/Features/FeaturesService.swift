@@ -49,7 +49,7 @@ private extension DefaultFeaturesService {
             .init(
                 title: "Feature 1",
                 body: "This is actually much cooler that you may think. Stay tunned!",
-                image: UIImage(named: "dashboard-palm")!.pngData()!,
+                image: "dashboard-palm".assetImage!.pngData()!,
                 category: .infrastructure
             )
         ]

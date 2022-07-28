@@ -121,13 +121,13 @@ private extension DashboardViewController {
         transitioningDelegate = self
                 
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: .init(systemName: "chevron.left"),
+            image: "chevron.left".assetImage,
             style: .plain,
             target: self,
             action: #selector(navBarLeftActionTapped)
         )
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: .init(systemName: "qrcode.viewfinder"),
+            image: "qrcode.viewfinder".assetImage,
             style: .plain,
             target: self,
             action: #selector(navBarRightActionTapped)
@@ -141,7 +141,7 @@ private extension DashboardViewController {
         
         navigationController?.tabBarItem = UITabBarItem(
             title: Localized("dashboard.tab.title"),
-            image: UIImage(named: "tab_icon_dashboard"),
+            image: "tab_icon_dashboard".assetImage,
             tag: 0
         )
     }

@@ -24,7 +24,7 @@ final class NavigationController: UINavigationController {
         ]
         
         appearance.setBackIndicatorImage(
-            UIImage(systemName: "chevron.left"),
+            "chevron.left".assetImage,
             transitionMaskImage:  nil
         )
 

@@ -30,11 +30,11 @@ final class TokenNetworkFeeView: UIView {
         
         nameLabel.apply(style: .footnote)
         nameLabel.text = Localized("tokenSwap.cell.estimatedFee")
-        networkTokenIcon.image = .init(named: "send-ethereum-token")
+        networkTokenIcon.image = "send-ethereum-token".assetImage
         networkEstimateFeeLabel.font = Theme.font.footnote
         networkEstimateFeeLabel.textColor = Theme.colour.labelPrimary
         networkFeeButton.style = .secondarySmall(
-            leftImage: .init(named: "dashboard-charging-station")
+            leftImage: "dashboard-charging-station".assetImage
         )
         networkFeeButton.addTarget(self, action: #selector(changeNetworkFee), for: .touchUpInside)
     }

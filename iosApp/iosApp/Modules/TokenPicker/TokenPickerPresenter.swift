@@ -407,7 +407,7 @@ private extension DefaultTokenPickerPresenter {
             }
             
             return .init(
-                image: interactor.tokenIcon(for: token).pngImage ?? .init(named: "default_token")!,
+                image: interactor.tokenIcon(for: token).pngImage ?? "default_token".assetImage!,
                 symbol: token.symbol,
                 name: token.name,
                 network: token.network.name,

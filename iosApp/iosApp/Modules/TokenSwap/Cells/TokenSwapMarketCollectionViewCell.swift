@@ -36,7 +36,7 @@ final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
         imageView.superview?.backgroundColor = Theme.colour.cellBackground
         
         imageView.tintColor = Theme.colour.labelSecondary
-        imageView.image = .init(systemName: "arrow.up.arrow.down")
+        imageView.image = "arrow.up.arrow.down".assetImage
         imageView.isHidden = false
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(flip))
         imageView.addGestureRecognizer(tapGesture)

@@ -52,12 +52,12 @@ extension SettingsCell {
             
         case .item:
             rightImageView.alpha = 1
-            rightImageView.image = UIImage(systemName: "chevron.right")
+            rightImageView.image = "chevron.right".assetImage
 
         case let .action(_, _, showTickOnSelected):
             
             if showTickOnSelected {
-                rightImageView.image = UIImage(systemName: "checkmark")
+                rightImageView.image = "checkmark".assetImage
                 rightImageView.alpha = (viewModel.isSelected ?? false) ? 1 : 0
             } else {
                 rightImageView.alpha = 0

@@ -75,6 +75,6 @@ struct CultProposalViewModel {
     
     var titleIcon: Data {
         
-        UIImage(named: "degen-cult-icon")!.pngData()!
+        "degen-cult-icon".assetImage!.pngData()!
     }
 }

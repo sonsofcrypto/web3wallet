@@ -76,7 +76,7 @@ extension CultProposalsViewModel {
     
     var titleIcon: Data {
         
-        UIImage(named: "degen-cult-icon")!.pngData()!
+        "degen-cult-icon".assetImage!.pngData()!
     }
 
     var sections: [CultProposalsViewModel.Section] {

@@ -642,6 +642,7 @@
                     <connections>
                         <outlet property="collectionView" destination="74Y-Ma-gMe" id="ISC-jX-ra4"/>
                         <outlet property="feesPickerView" destination="e16-94-oLm" id="hUQ-yj-gRV"/>
+                        <outlet property="providerLogo" destination="EfH-ZL-VFh" id="BWp-bB-62G"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u1d-mp-e5e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

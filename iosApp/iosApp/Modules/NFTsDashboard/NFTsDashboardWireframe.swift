@@ -48,7 +48,7 @@ extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
         
         navigationController.tabBarItem = UITabBarItem(
             title: Localized("nfts"),
-            image: UIImage(named: "tab_icon_nfts"),
+            image: "tab_icon_nfts".assetImage,
             tag: 2
         )
 

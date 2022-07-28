@@ -97,7 +97,7 @@ private extension ConfirmationViewController {
     func configureUI() {
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: .init(systemName: "xmark"),
+            image: "xmark".assetImage,
             style: .plain,
             target: self,
             action: #selector(dismissAction)

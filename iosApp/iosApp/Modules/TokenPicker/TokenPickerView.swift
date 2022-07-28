@@ -132,7 +132,7 @@ private extension TokenPickerViewController {
         if viewModel.allowMultiSelection {
             
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: .init(systemName: "plus"),
+                image: "plus".assetImage,
                 style: .plain,
                 target: self,
                 action: #selector(addCustomToken)

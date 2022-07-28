@@ -157,7 +157,7 @@ private extension DefaultCultProposalsPresenter {
             type: .pending,
             items: pendingProposals.compactMap { viewModel(from: $0) },
             footer: .init(
-                image: UIImage(named: "degen-cult-icon")!.pngData()!,
+                image: "degen-cult-icon".assetImage!.pngData()!,
                 text: Localized("cult.proposals.footer.text")
             )
         )
@@ -166,7 +166,7 @@ private extension DefaultCultProposalsPresenter {
             type: .closed,
             items: closedProposals.compactMap { viewModel(from: $0) },
             footer: .init(
-                image: UIImage(named: "degen-cult-icon")!.pngData()!,
+                image: "degen-cult-icon".assetImage!.pngData()!,
                 text: Localized("cult.proposals.footer.text")
             )
         )

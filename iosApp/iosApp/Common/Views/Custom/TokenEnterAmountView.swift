@@ -56,7 +56,7 @@ final class TokenEnterAmountView: UIView {
         sendAmountTextField.rightViewMode = .whileEditing
         
         let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(flipMode))
-        flipImageView.image = .init(systemName: "arrow.left.arrow.right")
+        flipImageView.image = "arrow.left.arrow.right".assetImage
         flipImageView.tintColor = Theme.colour.labelPrimary
         flipImageView.isUserInteractionEnabled = true
         flipImageView.addGestureRecognizer(tapGesture1)
@@ -76,9 +76,7 @@ final class TokenEnterAmountView: UIView {
         tokenIconImageView.layer.cornerRadius = tokenIconImageView.frame.size.width * 0.5
         tokenLabel.font = Theme.font.body
         tokenLabel.textColor = Theme.colour.labelPrimary
-        tokenDropdownImageView.image = .init(
-            systemName: "chevron.down"
-        )
+        tokenDropdownImageView.image = "chevron.down".assetImage
         tokenDropdownImageView.tintColor = Theme.colour.labelPrimary
         
         balanceLabel.font = Theme.font.footnote
@@ -188,7 +186,7 @@ private extension TokenEnterAmountView {
         
         let button = UIButton(type: .system)
         button.setImage(
-            .init(systemName: "xmark.circle.fill"),
+            "xmark.circle.fill".assetImage,
             for: .normal
         )
         button.tintColor = Theme.colour.labelSecondary

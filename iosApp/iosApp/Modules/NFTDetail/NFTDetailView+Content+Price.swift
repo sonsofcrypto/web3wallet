@@ -21,7 +21,7 @@ extension NFTDetailViewController {
         let hStackView = HStackView()
         hStackView.spacing = Theme.constant.padding * 0.5
         
-        let iconImage = UIImageView(image: UIImage(named: "ethereum-icon"))
+        let iconImage = UIImageView(image: "ethereum-icon".assetImage)
         iconImage.tintColor = Theme.colour.labelPrimary
         iconImage.addConstraints(
             [

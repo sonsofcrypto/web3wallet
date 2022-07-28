@@ -109,7 +109,7 @@ private extension QRCodeScanViewController {
         }
         
         return UIBarButtonItem(
-            image: .init(systemName: "chevron.left"),
+            image: "chevron.left".assetImage,
             style: .plain,
             target: self,
             action: #selector(closeTapped)

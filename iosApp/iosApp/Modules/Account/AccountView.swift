@@ -220,7 +220,7 @@ private extension AccountViewController {
 
         navigationItem.rightBarButtonItem = UIBarButtonItem.glowLabel()
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: .init(systemName: "chevron.left"),
+            image: "chevron.left".assetImage,
             style: .plain,
             target: self,
             action: #selector(dismissAction)

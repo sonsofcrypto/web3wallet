@@ -228,7 +228,7 @@ private extension DefaultWeb3Service {
             ]
         )
 
-        return UIImage(systemName: "s.circle.fill")!
+        return "s.circle.fill".assetImage!
             .applyingSymbolConfiguration(config)!
             .pngData()!
     }

@@ -87,7 +87,7 @@ private extension DefaultChatWireframe {
             let navigationController = NavigationController(rootViewController: vc)
             navigationController.tabBarItem = UITabBarItem(
                 title: Localized("apps"),
-                image: UIImage(named: "tab_icon_apps"),
+                image: "tab_icon_apps".assetImage,
                 tag: 3
             )
             return navigationController

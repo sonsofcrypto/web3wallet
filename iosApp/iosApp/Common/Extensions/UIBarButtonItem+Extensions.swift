@@ -13,7 +13,7 @@ extension UIBarButtonItem {
         selector: Selector?
     ) {
         self.init(
-            image: UIImage(named: imageName),
+            image: imageName.assetImage,
             style: .plain,
             target: target,
             action: selector

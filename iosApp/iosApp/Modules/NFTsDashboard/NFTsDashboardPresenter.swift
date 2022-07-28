@@ -141,10 +141,8 @@ private extension DefaultNFTsDashboardPresenter {
         }
         
         
-        let viewModel = NFTsDashboardViewModel(
-            nfts: nfts,
-            collections: collections
+        view.update(
+            with: .loaded(nfts: nfts, collections: collections)
         )
-        view.update(with: viewModel)
     }
 }

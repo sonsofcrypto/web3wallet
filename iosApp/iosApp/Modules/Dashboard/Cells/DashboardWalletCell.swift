@@ -73,7 +73,7 @@ private extension DashboardWalletCell {
         clipsToBounds = false
         
         // Add screen
-        let image = UIImage(named: "themeA-dashboard-screen")!
+        let image = "themeA-dashboard-screen".assetImage!
         let screenView = UIImageView(
             image: image.resizableImage(
                 withCapInsets: .init(
@@ -96,7 +96,7 @@ private extension DashboardWalletCell {
         )
 
         // Add mask
-        let maskImage = UIImage(named: "themeA-dashboard-mask")!
+        let maskImage = "themeA-dashboard-mask".assetImage!
         let maskView = UIImageView(
             image: maskImage
         )
