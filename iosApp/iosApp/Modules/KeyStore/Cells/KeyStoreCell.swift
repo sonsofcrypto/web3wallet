@@ -86,7 +86,7 @@ private extension KeyStoreCell {
         indexImage.alpha = isSelected ? 1.0 : 0.5
         
         titleLabel.font = isSelected
-        ? Theme.font.title3Bold
+        ? Theme.font.title3
         : Theme.font.title3
         titleLabel.textColor = isSelected
         ? Theme.colour.labelPrimary

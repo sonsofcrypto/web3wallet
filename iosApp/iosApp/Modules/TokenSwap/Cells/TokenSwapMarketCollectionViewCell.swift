@@ -23,7 +23,9 @@ final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
         let onTokenFromAmountChanged: ((Double) -> Void)?
         let onTokenToTapped: (() -> Void)
         let onTokenToAmountChanged: ((Double) -> Void)?
-        let onSwapFlip: (() -> Void)?
+        let onSwapFlip: (() -> Void)
+        let onProviderTapped: () -> Void
+        let onSlippageTapped: () -> Void
         let onNetworkFeesTapped: () -> Void
         let onCTATapped: () -> Void
     }
@@ -54,11 +56,11 @@ final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
         button.configuration = configuration
         button.updateConfiguration()
         
-        stackView.setCustomSpacing(32, after: tokenTo)
-        stackView.setCustomSpacing(4, after: tokenSwapProviderView)
-        stackView.setCustomSpacing(4, after: tokenSwapPriceView)
-        stackView.setCustomSpacing(8, after: tokenSwapSlippageView)
-        stackView.setCustomSpacing(16, after: networkFeeView)
+        stackView.setCustomSpacing(Theme.constant.padding * 1.5, after: tokenTo)
+        stackView.setCustomSpacing(Theme.constant.padding.half, after: tokenSwapProviderView)
+        stackView.setCustomSpacing(Theme.constant.padding.half, after: tokenSwapPriceView)
+        stackView.setCustomSpacing(Theme.constant.padding.half, after: tokenSwapSlippageView)
+        stackView.setCustomSpacing(Theme.constant.padding, after: networkFeeView)
     }
     
     override func resignFirstResponder() -> Bool {
@@ -108,7 +110,8 @@ extension TokenSwapMarketCollectionViewCell {
         )
         
         tokenSwapProviderView.update(
-            with: viewModel.tokenSwapProviderViewModel
+            with: viewModel.tokenSwapProviderViewModel,
+            handler: .init(onProviderTapped: handler.onProviderTapped)
         )
         
         tokenSwapPriceView.update(
@@ -116,7 +119,8 @@ extension TokenSwapMarketCollectionViewCell {
         )
         
         tokenSwapSlippageView.update(
-            with: viewModel.tokenSwapSlippageViewModel
+            with: viewModel.tokenSwapSlippageViewModel,
+            handler: .init(onSlippageTapped: handler.onSlippageTapped)
         )
         
         networkFeeView.update(
@@ -151,7 +155,7 @@ private extension TokenSwapMarketCollectionViewCell {
     
     @objc func flip() {
         
-        handler.onSwapFlip?()
+        handler.onSwapFlip()
     }
     
     @objc func buttonTapped() {

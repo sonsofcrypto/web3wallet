@@ -13,6 +13,7 @@ struct TokenSwapWireframeContext {
 
 enum TokenSwapWireframeDestination {
     
+    case underConstructionAlert
     case selectMyToken(onCompletion: (Web3Token) -> Void)
     case selectToken(onCompletion: (Web3Token) -> Void)
     case confirmSwap(
@@ -33,6 +34,7 @@ final class DefaultTokenSwapWireframe {
     private let context: TokenSwapWireframeContext
     private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
+    private let alertWireframeFactory: AlertWireframeFactory
     private let web3Service: Web3Service
     
     private weak var navigationController: NavigationController!
@@ -42,12 +44,14 @@ final class DefaultTokenSwapWireframe {
         context: TokenSwapWireframeContext,
         tokenPickerWireframeFactory: TokenPickerWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
+        alertWireframeFactory: AlertWireframeFactory,
         web3Service: Web3Service
     ) {
         self.presentingIn = presentingIn
         self.context = context
         self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
         self.confirmationWireframeFactory = confirmationWireframeFactory
+        self.alertWireframeFactory = alertWireframeFactory
         self.web3Service = web3Service
     }
 }
@@ -75,6 +79,18 @@ extension DefaultTokenSwapWireframe: TokenSwapWireframe {
     func navigate(to destination: TokenSwapWireframeDestination) {
         
         switch destination {
+            
+        case .underConstructionAlert:
+            
+            guard let viewController = navigationController.topViewController else {
+                
+                return
+            }
+            
+            alertWireframeFactory.makeWireframe(
+                viewController,
+                context: .underConstructionAlert()
+            ).present()
             
         case let .selectMyToken(onCompletion):
             presentTokenPicker(with: .myToken, onCompletion: onCompletion)

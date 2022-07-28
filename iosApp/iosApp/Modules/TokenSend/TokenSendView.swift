@@ -126,7 +126,7 @@ private extension TokenSendViewController {
     func configureUI() {
                 
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: "chevron.left".assetImage,
+            title: Localized("close"),
             style: .plain,
             target: self,
             action: #selector(navBarLeftActionTapped)
@@ -204,7 +204,10 @@ private extension TokenSendViewController {
         //height += Theme.constant.cellHeightSmall
         //height += Theme.constant.padding
         //height += 36 // fees view
-        height += 118
+        height += Theme.constant.padding * 2
+        height += 24
+        height += Theme.constant.padding
+        height += Theme.constant.buttonPrimaryHeight
         
         return height
     }
@@ -234,7 +237,7 @@ private extension TokenSendViewController {
         let sectionInset: CGFloat = Theme.constant.padding
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = .init(
-            top: sectionIndex == 0 ? sectionInset : sectionIndex == 1 ? sectionInset * 0.5 : 0,
+            top: sectionIndex == 0 ? sectionInset : 0,
             leading: sectionInset,
             bottom: sectionIndex == 1 ? 0 : sectionInset,
             trailing: sectionInset

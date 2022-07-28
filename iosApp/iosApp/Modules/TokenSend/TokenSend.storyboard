@@ -35,16 +35,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7PC-md-A3i" customClass="TokenEnterAddressView" customModule="iosApp" customModuleProvider="target">
-                                                    <rect key="frame" x="-20" y="-20" width="453" height="86"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="413" height="46"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="v8M-WP-eFZ">
-                                                            <rect key="frame" x="20" y="20" width="413" height="46"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="413" height="46"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NVb-pb-KwR">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="306.5" height="46"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="383" height="46"/>
                                                                     <subviews>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qKW-xc-SBl">
-                                                                            <rect key="frame" x="8" y="0.0" width="290.5" height="46"/>
+                                                                            <rect key="frame" x="8" y="0.0" width="367" height="46"/>
                                                                             <subviews>
                                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zQp-cn-ChD">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="22" height="46"/>
@@ -55,9 +55,9 @@
                                                                                     <buttonConfiguration key="configuration" style="plain"/>
                                                                                 </button>
                                                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jd0-SM-dpq" customClass="TextField" customModule="iosApp" customModuleProvider="target">
-                                                                                    <rect key="frame" x="30" y="0.0" width="260.5" height="46"/>
+                                                                                    <rect key="frame" x="30" y="0.0" width="337" height="46"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="name"/>
+                                                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                                                 </textField>
                                                                             </subviews>
                                                                         </stackView>
@@ -276,14 +276,14 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TokenSendCTACollectionViewCell" id="EZO-tt-vdJ" userLabel="TokenSendCTACollectionViewCell" customClass="TokenSendCTACollectionViewCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.5" y="174" width="413" height="132"/>
+                                        <rect key="frame" x="0.5" y="174" width="413" height="124"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="1Fh-Mc-g0b">
-                                            <rect key="frame" x="0.0" y="0.0" width="413" height="132"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="413" height="124"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="f6n-ff-hYJ">
-                                                    <rect key="frame" x="0.0" y="50" width="413" height="82"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="f6n-ff-hYJ">
+                                                    <rect key="frame" x="0.0" y="50" width="413" height="74"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q50-qH-Rye" customClass="TokenNetworkFeeView" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="413" height="24"/>
@@ -333,7 +333,7 @@
                                                             </connections>
                                                         </view>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wiM-GP-EgD" customClass="Button" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="48" width="413" height="34"/>
+                                                            <rect key="frame" x="0.0" y="40" width="413" height="34"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             <state key="normal" title="Button"/>
                                                         </button>
@@ -346,7 +346,7 @@
                                                 <constraint firstItem="f6n-ff-hYJ" firstAttribute="leading" secondItem="1Fh-Mc-g0b" secondAttribute="leading" id="bwI-qi-nit"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="413" height="132"/>
+                                        <size key="customSize" width="413" height="124"/>
                                         <connections>
                                             <outlet property="button" destination="wiM-GP-EgD" id="8pn-ar-tTp"/>
                                             <outlet property="networkFeeView" destination="Q50-qH-Rye" id="wj3-Sa-Wyb"/>

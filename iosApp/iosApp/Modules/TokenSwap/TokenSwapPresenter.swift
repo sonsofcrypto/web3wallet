@@ -6,12 +6,15 @@ import Foundation
 
 enum TokenSwapPresenterEvent {
 
+    case limitSwapTapped
     case dismiss
     case tokenFromTapped
     case tokenFromChanged(to: Double)
     case tokenToTapped
     case tokenToChanged(to: Double)
     case swapFlip
+    case providerTapped
+    case slippageTapped
     case feeChanged(to: String)
     case feeTapped
     case review
@@ -92,8 +95,8 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                         ),
                         buttonState: .swap(providerIconName: makeSelectedProviderIconName())
                     )
-                ),
-                .limit
+                )//,
+                //.limit
             ]
         )
     }
@@ -102,6 +105,9 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
 
         switch event {
             
+        case .limitSwapTapped:
+            
+            wireframe.navigate(to: .underConstructionAlert)
         case .dismiss:
             
             wireframe.dismiss()
@@ -147,6 +153,14 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                 shouldUpdateFromTextField: true,
                 shouldUpdateToTextField: true
             )
+            
+        case .providerTapped:
+            
+            wireframe.navigate(to: .underConstructionAlert)
+            
+        case .slippageTapped:
+            
+            wireframe.navigate(to: .underConstructionAlert)
             
         case let .feeChanged(identifier):
             
@@ -329,8 +343,8 @@ private extension DefaultTokenSwapPresenter {
                             providerIconName: self.makeSelectedProviderIconName()
                         )
                     )
-                ),
-                .limit
+                )//,
+//                .limit
             ]
         )
     }

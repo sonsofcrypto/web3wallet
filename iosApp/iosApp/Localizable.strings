@@ -36,6 +36,7 @@
 "rejected" = "Rejected";
 "reject" = "Reject";
 "new" = "New";
+"search" = "Search";
 "time.ago.day" = "%@ day ago";
 "time.ago.days" = "%@ days ago";
 "time.ago.hour" = "%@ hour ago";
@@ -223,7 +224,7 @@
 "qrCodeScan.error.notSupported.message" = "Your device does not support QR code scanning. Please use a device with a camera.";
 
 "tokenSend.title" = "Send %@";
-"tokenSend.cell.address.textField.placeholder" = "Name, ENS, or address";
+"tokenSend.cell.address.textField.placeholder" = "To ETH address";
 "tokenSend.cell.token.placeholder" = "0";
 "tokenSend.cell.currency.placeholder" = "0.0";
 "tokenSend.cell.currency.label.usd" = "USD";

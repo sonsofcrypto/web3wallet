@@ -11,6 +11,7 @@ final class TokenSwapWireframeFactoryAssembler: AssemblerComponent {
             DefaultTokenSwapWireframeFactory(
                 tokenPickerWireframeFactory: resolver.resolve(),
                 confirmationWireframeFactory: resolver.resolve(),
+                alertWireframeFactory: resolver.resolve(),
                 web3Service: resolver.resolve()
             )
         }

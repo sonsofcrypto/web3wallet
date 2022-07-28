@@ -108,12 +108,12 @@ final class TokenPickerItemCell: UICollectionViewCell {
         case .middle:
             separatorTopView.isHidden = false
             separatorTopViewLeadingConstraint.constant = Theme.constant.padding
-            separatorTopViewTrailingConstraint.constant = Theme.constant.padding
+            separatorTopViewTrailingConstraint.constant = 0
             separatorBottomView.isHidden = true
         case .last:
             separatorTopView.isHidden = false
             separatorTopViewLeadingConstraint.constant = Theme.constant.padding
-            separatorTopViewTrailingConstraint.constant = Theme.constant.padding
+            separatorTopViewTrailingConstraint.constant = 0
             separatorBottomView.isHidden = false
         }
     }
