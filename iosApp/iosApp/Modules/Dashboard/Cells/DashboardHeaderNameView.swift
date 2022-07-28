@@ -5,14 +5,18 @@
 import UIKit
 
 final class DashboardHeaderNameView: UICollectionReusableView {
-    
-    private weak var presenter: DashboardPresenter!
-    private var viewModel: DashboardViewModel.Section!
-    
+        
     private weak var label: UILabel!
     private weak var fuelCostImageView: UIView!
     private weak var fuelCostLabel: UILabel!
     private weak var rightAction: UILabel!
+    
+    private var handler: Handler?
+    
+    struct Handler {
+        
+        let onMoreTapped: () -> Void
+    }
     
     override init(frame: CGRect) {
         
@@ -112,40 +116,35 @@ private extension DashboardHeaderNameView {
     
     @objc func moreTapped() {
         
-        presenter.handle(.didTapEditTokens(network: viewModel.name))
+        handler?.onMoreTapped()
     }
 }
 
 extension DashboardHeaderNameView {
 
     func update(
-        with viewModel: DashboardViewModel.Section,
-        presenter: DashboardPresenter
+        with title: String,
+        and network: DashboardViewModel.Section.`Type`.Network?,
+        handler: Handler?
     ) {
         
-        self.viewModel = viewModel
-        self.presenter = presenter
+        self.handler = handler
         
-        label.text = viewModel.name.uppercased()
+        label.text = title.uppercased()
         
-        switch viewModel.items {
+        guard let network = network else {
             
-        case .wallets:
-            rightAction.isHidden = false
-            rightAction.text = viewModel.rightActionTitle
-        case .nfts, .actions, .notifications:
             rightAction.isHidden = true
+            fuelCostImageView.isHidden = true
+            fuelCostLabel.isHidden = true
+            return
         }
         
-        if let fuelCost = viewModel.fuelCost {
-            
-            self.fuelCostImageView.isHidden = false
-            self.fuelCostLabel.isHidden = false
-            self.fuelCostLabel.text = fuelCost
-        } else {
-            
-            self.fuelCostImageView.isHidden = true
-            self.fuelCostLabel.isHidden = true
-        }
+        rightAction.isHidden = false
+        rightAction.text = network.rightActionTitle
+        
+        fuelCostImageView.isHidden = false
+        fuelCostLabel.isHidden = false
+        fuelCostLabel.text = network.fuelCost
     }
 }

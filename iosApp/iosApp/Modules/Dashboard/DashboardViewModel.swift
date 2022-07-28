@@ -12,52 +12,33 @@ struct DashboardViewModel {
 extension DashboardViewModel {
 
     struct Section {
-        let name: String
-        let fuelCost: String?
-        let rightActionTitle: String?
-        let isCollapsed: Bool?
+        
+        let type: `Type`
         let items: Items
         
+        enum `Type` {
+            
+            case none
+            case balance(String)
+            case title(String)
+            case network(Network)
+            
+            struct Network {
+                
+                let id: String
+                let name: String
+                let fuelCost: String
+                let rightActionTitle: String
+                let isCollapsed: Bool
+            }
+        }
+        
         enum Items {
+            
             case actions([DashboardViewModel.Action])
             case notifications([DashboardViewModel.Notification])
             case wallets([DashboardViewModel.Wallet])
             case nfts([DashboardViewModel.NFT])
-            
-            var count: Int {
-                switch self {
-                case .actions:
-                    return 1
-                case let .notifications(notifications):
-                    return notifications.count
-                case let .wallets(wallets):
-                    return wallets.count
-                case let .nfts(nfts):
-                    return nfts.count
-                }
-            }
-            
-            func actions() -> [DashboardViewModel.Action] {
-                guard case let Items.actions(actions) = self else { return [] }
-                return actions
-            }
-            
-            func notifications(at index: Int) -> DashboardViewModel.Notification? {
-                guard case let Items.notifications(notifications) = self else { return nil }
-                return notifications[safe: index]
-            }
-            
-            func wallet(at index: Int) -> DashboardViewModel.Wallet? {
-                
-                guard case let Items.wallets(wallets) = self else { return nil }
-                return wallets[safe: index]
-            }
-
-            func nft(at index: Int) -> DashboardViewModel.NFT? {
-                
-                guard case let Items.nfts(nfts) = self else { return nil }
-                return nfts[safe: index]
-            }
         }
     }
 }
@@ -110,7 +91,89 @@ extension DashboardViewModel {
 extension DashboardViewModel {
 
     struct NFT {
+        
         let image: String
         let onSelected: () -> Void
+    }
+}
+
+extension DashboardViewModel.Section {
+    
+    var hasSectionHeader: Bool {
+        
+        switch type {
+            
+        case .none:
+            return false
+            
+        case .title, .balance, .network:
+            return true
+        }
+    }
+    
+    var isCollapsed: Bool {
+        
+        switch type {
+        case let .network(network):
+            return network.isCollapsed
+        default:
+            return false
+        }
+    }
+    
+    var networkId: String {
+        
+        switch type {
+        case let .network(network):
+            return network.id
+        default:
+            return ""
+        }
+    }
+}
+
+extension DashboardViewModel.Section.Items {
+    
+    var count: Int {
+        switch self {
+        case .actions:
+            return 1
+        case let .notifications(notifications):
+            return notifications.count
+        case let .wallets(wallets):
+            return wallets.count
+        case let .nfts(nfts):
+            return nfts.count
+        }
+    }
+    
+    var actions: [DashboardViewModel.Action] {
+        guard case let DashboardViewModel.Section.Items.actions(
+            actions
+        ) = self else { return [] }
+        return actions
+    }
+    
+    func notifications(at index: Int) -> DashboardViewModel.Notification? {
+        guard case let DashboardViewModel.Section.Items.notifications(
+            notifications
+        ) = self else { return nil }
+        return notifications[safe: index]
+    }
+    
+    func wallet(at index: Int) -> DashboardViewModel.Wallet? {
+        
+        guard case let DashboardViewModel.Section.Items.wallets(
+            wallets
+        ) = self else { return nil }
+        return wallets[safe: index]
+    }
+
+    func nft(at index: Int) -> DashboardViewModel.NFT? {
+        
+        guard case let DashboardViewModel.Section.Items.nfts(
+            nfts
+        ) = self else { return nil }
+        return nfts[safe: index]
     }
 }

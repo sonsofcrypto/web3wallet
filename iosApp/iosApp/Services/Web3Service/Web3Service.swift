@@ -119,9 +119,9 @@ extension Web3Token {
 
 extension Web3Token {
     
-    func equalTo(network: String, symbol: String) -> Bool {
+    func equalTo(networkId: String, symbol: String) -> Bool {
         
-        self.network.name == network && self.symbol == symbol
+        self.network.id == network.id && self.symbol == symbol
     }
     
     var usdBalance: Double {
