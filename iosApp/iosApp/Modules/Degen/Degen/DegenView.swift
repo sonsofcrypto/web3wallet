@@ -13,9 +13,12 @@ final class DegenViewController: BaseViewController {
 
     var presenter: DegenPresenter!
 
-    private var viewModel: DegenViewModel?
-
     @IBOutlet weak var collectionView: UICollectionView!
+
+    private var backgroundGradientTopConstraint: NSLayoutConstraint?
+    private var backgroundGradientHeightConstraint: NSLayoutConstraint?
+
+    private var viewModel: DegenViewModel?
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -39,13 +42,25 @@ final class DegenViewController: BaseViewController {
             collectionView.deselectItem(at: $0, animated: true)
         }
     }
+    
+    override func viewWillLayoutSubviews() {
+        
+        super.viewWillLayoutSubviews()
+        
+        updateBackgroundGradientTopConstraint()
+        backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
+    }
+
 }
 
 extension DegenViewController: DegenView {
 
     func update(with viewModel: DegenViewModel) {
+        
         self.viewModel = viewModel
         collectionView.reloadData()
+        
+        updateBackgroundGradient(after: 0.05)
     }
 }
 
@@ -114,6 +129,11 @@ extension DegenViewController: UICollectionViewDelegate {
             presenter.handle(.comingSoon)
         }
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        updateBackgroundGradientTopConstraint()
+    }
 }
 
 extension DegenViewController {
@@ -129,6 +149,8 @@ extension DegenViewController {
         overScrollView?.overScrollView.image = "overscroll_degen".assetImage
         overScrollView?.overScrollView.layer.transform = CATransform3DMakeTranslation(0, -100, 0)
         navigationItem.backButtonTitle = ""
+        
+        addCustomBackgroundGradientView()
     }
 
     func configureNavAndTabBarItem() {
@@ -227,3 +249,75 @@ extension DegenViewController {
         return section
     }
 }
+
+extension DegenViewController: UIScrollViewDelegate {
+
+    func addCustomBackgroundGradientView() {
+
+        // 1 - Add gradient
+        let backgroundGradient = GradientView()
+        backgroundGradient.isDashboard = true
+        view.insertSubview(backgroundGradient, at: 0)
+        
+        backgroundGradient.translatesAutoresizingMaskIntoConstraints = false
+        
+        let topConstraint = backgroundGradient.topAnchor.constraint(
+            equalTo: collectionView.topAnchor
+        )
+        self.backgroundGradientTopConstraint = topConstraint
+        topConstraint.isActive = true
+
+        backgroundGradient.leadingAnchor.constraint(
+            equalTo: view.leadingAnchor
+        ).isActive = true
+
+        backgroundGradient.trailingAnchor.constraint(
+            equalTo: view.trailingAnchor
+        ).isActive = true
+
+        let heightConstraint = backgroundGradient.heightAnchor.constraint(
+            equalToConstant: backgroundGradientHeight
+        )
+        self.backgroundGradientHeightConstraint = heightConstraint
+        heightConstraint.isActive = true
+    }
+
+    var backgroundGradientHeight: CGFloat {
+        
+        if collectionView.frame.size.height > collectionView.contentSize.height {
+            
+            return collectionView.frame.size.height
+        } else {
+            
+            return collectionView.contentSize.height
+        }
+    }
+    
+    func updateBackgroundGradient(after delay: TimeInterval) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+            guard let self = self else { return }
+            self.updateBackgroundGradient()
+        }
+    }
+    
+    func updateBackgroundGradient() {
+        
+        updateBackgroundGradientTopConstraint()
+        backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
+    }
+    
+    func updateBackgroundGradientTopConstraint() {
+        
+        let constant: CGFloat
+        if collectionView.contentOffset.y < 0 {
+            constant = 0
+        } else {
+            constant = -collectionView.contentOffset.y
+        }
+        
+        guard constant > collectionView.frame.size.height - collectionView.contentSize.height else { return }
+        backgroundGradientTopConstraint?.constant =  constant
+    }
+}
+

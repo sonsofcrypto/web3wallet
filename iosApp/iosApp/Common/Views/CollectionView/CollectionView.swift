@@ -33,9 +33,8 @@ class CollectionView: UICollectionView {
             overScrollView.bounds.height +
             contentInset.bottom,
             frame.maxY
-        ) - 20
+        ) - 35
 
-        // print(bounds.origin.y, adjustedContentInset.top, adjustedContentInset.bottom, bounds.height ,contentSize.height)
     }
 }
 

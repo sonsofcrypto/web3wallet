@@ -25,7 +25,7 @@ struct ThemeA: Themable {
                 traits.isDarkMode ? pallete.systemPink : pallete.systemBlue
             },
             gradientBottom: .init { traits in
-                traits.isDarkMode ? pallete.systemPurple : pallete.systemYellow
+                traits.isDarkMode ? pallete.systemPurple : pallete.systemFC78A9
             },
             navBarBackground: pallete.system1C1C1E,
             navBarTint: pallete.systemOrange,
@@ -173,6 +173,7 @@ private extension ThemeA {
         let systemF2F2F7: UIColor
         let system787880: UIColor
         let system767680: UIColor
+        let systemFC78A9: UIColor
         
         init(name: String) {
                         
@@ -194,6 +195,7 @@ private extension ThemeA {
             self.systemF2F2F7 = .init(rgb: 0xF2F2F7)
             self.system787880 = .init(rgb: 0x787880)
             self.system767680 = .init(rgb: 0x767680)
+            self.systemFC78A9 = .init(rgb: 0xFC78A9)
         }
     }
 }
