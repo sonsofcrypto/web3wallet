@@ -62,8 +62,8 @@ extension OpenSeaNFTsService: NFTsService {
     
     func yourNFTs(forNetwork network: Web3Network) -> [NFTItem] {
 
-        // TODO: Implement
-        []
+        // TODO: @Annon discuss how we will implement when we support more than 1 network
+        nfts
     }
     
     func yourNFTs(
@@ -99,9 +99,6 @@ extension OpenSeaNFTsService: NFTsService {
                 self.updateWeb3WalletNFTListeners()
                 onCompletion(.success(self.nfts))
             } catch {
-                self.nfts = []
-                self.collections = []
-                self.updateWeb3WalletNFTListeners()
                 onCompletion(.failure(error))
             }
         }.resume()
