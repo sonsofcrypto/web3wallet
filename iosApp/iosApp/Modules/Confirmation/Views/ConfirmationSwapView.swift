@@ -70,7 +70,7 @@ private extension ConfirmationSwapView {
         
         let horizontalStack = HStackView(
             [
-                makeTokenView(with: token.icon),
+                makeTokenView(with: token.iconName),
                 makeTokenAmountView(with: token.value, and: token.usdValue)
             ]
         )
@@ -88,9 +88,9 @@ private extension ConfirmationSwapView {
         return view
     }
     
-    func makeTokenView(with data: Data) -> UIView {
+    func makeTokenView(with imageName: String) -> UIView {
         
-        let image = UIImageView(image: data.pngImage)
+        let image = UIImageView(image: imageName.assetImage)
         
         let view = UIView()
         view.backgroundColor = .clear
@@ -198,7 +198,7 @@ private extension ConfirmationSwapView {
         providerLabel.apply(style: .body)
         providerLabel.text = Localized("confirmation.provider")
         
-        let icon = UIImageView(image: viewModel.provider.icon.pngImage)
+        let icon = UIImageView(image: viewModel.provider.iconName.assetImage)
         
         let providerName = UILabel()
         providerName.apply(style: .body)

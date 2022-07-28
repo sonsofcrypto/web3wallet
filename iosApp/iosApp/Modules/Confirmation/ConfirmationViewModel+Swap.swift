@@ -15,7 +15,7 @@ extension ConfirmationViewModel {
         
         struct Token {
             
-            let icon: Data
+            let iconName: String
             let symbol: String
             let value: String
             let usdValue: String
@@ -23,7 +23,7 @@ extension ConfirmationViewModel {
         
         struct Provider {
             
-            let icon: Data
+            let iconName: String
             let name: String
             let slippage: String
         }

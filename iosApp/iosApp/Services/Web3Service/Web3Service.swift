@@ -19,7 +19,9 @@ protocol Web3Service: AnyObject {
     func storeMyTokens(to tokens: [Web3Token])
     
     func networkIcon(for network: Web3Network) -> Data
+    func networkIconName(for network: Web3Network) -> String
     func tokenIcon(for token: Web3Token) -> Data
+    func tokenIconName(for token: Web3Token) -> String
     
     func addWalletListener(_ listener: Web3ServiceWalletListener)
     func removeWalletListener(_ listener: Web3ServiceWalletListener)
