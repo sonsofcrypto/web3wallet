@@ -6,9 +6,6 @@ import UIKit
 
 final class NetworksCell: UICollectionViewCell {
     
-    private weak var presenter: NetworksPresenter!
-    private var idx: Int!
-    
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var switchControl: OnOffSwitch!
@@ -19,7 +16,16 @@ final class NetworksCell: UICollectionViewCell {
     @IBOutlet weak var connectionLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var explorerLabel: UILabel!
-
+    
+    struct Handler {
+        
+        let onNetworkSwitch: (String, Bool) -> Void
+        let onSettingsTapped: (String) -> Void
+    }
+    
+    private var viewModel: NetworksViewModel.Network!
+    private var handler: Handler!
+    
     override func awakeFromNib() {
         
         super.awakeFromNib()
@@ -33,6 +39,7 @@ final class NetworksCell: UICollectionViewCell {
         titleLabel.textColor = Theme.colour.labelPrimary
         
         settingsButton.tintColor = Theme.colour.labelSecondary
+        settingsButton.addTarget(self, action: #selector(onSettingsTapped), for: .touchUpInside)
         
         switchControl.layer.cornerRadius = 16
         switchControl.addTarget(
@@ -61,32 +68,37 @@ extension NetworksCell {
  
     @objc func onSwitchValueChanged(_ sender: UISwitch) {
         
-        presenter.handle(.didSwitchNetwork(idx: idx, isOn: sender.isOn))
+        handler.onNetworkSwitch(viewModel.networkId, sender.isOn)
+//        presenter.handle(.didSwitchNetwork(idx: idx, isOn: sender.isOn))
+    }
+    
+    @objc func onSettingsTapped() {
+        
+        handler.onSettingsTapped(viewModel.networkId)
     }
 }
 
 extension NetworksCell {
 
     func update(
-        with viewModel: NetworksViewModel.Network?,
-        at idx: Int,
-        presenter: NetworksPresenter
+        with viewModel: NetworksViewModel.Network,
+        handler: Handler
     ) {
         
-        self.presenter = presenter
-        self.idx = idx
+        self.viewModel = viewModel
+        self.handler = handler
         
-        iconImageView.image = viewModel?.icon.pngImage
+        iconImageView.image = viewModel.iconName.assetImage
         
-        titleLabel.text = viewModel?.name ?? "-"
+        titleLabel.text = viewModel.name
         
-        switchControl.isOn = viewModel?.connected ?? false
-        switchControl.isEnabled = viewModel?.connected != nil
+        switchControl.isOn = viewModel.connected ?? false
+        switchControl.isEnabled = viewModel.connected != nil
         
-        connectionLabel.text = viewModel?.connectionType ?? "-"
+        connectionLabel.text = viewModel.connectionType
         
-        statusLabel.text = viewModel?.status ?? "-"
+        statusLabel.text = viewModel.status
         
-        explorerLabel.text = viewModel?.explorer ?? "-"
+        explorerLabel.text = viewModel.explorer
     }
 }

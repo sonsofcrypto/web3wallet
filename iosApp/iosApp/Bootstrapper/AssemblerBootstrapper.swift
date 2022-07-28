@@ -31,7 +31,6 @@ private extension AssemblerBootstrapper {
             DegenServiceAssembler(),
             KeyStoreServiceAssembler(),
             KeyChainServiceAssembler(),
-            NetworksServiceAssembler(),
             NFTsServiceAssembler(),
             OnboardingServiceAssembler(),
             ReachabilityServiceAssembler(),

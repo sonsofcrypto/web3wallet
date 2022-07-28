@@ -6,8 +6,9 @@ import Foundation
 
 enum NetworksPresenterEvent {
     
-    case didSwitchNetwork(idx: Int, isOn: Bool)
-    case didSelectNetwork(idx: Int)
+    case didTapSettings(String)
+    case didSwitchNetwork(networkId: String, isOn: Bool)
+    case didSelectNetwork(networkId: String)
 }
 
 protocol NetworksPresenter: AnyObject {
@@ -15,8 +16,6 @@ protocol NetworksPresenter: AnyObject {
     func present()
     func handle(_ event: NetworksPresenterEvent)
 }
-
-// MARK: - DefaultNetworksPresenter
 
 final class DefaultNetworksPresenter {
 
@@ -39,8 +38,6 @@ final class DefaultNetworksPresenter {
     }
 }
 
-// MARK: NetworksPresenter
-
 extension DefaultNetworksPresenter: NetworksPresenter {
 
     func present() {
@@ -55,10 +52,18 @@ extension DefaultNetworksPresenter: NetworksPresenter {
         
         switch event {
             
-        case let .didSwitchNetwork(idx, isOn):
+        case let .didTapSettings(networkId):
             
-            guard idx < networks.count else { return }
-            let network = networks[idx]
+            guard let network = networks.first(where: { $0.id == networkId }) else {
+                return
+            }
+            wireframe.navigate(to: .editNetwork(network))
+        
+        case let .didSwitchNetwork(networkId, isOn):
+            
+            guard let network = networks.first(where: { $0.id == networkId }) else {
+                return
+            }
             interactor.update(network: network, active: isOn)
             
         case .didSelectNetwork:
@@ -74,7 +79,8 @@ private extension DefaultNetworksPresenter {
         
         let networks: [NetworksViewModel.Network] = networks.map {
             .init(
-                icon: interactor.networkIcon(for: $0),
+                networkId: $0.id,
+                iconName: interactor.networkIconName(for: $0),
                 name: $0.name,
                 connectionType: formattedConnectionType($0),
                 status: formattedStatus($0),

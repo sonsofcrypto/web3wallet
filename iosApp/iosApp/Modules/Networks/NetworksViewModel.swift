@@ -14,7 +14,8 @@ extension NetworksViewModel {
 
     struct Network {
 
-        let icon: Data
+        let networkId: String
+        let iconName: String
         let name: String
         let connectionType: String
         let status: String

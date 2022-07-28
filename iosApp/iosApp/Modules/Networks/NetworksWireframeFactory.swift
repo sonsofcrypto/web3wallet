@@ -11,20 +11,27 @@ protocol NetworksWireframeFactory {
 
 final class DefaultNetworksWireframeFactory {
 
-    private let networksService: NetworksService
+    private let alertWireframeFactory: AlertWireframeFactory
+    private let web3Service: Web3Service
 
-    init(networksService: NetworksService) {
+    init(
+        alertWireframeFactory: AlertWireframeFactory,
+        web3Service: Web3Service
+    ) {
         
-        self.networksService = networksService
+        self.alertWireframeFactory = alertWireframeFactory
+        self.web3Service = web3Service
     }
 }
 
 extension DefaultNetworksWireframeFactory: NetworksWireframeFactory {
 
     func makeWireframe(_ parent: UIViewController) -> NetworksWireframe {
+        
         DefaultNetworksWireframe(
             parent: parent,
-            interactor: DefaultNetworksInteractor(networksService)
+            alertWireframeFactory: alertWireframeFactory,
+            web3Service: web3Service
         )
     }
 }

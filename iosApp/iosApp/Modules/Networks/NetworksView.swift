@@ -5,18 +5,18 @@
 import UIKit
 
 protocol NetworksView: AnyObject {
-
+    
     func update(with viewModel: NetworksViewModel)
 }
 
 final class NetworksViewController: BaseViewController {
-
+    
     var presenter: NetworksPresenter!
-
-    private var viewModel: NetworksViewModel?
-
+    
+    private var viewModel: NetworksViewModel!
+    
     @IBOutlet weak var collectionView: UICollectionView!
-
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -27,10 +27,8 @@ final class NetworksViewController: BaseViewController {
     }
 }
 
-// MARK: - WalletsView
-
 extension NetworksViewController: NetworksView {
-
+    
     func update(with viewModel: NetworksViewModel) {
         
         self.viewModel = viewModel
@@ -39,8 +37,6 @@ extension NetworksViewController: NetworksView {
     }
 }
 
-// MARK: - UICollectionViewDataSource
-
 extension NetworksViewController: UICollectionViewDataSource {
     
     func collectionView(
@@ -48,10 +44,10 @@ extension NetworksViewController: UICollectionViewDataSource {
         numberOfItemsInSection section: Int
     ) -> Int {
         
-        viewModel?.network().count ?? 0
+        viewModel.network().count ?? 0
     }
     
-
+    
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -59,27 +55,24 @@ extension NetworksViewController: UICollectionViewDataSource {
         
         let cell = collectionView.dequeue(NetworksCell.self, for: indexPath)
         cell.update(
-            with: viewModel?.network()[indexPath.item],
-            at: indexPath.item,
-            presenter: presenter
+            with: viewModel.network()[indexPath.item],
+            handler: makeNetworksCellHandler()
         )
         return cell
     }
 }
 
 extension NetworksViewController: UICollectionViewDelegate {
-
+    
     func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        guard let viewModel = viewModel?.network()[indexPath.item] else {
-            return
-        }
+        let viewModel = viewModel.network()[indexPath.item]
         
         guard viewModel.connected != nil else { return }
         
-        presenter.handle(.didSelectNetwork(idx: indexPath.item))
+        presenter.handle(.didSelectNetwork(networkId: viewModel.networkId))
     }
     
     func collectionView(
@@ -174,7 +167,37 @@ private extension NetworksViewController {
             alignment: .top
         )
         section.boundarySupplementaryItems = [headerItem]
-
+        
         return UICollectionViewCompositionalLayout(section: section)
+    }
+}
+
+private extension NetworksViewController {
+    
+    func makeNetworksCellHandler() -> NetworksCell.Handler {
+        
+        .init(
+            onNetworkSwitch: makeOnNetworkSwitch(),
+            onSettingsTapped: makeOnSettingsTapped()
+        )
+    }
+    
+    func makeOnNetworkSwitch() -> (String, Bool) -> Void {
+        
+        {
+            [weak self] (networkId, isOn) in
+            guard let self = self else { return }
+            self.presenter.handle(.didSwitchNetwork(networkId: networkId, isOn: isOn))
+        }
+    }
+    
+    func makeOnSettingsTapped() -> (String) -> Void {
+
+        {
+            [weak self] networkId in
+            guard let self = self else { return }
+            self.presenter.handle(.didTapSettings(networkId))
+        }
+
     }
 }
