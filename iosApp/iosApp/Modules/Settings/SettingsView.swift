@@ -44,7 +44,7 @@ extension SettingsViewController: SettingsView {
         if (navigationController?.viewControllers.count ?? 0) > 1 {
             
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: .init(systemName: "chevron.left"),
+                image: "chevron.left".assetImage,
                 style: .plain,
                 target: self,
                 action: #selector(dismissAction)

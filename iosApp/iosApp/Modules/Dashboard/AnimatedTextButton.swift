@@ -82,7 +82,7 @@ private extension AnimatedTextButton {
 
     func configureUI() {
 
-        let iconImageView = UIImageView(image: UIImage(systemName: "chevron.left"))
+        let iconImageView = UIImageView(image: "chevron.left".assetImage)
         let vStack = VStackView([], alignment: .leading, spacing: 2)
         let hStack = HStackView([iconImageView, vStack], alignment: .center, spacing: 1)
 

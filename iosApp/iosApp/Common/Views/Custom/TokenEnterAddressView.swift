@@ -35,7 +35,7 @@ final class TokenEnterAddressView: UIView {
         textFieldView.backgroundColor = Theme.colour.cellBackground
         textFieldView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         qrCodeScanButton.setImage(
-            .init(systemName: "qrcode.viewfinder"),
+            "qrcode.viewfinder".assetImage,
             for: .normal
         )
         qrCodeScanButton.tintColor = Theme.colour.labelPrimary
@@ -127,7 +127,7 @@ private extension TokenEnterAddressView {
         
         let button = UIButton(type: .system)
         button.setImage(
-            .init(systemName: "xmark.circle.fill"),
+            "xmark.circle.fill".assetImage,
             for: .normal
         )
         button.tintColor = Theme.colour.labelSecondary

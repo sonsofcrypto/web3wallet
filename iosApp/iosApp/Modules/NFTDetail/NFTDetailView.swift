@@ -70,7 +70,7 @@ private extension NFTDetailViewController {
         
         let showBack = (navigationController?.viewControllers.count ?? 0) > 1
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: showBack ? "chevron.left" : "xmark"),
+            image: showBack ? "chevron.left".assetImage : "xmark".assetImage,
             style: .plain,
             target: self,
             action: #selector(dismissTapped)

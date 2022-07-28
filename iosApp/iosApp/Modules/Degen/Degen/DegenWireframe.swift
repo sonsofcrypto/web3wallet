@@ -96,7 +96,7 @@ private extension DefaultDegenWireframe {
         
         navigationController.tabBarItem = UITabBarItem(
             title: Localized("degen"),
-            image: UIImage(named: "tab_icon_degen"),
+            image: "tab_icon_degen".assetImage,
             tag: 1
         )
         

@@ -70,7 +70,7 @@ private extension AuthenticateViewController {
         
         title = Localized("authenticate")
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            with: .init(systemName: "chevron.left"),
+            with: "chevron.left".assetImage,
             target: self,
             action: #selector(dismissAction(_:))
         )

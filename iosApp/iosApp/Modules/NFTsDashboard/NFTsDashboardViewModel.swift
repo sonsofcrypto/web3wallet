@@ -2,10 +2,11 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-struct NFTsDashboardViewModel {
+enum NFTsDashboardViewModel {
     
-    let nfts: [NFT]
-    let collections: [Collection]
+    case loading
+    case error(EmbeddedErrorCollectionViewCell.ViewModel)
+    case loaded(nfts: [NFT], collections: [Collection])
 }
 
 extension NFTsDashboardViewModel {
@@ -22,5 +23,28 @@ extension NFTsDashboardViewModel {
         let coverImage: String
         let title: String
         let author: String
+    }
+}
+
+extension NFTsDashboardViewModel {
+    
+    var nfts: [NFT] {
+        
+        switch self {
+        case .loading, .error:
+            return []
+        case let .loaded(nfts, _):
+            return nfts
+        }
+    }
+
+    var collections: [Collection] {
+        
+        switch self {
+        case .loading, .error:
+            return []
+        case let .loaded(_, collections):
+            return collections
+        }
     }
 }

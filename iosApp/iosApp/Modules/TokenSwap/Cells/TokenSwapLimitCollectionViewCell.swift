@@ -9,9 +9,7 @@ final class TokenSwapLimitCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
 
         let imageView = UIImageView(
-            image: .init(
-                named: "coming-soon-meme"
-            )!.withRenderingMode(
+            image: "coming-soon-meme".assetImage!.withRenderingMode(
                 .alwaysTemplate
             ).withTintColor(
                 Theme.colour.labelPrimary

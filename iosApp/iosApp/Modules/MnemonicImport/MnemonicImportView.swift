@@ -337,7 +337,7 @@ private extension MnemonicImportViewController {
         title = Localized("newMnemonic.title")
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: .init(systemName: "chevron.left"),
+            image: "chevron.left".assetImage,
             style: .plain,
             target: self,
             action: #selector(dismissAction(_:))

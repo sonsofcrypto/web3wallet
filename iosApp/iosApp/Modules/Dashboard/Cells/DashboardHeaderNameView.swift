@@ -50,7 +50,7 @@ private extension DashboardHeaderNameView {
         let iconImageViewGroup = UIView()
         iconImageViewGroup.backgroundColor = .clear
         let iconImageView = UIImageView(
-            image: .init(named: "dashboard-charging-station")!
+            image: "dashboard-charging-station".assetImage!
         )
         iconImageViewGroup.addSubview(iconImageView)
         iconImageView.addConstraints(

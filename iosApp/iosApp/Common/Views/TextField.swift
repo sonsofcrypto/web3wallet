@@ -64,7 +64,7 @@ private extension TextField {
     func makeClearButton() -> UIButton {
         let button = UIButton(type: .system)
         button.setImage(
-            .init(systemName: "xmark.circle.fill"),
+            "xmark.circle.fill".assetImage,
             for: .normal
         )
         button.tintColor = Theme.colour.labelSecondary

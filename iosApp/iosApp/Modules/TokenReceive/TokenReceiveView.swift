@@ -63,7 +63,7 @@ private extension TokenReceiveViewController {
         title = viewModel?.title
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: .init(systemName: "chevron.left"),
+            image: "chevron.left".assetImage,
             style: .plain,
             target: self,
             action: #selector(navBarLeftActionTapped)

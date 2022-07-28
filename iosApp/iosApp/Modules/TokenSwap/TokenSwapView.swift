@@ -17,6 +17,7 @@ final class TokenSwapViewController: BaseViewController {
 
     var presenter: TokenSwapPresenter!
 
+    @IBOutlet weak var providerLogo: UIImageView!
     private weak var segmentControl: SegmentedControl!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var feesPickerView: FeesPickerView!
@@ -149,9 +150,14 @@ extension TokenSwapViewController: UICollectionViewDelegate {
 private extension TokenSwapViewController {
     
     func configureUI() {
+        
+        // TODO: Pass provider logo when multiple here
+        providerLogo.image = "uniswap-logo-overlay".assetImage?.withTintColor(
+            Theme.colour.labelSecondary
+        )
                 
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: .init(systemName: "chevron.left"),
+            image: "chevron.left".assetImage,
             style: .plain,
             target: self,
             action: #selector(navBarLeftActionTapped)

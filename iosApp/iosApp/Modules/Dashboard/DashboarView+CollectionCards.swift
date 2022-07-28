@@ -48,7 +48,7 @@ extension DashboardViewController {
         
         // 2 - Add sunset image
         let sunsetBackground = UIImageView(
-            image: UIImage(named: "themeA-dashboard-bottom-image")
+            image: "themeA-dashboard-bottom-image".assetImage
         )
         view.insertSubview(sunsetBackground, at: 1)
         

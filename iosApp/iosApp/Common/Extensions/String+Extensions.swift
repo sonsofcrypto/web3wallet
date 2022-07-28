@@ -132,7 +132,7 @@ extension String {
 
     var assetImage: UIImage? {
         
-        UIImage(named: self)
+        UIImage.loadImage(named: self)
     }
     
     var qrCodeData: Data? {

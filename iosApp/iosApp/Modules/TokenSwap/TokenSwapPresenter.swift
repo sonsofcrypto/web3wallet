@@ -401,7 +401,7 @@ private extension DefaultTokenSwapPresenter {
     
     func makeSelectedProviderIcon() -> Data {
         
-        UIImage(named: "\(selectedProviderName)-provider")!.pngData()!
+        "\(selectedProviderName)-provider".assetImage!.pngData()!
     }
     
     var selectedProviderName: String {

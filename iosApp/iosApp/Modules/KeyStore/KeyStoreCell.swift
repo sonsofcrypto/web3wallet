@@ -27,7 +27,7 @@ final class KeyStoreCell: CollectionViewCell {
             action: #selector(accessoryAction(_:)),
             for: .touchUpInside
         )
-        arrowForward.image = .init(systemName: "chevron.right")
+        arrowForward.image = "chevron.right".assetImage
     }
 }
 
@@ -42,7 +42,7 @@ extension KeyStoreCell {
 
         self.accessoryHandler = accessoryHandler
         
-        let image = UIImage(systemName: "\(index + 1).square.fill")!
+        let image = "\(index + 1).square.fill".assetImage!
         let config = UIImage.SymbolConfiguration(
             paletteColors: [
                 Theme.colour.keystoreEnumText,

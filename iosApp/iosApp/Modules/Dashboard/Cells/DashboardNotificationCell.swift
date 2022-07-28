@@ -36,7 +36,7 @@ final class DashboardNotificationCell: CollectionViewCell {
         bodyLabel.textColor = Theme.colour.labelSecondary
         
         closeButton.setImage(
-            UIImage(systemName: "xmark.circle"),
+            "xmark.circle".assetImage,
             for: .normal
         )
         closeButton.tintColor = Theme.colour.labelPrimary

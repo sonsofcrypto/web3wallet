@@ -131,35 +131,35 @@ private extension DefaultDegenPresenter {
 
         switch category {
         case .swap:
-            return UIImage(named: "degen-trade-icon")!.pngData()!
+            return "degen-trade-icon".assetImage!.pngData()!
         case .cult:
-            return UIImage(named: "degen-cult-icon")!.pngData()!
+            return "degen-cult-icon".assetImage!.pngData()!
         case .stakeYield:
-            return UIImage(systemName: "s.circle.fill")!
+            return "s.circle.fill".assetImage!
                 .applyingSymbolConfiguration(config)!
                 .pngData()!
         case .landBorrow:
-            return UIImage(systemName: "l.circle.fill")!
+            return "l.circle.fill".assetImage!
                 .applyingSymbolConfiguration(config)!
                 .pngData()!
 
         case .derivative:
-            return UIImage(systemName: "d.circle.fill")!
+            return "d.circle.fill".assetImage!
                 .applyingSymbolConfiguration(config)!
                 .pngData()!
 
         case .bridge:
-            return UIImage(systemName: "b.circle.fill")!
+            return "b.circle.fill".assetImage!
                 .applyingSymbolConfiguration(config)!
                 .pngData()!
 
         case .mixer:
-            return UIImage(systemName: "m.circle.fill")!
+            return "m.circle.fill".assetImage!
                 .applyingSymbolConfiguration(config)!
                 .pngData()!
 
         case .governance:
-            return UIImage(systemName: "g.circle.fill")!
+            return "g.circle.fill".assetImage!
                 .applyingSymbolConfiguration(config)!
                 .pngData()!
 
