@@ -19,8 +19,6 @@ final class KeyStoreCell: CollectionViewCell {
                 
         titleLabel.font = Theme.font.title3
         titleLabel.textColor = Theme.colour.labelPrimary
-        accessoryButton.tintColor = Theme.colour.labelSecondary
-        arrowForward.tintColor = Theme.colour.labelSecondary
         
         accessoryButton.addTarget(
             self,
@@ -28,6 +26,23 @@ final class KeyStoreCell: CollectionViewCell {
             for: .touchUpInside
         )
         arrowForward.image = "chevron.right".assetImage
+        
+        updateStyle(with: isSelected)
+    }
+    
+    override var isSelected: Bool {
+        
+        didSet {
+            
+            updateStyle(with: isSelected)
+        }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        updateStyle(with: isSelected)
     }
 }
 
@@ -61,5 +76,28 @@ private extension KeyStoreCell {
     
     @objc func accessoryAction(_ sender: UIButton) {
         accessoryHandler?()
+    }
+    
+    func updateStyle(with isSelected: Bool) {
+        
+        layer.borderWidth = isSelected ? 1.0 : 0.0
+        layer.borderColor = Theme.colour.labelPrimary.cgColor
+        
+        indexImage.alpha = isSelected ? 1.0 : 0.5
+        
+        titleLabel.font = isSelected
+        ? Theme.font.title3Bold
+        : Theme.font.title3
+        titleLabel.textColor = isSelected
+        ? Theme.colour.labelPrimary
+        : Theme.colour.labelSecondary
+        
+        accessoryButton.tintColor = isSelected
+        ? Theme.colour.labelPrimary
+        : Theme.colour.labelSecondary
+        
+        arrowForward.tintColor = isSelected
+        ? Theme.colour.labelPrimary
+        : Theme.colour.labelSecondary
     }
 }

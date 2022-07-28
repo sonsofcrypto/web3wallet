@@ -32,6 +32,8 @@ final class DefaultKeyStorePresenter {
         sheetMode: .compact
     )
     
+    private var selectedIndex: Int?
+    
     init(
         view: KeyStoreView,
         interactor: KeyStoreInteractor,
@@ -58,6 +60,7 @@ extension DefaultKeyStorePresenter: KeyStorePresenter {
     func handle(_ event: KeyStorePresenterEvent) {
         switch event {
         case let .didSelectKeyStoreItemtAt(idx):
+            selectedIndex = idx
             handleDidSelectItem(at: idx)
         case let .didSelectAccessory(idx):
             handleDidSelectAccessory(at: idx)
@@ -177,12 +180,35 @@ private extension DefaultKeyStorePresenter {
             items: interactor.items.map {
                 KeyStoreViewModel.KeyStoreItem(title: $0.name)
             },
-            selectedIdxs: [interactor.items.firstIndex(of: interactor.selected)]
-                .compactMap{  $0 },
+            selectedIdxs: [
+                makeSelectedIdxs()
+            ].compactMap{ $0 },
             buttons: buttonsViewModel,
             targetView: targetView,
             transitionStyle: ServiceDirectory.transitionStyle
         )
+    }
+    
+    func makeSelectedIdxs() -> Int? {
+        
+        if let index = selectedIndex {
+            
+            return index
+        }
+        
+        if let index = interactor.items.firstIndex(of: interactor.selected) {
+            
+            return index
+        }
+        
+        // If we have items and the keystore item could not tell us which one is selected
+        // we default to 0, this should not happen though!
+        guard interactor.items.count > 0 else {
+            
+            return nil
+        }
+        
+        return 0
     }
 
     func viewModel(from error: Error) -> KeyStoreViewModel {

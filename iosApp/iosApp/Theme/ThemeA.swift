@@ -86,7 +86,12 @@ struct ThemeA: Themable {
             segmentedControlBackgroundSelected: pallete.systemEBEBF5.withAlpha(0.18),
             segmentedControlText: pallete.systemWhite,
             segmentedControlTextSelected: pallete.systemWhite,
-            cellBackground: pallete.systemEBEBF5.withAlpha(0.18),
+            cellBackground: .init { traits in
+                traits.isDarkMode ?
+                pallete.systemEBEBF5.withAlpha(0.18) :
+                pallete.systemEBEBF5.withAlpha(0.18)
+                //pallete.systemBlack.withAlpha(0.2)
+            },
             keystoreEnumFill: pallete.systemBlue,
             keystoreEnumText: pallete.systemWhite,
             priceUp: pallete.systemGreen,
