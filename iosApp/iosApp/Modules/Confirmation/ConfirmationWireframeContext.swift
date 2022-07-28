@@ -29,14 +29,14 @@ extension ConfirmationWireframeContext {
         
         struct Token {
             
-            let icon: Data
+            let iconName: String
             let token: Web3Token
             let value: Double
         }
         
         struct Provider {
             
-            let icon: Data
+            let iconName: String
             let name: String
             let slippage: String
         }
@@ -50,7 +50,7 @@ extension ConfirmationWireframeContext {
         
         struct Token {
             
-            let icon: Data
+            let iconName: String
             let token: Web3Token
             let value: Double
         }

@@ -65,7 +65,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                     .init(
                         tokenFrom: .init(
                             tokenAmount: nil,
-                            tokenSymbolIcon: interactor.tokenIcon(for: tokenFrom),
+                            tokenSymbolIconName: interactor.tokenIconName(for: tokenFrom),
                             tokenSymbol: tokenFrom.symbol.uppercased(),
                             tokenMaxAmount: tokenFrom.balance,
                             tokenMaxDecimals: tokenFrom.decimals,
@@ -75,7 +75,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                         ),
                         tokenTo: .init(
                             tokenAmount: nil,
-                            tokenSymbolIcon: interactor.tokenIcon(for: tokenTo),
+                            tokenSymbolIconName: interactor.tokenIconName(for: tokenTo),
                             tokenSymbol: tokenTo.symbol.uppercased(),
                             tokenMaxAmount: tokenTo.balance,
                             tokenMaxDecimals: tokenTo.decimals,
@@ -90,7 +90,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                             estimatedFee: makeEstimatedFee(),
                             feeType: makeFeeType()
                         ),
-                        buttonState: .swap(providerIcon: makeSelectedProviderIcon())
+                        buttonState: .swap(providerIconName: makeSelectedProviderIconName())
                     )
                 ),
                 .limit
@@ -199,7 +199,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
     func makeConfirmationSwapTokenFrom() -> ConfirmationWireframeContext.SwapContext.Token {
         
         .init(
-            icon: interactor.tokenIcon(for: tokenFrom),
+            iconName: interactor.tokenIconName(for: tokenFrom),
             token: tokenFrom,
             value: amountFrom ?? 0
         )
@@ -208,7 +208,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
     func makeConfirmationSwapTokenTo() -> ConfirmationWireframeContext.SwapContext.Token {
         
         .init(
-            icon: interactor.tokenIcon(for: tokenTo),
+            iconName: interactor.tokenIconName(for: tokenTo),
             token: tokenTo,
             value: amountTo ?? 0
         )
@@ -217,7 +217,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
     func makeConfirmationProvider() -> ConfirmationWireframeContext.SwapContext.Provider {
         
         .init(
-            icon: makeSelectedProviderIcon(),
+            iconName: makeSelectedProviderIconName(),
             name: selectedProviderName,
             slippage: selectedSlippage
         )
@@ -300,7 +300,7 @@ private extension DefaultTokenSwapPresenter {
                     .init(
                         tokenFrom: .init(
                             tokenAmount: amountFrom,
-                            tokenSymbolIcon: interactor.tokenIcon(for: tokenFrom),
+                            tokenSymbolIconName: interactor.tokenIconName(for: tokenFrom),
                             tokenSymbol: tokenFrom.symbol.uppercased(),
                             tokenMaxAmount: tokenFrom.balance,
                             tokenMaxDecimals: tokenFrom.decimals,
@@ -310,7 +310,7 @@ private extension DefaultTokenSwapPresenter {
                         ),
                         tokenTo: .init(
                             tokenAmount: amountTo,
-                            tokenSymbolIcon: interactor.tokenIcon(for: tokenTo),
+                            tokenSymbolIconName: interactor.tokenIconName(for: tokenTo),
                             tokenSymbol: tokenTo.symbol.uppercased(),
                             tokenMaxAmount: tokenTo.balance,
                             tokenMaxDecimals: tokenTo.decimals,
@@ -326,7 +326,7 @@ private extension DefaultTokenSwapPresenter {
                             feeType: self.makeFeeType()
                         ),
                         buttonState: insufficientFunds ? .insufficientFunds : .swap(
-                            providerIcon: self.makeSelectedProviderIcon()
+                            providerIconName: self.makeSelectedProviderIconName()
                         )
                     )
                 ),
@@ -383,7 +383,7 @@ private extension DefaultTokenSwapPresenter {
     func makeTokenSwapProviderViewModel() -> TokenSwapProviderViewModel {
         
         .init(
-            icon: makeSelectedProviderIcon(),
+            iconName: makeSelectedProviderIconName(),
             name: selectedProviderName
         )
     }
@@ -399,9 +399,9 @@ private extension DefaultTokenSwapPresenter {
         return .init(value: "1 \(tokenFrom.symbol) ≈ \(value) \(tokenTo.symbol)")
     }
     
-    func makeSelectedProviderIcon() -> Data {
+    func makeSelectedProviderIconName() -> String {
         
-        "\(selectedProviderName)-provider".assetImage!.pngData()!
+        "\(selectedProviderName)-provider"
     }
     
     var selectedProviderName: String {

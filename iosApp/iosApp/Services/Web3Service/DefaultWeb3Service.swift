@@ -61,26 +61,36 @@ extension DefaultWeb3Service: Web3Service {
     
     func networkIcon(for network: Web3Network) -> Data {
         
+        networkIconName(for: network).loadIconData
+    }
+    
+    func networkIconName(for network: Web3Network) -> String {
+        
         switch network.name {
             
         case "Bitcoin":
-            return "token_btc_icon".loadIconData
+            return "token_btc_icon"
             
         case "Ethereum":
-            return "token_eth_icon".loadIconData
+            return "token_eth_icon"
             
         case "Solana":
-            return "token_sol_icon".loadIconData
+            return "token_sol_icon"
             
         default:
             
-            return "default_token".loadIconData
+            return "default_token"
         }
     }
 
     func tokenIcon(for token: Web3Token) -> Data {
         
-        "token_\(token.symbol.lowercased())_icon".loadIconData
+        tokenIconName(for: token).loadIconData
+    }
+    
+    func tokenIconName(for token: Web3Token) -> String {
+        
+        "token_\(token.symbol.lowercased())_icon"
     }
     
     func addWalletListener(_ listener: Web3ServiceWalletListener) {

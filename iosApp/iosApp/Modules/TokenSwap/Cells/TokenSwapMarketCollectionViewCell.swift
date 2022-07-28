@@ -125,10 +125,10 @@ extension TokenSwapMarketCollectionViewCell {
         )
         
         switch viewModel.buttonState {
-        case let .swap(providerIcon):
+        case let .swap(providerIconName):
             button.setTitle(Localized("tokenSwap.cell.market.swap"), for: .normal)
             button.setImage(
-                providerIcon.pngImage?.resize(
+                providerIconName.assetImage?.resize(
                     to: .init(width: 24, height: 24)
                 ),
                 for: .normal

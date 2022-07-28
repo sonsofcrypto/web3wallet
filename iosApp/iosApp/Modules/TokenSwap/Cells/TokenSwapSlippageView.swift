@@ -21,23 +21,7 @@ final class TokenSwapSlippageView: UIView {
         nameLabel.apply(style: .footnote)
         nameLabel.text = Localized("tokenSwap.cell.slippage")
         
-        var configuration = UIButton.Configuration.plain()
-        configuration.titleTextAttributesTransformer = .init{ incoming in
-            var outgoing = incoming
-            outgoing.font = Theme.font.footnote
-            return outgoing
-        }
-        configuration.titlePadding = Theme.constant.padding * 0.5
-        configuration.imagePadding = Theme.constant.padding * 0.5
-        button.configuration = configuration
-        button.updateConfiguration()
-        button.backgroundColor = .clear
-        button.tintColor = Theme.colour.labelPrimary
-        button.layer.borderWidth = 0.5
-        button.layer.borderColor = Theme.colour.labelPrimary.cgColor
-        button.titleLabel?.textAlignment = .natural
-        button.layer.cornerRadius = button.frame.size.height.half
-        button.setTitleColor(Theme.colour.labelPrimary, for: .normal)
+        button.style = .secondarySmall(leftImage: nil)
         button.addTarget(
             self,
             action: #selector(changeSlippage),

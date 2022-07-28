@@ -68,7 +68,7 @@ private extension ConfirmationSendView {
         
         let horizontalStack = HStackView(
             [
-                makeTokenView(with: token.icon),
+                makeTokenView(with: token.iconName),
                 makeTokenAmountView(with: token.value, and: token.usdValue)
             ]
         )
@@ -86,9 +86,9 @@ private extension ConfirmationSendView {
         return view
     }
     
-    func makeTokenView(with data: Data) -> UIView {
+    func makeTokenView(with iconName: String) -> UIView {
         
-        let image = UIImageView(image: data.pngImage)
+        let image = UIImageView(image: iconName.assetImage)
         
         let view = UIView()
         view.backgroundColor = .clear

@@ -71,7 +71,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                 .token(
                     .init(
                         tokenAmount: nil,
-                        tokenSymbolIcon: interactor.tokenIcon(for: token),
+                        tokenSymbolIconName: interactor.tokenIconName(for: token),
                         tokenSymbol: token.symbol.uppercased(),
                         tokenMaxAmount: token.balance,
                         tokenMaxDecimals: token.decimals,
@@ -213,7 +213,7 @@ private extension DefaultTokenSendPresenter {
     func makeConfirmationSendToken() -> ConfirmationWireframeContext.SendContext.Token {
         
         .init(
-            icon: interactor.tokenIcon(for: token),
+            iconName: interactor.tokenIconName(for: token),
             token: token,
             value: amount ?? 0
         )
@@ -354,7 +354,7 @@ private extension DefaultTokenSendPresenter {
                 .token(
                     .init(
                         tokenAmount: amount,
-                        tokenSymbolIcon: interactor.tokenIcon(for: token),
+                        tokenSymbolIconName: interactor.tokenIconName(for: token),
                         tokenSymbol: token.symbol.uppercased(),
                         tokenMaxAmount: token.balance,
                         tokenMaxDecimals: token.decimals,

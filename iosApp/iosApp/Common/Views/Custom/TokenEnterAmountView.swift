@@ -7,7 +7,7 @@ import UIKit
 struct TokenEnterAmountViewModel {
     
     let tokenAmount: Double?
-    let tokenSymbolIcon: Data
+    let tokenSymbolIconName: String
     let tokenSymbol: String
     let tokenMaxAmount: Double
     let tokenMaxDecimals: Int
@@ -108,7 +108,7 @@ extension TokenEnterAmountView {
         updateSendAmountLabel()
         updateBalanceLabel()
                 
-        tokenIconImageView.image = viewModel.tokenSymbolIcon.pngImage
+        tokenIconImageView.image = viewModel.tokenSymbolIconName.assetImage
         tokenLabel.text = viewModel.tokenSymbol
         
         if viewModel.shouldBecomeFirstResponder {

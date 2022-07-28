@@ -4,14 +4,14 @@
 
 struct TokenSwapProviderViewModel {
     
-    let icon: Data
+    let iconName: String
     let name: String
 }
 
 final class TokenSwapProviderView: UIView {
     
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var button: UIButton!
+    @IBOutlet weak var button: Button!
     
     //private var handler: (() -> Void)!
     
@@ -22,23 +22,7 @@ final class TokenSwapProviderView: UIView {
         nameLabel.apply(style: .footnote)
         nameLabel.text = Localized("tokenSwap.cell.provider")
         
-        var configuration = UIButton.Configuration.plain()
-        configuration.titleTextAttributesTransformer = .init{ incoming in
-            var outgoing = incoming
-            outgoing.font = Theme.font.footnote
-            return outgoing
-        }
-        configuration.titlePadding = Theme.constant.padding * 0.5
-        configuration.imagePadding = Theme.constant.padding * 0.5
-        button.configuration = configuration
-        button.updateConfiguration()
-        button.backgroundColor = .clear
-        button.tintColor = Theme.colour.labelPrimary
-        button.layer.borderWidth = 0.5
-        button.layer.borderColor = Theme.colour.labelPrimary.cgColor
-        button.titleLabel?.textAlignment = .natural
-        button.layer.cornerRadius = button.frame.size.height.half
-        button.setTitleColor(Theme.colour.labelPrimary, for: .normal)
+        button.style = .secondarySmall(leftImage: nil)
         button.addTarget(
             self,
             action: #selector(changeProvider),
@@ -57,19 +41,25 @@ extension TokenSwapProviderView {
         //self.handler = handler
 
         button.setTitle(viewModel.name, for: .normal)
-        if let leftImage = viewModel.icon.pngImage {
-            
-            button.setImage(
-                leftImage.withRenderingMode(
-                    .alwaysTemplate
-                ).withTintColor(
-                    Theme.colour.buttonSecondaryText
-                ).resize(
-                    to: .init(width: 24, height: 24)
-                ),
-                for: .normal
+        button.style = .secondarySmall(
+            leftImage: viewModel.iconName.assetImage?.resize(
+                to: .init(width: 24, height: 24)
             )
-        }
+        )
+//        if let leftImage = viewModel.icon.pngImage {
+//
+//            button.style = .secondarySmall(leftImage: )
+//            button.setImage(
+//                leftImage.withRenderingMode(
+//                    .alwaysTemplate
+//                ).withTintColor(
+//                    Theme.colour.buttonSecondaryText
+//                ).resize(
+//                    to: .init(width: 24, height: 24)
+//                ),
+//                for: .normal
+//            )
+//        }
     }
 }
 
