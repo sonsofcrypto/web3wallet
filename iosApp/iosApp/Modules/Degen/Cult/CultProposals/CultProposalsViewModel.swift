@@ -27,7 +27,7 @@ extension CultProposalsViewModel {
         
         struct Footer {
             
-            let image: Data
+            let imageName: String
             let text: String
         }
     }

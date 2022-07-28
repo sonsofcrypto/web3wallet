@@ -28,13 +28,13 @@ final class CultProposalFooterSupplementaryView: UICollectionReusableView {
                 .layout(
                     anchor: .widthAnchor,
                     constant: .equalTo(
-                        constant: frame.width * 0.3
+                        constant: frame.width * 0.4
                     )
                 ),
                 .layout(
                     anchor: .heightAnchor,
                     constant: .equalTo(
-                        constant: frame.width * 0.3
+                        constant: frame.width * 0.4
                     )
                 )
             ]
@@ -48,13 +48,15 @@ final class CultProposalFooterSupplementaryView: UICollectionReusableView {
         self.label = label
 
         let hStack = VStackView([imageView, label])
-        hStack.spacing = Theme.constant.padding.half
         addSubview(hStack)
         hStack.addConstraints(
             [
                 .layout(anchor: .centerXAnchor),
-                .layout(anchor: .topAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: Theme.constant.padding))
+                .layout(anchor: .topAnchor),
+                .layout(
+                    anchor: .bottomAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding * 1.5)
+                )
             ]
         )
     }
@@ -64,7 +66,7 @@ extension CultProposalFooterSupplementaryView {
 
     func update(with viewModel: CultProposalsViewModel.Section.Footer) {
         
-        imageView.image = viewModel.image.pngImage
+        imageView.image = viewModel.imageName.assetImage
         label.text = viewModel.text
     }
 }
