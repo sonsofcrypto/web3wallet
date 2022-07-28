@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1A4C3001CAC79A77987DA8AE /* Error+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39798419CEB3807348FA /* Error+Extensions.swift */; };
-		1A4C30116B1618C1596D9D14 /* NetworksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DAB38F681061328F3F0 /* NetworksService.swift */; };
 		1A4C303A23D7DA2A37B292C1 /* CardFlipTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E976CBAB0A97E8AF408 /* CardFlipTransition.swift */; };
 		1A4C308B6FA11A032039F086 /* CandlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C359691FCF66942DF6CEF /* CandlesView.swift */; };
 		1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C300D073ABE25FC79D4A9 /* CollectionViewCell.swift */; };
@@ -297,8 +296,6 @@
 		1C6487272832E5150091A12D /* DefaultAppsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487262832E5150091A12D /* DefaultAppsService.swift */; };
 		1C64872B2832E5570091A12D /* DefaultAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64872A2832E5570091A12D /* DefaultAccountService.swift */; };
 		1C64872D2832E5800091A12D /* AccountServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64872C2832E5800091A12D /* AccountServiceAssembler.swift */; };
-		1C6487302832E5E90091A12D /* DefaultNetworksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64872F2832E5E90091A12D /* DefaultNetworksService.swift */; };
-		1C6487322832E5F90091A12D /* NetworksServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487312832E5F90091A12D /* NetworksServiceAssembler.swift */; };
 		1C6487342832E64A0091A12D /* DefaultNFTsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487332832E64A0091A12D /* DefaultNFTsService.swift */; };
 		1C6487362832E6650091A12D /* NFTsServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487352832E6650091A12D /* NFTsServiceAssembler.swift */; };
 		1C6487382832E6BE0091A12D /* DefaultOnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487372832E6BE0091A12D /* DefaultOnboardingService.swift */; };
@@ -566,7 +563,6 @@
 		1A4C3B70AA1B0BC942B15671 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		1A4C3D40E32D58F958911B60 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
-		1A4C3DAB38F681061328F3F0 /* NetworksService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksService.swift; sourceTree = "<group>"; };
 		1A4C3DBA41AF75471C619124 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		1A4C3DED61DB8FC18EFD5B0B /* SettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
 		1A4C3E976CBAB0A97E8AF408 /* CardFlipTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFlipTransition.swift; sourceTree = "<group>"; };
@@ -825,8 +821,6 @@
 		1C6487262832E5150091A12D /* DefaultAppsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAppsService.swift; sourceTree = "<group>"; };
 		1C64872A2832E5570091A12D /* DefaultAccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAccountService.swift; sourceTree = "<group>"; };
 		1C64872C2832E5800091A12D /* AccountServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountServiceAssembler.swift; sourceTree = "<group>"; };
-		1C64872F2832E5E90091A12D /* DefaultNetworksService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNetworksService.swift; sourceTree = "<group>"; };
-		1C6487312832E5F90091A12D /* NetworksServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksServiceAssembler.swift; sourceTree = "<group>"; };
 		1C6487332832E64A0091A12D /* DefaultNFTsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNFTsService.swift; sourceTree = "<group>"; };
 		1C6487352832E6650091A12D /* NFTsServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTsServiceAssembler.swift; sourceTree = "<group>"; };
 		1C6487372832E6BE0091A12D /* DefaultOnboardingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOnboardingService.swift; sourceTree = "<group>"; };
@@ -1076,16 +1070,6 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		1A4C34890DEC8B96E5A50E6C /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				1C64872F2832E5E90091A12D /* DefaultNetworksService.swift */,
-				1A4C3DAB38F681061328F3F0 /* NetworksService.swift */,
-				1C6487312832E5F90091A12D /* NetworksServiceAssembler.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
 		1A4C34EBFC9FFA8EFBE7DCA7 /* Account */ = {
 			isa = PBXGroup;
 			children = (
@@ -1171,7 +1155,6 @@
 				1C2B06542891D992002A8FBF /* Features */,
 				1C64871C2832E3B90091A12D /* KeychainService */,
 				1A4C378CF260A81DDB68B039 /* KeyStore */,
-				1A4C34890DEC8B96E5A50E6C /* Network */,
 				1A4C35A602BDFD544714CB8F /* NFTsService */,
 				1A4C39EC4A83EE79DD0F101F /* Onboarding */,
 				1C6487102832DE380091A12D /* Reachability */,
@@ -1217,6 +1200,14 @@
 			isa = PBXGroup;
 			children = (
 				1C60C1EC285724D0003BE25D /* KeyStoreCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		1C0643D02892F0E800643C15 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				1C60C223285724D0003BE25D /* NetworksCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1519,7 +1510,6 @@
 			isa = PBXGroup;
 			children = (
 				1CAC55A3286DF26100CCB2B6 /* Networks.storyboard */,
-				1C60C223285724D0003BE25D /* NetworksCell.swift */,
 				1C7E1F54286F129000E24811 /* NetworkHeaderCell.swift */,
 				1C60C220285724D0003BE25D /* NetworksInteractor.swift */,
 				1C60C224285724D0003BE25D /* NetworksPresenter.swift */,
@@ -1528,6 +1518,7 @@
 				1C60C222285724D0003BE25D /* NetworksWireframe.swift */,
 				1C60C221285724D0003BE25D /* NetworksWireframeFactory.swift */,
 				1C60C21D285724D0003BE25D /* NetworksWireframeFactoryAssembler.swift */,
+				1C0643D02892F0E800643C15 /* Cells */,
 			);
 			path = Networks;
 			sourceTree = "<group>";
@@ -2659,7 +2650,6 @@
 				1C60C2FF285724D1003BE25D /* NFTsDashboardView+MainScrollView.swift in Sources */,
 				1C672001287FE11700C5F044 /* TokenSwapMarketCollectionViewCell.swift in Sources */,
 				1C671FFA287FDFFF00C5F044 /* TokenSwapInteractor.swift in Sources */,
-				1A4C30116B1618C1596D9D14 /* NetworksService.swift in Sources */,
 				1C60C2CA285724D0003BE25D /* ChatPresenter.swift in Sources */,
 				1C60C321285724D1003BE25D /* AppsCell.swift in Sources */,
 				1C54DC152862351500E378F6 /* QRCodeScanViewModel.swift in Sources */,
@@ -2738,7 +2728,6 @@
 				1CB3A1F02840D6B70092D667 /* UIStoryboard+Extensions.swift in Sources */,
 				1C60C2F4285724D0003BE25D /* NFTDetailView+Content+Description.swift in Sources */,
 				1C60C2E5285724D0003BE25D /* AnimatedTextButton.swift in Sources */,
-				1C6487322832E5F90091A12D /* NetworksServiceAssembler.swift in Sources */,
 				1C60C2F0285724D0003BE25D /* NetworksCell.swift in Sources */,
 				1C60C323285724D1003BE25D /* AppsWireframeFactory.swift in Sources */,
 				1C2B065A28927F92002A8FBF /* EmbeddedErrorCollectionViewCell.swift in Sources */,
@@ -2936,7 +2925,6 @@
 				1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */,
 				1C671FEE287FDFB000C5F044 /* TokenSwapPresenter.swift in Sources */,
 				1C60C34D285724D1003BE25D /* CultProposalVoteView.swift in Sources */,
-				1C6487302832E5E90091A12D /* DefaultNetworksService.swift in Sources */,
 				1C54DC1F2862373C00E378F6 /* QRCodeScanInteractor.swift in Sources */,
 				1A4C370634B11B400C5C4356 /* TouchPassThroughCollectionView.swift in Sources */,
 				1CB8B0AD288B184A00024E7C /* CultProposalHeaderSupplementaryView.swift in Sources */,

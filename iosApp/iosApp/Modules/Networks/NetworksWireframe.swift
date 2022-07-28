@@ -6,31 +6,31 @@ import UIKit
 
 enum NetworksWireframeDestination {
     case dashboard
+    case editNetwork(Web3Network)
 }
 
 protocol NetworksWireframe {
+
     func present()
     func navigate(to destination: NetworksWireframeDestination)
 }
 
-// MARK: - DefaultNetworksWireframe
-
 final class DefaultNetworksWireframe {
 
     private weak var parent: UIViewController?
-
-    private let interactor: NetworksInteractor
+    private let alertWireframeFactory: AlertWireframeFactory
+    private let web3Service: Web3Service
 
     init(
         parent: UIViewController?,
-        interactor: NetworksInteractor
+        alertWireframeFactory: AlertWireframeFactory,
+        web3Service: Web3Service
     ) {
-        self.interactor = interactor
         self.parent = parent
+        self.alertWireframeFactory = alertWireframeFactory
+        self.web3Service = web3Service
     }
 }
-
-// MARK: - NetworksWireframe
 
 extension DefaultNetworksWireframe: NetworksWireframe {
 
@@ -44,20 +44,35 @@ extension DefaultNetworksWireframe: NetworksWireframe {
     }
 
     func navigate(to destination: NetworksWireframeDestination) {
-        if let parent = self.parent as? EdgeCardsController {
-            switch destination {
-            case .dashboard:
-                parent.setDisplayMode(.master, animated: true)
+        
+        switch destination {
+            
+        case .dashboard:
+            
+            guard let parent = parent as? EdgeCardsController else {
+                return
             }
-            return
+            parent.setDisplayMode(.master, animated: true)
+            
+        case .editNetwork:
+            
+            guard let parent = parent else { return }
+            alertWireframeFactory.makeWireframe(
+                parent,
+                context: .underConstructionAlert()
+            ).present()
         }
-        print("Failed to navigate to \(destination)")
+        
     }
 }
 
 extension DefaultNetworksWireframe {
 
     private func wireUp() -> UIViewController {
+        
+        let interactor = DefaultNetworksInteractor(
+            web3Service: web3Service
+        )
         
         let vc: NetworksViewController = UIStoryboard(.networks).instantiate()
         let presenter = DefaultNetworksPresenter(

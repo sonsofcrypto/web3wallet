@@ -6,36 +6,36 @@ import Foundation
 
 protocol NetworksInteractor: AnyObject {
 
-    func networkIcon(for network: Web3Network) -> Data
+    func networkIconName(for network: Web3Network) -> String
     func allNetworks() -> [Web3Network]
     func update(network: Web3Network, active: Bool)
 }
 
 final class DefaultNetworksInteractor {
 
-    private var networksService: NetworksService
+    private var web3Service: Web3Service
 
-    init(_ networksService: NetworksService) {
+    init(web3Service: Web3Service) {
         
-        self.networksService = networksService
+        self.web3Service = web3Service
     }
 }
 
 extension DefaultNetworksInteractor: NetworksInteractor {
     
-    func networkIcon(for network: Web3Network) -> Data {
+    func networkIconName(for network: Web3Network) -> String {
         
-        networksService.networkIcon(for: network)
+        web3Service.networkIconName(for: network)
     }
 
     func allNetworks() -> [Web3Network] {
         
-        networksService.allNetworks()
+        web3Service.allNetworks
     }
     
     func update(network: Web3Network, active: Bool) {
         
-        networksService.update(network: network, active: active)
+        web3Service.update(network: network, active: active)
     }
 
 }

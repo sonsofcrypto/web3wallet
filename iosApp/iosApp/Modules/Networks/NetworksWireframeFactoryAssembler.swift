@@ -9,7 +9,8 @@ final class NetworksWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> NetworksWireframeFactory in
             
             DefaultNetworksWireframeFactory(
-                networksService: resolver.resolve()
+                alertWireframeFactory: resolver.resolve(),
+                web3Service: resolver.resolve()
             )
         }
     }
