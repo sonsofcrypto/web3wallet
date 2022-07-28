@@ -32,8 +32,8 @@ final class DashboardHeaderBalanceView: UICollectionReusableView {
 
 extension DashboardHeaderBalanceView {
 
-    func update(with viewModel: DashboardViewModel.Section) {
+    func update(with balance: String) {
         
-        label.text = viewModel.name
+        label.text = balance
     }
 }

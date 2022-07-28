@@ -72,9 +72,9 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             expandedNetworks.append(network)
             view?.update(with: viewModel())
             
-        case let .didSelectWallet(network, symbol):
+        case let .didSelectWallet(networkId, symbol):
             guard let token = myTokens.first(
-                where: { $0.equalTo(network: network, symbol: symbol) }
+                where: { $0.equalTo(networkId: networkId, symbol: symbol) }
             ) else { return }
             wireframe.navigate(to: .wallet(token: token))
             
@@ -94,13 +94,11 @@ extension DefaultDashboardPresenter: DashboardPresenter {
         case .didScanQRCode:
             wireframe.navigate(to: .scanQRCode(onCompletion: makeOnQRCodeScanned()))
             
-        case let .didTapEditTokens(network):
+        case let .didTapEditTokens(networkId):
             
-            let networkOrNil = interactor.allNetworks.first {
-                $0.name.lowercased() == network.lowercased()
-            }
-            
-            guard let network = networkOrNil else { return }
+            guard let network = interactor.allNetworks.first(where: {
+                $0.id == networkId
+            }) else { return }
             
             wireframe.navigate(
                 to: .editTokens(
@@ -134,9 +132,7 @@ private extension DefaultDashboardPresenter {
     func fetchData() {
         
         self.notifications = interactor.notifications
-        let myTokens = interactor.myTokens
-        guard self.myTokens != myTokens else { return }
-        self.myTokens = myTokens
+        self.myTokens = interactor.myTokens
         view?.update(with: viewModel())
     }
 }
@@ -158,21 +154,24 @@ private extension DefaultDashboardPresenter {
             
             sections.append(
                 .init(
-                    name: network.name,
-                    fuelCost: network.cost,
-                    rightActionTitle: Localized("more").uppercased(),
-                    isCollapsed: false,//!expandedNetworks.contains(network.name),
+                    type: .network(
+                        .init(
+                            id: network.id,
+                            name: network.name,
+                            fuelCost: network.cost,
+                            rightActionTitle: Localized("more").uppercased(),
+                            isCollapsed: false//!expandedNetworks.contains(network.name),
+                        )
+                    ),
                     items: .wallets(
                         makeDashboardViewModelWallets(from: tokens)
                     )
                 )
             )
             
-            // TODO: @Annon check if we really wanna have 2 sections of NFTs feels like we should
-            // not be duplicating data for the sake of filling things up
-//            nfts.append(
-//                contentsOf: makeDashboardViewModelNFts(from: interactor.nfts(for: network))
-//            )
+            nfts.append(
+                contentsOf: makeDashboardViewModelNFts(from: interactor.nfts(for: network))
+            )
         }
         
         sections = addMissingSectionsIfNeeded(to: sections)
@@ -180,10 +179,9 @@ private extension DefaultDashboardPresenter {
         if !nfts.isEmpty {
             sections.append(
                 .init(
-                    name: Localized("dashboard.section.nfts").uppercased(),
-                    fuelCost: nil,
-                    rightActionTitle: nil,
-                    isCollapsed: false,
+                    type: .title(
+                        Localized("dashboard.section.nfts").uppercased()
+                    ),
                     items: .nfts(nfts)
                 )
             )
@@ -200,10 +198,7 @@ private extension DefaultDashboardPresenter {
         
         sections.insert(
             .init(
-                name: walletTotal.formatCurrency() ?? "",
-                fuelCost: nil,
-                rightActionTitle: nil,
-                isCollapsed: nil,
+                type: .balance(walletTotal.formatCurrency() ?? ""),
                 items: .actions(
                     [
                         .init(
@@ -229,10 +224,7 @@ private extension DefaultDashboardPresenter {
         
         sections.insert(
             .init(
-                name: Localized("dashboard.section.notifications"),
-                fuelCost: nil,
-                rightActionTitle: nil,
-                isCollapsed: nil,
+                type: .title(Localized("dashboard.section.notifications")),
                 items: makeNotificationItems()
             ),
             at: 1
@@ -268,19 +260,32 @@ private extension DefaultDashboardPresenter {
         
         allNetworks.forEach { network in
             
-            let sectionWithName = sections.filter {
-                $0.name.lowercased() == network.name.lowercased()
+            let section = sections.filter {
+                $0.networkId == network.id
             }.first
             
-            allSections.append(
-                sectionWithName ?? .init(
-                    name: network.name,
-                    fuelCost: network.cost,
-                    rightActionTitle: Localized("more").uppercased(),
-                    isCollapsed: false,
-                    items: .wallets([])
+            if let section = section {
+                
+                // If exists, we keep it
+                allSections.append(section)
+            } else {
+                
+                // Otherwise we create it with an empty wallets list
+                allSections.append(
+                    .init(
+                        type: .network(
+                            .init(
+                                id: network.id,
+                                name: network.name,
+                                fuelCost: network.cost,
+                                rightActionTitle: Localized("more").uppercased(),
+                                isCollapsed: false
+                            )
+                        ),
+                        items: .wallets([])
+                    )
                 )
-            )
+            }
         }
         
         return allSections
@@ -373,6 +378,11 @@ private extension Array where Element == Web3Candle {
 
 extension DefaultDashboardPresenter: Web3ServiceWalletListener {
     
+    func nftsChanged() {
+        
+        fetchData()
+    }
+    
     func tokensChanged() {
         
         fetchData()
@@ -388,6 +398,7 @@ private extension DefaultDashboardPresenter {
             
             guard let self = self else { return }
             
+            // TODO: @Annon Check here what to do with the code?
             print("QR code scanned: \(qrCode)")
         }
     }

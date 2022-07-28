@@ -22,7 +22,9 @@ final class NFTsServiceAssembler: AssemblerComponent {
                 action: .debugAPIsNFTsOpenSea
             ) {
                 
-                return OpenSeaNFTsService()
+                return OpenSeaNFTsService(
+                    web3Service: resolver.resolve()
+                )
                 
             } else {
                 

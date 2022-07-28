@@ -6,6 +6,7 @@ import Foundation
 
 protocol Web3ServiceWalletListener: AnyObject {
 
+    func nftsChanged()
     func tokensChanged()
 }
 
@@ -37,6 +38,8 @@ protocol Web3Service: AnyObject {
     var currentEthBlock: String { get }
     
     var dashboardNotifications: [Web3Notification] { get }
+    
+    func nftsChanged()
 }
 
 enum Web3NetworkFee: String {
@@ -119,9 +122,9 @@ extension Web3Token {
 
 extension Web3Token {
     
-    func equalTo(network: String, symbol: String) -> Bool {
+    func equalTo(networkId: String, symbol: String) -> Bool {
         
-        self.network.name == network && self.symbol == symbol
+        self.network.id == network.id && self.symbol == symbol
     }
     
     var usdBalance: Double {

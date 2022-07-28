@@ -65,7 +65,11 @@ extension DefaultWeb3ServiceLocalStorage: Web3ServiceLocalStorage {
         
         allTokens.forEach { token in
             
-            if let myToken = myTokens.first(where: { $0.equalTo(network: token.network.name, symbol: token.symbol) }) {
+            if let myToken = myTokens.first(
+                where: {
+                    $0.equalTo(networkId: token.network.id, symbol: token.symbol)
+                }
+            ) {
                 newTokens.append(
                     .init(
                         symbol: myToken.symbol,

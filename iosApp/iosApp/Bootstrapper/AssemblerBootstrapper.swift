@@ -41,6 +41,7 @@ private extension AssemblerBootstrapper {
             Web3ServiceAssembler(),
             Web3ServiceLocalStorageAssembler(),
             PriceHistoryServiceAssembler(),
+            FeaturesServiceAssembler(),
             // DeepLink
             DeepLinkHandlerAssembler(),
             // Modules

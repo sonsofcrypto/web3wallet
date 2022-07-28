@@ -185,13 +185,16 @@ extension DashboardViewController: UICollectionViewDataSource {
         viewModel?.sections.count ?? 0
     }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         
         guard let section = viewModel?.sections[section] else { return 0 }
         
         guard section.items.count > 4 else { return section.items.count }
         
-        return (section.isCollapsed ?? false) ? 4 : section.items.count
+        return section.isCollapsed ? 4 : section.items.count
     }
     
     func collectionView(
@@ -204,7 +207,7 @@ extension DashboardViewController: UICollectionViewDataSource {
             fatalError("No viewModel for \(indexPath) \(collectionView)")
         }
         
-        let actions = section.items.actions()
+        let actions = section.items.actions
         if !actions.isEmpty {
             
             let cell = collectionView.dequeue(DashboardButtonsCell.self, for: indexPath)
@@ -263,7 +266,12 @@ extension DashboardViewController: UICollectionViewDelegate {
             presenter.handle(.didTapNotification(id: notification.id))
         case let .wallets(wallets):
             let wallet = wallets[indexPath.item]
-            presenter.handle(.didSelectWallet(network: section.name, symbol: wallet.ticker))
+            presenter.handle(
+                .didSelectWallet(
+                    network: section.networkId,
+                    symbol: wallet.ticker
+                )
+            )
         case let .nfts(nfts):
             let nft = nfts[indexPath.item]
             nft.onSelected()
@@ -304,26 +312,69 @@ private extension DashboardViewController {
             fatalError("no section")
         }
         
-        switch indexPath.section {
+        switch section.type {
             
-        case 0:
+        case .none:
+            
+            fatalError("We should not configure a section header when type is none.")
+            
+        case let .balance(balance):
+
             let supplementary = collectionView.dequeue(
                 DashboardHeaderBalanceView.self,
                 for: indexPath,
                 kind: kind
             )
-            supplementary.update(with: section)
+            supplementary.update(with: balance)
             return supplementary
-            
-        default:
+
+        case let .title(title):
             
             let supplementary = collectionView.dequeue(
                 DashboardHeaderNameView.self,
                 for: indexPath,
                 kind: kind
             )
-            supplementary.update(with: section, presenter: presenter)
+            supplementary.update(
+                with: title,
+                and: nil,
+                handler: nil
+            )
             return supplementary
+            
+        case let .network(network):
+            
+            let supplementary = collectionView.dequeue(
+                DashboardHeaderNameView.self,
+                for: indexPath,
+                kind: kind
+            )
+            supplementary.update(
+                with: network.name,
+                and: network,
+                handler: makeDashboardHeaderNameViewHandler(for: section)
+            )
+            return supplementary
+        }
+    }
+    
+    func makeDashboardHeaderNameViewHandler(
+        for section: DashboardViewModel.Section
+    ) -> DashboardHeaderNameView.Handler {
+        
+        .init(
+            onMoreTapped: makeOnMoreNetworkTapped(for: section)
+        )
+    }
+    
+    func makeOnMoreNetworkTapped(
+        for section: DashboardViewModel.Section
+    ) -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.didTapEditTokens(network: section.networkId))
         }
     }
     
