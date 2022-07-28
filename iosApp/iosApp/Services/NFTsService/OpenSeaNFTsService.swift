@@ -99,9 +99,6 @@ extension OpenSeaNFTsService: NFTsService {
                 self.updateWeb3WalletNFTListeners()
                 onCompletion(.success(self.nfts))
             } catch {
-                self.nfts = []
-                self.collections = []
-                self.updateWeb3WalletNFTListeners()
                 onCompletion(.failure(error))
             }
         }.resume()
