@@ -22,7 +22,7 @@ private extension SeparatorView {
         
         backgroundColor = Theme.colour.separatorWithTransparency
 
-        let separatorHeight: CGFloat = 1
+        let separatorHeight: CGFloat = 0.25
         if let heightConstraint = heightConstraint {
             heightConstraint.constant = separatorHeight
         } else {

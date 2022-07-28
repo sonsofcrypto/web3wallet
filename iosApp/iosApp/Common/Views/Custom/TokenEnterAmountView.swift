@@ -52,8 +52,6 @@ final class TokenEnterAmountView: UIView {
         sendAmountTextField.font = Theme.font.title3
         sendAmountTextField.placeholderAttrText = "0"
         sendAmountTextField.delegate = self
-        sendAmountTextField.rightView = makeTokenClearButton()
-        sendAmountTextField.rightViewMode = .whileEditing
         
         let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(flipMode))
         flipImageView.image = "arrow.left.arrow.right".assetImage
@@ -180,31 +178,6 @@ private extension TokenEnterAmountView {
         {
             textField.text = text[0] + "." + text[1]
         }
-    }
-    
-    func makeTokenClearButton() -> UIButton {
-        
-        let button = UIButton(type: .system)
-        button.setImage(
-            "xmark.circle.fill".assetImage,
-            for: .normal
-        )
-        button.tintColor = Theme.colour.labelSecondary
-        button.addTarget(self, action: #selector(clearTokenTapped), for: .touchUpInside)
-        button.addConstraints(
-            [
-                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 20)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 20))
-            ]
-        )
-        return button
-    }
-        
-    @objc func clearTokenTapped() {
-        
-        sendAmountTextField.text = nil
-        
-        onTokenChanged?(0)
     }
     
     @objc func tokenTapped() {

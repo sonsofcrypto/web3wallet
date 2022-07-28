@@ -6,6 +6,8 @@ import UIKit
 
 final class NavigationController: UINavigationController {
     
+    private (set) var systemShadowColor: UIColor?
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         
         Theme.statusBarStyle.statusBarStyle(for: traitCollection.userInterfaceStyle)
@@ -22,7 +24,6 @@ final class NavigationController: UINavigationController {
             .foregroundColor: Theme.colour.navBarTitle,
             .font: Theme.font.navTitle
         ]
-        
         appearance.setBackIndicatorImage(
             "chevron.left".assetImage,
             transitionMaskImage:  nil
@@ -33,6 +34,7 @@ final class NavigationController: UINavigationController {
         navigationBar.compactAppearance = appearance
         navigationBar.compactScrollEdgeAppearance = appearance
         navigationBar.tintColor = Theme.colour.navBarTint
+        systemShadowColor = appearance.shadowColor
         
         // TODO: Review pop gesture behaviour
         interactivePopGestureRecognizer?.delegate = nil
@@ -40,10 +42,24 @@ final class NavigationController: UINavigationController {
     }
 }
 
-//extension NavigationController: UIGestureRecognizerDelegate {
-//
-//    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-//
-//        true
-//    }
-//}
+extension UINavigationController {
+    
+    var bottomLineColor: UIColor? {
+        
+        guard let navigationController = self as? NavigationController else {
+            
+            return nil
+        }
+        
+        return navigationController.systemShadowColor
+    }
+    
+    func showBottomLine(_ showBottomLine: Bool) {
+        
+        let appearance = navigationBar.standardAppearance
+        appearance.shadowColor = showBottomLine
+        ? bottomLineColor
+        : .clear
+        navigationBar.scrollEdgeAppearance = appearance
+    }
+}

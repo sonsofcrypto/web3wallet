@@ -66,10 +66,10 @@
                                                 <rect key="frame" x="0.0" y="502.5" width="331" height="72"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="8wg-2O-LVj">
-                                                        <rect key="frame" x="9.5" y="0.0" width="312" height="72"/>
+                                                        <rect key="frame" x="81.5" y="0.0" width="168" height="72"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5a8-s7-CHy" customClass="CustomVerticalButton" customModule="iosApp" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="80" height="72"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="72" height="72"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="72" id="vS8-CE-cis"/>
@@ -79,7 +79,7 @@
                                                                 </connections>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e3L-zP-54K" customClass="CustomVerticalButton" customModule="iosApp" customModuleProvider="target">
-                                                                <rect key="frame" x="116" y="0.0" width="80" height="72"/>
+                                                                <rect key="frame" x="96" y="0.0" width="72" height="72"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="72" id="cxO-yW-pdr"/>

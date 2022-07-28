@@ -41,12 +41,10 @@ final class TokenEnterAddressView: UIView {
         qrCodeScanButton.tintColor = Theme.colour.labelPrimary
         qrCodeScanButton.addTarget(self, action: #selector(qrCodeScanTapped), for: .touchUpInside)
         
-        textField.placeholderAttrText  = Localized("tokenSend.cell.address.textField.placeholder")
+        textField.placeholderAttrText = Localized("tokenSend.cell.address.textField.placeholder")
         textField.delegate = self
-        textField.rightView = makeClearButton()
-        textField.rightViewMode = .whileEditing
+        textField.textContentType = .none
 
-        
         let pasteAction = UIButton(type: .custom)
         pasteAction.setTitle(Localized("paste"), for: .normal)
         pasteAction.titleLabel?.font = Theme.font.subheadlineBold
@@ -118,31 +116,5 @@ private extension TokenEnterAddressView {
     @objc func saveTapped() {
         
         handler.onSaveTapped()
-    }
-}
-
-private extension TokenEnterAddressView {
-    
-    func makeClearButton() -> UIButton {
-        
-        let button = UIButton(type: .system)
-        button.setImage(
-            "xmark.circle.fill".assetImage,
-            for: .normal
-        )
-        button.tintColor = Theme.colour.labelSecondary
-        button.addTarget(self, action: #selector(clearTapped), for: .touchUpInside)
-        button.addConstraints(
-            [
-                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 20)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 20))
-            ]
-        )
-        return button
-    }
-    
-    @objc func clearTapped() {
-        
-        textField.text = nil
     }
 }

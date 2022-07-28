@@ -155,9 +155,9 @@ private extension TokenSwapViewController {
         providerLogo.image = "uniswap-logo-overlay".assetImage?.withTintColor(
             Theme.colour.labelSecondary
         )
-                
+            
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: "chevron.left".assetImage,
+            title: Localized("close"),
             style: .plain,
             target: self,
             action: #selector(navBarLeftActionTapped)
@@ -193,12 +193,11 @@ private extension TokenSwapViewController {
     
     @objc func segmentControlChanged(_ sender: SegmentedControl) {
         
-        let targetIndexPath = IndexPath(row: sender.selectedSegmentIndex, section: 0)
-        collectionView.selectItem(
-            at: targetIndexPath,
-            animated: true,
-            scrollPosition: .centeredHorizontally
-        )
+        if sender.selectedSegmentIndex == 1 {
+            
+            sender.selectedSegmentIndex = 0
+            presenter.handle(.providerTapped)
+        }        
     }
     
     @objc func navBarLeftActionTapped() {
@@ -259,16 +258,16 @@ private extension TokenSwapViewController {
         height += 4
         height += 80
         
-        height += 32 // Space
+        height += Theme.constant.padding * 1.5
         height += 32 // provider
-        height += 8
+        height += Theme.constant.padding.half
         height += 24 // slippage fee
-        height += 8
+        height += Theme.constant.padding.half
         height += 24 // price fee
-        height += 8
+        height += Theme.constant.padding.half
         height += 24 // estimated fee
-        height += 16
-        height += 46 // review
+        height += Theme.constant.padding
+        height += Theme.constant.buttonPrimaryHeight // review
         
         return height
     }
@@ -302,13 +301,13 @@ private extension TokenSwapViewController {
         )
         
         // Section
-        let sectionInset: CGFloat = Theme.constant.padding * 0.5
+        let sectionInset: CGFloat = Theme.constant.padding
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = .init(
-            top: 0,
-            leading: sectionInset,
+            top: sectionInset * 0.75,
+            leading: sectionInset.half,
             bottom: 0,
-            trailing: sectionInset
+            trailing: sectionInset.half
         )
         section.orthogonalScrollingBehavior = .groupPaging
         section.visibleItemsInvalidationHandler = {
@@ -357,6 +356,8 @@ private extension TokenSwapViewController {
             onTokenToTapped: makeOnTokenToTapped(),
             onTokenToAmountChanged: makeOnTokenToAmountChanged(),
             onSwapFlip: makeOnSwapFlip(),
+            onProviderTapped: makeOnProviderTapped(),
+            onSlippageTapped: makeOnSlippageTapped(),
             onNetworkFeesTapped: makeOnNetworkFeesTapped(),
             onCTATapped: makeOnCTATapped()
         )
@@ -406,6 +407,24 @@ private extension TokenSwapViewController {
             [weak self] in
             guard let self = self else { return }
             self.presenter.handle(.swapFlip)
+        }
+    }
+    
+    func makeOnProviderTapped() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.providerTapped)
+        }
+    }
+    
+    func makeOnSlippageTapped() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.slippageTapped)
         }
     }
     

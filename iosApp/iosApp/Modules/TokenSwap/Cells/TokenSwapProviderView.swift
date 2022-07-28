@@ -13,7 +13,12 @@ final class TokenSwapProviderView: UIView {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var button: Button!
     
-    //private var handler: (() -> Void)!
+    struct Handler {
+        
+        let onProviderTapped: (() -> Void)
+    }
+    
+    private var handler: Handler!
     
     override func awakeFromNib() {
         
@@ -34,11 +39,11 @@ final class TokenSwapProviderView: UIView {
 extension TokenSwapProviderView {
     
     func update(
-        with viewModel: TokenSwapProviderViewModel
-        //handler: @escaping () -> Void
+        with viewModel: TokenSwapProviderViewModel,
+        handler: Handler
     ) {
         
-        //self.handler = handler
+        self.handler = handler
 
         button.setTitle(viewModel.name, for: .normal)
         button.style = .secondarySmall(
@@ -67,6 +72,6 @@ private extension TokenSwapProviderView {
     
     @objc func changeProvider() {
         
-        print("Change provider")
+        handler.onProviderTapped()
     }
 }

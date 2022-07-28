@@ -32,6 +32,14 @@ final class TokenReceiveViewController: BaseViewController {
         
         presenter?.present()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        
+        navigationController?.showBottomLine(true)
+    }
+
 }
 
 extension TokenReceiveViewController: TokenReceiveView {

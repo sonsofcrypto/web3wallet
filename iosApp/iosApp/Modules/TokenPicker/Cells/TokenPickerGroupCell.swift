@@ -23,8 +23,10 @@ final class TokenPickerGroupCell: UICollectionReusableView {
                     anchor: .trailingAnchor,
                     constant: .equalTo(constant: Theme.constant.padding)
                 ),
-                .layout(anchor: .topAnchor, constant: .equalTo(constant: 28)),
-                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: 4))
+                .layout(
+                    anchor: .bottomAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding.half)
+                )
             ]
         )
         return label

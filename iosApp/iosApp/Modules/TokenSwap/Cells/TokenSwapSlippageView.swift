@@ -12,7 +12,12 @@ final class TokenSwapSlippageView: UIView {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var button: Button!
     
-    //private var handler: (() -> Void)!
+    struct Handler {
+        
+        let onSlippageTapped: () -> Void
+    }
+    
+    private var handler: Handler!
     
     override func awakeFromNib() {
         
@@ -33,11 +38,11 @@ final class TokenSwapSlippageView: UIView {
 extension TokenSwapSlippageView {
     
     func update(
-        with viewModel: TokenSwapSlippageViewModel
-        //handler: @escaping () -> Void
+        with viewModel: TokenSwapSlippageViewModel,
+        handler: Handler
     ) {
         
-        //self.handler = handler
+        self.handler = handler
 
         button.setTitle(viewModel.value, for: .normal)
     }
@@ -47,6 +52,6 @@ private extension TokenSwapSlippageView {
     
     @objc func changeSlippage() {
         
-        print("Change slippage tapped")
+        handler.onSlippageTapped()
     }
 }

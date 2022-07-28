@@ -16,15 +16,18 @@ final class DefaultTokenSwapWireframeFactory {
 
     private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
+    private let alertWireframeFactory: AlertWireframeFactory
     private let web3Service: Web3Service
 
     init(
         tokenPickerWireframeFactory: TokenPickerWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
+        alertWireframeFactory: AlertWireframeFactory,
         web3Service: Web3Service
     ) {
         self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
         self.confirmationWireframeFactory = confirmationWireframeFactory
+        self.alertWireframeFactory = alertWireframeFactory
         self.web3Service = web3Service
     }
 }
@@ -41,6 +44,7 @@ extension DefaultTokenSwapWireframeFactory: TokenSwapWireframeFactory {
             context: context,
             tokenPickerWireframeFactory: tokenPickerWireframeFactory,
             confirmationWireframeFactory: confirmationWireframeFactory,
+            alertWireframeFactory: alertWireframeFactory,
             web3Service: web3Service
         )
     }

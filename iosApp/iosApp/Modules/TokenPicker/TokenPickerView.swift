@@ -28,7 +28,7 @@ final class TokenPickerViewController: BaseViewController {
     @IBOutlet weak var searchTextFieldBox: UIView!
     @IBOutlet weak var searchImageView: UIImageView!
     @IBOutlet weak var searchTextField: TextField!
-    @IBOutlet weak var clearSearchButton: UIButton!
+    @IBOutlet weak var dividerLineView: UIView!
     
     private var searchTerm = ""
 
@@ -59,14 +59,19 @@ final class TokenPickerViewController: BaseViewController {
         updateBackgroundGradientTopConstraint()
         backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
     }
-}
-
-extension TokenPickerViewController {
     
-    @IBAction func clearSearchInputText() {
+    override func viewWillAppear(_ animated: Bool) {
         
-        searchTextField.text = ""
-        presenter.handle(.search(searchTerm: ""))
+        super.viewWillAppear(animated)
+        
+        navigationController?.showBottomLine(false)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+    
+        super.viewDidDisappear(animated)
+        
+        navigationController?.showBottomLine(true)
     }
 }
 
@@ -77,8 +82,6 @@ extension TokenPickerViewController: TokenPickerView {
         self.viewModel = viewModel
         
         title = viewModel.title
-        
-        clearSearchButton.isHidden = searchTextField.text?.isEmpty ?? true
         
         filtersCollectionView.isHidden = viewModel.filters().isEmpty
         filtersCollectionView.reloadData()
@@ -104,12 +107,11 @@ private extension TokenPickerViewController {
         searchImageView.tintColor = Theme.colour.labelSecondary
         
         searchTextField.backgroundColor = .clear
-        searchTextField.font = Theme.font.title3
         searchTextField.text = nil
         searchTextField.delegate = self
-        
-        clearSearchButton.isHidden = true
-        clearSearchButton.tintColor = Theme.colour.labelSecondary
+        searchTextField.placeholder = Localized("search")
+                
+        dividerLineView.backgroundColor = navigationController?.bottomLineColor
         
         itemsCollectionView.register(
             TokenPickerGroupCell.self,
@@ -122,7 +124,7 @@ private extension TokenPickerViewController {
             animated: false
         )
         
-        addCustomBackgroundGradientView()
+        addCustomBackgroundGradientView()        
     }
     
     func updateNavigationBarIcons() {
@@ -439,7 +441,7 @@ private extension TokenPickerViewController {
         // Group
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(44)
+            heightDimension: .estimated(48)
         )
         let outerGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize, subitems: [item]
@@ -450,7 +452,7 @@ private extension TokenPickerViewController {
         
         let headerItemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .absolute(54)
+            heightDimension: .absolute(44)
         )
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerItemSize,
