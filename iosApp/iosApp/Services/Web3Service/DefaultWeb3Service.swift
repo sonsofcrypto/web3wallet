@@ -8,6 +8,8 @@ final class DefaultWeb3Service {
     
     let web3ServiceLocalStorage: Web3ServiceLocalStorage
     
+    private var listeners: [Web3ServiceWalletListener] = []
+    
     init(
         web3ServiceLocalStorage: Web3ServiceLocalStorage
     ) {
@@ -84,11 +86,17 @@ extension DefaultWeb3Service: Web3Service {
     func addWalletListener(_ listener: Web3ServiceWalletListener) {
         
         web3ServiceLocalStorage.addWalletListener(listener)
+        
+        guard !listeners.contains(where: { $0 === listener}) else { return }
+        
+        listeners.append(listener)
     }
     
     func removeWalletListener(_ listener: Web3ServiceWalletListener) {
         
         web3ServiceLocalStorage.removeWalletListener(listener)
+        
+        listeners.removeAll { $0 === listener }
     }
     
     func isValid(address: String, forNetwork network: Web3Network) -> Bool {
@@ -201,6 +209,11 @@ extension DefaultWeb3Service: Web3Service {
                 order: 3
             )
         ]
+    }
+    
+    func nftsChanged() {
+        
+        listeners.forEach { $0.nftsChanged() }
     }
 }
 

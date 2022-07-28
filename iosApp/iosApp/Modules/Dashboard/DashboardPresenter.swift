@@ -132,9 +132,7 @@ private extension DefaultDashboardPresenter {
     func fetchData() {
         
         self.notifications = interactor.notifications
-        let myTokens = interactor.myTokens
-        guard self.myTokens != myTokens else { return }
-        self.myTokens = myTokens
+        self.myTokens = interactor.myTokens
         view?.update(with: viewModel())
     }
 }
@@ -379,6 +377,11 @@ private extension Array where Element == Web3Candle {
 }
 
 extension DefaultDashboardPresenter: Web3ServiceWalletListener {
+    
+    func nftsChanged() {
+        
+        fetchData()
+    }
     
     func tokensChanged() {
         

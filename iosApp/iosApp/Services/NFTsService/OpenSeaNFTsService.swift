@@ -11,10 +11,19 @@ enum OpenSeaNFTsServiceError: Error {
 
 final class OpenSeaNFTsService {
     
+    private let web3Service: Web3Service
+    
     private let API_KEY = ""
     
     private var nfts = [NFTItem]()
     private var collections = [NFTCollection]()
+    
+    init(
+        web3Service: Web3Service
+    ) {
+        
+        self.web3Service = web3Service
+    }
 }
 
 extension OpenSeaNFTsService: NFTsService {
@@ -87,8 +96,12 @@ extension OpenSeaNFTsService: NFTsService {
                 let assets = try JSONDecoder().decode(AssetList.self, from: data).assets
                 self.nfts = self.makeNFTItems(from: assets)
                 self.collections = self.makeNFTCollections(from: assets)
+                self.updateWeb3WalletNFTListeners()
                 onCompletion(.success(self.nfts))
             } catch {
+                self.nfts = []
+                self.collections = []
+                self.updateWeb3WalletNFTListeners()
                 onCompletion(.failure(error))
             }
         }.resume()
@@ -190,6 +203,17 @@ private extension OpenSeaNFTsService {
         }
         
         return collections
+    }
+}
+
+private extension OpenSeaNFTsService {
+    
+    func updateWeb3WalletNFTListeners() {
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.web3Service.nftsChanged()
+        }
     }
 }
 
