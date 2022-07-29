@@ -106,6 +106,8 @@ private extension DefaultNetworksPresenter {
             return "Infura"
         case .alchyme:
             return "Alchyme"
+        case .pocket:
+            return "Pocket"
         case nil:
             return "-"
         }
