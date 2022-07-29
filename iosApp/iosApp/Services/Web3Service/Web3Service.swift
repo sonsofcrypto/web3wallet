@@ -7,6 +7,7 @@ import Foundation
 protocol Web3ServiceWalletListener: AnyObject {
 
     func nftsChanged()
+    func notificationsChanged()
     func tokensChanged()
 }
 
@@ -39,6 +40,9 @@ protocol Web3Service: AnyObject {
     
     var currentEthBlock: String { get }
     
+    func setNotificationAsDone(
+        notificationId: String
+    )
     var dashboardNotifications: [Web3Notification] { get }
     
     func nftsChanged()

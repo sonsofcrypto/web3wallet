@@ -44,7 +44,7 @@ extension NetworksViewController: UICollectionViewDataSource {
         numberOfItemsInSection section: Int
     ) -> Int {
         
-        viewModel.network().count ?? 0
+        viewModel.network().count
     }
     
     
@@ -143,7 +143,7 @@ private extension NetworksViewController {
         let screenWidth: CGFloat = (view.bounds.width - Theme.constant.padding * 1.5)
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(screenWidth),
-            heightDimension: .absolute(156)
+            heightDimension: .estimated(100)
         )
         let outerGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize, subitems: [item]

@@ -11,11 +11,7 @@ final class NetworksCell: UICollectionViewCell {
     @IBOutlet weak var switchControl: OnOffSwitch!
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var connectionTitleLabel: UILabel!
-    @IBOutlet weak var statusTitleLabel: UILabel!
-    @IBOutlet weak var explorerTitleLabel: UILabel!
     @IBOutlet weak var connectionLabel: UILabel!
-    @IBOutlet weak var statusLabel: UILabel!
-    @IBOutlet weak var explorerLabel: UILabel!
     
     struct Handler {
         
@@ -48,19 +44,17 @@ final class NetworksCell: UICollectionViewCell {
             for: .valueChanged
         )
 
-        [connectionTitleLabel, statusTitleLabel, explorerTitleLabel].forEach {
+        [connectionTitleLabel].forEach {
             $0?.font = Theme.font.subheadline
             $0?.textColor = Theme.colour.labelSecondary
         }
 
-        [connectionLabel, statusLabel, explorerLabel].forEach {
+        [connectionLabel].forEach {
             $0?.font = Theme.font.subheadlineBold
             $0?.textColor = Theme.colour.labelPrimary
         }
 
         connectionTitleLabel.text = Localized("networks.cell.connection")
-        statusTitleLabel.text = Localized("networks.cell.status")
-        explorerTitleLabel.text = Localized("networks.cell.explorer")
     }
 }
 
@@ -95,10 +89,6 @@ extension NetworksCell {
         switchControl.isOn = viewModel.connected ?? false
         switchControl.isEnabled = viewModel.connected != nil
         
-        connectionLabel.text = viewModel.connectionType
-        
-        statusLabel.text = viewModel.status
-        
-        explorerLabel.text = viewModel.explorer
+        connectionLabel.text = viewModel.connectionType        
     }
 }

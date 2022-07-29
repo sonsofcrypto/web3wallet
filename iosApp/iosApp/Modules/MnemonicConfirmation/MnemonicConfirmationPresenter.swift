@@ -82,6 +82,8 @@ extension DefaultMnemonicConfirmationPresenter: MnemonicConfirmationPresenter {
                 return
             }
             
+            service.markDashboardNotificationAsComplete()
+            
             wireframe.navigate(to: .dismiss)
         }
     }

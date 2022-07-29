@@ -12,11 +12,13 @@ protocol MnemonicConfirmationService: AnyObject {
     ]
     func isValidPrefix(_ prefix: String) -> Bool
     func isMnemonicValid(_ mnemonic: String) -> Bool
+    func markDashboardNotificationAsComplete()
 }
 
 final class DefaultMnemonicConfirmationService {
     
     let keyStoreService: KeyStoreService
+    let web3Service: Web3Service
     
     private lazy var validator: Trie = {
         let trie = Trie()
@@ -26,9 +28,13 @@ final class DefaultMnemonicConfirmationService {
         return trie
     }()
     
-    init(keyStoreService: KeyStoreService) {
+    init(
+        keyStoreService: KeyStoreService,
+        web3Service: Web3Service
+    ) {
         
         self.keyStoreService = keyStoreService
+        self.web3Service = web3Service
     }
 }
 
@@ -127,6 +133,14 @@ private extension DefaultMnemonicConfirmationService {
         //        return Bip39.companion.isValidWordsCount(count: words.count.int32)
 
         return mnemonic == "one two three four five six seven eight nine ten eleven twelve"
+    }
+    
+    func markDashboardNotificationAsComplete() {
+        
+        // TODO: Improve
+        web3Service.setNotificationAsDone(
+            notificationId: "modal.mnemonic.confirmation"
+        )
     }
 }
 

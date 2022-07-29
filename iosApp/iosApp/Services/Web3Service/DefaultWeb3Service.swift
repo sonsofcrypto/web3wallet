@@ -187,6 +187,12 @@ extension DefaultWeb3Service: Web3Service {
         
         return "15223502"
     }
+    
+    func setNotificationAsDone(
+        notificationId: String
+    ) {
+        
+    }
 
     var dashboardNotifications: [Web3Notification] {
         

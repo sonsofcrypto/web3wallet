@@ -378,6 +378,11 @@ private extension Array where Element == Web3Candle {
 
 extension DefaultDashboardPresenter: Web3ServiceWalletListener {
     
+    func notificationsChanged() {
+        
+        fetchData()
+    }
+    
     func nftsChanged() {
         
         fetchData()
