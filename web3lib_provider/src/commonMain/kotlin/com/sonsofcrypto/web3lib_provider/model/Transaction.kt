@@ -5,7 +5,6 @@ import com.sonsofcrypto.web3lib_provider.model.JsonPrimitiveQntHexStr
 import com.sonsofcrypto.web3lib_provider.model.stringValue
 import com.sonsofcrypto.web3lib_provider.model.toBigIntQnt
 import com.sonsofcrypto.web3lib_utils.BigInt
-import com.sonsofcrypto.web3lib_utils.byteArrayWithByteAt
 import kotlinx.serialization.json.*
 
 typealias AccessList = List<AccessListItem>

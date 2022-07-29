@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity() {
 //        KeyValueStoreTest().runAll()
 //        KeyStoreTest().runAll()
 //        TrieTest().runAll()
-        ProviderTest().runAll()
+//        ProviderTest().runAll()
+        CoinGeckoTest(this.applicationContext).runAll()
         println("=== all tests executed ===")
     }
 }

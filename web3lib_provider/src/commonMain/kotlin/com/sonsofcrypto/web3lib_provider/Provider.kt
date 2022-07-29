@@ -18,11 +18,9 @@ abstract class Provider {
 
     /** Gossip */
 
-    @Throws(Throwable::class)
-    abstract suspend fun blockNumber(): BigInt
+    @Throws(Throwable::class) abstract suspend fun blockNumber(): BigInt
 
-    @Throws(Throwable::class)
-    abstract suspend fun gasPrice(): BigInt
+    @Throws(Throwable::class) abstract suspend fun gasPrice(): BigInt
 
     @Throws(Throwable::class) abstract suspend
     fun sendRawTransaction(transaction: DataHexString): DataHexString
@@ -47,8 +45,7 @@ abstract class Provider {
     @Throws(Throwable::class) abstract suspend
     fun estimateGas(transaction: Transaction): BigInt
 
-    @Throws(Throwable::class) abstract suspend
-    fun feeData(): FeeData
+    @Throws(Throwable::class) abstract suspend fun feeData(): FeeData
 
     /** History */
 
@@ -97,10 +94,10 @@ abstract class Provider {
     /** Name service */
 
     @Throws(Throwable::class) abstract suspend
-    fun resolveName(name: String): String?
+    fun resolveName(name: String): Address.HexString?
 
     @Throws(Throwable::class) abstract suspend
-    fun lookupAddress(address: Address): String?
+    fun lookupAddress(address: Address.HexString): String?
 
     /** Event emitter */
 

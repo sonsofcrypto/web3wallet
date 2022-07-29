@@ -63,7 +63,9 @@ kotlin {
                 api(project(":web3lib_core"))
                 api(project(":web3lib_keyStore"))
                 api(project(":web3lib_keyValueStore"))
+                api(project(":web3lib_signer"))
                 api(project(":web3lib_provider"))
+                api(project(":web3lib_services"))
             }
         }
         val commonTest by getting {
@@ -73,6 +75,9 @@ kotlin {
                 implementation(project(":web3lib_core"))
                 implementation(project(":web3lib_keyStore"))
                 implementation(project(":web3lib_keyValueStore"))
+                implementation(project(":web3lib_signer"))
+                implementation(project(":web3lib_provider"))
+                implementation(project(":web3lib_services"))
             }
         }
         val androidMain by getting

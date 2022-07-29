@@ -9,10 +9,42 @@ kotlin {
     android()
     
     val xcf = XCFramework()
+    val frameworkPath = project.file("src/iosMain/libs/CoreCrypto").absolutePath
+
     listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
+        iosX64() {
+            compilations.getByName("main") {
+                val CoreCrypto by cinterops.creating {
+                    defFile("$frameworkPath/ios-arm64_x86_64-simulator/CoreCrypto.def")
+                    compilerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+                }
+            }
+            binaries.all {
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+            }
+        },
+        iosArm64() {
+            compilations.getByName("main") {
+                val CoreCrypto by cinterops.creating {
+                    defFile("$frameworkPath/ios-arm64/CoreCrypto.def")
+                    compilerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64/")
+                }
+            }
+            binaries.all {
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64/")
+            }
+        },
+        iosSimulatorArm64() {
+            compilations.getByName("main") {
+                val CoreCrypto by cinterops.creating {
+                    defFile("$frameworkPath/ios-arm64_x86_64-simulator/CoreCrypto.def")
+                    compilerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+                }
+            }
+            binaries.all {
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+            }
+        },
     ).forEach {
         it.binaries.framework {
             baseName = "web3lib_signer"
@@ -21,7 +53,27 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(project(":web3lib_utils"))
+                implementation(project(":web3lib_core"))
+                implementation(project(":web3lib_provider"))
+                implementation(project(":web3lib_keyStore"))
+                implementation(project(":web3lib_keyValueStore"))
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${rootProject.ext["serialization_version"]}")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${rootProject.ext["serialization_version"]}")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.ext["coroutines_version"]}") {
+                    version {
+                        strictly("${rootProject.ext["coroutines_version"]}")
+                    }
+                }
+                implementation("io.ktor:ktor-client-core:${rootProject.ext["ktor_version"]}")
+                implementation("io.ktor:ktor-client-logging:${rootProject.ext["ktor_version"]}")
+                implementation("io.ktor:ktor-client-content-negotiation:${rootProject.ext["ktor_version"]}")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:${rootProject.ext["ktor_version"]}")
+                implementation("io.ktor:ktor-client-auth:${rootProject.ext["ktor_version"]}")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))

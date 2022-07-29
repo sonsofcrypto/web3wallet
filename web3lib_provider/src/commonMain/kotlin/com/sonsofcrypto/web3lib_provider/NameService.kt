@@ -1,12 +1,10 @@
 package com.sonsofcrypto.web3lib_provider
 
 import com.sonsofcrypto.web3lib_core.Address
-import com.sonsofcrypto.web3lib_core.AddressBytes
-import com.sonsofcrypto.web3lib_core.CoinType
 
 interface NameServiceProvider {
-    suspend fun resolve(name: String): Address
-    suspend fun lookup(address: AddressBytes): Address
+    suspend fun resolve(name: String): Address.HexString?
+    suspend fun lookup(address: Address.HexString): String?
     suspend fun resolver(name: String): Resolver?
 }
 
@@ -21,7 +19,7 @@ interface Resolver {
     /** Multichain address resolution (also normal address resolution)
      *  See: https://eips.ethereum.org/EIPS/eip-2304
      */
-    suspend fun address(coinType: CoinType = CoinType(60u)): String?
+//    suspend fun address(coinType: CoinType = CoinType(60u)): String?
 
     /** Contenthash field
      * See: https://eips.ethereum.org/EIPS/eip-1577

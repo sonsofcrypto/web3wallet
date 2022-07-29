@@ -1,40 +1,78 @@
-{
-  "0": "105",
-  "1": "0x5B8235604885B9Fb34e6DDe5d8b47fb92C0371A9",
-  "2": "0",
-  "3": "15187309",
-  "4": "15219809",
-  "5": "7429698439607801987792262886",
-  "6": "7761368721422654312833117583",
-  "7": "0",
-  "8": false,
-  "9": false,
-  "id": "105",
-  "proposer": "0x5B8235604885B9Fb34e6DDe5d8b47fb92C0371A9",
-  "eta": "0",
-  "startBlock": "15187309",
-  "endBlock": "15219809",
-  "forVotes": "7429698439607801987792262886",
-  "againstVotes": "7761368721422654312833117583",
-  "abstainVotes": "0",
-  "canceled": false,
-  "executed": false,
-  "description": {
-    "projectName": "History (token)",
-    "shortDescription": "History ($HSTK) is a decentralized autonomous research protocol that can determine the likelihood of information being true. It is operated by a rewards-based system of checks and balances that make it virtually impossible for those that currently control the flow of information, to censor or corrupt facts with money or influence, and utilizes advanced systems to prevent bias. Once the facts are determined, they are cemented on the blockchain forever as History.\n\nTrust in traditional media is at historic lows and an estimated 66% of all news and current events on social media are posted by bots. The same 3 hedge funds have a controlling interest in virtually every piece of media we consume. Division is at an all time high. Even our scientific research is sponsored by companies and compromised. Solving the centralized information crisis is as important as Bitcoin was in solving the financial and banking crisis. This is a 100 billion dollar opportunity, but most importantly it will benefit billions of people alive today and all of humanity moving forward forever. We know how to get it done, and we have the team ready to do so. Our values, messaging, and mission align perfectly with CULT and we would love to join your family and create a real revolution together. \n\n\nDeal terms:\n$5M FDV\n3 month lock, then 12 month vest",
-    "file": "https://docsend.com/view/3gh6d9zjff67t2q4",
-    "socialChannel": "historytoken.org\n\nTikTok : https://www.tiktok.com/@history_token\nTwitter : https://twitter.com/history_token\nDiscord : https://discord.gg/JepbSq35\n",
-    "links": "Pre TGE, no token minted yet ",
-    "range": 0.25,
-    "rate": "8.33",
-    "time": "Month",
-    "checkbox1": true,
-    "checkbox2": true,
-    "wallet": "0x7F6A57CddB0554eF3AB218104DC616b375674DD5",
-    "guardianProposal": "Kyle Chasse",
-    "guardianDiscord": "GetPAID#4155      @kyle_chasse",
-    "guardianAddress": "0x5B8235604885B9Fb34e6DDe5d8b47fb92C0371A9"
+[
+  {
+    "id": "zytara-dollar",
+    "symbol": "zusd",
+    "name": "Zytara Dollar",
+    "platforms": {
+      "ethereum": "0xbf0f3ccb8fa385a287106fba22e6bb722f94d686"
+    }
   },
-  "state": "1",
-  "stateName": "Active"
-}
+  {
+    "id": "zyx",
+    "symbol": "zyx",
+    "name": "ZYX",
+    "platforms": {
+      "ethereum": "0xf974b5f9ac9c6632fee8b76c61b0242ce69c839d",
+      "arbitrum-one": "0x377c6e37633e390aef9afb4f5e0b16689351eed4",
+      "binance-smart-chain": "0x377c6e37633e390aef9afb4f5e0b16689351eed4"
+    }
+  },
+
+  {
+    "id": "bitcoin",
+    "symbol": "btc",
+    "name": "Bitcoin",
+    "image": "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
+    "current_price": 21573,
+    "market_cap": 411574752909,
+    "market_cap_rank": 1,
+    "fully_diluted_valuation": 452394029195,
+    "total_volume": 42564347937,
+    "high_24h": 21694,
+    "low_24h": 20860,
+    "price_change_24h": 581.45,
+    "price_change_percentage_24h": 2.76998,
+    "market_cap_change_24h": 10349697209,
+    "market_cap_change_percentage_24h": 2.57952,
+    "circulating_supply": 19105181,
+    "total_supply": 21000000,
+    "max_supply": 21000000,
+    "ath": 69045,
+    "ath_change_percentage": -68.82527,
+    "ath_date": "2021-11-10T14:24:11.849Z",
+    "atl": 67.81,
+    "atl_change_percentage": 31642.86364,
+    "atl_date": "2013-07-06T00:00:00.000Z",
+    "roi": null,
+    "last_updated": "2022-07-27T17:34:40.621Z"
+  },
+
+  {
+    "id": "mapmetrics",
+    "symbol": "mmaps",
+    "name": "MapMetrics",
+    "image": "https://assets.coingecko.com/coins/images/25328/large/Map_Metrics_%28200x200%29.png?1651235329",
+    "current_price": null,
+    "market_cap": null,
+    "market_cap_rank": null,
+    "fully_diluted_valuation": null,
+    "total_volume": null,
+    "high_24h": null,
+    "low_24h": null,
+    "price_change_24h": null,
+    "price_change_percentage_24h": null,
+    "market_cap_change_24h": null,
+    "market_cap_change_percentage_24h": null,
+    "circulating_supply": null,
+    "total_supply": null,
+    "max_supply": null,
+    "ath": null,
+    "ath_change_percentage": 0,
+    "ath_date": null,
+    "atl": null,
+    "atl_change_percentage": 0,
+    "atl_date": null,
+    "roi": null,
+    "last_updated": null
+  }
+]
