@@ -10,14 +10,15 @@ private let currenciesKeyValueStore = "currenciesKeyValueStore"
 
 final class IntegrationWeb3Service {
     
-    private let internalService: web3lib.Web3Service
+    let web3service: web3lib.Web3Service
+
     private let defaults: UserDefaults
     private var supported: [Web3Token] = []
 
     private var listeners: [Web3ServiceWalletListener] = []
     
     private var currenciesService: CurrenciesService? {
-        guard let wallet = internalService.wallet else {
+        guard let wallet = web3service.wallet else {
             return nil
         }
         let service = DefaultCurrenciesService(
@@ -35,7 +36,7 @@ final class IntegrationWeb3Service {
         defaults: UserDefaults = .standard
     ) {
         
-        self.internalService = internalService
+        self.web3service = internalService
         self.defaults = defaults
         
         // TODO: @Annon implement
@@ -51,7 +52,10 @@ extension IntegrationWeb3Service: Web3Service {
     
     var allNetworks: [Web3Network] {
         Network.Companion().supported().map {
-            Web3Network.from($0, isOn: false) // internalService.enabledNetworks().contians($0)
+            Web3Network.from(
+                $0,
+                isOn: web3service.enabledNetworks().contains($0)
+            )
         }
     }
     
@@ -65,10 +69,10 @@ extension IntegrationWeb3Service: Web3Service {
             let url = Bundle.main.url(forResource: "coin_cache", withExtension: "json")!
             let data = try! Data(contentsOf: url)
             let string = String(data: data, encoding: .utf8)!
-            let web3LibNetwork: web3lib.Network = internalService.network ?? Network.Companion().ethereum()
+            let web3LibNetwork: web3lib.Network = web3service.network ?? Network.Companion().ethereum()
             let network: Web3Network = Web3Network.from(
                 web3LibNetwork,
-                isOn: internalService.enabledNetworks().contains(web3LibNetwork)
+                isOn: web3service.enabledNetworks().contains(web3LibNetwork)
             )
             supported = currenciesService.currencyList(data: string).map {
                 Web3Token.from(
@@ -87,12 +91,12 @@ extension IntegrationWeb3Service: Web3Service {
             return []
         }
         
-        let web3LibNetwork: web3lib.Network = internalService.network
+        let web3LibNetwork: web3lib.Network = web3service.network
             ?? Network.Companion().ethereum()
         
         let network: Web3Network = Web3Network.from(
             web3LibNetwork,
-            isOn: internalService.enabledNetworks().contains(web3LibNetwork)
+            isOn: web3service.enabledNetworks().contains(web3LibNetwork)
         )
 
         return currenciesService.currencies(network: network.toNetwork()).map {
@@ -113,7 +117,7 @@ extension IntegrationWeb3Service: Web3Service {
             .forEach {
                 currenciesService.remove(
                     currency: $0.toCurrency(),
-                    network: internalService.network!
+                    network: web3service.network!
                 )
             }
         
@@ -121,7 +125,7 @@ extension IntegrationWeb3Service: Web3Service {
             .forEach {
                 currenciesService.add(
                     currency: $0.toCurrency(),
-                    network: internalService.network!
+                    network: web3service.network!
                 )
             }
         
@@ -179,23 +183,27 @@ extension IntegrationWeb3Service: Web3Service {
     }
     
     func update(network: Web3Network, active: Bool) {
-        
+        web3service.setNetwork(network: network.toNetwork(), enabled: active)
     }
     
     func networkFeeInUSD(network: Web3Network, fee: Web3NetworkFee) -> Double {
-        fatalError("networkFeeInUSD(network:fee:) has not been implemented")
+        // TODO: return fees
+        return 0.0
     }
     
     func networkFeeInSeconds(network: Web3Network, fee: Web3NetworkFee) -> Int {
-        fatalError("networkFeeInSeconds(network:fee:) has not been implemented")
+        // TODO: return fees
+        return 1
     }
     
     func networkFeeInNetworkToken(network: Web3Network, fee: Web3NetworkFee) -> String {
-        fatalError("networkFeeInNetworkToken(network:fee:) has not been implemented")
+        // TODO: return fees
+        return "==="
     }
     
     var currentEthBlock: String {
-        fatalError("currentEthBlock has not been implemented")
+        // TODO: current block
+        return "current block"
     }
     
     func setNotificationAsDone(
@@ -204,7 +212,7 @@ extension IntegrationWeb3Service: Web3Service {
         
         if notificationId == "modal.mnemonic.confirmation" {
             
-            let walletId = internalService.wallet?.id() ?? ""
+            let walletId = web3service.wallet?.id() ?? ""
             defaults.bool(forKey: "\(notificationId).\(walletId)")
             listeners.forEach { $0.nftsChanged() }
         }
@@ -215,7 +223,7 @@ extension IntegrationWeb3Service: Web3Service {
         var notifications = [Web3Notification]()
         
         // TODO: @Annon implement
-        if let walletId = internalService.wallet?.id(),
+        if let walletId = web3service.wallet?.id(),
             defaults.object(forKey: "modal.mnemonic.confirmation.\(walletId)") == nil
         {
             

@@ -5,8 +5,6 @@ import com.sonsofcrypto.web3lib_core.Network
 import com.sonsofcrypto.web3lib_provider.model.BlockTag
 import com.sonsofcrypto.web3lib_provider.model.BlockTag.Latest
 import com.sonsofcrypto.web3lib_utils.BigInt
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.serialization.json.JsonObject
 
 interface SignedTransaction {}
@@ -101,13 +99,13 @@ abstract class Provider {
 
     /** Event emitter */
 
-    abstract fun on(event: Event, providerListener: Listener): Provider
-    abstract fun once(event: Event, providerListener: Listener): Provider
-    abstract fun emit(event: Event): Boolean
-    abstract fun listenerCount(event: Event? = null): UInt
-    abstract fun listeners(event: Event? = null): Array<Listener>
-    abstract fun off(event: Event, providerListener: Listener? = null): Provider
-    abstract fun removeAllListeners(event: Event? = null): Provider
+    abstract fun on(providerEvent: ProviderEvent, providerListener: ProviderListener): Provider
+    abstract fun once(providerEvent: ProviderEvent, providerListener: ProviderListener): Provider
+    abstract fun emit(providerEvent: ProviderEvent): Boolean
+    abstract fun listenerCount(providerEvent: ProviderEvent? = null): UInt
+    abstract fun listeners(providerEvent: ProviderEvent? = null): Array<ProviderListener>
+    abstract fun off(providerEvent: ProviderEvent, providerListener: ProviderListener? = null): Provider
+    abstract fun removeAllListeners(providerEvent: ProviderEvent? = null): Provider
 
     /** Errors */
     sealed class Error(

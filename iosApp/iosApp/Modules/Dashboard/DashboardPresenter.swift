@@ -48,16 +48,19 @@ final class DefaultDashboardPresenter {
         self.interactor = interactor
         self.wireframe = wireframe
         self.onboardingService = onboardingService
-        
-        interactor.addWalletListener(self)
+
+        interactor.addListener(self)
+    }
+
+    deinit {
+        interactor.removeListener(self)
     }
 }
 
 extension DefaultDashboardPresenter: DashboardPresenter {
     
     func present() {
-        
-        fetchData()
+        updateView()
     }
     
     func handle(_ event: DashboardPresenterEvent) {
@@ -127,9 +130,17 @@ extension DefaultDashboardPresenter: DashboardPresenter {
     }
 }
 
+extension DefaultDashboardPresenter: DashboardInteractorLister {
+
+    func handle(_ event: DashboardInteractorEvent) {
+        print("=== event recieved", event)
+        updateView()
+    }
+}
+
 private extension DefaultDashboardPresenter {
     
-    func fetchData() {
+    func updateView() {
         
         self.notifications = interactor.notifications
         self.myTokens = interactor.myTokens
@@ -380,17 +391,17 @@ extension DefaultDashboardPresenter: Web3ServiceWalletListener {
     
     func notificationsChanged() {
         
-        fetchData()
+        updateView()
     }
     
     func nftsChanged() {
         
-        fetchData()
+        updateView()
     }
     
     func tokensChanged() {
         
-        fetchData()
+        updateView()
     }
 }
 

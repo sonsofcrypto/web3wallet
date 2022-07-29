@@ -3,7 +3,7 @@ package com.sonsofcrypto.web3lib_provider
 import com.sonsofcrypto.web3lib_core.AddressBytes
 import com.sonsofcrypto.web3lib_core.Network
 
-interface Event {
+interface ProviderEvent {
 
     companion object {
         fun network(network: Network): EventNetwork = object : EventNetwork {
@@ -12,11 +12,11 @@ interface Event {
     }
 }
 
-interface EventNetwork: Event {
+interface EventNetwork: ProviderEvent {
     val network: Network
 }
 
-interface EventFilter: Event {
+interface EventFilter: ProviderEvent {
     val address: AddressBytes
     val topics: List<Any?>
 }
@@ -32,7 +32,7 @@ interface FilterByBlockHash: EventFilter {
 
 open class ForkEvent(
     val expiry: UInt
-) : Event
+) : ProviderEvent
 
 
 class BlockForkEvent : ForkEvent {
@@ -79,6 +79,6 @@ class TransactionOrderForkEvent: ForkEvent {
     }
 }
 
-interface Listener {
-    fun handle(event: Event)
+interface ProviderListener {
+    fun handle(providerEvent: ProviderEvent)
 }

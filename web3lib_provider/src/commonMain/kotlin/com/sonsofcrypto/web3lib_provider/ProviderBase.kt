@@ -142,31 +142,31 @@ open class ProviderBase(override val network: Network): Provider() {
         TODO("Not yet implemented")
     }
 
-    override fun on(event: Event, providerListener: Listener): Provider {
+    override fun on(providerEvent: ProviderEvent, providerListener: ProviderListener): Provider {
         TODO("Not yet implemented")
     }
 
-    override fun once(event: Event, providerListener: Listener): Provider {
+    override fun once(providerEvent: ProviderEvent, providerListener: ProviderListener): Provider {
         TODO("Not yet implemented")
     }
 
-    override fun emit(event: Event): Boolean {
+    override fun emit(providerEvent: ProviderEvent): Boolean {
         TODO("Not yet implemented")
     }
 
-    override fun listenerCount(event: Event?): UInt {
+    override fun listenerCount(providerEvent: ProviderEvent?): UInt {
         TODO("Not yet implemented")
     }
 
-    override fun listeners(event: Event?): Array<Listener> {
+    override fun listeners(providerEvent: ProviderEvent?): Array<ProviderListener> {
         TODO("Not yet implemented")
     }
 
-    override fun off(event: Event, providerListener: Listener?): Provider {
+    override fun off(providerEvent: ProviderEvent, providerListener: ProviderListener?): Provider {
         TODO("Not yet implemented")
     }
 
-    override fun removeAllListeners(event: Event?): Provider {
+    override fun removeAllListeners(providerEvent: ProviderEvent?): Provider {
         TODO("Not yet implemented")
     }
 }
