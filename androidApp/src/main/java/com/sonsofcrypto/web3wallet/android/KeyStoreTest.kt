@@ -92,7 +92,7 @@ class KeyStoreTest {
         keyStore.items().forEach { keyStore.remove(it) }
         keyStore.selected = mockKeyStoreItem
         assertTrue(
-            keyStore.selected != mockKeyStoreItem,
+            keyStore.selected == mockKeyStoreItem,
             "Failed selected"
         )
     }

@@ -39,7 +39,7 @@ class DefaultKeyStoreService(
 ) : KeyStoreService {
 
     override var selected: KeyStoreItem?
-    get() = store.get<String>(selectedKey)?.let { store.get<KeyStoreItem>(it) }
+    get() = store.get<KeyStoreItem>(selectedKey)
     set(value) = store.set(selectedKey, value)
 
     override fun add(item: KeyStoreItem, password: String, secretStorage: SecretStorage) {
