@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 protocol Web3ServiceWalletListener: AnyObject {
 
@@ -66,6 +67,22 @@ struct Web3Network: Codable, Equatable, Hashable {
     let connectionType: ConnectionType?
     let explorer: Explorer?
     let selectedByUser: Bool
+}
+
+extension Web3Network {
+    static func from(_ network: web3lib.Network, isOn: Bool) -> Web3Network {
+        return .init(
+            id: network.id(),
+            name: network.name,
+            cost: "",
+            hasDns: false,
+            url: nil,
+            status: .connected,
+            connectionType: .pocket,
+            explorer: nil,
+            selectedByUser: isOn
+        )
+    }
 }
 
 extension Web3Network {

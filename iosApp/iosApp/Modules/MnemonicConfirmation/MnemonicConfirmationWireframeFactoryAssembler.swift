@@ -9,7 +9,8 @@ final class MnemonicConfirmationWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> MnemonicConfirmationWireframeFactory in
             
             DefaultMnemonicConfirmationWireframeFactory(
-                keyStoreService: resolver.resolve()
+                keyStoreService: resolver.resolve(),
+                web3Service: resolver.resolve()
             )
         }
     }

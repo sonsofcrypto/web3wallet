@@ -52,6 +52,7 @@ kotlin {
             export(project(":web3lib_keyStore"))
             export(project(":web3lib_keyValueStore"))
             export(project(":web3lib_provider"))
+            export(project(":web3lib_services"))
             xcf.add(this)
         }
     }

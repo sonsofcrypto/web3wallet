@@ -15,12 +15,15 @@ protocol MnemonicConfirmationWireframeFactory {
 final class DefaultMnemonicConfirmationWireframeFactory {
     
     private let keyStoreService: KeyStoreService
+    private let web3Service: Web3Service
     
     init(
-        keyStoreService: KeyStoreService
+        keyStoreService: KeyStoreService,
+        web3Service: Web3Service
     ) {
         
         self.keyStoreService = keyStoreService
+        self.web3Service = web3Service
     }
 }
 
@@ -29,7 +32,8 @@ extension DefaultMnemonicConfirmationWireframeFactory: MnemonicConfirmationWiref
     func makeWireframe(_ parent: UIViewController) -> MnemonicConfirmationWireframe {
         
         let service = DefaultMnemonicConfirmationService(
-            keyStoreService: keyStoreService
+            keyStoreService: keyStoreService,
+            web3Service: web3Service
         )
         
         return DefaultMnemonicConfirmationWireframe(

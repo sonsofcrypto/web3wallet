@@ -104,6 +104,14 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
         
         validateMnemonic(with: mnemonic.trimmingCharacters(in: .whitespaces))
     }
+
+    func markDashboardNotificationAsComplete() {
+
+        // TODO: Improve
+        web3Service.setNotificationAsDone(
+            notificationId: "modal.mnemonic.confirmation"
+        )
+    }
 }
 
 private extension DefaultMnemonicConfirmationService {
@@ -133,14 +141,6 @@ private extension DefaultMnemonicConfirmationService {
         //        return Bip39.companion.isValidWordsCount(count: words.count.int32)
 
         return mnemonic == "one two three four five six seven eight nine ten eleven twelve"
-    }
-    
-    func markDashboardNotificationAsComplete() {
-        
-        // TODO: Improve
-        web3Service.setNotificationAsDone(
-            notificationId: "modal.mnemonic.confirmation"
-        )
     }
 }
 

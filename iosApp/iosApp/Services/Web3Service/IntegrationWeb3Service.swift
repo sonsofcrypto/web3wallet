@@ -9,16 +9,20 @@ final class IntegrationWeb3Service {
     
     private let internalService: web3lib.Web3Service
     private let defaults: UserDefaults
-    
+    private let currencyService: web3lib.CurrencyService
+    private var supported: [Web3Token] = []
+
     private var listeners: [Web3ServiceWalletListener] = []
     
     init(
         internalService: web3lib.Web3Service,
-        defaults: UserDefaults = .standard
+        defaults: UserDefaults = .standard,
+        currencyService: web3lib.CurrencyService = DefaultCurrencyService()
     ) {
         
         self.internalService = internalService
         self.defaults = defaults
+        self.currencyService = currencyService
         
         // TODO: @Annon implement
         //        internalService.onTokensUpdated {
@@ -46,8 +50,34 @@ extension IntegrationWeb3Service: Web3Service {
         }
     }
     var allTokens: [Web3Token] {
-        fatalError("allTokens has not been implemented")
+
+        if supported.isEmpty {
+            let url = Bundle.main.url(forResource: "coin_cache", withExtension: "json")!
+            let data = try! Data(contentsOf: url)
+            let string = String(data: data, encoding: .utf8)
+            let web3LibNetwork: web3lib.Network = internalService.network ?? Network.Companion().ethereum()
+            let network: Web3Network = Web3Network.from(
+                web3LibNetwork,
+                isOn: internalService.enabledNetworks().contains(web3LibNetwork)
+            )
+            supported = currencyService.currencyList(data: string).map {
+                Web3Token(
+                    symbol: $0.symbol,
+                    name: $0.name,
+                    address: $0.address ?? "",
+                    decimals: $0.decimals,
+                    type: .normal,
+                    network: network,
+                    balance: 0.0,
+                    showInWallet: currencyService.currencies(web3LibNetwork).contains($0),
+                    usdPrice: 0.0
+                )
+            }
+        }
+        return supported
+
     }
+
     var myTokens: [Web3Token] {
         fatalError("myTokens has not been implemented")
     }
