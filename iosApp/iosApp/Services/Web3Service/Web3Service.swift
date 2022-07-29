@@ -56,7 +56,7 @@ enum Web3NetworkFee: String {
     case high
 }
 
-struct Web3Network: Codable, Equatable, Hashable {
+struct Web3Network: Equatable, Hashable {
     
     let id: String
     let name: String
@@ -67,6 +67,8 @@ struct Web3Network: Codable, Equatable, Hashable {
     let connectionType: ConnectionType?
     let explorer: Explorer?
     let selectedByUser: Bool
+    let chainId: UInt
+    let networkType: Network.Type_
 }
 
 extension Web3Network {
@@ -80,7 +82,18 @@ extension Web3Network {
             status: .connected,
             connectionType: .pocket,
             explorer: nil,
-            selectedByUser: isOn
+            selectedByUser: isOn,
+            chainId: UInt(network.chainId),
+            networkType: network.type
+        )
+    }
+
+    func toNetwork() -> web3lib.Network {
+        return web3lib.Network(
+            name: name,
+            chainId: UInt32(chainId),
+            type: networkType,
+            nameServiceAddress: nil
         )
     }
 }
@@ -121,8 +134,7 @@ extension Array where Element == Web3Network {
     }
 }
 
-struct Web3Token: Codable, Equatable {
-    
+struct Web3Token: Equatable {
     let symbol: String // ETH
     let name: String // Ethereum
     let address: String // 0x482828...
@@ -132,6 +144,7 @@ struct Web3Token: Codable, Equatable {
     let balance: Double
     let showInWallet: Bool
     let usdPrice: Double
+    let coingGeckoId: String?
 }
 
 extension Web3Token {
@@ -159,6 +172,39 @@ extension Web3Token {
     var usdBalanceString: String {
         
         usdBalance.formatCurrency() ?? ""
+    }
+}
+
+extension Web3Token {
+
+    static func from(
+        currency: Currency,
+        network: Web3Network,
+        inWallet: Bool
+    ) -> Web3Token {
+        return Web3Token(
+            symbol: currency.symbol,
+            name: currency.name,
+            address: currency.address ?? "",
+            decimals: Int(currency.decimals),
+            type: .normal,
+            network: network,
+            balance: 0.0,
+            showInWallet: inWallet,
+            usdPrice: 0.0,
+            coingGeckoId: currency.coinGeckoId
+        )
+    }
+
+    func toCurrency() -> Currency {
+        return Currency(
+            name: name,
+            symbol: symbol,
+            decimals: UInt32(decimals),
+            type: name == "Ethereum" ? .native : .erc20,
+            address: address,
+            coinGeckoId: coingGeckoId
+        )
     }
 }
 

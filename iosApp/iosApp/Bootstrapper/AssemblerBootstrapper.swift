@@ -37,7 +37,7 @@ private extension AssemblerBootstrapper {
             ChatServiceAssembler(),
             CultServiceAssembler(),
             Web3ServiceAssembler(),
-            Web3ServiceLocalStorageAssembler(),
+//            Web3ServiceLocalStorageAssembler(),
             PriceHistoryServiceAssembler(),
             FeaturesServiceAssembler(),
             // DeepLink

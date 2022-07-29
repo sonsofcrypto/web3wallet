@@ -15,7 +15,7 @@ struct ServiceDirectory {
     }
     
     // TODO: Review
-    static var onboardingMode: OnboardingMode = .oneTap
+    static var onboardingMode: OnboardingMode = .twoTap
     enum OnboardingMode {
         case oneTap
         case twoTap

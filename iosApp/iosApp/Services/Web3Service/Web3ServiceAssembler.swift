@@ -8,9 +8,10 @@ final class Web3ServiceAssembler: AssemblerComponent {
         
         registry.register(scope: .singleton) { resolver -> Web3Service in
             
-            DefaultWeb3Service(
-                web3ServiceLocalStorage: resolver.resolve()
-            )
+//            DefaultWeb3Service(
+//                web3ServiceLocalStorage: resolver.resolve()
+//            )
+            IntegrationWeb3Service()
         }
     }
 }
