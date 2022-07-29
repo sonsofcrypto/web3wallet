@@ -8,7 +8,8 @@ class Network(
     val name: String,
     val chainId: UInt,
     val type: Type,
-    val nameServiceAddress: AddressBytes?
+    val nameServiceAddress: AddressBytes?,
+    val nativeCurrency: Currency,
 ) {
 
     fun id(): String = hashCode().toString()

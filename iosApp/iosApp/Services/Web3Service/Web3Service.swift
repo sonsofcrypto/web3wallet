@@ -81,6 +81,7 @@ extension Web3Network {
         case networkDefault
         case infura
         case alchyme
+        case pocket
     }
     
     enum Explorer: Codable, Equatable, Hashable {

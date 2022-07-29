@@ -34,6 +34,7 @@
 		1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */; };
 		1A4C3C28443621328248F5A7 /* CandlesViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C344022DBA2423C0F15F6 /* CandlesViewViewModel.swift */; };
 		1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C325A6875E5041A491945 /* CollectionView.swift */; };
+		1A4C3CA30F1785BF1A063059 /* IntegrationWeb3Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3F7AC2CFD735B708F22C /* IntegrationWeb3Service.swift */; };
 		1A4C3CFB23D66DF60B4BCE71 /* KeyStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3553B19E38E28C955332 /* KeyStoreService.swift */; };
 		1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3B70AA1B0BC942B15671 /* Store.swift */; };
 		1A4C3E41DA2739ED48CD12F9 /* CultServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3635DC5425C3CA3A2D25 /* CultServiceAssembler.swift */; };
@@ -574,6 +575,7 @@
 		1A4C3E976CBAB0A97E8AF408 /* CardFlipTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFlipTransition.swift; sourceTree = "<group>"; };
 		1A4C3EE3468010FE10976BEE /* mock-candles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mock-candles.json"; sourceTree = "<group>"; };
 		1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnOffSwitch.swift; sourceTree = "<group>"; };
+		1A4C3F7AC2CFD735B708F22C /* IntegrationWeb3Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntegrationWeb3Service.swift; sourceTree = "<group>"; };
 		1C0643CE2892EA2800643C15 /* KeyStoreWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C0643D32892FCB000643C15 /* FeaturesWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesWireframe.swift; sourceTree = "<group>"; };
 		1C0643D52892FCB500643C15 /* FeaturesWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesWireframeFactory.swift; sourceTree = "<group>"; };
@@ -2043,6 +2045,7 @@
 				1C60C1AD28572405003BE25D /* Web3ServiceAssembler.swift */,
 				1C60C383285A649B003BE25D /* Web3ServiceLocalStorage.swift */,
 				1C60C385285AFB20003BE25D /* Web3ServiceLocalStorageAssembler.swift */,
+				1A4C3F7AC2CFD735B708F22C /* IntegrationWeb3Service.swift */,
 			);
 			path = Web3Service;
 			sourceTree = "<group>";
@@ -2470,7 +2473,7 @@
 			);
 			mainGroup = D157F7BE27B69B6300578FF8;
 			packageReferences = (
-				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
 			);
 			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
 			projectDirPath = "";
@@ -3025,6 +3028,7 @@
 				1A4C30D6ED56A03136C4CA71 /* Kotlin+Extensions.swift in Sources */,
 				1A4C31D59C7D2B84D247FDDD /* TransformView.swift in Sources */,
 				1CB8B0C4288DD97300024E7C /* CultProposalStatus.swift in Sources */,
+				1A4C3CA30F1785BF1A063059 /* IntegrationWeb3Service.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3388,7 +3392,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -3401,7 +3405,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		1C5B603A284675B800ECBD79 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
