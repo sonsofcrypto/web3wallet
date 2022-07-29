@@ -15,11 +15,14 @@ protocol ConfirmationWireframeFactory {
 final class DefaultConfirmationWireframeFactory {
 
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
+    private let alertWireframeFactory: AlertWireframeFactory
 
     init(
-        authenticateWireframeFactory: AuthenticateWireframeFactory
+        authenticateWireframeFactory: AuthenticateWireframeFactory,
+        alertWireframeFactory: AlertWireframeFactory
     ) {
         self.authenticateWireframeFactory = authenticateWireframeFactory
+        self.alertWireframeFactory = alertWireframeFactory
     }
 }
 
@@ -33,7 +36,8 @@ extension DefaultConfirmationWireframeFactory: ConfirmationWireframeFactory {
         DefaultConfirmationWireframe(
             presentingIn: presentingIn,
             context: context,
-            authenticateWireframeFactory: authenticateWireframeFactory
+            authenticateWireframeFactory: authenticateWireframeFactory,
+            alertWireframeFactory: alertWireframeFactory
         )
     }
 }
