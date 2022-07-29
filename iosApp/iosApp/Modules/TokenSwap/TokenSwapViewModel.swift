@@ -31,7 +31,7 @@ extension TokenSwapViewModel {
         enum State {
             
             case swap(providerIconName: String)
-            case insufficientFunds
+            case insufficientFunds(providerIconName: String)
         }
     }
 }

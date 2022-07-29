@@ -42,6 +42,8 @@ final class DefaultTokenSwapPresenter {
     private var amountTo: Double?
 
     private var fee: Web3NetworkFee = .low
+    
+    private var calculatingSwap = false
 
     init(
         view: TokenSwapView,
@@ -62,7 +64,9 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
 
     func present() {
         
-        updateView(
+        let insufficientFunds = (amountFrom ?? 0) > tokenFrom.balance || tokenFrom.balance == 0
+        
+        return updateView(
             with: [
                 .swap(
                     .init(
@@ -93,7 +97,9 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                             estimatedFee: makeEstimatedFee(),
                             feeType: makeFeeType()
                         ),
-                        buttonState: .swap(providerIconName: makeSelectedProviderIconName())
+                        buttonState: insufficientFunds
+                        ? .insufficientFunds(providerIconName: makeSelectedProviderIconName())
+                        : .swap(providerIconName: makeSelectedProviderIconName())
                     )
                 )//,
                 //.limit
@@ -189,6 +195,8 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
             
             guard tokenFrom.balance >= (amountFrom ?? 0) else { return }
             
+            guard !calculatingSwap else { return }
+            
             wireframe.navigate(
                 to: .confirmSwap(
                     dataIn: .init(
@@ -269,9 +277,12 @@ private extension DefaultTokenSwapPresenter {
             tokenTo: tokenTo
         )
         
+        calculatingSwap = true
+        
         interactor.swapTokenAmount(dataIn: swapDataIn) { [weak self] swapDataOut in
             
             guard let self = self else { return }
+            self.calculatingSwap = false
             self.refreshView(with: swapDataOut, shouldUpdateToTextField: true)
         }
     }
@@ -306,9 +317,9 @@ private extension DefaultTokenSwapPresenter {
         amountFrom = swapDataOut.amountFrom
         amountTo = swapDataOut.amountTo
         
-        let insufficientFunds = (amountFrom ?? 0) > tokenFrom.balance
+        let insufficientFunds = (amountFrom ?? 0) > tokenFrom.balance || tokenFrom.balance == 0
         
-        self.updateView(
+        updateView(
             with: [
                 .swap(
                     .init(
@@ -336,11 +347,15 @@ private extension DefaultTokenSwapPresenter {
                         tokenSwapPriceViewModel: makeTokenPriceViewModel(),
                         tokenSwapSlippageViewModel: makeTokenSwapSlippageViewModel(),
                         tokenNetworkFeeViewModel: .init(
-                            estimatedFee: self.makeEstimatedFee(),
-                            feeType: self.makeFeeType()
+                            estimatedFee: makeEstimatedFee(),
+                            feeType: makeFeeType()
                         ),
-                        buttonState: insufficientFunds ? .insufficientFunds : .swap(
-                            providerIconName: self.makeSelectedProviderIconName()
+                        buttonState: insufficientFunds
+                        ? .insufficientFunds(
+                            providerIconName: makeSelectedProviderIconName()
+                        )
+                        : .swap(
+                            providerIconName: makeSelectedProviderIconName()
                         )
                     )
                 )//,
