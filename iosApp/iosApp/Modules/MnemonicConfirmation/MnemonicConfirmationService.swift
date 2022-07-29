@@ -2,6 +2,8 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
+import web3lib
+
 protocol MnemonicConfirmationService: AnyObject {
     
     func potentialMnemonicWords(for prefix: String?) -> [String]
@@ -14,11 +16,19 @@ protocol MnemonicConfirmationService: AnyObject {
 
 final class DefaultMnemonicConfirmationService {
     
-    private let accountService: AccountService
+    let keyStoreService: KeyStoreService
     
-    init(accountService: AccountService) {
+    private lazy var validator: Trie = {
+        let trie = Trie()
+        WordList.english.words().forEach {
+            trie.insert(word: $0)
+        }
+        return trie
+    }()
+    
+    init(keyStoreService: KeyStoreService) {
         
-        self.accountService = accountService
+        self.keyStoreService = keyStoreService
     }
 }
 
@@ -26,14 +36,12 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
     
     func potentialMnemonicWords(for prefix: String?) -> [String] {
         
-        guard let prefix = prefix else {
-            
-            return accountService.mnemonicWords
+        guard let prefix = prefix, !prefix.isEmpty else {
+
+            return []
         }
-        
-        return accountService.mnemonicWords.filter { word in
-            word.hasPrefix(prefix)
-        }        
+
+        return wordsStarting(with: prefix)
     }
     
     func findInvalidWords(in mnemonic: String?) -> [MnemonicConfirmationViewModel.WordInfo] {
@@ -57,7 +65,8 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
             
             let word = String(item)
             
-            var isWordValid = accountService.mnemonicWords.contains(word)
+            var isWordValid = wordsStarting(with: word).count > 0
+            //var isWordValid = mnemonicWords.contains(word)
             
             if index > 11 {
                 isWordValid = false
@@ -82,15 +91,42 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
     
     func isValidPrefix(_ prefix: String) -> Bool {
         
-        var isValidPrefix = false
-        accountService.mnemonicWords.forEach { word in
-            if word.hasPrefix(prefix) { isValidPrefix = true }
-        }
-        return isValidPrefix
+        !wordsStarting(with: prefix).isEmpty
     }
     
     func isMnemonicValid(_ mnemonic: String) -> Bool {
         
-        accountService.validateMnemonic(with: mnemonic.trimmingCharacters(in: .whitespaces))
+        validateMnemonic(with: mnemonic.trimmingCharacters(in: .whitespaces))
     }
 }
+
+private extension DefaultMnemonicConfirmationService {
+    
+    func wordsStarting(with word: String) -> [String] {
+        
+        validator.wordsStartingWith(prefix: word)
+    }
+
+    func validateMnemonic(with mnemonic: String) -> Bool {
+        
+        // TODO: @Annon to implement
+        print("[TODO]: Validate mnemonic: [\(mnemonic)]")
+//        let words = mnemonic.trimmingCharacters(in: .whitespacesAndNewlines).split(
+        //            separator: " "
+        //        )
+        //
+        //        let keystoreService: KeyStoreService
+        //        let keyStoreItem = key
+        //        let bip39 = try Bip39(mnemonic: mnemonic, salt: salt, worldList: .english)
+        //
+        //
+        //        let bip44 = try Bip44(seed: try bip39.seed(), version: .mainnetprv)
+        //
+        //        bi
+                
+        //        return Bip39.companion.isValidWordsCount(count: words.count.int32)
+
+        return mnemonic == "one two three four five six seven eight nine ten eleven twelve"
+    }
+}
+
