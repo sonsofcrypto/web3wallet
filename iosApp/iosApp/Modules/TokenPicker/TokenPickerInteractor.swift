@@ -13,10 +13,10 @@ protocol TokenPickerInteractor: AnyObject {
 
 final class DefaultTokenPickerInteractor {
 
-    private let web3Service: Web3Service
+    private let web3Service: Web3ServiceLegacy
     
     init(
-        web3Service: Web3Service
+        web3Service: Web3ServiceLegacy
     ) {
         
         self.web3Service = web3Service

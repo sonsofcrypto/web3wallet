@@ -31,13 +31,13 @@ protocol DashboardInteractor: AnyObject {
 
 final class DefaultDashboardInteractor {
 
-    private let web3Service: Web3Service
+    private let web3Service: Web3ServiceLegacy
     private let priceHistoryService: PriceHistoryService
     private let nftsService: NFTsService
     private var listeners: [WeakContainer] = []
 
     init(
-        web3Service: Web3Service,
+        web3Service: Web3ServiceLegacy,
         priceHistoryService: PriceHistoryService,
         nftsService: NFTsService
     ) {

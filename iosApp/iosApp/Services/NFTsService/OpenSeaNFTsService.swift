@@ -11,7 +11,7 @@ enum OpenSeaNFTsServiceError: Error {
 
 final class OpenSeaNFTsService {
     
-    private let web3Service: Web3Service
+    private let web3Service: Web3ServiceLegacy
     
     private let API_KEY = ""
     
@@ -19,7 +19,7 @@ final class OpenSeaNFTsService {
     private var collections = [NFTCollection]()
     
     init(
-        web3Service: Web3Service
+        web3Service: Web3ServiceLegacy
     ) {
         
         self.web3Service = web3Service

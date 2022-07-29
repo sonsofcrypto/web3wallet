@@ -12,7 +12,7 @@ protocol Web3ServiceWalletListener: AnyObject {
     func tokensChanged()
 }
 
-protocol Web3Service: AnyObject {
+protocol Web3ServiceLegacy: AnyObject {
 
     var allNetworks: [Web3Network] { get }
     var allTokens: [Web3Token] { get }
@@ -72,6 +72,7 @@ struct Web3Network: Equatable, Hashable {
 }
 
 extension Web3Network {
+    
     static func from(_ network: web3lib.Network, isOn: Bool) -> Web3Network {
         return .init(
             id: network.id(),

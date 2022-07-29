@@ -79,14 +79,14 @@ final class DefaultTokenPickerWireframe {
     private let context: TokenPickerWireframeContext
     private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
     private let tokenAddWireframeFactory: TokenAddWireframeFactory
-    private let web3Service: Web3Service
+    private let web3Service: Web3ServiceLegacy
     
     init(
         presentingIn: UIViewController,
         context: TokenPickerWireframeContext,
         tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
         tokenAddWireframeFactory: TokenAddWireframeFactory,
-        web3Service: Web3Service
+        web3Service: Web3ServiceLegacy
     ) {
         self.presentingIn = presentingIn
         self.context = context

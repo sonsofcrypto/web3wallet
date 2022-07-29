@@ -18,9 +18,9 @@ protocol CultService {
 
 final class DefaultCultService {
     
-    let web3Service: Web3Service
+    let web3Service: Web3ServiceLegacy
     
-    init(web3Service: Web3Service) {
+    init(web3Service: Web3ServiceLegacy) {
         
         self.web3Service = web3Service
     }

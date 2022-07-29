@@ -35,7 +35,7 @@ final class DefaultTokenSwapWireframe {
     private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
-    private let web3Service: Web3Service
+    private let web3Service: Web3ServiceLegacy
     
     private weak var navigationController: NavigationController!
     
@@ -45,7 +45,7 @@ final class DefaultTokenSwapWireframe {
         tokenPickerWireframeFactory: TokenPickerWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        web3Service: Web3Service
+        web3Service: Web3ServiceLegacy
     ) {
         self.presentingIn = presentingIn
         self.context = context

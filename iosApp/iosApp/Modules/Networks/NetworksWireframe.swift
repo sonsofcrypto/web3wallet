@@ -19,12 +19,12 @@ final class DefaultNetworksWireframe {
 
     private weak var parent: UIViewController?
     private let alertWireframeFactory: AlertWireframeFactory
-    private let web3Service: Web3Service
+    private let web3Service: Web3ServiceLegacy
 
     init(
         parent: UIViewController?,
         alertWireframeFactory: AlertWireframeFactory,
-        web3Service: Web3Service
+        web3Service: Web3ServiceLegacy
     ) {
         self.parent = parent
         self.alertWireframeFactory = alertWireframeFactory

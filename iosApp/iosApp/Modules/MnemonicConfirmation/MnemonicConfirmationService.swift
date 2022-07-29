@@ -18,7 +18,7 @@ protocol MnemonicConfirmationService: AnyObject {
 final class DefaultMnemonicConfirmationService {
     
     let keyStoreService: KeyStoreService
-    let web3Service: Web3Service
+    let web3Service: Web3ServiceLegacy
     
     private lazy var validator: Trie = {
         let trie = Trie()
@@ -30,7 +30,7 @@ final class DefaultMnemonicConfirmationService {
     
     init(
         keyStoreService: KeyStoreService,
-        web3Service: Web3Service
+        web3Service: Web3ServiceLegacy
     ) {
         
         self.keyStoreService = keyStoreService

@@ -27,7 +27,7 @@ final class DefaultTokenAddWireframe {
     private let context: TokenAddWireframeContext
     private let networkPickerWireframeFactory: NetworkPickerWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
-    private let web3Service: Web3Service
+    private let web3Service: Web3ServiceLegacy
     
     private weak var navigationController: NavigationController!
     
@@ -36,7 +36,7 @@ final class DefaultTokenAddWireframe {
         context: TokenAddWireframeContext,
         networkPickerWireframeFactory: NetworkPickerWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
-        web3Service: Web3Service
+        web3Service: Web3ServiceLegacy
     ) {
         self.presentingIn = presentingIn
         self.context = context

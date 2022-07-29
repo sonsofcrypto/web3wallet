@@ -34,7 +34,7 @@ final class DefaultTokenSendWireframe {
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
-    private let web3Service: Web3Service
+    private let web3Service: Web3ServiceLegacy
     
     private weak var navigationController: NavigationController!
     
@@ -44,7 +44,7 @@ final class DefaultTokenSendWireframe {
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         tokenPickerWireframeFactory: TokenPickerWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
-        web3Service: Web3Service
+        web3Service: Web3ServiceLegacy
     ) {
         self.presentingIn = presentingIn
         self.context = context

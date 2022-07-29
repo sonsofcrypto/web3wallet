@@ -25,12 +25,12 @@ final class DefaultNetworkPickerWireframe {
     
     private weak var presentingIn: UIViewController!
     private let context: NetworkPickerWireframeContext
-    private let web3Service: Web3Service
+    private let web3Service: Web3ServiceLegacy
     
     init(
         presentingIn: UIViewController,
         context: NetworkPickerWireframeContext,
-        web3Service: Web3Service
+        web3Service: Web3ServiceLegacy
     ) {
         self.presentingIn = presentingIn
         self.context = context

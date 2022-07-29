@@ -15,10 +15,14 @@ protocol KeyStoreInteractor: AnyObject {
 final class DefaultKeyStoreInteractor {
 
     private var keyStoreService: KeyStoreService
+    private var web3service: Web3Service
 
-    init(_ keyStoreService: KeyStoreService) {
-        
+    init(
+        _ keyStoreService: KeyStoreService,
+        web3service: Web3Service
+    ) {
         self.keyStoreService = keyStoreService
+        self.web3service = web3service
     }
 }
 
@@ -26,7 +30,7 @@ extension DefaultKeyStoreInteractor: KeyStoreInteractor {
     
     var selected: KeyStoreItem? {
         get { keyStoreService.selected }
-        set { keyStoreService.selected = newValue }
+        set { setSelected(newValue) }
     }
 
     var items: [KeyStoreItem] {
@@ -34,7 +38,22 @@ extension DefaultKeyStoreInteractor: KeyStoreInteractor {
     }
 
     func add(item: KeyStoreItem, password: String, secretStorage: SecretStorage) {
-        
         keyStoreService.add(item: item, password: password, secretStorage: secretStorage)
+    }
+}
+
+private extension DefaultKeyStoreInteractor {
+
+    func setSelected(_ keyStoreItem: KeyStoreItem?) {
+        keyStoreService.selected = keyStoreItem
+
+        guard let keyStoreItem = keyStoreItem else {
+            return
+        }
+
+        web3service.wallet = Wallet(
+            keyStoreItem: keyStoreItem,
+            keyStoreService: keyStoreService
+        )
     }
 }

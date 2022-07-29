@@ -10,7 +10,7 @@ private let currenciesKeyValueStore = "currenciesKeyValueStore"
 
 final class IntegrationWeb3Service {
     
-    let web3service: web3lib.Web3Service
+    let web3service: Web3Service
 
     private let defaults: UserDefaults
     private var supported: [Web3Token] = []
@@ -28,15 +28,12 @@ final class IntegrationWeb3Service {
         return service
     }
     
-    
     init(
-        internalService: web3lib.Web3Service = web3lib.DefaultWeb3Service(
-            store: KeyValueStore(name: serviceKeyValueStore)
-        ),
+        web3service: Web3Service,
         defaults: UserDefaults = .standard
     ) {
-        
-        self.web3service = internalService
+        print("=== started")
+        self.web3service = web3service
         self.defaults = defaults
         
         // TODO: @Annon implement
@@ -48,7 +45,7 @@ final class IntegrationWeb3Service {
     
 }
 
-extension IntegrationWeb3Service: Web3Service {
+extension IntegrationWeb3Service: Web3ServiceLegacy {
     
     var allNetworks: [Web3Network] {
         Network.Companion().supported().map {

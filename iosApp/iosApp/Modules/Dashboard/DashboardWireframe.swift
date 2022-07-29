@@ -42,7 +42,7 @@ final class DefaultDashboardWireframe {
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let onboardingService: OnboardingService
     private let deepLinkHandler: DeepLinkHandler
-    private let web3Service: Web3Service
+    private let web3Service: Web3ServiceLegacy
     private let priceHistoryService: PriceHistoryService
     private let nftsService: NFTsService
     
@@ -60,7 +60,7 @@ final class DefaultDashboardWireframe {
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         onboardingService: OnboardingService,
         deepLinkHandler: DeepLinkHandler,
-        web3Service: Web3Service,
+        web3Service: Web3ServiceLegacy,
         priceHistoryService: PriceHistoryService,
         nftsService: NFTsService
     ) {

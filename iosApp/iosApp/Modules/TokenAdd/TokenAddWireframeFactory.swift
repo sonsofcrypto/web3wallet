@@ -16,12 +16,12 @@ final class DefaultTokenAddWireframeFactory {
 
     private let networkPickerWireframeFactory: NetworkPickerWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
-    private let web3Service: Web3Service
+    private let web3Service: Web3ServiceLegacy
 
     init(
         networkPickerWireframeFactory: NetworkPickerWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
-        web3Service: Web3Service
+        web3Service: Web3ServiceLegacy
     ) {
         self.networkPickerWireframeFactory = networkPickerWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory

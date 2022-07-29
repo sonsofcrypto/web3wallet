@@ -15,11 +15,11 @@ protocol MnemonicConfirmationWireframeFactory {
 final class DefaultMnemonicConfirmationWireframeFactory {
     
     private let keyStoreService: KeyStoreService
-    private let web3Service: Web3Service
+    private let web3Service: Web3ServiceLegacy
     
     init(
         keyStoreService: KeyStoreService,
-        web3Service: Web3Service
+        web3Service: Web3ServiceLegacy
     ) {
         
         self.keyStoreService = keyStoreService

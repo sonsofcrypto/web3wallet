@@ -12,11 +12,11 @@ protocol NetworksWireframeFactory {
 final class DefaultNetworksWireframeFactory {
 
     private let alertWireframeFactory: AlertWireframeFactory
-    private let web3Service: Web3Service
+    private let web3Service: Web3ServiceLegacy
 
     init(
         alertWireframeFactory: AlertWireframeFactory,
-        web3Service: Web3Service
+        web3Service: Web3ServiceLegacy
     ) {
         
         self.alertWireframeFactory = alertWireframeFactory

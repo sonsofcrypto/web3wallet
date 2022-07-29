@@ -13,9 +13,9 @@ protocol NetworksInteractor: AnyObject {
 
 final class DefaultNetworksInteractor {
 
-    private var web3Service: Web3Service
+    private var web3Service: Web3ServiceLegacy
 
-    init(web3Service: Web3Service) {
+    init(web3Service: Web3ServiceLegacy) {
         
         self.web3Service = web3Service
     }

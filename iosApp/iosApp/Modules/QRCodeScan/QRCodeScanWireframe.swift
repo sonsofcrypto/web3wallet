@@ -31,14 +31,14 @@ final class DefaultQRCodeScanWireframe {
     
     private weak var presentingIn: UIViewController!
     private let context: QRCodeScanWireframeContext
-    private let web3Service: Web3Service
+    private let web3Service: Web3ServiceLegacy
     
     private weak var navigationController: NavigationController!
     
     init(
         presentingIn: UIViewController,
         context: QRCodeScanWireframeContext,
-        web3Service: Web3Service
+        web3Service: Web3ServiceLegacy
     ) {
         self.presentingIn = presentingIn
         self.context = context
