@@ -3,16 +3,15 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 enum NetworksPresenterEvent {
-    
-    case didTapSettings(String)
-    case didSwitchNetwork(networkId: String, isOn: Bool)
-    case didSelectNetwork(networkId: String)
+    case didTapSettings(chainId: UInt32)
+    case didSwitchNetwork(chainId: UInt32, isOn: Bool)
+    case didSelectNetwork(chainId: UInt32)
 }
 
 protocol NetworksPresenter: AnyObject {
-
     func present()
     func handle(_ event: NetworksPresenterEvent)
 }
@@ -21,8 +20,6 @@ final class DefaultNetworksPresenter {
 
     private let interactor: NetworksInteractor
     private let wireframe: NetworksWireframe
-
-    private var networks: [Web3Network]
 
     private weak var view: NetworksView?
 
@@ -34,133 +31,98 @@ final class DefaultNetworksPresenter {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
-        self.networks = []
+
+        interactor.addListener(self)
+    }
+    
+    deinit {
+        interactor.removeListener(self)
     }
 }
 
-extension DefaultNetworksPresenter: NetworksPresenter {
+extension DefaultNetworksPresenter: NetworksPresenter, NetworkInteractorLister {
 
     func present() {
-        
-        networks = interactor.allNetworks()
-        view?.update(
-            with: makeViewModel()
-        )
+        view?.update(with: viewModel())
     }
 
     func handle(_ event: NetworksPresenterEvent) {
-        
         switch event {
-            
-        case let .didTapSettings(networkId):
-            
-            guard let network = networks.first(where: { $0.id == networkId }) else {
+        case let .didTapSettings(chainId):
+            guard let network = network(chainId) else {
                 return
             }
-            wireframe.navigate(to: .editNetwork(network))
-        
-        case let .didSwitchNetwork(networkId, isOn):
-            
-            guard let network = networks.first(where: { $0.id == networkId }) else {
-                return
+            let enabled = interactor.isEnabled(network)
+            let w3Network = Web3Network.from(network, isOn: enabled)
+            wireframe.navigate(to: .editNetwork(w3Network))
+        case let .didSwitchNetwork(chainId, isOn):
+            if let network = network(chainId) {
+                interactor.set(network, enabled: isOn)
             }
-            interactor.update(network: network, active: isOn)
-            
-        case .didSelectNetwork:
-            
+        case let .didSelectNetwork(chainId):
+            if let network = network(chainId) {
+                interactor.selected = network
+            }
             wireframe.navigate(to: .dashboard)
         }
+    }
+
+    func handle(_ event: Web3ServiceEvent) {
+        view?.update(with: viewModel())
     }
 }
 
 private extension DefaultNetworksPresenter {
 
-    func makeViewModel() -> NetworksViewModel {
-        
-        let networks: [NetworksViewModel.Network] = networks.map {
-            .init(
-                networkId: $0.id,
-                iconName: interactor.networkIconName(for: $0),
-                name: $0.name,
-                connectionType: formattedConnectionType($0),
-                status: formattedStatus($0),
-                explorer: formattedExplorer($0),
-                connected: $0.status == .comingSoon ? nil : $0.selectedByUser
-            )
-        }
-        
-        return .loaded(
+    func viewModel() -> NetworksViewModel {
+        let l1s = interactor.networks().filter { $0.type == .l1 }
+        let l2s = interactor.networks().filter { $0.type == .l2 }
+        let l1sTest = interactor.networks().filter { $0.type == .l1Test }
+        let l2sTest = interactor.networks().filter { $0.type == .l2Test }
+
+        return .init(
             header: Localized("networks.header"),
-            networks: networks
+            sections: [
+                .init(
+                    header: Localized("networks.header.l1s"),
+                    networks: l1s.map { networkViewModel($0) }
+                ),
+                .init(
+                    header: Localized("networks.header.l2s"),
+                    networks: l2s.map { networkViewModel($0) }
+                ),
+                .init(
+                    header: Localized("networks.header.l1sTest"),
+                    networks: l1sTest.map { networkViewModel($0) }
+                ),
+                .init(
+                    header: Localized("networks.header.l2sTest"),
+                    networks: l2sTest.map { networkViewModel($0) }
+                )
+            ].filter { !$0.networks.isEmpty }
         )
     }
 
-    func formattedConnectionType(_ network: Web3Network) -> String {
-        
-        switch network.connectionType {
-        case .liteClient:
-            return "Lite client"
-        case .networkDefault:
-            return "Network default"
-        case .infura:
-            return "Infura"
-        case .alchyme:
-            return "Alchyme"
-        case .pocket:
-            return "Pocket"
-        case nil:
-            return "-"
-        }
+    func networkViewModel(_ network: Network) -> NetworksViewModel.Network {
+        .init(
+            chainId: network.chainId,
+            name: network.name,
+            connected: interactor.isEnabled(network),
+            imageData: interactor.image(network),
+            connectionType: formattedProvider(interactor.provider(network))
+        )
     }
 
-    func formattedStatus(_ network: Web3Network) -> String {
-        
-        switch network.status {
-            
-        case let .connectedSync(pct):
-            return String(
-                format: "%@ synced",
-                NumberFormatter.pct.string(from: pct)
-            )
-        case .connected:
-            return Localized("connected")
-        case .disconnected, .unknown:
-            return Localized("disconnected")
-        case .comingSoon:
-            return "-"
-        }
-    }
-
-    func formattedExplorer(_ network: Web3Network) -> String {
-        
-        guard let explorer = network.explorer else { return "-" }
-        
-        switch explorer {
-            
-        case .liteClientOnly:
-            return "Lite client only"
-        case .web2:
-            return "web2"
-        }
-    }
-
-    func isConnected(_ network: Web3Network) -> Bool {
-        
-        switch network.status {
-        case .connected, .connectedSync:
-            return true
+    func formattedProvider(_ provider: Provider?) -> String {
+        switch provider {
+        case is ProviderPocket:
+            return "Pokt.network"
         default:
-            return false
+            return "-"
         }
     }
 
-    func viewModel(from error: Error) -> NetworksViewModel {
-        .error(
-            error: NetworksViewModel.Error(
-                title: "Error",
-                body: error.localizedDescription,
-                actions: [Localized("OK")]
-            )
-        )
+    func network(_ chaiId: UInt32) -> Network? {
+        interactor.networks().first(where: { $0.chainId == chaiId })
     }
 }

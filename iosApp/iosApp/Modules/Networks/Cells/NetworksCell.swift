@@ -12,18 +12,13 @@ final class NetworksCell: UICollectionViewCell {
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var connectionTitleLabel: UILabel!
     @IBOutlet weak var connectionLabel: UILabel!
+
+    var onNetworkSwitch: ((UInt32, Bool) -> Void)? = nil
+    var onSettingsTapped: ((UInt32) -> Void)? = nil
     
-    struct Handler {
-        
-        let onNetworkSwitch: (String, Bool) -> Void
-        let onSettingsTapped: (String) -> Void
-    }
-    
-    private var viewModel: NetworksViewModel.Network!
-    private var handler: Handler!
-    
+    private var id: UInt32 = 0
+
     override func awakeFromNib() {
-        
         super.awakeFromNib()
         
         contentView.backgroundColor = Theme.colour.cellBackground
@@ -35,7 +30,11 @@ final class NetworksCell: UICollectionViewCell {
         titleLabel.textColor = Theme.colour.labelPrimary
         
         settingsButton.tintColor = Theme.colour.labelSecondary
-        settingsButton.addTarget(self, action: #selector(onSettingsTapped), for: .touchUpInside)
+        settingsButton.addTarget(
+            self,
+            action: #selector(onSettingsTappedAction),
+            for: .touchUpInside
+        )
         
         switchControl.layer.cornerRadius = 16
         switchControl.addTarget(
@@ -61,14 +60,11 @@ final class NetworksCell: UICollectionViewCell {
 extension NetworksCell {
  
     @objc func onSwitchValueChanged(_ sender: UISwitch) {
-        
-        handler.onNetworkSwitch(viewModel.networkId, sender.isOn)
-//        presenter.handle(.didSwitchNetwork(idx: idx, isOn: sender.isOn))
+        onNetworkSwitch?(id, sender.isOn)
     }
     
-    @objc func onSettingsTapped() {
-        
-        handler.onSettingsTapped(viewModel.networkId)
+    @objc func onSettingsTappedAction() {
+        onSettingsTapped?(id)
     }
 }
 
@@ -76,19 +72,17 @@ extension NetworksCell {
 
     func update(
         with viewModel: NetworksViewModel.Network,
-        handler: Handler
+        onNetworkSwitch: ((UInt32, Bool) -> Void)? = nil,
+        onSettingsTapped: ((UInt32) -> Void)? = nil
     ) {
+        self.id = viewModel.chainId
+        self.onNetworkSwitch = onNetworkSwitch
+        self.onSettingsTapped = onSettingsTapped
         
-        self.viewModel = viewModel
-        self.handler = handler
-        
-        iconImageView.image = viewModel.iconName.assetImage
-        
+        iconImageView.image = UIImage(data: viewModel.imageData)
         titleLabel.text = viewModel.name
-        
         switchControl.isOn = viewModel.connected ?? false
         switchControl.isEnabled = viewModel.connected != nil
-        
         connectionLabel.text = viewModel.connectionType        
     }
 }

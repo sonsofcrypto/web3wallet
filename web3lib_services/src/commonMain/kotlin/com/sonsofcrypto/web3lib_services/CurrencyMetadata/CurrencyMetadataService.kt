@@ -14,7 +14,6 @@ typealias ImageBytes = ByteArray
 interface CurrencyMetadataService {
 
     fun cachedImage(currency: Currency): ByteArray?
-    // IGNORE
     fun cachedCandles(currency: Currency): List<Candle>?
     fun market(currency: Currency): Market?
     fun colors(currency: Currency): Pair<HexColor, HexColor>

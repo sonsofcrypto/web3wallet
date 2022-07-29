@@ -3,39 +3,111 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
+
+protocol NetworkInteractorLister: AnyObject {
+    func handle(_ event: Web3ServiceEvent)
+}
 
 protocol NetworksInteractor: AnyObject {
+    var selected: Network? { get set }
 
-    func networkIconName(for network: Web3Network) -> String
-    func allNetworks() -> [Web3Network]
-    func update(network: Web3Network, active: Bool)
+    func set(_ network: Network, enabled: Bool)
+    func isEnabled(_ network: Network) -> Bool
+
+    func networks() -> [Network]
+    func image(_ network: Network) -> Data
+    func provider(_ network: Network) -> Provider?
+
+    func addListener(_ listener: NetworkInteractorLister)
+    func removeListener(_ listener: NetworkInteractorLister?)
 }
 
 final class DefaultNetworksInteractor {
 
-    private var web3Service: Web3ServiceLegacy
+    var selected: Network? {
+        get { web3service.network }
+        set { web3service.network = newValue }
+    }
 
-    init(web3Service: Web3ServiceLegacy) {
-        
-        self.web3Service = web3Service
+    private let web3service: Web3Service
+    private let currencyMetadataService: CurrencyMetadataService
+    private var listeners: [WeakContainer] = []
+    private var web3ServiceLegacy: Web3ServiceLegacy
+
+    init(
+        _ web3service: Web3Service,
+        currencyMetadataService: CurrencyMetadataService,
+        web3ServiceLegacy: Web3ServiceLegacy
+    ) {
+        self.web3service = web3service
+        self.currencyMetadataService = currencyMetadataService
+        self.web3ServiceLegacy = web3ServiceLegacy
     }
 }
 
 extension DefaultNetworksInteractor: NetworksInteractor {
-    
-    func networkIconName(for network: Web3Network) -> String {
-        
-        web3Service.networkIconName(for: network)
+
+    func networks() -> [Network] {
+        Network.Companion().supported()
     }
 
-    func allNetworks() -> [Web3Network] {
-        
-        web3Service.allNetworks
-    }
-    
-    func update(network: Web3Network, active: Bool) {
-        
-        web3Service.update(network: network, active: active)
+    func image(_ network: Network) -> Data {
+        currencyMetadataService.cachedImage(currency: network.nativeCurrency)?
+            .toDataFull() ?? UIImage(named: "currency_placeholder")!.pngData()!
     }
 
+    func provider(_ network: Network) -> Provider? {
+        web3service.provider(network: network)
+    }
+
+    func isEnabled(_ network: Network) -> Bool {
+        web3service.enabledNetworks().contains(network)
+    }
+
+    func set(_ network: Network, enabled: Bool) {
+        web3service.setNetwork(network: network, enabled: enabled)
+    }
+}
+
+// MARK: - Listeners
+
+extension DefaultNetworksInteractor: Web3ServiceListener {
+
+    func addListener(_ listener: NetworkInteractorLister) {
+        if listeners.isEmpty {
+            web3service.addListener(listener: self)
+        }
+        listeners = listeners + [WeakContainer(listener)]
+    }
+
+    func removeListener(_ listener: NetworkInteractorLister?) {
+        guard let listener = listener else {
+            listeners = []
+            web3service.removeListener(listener: nil)
+            return
+        }
+
+        listeners = listeners.filter { $0.value !== listener }
+
+        if listeners.isEmpty {
+            web3service.removeListener(listener: nil)
+        }
+    }
+
+    private func emit(_ event: Web3ServiceEvent) {
+        listeners.forEach { $0.value?.handle(event) }
+    }
+
+    func handle(event: Web3ServiceEvent) {
+        emit(event)
+    }
+
+    private class WeakContainer {
+        weak var value: NetworkInteractorLister?
+
+        init(_ value: NetworkInteractorLister) {
+            self.value = value
+        }
+    }
 }

@@ -18,4 +18,15 @@ data class Currency(
     fun id(): String {
         return coinGeckoId ?: (symbol + (address ?: name))
     }
+
+    companion object {
+        fun ethereum(): Currency = Currency(
+            name = "Ethereum",
+            symbol = "eth",
+            decimals = 18u,
+            type = Type.NATIVE,
+            address = null,
+            coinGeckoId = "ethereum",
+        )
+    }
 }

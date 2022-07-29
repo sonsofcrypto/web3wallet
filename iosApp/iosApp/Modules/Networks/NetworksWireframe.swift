@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 enum NetworksWireframeDestination {
     case dashboard
@@ -19,16 +20,22 @@ final class DefaultNetworksWireframe {
 
     private weak var parent: UIViewController?
     private let alertWireframeFactory: AlertWireframeFactory
-    private let web3Service: Web3ServiceLegacy
+    private let web3Service: Web3Service
+    private let currencyMetadataService: CurrencyMetadataService
+    private let web3ServiceLegacy: Web3ServiceLegacy
 
     init(
         parent: UIViewController?,
-        alertWireframeFactory: AlertWireframeFactory,
-        web3Service: Web3ServiceLegacy
+        web3Service: Web3Service,
+        currencyMetadataService: CurrencyMetadataService,
+        web3ServiceLegacy: Web3ServiceLegacy,
+        alertWireframeFactory: AlertWireframeFactory
     ) {
         self.parent = parent
         self.alertWireframeFactory = alertWireframeFactory
         self.web3Service = web3Service
+        self.currencyMetadataService = currencyMetadataService
+        self.web3ServiceLegacy = web3ServiceLegacy
     }
 }
 
@@ -44,43 +51,36 @@ extension DefaultNetworksWireframe: NetworksWireframe {
     }
 
     func navigate(to destination: NetworksWireframeDestination) {
-        
         switch destination {
-            
         case .dashboard:
-            
             guard let parent = parent as? EdgeCardsController else {
                 return
             }
             parent.setDisplayMode(.master, animated: true)
-            
         case .editNetwork:
-            
             guard let parent = parent else { return }
             alertWireframeFactory.makeWireframe(
                 parent,
                 context: .underConstructionAlert()
             ).present()
         }
-        
     }
 }
 
 extension DefaultNetworksWireframe {
 
     private func wireUp() -> UIViewController {
-        
         let interactor = DefaultNetworksInteractor(
-            web3Service: web3Service
+            web3Service,
+            currencyMetadataService: currencyMetadataService,
+            web3ServiceLegacy: web3ServiceLegacy
         )
-        
         let vc: NetworksViewController = UIStoryboard(.networks).instantiate()
         let presenter = DefaultNetworksPresenter(
             view: vc,
             interactor: interactor,
             wireframe: self
         )
-
         vc.presenter = presenter
         return NavigationController(rootViewController: vc)
     }

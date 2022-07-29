@@ -94,7 +94,8 @@ extension Web3Network {
             name: name,
             chainId: UInt32(chainId),
             type: networkType,
-            nameServiceAddress: nil
+            nameServiceAddress: nil,
+            nativeCurrency: Currency.Companion().ethereum()
         )
     }
 }

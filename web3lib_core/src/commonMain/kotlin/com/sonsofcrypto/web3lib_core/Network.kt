@@ -9,7 +9,7 @@ class Network(
     val chainId: UInt,
     val type: Type,
     val nameServiceAddress: AddressBytes?,
-//    val nativeCurrency: Currency,
+    val nativeCurrency: Currency,
 ) {
 
     fun id(): String = hashCode().toString()
@@ -35,10 +35,10 @@ class Network(
     }
 
     companion object {
-        fun ethereum() = Network("Ethereum", 1u, Type.L1, null)
-        fun ropsten() = Network("Ropsten", 3u, Type.L1_TEST, null)
-        fun rinkeby() = Network("Rinkeby", 4u, Type.L1_TEST, null)
-        fun goerli() = Network("Goerli", 5u, Type.L1_TEST, null)
+        fun ethereum() = Network("Ethereum", 1u, Type.L1, null, Currency.ethereum())
+        fun ropsten() = Network("Ropsten", 3u, Type.L1_TEST, null, Currency.ethereum())
+        fun rinkeby() = Network("Rinkeby", 4u, Type.L1_TEST, null, Currency.ethereum())
+        fun goerli() = Network("Goerli", 5u, Type.L1_TEST, null, Currency.ethereum())
 
         fun supported(): List<Network> = listOf(
             Network.ethereum(),

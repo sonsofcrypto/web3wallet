@@ -4,55 +4,26 @@
 
 import Foundation
 
-enum NetworksViewModel {
-    
-    case loaded(header: String, networks: [Network])
-    case error(error: NetworksViewModel.Error)
+struct NetworksViewModel {
+    let header: String
+    let sections: [Section]
+}
+
+extension NetworksViewModel {
+
+    struct Section {
+        let header: String
+        let networks: [Network]
+    }
 }
 
 extension NetworksViewModel {
 
     struct Network {
-
-        let networkId: String
-        let iconName: String
+        let chainId: UInt32
         let name: String
+        let connected: Bool
+        let imageData: Data
         let connectionType: String
-        let status: String
-        let explorer: String
-        let connected: Bool?
-    }
-}
-
-extension NetworksViewModel {
-
-    struct Error {
-        
-        let title: String
-        let body: String
-        let actions: [String]
-    }
-}
-
-extension NetworksViewModel {
-    
-    var header: String {
-        
-        switch self {
-        case let .loaded(header, _):
-            return header
-        default:
-            return ""
-        }
-    }
-
-    func network() -> [NetworksViewModel.Network] {
-        
-        switch self {
-        case let .loaded(_, items):
-            return items
-        default:
-            return []
-        }
     }
 }

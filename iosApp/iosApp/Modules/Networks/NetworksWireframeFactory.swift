@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 protocol NetworksWireframeFactory {
 
@@ -12,15 +13,20 @@ protocol NetworksWireframeFactory {
 final class DefaultNetworksWireframeFactory {
 
     private let alertWireframeFactory: AlertWireframeFactory
-    private let web3Service: Web3ServiceLegacy
+    private let web3Service: Web3Service
+    private let currencyMetadataService: CurrencyMetadataService
+    private let web3ServiceLegacy: Web3ServiceLegacy
 
     init(
         alertWireframeFactory: AlertWireframeFactory,
-        web3Service: Web3ServiceLegacy
+        web3Service: Web3Service,
+        currencyMetadataService: CurrencyMetadataService,
+        web3ServiceLegacy: Web3ServiceLegacy
     ) {
-        
         self.alertWireframeFactory = alertWireframeFactory
         self.web3Service = web3Service
+        self.currencyMetadataService = currencyMetadataService
+        self.web3ServiceLegacy = web3ServiceLegacy
     }
 }
 
@@ -30,8 +36,26 @@ extension DefaultNetworksWireframeFactory: NetworksWireframeFactory {
         
         DefaultNetworksWireframe(
             parent: parent,
-            alertWireframeFactory: alertWireframeFactory,
-            web3Service: web3Service
+            web3Service: web3Service,
+            currencyMetadataService: currencyMetadataService,
+            web3ServiceLegacy: web3ServiceLegacy,
+            alertWireframeFactory: alertWireframeFactory
         )
+    }
+}
+
+// MARK: - NetworksWireframeFactoryAssembler
+
+final class NetworksWireframeFactoryAssembler: AssemblerComponent {
+
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> NetworksWireframeFactory in
+            DefaultNetworksWireframeFactory(
+                alertWireframeFactory: resolver.resolve(),
+                web3Service: resolver.resolve(),
+                currencyMetadataService: resolver.resolve(),
+                web3ServiceLegacy: resolver.resolve()
+            )
+        }
     }
 }

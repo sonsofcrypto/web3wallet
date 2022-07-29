@@ -14,6 +14,7 @@
 		1A4C30D6ED56A03136C4CA71 /* Kotlin+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C301CA1E59BEACD136BCD /* Kotlin+Extensions.swift */; };
 		1A4C31D59C7D2B84D247FDDD /* TransformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C393772D3384C556C29C3 /* TransformView.swift */; };
 		1A4C31E84A86A69FFC7C3E0F /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D40E32D58F958911B60 /* Setting.swift */; };
+		1A4C333176FECF247923940A /* CurrencyMetadataServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C08E08B50822B0A46C8 /* CurrencyMetadataServiceAssembler.swift */; };
 		1A4C33A130E35EBC0BC27B07 /* mock-candles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1A4C3EE3468010FE10976BEE /* mock-candles.json */; };
 		1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */; };
 		1A4C34ABFF1DD20804DED956 /* AppsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3228790C1569B37F5179 /* AppsService.swift */; };
@@ -172,7 +173,6 @@
 		1C60C2E6285724D0003BE25D /* DashboardWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C218285724D0003BE25D /* DashboardWireframeFactory.swift */; };
 		1C60C2E7285724D0003BE25D /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C219285724D0003BE25D /* DashboardViewModel.swift */; };
 		1C60C2E9285724D0003BE25D /* DashboardWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C21B285724D0003BE25D /* DashboardWireframe.swift */; };
-		1C60C2EA285724D0003BE25D /* NetworksWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C21D285724D0003BE25D /* NetworksWireframeFactoryAssembler.swift */; };
 		1C60C2EB285724D0003BE25D /* NetworksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C21E285724D0003BE25D /* NetworksViewModel.swift */; };
 		1C60C2EC285724D0003BE25D /* NetworksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C21F285724D0003BE25D /* NetworksView.swift */; };
 		1C60C2ED285724D0003BE25D /* NetworksInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C220285724D0003BE25D /* NetworksInteractor.swift */; };
@@ -570,6 +570,7 @@
 		1A4C39D6ADB830082AC3CEA6 /* Authenticate.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Authenticate.storyboard; sourceTree = "<group>"; };
 		1A4C3B4D97107E875FCF5F38 /* AuthenticateContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateContext.swift; sourceTree = "<group>"; };
 		1A4C3B70AA1B0BC942B15671 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		1A4C3C08E08B50822B0A46C8 /* CurrencyMetadataServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyMetadataServiceAssembler.swift; sourceTree = "<group>"; };
 		1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		1A4C3D40E32D58F958911B60 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		1A4C3DBA41AF75471C619124 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
@@ -706,7 +707,6 @@
 		1C60C218285724D0003BE25D /* DashboardWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C219285724D0003BE25D /* DashboardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		1C60C21B285724D0003BE25D /* DashboardWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardWireframe.swift; sourceTree = "<group>"; };
-		1C60C21D285724D0003BE25D /* NetworksWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C60C21E285724D0003BE25D /* NetworksViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksViewModel.swift; sourceTree = "<group>"; };
 		1C60C21F285724D0003BE25D /* NetworksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksView.swift; sourceTree = "<group>"; };
 		1C60C220285724D0003BE25D /* NetworksInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksInteractor.swift; sourceTree = "<group>"; };
@@ -1168,8 +1168,17 @@
 				1A4C30349A9657E321920184 /* Settings */,
 				D17AC2D527B7E674000D7C34 /* Store */,
 				1CD3FE8728559EF2008312DE /* Web3Service */,
+				1A4C38E57534723ADC9F3D57 /* CurrencyMetadataService */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		1A4C38E57534723ADC9F3D57 /* CurrencyMetadataService */ = {
+			isa = PBXGroup;
+			children = (
+				1A4C3C08E08B50822B0A46C8 /* CurrencyMetadataServiceAssembler.swift */,
+			);
+			path = CurrencyMetadataService;
 			sourceTree = "<group>";
 		};
 		1A4C39EC4A83EE79DD0F101F /* Onboarding */ = {
@@ -1548,7 +1557,6 @@
 				1C60C21E285724D0003BE25D /* NetworksViewModel.swift */,
 				1C60C222285724D0003BE25D /* NetworksWireframe.swift */,
 				1C60C221285724D0003BE25D /* NetworksWireframeFactory.swift */,
-				1C60C21D285724D0003BE25D /* NetworksWireframeFactoryAssembler.swift */,
 				1C0643D02892F0E800643C15 /* Cells */,
 			);
 			path = Networks;
@@ -2714,7 +2722,6 @@
 				1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */,
 				1C60C2B5285724D0003BE25D /* TokenPickerWireframeFactory.swift in Sources */,
 				1C54DBE0285E1A0E00E378F6 /* Double+Extensions.swift in Sources */,
-				1C60C2EA285724D0003BE25D /* NetworksWireframeFactoryAssembler.swift in Sources */,
 				1C60C2E9285724D0003BE25D /* DashboardWireframe.swift in Sources */,
 				1C67202128870FE100C5F044 /* ConfirmationWireframeFactory.swift in Sources */,
 				1C60C2EF285724D0003BE25D /* NetworksWireframe.swift in Sources */,
@@ -3033,6 +3040,7 @@
 				1CB8B0C4288DD97300024E7C /* CultProposalStatus.swift in Sources */,
 				1A4C3CA30F1785BF1A063059 /* IntegrationWeb3Service.swift in Sources */,
 				1A4C3EA4FC2C67C1E1609ABC /* Web3ServiceAssembler.swift in Sources */,
+				1A4C333176FECF247923940A /* CurrencyMetadataServiceAssembler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

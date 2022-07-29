@@ -38,6 +38,7 @@ private extension AssemblerBootstrapper {
             CultServiceAssembler(),
             Web3ServiceLegacyAssembler(),
             Web3ServiceAssembler(),
+            CurrencyMetadataServiceAssembler(),
             PriceHistoryServiceAssembler(),
             FeaturesServiceAssembler(),
             // DeepLink
