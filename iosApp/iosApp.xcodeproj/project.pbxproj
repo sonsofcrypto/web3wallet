@@ -476,6 +476,7 @@
 		D157F7D727B69B6400578FF8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D157F7D527B69B6400578FF8 /* LaunchScreen.storyboard */; };
 		D157F7EE27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */; };
 		D15B06C327B6D23C008C3C62 /* GradienView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15B06C227B6D23C008C3C62 /* GradienView.swift */; };
+		D15CB4FE2893D1AC00E4A25E /* Currencies.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D15CB4FD2893D1AC00E4A25E /* Currencies.xcassets */; };
 		D1966C3C281468C300550332 /* SecretStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1966C3B281468C300550332 /* SecretStorageTests.swift */; };
 		D1976B0C287EFAE10063FC9C /* MnemonicImportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B03287EFAE10063FC9C /* MnemonicImportCell.swift */; };
 		D1976B0D287EFAE10063FC9C /* MnemonicImportContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B04287EFAE10063FC9C /* MnemonicImportContext.swift */; };
@@ -1016,6 +1017,7 @@
 		D157F7E727B69B6400578FF8 /* iosAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D157F7ED27B69B6400578FF8 /* web3walletUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = web3walletUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D15B06C227B6D23C008C3C62 /* GradienView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradienView.swift; sourceTree = "<group>"; };
+		D15CB4FD2893D1AC00E4A25E /* Currencies.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Currencies.xcassets; sourceTree = "<group>"; };
 		D1966C3B281468C300550332 /* SecretStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretStorageTests.swift; sourceTree = "<group>"; };
 		D1976B03287EFAE10063FC9C /* MnemonicImportCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportCell.swift; sourceTree = "<group>"; };
 		D1976B04287EFAE10063FC9C /* MnemonicImportContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportContext.swift; sourceTree = "<group>"; };
@@ -2209,6 +2211,7 @@
 				1CB8B0CA288FAB7900024E7C /* DeepLink */,
 				D11A98F327B8615B00EDFDD0 /* Fonts */,
 				D157F7D527B69B6400578FF8 /* LaunchScreen.storyboard */,
+				D15CB4FD2893D1AC00E4A25E /* Currencies.xcassets */,
 				D157F7D027B69B6300578FF8 /* Main.storyboard */,
 				1C60C1C7285724D0003BE25D /* Modules */,
 				1C9B46F92814279F00F6C40B /* Resources */,
@@ -2545,6 +2548,7 @@
 				1C0643E52892FD5200643C15 /* Features.storyboard in Resources */,
 				1CB8B0DC28904F6C00024E7C /* NFTsCollection.storyboard in Resources */,
 				1C9E31AE287732A700DD2031 /* Assets-Old.xcassets in Resources */,
+				D15CB4FE2893D1AC00E4A25E /* Currencies.xcassets in Resources */,
 				1C54DC74286A1D4C00E378F6 /* Assets-ThemeA.xcassets in Resources */,
 				D11A990727B8615B00EDFDD0 /* GothicA1-Medium.ttf in Resources */,
 				1C54DC5A28683DDA00E378F6 /* NaokoAA-Extrabold.otf in Resources */,

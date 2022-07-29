@@ -17,12 +17,17 @@ class MainActivity : AppCompatActivity() {
 
         val tv: TextView = findViewById(R.id.text_view)
         tv.text = secureRand(128).toString()
+    }
 
-        Bip39Test().runAll()
-        Bip44Test().runAll()
-        KeyValueStoreTest().runAll()
-        KeyStoreTest().runAll()
-        TrieTest().runAll()
+    override fun onResume() {
+        super.onResume()
+//        Bip39Test().runAll()
+//        Bip44Test().runAll()
+//        KeyValueStoreTest().runAll()
+//        KeyStoreTest().runAll()
+//        TrieTest().runAll()
+//        ProviderTest().runAll()
+        CoinGeckoTest(this.applicationContext).runAll()
         println("=== all tests executed ===")
     }
 }

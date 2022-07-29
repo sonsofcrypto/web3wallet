@@ -5,14 +5,14 @@ import kotlin.experimental.or
 /** Hex string */
 
 @kotlin.ExperimentalUnsignedTypes
-fun ByteArray.toHexString(): String = asUByteArray().joinToString("") {
-    it.toString(radix = 16).padStart(2, '0')
-}
+fun ByteArray.toHexString(prefix: Boolean = false): String = (if (prefix) "0x" else "") +
+    asUByteArray().joinToString("") { it.toString(radix = 16).padStart(2, '0') }
 
 fun String.hexStringToByteArray(): ByteArray {
     check(length % 2 == 0) { "Must have an even length" }
 
-    return chunked(2)
+    return (if (length > 1 && substring(0, 2) == "0x") substring(2) else this)
+        .chunked(2)
         .map { it.toInt(16).toByte() }
         .toByteArray()
 }
@@ -60,3 +60,12 @@ fun BooleanArray.toByteArray(len : Int = this.size / 8): ByteArray {
             }
     return byteArray
 }
+
+/** - */
+
+fun ByteArray.byteArrayWithByteAt(idx: Int): ByteArray {
+    val array = ByteArray(1)
+    array.set(0, this[idx])
+    return array
+}
+

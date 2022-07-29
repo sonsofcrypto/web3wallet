@@ -1,59 +1,25 @@
-# web3wallet
-
+# CoreCrypto
+ 
 ### NOTE: Currently under active development.
 
-This repo contains iOS, Android and React browser extension apps. All apps use 
-shared Kotlin `web3lib` for all of web3 needs. Creating and managing wallets, 
-signing transactions, connecting to networks, interacting with smart contracts.
+`CoreCrypto` is written in [Go](https://go.dev) with binding and wrappers for 
+[Swift](https://www.swift.org), [Kotlin](https://kotlinlang.org) and 
+[TypeScript](https://www.typescriptlang.org). Provides all the core crypto
+primitives. Uses same libraries as [Geth](https://github.com/ethereum/go-ethereum).
 
 ## Compilation instructions
-- Clone and repo
-```
-git clone https://github.com/sonsofcrypto/web3wallet.git
-```
-- you will need to have `Go` environment setup and `gomobile` to compile 
-`CoreCrypto`. More info in `coreCrypto/README.md`.
+
+- Setup [GoLang](https://go.dev/doc/install) environment. 
+- Install gomobile
 ```
 $ go install golang.org/x/mobile/cmd/gomobile@latest
 $ go install golang.org/x/mobile/cmd/gobind@latest
 $ gomobile init
 ```
-- build `CoreCryto` dependency for `web3lib`. 
-```
-$ cd coreCrypto && chmod +x build.sh && ./build.sh
-```
-- build iOS run `./gradlew assembleXCFramework`, then open Xcode and run
-- build Android simply run in AndroidStudio or use standards gradle tasks
-- build Browser extension soon™
+- get dependencies `go get -v`
+- build Swift `gomobile bind -v -target=ios -o ./../swift/web3lib.xcframework ./`
+- build Kotlin ` gomobile bind -v -o ./../web3lib_crypto/src/androidMain/libs/CoreCrypto.aar -target=android ./`
+- build for TypeScript, coming soon™
 
-## TODO:
-	- [x] bip39
-	- [ ] bip44
-	- [ ] Move keystore to kotlin (create, restore bip39, bip44, bip32)
-    - [ ] RPC
-    - [ ] Run light client
-		- [ ] Pocket network
-		- [ ] Infura
-		- [ ] Alchyme    
-    - [ ] Contract and sign transaction
-    - [ ] Currencies metadata store
-    - [ ] Swaps
-	- [ ] Fix keychain storage bug
-
-## Backlog:
-    - [ ] Bip39 optimize performance of `WordList.indexOf`
-	- [ ] Add support for 24 word mnemonics (option to select & text to scale down when entering)
-	- [ ] Import private key
-	- [ ] Handle multiple accounts from from same mnemonic
-	- [ ] Connect harware wallet
-	- [ ] Create multisig
-	- [ ] Add bip39 validation 
-	- [ ] Add inset for keybord and scroll to fiedl when keyboard comes up
- 	- [ ] Implement custom layout for separators
- 	- [ ] Fix add wallet dismiss animation when in cards mode
-	- [ ] Interactive gesture for dismisg card flip
-	- [ ] Validation UI for importing menmonic
-	- [ ] Create password VC
-	- [ ] Play haptics when swipe starts
-
-For more info [sonsOfCrypto.com](https://sonsofcrypto.com/)
+NOTE: If you are seeing `no exported names in the package`, either moving 
+repo to `$GOPATH/src`, or following steps [here](https://github.com/golang/go/issues/37961#issuecomment-673854585) should fix it.

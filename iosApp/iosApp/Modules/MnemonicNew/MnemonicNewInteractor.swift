@@ -84,7 +84,7 @@ extension DefaultMnemonicNewInteractor: MnemonicNewInteractor {
     func generatePassword() -> String {
         let password = try! CipherKt.secureRand(size: 32)
         return String(data: password.toDataFull(), encoding: .ascii)
-            ?? password.toHexString()
+            ?? password.toHexString(prefix: false)
     }
 
     func createKeyStoreItem(_ password: String, salt: String) throws -> KeyStoreItem {
@@ -165,7 +165,7 @@ private extension DefaultMnemonicNewInteractor {
 
     // TODO: Derive address for key
     func address(_ extKey: ExtKey) -> String {
-        extKey.pub().toHexString()
+        extKey.pub().toHexString(prefix: false)
     }
 
     // TODO: Derive addresses

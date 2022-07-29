@@ -8,4 +8,4 @@ expect fun secureRand(size: Int): ByteArray
 expect fun aesCTRXOR(key: ByteArray, inText: ByteArray, iv: ByteArray): ByteArray
 
 @Throws(Exception::class)
-expect fun aesCBCDecrypt(key: ByteArray, cipherText: ByteArray, iv: ByteArray): ByteArray
+expect fun sign(digest: ByteArray, key: ByteArray): ByteArray

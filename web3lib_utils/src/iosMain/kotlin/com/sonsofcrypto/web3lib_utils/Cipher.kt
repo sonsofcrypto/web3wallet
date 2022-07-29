@@ -21,14 +21,20 @@ actual fun aesCTRXOR(key: ByteArray, inText: ByteArray, iv: ByteArray): ByteArra
 }
 
 @Throws(Exception::class)
-actual fun aesCBCDecrypt(key: ByteArray, cipherText: ByteArray, iv: ByteArray): ByteArray {
-    val result: ByteArray = CoreCryptoAESCBCDecryptEmptyOnError(
+actual fun sign(digest: ByteArray, key: ByteArray): ByteArray {
+    val sig = CoreCryptoSignEmptyOnError(
+        digest.toDataFull(),
         key.toDataFull(),
-        cipherText.toDataFull(),
-        iv.toDataFull()
+        curveInt(Curve.SECP256K1)
     )!!.toByteArray()
-    if (result.isEmpty()) {
-        throw Exception("aesCBCDecrypt failed")
+    if (sig.isEmpty()) {
+        throw Exception("Failed to sign data")
     }
-    return result
+    return sig
+}
+
+private fun curveInt(curve: Curve): Long {
+    return when (curve) {
+        Curve.SECP256K1 -> CoreCryptoCurveSecp256k1
+    }
 }

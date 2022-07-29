@@ -29,6 +29,12 @@ rm -rf ./../web3lib_core/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framew
 rm -rf ./../web3lib_core/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
 rm -rf ./../web3lib_keyStore/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
 rm -rf ./../web3lib_keyStore/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
+rm -rf ./../web3lib_provider/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
+rm -rf ./../web3lib_provider/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
+rm -rf ./../web3lib_services/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
+rm -rf ./../web3lib_services/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
+rm -rf ./../web3lib_signer/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
+rm -rf ./../web3lib_signer/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
 rm -rf ./../web3lib/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
 rm -rf ./../web3lib/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
 
@@ -51,9 +57,25 @@ cp -r ./CoreCrypto.xcframework/ios-arm64_x86_64-simulator/CoreCrypto.framework \
   ./../web3lib_keyStore/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
 
 cp -r ./CoreCrypto.xcframework/ios-arm64/CoreCrypto.framework \
+  ./../web3lib_provider/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
+
+cp -r ./CoreCrypto.xcframework/ios-arm64_x86_64-simulator/CoreCrypto.framework \
+  ./../web3lib_provider/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
+
+cp -r ./CoreCrypto.xcframework/ios-arm64/CoreCrypto.framework \
+  ./../web3lib_services/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
+
+cp -r ./CoreCrypto.xcframework/ios-arm64_x86_64-simulator/CoreCrypto.framework \
+  ./../web3lib_services/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
+
+cp -r ./CoreCrypto.xcframework/ios-arm64/CoreCrypto.framework \
+  ./../web3lib_signer/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
+
+cp -r ./CoreCrypto.xcframework/ios-arm64_x86_64-simulator/CoreCrypto.framework \
+  ./../web3lib_signer/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
+
+cp -r ./CoreCrypto.xcframework/ios-arm64/CoreCrypto.framework \
   ./../web3lib/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
 
 cp -r ./CoreCrypto.xcframework/ios-arm64_x86_64-simulator/CoreCrypto.framework \
   ./../web3lib/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
-
-

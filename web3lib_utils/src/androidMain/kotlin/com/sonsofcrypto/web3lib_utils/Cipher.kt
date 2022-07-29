@@ -12,6 +12,12 @@ actual fun aesCTRXOR(key: ByteArray, inText: ByteArray, iv: ByteArray): ByteArra
 }
 
 @Throws(Exception::class)
-actual fun aesCBCDecrypt(key: ByteArray, cipherText: ByteArray, iv: ByteArray): ByteArray {
-    return CoreCrypto.aescbcDecrypt(key, cipherText, iv)
+actual fun sign(digest: ByteArray, key: ByteArray): ByteArray {
+    return CoreCrypto.sign(digest, key, curveInt(Curve.SECP256K1))
+}
+
+private fun curveInt(curve: Curve): Long {
+    return when (curve) {
+        Curve.SECP256K1 -> CoreCrypto.CurveSecp256k1
+    }
 }

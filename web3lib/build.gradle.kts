@@ -51,6 +51,7 @@ kotlin {
             export(project(":web3lib_core"))
             export(project(":web3lib_keyStore"))
             export(project(":web3lib_keyValueStore"))
+            export(project(":web3lib_provider"))
             xcf.add(this)
         }
     }
@@ -62,6 +63,9 @@ kotlin {
                 api(project(":web3lib_core"))
                 api(project(":web3lib_keyStore"))
                 api(project(":web3lib_keyValueStore"))
+                api(project(":web3lib_signer"))
+                api(project(":web3lib_provider"))
+                api(project(":web3lib_services"))
             }
         }
         val commonTest by getting {
@@ -71,6 +75,9 @@ kotlin {
                 implementation(project(":web3lib_core"))
                 implementation(project(":web3lib_keyStore"))
                 implementation(project(":web3lib_keyValueStore"))
+                implementation(project(":web3lib_signer"))
+                implementation(project(":web3lib_provider"))
+                implementation(project(":web3lib_services"))
             }
         }
         val androidMain by getting
