@@ -7,6 +7,7 @@ import UIKit
 enum ConfirmationWireframeDestination {
     
     case authenticate(AuthenticateContext)
+    case underConstruction
 }
 
 protocol ConfirmationWireframe {
@@ -20,17 +21,20 @@ final class DefaultConfirmationWireframe {
     private weak var presentingIn: UIViewController!
     private let context: ConfirmationWireframeContext
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
+    private let alertWireframeFactory: AlertWireframeFactory
     
     private weak var navigationController: UINavigationController!
     
     init(
         presentingIn: UIViewController,
         context: ConfirmationWireframeContext,
-        authenticateWireframeFactory: AuthenticateWireframeFactory
+        authenticateWireframeFactory: AuthenticateWireframeFactory,
+        alertWireframeFactory: AlertWireframeFactory
     ) {
         self.presentingIn = presentingIn
         self.context = context
         self.authenticateWireframeFactory = authenticateWireframeFactory
+        self.alertWireframeFactory = alertWireframeFactory
     }
 }
 
@@ -45,7 +49,7 @@ extension DefaultConfirmationWireframe: ConfirmationWireframe {
     func navigate(to destination: ConfirmationWireframeDestination) {
         
         switch destination {
-            
+
         case let .authenticate(context):
             
             guard let parent = navigationController.topViewController else { return }
@@ -55,6 +59,13 @@ extension DefaultConfirmationWireframe: ConfirmationWireframe {
                 context: context
             )
             wireframe.present()
+            
+        case .underConstruction:
+            
+            alertWireframeFactory.makeWireframe(
+                navigationController,
+                context: .underConstructionAlert()
+            ).present()
         }
     }
     

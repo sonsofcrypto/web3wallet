@@ -9,7 +9,8 @@ final class ConfirmationWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> ConfirmationWireframeFactory in
             
             DefaultConfirmationWireframeFactory(
-                authenticateWireframeFactory: resolver.resolve()
+                authenticateWireframeFactory: resolver.resolve(),
+                alertWireframeFactory: resolver.resolve()
             )
         }
     }

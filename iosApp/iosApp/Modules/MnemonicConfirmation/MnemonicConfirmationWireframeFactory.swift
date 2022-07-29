@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 protocol MnemonicConfirmationWireframeFactory {
 
@@ -13,13 +14,13 @@ protocol MnemonicConfirmationWireframeFactory {
 
 final class DefaultMnemonicConfirmationWireframeFactory {
     
-    private let accountService: AccountService
+    private let keyStoreService: KeyStoreService
     
     init(
-        accountService: AccountService
+        keyStoreService: KeyStoreService
     ) {
         
-        self.accountService = accountService
+        self.keyStoreService = keyStoreService
     }
 }
 
@@ -28,7 +29,7 @@ extension DefaultMnemonicConfirmationWireframeFactory: MnemonicConfirmationWiref
     func makeWireframe(_ parent: UIViewController) -> MnemonicConfirmationWireframe {
         
         let service = DefaultMnemonicConfirmationService(
-            accountService: accountService
+            keyStoreService: keyStoreService
         )
         
         return DefaultMnemonicConfirmationWireframe(

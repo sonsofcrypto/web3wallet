@@ -163,7 +163,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
             
             guard let fee = fees.first(where: { $0.rawValue == identifier }) else { return }
             self.fee = fee
-            updateToken(with: amount ?? 0, shouldUpdateTextFields: false)
+            updateCTA()
             
         case .feeTapped:
             
@@ -379,6 +379,8 @@ private extension DefaultTokenSendPresenter {
             buttonState = .ready
         } else if !isValidAddress {
             buttonState = .invalidDestination
+        } else if (amount ?? 0) == 0 {
+            buttonState = .insufficientFunds
         } else if (amount ?? 0) > token.balance {
             buttonState = .insufficientFunds
         } else if (amount ?? 0) == 0 {

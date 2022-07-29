@@ -26,7 +26,6 @@ private extension AssemblerBootstrapper {
             KeyStoreKeyValStoreServiceAssembler(),
             KeyStoreServiceAssembler(),
             KeyChainServiceAssembler(),
-            AccountServiceAssembler(),
             AppsServiceAssembler(),
             DegenServiceAssembler(),
             KeyStoreServiceAssembler(),

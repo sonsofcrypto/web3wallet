@@ -22,7 +22,6 @@
 		1A4C37074D8859F0DC14C905 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */; };
 		1A4C3735189D6616D915D851 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C309894247AA73F274756 /* TabBarController.swift */; };
 		1A4C373BF33DAF794F261056 /* CardFlipAnimatedTransitioning2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3649032759624C3E2734 /* CardFlipAnimatedTransitioning2.swift */; };
-		1A4C37AEF66358EA9CA0CA59 /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C388B9A42E6A279D2867F /* AccountService.swift */; };
 		1A4C38C98450A3C5884565AC /* CultProposal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C36ECC90C8D924B7C413B /* CultProposal.swift */; };
 		1A4C39EAC9477080E80A6C07 /* EdgeCardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3178DA54CD0800157DD5 /* EdgeCardsController.swift */; };
 		1A4C3A41389B5EC22F3B2B88 /* Authenticate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A4C39D6ADB830082AC3CEA6 /* Authenticate.storyboard */; };
@@ -303,8 +302,6 @@
 		1C6487232832E4BA0091A12D /* DefaultDegenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487222832E4BA0091A12D /* DefaultDegenService.swift */; };
 		1C6487252832E4D40091A12D /* DegenServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487242832E4D40091A12D /* DegenServiceAssembler.swift */; };
 		1C6487272832E5150091A12D /* DefaultAppsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487262832E5150091A12D /* DefaultAppsService.swift */; };
-		1C64872B2832E5570091A12D /* DefaultAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64872A2832E5570091A12D /* DefaultAccountService.swift */; };
-		1C64872D2832E5800091A12D /* AccountServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C64872C2832E5800091A12D /* AccountServiceAssembler.swift */; };
 		1C6487342832E64A0091A12D /* DefaultNFTsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487332832E64A0091A12D /* DefaultNFTsService.swift */; };
 		1C6487362832E6650091A12D /* NFTsServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487352832E6650091A12D /* NFTsServiceAssembler.swift */; };
 		1C6487382832E6BE0091A12D /* DefaultOnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487372832E6BE0091A12D /* DefaultOnboardingService.swift */; };
@@ -562,7 +559,6 @@
 		1A4C36ECC90C8D924B7C413B /* CultProposal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposal.swift; sourceTree = "<group>"; };
 		1A4C375870963EEF9ECBE64B /* DApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DApp.swift; sourceTree = "<group>"; };
 		1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsService.swift; sourceTree = "<group>"; };
-		1A4C388B9A42E6A279D2867F /* AccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
 		1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewEffectViewiOS14.swift; sourceTree = "<group>"; };
 		1A4C393772D3384C556C29C3 /* TransformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformView.swift; sourceTree = "<group>"; };
 		1A4C39798419CEB3807348FA /* Error+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error+Extensions.swift"; sourceTree = "<group>"; };
@@ -838,8 +834,6 @@
 		1C6487222832E4BA0091A12D /* DefaultDegenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDegenService.swift; sourceTree = "<group>"; };
 		1C6487242832E4D40091A12D /* DegenServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DegenServiceAssembler.swift; sourceTree = "<group>"; };
 		1C6487262832E5150091A12D /* DefaultAppsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAppsService.swift; sourceTree = "<group>"; };
-		1C64872A2832E5570091A12D /* DefaultAccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAccountService.swift; sourceTree = "<group>"; };
-		1C64872C2832E5800091A12D /* AccountServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountServiceAssembler.swift; sourceTree = "<group>"; };
 		1C6487332832E64A0091A12D /* DefaultNFTsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNFTsService.swift; sourceTree = "<group>"; };
 		1C6487352832E6650091A12D /* NFTsServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTsServiceAssembler.swift; sourceTree = "<group>"; };
 		1C6487372832E6BE0091A12D /* DefaultOnboardingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOnboardingService.swift; sourceTree = "<group>"; };
@@ -1090,16 +1084,6 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		1A4C34EBFC9FFA8EFBE7DCA7 /* Account */ = {
-			isa = PBXGroup;
-			children = (
-				1A4C388B9A42E6A279D2867F /* AccountService.swift */,
-				1C64872C2832E5800091A12D /* AccountServiceAssembler.swift */,
-				1C64872A2832E5570091A12D /* DefaultAccountService.swift */,
-			);
-			path = Account;
-			sourceTree = "<group>";
-		};
 		1A4C35A602BDFD544714CB8F /* NFTsService */ = {
 			isa = PBXGroup;
 			children = (
@@ -1167,7 +1151,6 @@
 		1A4C38B91F448C1E962685B3 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				1A4C34EBFC9FFA8EFBE7DCA7 /* Account */,
 				1A4C35BE139AFC345B42DE7F /* Apps */,
 				1CE66BC82848EA9000AB6ACA /* Chat */,
 				D1BC5304284B5B8E007E6FF4 /* CultService */,
@@ -2651,7 +2634,6 @@
 				1C6487432832E7EA0091A12D /* SettingsServiceAssembler.swift in Sources */,
 				D1EF5BCE287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift in Sources */,
 				1C54DC132862351100E378F6 /* QRCodeScanView.swift in Sources */,
-				1C64872D2832E5800091A12D /* AccountServiceAssembler.swift in Sources */,
 				1C0643DA2892FCC300643C15 /* FeaturesView.swift in Sources */,
 				1C54DBED285E834200E378F6 /* TokenAddInteractor.swift in Sources */,
 				1C60C2BD285724D0003BE25D /* ButtonsSheetViewModel.swift in Sources */,
@@ -2775,7 +2757,6 @@
 				1C60C31A285724D1003BE25D /* AccountView.swift in Sources */,
 				1CB3A1CD2840D50C0092D667 /* DefaultNFTsService+Data.swift in Sources */,
 				1C64875F2832EF450091A12D /* UIBootstrapper.swift in Sources */,
-				1C64872B2832E5570091A12D /* DefaultAccountService.swift in Sources */,
 				1CB3A1F02840D6B70092D667 /* UIStoryboard+Extensions.swift in Sources */,
 				1C60C2F4285724D0003BE25D /* NFTDetailView+Content+Description.swift in Sources */,
 				1C60C2E5285724D0003BE25D /* AnimatedTextButton.swift in Sources */,
@@ -2832,7 +2813,6 @@
 				1C60C2F9285724D0003BE25D /* NFTDetailPresenter.swift in Sources */,
 				1CB3A1EE2840D6B70092D667 /* Formatter+Extensions.swift in Sources */,
 				1C60C2FD285724D0003BE25D /* NFTDetailView+Shared.swift in Sources */,
-				1A4C37AEF66358EA9CA0CA59 /* AccountService.swift in Sources */,
 				1CB8B0A9288AA3B600024E7C /* DgenCellBackgroundSupplementaryView.swift in Sources */,
 				1C60C349285724D1003BE25D /* CultProposalViewModel.swift in Sources */,
 				1C60C38C285B9F71003BE25D /* PriceHistoryService.swift in Sources */,
@@ -3224,7 +3204,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = L4HD966EQA;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3264,7 +3244,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = L4HD966EQA;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;

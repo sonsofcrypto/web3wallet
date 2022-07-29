@@ -73,6 +73,7 @@ final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
         loadingIndicator.isHidden = false
         loadingIndicator.startAnimating()
         imageView.isHidden = true
+        setButtonLoading(to: true)
     }
 }
 
@@ -137,9 +138,14 @@ extension TokenSwapMarketCollectionViewCell {
                 ),
                 for: .normal
             )
-            
-        case .insufficientFunds:
+        case let .insufficientFunds(providerIconName):
             button.setTitle(Localized("insufficientFunds"), for: .normal)
+            button.setImage(
+                providerIconName.assetImage?.resize(
+                    to: .init(width: 24, height: 24)
+                ),
+                for: .normal
+            )
         }
     }
 }
@@ -151,6 +157,7 @@ private extension TokenSwapMarketCollectionViewCell {
         loadingIndicator.stopAnimating()
         loadingIndicator.isHidden = true
         imageView.isHidden = false
+        setButtonLoading(to: false)
     }
     
     @objc func flip() {
@@ -161,5 +168,15 @@ private extension TokenSwapMarketCollectionViewCell {
     @objc func buttonTapped() {
         
         handler.onCTATapped()
+    }
+    
+    func setButtonLoading(to loading: Bool) {
+        
+        var configuration = button.configuration ?? .plain()
+        configuration.imagePlacement = .trailing
+        configuration.showsActivityIndicator = loading
+        button.configuration = configuration
+        button.updateConfiguration()
+
     }
 }

@@ -47,9 +47,19 @@ extension DefaultConfirmationPresenter: ConfirmationPresenter {
             
         case .confirm:
             
-            wireframe.navigate(
-                to: .authenticate(makeAuthenticateContext())
-            )
+            switch context.type {
+                
+            case .send:
+                
+                wireframe.navigate(
+                    to: .authenticate(makeAuthenticateContext())
+                )
+                
+            case .swap:
+                
+                wireframe.navigate(to: .underConstruction)
+            }
+            
             
         case .dismiss:
             
