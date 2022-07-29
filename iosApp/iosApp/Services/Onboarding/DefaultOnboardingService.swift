@@ -85,7 +85,7 @@ private extension DefaultOnboardingService {
             derivationPath: derivationPath(),
             addresses: addresses()
         )
-        let password = try CipherKt.secureRand(size: 32).toHexString()
+        let password = try CipherKt.secureRand(size: 32).toHexString(prefix: false)
         let secretStorage = SecretStorage.companion.encryptDefault(
             id: keyStoreItem.uuid,
             data: extKey.key,
@@ -119,7 +119,7 @@ private extension DefaultOnboardingService {
 
     // TODO: Derive address for key
     func address(_ extKey: ExtKey) -> String {
-        extKey.pub().toHexString()
+        extKey.pub().toHexString(prefix:false)
     }
 
     // TODO: Derive addresses

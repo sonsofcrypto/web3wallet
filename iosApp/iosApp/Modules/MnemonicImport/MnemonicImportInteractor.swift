@@ -136,7 +136,7 @@ extension DefaultMnemonicImportInteractor: MnemonicImportInteractor {
     func generatePassword() -> String {
         let password = try! CipherKt.secureRand(size: 32)
         return String(data: password.toDataFull(), encoding: .ascii)
-            ?? password.toHexString()
+            ?? password.toHexString(prefix: false)
     }
 }
 
@@ -163,7 +163,7 @@ private extension DefaultMnemonicImportInteractor {
 
     // TODO: Derive address for key
     func address(_ extKey: ExtKey) -> String {
-        extKey.pub().toHexString()
+        extKey.pub().toHexString(prefix: false)
     }
 
     // TODO: Derive addresses

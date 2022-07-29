@@ -73,9 +73,9 @@ class ProviderPocket: ProviderJsonRpc {
 
             /** Only used for development */
             fun default(): ApiKeys = ApiKeys(
-                portalId = "62d4f62bb37b8e0039315bfa",
-                secretKey = "a3f174d6b84aca701f065f9b60366dcf",
-                publicKey = "972457802d6b4b7945c9797295507884112ad1161d2797f4a4cdcd28da2b987f"
+                portalId = "",
+                secretKey = "",
+                publicKey = ""
             )
         }
     }
