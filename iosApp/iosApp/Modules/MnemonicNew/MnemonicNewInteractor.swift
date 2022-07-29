@@ -165,7 +165,7 @@ private extension DefaultMnemonicNewInteractor {
 
     // TODO: Derive address for key
     func address(_ extKey: ExtKey) -> String {
-        extKey.pub().toHexString(prefix: <#Bool#>)
+        extKey.pub().toHexString(prefix: false)
     }
 
     // TODO: Derive addresses
