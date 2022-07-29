@@ -29,11 +29,18 @@ class DefaultWeb3Service: Web3Service {
         set(value) {
             field = value
             networks = this.defaultNetworks(value)
+            network = this.defaultSelectedNetwork(value)
+
         }
 
     override var network: Network? = null
 
-    private var networks: List<Network> = mutableListOf()
+    private var networks: List<Network> = listOf()
+        set(value) {
+            field = value
+            updateProviders(value)
+        }
+
     private var providers: MutableMap<Network, Provider> = mutableMapOf()
     private var store: KeyValueStore
 
@@ -61,6 +68,13 @@ class DefaultWeb3Service: Web3Service {
         } else providers.remove(network)
     }
 
+
+    private fun updateProviders(networks: List<Network>) {
+        networks.forEach {
+            setProvider(it, ProviderPocket(it))
+        }
+    }
+
     private fun defaultNetworks(wallet: Wallet?): List<Network> {
         if (wallet == null) return listOf()
 
@@ -73,7 +87,18 @@ class DefaultWeb3Service: Web3Service {
         )
     }
 
+    private fun defaultSelectedNetwork(wallet: Wallet?): Network? {
+        if (wallet != null) {
+            return store[selectedNetworkKey(wallet)] ?: networks.first()
+        }
+        return null
+    }
+
     private fun defaultProvider(network: Network): Provider {
         return ProviderPocket(network)
+    }
+
+    private fun selectedNetworkKey(wallet: Wallet): String {
+        return "last_selected_network" + wallet.id()
     }
 }
