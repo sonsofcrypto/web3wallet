@@ -1,10 +1,9 @@
 package com.sonsofcrypto.web3wallet.android
 
 import android.content.Context
-import com.sonsofcrypto.web3lib_services.GoinGecko.CoinGeckoService
-import com.sonsofcrypto.web3lib_services.GoinGecko.DefaultCoinGeckoService
-import com.sonsofcrypto.web3lib_services.GoinGecko.model.Coin
-import com.sonsofcrypto.web3lib_services.GoinGecko.model.Market
+import com.sonsofcrypto.web3lib.services.coinGecko.DefaultCoinGeckoService
+import com.sonsofcrypto.web3lib.services.coinGecko.model.Coin
+import com.sonsofcrypto.web3lib.services.coinGecko.model.Market
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable

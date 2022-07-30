@@ -19,6 +19,7 @@ allprojects {
     ext["coroutines_version"] = "1.6.0-native-mt"
     ext["ktor_version"] = "2.0.3"
     ext["bignum_version"] = "0.3.6"
+    ext["datetime_version"] = "0.4.0"
     repositories {
         google()
         mavenCentral()

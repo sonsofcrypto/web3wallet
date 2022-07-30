@@ -223,7 +223,6 @@ private extension DefaultMnemonicImportPresenter {
         if let err = error as? MnemonicImportInteractorError, err == .invalidWordCount,
             interactor.mnemonic.count > 12 {
         }
-        print("=== returnig", error.localizedDescription)
         return error.localizedDescription
     }
 }

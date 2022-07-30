@@ -1,12 +1,9 @@
 package com.sonsofcrypto.web3wallet.android
 
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.sonsofcrypto.web3lib_utils.*
-import com.sonsofcrypto.web3lib_core.*
+import com.sonsofcrypto.web3lib.utils.*
 import android.widget.TextView
-import com.sonsofcrypto.keyvaluestore.KeyValueStore
 
 
 class MainActivity : AppCompatActivity() {

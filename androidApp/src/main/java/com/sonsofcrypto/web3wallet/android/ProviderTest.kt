@@ -1,10 +1,15 @@
 package com.sonsofcrypto.web3wallet.android
 
-import com.sonsofcrypto.web3lib_core.*
-import com.sonsofcrypto.web3lib_provider.*
-import com.sonsofcrypto.web3lib_provider.Provider
-import com.sonsofcrypto.web3lib_provider.model.BlockTag
-import com.sonsofcrypto.web3lib_utils.*
+import com.sonsofcrypto.web3lib.provider.JsonRpcErrorResponse
+import com.sonsofcrypto.web3lib.types.*
+import com.sonsofcrypto.web3lib.provider.*
+import com.sonsofcrypto.web3lib.provider.model.*
+import com.sonsofcrypto.web3lib.provider.utils.*
+import com.sonsofcrypto.web3lib.provider.model.BlockTag
+import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
+import com.sonsofcrypto.web3lib.utils.*
+import com.sonsofcrypto.web3lib.utils.bip39.Bip39
+import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import kotlinx.coroutines.*
 import kotlinx.serialization.json.Json
 import java.lang.Exception

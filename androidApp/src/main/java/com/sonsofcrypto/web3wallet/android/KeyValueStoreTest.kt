@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3wallet.android
 
 import androidx.annotation.Keep
-import com.sonsofcrypto.keyvaluestore.KeyValueStore
+import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import kotlinx.serialization.*
 import java.lang.Exception
 

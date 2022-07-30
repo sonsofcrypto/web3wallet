@@ -3,6 +3,7 @@ import java.io.File
 
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization")
     id("com.android.library")
 }
 
@@ -47,13 +48,6 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "web3lib"
-            export(project(":web3lib_utils"))
-            export(project(":web3lib_core"))
-            export(project(":web3lib_keyStore"))
-            export(project(":web3lib_keyValueStore"))
-            export(project(":web3lib_signer"))
-            export(project(":web3lib_provider"))
-            export(project(":web3lib_services"))
             xcf.add(this)
         }
     }
@@ -61,28 +55,34 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(project(":web3lib_utils"))
-                api(project(":web3lib_core"))
-                api(project(":web3lib_keyStore"))
-                api(project(":web3lib_keyValueStore"))
-                api(project(":web3lib_signer"))
-                api(project(":web3lib_provider"))
-                api(project(":web3lib_services"))
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${rootProject.ext["serialization_version"]}")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${rootProject.ext["serialization_version"]}")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:${rootProject.ext["serialization_version"]}")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.ext["coroutines_version"]}") {
+                    version {
+                        strictly("${rootProject.ext["coroutines_version"]}")
+                    }
+                }
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:${rootProject.ext["datetime_version"]}")
+                implementation("com.ionspin.kotlin:bignum:${rootProject.ext["bignum_version"]}")
+                implementation("com.russhwolf:multiplatform-settings:${rootProject.ext["settings_version"]}")
+                implementation("io.ktor:ktor-client-core:${rootProject.ext["ktor_version"]}")
+                implementation("io.ktor:ktor-client-logging:${rootProject.ext["ktor_version"]}")
+                implementation("io.ktor:ktor-client-content-negotiation:${rootProject.ext["ktor_version"]}")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:${rootProject.ext["ktor_version"]}")
+                implementation("io.ktor:ktor-client-auth:${rootProject.ext["ktor_version"]}")
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                implementation(project(":web3lib_utils"))
-                implementation(project(":web3lib_core"))
-                implementation(project(":web3lib_keyStore"))
-                implementation(project(":web3lib_keyValueStore"))
-                implementation(project(":web3lib_signer"))
-                implementation(project(":web3lib_provider"))
-                implementation(project(":web3lib_services"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(files("./src/androidMain/libs/CoreCrypto.aar"))
+            }
+        }
         val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
@@ -116,4 +116,10 @@ android {
         minSdk = 29
         targetSdk = 32
     }
+}
+
+dependencies {
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${rootProject.ext["serialization_version"]}")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${rootProject.ext["serialization_version"]}")
+    implementation("com.russhwolf:multiplatform-settings:${rootProject.ext["settings_version"]}")
 }

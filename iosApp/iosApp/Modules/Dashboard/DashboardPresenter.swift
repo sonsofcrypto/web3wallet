@@ -133,7 +133,6 @@ extension DefaultDashboardPresenter: DashboardPresenter {
 extension DefaultDashboardPresenter: DashboardInteractorLister {
 
     func handle(_ event: DashboardInteractorEvent) {
-        print("=== event recieved", event)
         updateView()
     }
 }

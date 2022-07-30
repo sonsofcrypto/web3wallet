@@ -58,6 +58,10 @@ extension DefaultNetworksPresenter: NetworksPresenter, NetworkInteractorLister {
         case let .didSwitchNetwork(chainId, isOn):
             if let network = network(chainId) {
                 interactor.set(network, enabled: isOn)
+                print("=== did set on chainId \(chainId) \(isOn)")
+                print("=== we have \(network)")
+                print("=== viewModel \(networkViewModel(network).connected)")
+
             }
         case let .didSelectNetwork(chainId):
             if let network = network(chainId) {
@@ -65,6 +69,7 @@ extension DefaultNetworksPresenter: NetworksPresenter, NetworkInteractorLister {
             }
             wireframe.navigate(to: .dashboard)
         }
+        view?.update(with: viewModel())
     }
 
     func handle(_ event: Web3ServiceEvent) {

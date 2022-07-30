@@ -1,9 +1,9 @@
 package com.sonsofcrypto.web3wallet.android
 
-import com.sonsofcrypto.web3lib_utils.Trie
-import com.sonsofcrypto.web3lib_utils.WordList
-import com.sonsofcrypto.web3lib_utils.toHexString
-import com.sonsofcrypto.web3lib_utils.words
+import com.sonsofcrypto.web3lib.utils.Trie
+import com.sonsofcrypto.web3lib.utils.bip39.WordList
+import com.sonsofcrypto.web3lib.utils.bip39.words
+import com.sonsofcrypto.web3lib.utils.toHexString
 import kotlinx.serialization.encodeToByteArray
 import kotlinx.serialization.protobuf.ProtoBuf
 import java.lang.Exception

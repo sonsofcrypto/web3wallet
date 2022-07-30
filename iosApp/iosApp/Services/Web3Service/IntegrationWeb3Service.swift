@@ -32,7 +32,6 @@ final class IntegrationWeb3Service {
         web3service: Web3Service,
         defaults: UserDefaults = .standard
     ) {
-        print("=== started")
         self.web3service = web3service
         self.defaults = defaults
         

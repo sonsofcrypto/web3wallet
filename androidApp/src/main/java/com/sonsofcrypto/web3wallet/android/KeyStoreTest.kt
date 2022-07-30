@@ -1,9 +1,9 @@
 package com.sonsofcrypto.web3wallet.android
 
-import com.sonsofcrypto.keyvaluestore.KeyValueStore
-import com.sonsofcrypto.web3lib_keystore.*
-import com.sonsofcrypto.web3lib_utils.secureRand
-import com.sonsofcrypto.web3lib_utils.toHexString
+import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
+import com.sonsofcrypto.web3lib.services.keyStore.*
+import com.sonsofcrypto.web3lib.utils.secureRand
+import com.sonsofcrypto.web3lib.utils.toHexString
 import java.lang.Exception
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json

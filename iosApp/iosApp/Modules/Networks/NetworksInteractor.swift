@@ -62,11 +62,14 @@ extension DefaultNetworksInteractor: NetworksInteractor {
     }
 
     func isEnabled(_ network: Network) -> Bool {
-        web3service.enabledNetworks().contains(network)
+        let result = web3service.enabledNetworks().contains(network)
+        print("is enabled", network.chainId, result)
+        return result
     }
 
     func set(_ network: Network, enabled: Bool) {
         web3service.setNetwork(network: network, enabled: enabled)
+        print("=== web3service", web3service.enabledNetworks().map { $0.chainId } )
     }
 }
 
