@@ -81,6 +81,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(files("./src/androidMain/libs/CoreCrypto.aar"))
+                implementation("io.ktor:ktor-client-okhttp:${rootProject.ext["ktor_version"]}")
             }
         }
         val androidTest by getting
@@ -92,6 +93,9 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation("io.ktor:ktor-client-darwin:${rootProject.ext["ktor_version"]}")
+            }
         }
         val iosX64Test by getting {
 
