@@ -36,25 +36,11 @@ extension CultProposalsViewModel {
         
         let id: String
         let title: String
-        let approved: Vote
-        let rejected: Vote
+        let approved: ProposalVoteView.ViewModel
+        let rejected: ProposalVoteView.ViewModel
         let approveButtonTitle: String
         let rejectButtonTitle: String
         let endDate: Date
-        
-        struct Vote {
-            
-            let name: String
-            let value: Double
-            let total: Double
-            let type: `Type`
-            
-            enum `Type` {
-                
-                case approved
-                case rejected
-            }
-        }
     }
 }
 

@@ -3,7 +3,6 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -52,28 +51,28 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" placeholderIntrinsicWidth="343" placeholderIntrinsicHeight="15.666666666666671" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="frE-mH-NxF">
-                                                            <rect key="frame" x="0.0" y="80.5" width="343" height="15.5"/>
+                                                            <rect key="frame" x="0.0" y="80.5" width="343" height="3.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="7II-i7-8uf">
-                                                            <rect key="frame" x="15.5" y="50" width="312" height="72"/>
+                                                            <rect key="frame" x="0.0" y="100" width="343" height="72"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ywh-EX-shd" customClass="CustomVerticalButton" customModule="iosApp" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="72"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="74" height="72"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </view>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4YI-Qp-GcI" customClass="CustomVerticalButton" customModule="iosApp" customModuleProvider="target">
-                                                                    <rect key="frame" x="116" y="0.0" width="80" height="72"/>
+                                                                    <rect key="frame" x="90" y="0.0" width="73.5" height="72"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </view>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lwx-vg-7Y2" customClass="CustomVerticalButton" customModule="iosApp" customModuleProvider="target">
-                                                                    <rect key="frame" x="116" y="0.0" width="80" height="72"/>
+                                                                    <rect key="frame" x="179.5" y="0.0" width="74" height="72"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </view>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OR9-vr-mIX" customClass="CustomVerticalButton" customModule="iosApp" customModuleProvider="target">
-                                                                    <rect key="frame" x="116" y="0.0" width="80" height="72"/>
+                                                                    <rect key="frame" x="269.5" y="0.0" width="73.5" height="72"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </view>
                                                             </subviews>
@@ -330,14 +329,6 @@
                             <constraint firstAttribute="bottom" secondItem="Vbu-A3-ojv" secondAttribute="bottom" id="Wp1-Q4-cwB"/>
                             <constraint firstItem="Vbu-A3-ojv" firstAttribute="top" secondItem="dSa-E0-Gsz" secondAttribute="top" id="oPY-ve-Hyv"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="defaultTopColor">
-                                <color key="value" name="bgGradientTop"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="color" keyPath="defaultBottomColor">
-                                <color key="value" name="bgGradientBottom"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="Vbu-A3-ojv" id="DHr-PH-mn0"/>
@@ -350,12 +341,6 @@
     </scenes>
     <resources>
         <image name="arrow_cell_forward" width="9" height="15"/>
-        <namedColor name="bgGradientBottom">
-            <color red="0.075000002980232239" green="0.043000001460313797" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="bgGradientTop">
-            <color red="0.1289999932050705" green="0.11800000071525574" blue="0.23899999260902405" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

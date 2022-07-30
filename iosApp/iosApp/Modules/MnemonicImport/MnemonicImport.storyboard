@@ -3,7 +3,6 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -371,14 +370,6 @@
                             <constraint firstItem="qxm-99-VhP" firstAttribute="trailing" secondItem="TOp-SW-Pkz" secondAttribute="trailing" constant="16" id="gJ8-kn-EVy"/>
                             <constraint firstItem="RC7-Mo-ain" firstAttribute="top" secondItem="sR2-sg-55A" secondAttribute="top" id="oQg-nh-Km7"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="color" keyPath="defaultTopColor">
-                                <color key="value" name="bgGradientTop"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="color" keyPath="defaultBottomColor">
-                                <color key="value" name="bgGradientBottom"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </view>
                     <navigationItem key="navigationItem" title="networks" id="COM-Iv-UoN"/>
                     <connections>
@@ -392,12 +383,6 @@
         </scene>
     </scenes>
     <resources>
-        <namedColor name="bgGradientBottom">
-            <color red="0.32899999618530273" green="0.32400000095367432" blue="0.4779999852180481" alpha="0.33000001311302185" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="bgGradientTop">
-            <color red="0.32899999618530273" green="0.32400000095367432" blue="0.4779999852180481" alpha="0.33000001311302185" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

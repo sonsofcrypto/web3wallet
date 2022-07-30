@@ -248,6 +248,18 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
             )
         )
         
+        notifications.append(
+            .init(
+                id: "3",
+                image: makeSecurityImageData(letter: "f"),
+                title: "App Features",
+                body: "Your opinion matters to us",
+                deepLink: "modal.features",
+                canDismiss: false,
+                order: 2
+            )
+        )
+        
         return notifications
     }
     

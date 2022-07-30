@@ -288,3 +288,9 @@
 "cult.proposal.tokenomics.projectEthWallet" = "Project Ethereum Wallet";
 "cult.proposal.parsing.rewardDistribution.per" = "per";
 "cult.proposal.parsing.cultRewardAllocation" = "%@% of Total Supply";
+
+"features.title" = "Upcoming Features";
+"features.segmentedControl.all" = "All";
+"features.segmentedControl.infrastructure" = "Infrastructure";
+"features.segmentedControl.integrations" = "Integrations";
+"features.segmentedControl.features" = "Features";

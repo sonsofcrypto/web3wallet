@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class CultProposalStatus: UIView {
+final class ProposalStatus: UIView {
     
     private (set) weak var label: UILabel!
     

@@ -7,14 +7,14 @@ import UIKit
 final class CultProposalCellPending: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var approvedVoteView: CultProposalVoteView!
+    @IBOutlet weak var approvedVoteView: ProposalVoteView!
     @IBOutlet weak var approvedVotes: UILabel!
-    @IBOutlet weak var rejectedVoteView: CultProposalVoteView!
+    @IBOutlet weak var rejectedVoteView: ProposalVoteView!
     @IBOutlet weak var rejectedVotes: UILabel!
     @IBOutlet weak var chevronImageView: UIImageView!
     @IBOutlet weak var approveButton: Button!
     @IBOutlet weak var rejectButton: Button!
-    private weak var statusView: CultProposalStatus!
+    private weak var statusView: ProposalStatus!
 
     private var timer: Timer? = nil
     private var date: Date = .distantPast
@@ -45,7 +45,7 @@ final class CultProposalCellPending: CollectionViewCell {
         
         clipsToBounds = false
         
-        let statusView = CultProposalStatus()
+        let statusView = ProposalStatus()
         statusView.backgroundColor = Theme.colour.navBarTint
         addSubview(statusView)
         self.statusView = statusView

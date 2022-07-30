@@ -7,13 +7,13 @@ import UIKit
 
 final class CultProposalDetailStatusView: UIView {
     
-    private weak var statusView: CultProposalStatus!
+    private weak var statusView: ProposalStatus!
     
     override func awakeFromNib() {
         
         super.awakeFromNib()
         
-        let statusView = CultProposalStatus()
+        let statusView = ProposalStatus()
         statusView.backgroundColor = Theme.colour.separatorWithTransparency
         statusView.label.apply(style: .headline)
         addSubview(statusView)

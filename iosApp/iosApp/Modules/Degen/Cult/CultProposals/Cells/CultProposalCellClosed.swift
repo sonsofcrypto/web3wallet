@@ -7,14 +7,14 @@ import UIKit
 final class CultProposalCellClosed: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var approvedVoteView: CultProposalVoteView!
+    @IBOutlet weak var approvedVoteView: ProposalVoteView!
     @IBOutlet weak var approvedVotes: UILabel!
-    @IBOutlet weak var rejectedVoteView: CultProposalVoteView!
+    @IBOutlet weak var rejectedVoteView: ProposalVoteView!
     @IBOutlet weak var rejectedVotes: UILabel!
     @IBOutlet weak var chevronImageView: UIImageView!
     @IBOutlet weak var result1Label: UILabel!
     @IBOutlet weak var result2Label: UILabel!
-    private weak var statusView: CultProposalStatus!
+    private weak var statusView: ProposalStatus!
 
     private var viewModel: CultProposalsViewModel.Item!
     
@@ -34,7 +34,7 @@ final class CultProposalCellClosed: CollectionViewCell {
         result1Label.apply(style: .callout, weight: .bold)
         result2Label.apply(style: .callout)
         
-        let statusView = CultProposalStatus()
+        let statusView = ProposalStatus()
         statusView.backgroundColor = Theme.colour.separatorNoTransparency
         addSubview(statusView)
         self.statusView = statusView
