@@ -9,30 +9,22 @@ private let serviceKeyValueStore = "serviceKeyValueStore"
 private let currenciesKeyValueStore = "currenciesKeyValueStore"
 
 final class IntegrationWeb3Service {
-    
+
     let web3service: Web3Service
 
+    private let currenciesService: CurrenciesService
     private let defaults: UserDefaults
-    private var supported: [Web3Token] = []
 
+    private var supported: [Web3Token] = []
     private var listeners: [Web3ServiceWalletListener] = []
-    
-    private var currenciesService: CurrenciesService? {
-        guard let wallet = web3service.wallet else {
-            return nil
-        }
-        let service = DefaultCurrenciesService(
-            wallet: wallet,
-            store: KeyValueStore(name: currenciesKeyValueStore)
-        )
-        return service
-    }
-    
+
     init(
         web3service: Web3Service,
+        currenciesService: CurrenciesService,
         defaults: UserDefaults = .standard
     ) {
         self.web3service = web3service
+        self.currenciesService = currenciesService
         self.defaults = defaults
         
         // TODO: @Annon implement
@@ -56,8 +48,8 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
     }
     
     var allTokens: [Web3Token] {
-
-        guard let currenciesService = currenciesService else {
+        guard let wallet = web3service.wallet,
+              let network = web3service.network else {
             return []
         }
         
@@ -74,7 +66,10 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
                 Web3Token.from(
                     currency: $0,
                     network: network,
-                    inWallet: currenciesService.currencies(network: web3LibNetwork).contains($0)
+                    inWallet: currenciesService.currencies(
+                        wallet: wallet,
+                        network: web3LibNetwork
+                    ).contains($0)
                 )
             }
         }
@@ -83,25 +78,25 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
     }
 
     var myTokens: [Web3Token] {
-        guard let currenciesService = currenciesService else {
-            print("=== Web3Token no currenciesService")
+        guard let wallet = web3service.wallet,
+              let network = web3service.network else {
             return []
         }
-        
-        let web3LibNetwork: web3lib.Network = web3service.network
-            ?? Network.Companion().ethereum()
-        
+
         let web3network: Web3Network = Web3Network.from(
-            web3LibNetwork,
-            isOn: web3service.enabledNetworks().contains(web3LibNetwork)
+            network,
+            isOn: web3service.enabledNetworks().contains(network)
         )
 
-        let network = web3network.toNetwork()
+        let defaults = UserDefaults(suiteName: "Web3libDefaultCurrenciesService")
+        print("=== defaults", defaults?.string(forKey: wallet.id() + "-" + network.id()))
 
-        print("===", network)
+        let currencies = currenciesService.currencies(
+            wallet: wallet,
+            network: network
+        )
 
-        let currencies = currenciesService.currencies(network: network)
-        print("=== Web3Token", currencies.count)
+        print("=== currencies", currencies)
 
         return currencies.map {
             Web3Token.from(
@@ -113,7 +108,7 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
     }
     
     func storeMyTokens(to tokens: [Web3Token]) {
-        guard let currenciesService = currenciesService else {
+        guard let wallet = web3service.wallet else {
             return
         }
         
@@ -121,6 +116,7 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
             .forEach {
                 currenciesService.remove(
                     currency: $0.toCurrency(),
+                    wallet: wallet,
                     network: web3service.network!
                 )
             }
@@ -129,6 +125,7 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
             .forEach {
                 currenciesService.add(
                     currency: $0.toCurrency(),
+                    wallet: wallet,
                     network: web3service.network!
                 )
             }

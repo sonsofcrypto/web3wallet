@@ -12,7 +12,8 @@ final class Web3ServiceLegacyAssembler: AssemblerComponent {
 //                web3ServiceLocalStorage: resolver.resolve()
 //            )
             IntegrationWeb3Service(
-                web3service: resolver.resolve()
+                web3service: resolver.resolve(),
+                currenciesService: resolver.resolve()
             )
         }
     }

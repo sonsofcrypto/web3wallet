@@ -101,8 +101,12 @@ extension DefaultNetworksInteractor: Web3ServiceListener {
 
     func handle(event: Web3ServiceEvent) {
         if let network = (event as? Web3ServiceEvent.NetworkSelected)?.network,
-            currenciesService.currencies(network: network).isEmpty {
-                currenciesService.generateDefaultCurrencies(network: network)
+           let wallet = web3service.wallet,
+           currenciesService.currencies(wallet: wallet, network: network).isEmpty {
+                currenciesService.generateDefaultCurrenciesIfNeeded(
+                    wallet: wallet,
+                    network: network
+                )
         }
 
         emit(event)

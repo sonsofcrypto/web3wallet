@@ -11,6 +11,7 @@ import com.sonsofcrypto.web3lib.signer.Wallet
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlin.native.concurrent.SharedImmutable
 
 interface CurrenciesService {
     fun currencies(wallet: Wallet, network: Network): List<Currency>
@@ -72,16 +73,29 @@ class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
     }
 
     private fun setCurrencies(key: String, currencies: List<Currency>) {
-        store[key] = Json.encodeToString(currencies)
+        store[key] = currenciesJson.encodeToString(currencies)
     }
 
     private fun getCurrencies(key: String): List<Currency>? {
-        return store.get<String>(key)?.let{
-            Json.decodeFromString(it)
+        return store.get<String>(key)?.let {
+            return currenciesJson.decodeFromString<List<Currency>>(it)
         }
     }
 
     private fun id(wallet: Wallet, network: Network): String {
-        return wallet.id() + network.id()
+        return wallet.id() + "-" + network.id()
     }
+}
+
+@SharedImmutable
+private val currenciesJson = Json {
+    encodeDefaults = true
+    isLenient = true
+    ignoreUnknownKeys = true
+    coerceInputValues = true
+    allowStructuredMapKeys = true
+    useAlternativeNames = false
+    prettyPrint = false
+    useArrayPolymorphism = true
+    explicitNulls = true
 }

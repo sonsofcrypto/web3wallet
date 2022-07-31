@@ -9,7 +9,11 @@ final class CurrenciesServiceAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .singleton) { _ -> CurrenciesService in
-            DefaultCurrenciesService(store: "\(DefaultCurrenciesService.self)")
+            DefaultCurrenciesService(
+                store: KeyValueStore(
+                    name: "\(DefaultCurrenciesService.self)"
+                )
+            )
         }
     }
 }
