@@ -32,17 +32,17 @@ final class DefaultNetworksInteractor {
 
     private let web3service: Web3Service
     private let currencyMetadataService: CurrencyMetadataService
+    private let currenciesService: CurrenciesService
     private var listeners: [WeakContainer] = []
-    private var web3ServiceLegacy: Web3ServiceLegacy
 
     init(
         _ web3service: Web3Service,
-        currencyMetadataService: CurrencyMetadataService,
-        web3ServiceLegacy: Web3ServiceLegacy
+        currenciesService: CurrenciesService,
+        currencyMetadataService: CurrencyMetadataService
     ) {
         self.web3service = web3service
+        self.currenciesService = currenciesService
         self.currencyMetadataService = currencyMetadataService
-        self.web3ServiceLegacy = web3ServiceLegacy
     }
 }
 
@@ -100,6 +100,11 @@ extension DefaultNetworksInteractor: Web3ServiceListener {
     }
 
     func handle(event: Web3ServiceEvent) {
+        if let network = (event as? Web3ServiceEvent.NetworkSelected)?.network,
+            currenciesService.currencies(network: network).isEmpty {
+                currenciesService.generateDefaultCurrencies(network: network)
+        }
+
         emit(event)
     }
 

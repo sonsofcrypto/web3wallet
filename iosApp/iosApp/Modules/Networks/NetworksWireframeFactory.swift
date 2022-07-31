@@ -14,19 +14,19 @@ final class DefaultNetworksWireframeFactory {
 
     private let alertWireframeFactory: AlertWireframeFactory
     private let web3Service: Web3Service
+    private let currenciesService: CurrenciesService
     private let currencyMetadataService: CurrencyMetadataService
-    private let web3ServiceLegacy: Web3ServiceLegacy
 
     init(
         alertWireframeFactory: AlertWireframeFactory,
         web3Service: Web3Service,
-        currencyMetadataService: CurrencyMetadataService,
-        web3ServiceLegacy: Web3ServiceLegacy
+        currenciesService: CurrenciesService,
+        currencyMetadataService: CurrencyMetadataService
     ) {
         self.alertWireframeFactory = alertWireframeFactory
         self.web3Service = web3Service
+        self.currenciesService = currenciesService
         self.currencyMetadataService = currencyMetadataService
-        self.web3ServiceLegacy = web3ServiceLegacy
     }
 }
 
@@ -37,8 +37,8 @@ extension DefaultNetworksWireframeFactory: NetworksWireframeFactory {
         DefaultNetworksWireframe(
             parent: parent,
             web3Service: web3Service,
+            currenciesService: currenciesService,
             currencyMetadataService: currencyMetadataService,
-            web3ServiceLegacy: web3ServiceLegacy,
             alertWireframeFactory: alertWireframeFactory
         )
     }
@@ -53,8 +53,8 @@ final class NetworksWireframeFactoryAssembler: AssemblerComponent {
             DefaultNetworksWireframeFactory(
                 alertWireframeFactory: resolver.resolve(),
                 web3Service: resolver.resolve(),
-                currencyMetadataService: resolver.resolve(),
-                web3ServiceLegacy: resolver.resolve()
+                currenciesService: resolver.resolve(),
+                currencyMetadataService: resolver.resolve()
             )
         }
     }

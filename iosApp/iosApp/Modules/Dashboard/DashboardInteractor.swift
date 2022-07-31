@@ -58,7 +58,8 @@ extension DefaultDashboardInteractor: DashboardInteractor {
     }
 
     var myTokens: [Web3Token] {
-        web3Service.myTokens
+        print("=== getting tokens", web3Service.myTokens.count)
+        return web3Service.myTokens
     }
     
     func tokenIcon(for token: Web3Token) -> Data {

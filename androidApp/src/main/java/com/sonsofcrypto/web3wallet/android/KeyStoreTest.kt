@@ -150,7 +150,7 @@ private val mockSecretStorageString = """
 }
 """.trimIndent()
 
-private val mockKeyStoreItem = KeyStoreItem(
+val mockKeyStoreItem = KeyStoreItem(
     uuid = "uuid001",
     name = "wallet mock",
     sortOrder = 0u,

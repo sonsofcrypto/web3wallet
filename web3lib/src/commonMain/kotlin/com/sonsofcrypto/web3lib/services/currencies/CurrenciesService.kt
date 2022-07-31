@@ -4,82 +4,57 @@ import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.services.currencies.model.CurrencyInfo
+import com.sonsofcrypto.web3lib.services.currencies.model.ethereumDefaultCurrencies
 import com.sonsofcrypto.web3lib.services.currencies.model.listFrom
+import com.sonsofcrypto.web3lib.services.currencies.model.ropstenDefaultCurrencies
 import com.sonsofcrypto.web3lib.signer.Wallet
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 interface CurrenciesService {
-    fun currencies(network: Network): List<Currency>
-    fun add(currency: Currency, network: Network)
-    fun remove(currency: Currency, network: Network)
+    fun currencies(wallet: Wallet, network: Network): List<Currency>
+    fun add(currency: Currency, wallet: Wallet, network: Network)
+    fun remove(currency: Currency, wallet: Wallet, network: Network)
 
-    fun generateDefaultCurrencies(network: Network): List<Currency>
-
+    fun generateDefaultCurrenciesIfNeeded(wallet: Wallet, network: Network)
+    fun defaultCurrencies(network: Network): List<Currency>
     fun currencyList(data: String): List<Currency>
 }
 
-class DefaultCurrenciesService(
-    val wallet: Wallet,
-    val store: KeyValueStore,
-): CurrenciesService {
+class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
 
-    override fun currencies(network: Network): List<Currency> {
-        return store.get(id(network)) ?: listOf()
+    override fun currencies(wallet: Wallet, network: Network): List<Currency> {
+        return getCurrencies(id(wallet, network)) ?: listOf()
     }
 
-    override fun add(currency: Currency, network: Network) {
-        store.set(id(network), currencies(network) + listOf(currency))
-    }
-
-    override fun remove(currency: Currency, network: Network) {
-        store.set(id(network), currencies(network).filter { it != currency } )
-    }
-
-    override fun generateDefaultCurrencies(network: Network): List<Currency> = when(network) {
-        Network.ethereum() -> listOf(
-            Currency(
-                name = "Ethereum",
-                symbol = "eth",
-                decimals = 18u,
-                type = Currency.Type.NATIVE,
-                address = null,
-                coinGeckoId = "ethereum",
-            ),
-            Currency(
-                name = "Tether",
-                symbol = "usdt",
-                decimals = 6u,
-                type = Currency.Type.ERC20,
-                address = null,
-                coinGeckoId = "tether",
-            ),
-            Currency(
-                name = "Cult DAO",
-                symbol = "cult",
-                decimals = 18u,
-                type = Currency.Type.ERC20,
-                address = "0xf0f9d895aca5c8678f706fb8216fa22957685a13",
-                coinGeckoId = "cult-dao",
-            ),
-            Currency(
-                name = "Cult DAO",
-                symbol = "cult",
-                decimals = 18u,
-                type = Currency.Type.ERC20,
-                address = "0xf0f9d895aca5c8678f706fb8216fa22957685a13",
-                coinGeckoId = "cult-dao",
-            ),
+    override fun add(currency: Currency, wallet: Wallet, network: Network) {
+        setCurrencies(
+            id(wallet, network),
+            currencies(wallet, network) + listOf(currency)
         )
-        Network.ropsten() -> listOf(
-            Currency(
-                name = "Ropsten Ethereum",
-                symbol = "eth",
-                decimals = 18u,
-                type = Currency.Type.NATIVE,
-                address = null,
-                coinGeckoId = "ethereum",
-            )
+    }
+
+    override fun remove(currency: Currency, wallet: Wallet, network: Network) {
+        setCurrencies(
+            id(wallet, network),
+            currencies(wallet, network).filter { it != currency }
         )
-        else -> listOf()
+    }
+
+    override fun generateDefaultCurrenciesIfNeeded(wallet: Wallet, network: Network) {
+        if (currencies(wallet, network).isEmpty()) {
+            setCurrencies(id(wallet, network), defaultCurrencies(network))
+        }
+    }
+
+
+    override fun defaultCurrencies(network: Network): List<Currency> {
+        return when(network) {
+            Network.ethereum() -> ethereumDefaultCurrencies
+            Network.ropsten() -> ropstenDefaultCurrencies
+            else -> listOf()
+        }
     }
 
     override fun currencyList(data: String): List<Currency> {
@@ -96,7 +71,17 @@ class DefaultCurrenciesService(
         }
     }
 
-    private fun id(network: Network): String {
+    private fun setCurrencies(key: String, currencies: List<Currency>) {
+        store[key] = Json.encodeToString(currencies)
+    }
+
+    private fun getCurrencies(key: String): List<Currency>? {
+        return store.get<String>(key)?.let{
+            Json.decodeFromString(it)
+        }
+    }
+
+    private fun id(wallet: Wallet, network: Network): String {
         return wallet.id() + network.id()
     }
 }

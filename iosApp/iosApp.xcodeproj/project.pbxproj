@@ -27,6 +27,7 @@
 		1A4C373BF33DAF794F261056 /* CardFlipAnimatedTransitioning2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3649032759624C3E2734 /* CardFlipAnimatedTransitioning2.swift */; };
 		1A4C38C98450A3C5884565AC /* CultProposal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C36ECC90C8D924B7C413B /* CultProposal.swift */; };
 		1A4C39EAC9477080E80A6C07 /* EdgeCardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3178DA54CD0800157DD5 /* EdgeCardsController.swift */; };
+		1A4C3A127E059F4973AAE8A9 /* CurrenciesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3766FCB2E384E3CA86A7 /* CurrenciesService.swift */; };
 		1A4C3A41389B5EC22F3B2B88 /* Authenticate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A4C39D6ADB830082AC3CEA6 /* Authenticate.storyboard */; };
 		1A4C3AD382E8BADCBE160CBC /* DApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C375870963EEF9ECBE64B /* DApp.swift */; };
 		1A4C3B1D9B56685FF628A0AD /* DegenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C34077200A9E856B77DDF /* DegenService.swift */; };
@@ -564,6 +565,7 @@
 		1A4C36B82F077468E37FE816 /* Web3ServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Web3ServiceAssembler.swift; sourceTree = "<group>"; };
 		1A4C36ECC90C8D924B7C413B /* CultProposal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposal.swift; sourceTree = "<group>"; };
 		1A4C375870963EEF9ECBE64B /* DApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DApp.swift; sourceTree = "<group>"; };
+		1A4C3766FCB2E384E3CA86A7 /* CurrenciesService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrenciesService.swift; sourceTree = "<group>"; };
 		1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsService.swift; sourceTree = "<group>"; };
 		1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewEffectViewiOS14.swift; sourceTree = "<group>"; };
 		1A4C393772D3384C556C29C3 /* TransformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformView.swift; sourceTree = "<group>"; };
@@ -1114,6 +1116,14 @@
 			path = Apps;
 			sourceTree = "<group>";
 		};
+		1A4C36A308B86BF401D803B6 /* Currencies */ = {
+			isa = PBXGroup;
+			children = (
+				1A4C3766FCB2E384E3CA86A7 /* CurrenciesService.swift */,
+			);
+			path = Currencies;
+			sourceTree = "<group>";
+		};
 		1A4C378CF260A81DDB68B039 /* KeyStore */ = {
 			isa = PBXGroup;
 			children = (
@@ -1164,25 +1174,26 @@
 				D1BC5304284B5B8E007E6FF4 /* CultService */,
 				1A4C3888D4FA37BEB1285C02 /* Degen */,
 				1C2B06542891D992002A8FBF /* Features */,
-				1C64871C2832E3B90091A12D /* KeychainService */,
+				1C64871C2832E3B90091A12D /* Keychain */,
 				1A4C378CF260A81DDB68B039 /* KeyStore */,
 				1A4C35A602BDFD544714CB8F /* NFTsService */,
 				1A4C39EC4A83EE79DD0F101F /* Onboarding */,
 				1C6487102832DE380091A12D /* Reachability */,
 				1A4C30349A9657E321920184 /* Settings */,
 				D17AC2D527B7E674000D7C34 /* Store */,
-				1CD3FE8728559EF2008312DE /* Web3Service */,
-				1A4C38E57534723ADC9F3D57 /* CurrencyMetadataService */,
+				1CD3FE8728559EF2008312DE /* Web3 */,
+				1A4C38E57534723ADC9F3D57 /* CurrencyMetadata */,
+				1A4C36A308B86BF401D803B6 /* Currencies */,
 			);
 			path = Services;
 			sourceTree = "<group>";
 		};
-		1A4C38E57534723ADC9F3D57 /* CurrencyMetadataService */ = {
+		1A4C38E57534723ADC9F3D57 /* CurrencyMetadata */ = {
 			isa = PBXGroup;
 			children = (
 				1A4C3C08E08B50822B0A46C8 /* CurrencyMetadataServiceAssembler.swift */,
 			);
-			path = CurrencyMetadataService;
+			path = CurrencyMetadata;
 			sourceTree = "<group>";
 		};
 		1A4C39EC4A83EE79DD0F101F /* Onboarding */ = {
@@ -1828,12 +1839,12 @@
 			path = Reachability;
 			sourceTree = "<group>";
 		};
-		1C64871C2832E3B90091A12D /* KeychainService */ = {
+		1C64871C2832E3B90091A12D /* Keychain */ = {
 			isa = PBXGroup;
 			children = (
 				1C64871D2832E3D60091A12D /* KeyChainService.swift */,
 			);
-			path = KeychainService;
+			path = Keychain;
 			sourceTree = "<group>";
 		};
 		1C6487212832E47A0091A12D /* Internal */ = {
@@ -2051,7 +2062,7 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		1CD3FE8728559EF2008312DE /* Web3Service */ = {
+		1CD3FE8728559EF2008312DE /* Web3 */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C3762858634A003BE25D /* DefaultWeb3ServiceLegacy.swift */,
@@ -2064,7 +2075,7 @@
 				1A4C3F7AC2CFD735B708F22C /* IntegrationWeb3Service.swift */,
 				1A4C36B82F077468E37FE816 /* Web3ServiceAssembler.swift */,
 			);
-			path = Web3Service;
+			path = Web3;
 			sourceTree = "<group>";
 		};
 		1CD843E8287218B900E6D359 /* OCR-A */ = {
@@ -3049,6 +3060,7 @@
 				1A4C333176FECF247923940A /* CurrencyMetadataServiceAssembler.swift in Sources */,
 				1A4C3341E51D9D180FAC1962 /* NetworksSectionHeaderView.swift in Sources */,
 				1A4C327E988FE454C9AE05CC /* UIEdgeInsets+Extensions.swift in Sources */,
+				1A4C3A127E059F4973AAE8A9 /* CurrenciesService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

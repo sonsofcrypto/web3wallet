@@ -174,7 +174,7 @@ private extension DefaultDashboardPresenter {
                         )
                     ),
                     items: .wallets(
-                        makeDashboardViewModelWallets(from: tokens)
+                        walletViewModel(from: tokens)
                     )
                 )
             )
@@ -301,10 +301,8 @@ private extension DefaultDashboardPresenter {
         return allSections
     }
     
-    func makeDashboardViewModelWallets(from tokens: [Web3Token]) -> [DashboardViewModel.Wallet] {
-        
+    func walletViewModel(from tokens: [Web3Token]) -> [DashboardViewModel.Wallet] {
         tokens.sortByNetworkBalanceAndName.compactMap {
-            
             .init(
                 name: $0.name,
                 ticker: $0.symbol,

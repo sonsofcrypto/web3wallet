@@ -5,7 +5,6 @@ import android.os.Bundle
 import com.sonsofcrypto.web3lib.utils.*
 import android.widget.TextView
 
-
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +24,8 @@ class MainActivity : AppCompatActivity() {
 //        TrieTest().runAll()
 //        ProviderTest().runAll()
 //        CoinGeckoTest(this.applicationContext).runAll()
-        Web3ServiceTests().runAll()
+//        Web3ServiceTests().runAll()
+        CurrenciesServiceTests().runAll()
         println("=== all tests executed ===")
     }
 }

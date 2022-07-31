@@ -84,21 +84,29 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
 
     var myTokens: [Web3Token] {
         guard let currenciesService = currenciesService else {
+            print("=== Web3Token no currenciesService")
             return []
         }
         
         let web3LibNetwork: web3lib.Network = web3service.network
             ?? Network.Companion().ethereum()
         
-        let network: Web3Network = Web3Network.from(
+        let web3network: Web3Network = Web3Network.from(
             web3LibNetwork,
             isOn: web3service.enabledNetworks().contains(web3LibNetwork)
         )
 
-        return currenciesService.currencies(network: network.toNetwork()).map {
+        let network = web3network.toNetwork()
+
+        print("===", network)
+
+        let currencies = currenciesService.currencies(network: network)
+        print("=== Web3Token", currencies.count)
+
+        return currencies.map {
             Web3Token.from(
                 currency: $0,
-                network: network,
+                network: web3network,
                 inWallet: true
             )
         }
