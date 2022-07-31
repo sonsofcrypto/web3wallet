@@ -1924,17 +1924,17 @@
 		1C67201928870FA900C5F044 /* Confirmation */ = {
 			isa = PBXGroup;
 			children = (
-				1CE00639288884C8002D1EB3 /* Views */,
 				1C67202A2887EB7F00C5F044 /* Confirmation.storyboard */,
 				1C67202428870FF400C5F044 /* ConfirmationPresenter.swift */,
 				1C67201A28870FCB00C5F044 /* ConfirmationView.swift */,
 				1C67201C28870FD200C5F044 /* ConfirmationViewModel.swift */,
-				1CE0064128894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift */,
 				1CE0064328894F72002D1EB3 /* ConfirmationViewModel+Send.swift */,
+				1CE0064128894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift */,
 				1C67201E28870FDB00C5F044 /* ConfirmationWireframe.swift */,
 				1C67202C2887EECB00C5F044 /* ConfirmationWireframeContext.swift */,
 				1C67202028870FE100C5F044 /* ConfirmationWireframeFactory.swift */,
 				1C67202228870FEB00C5F044 /* ConfirmationWireframeFactoryAssembler.swift */,
+				1CE00639288884C8002D1EB3 /* Views */,
 			);
 			path = Confirmation;
 			sourceTree = "<group>";

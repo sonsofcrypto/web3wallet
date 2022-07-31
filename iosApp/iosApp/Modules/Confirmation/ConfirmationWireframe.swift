@@ -8,6 +8,7 @@ enum ConfirmationWireframeDestination {
     
     case authenticate(AuthenticateContext)
     case underConstruction
+    case account(token: Web3Token)
 }
 
 protocol ConfirmationWireframe {
@@ -22,6 +23,7 @@ final class DefaultConfirmationWireframe {
     private let context: ConfirmationWireframeContext
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
+    private let deepLinkHandler: DeepLinkHandler
     
     private weak var navigationController: UINavigationController!
     
@@ -29,12 +31,14 @@ final class DefaultConfirmationWireframe {
         presentingIn: UIViewController,
         context: ConfirmationWireframeContext,
         authenticateWireframeFactory: AuthenticateWireframeFactory,
-        alertWireframeFactory: AlertWireframeFactory
+        alertWireframeFactory: AlertWireframeFactory,
+        deepLinkHandler: DeepLinkHandler
     ) {
         self.presentingIn = presentingIn
         self.context = context
         self.authenticateWireframeFactory = authenticateWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
+        self.deepLinkHandler = deepLinkHandler
     }
 }
 
@@ -66,6 +70,10 @@ extension DefaultConfirmationWireframe: ConfirmationWireframe {
                 navigationController,
                 context: .underConstructionAlert()
             ).present()
+            
+        case let .account(token):
+            
+            deepLinkHandler.handle(deepLink: .account(token: token))
         }
     }
     

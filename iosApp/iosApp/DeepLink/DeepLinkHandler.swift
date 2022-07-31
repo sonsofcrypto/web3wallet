@@ -5,12 +5,41 @@
 import Foundation
 import UIKit
 
-enum DeepLink: String {
+enum DeepLink {
     
-    case mnemonicConfirmation = "modal.mnemonic.confirmation"
-    case themesList = "settings.themes"
-    case featuresList = "modal.features"
-    case degen = "degen"
+    init?(rawValue: String) {
+        
+        switch rawValue {
+            
+        case DeepLink.mnemonicConfirmation.identifier:
+            self = .mnemonicConfirmation
+        case DeepLink.themesList.identifier:
+            self = .themesList
+        case DeepLink.featuresList.identifier:
+            self = .featuresList
+        case DeepLink.degen.identifier:
+            self = .degen
+        default:
+            return nil
+        }
+    }
+    
+    case mnemonicConfirmation
+    case themesList
+    case featuresList
+    case degen
+    case account(token: Web3Token)
+    
+    var identifier: String {
+        
+        switch self {
+        case .mnemonicConfirmation: return "modal.mnemonic.confirmation"
+        case .themesList: return "settings.themes"
+        case .featuresList: return "modal.features"
+        case .degen: return "degen"
+        case .account: return "modal.account"
+        }
+    }
 }
 
 protocol DeepLinkHandler: AnyObject {
@@ -47,10 +76,15 @@ extension DefaultDeepLinkHandler: DeepLinkHandler {
                 self.openFeaturesList()
             case .degen:
                 self.navigate(to: .degen)
+            case let .account(token):
+                self.navigate(to: .dashboard)
+                self.openAccount(with: token)
             }
         }
 
-        dismissAnyModals(completion: completion)
+        dismissAnyModals(
+            completion: completion
+        )
     }
 }
 
@@ -203,5 +237,15 @@ private extension DefaultDeepLinkHandler {
         guard let dashboardVC = dashboardVC else { return }
         let wireframe: MnemonicConfirmationWireframeFactory = ServiceDirectory.assembler.resolve()
         wireframe.makeWireframe(dashboardVC).present()
+    }
+    
+    func openAccount(with token: Web3Token) {
+        
+        guard let dashboardVC = dashboardVC else { return }
+        let wireframe: AccountWireframeFactory = ServiceDirectory.assembler.resolve()
+        wireframe.makeWireframe(
+            presentingIn: dashboardVC,
+            context: .init(web3Token: token)
+        ).present()
     }
 }

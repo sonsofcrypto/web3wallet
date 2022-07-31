@@ -249,6 +249,7 @@ private extension DefaultConfirmationPresenter {
             
             print("Do send!")
             print("Authenticated with: \(password) and \(salt)")
+            //wireframe.navigate(to: .account(token: context.type.accountToken))
         }
     }
 

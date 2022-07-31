@@ -15,6 +15,18 @@ struct ConfirmationWireframeContext {
     enum `Type` {
         case swap(SwapContext)
         case send(SendContext)
+        
+        var accountToken: Web3Token {
+            
+            switch self {
+                
+            case let .swap(swapData):
+                return swapData.tokenFrom.token
+                
+            case let .send(sendData):
+                return sendData.token.token
+            }
+        }
     }
 }
 
