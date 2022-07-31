@@ -46,9 +46,7 @@ final class DashboardViewController: BaseViewController {
 extension DashboardViewController: DashboardView {
     
     func update(with viewModel: DashboardViewModel) {
-        
         self.viewModel = viewModel
-        
         collectionView.reloadData()
         
         if let btn = navigationItem.leftBarButtonItem as? AnimatedTextBarButton {
@@ -64,10 +62,8 @@ extension DashboardViewController: DashboardView {
 extension DashboardViewController: UIScrollViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         lastVelocity = scrollView.contentOffset.y - previousYOffset
         previousYOffset = scrollView.contentOffset.y
-        
         updateBackgroundGradientTopConstraint()
     }
 }
@@ -239,13 +235,10 @@ extension DashboardViewController: UICollectionViewDataSource {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        
         switch kind {
             
         case UICollectionView.elementKindSectionHeader:
-            
             return supplementaryHeaderView(kind: kind, at: indexPath)
-            
         default:
             fatalError("Unexpected supplementary idxPath: \(indexPath) \(kind)")
         }
@@ -313,13 +306,9 @@ private extension DashboardViewController {
         }
         
         switch section.type {
-            
         case .none:
-            
             fatalError("We should not configure a section header when type is none.")
-            
         case let .balance(balance):
-
             let supplementary = collectionView.dequeue(
                 DashboardHeaderBalanceView.self,
                 for: indexPath,
@@ -329,7 +318,6 @@ private extension DashboardViewController {
             return supplementary
 
         case let .title(title):
-            
             let supplementary = collectionView.dequeue(
                 DashboardHeaderNameView.self,
                 for: indexPath,

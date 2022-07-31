@@ -110,7 +110,8 @@ private extension DefaultNetworksPresenter {
             name: network.name,
             connected: interactor.isEnabled(network),
             imageData: interactor.image(network),
-            connectionType: formattedProvider(interactor.provider(network))
+            connectionType: formattedProvider(interactor.provider(network)),
+            isSelected: interactor.selected == network
         )
     }
 

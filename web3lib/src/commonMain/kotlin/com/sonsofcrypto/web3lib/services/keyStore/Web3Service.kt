@@ -88,7 +88,6 @@ class DefaultWeb3Service: Web3Service {
     }
 
     override fun enabledNetworks(): List<Network> {
-        println("=== returning enabled network ${enabledNetworks.count()} $enabledNetworks")
         return enabledNetworks
     }
 

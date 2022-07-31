@@ -5,7 +5,11 @@
 import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
-    
+
+    override var isSelected: Bool {
+        didSet { setSelected(isSelected) }
+    }
+
     private (set) var bottomSeparatorView: UIView!
     
     override init(frame: CGRect) {
@@ -14,28 +18,30 @@ class CollectionViewCell: UICollectionViewCell {
     }
 
     required init?(coder: NSCoder) {
-        
         super.init(coder: coder)
         configureUI()
     }
     
     var cornerStyle: Style = .single {
-        
         didSet { update(for: cornerStyle) }
+    }
+
+    func setSelected(_ selected: Bool) {
+        layer.borderWidth = isSelected ? 1.0 : 0.0
+        layer.borderColor = Theme.colour.labelPrimary.cgColor
     }
 }
 
 private extension CollectionViewCell {
-    
+
     func configureUI() {
-        
         clipsToBounds = false
         backgroundColor = Theme.colour.cellBackground
         layer.cornerRadius = Theme.constant.cornerRadius
-        
         configureSeparator()
+        setSelected(isSelected)
     }
-    
+
     func configureSeparator() {
         
         let separator = UIView()

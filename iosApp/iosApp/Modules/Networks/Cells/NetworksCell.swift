@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class NetworksCell: UICollectionViewCell {
+final class NetworksCell: CollectionViewCell {
     
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -13,16 +13,13 @@ final class NetworksCell: UICollectionViewCell {
     @IBOutlet weak var connectionTitleLabel: UILabel!
     @IBOutlet weak var connectionLabel: UILabel!
 
-    var onNetworkSwitch: ((UInt32, Bool) -> Void)? = nil
-    var onSettingsTapped: ((UInt32) -> Void)? = nil
+    var onOffHandler: ((UInt32, Bool) -> Void)? = nil
+    var settingsHandler: ((UInt32) -> Void)? = nil
     
     private var id: UInt32 = 0
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        contentView.backgroundColor = Theme.colour.cellBackground
-        contentView.layer.cornerRadius = Theme.constant.cornerRadius
 
         iconImageView.layer.cornerRadius = iconImageView.frame.size.width * 0.5
         
@@ -32,14 +29,14 @@ final class NetworksCell: UICollectionViewCell {
         settingsButton.tintColor = Theme.colour.labelSecondary
         settingsButton.addTarget(
             self,
-            action: #selector(onSettingsTappedAction),
+            action: #selector(settingsAction),
             for: .touchUpInside
         )
         
         switchControl.layer.cornerRadius = 16
         switchControl.addTarget(
             self,
-            action: #selector(onSwitchValueChanged(_:)),
+            action: #selector(switchAction(_:)),
             for: .valueChanged
         )
 
@@ -59,31 +56,33 @@ final class NetworksCell: UICollectionViewCell {
 
 extension NetworksCell {
  
-    @objc func onSwitchValueChanged(_ sender: UISwitch) {
-        onNetworkSwitch?(id, sender.isOn)
+    @objc func switchAction(_ sender: UISwitch) {
+        onOffHandler?(id, sender.isOn)
     }
     
-    @objc func onSettingsTappedAction() {
-        onSettingsTapped?(id)
+    @objc func settingsAction() {
+        settingsHandler?(id)
     }
 }
 
 extension NetworksCell {
 
     func update(
-        with viewModel: NetworksViewModel.Network,
-        onNetworkSwitch: ((UInt32, Bool) -> Void)? = nil,
-        onSettingsTapped: ((UInt32) -> Void)? = nil
+        with viewModel: NetworksViewModel.Network?,
+        onOffHandler: ((UInt32, Bool) -> Void)? = nil,
+        settingsHandler: ((UInt32) -> Void)? = nil
     ) {
+        guard let viewModel = viewModel else {
+            return
+        }
+
         self.id = viewModel.chainId
-        self.onNetworkSwitch = onNetworkSwitch
-        self.onSettingsTapped = onSettingsTapped
+        self.onOffHandler = onOffHandler
+        self.settingsHandler = settingsHandler
         
         iconImageView.image = UIImage(data: viewModel.imageData)
         titleLabel.text = viewModel.name
-        if viewModel.chainId == 1 {
-            print("=== setting on ??/ \(viewModel.connected)")
-        }
+
         switchControl.setOn(viewModel.connected, animated: true)
         switchControl.isEnabled = viewModel.connected != nil
         connectionLabel.text = viewModel.connectionType        

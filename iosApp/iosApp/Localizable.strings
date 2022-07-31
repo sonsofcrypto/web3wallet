@@ -132,10 +132,10 @@
 "newMnemonic.defaultWalletName" = "Default wallet";
 "newMnemonic.defaultNthWalletName" = "Wallet %d";
 
-"networks.header.l1s" = "Layer Ones";
-"networks.header.l2s" = "Layer Twos";
-"networks.header.l1sTest" = "Layer Ones Testnets";
-"networks.header.l2sTest" = "Layer Twos Testnets";
+"networks.header.l1s" = "Layer #1s";
+"networks.header.l2s" = "Layer #2s";
+"networks.header.l1sTest" = "Layer #1s Testnets";
+"networks.header.l2sTest" = "Layer #2s Testnets";
 
 "settings.root.group.settings" = "Settings";
 "settings.root.group.actions" = "Actions";
