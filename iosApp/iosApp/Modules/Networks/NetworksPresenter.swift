@@ -58,10 +58,6 @@ extension DefaultNetworksPresenter: NetworksPresenter, NetworkInteractorLister {
         case let .didSwitchNetwork(chainId, isOn):
             if let network = network(chainId) {
                 interactor.set(network, enabled: isOn)
-                print("=== did set on chainId \(chainId) \(isOn)")
-                print("=== we have \(network)")
-                print("=== viewModel \(networkViewModel(network).connected)")
-
             }
         case let .didSelectNetwork(chainId):
             if let network = network(chainId) {

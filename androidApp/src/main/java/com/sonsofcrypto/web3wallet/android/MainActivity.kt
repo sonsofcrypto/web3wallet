@@ -24,7 +24,8 @@ class MainActivity : AppCompatActivity() {
 //        KeyStoreTest().runAll()
 //        TrieTest().runAll()
 //        ProviderTest().runAll()
-        CoinGeckoTest(this.applicationContext).runAll()
+//        CoinGeckoTest(this.applicationContext).runAll()
+        Web3ServiceTests().runAll()
         println("=== all tests executed ===")
     }
 }

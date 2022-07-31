@@ -81,7 +81,9 @@ extension NetworksCell {
         
         iconImageView.image = UIImage(data: viewModel.imageData)
         titleLabel.text = viewModel.name
-        print("=== setting on ??/ \(viewModel.connected)")
+        if viewModel.chainId == 1 {
+            print("=== setting on ??/ \(viewModel.connected)")
+        }
         switchControl.setOn(viewModel.connected, animated: true)
         switchControl.isEnabled = viewModel.connected != nil
         connectionLabel.text = viewModel.connectionType        

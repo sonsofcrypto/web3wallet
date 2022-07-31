@@ -26,7 +26,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             .userDomainMask,
             true
         )
-        print(documents.last ?? "")
+        print("app path", documents.last ?? "")
 #endif
 
         return true

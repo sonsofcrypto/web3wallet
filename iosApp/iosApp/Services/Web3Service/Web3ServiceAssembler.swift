@@ -10,9 +10,17 @@ final class Web3ServiceAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
 
         registry.register(scope: .singleton) { resolver -> Web3Service in
-            DefaultWeb3Service(
+            let keyStoreService: KeyStoreService = resolver.resolve()
+            let web3service = DefaultWeb3Service(
                 store: KeyValueStore(name: "\(DefaultWeb3Service.self)")
             )
+            if let keyStoreItem = keyStoreService.selected {
+                web3service.wallet = Wallet(
+                    keyStoreItem: keyStoreItem,
+                    keyStoreService: keyStoreService
+                )
+            }
+            return web3service
         }
     }
 }

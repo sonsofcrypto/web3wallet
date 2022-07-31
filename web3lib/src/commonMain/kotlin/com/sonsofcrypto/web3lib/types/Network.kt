@@ -4,7 +4,7 @@ import com.sonsofcrypto.web3lib.utils.keccak256
 import kotlinx.serialization.Serializable
 
 @Serializable
-class Network(
+data class Network(
     val name: String,
     val chainId: UInt,
     val type: Type,
@@ -29,7 +29,6 @@ class Network(
             else -> throw Error("Unknown network id $network")
         }
     }
-
     enum class Type() {
         L1, L2, L1_TEST, L2_TEST;
     }

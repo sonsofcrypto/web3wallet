@@ -18,7 +18,6 @@ import kotlin.native.concurrent.SharedImmutable
 import com.sonsofcrypto.web3lib.provider.JsonRpcRequest.Method
 import com.sonsofcrypto.web3lib.provider.model.*
 
-
 @SharedImmutable
 val providerJson = Json {
     encodeDefaults = true

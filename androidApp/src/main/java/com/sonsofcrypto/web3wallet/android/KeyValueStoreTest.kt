@@ -2,7 +2,10 @@ package com.sonsofcrypto.web3wallet.android
 
 import androidx.annotation.Keep
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
+import com.sonsofcrypto.web3lib.services.keyStore.Web3Service
+import com.sonsofcrypto.web3lib.types.Network
 import kotlinx.serialization.*
+import kotlinx.serialization.json.Json
 import java.lang.Exception
 
 
@@ -21,6 +24,7 @@ class KeyValueStoreTest {
 
     fun runAll() {
         testKeyValueStore()
+        testStoreNetworks()
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
@@ -42,6 +46,15 @@ class KeyValueStoreTest {
             store.get<TestSerializable>("serKey")?.foo == "foo",
             "Unexpected value in int test",
         )
+    }
+
+    fun testStoreNetworks() {
+        val networks: List<Network> = Network.supported()
+        val encoded = Json.encodeToString(networks)
+        val store = KeyValueStore("networksTest")
+        store.set("why", encoded)
+        val decoded: List<Network> = Json.decodeFromString(store.get("why")!!)
+        assertTrue(networks == decoded, "network serialization error")
     }
 }
 
