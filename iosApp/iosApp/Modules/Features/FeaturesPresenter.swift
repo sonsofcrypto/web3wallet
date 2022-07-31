@@ -159,7 +159,7 @@ private extension DefaultFeaturesPresenter {
             ),
             approveButtonTitle: Localized("approve"),
             rejectButtonTitle: Localized("reject"),
-            category: filterSectionType == .all ? nil :  feature.category.stringValue
+            category: filterSectionType == .all ? feature.category.stringValue : nil
         )
     }
 }

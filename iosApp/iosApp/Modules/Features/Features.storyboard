@@ -17,11 +17,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gT4-LR-dDm">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="FCs-8Q-ed2">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nu3-8B-ncL">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="48"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="56" id="ErM-dL-fOj"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Qv-Od-CKY">
+                                                <rect key="frame" x="0.0" y="56" width="414" height="0.0"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="0.25" id="mAV-l9-OjL"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="FCs-8Q-ed2" secondAttribute="bottom" id="KKD-89-kJv"/>
+                                    <constraint firstItem="FCs-8Q-ed2" firstAttribute="top" secondItem="gT4-LR-dDm" secondAttribute="top" id="LBO-Ew-QnS"/>
+                                    <constraint firstAttribute="trailing" secondItem="FCs-8Q-ed2" secondAttribute="trailing" id="OPs-hq-GF9"/>
+                                    <constraint firstItem="FCs-8Q-ed2" firstAttribute="leading" secondItem="gT4-LR-dDm" secondAttribute="leading" id="TLF-TF-67g"/>
+                                    <constraint firstAttribute="height" constant="56" id="qgD-Rn-SWo"/>
+                                </constraints>
+                            </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="HJC-2Y-FV6">
-                                <rect key="frame" x="188.5" y="16" width="37" height="37"/>
+                                <rect key="frame" x="188.5" y="66" width="37" height="37"/>
                             </activityIndicatorView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="YS8-R3-Uul">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                                <rect key="frame" x="0.0" y="56" width="414" height="806"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="19" minimumInteritemSpacing="19" id="DW3-6L-nxo">
                                     <size key="itemSize" width="343" height="173"/>
@@ -144,16 +176,22 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="YS8-R3-Uul" firstAttribute="leading" secondItem="LI9-Q1-H5U" secondAttribute="leading" id="2wR-aJ-e40"/>
+                            <constraint firstItem="YS8-R3-Uul" firstAttribute="top" secondItem="gT4-LR-dDm" secondAttribute="bottom" id="2z6-qI-DaS"/>
                             <constraint firstItem="LI9-Q1-H5U" firstAttribute="bottom" secondItem="YS8-R3-Uul" secondAttribute="bottom" id="Hc0-Ft-wyv"/>
-                            <constraint firstItem="HJC-2Y-FV6" firstAttribute="top" secondItem="wfx-It-eJq" secondAttribute="top" constant="16" id="MZU-pw-sgA"/>
+                            <constraint firstItem="HJC-2Y-FV6" firstAttribute="top" secondItem="wfx-It-eJq" secondAttribute="top" constant="66" id="MZU-pw-sgA"/>
                             <constraint firstItem="HJC-2Y-FV6" firstAttribute="centerX" secondItem="wfx-It-eJq" secondAttribute="centerX" id="UkH-VU-oaO"/>
-                            <constraint firstItem="YS8-R3-Uul" firstAttribute="top" secondItem="wfx-It-eJq" secondAttribute="top" id="k7u-Jm-FzY"/>
+                            <constraint firstItem="gT4-LR-dDm" firstAttribute="top" secondItem="wfx-It-eJq" secondAttribute="top" id="gr3-qE-dRL"/>
+                            <constraint firstItem="gT4-LR-dDm" firstAttribute="trailing" secondItem="LI9-Q1-H5U" secondAttribute="trailing" id="pxG-cj-ydq"/>
                             <constraint firstItem="YS8-R3-Uul" firstAttribute="trailing" secondItem="LI9-Q1-H5U" secondAttribute="trailing" id="qtd-25-RrP"/>
+                            <constraint firstItem="gT4-LR-dDm" firstAttribute="leading" secondItem="LI9-Q1-H5U" secondAttribute="leading" id="xq6-tV-u9Y"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="HJC-2Y-FV6" id="BJJ-pE-CYj"/>
                         <outlet property="collectionView" destination="YS8-R3-Uul" id="zXl-Jb-qmH"/>
+                        <outlet property="dividerLineView" destination="2Qv-Od-CKY" id="cQM-3U-zrV"/>
+                        <outlet property="segmentContainer" destination="Nu3-8B-ncL" id="Hrw-M3-0hD"/>
+                        <outlet property="topContainerView" destination="gT4-LR-dDm" id="f81-fl-RTx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWA-NB-KYJ" sceneMemberID="firstResponder"/>

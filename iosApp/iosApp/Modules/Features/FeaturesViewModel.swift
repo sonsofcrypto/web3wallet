@@ -36,7 +36,7 @@ extension FeaturesViewModel {
                 case .integrations:
                     return Localized("features.segmentedControl.integrations")
                 case .features:
-                    return Localized("features.segmentedControl.infrastructure")
+                    return Localized("features.segmentedControl.features")
                 }
             }
         }

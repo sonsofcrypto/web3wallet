@@ -12,6 +12,9 @@ protocol FeaturesView: AnyObject {
 final class FeaturesViewController: BaseViewController {
     
     //let searchController = UISearchController()
+    @IBOutlet weak var topContainerView: UIView!
+    @IBOutlet weak var segmentContainer: UIView!
+    @IBOutlet weak var dividerLineView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var collectionView: UICollectionView!
     private let refreshControl = UIRefreshControl()
@@ -28,6 +31,13 @@ final class FeaturesViewController: BaseViewController {
         
         presenter?.present()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        
+        navigationController?.showBottomLine(false)
+    }    
 }
 
 extension FeaturesViewController: FeaturesView {
@@ -35,9 +45,9 @@ extension FeaturesViewController: FeaturesView {
     func update(with viewModel: FeaturesViewModel) {
         
         self.viewModel = viewModel
+        
+        title = viewModel.title
                 
-        setTitle()
-
         switch viewModel {
             
         case .loading:
@@ -117,21 +127,7 @@ private extension FeaturesViewController {
         activityIndicator.stopAnimating()
     }
     
-    func setTitle() {
-        
-        switch viewModel {
-            
-        case .loading, .error, .none:
-            
-            title = viewModel.title
-
-        case .loaded:
-            
-            setSegmentedTitle()
-        }
-    }
-    
-    func setSegmentedTitle() {
+    func setSegmented() {
         
         let segmentControl = SegmentedControl()
         segmentControl.insertSegment(
@@ -155,24 +151,27 @@ private extension FeaturesViewController {
             animated: false
         )
         
-        switch viewModel.selectedSectionType {
-            
-        case .all:
-            segmentControl.selectedSegmentIndex = 0
-        case .infrastructure:
-            segmentControl.selectedSegmentIndex = 1
-        case .integrations:
-            segmentControl.selectedSegmentIndex = 2
-        case .features:
-            segmentControl.selectedSegmentIndex = 3
-        }
+        segmentControl.selectedSegmentIndex = 0
         
         segmentControl.addTarget(
             self,
             action: #selector(segmentControlChanged(_:)),
             for: .valueChanged
         )
-        navigationItem.titleView = segmentControl
+        segmentContainer.addSubview(segmentControl)
+        segmentControl.addConstraints(
+            [
+                .layout(anchor: .centerYAnchor),
+                .layout(
+                    anchor: .leadingAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding)
+                ),
+                .layout(
+                    anchor: .trailingAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding)
+                )
+            ]
+        )
     }
     
     @objc func segmentControlChanged(_ sender: SegmentedControl) {
@@ -193,6 +192,11 @@ private extension FeaturesViewController {
     }
     
     func configureUI() {
+        
+        topContainerView.backgroundColor = Theme.colour.navBarBackground
+        dividerLineView.backgroundColor = navigationController?.bottomLineColor
+        
+        setSegmented()
         
         activityIndicator.color = Theme.colour.activityIndicator
         
@@ -281,7 +285,7 @@ private extension FeaturesViewController {
             alignment: .bottom
         )
         
-        section.boundarySupplementaryItems = [headerItem, footerItem]
+        //section.boundarySupplementaryItems = [headerItem, footerItem]
         
         return section
     }
