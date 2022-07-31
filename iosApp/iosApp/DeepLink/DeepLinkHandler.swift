@@ -9,6 +9,7 @@ enum DeepLink: String {
     
     case mnemonicConfirmation = "modal.mnemonic.confirmation"
     case themesList = "settings.themes"
+    case featuresList = "modal.features"
     case degen = "degen"
 }
 
@@ -42,7 +43,8 @@ extension DefaultDeepLinkHandler: DeepLinkHandler {
             case .themesList:
                 self.navigate(to: .settings)
                 self.openThemeMenu()
-                
+            case .featuresList:
+                self.openFeaturesList()
             case .degen:
                 self.navigate(to: .degen)
             }
@@ -184,6 +186,13 @@ private extension DefaultDeepLinkHandler {
                 ]
             )
         ).present()
+    }
+    
+    func openFeaturesList() {
+        
+        guard let dashboardVC = dashboardVC else { return }
+        let wireframe: FeaturesWireframeFactory = ServiceDirectory.assembler.resolve()
+        wireframe.makeWireframe(dashboardVC).present()
     }
     
     func openMnemonicConfirmation() {

@@ -1,4 +1,4 @@
-// Created by web3d3v on 11/02/2022.
+// Created by web3d3v on 30/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
@@ -7,7 +7,7 @@ import UIKit
 enum FeaturesWireframeDestination {
     
     case comingSoon
-    case proposal(proposal: CultProposal, proposals: [CultProposal])
+    case feature(feature: Web3Feature, features: [Web3Feature])
 }
 
 protocol FeaturesWireframe {
@@ -18,22 +18,19 @@ protocol FeaturesWireframe {
 final class DefaultFeaturesWireframe {
 
     private weak var parent: UIViewController!
-    private let cultProposalWireframeFactory: CultProposalWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
-    private let cultService: CultService
+    private let featuresService: FeaturesService
 
     private weak var vc: UIViewController!
 
     init(
         parent: UIViewController,
-        cultProposalWireframeFactory: CultProposalWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        cultService: CultService
+        featuresService: FeaturesService
     ) {
         self.parent = parent
-        self.cultProposalWireframeFactory = cultProposalWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
-        self.cultService = cultService
+        self.featuresService = featuresService
     }
 }
 
@@ -50,12 +47,9 @@ extension DefaultFeaturesWireframe: FeaturesWireframe {
 
         switch destination {
             
-        case let .proposal(proposal, proposals):
+        case let .feature(feature, features):
             
-            cultProposalWireframeFactory.makeWireframe(
-                parent: vc,
-                context: .init(proposal: proposal, proposals: proposals)
-            ).present()
+            break
             
         case .comingSoon:
             
@@ -76,7 +70,7 @@ extension DefaultFeaturesWireframe {
         ).instantiate()
         
         let interactor = DefaultFeaturesInteractor(
-            cultService
+            featureService: featuresService
         )
         
         let presenter = DefaultFeaturesPresenter(

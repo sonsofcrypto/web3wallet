@@ -1,4 +1,4 @@
-// Created by web3d3v on 11/02/2022.
+// Created by web3d3v on 30/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
@@ -77,60 +77,11 @@ extension FeaturesViewController: UICollectionViewDataSource {
         
         let section = viewModel.sections[indexPath.section]
         let viewModel = section.items[indexPath.item]
-
-        fatalError()
-//        switch section.type {
-//        case .pending:
-//            let cell = collectionView.dequeue(CultProposalCellPending.self, for: indexPath)
-//            return cell.update(with: viewModel, handler: makeCultProposalCellPendingHandler())
-//        case .closed:
-//            let cell = collectionView.dequeue(CultProposalCellClosed.self, for: indexPath)
-//            return cell.update(with: viewModel)
-//        }
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        viewForSupplementaryElementOfKind kind: String,
-        at indexPath: IndexPath
-    ) -> UICollectionReusableView {
-        
-        fatalError()
-//        switch kind {
-//        case "header":
-//            
-//            guard let headerView = collectionView.dequeueReusableSupplementaryView(
-//                ofKind: kind,
-//                withReuseIdentifier: String(describing: CultProposalHeaderSupplementaryView.self),
-//                for: indexPath
-//            ) as? CultProposalHeaderSupplementaryView else {
-//                
-//                return CultProposalHeaderSupplementaryView()
-//            }
-//            
-//            let section = viewModel.sections[indexPath.section]
-//            headerView.update(with: section)
-//            return headerView
-//            
-//        case "footer":
-//            
-//            guard let footerView = collectionView.dequeueReusableSupplementaryView(
-//                ofKind: kind,
-//                withReuseIdentifier: String(describing: CultProposalFooterSupplementaryView.self),
-//                for: indexPath
-//            ) as? CultProposalFooterSupplementaryView else {
-//                
-//                return CultProposalFooterSupplementaryView()
-//            }
-//            
-//            let section = viewModel.sections[indexPath.section]
-//            footerView.update(with: section.footer)
-//            return footerView
-//            
-//        default:
-//            assertionFailure("Unexpected element kind: \(kind).")
-//            return UICollectionReusableView()
-//        }
+        let cell = collectionView.dequeue(FeaturesCell.self, for: indexPath)
+        return cell.update(
+            with: viewModel,
+            handler: makeCultProposalCellPendingHandler()
+        )
     }
 }
 
@@ -143,7 +94,7 @@ extension FeaturesViewController: UICollectionViewDelegate {
         
         let section = viewModel.sections[indexPath.section]
         let item = section.items[indexPath.row]
-        presenter.handle(.selectProposal(id: item.id))
+        presenter.handle(.select(id: item.id))
     }
     
 //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -172,7 +123,7 @@ private extension FeaturesViewController {
             
         case .loading, .error, .none:
             
-            setDefaultTitle()
+            title = viewModel.title
 
         case .loaded:
             
@@ -180,40 +131,40 @@ private extension FeaturesViewController {
         }
     }
     
-    func setDefaultTitle() {
-        
-        let cultIcon = viewModel.titleIcon.pngImage!.resize(to: .init(width: 32, height: 32))
-        let imageView = UIImageView(image: cultIcon)
-        let titleLabel = UILabel()
-        titleLabel.text = viewModel.title
-        titleLabel.apply(style: .navTitle)
-        
-        let stackView = HStackView([imageView, titleLabel])
-        stackView.spacing = 4
-        
-        navigationItem.titleView = stackView
-    }
-    
     func setSegmentedTitle() {
         
         let segmentControl = SegmentedControl()
         segmentControl.insertSegment(
-            withTitle: Localized("cult.proposals.segmentedControl.pending"),
+            withTitle: Localized("features.segmentedControl.all"),
             at: 0,
             animated: false
         )
         segmentControl.insertSegment(
-            withTitle: Localized("cult.proposals.segmentedControl.closed"),
+            withTitle: Localized("features.segmentedControl.infrastructure"),
             at: 1,
+            animated: false
+        )
+        segmentControl.insertSegment(
+            withTitle: Localized("features.segmentedControl.integrations"),
+            at: 2,
+            animated: false
+        )
+        segmentControl.insertSegment(
+            withTitle: Localized("features.segmentedControl.features"),
+            at: 3,
             animated: false
         )
         
         switch viewModel.selectedSectionType {
             
-        case .pending:
+        case .all:
             segmentControl.selectedSegmentIndex = 0
-        case .closed:
+        case .infrastructure:
             segmentControl.selectedSegmentIndex = 1
+        case .integrations:
+            segmentControl.selectedSegmentIndex = 2
+        case .features:
+            segmentControl.selectedSegmentIndex = 3
         }
         
         segmentControl.addTarget(
@@ -226,10 +177,18 @@ private extension FeaturesViewController {
     
     @objc func segmentControlChanged(_ sender: SegmentedControl) {
         
-        presenter.handle(
-            .filterBySection(
-                sectionType: sender.selectedSegmentIndex == 0 ? .pending : .closed
-            )
+        let sectionType: FeaturesViewModel.Section.`Type`
+        
+        switch sender.selectedSegmentIndex {
+            
+        case 0: sectionType = .all
+        case 1: sectionType = .infrastructure
+        case 2: sectionType = .integrations
+        default: sectionType = .features
+        }
+        
+        return presenter.handle(
+            .filterBySection(sectionType: sectionType)
         )
     }
     
@@ -330,7 +289,7 @@ private extension FeaturesViewController {
 
 private extension FeaturesViewController {
 
-    func makeCultProposalCellPendingHandler() -> CultProposalCellPending.Handler {
+    func makeCultProposalCellPendingHandler() -> FeaturesCell.Handler {
         
         .init(
             approveProposal: makeApproveProposal(),
@@ -343,7 +302,7 @@ private extension FeaturesViewController {
         {
             [weak self] id in
             guard let self = self else { return }
-            self.presenter.handle(.approveProposal(id: id))
+            self.presenter.handle(.approve(id: id))
         }
     }
     
@@ -352,7 +311,7 @@ private extension FeaturesViewController {
         {
             [weak self] id in
             guard let self = self else { return }
-            self.presenter.handle(.rejectProposal(id: id))
+            self.presenter.handle(.reject(id: id))
         }
     }
 
