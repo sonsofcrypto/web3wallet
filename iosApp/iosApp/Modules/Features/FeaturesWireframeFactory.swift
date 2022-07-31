@@ -6,18 +6,24 @@ import UIKit
 
 protocol FeaturesWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController) -> FeaturesWireframe
+    func makeWireframe(
+        presentingIn: UIViewController,
+        context: FeaturesWireframeContext
+    ) -> FeaturesWireframe
 }
 
 final class DefaultFeaturesWireframeFactory {
 
+    private let featureWireframeFactory: FeatureWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let featuresService: FeaturesService
 
     init(
+        featureWireframeFactory: FeatureWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         featuresService: FeaturesService
     ) {
+        self.featureWireframeFactory = featureWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.featuresService = featuresService
     }
@@ -25,10 +31,15 @@ final class DefaultFeaturesWireframeFactory {
 
 extension DefaultFeaturesWireframeFactory: FeaturesWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController) -> FeaturesWireframe {
+    func makeWireframe(
+        presentingIn: UIViewController,
+        context: FeaturesWireframeContext
+    ) -> FeaturesWireframe {
         
         DefaultFeaturesWireframe(
-            parent: parent,
+            presentingIn: presentingIn,
+            context: context,
+            featureWireframeFactory: featureWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
             featuresService: featuresService
         )

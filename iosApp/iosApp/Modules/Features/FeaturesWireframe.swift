@@ -4,6 +4,11 @@
 
 import UIKit
 
+struct FeaturesWireframeContext {
+    
+    let presentationStyle: PresentationStyle
+}
+
 enum FeaturesWireframeDestination {
     
     case comingSoon
@@ -17,18 +22,24 @@ protocol FeaturesWireframe {
 
 final class DefaultFeaturesWireframe {
 
-    private weak var parent: UIViewController!
+    private weak var presentingIn: UIViewController!
+    private let context: FeaturesWireframeContext
+    private let featureWireframeFactory: FeatureWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let featuresService: FeaturesService
 
-    private weak var vc: UIViewController!
+    private weak var navigationController: NavigationController!
 
     init(
-        parent: UIViewController,
+        presentingIn: UIViewController,
+        context: FeaturesWireframeContext,
+        featureWireframeFactory: FeatureWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         featuresService: FeaturesService
     ) {
-        self.parent = parent
+        self.presentingIn = presentingIn
+        self.context = context
+        self.featureWireframeFactory = featureWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.featuresService = featuresService
     }
@@ -39,8 +50,20 @@ extension DefaultFeaturesWireframe: FeaturesWireframe {
     func present() {
         
         let vc = wireUp()
-        self.vc = vc
-        parent.show(vc, sender: self)
+        
+        switch context.presentationStyle {
+            
+        case .embed:
+            fatalError("Not implemented")
+            
+        case .present:
+            presentingIn.present(vc, animated: true)
+            
+        case .push:
+            guard let navigationController = presentingIn as? NavigationController else { return }
+            self.navigationController = navigationController
+            navigationController.pushViewController(vc, animated: true)
+        }
     }
 
     func navigate(to destination: FeaturesWireframeDestination) {
@@ -49,12 +72,15 @@ extension DefaultFeaturesWireframe: FeaturesWireframe {
             
         case let .feature(feature, features):
             
-            break
+            featureWireframeFactory.makeWireframe(
+                parent: navigationController,
+                context: .init(feature: feature, features: features)
+            ).present()
             
         case .comingSoon:
             
             alertWireframeFactory.makeWireframe(
-                vc,
+                navigationController,
                 context: .underConstructionAlert()
             ).present()
         }
@@ -62,24 +88,35 @@ extension DefaultFeaturesWireframe: FeaturesWireframe {
 }
 
 extension DefaultFeaturesWireframe {
-
-    private func wireUp() -> UIViewController {
-        
-        let vc: FeaturesViewController = UIStoryboard(
-            .features
-        ).instantiate()
+    
+    func wireUp() -> UIViewController {
         
         let interactor = DefaultFeaturesInteractor(
             featureService: featuresService
         )
-        
+        let vc: FeaturesViewController = UIStoryboard(.features).instantiate()
         let presenter = DefaultFeaturesPresenter(
             view: vc,
             interactor: interactor,
             wireframe: self
         )
-
+        
         vc.presenter = presenter
-        return vc
+        
+        switch context.presentationStyle {
+        case .embed:
+            
+            fatalError("Not implemented")
+        case .present:
+                        
+            let navigationController = NavigationController(rootViewController: vc)
+            self.navigationController = navigationController
+            return navigationController
+            
+        case .push:
+            
+            vc.hidesBottomBarWhenPushed = true
+            return vc
+        }
     }
 }

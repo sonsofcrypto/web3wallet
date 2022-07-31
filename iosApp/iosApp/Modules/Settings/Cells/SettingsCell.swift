@@ -19,6 +19,11 @@ final class SettingsCell: CollectionViewCell {
         rightImageView.tintColor = Theme.colour.labelPrimary
     }
     
+    override func setSelected(_ selected: Bool) {
+        
+        // do nothing
+    }
+    
     override var isSelected: Bool {
         
         didSet {

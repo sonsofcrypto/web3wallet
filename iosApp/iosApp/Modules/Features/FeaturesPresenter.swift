@@ -8,8 +8,7 @@ enum FeaturesPresenterEvent {
     
     case filterBySection(sectionType: FeaturesViewModel.Section.`Type`)
     case filterBy(text: String)
-    case approve(id: String)
-    case reject(id: String)
+    case vote(id: String)
     case select(id: String)
 }
 
@@ -100,7 +99,7 @@ extension DefaultFeaturesPresenter: FeaturesPresenter {
                 )
             )
             
-        case .approve, .reject:
+        case .vote:
             
             wireframe.navigate(to: .comingSoon)
         }
@@ -123,7 +122,7 @@ private extension DefaultFeaturesPresenter {
             guard let self = self else { return false }
             guard !self.filterText.isEmpty else { return true }
             return $0.title.contains(self.filterText)
-        }.sorted { $0.id > $1.id }
+        }.sortedList
         
         let section: FeaturesViewModel.Section = .init(
             title: filterSectionType.stringValue + " (\(featuresList.count))",
@@ -139,27 +138,14 @@ private extension DefaultFeaturesPresenter {
 
     func viewModel(from feature: Web3Feature) -> FeaturesViewModel.Item {
         
-        let total = feature.approved + feature.rejeceted
-        let approved = total == 0 ? 0 : feature.approved / total
-
-        return .init(
+        .init(
             id: feature.id,
             title: feature.title,
-            approved: .init(
-                name: Localized("approved"),
-                value: approved,
-                total: feature.approved,
-                type: .approved
-            ),
-            rejected: .init(
-                name: Localized("rejected"),
-                value: approved == 0 ? 0 : 1 - approved,
-                total: feature.rejeceted,
-                type: .rejected
-            ),
-            approveButtonTitle: Localized("approve"),
-            rejectButtonTitle: Localized("reject"),
-            category: filterSectionType == .all ? feature.category.stringValue : nil
+            totalVotes: Localized("features.votes"),
+            totalVotesValue: feature.votes.stringValue,
+            category: filterSectionType == .all ? Localized("features.category") : nil,
+            categoryValue: filterSectionType == .all ? feature.category.stringValue : nil,
+            voteButtonTitle: Localized("features.button.vote")
         )
     }
 }
@@ -169,15 +155,20 @@ private extension DefaultFeaturesPresenter {
     var currentList: [Web3Feature] {
         
         switch filterSectionType {
-        case .all: return allFeatures
-        case .infrastructure: return allFeatures.infrastructure
-        case .integrations: return allFeatures.integrations
-        case .features: return allFeatures.features
+        case .all: return allFeatures.sortedList
+        case .infrastructure: return allFeatures.infrastructure.sortedList
+        case .integrations: return allFeatures.integrations.sortedList
+        case .features: return allFeatures.features.sortedList
         }
     }
 }
 
 extension Array where Element == Web3Feature {
+    
+    var sortedList: [Web3Feature] {
+        
+        sorted { $0.id > $1.id }
+    }
     
     var integrations: [Web3Feature] {
         
@@ -202,21 +193,5 @@ extension Array where Element == Web3Feature {
     func filterTitle(by text: String) -> [Web3Feature] {
         
         filter { $0.title.contains(text) }
-    }
-}
-
-extension Web3Feature.Category {
-    
-    var stringValue: String {
-        
-        switch self {
-            
-        case .infrastructure:
-            return Localized("features.segmentedControl.infrastructure")
-        case .integrations:
-            return Localized("features.segmentedControl.integrations")
-        case .features:
-            return Localized("features.segmentedControl.infrastructure")
-        }
     }
 }

@@ -83,6 +83,11 @@ final class CultProposalCellPending: CollectionViewCell {
         }
     }
     
+    override func setSelected(_ selected: Bool) {
+        
+        // do nothing
+    }
+    
     func update(
         with viewModel: CultProposalsViewModel.Item,
         handler: Handler
