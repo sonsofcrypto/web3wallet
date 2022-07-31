@@ -263,27 +263,32 @@ private extension FeaturesViewController {
 
         // Section
         let section = NSCollectionLayoutSection(group: outerGroup)
-        section.contentInsets = .paddingDefault
+        section.contentInsets = .init(
+            top: Theme.constant.padding * 2,
+            leading: Theme.constant.padding,
+            bottom: Theme.constant.padding,
+            trailing: Theme.constant.padding
+        )
         section.interGroupSpacing = Theme.constant.padding * 1.5
         
-        let headerItemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(100)
-        )
-        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerItemSize,
-            elementKind: "header",
-            alignment: .top
-        )
-        let footerItemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(100)
-        )
-        let footerItem = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: footerItemSize,
-            elementKind: "footer",
-            alignment: .bottom
-        )
+//        let headerItemSize = NSCollectionLayoutSize(
+//            widthDimension: .fractionalWidth(1),
+//            heightDimension: .estimated(100)
+//        )
+//        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+//            layoutSize: headerItemSize,
+//            elementKind: "header",
+//            alignment: .top
+//        )
+//        let footerItemSize = NSCollectionLayoutSize(
+//            widthDimension: .fractionalWidth(1),
+//            heightDimension: .estimated(100)
+//        )
+//        let footerItem = NSCollectionLayoutBoundarySupplementaryItem(
+//            layoutSize: footerItemSize,
+//            elementKind: "footer",
+//            alignment: .bottom
+//        )
         
         //section.boundarySupplementaryItems = [headerItem, footerItem]
         

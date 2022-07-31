@@ -192,7 +192,10 @@ private extension DefaultDeepLinkHandler {
         
         guard let dashboardVC = dashboardVC else { return }
         let wireframe: FeaturesWireframeFactory = ServiceDirectory.assembler.resolve()
-        wireframe.makeWireframe(dashboardVC).present()
+        wireframe.makeWireframe(
+            presentingIn: dashboardVC,
+            context: .init(presentationStyle: .present)
+        ).present()
     }
     
     func openMnemonicConfirmation() {
