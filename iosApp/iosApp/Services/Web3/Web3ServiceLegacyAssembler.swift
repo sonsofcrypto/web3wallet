@@ -7,10 +7,6 @@ final class Web3ServiceLegacyAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
         
         registry.register(scope: .singleton) { resolver -> Web3ServiceLegacy in
-            
-//            DefaultWeb3Service(
-//                web3ServiceLocalStorage: resolver.resolve()
-//            )
             IntegrationWeb3Service(
                 web3service: resolver.resolve(),
                 currenciesService: resolver.resolve()

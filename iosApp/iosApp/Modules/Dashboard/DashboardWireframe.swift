@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 enum DashboardWireframeDestination {
     case wallet(token: Web3Token)
@@ -42,7 +43,10 @@ final class DefaultDashboardWireframe {
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let onboardingService: OnboardingService
     private let deepLinkHandler: DeepLinkHandler
-    private let web3Service: Web3ServiceLegacy
+    private let web3Service: Web3Service
+    private let currenciesService: CurrenciesService
+    private let currencyMetadataService: CurrencyMetadataService
+    private let web3ServiceLegacy: Web3ServiceLegacy
     private let priceHistoryService: PriceHistoryService
     private let nftsService: NFTsService
     
@@ -60,7 +64,10 @@ final class DefaultDashboardWireframe {
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         onboardingService: OnboardingService,
         deepLinkHandler: DeepLinkHandler,
-        web3Service: Web3ServiceLegacy,
+        web3Service: Web3Service,
+        currenciesService: CurrenciesService,
+        currencyMetadataService: CurrencyMetadataService,
+        web3ServiceLegacy: Web3ServiceLegacy,
         priceHistoryService: PriceHistoryService,
         nftsService: NFTsService
     ) {
@@ -76,6 +83,9 @@ final class DefaultDashboardWireframe {
         self.onboardingService = onboardingService
         self.deepLinkHandler = deepLinkHandler
         self.web3Service = web3Service
+        self.currenciesService = currenciesService
+        self.currencyMetadataService = currencyMetadataService
+        self.web3ServiceLegacy = web3ServiceLegacy
         self.priceHistoryService = priceHistoryService
         self.nftsService = nftsService
     }
@@ -84,18 +94,13 @@ final class DefaultDashboardWireframe {
 extension DefaultDashboardWireframe: DashboardWireframe {
 
     func present() {
-        
         vc = wireUp()
-        
+
         if let parent = parent as? EdgeCardsController {
-            
             parent.setMaster(vc: vc)
-        
         } else if let tabVc = parent as? UITabBarController {
-            
             let vcs: [UIViewController] = [vc] + (tabVc.viewControllers ?? [])
             tabVc.setViewControllers(vcs, animated: false)
-            
         } else {
             parent.show(vc, sender: self)
         }
@@ -108,30 +113,25 @@ extension DefaultDashboardWireframe: DashboardWireframe {
         }
 
         switch destination {
-            
         case let .wallet(token):
             accountWireframeFactory.makeWireframe(
                 presentingIn: vc, context: .init(web3Token: token)
             ).present()
-            
+
         case .keyStoreNetworkSettings:
             vc.edgeCardsController?.setDisplayMode(.overview, animated: true)
-            
+
         case .presentUnderConstructionAlert:
-            
             let context = AlertContext.underConstructionAlert()
             alertWireframeFactory.makeWireframe(parent, context: context).present()
-            
+
         case .mnemonicConfirmation:
-            
             mnemonicConfirmationWireframeFactory.makeWireframe(parent).present()
-            
+
         case .receiveCoins:
-            
             presentTokenPicker(with: .receive)
-            
+
         case .sendCoins:
-            
             let wireframe = tokenSendWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(
@@ -142,7 +142,6 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             wireframe.present()
             
         case let .scanQRCode(onCompletion):
-            
             let wireframe = qrCodeScanWireframeFactory.makeWireframe(
                 presentingIn: parent,
                 context: .init(
@@ -152,9 +151,8 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 )
             )
             wireframe.present()
-            
+
         case let .nftItem(nftItem):
-            
             nftDetailWireframeFactory.makeWireframe(
                 navigationController,
                 context: .init(
@@ -165,7 +163,6 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             ).present()
             
         case let .editTokens(network, selectedTokens, onCompletion):
-            
             let source: TokenPickerWireframeContext.Source = .multiSelectEdit(
                 network: network,
                 selectedTokens: selectedTokens,
@@ -181,7 +178,6 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             wireframe.present()
             
         case .tokenSwap:
-            
             let wireframe = tokenSwapWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(
@@ -205,9 +201,13 @@ private extension DefaultDashboardWireframe {
         
         let interactor = DefaultDashboardInteractor(
             web3Service: web3Service,
+            currenciesService: currenciesService,
+            currencyMetadataService: currencyMetadataService,
+            web3ServiceLegacy: web3ServiceLegacy,
             priceHistoryService: priceHistoryService,
             nftsService: nftsService
         )
+
         let vc: DashboardViewController = UIStoryboard(.dashboard).instantiate()
         let presenter = DefaultDashboardPresenter(
             view: vc,

@@ -7,12 +7,9 @@ import Foundation
 extension DashboardViewController {
     
     var backgroundGradientHeight: CGFloat {
-        
         if collectionView.frame.size.height > collectionView.contentSize.height {
-            
             return collectionView.frame.size.height
         } else {
-            
             return collectionView.contentSize.height
         }
     }

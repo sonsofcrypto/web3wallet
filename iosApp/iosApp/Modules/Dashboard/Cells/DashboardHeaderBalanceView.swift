@@ -7,7 +7,6 @@ import UIKit
 final class DashboardHeaderBalanceView: UICollectionReusableView {
     
     private lazy var label: UILabel = {
-        
         let label = UILabel()
         label.apply(style: .largeTitle, weight: .bold)
         label.textAlignment = .center
@@ -28,6 +27,11 @@ final class DashboardHeaderBalanceView: UICollectionReusableView {
         )
         return label
     }()
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.backgroundColor = .red
+    }
 }
 
 extension DashboardHeaderBalanceView {

@@ -124,7 +124,7 @@ extension DashboardHeaderNameView {
 
     func update(
         with title: String,
-        and network: DashboardViewModel.Section.`Type`.Network?,
+        and network: DashboardViewModel.Section.Header.Network?,
         handler: Handler?
     ) {
         

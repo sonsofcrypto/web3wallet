@@ -12,19 +12,16 @@ struct DashboardViewModel {
 extension DashboardViewModel {
 
     struct Section {
-        
-        let type: `Type`
+        let header: Header
         let items: Items
         
-        enum `Type` {
-            
-            case none
+        enum Header {
             case balance(String)
-            case title(String)
             case network(Network)
-            
+            case title(String)
+            case none
+
             struct Network {
-                
                 let id: String
                 let name: String
                 let fuelCost: String
@@ -34,7 +31,6 @@ extension DashboardViewModel {
         }
         
         enum Items {
-            
             case actions([DashboardViewModel.Action])
             case notifications([DashboardViewModel.Notification])
             case wallets([DashboardViewModel.Wallet])
@@ -46,13 +42,13 @@ extension DashboardViewModel {
 extension DashboardViewModel {
 
     struct Action {
-        
+
         let title: String
         let imageName: String
         let type: `Type`
-        
+
         enum `Type` {
-            
+
             case send
             case receive
             case swap
@@ -63,7 +59,6 @@ extension DashboardViewModel {
 extension DashboardViewModel {
 
     struct Notification {
-        
         let id: String
         let image: Data
         let title: String
@@ -75,7 +70,6 @@ extension DashboardViewModel {
 extension DashboardViewModel {
 
     struct Wallet {
-        
         let name: String
         let ticker: String
         let imageData: Data
@@ -91,7 +85,6 @@ extension DashboardViewModel {
 extension DashboardViewModel {
 
     struct NFT {
-        
         let image: String
         let onSelected: () -> Void
     }
@@ -101,7 +94,7 @@ extension DashboardViewModel.Section {
     
     var hasSectionHeader: Bool {
         
-        switch type {
+        switch header {
             
         case .none:
             return false
@@ -113,7 +106,7 @@ extension DashboardViewModel.Section {
     
     var isCollapsed: Bool {
         
-        switch type {
+        switch header {
         case let .network(network):
             return network.isCollapsed
         default:
@@ -123,7 +116,7 @@ extension DashboardViewModel.Section {
     
     var networkId: String {
         
-        switch type {
+        switch header {
         case let .network(network):
             return network.id
         default:

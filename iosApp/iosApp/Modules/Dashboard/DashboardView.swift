@@ -5,7 +5,6 @@
 import UIKit
 
 protocol DashboardView: AnyObject {
-
     func update(with viewModel: DashboardViewModel)
 }
 
@@ -15,8 +14,6 @@ final class DashboardViewController: BaseViewController {
 
     var presenter: DashboardPresenter!
 
-    // NOTE: Ideally all this should be private but because we split the code in separate
-    // extensions this needs to be internal unfortunately (hoping swift one day fixes this).
     var viewModel: DashboardViewModel?
     var animatedTransitioning: UIViewControllerAnimatedTransitioning?
     var previousYOffset: CGFloat = 0
@@ -26,18 +23,13 @@ final class DashboardViewController: BaseViewController {
     var backgroundGradientHeightConstraint: NSLayoutConstraint?
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         configureUI()
-        
         presenter.present()
     }
         
     override func viewWillLayoutSubviews() {
-        
         super.viewWillLayoutSubviews()
-        
         updateBackgroundGradientTopConstraint()
         backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
     }
@@ -305,7 +297,7 @@ private extension DashboardViewController {
             fatalError("no section")
         }
         
-        switch section.type {
+        switch section.header {
         case .none:
             fatalError("We should not configure a section header when type is none.")
         case let .balance(balance):
@@ -349,7 +341,6 @@ private extension DashboardViewController {
     func makeDashboardHeaderNameViewHandler(
         for section: DashboardViewModel.Section
     ) -> DashboardHeaderNameView.Handler {
-        
         .init(
             onMoreTapped: makeOnMoreNetworkTapped(for: section)
         )

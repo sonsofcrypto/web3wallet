@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 enum DashboardPresenterEvent {
     case receiveAction
@@ -140,7 +141,6 @@ extension DefaultDashboardPresenter: DashboardInteractorLister {
 private extension DefaultDashboardPresenter {
     
     func updateView() {
-        
         self.notifications = interactor.notifications
         self.myTokens = interactor.myTokens
         view?.update(with: viewModel())
@@ -164,7 +164,7 @@ private extension DefaultDashboardPresenter {
             
             sections.append(
                 .init(
-                    type: .network(
+                    header: .network(
                         .init(
                             id: network.id,
                             name: network.name,
@@ -189,7 +189,7 @@ private extension DefaultDashboardPresenter {
         if !nfts.isEmpty {
             sections.append(
                 .init(
-                    type: .title(
+                    header: .title(
                         Localized("dashboard.section.nfts").uppercased()
                     ),
                     items: .nfts(nfts)
@@ -208,7 +208,7 @@ private extension DefaultDashboardPresenter {
         
         sections.insert(
             .init(
-                type: .balance(walletTotal.formatCurrency() ?? ""),
+                header: .balance(walletTotal.formatCurrency() ?? ""),
                 items: .actions(
                     [
                         .init(
@@ -234,7 +234,7 @@ private extension DefaultDashboardPresenter {
         
         sections.insert(
             .init(
-                type: .title(Localized("dashboard.section.notifications")),
+                header: .title(Localized("dashboard.section.notifications")),
                 items: makeNotificationItems()
             ),
             at: 1
@@ -283,7 +283,7 @@ private extension DefaultDashboardPresenter {
                 // Otherwise we create it with an empty wallets list
                 allSections.append(
                     .init(
-                        type: .network(
+                        header: .network(
                             .init(
                                 id: network.id,
                                 name: network.name,

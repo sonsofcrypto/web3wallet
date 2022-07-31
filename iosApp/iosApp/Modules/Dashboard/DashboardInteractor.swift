@@ -31,17 +31,26 @@ protocol DashboardInteractor: AnyObject {
 
 final class DefaultDashboardInteractor {
 
-    private let web3Service: Web3ServiceLegacy
+    private let web3service: Web3Service
+    private let currenciesService: CurrenciesService
+    private let currencyMetadataService: CurrencyMetadataService
+    private let web3ServiceLegacy: Web3ServiceLegacy
     private let priceHistoryService: PriceHistoryService
     private let nftsService: NFTsService
     private var listeners: [WeakContainer] = []
 
     init(
-        web3Service: Web3ServiceLegacy,
+        web3service: Web3Service,
+        currenciesService: CurrenciesService,
+        currencyMetadataService: CurrencyMetadataService,
+        web3ServiceLegacy: Web3ServiceLegacy,
         priceHistoryService: PriceHistoryService,
         nftsService: NFTsService
     ) {
-        self.web3Service = web3Service
+        self.web3ServiceLegacy = web3ServiceLegacy
+        self.web3service = web3service
+        self.currenciesService = currenciesService
+        self.currencyMetadataService = currencyMetadataService
         self.priceHistoryService = priceHistoryService
         self.nftsService = nftsService
     }
@@ -50,20 +59,19 @@ final class DefaultDashboardInteractor {
 extension DefaultDashboardInteractor: DashboardInteractor {
         
     var notifications: [Web3Notification] {
-        web3Service.dashboardNotifications
+        web3ServiceLegacy.dashboardNotifications
     }
     
     var allNetworks: [Web3Network] {
-        web3Service.allNetworks
+        web3ServiceLegacy.allNetworks
     }
 
     var myTokens: [Web3Token] {
-        print("=== getting tokens", web3Service.myTokens.count)
-        return web3Service.myTokens
+        return web3ServiceLegacy.myTokens
     }
     
     func tokenIcon(for token: Web3Token) -> Data {
-        web3Service.tokenIcon(for: token)
+        web3ServiceLegacy.tokenIcon(for: token)
     }
     
     func priceData(for token: Web3Token) -> [ Web3Candle ] {
@@ -75,7 +83,7 @@ extension DefaultDashboardInteractor: DashboardInteractor {
     }
     
     func updateMyWeb3Tokens(to tokens: [Web3Token]) {
-        web3Service.storeMyTokens(to: tokens)
+        web3ServiceLegacy.storeMyTokens(to: tokens)
     }
 }
 
@@ -85,7 +93,7 @@ extension DefaultDashboardInteractor: Web3ServiceListener {
 
     func addListener(_ listener: DashboardInteractorLister) {
         if listeners.isEmpty {
-            web3service().addListener(listener: self)
+            web3service.addListener(listener: self)
         }
 
         listeners = listeners + [WeakContainer(listener)]
@@ -94,14 +102,14 @@ extension DefaultDashboardInteractor: Web3ServiceListener {
     func removeListener(_ listener: DashboardInteractorLister?) {
         guard let listener = listener else {
             listeners = []
-            web3service().removeListener(listener: nil)
+            web3service.removeListener(listener: nil)
             return
         }
 
         listeners = listeners.filter { $0.value !== listener }
 
         if listeners.isEmpty {
-            web3service().removeListener(listener: nil)
+            web3service.removeListener(listener: nil)
         }
     }
 
@@ -119,10 +127,6 @@ extension DefaultDashboardInteractor: Web3ServiceListener {
         init(_ value: DashboardInteractorLister) {
             self.value = value
         }
-    }
-
-    private func web3service() -> web3lib.Web3Service {
-        (web3Service as! IntegrationWeb3Service).web3service
     }
 }
 

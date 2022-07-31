@@ -323,7 +323,6 @@
 		1C671FFA287FDFFF00C5F044 /* TokenSwapInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C671FF9287FDFFF00C5F044 /* TokenSwapInteractor.swift */; };
 		1C671FFC287FE02200C5F044 /* TokenSwap.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C671FFB287FE02200C5F044 /* TokenSwap.storyboard */; };
 		1C672001287FE11700C5F044 /* TokenSwapMarketCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C672000287FE11700C5F044 /* TokenSwapMarketCollectionViewCell.swift */; };
-		1C6720042880053E00C5F044 /* DashboardWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6720032880053E00C5F044 /* DashboardWireframeFactoryAssembler.swift */; };
 		1C6720062880059B00C5F044 /* MnemonicNewWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6720052880059B00C5F044 /* MnemonicNewWireframeFactoryAssembler.swift */; };
 		1C672008288005C300C5F044 /* MnemonicUpdateWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C672007288005C300C5F044 /* MnemonicUpdateWireframeFactoryAssembler.swift */; };
 		1C67200A2880193000C5F044 /* TokenEnterAmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6720092880193000C5F044 /* TokenEnterAmountView.swift */; };
@@ -860,7 +859,6 @@
 		1C671FF9287FDFFF00C5F044 /* TokenSwapInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSwapInteractor.swift; sourceTree = "<group>"; };
 		1C671FFB287FE02200C5F044 /* TokenSwap.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TokenSwap.storyboard; sourceTree = "<group>"; };
 		1C672000287FE11700C5F044 /* TokenSwapMarketCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSwapMarketCollectionViewCell.swift; sourceTree = "<group>"; };
-		1C6720032880053E00C5F044 /* DashboardWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C6720052880059B00C5F044 /* MnemonicNewWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicNewWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C672007288005C300C5F044 /* MnemonicUpdateWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C6720092880193000C5F044 /* TokenEnterAmountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenEnterAmountView.swift; sourceTree = "<group>"; };
@@ -1543,7 +1541,6 @@
 				1C60C219285724D0003BE25D /* DashboardViewModel.swift */,
 				1C60C21B285724D0003BE25D /* DashboardWireframe.swift */,
 				1C60C218285724D0003BE25D /* DashboardWireframeFactory.swift */,
-				1C6720032880053E00C5F044 /* DashboardWireframeFactoryAssembler.swift */,
 				1C60C20F285724D0003BE25D /* Cells */,
 			);
 			path = Dashboard;
@@ -2784,7 +2781,6 @@
 				1CE0064228894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift in Sources */,
 				1C60C313285724D1003BE25D /* AccountSectionHeader.swift in Sources */,
 				1CB3A1EF2840D6B70092D667 /* UIStackView+Extensions.swift in Sources */,
-				1C6720042880053E00C5F044 /* DashboardWireframeFactoryAssembler.swift in Sources */,
 				1C60C31A285724D1003BE25D /* AccountView.swift in Sources */,
 				1CB3A1CD2840D50C0092D667 /* DefaultNFTsService+Data.swift in Sources */,
 				1C64875F2832EF450091A12D /* UIBootstrapper.swift in Sources */,
