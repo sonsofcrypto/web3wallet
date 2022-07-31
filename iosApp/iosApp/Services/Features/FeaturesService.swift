@@ -14,6 +14,8 @@ struct Web3Feature {
     let approved: Double
     let rejeceted: Double
     let category: Category
+    let creationDate: Date
+    let endDate: Date
     
     enum Category {
         
@@ -56,7 +58,9 @@ private extension DefaultFeaturesService {
                 image: "dashboard-palm".assetImage!.pngData()!,
                 approved: 65,
                 rejeceted: 23,
-                category: .infrastructure
+                category: .infrastructure,
+                creationDate: Date(),
+                endDate: Date().addingTimeInterval(2*24*60*60)
             ),
             .init(
                 id: "2",
@@ -65,7 +69,9 @@ private extension DefaultFeaturesService {
                 image: "dashboard-palm".assetImage!.pngData()!,
                 approved: 23,
                 rejeceted: 23,
-                category: .infrastructure
+                category: .infrastructure,
+                creationDate: Date().addingTimeInterval(-8*24*60*60),
+                endDate: Date().addingTimeInterval(5*24*60*60)
             ),
             .init(
                 id: "3",
@@ -74,16 +80,20 @@ private extension DefaultFeaturesService {
                 image: "dashboard-palm".assetImage!.pngData()!,
                 approved: 79,
                 rejeceted: 23,
-                category: .integrations
+                category: .integrations,
+                creationDate: Date().addingTimeInterval(-5*24*60*60),
+                endDate: Date().addingTimeInterval(24*60*60)
             ),
             .init(
                 id: "4",
-                title: "Feature 3",
+                title: "Feature 4",
                 body: "Anoon will this with exciting details, this is gonna be a very long description, he loves to write!",
                 image: "dashboard-palm".assetImage!.pngData()!,
                 approved: 79,
                 rejeceted: 23,
-                category: .features
+                category: .features,
+                creationDate: Date().addingTimeInterval(-2*24*60*60),
+                endDate: Date().addingTimeInterval(2*24*60*60)
             )
         ]
     }
