@@ -9,27 +9,49 @@ final class FeatureDetailViewCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var statusView: FeatureDetailStatusView!
     @IBOutlet weak var summaryView: FeatureDetailSummaryView!
+    @IBOutlet weak var voteButton: Button!
+    
+    struct Handler {
+        
+        let onVote: (String) -> Void
+    }
 
     private var viewModel: FeatureViewModel.Details!
+    private var handler: Handler!
     
     override func awakeFromNib() {
         
         super.awakeFromNib()
         
         titleLabel.apply(style: .title3)
+        
+        voteButton.style = .primary
+        voteButton.addTarget(self, action: #selector(voteTapped), for: .touchUpInside)
     }
     
     func update(
-        with viewModel: FeatureViewModel.Details
+        with viewModel: FeatureViewModel.Details,
+        handler: Handler
     ) -> Self {
         
         self.viewModel = viewModel
+        self.handler = handler
         
         titleLabel.text = viewModel.name
         
         statusView.update(with: viewModel.status)
         summaryView.update(with: viewModel.summary)
         
+        voteButton.setTitle(viewModel.voteButton, for: .normal)
+        
         return self
+    }
+}
+
+private extension FeatureDetailViewCell  {
+    
+    @objc func voteTapped() {
+        
+        handler.onVote(viewModel.id)
     }
 }

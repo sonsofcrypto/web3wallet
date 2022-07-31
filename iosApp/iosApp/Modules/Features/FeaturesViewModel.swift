@@ -52,12 +52,11 @@ extension FeaturesViewModel {
         
         let id: String
         let title: String
-        // TODO: Extract CULT to shared
-        let approved: CultProposalsViewModel.Item.Vote
-        let rejected: CultProposalsViewModel.Item.Vote
-        let approveButtonTitle: String
-        let rejectButtonTitle: String
+        let totalVotes: String
+        let totalVotesValue: String
         let category: String?
+        let categoryValue: String?
+        let voteButtonTitle: String
     }
 }
 

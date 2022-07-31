@@ -59,7 +59,7 @@ extension FeatureViewController: UICollectionViewDataSource {
         
         let viewModel = viewModel.details[indexPath.item]
         let cell = collectionView.dequeue(FeatureDetailViewCell.self, for: indexPath)
-        return cell.update(with: viewModel)
+        return cell.update(with: viewModel, handler: makeFeatureDetailViewHandler())
     }
 }
 
@@ -183,5 +183,24 @@ private extension FeatureViewController {
         //section.interGroupSpacing = Theme.constant.padding * 0.25
         
         return section
+    }
+}
+
+private extension FeatureViewController {
+
+    func makeFeatureDetailViewHandler() -> FeatureDetailViewCell.Handler {
+        
+        .init(
+            onVote: makeOnVote()
+        )
+    }
+    
+    func makeOnVote() -> (String) -> Void {
+        
+        {
+            [weak self] id in
+            guard let self = self else { return }
+            self.presenter.handle(.vote(id: id))
+        }
     }
 }

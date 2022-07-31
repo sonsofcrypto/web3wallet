@@ -90,7 +90,7 @@ extension FeaturesViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeue(FeaturesCell.self, for: indexPath)
         return cell.update(
             with: viewModel,
-            handler: makeCultProposalCellPendingHandler()
+            handler: makeFeaturesCellHandler()
         )
     }
 }
@@ -204,16 +204,6 @@ private extension FeaturesViewController {
             makeCompositionalLayout(),
             animated: false
         )
-        collectionView.register(
-            CultProposalHeaderSupplementaryView.self,
-            forSupplementaryViewOfKind: "header",
-            withReuseIdentifier: String(describing: CultProposalHeaderSupplementaryView.self)
-        )
-        collectionView.register(
-            CultProposalFooterSupplementaryView.self,
-            forSupplementaryViewOfKind: "footer",
-            withReuseIdentifier: String(describing: CultProposalFooterSupplementaryView.self)
-        )
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -298,32 +288,21 @@ private extension FeaturesViewController {
 
 private extension FeaturesViewController {
 
-    func makeCultProposalCellPendingHandler() -> FeaturesCell.Handler {
+    func makeFeaturesCellHandler() -> FeaturesCell.Handler {
         
         .init(
-            approveProposal: makeApproveProposal(),
-            rejectProposal: makeRejectProposal()
+            onVote: makeOnVote()
         )
     }
     
-    func makeApproveProposal() -> (String) -> Void {
+    func makeOnVote() -> (String) -> Void {
         
         {
             [weak self] id in
             guard let self = self else { return }
-            self.presenter.handle(.approve(id: id))
+            self.presenter.handle(.vote(id: id))
         }
     }
-    
-    func makeRejectProposal() -> (String) -> Void {
-        
-        {
-            [weak self] id in
-            guard let self = self else { return }
-            self.presenter.handle(.reject(id: id))
-        }
-    }
-
 }
 
 //extension FeaturesViewController: UISearchResultsUpdating {

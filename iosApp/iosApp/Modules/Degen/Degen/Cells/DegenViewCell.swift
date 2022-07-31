@@ -31,6 +31,11 @@ final class DegenViewCell: CollectionViewCell {
         
         chevronImage.tintColor = Theme.colour.labelSecondary
     }
+    
+    override func setSelected(_ selected: Bool) {
+        
+        // Do nothing
+    }
 }
 
 extension DegenViewCell {

@@ -13,10 +13,12 @@ struct FeatureViewModel {
 
     struct Details {
         
+        let id: String
         let name: String
         let status: Status
         let summary: Summary
-        
+        let voteButton: String
+
         struct Status {
             
             let title: String

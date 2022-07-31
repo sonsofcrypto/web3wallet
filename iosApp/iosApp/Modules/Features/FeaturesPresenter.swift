@@ -8,8 +8,7 @@ enum FeaturesPresenterEvent {
     
     case filterBySection(sectionType: FeaturesViewModel.Section.`Type`)
     case filterBy(text: String)
-    case approve(id: String)
-    case reject(id: String)
+    case vote(id: String)
     case select(id: String)
 }
 
@@ -100,7 +99,7 @@ extension DefaultFeaturesPresenter: FeaturesPresenter {
                 )
             )
             
-        case .approve, .reject:
+        case .vote:
             
             wireframe.navigate(to: .comingSoon)
         }
@@ -139,27 +138,14 @@ private extension DefaultFeaturesPresenter {
 
     func viewModel(from feature: Web3Feature) -> FeaturesViewModel.Item {
         
-        let total = feature.approved + feature.rejeceted
-        let approved = total == 0 ? 0 : feature.approved / total
-
-        return .init(
+        .init(
             id: feature.id,
             title: feature.title,
-            approved: .init(
-                name: Localized("approved"),
-                value: approved,
-                total: feature.approved,
-                type: .approved
-            ),
-            rejected: .init(
-                name: Localized("rejected"),
-                value: approved == 0 ? 0 : 1 - approved,
-                total: feature.rejeceted,
-                type: .rejected
-            ),
-            approveButtonTitle: Localized("approve"),
-            rejectButtonTitle: Localized("reject"),
-            category: filterSectionType == .all ? feature.category.stringValue : nil
+            totalVotes: Localized("features.votes"),
+            totalVotesValue: feature.votes.stringValue,
+            category: filterSectionType == .all ? Localized("features.category") : nil,
+            categoryValue: filterSectionType == .all ? feature.category.stringValue : nil,
+            voteButtonTitle: Localized("features.button.vote")
         )
     }
 }

@@ -6,24 +6,21 @@ import UIKit
 
 final class FeaturesCell: CollectionViewCell {
     
-    // TODO: Extract Cult View to shared
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var approvedVoteView: CultProposalVoteView!
-    @IBOutlet weak var approvedVotes: UILabel!
-    @IBOutlet weak var rejectedVoteView: CultProposalVoteView!
-    @IBOutlet weak var rejectedVotes: UILabel!
     @IBOutlet weak var chevronImageView: UIImageView!
-    @IBOutlet weak var approveButton: Button!
-    @IBOutlet weak var rejectButton: Button!
-    private weak var statusView: CultProposalStatus!
+    @IBOutlet weak var voteLabel: UILabel!
+    @IBOutlet weak var voteValueLabel: UILabel!
+    @IBOutlet weak var categoryStack: UIStackView!
+    @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var categoryValueLabel: UILabel!
+    @IBOutlet weak var voteButton: Button!
 
     private var viewModel: FeaturesViewModel.Item!
     private var handler: Handler!
     
     struct Handler {
         
-        let approveProposal: (String) -> Void
-        let rejectProposal: (String) -> Void
+        let onVote: (String) -> Void
     }
     
     override func awakeFromNib() {
@@ -31,36 +28,21 @@ final class FeaturesCell: CollectionViewCell {
         super.awakeFromNib()
         
         titleLabel.apply(style: .body, weight: .bold)
-        approvedVotes.apply(style: .footnote)
-        rejectedVotes.apply(style: .footnote)
+        
+        voteLabel.apply(style: .subheadline)
+        voteLabel.textColor = Theme.colour.labelSecondary
+        voteValueLabel.apply(style: .body)
+
+        categoryLabel.apply(style: .subheadline)
+        categoryLabel.textColor = Theme.colour.labelSecondary
+        categoryValueLabel.apply(style: .body)
 
         chevronImageView.tintColor = Theme.colour.labelPrimary
         
-        approveButton.style = .primary
-        approveButton.addTarget(self, action: #selector(approveProposal), for: .touchUpInside)
-        rejectButton.style = .primary
-        rejectButton.addTarget(self, action: #selector(rejectProposal), for: .touchUpInside)
+        voteButton.style = .primary
+        voteButton.addTarget(self, action: #selector(voteTapped), for: .touchUpInside)
         
         clipsToBounds = false
-        
-        let statusView = CultProposalStatus()
-        statusView.backgroundColor = Theme.colour.navBarTint
-        addSubview(statusView)
-        self.statusView = statusView
-        statusView.addConstraints(
-            [
-                .layout(
-                    anchor: .topAnchor,
-                    constant: .equalTo(constant: -12)
-                ),
-                .layout(
-                    anchor: .trailingAnchor,
-                    constant: .equalTo(
-                        constant: Theme.constant.padding
-                    )
-                )
-            ]
-        )
         
         bottomSeparatorView.isHidden = true
     }
@@ -79,20 +61,15 @@ final class FeaturesCell: CollectionViewCell {
         self.handler = handler
         
         titleLabel.text = viewModel.title
-        approvedVoteView.update(
-            viewModel: viewModel.approved
-        )
-        approvedVotes.text = viewModel.approved.total.format(maximumFractionDigits: 3)
-        rejectedVoteView.update(
-            viewModel: viewModel.rejected
-        )
-        rejectedVotes.text = viewModel.rejected.total.format(maximumFractionDigits: 3)
         
-        approveButton.setTitle(viewModel.approveButtonTitle, for: .normal)
-        rejectButton.setTitle(viewModel.rejectButtonTitle, for: .normal)
-        
-        statusView.isHidden = viewModel.category == nil
-        statusView.text = viewModel.category ?? ""
+        voteLabel.text = viewModel.totalVotes
+        voteValueLabel.text = viewModel.totalVotesValue
+
+        categoryLabel.text = viewModel.category
+        categoryValueLabel.text = viewModel.categoryValue
+        categoryStack.isHidden = true//viewModel.category == nil
+
+        voteButton.setTitle(viewModel.voteButtonTitle, for: .normal)
         
         return self
     }
@@ -100,13 +77,8 @@ final class FeaturesCell: CollectionViewCell {
 
 private extension FeaturesCell  {
     
-    @objc func approveProposal() {
+    @objc func voteTapped() {
         
-        handler.approveProposal(viewModel.id)
-    }
-
-    @objc func rejectProposal() {
-        
-        handler.rejectProposal(viewModel.id)
+        handler.onVote(viewModel.id)
     }
 }

@@ -38,17 +38,17 @@
                                                     <rect key="frame" x="16" y="16" width="382" height="468"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mMZ-JH-vcS">
-                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="20.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="0.0"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kpJ-ro-D5D" customClass="FeatureDetailStatusView" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="36.5" width="382" height="325.5"/>
+                                                            <rect key="frame" x="0.0" y="16" width="382" height="299"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KSs-0T-SXN" customClass="FeatureDetailSummaryView" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="378" width="382" height="90"/>
+                                                            <rect key="frame" x="0.0" y="331" width="382" height="90"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ChK-QA-bxP">
                                                                     <rect key="frame" x="16" y="16" width="350" height="58"/>
@@ -89,6 +89,11 @@
                                                                 <outlet property="titleLabel" destination="ftS-wy-RVi" id="4OU-Jl-21O"/>
                                                             </connections>
                                                         </view>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x14-lX-W1D" customClass="Button" customModule="iosApp" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="437" width="382" height="31"/>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                                        </button>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
@@ -104,6 +109,7 @@
                                             <outlet property="statusView" destination="kpJ-ro-D5D" id="2hJ-Ze-jWF"/>
                                             <outlet property="summaryView" destination="KSs-0T-SXN" id="XcH-fH-W0U"/>
                                             <outlet property="titleLabel" destination="mMZ-JH-vcS" id="2Td-o2-uN2"/>
+                                            <outlet property="voteButton" destination="x14-lX-W1D" id="Rjt-I5-81T"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

@@ -11,8 +11,7 @@ struct Web3Feature {
     let title: String
     let body: String
     let image: Data
-    let approved: Double
-    let rejeceted: Double
+    let votes: Int
     let category: Category
     let creationDate: Date
     let endDate: Date
@@ -69,11 +68,10 @@ private extension DefaultFeaturesService {
         [
             .init(
                 id: "1",
-                title: "Feature 1",
+                title: "This is now a long title to test what happens",
                 body: "This is actually much cooler that you may think. Stay tunned!",
                 image: "dashboard-palm".assetImage!.pngData()!,
-                approved: 0,
-                rejeceted: 0,
+                votes: 34,
                 category: .infrastructure,
                 creationDate: Date(),
                 endDate: Date().addingTimeInterval(2*24*60*60)
@@ -83,8 +81,7 @@ private extension DefaultFeaturesService {
                 title: "Feature 2",
                 body: "Anoon will this with exciting details, this is gonna be a very long description, he loves to write!",
                 image: "dashboard-palm".assetImage!.pngData()!,
-                approved: 23,
-                rejeceted: 23,
+                votes: 44,
                 category: .infrastructure,
                 creationDate: Date().addingTimeInterval(-8*24*60*60),
                 endDate: Date().addingTimeInterval(5*24*60*60)
@@ -94,8 +91,7 @@ private extension DefaultFeaturesService {
                 title: "Feature 3",
                 body: "Anoon will this with exciting details, this is gonna be a very long description, he loves to write!",
                 image: "dashboard-palm".assetImage!.pngData()!,
-                approved: 79,
-                rejeceted: 23,
+                votes: 104,
                 category: .integrations,
                 creationDate: Date().addingTimeInterval(-5*24*60*60),
                 endDate: Date().addingTimeInterval(24*60*60)
@@ -105,8 +101,7 @@ private extension DefaultFeaturesService {
                 title: "Feature 4",
                 body: "Anoon will this with exciting details, this is gonna be a very long description, he loves to write!",
                 image: "dashboard-palm".assetImage!.pngData()!,
-                approved: 79,
-                rejeceted: 23,
+                votes: 434,
                 category: .features,
                 creationDate: Date().addingTimeInterval(-2*24*60*60),
                 endDate: Date().addingTimeInterval(2*24*60*60)

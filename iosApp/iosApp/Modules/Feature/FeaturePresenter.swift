@@ -8,6 +8,7 @@ import UIKit
 enum FeaturePresenterEvent {
 
     case dismiss
+    case vote(id: String)
 }
 
 protocol FeaturePresenter {
@@ -51,6 +52,11 @@ extension DefaultFeaturePresenter: FeaturePresenter {
         case .dismiss:
             
             wireframe.navigate(to: .dismiss)
+            
+        case .vote:
+            
+            // TODO: Open link
+            print("Open twitter link")
         }
     }
 }
@@ -80,6 +86,7 @@ private extension DefaultFeaturePresenter {
         context.features.compactMap {
             
             .init(
+                id: $0.id,
                 name: $0.title,
                 status: .init(
                     title: $0.category.stringValue,
@@ -88,7 +95,8 @@ private extension DefaultFeaturePresenter {
                 summary: .init(
                     title: Localized("feature.summary.header"),
                     summary: $0.body
-                )
+                ),
+                voteButton: Localized("feature.button.vote")
             )
         }
     }
