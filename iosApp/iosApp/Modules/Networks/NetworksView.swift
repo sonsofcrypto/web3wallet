@@ -151,7 +151,7 @@ private extension NetworksViewController {
             contentInsets: .init(
                 top: Theme.constant.padding,
                 leading: Theme.constant.padding,
-                bottom: Theme.constant.padding * 0,
+                bottom: 0,
                 trailing: Theme.constant.padding
             )
         )
