@@ -52,27 +52,29 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
               let network = web3service.network else {
             return []
         }
-        
+
+        let legacyNetwork: Web3Network = Web3Network.from(
+            network,
+            isOn: web3service.enabledNetworks().contains(network)
+        )
+
         if supported.isEmpty {
             let url = Bundle.main.url(forResource: "coin_cache", withExtension: "json")!
             let data = try! Data(contentsOf: url)
             let string = String(data: data, encoding: .utf8)!
-            let web3LibNetwork: web3lib.Network = web3service.network ?? Network.Companion().ethereum()
-            let network: Web3Network = Web3Network.from(
-                web3LibNetwork,
-                isOn: web3service.enabledNetworks().contains(web3LibNetwork)
-            )
+            print("=== supported string len", string.count)
             supported = currenciesService.currencyList(data: string).map {
                 Web3Token.from(
                     currency: $0,
-                    network: network,
+                    network: legacyNetwork,
                     inWallet: currenciesService.currencies(
                         wallet: wallet,
-                        network: web3LibNetwork
+                        network: network
                     ).contains($0)
                 )
             }
         }
+        print("=== supported", supported)
         return supported
 
     }
@@ -88,15 +90,11 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
             isOn: web3service.enabledNetworks().contains(network)
         )
 
-        let defaults = UserDefaults(suiteName: "Web3libDefaultCurrenciesService")
-        print("=== defaults", defaults?.string(forKey: wallet.id() + "-" + network.id()))
-
         let currencies = currenciesService.currencies(
             wallet: wallet,
             network: network
         )
 
-        print("=== currencies", currencies)
 
         return currencies.map {
             Web3Token.from(
@@ -142,7 +140,14 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
     }
     
     func tokenIcon(for token: Web3Token) -> Data {
-        tokenIconName(for: token).loadIconData
+        var image: UIImage?
+
+        if let id = token.coingGeckoId {
+            image = UIImage(named: id + "_large")
+        }
+
+        image = image ?? UIImage(named: "currency_placeholder")
+        return image!.pngData()!
     }
     
     func tokenIconName(for token: Web3Token) -> String {

@@ -126,17 +126,14 @@ extension String {
 extension String {
     
     var loadIconData: Data {
-        
         assetImage!.pngData()!
     }
 
     var assetImage: UIImage? {
-        
         UIImage.loadImage(named: self)
     }
     
     var qrCodeData: Data? {
-        
         data(using: .isoLatin1, allowLossyConversion: false)
     }
 }

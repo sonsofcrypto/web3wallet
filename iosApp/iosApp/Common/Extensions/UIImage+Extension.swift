@@ -7,7 +7,6 @@ import UIKit
 extension UIImage {
     
     static func loadImage(named: String) -> UIImage? {
-        
         UIImage(named: Theme.name + "-" + named) ??
         UIImage(named: named) ??
         UIImage(systemName: named) ??
@@ -15,7 +14,6 @@ extension UIImage {
     }
         
     func resize(to size: CGSize) -> UIImage {
-        
         UIGraphicsImageRenderer(size: size).image { _ in
             draw(in: .init(origin: .zero, size: size))
         }
