@@ -294,3 +294,7 @@
 "features.segmentedControl.infrastructure" = "Infrastructure";
 "features.segmentedControl.integrations" = "Integrations";
 "features.segmentedControl.features" = "Features";
+
+"feature.title" = "Feature";
+"feature.summary.header" = "Details";
+"feature.title.of" = "of";

@@ -123,7 +123,7 @@ private extension DefaultFeaturesPresenter {
             guard let self = self else { return false }
             guard !self.filterText.isEmpty else { return true }
             return $0.title.contains(self.filterText)
-        }.sorted { $0.id > $1.id }
+        }.sortedList
         
         let section: FeaturesViewModel.Section = .init(
             title: filterSectionType.stringValue + " (\(featuresList.count))",
@@ -169,15 +169,20 @@ private extension DefaultFeaturesPresenter {
     var currentList: [Web3Feature] {
         
         switch filterSectionType {
-        case .all: return allFeatures
-        case .infrastructure: return allFeatures.infrastructure
-        case .integrations: return allFeatures.integrations
-        case .features: return allFeatures.features
+        case .all: return allFeatures.sortedList
+        case .infrastructure: return allFeatures.infrastructure.sortedList
+        case .integrations: return allFeatures.integrations.sortedList
+        case .features: return allFeatures.features.sortedList
         }
     }
 }
 
 extension Array where Element == Web3Feature {
+    
+    var sortedList: [Web3Feature] {
+        
+        sorted { $0.id > $1.id }
+    }
     
     var integrations: [Web3Feature] {
         
@@ -202,21 +207,5 @@ extension Array where Element == Web3Feature {
     func filterTitle(by text: String) -> [Web3Feature] {
         
         filter { $0.title.contains(text) }
-    }
-}
-
-extension Web3Feature.Category {
-    
-    var stringValue: String {
-        
-        switch self {
-            
-        case .infrastructure:
-            return Localized("features.segmentedControl.infrastructure")
-        case .integrations:
-            return Localized("features.segmentedControl.integrations")
-        case .features:
-            return Localized("features.segmentedControl.infrastructure")
-        }
     }
 }

@@ -42,6 +42,11 @@ final class DashboardNotificationCell: CollectionViewCell {
         closeButton.tintColor = Theme.colour.labelPrimary
         closeButton.addTarget(self, action: #selector(dismissTapped), for: .touchUpInside)
     }
+    
+    override func setSelected(_ selected: Bool) {
+        
+        // do nothing
+    }
 
     override func prepareForReuse() {
         

@@ -1,40 +1,40 @@
-// Created by web3d3v on 11/02/2022.
+// Created by web3d4v on 31/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import UIKit
 
-struct CultProposalWireframeContext {
+struct FeatureWireframeContext {
     
-    let proposal: CultProposal
-    let proposals: [CultProposal]
+    let feature: Web3Feature
+    let features: [Web3Feature]
 }
 
-enum CultProposalWireframeDestination {
+enum FeatureWireframeDestination {
 
     case dismiss
 }
 
-protocol CultProposalWireframe {
+protocol FeatureWireframe {
     func present()
-    func navigate(to destination: CultProposalWireframeDestination)
+    func navigate(to destination: FeatureWireframeDestination)
 }
 
-final class DefaultCultProposalWireframe {
+final class DefaultFeatureWireframe {
 
     private weak var parent: UIViewController!
-    private let context: CultProposalWireframeContext
+    private let context: FeatureWireframeContext
 
     init(
         parent: UIViewController,
-        context: CultProposalWireframeContext
+        context: FeatureWireframeContext
     ) {
         self.parent = parent
         self.context = context
     }
 }
 
-extension DefaultCultProposalWireframe: CultProposalWireframe {
+extension DefaultFeatureWireframe: FeatureWireframe {
 
     func present() {
         
@@ -42,7 +42,7 @@ extension DefaultCultProposalWireframe: CultProposalWireframe {
         parent.show(vc, sender: self)
     }
 
-    func navigate(to destination: CultProposalWireframeDestination) {
+    func navigate(to destination: FeatureWireframeDestination) {
 
         switch destination {
             
@@ -59,12 +59,12 @@ extension DefaultCultProposalWireframe: CultProposalWireframe {
     }
 }
 
-private extension DefaultCultProposalWireframe {
+private extension DefaultFeatureWireframe {
 
     func wireUp() -> UIViewController {
         
-        let vc: CultProposalViewController = UIStoryboard(.cultProposal).instantiate()
-        let presenter = DefaultCultProposalPresenter(
+        let vc: FeatureViewController = UIStoryboard(.feature).instantiate()
+        let presenter = DefaultFeaturePresenter(
             view: vc,
             wireframe: self,
             context: context

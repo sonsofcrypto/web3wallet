@@ -11,6 +11,7 @@ final class FeaturesWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> FeaturesWireframeFactory in
 
             DefaultFeaturesWireframeFactory(
+                featureWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
                 featuresService: resolver.resolve()
             )

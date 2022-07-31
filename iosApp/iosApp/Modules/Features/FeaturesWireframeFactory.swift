@@ -14,13 +14,16 @@ protocol FeaturesWireframeFactory {
 
 final class DefaultFeaturesWireframeFactory {
 
+    private let featureWireframeFactory: FeatureWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let featuresService: FeaturesService
 
     init(
+        featureWireframeFactory: FeatureWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         featuresService: FeaturesService
     ) {
+        self.featureWireframeFactory = featureWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.featuresService = featuresService
     }
@@ -36,6 +39,7 @@ extension DefaultFeaturesWireframeFactory: FeaturesWireframeFactory {
         DefaultFeaturesWireframe(
             presentingIn: presentingIn,
             context: context,
+            featureWireframeFactory: featureWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
             featuresService: featuresService
         )

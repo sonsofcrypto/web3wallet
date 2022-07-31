@@ -25,6 +25,22 @@ struct Web3Feature {
     }
 }
 
+extension Web3Feature.Category {
+    
+    var stringValue: String {
+        
+        switch self {
+            
+        case .infrastructure:
+            return Localized("features.segmentedControl.infrastructure")
+        case .integrations:
+            return Localized("features.segmentedControl.integrations")
+        case .features:
+            return Localized("features.segmentedControl.infrastructure")
+        }
+    }
+}
+
 protocol FeaturesService {
     
     func fetchAllFeatures(onCompletion: @escaping (Result<[Web3Feature], Error>) -> Void)
@@ -38,7 +54,7 @@ extension DefaultFeaturesService: FeaturesService {
     
     func fetchAllFeatures(onCompletion: @escaping (Result<[Web3Feature], Error>) -> Void) {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             
             guard let self = self else { return }
             onCompletion(.success(self.allFeatures))
@@ -56,8 +72,8 @@ private extension DefaultFeaturesService {
                 title: "Feature 1",
                 body: "This is actually much cooler that you may think. Stay tunned!",
                 image: "dashboard-palm".assetImage!.pngData()!,
-                approved: 65,
-                rejeceted: 23,
+                approved: 0,
+                rejeceted: 0,
                 category: .infrastructure,
                 creationDate: Date(),
                 endDate: Date().addingTimeInterval(2*24*60*60)

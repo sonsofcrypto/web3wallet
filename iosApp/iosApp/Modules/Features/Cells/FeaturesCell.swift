@@ -65,6 +65,11 @@ final class FeaturesCell: CollectionViewCell {
         bottomSeparatorView.isHidden = true
     }
     
+    override func setSelected(_ selected: Bool) {
+        
+        // do nothing
+    }
+    
     func update(
         with viewModel: FeaturesViewModel.Item,
         handler: Handler

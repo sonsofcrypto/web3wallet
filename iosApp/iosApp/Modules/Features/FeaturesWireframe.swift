@@ -24,6 +24,7 @@ final class DefaultFeaturesWireframe {
 
     private weak var presentingIn: UIViewController!
     private let context: FeaturesWireframeContext
+    private let featureWireframeFactory: FeatureWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let featuresService: FeaturesService
 
@@ -32,11 +33,13 @@ final class DefaultFeaturesWireframe {
     init(
         presentingIn: UIViewController,
         context: FeaturesWireframeContext,
+        featureWireframeFactory: FeatureWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         featuresService: FeaturesService
     ) {
         self.presentingIn = presentingIn
         self.context = context
+        self.featureWireframeFactory = featureWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.featuresService = featuresService
     }
@@ -57,8 +60,9 @@ extension DefaultFeaturesWireframe: FeaturesWireframe {
             presentingIn.present(vc, animated: true)
             
         case .push:
-            guard let presentingIn = presentingIn as? NavigationController else { return }
-            presentingIn.pushViewController(vc, animated: true)
+            guard let navigationController = presentingIn as? NavigationController else { return }
+            self.navigationController = navigationController
+            navigationController.pushViewController(vc, animated: true)
         }
     }
 
@@ -68,7 +72,10 @@ extension DefaultFeaturesWireframe: FeaturesWireframe {
             
         case let .feature(feature, features):
             
-            break
+            featureWireframeFactory.makeWireframe(
+                parent: navigationController,
+                context: .init(feature: feature, features: features)
+            ).present()
             
         case .comingSoon:
             
@@ -103,6 +110,7 @@ extension DefaultFeaturesWireframe {
         case .present:
                         
             let navigationController = NavigationController(rootViewController: vc)
+            self.navigationController = navigationController
             return navigationController
             
         case .push:

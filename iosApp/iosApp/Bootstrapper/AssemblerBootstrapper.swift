@@ -73,7 +73,8 @@ private extension AssemblerBootstrapper {
             NetworkPickerWireframeFactoryAssembler(),
             QRCodeScanWireframeFactoryAssembler(),
             ConfirmationWireframeFactoryAssembler(),
-            FeaturesWireframeFactoryAssembler()
+            FeaturesWireframeFactoryAssembler(),
+            FeatureWireframeFactoryAssembler()
         ]
     }
 }
