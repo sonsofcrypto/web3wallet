@@ -1,4 +1,4 @@
-// Created by web3d3v on 11/02/2022.
+// Created by web3d3v on 30/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
@@ -12,6 +12,9 @@ protocol FeaturesView: AnyObject {
 final class FeaturesViewController: BaseViewController {
     
     //let searchController = UISearchController()
+    @IBOutlet weak var topContainerView: UIView!
+    @IBOutlet weak var segmentContainer: UIView!
+    @IBOutlet weak var dividerLineView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var collectionView: UICollectionView!
     private let refreshControl = UIRefreshControl()
@@ -28,6 +31,13 @@ final class FeaturesViewController: BaseViewController {
         
         presenter?.present()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        
+        navigationController?.showBottomLine(false)
+    }    
 }
 
 extension FeaturesViewController: FeaturesView {
@@ -35,9 +45,9 @@ extension FeaturesViewController: FeaturesView {
     func update(with viewModel: FeaturesViewModel) {
         
         self.viewModel = viewModel
+        
+        title = viewModel.title
                 
-        setTitle()
-
         switch viewModel {
             
         case .loading:
@@ -77,60 +87,11 @@ extension FeaturesViewController: UICollectionViewDataSource {
         
         let section = viewModel.sections[indexPath.section]
         let viewModel = section.items[indexPath.item]
-
-        fatalError()
-//        switch section.type {
-//        case .pending:
-//            let cell = collectionView.dequeue(CultProposalCellPending.self, for: indexPath)
-//            return cell.update(with: viewModel, handler: makeCultProposalCellPendingHandler())
-//        case .closed:
-//            let cell = collectionView.dequeue(CultProposalCellClosed.self, for: indexPath)
-//            return cell.update(with: viewModel)
-//        }
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        viewForSupplementaryElementOfKind kind: String,
-        at indexPath: IndexPath
-    ) -> UICollectionReusableView {
-        
-        fatalError()
-//        switch kind {
-//        case "header":
-//            
-//            guard let headerView = collectionView.dequeueReusableSupplementaryView(
-//                ofKind: kind,
-//                withReuseIdentifier: String(describing: CultProposalHeaderSupplementaryView.self),
-//                for: indexPath
-//            ) as? CultProposalHeaderSupplementaryView else {
-//                
-//                return CultProposalHeaderSupplementaryView()
-//            }
-//            
-//            let section = viewModel.sections[indexPath.section]
-//            headerView.update(with: section)
-//            return headerView
-//            
-//        case "footer":
-//            
-//            guard let footerView = collectionView.dequeueReusableSupplementaryView(
-//                ofKind: kind,
-//                withReuseIdentifier: String(describing: CultProposalFooterSupplementaryView.self),
-//                for: indexPath
-//            ) as? CultProposalFooterSupplementaryView else {
-//                
-//                return CultProposalFooterSupplementaryView()
-//            }
-//            
-//            let section = viewModel.sections[indexPath.section]
-//            footerView.update(with: section.footer)
-//            return footerView
-//            
-//        default:
-//            assertionFailure("Unexpected element kind: \(kind).")
-//            return UICollectionReusableView()
-//        }
+        let cell = collectionView.dequeue(FeaturesCell.self, for: indexPath)
+        return cell.update(
+            with: viewModel,
+            handler: makeCultProposalCellPendingHandler()
+        )
     }
 }
 
@@ -143,7 +104,7 @@ extension FeaturesViewController: UICollectionViewDelegate {
         
         let section = viewModel.sections[indexPath.section]
         let item = section.items[indexPath.row]
-        presenter.handle(.selectProposal(id: item.id))
+        presenter.handle(.select(id: item.id))
     }
     
 //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -166,74 +127,76 @@ private extension FeaturesViewController {
         activityIndicator.stopAnimating()
     }
     
-    func setTitle() {
-        
-        switch viewModel {
-            
-        case .loading, .error, .none:
-            
-            setDefaultTitle()
-
-        case .loaded:
-            
-            setSegmentedTitle()
-        }
-    }
-    
-    func setDefaultTitle() {
-        
-        let cultIcon = viewModel.titleIcon.pngImage!.resize(to: .init(width: 32, height: 32))
-        let imageView = UIImageView(image: cultIcon)
-        let titleLabel = UILabel()
-        titleLabel.text = viewModel.title
-        titleLabel.apply(style: .navTitle)
-        
-        let stackView = HStackView([imageView, titleLabel])
-        stackView.spacing = 4
-        
-        navigationItem.titleView = stackView
-    }
-    
-    func setSegmentedTitle() {
+    func setSegmented() {
         
         let segmentControl = SegmentedControl()
         segmentControl.insertSegment(
-            withTitle: Localized("cult.proposals.segmentedControl.pending"),
+            withTitle: Localized("features.segmentedControl.all"),
             at: 0,
             animated: false
         )
         segmentControl.insertSegment(
-            withTitle: Localized("cult.proposals.segmentedControl.closed"),
+            withTitle: Localized("features.segmentedControl.infrastructure"),
             at: 1,
             animated: false
         )
+        segmentControl.insertSegment(
+            withTitle: Localized("features.segmentedControl.integrations"),
+            at: 2,
+            animated: false
+        )
+        segmentControl.insertSegment(
+            withTitle: Localized("features.segmentedControl.features"),
+            at: 3,
+            animated: false
+        )
         
-        switch viewModel.selectedSectionType {
-            
-        case .pending:
-            segmentControl.selectedSegmentIndex = 0
-        case .closed:
-            segmentControl.selectedSegmentIndex = 1
-        }
+        segmentControl.selectedSegmentIndex = 0
         
         segmentControl.addTarget(
             self,
             action: #selector(segmentControlChanged(_:)),
             for: .valueChanged
         )
-        navigationItem.titleView = segmentControl
+        segmentContainer.addSubview(segmentControl)
+        segmentControl.addConstraints(
+            [
+                .layout(anchor: .centerYAnchor),
+                .layout(
+                    anchor: .leadingAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding)
+                ),
+                .layout(
+                    anchor: .trailingAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding)
+                )
+            ]
+        )
     }
     
     @objc func segmentControlChanged(_ sender: SegmentedControl) {
         
-        presenter.handle(
-            .filterBySection(
-                sectionType: sender.selectedSegmentIndex == 0 ? .pending : .closed
-            )
+        let sectionType: FeaturesViewModel.Section.`Type`
+        
+        switch sender.selectedSegmentIndex {
+            
+        case 0: sectionType = .all
+        case 1: sectionType = .infrastructure
+        case 2: sectionType = .integrations
+        default: sectionType = .features
+        }
+        
+        return presenter.handle(
+            .filterBySection(sectionType: sectionType)
         )
     }
     
     func configureUI() {
+        
+        topContainerView.backgroundColor = Theme.colour.navBarBackground
+        dividerLineView.backgroundColor = navigationController?.bottomLineColor
+        
+        setSegmented()
         
         activityIndicator.color = Theme.colour.activityIndicator
         
@@ -322,7 +285,7 @@ private extension FeaturesViewController {
             alignment: .bottom
         )
         
-        section.boundarySupplementaryItems = [headerItem, footerItem]
+        //section.boundarySupplementaryItems = [headerItem, footerItem]
         
         return section
     }
@@ -330,7 +293,7 @@ private extension FeaturesViewController {
 
 private extension FeaturesViewController {
 
-    func makeCultProposalCellPendingHandler() -> CultProposalCellPending.Handler {
+    func makeCultProposalCellPendingHandler() -> FeaturesCell.Handler {
         
         .init(
             approveProposal: makeApproveProposal(),
@@ -343,7 +306,7 @@ private extension FeaturesViewController {
         {
             [weak self] id in
             guard let self = self else { return }
-            self.presenter.handle(.approveProposal(id: id))
+            self.presenter.handle(.approve(id: id))
         }
     }
     
@@ -352,7 +315,7 @@ private extension FeaturesViewController {
         {
             [weak self] id in
             guard let self = self else { return }
-            self.presenter.handle(.rejectProposal(id: id))
+            self.presenter.handle(.reject(id: id))
         }
     }
 

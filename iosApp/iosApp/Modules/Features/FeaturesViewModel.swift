@@ -1,4 +1,4 @@
-// Created by web3d3v on 11/02/2022.
+// Created by web3d3v on 30/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
@@ -18,11 +18,27 @@ extension FeaturesViewModel {
         let title: String
         let type: `Type`
         let items: [Item]
-        let footer: Footer
+        let footer: Footer?
         
         enum `Type` {
-            case pending
-            case closed
+            case all
+            case infrastructure
+            case integrations
+            case features
+            
+            var stringValue: String {
+                
+                switch self {
+                case .all:
+                    return Localized("features.segmentedControl.all")
+                case .infrastructure:
+                    return Localized("features.segmentedControl.infrastructure")
+                case .integrations:
+                    return Localized("features.segmentedControl.integrations")
+                case .features:
+                    return Localized("features.segmentedControl.features")
+                }
+            }
         }
         
         struct Footer {
@@ -36,25 +52,12 @@ extension FeaturesViewModel {
         
         let id: String
         let title: String
-        let approved: Vote
-        let rejected: Vote
+        // TODO: Extract CULT to shared
+        let approved: CultProposalsViewModel.Item.Vote
+        let rejected: CultProposalsViewModel.Item.Vote
         let approveButtonTitle: String
         let rejectButtonTitle: String
-        let endDate: Date
-        
-        struct Vote {
-            
-            let name: String
-            let value: Double
-            let total: Double
-            let type: `Type`
-            
-            enum `Type` {
-                
-                case approved
-                case rejected
-            }
-        }
+        let category: String?
     }
 }
 
@@ -71,14 +74,9 @@ extension FeaturesViewModel {
 extension FeaturesViewModel {
     
     var title: String {
-        Localized("cult.proposals.title")
+        Localized("features.title")
     }
     
-    var titleIcon: Data {
-        
-        "degen-cult-icon".assetImage!.pngData()!
-    }
-
     var sections: [FeaturesViewModel.Section] {
         
         switch self {
@@ -95,7 +93,7 @@ extension FeaturesViewModel {
         case let .loaded(_, type):
             return type
         default:
-            return .pending
+            return .all
         }
     }
 }

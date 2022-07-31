@@ -1,4 +1,4 @@
-// Created by web3d3v on 04/06/2022.
+// Created by web3d3v on 30/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
@@ -11,9 +11,8 @@ final class FeaturesWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> FeaturesWireframeFactory in
 
             DefaultFeaturesWireframeFactory(
-                cultProposalWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
-                cultService: resolver.resolve()
+                featuresService: resolver.resolve()
             )
         }
     }

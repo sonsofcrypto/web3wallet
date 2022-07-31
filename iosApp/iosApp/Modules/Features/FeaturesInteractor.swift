@@ -1,4 +1,4 @@
-// Created by web3d3v on 11/02/2022.
+// Created by web3d3v on 30/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
@@ -6,27 +6,27 @@ import Foundation
 
 protocol FeaturesInteractor: AnyObject {
 
-    func fetchProposals(
-        onCompletion: @escaping (Result<[CultProposal], Error>) -> Void
+    func fetchAllFeatures(
+        onCompletion: @escaping (Result<[Web3Feature], Error>) -> Void
     )
 }
 
 final class DefaultFeaturesInteractor {
 
-    private let cultService: CultService
+    private let featureService: FeaturesService
 
-    init(_ cultService: CultService) {
+    init(featureService: FeaturesService) {
         
-        self.cultService = cultService
+        self.featureService = featureService
     }
 }
 
 extension DefaultFeaturesInteractor: FeaturesInteractor {
 
-    func fetchProposals(
-        onCompletion: @escaping (Result<[CultProposal], Error>) -> Void
+    func fetchAllFeatures(
+        onCompletion: @escaping (Result<[Web3Feature], Error>) -> Void
     ) {
         
-        cultService.fetchProposals(onCompletion: onCompletion)
+        featureService.fetchAllFeatures(onCompletion: onCompletion)
     }
 }

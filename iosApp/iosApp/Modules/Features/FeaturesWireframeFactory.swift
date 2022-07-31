@@ -1,4 +1,4 @@
-// Created by web3d3v on 11/02/2022.
+// Created by web3d3v on 30/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
@@ -11,18 +11,15 @@ protocol FeaturesWireframeFactory {
 
 final class DefaultFeaturesWireframeFactory {
 
-    private let cultProposalWireframeFactory: CultProposalWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
-    private let cultService: CultService
+    private let featuresService: FeaturesService
 
     init(
-        cultProposalWireframeFactory: CultProposalWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        cultService: CultService
+        featuresService: FeaturesService
     ) {
-        self.cultProposalWireframeFactory = cultProposalWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
-        self.cultService = cultService
+        self.featuresService = featuresService
     }
 }
 
@@ -32,9 +29,8 @@ extension DefaultFeaturesWireframeFactory: FeaturesWireframeFactory {
         
         DefaultFeaturesWireframe(
             parent: parent,
-            cultProposalWireframeFactory: cultProposalWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
-            cultService: cultService
+            featuresService: featuresService
         )
     }
 }
