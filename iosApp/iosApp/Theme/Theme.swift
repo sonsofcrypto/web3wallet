@@ -5,28 +5,21 @@
 import UIKit
 
 var Theme: Themable = appTheme {
-    
     didSet { ServiceDirectory.rebootApp() }
 }
 
 var appTheme: Themable {
-    
     let service: SettingsService = ServiceDirectory.assembler.resolve()
-    
     if service.isSelected(item: .theme, action: .themeMiami) {
-        
-        return ThemeA()
+        return ThemeMiami()
     } else if service.isSelected(item: .theme, action: .themeIOS) {
-        
         return ThemeIOS()
     } else {
-        
         return ThemeIOS()
     }
 }
 
 protocol Themable {
-    
     var name: String { get }
     var statusBarStyle: ThemeStatusBarStyle { get }
     var type: ThemeType { get }
@@ -36,7 +29,6 @@ protocol Themable {
 }
 
 struct ThemeStatusBarStyle {
-    
     let lightMode: Style
     let darkMode: Style
     
@@ -79,17 +71,15 @@ extension ThemeStatusBarStyle {
 
 enum ThemeType {
     
-    case themeA
-    case themeIOS
+    case themeMiami
+    case themeVanilla
     
     var isThemeA: Bool {
-        
-        self == .themeA
+        self == .themeMiami
     }
     
     var isThemeIOS: Bool {
-        
-        self == .themeIOS
+        self == .themeVanilla
     }
 }
 
@@ -148,8 +138,8 @@ struct ThemeColour {
     let fillTertiary: UIColor
     let fillQuaternary: UIColor
 
-    let separatorNoTransparency: UIColor
-    let separatorWithTransparency: UIColor
+    let separator: UIColor
+    let separatorTransparent: UIColor
         
     let labelPrimary: UIColor
     let labelSecondary: UIColor

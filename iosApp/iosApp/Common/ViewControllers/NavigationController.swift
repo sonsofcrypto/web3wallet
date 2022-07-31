@@ -45,21 +45,17 @@ final class NavigationController: UINavigationController {
 extension UINavigationController {
     
     var bottomLineColor: UIColor? {
-        
         guard let navigationController = self as? NavigationController else {
-            
             return nil
         }
-        
         return navigationController.systemShadowColor
     }
     
     func showBottomLine(_ showBottomLine: Bool) {
-        
         let appearance = navigationBar.standardAppearance
         appearance.shadowColor = showBottomLine
-        ? bottomLineColor
-        : .clear
+            ? bottomLineColor
+            : .clear
         navigationBar.scrollEdgeAppearance = appearance
     }
 }

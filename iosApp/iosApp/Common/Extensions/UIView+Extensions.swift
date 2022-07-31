@@ -88,7 +88,7 @@ extension UIView {
     }
     
     class func dividerLine(
-        backgroundColor: UIColor = Theme.colour.separatorWithTransparency,
+        backgroundColor: UIColor = Theme.colour.separatorTransparent,
         height: CGFloat = 1
     ) -> UIView {
         

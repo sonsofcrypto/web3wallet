@@ -20,7 +20,7 @@ private extension SeparatorView {
     
     func configureUI() {
         
-        backgroundColor = Theme.colour.separatorWithTransparency
+        backgroundColor = Theme.colour.separatorTransparent
 
         let separatorHeight: CGFloat = 0.25
         if let heightConstraint = heightConstraint {

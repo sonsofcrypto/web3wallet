@@ -45,7 +45,7 @@ private extension CollectionViewCell {
     func configureSeparator() {
         
         let separator = UIView()
-        separator.backgroundColor = Theme.colour.separatorWithTransparency
+        separator.backgroundColor = Theme.colour.separatorTransparent
         contentView.addSubview(separator)
         separator.addConstraints(
             [

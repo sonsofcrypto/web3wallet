@@ -37,7 +37,7 @@ final class TokenAddCollectionViewCell: UICollectionViewCell {
         
         (tokenDetailsView.subviews.first as? UIStackView)?.arrangedSubviews.forEach {
             
-            if $0.tag == 10 { $0.backgroundColor = Theme.colour.separatorWithTransparency }
+            if $0.tag == 10 { $0.backgroundColor = Theme.colour.separatorTransparent }
         }
         
         saveButton.style = .primary

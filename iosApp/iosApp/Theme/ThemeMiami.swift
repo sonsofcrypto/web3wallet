@@ -4,21 +4,17 @@
 
 import UIKit
 
-struct ThemeA: Themable {
+struct ThemeMiami: Themable {
     
-    var name: String {
-        "themeA"
-    }
-    
+    var name: String { "themeA" }
+    var type: ThemeType { .themeMiami }
+
     var statusBarStyle: ThemeStatusBarStyle {
-        
         .init(lightMode: .light, darkMode: .light)
     }
     
-    var type: ThemeType { .themeA }
-    
+
     var colour: ThemeColour {
-        
         let pallete = ThemeColourPalette(name: name)
         return .init(
             gradientTop: .init { traits in
@@ -51,8 +47,8 @@ struct ThemeA: Themable {
             },
             fillTertiary: pallete.system767680,
             fillQuaternary: pallete.systemEBEBF5.withAlpha(0.18),
-            separatorNoTransparency: pallete.systemC6C6C8,
-            separatorWithTransparency: pallete.systemEBEBF5.withAlpha(0.3),
+            separator: pallete.systemC6C6C8,
+            separatorTransparent: pallete.systemEBEBF5.withAlpha(0.3),
             labelPrimary: pallete.systemWhite,
             labelSecondary: pallete.systemEBEBF5.withAlpha(0.6),
             labelTertiary: pallete.systemEBEBF5.withAlpha(0.3),
@@ -156,7 +152,7 @@ struct ThemeA: Themable {
     }
 }
 
-private extension ThemeA {
+private extension ThemeMiami {
     
     struct ThemeColourPalette {
         

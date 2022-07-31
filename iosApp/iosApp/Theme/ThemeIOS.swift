@@ -16,7 +16,7 @@ struct ThemeIOS: Themable {
         .init(lightMode: .dark, darkMode: .light)
     }
     
-    var type: ThemeType { .themeIOS }
+    var type: ThemeType { .themeVanilla }
     
     var colour: ThemeColour {
         
@@ -80,12 +80,12 @@ struct ThemeIOS: Themable {
                 pallete.system767680.withAlpha(0.18) :
                 pallete.system747480.withAlpha(0.08)
             },
-            separatorNoTransparency: .init { traits in
+            separator: .init { traits in
                 traits.isDarkMode ?
                 pallete.system38383A :
                 pallete.systemC6C6C8
             },
-            separatorWithTransparency: .init { traits in
+            separatorTransparent: .init { traits in
                 traits.isDarkMode ?
                 pallete.system545458.withAlpha(0.65) :
                 pallete.system3C3C43.withAlpha(0.36)

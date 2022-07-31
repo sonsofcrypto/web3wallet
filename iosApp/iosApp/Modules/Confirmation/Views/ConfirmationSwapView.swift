@@ -250,7 +250,7 @@ private extension ConfirmationSwapView {
     func makeDividerLine() -> UIView {
         
         let divider = UIView()
-        divider.backgroundColor = Theme.colour.separatorWithTransparency
+        divider.backgroundColor = Theme.colour.separatorTransparent
         
         let view = UIView()
         view.backgroundColor = .clear

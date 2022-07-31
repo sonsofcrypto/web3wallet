@@ -14,7 +14,7 @@ final class CultProposalDetailStatusView: UIView {
         super.awakeFromNib()
         
         let statusView = CultProposalStatus()
-        statusView.backgroundColor = Theme.colour.separatorWithTransparency
+        statusView.backgroundColor = Theme.colour.separatorTransparent
         statusView.label.apply(style: .headline)
         addSubview(statusView)
         self.statusView = statusView

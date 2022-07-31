@@ -115,7 +115,7 @@ private extension GradientView {
         
         switch Theme.type {
             
-        case .themeA:
+        case .themeMiami:
 
             let topColor = Theme.colour.gradientTop
 //            let middleTopColor = isDarkMode ? UIColor(rgb: 0xDA3E9B) : UIColor(rgb: 0x4361BC).withAlpha(0.75)
@@ -135,7 +135,7 @@ private extension GradientView {
                 //(layer as? CAGradientLayer)?.locations = [0,0.3,0.5,0.75,1]
             }
             
-        case .themeIOS:
+        case .themeVanilla:
             colors = [
                 Theme.colour.gradientTop, Theme.colour.gradientBottom
             ]

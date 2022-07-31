@@ -131,7 +131,7 @@ private extension DefaultCultProposalPresenter {
         case .pending:
             return Theme.colour.navBarTint
         case .closed:
-            return Theme.colour.separatorNoTransparency
+            return Theme.colour.separator
         }
     }
     

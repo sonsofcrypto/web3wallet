@@ -20,7 +20,7 @@ final class CultProposalDetailSummaryView: UIView {
                 
         titleLabel.apply(style: .headline, weight: .bold)
         
-        separatorView.backgroundColor = Theme.colour.separatorWithTransparency
+        separatorView.backgroundColor = Theme.colour.separatorTransparent
         stackView.setCustomSpacing(Theme.constant.padding * 0.75, after: titleLabel)
         stackView.setCustomSpacing(Theme.constant.padding * 0.75, after: separatorView)
 
