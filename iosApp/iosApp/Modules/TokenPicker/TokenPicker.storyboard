@@ -85,7 +85,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="md3-vt-1dq">
-                                <rect key="frame" x="0.0" y="88.5" width="414" height="773.5"/>
+                                <rect key="frame" x="0.0" y="88.5" width="414" height="807.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Rdh-1Y-e7S">
                                     <size key="itemSize" width="414" height="128"/>
@@ -271,7 +271,7 @@
                         <viewLayoutGuide key="safeArea" id="sTJ-sP-662"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="sTJ-sP-662" firstAttribute="bottom" secondItem="md3-vt-1dq" secondAttribute="bottom" id="Pth-bD-oT1"/>
+                            <constraint firstAttribute="bottom" secondItem="md3-vt-1dq" secondAttribute="bottom" id="Pth-bD-oT1"/>
                             <constraint firstItem="md3-vt-1dq" firstAttribute="leading" secondItem="sTJ-sP-662" secondAttribute="leading" id="Vyg-hk-b4c"/>
                             <constraint firstItem="md3-vt-1dq" firstAttribute="top" secondItem="unt-fL-27U" secondAttribute="bottom" id="XJV-8R-axs"/>
                             <constraint firstItem="sTJ-sP-662" firstAttribute="trailing" secondItem="md3-vt-1dq" secondAttribute="trailing" id="ag9-vD-gzh"/>

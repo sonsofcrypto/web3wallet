@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import UIKit
 
 enum TokenPickerPresenterEvent {
 
@@ -303,8 +304,8 @@ private extension DefaultTokenPickerPresenter {
         from tokens: [Web3Token]
     ) -> [TokenPickerViewModel.Token] {
         
-        let sortedTokens = tokens.sortByNetworkBalanceAndName
-        return sortedTokens.compactMap { token in
+        //let sortedTokens = tokens.sortByNetworkBalanceAndName
+        tokens.compactMap { token in
             
             let type: TokenPickerViewModel.TokenType
             switch context.source {
@@ -327,27 +328,33 @@ private extension DefaultTokenPickerPresenter {
                 }
             }
             
-            let position: TokenPickerViewModel.Token.Position
-            if sortedTokens.first == token && sortedTokens.last == token {
-                position = .onlyOne
-            } else if sortedTokens.first == token {
-                position = .first
-            } else if sortedTokens.last == token {
-                position = .last
-            } else {
-                position = .middle
-            }
+//            let position: TokenPickerViewModel.Token.Position
+//            if sortedTokens.first == token && sortedTokens.last == token {
+//                position = .onlyOne
+//            } else if sortedTokens.first == token {
+//                position = .first
+//            } else if sortedTokens.last == token {
+//                position = .last
+//            } else {
+//                position = .middle
+//            }
             
             return .init(
-                image: interactor.tokenIcon(for: token).pngImage ?? "default_token".assetImage!,
+                image: makeTokenImage(from: token),
                 symbol: token.symbol,
                 name: token.name,
                 network: token.network.name,
                 type: type,
-                position: position,
+                position: .middle,
                 tokenId: token.coingGeckoId ?? ""
             )
         }
+    }
+    
+    func makeTokenImage(from token: Web3Token) -> UIImage {
+        
+        ((token.coingGeckoId ?? "") + "_large").assetImage
+        ?? "default_token".assetImage!
     }
 }
 

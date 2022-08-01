@@ -118,6 +118,10 @@ private extension TokenPickerViewController {
             animated: false
         )
         
+        var insets = collectionView.contentInset
+        insets.bottom += view.safeAreaInsets.bottom
+        collectionView.contentInset = insets
+        
         addCustomBackgroundGradientView()        
     }
     

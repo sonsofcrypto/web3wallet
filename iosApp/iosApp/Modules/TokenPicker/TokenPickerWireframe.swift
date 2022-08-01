@@ -157,7 +157,7 @@ private extension DefaultTokenPickerWireframe {
     func wireUp() -> UIViewController {
         
         let interactor = DefaultTokenPickerInteractor(
-            web3Service: web3Service
+            web3ServiceLegacy: web3Service
         )
         let vc: TokenPickerViewController = UIStoryboard(.tokenPicker).instantiate()
         let presenter = DefaultTokenPickerPresenter(

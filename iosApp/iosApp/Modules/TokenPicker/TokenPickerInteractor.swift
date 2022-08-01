@@ -5,7 +5,6 @@
 import Foundation
 import web3lib
 
-
 protocol TokenPickerInteractor: AnyObject {
 
     var myTokens: [Web3Token] { get }
@@ -24,9 +23,13 @@ final class DefaultTokenPickerInteractor {
     private let currenciesService: CurrenciesService
 
     init(
-        web3Service: Web3ServiceLegacy
+        web3ServiceLegacy: Web3ServiceLegacy,
+        web3Service: Web3Service = ServiceDirectory.assembler.resolve(),
+        currenciesService: CurrenciesService = ServiceDirectory.assembler.resolve()
     ) {
-        self.web3ServiceLegacy = web3Service
+        self.web3ServiceLegacy = web3ServiceLegacy
+        self.web3Service = web3Service
+        self.currenciesService = currenciesService
     }
 }
 
@@ -41,19 +44,26 @@ extension DefaultTokenPickerInteractor: TokenPickerInteractor {
         filteredBy searchTerm: String,
         for network: Web3Network?
     ) -> [Web3Token] {
-        guard let network = network ?? Web3Network.from(web3Service.network), isOn: false) {
-
+        
+        guard let network = network ?? makeSelectedNetwork() else {
+            return []
         }
-        currenciesService.currencies(search: searchTerm).first(n: 200).map {
+
+        var currencies = searchTerm.isEmpty
+        ? currenciesService.currencies
+        : currenciesService.currencies(search: searchTerm)
+
+        currencies = currencies.first(n: 1000)
+            
+        let toReturn = currencies.map {
             Web3Token.from(
                 currency: $0,
-                network: network ?? web3ServiceLegacy.,
+                network: network,
                 inWallet: false
             )
-
         }
-
-        web3ServiceLegacy.allTokens.filterBy(searchTerm: searchTerm)
+        
+        return toReturn
     }
     
     func networkIcon(for network: Web3Network) -> Data {
@@ -66,4 +76,14 @@ extension DefaultTokenPickerInteractor: TokenPickerInteractor {
         web3ServiceLegacy.tokenIcon(for: token)
     }
 
+}
+
+private extension DefaultTokenPickerInteractor {
+    
+    func makeSelectedNetwork() -> Web3Network? {
+        
+        guard let selectedNetwork = web3Service.network else { return nil }
+        
+        return Web3Network.from(selectedNetwork, isOn: false)
+    }
 }

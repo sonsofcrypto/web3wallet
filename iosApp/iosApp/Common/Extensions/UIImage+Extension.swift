@@ -7,8 +7,8 @@ import UIKit
 extension UIImage {
     
     static func loadImage(named: String) -> UIImage? {
-        UIImage(named: Theme.name + "-" + named) ??
         UIImage(named: named) ??
+        UIImage(named: Theme.name + "-" + named) ??
         UIImage(systemName: named) ??
         nil
     }

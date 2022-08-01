@@ -185,7 +185,7 @@ extension Web3Token {
         inWallet: Bool
     ) -> Web3Token {
         return Web3Token(
-            symbol: currency.symbol,
+            symbol: currency.symbol.uppercased(),
             name: currency.name,
             address: currency.address ?? "",
             decimals: Int(currency.decimals),
@@ -201,7 +201,7 @@ extension Web3Token {
     func toCurrency() -> Currency {
         return Currency(
             name: name,
-            symbol: symbol,
+            symbol: symbol.lowercased(),
             decimals: UInt32(decimals),
             type: name == "Ethereum" ? .native : .erc20,
             address: address,
