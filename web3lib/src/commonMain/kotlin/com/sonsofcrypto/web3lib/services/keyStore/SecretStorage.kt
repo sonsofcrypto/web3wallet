@@ -48,27 +48,52 @@ data class SecretStorage(
     @Serializable
     data class W3WParams(
         val mnemonicLocale: String,
+        val mnemonicPath: String?,
+        val mnemonicCiphertext: String,
+        val mnemonicIv: String,
+        val version: Int
+    )
+
+    data class DecryptResult(
+        val key: ByteArray,
+        val mnemonic: String?,
+        val mnemonicLocale: String,
+        val mnemonicPath: String?,
     )
 
     @Throws(Error::class)
-    fun decrypt(password: String): ByteArray {
-        val dkLen = crypto.kdfparams.dklen
+    fun decrypt(password: String): DecryptResult {
         val cipherData = crypto.ciphertext.hexStringToByteArray()
-        val dKey = scrypt(
+        val mnemonicData = w3wParams?.mnemonicCiphertext?.hexStringToByteArray()
+        val dkLen = crypto.kdfparams.dklen
+        val dkLenExt = if (w3wParams?.mnemonicCiphertext != null) dkLen * 2 else dkLen
+        val dKeyExt = scrypt(
             password.encodeToByteArray(),
             crypto.kdfparams.salt.hexStringToByteArray(),
             crypto.kdfparams.n ?: throw Error.FailedToLoadKDFParams,
             crypto.kdfparams.r ?: throw Error.FailedToLoadKDFParams,
             crypto.kdfparams.p ?: throw Error.FailedToLoadKDFParams,
-            dkLen
+            dkLenExt
         )
+        val dKey = dKeyExt.copyOfRange(0, dkLen.toInt())
         val encKey = dKey.copyOfRange(0, (dkLen/2).toInt())
-        val tailBytes = dKey.copyOfRange((dkLen/2).toInt(), dKey.size)
+        val tailBytes = dKey.copyOfRange((dkLen/2).toInt(), dkLen.toInt())
 
         if (keccak256(tailBytes + cipherData).toHexString() != crypto.mac) {
             throw Error.WrongPassword
         }
-        return aesCTRXOR(encKey, cipherData, crypto.cipherparams.iv.hexStringToByteArray())
+        return DecryptResult(
+            aesCTRXOR(encKey, cipherData, crypto.cipherparams.iv.hexStringToByteArray()),
+            if (mnemonicData != null)
+                aesCTRXOR(
+                    dKeyExt.copyOfRange(dkLen.toInt(), (dkLen + dkLen / 2).toInt()),
+                    mnemonicData,
+                    w3wParams?.mnemonicIv?.hexStringToByteArray() ?: ByteArray(0),
+                ).decodeToString()
+            else null,
+            w3wParams?.mnemonicLocale ?: "en",
+            w3wParams?.mnemonicPath ?: "m/44'/60'/0'/0/0",
+        )
     }
 
     /** Exceptions */
@@ -98,16 +123,23 @@ data class SecretStorage(
             dkLen: Long = 32,
             cipher: String = "aes-128-ctr",
             version: Int = 3,
-            w3wParams: W3WParams? = null
+            mnemonic: String? = null,
+            mnemonicLocale: String? = null,
+            mnemonicPath: String? = null,
         ): SecretStorage {
             if (dkLen < minDkLen) {
                 throw Error.DkLenTooShort
             }
             val salt = secureRand(32)
             val iv = secureRand(16)
-            val dKey = scrypt(password.encodeToByteArray(), salt, n, r, p, dkLen)
+            val mnemonicIv = secureRand(16)
+            val dkLenExt = if (mnemonic != null) dkLen * 2 else dkLen
+            val dKeyExt = scrypt(
+                password.encodeToByteArray(), salt, n, r, p, dkLenExt
+            )
+            val dKey = dKeyExt.copyOfRange(0, dkLen.toInt())
             val encKey = dKey.copyOfRange(0, (dkLen/2).toInt())
-            val tailBytes = dKey.copyOfRange((dkLen/2).toInt(), dKey.size)
+            val tailBytes = dKey.copyOfRange((dkLen/2).toInt(), dkLen.toInt())
             val cipherData = aesCTRXOR(encKey, data, iv)
             return SecretStorage(
                 Crypto(
@@ -121,7 +153,19 @@ data class SecretStorage(
                 id,
                 version,
                 address,
-                w3wParams
+                if (mnemonic != null)
+                    W3WParams(
+                        mnemonicLocale = mnemonicLocale ?: "en",
+                        mnemonicPath = mnemonicPath ?: "m/44'/60'/0'/0/0",
+                        mnemonicCiphertext = aesCTRXOR(
+                            dKeyExt.copyOfRange(dkLen.toInt(), (dkLen + dkLen / 2).toInt()),
+                            mnemonic.encodeToByteArray(),
+                            mnemonicIv
+                        ).toHexString(),
+                        mnemonicIv = mnemonicIv.toHexString(),
+                        version = 1,
+                    )
+                else null
             )
         }
 
@@ -130,15 +174,17 @@ data class SecretStorage(
             data: ByteArray,
             password: String,
             address: String? = null,
-            w3wParams: W3WParams? = null
+            mnemonic: String? = null,
+            mnemonicLocale: String? = null,
+            mnemonicPath: String? = null,
         ): SecretStorage = encrypt(
-                id = id,
-                data = data,
-                password = password,
-                address = address,
-                w3wParams = w3wParams,
-            )
-
-
+            id = id,
+            data = data,
+            password = password,
+            address = address,
+            mnemonic = mnemonic,
+            mnemonicLocale = mnemonicLocale,
+            mnemonicPath = mnemonicPath,
+        )
     }
 }

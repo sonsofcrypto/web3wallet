@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib.services.keyStore
+package com.sonsofcrypto.web3lib.services.web3service
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.types.Network
@@ -41,6 +41,7 @@ interface Web3Service {
         data class NetworkSelected(val network: Network?): Event()
         data class NetworksChanged(val networks: List<Network>): Event()
         data class BlockUpdated(val number: BigInt): Event()
+        data class RefreshNFTs(val wallet: Network, val network: Network): Event()
     }
 
     interface Listener{

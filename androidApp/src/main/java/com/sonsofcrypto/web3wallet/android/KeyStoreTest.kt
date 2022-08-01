@@ -2,6 +2,11 @@ package com.sonsofcrypto.web3wallet.android
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.services.keyStore.*
+import com.sonsofcrypto.web3lib.types.Bip44
+import com.sonsofcrypto.web3lib.types.ExtKey
+import com.sonsofcrypto.web3lib.utils.bip39.Bip39
+import com.sonsofcrypto.web3lib.utils.bip39.WordList
+import com.sonsofcrypto.web3lib.utils.bip39.localeString
 import com.sonsofcrypto.web3lib.utils.secureRand
 import com.sonsofcrypto.web3lib.utils.toHexString
 import java.lang.Exception
@@ -16,6 +21,7 @@ class KeyStoreTest {
         testSecretStorageDecrypt()
         testKeyStore()
         testKeyStoreSelected()
+        testSecretStorageEncryptDecryptMnemonic()
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
@@ -30,23 +36,25 @@ class KeyStoreTest {
             data = data,
             password = password,
             address = "67ca77ce83b9668460ab6263dc202a788443510c",
-            w3wParams = SecretStorage.W3WParams("en"),
+            mnemonic = null,
+            mnemonicLocale = null,
+            mnemonicPath = null,
         )
         val json = Json.encodeToString(secretStorage)
         val decodedSecretStorage = Json.decodeFromString<SecretStorage>(json)
-        val decodedData = decodedSecretStorage.decrypt(password)
+        val result = decodedSecretStorage.decrypt(password)
         assertTrue(
-            decodedData.toHexString() == data.toHexString(),
-            "Failed to decrypt \n${data.toHexString()}\n${decodedData.toHexString()}"
+            result.key.toHexString() == data.toHexString(),
+            "Failed to decrypt \n${data.toHexString()}\n${result.key.toHexString()}"
         )
     }
 
     fun testSecretStorageDecrypt() {
         val password = "testpass"
         val secretStorage = Json.decodeFromString<SecretStorage>(mockSecretStorageString)
-        val decodedData = secretStorage.decrypt(password)
+        val result = secretStorage.decrypt(password)
         assertTrue(
-            decodedData.toHexString() == mockPrivateKey,
+            result.key.toHexString() == mockPrivateKey,
             "Failed to decode correct data"
         )
     }
@@ -64,7 +72,9 @@ class KeyStoreTest {
             data = secureRand(32),
             password = password,
             address = "67ca77ce83b9668460ab6263dc202a788443510c",
-            w3wParams = SecretStorage.W3WParams("en"),
+            mnemonic = null,
+            mnemonicLocale = null,
+            mnemonicPath = null,
         )
         keyStore.add(mockKeyStoreItem, password, secretStorage)
         assertTrue(
@@ -94,6 +104,34 @@ class KeyStoreTest {
         assertTrue(
             keyStore.selected == mockKeyStoreItem,
             "Failed selected"
+        )
+    }
+
+    fun testSecretStorageEncryptDecryptMnemonic() {
+        val bip39 = Bip39(testMnemonic, "", WordList.ENGLISH)
+        val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
+        val path = "m/44'/60'/0'/0/0"
+        val data = bip44.deviceChildKey(path).key
+        val password = "testpass"
+        val secretStorage = SecretStorage.encrypt(
+            id = mockKeyStoreItem.uuid,
+            data = data,
+            password = password,
+            address = "67ca77ce83b9668460ab6263dc202a788443510c",
+            mnemonic = testMnemonic.joinToString(separator = " "),
+            mnemonicLocale = bip39.worldList.localeString(),
+            mnemonicPath = path,
+        )
+        val json = Json.encodeToString(secretStorage)
+        val decodedSecretStorage = Json.decodeFromString<SecretStorage>(json)
+        val result = decodedSecretStorage.decrypt(password)
+        assertTrue(
+            result.mnemonic == testMnemonic.joinToString(separator = " "),
+            "Failed to decrypt \n${result.mnemonic}\n${testMnemonic.joinToString(separator = " ")}"
+        )
+        assertTrue(
+            result.key.toHexString() == data.toHexString(),
+            "Failed to decrypt \n${result.key.toHexString()}\n${data.toHexString()}"
         )
     }
 
@@ -164,3 +202,5 @@ val mockKeyStoreItem = KeyStoreItem(
         "m/44'/80'/0'/0/0" to "71C7656EC7ab88b098defB751B7401B5f6d8976F",
     ),
 )
+
+val testMnemonic = listOf("club", "aspect", "deposit", "protect", "arrest", "leader", "zone", "crash", "west", "strong", "tent", "hammer")

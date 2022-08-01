@@ -2,7 +2,6 @@ package com.sonsofcrypto.web3wallet.android
 
 import androidx.annotation.Keep
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
-import com.sonsofcrypto.web3lib.services.keyStore.Web3Service
 import com.sonsofcrypto.web3lib.types.Network
 import kotlinx.serialization.*
 import kotlinx.serialization.json.Json

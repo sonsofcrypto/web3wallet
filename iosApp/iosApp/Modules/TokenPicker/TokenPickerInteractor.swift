@@ -4,6 +4,7 @@
 
 import Foundation
 
+
 protocol TokenPickerInteractor: AnyObject {
 
     var allTokens: [ Web3Token ] { get }
@@ -14,7 +15,7 @@ protocol TokenPickerInteractor: AnyObject {
 final class DefaultTokenPickerInteractor {
 
     private let web3Service: Web3ServiceLegacy
-    
+
     init(
         web3Service: Web3ServiceLegacy
     ) {
