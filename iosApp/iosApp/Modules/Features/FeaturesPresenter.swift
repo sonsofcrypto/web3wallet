@@ -126,6 +126,7 @@ private extension DefaultFeaturesPresenter {
         
         let section: FeaturesViewModel.Section = .init(
             title: filterSectionType.stringValue + " (\(featuresList.count))",
+            description: filterSectionType.descriptionValue,
             type: filterSectionType,
             items: featuresList.compactMap { viewModel(from: $0) },
             footer: nil
@@ -169,7 +170,7 @@ extension Array where Element == Web3Feature {
     
     var sortedList: [Web3Feature] {
         
-        sorted { $0.id > $1.id }
+        sorted { $0.votes > $1.votes }
     }
     
     var integrations: [Web3Feature] {

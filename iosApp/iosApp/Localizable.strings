@@ -290,6 +290,10 @@
 "cult.proposal.parsing.cultRewardAllocation" = "%@% of Total Supply";
 
 "features.title" = "Upcoming Features";
+"features.section.all.description" = "Description here for section all, @Annon to fill up.";
+"features.section.infrastructure.description" = "Description here for section infrastructure, @Annon to fill up.";
+"features.section.integrations.description" = "Description here for section integrations, @Annon to fill up.";
+"features.section.features.description" = "Description here for section features, @Annon to fill up.";
 "features.segmentedControl.all" = "All";
 "features.segmentedControl.infrastructure" = "Infrastructure";
 "features.segmentedControl.integrations" = "Integrations";

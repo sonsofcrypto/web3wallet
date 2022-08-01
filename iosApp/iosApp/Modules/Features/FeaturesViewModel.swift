@@ -16,6 +16,7 @@ extension FeaturesViewModel {
     struct Section {
         
         let title: String
+        let description: String
         let type: `Type`
         let items: [Item]
         let footer: Footer?
@@ -37,6 +38,20 @@ extension FeaturesViewModel {
                     return Localized("features.segmentedControl.integrations")
                 case .features:
                     return Localized("features.segmentedControl.features")
+                }
+            }
+            
+            var descriptionValue: String {
+                
+                switch self {
+                case .all:
+                    return Localized("features.section.all.description")
+                case .infrastructure:
+                    return Localized("features.section.infrastructure.description")
+                case .integrations:
+                    return Localized("features.section.integrations.description")
+                case .features:
+                    return Localized("features.section.features.description")
                 }
             }
         }

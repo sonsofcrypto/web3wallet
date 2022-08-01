@@ -444,6 +444,7 @@
 		1CDED5E8289701EF00DF34A7 /* FeatureDetailStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5E7289701EF00DF34A7 /* FeatureDetailStatusView.swift */; };
 		1CDED5EA289701FA00DF34A7 /* FeatureDetailSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5E9289701FA00DF34A7 /* FeatureDetailSummaryView.swift */; };
 		1CDED5EC2897C5F300DF34A7 /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5EB2897C5F300DF34A7 /* ScrollView.swift */; };
+		1CDED5EE2897E88900DF34A7 /* FeaturesHeaderSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5ED2897E88900DF34A7 /* FeaturesHeaderSupplementaryView.swift */; };
 		1CE0063B288884D2002D1EB3 /* ConfirmationSwapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0063A288884D2002D1EB3 /* ConfirmationSwapView.swift */; };
 		1CE0063D288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0063C288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift */; };
 		1CE0064028894F41002D1EB3 /* ConfirmationSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0063F28894F41002D1EB3 /* ConfirmationSendView.swift */; };
@@ -991,6 +992,7 @@
 		1CDED5E7289701EF00DF34A7 /* FeatureDetailStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureDetailStatusView.swift; sourceTree = "<group>"; };
 		1CDED5E9289701FA00DF34A7 /* FeatureDetailSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureDetailSummaryView.swift; sourceTree = "<group>"; };
 		1CDED5EB2897C5F300DF34A7 /* ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollView.swift; sourceTree = "<group>"; };
+		1CDED5ED2897E88900DF34A7 /* FeaturesHeaderSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesHeaderSupplementaryView.swift; sourceTree = "<group>"; };
 		1CE0063A288884D2002D1EB3 /* ConfirmationSwapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationSwapView.swift; sourceTree = "<group>"; };
 		1CE0063C288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationSheetPresentationController.swift; sourceTree = "<group>"; };
 		1CE0063F28894F41002D1EB3 /* ConfirmationSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationSendView.swift; sourceTree = "<group>"; };
@@ -1284,6 +1286,7 @@
 			isa = PBXGroup;
 			children = (
 				1C0643E22892FD2D00643C15 /* FeaturesCell.swift */,
+				1CDED5ED2897E88900DF34A7 /* FeaturesHeaderSupplementaryView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -3002,6 +3005,7 @@
 				1C60C352285724D1003BE25D /* CultProposalsWireframeFactory.swift in Sources */,
 				1C60C2AC285724D0003BE25D /* SettingsPresenter.swift in Sources */,
 				1CE0064028894F41002D1EB3 /* ConfirmationSendView.swift in Sources */,
+				1CDED5EE2897E88900DF34A7 /* FeaturesHeaderSupplementaryView.swift in Sources */,
 				1CB8B0B3288BD6EC00024E7C /* Float+Extensions.swift in Sources */,
 				1C67202328870FEB00C5F044 /* ConfirmationWireframeFactoryAssembler.swift in Sources */,
 				1C6487412832E7D10091A12D /* DefaultSettingsService.swift in Sources */,
