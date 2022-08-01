@@ -49,7 +49,7 @@ extension DefaultSettingsService: SettingsService {
     
     func settings(
         for setting: Setting.ItemIdentifier
-    ) -> [Setting] {
+    ) -> [SettingsWireframeContext.Group] {
         
         switch setting {
             
@@ -57,20 +57,25 @@ extension DefaultSettingsService: SettingsService {
             
             return [
                 .init(
-                    title: Localized("settings.theme.miami"),
-                    type: .action(
-                        item: .theme,
-                        action: .themeMiami,
-                        showTickOnSelected: true
-                    )
-                ),
-                .init(
-                    title: Localized("settings.theme.ios"),
-                    type: .action(
-                        item: .theme,
-                        action: .themeIOS,
-                        showTickOnSelected: true
-                    )
+                    title: nil,
+                    items: [
+                        .init(
+                            title: Localized("settings.theme.miami"),
+                            type: .action(
+                                item: .theme,
+                                action: .themeMiami,
+                                showTickOnSelected: true
+                            )
+                        ),
+                        .init(
+                            title: Localized("settings.theme.ios"),
+                            type: .action(
+                                item: .theme,
+                                action: .themeIOS,
+                                showTickOnSelected: true
+                            )
+                        )
+                    ]
                 )
             ]
             
@@ -78,8 +83,21 @@ extension DefaultSettingsService: SettingsService {
             
             return [
                 .init(
-                    title: Localized("settings.debug.apis"),
-                    type: .item(.debugAPIs)
+                    title: nil,
+                    items: [
+                        .init(
+                            title: Localized("settings.debug.apis"),
+                            type: .item(.debugAPIs)
+                        ),
+                        .init(
+                            title: Localized("settings.debug.resetKeyStore"),
+                            type: .action(
+                                item: .debug,
+                                action: .resetKeystore,
+                                showTickOnSelected: false
+                            )
+                        )
+                    ]
                 )
             ]
 
@@ -87,8 +105,13 @@ extension DefaultSettingsService: SettingsService {
             
             return [
                 .init(
-                    title: Localized("settings.debug.apis.nfts"),
-                    type: .item(.debugAPIsNFTs)
+                    title: nil,
+                    items: [
+                        .init(
+                            title: Localized("settings.debug.apis.nfts"),
+                            type: .item(.debugAPIsNFTs)
+                        )
+                    ]
                 )
             ]
             
@@ -96,20 +119,96 @@ extension DefaultSettingsService: SettingsService {
             
             return [
                 .init(
-                    title: Localized("settings.debug.apis.nfts.openSea"),
-                    type: .action(
-                        item: .debugAPIsNFTs,
-                        action: .debugAPIsNFTsOpenSea,
-                        showTickOnSelected: true
-                    )
+                    title: nil,
+                    items: [
+                        .init(
+                            title: Localized("settings.debug.apis.nfts.openSea"),
+                            type: .action(
+                                item: .debugAPIsNFTs,
+                                action: .debugAPIsNFTsOpenSea,
+                                showTickOnSelected: true
+                            )
+                        ),
+                        .init(
+                            title: Localized("settings.debug.apis.nfts.mock"),
+                            type: .action(
+                                item: .debugAPIsNFTs,
+                                action: .debugAPIsNFTsMock,
+                                showTickOnSelected: true
+                            )
+                        )
+                    ]
+                )
+            ]
+            
+        case .about:
+            
+            return [
+                .init(
+                    title: Localized("settings.about.socials"),
+                    items: [
+                        .init(
+                            title: Localized("settings.about.website"),
+                            type: .action(
+                                item: .about,
+                                action: .aboutWebsite,
+                                showTickOnSelected: false
+                            )
+                        ),
+                        .init(
+                            title: Localized("settings.about.github"),
+                            type: .action(
+                                item: .about,
+                                action: .aboutGitHub,
+                                showTickOnSelected: false
+                            )
+                        ),
+                        .init(
+                            title: Localized("settings.about.medium"),
+                            type: .action(
+                                item: .about,
+                                action: .aboutMedium,
+                                showTickOnSelected: false
+                            )
+                        ),
+                        .init(
+                            title: Localized("settings.about.telegram"),
+                            type: .action(
+                                item: .about,
+                                action: .aboutTelegram,
+                                showTickOnSelected: false
+                            )
+                        ),
+                        .init(
+                            title: Localized("settings.about.twitter"),
+                            type: .action(
+                                item: .about,
+                                action: .aboutTwitter,
+                                showTickOnSelected: false
+                            )
+                        ),
+                        .init(
+                            title: Localized("settings.about.discord"),
+                            type: .action(
+                                item: .about,
+                                action: .aboutDiscord,
+                                showTickOnSelected: false
+                            )
+                        )
+                    ]
                 ),
                 .init(
-                    title: Localized("settings.debug.apis.nfts.mock"),
-                    type: .action(
-                        item: .debugAPIsNFTs,
-                        action: .debugAPIsNFTsMock,
-                        showTickOnSelected: true
-                    )
+                    title: Localized("settings.about.contactUs"),
+                    items: [
+                        .init(
+                            title: Localized("settings.about.mail"),
+                            type: .action(
+                                item: .about,
+                                action: .aboutMail,
+                                showTickOnSelected: false
+                            )
+                        )
+                    ]
                 )
             ]
         }
@@ -151,6 +250,41 @@ private extension DefaultSettingsService {
                 keyStoreService.remove(item: $0)
             }
             ServiceDirectory.rebootApp()
+            
+        case .aboutWebsite:
+            UIApplication.shared.open(
+                "https://www.sonsofcrypto.com".url!
+            )
+            
+        case .aboutGitHub:
+            UIApplication.shared.open(
+                "https://github.com/sonsofcrypto".url!
+            )
+
+        case .aboutMedium:
+            UIApplication.shared.open(
+                "https://medium.com/@sonsofcrypto".url!
+            )
+            
+        case .aboutTwitter:
+            UIApplication.shared.open(
+                "https://twitter.com/sonsofcryptolab".url!
+            )
+
+        case .aboutDiscord:
+            UIApplication.shared.open(
+                "https://discord.gg/DW8kUu6Q6E".url!
+            )
+
+        case .aboutTelegram:
+            UIApplication.shared.open(
+                "https://t.me/+osHUInXKmwMyZjQ0".url!
+            )
+            
+        case .aboutMail:
+            UIApplication.shared.open(
+                "mailto:sonsofcrypto@protonmail.com".url!
+            )
         }
     }
 }

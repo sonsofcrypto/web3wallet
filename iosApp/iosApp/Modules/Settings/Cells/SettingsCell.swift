@@ -15,6 +15,8 @@ final class SettingsCell: CollectionViewCell {
         
         super.awakeFromNib()
         
+        backgroundColor = .clear
+        
         titleLabel.apply(style: .callout)
         rightImageView.tintColor = Theme.colour.labelPrimary
     }
@@ -46,7 +48,8 @@ final class SettingsCell: CollectionViewCell {
 extension SettingsCell {
     
     func update(
-        with viewModel: SettingsViewModel.Item
+        with viewModel: SettingsViewModel.Item,
+        showSeparator: Bool = true
     ) -> SettingsCell {
         
         self.viewModel = viewModel
@@ -68,6 +71,8 @@ extension SettingsCell {
                 rightImageView.alpha = 0
             }
         }
+        
+        bottomSeparatorView.isHidden = !showSeparator
 
         return self
     }

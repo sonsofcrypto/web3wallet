@@ -8,9 +8,16 @@ final class SeparatorView: UIView {
     
     @IBOutlet weak var heightConstraint: NSLayoutConstraint?
     
-    override func awakeFromNib() {
+    override init(frame: CGRect) {
         
-        super.awakeFromNib()
+        super.init(frame: frame)
+        
+        configureUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        
+        super.init(coder: coder)
         
         configureUI()
     }
@@ -22,7 +29,7 @@ private extension SeparatorView {
         
         backgroundColor = Theme.colour.separatorTransparent
 
-        let separatorHeight: CGFloat = 0.25
+        let separatorHeight: CGFloat = 0.5
         if let heightConstraint = heightConstraint {
             heightConstraint.constant = separatorHeight
         } else {

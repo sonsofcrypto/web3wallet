@@ -12,13 +12,28 @@ struct SettingsViewModel {
 
 extension SettingsViewModel {
 
-    struct Section {
+    enum Section {
         
-        let title: String?
-        let items: [Item]
+        case header(header: Header)
+        case group(items: [Item])
+        
+        struct Header {
+            
+            let title: String
+        }
+        
+        var items: [Item] {
+            
+            switch self {
+            case .header:
+                return []
+            case let .group(items):
+                return items
+            }
+        }
     }
-    
-    struct Item {
+        
+    struct Item: Equatable {
         
         let title: String
         let setting: Setting

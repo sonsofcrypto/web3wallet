@@ -8,7 +8,7 @@ protocol SettingsService: AnyObject {
     
     func settings(
         for setting: Setting.ItemIdentifier
-    ) -> [Setting]
+    ) -> [SettingsWireframeContext.Group]
     
     func didSelect(
         item: Setting.ItemIdentifier?,

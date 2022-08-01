@@ -178,12 +178,7 @@ private extension DefaultDeepLinkHandler {
             settingsVC,
             context: .init(
                 title: Localized("settings.theme"),
-                groups: [
-                    .init(
-                        title: nil,
-                        items: settingsService.settings(for: .theme)
-                    )
-                ]
+                groups: settingsService.settings(for: .theme)
             )
         ).present()
     }
