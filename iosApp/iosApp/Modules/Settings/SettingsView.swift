@@ -13,13 +13,15 @@ final class SettingsViewController: BaseViewController {
 
     var presenter: SettingsPresenter!
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: CollectionView!
 
     private var viewModel: SettingsViewModel!
 
     override func viewDidLoad() {
 
         super.viewDidLoad()
+        
+        configureUI()
         
         presenter.present()
     }
@@ -108,5 +110,14 @@ extension SettingsViewController: UICollectionViewDelegateFlowLayout {
             width: collectionView.frame.width - Theme.constant.padding * 2,
             height: Theme.constant.cellHeightSmall
         )
+    }
+}
+
+private extension SettingsViewController {
+    
+    func configureUI() {
+        
+        collectionView.overScrollView.image = "overscroll_anon".assetImage
+        collectionView.overScrollView.layer.transform = CATransform3DMakeTranslation(0, 100, 0)
     }
 }

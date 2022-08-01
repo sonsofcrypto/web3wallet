@@ -13,7 +13,7 @@ final class DegenViewController: BaseViewController {
 
     var presenter: DegenPresenter!
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: CollectionView!
 
     private var backgroundGradientTopConstraint: NSLayoutConstraint?
     private var backgroundGradientHeightConstraint: NSLayoutConstraint?
@@ -145,10 +145,7 @@ extension DegenViewController {
             animated: false
         )
 
-        let overScrollView = (collectionView as? CollectionView)
-        overScrollView?.overScrollView.image = "overscroll_degen".assetImage
-        overScrollView?.overScrollView.layer.transform = CATransform3DMakeTranslation(0, -100, 0)
-        navigationItem.backButtonTitle = ""
+        collectionView.overScrollView.image = "overscroll_degen".assetImage
         
         addCustomBackgroundGradientView()
     }

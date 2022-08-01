@@ -1,10 +1,10 @@
-// Created by web3d3v on 20/02/2022.
+// Created by web3d4v on 20/02/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import UIKit
 
-class CollectionView: UICollectionView {
+class ScrollView: UIScrollView {
 
     private(set) var overScrollView: UIImageView = .init()
 
@@ -15,7 +15,7 @@ class CollectionView: UICollectionView {
         guard superview != nil else { return }
 
         if overScrollView.superview == nil {
-            addSubview(overScrollView)
+            insertSubview(overScrollView, at: 0)
         }
 
         overScrollView.contentMode = .scaleAspectFit
@@ -36,19 +36,22 @@ class CollectionView: UICollectionView {
     override func layoutSubviews() {
         
         super.layoutSubviews()
-
+        
         overScrollView.center.x = bounds.width / 2
         overScrollView.center.y = max(
             contentSize.height
             + overScrollView.bounds.height.half
-            - contentInset.bottom,
+            - contentInset.bottom
+            + Theme.constant.padding,
             frame.maxY
+            + overScrollView.bounds.height.half
+            + Theme.constant.padding
         )
-        
+
     }
 }
 
-private extension CollectionView {
+private extension ScrollView {
 
     enum Constant {
         
