@@ -74,24 +74,27 @@ final class TokenPickerItemCell: UICollectionViewCell {
             networkLabel.isHidden = true
         }
         
-        switch viewModel.type {
-            
-        case .receive:
-            break
-
-        case let .multiSelect(isSelected):
+        if let isSelected = viewModel.type.isSelected {
             multiSelectView.isHidden = false
             multiSelectTick.tintColor = Theme.colour.labelSecondary
             multiSelectTick.image = isSelected
             ? "checkmark.circle.fill".assetImage
             : "circle".assetImage
-
-        case let .send(tokens, usdTotal):
+        } else {
+            multiSelectView.isHidden = true
+        }
+        
+        if let balance = viewModel.type.balance {
+            
             symbolLabel.isHidden = true
             tokenPriceView.isHidden = false
-            tokenLabel.text = tokens
+            tokenLabel.text = balance.tokens
             tokenSymbolLabel.text = viewModel.symbol.uppercased()
-            usdPriceLabel.text = usdTotal
+            usdPriceLabel.text = balance.usdTotal
+        } else {
+            
+            symbolLabel.isHidden = false
+            tokenPriceView.isHidden = true
         }
         
         switch viewModel.position {

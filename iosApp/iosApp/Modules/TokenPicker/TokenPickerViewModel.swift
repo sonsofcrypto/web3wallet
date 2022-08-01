@@ -44,11 +44,16 @@ extension TokenPickerViewModel {
         }
     }
     
-    enum TokenType {
+    struct TokenType {
         
-        case receive
-        case send(tokens: String, usdTotal: String)
-        case multiSelect(isSelected: Bool)
+        let isSelected: Bool?
+        let balance: Balance?
+        
+        struct Balance {
+            
+            let tokens: String
+            let usdTotal: String
+        }
     }
 }
 

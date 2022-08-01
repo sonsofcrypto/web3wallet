@@ -106,7 +106,6 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
                 context: .init(
                     presentationStyle: .present,
                     source: .select(
-                        type: .myToken,
                         onCompletion: onCompletion
                     )
                 )

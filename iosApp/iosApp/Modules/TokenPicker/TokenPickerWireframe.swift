@@ -18,7 +18,6 @@ struct TokenPickerWireframeContext {
             onCompletion: (([Web3Token]) -> Void)
         )
         case select(
-            type: SelectionType,
             onCompletion: (Web3Token) -> Void
         )
         
@@ -52,11 +51,6 @@ struct TokenPickerWireframeContext {
             case .receive, .select:
                 return nil
             }
-        }
-        
-        enum SelectionType {
-            case myToken
-            case any
         }
     }
 }

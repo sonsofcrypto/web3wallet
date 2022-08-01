@@ -93,10 +93,10 @@ extension DefaultTokenSwapWireframe: TokenSwapWireframe {
             ).present()
             
         case let .selectMyToken(onCompletion):
-            presentTokenPicker(with: .myToken, onCompletion: onCompletion)
+            presentTokenPicker(onCompletion: onCompletion)
             
         case let .selectToken(onCompletion):
-            presentTokenPicker(with: .any, onCompletion: onCompletion)
+            presentTokenPicker(onCompletion: onCompletion)
         
         case let .confirmSwap(dataIn, onSuccess):
             
@@ -170,7 +170,6 @@ private extension DefaultTokenSwapWireframe {
     }
     
     func presentTokenPicker(
-        with type: TokenPickerWireframeContext.Source.SelectionType,
         onCompletion: @escaping (Web3Token) -> Void
     ) {
         
@@ -179,7 +178,6 @@ private extension DefaultTokenSwapWireframe {
             context: .init(
                 presentationStyle: .present,
                 source: .select(
-                    type: type,
                     onCompletion: onCompletion
                 )
             )

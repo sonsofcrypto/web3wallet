@@ -78,7 +78,7 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
                 
                 handleTokenTappedOnMultiSelect(token: token)
                 
-            case let .select(_, onCompletion):
+            case let .select(onCompletion):
                 
                 guard let token = findSelectedToken(from: token) else { return }
                 onCompletion(token)
@@ -242,27 +242,27 @@ private extension DefaultTokenPickerPresenter {
             let type: TokenPickerViewModel.TokenType
             switch context.source {
                 
-            case .receive:
-                type = .receive
+            case .receive, .select:
+                type = .init(
+                    isSelected: nil,
+                    balance: .init(
+                        tokens: token.balance.toString(decimals: 2),
+                        usdTotal: token.usdBalanceString
+                    )
+                )
             case .multiSelectEdit:
                 let isSelected = selectedTokensFiltered.contains(
                     where: {
                         $0.network.name == token.network.name && $0.symbol == token.symbol
                     }
                 )
-                type = .multiSelect(isSelected: isSelected)
-            case let .select(selectionType, _):
-                
-                switch selectionType {
-                    
-                case .myToken:
-                    type = .send(
+                type = .init(
+                    isSelected: isSelected,
+                    balance: .init(
                         tokens: token.balance.toString(decimals: 2),
                         usdTotal: token.usdBalanceString
                     )
-                case .any:
-                    type = .receive
-                }
+                )
             }
             
             let position: TokenPickerViewModel.Token.Position
@@ -310,34 +310,28 @@ private extension DefaultTokenPickerPresenter {
             let type: TokenPickerViewModel.TokenType
             switch context.source {
                 
-            case .receive:
-                type = .receive
+            case .receive, .select:
+                type = .init(
+                    isSelected: nil,
+                    balance: nil
+                )
             case .multiSelectEdit:
-                type = .multiSelect(isSelected: false)
-            case let .select(selectionType, _):
-                
-                switch selectionType {
-                    
-                case .myToken:
-                    type = .send(
-                        tokens: token.balance.toString(decimals: 2),
-                        usdTotal: token.usdBalanceString
-                    )
-                case .any:
-                    type = .receive
-                }
+                type = .init(
+                    isSelected: false,
+                    balance: nil
+                )
             }
             
-//            let position: TokenPickerViewModel.Token.Position
-//            if sortedTokens.first == token && sortedTokens.last == token {
-//                position = .onlyOne
-//            } else if sortedTokens.first == token {
-//                position = .first
-//            } else if sortedTokens.last == token {
-//                position = .last
-//            } else {
-//                position = .middle
-//            }
+            let position: TokenPickerViewModel.Token.Position
+            if tokens.first == token && tokens.last == token {
+                position = .onlyOne
+            } else if tokens.first == token {
+                position = .first
+            } else if tokens.last == token {
+                position = .last
+            } else {
+                position = .middle
+            }
             
             return .init(
                 image: makeTokenImage(from: token),
@@ -345,7 +339,7 @@ private extension DefaultTokenPickerPresenter {
                 name: token.name,
                 network: token.network.name,
                 type: type,
-                position: .middle,
+                position: position,
                 tokenId: token.coingGeckoId ?? ""
             )
         }
