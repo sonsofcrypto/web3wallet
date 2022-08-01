@@ -72,7 +72,7 @@ private extension DefaultOnboardingService {
             worldList: worldList
         )
         let bip44 = try Bip44(seed: try bip39.seed(), version: .mainnetprv)
-        let extKey = try bip44.deviceChildKey(path: derivationPath())
+        let extKey = try bip44.deriveChildKey(path: derivationPath())
         let keyStoreItem = KeyStoreItem(
             uuid: UUID().uuidString,
             name: walletName(),

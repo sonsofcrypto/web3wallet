@@ -14,6 +14,10 @@ data class Network(
 
     fun id(): String = hashCode().toString()
 
+    fun defaultDerivationPath(): String {
+        return "m/44'/60'/0'/0/0"
+    }
+
     fun address(pubKey: ByteArray): AddressBytes {
         return keccak256(pubKey).copyOfRange(12, 32)
     }

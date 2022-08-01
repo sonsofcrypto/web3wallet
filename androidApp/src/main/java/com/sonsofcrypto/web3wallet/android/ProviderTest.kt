@@ -4,7 +4,6 @@ import com.sonsofcrypto.web3lib.provider.JsonRpcErrorResponse
 import com.sonsofcrypto.web3lib.types.*
 import com.sonsofcrypto.web3lib.provider.*
 import com.sonsofcrypto.web3lib.provider.model.*
-import com.sonsofcrypto.web3lib.provider.utils.*
 import com.sonsofcrypto.web3lib.provider.model.BlockTag
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.utils.*
@@ -690,7 +689,7 @@ class ProviderTest {
             WordList.ENGLISH
         )
         val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
-        val key = bip44.deviceChildKey("m/44'/60'/0'/0/0")
+        val key = bip44.deriveChildKey("m/44'/60'/0'/0/0")
         val signature = sign(digest, key.key)
 
         println("signature ${signature.toHexString()}")
@@ -732,7 +731,7 @@ class ProviderTest {
             WordList.ENGLISH
         )
         val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
-        val key = bip44.deviceChildKey("m/44'/60'/0'/0/0")
+        val key = bip44.deriveChildKey("m/44'/60'/0'/0/0")
         val feeData = provider.feeData()
         println("=== feeData $feeData")
         val nonce = provider.getTransactionCount(

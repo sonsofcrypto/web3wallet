@@ -111,7 +111,7 @@ class KeyStoreTest {
         val bip39 = Bip39(testMnemonic, "", WordList.ENGLISH)
         val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
         val path = "m/44'/60'/0'/0/0"
-        val data = bip44.deviceChildKey(path).key
+        val data = bip44.deriveChildKey(path).key
         val password = "testpass"
         val secretStorage = SecretStorage.encrypt(
             id = mockKeyStoreItem.uuid,

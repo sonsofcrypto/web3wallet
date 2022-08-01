@@ -59,47 +59,47 @@ class Bip44Test {
         )
         // m/0'
         assertTrue(
-            bip44.deviceChildKey("m/0'").base58WithChecksumString() == "xprv9uHRZZhk6KAJC1avXpDAp4MDc3sQKNxDiPvvkX8Br5ngLNv1TxvUxt4cV1rGL5hj6KCesnDYUhd7oWgT11eZG7XnxHrnYeSvkzY7d2bhkJ7",
+            bip44.deriveChildKey("m/0'").base58WithChecksumString() == "xprv9uHRZZhk6KAJC1avXpDAp4MDc3sQKNxDiPvvkX8Br5ngLNv1TxvUxt4cV1rGL5hj6KCesnDYUhd7oWgT11eZG7XnxHrnYeSvkzY7d2bhkJ7",
             "unexpected prv key at m/0'"
         )
         assertTrue(
-            bip44.deviceChildKey("m/0'").xpub().base58WithChecksumString() == "xpub68Gmy5EdvgibQVfPdqkBBCHxA5htiqg55crXYuXoQRKfDBFA1WEjWgP6LHhwBZeNK1VTsfTFUHCdrfp1bgwQ9xv5ski8PX9rL2dZXvgGDnw",
+            bip44.deriveChildKey("m/0'").xpub().base58WithChecksumString() == "xpub68Gmy5EdvgibQVfPdqkBBCHxA5htiqg55crXYuXoQRKfDBFA1WEjWgP6LHhwBZeNK1VTsfTFUHCdrfp1bgwQ9xv5ski8PX9rL2dZXvgGDnw",
             "unexpected pub key at m/0'"
         )
         // m/0'/1
         assertTrue(
-            bip44.deviceChildKey("m/0'/1").base58WithChecksumString() == "xprv9wTYmMFdV23N2TdNG573QoEsfRrWKQgWeibmLntzniatZvR9BmLnvSxqu53Kw1UmYPxLgboyZQaXwTCg8MSY3H2EU4pWcQDnRnrVA1xe8fs",
+            bip44.deriveChildKey("m/0'/1").base58WithChecksumString() == "xprv9wTYmMFdV23N2TdNG573QoEsfRrWKQgWeibmLntzniatZvR9BmLnvSxqu53Kw1UmYPxLgboyZQaXwTCg8MSY3H2EU4pWcQDnRnrVA1xe8fs",
             "unexpected prv key at m/0'/1"
         )
         assertTrue(
-            bip44.deviceChildKey("m/0'/1").xpub().base58WithChecksumString() == "xpub6ASuArnXKPbfEwhqN6e3mwBcDTgzisQN1wXN9BJcM47sSikHjJf3UFHKkNAWbWMiGj7Wf5uMash7SyYq527Hqck2AxYysAA7xmALppuCkwQ",
+            bip44.deriveChildKey("m/0'/1").xpub().base58WithChecksumString() == "xpub6ASuArnXKPbfEwhqN6e3mwBcDTgzisQN1wXN9BJcM47sSikHjJf3UFHKkNAWbWMiGj7Wf5uMash7SyYq527Hqck2AxYysAA7xmALppuCkwQ",
             "unexpected pub key at m/0'/1"
         )
         // m/0'/1/2'
         assertTrue(
-            bip44.deviceChildKey("m/0'/1/2'").base58WithChecksumString() == "xprv9z4pot5VBttmtdRTWfWQmoH1taj2axGVzFqSb8C9xaxKymcFzXBDptWmT7FwuEzG3ryjH4ktypQSAewRiNMjANTtpgP4mLTj34bhnZX7UiM",
+            bip44.deriveChildKey("m/0'/1/2'").base58WithChecksumString() == "xprv9z4pot5VBttmtdRTWfWQmoH1taj2axGVzFqSb8C9xaxKymcFzXBDptWmT7FwuEzG3ryjH4ktypQSAewRiNMjANTtpgP4mLTj34bhnZX7UiM",
             "unexpected prv key at m/0'/1/2'"
         )
         assertTrue(
-            bip44.deviceChildKey("m/0'/1/2'").xpub().base58WithChecksumString() == "xpub6D4BDPcP2GT577Vvch3R8wDkScZWzQzMMUm3PWbmWvVJrZwQY4VUNgqFJPMM3No2dFDFGTsxxpG5uJh7n7epu4trkrX7x7DogT5Uv6fcLW5",
+            bip44.deriveChildKey("m/0'/1/2'").xpub().base58WithChecksumString() == "xpub6D4BDPcP2GT577Vvch3R8wDkScZWzQzMMUm3PWbmWvVJrZwQY4VUNgqFJPMM3No2dFDFGTsxxpG5uJh7n7epu4trkrX7x7DogT5Uv6fcLW5",
             "unexpected pub key at m/0'/1/2'"
         )
         // m/0'/1/2'/2
         assertTrue(
-            bip44.deviceChildKey("m/0'/1/2'/2").base58WithChecksumString() == "xprvA2JDeKCSNNZky6uBCviVfJSKyQ1mDYahRjijr5idH2WwLsEd4Hsb2Tyh8RfQMuPh7f7RtyzTtdrbdqqsunu5Mm3wDvUAKRHSC34sJ7in334",
+            bip44.deriveChildKey("m/0'/1/2'/2").base58WithChecksumString() == "xprvA2JDeKCSNNZky6uBCviVfJSKyQ1mDYahRjijr5idH2WwLsEd4Hsb2Tyh8RfQMuPh7f7RtyzTtdrbdqqsunu5Mm3wDvUAKRHSC34sJ7in334",
             "unexpected prv key at m/0'/1/2'/2"
         )
         assertTrue(
-            bip44.deviceChildKey("m/0'/1/2'/2").xpub().base58WithChecksumString() == "xpub6FHa3pjLCk84BayeJxFW2SP4XRrFd1JYnxeLeU8EqN3vDfZmbqBqaGJAyiLjTAwm6ZLRQUMv1ZACTj37sR62cfN7fe5JnJ7dh8zL4fiyLHV",
+            bip44.deriveChildKey("m/0'/1/2'/2").xpub().base58WithChecksumString() == "xpub6FHa3pjLCk84BayeJxFW2SP4XRrFd1JYnxeLeU8EqN3vDfZmbqBqaGJAyiLjTAwm6ZLRQUMv1ZACTj37sR62cfN7fe5JnJ7dh8zL4fiyLHV",
             "unexpected pub key at m/0'/1/2'/2'"
         )
         // m/0'/1/2'/2/1000000000
         assertTrue(
-            bip44.deviceChildKey("m/0'/1/2'/2/1000000000").base58WithChecksumString() == "xprvA41z7zogVVwxVSgdKUHDy1SKmdb533PjDz7J6N6mV6uS3ze1ai8FHa8kmHScGpWmj4WggLyQjgPie1rFSruoUihUZREPSL39UNdE3BBDu76",
+            bip44.deriveChildKey("m/0'/1/2'/2/1000000000").base58WithChecksumString() == "xprvA41z7zogVVwxVSgdKUHDy1SKmdb533PjDz7J6N6mV6uS3ze1ai8FHa8kmHScGpWmj4WggLyQjgPie1rFSruoUihUZREPSL39UNdE3BBDu76",
             "unexpected prv key at m/0'/1/2'/2/1000000000"
         )
         assertTrue(
-            bip44.deviceChildKey("m/0'/1/2'/2/1000000000").xpub().base58WithChecksumString() == "xpub6H1LXWLaKsWFhvm6RVpEL9P4KfRZSW7abD2ttkWP3SSQvnyA8FSVqNTEcYFgJS2UaFcxupHiYkro49S8yGasTvXEYBVPamhGW6cFJodrTHy",
+            bip44.deriveChildKey("m/0'/1/2'/2/1000000000").xpub().base58WithChecksumString() == "xpub6H1LXWLaKsWFhvm6RVpEL9P4KfRZSW7abD2ttkWP3SSQvnyA8FSVqNTEcYFgJS2UaFcxupHiYkro49S8yGasTvXEYBVPamhGW6cFJodrTHy",
             "unexpected pub key at m/0'/1/2'/2/1000000000"
         )
     }
@@ -118,38 +118,38 @@ class Bip44Test {
         )
         // m/0
         assertTrue(
-            bip44.deviceChildKey("m/0").base58WithChecksumString() == "xprv9vHkqa6EV4sPZHYqZznhT2NPtPCjKuDKGY38FBWLvgaDx45zo9WQRUT3dKYnjwih2yJD9mkrocEZXo1ex8G81dwSM1fwqWpWkeS3v86pgKt",
+            bip44.deriveChildKey("m/0").base58WithChecksumString() == "xprv9vHkqa6EV4sPZHYqZznhT2NPtPCjKuDKGY38FBWLvgaDx45zo9WQRUT3dKYnjwih2yJD9mkrocEZXo1ex8G81dwSM1fwqWpWkeS3v86pgKt",
             "unexpected prv key at m/0"
         )
         assertTrue(
-            bip44.deviceChildKey("m/0").xpub().base58WithChecksumString() == "xpub69H7F5d8KSRgmmdJg2KhpAK8SR3DjMwAdkxj3ZuxV27CprR9LgpeyGmXUbC6wb7ERfvrnKZjXoUmmDznezpbZb7ap6r1D3tgFxHmwMkQTPH",
+            bip44.deriveChildKey("m/0").xpub().base58WithChecksumString() == "xpub69H7F5d8KSRgmmdJg2KhpAK8SR3DjMwAdkxj3ZuxV27CprR9LgpeyGmXUbC6wb7ERfvrnKZjXoUmmDznezpbZb7ap6r1D3tgFxHmwMkQTPH",
             "unexpected pub key at m/0"
         )
         // m/0/2147483647'
         assertTrue(
-            bip44.deviceChildKey("m/0/2147483647'").base58WithChecksumString() == "xprv9wSp6B7kry3Vj9m1zSnLvN3xH8RdsPP1Mh7fAaR7aRLcQMKTR2vidYEeEg2mUCTAwCd6vnxVrcjfy2kRgVsFawNzmjuHc2YmYRmagcEPdU9",
+            bip44.deriveChildKey("m/0/2147483647'").base58WithChecksumString() == "xprv9wSp6B7kry3Vj9m1zSnLvN3xH8RdsPP1Mh7fAaR7aRLcQMKTR2vidYEeEg2mUCTAwCd6vnxVrcjfy2kRgVsFawNzmjuHc2YmYRmagcEPdU9",
             "unexpected prv key at m/0/2147483647'"
         )
         assertTrue(
-            bip44.deviceChildKey("m/0/2147483647'").xpub().base58WithChecksumString() == "xpub6ASAVgeehLbnwdqV6UKMHVzgqAG8Gr6riv3Fxxpj8ksbH9ebxaEyBLZ85ySDhKiLDBrQSARLq1uNRts8RuJiHjaDMBU4Zn9h8LZNnBC5y4a",
+            bip44.deriveChildKey("m/0/2147483647'").xpub().base58WithChecksumString() == "xpub6ASAVgeehLbnwdqV6UKMHVzgqAG8Gr6riv3Fxxpj8ksbH9ebxaEyBLZ85ySDhKiLDBrQSARLq1uNRts8RuJiHjaDMBU4Zn9h8LZNnBC5y4a",
             "unexpected pub key at m/0/2147483647'"
         )
         // m/0/2147483647'/1/2147483646'
         assertTrue(
-            bip44.deviceChildKey("m/0/2147483647'/1/2147483646'").base58WithChecksumString() == "xprvA1RpRA33e1JQ7ifknakTFpgNXPmW2YvmhqLQYMmrj4xJXXWYpDPS3xz7iAxn8L39njGVyuoseXzU6rcxFLJ8HFsTjSyQbLYnMpCqE2VbFWc",
+            bip44.deriveChildKey("m/0/2147483647'/1/2147483646'").base58WithChecksumString() == "xprvA1RpRA33e1JQ7ifknakTFpgNXPmW2YvmhqLQYMmrj4xJXXWYpDPS3xz7iAxn8L39njGVyuoseXzU6rcxFLJ8HFsTjSyQbLYnMpCqE2VbFWc",
             "unexpected prv key at m/0/2147483647'/1/2147483646'"
         )
         assertTrue(
-            bip44.deviceChildKey("m/0/2147483647'/1/2147483646'").xpub().base58WithChecksumString() == "xpub6ERApfZwUNrhLCkDtcHTcxd75RbzS1ed54G1LkBUHQVHQKqhMkhgbmJbZRkrgZw4koxb5JaHWkY4ALHY2grBGRjaDMzQLcgJvLJuZZvRcEL",
+            bip44.deriveChildKey("m/0/2147483647'/1/2147483646'").xpub().base58WithChecksumString() == "xpub6ERApfZwUNrhLCkDtcHTcxd75RbzS1ed54G1LkBUHQVHQKqhMkhgbmJbZRkrgZw4koxb5JaHWkY4ALHY2grBGRjaDMzQLcgJvLJuZZvRcEL",
             "unexpected pub key at m/0/2147483647'/1/2147483646'"
         )
         // m/0/2147483647'/1/2147483646'/2
         assertTrue(
-            bip44.deviceChildKey("m/0/2147483647'/1/2147483646'/2").base58WithChecksumString() == "xprvA2nrNbFZABcdryreWet9Ea4LvTJcGsqrMzxHx98MMrotbir7yrKCEXw7nadnHM8Dq38EGfSh6dqA9QWTyefMLEcBYJUuekgW4BYPJcr9E7j",
+            bip44.deriveChildKey("m/0/2147483647'/1/2147483646'/2").base58WithChecksumString() == "xprvA2nrNbFZABcdryreWet9Ea4LvTJcGsqrMzxHx98MMrotbir7yrKCEXw7nadnHM8Dq38EGfSh6dqA9QWTyefMLEcBYJUuekgW4BYPJcr9E7j",
             "unexpected prv key at m/0/2147483647'/1/2147483646'/2"
         )
         assertTrue(
-            bip44.deviceChildKey("m/0/2147483647'/1/2147483646'/2").xpub().base58WithChecksumString() == "xpub6FnCn6nSzZAw5Tw7cgR9bi15UV96gLZhjDstkXXxvCLsUXBGXPdSnLFbdpq8p9HmGsApME5hQTZ3emM2rnY5agb9rXpVGyy3bdW6EEgAtqt",
+            bip44.deriveChildKey("m/0/2147483647'/1/2147483646'/2").xpub().base58WithChecksumString() == "xpub6FnCn6nSzZAw5Tw7cgR9bi15UV96gLZhjDstkXXxvCLsUXBGXPdSnLFbdpq8p9HmGsApME5hQTZ3emM2rnY5agb9rXpVGyy3bdW6EEgAtqt",
             "unexpected pub key at m/0/2147483647'/1/2147483646'/2"
         )
     }
@@ -168,11 +168,11 @@ class Bip44Test {
         )
         // m/0
         assertTrue(
-            bip44.deviceChildKey("m/0'").base58WithChecksumString() == "xprv9uPDJpEQgRQfDcW7BkF7eTya6RPxXeJCqCJGHuCJ4GiRVLzkTXBAJMu2qaMWPrS7AANYqdq6vcBcBUdJCVVFceUvJFjaPdGZ2y9WACViL4L",
+            bip44.deriveChildKey("m/0'").base58WithChecksumString() == "xprv9uPDJpEQgRQfDcW7BkF7eTya6RPxXeJCqCJGHuCJ4GiRVLzkTXBAJMu2qaMWPrS7AANYqdq6vcBcBUdJCVVFceUvJFjaPdGZ2y9WACViL4L",
             "unexpected prv key at m/0'"
         )
         assertTrue(
-            bip44.deviceChildKey("m/0'").xpub().base58WithChecksumString() == "xpub68NZiKmJWnxxS6aaHmn81bvJeTESw724CRDs6HbuccFQN9Ku14VQrADWgqbhhTHBaohPX4CjNLf9fq9MYo6oDaPPLPxSb7gwQN3ih19Zm4Y",
+            bip44.deriveChildKey("m/0'").xpub().base58WithChecksumString() == "xpub68NZiKmJWnxxS6aaHmn81bvJeTESw724CRDs6HbuccFQN9Ku14VQrADWgqbhhTHBaohPX4CjNLf9fq9MYo6oDaPPLPxSb7gwQN3ih19Zm4Y",
             "unexpected pub key at m/0'"
         )
     }
@@ -191,20 +191,20 @@ class Bip44Test {
         )
         // m/0'
         assertTrue(
-            bip44.deviceChildKey("m/0'").base58WithChecksumString() == "xprv9vB7xEWwNp9kh1wQRfCCQMnZUEG21LpbR9NPCNN1dwhiZkjjeGRnaALmPXCX7SgjFTiCTT6bXes17boXtjq3xLpcDjzEuGLQBM5ohqkao9G",
+            bip44.deriveChildKey("m/0'").base58WithChecksumString() == "xprv9vB7xEWwNp9kh1wQRfCCQMnZUEG21LpbR9NPCNN1dwhiZkjjeGRnaALmPXCX7SgjFTiCTT6bXes17boXtjq3xLpcDjzEuGLQBM5ohqkao9G",
             "unexpected prv key at m/0'"
         )
         assertTrue(
-            bip44.deviceChildKey("m/0'").xpub().base58WithChecksumString() == "xpub69AUMk3qDBi3uW1sXgjCmVjJ2G6WQoYSnNHyzkmdCHEhSZ4tBok37xfFEqHd2AddP56Tqp4o56AePAgCjYdvpW2PU2jbUPFKsav5ut6Ch1m",
+            bip44.deriveChildKey("m/0'").xpub().base58WithChecksumString() == "xpub69AUMk3qDBi3uW1sXgjCmVjJ2G6WQoYSnNHyzkmdCHEhSZ4tBok37xfFEqHd2AddP56Tqp4o56AePAgCjYdvpW2PU2jbUPFKsav5ut6Ch1m",
             "unexpected pub key at m/0'"
         )
         // m/0'/1'
         assertTrue(
-            bip44.deviceChildKey("m/0'/1'").base58WithChecksumString() == "xprv9xJocDuwtYCMNAo3Zw76WENQeAS6WGXQ55RCy7tDJ8oALr4FWkuVoHJeHVAcAqiZLE7Je3vZJHxspZdFHfnBEjHqU5hG1Jaj32dVoS6XLT1",
+            bip44.deriveChildKey("m/0'/1'").base58WithChecksumString() == "xprv9xJocDuwtYCMNAo3Zw76WENQeAS6WGXQ55RCy7tDJ8oALr4FWkuVoHJeHVAcAqiZLE7Je3vZJHxspZdFHfnBEjHqU5hG1Jaj32dVoS6XLT1",
             "unexpected prv key at m/0'/1'"
         )
         assertTrue(
-            bip44.deviceChildKey("m/0'/1'").xpub().base58WithChecksumString() == "xpub6BJA1jSqiukeaesWfxe6sNK9CCGaujFFSJLomWHprUL9DePQ4JDkM5d88n49sMGJxrhpjazuXYWdMf17C9T5XnxkopaeS7jGk1GyyVziaMt",
+            bip44.deriveChildKey("m/0'/1'").xpub().base58WithChecksumString() == "xpub6BJA1jSqiukeaesWfxe6sNK9CCGaujFFSJLomWHprUL9DePQ4JDkM5d88n49sMGJxrhpjazuXYWdMf17C9T5XnxkopaeS7jGk1GyyVziaMt",
             "unexpected pub key at m/0'/1'"
         )
     }
@@ -327,7 +327,7 @@ class Bip44Test {
                 )
             }
             try {
-                val childKey = bip44.deviceChildKey(path)
+                val childKey = bip44.deriveChildKey(path)
                 val childKeyStr = childKey.base58WithChecksumString()
                 val deserializedKey = ExtKey.fromString(childKeyStr)
                     .base58WithChecksumString()

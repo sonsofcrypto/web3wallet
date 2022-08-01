@@ -6,3 +6,26 @@ import Foundation
 import web3lib
 
 extension KotlinError: Error {}
+
+extension Network {
+
+    static func ethereum() -> Network {
+        Network.Companion().ethereum()
+    }
+
+    static func goerli() -> Network {
+        Network.Companion().goerli()
+    }
+
+    static func rinkeby() -> Network {
+        Network.Companion().rinkeby()
+    }
+
+    static func ropsten() -> Network {
+        Network.Companion().ropsten()
+    }
+
+    static func supported() -> [Network] {
+        Network.Companion().supported()
+    }
+}

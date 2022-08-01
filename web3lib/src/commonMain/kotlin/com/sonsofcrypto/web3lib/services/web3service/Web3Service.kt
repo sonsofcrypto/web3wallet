@@ -41,7 +41,6 @@ interface Web3Service {
         data class NetworkSelected(val network: Network?): Event()
         data class NetworksChanged(val networks: List<Network>): Event()
         data class BlockUpdated(val number: BigInt): Event()
-        data class RefreshNFTs(val wallet: Network, val network: Network): Event()
     }
 
     interface Listener{
@@ -156,14 +155,14 @@ class DefaultWeb3Service: Web3Service {
         return store.get("lastKnownBlock${network.chainId}") ?: BigInt.zero()
     }
 
-    // TODO: - Screw Kotlin's serialization and generics. Implement our own
+    // TODO: - Fix Kotlin serialization
     private fun storeNetworks(networks: List<Network>, wallet: Wallet?) {
         if (wallet != null) {
             store[networksKey(wallet)] = Json.encodeToString(networks)
         }
     }
 
-    // TODO: - Screw Kotlin's serialization and generics. Implement our own
+    // TODO: - Fix Kotlin serialization
     private fun getStoredNetworks(wallet: Wallet?): List<Network>? {
         wallet?.let { wallet: Wallet ->
             store.get<String>(networksKey(wallet))?.let {
