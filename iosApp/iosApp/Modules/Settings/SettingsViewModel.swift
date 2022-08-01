@@ -16,16 +16,29 @@ extension SettingsViewModel {
         
         case header(header: Header)
         case group(items: [Item])
+        case footer(footer: Footer)
         
         struct Header {
             
             let title: String
         }
         
+        struct Footer {
+            
+            let body: String
+            let textAlignment: TextAlignment
+            
+            enum TextAlignment {
+                
+                case leading
+                case center
+            }
+        }
+        
         var items: [Item] {
             
             switch self {
-            case .header:
+            case .header, .footer:
                 return []
             case let .group(items):
                 return items

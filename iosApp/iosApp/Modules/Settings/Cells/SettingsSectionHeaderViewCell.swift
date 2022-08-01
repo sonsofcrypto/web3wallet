@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class SettingsSectionViewCell: UICollectionViewCell {
+final class SettingsSectionHeaderViewCell: UICollectionViewCell {
     
     @IBOutlet weak var label: UILabel!
     
@@ -16,7 +16,7 @@ final class SettingsSectionViewCell: UICollectionViewCell {
     }
 }
 
-extension SettingsSectionViewCell {
+extension SettingsSectionHeaderViewCell {
 
     func update(with viewModel: SettingsViewModel.Section.Header) {
         

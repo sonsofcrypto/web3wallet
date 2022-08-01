@@ -79,6 +79,8 @@ extension SettingsViewController: UICollectionViewDataSource {
             return 1
         case let .group(items):
             return items.count
+        case .footer:
+            return 1
         }
     }
 
@@ -92,7 +94,7 @@ extension SettingsViewController: UICollectionViewDataSource {
         switch section {
             
         case let .header(header):
-            let cell = collectionView.dequeue(SettingsSectionViewCell.self, for: indexPath)
+            let cell = collectionView.dequeue(SettingsSectionHeaderViewCell.self, for: indexPath)
             cell.update(with: header)
             return cell
             
@@ -100,6 +102,11 @@ extension SettingsViewController: UICollectionViewDataSource {
             let item = items[indexPath.item]
             let cell = collectionView.dequeue(SettingsCell.self, for: indexPath)
             return cell.update(with: item, showSeparator: items.last != item)
+            
+        case let .footer(footer):
+            let cell = collectionView.dequeue(SettingsSectionFooterViewCell.self, for: indexPath)
+            cell.update(with: footer)
+            return cell
         }
     }
 }
@@ -139,6 +146,13 @@ private extension SettingsViewController{
                 return self.makeCollectionLayoutSection(
                     withBackgroundDecoratorView: true,
                     isHeader: false,
+                    sectionIndex: sectionIndex
+                )
+                
+            case .footer:
+                return self.makeCollectionLayoutSection(
+                    withBackgroundDecoratorView: false,
+                    isHeader: true,
                     sectionIndex: sectionIndex
                 )
             }
@@ -193,7 +207,16 @@ private extension SettingsViewController{
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
-        section.boundarySupplementaryItems = [headerItem]
+        let footerItemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(1)
+        )
+        let footerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: footerItemSize,
+            elementKind: UICollectionView.elementKindSectionFooter,
+            alignment: .bottom
+        )
+        section.boundarySupplementaryItems = [headerItem, footerItem]
         
         if addBackgroundDecorator {
 

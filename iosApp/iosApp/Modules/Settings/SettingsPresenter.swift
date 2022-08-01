@@ -103,6 +103,19 @@ private extension DefaultSettingsPresenter {
             }
             
             sections.append(makeSectionItems(for: $0))
+            
+            if let footer = $0.footer {
+                
+                sections.append(
+                    .footer(
+                        footer: .init(
+                            body: footer.text,
+                            textAlignment: footer.textAlignment
+                        )
+                    )
+                )
+            }
+
         }
         return sections
     }

@@ -75,7 +75,8 @@ extension DefaultSettingsService: SettingsService {
                                 showTickOnSelected: true
                             )
                         )
-                    ]
+                    ],
+                    footer: nil
                 )
             ]
             
@@ -97,7 +98,8 @@ extension DefaultSettingsService: SettingsService {
                                 showTickOnSelected: false
                             )
                         )
-                    ]
+                    ],
+                    footer: nil
                 )
             ]
 
@@ -111,7 +113,8 @@ extension DefaultSettingsService: SettingsService {
                             title: Localized("settings.debug.apis.nfts"),
                             type: .item(.debugAPIsNFTs)
                         )
-                    ]
+                    ],
+                    footer: nil
                 )
             ]
             
@@ -137,7 +140,8 @@ extension DefaultSettingsService: SettingsService {
                                 showTickOnSelected: true
                             )
                         )
-                    ]
+                    ],
+                    footer: nil
                 )
             ]
             
@@ -195,7 +199,8 @@ extension DefaultSettingsService: SettingsService {
                                 showTickOnSelected: false
                             )
                         )
-                    ]
+                    ],
+                    footer: nil
                 ),
                 .init(
                     title: Localized("settings.about.contactUs"),
@@ -208,7 +213,11 @@ extension DefaultSettingsService: SettingsService {
                                 showTickOnSelected: false
                             )
                         )
-                    ]
+                    ],
+                    footer: .init(
+                        text: "TODO: @Annon to fill this footer with some text that actually makes sense.",
+                        textAlignment: .leading
+                    )
                 )
             ]
         }
