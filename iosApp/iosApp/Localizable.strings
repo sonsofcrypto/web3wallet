@@ -137,19 +137,30 @@
 "networks.header.l1sTest" = "Layer #1s Testnets";
 "networks.header.l2sTest" = "Layer #2s Testnets";
 
-"settings.root.group.settings" = "Settings";
-"settings.root.group.actions" = "Actions";
+"settings.root.themes" = "Themes";
 "settings.theme" = "Theme";
 "settings.theme.miami" = "Theme Miami";
 "settings.theme.ios" = "Theme IOS";
-"settings.debug" = "Debug";
+
+"settings.root.developerMenu" = "Developer Menu";
 "settings.debug.apis" = "APIs";
 "settings.debug.apis.nfts" = "NFTs";
 "settings.debug.apis.nfts.openSea" = "OpenSea";
 "settings.debug.apis.nfts.mock" = "Dummy Data";
-"settings.resetKeyStore" = "Reset keystore";
-"settings.newSeedTransitionType" = "New seed transition type";
-"settings.onboardingMode" = "Onboarding mode";
+"settings.debug.resetKeyStore" = "Reset keystore";
+
+"settings.root.about" = "About";
+"settings.about.socials" = "Socials";
+"settings.about.website" = "Website";
+"settings.about.github" = "GitHub";
+"settings.about.medium" = "Medium";
+"settings.about.discord" = "Discord";
+"settings.about.twitter" = "Twitter";
+"settings.about.telegram" = "Telegram";
+"settings.about.fotter" = "Section footer here...";
+"settings.about.contactUs" = "Contact Us";
+"settings.about.mail" = "Mail";
+"settings.about.footer" = "Version: %@";
 
 "alert.underConstruction.title" = "Under construction";
 "alert.underConstruction.message" = "App is under very active development and this corner is not quite ready yet. Check back soon.";
@@ -188,6 +199,8 @@
 "tokenPicker.title.multiSelectEdit" = "Select";
 "tokenPicker.title.select" = "Select";
 "tokenPicker.networks.all" = "All networks";
+"tokenPicker.myTokens.title" = "My tokens";
+"tokenPicker.other.title" = "Other";
 "tokenPicker.featured.title" = "Featured";
 "tokenPicker.popular.title" = "Popular";
 "tokenPicker.noResults" = "No results";
@@ -290,15 +303,19 @@
 "cult.proposal.parsing.cultRewardAllocation" = "%@% of Total Supply";
 
 "features.title" = "Upcoming Features";
+"features.section.all.description" = "Description here for section all, @Annon to fill up.";
+"features.section.infrastructure.description" = "Description here for section infrastructure, @Annon to fill up.";
+"features.section.integrations.description" = "Description here for section integrations, @Annon to fill up.";
+"features.section.features.description" = "Description here for section features, @Annon to fill up.";
 "features.segmentedControl.all" = "All";
 "features.segmentedControl.infrastructure" = "Infrastructure";
 "features.segmentedControl.integrations" = "Integrations";
 "features.segmentedControl.features" = "Features";
-"features.votes" = "Total Votes:";
-"features.category" = "Category:";
-"features.button.vote" = "Vote";
+"features.cell.votes" = "Votes: %@";
+"features.cell.button.vote" = "Vote";
 
 "feature.title" = "Feature";
 "feature.summary.header" = "Details";
 "feature.title.of" = "of";
 "feature.button.vote" = "Vote";
+"feature.hashTag" = "WIP%@";

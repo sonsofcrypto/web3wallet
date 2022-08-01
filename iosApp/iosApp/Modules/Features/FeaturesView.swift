@@ -93,6 +93,34 @@ extension FeaturesViewController: UICollectionViewDataSource {
             handler: makeFeaturesCellHandler()
         )
     }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        
+        switch kind {
+        case "header":
+            
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: String(describing: FeaturesHeaderSupplementaryView.self),
+                for: indexPath
+            ) as? FeaturesHeaderSupplementaryView else {
+                
+                return FeaturesHeaderSupplementaryView()
+            }
+            
+            let section = viewModel.sections[indexPath.section]
+            headerView.update(with: section)
+            return headerView
+            
+        default:
+            assertionFailure("Unexpected element kind: \(kind).")
+            return UICollectionReusableView()
+        }
+    }
 }
 
 extension FeaturesViewController: UICollectionViewDelegate {
@@ -210,6 +238,12 @@ private extension FeaturesViewController {
         collectionView.alwaysBounceVertical = true
         collectionView.refreshControl = refreshControl
         
+        collectionView.register(
+            FeaturesHeaderSupplementaryView.self,
+            forSupplementaryViewOfKind: "header",
+            withReuseIdentifier: String(describing: FeaturesHeaderSupplementaryView.self)
+        )
+        
         refreshControl.tintColor = Theme.colour.activityIndicator
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
 
@@ -254,22 +288,22 @@ private extension FeaturesViewController {
         // Section
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = .init(
-            top: Theme.constant.padding * 2,
+            top: Theme.constant.padding,
             leading: Theme.constant.padding,
             bottom: Theme.constant.padding,
             trailing: Theme.constant.padding
         )
         section.interGroupSpacing = Theme.constant.padding * 1.5
         
-//        let headerItemSize = NSCollectionLayoutSize(
-//            widthDimension: .fractionalWidth(1),
-//            heightDimension: .estimated(100)
-//        )
-//        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
-//            layoutSize: headerItemSize,
-//            elementKind: "header",
-//            alignment: .top
-//        )
+        let headerItemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(100)
+        )
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerItemSize,
+            elementKind: "header",
+            alignment: .top
+        )
 //        let footerItemSize = NSCollectionLayoutSize(
 //            widthDimension: .fractionalWidth(1),
 //            heightDimension: .estimated(100)
@@ -280,7 +314,7 @@ private extension FeaturesViewController {
 //            alignment: .bottom
 //        )
         
-        //section.boundarySupplementaryItems = [headerItem, footerItem]
+        section.boundarySupplementaryItems = [headerItem]
         
         return section
     }

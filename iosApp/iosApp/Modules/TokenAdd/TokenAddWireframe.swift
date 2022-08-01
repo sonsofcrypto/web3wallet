@@ -7,6 +7,7 @@ import UIKit
 struct TokenAddWireframeContext {
     
     let presentationStyle: PresentationStyle
+    let network: Web3Network
 }
 
 enum TokenAddWireframeDestination {

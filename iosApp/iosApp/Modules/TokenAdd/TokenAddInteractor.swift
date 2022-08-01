@@ -14,7 +14,6 @@ struct TokenAddInteractorNewToken {
 
 protocol TokenAddInteractor: AnyObject {
     
-    var defaultNetwork: Web3Network { get }
     func isValid(address: String, forNetwork: Web3Network) -> Bool
     func addressFormattedShort(
         address: String,
@@ -40,17 +39,6 @@ final class DefaultTokenAddInteractor {
 }
 
 extension DefaultTokenAddInteractor: TokenAddInteractor {
-
-    var defaultNetwork: Web3Network {
-        
-        let network = web3Service.allTokens.networks.first {
-            $0.name.lowercased() == "ethereum"
-        }
-        
-        guard let network = network else { fatalError("Missing ethereum network!") }
-        
-        return network
-    }
     
     func isValid(address: String, forNetwork network: Web3Network) -> Bool {
         

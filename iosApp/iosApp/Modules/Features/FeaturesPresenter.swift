@@ -126,6 +126,7 @@ private extension DefaultFeaturesPresenter {
         
         let section: FeaturesViewModel.Section = .init(
             title: filterSectionType.stringValue + " (\(featuresList.count))",
+            description: filterSectionType.descriptionValue,
             type: filterSectionType,
             items: featuresList.compactMap { viewModel(from: $0) },
             footer: nil
@@ -141,16 +142,18 @@ private extension DefaultFeaturesPresenter {
         .init(
             id: feature.id,
             title: feature.title,
-            totalVotes: Localized("features.votes"),
-            totalVotesValue: feature.votes.stringValue,
-            category: filterSectionType == .all ? Localized("features.category") : nil,
-            categoryValue: filterSectionType == .all ? feature.category.stringValue : nil,
-            voteButtonTitle: Localized("features.button.vote")
+            subtitle: makeSubtitle(for: feature),
+            buttonTitle: Localized("features.cell.button.vote")
         )
     }
 }
 
 private extension DefaultFeaturesPresenter {
+    
+    func makeSubtitle(for feature: Web3Feature) -> String {
+        
+        feature.hashTag + "  |  " + Localized("features.cell.votes", arg: feature.votes.stringValue)
+    }
     
     var currentList: [Web3Feature] {
         
@@ -167,7 +170,7 @@ extension Array where Element == Web3Feature {
     
     var sortedList: [Web3Feature] {
         
-        sorted { $0.id > $1.id }
+        sorted { $0.votes > $1.votes }
     }
     
     var integrations: [Web3Feature] {

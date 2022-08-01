@@ -18,8 +18,19 @@ class CollectionView: UICollectionView {
             addSubview(overScrollView)
         }
 
-        overScrollView.contentMode = .center
-        overScrollView.bounds.size = Constant.overScrollViewSize
+        overScrollView.contentMode = .scaleAspectFit
+        overScrollView.addConstraints(
+            [
+                .layout(
+                    anchor: .widthAnchor,
+                    constant: .equalTo(constant: Constant.overScrollViewSize.width)
+                ),
+                .layout(
+                    anchor: .heightAnchor,
+                    constant: .equalTo(constant: Constant.overScrollViewSize.height)
+                )
+            ]
+        )
     }
 
     override func layoutSubviews() {
@@ -28,13 +39,12 @@ class CollectionView: UICollectionView {
 
         overScrollView.center.x = bounds.width / 2
         overScrollView.center.y = max(
-            contentSize.height -
-            adjustedContentInset.bottom +
-            overScrollView.bounds.height +
-            contentInset.bottom,
+            contentSize.height
+            + overScrollView.bounds.height.half
+            - contentInset.bottom,
             frame.maxY
-        ) - 35
-
+        )
+        
     }
 }
 

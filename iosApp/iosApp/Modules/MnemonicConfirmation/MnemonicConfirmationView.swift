@@ -202,7 +202,7 @@ private extension MnemonicConfirmationViewController {
                 )
             )
         )
-        scrollView.backgroundColor = Theme.colour.cellBackground
+        scrollView.backgroundColor = Theme.colour.navBarBackground
         addWords([], to: scrollView)
         return scrollView
     }

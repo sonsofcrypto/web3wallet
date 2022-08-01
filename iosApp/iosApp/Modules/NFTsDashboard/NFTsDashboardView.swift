@@ -13,7 +13,7 @@ final class NFTsDashboardViewController: BaseViewController {
 
     var presenter: NFTsDashboardPresenter!
     
-    private (set) weak var mainScrollView: UIScrollView!
+    private (set) weak var mainScrollView: ScrollView!
     weak var carousel: iCarousel!
     weak var collectionsView: UIView!
 
@@ -35,7 +35,7 @@ extension NFTsDashboardViewController: NFTsDashboardView {
 
         self.viewModel = viewModel
         
-        self.mainScrollView.refreshControl?.endRefreshing()
+        mainScrollView.refreshControl?.endRefreshing()
         
         refreshNFTs()
         refreshNFTsCollections()
@@ -79,5 +79,8 @@ private extension NFTsDashboardViewController {
         view.addSubview(mainScrollView)
         self.mainScrollView = mainScrollView
         mainScrollView.addConstraints(.toEdges)
+        
+        mainScrollView.overScrollView.image = "overscroll_ape".assetImage
+        mainScrollView.overScrollView.layer.transform = CATransform3DMakeTranslation(0, -20, 0)
     }
 }

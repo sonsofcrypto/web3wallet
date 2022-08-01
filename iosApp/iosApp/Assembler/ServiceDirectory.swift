@@ -26,4 +26,9 @@ struct ServiceDirectory {
         guard let window = SceneDelegateHelper().window else { return }
         MainBootstrapper(window: window).boot()
     }
+    
+    static func makeVersionNumber() -> String {
+        
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+    }
 }

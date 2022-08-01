@@ -7,13 +7,9 @@ import UIKit
 final class FeaturesCell: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var chevronImageView: UIImageView!
-    @IBOutlet weak var voteLabel: UILabel!
-    @IBOutlet weak var voteValueLabel: UILabel!
-    @IBOutlet weak var categoryStack: UIStackView!
-    @IBOutlet weak var categoryLabel: UILabel!
-    @IBOutlet weak var categoryValueLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var voteButton: Button!
+    @IBOutlet weak var chevronImageView: UIImageView!
 
     private var viewModel: FeaturesViewModel.Item!
     private var handler: Handler!
@@ -29,17 +25,12 @@ final class FeaturesCell: CollectionViewCell {
         
         titleLabel.apply(style: .body, weight: .bold)
         
-        voteLabel.apply(style: .subheadline)
-        voteLabel.textColor = Theme.colour.labelSecondary
-        voteValueLabel.apply(style: .body)
-
-        categoryLabel.apply(style: .subheadline)
-        categoryLabel.textColor = Theme.colour.labelSecondary
-        categoryValueLabel.apply(style: .body)
+        subtitleLabel.apply(style: .subheadline)
+        subtitleLabel.textColor = Theme.colour.labelSecondary
 
         chevronImageView.tintColor = Theme.colour.labelPrimary
         
-        voteButton.style = .primary
+        voteButton.style = .dashboardAction(leftImage: nil)
         voteButton.addTarget(self, action: #selector(voteTapped), for: .touchUpInside)
         
         clipsToBounds = false
@@ -61,15 +52,9 @@ final class FeaturesCell: CollectionViewCell {
         self.handler = handler
         
         titleLabel.text = viewModel.title
-        
-        voteLabel.text = viewModel.totalVotes
-        voteValueLabel.text = viewModel.totalVotesValue
+        subtitleLabel.text = viewModel.subtitle
 
-        categoryLabel.text = viewModel.category
-        categoryValueLabel.text = viewModel.categoryValue
-        categoryStack.isHidden = true//viewModel.category == nil
-
-        voteButton.setTitle(viewModel.voteButtonTitle, for: .normal)
+        voteButton.setTitle(viewModel.buttonTitle, for: .normal)
         
         return self
     }

@@ -28,6 +28,41 @@ class TextField: UITextField {
     }
 }
 
+extension TextField {
+    
+    func addDoneInputAccessoryView(
+        with targetAction: TargetActionViewModel
+    ) {
+        
+        let view = UIView(
+            frame: .init(
+                origin: .zero,
+                size: .init(
+                    width: SceneDelegateHelper().window?.frame.size.width ?? 0,
+                    height: 40
+                )
+            )
+        )
+        view.backgroundColor = Theme.colour.navBarBackground
+        
+        let doneAction = UIButton(type: .custom)
+        doneAction.titleLabel?.font = Theme.font.bodyBold
+        doneAction.titleLabel?.textAlignment = .right
+        doneAction.setTitle(Localized("done"), for: .normal)
+        doneAction.setTitleColor(Theme.colour.labelPrimary, for: .normal)
+        doneAction.add(targetAction)
+        view.addSubview(doneAction)
+        doneAction.addConstraints(
+            [
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 16)),
+                .layout(anchor: .centerYAnchor)
+            ]
+        )
+        
+        inputAccessoryView = view
+    }
+}
+
 private extension TextField {
     
     func configure() {

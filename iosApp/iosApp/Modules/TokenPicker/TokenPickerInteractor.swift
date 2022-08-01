@@ -7,7 +7,11 @@ import Foundation
 
 protocol TokenPickerInteractor: AnyObject {
 
-    var allTokens: [ Web3Token ] { get }
+    var myTokens: [Web3Token] { get }
+    func tokens(
+        filteredBy searchTerm: String,
+        for network: Web3Network?
+    ) -> [Web3Token]
     func networkIcon(for network: Web3Network) -> Data
     func tokenIcon(for token: Web3Token) -> Data
 }
@@ -26,9 +30,17 @@ final class DefaultTokenPickerInteractor {
 
 extension DefaultTokenPickerInteractor: TokenPickerInteractor {
     
-    var allTokens: [ Web3Token ] {
+    var myTokens: [Web3Token] {
         
-        web3Service.allTokens
+        web3Service.myTokens
+    }
+    
+    func tokens(
+        filteredBy searchTerm: String,
+        for network: Web3Network?
+    ) -> [Web3Token] {
+        
+        web3Service.allTokens.filterBy(searchTerm: searchTerm)
     }
     
     func networkIcon(for network: Web3Network) -> Data {

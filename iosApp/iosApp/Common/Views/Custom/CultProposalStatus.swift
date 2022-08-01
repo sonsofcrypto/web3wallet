@@ -35,6 +35,7 @@ final class CultProposalStatus: UIView {
         
         let label = UILabel()
         label.apply(style: .footnote, weight: .bold)
+        label.textAlignment = .center
         self.addSubview(label)
         self.label = label
         label.addConstraints(

@@ -13,38 +13,46 @@ struct SettingsWireframeContext {
         
         let title: String?
         let items: [Setting]
+        let footer: Footer?
+        
+        struct Footer {
+            
+            let text: String
+            let textAlignment: SettingsViewModel.Section.Footer.TextAlignment
+        }
     }
     
     static var `default`: SettingsWireframeContext {
         
         .init(
-            title: Localized("settings.root.group.settings"),
+            title: Localized("settings"),
             groups: [
                 .init(
-                    title: Localized("settings.root.group.settings"),
+                    title: nil,
                     items: [
                         .init(
-                            title: Localized("settings.debug"),
-                            type: .item(.debug)
+                            title: Localized("settings.root.themes"),
+                            type: .item(.theme)
                         ),
                         .init(
-                            title: Localized("settings.theme"),
-                            type: .item(.theme)
+                            title: Localized("settings.root.developerMenu"),
+                            type: .item(.debug)
                         )
-                    ]
+                    ],
+                    footer: nil
                 ),
                 .init(
-                    title: Localized("settings.root.group.actions"),
+                    title: nil,
                     items: [
                         .init(
-                            title: Localized("settings.resetKeyStore"),
-                            type: .action(
-                                item: nil,
-                                action: .resetKeystore,
-                                showTickOnSelected: false
-                            )
+                            title: Localized("settings.root.about"),
+                            type: .item(.about)
                         )
-                    ]
+                    ],
+                    footer: .init(
+                        text: Localized("settings.about.footer", arg: ServiceDirectory.makeVersionNumber()),
+                        textAlignment: .center
+                    )
                 )
             ]
         )

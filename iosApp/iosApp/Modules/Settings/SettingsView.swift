@@ -13,13 +13,15 @@ final class SettingsViewController: BaseViewController {
 
     var presenter: SettingsPresenter!
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: CollectionView!
 
     private var viewModel: SettingsViewModel!
 
     override func viewDidLoad() {
 
         super.viewDidLoad()
+        
+        configureUI()
         
         presenter.present()
     }
@@ -56,18 +58,30 @@ extension SettingsViewController: SettingsView {
 }
 
 extension SettingsViewController: UICollectionViewDataSource {
-
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         
-        viewModel.sections.count
+        viewModel?.sections.count ?? 0
     }
-
+    
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
         
-        viewModel.sections[section].items.count
+        guard let section = viewModel?.sections[section] else {
+            
+            return 0
+        }
+        
+        switch section {
+        case .header:
+            return 1
+        case let .group(items):
+            return items.count
+        case .footer:
+            return 1
+        }
     }
 
     func collectionView(
@@ -75,12 +89,25 @@ extension SettingsViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         
-        collectionView.dequeue(
-            SettingsCell.self,
-            for: indexPath
-        ).update(
-            with: viewModel.item(at: indexPath)
-        )
+        guard let section = viewModel?.sections[indexPath.section] else { fatalError() }
+        
+        switch section {
+            
+        case let .header(header):
+            let cell = collectionView.dequeue(SettingsSectionHeaderViewCell.self, for: indexPath)
+            cell.update(with: header)
+            return cell
+            
+        case let .group(items):
+            let item = items[indexPath.item]
+            let cell = collectionView.dequeue(SettingsCell.self, for: indexPath)
+            return cell.update(with: item, showSeparator: items.last != item)
+            
+        case let .footer(footer):
+            let cell = collectionView.dequeue(SettingsSectionFooterViewCell.self, for: indexPath)
+            cell.update(with: footer)
+            return cell
+        }
     }
 }
 
@@ -96,17 +123,124 @@ extension SettingsViewController: UICollectionViewDelegate {
     }
 }
 
-extension SettingsViewController: UICollectionViewDelegateFlowLayout {
+private extension SettingsViewController{
 
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
+    func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
         
-        .init(
-            width: collectionView.frame.width - Theme.constant.padding * 2,
-            height: Theme.constant.cellHeightSmall
+        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, environment in
+            
+            guard let self = self else { return nil }
+            
+            guard let viewModel = self.viewModel else { return nil }
+            
+            switch viewModel.sections[sectionIndex] {
+                
+            case .header:
+                return self.makeCollectionLayoutSection(
+                    withBackgroundDecoratorView: false,
+                    isHeader: true,
+                    sectionIndex: sectionIndex
+                )
+
+            case .group:
+                return self.makeCollectionLayoutSection(
+                    withBackgroundDecoratorView: true,
+                    isHeader: false,
+                    sectionIndex: sectionIndex
+                )
+                
+            case .footer:
+                return self.makeCollectionLayoutSection(
+                    withBackgroundDecoratorView: false,
+                    isHeader: true,
+                    sectionIndex: sectionIndex
+                )
+            }
+        }
+        layout.register(
+            DgenCellBackgroundSupplementaryView.self,
+            forDecorationViewOfKind: "background"
         )
+        return layout
+    }
+    
+    func makeCollectionLayoutSection(
+        withBackgroundDecoratorView addBackgroundDecorator: Bool,
+        isHeader: Bool,
+        sectionIndex: Int
+    ) -> NSCollectionLayoutSection {
+        
+        // Item
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        //item.contentInsets = .paddingHalf
+        
+        // Group
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(1)
+        )
+        let outerGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize, subitems: [item]
+        )
+        //outerGroup.contentInsets = .paddingHalf
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: outerGroup)
+        section.contentInsets = isHeader ?
+            .init(
+                top: sectionIndex == 0 ? Theme.constant.padding : 0,
+                leading: Theme.constant.padding,
+                bottom: 0,
+                trailing: Theme.constant.padding
+            ) : .paddingDefault
+        
+        let headerItemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(1)
+        )
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerItemSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        let footerItemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(1)
+        )
+        let footerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: footerItemSize,
+            elementKind: UICollectionView.elementKindSectionFooter,
+            alignment: .bottom
+        )
+        section.boundarySupplementaryItems = [headerItem, footerItem]
+        
+        if addBackgroundDecorator {
+
+            let backgroundItem = NSCollectionLayoutDecorationItem.background(
+                elementKind: "background"
+            )
+            backgroundItem.contentInsets = .paddingDefault
+            section.decorationItems = [backgroundItem]
+        }
+        
+        return section
+    }
+}
+
+private extension SettingsViewController {
+    
+    func configureUI() {
+        
+        collectionView.setCollectionViewLayout(
+            makeCompositionalLayout(),
+            animated: false
+        )
+        
+        collectionView.overScrollView.image = "overscroll_anon".assetImage
+        collectionView.overScrollView.layer.transform = CATransform3DMakeTranslation(0, 100, 0)
     }
 }

@@ -56,12 +56,10 @@ extension DefaultSettingsPresenter: SettingsPresenter {
                 
             case let .item(identifier):
                 
-                let items = interactor.settings(for: identifier)
+                let groups = interactor.settings(for: identifier)
                 let context = SettingsWireframeContext(
                     title: setting.title,
-                    groups: [
-                        .init(title: nil, items: items)
-                    ]
+                    groups: groups
                 )
                 wireframe.navigate(to: .settings(context: context))
                 
@@ -88,16 +86,48 @@ private extension DefaultSettingsPresenter {
         
         .init(
             title: context.title,
-            sections: context.groups.map {
+            sections: makeSections()
+        )
+    }
+    
+    func makeSections() -> [SettingsViewModel.Section] {
+        
+        var sections = [SettingsViewModel.Section]()
+        context.groups.forEach {
+            
+            if let title = $0.title {
+                
+                sections.append(
+                    .header(header: .init(title: title))
+                )
+            }
+            
+            sections.append(makeSectionItems(for: $0))
+            
+            if let footer = $0.footer {
+                
+                sections.append(
+                    .footer(
+                        footer: .init(
+                            body: footer.text,
+                            textAlignment: footer.textAlignment
+                        )
+                    )
+                )
+            }
+
+        }
+        return sections
+    }
+    
+    func makeSectionItems(for group: SettingsWireframeContext.Group) -> SettingsViewModel.Section {
+        
+        .group(
+            items: group.items.compactMap {
                 .init(
                     title: $0.title,
-                    items: $0.items.compactMap {
-                        .init(
-                            title: $0.title,
-                            setting: $0,
-                            isSelected: isTypeSelected($0.type)
-                        )
-                    }
+                    setting: $0,
+                    isSelected: isTypeSelected($0.type)
                 )
             }
         )

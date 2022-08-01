@@ -15,6 +15,7 @@ final class FeatureDetailStatusView: UIView {
         
         let statusView = CultProposalStatus()
         statusView.backgroundColor = Theme.colour.separatorTransparent
+        statusView.label.numberOfLines = 0
         statusView.label.apply(style: .headline)
         addSubview(statusView)
         self.statusView = statusView

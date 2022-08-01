@@ -4,12 +4,12 @@
 
 import Foundation
 
-struct Setting {
+struct Setting: Equatable {
 
     let title: String
     let type: `Type`
     
-    enum `Type` {
+    enum `Type`: Equatable {
         
         case item(
             ItemIdentifier
@@ -27,8 +27,10 @@ extension Setting {
     enum ItemIdentifier: String {
         
         case theme = "theme"
-        
         case debug = "debug"
+        
+        case about = "about"
+        
         case debugAPIs = "debug.apis"
         case debugAPIsNFTs = "debug.apis.nfts"
         
@@ -43,5 +45,13 @@ extension Setting {
         case debugAPIsNFTsMock = "providers.nfts.mock"
 
         case resetKeystore = "reset.keystore"
+        
+        case aboutWebsite = "about.website"
+        case aboutGitHub = "about.github"
+        case aboutMedium = "about.medium"
+        case aboutTelegram = "about.telegram"
+        case aboutTwitter = "about.twitter"
+        case aboutDiscord = "about.discord"
+        case aboutMail = "about.mail"
     }
 }

@@ -212,6 +212,24 @@ extension Web3Token {
 
 extension Array where Element == Web3Token {
     
+    func filterBy(searchTerm: String) -> [Web3Token] {
+        
+        filter {
+            
+            let searchTermMatching =
+                $0.name.capitalized.hasPrefix(searchTerm.capitalized) ||
+                $0.symbol.capitalized.hasPrefix(searchTerm.capitalized)
+            
+            let condition1 = searchTerm.isEmpty ? true : searchTermMatching
+            
+//            let condition2 = web3Service.selectedNetworks.isEmpty ? true : selectedNetworks.hasNetwork(
+//                matching: $0.network.name
+//            )
+            
+            return condition1 //&& condition2
+        }
+    }
+    
     var sortByNetworkBalanceAndName: [Web3Token] {
         
         sorted {
@@ -231,19 +249,6 @@ extension Array where Element == Web3Token {
         }
     }
     
-    var sortByNetworkAndName: [ Web3Token ] {
-        
-        sorted {
-            
-            guard $0.symbol == $1.symbol else {
-                
-                return $0.symbol < $0.symbol
-            }
-            
-            return $0.network.name > $1.network.name
-        }
-    }
-
     var networks: [Web3Network] {
         
         reduce([]) { result, token in

@@ -44,8 +44,7 @@ private extension CollectionViewCell {
 
     func configureSeparator() {
         
-        let separator = UIView()
-        separator.backgroundColor = Theme.colour.separatorTransparent
+        let separator = SeparatorView()
         contentView.addSubview(separator)
         separator.addConstraints(
             [
@@ -53,7 +52,6 @@ private extension CollectionViewCell {
                     anchor: .leadingAnchor,
                     constant: .equalTo(constant: Theme.constant.padding)
                 ),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 1)),
                 .layout(anchor: .bottomAnchor),
                 .layout(anchor: .trailingAnchor)
             ]

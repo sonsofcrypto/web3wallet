@@ -12,13 +12,41 @@ struct SettingsViewModel {
 
 extension SettingsViewModel {
 
-    struct Section {
+    enum Section {
         
-        let title: String?
-        let items: [Item]
+        case header(header: Header)
+        case group(items: [Item])
+        case footer(footer: Footer)
+        
+        struct Header {
+            
+            let title: String
+        }
+        
+        struct Footer {
+            
+            let body: String
+            let textAlignment: TextAlignment
+            
+            enum TextAlignment {
+                
+                case leading
+                case center
+            }
+        }
+        
+        var items: [Item] {
+            
+            switch self {
+            case .header, .footer:
+                return []
+            case let .group(items):
+                return items
+            }
+        }
     }
-    
-    struct Item {
+        
+    struct Item: Equatable {
         
         let title: String
         let setting: Setting

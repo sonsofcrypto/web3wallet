@@ -9,7 +9,7 @@ protocol SettingsInteractor: AnyObject {
 
     func settings(
         for setting: Setting.ItemIdentifier
-    ) -> [Setting]
+    ) -> [SettingsWireframeContext.Group]
     
     func didSelect(
         item: Setting.ItemIdentifier?,
@@ -38,7 +38,7 @@ extension DefaultSettingsInteractor: SettingsInteractor {
 
     func settings(
         for setting: Setting.ItemIdentifier
-    ) -> [Setting] {
+    ) -> [SettingsWireframeContext.Group] {
         
         settingsService.settings(for: setting)
     }
