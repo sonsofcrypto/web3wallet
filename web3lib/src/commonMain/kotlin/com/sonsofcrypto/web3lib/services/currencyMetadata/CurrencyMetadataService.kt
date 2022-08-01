@@ -4,7 +4,7 @@ import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.services.coinGecko.CoinGeckoService
 import com.sonsofcrypto.web3lib.services.coinGecko.model.Candle
 import com.sonsofcrypto.web3lib.services.coinGecko.model.Market
-import com.sonsofcrypto.web3lib.services.currencyMetadata.BundledImageProvider
+import com.sonsofcrypto.web3lib.services.currencyMetadata.BundledAssetProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
@@ -32,20 +32,20 @@ class DefaultCurrencyMetadataService: CurrencyMetadataService {
     private var market: MutableMap<Currency, Market> = mutableMapOf()
     private var marketUpdate: MutableMap<Currency, Instant> = mutableMapOf()
 
-    private val bundledImageProvider: BundledImageProvider
+    private val bundledAssetProvider: BundledAssetProvider
     private val coinGeckoService: CoinGeckoService
 
     constructor(
-        bundledImageProvider: BundledImageProvider,
+        bundledAssetProvider: BundledAssetProvider,
         coinGeckoService: CoinGeckoService,
     ) {
-        this.bundledImageProvider = bundledImageProvider
+        this.bundledAssetProvider = bundledAssetProvider
         this.coinGeckoService = coinGeckoService
     }
 
     override fun cachedImage(currency: Currency): ByteArray? {
         val id = (currency.coinGeckoId ?: currency.symbol) + "_large"
-        bundledImageProvider.image(id)?.let {
+        bundledAssetProvider.image(id)?.let {
             return it
         }
 
@@ -68,7 +68,7 @@ class DefaultCurrencyMetadataService: CurrencyMetadataService {
     override suspend fun image(currency: Currency): ByteArray? {
         // TODO: Download from network
         val id = (currency.coinGeckoId ?: currency.symbol) + "_large"
-        return bundledImageProvider.image(id)
+        return bundledAssetProvider.image(id)
     }
 
     override suspend fun refreshMarket(currencies: List<Currency>): Map<Currency, Market> {

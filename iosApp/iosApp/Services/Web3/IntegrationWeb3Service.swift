@@ -59,11 +59,7 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
         )
 
         if supported.isEmpty {
-            let url = Bundle.main.url(forResource: "coin_cache", withExtension: "json")!
-            let data = try! Data(contentsOf: url)
-            let string = String(data: data, encoding: .utf8)!
-            //print("=== supported string len", string.count)
-            supported = currenciesService.currencyList(data: string).map {
+            supported = currenciesService.currencies.map {
                 Web3Token.from(
                     currency: $0,
                     network: legacyNetwork,
@@ -74,9 +70,7 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
                 )
             }
         }
-        //print("=== supported", supported)
         return supported
-
     }
 
     var myTokens: [Web3Token] {

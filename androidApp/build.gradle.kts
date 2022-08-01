@@ -30,8 +30,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${rootProject.ext["serialization_version"]}")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:${rootProject.ext["serialization_version"]}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.ext["coroutines_version"]}") {
-        version {
-            strictly("${rootProject.ext["coroutines_version"]}")
-        }
+        version { strictly("${rootProject.ext["coroutines_version"]}") }
+    }
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${rootProject.ext["coroutines_version"]}") {
+        version { strictly("${rootProject.ext["coroutines_version"]}") }
     }
 }

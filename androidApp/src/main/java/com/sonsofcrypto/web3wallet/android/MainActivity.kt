@@ -20,12 +20,12 @@ class MainActivity : AppCompatActivity() {
 //        Bip39Test().runAll()
 //        Bip44Test().runAll()
 //        KeyValueStoreTest().runAll()
-        KeyStoreTest().runAll()
+//        KeyStoreTest().runAll()
 //        TrieTest().runAll()
 //        ProviderTest().runAll()
 //        CoinGeckoTest(this.applicationContext).runAll()
 //        Web3ServiceTests().runAll()
-//        CurrenciesServiceTests().runAll()
+        CurrenciesServiceTests().runAll()
         println("=== all tests executed ===")
     }
 }

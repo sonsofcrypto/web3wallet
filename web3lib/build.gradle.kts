@@ -59,9 +59,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${rootProject.ext["serialization_version"]}")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:${rootProject.ext["serialization_version"]}")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.ext["coroutines_version"]}") {
-                    version {
-                        strictly("${rootProject.ext["coroutines_version"]}")
-                    }
+                    version { strictly("${rootProject.ext["coroutines_version"]}") }
                 }
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:${rootProject.ext["datetime_version"]}")
                 implementation("com.ionspin.kotlin:bignum:${rootProject.ext["bignum_version"]}")
@@ -126,4 +124,5 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${rootProject.ext["serialization_version"]}")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${rootProject.ext["serialization_version"]}")
     implementation("com.russhwolf:multiplatform-settings:${rootProject.ext["settings_version"]}")
+
 }

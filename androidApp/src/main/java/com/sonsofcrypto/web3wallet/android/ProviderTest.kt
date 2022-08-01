@@ -27,7 +27,7 @@ class ProviderTest {
 
     fun runAll() {
         testQuantityHexString()
-//        testBlockNumber()
+        testBlockNumber()
 //        testGasPrice()
 //        testGetBalance()
 //        testGetStorageAt()
@@ -47,7 +47,7 @@ class ProviderTest {
 //        testGetLogs()
 //        testSendTransaction()
 //        testNewFilter()
-        testSendTransaction2()
+//        testSendTransaction2()
 //        testGetTransactionReceipt2()
     }
 

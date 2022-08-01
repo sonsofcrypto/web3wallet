@@ -10,7 +10,7 @@ final class CurrencyMetadataServiceAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .singleton) { _ -> CurrencyMetadataService in
             DefaultCurrencyMetadataService(
-                bundledImageProvider: BundledImageProvider(),
+                bundledAssetProvider: BundledAssetProvider(),
                 coinGeckoService: DefaultCoinGeckoService()
             )
         }
