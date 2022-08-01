@@ -43,7 +43,7 @@ final class DefaultDashboardWireframe {
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let onboardingService: OnboardingService
     private let deepLinkHandler: DeepLinkHandler
-    private let web3Service: Web3Service
+    private let web3service: Web3Service
     private let currenciesService: CurrenciesService
     private let currencyMetadataService: CurrencyMetadataService
     private let web3ServiceLegacy: Web3ServiceLegacy
@@ -64,7 +64,7 @@ final class DefaultDashboardWireframe {
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         onboardingService: OnboardingService,
         deepLinkHandler: DeepLinkHandler,
-        web3Service: Web3Service,
+        web3service: Web3Service,
         currenciesService: CurrenciesService,
         currencyMetadataService: CurrencyMetadataService,
         web3ServiceLegacy: Web3ServiceLegacy,
@@ -82,7 +82,7 @@ final class DefaultDashboardWireframe {
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.onboardingService = onboardingService
         self.deepLinkHandler = deepLinkHandler
-        self.web3Service = web3Service
+        self.web3service = web3service
         self.currenciesService = currenciesService
         self.currencyMetadataService = currencyMetadataService
         self.web3ServiceLegacy = web3ServiceLegacy
@@ -200,7 +200,7 @@ private extension DefaultDashboardWireframe {
     func wireUp() -> UIViewController {
         
         let interactor = DefaultDashboardInteractor(
-            web3Service: web3Service,
+            web3service: web3service,
             currenciesService: currenciesService,
             currencyMetadataService: currencyMetadataService,
             web3ServiceLegacy: web3ServiceLegacy,

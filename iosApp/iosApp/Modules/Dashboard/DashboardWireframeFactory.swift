@@ -81,7 +81,7 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
             onboardingService: onboardingService,
             deepLinkHandler: deepLinkHandler,
-            web3Service: web3Service,
+            web3service: web3Service,
             currenciesService: currenciesService,
             currencyMetadataService: currencyMetadataService,
             web3ServiceLegacy: web3ServiceLegacy,
