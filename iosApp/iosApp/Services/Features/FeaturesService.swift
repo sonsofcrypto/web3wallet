@@ -24,6 +24,14 @@ struct Web3Feature {
     }
 }
 
+extension Web3Feature {
+    
+    var hashTag: String {
+        
+        Localized("feature.hashTag", arg: id)
+    }
+}
+
 extension Web3Feature.Category {
     
     var stringValue: String {
@@ -67,7 +75,7 @@ private extension DefaultFeaturesService {
         
         [
             .init(
-                id: "1",
+                id: "1002",
                 title: "This is now a long title to test what happens",
                 body: "This is actually much cooler that you may think. Stay tunned!",
                 image: "dashboard-palm".assetImage!.pngData()!,
@@ -77,7 +85,7 @@ private extension DefaultFeaturesService {
                 endDate: Date().addingTimeInterval(2*24*60*60)
             ),
             .init(
-                id: "2",
+                id: "1001",
                 title: "Feature 2",
                 body: "Anoon will this with exciting details, this is gonna be a very long description, he loves to write!",
                 image: "dashboard-palm".assetImage!.pngData()!,
@@ -87,7 +95,7 @@ private extension DefaultFeaturesService {
                 endDate: Date().addingTimeInterval(5*24*60*60)
             ),
             .init(
-                id: "3",
+                id: "2001",
                 title: "Feature 3",
                 body: "Anoon will this with exciting details, this is gonna be a very long description, he loves to write!",
                 image: "dashboard-palm".assetImage!.pngData()!,
@@ -97,7 +105,7 @@ private extension DefaultFeaturesService {
                 endDate: Date().addingTimeInterval(24*60*60)
             ),
             .init(
-                id: "4",
+                id: "3001",
                 title: "Feature 4",
                 body: "Anoon will this with exciting details, this is gonna be a very long description, he loves to write!",
                 image: "dashboard-palm".assetImage!.pngData()!,

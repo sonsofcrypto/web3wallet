@@ -141,16 +141,18 @@ private extension DefaultFeaturesPresenter {
         .init(
             id: feature.id,
             title: feature.title,
-            totalVotes: Localized("features.votes"),
-            totalVotesValue: feature.votes.stringValue,
-            category: filterSectionType == .all ? Localized("features.category") : nil,
-            categoryValue: filterSectionType == .all ? feature.category.stringValue : nil,
-            voteButtonTitle: Localized("features.button.vote")
+            subtitle: makeSubtitle(for: feature),
+            buttonTitle: Localized("features.cell.button.vote")
         )
     }
 }
 
 private extension DefaultFeaturesPresenter {
+    
+    func makeSubtitle(for feature: Web3Feature) -> String {
+        
+        feature.hashTag + "  |  " + Localized("features.cell.votes", arg: feature.votes.stringValue)
+    }
     
     var currentList: [Web3Feature] {
         

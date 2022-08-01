@@ -52,11 +52,8 @@ extension FeaturesViewModel {
         
         let id: String
         let title: String
-        let totalVotes: String
-        let totalVotesValue: String
-        let category: String?
-        let categoryValue: String?
-        let voteButtonTitle: String
+        let subtitle: String
+        let buttonTitle: String
     }
 }
 

@@ -294,11 +294,11 @@
 "features.segmentedControl.infrastructure" = "Infrastructure";
 "features.segmentedControl.integrations" = "Integrations";
 "features.segmentedControl.features" = "Features";
-"features.votes" = "Total Votes:";
-"features.category" = "Category:";
-"features.button.vote" = "Vote";
+"features.cell.votes" = "Votes: %@";
+"features.cell.button.vote" = "Vote";
 
 "feature.title" = "Feature";
 "feature.summary.header" = "Details";
 "feature.title.of" = "of";
 "feature.button.vote" = "Vote";
+"feature.hashTag" = "WIP%@";
