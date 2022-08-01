@@ -41,9 +41,7 @@ final class DefaultMnemonicConfirmationService {
 extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
     
     func potentialMnemonicWords(for prefix: String?) -> [String] {
-        
         guard let prefix = prefix, !prefix.isEmpty else {
-
             return []
         }
 
@@ -117,7 +115,6 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
 private extension DefaultMnemonicConfirmationService {
     
     func wordsStarting(with word: String) -> [String] {
-        
         validator.wordsStartingWith(prefix: word)
     }
 

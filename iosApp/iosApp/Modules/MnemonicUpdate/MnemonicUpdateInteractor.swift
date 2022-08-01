@@ -61,19 +61,18 @@ extension DefaultMnemonicUpdateInteractor: MnemonicUpdateInteractor {
         name = keyStoreItem.name
         iCloudSecretStorage = keyStoreItem.iCloudSecretStorage
 
-        guard let secretStorage = try? keyStoreService.secretStorage(
+        guard let decryptResult = try? keyStoreService.secretStorage(
             item: keyStoreItem,
             password: password
         )?.decrypt(password: password) else {
             throw MnemonicUpdateInteractorError.failedToUnlockItem
         }
 
-        // TODO: P1 Fix mnemonic description
+        guard let mnemonic = decryptResult.mnemonic else {
+            throw MnemonicUpdateInteractorError.failedToUnlockItem
+        }
 
-        mnemonic = [
-            "squeeze", "mention", "ostrich", "crunch", "maple", "liar",
-            "aerobic", "brass", "vote", "young", "neither", "dune",
-        ]
+        self.mnemonic = mnemonic.split(separator: " ").map { String($0) }
     }
 
     func update(for item: KeyStoreItem) throws -> KeyStoreItem {

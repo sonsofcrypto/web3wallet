@@ -45,20 +45,15 @@ final class DefaultMnemonicConfirmationPresenter {
 extension DefaultMnemonicConfirmationPresenter: MnemonicConfirmationPresenter {
 
     func present() {
-        
         refresh()
     }
 
     func handle(_ event: MnemonicConfirmationPresenterEvent) {
-        
         switch event {
-            
         case .dismiss:
-            
             wireframe.navigate(to: .dismiss)
             
         case let .mnemonicChanged(mnemonicIn, selectedLocationIn):
-            
             let tuple = clearBlanksFromFrontOf(mnemonicIn, with: selectedLocationIn)
             
             self.mnemonic = tuple.mnemonic
@@ -66,24 +61,20 @@ extension DefaultMnemonicConfirmationPresenter: MnemonicConfirmationPresenter {
             refresh(updateMnemonic: mnemonicIn != mnemonic)
 
         case .confirm:
-            
             guard ctaTapped else {
-                
                 ctaTapped = true
                 refresh()
                 return
             }
-            
+
             ctaTapped = true
 
             guard service.isMnemonicValid(mnemonic) else {
-                
                 refresh()
                 return
             }
-            
+
             service.markDashboardNotificationAsComplete()
-            
             wireframe.navigate(to: .dismiss)
         }
     }
@@ -106,12 +97,10 @@ private extension DefaultMnemonicConfirmationPresenter {
         }
         
         let finalCount = mnemonic.count
-        
         return (mnemonic, selectedLocation - (initialCount - finalCount))
     }
     
     func refresh(updateMnemonic: Bool = false) {
-        
         let viewModel = makeViewModel(updateMnemonic: updateMnemonic)
         view.update(with: viewModel)
     }
@@ -152,20 +141,16 @@ private extension DefaultMnemonicConfirmationPresenter {
         
         var prefix = ""
         for var i in 0..<mnemonic.count {
-            
             let character = mnemonic[
                 mnemonic.index(mnemonic.startIndex, offsetBy: i)
             ]
-            
             if i == selectedLocation {
-                
                 return prefix
             }
             
             prefix.append(character)
             
             if character == " " {
-                
                 prefix = ""
             }
             
@@ -187,16 +172,12 @@ private extension DefaultMnemonicConfirmationPresenter {
         var wordUpdated = false
         
         for (index, wordInfo) in wordsInfo.enumerated() {
-            
             location += wordInfo.word.count
-            
             if selectedLocation <= location, !wordUpdated {
-                
                 if wordInfo.word == prefixForPotentialwords {
-                    
                     let isInvalid = index > 11
-                    ? wordInfo.isInvalid
-                    : !service.isValidPrefix(wordInfo.word)
+                        ? wordInfo.isInvalid
+                        : !service.isValidPrefix(wordInfo.word)
                     
                     updatedWords.append(
                         .init(
@@ -207,7 +188,6 @@ private extension DefaultMnemonicConfirmationPresenter {
                 }
                 wordUpdated = true
             } else {
-                
                 updatedWords.append(wordInfo)
             }
             

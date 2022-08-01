@@ -91,7 +91,9 @@ private extension DefaultOnboardingService {
             data: extKey.key,
             password: password,
             address: address(extKey),
-            w3wParams: SecretStorage.W3WParams(mnemonicLocale: "en")
+            mnemonic: bip39.mnemonic.joined(separator: " "),
+            mnemonicLocale: bip39.worldList.localeString(),
+            mnemonicPath: derivationPath()
         )
         keyStoreService.add(
             item: keyStoreItem,
