@@ -49,7 +49,7 @@ final class DefaultTokenAddPresenter {
         self.wireframe = wireframe
         self.context = context
         
-        self.network = interactor.defaultNetwork
+        self.network = context.network
     }
 }
 

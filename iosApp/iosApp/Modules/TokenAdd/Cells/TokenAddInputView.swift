@@ -110,7 +110,9 @@ private extension TokenAddInputView {
         textField.autocorrectionType = .no
         textField.spellCheckingType = .no
         textField.clearButtonMode = .whileEditing
-        textField.inputAccessoryView = makeInputAccessoryView()
+        textField.addDoneInputAccessoryView(
+            with: .targetAction(.init(target: self, selector: #selector(dismissKeyboard)))
+        )
         textField.delegate = self
         
         stackView.addArrangedSubview(textField)
@@ -168,37 +170,7 @@ private extension TokenAddInputView {
         textField.text = UIPasteboard.general.string
         viewModel.onTextChanged(textFieldType, textField.text ?? "")
     }
-    
-    func makeInputAccessoryView() -> UIView {
-        
-        let view = UIView(
-            frame: .init(
-                origin: .zero,
-                size: .init(
-                    width: frame.width,
-                    height: 40
-                )
-            )
-        )
-        view.backgroundColor = Theme.colour.cellBackground
-        
-        let doneAction = UIButton(type: .custom)
-        doneAction.titleLabel?.font = Theme.font.bodyBold
-        doneAction.titleLabel?.textAlignment = .right
-        doneAction.setTitle(Localized("done"), for: .normal)
-        doneAction.setTitleColor(Theme.colour.labelPrimary, for: .normal)
-        doneAction.addTarget(self, action: #selector(dismissKeyboard), for: .touchUpInside)
-        view.addSubview(doneAction)
-        doneAction.addConstraints(
-            [
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 16)),
-                .layout(anchor: .centerYAnchor)
-            ]
-        )
 
-        return view
-    }
-    
     @objc func dismissKeyboard() {
         
         textField.resignFirstResponder()

@@ -18,7 +18,7 @@ final class TokenPickerItemCell: UICollectionViewCell {
     @IBOutlet weak var multiSelectView: UIView!
     @IBOutlet weak var multiSelectTick: UIImageView!
     
-    @IBOutlet weak var tokenPriceStackView: UIStackView!
+    @IBOutlet weak var tokenPriceView: UIView!
     @IBOutlet weak var tokenLabel: UILabel!
     @IBOutlet weak var tokenSymbolLabel: UILabel!
     @IBOutlet weak var usdPriceLabel: UILabel!
@@ -43,7 +43,7 @@ final class TokenPickerItemCell: UICollectionViewCell {
         
         multiSelectView.isHidden = true
         
-        tokenPriceStackView.isHidden = true
+        tokenPriceView.isHidden = true
         tokenLabel.font = Theme.font.body
         tokenLabel.textColor = Theme.colour.labelPrimary
         tokenLabel.textAlignment = .right
@@ -65,7 +65,7 @@ final class TokenPickerItemCell: UICollectionViewCell {
     ) {
 
         iconImageView.image = viewModel.image
-        symbolLabel.text = viewModel.symbol
+        symbolLabel.text = viewModel.symbol.uppercased()
         nameLabel.text = viewModel.name
         if let network = viewModel.network {
             networkLabel.isHidden = true
@@ -88,9 +88,9 @@ final class TokenPickerItemCell: UICollectionViewCell {
 
         case let .send(tokens, usdTotal):
             symbolLabel.isHidden = true
-            tokenPriceStackView.isHidden = false
+            tokenPriceView.isHidden = false
             tokenLabel.text = tokens
-            tokenSymbolLabel.text = viewModel.symbol
+            tokenSymbolLabel.text = viewModel.symbol.uppercased()
             usdPriceLabel.text = usdTotal
         }
         

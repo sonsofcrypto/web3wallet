@@ -133,9 +133,14 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
             
             guard let presentingIn = presentingIn.presentedViewController else { return }
             
+            guard let network = context.source.network else { return }
+            
             let wireframe = tokenAddWireframeFactory.makeWireframe(
                 presentingIn: presentingIn,
-                context: .init(presentationStyle: .push)
+                context: .init(
+                    presentationStyle: .push,
+                    network: network
+                )
             )
             wireframe.present()
         }

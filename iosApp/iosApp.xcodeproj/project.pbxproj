@@ -285,7 +285,6 @@
 		1C60C36F2857C613003BE25D /* TokenReceiveInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C36E2857C613003BE25D /* TokenReceiveInteractor.swift */; };
 		1C60C3712857CEB5003BE25D /* TokenReceive.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C60C3702857CEB5003BE25D /* TokenReceive.storyboard */; };
 		1C60C3772858634A003BE25D /* DefaultWeb3ServiceLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3762858634A003BE25D /* DefaultWeb3ServiceLegacy.swift */; };
-		1C60C37928588147003BE25D /* TokenPickerFilterAllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C37828588147003BE25D /* TokenPickerFilterAllCell.swift */; };
 		1C60C37B2859BDD9003BE25D /* UIView+Toast+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C37A2859BDD9003BE25D /* UIView+Toast+Extensions.swift */; };
 		1C60C37E2859CC2A003BE25D /* ShareFactoryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C37D2859CC2A003BE25D /* ShareFactoryHelper.swift */; };
 		1C60C382285A5AE8003BE25D /* UICollectionViewCell+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C381285A5AE8003BE25D /* UICollectionViewCell+Extensions.swift */; };
@@ -836,7 +835,6 @@
 		1C60C36E2857C613003BE25D /* TokenReceiveInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReceiveInteractor.swift; sourceTree = "<group>"; };
 		1C60C3702857CEB5003BE25D /* TokenReceive.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TokenReceive.storyboard; sourceTree = "<group>"; };
 		1C60C3762858634A003BE25D /* DefaultWeb3ServiceLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultWeb3ServiceLegacy.swift; sourceTree = "<group>"; };
-		1C60C37828588147003BE25D /* TokenPickerFilterAllCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenPickerFilterAllCell.swift; sourceTree = "<group>"; };
 		1C60C37A2859BDD9003BE25D /* UIView+Toast+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Toast+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C37D2859CC2A003BE25D /* ShareFactoryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareFactoryHelper.swift; sourceTree = "<group>"; };
 		1C60C381285A5AE8003BE25D /* UICollectionViewCell+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+Extensions.swift"; sourceTree = "<group>"; };
@@ -1474,7 +1472,6 @@
 		1C60C1D8285724D0003BE25D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				1C60C37828588147003BE25D /* TokenPickerFilterAllCell.swift */,
 				1C60C1DA285724D0003BE25D /* TokenPickerGroupCell.swift */,
 				1C60C1D9285724D0003BE25D /* TokenPickerItemCell.swift */,
 			);
@@ -2800,7 +2797,6 @@
 				1C60C358285724D1003BE25D /* DegenView.swift in Sources */,
 				1A4C3B1D9B56685FF628A0AD /* DegenService.swift in Sources */,
 				1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */,
-				1C60C37928588147003BE25D /* TokenPickerFilterAllCell.swift in Sources */,
 				1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */,
 				1C60C2B5285724D0003BE25D /* TokenPickerWireframeFactory.swift in Sources */,
 				1C54DBE0285E1A0E00E378F6 /* Double+Extensions.swift in Sources */,
