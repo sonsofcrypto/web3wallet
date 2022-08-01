@@ -43,6 +43,7 @@ data class CurrencyInfo(
     }
 }
 
+@OptIn(kotlinx.serialization.ExperimentalSerializationApi::class)
 fun CurrencyInfo.Companion.listFrom(data: String): List<CurrencyInfo> {
     val currencyInfoJson = Json {
         encodeDefaults = true

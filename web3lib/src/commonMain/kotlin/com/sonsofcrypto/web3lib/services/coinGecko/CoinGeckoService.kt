@@ -51,7 +51,7 @@ interface CoinGeckoService {
     suspend fun coinsList(): List<Coin>
 }
 
-@SharedImmutable
+@SharedImmutable @OptIn(kotlinx.serialization.ExperimentalSerializationApi::class)
 private val geckoJson = Json {
     encodeDefaults = true
     isLenient = true

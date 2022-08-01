@@ -44,7 +44,7 @@ class DefaultCurrencyMetadataService: CurrencyMetadataService {
     }
 
     override fun cachedImage(currency: Currency): ByteArray? {
-        val id = (currency?.coinGeckoId ?: currency.symbol) + "_large"
+        val id = (currency.coinGeckoId ?: currency.symbol) + "_large"
         bundledImageProvider.image(id)?.let {
             return it
         }
@@ -67,14 +67,14 @@ class DefaultCurrencyMetadataService: CurrencyMetadataService {
 
     override suspend fun image(currency: Currency): ByteArray? {
         // TODO: Download from network
-        val id = (currency?.coinGeckoId ?: currency.symbol) + "_large"
+        val id = (currency.coinGeckoId ?: currency.symbol) + "_large"
         return bundledImageProvider.image(id)
     }
 
     override suspend fun refreshMarket(currencies: List<Currency>): Map<Currency, Market> {
         var markets = withContext(Dispatchers.Default) {
             return@withContext coinGeckoService.market(
-                (currencies ?: listOf())
+                currencies
                     .map { it.coinGeckoId }
                     .filterNotNull(),
                 "usd",

@@ -14,7 +14,6 @@ sealed class Topic {
                 when(it) {
                     is TopicValue -> it.jsonPrimitive()
                     is TopicList -> it.jsonPrimitive()
-                    else -> throw Error("Unexpected `Topic`")
                 }
             }
         )
@@ -76,7 +75,6 @@ data class FilterRequest(
                 when (it) {
                     is Topic.TopicValue -> it.jsonPrimitive()
                     is Topic.TopicList -> it.jsonPrimitive()
-                    else -> throw Error("Unexpected `Topic`")
                 }
             }
             put("topics", JsonArray(encoded))

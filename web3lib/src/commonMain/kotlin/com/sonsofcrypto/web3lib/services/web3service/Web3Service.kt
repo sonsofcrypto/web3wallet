@@ -164,8 +164,8 @@ class DefaultWeb3Service: Web3Service {
 
     // TODO: - Fix Kotlin serialization
     private fun getStoredNetworks(wallet: Wallet?): List<Network>? {
-        wallet?.let { wallet: Wallet ->
-            store.get<String>(networksKey(wallet))?.let {
+        wallet?.let { unwrappedWallet: Wallet ->
+            store.get<String>(networksKey(unwrappedWallet))?.let {
                 return Json.decodeFromString(it)
             }
         }

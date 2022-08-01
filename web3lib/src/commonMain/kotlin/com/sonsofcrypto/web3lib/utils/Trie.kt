@@ -65,7 +65,7 @@ class Trie {
             results.add(prefix)
         }
 
-        node?.children?.forEach { (key, child) ->
+        node.children?.forEach { (key, child) ->
             results.addAll(collections(prefix + key, child))
         }
         return results

@@ -49,6 +49,7 @@ fun QuantityHexString.jsonPrimitive(): JsonPrimitive = JsonPrimitive(this)
 /** SEE: https://ethereum.org/en/developers/docs/apis/json-rpc/#unformatted-data-encoding */
 typealias DataHexString = String
 
+@OptIn(kotlin.ExperimentalUnsignedTypes::class)
 fun DataHexString(byteArray: ByteArray): DataHexString = byteArray.toHexString(true)
 
 fun DataHexString.toByteArrayData(): ByteArray = hexStringToByteArray()

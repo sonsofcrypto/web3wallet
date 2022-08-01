@@ -4,7 +4,7 @@ import kotlin.experimental.or
 
 /** Hex string */
 
-@kotlin.ExperimentalUnsignedTypes
+@OptIn(kotlin.ExperimentalUnsignedTypes::class)
 fun ByteArray.toHexString(prefix: Boolean = false): String = (if (prefix) "0x" else "") +
     asUByteArray().joinToString("") { it.toString(radix = 16).padStart(2, '0') }
 

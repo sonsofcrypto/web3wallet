@@ -54,7 +54,7 @@ final class DefaultMnemonicImportInteractor {
     var iCloudSecretStorage: Bool = true
     var saltMnemonic: Bool = false
     var passwordType: KeyStoreItem.PasswordType = .bio
-    var derivationPath: String = "m/44'/60'/0'/0/0" // TODO: Get default derivations path from wallet
+    var derivationPath: String = Network.ethereum().defaultDerivationPath()
 
     private(set) var locale = "en"
 
@@ -111,13 +111,15 @@ extension DefaultMnemonicImportInteractor: MnemonicImportInteractor {
             saltMnemonic: saltMnemonic,
             passwordType: passwordType,
             derivationPath: derivationPath,
-            addresses: addresses()
+            addresses: addresses(bip44: bip44)
         )
         let secretStorage = SecretStorage.companion.encryptDefault(
             id: keyStoreItem.uuid,
             data: extKey.key,
             password: password,
-            address: address(extKey),
+            address: Network.ethereum()
+                .address(pubKey: extKey.pub())
+                .toHexString(prefix: true),
             mnemonic: bip39.mnemonic.joined(separator: " "),
             mnemonicLocale: bip39.worldList.localeString(),
             mnemonicPath: derivationPath
@@ -163,24 +165,14 @@ private extension DefaultMnemonicImportInteractor {
         )
     }
 
-    // TODO: Derive address for key
-    func address(_ extKey: ExtKey) -> String {
-        extKey.pub().toHexString(prefix: false)
-    }
-
-    // TODO: Derive addresses
-    func addresses() -> [String: String] {
-        let addresses = [String: String]()
+    func addresses(bip44: Bip44) -> [String: String] {
+        var addresses = [String: String]()
+        Network.supported().forEach {
+            let path = $0.defaultDerivationPath()
+            let pub = try! bip44.deriveChildKey(path: path).pub()
+            addresses[path] = $0.address(pubKey: pub).toHexString(prefix: true)
+        }
         return addresses
-    }
-
-    // TODO: Get default paths from `Network`/`Wallet`
-    func defaultDerivationsPaths() -> [String] {
-        [
-            "m/44'/60'/0'/0/0",
-            "m/44'/501'/0'/0/0",
-            "m/44'/354'/0'/0/0",
-        ]
     }
 }
 

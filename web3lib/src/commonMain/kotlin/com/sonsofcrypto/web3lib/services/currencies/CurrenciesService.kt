@@ -87,7 +87,7 @@ class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
     }
 }
 
-@SharedImmutable
+@SharedImmutable @OptIn(kotlinx.serialization.ExperimentalSerializationApi::class)
 private val currenciesJson = Json {
     encodeDefaults = true
     isLenient = true

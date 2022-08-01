@@ -23,7 +23,6 @@ fun Rlp.encode(): ByteArray = when (this) {
     is RlpList -> element.asSequence().map { it.encode() }
         .fold(ByteArray(0)) { acc, bytes -> acc + bytes }
         .encodeRlp(LIST_OFFSET)
-    else -> throw Error("Unexpected `Rlp`")
 }
 
 private fun ByteArray.encodeRlp(offset: Int) = when {

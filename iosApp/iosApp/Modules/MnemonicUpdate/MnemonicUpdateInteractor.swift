@@ -38,7 +38,7 @@ final class DefaultMnemonicUpdateInteractor {
     var name: String = ""
     var mnemonic: [String] = []
     var iCloudSecretStorage: Bool = true
-    var derivationPath: String = "m/44'/60'/0'/0/0" // TODO: Get default derivations path from wallet
+    var derivationPath: String = ""
 
     private var keyStoreService: KeyStoreService
     private var bip39: Bip39!
@@ -73,6 +73,8 @@ extension DefaultMnemonicUpdateInteractor: MnemonicUpdateInteractor {
         }
 
         self.mnemonic = mnemonic.split(separator: " ").map { String($0) }
+        self.derivationPath = decryptResult.mnemonicPath
+            ?? Network.ethereum().defaultDerivationPath()
     }
 
     func update(for item: KeyStoreItem) throws -> KeyStoreItem {

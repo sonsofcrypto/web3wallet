@@ -41,7 +41,6 @@ class Bip39 {
 
     /** Original entropy for mnemonic */
     @Throws(Exception::class) fun entropy(): ByteArray {
-        val indexes = mnemonic.map { worldList.indexOf(it) }
         val bitArray = BooleanArray(mnemonic.size * 11)
 
         mnemonic
