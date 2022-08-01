@@ -99,7 +99,6 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             wireframe.navigate(to: .scanQRCode(onCompletion: makeOnQRCodeScanned()))
             
         case let .didTapEditTokens(networkId):
-            
             guard let network = interactor.allNetworks.first(where: {
                 $0.id == networkId
             }) else { return }
@@ -113,11 +112,9 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             )
             
         case .swapAction:
-            
             wireframe.navigate(to: .tokenSwap)
             
         case let .didTapNotification(id):
-            
             guard let notification = notifications.first(where: { $0.id == id }) else { return }
             guard let deepLink = DeepLink(rawValue: notification.deepLink) else { return }
             wireframe.navigate(to: .deepLink(deepLink))
@@ -150,65 +147,12 @@ private extension DefaultDashboardPresenter {
 private extension DefaultDashboardPresenter {
     
     func viewModel() -> DashboardViewModel {
-        
-        let networksAndTokensDict = myTokens.networksAndTokensDict
-        
         var sections = [DashboardViewModel.Section]()
         var nfts = [DashboardViewModel.NFT]()
-        
-        Array(networksAndTokensDict.keys).sorted(by: {
-            $0.name < $1.name
-        }).forEach { network in
-            
-            let tokens: [Web3Token] = networksAndTokensDict[network] ?? []
-            
-            sections.append(
-                .init(
-                    header: .network(
-                        .init(
-                            id: network.id,
-                            name: network.name,
-                            fuelCost: network.cost,
-                            rightActionTitle: Localized("more").uppercased(),
-                            isCollapsed: false//!expandedNetworks.contains(network.name),
-                        )
-                    ),
-                    items: .wallets(
-                        walletViewModel(from: tokens)
-                    )
-                )
-            )
-            
-            nfts.append(
-                contentsOf: makeDashboardViewModelNFts(from: interactor.nfts(for: network))
-            )
-        }
-        
-        sections = addMissingSectionsIfNeeded(to: sections)
-        
-        if !nfts.isEmpty {
-            sections.append(
-                .init(
-                    header: .title(
-                        Localized("dashboard.section.nfts").uppercased()
-                    ),
-                    items: .nfts(nfts)
-                )
-            )
-        }
-        
-        let walletTotal = networksAndTokensDict.values.reduce(into: 0.0) { (walletTotal, tokens) in
-            
-            let sectionTotal = tokens.reduce(into: 0.0) { sectionTotal, token in
-                sectionTotal += token.balance * token.usdPrice
-            }
-            
-            walletTotal += sectionTotal
-        }
-        
-        sections.insert(
+
+        sections.append(
             .init(
-                header: .balance(walletTotal.formatCurrency() ?? ""),
+                header: .balance(interactor.totalBalanceInFiat().formatCurrency() ?? ""),
                 items: .actions(
                     [
                         .init(
@@ -228,18 +172,54 @@ private extension DefaultDashboardPresenter {
                         )
                     ]
                 )
-            ),
-            at: 0
+            )
         )
-        
-        sections.insert(
+
+        sections.append(
             .init(
                 header: .title(Localized("dashboard.section.notifications")),
                 items: makeNotificationItems()
-            ),
-            at: 1
+            )
         )
-        
+
+
+        for (idx, network) in interactor.enabledNetworks().enumerated() {
+            let currencies = interactor.currencies(for: network)
+            let tokens = currencies.map {
+                Web3Token.from(
+                    currency: $0,
+                    network: Web3Network.from(network, isOn: true),
+                    inWallet: true
+                )
+            }
+
+            sections.append(
+                .init(
+                    header: .network(
+                        .init(
+                            id: network.id(),
+                            name: network.name,
+                            fuelCost: "", // TODO: Add gas price
+                            rightActionTitle: Localized("more").uppercased(),
+                            isCollapsed: false // !expandedNetworks.contains(network.name),
+                        )
+                    ),
+                    items: .wallets(walletViewModel(from: tokens))
+                )
+            )
+        }
+
+        if !nfts.isEmpty {
+            sections.append(
+                .init(
+                    header: .title(
+                        Localized("dashboard.section.nfts").uppercased()
+                    ),
+                    items: .nfts(nfts)
+                )
+            )
+        }
+
         return .init(
             shouldAnimateCardSwitcher: onboardingService.shouldShowOnboardingButton(),
             sections: sections
@@ -258,47 +238,6 @@ private extension DefaultDashboardPresenter {
             )
         }
         return .notifications(items)
-    }
-    
-    func addMissingSectionsIfNeeded(
-        to sections: [DashboardViewModel.Section]
-    ) -> [DashboardViewModel.Section] {
-        
-        var allSections = [DashboardViewModel.Section]()
-        
-        let allNetworks = interactor.allNetworks.filter { $0.selectedByUser }.sortByName
-        
-        allNetworks.forEach { network in
-            
-            let section = sections.filter {
-                $0.networkId == network.id
-            }.first
-            
-            if let section = section {
-                
-                // If exists, we keep it
-                allSections.append(section)
-            } else {
-                
-                // Otherwise we create it with an empty wallets list
-                allSections.append(
-                    .init(
-                        header: .network(
-                            .init(
-                                id: network.id,
-                                name: network.name,
-                                fuelCost: network.cost,
-                                rightActionTitle: Localized("more").uppercased(),
-                                isCollapsed: false
-                            )
-                        ),
-                        items: .wallets([])
-                    )
-                )
-            }
-        }
-        
-        return allSections
     }
     
     func walletViewModel(from tokens: [Web3Token]) -> [DashboardViewModel.Wallet] {
@@ -334,43 +273,18 @@ private extension DefaultDashboardPresenter {
     }
     
     func makeOnEditTokensCompletion() -> ([Web3Token]) -> Void {
-        
         {
             [weak self] updatedTokens in
-            
             guard let self = self else { return }
-            
             self.interactor.updateMyWeb3Tokens(to: updatedTokens)
         }
     }
 }
 
-private extension Array where Element == Web3Token {
-    
-    var networksAndTokensDict: [Web3Network: [Web3Token]] {
-        
-        var networksDict = [Web3Network: [Web3Token]]()
-        
-        forEach {
-            
-            if var tokenArray = networksDict[$0.network] {
-                
-                tokenArray.append($0)
-                networksDict[$0.network] = tokenArray
-            } else {
-                
-                networksDict[$0.network] = [$0]
-            }
-        }
-        
-        return networksDict
-    }
-}
 
 private extension Array where Element == Web3Candle {
     
     var toCandlesViewModelCandle: [CandlesViewModel.Candle] {
-        
         compactMap {
             .init(
                 open: $0.open,
@@ -387,17 +301,14 @@ private extension Array where Element == Web3Candle {
 extension DefaultDashboardPresenter: Web3ServiceWalletListener {
     
     func notificationsChanged() {
-        
         updateView()
     }
     
     func nftsChanged() {
-        
         updateView()
     }
     
     func tokensChanged() {
-        
         updateView()
     }
 }
@@ -405,12 +316,9 @@ extension DefaultDashboardPresenter: Web3ServiceWalletListener {
 private extension DefaultDashboardPresenter {
     
     func makeOnQRCodeScanned() -> (String) -> Void {
-        
         {
             [weak self] qrCode in
-            
             guard let self = self else { return }
-            
             // TODO: @Annon Check here what to do with the code?
             print("QR code scanned: \(qrCode)")
         }

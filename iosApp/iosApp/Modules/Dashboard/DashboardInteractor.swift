@@ -25,6 +25,10 @@ protocol DashboardInteractor: AnyObject {
     func nfts(for network: Web3Network) -> [ NFTItem ]
     func updateMyWeb3Tokens(to tokens: [Web3Token])
 
+    func enabledNetworks() -> [Network]
+    func currencies(for network: Network) -> [Currency]
+    func totalBalanceInFiat() -> Double
+
     func addListener(_ listener: DashboardInteractorLister)
     func removeListener(_ listener: DashboardInteractorLister?)
 }
@@ -84,6 +88,26 @@ extension DefaultDashboardInteractor: DashboardInteractor {
     
     func updateMyWeb3Tokens(to tokens: [Web3Token]) {
         web3ServiceLegacy.storeMyTokens(to: tokens)
+    }
+
+    func enabledNetworks() -> [Network] {
+        web3service.enabledNetworks()
+    }
+
+    func currencies(for network: Network) -> [Currency] {
+        guard let wallet = web3service.wallet else {
+            return []
+        }
+
+        return currenciesService.currencies(
+            wallet: wallet,
+            network: network
+        )
+    }
+
+    func totalBalanceInFiat() -> Double {
+        // TODO: Total balance
+        return 4235.20
     }
 }
 
