@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 
 protocol TokenPickerInteractor: AnyObject {
@@ -18,13 +19,14 @@ protocol TokenPickerInteractor: AnyObject {
 
 final class DefaultTokenPickerInteractor {
 
-    private let web3Service: Web3ServiceLegacy
+    private let web3ServiceLegacy: Web3ServiceLegacy
+    private let web3Service: Web3Service
+    private let currenciesService: CurrenciesService
 
     init(
         web3Service: Web3ServiceLegacy
     ) {
-        
-        self.web3Service = web3Service
+        self.web3ServiceLegacy = web3Service
     }
 }
 
@@ -32,25 +34,36 @@ extension DefaultTokenPickerInteractor: TokenPickerInteractor {
     
     var myTokens: [Web3Token] {
         
-        web3Service.myTokens
+        web3ServiceLegacy.myTokens
     }
     
     func tokens(
         filteredBy searchTerm: String,
         for network: Web3Network?
     ) -> [Web3Token] {
-        
-        web3Service.allTokens.filterBy(searchTerm: searchTerm)
+        guard let network = network ?? Web3Network.from(web3Service.network), isOn: false) {
+
+        }
+        currenciesService.currencies(search: searchTerm).first(n: 200).map {
+            Web3Token.from(
+                currency: $0,
+                network: network ?? web3ServiceLegacy.,
+                inWallet: false
+            )
+
+        }
+
+        web3ServiceLegacy.allTokens.filterBy(searchTerm: searchTerm)
     }
     
     func networkIcon(for network: Web3Network) -> Data {
         
-        web3Service.networkIcon(for: network)
+        web3ServiceLegacy.networkIcon(for: network)
     }
     
     func tokenIcon(for token: Web3Token) -> Data {
         
-        web3Service.tokenIcon(for: token)
+        web3ServiceLegacy.tokenIcon(for: token)
     }
 
 }
