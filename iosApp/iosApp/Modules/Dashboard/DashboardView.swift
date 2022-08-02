@@ -6,6 +6,7 @@ import UIKit
 
 protocol DashboardView: AnyObject {
     func update(with viewModel: DashboardViewModel)
+    func updateWallet(_ viewModel: DashboardViewModel.Wallet?, at idxPath: IndexPath)
 }
 
 final class DashboardViewController: BaseViewController {
@@ -39,8 +40,26 @@ extension DashboardViewController: DashboardView {
     
     func update(with viewModel: DashboardViewModel) {
         self.viewModel = viewModel
-        collectionView.reloadData()
-        
+        var needsFullReload = false
+
+        for (idx, val) in viewModel.sections.enumerated() {
+            if self.viewModel?.sections[idx].items.count != val.items.count {
+                needsFullReload = true
+            }
+        }
+
+        if needsFullReload {
+            collectionView.reloadData()
+        } else {
+            collectionView.visibleCells.forEach {
+                if let idxPath = collectionView.indexPath(for: $0),
+                    let cell = $0 as? DashboardWalletCell {
+                    let viewModel = viewModel.sections[idxPath.section].items.wallet(at: idxPath.item)
+                    cell.update(with: viewModel)
+                }
+            }
+        }
+
         if let btn = navigationItem.leftBarButtonItem as? AnimatedTextBarButton {
             let nonAnimMode: AnimatedTextButton.Mode = btn.mode == .animating ? .static : .hidden
             btn.setMode(
@@ -48,6 +67,13 @@ extension DashboardViewController: DashboardView {
                 animated: true
             )
         }
+    }
+
+    func updateWallet(_ viewModel: DashboardViewModel.Wallet?, at idxPath: IndexPath) {
+        let cell = collectionView.visibleCells.first(where: {
+            collectionView.indexPath(for: $0) == idxPath
+        })
+        (cell as? DashboardWalletCell)?.update(with: viewModel)
     }
 }
 

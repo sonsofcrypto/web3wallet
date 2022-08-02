@@ -51,7 +51,10 @@ final class DashboardWalletCell: UICollectionViewCell {
 
 extension DashboardWalletCell {
 
-    func update(with viewModel: DashboardViewModel.Wallet) {
+    func update(with viewModel: DashboardViewModel.Wallet?) {
+        guard let viewModel = viewModel else {
+            return
+        }
         
         imageView.image = viewModel.imageData.pngImage
         currencyLabel.text = viewModel.ticker

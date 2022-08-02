@@ -34,7 +34,20 @@ final class DefaultDashboardPresenter {
     private let interactor: DashboardInteractor
     private let wireframe: DashboardWireframe
     private let onboardingService: OnboardingService
-    
+    // TODD(Anon): Refactor to shared formatters
+    private let fiatFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.currencyCode = "usd"
+        formatter.numberStyle = .currency
+        return formatter
+    }()
+    // TODD(Anon): Refactor to shared formatters
+    private let pctFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .percent
+        return formatter
+    }()
+
     var expandedNetworks = [String]()
     var notifications = [Web3Notification]()
     var myTokens = [Web3Token]()
@@ -61,6 +74,7 @@ final class DefaultDashboardPresenter {
 extension DefaultDashboardPresenter: DashboardPresenter {
     
     func present() {
+        interactor.reloadData()
         updateView()
     }
     
@@ -131,7 +145,25 @@ extension DefaultDashboardPresenter: DashboardPresenter {
 extension DefaultDashboardPresenter: DashboardInteractorLister {
 
     func handle(_ event: DashboardInteractorEvent) {
-        updateView()
+        switch event {
+        case .didUpdatePriceData:
+            updateView()
+        case let .didUpdateCandles(network, currency):
+            // TODO(Anon): We dont need to construct viewModel here
+            // TODO(Anon): Refactor ugly AF
+            let section = interactor.enabledNetworks().firstIndex(where: { $0 == network })
+            let item = interactor.currencies(for: network).firstIndex(where: { $0 == currency })
+            if let section = section, let item = item {
+                let viewModel = viewModel()
+                view?.updateWallet(
+                    viewModel.sections[section + 2].items.wallet(at: item),
+                    at: IndexPath(item: item, section: section)
+                )
+                print("=== updating", section, item)
+            }
+        default:
+            ()
+        }
     }
 }
 
@@ -141,6 +173,7 @@ private extension DefaultDashboardPresenter {
         self.notifications = interactor.notifications
         self.myTokens = interactor.myTokens
         view?.update(with: viewModel())
+        print("=== updating view")
     }
 }
 
@@ -183,11 +216,6 @@ private extension DefaultDashboardPresenter {
         )
 
         for network in interactor.enabledNetworks() {
-            
-            let tokens = interactor.currencies(for: network).toWeb3TokenList(
-                network: Web3Network.from(network, isOn: true)
-            )
-
             sections.append(
                 .init(
                     header: .network(
@@ -199,7 +227,9 @@ private extension DefaultDashboardPresenter {
                             isCollapsed: false // !expandedNetworks.contains(network.name),
                         )
                     ),
-                    items: .wallets(walletViewModel(from: tokens))
+                    items: .wallets(
+                        walletsViewModel(from: interactor.currencies(for: network))
+                    )
                 )
             )
         }
@@ -235,27 +265,46 @@ private extension DefaultDashboardPresenter {
         return .notifications(items)
     }
     
-    func walletViewModel(from tokens: [Web3Token]) -> [DashboardViewModel.Wallet] {
-        tokens.sortByNetworkBalanceAndName.compactMap {
-            .init(
-                name: $0.name,
-                ticker: $0.symbol,
-                imageData: interactor.tokenIcon(for: $0),
-                fiatBalance: $0.usdBalanceString,
-                cryptoBalance: "\($0.balance.toString(decimals: $0.decimals)) \($0.symbol)",
-                tokenPrice: $0.usdPrice.formatCurrency() ?? "",
-                pctChange: "4.5%",
-                priceUp: true,
-                candles: .loaded(interactor.priceData(for: $0).toCandlesViewModelCandle)
+    func walletsViewModel(from currencies: [Currency]) -> [DashboardViewModel.Wallet] {
+        currencies.map {
+            walletViewModel(
+                $0,
+                market: interactor.metadata(for: $0)
             )
         }
+    }
+
+    func walletViewModel(_ currency: Currency, market: Market?) -> DashboardViewModel.Wallet {
+        .init(
+            name: currency.name,
+            ticker: currency.symbol,
+            imageData: interactor.image(for: currency),
+            fiatBalance: "0", // $0.usdBalanceString,
+            cryptoBalance: "0", // "\($0.balance.toString(decimals: $0.decimals)) \($0.symbol)",
+            tokenPrice: market?.currentPrice != nil
+                ? fiatFormatter.string(from: market?.currentPrice ?? 0) ?? "-"
+                : "-",
+            pctChange: market?.priceChangePercentage24h != nil
+                ? pctFormatter.string(from: Float(market?.priceChangePercentage24h ?? 0) * 0.01) ?? "-"
+                : "-",
+            priceUp: market?.priceChangePercentage24h?.doubleValue ?? 0 >= 0,
+            candles: candlesViewModel(candles: interactor.candles(for: currency))
+        )
+    }
+
+    func candlesViewModel(candles: [Candle]?) -> CandlesViewModel {
+        guard let candles = candles else {
+            return .loading(40)
+        }
+
+        return .loaded(candles.last(n: 40).map { CandlesViewModel.Candle.from($0) })
     }
     
     func makeDashboardViewModelNFts(from nfts: [NFTItem]) -> [DashboardViewModel.NFT] {
         
         nfts.compactMap { .init(image: $0.image, onSelected: makeOnNFTSelected(for: $0)) }
     }
-    
+
     func makeOnNFTSelected(for nftItem: NFTItem) -> () -> Void {
         
         {
@@ -276,22 +325,6 @@ private extension DefaultDashboardPresenter {
     }
 }
 
-
-private extension Array where Element == Web3Candle {
-    
-    var toCandlesViewModelCandle: [CandlesViewModel.Candle] {
-        compactMap {
-            .init(
-                open: $0.open,
-                high: $0.high,
-                low: $0.low,
-                close: $0.close,
-                volume: $0.volume,
-                period: $0.period
-            )
-        }
-    }
-}
 
 extension DefaultDashboardPresenter: Web3ServiceWalletListener {
     

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 enum CandlesViewModel {
 
@@ -31,5 +32,22 @@ extension CandlesViewModel {
         default:
             return false
         }
+    }
+}
+
+extension CandlesViewModel.Candle {
+
+    static func from(_ candle: web3lib.Candle) -> CandlesViewModel.Candle {
+        CandlesViewModel.Candle(
+            open: candle.open,
+            high: candle.high,
+            low: candle.low,
+            close: candle.close,
+            volume: 0,
+            period: Date(timeIntervalSince1970:
+                Double(Int(candle.timestamp.epochSeconds))
+            )
+        )
+
     }
 }

@@ -10,6 +10,9 @@ enum DashboardInteractorEvent {
     case didSelectNetwork
     case didChaneNetwork
     case didUpdateBlock
+    case didUpdatePriceData
+    case didUpdateCandles(network: Network, currency: Currency)
+    case didUpdateNFTs
 }
 
 protocol DashboardInteractorLister: AnyObject {
@@ -27,7 +30,12 @@ protocol DashboardInteractor: AnyObject {
 
     func enabledNetworks() -> [Network]
     func currencies(for network: Network) -> [Currency]
+    func metadata(for currency: Currency) -> Market?
+    func candles(for currency: Currency) -> [Candle]?
+    // TODO: Refactor to be url or image name
+    func image(for currency: Currency) -> Data
     func totalBalanceInFiat() -> Double
+    func reloadData()
 
     func addListener(_ listener: DashboardInteractorLister)
     func removeListener(_ listener: DashboardInteractorLister?)
@@ -61,11 +69,11 @@ final class DefaultDashboardInteractor {
 }
 
 extension DefaultDashboardInteractor: DashboardInteractor {
-        
+
     var notifications: [Web3Notification] {
         web3ServiceLegacy.dashboardNotifications
     }
-    
+
     var allNetworks: [Web3Network] {
         web3ServiceLegacy.allNetworks
     }
@@ -73,22 +81,25 @@ extension DefaultDashboardInteractor: DashboardInteractor {
     var myTokens: [Web3Token] {
         return web3ServiceLegacy.myTokens
     }
-    
+
     func tokenIcon(for token: Web3Token) -> Data {
         web3ServiceLegacy.tokenIcon(for: token)
     }
-    
-    func priceData(for token: Web3Token) -> [ Web3Candle ] {
+
+    func priceData(for token: Web3Token) -> [Web3Candle] {
         priceHistoryService.priceData(for: token, period: .lastXDays(43))
     }
-    
-    func nfts(for network: Web3Network) -> [ NFTItem ] {
+
+    func nfts(for network: Web3Network) -> [NFTItem] {
         nftsService.yourNFTs(forNetwork: network)
     }
-    
+
     func updateMyWeb3Tokens(to tokens: [Web3Token]) {
         web3ServiceLegacy.storeMyTokens(to: tokens)
     }
+}
+
+extension DefaultDashboardInteractor {
 
     func enabledNetworks() -> [Network] {
         web3service.enabledNetworks()
@@ -99,10 +110,76 @@ extension DefaultDashboardInteractor: DashboardInteractor {
             return []
         }
 
-        return currenciesService.currencies(
-            wallet: wallet,
-            network: network
+        return currenciesService.currencies(wallet: wallet, network: network)
+    }
+
+    func metadata(for currency: Currency) -> Market? {
+        currencyMetadataService.market(currency: currency)
+    }
+
+    func candles(for currency: Currency) -> [Candle]? {
+        currencyMetadataService.cachedCandles(currency: currency)
+    }
+
+    // TODO: Refactor to be url or image name
+    func image(for currency: Currency) -> Data {
+        var image: UIImage?
+
+        if let id = currency.coinGeckoId {
+            image = UIImage(named: id + "_large")
+        }
+
+        image = image ?? UIImage(named: "currency_placeholder")
+        return image!.pngData()!
+    }
+
+    func reloadData() {
+        guard let wallet = web3service.wallet else {
+            return
+        }
+
+        print("=== RELOADING")
+
+        let allCurrencies = web3service.enabledNetworks()
+                .map { currenciesService.currencies(wallet: wallet, network: $0) }
+                .reduce([Currency](), { $0 + $1 })
+
+        currencyMetadataService.refreshMarket(
+            currencies: allCurrencies,
+            completionHandler: { [weak self] (_, _) in
+                print("=== market data laoded ")
+                DispatchQueue.main.async {
+                    self?.emit(.didUpdatePriceData)
+                }
+            }
         )
+
+        reloadCandles()
+        // TODO: Get balance
+        // TODO: Refresh nfts
+    }
+
+    func reloadCandles() {
+        guard let wallet = web3service.wallet else {
+            return
+        }
+        // TODO: Limit to 50 currencies
+        web3service.enabledNetworks().forEach { network in
+            currenciesService.currencies(
+                wallet: wallet,
+                network: network
+            ).forEach { currency in
+                currencyMetadataService.candles(
+                    currency: currency,
+                    completionHandler: { [weak self] (_, _ ) in
+                        let event = DashboardInteractorEvent.didUpdateCandles(
+                            network: network,
+                            currency: currency)
+                        self?.emit(event)
+                    }
+                )
+            }
+        }
     }
 
     func totalBalanceInFiat() -> Double {
@@ -142,6 +219,10 @@ extension DefaultDashboardInteractor: Web3ServiceListener {
     }
 
     func handle(event: Web3ServiceEvent) {
+        print("=== get event")
+        if let networksChanged = event as? Web3ServiceEvent.NetworksChanged {
+            reloadData()
+        }
         emit(event.toInteractorEvent())
     }
 
@@ -153,6 +234,7 @@ extension DefaultDashboardInteractor: Web3ServiceListener {
         }
     }
 }
+
 
 // MARK: - Web3ServiceEvent
 

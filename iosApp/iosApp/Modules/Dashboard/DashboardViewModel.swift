@@ -93,19 +93,15 @@ extension DashboardViewModel {
 extension DashboardViewModel.Section {
     
     var hasSectionHeader: Bool {
-        
         switch header {
-            
         case .none:
             return false
-            
         case .title, .balance, .network:
             return true
         }
     }
     
     var isCollapsed: Bool {
-        
         switch header {
         case let .network(network):
             return network.isCollapsed
@@ -115,7 +111,6 @@ extension DashboardViewModel.Section {
     }
     
     var networkId: String {
-        
         switch header {
         case let .network(network):
             return network.id

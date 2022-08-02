@@ -69,7 +69,7 @@ class DefaultCoinGeckoService : CoinGeckoService {
     private val baseURL: String = "https://api.coingecko.com/api/v3"
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default
     private val client: HttpClient = HttpClient() {
-        Logging { level = LogLevel.ALL; logger = Logger.SIMPLE }
+        Logging { level = LogLevel.NONE; logger = Logger.SIMPLE }
         install(ContentNegotiation) { json(providerJson, contentType()) }
     }
 
@@ -81,7 +81,7 @@ class DefaultCoinGeckoService : CoinGeckoService {
         change: String
     ): List<Market> = withContext(dispatcher) {
         val idsStr = if (ids != null) {
-            "&ids=" + ids.reduce { acc, s -> "$acc$s," }.removeSuffix(",")
+            "&ids=" + ids.reduce { acc, s -> "$acc,$s" }.removeSuffix(",")
         } else ""
 
         val url = baseURL +

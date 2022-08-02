@@ -14,10 +14,10 @@ typealias ImageBytes = ByteArray
 
 interface CurrencyMetadataService {
 
-    fun cachedImage(currency: Currency): ByteArray?
-    fun cachedCandles(currency: Currency): List<Candle>?
-    fun market(currency: Currency): Market?
-    fun colors(currency: Currency): Pair<HexColor, HexColor>
+    fun cachedImage(currency: Currency?): ByteArray?
+    fun cachedCandles(currency: Currency?): List<Candle>?
+    fun market(currency: Currency?): Market?
+    fun colors(currency: Currency?): Pair<HexColor, HexColor>
 
     suspend fun image(currency: Currency): ByteArray?
     suspend fun refreshMarket(currencies: List<Currency>): Map<Currency, Market>
@@ -43,8 +43,11 @@ class DefaultCurrencyMetadataService: CurrencyMetadataService {
         this.coinGeckoService = coinGeckoService
     }
 
-    override fun cachedImage(currency: Currency): ByteArray? {
-        val id = (currency.coinGeckoId ?: currency.symbol) + "_large"
+    override fun cachedImage(currency: Currency?): ByteArray? {
+        if (currency == null) {
+            return null
+        }
+        val id = (currency?.coinGeckoId ?: currency?.symbol) + "_large"
         bundledAssetProvider.image(id)?.let {
             return it
         }
@@ -53,15 +56,15 @@ class DefaultCurrencyMetadataService: CurrencyMetadataService {
         return null
     }
 
-    override fun cachedCandles(currency: Currency): List<Candle>? {
-        return candleCache[currency]
+    override fun cachedCandles(currency: Currency?): List<Candle>? {
+        return if (currency != null) candleCache[currency] else null
     }
 
-    override fun market(currency: Currency): Market? {
-        return market[currency]
+    override fun market(currency: Currency?): Market? {
+        return if (currency != null) market[currency] else null
     }
 
-    override fun colors(currency: Currency): Pair<HexColor, HexColor> {
+    override fun colors(currency: Currency?): Pair<HexColor, HexColor> {
         return Pair("0xffffff", "0xffffff")
     }
 
