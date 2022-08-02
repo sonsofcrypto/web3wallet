@@ -10,6 +10,8 @@ import com.sonsofcrypto.web3lib.services.currencies.model.ropstenDefaultCurrenci
 import com.sonsofcrypto.web3lib.services.currencyMetadata.BundledAssetProvider
 import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.utils.Trie
+import com.sonsofcrypto.web3lib.utils.defaultDispatcher
+import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import io.ktor.util.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +19,8 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlin.native.concurrent.SharedImmutable
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
 
 interface CurrenciesService {
     fun currencies(wallet: Wallet, network: Network): List<Currency>
@@ -29,9 +33,10 @@ interface CurrenciesService {
     var currencies: List<Currency>
     fun currencies(search: String): List<Currency>
 
-    suspend fun loadCurrencies(): List<Currency>
+    suspend fun loadCurrencies()
 }
 
+@OptIn(ExperimentalTime::class)
 class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
 
     override var currencies: List<Currency> = listOf()
@@ -40,32 +45,11 @@ class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
     private var symbolsTrie: Trie = Trie()
     private var namesMap: Map<String, Int> = emptyMap()
     private var symbolsMap: Map<String, Int> = emptyMap()
-    private val scope = CoroutineScope(Dispatchers.Default)
+    private val scope = CoroutineScope(SupervisorJob() + defaultDispatcher)
 
     init {
-        scope.launch(Dispatchers.Default) {
-            val currencies = loadCurrencies()
-            val namesTrie = Trie()
-            val symbolsTrie = Trie()
-            val namesMap = mutableMapOf<String, Int>()
-            val symbolsMap = mutableMapOf<String, Int>()
-            currencies.forEachIndexed { idx, currency ->
-                val name = currency.name.toLowerCasePreservingASCIIRules()
-                val symbol = currency.symbol.toLowerCasePreservingASCIIRules()
-                namesTrie.insert(name)
-                namesMap.put(name, idx)
-                symbolsTrie.insert(symbol)
-                symbolsMap.put(symbol, idx)
-            }
-            launch(Dispatchers.Main) {
-                updateCurrencies(
-                    currencies,
-                    namesTrie,
-                    symbolsTrie,
-                    namesMap,
-                    symbolsMap
-                )
-            }
+        scope.launch(defaultDispatcher) {
+            loadCurrencies()
         }
     }
 
@@ -116,7 +100,7 @@ class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
         return results.toList()
     }
 
-    override suspend fun loadCurrencies(): List<Currency> = withContext(Dispatchers.Default) {
+    override suspend fun loadCurrencies() = withContext(Dispatchers.Default) {
         val data = BundledAssetProvider().file("coin_cache", "json")
         val jsonString = data?.decodeToString() ?: "[]"
         val currencies = CurrencyInfo.listFrom(jsonString).map {
@@ -130,8 +114,27 @@ class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
                 coinGeckoId = it.id,
             )
         }
-
-        return@withContext currencies
+        val namesTrie = Trie()
+        val symbolsTrie = Trie()
+        val namesMap = mutableMapOf<String, Int>()
+        val symbolsMap = mutableMapOf<String, Int>()
+        currencies.forEachIndexed { idx, currency ->
+            val name = currency.name.toLowerCasePreservingASCIIRules()
+            val symbol = currency.symbol.toLowerCasePreservingASCIIRules()
+            namesTrie.insert(name)
+            namesMap.put(name, idx)
+            symbolsTrie.insert(symbol)
+            symbolsMap.put(symbol, idx)
+        }
+        withContext(uiDispatcher) {
+            updateCurrencies(
+                currencies,
+                namesTrie,
+                symbolsTrie,
+                namesMap,
+                symbolsMap
+            )
+        }
     }
 
     private fun updateCurrencies(

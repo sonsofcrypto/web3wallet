@@ -7,12 +7,14 @@ import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import java.lang.Exception
+import java.time.Clock
 import kotlin.reflect.KClass
 
 class CurrenciesServiceTests {
 
     fun runAll() {
-        testCurrenciesService()
+//        testCurrenciesService()
+        testCurrenciesServiceInit()
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
@@ -37,5 +39,12 @@ class CurrenciesServiceTests {
             currenciesService.currencies(wallet, network).count() == 4,
             "Unexpected currencies count after generateDefaultCurrencies"
         )
+    }
+
+    fun testCurrenciesServiceInit() {
+        val clock = Clock.systemUTC()
+        println("=== about to init ${clock.instant()}")
+        val service = DefaultCurrenciesService(KeyValueStore("CurrenciesServiceKeyStoreTests"))
+        println("=== did init ${clock.instant()}")
     }
 }
