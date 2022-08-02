@@ -155,6 +155,10 @@ extension DefaultDashboardInteractor {
                 .map { currenciesService.currencies(wallet: wallet, network: $0) }
                 .reduce([Currency](), { $0 + $1 })
 
+        guard allCurrencies.isEmpty == false {
+            return
+        }
+
         currencyMetadataService.refreshMarket(
             currencies: allCurrencies,
             completionHandler: { [weak self] (_, _) in
