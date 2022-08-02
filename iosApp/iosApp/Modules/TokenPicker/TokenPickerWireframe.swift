@@ -118,22 +118,18 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
         switch destination {
         case let .tokenReceive(token):
             
-            guard let presentingIn = presentingIn.presentedViewController else { return }
-            
             let wireframe = tokenReceiveWireframeFactory.makeWireframe(
-                presentingIn: presentingIn,
+                presentingIn: navigationController,
                 context: .init(presentationStyle: .push, web3Token: token)
             )
             wireframe.present()
                         
         case .addCustomToken:
             
-            guard let presentingIn = presentingIn.presentedViewController else { return }
-            
             guard let network = context.source.network else { return }
             
             let wireframe = tokenAddWireframeFactory.makeWireframe(
-                presentingIn: presentingIn,
+                presentingIn: navigationController,
                 context: .init(
                     presentationStyle: .push,
                     network: network
