@@ -1,5 +1,7 @@
 package com.sonsofcrypto.web3lib.provider
 
+import com.sonsofcrypto.web3lib.provider.JsonRpcRequest.Method
+import com.sonsofcrypto.web3lib.provider.model.*
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.jsonPrimitive
@@ -8,15 +10,16 @@ import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 import kotlinx.serialization.serializer
 import kotlin.native.concurrent.SharedImmutable
-import com.sonsofcrypto.web3lib.provider.JsonRpcRequest.Method
-import com.sonsofcrypto.web3lib.provider.model.*
 
 @SharedImmutable
 val providerJson = Json {

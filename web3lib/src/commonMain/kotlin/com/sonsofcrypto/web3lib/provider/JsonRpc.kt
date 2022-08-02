@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3lib.provider
 
-import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonElement
 import kotlin.random.Random
 import kotlin.random.nextUInt
 

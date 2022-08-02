@@ -2,7 +2,6 @@ package com.sonsofcrypto.web3lib.utils
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import com.ionspin.kotlin.bignum.integer.Sign
-import kotlinx.serialization.Serializable
 
 class BigInt {
 

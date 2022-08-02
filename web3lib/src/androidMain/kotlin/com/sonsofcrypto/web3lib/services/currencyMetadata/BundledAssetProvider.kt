@@ -1,8 +1,5 @@
 package com.sonsofcrypto.web3lib.services.currencyMetadata
 
-import java.io.File
-import java.io.FileReader
-
 actual class BundledAssetProvider {
 
     actual constructor() {}

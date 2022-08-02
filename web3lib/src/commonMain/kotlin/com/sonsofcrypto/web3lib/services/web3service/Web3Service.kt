@@ -1,10 +1,10 @@
 package com.sonsofcrypto.web3lib.services.web3service
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
-import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
+import com.sonsofcrypto.web3lib.signer.Wallet
+import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString

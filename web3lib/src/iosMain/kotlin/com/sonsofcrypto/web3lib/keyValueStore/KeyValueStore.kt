@@ -5,10 +5,11 @@ import com.russhwolf.settings.Settings
 import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.pin
 import kotlinx.cinterop.usePinned
-import kotlinx.serialization.*
-import platform.Foundation.NSUserDefaults
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.serializer
 import platform.Foundation.NSData
+import platform.Foundation.NSUserDefaults
 import platform.Foundation.create
 import platform.posix.memcpy
 

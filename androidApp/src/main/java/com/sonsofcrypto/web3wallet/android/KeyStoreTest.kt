@@ -9,10 +9,9 @@ import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.bip39.localeString
 import com.sonsofcrypto.web3lib.utils.secureRand
 import com.sonsofcrypto.web3lib.utils.toHexString
-import java.lang.Exception
 import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class KeyStoreTest {
 

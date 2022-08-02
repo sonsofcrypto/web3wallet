@@ -1,9 +1,9 @@
 package com.sonsofcrypto.web3lib.provider
 
 import com.sonsofcrypto.web3lib.provider.model.*
+import com.sonsofcrypto.web3lib.provider.model.BlockTag.Latest
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3lib.provider.model.BlockTag.Latest
 import com.sonsofcrypto.web3lib.utils.BigInt
 import kotlinx.serialization.json.JsonObject
 

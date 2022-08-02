@@ -1,9 +1,9 @@
 package com.sonsofcrypto.web3wallet.android
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.sonsofcrypto.web3lib.utils.*
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.sonsofcrypto.web3lib.utils.secureRand
 
 class MainActivity : AppCompatActivity() {
 

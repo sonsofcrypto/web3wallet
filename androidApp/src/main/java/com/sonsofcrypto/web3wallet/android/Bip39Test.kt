@@ -1,10 +1,9 @@
 package com.sonsofcrypto.web3wallet.android
 
-import com.sonsofcrypto.web3lib.utils.*
-import com.sonsofcrypto.web3lib.types.*
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
-import java.lang.Exception
+import com.sonsofcrypto.web3lib.utils.hexStringToByteArray
+import com.sonsofcrypto.web3lib.utils.toHexString
 
 class Bip39Test {
 

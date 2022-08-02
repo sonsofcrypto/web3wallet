@@ -3,12 +3,9 @@ package com.sonsofcrypto.web3lib.keyValueStore
 import android.content.Context.MODE_PRIVATE
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.SharedPreferencesSettings
-import com.russhwolf.settings.set
-import com.sonsofcrypto.web3lib.types.Currency
-import kotlinx.serialization.*
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.json.Json
-import kotlin.reflect.KClass
-import kotlin.reflect.cast
+import kotlinx.serialization.serializer
 
 
 private const val DEFAULTS_NAME = "KeyValueStore"

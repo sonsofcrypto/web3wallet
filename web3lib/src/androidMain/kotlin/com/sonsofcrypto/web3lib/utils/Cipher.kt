@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3lib.utils
 
-import coreCrypto.*
+import coreCrypto.CoreCrypto
 
 /** Cryptographically secure source of randomnes */
 @Throws(Exception::class)

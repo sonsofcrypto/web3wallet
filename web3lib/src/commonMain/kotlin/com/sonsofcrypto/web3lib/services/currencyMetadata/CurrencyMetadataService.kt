@@ -1,10 +1,10 @@
 package com.sonsofcrypto.web3lib.services.keyStore.CurrencyMetadata
 
-import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.services.coinGecko.CoinGeckoService
 import com.sonsofcrypto.web3lib.services.coinGecko.model.Candle
 import com.sonsofcrypto.web3lib.services.coinGecko.model.Market
 import com.sonsofcrypto.web3lib.services.currencyMetadata.BundledAssetProvider
+import com.sonsofcrypto.web3lib.types.Currency
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant

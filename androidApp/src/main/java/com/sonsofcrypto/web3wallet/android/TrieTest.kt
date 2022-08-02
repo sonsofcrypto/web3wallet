@@ -6,7 +6,6 @@ import com.sonsofcrypto.web3lib.utils.bip39.words
 import com.sonsofcrypto.web3lib.utils.toHexString
 import kotlinx.serialization.encodeToByteArray
 import kotlinx.serialization.protobuf.ProtoBuf
-import java.lang.Exception
 
 class TrieTest {
 

@@ -4,11 +4,8 @@ import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.services.currencies.DefaultCurrenciesService
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService
 import com.sonsofcrypto.web3lib.signer.Wallet
-import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
-import java.lang.Exception
 import java.time.Clock
-import kotlin.reflect.KClass
 
 class CurrenciesServiceTests {
 

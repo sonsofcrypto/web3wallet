@@ -1,9 +1,9 @@
 package com.sonsofcrypto.web3lib.services.currencies.model
 
 import com.sonsofcrypto.web3lib.services.coinGecko.model.Coin
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.Serializable
 
 @Serializable
 data class CurrencyInfo(
