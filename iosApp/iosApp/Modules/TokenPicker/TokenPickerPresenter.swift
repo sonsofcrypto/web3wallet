@@ -167,8 +167,6 @@ private extension DefaultTokenPickerPresenter {
         tokensFiltered = interactor.tokens(
             filteredBy: searchTerm,
             for: context.source.network
-        ).removingTokens(
-            matching: selectedTokensFiltered
         )
 
         let sectionsToDisplay = makeSectionsToDisplay()

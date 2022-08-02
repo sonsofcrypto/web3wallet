@@ -120,24 +120,25 @@ private extension DefaultMnemonicConfirmationService {
 
     func validateMnemonic(with mnemonic: String) -> Bool {
         
-        // TODO: @Annon to implement
         print("[TODO]: Validate mnemonic: [\(mnemonic)]")
-//        let words = mnemonic.trimmingCharacters(in: .whitespacesAndNewlines).split(
-        //            separator: " "
-        //        )
-        //
-        //        let keystoreService: KeyStoreService
-        //        let keyStoreItem = key
-        //        let bip39 = try Bip39(mnemonic: mnemonic, salt: salt, worldList: .english)
-        //
-        //
-        //        let bip44 = try Bip44(seed: try bip39.seed(), version: .mainnetprv)
-        //
-        //        bi
-                
-        //        return Bip39.companion.isValidWordsCount(count: words.count.int32)
-
-        return mnemonic == "one two three four five six seven eight nine ten eleven twelve"
+        return true
+//        let words = mnemonic.trimmingCharacters(in: .whitespacesAndNewlines)
+//            .split(separator: " ")
+//            .map { String($0) }
+//
+//        // This expected address
+//        let expectedAddress = keyStoreService.selected?.addresses[Network.ethereum().defaultDerivationPath()]
+//
+//        // Thi
+//        let bip39 = try Bip39(mnemonic: words, salt: "", worldList: .english)
+//        let bip44 = try Bip44(seed: try bip39.seed(), version: .mainnetprv)
+//        let extKey = try bip44.deriveChildKey(path: Network.ethereum().defaultDerivationPath())
+//        let address = Network.ethereum().address(pubKey: extKey.pub()).toHexString(prefix: true)
+//
+//        // This is how you know
+//        keyStoreService.selected?.saltMnemonic
+//
+//        return expectedAddress == address
     }
 }
 
