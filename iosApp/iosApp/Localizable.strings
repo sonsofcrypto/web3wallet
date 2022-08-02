@@ -200,7 +200,7 @@
 "tokenPicker.title.select" = "Select";
 "tokenPicker.networks.all" = "All networks";
 "tokenPicker.myTokens.title" = "My tokens";
-"tokenPicker.other.title" = "Other";
+"tokenPicker.other.title" = "All tokens";
 "tokenPicker.featured.title" = "Featured";
 "tokenPicker.popular.title" = "Popular";
 "tokenPicker.noResults" = "No results";

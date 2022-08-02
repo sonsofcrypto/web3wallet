@@ -163,7 +163,11 @@ private extension DefaultTokenPickerPresenter {
     
     func refreshData() {
         
-        selectedTokensFiltered = selectedTokens.filterBy(searchTerm: searchTerm)
+        selectedTokensFiltered = selectedTokens.filterBy(
+            searchTerm: searchTerm
+        ).sorted {
+            $0.rank < $1.rank
+        }
         tokensFiltered = interactor.tokens(
             filteredBy: searchTerm,
             for: context.source.network
@@ -218,24 +222,11 @@ private extension DefaultTokenPickerPresenter {
 
 private extension DefaultTokenPickerPresenter {
     
-    func makeMyGroupToken(
-        for prefix: String,
-        tokens: [Web3Token]
-    ) -> [TokenPickerViewModel.Section] {
-        
-        let tokens = tokens.filter { $0.name.uppercased().hasPrefix(prefix) }
-        guard !tokens.isEmpty else { return [] }
-        return [
-            .init(name: prefix, items: makeMyViewModelTokens(from: tokens))
-        ]
-    }
-    
     func makeMyViewModelTokens(
         from tokens: [Web3Token]
     ) -> [TokenPickerViewModel.Token] {
         
-        let sortedTokens = tokens.sortByNetworkBalanceAndName
-        return sortedTokens.compactMap { token in
+        tokens.compactMap { token in
             
             let type: TokenPickerViewModel.TokenType
             switch context.source {
@@ -264,11 +255,11 @@ private extension DefaultTokenPickerPresenter {
             }
             
             let position: TokenPickerViewModel.Token.Position
-            if sortedTokens.first == token && sortedTokens.last == token {
+            if tokens.first == token && tokens.last == token {
                 position = .onlyOne
-            } else if sortedTokens.first == token {
+            } else if tokens.first == token {
                 position = .first
-            } else if sortedTokens.last == token {
+            } else if tokens.last == token {
                 position = .last
             } else {
                 position = .middle
@@ -286,23 +277,10 @@ private extension DefaultTokenPickerPresenter {
         }
     }
     
-    func makeOtherGroupToken(
-        for prefix: String,
-        tokens: [Web3Token]
-    ) -> [TokenPickerViewModel.Section] {
-        
-        let tokens = tokens.filter { $0.name.uppercased().hasPrefix(prefix) }
-        guard !tokens.isEmpty else { return [] }
-        return [
-            .init(name: prefix, items: makeOtherViewModelTokens(from: tokens))
-        ]
-    }
-    
     func makeOtherViewModelTokens(
         from tokens: [Web3Token]
     ) -> [TokenPickerViewModel.Token] {
         
-        //let sortedTokens = tokens.sortByNetworkBalanceAndName
         tokens.compactMap { token in
             
             let type: TokenPickerViewModel.TokenType
@@ -314,8 +292,14 @@ private extension DefaultTokenPickerPresenter {
                     balance: nil
                 )
             case .multiSelectEdit:
+
+                let isSelected = selectedTokensFiltered.contains(
+                    where: {
+                        $0.network.name == token.network.name && $0.symbol == token.symbol
+                    }
+                )
                 type = .init(
-                    isSelected: false,
+                    isSelected: isSelected,
                     balance: nil
                 )
             }

@@ -55,15 +55,7 @@ extension DefaultTokenPickerInteractor: TokenPickerInteractor {
 
         currencies = currencies.first(n: 1000)
             
-        let toReturn = currencies.map {
-            Web3Token.from(
-                currency: $0,
-                network: network,
-                inWallet: false
-            )
-        }
-        
-        return toReturn
+        return currencies.toWeb3TokenList(network: network)
     }
     
     func networkIcon(for network: Web3Network) -> Data {

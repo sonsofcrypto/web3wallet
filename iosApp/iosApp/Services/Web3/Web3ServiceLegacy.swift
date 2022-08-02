@@ -147,6 +147,7 @@ struct Web3Token: Equatable {
     let showInWallet: Bool
     let usdPrice: Double
     let coingGeckoId: String?
+    let rank: Int
 }
 
 extension Web3Token {
@@ -177,12 +178,35 @@ extension Web3Token {
     }
 }
 
+extension Array where Element == Currency {
+    
+    func toWeb3TokenList(
+        network: Web3Network,
+        inWallet: Bool = true
+    ) -> [Web3Token] {
+        
+        var tokens = [Web3Token]()
+        for (idx, currency) in self.enumerated() {
+            tokens.append(
+                Web3Token.from(
+                    currency: currency,
+                    network: network,
+                    inWallet: inWallet,
+                    idx: idx
+                )
+            )
+        }
+        return tokens
+    }
+}
+
 extension Web3Token {
 
     static func from(
         currency: Currency,
         network: Web3Network,
-        inWallet: Bool
+        inWallet: Bool,
+        idx rank: Int
     ) -> Web3Token {
         return Web3Token(
             symbol: currency.symbol.uppercased(),
@@ -194,7 +218,8 @@ extension Web3Token {
             balance: 0.0,
             showInWallet: inWallet,
             usdPrice: 0.0,
-            coingGeckoId: currency.coinGeckoId
+            coingGeckoId: currency.coinGeckoId,
+            rank: rank
         )
     }
 

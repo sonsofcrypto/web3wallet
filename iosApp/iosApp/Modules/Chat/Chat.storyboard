@@ -28,7 +28,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="16" maxX="0.0" maxY="16"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="SettingsCell" reuseIdentifier="ChatLeftCollectionViewCell" id="j0a-gF-9zV" userLabel="ChatLeftCollectionViewCell" customClass="ChatLeftCollectionViewCell" customModule="iosApp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="ChatLeftCollectionViewCell" reuseIdentifier="ChatLeftCollectionViewCell" id="j0a-gF-9zV" userLabel="ChatLeftCollectionViewCell" customClass="ChatLeftCollectionViewCell" customModule="iosApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="16" width="414" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="dwF-bd-TH3">
@@ -79,7 +79,7 @@
                                             <outlet property="widthLayoutConstraint" destination="WCk-6D-62O" id="PZe-IZ-hmP"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="SettingsCell" reuseIdentifier="ChatRightCollectionViewCell" id="PXq-qR-QUC" userLabel="ChatRightCollectionViewCell" customClass="ChatRightCollectionViewCell" customModule="iosApp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="ChatRightCollectionViewCell" reuseIdentifier="ChatRightCollectionViewCell" id="PXq-qR-QUC" userLabel="ChatRightCollectionViewCell" customClass="ChatRightCollectionViewCell" customModule="iosApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="154" width="414" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="pzy-en-xxb">

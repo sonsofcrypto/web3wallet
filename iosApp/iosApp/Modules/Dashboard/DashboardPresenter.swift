@@ -182,16 +182,11 @@ private extension DefaultDashboardPresenter {
             )
         )
 
-
-        for (idx, network) in interactor.enabledNetworks().enumerated() {
-            let currencies = interactor.currencies(for: network)
-            let tokens = currencies.map {
-                Web3Token.from(
-                    currency: $0,
-                    network: Web3Network.from(network, isOn: true),
-                    inWallet: true
-                )
-            }
+        for network in interactor.enabledNetworks() {
+            
+            let tokens = interactor.currencies(for: network).toWeb3TokenList(
+                network: Web3Network.from(network, isOn: true)
+            )
 
             sections.append(
                 .init(

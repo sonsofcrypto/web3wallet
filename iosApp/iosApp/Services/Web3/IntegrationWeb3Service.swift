@@ -59,17 +59,23 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
         )
 
         if supported.isEmpty {
-            supported = currenciesService.currencies.map {
-                Web3Token.from(
-                    currency: $0,
-                    network: legacyNetwork,
-                    inWallet: currenciesService.currencies(
-                        wallet: wallet,
-                        network: network
-                    ).contains($0)
+
+            for (idx, currency) in currenciesService.currencies.enumerated() {
+                
+                supported.append(
+                    Web3Token.from(
+                        currency: currency,
+                        network: legacyNetwork,
+                        inWallet: currenciesService.currencies(
+                            wallet: wallet,
+                            network: network
+                        ).contains(currency),
+                        idx: idx
+                    )
                 )
             }
         }
+
         return supported
     }
 
@@ -89,14 +95,7 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
             network: network
         )
 
-
-        return currencies.map {
-            Web3Token.from(
-                currency: $0,
-                network: web3network,
-                inWallet: true
-            )
-        }
+        return currencies.toWeb3TokenList(network: web3network, inWallet: true)
     }
     
     func storeMyTokens(to tokens: [Web3Token]) {
