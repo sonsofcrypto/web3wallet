@@ -121,7 +121,7 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             guard let network = interactor.allNetworks.first(where: {
                 $0.id == networkId
             }) else { return }
-            
+
             wireframe.navigate(
                 to: .editTokens(
                     network: network,
@@ -332,6 +332,8 @@ private extension DefaultDashboardPresenter {
 
     func selectedCurrenciesHandler(_ currencies: [Currency], network: Network) {
         interactor.setCurrencies(currencies, network: network)
+        updateView()
+        interactor.reloadData()
     }
 }
 

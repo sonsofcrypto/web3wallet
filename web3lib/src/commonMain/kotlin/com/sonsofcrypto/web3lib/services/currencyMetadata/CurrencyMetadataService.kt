@@ -77,9 +77,7 @@ class DefaultCurrencyMetadataService: CurrencyMetadataService {
     override suspend fun refreshMarket(currencies: List<Currency>): Map<Currency, Market> {
         var markets = withContext(Dispatchers.Default) {
             return@withContext coinGeckoService.market(
-                currencies
-                    .map { it.coinGeckoId }
-                    .filterNotNull(),
+                currencies.map { it.coinGeckoId }.filterNotNull(),
                 "usd",
                 page = 1,
                 "24h"

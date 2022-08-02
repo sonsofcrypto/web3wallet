@@ -163,11 +163,11 @@ extension DefaultDashboardInteractor {
                 print("=== market data laoded ")
                 DispatchQueue.main.async {
                     self?.emit(.didUpdatePriceData)
+                    self?.reloadCandles()
                 }
             }
         )
 
-        reloadCandles()
         // TODO: Get balance
         // TODO: Refresh nfts
     }

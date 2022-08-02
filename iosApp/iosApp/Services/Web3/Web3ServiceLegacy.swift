@@ -90,7 +90,7 @@ extension Web3Network {
     }
 
     func toNetwork() -> web3lib.Network {
-        web3lib.Network.Companion.fromChainId(UInt32(chainId))
+        web3lib.Network.Companion().fromChainId(chainId: UInt32(chainId))
     }
 }
 
