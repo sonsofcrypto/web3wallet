@@ -10,6 +10,7 @@ import com.sonsofcrypto.web3lib.services.currencies.model.ropstenDefaultCurrenci
 import com.sonsofcrypto.web3lib.services.currencyMetadata.BundledAssetProvider
 import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.utils.Trie
+import io.ktor.util.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.decodeFromString
@@ -49,10 +50,12 @@ class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
             val namesMap = mutableMapOf<String, Int>()
             val symbolsMap = mutableMapOf<String, Int>()
             currencies.forEachIndexed { idx, currency ->
-                namesTrie.insert(currency.name)
-                namesMap.put(currency.name, idx)
-                symbolsTrie.insert(currency.symbol)
-                symbolsMap.put(currency.name, idx)
+                val name = currency.name.toLowerCasePreservingASCIIRules()
+                val symbol = currency.symbol.toLowerCasePreservingASCIIRules()
+                namesTrie.insert(name)
+                namesMap.put(name, idx)
+                symbolsTrie.insert(symbol)
+                symbolsMap.put(symbol, idx)
             }
             launch(Dispatchers.Main) {
                 updateCurrencies(
@@ -99,11 +102,15 @@ class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
     }
 
     override fun currencies(search: String): List<Currency> {
+        if (search.isEmpty()) {
+            return emptyList()
+        }
         val results = mutableSetOf<Currency>()
-        namesTrie.wordsStartingWith(search).forEach {
+        val searchTerm = search.toLowerCasePreservingASCIIRules()
+        namesTrie.wordsStartingWith(searchTerm).forEach {
             namesMap[it]?.let { idx -> results.add(currencies[idx]) }
         }
-        symbolsTrie.wordsStartingWith(search).forEach {
+        symbolsTrie.wordsStartingWith(searchTerm).forEach {
             symbolsMap[it]?.let { idx -> results.add(currencies[idx]) }
         }
         return results.toList()
