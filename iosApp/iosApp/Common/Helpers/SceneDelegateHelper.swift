@@ -13,6 +13,28 @@ struct SceneDelegateHelper {
     var rootVC: UIViewController? {
         window?.rootViewController
     }
+    
+    var canSwipeToWallets: Bool {
+        
+        guard let rootVC = SceneDelegateHelper().rootVC as? RootViewController else {
+            return false
+        }
+        
+        guard let tabBarController = rootVC.children.first(
+            where: { $0 is TabBarController }
+        ) as? TabBarController else {
+            return false
+        }
+        
+        guard let selectedNavigationController = tabBarController.viewControllers?[
+            safe: tabBarController.selectedIndex
+        ] as? NavigationController
+        else {
+            return false
+        }
+        
+        return selectedNavigationController.viewControllers.count == 1
+    }
 }
 
 private extension SceneDelegateHelper {
