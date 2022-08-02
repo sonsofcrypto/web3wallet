@@ -12,7 +12,7 @@ enum DashboardPresenterEvent {
     case walletConnectionSettingsAction
     case didTapCollapse(network: String)
     case didTapExpand(network: String)
-    case didSelectWallet(network: String, symbol: String)
+    case didSelectWallet(networkIdx: Int, currencyIdx: Int)
     case didSelectNFT(idx: Int)
     case didInteractWithCardSwitcher
     case didTapNetwork
@@ -90,10 +90,15 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             expandedNetworks.append(network)
             view?.update(with: viewModel())
             
-        case let .didSelectWallet(networkId, symbol):
-            guard let token = myTokens.first(
-                where: { $0.equalTo(networkId: networkId, symbol: symbol) }
-            ) else { return }
+        case let .didSelectWallet(networkIdx, currencyIdx):
+            let network = interactor.enabledNetworks()[networkIdx]
+            let currency = interactor.currencies(for: network)[currencyIdx]
+            let token = Web3Token.from(
+                currency: currency,
+                network: Web3Network.from(network, isOn: true),
+                inWallet: true,
+                idx: currencyIdx
+            )
             wireframe.navigate(to: .wallet(token: token))
             
         case .walletConnectionSettingsAction:

@@ -279,8 +279,8 @@ extension DashboardViewController: UICollectionViewDelegate {
             let wallet = wallets[indexPath.item]
             presenter.handle(
                 .didSelectWallet(
-                    network: section.networkId,
-                    symbol: wallet.ticker
+                    networkIdx: indexPath.section - 2,
+                    currencyIdx: indexPath.item
                 )
             )
         case let .nfts(nfts):
