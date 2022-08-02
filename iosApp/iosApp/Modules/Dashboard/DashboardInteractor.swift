@@ -30,6 +30,7 @@ protocol DashboardInteractor: AnyObject {
 
     func enabledNetworks() -> [Network]
     func currencies(for network: Network) -> [Currency]
+    func setCurrencies(_ currencies: [Currency], network: Network)
     func metadata(for currency: Currency) -> Market?
     func candles(for currency: Currency) -> [Candle]?
     // TODO: Refactor to be url or image name
@@ -111,6 +112,18 @@ extension DefaultDashboardInteractor {
         }
 
         return currenciesService.currencies(wallet: wallet, network: network)
+    }
+
+    func setCurrencies(_ currencies: [Currency], network: Network) {
+        guard let wallet = web3service.wallet else {
+            return
+        }
+
+        currenciesService.setSelected(
+            currencies: currencies,
+            wallet: wallet,
+            network: network
+        )
     }
 
     func metadata(for currency: Currency) -> Market? {

@@ -25,6 +25,8 @@ interface CurrenciesService {
     fun currencies(wallet: Wallet, network: Network): List<Currency>
     fun add(currency: Currency, wallet: Wallet, network: Network)
     fun remove(currency: Currency, wallet: Wallet, network: Network)
+    /** Replaces currency list of existing currencies (ie remove existing) */
+    fun setSelected(currencies: List<Currency>, wallet: Wallet, network: Network)
 
     fun generateDefaultCurrenciesIfNeeded(wallet: Wallet, network: Network)
     fun defaultCurrencies(network: Network): List<Currency>
@@ -40,6 +42,7 @@ class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
 
     override var currencies: List<Currency> = listOf()
 
+    private var selectedCurrencies: MutableMap<String, List<Currency>> = mutableMapOf()
     private var namesTrie: Trie = Trie()
     private var symbolsTrie: Trie = Trie()
     private var namesMap: Map<String, Int> = emptyMap()
@@ -71,6 +74,10 @@ class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
             id(wallet, network),
             currencies(wallet, network).filter { it != currency }
         )
+    }
+
+    override fun setSelected(currencies: List<Currency>, wallet: Wallet, network: Network) {
+        setCurrencies(id(wallet, network), currencies)
     }
 
     override fun generateDefaultCurrenciesIfNeeded(wallet: Wallet, network: Network) {
@@ -157,11 +164,12 @@ class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
     }
 
     private fun setCurrencies(key: String, currencies: List<Currency>) {
+        selectedCurrencies.put(key, currencies)
         store[key] = currenciesJson.encodeToString(currencies)
     }
 
     private fun getCurrencies(key: String): List<Currency>? {
-        return store.get<String>(key)?.let {
+        return selectedCurrencies.get(key) ?: store.get<String>(key)?.let {
             return currenciesJson.decodeFromString<List<Currency>>(it)
         }
     }

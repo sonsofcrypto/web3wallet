@@ -49,5 +49,12 @@ data class Network(
             Network.rinkeby(),
             Network.goerli(),
         )
+
+        fun fromChainId(chainId: UInt): Network = when(chainId) {
+            3u -> ropsten()
+            4u -> rinkeby()
+            5u -> goerli()
+            else -> ethereum()
+        }
     }
 }

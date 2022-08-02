@@ -90,13 +90,7 @@ extension Web3Network {
     }
 
     func toNetwork() -> web3lib.Network {
-        return web3lib.Network(
-            name: name,
-            chainId: UInt32(chainId),
-            type: networkType,
-            nameServiceAddress: nil,
-            nativeCurrency: Currency.Companion().ethereum()
-        )
+        web3lib.Network.Companion.fromChainId(UInt32(chainId))
     }
 }
 

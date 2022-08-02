@@ -126,7 +126,9 @@ extension DefaultDashboardPresenter: DashboardPresenter {
                 to: .editTokens(
                     network: network,
                     selectedTokens: myTokens,
-                    onCompletion: makeOnEditTokensCompletion()
+                    onCompletion: { [weak self] tokens in
+                        self?.selectedTokensHandler(tokens, network: network)
+                    }
                 )
             )
             
@@ -320,16 +322,18 @@ private extension DefaultDashboardPresenter {
             self.wireframe.navigate(to: .nftItem(nftItem))
         }
     }
-    
-    func makeOnEditTokensCompletion() -> ([Web3Token]) -> Void {
-        {
-            [weak self] updatedTokens in
-            guard let self = self else { return }
-            self.interactor.updateMyWeb3Tokens(to: updatedTokens)
-        }
+
+    func selectedTokensHandler(_ tokens: [Web3Token], network: Web3Network) {
+        selectedCurrenciesHandler(
+            tokens.map { $0.toCurrency() },
+            network: network.toNetwork()
+        )
+    }
+
+    func selectedCurrenciesHandler(_ currencies: [Currency], network: Network) {
+        interactor.setCurrencies(currencies, network: network)
     }
 }
-
 
 extension DefaultDashboardPresenter: Web3ServiceWalletListener {
     
