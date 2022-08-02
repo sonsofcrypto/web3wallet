@@ -155,7 +155,7 @@ extension DefaultDashboardInteractor {
                 .map { currenciesService.currencies(wallet: wallet, network: $0) }
                 .reduce([Currency](), { $0 + $1 })
 
-        guard allCurrencies.isEmpty == false {
+        guard allCurrencies.isEmpty == false else {
             return
         }
 
