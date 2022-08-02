@@ -151,8 +151,6 @@ extension DefaultDashboardInteractor {
             return
         }
 
-        print("=== RELOADING")
-
         let allCurrencies = web3service.enabledNetworks()
                 .map { currenciesService.currencies(wallet: wallet, network: $0) }
                 .reduce([Currency](), { $0 + $1 })
@@ -160,13 +158,14 @@ extension DefaultDashboardInteractor {
         currencyMetadataService.refreshMarket(
             currencies: allCurrencies,
             completionHandler: { [weak self] (_, _) in
-                print("=== market data laoded ")
                 DispatchQueue.main.async {
                     self?.emit(.didUpdatePriceData)
-                    self?.reloadCandles()
                 }
             }
         )
+
+        reloadCandles()
+
 
         // TODO: Get balance
         // TODO: Refresh nfts
@@ -232,7 +231,7 @@ extension DefaultDashboardInteractor: Web3ServiceListener {
     }
 
     func handle(event: Web3ServiceEvent) {
-        print("=== get event")
+        print("=== got event", event)
         if let networksChanged = event as? Web3ServiceEvent.NetworksChanged {
             reloadData()
         }

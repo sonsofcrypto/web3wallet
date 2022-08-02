@@ -164,9 +164,8 @@ extension DefaultDashboardPresenter: DashboardInteractorLister {
                 let viewModel = viewModel()
                 view?.updateWallet(
                     viewModel.sections[section + 2].items.wallet(at: item),
-                    at: IndexPath(item: item, section: section)
+                    at: IndexPath(item: item, section: section + 2)
                 )
-                print("=== updating", section, item)
             }
         default:
             ()
@@ -180,7 +179,6 @@ private extension DefaultDashboardPresenter {
         self.notifications = interactor.notifications
         self.myTokens = interactor.myTokens
         view?.update(with: viewModel())
-        print("=== updating view")
     }
 }
 
