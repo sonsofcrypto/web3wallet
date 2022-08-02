@@ -13,18 +13,18 @@ protocol NetworksWireframeFactory {
 final class DefaultNetworksWireframeFactory {
 
     private let alertWireframeFactory: AlertWireframeFactory
-    private let web3Service: Web3Service
+    private let walletsConnectionService: WalletsConnectionService
     private let currenciesService: CurrenciesService
     private let currencyMetadataService: CurrencyMetadataService
 
     init(
         alertWireframeFactory: AlertWireframeFactory,
-        web3Service: Web3Service,
+        walletsConnectionService: WalletsConnectionService,
         currenciesService: CurrenciesService,
         currencyMetadataService: CurrencyMetadataService
     ) {
         self.alertWireframeFactory = alertWireframeFactory
-        self.web3Service = web3Service
+        self.walletsConnectionService = walletsConnectionService
         self.currenciesService = currenciesService
         self.currencyMetadataService = currencyMetadataService
     }
@@ -36,7 +36,7 @@ extension DefaultNetworksWireframeFactory: NetworksWireframeFactory {
         
         DefaultNetworksWireframe(
             parent: parent,
-            web3Service: web3Service,
+            walletsConnectionService: walletsConnectionService,
             currenciesService: currenciesService,
             currencyMetadataService: currencyMetadataService,
             alertWireframeFactory: alertWireframeFactory
@@ -52,7 +52,7 @@ final class NetworksWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> NetworksWireframeFactory in
             DefaultNetworksWireframeFactory(
                 alertWireframeFactory: resolver.resolve(),
-                web3Service: resolver.resolve(),
+                walletsConnectionService: resolver.resolve(),
                 currenciesService: resolver.resolve(),
                 currencyMetadataService: resolver.resolve()
             )

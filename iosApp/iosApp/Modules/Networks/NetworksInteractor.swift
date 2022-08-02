@@ -6,7 +6,7 @@ import Foundation
 import web3lib
 
 protocol NetworkInteractorLister: AnyObject {
-    func handle(_ event: Web3ServiceEvent)
+    func handle(_ event: WalletsConnectionServiceEvent)
 }
 
 protocol NetworksInteractor: AnyObject {
@@ -26,21 +26,21 @@ protocol NetworksInteractor: AnyObject {
 final class DefaultNetworksInteractor {
 
     var selected: Network? {
-        get { web3service.network }
-        set { web3service.network = newValue }
+        get { walletsConnectionService.network }
+        set { walletsConnectionService.network = newValue }
     }
 
-    private let web3service: Web3Service
+    private let walletsConnectionService: WalletsConnectionService
     private let currencyMetadataService: CurrencyMetadataService
     private let currenciesService: CurrenciesService
     private var listeners: [WeakContainer] = []
 
     init(
-        _ web3service: Web3Service,
+        _ walletsConnectionService: WalletsConnectionService,
         currenciesService: CurrenciesService,
         currencyMetadataService: CurrencyMetadataService
     ) {
-        self.web3service = web3service
+        self.walletsConnectionService = walletsConnectionService
         self.currenciesService = currenciesService
         self.currencyMetadataService = currencyMetadataService
     }
@@ -58,25 +58,25 @@ extension DefaultNetworksInteractor: NetworksInteractor {
     }
 
     func provider(_ network: Network) -> Provider? {
-        web3service.provider(network: network)
+        walletsConnectionService.provider(network: network)
     }
 
     func isEnabled(_ network: Network) -> Bool {
-        web3service.enabledNetworks().contains(network)
+        walletsConnectionService.enabledNetworks().contains(network)
     }
 
     func set(_ network: Network, enabled: Bool) {
-        web3service.setNetwork(network: network, enabled: enabled)
+        walletsConnectionService.setNetwork(network: network, enabled: enabled)
     }
 }
 
 // MARK: - Listeners
 
-extension DefaultNetworksInteractor: Web3ServiceListener {
+extension DefaultNetworksInteractor: WalletsConnectionServiceListener {
 
     func addListener(_ listener: NetworkInteractorLister) {
         if listeners.isEmpty {
-            web3service.addListener(listener: self)
+            walletsConnectionService.addListener(listener: self)
         }
         listeners = listeners + [WeakContainer(listener)]
     }
@@ -84,24 +84,24 @@ extension DefaultNetworksInteractor: Web3ServiceListener {
     func removeListener(_ listener: NetworkInteractorLister?) {
         guard let listener = listener else {
             listeners = []
-            web3service.removeListener(listener: nil)
+            walletsConnectionService.removeListener(listener: nil)
             return
         }
 
         listeners = listeners.filter { $0.value !== listener }
 
         if listeners.isEmpty {
-            web3service.removeListener(listener: nil)
+            walletsConnectionService.removeListener(listener: nil)
         }
     }
 
-    private func emit(_ event: Web3ServiceEvent) {
+    private func emit(_ event: WalletsConnectionServiceEvent) {
         listeners.forEach { $0.value?.handle(event) }
     }
 
-    func handle(event: Web3ServiceEvent) {
-        if let network = (event as? Web3ServiceEvent.NetworkSelected)?.network,
-           let wallet = web3service.wallet,
+    func handle(event: WalletsConnectionServiceEvent) {
+        if let network = (event as? WalletsConnectionServiceEvent.NetworkSelected)?.network,
+           let wallet = walletsConnectionService.wallet,
            currenciesService.currencies(wallet: wallet, network: network).isEmpty {
                 currenciesService.generateDefaultCurrenciesIfNeeded(
                     wallet: wallet,

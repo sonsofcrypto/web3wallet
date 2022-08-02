@@ -68,7 +68,7 @@ extension DefaultNetworksPresenter: NetworksPresenter, NetworkInteractorLister {
         view?.update(with: viewModel())
     }
 
-    func handle(_ event: Web3ServiceEvent) {
+    func handle(_ event: WalletsConnectionServiceEvent) {
         view?.update(with: viewModel())
     }
 }

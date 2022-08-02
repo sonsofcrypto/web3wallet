@@ -21,7 +21,7 @@ final class DefaultDashboardWireframeFactory {
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let onboardingService: OnboardingService
     private let deepLinkHandler: DeepLinkHandler
-    private let web3Service: Web3Service
+    private let walletsConnectionService: WalletsConnectionService
     private let currenciesService: CurrenciesService
     private let currencyMetadataService: CurrencyMetadataService
     private let web3ServiceLegacy: Web3ServiceLegacy
@@ -39,7 +39,7 @@ final class DefaultDashboardWireframeFactory {
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         onboardingService: OnboardingService,
         deepLinkHandler: DeepLinkHandler,
-        web3Service: Web3Service,
+        walletsConnectionService: WalletsConnectionService,
         currenciesService: CurrenciesService,
         currencyMetadataService: CurrencyMetadataService,
         web3ServiceLegacy: Web3ServiceLegacy,
@@ -56,7 +56,7 @@ final class DefaultDashboardWireframeFactory {
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.onboardingService = onboardingService
         self.deepLinkHandler = deepLinkHandler
-        self.web3Service = web3Service
+        self.walletsConnectionService = walletsConnectionService
         self.currenciesService = currenciesService
         self.currencyMetadataService = currencyMetadataService
         self.web3ServiceLegacy = web3ServiceLegacy
@@ -81,7 +81,7 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
             onboardingService: onboardingService,
             deepLinkHandler: deepLinkHandler,
-            web3service: web3Service,
+            walletsConnectionService: walletsConnectionService,
             currenciesService: currenciesService,
             currencyMetadataService: currencyMetadataService,
             web3ServiceLegacy: web3ServiceLegacy,
@@ -110,7 +110,7 @@ final class DashboardWireframeFactoryAssembler: AssemblerComponent {
                 qrCodeScanWireframeFactory: resolver.resolve(),
                 onboardingService: resolver.resolve(),
                 deepLinkHandler: resolver.resolve(),
-                web3Service: resolver.resolve(),
+                walletsConnectionService: resolver.resolve(),
                 currenciesService: resolver.resolve(),
                 currencyMetadataService: resolver.resolve(),
                 web3ServiceLegacy: resolver.resolve(),

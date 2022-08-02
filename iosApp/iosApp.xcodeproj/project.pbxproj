@@ -44,8 +44,8 @@
 		1A4C3DE2637107E90B7B1CD9 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3B70AA1B0BC942B15671 /* Store.swift */; };
 		1A4C3E41DA2739ED48CD12F9 /* CultServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3635DC5425C3CA3A2D25 /* CultServiceAssembler.swift */; };
 		1A4C3E81CF175B7B283C13E0 /* AuthenticateContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3B4D97107E875FCF5F38 /* AuthenticateContext.swift */; };
-		1A4C3EA4FC2C67C1E1609ABC /* Web3ServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C36B82F077468E37FE816 /* Web3ServiceAssembler.swift */; };
 		1A4C3EB4D429242923984C76 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3378B5287B6A9BDE65CD /* Button.swift */; };
+		1A4C3F6836A9B121F54F7100 /* WalletsConnectionServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A030BE46910A7122373 /* WalletsConnectionServiceAssembler.swift */; };
 		1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */; };
 		1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */; };
 		1C0643D42892FCB000643C15 /* FeaturesWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0643D32892FCB000643C15 /* FeaturesWireframe.swift */; };
@@ -577,7 +577,6 @@
 		1A4C3635DC5425C3CA3A2D25 /* CultServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultServiceAssembler.swift; sourceTree = "<group>"; };
 		1A4C3644A9D218CC991B2A56 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		1A4C3649032759624C3E2734 /* CardFlipAnimatedTransitioning2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFlipAnimatedTransitioning2.swift; sourceTree = "<group>"; };
-		1A4C36B82F077468E37FE816 /* Web3ServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Web3ServiceAssembler.swift; sourceTree = "<group>"; };
 		1A4C36ECC90C8D924B7C413B /* CultProposal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposal.swift; sourceTree = "<group>"; };
 		1A4C375870963EEF9ECBE64B /* DApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DApp.swift; sourceTree = "<group>"; };
 		1A4C3766FCB2E384E3CA86A7 /* CurrenciesService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrenciesService.swift; sourceTree = "<group>"; };
@@ -589,6 +588,7 @@
 		1A4C39C4B0802356E1007E01 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAppCategory.swift; sourceTree = "<group>"; };
 		1A4C39D6ADB830082AC3CEA6 /* Authenticate.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Authenticate.storyboard; sourceTree = "<group>"; };
+		1A4C3A030BE46910A7122373 /* WalletsConnectionServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsConnectionServiceAssembler.swift; sourceTree = "<group>"; };
 		1A4C3B4D97107E875FCF5F38 /* AuthenticateContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateContext.swift; sourceTree = "<group>"; };
 		1A4C3B70AA1B0BC942B15671 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		1A4C3C08E08B50822B0A46C8 /* CurrencyMetadataServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyMetadataServiceAssembler.swift; sourceTree = "<group>"; };
@@ -1122,6 +1122,14 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		1A4C3127E3A7AFFBF86C7DD3 /* WalletsConnectionService */ = {
+			isa = PBXGroup;
+			children = (
+				1A4C3A030BE46910A7122373 /* WalletsConnectionServiceAssembler.swift */,
+			);
+			path = WalletsConnectionService;
+			sourceTree = "<group>";
+		};
 		1A4C35A602BDFD544714CB8F /* NFTsService */ = {
 			isa = PBXGroup;
 			children = (
@@ -1212,6 +1220,7 @@
 				1CD3FE8728559EF2008312DE /* Web3 */,
 				1A4C38E57534723ADC9F3D57 /* CurrencyMetadata */,
 				1A4C36A308B86BF401D803B6 /* Currencies */,
+				1A4C3127E3A7AFFBF86C7DD3 /* WalletsConnectionService */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -2105,7 +2114,6 @@
 				1C60C383285A649B003BE25D /* Web3ServiceLocalStorage.swift */,
 				1C60C385285AFB20003BE25D /* Web3ServiceLocalStorageAssembler.swift */,
 				1A4C3F7AC2CFD735B708F22C /* IntegrationWeb3Service.swift */,
-				1A4C36B82F077468E37FE816 /* Web3ServiceAssembler.swift */,
 			);
 			path = Web3;
 			sourceTree = "<group>";
@@ -3127,12 +3135,12 @@
 				1CB8B0C4288DD97300024E7C /* CultProposalStatus.swift in Sources */,
 				1A4C3CA30F1785BF1A063059 /* IntegrationWeb3Service.swift in Sources */,
 				1CDED5EC2897C5F300DF34A7 /* ScrollView.swift in Sources */,
-				1A4C3EA4FC2C67C1E1609ABC /* Web3ServiceAssembler.swift in Sources */,
 				1A4C333176FECF247923940A /* CurrencyMetadataServiceAssembler.swift in Sources */,
 				1A4C3341E51D9D180FAC1962 /* NetworksSectionHeaderView.swift in Sources */,
 				1A4C327E988FE454C9AE05CC /* UIEdgeInsets+Extensions.swift in Sources */,
 				1A4C3A127E059F4973AAE8A9 /* CurrenciesService.swift in Sources */,
 				1A4C36D33E738CDC80BE8575 /* TokenPickerInteractor2.swift in Sources */,
+				1A4C3F6836A9B121F54F7100 /* WalletsConnectionServiceAssembler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

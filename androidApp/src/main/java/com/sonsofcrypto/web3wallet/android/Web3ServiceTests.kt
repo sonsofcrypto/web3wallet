@@ -4,7 +4,7 @@ import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
-import com.sonsofcrypto.web3lib.services.web3service.DefaultWeb3Service
+import com.sonsofcrypto.web3lib.services.walletsConnectionService.DefaultWalletsConnectionService
 import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.types.Network
 
@@ -26,13 +26,13 @@ class Web3ServiceTests {
 
         keyStore.selected = mockKeyStoreItem
 
-        val web3service = DefaultWeb3Service(KeyValueStore("web3serviceTest"))
+        val web3service = DefaultWalletsConnectionService(KeyValueStore("web3serviceTest"))
         web3service.wallet = Wallet(mockKeyStoreItem, keyStoreService = keyStore)
 
         val provider = ProviderPocket(Network.ropsten())
         web3service.setProvider(Network.ropsten(), provider)
 
-        val web3service2 = DefaultWeb3Service(KeyValueStore("web3serviceTest"))
+        val web3service2 = DefaultWalletsConnectionService(KeyValueStore("web3serviceTest"))
         web3service2.wallet = Wallet(mockKeyStoreItem, keyStoreService = keyStore)
         val provider2 = web3service.provider(Network.ropsten())
 

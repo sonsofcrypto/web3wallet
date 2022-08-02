@@ -2,10 +2,13 @@ package com.sonsofcrypto.web3lib.signer
 
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.model.*
+import com.sonsofcrypto.web3lib.services.currencies.CurrenciesService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.AddressBytes
+import com.sonsofcrypto.web3lib.types.Currency
+import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt
 
 class Wallet: Signer {
@@ -15,10 +18,12 @@ class Wallet: Signer {
 
     constructor(
         keyStoreItem: KeyStoreItem,
-        keyStoreService: KeyStoreService
+        keyStoreService: KeyStoreService,
+        provider: Provider? = null,
     ) {
         this.keyStoreItem = keyStoreItem
         this.keyStoreService = keyStoreService
+        this.provider = provider
     }
 
     fun id(): String = keyStoreItem.uuid
@@ -26,6 +31,10 @@ class Wallet: Signer {
     override fun connect(provider: Provider): Signer {
         this.provider = provider
         return this
+    }
+
+    fun copy(provider: Provider? = null): Wallet {
+        return Wallet(keyStoreItem, keyStoreService, provider)
     }
 
     override fun provider(): Provider? = provider

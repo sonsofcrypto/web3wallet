@@ -19,16 +19,16 @@ protocol TokenPickerInteractor: AnyObject {
 final class DefaultTokenPickerInteractor {
 
     private let web3ServiceLegacy: Web3ServiceLegacy
-    private let web3Service: Web3Service
+    private let walletsConnectionService: WalletsConnectionService
     private let currenciesService: CurrenciesService
 
     init(
         web3ServiceLegacy: Web3ServiceLegacy,
-        web3Service: Web3Service = ServiceDirectory.assembler.resolve(),
+        walletsConnectionService: WalletsConnectionService = ServiceDirectory.assembler.resolve(),
         currenciesService: CurrenciesService = ServiceDirectory.assembler.resolve()
     ) {
         self.web3ServiceLegacy = web3ServiceLegacy
-        self.web3Service = web3Service
+        self.walletsConnectionService = walletsConnectionService
         self.currenciesService = currenciesService
     }
 }
@@ -74,7 +74,9 @@ private extension DefaultTokenPickerInteractor {
     
     func makeSelectedNetwork() -> Web3Network? {
         
-        guard let selectedNetwork = web3Service.network else { return nil }
+        guard let selectedNetwork = walletsConnectionService.network else {
+            return nil
+        }
         
         return Web3Network.from(selectedNetwork, isOn: false)
     }

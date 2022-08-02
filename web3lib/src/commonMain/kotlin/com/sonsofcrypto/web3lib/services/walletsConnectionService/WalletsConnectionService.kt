@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib.services.web3service
+package com.sonsofcrypto.web3lib.services.walletsConnectionService
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.provider.Provider
@@ -11,7 +11,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-interface Web3Service {
+interface WalletsConnectionService {
     var wallet: Wallet?
     var network: Network?
 
@@ -21,6 +21,8 @@ interface Web3Service {
     fun provider(network: Network): Provider?
     fun setProvider(network: Network, provider: Provider?)
     fun setProvider(network: Network, provider: ProviderInfo)
+
+    fun wallet(network: Network): Wallet?
 
     @Serializable
     data class ProviderInfo(
@@ -34,13 +36,10 @@ interface Web3Service {
         enum class Type() { POCKET, CUSTOM }
     }
 
-    fun blockNumber(network: Network): BigInt
-
     sealed class Event() {
         data class WalletSelected(val wallet: Wallet?): Event()
         data class NetworkSelected(val network: Network?): Event()
         data class NetworksChanged(val networks: List<Network>): Event()
-        data class BlockUpdated(val number: BigInt): Event()
     }
 
     interface Listener{
@@ -53,13 +52,13 @@ interface Web3Service {
     companion object {}
 }
 
-/** DefaultWeb3Service */
-class DefaultWeb3Service: Web3Service {
+/** DefaultWalletsConnectionService */
+class DefaultWalletsConnectionService: WalletsConnectionService {
 
     override var wallet: Wallet? = null
         set(value) {
             field = value
-            emit(Web3Service.Event.WalletSelected(value))
+            emit(WalletsConnectionService.Event.WalletSelected(value))
             enabledNetworks = this.defaultNetworks(value)
             network = this.defaultSelectedNetwork(value)
         }
@@ -68,19 +67,20 @@ class DefaultWeb3Service: Web3Service {
         set(value) {
             field = value
             wallet?.let { store[selectedNetworkKey(it)] = value }
-            emit(Web3Service.Event.NetworkSelected(value))
+            emit(WalletsConnectionService.Event.NetworkSelected(value))
         }
 
     private var enabledNetworks: List<Network> = listOf()
         set(value) {
             field = value
             value.forEach { setProvider(it, provider(it)) }
-            emit(Web3Service.Event.NetworksChanged(value))
+            emit(WalletsConnectionService.Event.NetworksChanged(value))
             storeNetworks(value, wallet)
         }
 
     private var providers: MutableMap<Network, Provider> = mutableMapOf()
-    private var listeners: List<Web3Service.Listener> = listOf()
+    private var wallets: MutableMap<String, Wallet> = mutableMapOf()
+    private var listeners: List<WalletsConnectionService.Listener> = listOf()
     private var store: KeyValueStore
 
     constructor(store: KeyValueStore) {
@@ -100,7 +100,7 @@ class DefaultWeb3Service: Web3Service {
         if (providers[network] != null)
             return providers[network]
 
-        store.get<Web3Service.ProviderInfo>(providerKey(network))?.let {
+        store.get<WalletsConnectionService.ProviderInfo>(providerKey(network))?.let {
             providers[network] = provider(it, network)
             return providers[network]
         }
@@ -116,8 +116,21 @@ class DefaultWeb3Service: Web3Service {
         } else providers.remove(network)
     }
 
-    override fun setProvider(network: Network, provider: Web3Service.ProviderInfo) {
+    override fun setProvider(network: Network, provider: WalletsConnectionService.ProviderInfo) {
         setProvider(network, provider(provider, network))
+    }
+
+    override fun wallet(network: Network): Wallet? {
+        var wallet = wallets[network.id()]
+        if (wallet != null)
+            return wallet
+
+        wallet = wallet?.copy(provider(network))
+        if (wallet != null)
+            wallets[network.id()] = wallet
+            return wallet
+
+        return null
     }
 
     private fun defaultNetworks(wallet: Wallet?): List<Network> {
@@ -138,21 +151,17 @@ class DefaultWeb3Service: Web3Service {
         return store[providerKey(network)] ?: ProviderPocket(network)
     }
 
-    override fun addListener(listener: Web3Service.Listener) {
+    override fun addListener(listener: WalletsConnectionService.Listener) {
         listeners = listeners + listOf(listener)
     }
 
-    override fun removeListener(listener: Web3Service.Listener?) {
+    override fun removeListener(listener: WalletsConnectionService.Listener?) {
         if (listener != null) listeners = listeners.filter { it != listener }
         else listeners = listOf()
     }
 
-    private fun emit(event: Web3Service.Event) = listeners.forEach {
+    private fun emit(event: WalletsConnectionService.Event) = listeners.forEach {
         it.handle(event)
-    }
-
-    override fun blockNumber(network: Network): BigInt {
-        return store.get("lastKnownBlock${network.chainId}") ?: BigInt.zero()
     }
 
     // TODO: - Fix Kotlin serialization
@@ -184,20 +193,20 @@ class DefaultWeb3Service: Web3Service {
         return "provider_${network.chainId}"
     }
 
-    private fun providerType(provider: Provider): Web3Service.ProviderInfo {
+    private fun providerType(provider: Provider): WalletsConnectionService.ProviderInfo {
         return when (provider) {
-            is ProviderPocket -> return Web3Service.ProviderInfo(
-                Web3Service.ProviderInfo.Type.POCKET
+            is ProviderPocket -> return WalletsConnectionService.ProviderInfo(
+                WalletsConnectionService.ProviderInfo.Type.POCKET
             )
-            else -> Web3Service.ProviderInfo(Web3Service.ProviderInfo.Type.CUSTOM)
+            else -> WalletsConnectionService.ProviderInfo(WalletsConnectionService.ProviderInfo.Type.CUSTOM)
         }
     }
 
     private fun provider(
-        info: Web3Service.ProviderInfo,
+        info: WalletsConnectionService.ProviderInfo,
         network: Network
     ): Provider = when (info.type) {
-        Web3Service.ProviderInfo.Type.POCKET -> ProviderPocket(network)
+        WalletsConnectionService.ProviderInfo.Type.POCKET -> ProviderPocket(network)
         else -> TODO("Implement custom provider")
     }
 }

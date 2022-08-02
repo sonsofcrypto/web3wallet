@@ -44,7 +44,7 @@ protocol DashboardInteractor: AnyObject {
 
 final class DefaultDashboardInteractor {
 
-    private let web3service: Web3Service
+    private let walletsConnectionService: WalletsConnectionService
     private let currenciesService: CurrenciesService
     private let currencyMetadataService: CurrencyMetadataService
     private let web3ServiceLegacy: Web3ServiceLegacy
@@ -53,7 +53,7 @@ final class DefaultDashboardInteractor {
     private var listeners: [WeakContainer] = []
 
     init(
-        web3service: Web3Service,
+        walletsConnectionService: WalletsConnectionService,
         currenciesService: CurrenciesService,
         currencyMetadataService: CurrencyMetadataService,
         web3ServiceLegacy: Web3ServiceLegacy,
@@ -61,7 +61,7 @@ final class DefaultDashboardInteractor {
         nftsService: NFTsService
     ) {
         self.web3ServiceLegacy = web3ServiceLegacy
-        self.web3service = web3service
+        self.walletsConnectionService = walletsConnectionService
         self.currenciesService = currenciesService
         self.currencyMetadataService = currencyMetadataService
         self.priceHistoryService = priceHistoryService
@@ -103,11 +103,11 @@ extension DefaultDashboardInteractor: DashboardInteractor {
 extension DefaultDashboardInteractor {
 
     func enabledNetworks() -> [Network] {
-        web3service.enabledNetworks()
+        walletsConnectionService.enabledNetworks()
     }
 
     func currencies(for network: Network) -> [Currency] {
-        guard let wallet = web3service.wallet else {
+        guard let wallet = walletsConnectionService.wallet else {
             return []
         }
 
@@ -115,7 +115,7 @@ extension DefaultDashboardInteractor {
     }
 
     func setCurrencies(_ currencies: [Currency], network: Network) {
-        guard let wallet = web3service.wallet else {
+        guard let wallet = walletsConnectionService.wallet else {
             return
         }
 
@@ -147,11 +147,11 @@ extension DefaultDashboardInteractor {
     }
 
     func reloadData() {
-        guard let wallet = web3service.wallet else {
+        guard let wallet = walletsConnectionService.wallet else {
             return
         }
 
-        let allCurrencies = web3service.enabledNetworks()
+        let allCurrencies = walletsConnectionService.enabledNetworks()
                 .map { currenciesService.currencies(wallet: wallet, network: $0) }
                 .reduce([Currency](), { $0 + $1 })
 
@@ -176,11 +176,11 @@ extension DefaultDashboardInteractor {
     }
 
     func reloadCandles() {
-        guard let wallet = web3service.wallet else {
+        guard let wallet = walletsConnectionService.wallet else {
             return
         }
         // TODO: Limit to 50 currencies
-        web3service.enabledNetworks().forEach { network in
+        walletsConnectionService.enabledNetworks().forEach { network in
             currenciesService.currencies(
                 wallet: wallet,
                 network: network
@@ -206,11 +206,11 @@ extension DefaultDashboardInteractor {
 
 // MARK: - Listeners
 
-extension DefaultDashboardInteractor: Web3ServiceListener {
+extension DefaultDashboardInteractor: WalletsConnectionServiceListener {
 
     func addListener(_ listener: DashboardInteractorLister) {
         if listeners.isEmpty {
-            web3service.addListener(listener: self)
+            walletsConnectionService.addListener(listener: self)
         }
 
         listeners = listeners + [WeakContainer(listener)]
@@ -219,14 +219,14 @@ extension DefaultDashboardInteractor: Web3ServiceListener {
     func removeListener(_ listener: DashboardInteractorLister?) {
         guard let listener = listener else {
             listeners = []
-            web3service.removeListener(listener: nil)
+            walletsConnectionService.removeListener(listener: nil)
             return
         }
 
         listeners = listeners.filter { $0.value !== listener }
 
         if listeners.isEmpty {
-            web3service.removeListener(listener: nil)
+            walletsConnectionService.removeListener(listener: nil)
         }
     }
 
@@ -234,9 +234,9 @@ extension DefaultDashboardInteractor: Web3ServiceListener {
         listeners.forEach { $0.value?.handle(event) }
     }
 
-    func handle(event: Web3ServiceEvent) {
+    func handle(event: WalletsConnectionServiceEvent) {
         print("=== got event", event)
-        if let networksChanged = event as? Web3ServiceEvent.NetworksChanged {
+        if let networksChanged = event as? WalletsConnectionServiceEvent.NetworksChanged {
             reloadData()
         }
         emit(event.toInteractorEvent())
@@ -252,20 +252,18 @@ extension DefaultDashboardInteractor: Web3ServiceListener {
 }
 
 
-// MARK: - Web3ServiceEvent
+// MARK: - WalletsConnectionServiceEvent
 
-extension Web3ServiceEvent {
+extension WalletsConnectionServiceEvent {
 
     func toInteractorEvent() -> DashboardInteractorEvent {
         switch self {
-        case is Web3ServiceEvent.WalletSelected:
+        case is WalletsConnectionServiceEvent.WalletSelected:
             return .didSelectWallet
-        case is Web3ServiceEvent.NetworkSelected:
+        case is WalletsConnectionServiceEvent.NetworkSelected:
             return .didSelectNetwork
-        case is Web3ServiceEvent.NetworksChanged:
+        case is WalletsConnectionServiceEvent.NetworksChanged:
             return .didChaneNetwork
-        case is Web3ServiceEvent.BlockUpdated:
-            return .didUpdateBlock
         default:
             fatalError("Unhandled event \(self)")
         }

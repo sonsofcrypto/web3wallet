@@ -18,7 +18,7 @@ import UIKit
 //   }
 //}
 //
-//extension DefaultWeb3ServiceLegacy: Web3Service {
+//extension DefaultWeb3ServiceLegacy: WalletsConnectionService {
 //
 //   var allNetworks: [Web3Network] {
 //

@@ -18,10 +18,7 @@ final class OpenSeaNFTsService {
     private var nfts = [NFTItem]()
     private var collections = [NFTCollection]()
     
-    init(
-        web3Service: Web3ServiceLegacy
-    ) {
-        
+    init(web3Service: Web3ServiceLegacy) {
         self.web3Service = web3Service
     }
 }
