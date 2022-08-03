@@ -20,7 +20,7 @@
                                 <rect key="frame" x="16" y="60" width="382" height="215.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I7k-3K-wN1">
-                                        <rect key="frame" x="0.0" y="0.0" width="382" height="20.5"/>
+                                        <rect key="frame" x="16" y="0.0" width="350" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -60,9 +60,9 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="4gJ-wk-tg5" secondAttribute="trailing" id="2mb-Kf-UWM"/>
                                     <constraint firstAttribute="trailing" secondItem="Vtj-V4-X6d" secondAttribute="trailing" id="2pU-8R-qv1"/>
-                                    <constraint firstAttribute="trailing" secondItem="I7k-3K-wN1" secondAttribute="trailing" id="9gR-Cw-ykw"/>
+                                    <constraint firstAttribute="trailing" secondItem="I7k-3K-wN1" secondAttribute="trailing" constant="16" id="9gR-Cw-ykw"/>
                                     <constraint firstItem="4gJ-wk-tg5" firstAttribute="leading" secondItem="hjB-69-gtF" secondAttribute="leading" id="KX7-6f-Grf"/>
-                                    <constraint firstItem="I7k-3K-wN1" firstAttribute="leading" secondItem="hjB-69-gtF" secondAttribute="leading" id="fdL-83-bCb"/>
+                                    <constraint firstItem="I7k-3K-wN1" firstAttribute="leading" secondItem="hjB-69-gtF" secondAttribute="leading" constant="16" id="fdL-83-bCb"/>
                                     <constraint firstItem="Vtj-V4-X6d" firstAttribute="leading" secondItem="hjB-69-gtF" secondAttribute="leading" id="oes-aq-aUu"/>
                                 </constraints>
                             </stackView>

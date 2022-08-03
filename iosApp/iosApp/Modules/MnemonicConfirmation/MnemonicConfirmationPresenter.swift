@@ -69,7 +69,7 @@ extension DefaultMnemonicConfirmationPresenter: MnemonicConfirmationPresenter {
 
             ctaTapped = true
 
-            guard service.isMnemonicValid(mnemonic) else {
+            guard service.isMnemonicValid(mnemonic, salt: nil) else {
                 refresh()
                 return
             }

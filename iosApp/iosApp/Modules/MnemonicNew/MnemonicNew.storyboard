@@ -361,15 +361,15 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jjq-Ij-FCM">
-                                            <rect key="frame" x="24" y="0.0" width="374" height="20.5"/>
+                                            <rect key="frame" x="32" y="0.0" width="350" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Jjq-Ij-FCM" firstAttribute="leading" secondItem="WkI-WP-GSv" secondAttribute="leading" constant="24" id="1Ke-UT-xQC"/>
-                                        <constraint firstAttribute="trailing" secondItem="Jjq-Ij-FCM" secondAttribute="trailing" constant="16" id="Ac4-Wq-1zA"/>
+                                        <constraint firstItem="Jjq-Ij-FCM" firstAttribute="leading" secondItem="WkI-WP-GSv" secondAttribute="leading" constant="32" id="1Ke-UT-xQC"/>
+                                        <constraint firstAttribute="trailing" secondItem="Jjq-Ij-FCM" secondAttribute="trailing" constant="32" id="Ac4-Wq-1zA"/>
                                         <constraint firstItem="Jjq-Ij-FCM" firstAttribute="top" secondItem="WkI-WP-GSv" secondAttribute="top" id="qDi-2z-hd2"/>
                                     </constraints>
                                     <connections>
