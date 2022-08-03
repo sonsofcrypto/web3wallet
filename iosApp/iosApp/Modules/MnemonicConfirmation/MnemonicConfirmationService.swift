@@ -11,7 +11,10 @@ protocol MnemonicConfirmationService: AnyObject {
         MnemonicConfirmationViewModel.WordInfo
     ]
     func isValidPrefix(_ prefix: String) -> Bool
-    func isMnemonicValid(_ mnemonic: String) -> Bool
+    func isMnemonicValid(
+        _ mnemonic: String,
+        salt: String?
+    ) -> Bool
     func markDashboardNotificationAsComplete()
 }
 
@@ -91,9 +94,26 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
         !validator.wordsStartingWith(prefix: prefix).isEmpty
     }
     
-    func isMnemonicValid(_ mnemonic: String) -> Bool {
+    func isMnemonicValid(
+        _ mnemonic: String,
+        salt: String?
+    ) -> Bool {
         
-        validateMnemonic(with: mnemonic.trimmingCharacters(in: .whitespaces))
+        let words = mnemonic.trimmingCharacters(in: .whitespaces).split(
+            separator: " "
+        ).map { String($0) }
+        
+        guard Bip39.companion.isValidWordsCount(count: words.count.int32) else {
+            return false
+        }
+        
+        do {
+            let bip39 = try Bip39(mnemonic: words, salt: salt ?? "", worldList: .english)
+            _ = try Bip44(seed: try bip39.seed(), version: .mainnetprv)
+            return true
+        } catch {
+            return false
+        }
     }
 
     func markDashboardNotificationAsComplete() {
@@ -104,30 +124,3 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
         )
     }
 }
-
-private extension DefaultMnemonicConfirmationService {
-    
-    func validateMnemonic(with mnemonic: String) -> Bool {
-        
-        print("[TODO]: Validate mnemonic: [\(mnemonic)]")
-        return true
-//        let words = mnemonic.trimmingCharacters(in: .whitespacesAndNewlines)
-//            .split(separator: " ")
-//            .map { String($0) }
-//
-//        // This expected address
-//        let expectedAddress = keyStoreService.selected?.addresses[Network.ethereum().defaultDerivationPath()]
-//
-//        // Thi
-//        let bip39 = try Bip39(mnemonic: words, salt: "", worldList: .english)
-//        let bip44 = try Bip44(seed: try bip39.seed(), version: .mainnetprv)
-//        let extKey = try bip44.deriveChildKey(path: Network.ethereum().defaultDerivationPath())
-//        let address = Network.ethereum().address(pubKey: extKey.pub()).toHexString(prefix: true)
-//
-//        // This is how you know
-//        keyStoreService.selected?.saltMnemonic
-//
-//        return expectedAddress == address
-    }
-}
-

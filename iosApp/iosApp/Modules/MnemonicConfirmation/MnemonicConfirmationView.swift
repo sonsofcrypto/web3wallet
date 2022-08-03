@@ -88,6 +88,7 @@ private extension MnemonicConfirmationViewController {
         statusLabel.text = Localized("mnemonicConfirmation.confirm.wallet")
         statusLabel.font = Theme.font.body
         statusLabel.textColor = Theme.colour.labelPrimary
+        statusLabel.textAlignment = .left
         
         textViewContainer.backgroundColor = Theme.colour.cellBackground
         textViewContainer.layer.cornerRadius = Theme.constant.cornerRadiusSmall

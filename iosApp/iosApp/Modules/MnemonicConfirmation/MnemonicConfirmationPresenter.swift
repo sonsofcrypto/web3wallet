@@ -123,7 +123,8 @@ private extension DefaultMnemonicConfirmationPresenter {
             at: selectedLocation
         )
         let isMnemonicValid = service.isMnemonicValid(
-            mnemonic.trimmingCharacters(in: .whitespaces)
+            mnemonic.trimmingCharacters(in: .whitespaces),
+            salt: nil
         )
         
         return .init(
