@@ -15,6 +15,10 @@ final class MnemonicConfirmationViewController: UIViewController {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var textViewContainer: UIView!
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var saltContainer: UIStackView!
+    @IBOutlet weak var saltLabel: UILabel!
+    @IBOutlet weak var saltTextFieldView: UIView!
+    @IBOutlet weak var saltTextField: TextField!
     @IBOutlet weak var button: Button!
 
     var presenter: MnemonicConfirmationPresenter!
@@ -59,6 +63,19 @@ extension MnemonicConfirmationViewController: MnemonicConfirmationView {
 
 extension MnemonicConfirmationViewController: UITextViewDelegate {
     
+    func textView(
+        _ textView: UITextView,
+        shouldChangeTextIn range: NSRange,
+        replacementText text: String
+    ) -> Bool {
+        
+        if (text == "\n") {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
     func textViewDidChange(_ textView: UITextView) {
         
         presenter.handle(
@@ -96,6 +113,20 @@ private extension MnemonicConfirmationViewController {
         textView.delegate = self
         textView.applyStyle(.body)
         textView.inputAccessoryView = makeInputAccessoryView()
+        
+        saltLabel.text = Localized("mnemonicConfirmation.salt")
+        saltLabel.apply(style: .headline)
+        
+        saltTextFieldView.backgroundColor = Theme.colour.cellBackground
+        saltTextFieldView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        
+        saltTextField.backgroundColor = .clear
+        saltTextField.text = nil
+        saltTextField.delegate = self
+        saltTextField.placeholderAttrText = Localized("mnemonicConfirmation.salt.placeholder")
+        saltTextField.addDoneInputAccessoryView(
+            with: .targetAction(.init(target: self, selector: #selector(dismissKeyboard)))
+        )
 
         button.style = .primary
         button.setTitle(Localized("mnemonicConfirmation.cta"), for: .normal)
@@ -117,6 +148,7 @@ private extension MnemonicConfirmationViewController {
     func refresh() {
         
         refreshTextView()
+        saltContainer.isHidden = !viewModel.showSalt
         refreshCTA()
     }
     
@@ -311,5 +343,13 @@ private extension MnemonicConfirmationViewController {
         }
         
         return newString
+    }
+}
+
+extension MnemonicConfirmationViewController: UITextFieldDelegate {
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        
+        presenter.handle(.saltChanged(to: textField.text ?? ""))
     }
 }

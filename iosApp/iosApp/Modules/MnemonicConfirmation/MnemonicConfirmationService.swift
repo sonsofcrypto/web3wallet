@@ -15,6 +15,7 @@ protocol MnemonicConfirmationService: AnyObject {
         _ mnemonic: String,
         salt: String?
     ) -> Bool
+    func showSalt() -> Bool
     func markDashboardNotificationAsComplete()
 }
 
@@ -114,6 +115,12 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
         } catch {
             return false
         }
+    }
+    
+    func showSalt() -> Bool {
+        
+        guard let keyStoreItem = keyStoreService.selected else { return false }
+        return keyStoreItem.saltMnemonic
     }
 
     func markDashboardNotificationAsComplete() {

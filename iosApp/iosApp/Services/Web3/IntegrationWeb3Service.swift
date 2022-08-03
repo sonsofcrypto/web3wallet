@@ -216,8 +216,9 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
         if notificationId == "modal.mnemonic.confirmation" {
             
             let walletId = walletsConnectionService.wallet?.id() ?? ""
-            defaults.bool(forKey: "\(notificationId).\(walletId)")
-            listeners.forEach { $0.nftsChanged() }
+            defaults.set(true, forKey: "\(notificationId).\(walletId)")
+            defaults.synchronize()
+            listeners.forEach { $0.notificationsChanged() }
         }
     }
     
@@ -225,9 +226,8 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
         
         var notifications = [Web3Notification]()
         
-        // TODO: @Annon implement
         if let walletId = walletsConnectionService.wallet?.id(),
-            defaults.object(forKey: "modal.mnemonic.confirmation.\(walletId)") == nil
+            !defaults.bool(forKey: "modal.mnemonic.confirmation.\(walletId)")
         {
             
             notifications.append(

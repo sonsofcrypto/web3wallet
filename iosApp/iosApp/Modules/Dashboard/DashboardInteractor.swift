@@ -39,7 +39,9 @@ protocol DashboardInteractor: AnyObject {
     func reloadData()
 
     func addListener(_ listener: DashboardInteractorLister)
+    func addLegacyListener(_ listener: Web3ServiceWalletListener)
     func removeListener(_ listener: DashboardInteractorLister?)
+    func removeLegacyListener(_ listener: Web3ServiceWalletListener)
 }
 
 final class DefaultDashboardInteractor {
@@ -212,11 +214,17 @@ extension DefaultDashboardInteractor {
 extension DefaultDashboardInteractor: WalletsConnectionListener {
 
     func addListener(_ listener: DashboardInteractorLister) {
+        
         if listeners.isEmpty {
             walletsConnectionService.addListener(listener: self)
         }
 
         listeners = listeners + [WeakContainer(listener)]
+    }
+    
+    func addLegacyListener(_ listener: Web3ServiceWalletListener) {
+        
+        web3ServiceLegacy.addWalletListener(listener)
     }
 
     func removeListener(_ listener: DashboardInteractorLister?) {
@@ -231,6 +239,11 @@ extension DefaultDashboardInteractor: WalletsConnectionListener {
         if listeners.isEmpty {
             walletsConnectionService.removeListener(listener: nil)
         }
+    }
+    
+    func removeLegacyListener(_ listener: Web3ServiceWalletListener) {
+        
+        web3ServiceLegacy.removeWalletListener(listener)
     }
 
     private func emit(_ event: DashboardInteractorEvent) {

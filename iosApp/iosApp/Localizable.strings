@@ -167,6 +167,8 @@
 
 "mnemonicConfirmation.title" = "Confirm Mnemonic";
 "mnemonicConfirmation.confirm.wallet" = "Please enter the 12 word phrase you were given when you created your wallet.";
+"mnemonicConfirmation.salt" = "Salt mnemonic";
+"mnemonicConfirmation.salt.placeholder" = "Enter salt";
 "mnemonicConfirmation.cta" = "Validate";
 "mnemonicConfirmation.cta.invalid" = "Invalid mnemonic";
 "mnemonicConfirmation.cta.congratulations" = "Tap to confirm! 🥳";
