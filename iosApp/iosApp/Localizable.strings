@@ -176,9 +176,9 @@
 "nfts.dashboard.collection.title" = "Your Collections";
 "nfts.dashboard.collection.popular.author" = "Created by %@";
 
-"nft.detail.button.send" = "Send";
 "nft.detail.section.title.description" = "Description";
 "nft.detail.section.title.properties" = "Properties";
+"nft.detail.button.send" = "Send";
 
 "chat" = "web3chat";
 "chat.colletion.top.cell.body" = "List of upcoming web3 apps, of course all will be fully decentralised! 🚀🚀🚀";
