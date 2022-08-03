@@ -241,6 +241,26 @@ private extension SettingsViewController {
         )
         
         collectionView.overScrollView.image = "overscroll_anon".assetImage
-        collectionView.overScrollView.layer.transform = CATransform3DMakeTranslation(0, 100, 0)
+        collectionView.overScrollView.layer.transform = CATransform3DMakeTranslation(
+            0, 50, 0
+        )
+        
+        let version = UILabel(
+            frame: .init(
+                origin: .init(x: 8, y: 30),
+                size: .init(length: 80)
+            )
+        )
+        version.apply(style: .footnote)
+        version.textAlignment = .center
+        version.text = "v" + ServiceDirectory.makeVersionNumber()
+        collectionView.overScrollView.addSubview(version)
+        
+        collectionView.overScrollView.centerXAnchor.constraint(
+            equalTo: version.centerXAnchor
+        ).isActive = true
+        collectionView.overScrollView.centerYAnchor.constraint(
+            equalTo: version.centerYAnchor
+        ).isActive = true
     }
 }

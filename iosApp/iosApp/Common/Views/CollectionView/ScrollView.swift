@@ -55,6 +55,6 @@ private extension ScrollView {
 
     enum Constant {
         
-        static let overScrollViewSize = CGSize(length: 200)
+        static let overScrollViewSize = CGSize(length: 100)
     }
 }
