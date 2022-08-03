@@ -36,6 +36,7 @@
 		1A4C3B49BC67AF7AA3BF0D8F /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3644A9D218CC991B2A56 /* VisualEffectView.swift */; };
 		1A4C3B697503D478741295DB /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DBA41AF75471C619124 /* TextField.swift */; };
 		1A4C3B6D2DFADBE2EF71F3A5 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DED61DB8FC18EFD5B0B /* SettingsService.swift */; };
+		1A4C3B9C62DFDDC589C8E7DB /* WalletsStateServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C351B672C360A32A15547 /* WalletsStateServiceAssembler.swift */; };
 		1A4C3BE0E686AF5D6FB08274 /* UIViewEffectViewiOS14.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */; };
 		1A4C3C28443621328248F5A7 /* CandlesViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C344022DBA2423C0F15F6 /* CandlesViewViewModel.swift */; };
 		1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C325A6875E5041A491945 /* CollectionView.swift */; };
@@ -572,6 +573,7 @@
 		1A4C33AD01DEDBD1FF859C7C /* UIEdgeInsets+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Extensions.swift"; sourceTree = "<group>"; };
 		1A4C34077200A9E856B77DDF /* DegenService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenService.swift; sourceTree = "<group>"; };
 		1A4C344022DBA2423C0F15F6 /* CandlesViewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandlesViewViewModel.swift; sourceTree = "<group>"; };
+		1A4C351B672C360A32A15547 /* WalletsStateServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsStateServiceAssembler.swift; sourceTree = "<group>"; };
 		1A4C3553B19E38E28C955332 /* KeyStoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreService.swift; sourceTree = "<group>"; };
 		1A4C359691FCF66942DF6CEF /* CandlesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandlesView.swift; sourceTree = "<group>"; };
 		1A4C3635DC5425C3CA3A2D25 /* CultServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultServiceAssembler.swift; sourceTree = "<group>"; };
@@ -1221,6 +1223,7 @@
 				1A4C38E57534723ADC9F3D57 /* CurrencyMetadata */,
 				1A4C36A308B86BF401D803B6 /* Currencies */,
 				1A4C3127E3A7AFFBF86C7DD3 /* WalletsConnectionService */,
+				1A4C3B1326058125DEAA66B4 /* WalletsStateService */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1240,6 +1243,14 @@
 				1CB8B0E128907D8D00024E7C /* OnboardingServiceAssembler.swift */,
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		1A4C3B1326058125DEAA66B4 /* WalletsStateService */ = {
+			isa = PBXGroup;
+			children = (
+				1A4C351B672C360A32A15547 /* WalletsStateServiceAssembler.swift */,
+			);
+			path = WalletsStateService;
 			sourceTree = "<group>";
 		};
 		1A4C3C27E8AC72B44037C9E2 /* ViewControllers */ = {
@@ -3141,6 +3152,7 @@
 				1A4C3A127E059F4973AAE8A9 /* CurrenciesService.swift in Sources */,
 				1A4C36D33E738CDC80BE8575 /* TokenPickerInteractor2.swift in Sources */,
 				1A4C3F6836A9B121F54F7100 /* WalletsConnectionServiceAssembler.swift in Sources */,
+				1A4C3B9C62DFDDC589C8E7DB /* WalletsStateServiceAssembler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

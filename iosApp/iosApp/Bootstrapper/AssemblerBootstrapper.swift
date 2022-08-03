@@ -40,6 +40,7 @@ private extension AssemblerBootstrapper {
             WalletsConnectionServiceAssembler(),
             CurrenciesServiceAssembler(),
             CurrencyMetadataServiceAssembler(),
+            WalletsStateServiceAssembler(),
             PriceHistoryServiceAssembler(),
             FeaturesServiceAssembler(),
             // DeepLink

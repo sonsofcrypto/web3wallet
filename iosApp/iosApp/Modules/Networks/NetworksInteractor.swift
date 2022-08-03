@@ -6,7 +6,7 @@ import Foundation
 import web3lib
 
 protocol NetworkInteractorLister: AnyObject {
-    func handle(_ event: WalletsConnectionServiceEvent)
+    func handle(_ event: WalletsConnectionEvent)
 }
 
 protocol NetworksInteractor: AnyObject {
@@ -72,7 +72,7 @@ extension DefaultNetworksInteractor: NetworksInteractor {
 
 // MARK: - Listeners
 
-extension DefaultNetworksInteractor: WalletsConnectionServiceListener {
+extension DefaultNetworksInteractor: WalletsConnectionListener {
 
     func addListener(_ listener: NetworkInteractorLister) {
         if listeners.isEmpty {
@@ -95,12 +95,12 @@ extension DefaultNetworksInteractor: WalletsConnectionServiceListener {
         }
     }
 
-    private func emit(_ event: WalletsConnectionServiceEvent) {
+    private func emit(_ event: WalletsConnectionEvent) {
         listeners.forEach { $0.value?.handle(event) }
     }
 
-    func handle(event: WalletsConnectionServiceEvent) {
-        if let network = (event as? WalletsConnectionServiceEvent.NetworkSelected)?.network,
+    func handle(event: WalletsConnectionEvent) {
+        if let network = (event as? WalletsConnectionEvent.NetworkSelected)?.network,
            let wallet = walletsConnectionService.wallet,
            currenciesService.currencies(wallet: wallet, network: network).isEmpty {
                 currenciesService.generateDefaultCurrenciesIfNeeded(

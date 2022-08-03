@@ -1,7 +1,9 @@
 package com.sonsofcrypto.web3lib.utils
 
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.CoroutineDispatcher
 
-expect val defaultDispatcher: CoroutineContext
+expect val bgDispatcher: CoroutineDispatcher
 
-expect val uiDispatcher: CoroutineContext
+expect val uiDispatcher: CoroutineDispatcher
+
+expect fun currentThreadId(): String

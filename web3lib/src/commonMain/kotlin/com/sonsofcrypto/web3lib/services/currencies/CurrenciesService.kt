@@ -10,7 +10,7 @@ import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.Trie
-import com.sonsofcrypto.web3lib.utils.defaultDispatcher
+import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import io.ktor.util.*
 import kotlinx.coroutines.*
@@ -18,7 +18,6 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlin.native.concurrent.SharedImmutable
-import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
 interface CurrenciesService {
@@ -47,7 +46,7 @@ class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
     private var symbolsTrie: Trie = Trie()
     private var namesMap: Map<String, Int> = emptyMap()
     private var symbolsMap: Map<String, Int> = emptyMap()
-    private val scope = CoroutineScope(SupervisorJob() + defaultDispatcher)
+    private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
 
     init {
         val handler = CoroutineExceptionHandler { _, exception ->
@@ -109,7 +108,7 @@ class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
         return results.toList()
     }
 
-    override suspend fun loadCurrencies() = withContext(defaultDispatcher) {
+    override suspend fun loadCurrencies() = withContext(bgDispatcher) {
         val singleThreadContext = newSingleThreadContext("coin_cache_loading")
         withContext(singleThreadContext) {
             val data = BundledAssetProvider().file("coin_cache", "json")

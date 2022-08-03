@@ -11,8 +11,8 @@ private let currenciesKeyValueStore = "currenciesKeyValueStore"
 final class IntegrationWeb3Service {
 
     let walletsConnectionService: WalletsConnectionService
-
     private let currenciesService: CurrenciesService
+    private let walletsStateService: WalletsStateService
     private let defaults: UserDefaults
 
     private var supported: [Web3Token] = []
@@ -21,10 +21,12 @@ final class IntegrationWeb3Service {
     init(
         walletsConnectionService: WalletsConnectionService,
         currenciesService: CurrenciesService,
+        walletsStateService: WalletsStateService,
         defaults: UserDefaults = .standard
     ) {
         self.walletsConnectionService = walletsConnectionService
         self.currenciesService = currenciesService
+        self.walletsStateService = walletsStateService
         self.defaults = defaults
         
         // TODO: @Annon implement
@@ -201,8 +203,10 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
     }
     
     var currentEthBlock: String {
-        // TODO: current block
-        return "current block"
+        guard let wallet = walletsConnectionService.wallet else {
+            return ""
+        }
+        return walletsStateService.blockNumber(wallet: wallet)?.toDecimalString() ?? ""
     }
     
     func setNotificationAsDone(

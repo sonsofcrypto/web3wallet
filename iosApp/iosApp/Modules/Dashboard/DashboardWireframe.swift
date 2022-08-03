@@ -46,6 +46,7 @@ final class DefaultDashboardWireframe {
     private let walletsConnectionService: WalletsConnectionService
     private let currenciesService: CurrenciesService
     private let currencyMetadataService: CurrencyMetadataService
+    private let walletsStateService: WalletsStateService
     private let web3ServiceLegacy: Web3ServiceLegacy
     private let priceHistoryService: PriceHistoryService
     private let nftsService: NFTsService
@@ -67,6 +68,7 @@ final class DefaultDashboardWireframe {
         walletsConnectionService: WalletsConnectionService,
         currenciesService: CurrenciesService,
         currencyMetadataService: CurrencyMetadataService,
+        walletsStateService: WalletsStateService,
         web3ServiceLegacy: Web3ServiceLegacy,
         priceHistoryService: PriceHistoryService,
         nftsService: NFTsService
@@ -85,6 +87,7 @@ final class DefaultDashboardWireframe {
         self.walletsConnectionService = walletsConnectionService
         self.currenciesService = currenciesService
         self.currencyMetadataService = currencyMetadataService
+        self.walletsStateService = walletsStateService
         self.web3ServiceLegacy = web3ServiceLegacy
         self.priceHistoryService = priceHistoryService
         self.nftsService = nftsService
@@ -203,6 +206,7 @@ private extension DefaultDashboardWireframe {
             walletsConnectionService: walletsConnectionService,
             currenciesService: currenciesService,
             currencyMetadataService: currencyMetadataService,
+            walletsStateService: walletsStateService,
             web3ServiceLegacy: web3ServiceLegacy,
             priceHistoryService: priceHistoryService,
             nftsService: nftsService

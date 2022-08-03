@@ -2,12 +2,10 @@ package com.sonsofcrypto.web3lib.signer
 
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.model.*
-import com.sonsofcrypto.web3lib.services.currencies.CurrenciesService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.AddressBytes
-import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt
 
@@ -33,9 +31,7 @@ class Wallet: Signer {
         return this
     }
 
-    fun copy(provider: Provider? = null): Wallet {
-        return Wallet(keyStoreItem, keyStoreService, provider)
-    }
+    fun network(): Network? = provider?.network
 
     override fun provider(): Provider? = provider
 
@@ -85,6 +81,10 @@ class Wallet: Signer {
 
     override suspend fun resolveName(name: String): Address.HexString? {
         return provider!!.resolveName(name)
+    }
+
+    fun copy(provider: Provider? = null): Wallet {
+        return Wallet(keyStoreItem, keyStoreService, provider)
     }
 }
 

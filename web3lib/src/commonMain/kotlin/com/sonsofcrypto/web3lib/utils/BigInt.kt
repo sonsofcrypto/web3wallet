@@ -16,6 +16,8 @@ class BigInt {
 
     fun toByteArray(): ByteArray = storage.toByteArray()
     fun toHexString(): String = storage.toString(16)
+    fun toDecimalString(): String = toString()
+
     override fun toString(): String = storage.toString(10)
 
     override fun equals(other: Any?): Boolean  {

@@ -24,6 +24,7 @@ final class DefaultDashboardWireframeFactory {
     private let walletsConnectionService: WalletsConnectionService
     private let currenciesService: CurrenciesService
     private let currencyMetadataService: CurrencyMetadataService
+    private let walletsStateService: WalletsStateService
     private let web3ServiceLegacy: Web3ServiceLegacy
     private let priceHistoryService: PriceHistoryService
     private let nftsService: NFTsService
@@ -42,6 +43,7 @@ final class DefaultDashboardWireframeFactory {
         walletsConnectionService: WalletsConnectionService,
         currenciesService: CurrenciesService,
         currencyMetadataService: CurrencyMetadataService,
+        walletsStateService: WalletsStateService,
         web3ServiceLegacy: Web3ServiceLegacy,
         priceHistoryService: PriceHistoryService,
         nftsService: NFTsService
@@ -59,6 +61,7 @@ final class DefaultDashboardWireframeFactory {
         self.walletsConnectionService = walletsConnectionService
         self.currenciesService = currenciesService
         self.currencyMetadataService = currencyMetadataService
+        self.walletsStateService = walletsStateService
         self.web3ServiceLegacy = web3ServiceLegacy
         self.priceHistoryService = priceHistoryService
         self.nftsService = nftsService
@@ -84,6 +87,7 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             walletsConnectionService: walletsConnectionService,
             currenciesService: currenciesService,
             currencyMetadataService: currencyMetadataService,
+            walletsStateService: walletsStateService,
             web3ServiceLegacy: web3ServiceLegacy,
             priceHistoryService: priceHistoryService,
             nftsService: nftsService
@@ -113,6 +117,7 @@ final class DashboardWireframeFactoryAssembler: AssemblerComponent {
                 walletsConnectionService: resolver.resolve(),
                 currenciesService: resolver.resolve(),
                 currencyMetadataService: resolver.resolve(),
+                walletsStateService: resolver.resolve(),
                 web3ServiceLegacy: resolver.resolve(),
                 priceHistoryService: resolver.resolve(),
                 nftsService: resolver.resolve()

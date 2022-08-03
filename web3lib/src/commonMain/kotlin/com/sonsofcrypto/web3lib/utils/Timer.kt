@@ -10,6 +10,7 @@ typealias Timer = Flow<Unit>
 fun timerFlow(period: Duration, initialDelay: Duration = Duration.ZERO) = flow {
     delay(initialDelay)
     while (true) {
+        println("=== Flow emit ${currentThreadId()}")
         emit(Unit)
         delay(period)
     }

@@ -5,11 +5,20 @@ import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3lib.utils.BigInt
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+
+sealed class WalletsConnectionEvent() {
+    data class WalletSelected(val wallet: Wallet?): WalletsConnectionEvent()
+    data class NetworkSelected(val network: Network?): WalletsConnectionEvent()
+    data class NetworksChanged(val networks: List<Network>): WalletsConnectionEvent()
+}
+
+interface WalletsConnectionListener{
+    fun handle(event: WalletsConnectionEvent)
+}
 
 interface WalletsConnectionService {
     var wallet: Wallet?
@@ -36,18 +45,8 @@ interface WalletsConnectionService {
         enum class Type() { POCKET, CUSTOM }
     }
 
-    sealed class Event() {
-        data class WalletSelected(val wallet: Wallet?): Event()
-        data class NetworkSelected(val network: Network?): Event()
-        data class NetworksChanged(val networks: List<Network>): Event()
-    }
-
-    interface Listener{
-        fun handle(event: Event)
-    }
-
-    fun addListener(listener: Listener)
-    fun removeListener(listener: Listener?)
+    fun addListener(listener: WalletsConnectionListener)
+    fun removeListener(listener: WalletsConnectionListener?)
 
     companion object {}
 }
@@ -58,7 +57,7 @@ class DefaultWalletsConnectionService: WalletsConnectionService {
     override var wallet: Wallet? = null
         set(value) {
             field = value
-            emit(WalletsConnectionService.Event.WalletSelected(value))
+            emit(WalletsConnectionEvent.WalletSelected(value))
             enabledNetworks = this.defaultNetworks(value)
             network = this.defaultSelectedNetwork(value)
         }
@@ -67,20 +66,20 @@ class DefaultWalletsConnectionService: WalletsConnectionService {
         set(value) {
             field = value
             wallet?.let { store[selectedNetworkKey(it)] = value }
-            emit(WalletsConnectionService.Event.NetworkSelected(value))
+            emit(WalletsConnectionEvent.NetworkSelected(value))
         }
 
     private var enabledNetworks: List<Network> = listOf()
         set(value) {
             field = value
             value.forEach { setProvider(it, provider(it)) }
-            emit(WalletsConnectionService.Event.NetworksChanged(value))
+            emit(WalletsConnectionEvent.NetworksChanged(value))
             storeNetworks(value, wallet)
         }
 
     private var providers: MutableMap<Network, Provider> = mutableMapOf()
     private var wallets: MutableMap<String, Wallet> = mutableMapOf()
-    private var listeners: List<WalletsConnectionService.Listener> = listOf()
+    private var listeners: List<WalletsConnectionListener> = listOf()
     private var store: KeyValueStore
 
     constructor(store: KeyValueStore) {
@@ -151,16 +150,16 @@ class DefaultWalletsConnectionService: WalletsConnectionService {
         return store[providerKey(network)] ?: ProviderPocket(network)
     }
 
-    override fun addListener(listener: WalletsConnectionService.Listener) {
+    override fun addListener(listener: WalletsConnectionListener) {
         listeners = listeners + listOf(listener)
     }
 
-    override fun removeListener(listener: WalletsConnectionService.Listener?) {
+    override fun removeListener(listener: WalletsConnectionListener?) {
         if (listener != null) listeners = listeners.filter { it != listener }
         else listeners = listOf()
     }
 
-    private fun emit(event: WalletsConnectionService.Event) = listeners.forEach {
+    private fun emit(event: WalletsConnectionEvent) = listeners.forEach {
         it.handle(event)
     }
 

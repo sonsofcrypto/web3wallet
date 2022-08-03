@@ -47,6 +47,7 @@ final class DefaultDashboardInteractor {
     private let walletsConnectionService: WalletsConnectionService
     private let currenciesService: CurrenciesService
     private let currencyMetadataService: CurrencyMetadataService
+    private let walletsStateService: WalletsStateService
     private let web3ServiceLegacy: Web3ServiceLegacy
     private let priceHistoryService: PriceHistoryService
     private let nftsService: NFTsService
@@ -56,6 +57,7 @@ final class DefaultDashboardInteractor {
         walletsConnectionService: WalletsConnectionService,
         currenciesService: CurrenciesService,
         currencyMetadataService: CurrencyMetadataService,
+        walletsStateService: WalletsStateService,
         web3ServiceLegacy: Web3ServiceLegacy,
         priceHistoryService: PriceHistoryService,
         nftsService: NFTsService
@@ -64,6 +66,7 @@ final class DefaultDashboardInteractor {
         self.walletsConnectionService = walletsConnectionService
         self.currenciesService = currenciesService
         self.currencyMetadataService = currencyMetadataService
+        self.walletsStateService = walletsStateService
         self.priceHistoryService = priceHistoryService
         self.nftsService = nftsService
     }
@@ -206,7 +209,7 @@ extension DefaultDashboardInteractor {
 
 // MARK: - Listeners
 
-extension DefaultDashboardInteractor: WalletsConnectionServiceListener {
+extension DefaultDashboardInteractor: WalletsConnectionListener {
 
     func addListener(_ listener: DashboardInteractorLister) {
         if listeners.isEmpty {
@@ -234,9 +237,9 @@ extension DefaultDashboardInteractor: WalletsConnectionServiceListener {
         listeners.forEach { $0.value?.handle(event) }
     }
 
-    func handle(event: WalletsConnectionServiceEvent) {
+    func handle(event: WalletsConnectionEvent) {
         print("=== got event", event)
-        if let networksChanged = event as? WalletsConnectionServiceEvent.NetworksChanged {
+        if let networksChanged = event as? WalletsConnectionEvent.NetworksChanged {
             reloadData()
         }
         emit(event.toInteractorEvent())
@@ -252,17 +255,17 @@ extension DefaultDashboardInteractor: WalletsConnectionServiceListener {
 }
 
 
-// MARK: - WalletsConnectionServiceEvent
+// MARK: - WalletsConnectionEvent
 
-extension WalletsConnectionServiceEvent {
+extension WalletsConnectionEvent {
 
     func toInteractorEvent() -> DashboardInteractorEvent {
         switch self {
-        case is WalletsConnectionServiceEvent.WalletSelected:
+        case is WalletsConnectionEvent.WalletSelected:
             return .didSelectWallet
-        case is WalletsConnectionServiceEvent.NetworkSelected:
+        case is WalletsConnectionEvent.NetworkSelected:
             return .didSelectNetwork
-        case is WalletsConnectionServiceEvent.NetworksChanged:
+        case is WalletsConnectionEvent.NetworksChanged:
             return .didChaneNetwork
         default:
             fatalError("Unhandled event \(self)")
