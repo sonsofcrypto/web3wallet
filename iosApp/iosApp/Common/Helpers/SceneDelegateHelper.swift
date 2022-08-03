@@ -7,12 +7,10 @@ import UIKit
 struct SceneDelegateHelper {
     
     var window: UIWindow? {
-        
         sceneDelegate?.window
     }
     
     var rootVC: UIViewController? {
-        
         window?.rootViewController
     }
 }

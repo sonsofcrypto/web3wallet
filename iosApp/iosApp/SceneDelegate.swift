@@ -18,8 +18,8 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let window = UIWindow(windowScene: windowScene)
         self.window = window
-        
-        MainBootstrapper(window: window).boot()
+
+        UIBootstrapper(window: window).boot()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

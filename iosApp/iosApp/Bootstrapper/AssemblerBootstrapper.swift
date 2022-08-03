@@ -6,9 +6,8 @@ final class AssemblerBootstrapper {
 }
 
 extension AssemblerBootstrapper: Bootstrapper {
-    
+
     func boot() {
-        
         let assembler = DefaultAssembler()
         let components = makeComponents()
         assembler.configure(components: components)
