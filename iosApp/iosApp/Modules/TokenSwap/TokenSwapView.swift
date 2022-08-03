@@ -156,12 +156,23 @@ private extension TokenSwapViewController {
             Theme.colour.labelSecondary
         )
             
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: Localized("close"),
-            style: .plain,
-            target: self,
-            action: #selector(navBarLeftActionTapped)
-        )
+        if (navigationController?.viewControllers.count ?? 0) > 1 {
+            
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                image: "chevron.left".assetImage,
+                style: .plain,
+                target: self,
+                action: #selector(navBarLeftActionTapped)
+            )
+        } else {
+            
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                title: Localized("close"),
+                style: .plain,
+                target: self,
+                action: #selector(navBarLeftActionTapped)
+            )
+        }
         
         let segmentControl = makeSegmentedControl()
         navigationItem.titleView = segmentControl

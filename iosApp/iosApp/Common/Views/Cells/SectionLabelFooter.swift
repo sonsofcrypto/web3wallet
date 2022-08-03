@@ -4,12 +4,10 @@
 
 import UIKit
 
-class SectionLabelFooter: UICollectionReusableView {
+final class SectionLabelFooter: UICollectionReusableView {
 
     @IBOutlet weak var label: UILabel!
 }
-
-// MARK: - Update with viewModel
 
 extension SectionLabelFooter {
 
@@ -41,11 +39,10 @@ extension SectionLabelFooter {
     }
 }
 
-// MARK: -
+private extension SectionLabelFooter {
 
-extension SectionLabelFooter {
-
-    private func updateFooter(text: String, highlightWords: [String]) {
+    func updateFooter(text: String, highlightWords: [String]) {
+        
         let attrs = sectionFooter()
         let hlAttrs: [NSAttributedString.Key : Any] = [
             .font: Theme.font.subheadlineBold,
@@ -62,7 +59,7 @@ extension SectionLabelFooter {
         label.attributedText = attrStr
     }
 
-    private func sectionFooter() -> [NSAttributedString.Key: Any] {
+    func sectionFooter() -> [NSAttributedString.Key: Any] {
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6

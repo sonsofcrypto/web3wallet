@@ -138,7 +138,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             let wireframe = tokenSendWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(
-                    presentationStyle: .present,
+                    presentationStyle: .push,
                     web3Token: nil
                 )
             )
@@ -184,7 +184,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             let wireframe = tokenSwapWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(
-                    presentationStyle: .present,
+                    presentationStyle: .push,
                     tokenFrom: nil,
                     tokenTo: nil
                 )
@@ -231,11 +231,11 @@ private extension DefaultDashboardWireframe {
         
         let factory: TokenPickerWireframeFactory = ServiceDirectory.assembler.resolve()
         let context = TokenPickerWireframeContext(
-            presentationStyle: .present,
+            presentationStyle: .push,
             source: source
         )
         factory.makeWireframe(
-            presentingIn: parent,
+            presentingIn: navigationController,
             context: context
         ).present()
     }

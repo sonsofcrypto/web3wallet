@@ -107,6 +107,8 @@
 "keyStore.createMultiSig" = "Create multisig wallet";
 
 "newMnemonic.title" = "New wallet";
+"newMnemonic.title.import" = "Import wallet";
+"newMnemonic.title.update" = "Edit wallet";
 "newMnemonic.tapToReveal" = "Tap to reveal mnemonic";
 "newMnemonic.footer" = "Write down mnemonic above. Never share it with anyone. All of the accounts/wallets are derived from it. If lost crypto is unrecoverable";
 "newMnemonic.footerHighlightWord0" = "Never";
@@ -128,6 +130,7 @@
 "newMnemonic.pasteboard" = "Mnemonic copied to pasteboard";
 "newMnemonic.cta.new" = "Create new wallet";
 "newMnemonic.cta.update" = "Update";
+"newMnemonic.cta.delete" = "Delete";
 "newMnemonic.cta.import" = "Import";
 "newMnemonic.defaultWalletName" = "Default wallet";
 "newMnemonic.defaultNthWalletName" = "Wallet %d";
@@ -160,13 +163,14 @@
 "settings.about.fotter" = "Section footer here...";
 "settings.about.contactUs" = "Contact Us";
 "settings.about.mail" = "Mail";
-"settings.about.footer" = "Version: %@";
 
 "alert.underConstruction.title" = "Under construction";
 "alert.underConstruction.message" = "App is under very active development and this corner is not quite ready yet. Check back soon.";
 
 "mnemonicConfirmation.title" = "Confirm Mnemonic";
 "mnemonicConfirmation.confirm.wallet" = "Please enter the 12 word phrase you were given when you created your wallet.";
+"mnemonicConfirmation.salt" = "Salt mnemonic";
+"mnemonicConfirmation.salt.placeholder" = "Enter salt";
 "mnemonicConfirmation.cta" = "Validate";
 "mnemonicConfirmation.cta.invalid" = "Invalid mnemonic";
 "mnemonicConfirmation.cta.congratulations" = "Tap to confirm! 🥳";
@@ -174,9 +178,9 @@
 "nfts.dashboard.collection.title" = "Your Collections";
 "nfts.dashboard.collection.popular.author" = "Created by %@";
 
-"nft.detail.button.send" = "Send";
 "nft.detail.section.title.description" = "Description";
 "nft.detail.section.title.properties" = "Properties";
+"nft.detail.button.send" = "Send";
 
 "chat" = "web3chat";
 "chat.colletion.top.cell.body" = "List of upcoming web3 apps, of course all will be fully decentralised! 🚀🚀🚀";
@@ -319,3 +323,7 @@
 "feature.title.of" = "of";
 "feature.button.vote" = "Vote";
 "feature.hashTag" = "WIP%@";
+
+"mnemonic.error.invalid" = "Invalid mnemonic, the words entered are invalid.";
+"mnemonic.error.invalid.wordCount" = "Typically 12 (or 15, 18, 21, 24) words separated by spaces.";
+"mnemonic.error.invalid.wordCount.highlight0" = "12 (or 15, 18, 21, 24) words";

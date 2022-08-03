@@ -23,12 +23,10 @@ extension MnemonicImportViewModel {
         headers[idx]
     }
 
-    func footer(at idx: Int) -> MnemonicImportViewModel.Footer {
-        footers[idx]
+    func footer(at idx: Int) -> MnemonicImportViewModel.Footer? {
+        footers[safe: idx]
     }
 }
-
-// MARK: - Item
 
 extension MnemonicImportViewModel {
 
@@ -51,24 +49,21 @@ extension MnemonicImportViewModel {
     }
 }
 
-// MARK: - Mnemonic
-
 extension MnemonicImportViewModel {
 
     struct Mnemonic {
-        let value: String
-        let type: MnemonicType
+        
+        let potentialWords: [String]
+        let wordsInfo: [WordInfo]
+        let mnemonicToUpdate: String?
 
-        enum MnemonicType {
-            case new
-            case importing
-            case editHidden
-            case editShown
+        struct WordInfo {
+            
+            let word: String
+            let isInvalid: Bool
         }
     }
 }
-
-// MARK: - Name
 
 extension MnemonicImportViewModel {
 
@@ -78,8 +73,6 @@ extension MnemonicImportViewModel {
         let placeholder: String
     }
 }
-
-// MARK: - SwitchWithTextInput
 
 extension MnemonicImportViewModel {
 
@@ -92,8 +85,6 @@ extension MnemonicImportViewModel {
         let descriptionHighlightedWords: [String]
     }
 }
-
-// MARK: - SwitchWithTextInput
 
 extension MnemonicImportViewModel {
 

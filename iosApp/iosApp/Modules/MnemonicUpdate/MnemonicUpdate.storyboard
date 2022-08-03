@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RC7-Mo-ain">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="782"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="710"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="19" id="SDo-ag-mEq">
                                     <size key="itemSize" width="343" height="149"/>
@@ -357,15 +357,15 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jjq-Ij-FCM">
-                                            <rect key="frame" x="24" y="0.0" width="374" height="20.5"/>
+                                            <rect key="frame" x="32" y="0.0" width="350" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Jjq-Ij-FCM" firstAttribute="leading" secondItem="WkI-WP-GSv" secondAttribute="leading" constant="24" id="1Ke-UT-xQC"/>
-                                        <constraint firstAttribute="trailing" secondItem="Jjq-Ij-FCM" secondAttribute="trailing" constant="16" id="Ac4-Wq-1zA"/>
+                                        <constraint firstItem="Jjq-Ij-FCM" firstAttribute="leading" secondItem="WkI-WP-GSv" secondAttribute="leading" constant="32" id="1Ke-UT-xQC"/>
+                                        <constraint firstAttribute="trailing" secondItem="Jjq-Ij-FCM" secondAttribute="trailing" constant="32" id="Ac4-Wq-1zA"/>
                                         <constraint firstItem="Jjq-Ij-FCM" firstAttribute="top" secondItem="WkI-WP-GSv" secondAttribute="top" id="qDi-2z-hd2"/>
                                     </constraints>
                                     <connections>
@@ -377,8 +377,8 @@
                                     <outlet property="delegate" destination="ozv-nd-HZD" id="TVP-ZP-zci"/>
                                 </connections>
                             </collectionView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="TOp-SW-Pkz">
-                                <rect key="frame" x="16" y="798" width="382" height="64"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="TOp-SW-Pkz">
+                                <rect key="frame" x="16" y="726" width="382" height="136"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qaj-TS-eJX" customClass="Button" customModule="iosApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="64"/>
@@ -386,6 +386,14 @@
                                         <buttonConfiguration key="configuration" style="plain" title="Next"/>
                                         <connections>
                                             <action selector="ctaAction:" destination="ozv-nd-HZD" eventType="touchUpInside" id="e1K-R0-IbT"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="64" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OuI-UT-y3J" customClass="Button" customModule="iosApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="72" width="382" height="64"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Next"/>
+                                        <connections>
+                                            <action selector="ctaAction:" destination="ozv-nd-HZD" eventType="touchUpInside" id="Cbh-PC-sr9"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -407,6 +415,7 @@
                     <connections>
                         <outlet property="collectionView" destination="RC7-Mo-ain" id="SRO-Vn-vpA"/>
                         <outlet property="ctaButton" destination="Qaj-TS-eJX" id="RtR-Qa-d0H"/>
+                        <outlet property="ctaDeleteButton" destination="OuI-UT-y3J" id="TLq-e0-wcm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cQx-oo-5Mw" sceneMemberID="firstResponder"/>

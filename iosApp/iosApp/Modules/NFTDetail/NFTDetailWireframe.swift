@@ -13,6 +13,7 @@ struct NFTDetailWireframeContext {
 
 enum NFTDetailWireframeDestination {
     
+    case underConstruction
     case dismiss
 }
 
@@ -71,6 +72,14 @@ extension DefaultNFTDetailWireframe: NFTDetailWireframe {
     func navigate(to destination: NFTDetailWireframeDestination) {
         
         switch destination {
+            
+        case .underConstruction:
+            
+            let alert: AlertWireframeFactory = ServiceDirectory.assembler.resolve()
+            alert.makeWireframe(
+                navigationController,
+                context: .underConstructionAlert()
+            ).present()
             
         case .dismiss:
             

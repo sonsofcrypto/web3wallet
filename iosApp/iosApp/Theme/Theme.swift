@@ -179,6 +179,9 @@ struct ThemeColour {
     let activityIndicator: UIColor
     
     let toastAlertBackgroundColor: UIColor
+    
+    let destructive: UIColor
+
 }
 
 struct ThemeConstant {

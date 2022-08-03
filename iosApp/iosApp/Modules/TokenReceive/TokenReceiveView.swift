@@ -79,6 +79,9 @@ private extension TokenReceiveViewController {
         
         cardView.backgroundColor = Theme.colour.cellBackground
         cardView.layer.cornerRadius = Theme.constant.cornerRadius
+        cardView.add(
+            .targetAction(.init(target: self, selector: #selector(onCopyAction)))
+        )
         
         nameLabel.apply(style: .body)
         
@@ -124,10 +127,14 @@ private extension TokenReceiveViewController {
         {
             [weak self] in
             guard let self = self else { return }
-            
-            UIPasteboard.general.string = self.viewModel?.data?.address
-            self.view.presentToastAlert(with: Localized("tokenReceive.action.copy.toast"))
+            self.onCopyAction()
         }
+    }
+    
+    @objc func onCopyAction() {
+        
+        UIPasteboard.general.string = self.viewModel?.data?.address
+        view.presentToastAlert(with: Localized("tokenReceive.action.copy.toast"))
     }
 
     func makeShareAction() -> (() -> Void) {

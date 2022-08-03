@@ -64,10 +64,12 @@ final class DefaultDashboardPresenter {
         self.onboardingService = onboardingService
 
         interactor.addListener(self)
+        interactor.addLegacyListener(self)
     }
 
     deinit {
         interactor.removeListener(self)
+        interactor.removeLegacyListener(self)
     }
 }
 
@@ -176,6 +178,7 @@ extension DefaultDashboardPresenter: DashboardInteractorLister {
 private extension DefaultDashboardPresenter {
     
     func updateView() {
+        
         self.notifications = interactor.notifications
         self.myTokens = interactor.myTokens
         view?.update(with: viewModel())

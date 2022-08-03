@@ -75,6 +75,8 @@ final class DefaultTokenPickerWireframe {
     private let tokenAddWireframeFactory: TokenAddWireframeFactory
     private let web3Service: Web3ServiceLegacy
     
+    private weak var navigationController: NavigationController!
+    
     init(
         presentingIn: UIViewController,
         context: TokenPickerWireframeContext,
@@ -105,8 +107,9 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
             presentingIn.present(vc, animated: true)
             
         case .push:
-            guard let presentingIn = presentingIn as? NavigationController else { return }
-            presentingIn.pushViewController(vc, animated: true)
+            guard let navigationController = presentingIn as? NavigationController else { return }
+            self.navigationController = navigationController
+            navigationController.pushViewController(vc, animated: true)
         }
     }
     
@@ -115,22 +118,18 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
         switch destination {
         case let .tokenReceive(token):
             
-            guard let presentingIn = presentingIn.presentedViewController else { return }
-            
             let wireframe = tokenReceiveWireframeFactory.makeWireframe(
-                presentingIn: presentingIn,
+                presentingIn: navigationController,
                 context: .init(presentationStyle: .push, web3Token: token)
             )
             wireframe.present()
                         
         case .addCustomToken:
             
-            guard let presentingIn = presentingIn.presentedViewController else { return }
-            
             guard let network = context.source.network else { return }
             
             let wireframe = tokenAddWireframeFactory.makeWireframe(
-                presentingIn: presentingIn,
+                presentingIn: navigationController,
                 context: .init(
                     presentationStyle: .push,
                     network: network
@@ -142,7 +141,13 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
     
     func dismiss() {
         
-        presentingIn.presentedViewController?.dismiss(animated: true)
+        if navigationController.viewControllers.count > 1 {
+            
+            navigationController.popViewController(animated: true)
+        } else {
+            
+            navigationController.dismiss(animated: true)
+        }
     }
 }
 
@@ -160,7 +165,7 @@ private extension DefaultTokenPickerWireframe {
             wireframe: self,
             context: context
         )
-        
+        vc.hidesBottomBarWhenPushed = true
         vc.presenter = presenter
         vc.context = context
         
@@ -171,6 +176,7 @@ private extension DefaultTokenPickerWireframe {
         case .present:
                         
             let navigationController = NavigationController(rootViewController: vc)
+            self.navigationController = navigationController
             return navigationController
             
         case .push:

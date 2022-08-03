@@ -52,6 +52,6 @@ private extension CollectionView {
 
     enum Constant {
         
-        static let overScrollViewSize = CGSize(length: 200)
+        static let overScrollViewSize = CGSize(length: 100)
     }
 }

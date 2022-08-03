@@ -19,8 +19,6 @@ class EdgeCardsController: BaseViewController {
     
     private(set) var displayMode: DisplayMode = .master
 
-    var cardNavigationEnabled: Bool = true
-
     weak var delegate: EdgeCardsControllerDelegate?
 
     private var masterContainer: UIView = .init()
@@ -542,7 +540,8 @@ extension EdgeCardsController: UIGestureRecognizerDelegate {
         _ gestureRecognizer: UIGestureRecognizer,
         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
     ) -> Bool {
-        return true
+        
+        SceneDelegateHelper().canSwipeToWallets
     }
 }
 

@@ -138,7 +138,7 @@ private extension DefaultTokenSwapWireframe {
             wireframe: self,
             context: context
         )
-        
+        vc.hidesBottomBarWhenPushed = true
         vc.presenter = presenter
         
         switch context.presentationStyle {

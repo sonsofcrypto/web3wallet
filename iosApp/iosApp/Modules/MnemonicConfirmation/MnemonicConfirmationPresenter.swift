@@ -12,6 +12,9 @@ enum MnemonicConfirmationPresenterEvent {
         to: String,
         selectedLocation: Int
     )
+    case saltChanged(
+        to: String
+    )
     case confirm
 }
 
@@ -29,6 +32,7 @@ final class DefaultMnemonicConfirmationPresenter {
     
     private var ctaTapped = false
     private var mnemonic = ""
+    private var salt = ""
     private var selectedLocation = 0
 
     init(
@@ -60,6 +64,11 @@ extension DefaultMnemonicConfirmationPresenter: MnemonicConfirmationPresenter {
             self.selectedLocation = tuple.selectedLocation
             refresh(updateMnemonic: mnemonicIn != mnemonic)
 
+        case let .saltChanged(salt):
+            
+            self.salt = salt
+            refresh(updateMnemonic: false)
+            
         case .confirm:
             guard ctaTapped else {
                 ctaTapped = true
@@ -69,7 +78,7 @@ extension DefaultMnemonicConfirmationPresenter: MnemonicConfirmationPresenter {
 
             ctaTapped = true
 
-            guard service.isMnemonicValid(mnemonic) else {
+            guard service.isMnemonicValid(mnemonic, salt: nil) else {
                 refresh()
                 return
             }
@@ -123,14 +132,16 @@ private extension DefaultMnemonicConfirmationPresenter {
             at: selectedLocation
         )
         let isMnemonicValid = service.isMnemonicValid(
-            mnemonic.trimmingCharacters(in: .whitespaces)
+            mnemonic.trimmingCharacters(in: .whitespaces),
+            salt: salt
         )
         
         return .init(
             potentialWords: potentialWords,
             wordsInfo: wordsInfo,
             isValid: ctaTapped ? isMnemonicValid : nil,
-            mnemonicToUpdate: updateMnemonic ? mnemonic : nil
+            mnemonicToUpdate: updateMnemonic ? mnemonic : nil,
+            showSalt: service.showSalt()
         )
     }
     

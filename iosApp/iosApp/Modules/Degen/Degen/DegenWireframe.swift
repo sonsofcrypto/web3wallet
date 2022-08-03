@@ -58,7 +58,7 @@ extension DefaultDegenWireframe: DegenWireframe {
             tokenSwapWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(
-                    presentationStyle: .present,
+                    presentationStyle: .push,
                     tokenFrom: nil,
                     tokenTo: nil
                 )

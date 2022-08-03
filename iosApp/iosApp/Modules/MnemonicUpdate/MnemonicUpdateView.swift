@@ -19,6 +19,7 @@ final class MnemonicUpdateViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var ctaButton: Button!
+    @IBOutlet weak var ctaDeleteButton: Button!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,10 @@ final class MnemonicUpdateViewController: BaseViewController {
     
     @IBAction func ctaAction(_ sender: Any) {
         presenter.handle(.didSelectCta)
+    }
+    
+    @IBAction func deleteCtaAction(_ sender: Any) {
+        presenter.handle(.didSelectDeleteCta)
     }
 
     @IBAction func dismissAction(_ sender: Any?) {
@@ -55,6 +60,7 @@ extension MnemonicUpdateViewController: MnemonicUpdateView {
         }
 
         ctaButton.setTitle(viewModel.cta, for: .normal)
+        ctaDeleteButton.setTitle(viewModel.deleteCta, for: .normal)
 
         let cells = cv.indexPathsForVisibleItems
         let idxs = IndexSet(0..<viewModel.sectionsItems.count)
@@ -288,7 +294,7 @@ extension MnemonicUpdateViewController: UIScrollViewDelegate {
 private extension MnemonicUpdateViewController {
     
     func configureUI() {
-        title = Localized("newMnemonic.title")
+        title = Localized("newMnemonic.title.update")
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: "chevron.left".assetImage,
@@ -298,6 +304,7 @@ private extension MnemonicUpdateViewController {
         )
         
         ctaButton.style = .primary
+        ctaDeleteButton.isHidden = true
     }
 
     func needsReload(_ preViewModel: MnemonicUpdateViewModel?, viewModel: MnemonicUpdateViewModel) -> Bool {

@@ -22,7 +22,7 @@ extension NFTsDashboardViewController {
 //        carousel.layer.borderWidth = 1
 //        carousel.layer.borderColor = Theme.colour.fillTertiary.cgColor
         mainScrollView.addSubview(carousel)
-        carousel.clipsToBounds = true
+        carousel.clipsToBounds = false
         self.carousel = carousel
         carousel.addConstraints(
             [

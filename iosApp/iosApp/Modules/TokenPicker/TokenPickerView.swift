@@ -146,12 +146,23 @@ private extension TokenPickerViewController {
             collectionView.allowsMultipleSelection = viewModel.allowMultiSelection
         } else {
             
-            navigationItem.leftBarButtonItem = UIBarButtonItem(
-                title: Localized("close"),
-                style: .plain,
-                target: self,
-                action: #selector(closeTapped)
-            )
+            if (navigationController?.viewControllers.count ?? 0) > 1 {
+                
+                navigationItem.leftBarButtonItem = UIBarButtonItem(
+                    image: "chevron.left".assetImage,
+                    style: .plain,
+                    target: self,
+                    action: #selector(navBarLeftActionTapped)
+                )
+            } else {
+                
+                navigationItem.leftBarButtonItem = UIBarButtonItem(
+                    title: Localized("close"),
+                    style: .plain,
+                    target: self,
+                    action: #selector(navBarLeftActionTapped)
+                )
+            }
         }
     }
 
@@ -165,7 +176,7 @@ private extension TokenPickerViewController {
         presenter.handle(.done)
     }
 
-    @objc func closeTapped() {
+    @objc func navBarLeftActionTapped() {
         
         presenter.handle(.dismiss)
     }

@@ -8,6 +8,7 @@ struct MnemonicConfirmationViewModel {
     let wordsInfo: [WordInfo]
     let isValid: Bool?
     let mnemonicToUpdate: String?
+    let showSalt: Bool
     
     struct WordInfo {
         

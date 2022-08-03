@@ -44,9 +44,25 @@ private extension NFTDetailViewController {
         
         content.append(contentsOf: makeProperties(with: item))
         
+        content.append(makeSendButton())
+        
         let vStackView = VStackView(content)
         vStackView.spacing = Theme.constant.padding
         
         return vStackView
+    }
+    
+    func makeSendButton() -> Button {
+        
+        let button = Button()
+        button.style = .primary
+        button.setTitle(Localized("nft.detail.button.send"), for: .normal)
+        button.add(.targetAction(.init(target: self, selector: #selector(sendNFT))))
+        return button
+    }
+    
+    @objc func sendNFT() {
+        
+        presenter.handle(.send)
     }
 }

@@ -6,6 +6,7 @@ import Foundation
 
 enum NFTDetailPresenterEvent {
 
+    case send
     case dismiss
 }
 
@@ -55,6 +56,10 @@ extension DefaultNFTDetailPresenter: NFTDetailPresenter {
     func handle(_ event: NFTDetailPresenterEvent) {
 
         switch event {
+            
+        case .send:
+            
+            wireframe.navigate(to: .underConstruction)
             
         case .dismiss:
             wireframe.navigate(to: .dismiss)

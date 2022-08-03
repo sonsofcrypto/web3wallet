@@ -49,10 +49,7 @@ struct SettingsWireframeContext {
                             type: .item(.about)
                         )
                     ],
-                    footer: .init(
-                        text: Localized("settings.about.footer", arg: ServiceDirectory.makeVersionNumber()),
-                        textAlignment: .center
-                    )
+                    footer: nil
                 )
             ]
         )
