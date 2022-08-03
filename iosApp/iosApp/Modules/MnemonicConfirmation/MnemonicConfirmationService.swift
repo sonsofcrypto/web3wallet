@@ -45,7 +45,7 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
             return []
         }
 
-        return wordsStarting(with: prefix)
+        return validator.wordsStartingWith(prefix: prefix)
     }
     
     func findInvalidWords(in mnemonic: String?) -> [MnemonicConfirmationViewModel.WordInfo] {
@@ -69,7 +69,7 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
             
             let word = String(item)
             
-            var isWordValid = wordsStarting(with: word).count > 0
+            var isWordValid = validator.wordsStartingWith(prefix: word).count > 0
             //var isWordValid = mnemonicWords.contains(word)
             
             if index > 11 {
@@ -95,7 +95,7 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
     
     func isValidPrefix(_ prefix: String) -> Bool {
         
-        !wordsStarting(with: prefix).isEmpty
+        !validator.wordsStartingWith(prefix: prefix).isEmpty
     }
     
     func isMnemonicValid(_ mnemonic: String) -> Bool {
@@ -114,10 +114,6 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
 
 private extension DefaultMnemonicConfirmationService {
     
-    func wordsStarting(with word: String) -> [String] {
-        validator.wordsStartingWith(prefix: word)
-    }
-
     func validateMnemonic(with mnemonic: String) -> Bool {
         
         print("[TODO]: Validate mnemonic: [\(mnemonic)]")
