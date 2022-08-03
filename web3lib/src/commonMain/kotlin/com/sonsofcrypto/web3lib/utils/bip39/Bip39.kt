@@ -26,6 +26,8 @@ class Bip39 {
             if (worldList.indexOf(it) == -1)
                 throw Error.InvalidWord(it)
         }
+
+        entropy()
     }
 
     /** Seed for mnemonic */
@@ -51,8 +53,18 @@ class Bip39 {
                 bitArray[idx * 11 + bit] = wordIdx and (1 shl (10 - bit)) != 0
         }
 
-        return bitArray.copyOfRange(0, bitArray.size - (bitArray.size / 33))
-            .toByteArray()
+        val entropyBitsCount = bitArray.size - (bitArray.size / 33)
+        val entropyBits = bitArray.copyOfRange(0, entropyBitsCount)
+        val checksumBits = bitArray.copyOfRange(entropyBitsCount, bitArray.size)
+        val entropyBytes = entropyBits.toByteArray()
+        val entropyHash = sha256(entropyBytes).toBitArray()
+
+        for (idx in checksumBits.indices) {
+            if (checksumBits[idx] != entropyHash[idx])
+                throw Error.InvalidMnemonicChecksum
+        }
+
+        return entropyBytes
     }
 
     /** Valid entropy sizes */
@@ -76,6 +88,9 @@ class Bip39 {
 
         /** Word is not part of bip39 set */
         data class InvalidWord(val word: String) : Error("Invalid bip39 word $word")
+
+        /** Invalid mnemonic checksum */
+        object InvalidMnemonicChecksum : Error("Invalid mnemonic checksum")
 
         /** Failed to generate cryptographically secure randomness */
         object SecureRandomness : Error("Failed to generate cryptographically secure randomness")

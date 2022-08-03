@@ -22,12 +22,24 @@ class Bip39Test {
     val entropyString = "d39162739a7879018108d9f5ffea50a2"
 
     fun runAll() {
-        testBip39Seed()
-        testBip39Entropy()
+//        testBip39Seed()
+//        testBip39Entropy()
+        debugMnemonic()
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
         if (!actual) throw Exception("Failed $message")
+    }
+
+    fun debugMnemonic() {
+        val invalid =  listOf("faith","rabbit","damp","raccoon","erode","raccoon","race","raccoon","early","raccoon","early","yellow")
+        val bip39 = Bip39(invalid, "", WordList.ENGLISH)
+        val seed = bip39.seed()
+        val entropy = bip39.entropy()
+
+        val men = Bip39.from(bip39.entropy(), "", WordList.ENGLISH)
+        println("=== $seed")
+        println("=== ${men.mnemonic}")
     }
 
     fun testBip39Seed() {

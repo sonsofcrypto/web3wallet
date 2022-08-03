@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-//        Bip39Test().runAll()
+        Bip39Test().runAll()
 //        Bip44Test().runAll()
 //        KeyValueStoreTest().runAll()
 //        KeyStoreTest().runAll()
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 //        ProviderTest().runAll()
 //        CoinGeckoTest(this.applicationContext).runAll()
 //        Web3ServiceTests().runAll()
-        CurrenciesServiceTests().runAll()
+//        CurrenciesServiceTests().runAll()
         println("=== all tests executed ===")
     }
 }
