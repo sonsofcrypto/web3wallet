@@ -108,6 +108,7 @@
 
 "newMnemonic.title" = "New wallet";
 "newMnemonic.title.import" = "Import wallet";
+"newMnemonic.title.update" = "Edit wallet";
 "newMnemonic.tapToReveal" = "Tap to reveal mnemonic";
 "newMnemonic.footer" = "Write down mnemonic above. Never share it with anyone. All of the accounts/wallets are derived from it. If lost crypto is unrecoverable";
 "newMnemonic.footerHighlightWord0" = "Never";
@@ -129,6 +130,7 @@
 "newMnemonic.pasteboard" = "Mnemonic copied to pasteboard";
 "newMnemonic.cta.new" = "Create new wallet";
 "newMnemonic.cta.update" = "Update";
+"newMnemonic.cta.delete" = "Delete";
 "newMnemonic.cta.import" = "Import";
 "newMnemonic.defaultWalletName" = "Default wallet";
 "newMnemonic.defaultNthWalletName" = "Wallet %d";

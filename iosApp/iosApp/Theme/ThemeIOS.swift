@@ -190,7 +190,8 @@ struct ThemeIOS: Themable {
                 traits.isDarkMode ?
                 pallete.systemWhite :
                 pallete.systemBlack
-            }
+            },
+            destructive: pallete.systemRed
         )
     }
     

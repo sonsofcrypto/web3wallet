@@ -96,7 +96,8 @@ struct ThemeMiami: Themable {
             candleRed: pallete.systemPink,
             dashboardTVCryptoBallance: pallete.systemOrange,
             activityIndicator: pallete.systemWhite,
-            toastAlertBackgroundColor: pallete.system1C1C1E
+            toastAlertBackgroundColor: pallete.system1C1C1E,
+            destructive: pallete.systemRed
         )
     }
     

@@ -9,6 +9,7 @@ struct MnemonicUpdateViewModel {
     var headers: [Header]
     var footers: [Footer]
     var cta: String
+    var deleteCta: String
 }
 
 // MARK: - Access utilities

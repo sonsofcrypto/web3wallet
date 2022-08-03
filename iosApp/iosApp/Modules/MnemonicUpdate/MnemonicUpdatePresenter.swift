@@ -16,6 +16,7 @@ enum MnemonicUpdatePresenterEvent {
     case didChangeCustomDerivation(path: String)
     case didTapAddAccount
     case didSelectCta
+    case didSelectDeleteCta
     case didSelectDismiss
 }
 
@@ -110,6 +111,8 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
             } catch {
                 // TODO(web3dgn): - Handle error
             }
+        case .didSelectDeleteCta:
+            print("Delete wallet...")
         case .didSelectDismiss:
             view?.dismiss(animated: true, completion: {})
         }
@@ -160,7 +163,8 @@ private extension DefaultMnemonicUpdatePresenter {
                 ),
                 .none
             ],
-            cta: Localized("newMnemonic.cta.update")
+            cta: Localized("newMnemonic.cta.update"),
+            deleteCta: Localized("newMnemonic.cta.delete")
         )
     }
 
