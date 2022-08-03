@@ -7,7 +7,10 @@ import web3lib
 import UniformTypeIdentifiers
 
 enum MnemonicImportPresenterEvent {
-    case didChangeMnemonic(mnemonic: String)
+    case mnemonicChanged(
+        to: String,
+        selectedLocation: Int
+    )
     case didChangeName(name: String)
     case didChangeICouldBackup(onOff: Bool)
     case saltSwitchDidChange(onOff: Bool)
@@ -27,18 +30,18 @@ protocol MnemonicImportPresenter {
     func handle(_ event: MnemonicImportPresenterEvent)
 }
 
-// MARK: - DefaultMnemonicPresenter
-
 final class DefaultMnemonicImportPresenter {
 
     private let context: MnemonicImportContext
+    private weak var view: MnemonicImportView?
     private let interactor: MnemonicImportInteractor
     private let wireframe: MnemonicImportWireframe
 
     private var password: String = ""
     private var salt: String = ""
 
-    private weak var view: MnemonicImportView?
+    private var mnemonic = ""
+    private var selectedLocation = 0
 
     init(
         context: MnemonicImportContext,
@@ -51,26 +54,29 @@ final class DefaultMnemonicImportPresenter {
         self.interactor = interactor
         self.wireframe = wireframe
     }
-
-    private func updateView() {
-        view?.update(with: viewModel())
-    }
 }
-
-// MARK: MnemonicPresenter
 
 extension DefaultMnemonicImportPresenter: MnemonicImportPresenter {
 
     func present() {
-        let start = Date()
+
         updateView()
     }
 
     func handle(_ event: MnemonicImportPresenterEvent) {
         switch event {
-        case let .didChangeMnemonic(text):
-            interactor.mnemonic = text.split(separator: " ").map { String($0) }
-            updateView()
+        case let .mnemonicChanged(mnemonicIn, selectedLocationIn):
+            let tuple = clearBlanksFromFrontOf(mnemonicIn, with: selectedLocationIn)
+            
+            self.mnemonic = tuple.mnemonic
+            self.selectedLocation = tuple.selectedLocation
+            
+            interactor.mnemonic = mnemonic.trimmingCharacters(in: .whitespaces).split(
+                separator: " "
+            ).map { String($0) }
+            
+            updateView(updateMnemonic: mnemonicIn != mnemonic)
+
         case let .didChangeName(name):
             interactor.name = name
         case let .didChangeICouldBackup(onOff):
@@ -123,34 +129,44 @@ extension DefaultMnemonicImportPresenter: MnemonicImportPresenter {
     }
 }
 
-// MARK: - WalletsViewModel utilities
-
 private extension DefaultMnemonicImportPresenter {
+    
+    func updateView(updateMnemonic: Bool = false) {
+        
+        view?.update(
+            with: viewModel(
+                updateMnemonic: updateMnemonic
+            )
+        )
+    }
 
-    func viewModel() -> MnemonicImportViewModel {
+    func viewModel(
+        updateMnemonic: Bool
+    ) -> MnemonicImportViewModel {
+        
         if let error = interactor.mnemonicError(
             words: interactor.mnemonic,
             salt: salt
         ) {
             return .init(
                 sectionsItems: [
-                    mnemonicSectionItems()
+                    mnemonicSectionItems(
+                        updateMnemonic: updateMnemonic,
+                        isValidMnemonic: false
+                    )
                 ],
                 headers: [.none, .none],
-                footers: [
-                    .attrStr(
-                        text: mnemonicErrorString(error) ?? Localized("newMnemonic.footer"),
-                        highlightWords: Constant.mnemonicHighlightWords
-                    ),
-                    .none
-                ],
+                footers: mnemonicFootersError(error),
                 cta: Localized("newMnemonic.cta.import")
             )
         }
 
         return .init(
             sectionsItems: [
-                mnemonicSectionItems(),
+                mnemonicSectionItems(
+                    updateMnemonic: updateMnemonic,
+                    isValidMnemonic: true
+                ),
                 optionsSectionItems()
             ],
             headers: [.none, .none],
@@ -161,17 +177,17 @@ private extension DefaultMnemonicImportPresenter {
                 ),
                 .none
             ],
-            cta: Localized("newMnemonic.cta.new")
+            cta: Localized("newMnemonic.cta.import")
         )
     }
 
-    func mnemonicSectionItems() -> [MnemonicImportViewModel.Item] {
+    func mnemonicSectionItems(
+        updateMnemonic: Bool,
+        isValidMnemonic: Bool
+    ) -> [MnemonicImportViewModel.Item] {
         [
             MnemonicImportViewModel.Item.mnemonic(
-                mnemonic: .init(
-                    value: interactor.mnemonic.joined(separator: " "),
-                    type: .new
-                )
+                mnemonic: makeMnemonic(updateMnemonic: updateMnemonic)
             )
         ]
     }
@@ -215,19 +231,37 @@ private extension DefaultMnemonicImportPresenter {
         ]
     }
 
-    func mnemonicErrorString(_ error: Error?) -> String? {
-        guard let error = error else {
-            return nil
+    func mnemonicFootersError(_ error: Error?) -> [
+        MnemonicImportViewModel.Footer
+    ] {
+        
+        guard let error = error else { return [.none] }
+        
+        switch error {
+        case MnemonicImportInteractorError.invalidWordCount:
+            
+            return [
+                .attrStr(
+                    text: Localized("mnemonic.error.invalid.wordCount"),
+                    highlightWords: [
+                        Localized("mnemonic.error.invalid.wordCount.highlight0")
+                    ]
+                )
+            ]
+            
+        default:
+            
+            return [
+                .attrStr(
+                    text: Localized("mnemonic.error.invalid"),
+                    highlightWords: [
+                        Localized("mnemonic.error.invalid")
+                    ]
+                )
+            ]
         }
-
-        if let err = error as? MnemonicImportInteractorError, err == .invalidWordCount,
-            interactor.mnemonic.count > 12 {
-        }
-        return error.localizedDescription
     }
 }
-
-// MARK: - Utilities
 
 private extension DefaultMnemonicImportPresenter {
 
@@ -251,8 +285,6 @@ private extension DefaultMnemonicImportPresenter {
     }
 }
 
-// MARK: - Constant
-
 private extension DefaultMnemonicImportPresenter {
 
     enum Constant {
@@ -260,5 +292,113 @@ private extension DefaultMnemonicImportPresenter {
             Localized("newMnemonic.footerHighlightWord0"),
             Localized("newMnemonic.footerHighlightWord1"),
         ]
+    }
+}
+
+private extension DefaultMnemonicImportPresenter {
+    
+    func clearBlanksFromFrontOf(
+        _ mnemonic: String,
+        with selectedLocation: Int
+    ) -> (mnemonic: String, selectedLocation: Int) {
+        
+        let initialCount = mnemonic.count
+        
+        var mnemonic = mnemonic
+        if let c = (mnemonic.first { !($0 == " " || $0 == "\t" || $0 == "\n") }) {
+            if let nonWhiteSpaceIndex = mnemonic.firstIndex(of: c) {
+                mnemonic.replaceSubrange(mnemonic.startIndex ..< nonWhiteSpaceIndex, with: "")
+            }
+        }
+        
+        let finalCount = mnemonic.count
+        return (mnemonic, selectedLocation - (initialCount - finalCount))
+    }
+    
+    func makeMnemonic(
+        updateMnemonic: Bool
+    ) -> MnemonicImportViewModel.Mnemonic {
+        
+        let prefixForPotentialwords = findPrefixForPotentialWords(
+            for: mnemonic,
+            selectedLocation: selectedLocation
+        )
+        let potentialWords = interactor.potentialMnemonicWords(
+            for: prefixForPotentialwords
+        )
+        var wordsInfo = interactor.findInvalidWords(in: mnemonic)
+        wordsInfo = updateWordsInfo(
+            wordsInfo: wordsInfo,
+            with: prefixForPotentialwords,
+            at: selectedLocation
+        )
+        return .init(
+            potentialWords: potentialWords,
+            wordsInfo: wordsInfo,
+            mnemonicToUpdate: updateMnemonic ? mnemonic : nil
+        )
+    }
+    
+    func findPrefixForPotentialWords(
+        for mnemonic: String,
+        selectedLocation: Int
+    ) -> String {
+        
+        var prefix = ""
+        for var i in 0..<mnemonic.count {
+            let character = mnemonic[
+                mnemonic.index(mnemonic.startIndex, offsetBy: i)
+            ]
+            if i == selectedLocation {
+                return prefix
+            }
+            
+            prefix.append(character)
+            
+            if character == " " {
+                prefix = ""
+            }
+            
+            i += 1
+        }
+
+        return prefix
+    }
+    
+    func updateWordsInfo(
+        wordsInfo: [MnemonicImportViewModel.Mnemonic.WordInfo],
+        with prefixForPotentialwords: String,
+        at selectedLocation: Int
+    ) -> [MnemonicImportViewModel.Mnemonic.WordInfo] {
+        
+        var updatedWords = [MnemonicImportViewModel.Mnemonic.WordInfo]()
+        
+        var location = 0
+        var wordUpdated = false
+        
+        for (index, wordInfo) in wordsInfo.enumerated() {
+            location += wordInfo.word.count
+            if selectedLocation <= location, !wordUpdated {
+                if wordInfo.word == prefixForPotentialwords {
+                    let isInvalid = index > 11
+                        ? wordInfo.isInvalid
+                        : !interactor.isValidPrefix(wordInfo.word)
+                    
+                    updatedWords.append(
+                        .init(
+                            word: wordInfo.word,
+                            isInvalid: isInvalid
+                        )
+                    )
+                }
+                wordUpdated = true
+            } else {
+                updatedWords.append(wordInfo)
+            }
+            
+            location += 1
+        }
+        
+        return updatedWords
     }
 }

@@ -65,16 +65,11 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
         
         // Validates that all words other than the last one (if we are still typing)
         // are valid
-        for (index, item) in words.enumerated() {
+        words.forEach {
+
+            let word = String($0)
             
-            let word = String(item)
-            
-            var isWordValid = validator.wordsStartingWith(prefix: word).count > 0
-            //var isWordValid = mnemonicWords.contains(word)
-            
-            if index > 11 {
-                isWordValid = false
-            }
+            let isWordValid = validator.wordsStartingWith(prefix: word).count > 0
             
             wordsInfo.append(.init(word: word, isInvalid: !isWordValid))
         }
@@ -83,9 +78,7 @@ extension DefaultMnemonicConfirmationService: MnemonicConfirmationService {
         // matches with a valid word
         if let lastWord = lastWord {
             
-            var isValidPrefix = isValidPrefix(lastWord)
-            
-            if words.count > 11 { isValidPrefix = false }
+            let isValidPrefix = isValidPrefix(lastWord)
             
             wordsInfo.append(.init(word: lastWord, isInvalid: !isValidPrefix))
         }

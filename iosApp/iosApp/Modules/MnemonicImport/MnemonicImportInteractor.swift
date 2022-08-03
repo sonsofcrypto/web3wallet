@@ -42,6 +42,13 @@ protocol MnemonicImportInteractor: AnyObject {
 
     /// Creates new `KeyStoreItem` and saves it to `KeyStore`
     func createKeyStoreItem(_ password: String, salt: String) throws -> KeyStoreItem
+    
+    
+    func potentialMnemonicWords(for prefix: String?) -> [String]
+    func findInvalidWords(in mnemonic: String?) -> [
+        MnemonicImportViewModel.Mnemonic.WordInfo
+    ]
+    func isValidPrefix(_ prefix: String) -> Bool
 }
 
 // MARK: - DefaultMnemonicImportInteractor
@@ -142,6 +149,57 @@ extension DefaultMnemonicImportInteractor: MnemonicImportInteractor {
         return String(data: password.toDataFull(), encoding: .ascii)
             ?? password.toHexString(prefix: false)
     }
+    
+    func potentialMnemonicWords(for prefix: String?) -> [String] {
+        guard let prefix = prefix, !prefix.isEmpty else {
+            return []
+        }
+
+        return validator.wordsStartingWith(prefix: prefix)
+    }
+    
+    func findInvalidWords(in mnemonic: String?) -> [MnemonicImportViewModel.Mnemonic.WordInfo] {
+        
+        guard let mnemonic = mnemonic else { return [] }
+        
+        var wordsInfo = [MnemonicImportViewModel.Mnemonic.WordInfo]()
+
+        var words = mnemonic.split(separator: " ")
+        
+        var lastWord: String?
+        if let last = words.last, let lastCharacter = mnemonic.last, lastCharacter != " " {
+            
+            lastWord = String(last)
+            words = words.dropLast()
+        }
+        
+        // Validates that all words other than the last one (if we are still typing)
+        // are valid
+        words.forEach {
+            
+            let word = String($0)
+            
+            let isWordValid = validator.wordsStartingWith(prefix: word).count > 0
+            
+            wordsInfo.append(.init(word: word, isInvalid: !isWordValid))
+        }
+        
+        // In case we have not yet typed the entire last word, we check that the start of it
+        // matches with a valid word
+        if let lastWord = lastWord {
+            
+            let isValidPrefix = isValidPrefix(lastWord)
+            
+            wordsInfo.append(.init(word: lastWord, isInvalid: !isValidPrefix))
+        }
+        
+        return wordsInfo
+    }
+    
+    func isValidPrefix(_ prefix: String) -> Bool {
+        
+        !validator.wordsStartingWith(prefix: prefix).isEmpty
+    }    
 }
 
 private extension DefaultMnemonicImportInteractor {

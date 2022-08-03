@@ -139,8 +139,7 @@ extension MnemonicImportViewController: UICollectionViewDataSource {
             return collectionView.dequeue(MnemonicImportCell.self, for: idxPath)
                 .update(
                     with: mnemonic,
-                    textChangeHandler: { value in self.mnemonicDidChange(value) },
-                    textEditingEndHandler: nil
+                    handler: mnemonicMnemonicHandler()
                 )
 
         case let .name(name):
@@ -205,7 +204,6 @@ extension MnemonicImportViewController: UICollectionViewDataSource {
                 for: indexPath,
                 kind: kind
             )
-
             footer.update(with: viewModel)
             return footer
 
@@ -226,8 +224,25 @@ extension MnemonicImportViewController: UICollectionViewDelegate {
         return false
     }
 
-    func mnemonicDidChange(_ mnemonic: String) {
-        presenter.handle(.didChangeMnemonic(mnemonic: mnemonic))
+    func mnemonicMnemonicHandler() -> MnemonicImportCell.Handler {
+        
+        .init(
+            onMnemonicChanged: makeOnMnemonicChanged()
+        )
+    }
+    
+    func makeOnMnemonicChanged() -> MnemonicImportCell.OnMnemonicChanged {
+        
+        {
+            [weak self] info in
+            guard let self = self else { return }
+            self.presenter.handle(
+                .mnemonicChanged(
+                    to: info.mnemonic,
+                    selectedLocation: info.selectedLocation
+                )
+            )
+        }
     }
 
     func nameDidChange(_ name: String) {
@@ -308,7 +323,11 @@ extension MnemonicImportViewController: UICollectionViewDelegateFlowLayout {
         return .zero
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForFooterInSection section: Int
+    ) -> CGSize {
         guard let footer = viewModel?.footer(at: section) else {
             return .zero
         }
@@ -334,7 +353,7 @@ extension MnemonicImportViewController: UIScrollViewDelegate {
 private extension MnemonicImportViewController {
     
     func configureUI() {
-        title = Localized("newMnemonic.title")
+        title = Localized("newMnemonic.title.import")
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: "chevron.left".assetImage,
