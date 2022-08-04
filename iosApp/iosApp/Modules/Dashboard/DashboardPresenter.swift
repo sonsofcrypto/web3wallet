@@ -47,6 +47,8 @@ final class DefaultDashboardPresenter {
         formatter.numberStyle = .percent
         return formatter
     }()
+    // TODD(Anon): Refactor to shared formatters
+    private let currencyFormatter = CurrencyFormatter()
 
     var expandedNetworks = [String]()
     var notifications = [Web3Notification]()
@@ -191,7 +193,7 @@ private extension DefaultDashboardPresenter {
 
         sections.append(
             .init(
-                header: .balance(interactor.totalBalanceInFiat().formatCurrency() ?? ""),
+                header: .balance(interactor.totalFiatBalance().formatCurrency() ?? ""),
                 items: .actions(
                     [
                         .init(
@@ -234,7 +236,10 @@ private extension DefaultDashboardPresenter {
                         )
                     ),
                     items: .wallets(
-                        walletsViewModel(from: interactor.currencies(for: network))
+                        walletsViewModel(
+                            from: network,
+                            currencies:  interactor.currencies(for: network)
+                        )
                     )
                 )
             )
@@ -271,22 +276,36 @@ private extension DefaultDashboardPresenter {
         return .notifications(items)
     }
     
-    func walletsViewModel(from currencies: [Currency]) -> [DashboardViewModel.Wallet] {
+    func walletsViewModel(from network: Network, currencies: [Currency]) -> [DashboardViewModel.Wallet] {
         currencies.map {
             walletViewModel(
-                $0,
+                network,
+                currency: $0,
                 market: interactor.metadata(for: $0)
             )
         }
     }
 
-    func walletViewModel(_ currency: Currency, market: Market?) -> DashboardViewModel.Wallet {
-        .init(
+    func walletViewModel(_ network: Network, currency: Currency, market: Market?) -> DashboardViewModel.Wallet {
+        let cryptoBalance = interactor.cryptoBalance(
+            for: interactor.wallet(for: network),
+            currency: currency
+        )
+        if currency.name == "Ethereum" || currency.name == "Cult DAO" {
+            print("=== balance \(currency.name)", cryptoBalance)
+        }
+
+        let formatted = currencyFormatter.format(
+            bigInt: cryptoBalance,
+            currency: currency
+        )
+
+        return .init(
             name: currency.name,
             ticker: currency.symbol,
             imageData: interactor.image(for: currency),
-            fiatBalance: "0", // $0.usdBalanceString,
-            cryptoBalance: "0", // "\($0.balance.toString(decimals: $0.decimals)) \($0.symbol)",
+            fiatBalance: "0",
+            cryptoBalance: formatted, // "\($0.balance.toString(decimals: $0.decimals)) \($0.symbol)",
             tokenPrice: market?.currentPrice != nil
                 ? fiatFormatter.string(from: market?.currentPrice ?? 0) ?? "-"
                 : "-",

@@ -13,6 +13,7 @@ enum DashboardInteractorEvent {
     case didUpdateCandles(network: Network, currency: Currency)
     case didUpdateBlock(blockNumber: BigInt)
     case didUpdateBalance(wallet: Wallet, currency: Currency, balance: BigInt)
+    case didUpdateTransactionCount(wallet: Wallet, count: BigInt)
     case didUpdateNFTs
 }
 
@@ -29,13 +30,16 @@ protocol DashboardInteractor: AnyObject {
     func nfts(for network: Web3Network) -> [ NFTItem ]
 
     func enabledNetworks() -> [Network]
+    func wallet(for network: Network) -> Wallet?
     func currencies(for network: Network) -> [Currency]
     func setCurrencies(_ currencies: [Currency], network: Network)
     func metadata(for currency: Currency) -> Market?
     func candles(for currency: Currency) -> [Candle]?
     // TODO: Refactor to be url or image name
     func image(for currency: Currency) -> Data
-    func totalBalanceInFiat() -> Double
+    func cryptoBalance(for wallet: Wallet?, currency: Currency) -> BigInt
+    func fiatBalance(for wallet: Wallet, currency: Currency) -> BigInt
+    func totalFiatBalance() -> Double
     func reloadData()
 
     func addListener(_ listener: DashboardInteractorLister)
@@ -106,6 +110,10 @@ extension DefaultDashboardInteractor {
         walletsConnectionService.enabledNetworks()
     }
 
+    func wallet(for network: Network) -> Wallet? {
+        walletsConnectionService.wallet(network: network)
+    }
+
     func currencies(for network: Network) -> [Currency] {
         guard let wallet = walletsConnectionService.wallet(network: network) else {
             return []
@@ -142,6 +150,26 @@ extension DefaultDashboardInteractor {
         return image!.pngData()!
     }
 
+    func cryptoBalance(for wallet: Wallet?, currency: Currency) -> BigInt {
+        guard let wallet = wallet else {
+            return BigInt.Companion().zero()
+        }
+        let count = walletsStateService.transactionCount(wallet: wallet)
+        if currency.name == "Ethereum" {
+            print("=== nonce \(wallet.network()?.name) \(count)")
+        }
+        return walletsStateService.balance(wallet: wallet, currency: currency)
+    }
+
+    func fiatBalance(for wallet: Wallet, currency: Currency) -> BigInt {
+        return BigInt.Companion().zero()
+    }
+
+    func totalFiatBalance() -> Double {
+        return 34234.2
+    }
+
+
     func reloadData() {
         guard let wallet = walletsConnectionService.wallet else {
             return
@@ -165,8 +193,6 @@ extension DefaultDashboardInteractor {
         )
 
         reloadCandles()
-        // TODO: Get balance
-        // TODO: Refresh nfts
         nftsService.fetchNFTs { _ in }
     }
 
@@ -188,11 +214,6 @@ extension DefaultDashboardInteractor {
                 )
             }
         }
-    }
-
-    func totalBalanceInFiat() -> Double {
-        // TODO: Total balance
-        return 4235.20
     }
 }
 
@@ -300,6 +321,10 @@ extension WalletsStateEvent {
         }
         if let event = self as? WalletsStateEvent.BlockNumber {
             return .didUpdateBlock(blockNumber: event.number)
+        }
+        if let event = self as? WalletsStateEvent.TransactionCount {
+            let (wallet, count) = (event.wallet, event.nonce)
+            return .didUpdateTransactionCount(wallet: wallet, count: count)
         }
         fatalError("Unhandled event \(self)")
     }

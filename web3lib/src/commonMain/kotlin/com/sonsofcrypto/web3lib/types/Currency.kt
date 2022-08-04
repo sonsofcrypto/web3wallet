@@ -1,5 +1,7 @@
 package com.sonsofcrypto.web3lib.types
 
+import com.sonsofcrypto.web3lib.utils.BigDec
+import com.sonsofcrypto.web3lib.utils.BigInt
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -17,6 +19,14 @@ data class Currency(
 
     fun id(): String {
         return coinGeckoId ?: (symbol + (address ?: name))
+    }
+
+    fun double(balance: BigInt): Double {
+        if (balance == null) {
+            return 0.0
+        }
+        val divisor = BigInt.from(10).pow(decimals.toLong())
+        return BigDec.from(balance).div(BigDec.from(divisor)).toDouble()
     }
 
     companion object {

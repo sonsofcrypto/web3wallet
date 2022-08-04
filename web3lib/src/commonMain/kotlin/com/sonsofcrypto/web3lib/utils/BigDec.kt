@@ -1,6 +1,10 @@
 package com.sonsofcrypto.web3lib.utils
 
 import com.ionspin.kotlin.bignum.decimal.BigDecimal
+import com.ionspin.kotlin.bignum.decimal.DecimalMode
+import com.ionspin.kotlin.bignum.decimal.RoundingMode
+
+private val decimalMode = DecimalMode(36, RoundingMode.ROUND_HALF_AWAY_FROM_ZERO, 36)
 
 class BigDec {
 
@@ -10,13 +14,20 @@ class BigDec {
         this.storage = storage
     }
 
-    fun add(value: BigDec): BigDec = BigDec(storage.add(value.storage))
-    fun mul(value: BigDec): BigDec = BigDec(storage.multiply(value.storage))
-    fun div(value: BigDec): BigDec = BigDec(storage.divide(value.storage))
+    fun add(value: BigDec): BigDec = BigDec(
+        storage.add(value.storage, decimalMode = decimalMode)
+    )
+    fun mul(value: BigDec): BigDec = BigDec(
+        storage.multiply(value.storage, decimalMode = decimalMode)
+    )
+    fun div(value: BigDec): BigDec = BigDec(
+        storage.divide(value.storage, decimalMode = decimalMode)
+    )
 
     fun toBigInt(): BigInt = BigInt(storage.toBigInteger())
     fun toHexString(): String = storage.toString(16)
     fun toDecimalString(): String = toString()
+    fun toDouble(): Double = storage.doubleValue(false)
 
     override fun toString(): String = storage.toString(10)
 

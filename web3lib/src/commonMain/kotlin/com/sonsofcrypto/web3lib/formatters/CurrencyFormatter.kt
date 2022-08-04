@@ -10,8 +10,9 @@ class CurrencyFormatter {
         if (bigInt == null) {
             return "0"
         }
-        val dec = BigDec.from(bigInt).div(BigDec.from(currency.decimals))
-        return dec.toDecimalString()
+        val divisor = BigInt.from(10).pow(currency.decimals.toLong())
+        val dec = BigDec.from(bigInt).div(BigDec.from(divisor))
+        return dec.toDouble().toString()
     }
 
     fun bigInt(string: String, currency: Currency): BigInt {

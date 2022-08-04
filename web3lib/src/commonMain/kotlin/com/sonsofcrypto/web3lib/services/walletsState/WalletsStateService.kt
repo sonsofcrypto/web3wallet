@@ -198,7 +198,6 @@ class DefaultWalletsStateService: WalletsStateService {
         if (nonce.equals(knownNonce)) {
             return@bgDispatcher
         }
-        handleTransactionCount(wallet, nonce)
         // TODO: Get transaction from nonce and only update IRC20s in transaction
         for (currency in currencies) {
             when (currency.type) {
@@ -222,6 +221,7 @@ class DefaultWalletsStateService: WalletsStateService {
                 else -> { println("Unhandled balance") }
             }
         }
+        handleTransactionCount(wallet, nonce)
     }
 
     private suspend fun handleBalance(
