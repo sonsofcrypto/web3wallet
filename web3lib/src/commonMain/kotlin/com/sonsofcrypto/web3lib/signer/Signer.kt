@@ -11,7 +11,7 @@ interface Signer {
     fun provider(): Provider?
 
     /** Returns the checksum address */
-    @Throws(Throwable::class) suspend fun address(): Address
+    @Throws(Throwable::class) fun address(): Address
 
     /** Signed prefixed-message. Bytes or encoded string as a UTF8-message */
     suspend fun signMessage(message: ByteArray): ByteArray

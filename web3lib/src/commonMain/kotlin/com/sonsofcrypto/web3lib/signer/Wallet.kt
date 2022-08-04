@@ -37,7 +37,7 @@ class Wallet: Signer {
     fun network(): Network? = provider?.network
 
     @Throws(Throwable::class)
-    override suspend fun address(): Address {
+    override fun address(): Address {
         val path = keyStoreItem.derivationPath
         val hexStrAddress = keyStoreItem.addresses[path]
         if (hexStrAddress != null)
