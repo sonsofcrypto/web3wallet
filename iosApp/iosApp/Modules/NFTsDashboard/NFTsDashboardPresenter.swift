@@ -11,7 +11,7 @@ enum NFTsDashboardPresenterEvent {
 
 protocol NFTsDashboardPresenter {
 
-    func present()
+    func present(isPullDownToRefreh: Bool)
     func handle(_ event: NFTsDashboardPresenterEvent)
 }
 
@@ -37,9 +37,11 @@ final class DefaultNFTsDashboardPresenter {
 
 extension DefaultNFTsDashboardPresenter: NFTsDashboardPresenter {
 
-    func present() {
+    func present(isPullDownToRefreh: Bool) {
         
-        interactor.fetchYourNFTs { [weak self] result in
+        view.update(with: .loading)
+        
+        interactor.fetchYourNFTs(isPullDownToRefreh: isPullDownToRefreh) { [weak self] result in
             
             guard let self = self else { return }
             

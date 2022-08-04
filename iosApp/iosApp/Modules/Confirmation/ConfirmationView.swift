@@ -77,6 +77,13 @@ extension ConfirmationViewController: UIViewControllerTransitioningDelegate, Mod
             contentHeight += Theme.constant.padding
             contentHeight += 322
             contentHeight += Theme.constant.padding
+            
+        case .sendNFT:
+            
+            contentHeight += navBarHeight
+            contentHeight += Theme.constant.padding
+            contentHeight += 342
+            contentHeight += Theme.constant.padding
         }
         
         return ConfirmationSheetPresentationController(
@@ -126,6 +133,13 @@ private extension ConfirmationViewController {
         case let .send(viewModel):
             
             return ConfirmationSendView(
+                viewModel: viewModel,
+                onConfirmHandler: makeConfirmationHandler()
+            )
+            
+        case let .sendNFT(viewModel):
+
+            return ConfirmationSendNFTView(
                 viewModel: viewModel,
                 onConfirmHandler: makeConfirmationHandler()
             )

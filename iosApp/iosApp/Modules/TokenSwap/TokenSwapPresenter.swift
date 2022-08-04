@@ -203,11 +203,24 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                         tokenFrom: makeConfirmationSwapTokenFrom(),
                         tokenTo: makeConfirmationSwapTokenTo(),
                         provider: makeConfirmationProvider(),
-                        estimatedFee: interactor.networkFeeInUSD(network: tokenFrom.network, fee: fee)
+                        estimatedFee: makeConfirmationSwapEstimatedFee()
                     ),
                     onSuccess: makeOnTokenTransactionSend()
                 )
             )
+        }
+    }
+    
+    func makeConfirmationSwapEstimatedFee() -> ConfirmationWireframeContext.SwapContext.Fee {
+        
+        switch fee {
+            
+        case .low:
+            return .low
+        case .medium:
+            return .medium
+        case .high:
+            return .high
         }
     }
     

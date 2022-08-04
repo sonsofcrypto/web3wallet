@@ -14,6 +14,8 @@ final class NFTsDashboardViewController: BaseViewController {
     var presenter: NFTsDashboardPresenter!
     
     private (set) weak var mainScrollView: ScrollView!
+    weak var loadingView: UIActivityIndicatorView!
+    weak var noContentView: UIView!
     weak var carousel: iCarousel!
     weak var collectionsView: UIView!
 
@@ -25,20 +27,31 @@ final class NFTsDashboardViewController: BaseViewController {
         
         configureUI()
         
-        refresh()
+        presenter.present(isPullDownToRefreh: false)
     }
 }
 
 extension NFTsDashboardViewController: NFTsDashboardView {
 
     func update(with viewModel: NFTsDashboardViewModel) {
-
-        self.viewModel = viewModel
         
-        mainScrollView.refreshControl?.endRefreshing()
-        
-        refreshNFTs()
-        refreshNFTsCollections()
+        switch viewModel {
+        case .loading:
+            
+            guard self.viewModel?.nfts.isEmpty ?? true else { return }
+            showLoading()
+        case .error:
+            // TODO: Improve and show error
+            showNoNFTs()
+        case .loaded:
+            mainScrollView.refreshControl?.endRefreshing()
+            self.viewModel = viewModel
+            if viewModel.nfts.isEmpty {
+                showNoNFTs()
+            } else {
+                showNFTs()
+            }
+        }
     }
 }
 
@@ -59,14 +72,44 @@ extension NFTsDashboardViewController {
         )
     }
     
-    @objc func refresh() {
+    @objc func pullDownToRefresh() {
         
-        presenter.present()
+        presenter.present(isPullDownToRefreh: true)
     }
 }
 
 private extension NFTsDashboardViewController {
     
+    func showLoading() {
+        
+        loadingView.isHidden = false
+        loadingView.startAnimating()
+        noContentView.isHidden = true
+        mainScrollView.isHidden = true
+    }
+
+    func hideLoading() {
+        
+        loadingView.isHidden = true
+        loadingView.stopAnimating()
+    }
+
+    func showNoNFTs() {
+        
+        hideLoading()
+        noContentView.isHidden = false
+        mainScrollView.isHidden = true
+    }
+
+    func showNFTs() {
+        
+        hideLoading()
+        noContentView.isHidden = true
+        mainScrollView.isHidden = false
+        refreshNFTs()
+        refreshNFTsCollections()
+    }
+
     func configureUI() {
         
         title = Localized("nfts")
@@ -74,6 +117,42 @@ private extension NFTsDashboardViewController {
         let gradient = GradientView()
         view.addSubview(gradient)
         gradient.addConstraints(.toEdges)
+        
+        let loadingView = UIActivityIndicatorView(style: .large)
+        loadingView.color = Theme.colour.activityIndicator
+        view.addSubview(loadingView)
+        self.loadingView = loadingView
+        loadingView.addConstraints(
+            [
+                .layout(
+                    anchor: .topAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding * 2)
+                ),
+                .layout(
+                    anchor: .centerXAnchor
+                )
+            ]
+        )
+
+        let noContentView = makeNoContentView()
+        view.addSubview(noContentView)
+        self.noContentView = noContentView
+        noContentView.addConstraints(
+            [
+                .layout(
+                    anchor: .topAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding)
+                ),
+                .layout(
+                    anchor: .leadingAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding)
+                ),
+                .layout(
+                    anchor: .trailingAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding)
+                )
+            ]
+        )
         
         let mainScrollView = makeMainScrollView()
         view.addSubview(mainScrollView)

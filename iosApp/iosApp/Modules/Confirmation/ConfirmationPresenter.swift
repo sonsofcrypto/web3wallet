@@ -49,12 +49,12 @@ extension DefaultConfirmationPresenter: ConfirmationPresenter {
             
             switch context.type {
                 
-            case .send:
+            case .send, .sendNFT:
                 
                 wireframe.navigate(
                     to: .authenticate(makeAuthenticateContext())
                 )
-                
+                                
             case .swap:
                 
                 wireframe.navigate(to: .underConstruction)
@@ -84,6 +84,10 @@ private extension DefaultConfirmationPresenter {
             
             content = makeViewModelContent(forSend: sendData)
 
+        case let .sendNFT(sendNFTData):
+            
+            content = makeViewModelContent(forSendNFT: sendNFTData)
+
         }
         
         return .init(title: makeTitle(), content: content)
@@ -100,6 +104,10 @@ private extension DefaultConfirmationPresenter {
         case .send:
             
             return Localized("confirmation.send.title")
+
+        case .sendNFT:
+            
+            return Localized("confirmation.sendNFT.title")
         }
     }
     
@@ -133,12 +141,12 @@ private extension DefaultConfirmationPresenter {
             slippage: data.provider.slippage
         )
         
-        let estimatedFeeUSD = (
-            data.estimatedFee * data.tokenFrom.token.usdPrice
-        ).formatCurrency() ?? ""
+        // TODO: @Annon to show price here
+        let feeValueInToken = "value token"
+        let feeValueInUSD = "value usd"
         let estimatedFee = ConfirmationViewModel.SwapViewModel.Fee(
-            value: data.estimatedFee.toString(decimals: data.tokenFrom.token.decimals),
-            usdValue: estimatedFeeUSD
+            value: feeValueInToken,
+            usdValue: feeValueInUSD
         )
 
         return .swap(
@@ -170,17 +178,43 @@ private extension DefaultConfirmationPresenter {
             to: data.destination.to
         )
 
-        let estimatedFeeUSD = (
-            data.estimatedFee * data.token.token.usdPrice
-        ).formatCurrency() ?? ""
+        // TODO: @Annon to show price here
+        let feeValueInToken = "value token"
+        let feeValueInUSD = "value usd"
         let estimatedFee = ConfirmationViewModel.SendViewModel.Fee(
-            value: data.estimatedFee.toString(decimals: data.token.token.decimals),
-            usdValue: estimatedFeeUSD
+            value: feeValueInToken,
+            usdValue: feeValueInUSD
         )
 
         return .send(
             .init(
                 token: token,
+                destination: destination,
+                estimatedFee: estimatedFee
+            )
+        )
+    }
+    
+    func makeViewModelContent(
+        forSendNFT data: ConfirmationWireframeContext.SendNFTContext
+    ) -> ConfirmationViewModel.Content {
+        
+        let destination = ConfirmationViewModel.SendNFTViewModel.Destination(
+            from: data.destination.from,
+            to: data.destination.to
+        )
+
+        // TODO: @Annon to show price here
+        let feeValueInToken = "value token"
+        let feeValueInUSD = "value usd"
+        let estimatedFee = ConfirmationViewModel.SendNFTViewModel.Fee(
+            value: feeValueInToken,
+            usdValue: feeValueInUSD
+        )
+
+        return .sendNFT(
+            .init(
+                nftItem: data.nftItem,
                 destination: destination,
                 estimatedFee: estimatedFee
             )
@@ -206,10 +240,15 @@ private extension DefaultConfirmationPresenter {
         case .swap:
             
             return Localized("authenticate.title.swap")
-        
+                    
         case .send:
             
             return Localized("authenticate.title.send")
+            
+        case .sendNFT:
+            
+            return Localized("authenticate.title.sendNFT")
+
         }
     }
     
@@ -248,6 +287,11 @@ private extension DefaultConfirmationPresenter {
         case .send:
             
             print("Do send!")
+            print("Authenticated with: \(password) and \(salt)")
+            
+        case .sendNFT:
+            
+            print("Do send NFT!")
             print("Authenticated with: \(password) and \(salt)")
         }
     }

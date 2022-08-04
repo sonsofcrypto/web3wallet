@@ -1,11 +1,11 @@
-// Created by web3d4v on 06/07/2022.
+// Created by web3d4v on 04/08/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import Foundation
 import web3lib
 
-protocol TokenSendInteractor: AnyObject {
+protocol NFTSendInteractor: AnyObject {
 
     var defaultToken: Web3Token { get }
     var walletAddress: String? { get }
@@ -26,18 +26,16 @@ protocol TokenSendInteractor: AnyObject {
     func networkFeeInNetworkToken(network: Web3Network, fee: Web3NetworkFee) -> String
 }
 
-final class DefaultTokenSendInteractor {
+final class DefaultNFTSendInteractor {
 
     private let web3Service: Web3ServiceLegacy
-    
-    init(
-        web3Service: Web3ServiceLegacy
-    ) {
+     
+    init(web3Service: Web3ServiceLegacy) {
         self.web3Service = web3Service
     }
 }
 
-extension DefaultTokenSendInteractor: TokenSendInteractor {
+extension DefaultNFTSendInteractor: NFTSendInteractor {
     
     var walletAddress: String? {
         

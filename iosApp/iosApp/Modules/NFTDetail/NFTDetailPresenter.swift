@@ -59,7 +59,8 @@ extension DefaultNFTDetailPresenter: NFTDetailPresenter {
             
         case .send:
             
-            wireframe.navigate(to: .underConstruction)
+            guard let item = latestNFT else { return }
+            wireframe.navigate(to: .send(item))
             
         case .dismiss:
             wireframe.navigate(to: .dismiss)

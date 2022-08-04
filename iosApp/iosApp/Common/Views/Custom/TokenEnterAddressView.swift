@@ -9,6 +9,7 @@ struct TokenEnterAddressViewModel {
     let becomeFirstResponder: Bool
 }
 
+// TODO: Rename to AddressPickerView
 final class TokenEnterAddressView: UIView {
     
     @IBOutlet weak var textFieldView: UIView!

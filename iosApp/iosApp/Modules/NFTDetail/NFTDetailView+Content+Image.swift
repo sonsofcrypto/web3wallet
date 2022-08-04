@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import UIKit
 
 extension NFTDetailViewController {
     
@@ -33,8 +34,17 @@ extension NFTDetailViewController {
             ]
         )
         
+        let idLabel = UILabel()
+        idLabel.apply(style: .body)
+        idLabel.textAlignment = .center
+        idLabel.text = Localized("nft.detail.section.id", arg: item.identifier)
+        views.append(idLabel)
+        
+        views.append(.vSpace(height: Theme.constant.padding.half * 0.75))
+        
         let containerView = UIView()
         let vStackView = VStackView(views)
+        vStackView.spacing = Theme.constant.padding.half
         vStackView.clipsToBounds = true
         containerView.addSubview(vStackView)
         vStackView.addConstraints(
@@ -45,7 +55,7 @@ extension NFTDetailViewController {
             ]
         )
         
-        vStackView.backgroundColor = Theme.colour.backgroundBasePrimary
+        vStackView.backgroundColor = Theme.colour.cellBackground
         vStackView.layer.cornerRadius = Theme.constant.cornerRadius
         vStackView.layer.borderWidth = 1
         vStackView.layer.borderColor = Theme.colour.fillTertiary.cgColor

@@ -9,6 +9,7 @@ final class NFTDetailWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> NFTDetailWireframeFactory in
             
             DefaultNFTDetailWireframeFactory(
+                nftSendWireframeFactory: resolver.resolve(),
                 nftsService: resolver.resolve()
             )
         }

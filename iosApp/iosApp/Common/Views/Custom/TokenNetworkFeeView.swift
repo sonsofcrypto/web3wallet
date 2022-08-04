@@ -15,6 +15,7 @@ struct TokenNetworkFeeViewModel {
     }
 }
 
+// TODO: Rename to NetworkFeePickerView
 final class TokenNetworkFeeView: UIView {
     
     @IBOutlet weak var nameLabel: UILabel!
