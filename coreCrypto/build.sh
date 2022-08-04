@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-gomobile bind -v -target=android -o ./../web3lib.utils/src/androidMain/libs/CoreCrypto.aar ./
+gomobile bind -v -target=android -o ./../web3lib/src/androidMain/libs/CoreCrypto.aar ./
 gomobile bind -v -target=ios -o ./CoreCrypto.xcframework ./
 
 SRC="@import Foundation;"

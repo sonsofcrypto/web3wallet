@@ -64,12 +64,10 @@ final class DefaultDashboardPresenter {
         self.onboardingService = onboardingService
 
         interactor.addListener(self)
-        interactor.addLegacyListener(self)
     }
 
     deinit {
         interactor.removeListener(self)
-        interactor.removeLegacyListener(self)
     }
 }
 

@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3lib.types
 
+import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import kotlinx.serialization.json.JsonPrimitive
 
 typealias AddressBytes = ByteArray
@@ -22,7 +23,7 @@ sealed class Address() {
 
 fun Address.jsonPrimitive(): JsonPrimitive = when (this) {
     is Address.HexString -> JsonPrimitive(hexString)
-    is Address.Bytes -> TODO("Convert to hex string format")
+    is Address.Bytes -> JsonPrimitive(DataHexString(data))
     else -> JsonPrimitive("")
 }
 

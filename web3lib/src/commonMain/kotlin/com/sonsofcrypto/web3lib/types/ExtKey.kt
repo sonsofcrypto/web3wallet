@@ -23,11 +23,11 @@ class ExtKey(
     /** Raw bytes **not** base58Check encoded*/
     fun bytes(): ByteArray {
         return version.hex() +
-                depth.toByte() +
-                fingerprint +
-                index.toByteArray() +
-                chainCode +
-                if (isXprv()) ByteArray(1) + key else key
+            depth.toByte() +
+            fingerprint +
+            index.toByteArray() +
+            chainCode +
+            if (isXprv()) ByteArray(1) + key else key
     }
 
     /** Is `ExtKey` is private or public key */
@@ -46,6 +46,9 @@ class ExtKey(
 
     /** Compressed pub key */
     fun pub(): ByteArray = if (!isXprv()) key else compressedPubKey(curve, key)
+
+    /** Uncompressed pub key */
+    fun uncompressedPub(): ByteArray = upcompressedPubKey(curve, pub())
 
     /**
      * Derive child key at index. If key is private derives regular child

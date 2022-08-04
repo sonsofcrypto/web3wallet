@@ -17,7 +17,8 @@ const (
 
 const compressedPubKeyLen = 33
 
-// CompressedPubKey for given curve, user CurveXYZ constants above. (Not type due to `go bind` interop)
+// CompressedPubKey for given curve, user CurveXYZ constants above.
+// (Not type due to `go bind` interop)
 func CompressedPubKey(curve int, priv []byte) []byte {
 	c := curveFor(curve)
 	x, y := c.ScalarBaseMult(priv)
@@ -30,6 +31,17 @@ func CompressedPubKey(curve int, priv []byte) []byte {
 	pub = append(pub, prefix)
 
 	return paddedAppend(compressedPubKeyLen-1, pub, x.Bytes())
+}
+
+// UncompressedPubKey for given curve, decompresses compressed put key
+// Returns empty byte array on error. (Not type due to `go bind` interop)
+func UncompressedPubKey(curve int, pubKey []byte) []byte {
+	x, y := secp256k1.DecompressPubkey(pubKey)
+	if x == nil {
+		return make([]byte, 0)
+	}
+	prefix := []byte{0x4}
+	return append(append(prefix, x.Bytes()...), y.Bytes()...)
 }
 
 // AddPrivKeys Add key to key on a curve

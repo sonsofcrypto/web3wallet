@@ -12,7 +12,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        MainBootstrapper().boot()
 #if DEBUG
         let documents = NSSearchPathForDirectoriesInDomains(
             .documentDirectory,
@@ -21,6 +20,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         )
         print(documents.last ?? "")
 #endif
+        MainBootstrapper().boot()
         return true
     }
 

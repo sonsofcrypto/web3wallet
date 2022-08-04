@@ -39,9 +39,7 @@ protocol DashboardInteractor: AnyObject {
     func reloadData()
 
     func addListener(_ listener: DashboardInteractorLister)
-    func addLegacyListener(_ listener: Web3ServiceWalletListener)
     func removeListener(_ listener: DashboardInteractorLister?)
-    func removeLegacyListener(_ listener: Web3ServiceWalletListener)
 }
 
 final class DefaultDashboardInteractor {
@@ -202,40 +200,29 @@ extension DefaultDashboardInteractor {
 extension DefaultDashboardInteractor: WalletsConnectionListener, WalletsStateListener {
 
     func addListener(_ listener: DashboardInteractorLister) {
-        
         if listeners.isEmpty {
-            walletsConnectionService.addListener(listener: self)
-            walletsStateService.add(listener: self)
+            walletsConnectionService.add(listener: self)
+            walletsStateService.add(listener_: self)
             updateObservingWalletsState()
         }
 
         listeners = listeners + [WeakContainer(listener)]
     }
-    
-    func addLegacyListener(_ listener: Web3ServiceWalletListener) {
-        
-        web3ServiceLegacy.addWalletListener(listener)
-    }
 
     func removeListener(_ listener: DashboardInteractorLister?) {
         guard let listener = listener else {
             listeners = []
-            walletsConnectionService.removeListener(listener: nil)
-            walletsStateService.remove(listener: nil)
+            walletsConnectionService.remove(listener: nil)
+            walletsStateService.remove(listener_: nil)
             return
         }
 
         listeners = listeners.filter { $0.value !== listener }
 
         if listeners.isEmpty {
-            walletsConnectionService.removeListener(listener: nil)
-            walletsStateService.remove(listener: nil)
+            walletsConnectionService.remove(listener: nil)
+            walletsStateService.remove(listener_: nil)
         }
-    }
-    
-    func removeLegacyListener(_ listener: Web3ServiceWalletListener) {
-        
-        web3ServiceLegacy.removeWalletListener(listener)
     }
 
     private func emit(_ event: DashboardInteractorEvent) {
@@ -265,11 +252,17 @@ extension DefaultDashboardInteractor: WalletsConnectionListener, WalletsStateLis
     }
 
     func updateObservingWalletsState() {
+        print("=== update observing wallet")
         walletsStateService.stopObserving(wallet: nil)
         walletsConnectionService.walletsForAllNetwork().forEach {
             walletsStateService.observe(
                 wallet: $0,
                 currencies: currenciesService.currencies(wallet: $0)
+            )
+            print(
+                "=== update observing wallet",
+                $0,
+                currenciesService.currencies(wallet: $0).count
             )
         }
     }

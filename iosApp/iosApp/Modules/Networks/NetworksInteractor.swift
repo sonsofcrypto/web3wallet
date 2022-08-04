@@ -76,7 +76,7 @@ extension DefaultNetworksInteractor: WalletsConnectionListener {
 
     func addListener(_ listener: NetworkInteractorLister) {
         if listeners.isEmpty {
-            walletsConnectionService.addListener(listener: self)
+            walletsConnectionService.add(listener: self)
         }
         listeners = listeners + [WeakContainer(listener)]
     }
@@ -84,14 +84,14 @@ extension DefaultNetworksInteractor: WalletsConnectionListener {
     func removeListener(_ listener: NetworkInteractorLister?) {
         guard let listener = listener else {
             listeners = []
-            walletsConnectionService.removeListener(listener: nil)
+            walletsConnectionService.remove(listener: nil)
             return
         }
 
         listeners = listeners.filter { $0.value !== listener }
 
         if listeners.isEmpty {
-            walletsConnectionService.removeListener(listener: nil)
+            walletsConnectionService.remove(listener: nil)
         }
     }
 
@@ -100,10 +100,14 @@ extension DefaultNetworksInteractor: WalletsConnectionListener {
     }
 
     func handle(event: WalletsConnectionEvent) {
-        if let network = (event as? WalletsConnectionEvent.NetworkSelected)?.network,
-           let wallet = walletsConnectionService.wallet(network: network),
-           currenciesService.currencies(wallet: wallet).isEmpty {
-                currenciesService.generateDefaultCurrenciesIfNeeded(wallet: wallet)
+        if let networks = (event as? WalletsConnectionEvent.NetworksChanged) {
+            walletsConnectionService.walletsForAllNetwork().forEach {
+                if currenciesService.currencies(wallet: $0).isEmpty {
+                    currenciesService.generateDefaultCurrenciesIfNeeded(
+                        wallet: $0
+                    )
+                }
+            }
         }
 
         emit(event)

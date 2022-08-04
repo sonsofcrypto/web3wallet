@@ -7,6 +7,11 @@ actual fun compressedPubKey(curve: Curve, prv: ByteArray): ByteArray {
     return CoreCrypto.compressedPubKey(curveInt(curve), prv)
 }
 
+/** Returns decompressed pub key bytes for compressed `pub` key on `curve`  */
+actual fun upcompressedPubKey(curve: Curve, pub: ByteArray): ByteArray {
+    return CoreCrypto.uncompressedPubKey(curveInt(curve), pub)
+}
+
 actual fun addPrvKeys(curve: Curve, key1: ByteArray, key2: ByteArray): ByteArray {
     return CoreCrypto.addPrivKeys(curveInt(curve), key1, key2)
 }

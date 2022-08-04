@@ -109,7 +109,7 @@ extension DefaultMnemonicNewInteractor: MnemonicNewInteractor {
             data: extKey.key,
             password: password,
             address: Network.ethereum()
-                .address(pubKey: extKey.pub())
+                .address(pubKey: extKey.xpub())
                 .toHexString(prefix: true),
             mnemonic: bip39.mnemonic.joined(separator: " "),
             mnemonicLocale: bip39.worldList.localeString(),
@@ -171,8 +171,8 @@ private extension DefaultMnemonicNewInteractor {
         var addresses = [String: String]()
         Network.supported().forEach {
             let path = $0.defaultDerivationPath()
-            let pub = try! bip44.deriveChildKey(path: path).pub()
-            addresses[path] = $0.address(pubKey: pub).toHexString(prefix: true)
+            let xpub = try! bip44.deriveChildKey(path: path).xpub()
+            addresses[path] = $0.address(pubKey: xpub).toHexString(prefix: true)
         }
         return addresses
     }

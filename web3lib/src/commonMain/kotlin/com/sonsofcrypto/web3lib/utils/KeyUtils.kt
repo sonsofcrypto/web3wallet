@@ -6,6 +6,8 @@ enum class Curve {
 
 /** Returns compressed pub key bytes for `prv` key byte on given `curve`  */
 expect fun compressedPubKey(curve: Curve, prv: ByteArray): ByteArray
+/** Returns decompressed pub key bytes for compressed `pub` key on `curve`  */
+expect fun upcompressedPubKey(curve: Curve, pub: ByteArray): ByteArray
 
 expect fun addPrvKeys(curve: Curve, key1: ByteArray, key2: ByteArray): ByteArray
 expect fun addPubKeys(curve: Curve, key1: ByteArray, key2: ByteArray): ByteArray

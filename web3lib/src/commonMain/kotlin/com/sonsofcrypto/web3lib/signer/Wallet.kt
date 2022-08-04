@@ -8,6 +8,7 @@ import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.AddressBytes
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.hexStringToByteArray
 
 class Wallet: Signer {
     private val keyStoreItem: KeyStoreItem
@@ -26,6 +27,8 @@ class Wallet: Signer {
 
     fun id(): String = keyStoreItem.uuid
 
+    override fun provider(): Provider? = provider
+
     override fun connect(provider: Provider): Signer {
         this.provider = provider
         return this
@@ -33,10 +36,13 @@ class Wallet: Signer {
 
     fun network(): Network? = provider?.network
 
-    override fun provider(): Provider? = provider
-
+    @Throws(Throwable::class)
     override suspend fun address(): AddressBytes {
-        TODO("Not yet implemented")
+        val path = keyStoreItem.derivationPath
+        val hexStrAddress = keyStoreItem.addresses[path]
+        if (hexStrAddress != null)
+            return hexStrAddress.hexStringToByteArray()
+        throw Error.MissingAddressError(path, keyStoreItem.uuid)
     }
 
     override suspend fun signMessage(message: ByteArray): ByteArray {
@@ -48,7 +54,7 @@ class Wallet: Signer {
     }
 
     override suspend fun getBalance(block: BlockTag): BigInt {
-        TODO("Not yet implemented")
+        return provider!!.getBalance(Address.Bytes(address()), block)
     }
 
     override suspend fun getTransactionCount(address: Address, block: BlockTag): BigInt {
@@ -85,6 +91,23 @@ class Wallet: Signer {
 
     fun copy(provider: Provider? = null): Wallet {
         return Wallet(keyStoreItem, keyStoreService, provider)
+    }
+
+    /** Exceptions */
+    sealed class Error(
+        message: String? = null,
+        cause: Throwable? = null
+    ) : Exception(message, cause) {
+
+        constructor(cause: Throwable) : this(null, cause)
+
+        /** Missing Address for derivation path */
+        data class MissingAddressError(val path: String, val itemId: String) :
+            Error("Missing address $path for item $itemId")
+
+        /** When calling methods that require provider while one is not connected */
+        data class ProviderConnectionError(val wallet: Wallet) :
+            Error("Provider not connected for ${wallet.id()}")
     }
 }
 

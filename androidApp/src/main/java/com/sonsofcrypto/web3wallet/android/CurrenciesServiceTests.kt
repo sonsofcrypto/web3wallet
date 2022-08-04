@@ -31,9 +31,9 @@ class CurrenciesServiceTests {
         )
 
         val currencies = currenciesService.defaultCurrencies(network)
-        currenciesService.generateDefaultCurrenciesIfNeeded(wallet, network)
+        currenciesService.generateDefaultCurrenciesIfNeeded(wallet)
         assertTrue(
-            currenciesService.currencies(wallet, network).count() == 4,
+            currenciesService.currencies(wallet).count() == 4,
             "Unexpected currencies count after generateDefaultCurrencies"
         )
     }

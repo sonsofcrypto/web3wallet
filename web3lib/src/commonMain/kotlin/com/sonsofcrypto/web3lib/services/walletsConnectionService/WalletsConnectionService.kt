@@ -46,8 +46,8 @@ interface WalletsConnectionService {
         enum class Type() { POCKET, CUSTOM }
     }
 
-    fun addListener(listener: WalletsConnectionListener)
-    fun removeListener(listener: WalletsConnectionListener?)
+    fun add(listener: WalletsConnectionListener)
+    fun remove(listener: WalletsConnectionListener?)
 
     companion object {}
 }
@@ -172,11 +172,11 @@ class DefaultWalletsConnectionService: WalletsConnectionService {
         return store[providerKey(network)] ?: ProviderPocket(network)
     }
 
-    override fun addListener(listener: WalletsConnectionListener) {
+    override fun add(listener: WalletsConnectionListener) {
         listeners = listeners + listOf(listener)
     }
 
-    override fun removeListener(listener: WalletsConnectionListener?) {
+    override fun remove(listener: WalletsConnectionListener?) {
         if (listener != null) listeners = listeners.filter { it != listener }
         else listeners = listOf()
     }

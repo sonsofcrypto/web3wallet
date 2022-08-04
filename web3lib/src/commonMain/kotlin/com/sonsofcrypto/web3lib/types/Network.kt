@@ -18,8 +18,10 @@ data class Network(
         return "m/44'/60'/0'/0/0"
     }
 
-    fun address(pubKey: ByteArray): AddressBytes {
-        return keccak256(pubKey).copyOfRange(12, 32)
+    fun address(pubKey: ExtKey): AddressBytes {
+        val uncompressed = pubKey.uncompressedPub()
+        val bytes = uncompressed.copyOfRange(1, uncompressed.size) // (strip prefix 0x04)
+        return keccak256(bytes).copyOfRange(12, 32)
     }
 
     fun l1(network: Network): Network {
