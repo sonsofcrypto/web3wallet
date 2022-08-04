@@ -1,14 +1,32 @@
 package com.sonsofcrypto.web3lib.signer.contracts
 
 import com.sonsofcrypto.web3lib.provider.model.DataHexString
+import com.sonsofcrypto.web3lib.provider.model.toBigIntData
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.keccak256
+
+private val abiParamLen = 32
 
 open class Contract(
     var address: Address.HexString
 ) {
     open class Event()
+
+    fun abiEncode(address: Address.HexString): ByteArray {
+        val addressBytes = address.hexString.hexStringToByteArray()
+        var result = ByteArray(abiParamLen - addressBytes.size)
+        return result + addressBytes
+    }
+
+    fun abiDecode(value: String): BigInt {
+        var idx = 2
+        while (value[idx] == '0' && idx<(value.length-2)) {  idx += 1 }
+        var stripped = value.substring(idx)
+        stripped = if (stripped.length % 2 == 0) stripped else "0" + stripped
+        return stripped.toBigIntData()
+    }
 }
 
 class ERC20(address: Address.HexString) : Contract(address) {
@@ -52,5 +70,14 @@ class ERC20(address: Address.HexString) : Contract(address) {
      */
     fun transfer(to: Address.HexString, amount: BigInt): DataHexString = DataHexString(
         keccak256("decimals(address,uint256)".encodeToByteArray()).copyOfRange(0, 4)
+    )
+
+    /**
+     * @dev See {IERC20-balanceOf}.
+     * @return public view virtual override returns (uint256)
+     */
+    fun balanceOf(account: Address.HexString): DataHexString = DataHexString(
+        keccak256("balanceOf(address)".encodeToByteArray()).copyOfRange(0, 4) +
+            abiEncode(account)
     )
 }

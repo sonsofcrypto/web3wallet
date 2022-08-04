@@ -53,3 +53,4 @@ typealias DataHexString = String
 fun DataHexString(byteArray: ByteArray): DataHexString = byteArray.toHexString(true)
 
 fun DataHexString.toByteArrayData(): ByteArray = hexStringToByteArray()
+fun DataHexString.toBigIntData(): BigInt = BigInt.from(this, 16)

@@ -37,11 +37,11 @@ class Wallet: Signer {
     fun network(): Network? = provider?.network
 
     @Throws(Throwable::class)
-    override suspend fun address(): AddressBytes {
+    override suspend fun address(): Address {
         val path = keyStoreItem.derivationPath
         val hexStrAddress = keyStoreItem.addresses[path]
         if (hexStrAddress != null)
-            return hexStrAddress.hexStringToByteArray()
+            return Address.HexString(hexStrAddress)
         throw Error.MissingAddressError(path, keyStoreItem.uuid)
     }
 
@@ -54,19 +54,21 @@ class Wallet: Signer {
     }
 
     override suspend fun getBalance(block: BlockTag): BigInt {
-        return provider!!.getBalance(Address.Bytes(address()), block)
+        return provider!!.getBalance(address(), block)
     }
 
+    @Throws(Throwable::class)
     override suspend fun getTransactionCount(address: Address, block: BlockTag): BigInt {
-        TODO("Not yet implemented")
+        return provider!!.getTransactionCount(address, block)
     }
 
     override suspend fun estimateGas(transaction: Transaction): BigInt {
         TODO("Not yet implemented")
     }
 
-    override suspend fun call(transaction: TransactionRequest, block: UInt?): ByteArray {
-        TODO("Not yet implemented")
+    @Throws(Throwable::class)
+    override suspend fun call(transaction: TransactionRequest, block: BlockTag): DataHexString {
+        return provider!!.call(transaction, block)
     }
 
     override suspend fun sendTransaction(transaction: TransactionRequest): TransactionResponse {

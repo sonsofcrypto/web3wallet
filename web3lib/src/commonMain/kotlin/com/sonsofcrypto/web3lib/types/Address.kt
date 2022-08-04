@@ -21,9 +21,16 @@ sealed class Address() {
     }
 }
 
+fun Address.toHexStringAddress(): Address.HexString = when (this) {
+    is Address.HexString -> this
+    is Address.Bytes -> Address.HexString(DataHexString(this.data))
+    else -> TODO("Resolve name address")
+}
+
 fun Address.jsonPrimitive(): JsonPrimitive = when (this) {
     is Address.HexString -> JsonPrimitive(hexString)
     is Address.Bytes -> JsonPrimitive(DataHexString(data))
     else -> JsonPrimitive("")
 }
+
 

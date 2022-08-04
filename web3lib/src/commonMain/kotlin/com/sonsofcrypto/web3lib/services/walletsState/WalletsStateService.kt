@@ -3,9 +3,14 @@ package com.sonsofcrypto.web3lib.services.walletsState
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.provider.model.BlockTag
 import com.sonsofcrypto.web3lib.provider.model.QuantityHexString
+import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.provider.model.toBigIntQnt
 import com.sonsofcrypto.web3lib.signer.Wallet
+import com.sonsofcrypto.web3lib.signer.contracts.ERC20
+import com.sonsofcrypto.web3lib.types.Address
+import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.types.Currency
+import com.sonsofcrypto.web3lib.types.toHexStringAddress
 import com.sonsofcrypto.web3lib.utils.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.launchIn
@@ -27,13 +32,22 @@ sealed class WalletsStateEvent() {
         val wallet: Wallet,
         val number: BigInt
     ): WalletsStateEvent()
+
+    data class TransactionCount(
+        val wallet: Wallet,
+        val nonce: BigInt
+    ): WalletsStateEvent()
 }
 
 interface WalletsStateListener { fun handle(event: WalletsStateEvent) }
 
 interface WalletsStateService {
+    /** Last known balance number for network connected to wallet  */
     fun balance(wallet: Wallet, currency: Currency): BigInt
+    /** Last known block number for network connected to wallet  */
     fun blockNumber(wallet: Wallet): BigInt?
+    /** Last known transaction count wallet (in network wallet is connected to) */
+    fun transactionCount(wallet: Wallet): BigInt
     /** Replaces currencies if any */
     fun observe(wallet: Wallet, currencies: List<Currency>)
     /** If wallet is null removes all wallets */
@@ -51,6 +65,7 @@ interface WalletsStateService {
 class DefaultWalletsStateService: WalletsStateService {
     private var blocks: MutableMap<String, BigInt> = mutableMapOf()
     private var balances: MutableMap<String, BigInt> = mutableMapOf()
+    private var transactionCounts: MutableMap<String, BigInt> = mutableMapOf()
     private var listeners: MutableSet<WalletsStateListener> = mutableSetOf()
     private var wallets: MutableSet<Wallet> = mutableSetOf()
     private var currencies: MutableMap<String, List<Currency>> = mutableMapOf()
@@ -91,6 +106,19 @@ class DefaultWalletsStateService: WalletsStateService {
             blocks.remove(id)
             store.set(id, null)
         }
+    }
+
+    override fun transactionCount(wallet: Wallet): BigInt {
+        val id = transactionCountId(wallet)
+        return transactionCounts[id]
+            ?: store.get<QuantityHexString>(id)?.toBigIntQnt()
+            ?: BigInt.zero()
+    }
+
+    private fun setTransactionCount(wallet: Wallet, count: BigInt) {
+        val id = transactionCountId(wallet)
+        transactionCounts[id] = count
+        store.set(id, QuantityHexString(count))
     }
 
     override fun add(listener: WalletsStateListener) {
@@ -137,8 +165,9 @@ class DefaultWalletsStateService: WalletsStateService {
         }
 
         for (wallet in allWallets) {
+            val transactionCount = transactionCount(wallet)
             currencies[currenciesId(wallet)]?.let {
-                bgScope.launch { balances(wallet, it) }
+                bgScope.launch { balances(wallet, transactionCount, it) }
             }
         }
     }
@@ -160,8 +189,16 @@ class DefaultWalletsStateService: WalletsStateService {
         }
     }
 
-    private suspend fun balances(wallet: Wallet, currencies: List<Currency>) = bgDispatcher {
-        // TODO: Check if nonce is different
+    private suspend fun balances(
+        wallet: Wallet,
+        knownNonce: BigInt,
+        currencies: List<Currency>
+    ) = bgDispatcher {
+        val nonce = wallet.getTransactionCount(wallet.address(), BlockTag.Latest)
+        if (nonce.equals(knownNonce)) {
+            return@bgDispatcher
+        }
+        handleTransactionCount(wallet, nonce)
         // TODO: Get transaction from nonce and only update IRC20s in transaction
         for (currency in currencies) {
             when (currency.type) {
@@ -170,7 +207,17 @@ class DefaultWalletsStateService: WalletsStateService {
                     handleBalance(wallet, currency, balance)
                 }
                 Currency.Type.ERC20 -> {
-                    // TODO: Get ERC20 balance
+                    if (currency.address == null)
+                        continue
+                    val contract = ERC20(Address.HexString(currency.address))
+                    val encodedBalance = wallet.call(
+                        TransactionRequest(
+                            to = contract.address,
+                            data = contract.balanceOf(wallet.address().toHexStringAddress()),
+                        )
+                    )
+                    val balance = contract.abiDecode(encodedBalance)
+                    handleBalance(wallet, currency, balance)
                 }
                 else -> { println("Unhandled balance") }
             }
@@ -184,6 +231,14 @@ class DefaultWalletsStateService: WalletsStateService {
     ) = uiDispatcher {
         setBalance(wallet, currency, balance)
         emit(WalletsStateEvent.Balance(wallet, currency, balance))
+    }
+
+    private suspend fun handleTransactionCount(
+        wallet: Wallet,
+        nonce: BigInt
+    ) = uiDispatcher {
+        setTransactionCount(wallet, nonce)
+        emit(WalletsStateEvent.TransactionCount(wallet, nonce))
     }
 
     @OptIn(ExperimentalTime::class)
@@ -201,10 +256,6 @@ class DefaultWalletsStateService: WalletsStateService {
         updatesTickJob = null
     }
 
-    private fun listenerId(listener: WalletsStateListener, wallet: Wallet): String {
-        return "listenerId-${wallet.id()}-${wallet.network()}"
-    }
-
     private fun balanceId(wallet: Wallet, currency: Currency): String {
         return "balance-${wallet.id()}-${wallet.network()?.chainId}-${currency.id()}"
     }
@@ -215,5 +266,9 @@ class DefaultWalletsStateService: WalletsStateService {
 
     private fun currenciesId(wallet: Wallet): String {
         return "currencies-${wallet.id()}-${wallet.network()?.chainId}"
+    }
+
+    private fun transactionCountId(wallet: Wallet): String {
+        return "transactionCount-${wallet.id()}-${wallet.network()?.chainId}"
     }
 }
