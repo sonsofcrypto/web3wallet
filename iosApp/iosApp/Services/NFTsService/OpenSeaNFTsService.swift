@@ -70,7 +70,12 @@ extension OpenSeaNFTsService: NFTsService {
         nfts
     }
     
-    func yourNFTs(
+    func yourNFTs() -> [NFTItem] {
+        
+        nfts
+    }
+    
+    func fetchNFTs(
         onCompletion: @escaping (Result<[NFTItem], Error>) -> Void
     ) {
 
@@ -84,7 +89,7 @@ extension OpenSeaNFTsService: NFTsService {
         }
         
         guard let urlRequest = makeURLRequest(for: .assets(owner: address)) else {
-            
+
             onCompletion(.failure(OpenSeaNFTsServiceError.unableToConstructURL))
             return
         }

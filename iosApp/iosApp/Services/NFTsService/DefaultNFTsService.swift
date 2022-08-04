@@ -8,6 +8,15 @@ final class DefaultNFTsService {
 
 extension DefaultNFTsService: NFTsService {
     
+    func fetchNFTs(onCompletion: @escaping (Result<[NFTItem], Error>) -> Void) {
+        
+    }
+    
+    func yourNFTs() -> [NFTItem] {
+        []
+    }
+    
+    
     func nft(
         with identifier: String,
         onCompletion: (Result<NFTItem, Error>) -> Void

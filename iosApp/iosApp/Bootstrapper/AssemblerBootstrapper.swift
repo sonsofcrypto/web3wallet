@@ -60,6 +60,7 @@ private extension AssemblerBootstrapper {
             NFTsDashboardWireframeFactoryAssembler(),
             NFTsCollectionWireframeFactoryAssembler(),
             NFTDetailWireframeFactoryAssembler(),
+            NFTSendWireframeFactoryAssembler(),
             RootWireframeFactoryAssembler(),
             SettingsWireframeFactoryAssembler(),
             ChatWireframeFactoryAssembler(),

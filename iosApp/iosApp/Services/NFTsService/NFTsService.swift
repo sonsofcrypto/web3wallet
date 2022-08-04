@@ -14,7 +14,7 @@ protocol NFTsService: AnyObject {
         with identifier: String,
         onCompletion: (Result<NFTCollection, Error>) -> Void
     )
-    func yourNFTs(
+    func fetchNFTs(
         onCompletion: @escaping (Result<[NFTItem], Error>) -> Void
     )
     func yourNFTs(
@@ -27,6 +27,8 @@ protocol NFTsService: AnyObject {
     func yourNFTs(
         forNetwork network: Web3Network
     ) -> [NFTItem]
+    
+    func yourNFTs() -> [NFTItem]
 }
 
 struct NFTItem {

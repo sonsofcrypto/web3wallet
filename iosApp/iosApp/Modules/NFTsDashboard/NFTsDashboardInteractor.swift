@@ -7,6 +7,7 @@ import Foundation
 protocol NFTsDashboardInteractor: AnyObject {
 
     func fetchYourNFTs(
+        isPullDownToRefreh: Bool,
         onCompletion: @escaping (Result<[NFTItem], Error>) -> Void
     )
     func fetchYourNFTsCollections(
@@ -26,9 +27,24 @@ final class DefaultNFTsDashboardInteractor {
 
 extension DefaultNFTsDashboardInteractor: NFTsDashboardInteractor {
     
-    func fetchYourNFTs(onCompletion: @escaping (Result<[NFTItem], Error>) -> Void) {
+    func fetchYourNFTs(
+        isPullDownToRefreh: Bool,
+        onCompletion: @escaping (Result<[NFTItem], Error>) -> Void
+    ) {
         
-        service.yourNFTs(onCompletion: onCompletion)
+        guard !isPullDownToRefreh else {
+            
+            service.fetchNFTs(onCompletion: onCompletion)
+            return
+        }
+        
+        guard service.yourNFTs().isEmpty else {
+            
+            onCompletion(.success(service.yourNFTs()))
+            return
+        }
+        
+        service.fetchNFTs(onCompletion: onCompletion)
     }
     
     func fetchYourNFTsCollections(onCompletion: (Result<[NFTCollection], Error>) -> Void) {

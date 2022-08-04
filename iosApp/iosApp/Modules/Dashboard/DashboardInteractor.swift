@@ -167,6 +167,7 @@ extension DefaultDashboardInteractor {
         reloadCandles()
         // TODO: Get balance
         // TODO: Refresh nfts
+        nftsService.fetchNFTs { _ in }
     }
 
     func reloadCandles() {

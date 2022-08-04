@@ -15,6 +15,7 @@ struct ConfirmationWireframeContext {
     enum `Type` {
         case swap(SwapContext)
         case send(SendContext)
+        case sendNFT(SendNFTContext)
     }
 }
 
@@ -25,7 +26,7 @@ extension ConfirmationWireframeContext {
         let tokenFrom: Token
         let tokenTo: Token
         let provider: Provider
-        let estimatedFee: Double // in the token from unit
+        let estimatedFee: Fee
         
         struct Token {
             
@@ -40,13 +41,20 @@ extension ConfirmationWireframeContext {
             let name: String
             let slippage: String
         }
+        
+        enum Fee {
+            
+            case low
+            case medium
+            case high
+        }
     }
     
     struct SendContext {
         
         let token: Token
         let destination: Destination
-        let estimatedFee: Double // in the token from unit
+        let estimatedFee: Fee
         
         struct Token {
             
@@ -59,6 +67,33 @@ extension ConfirmationWireframeContext {
             
             let from: String
             let to: String
+        }
+        
+        enum Fee: String {
+            
+            case low
+            case medium
+            case high
+        }
+    }
+    
+    struct SendNFTContext {
+        
+        let nftItem: NFTItem
+        let destination: Destination
+        let estimatedFee: Fee
+                
+        struct Destination {
+            
+            let from: String
+            let to: String
+        }
+        
+        enum Fee {
+            
+            case low
+            case medium
+            case high
         }
     }
 }

@@ -37,7 +37,7 @@ extension NFTsDashboardViewController {
         let ctaButton = Button()
         ctaButton.style = .primary
         ctaButton.setTitle(Localized("nfts.dashboard.noContent.cta"), for: .normal)
-        ctaButton.addTarget(self, action: #selector(refresh), for: .touchUpInside)
+        ctaButton.addTarget(self, action: #selector(pullDownToRefresh), for: .touchUpInside)
         
         let stackView = VStackView(
             [

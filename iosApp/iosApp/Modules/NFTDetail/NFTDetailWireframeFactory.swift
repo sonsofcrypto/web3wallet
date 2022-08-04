@@ -14,13 +14,16 @@ protocol NFTDetailWireframeFactory {
 
 final class DefaultNFTDetailWireframeFactory {
 
+    private let nftSendWireframeFactory: NFTSendWireframeFactory
     private let nftsService: NFTsService
-
+    
     private weak var window: UIWindow?
 
     init(
+        nftSendWireframeFactory: NFTSendWireframeFactory,
         nftsService: NFTsService
     ) {
+        self.nftSendWireframeFactory = nftSendWireframeFactory
         self.nftsService = nftsService
     }
 }
@@ -35,6 +38,7 @@ extension DefaultNFTDetailWireframeFactory: NFTDetailWireframeFactory {
         DefaultNFTDetailWireframe(
             parent: parent,
             context: context,
+            nftSendWireframeFactory: nftSendWireframeFactory,
             nftsService: nftsService
         )
     }

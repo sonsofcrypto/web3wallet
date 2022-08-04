@@ -257,6 +257,9 @@
 "tokenSend.cell.balance" = "Balance: %@";
 "tokenSend.missing.address" = "Invalid address";
 
+"nftSend.title" = "Send NFT";
+"nftSend.missing.address" = "Invalid address";
+
 "tokenSwap.title" = "Token Swap";
 "tokenSwap.segment.swap" = "Swap";
 "tokenSwap.segment.limit" = "Limit";
@@ -272,15 +275,24 @@
 "authenticate.placeholder.password" = "Password";
 "authenticate.placeholder.salt" = "Salt";
 
+"authenticate.title.send" = "Send";
+
+"authenticate.title.sendNFT" = "Send NFT";
+
 "confirmation.provider" = "Provider";
 "confirmation.slippage" = "Slippage";
 "confirmation.estimatedFee" = "Estimated Fee";
 "confirmation.from" = "From";
 "confirmation.to" = "To";
+
 "confirmation.swap.title" = "Confirm Transaction";
 "confirmation.swap.confirm" = "Authenticate & Swap";
+
 "confirmation.send.title" = "Confirm Transaction";
 "confirmation.send.confirm" = "Authenticate & Send";
+
+"confirmation.sendNFT.title" = "Confirm Transaction";
+"confirmation.sendNFT.confirm" = "Authenticate & Send";
 
 "cult.proposals.title" = "Cult.DAO Proposals";
 "cult.proposals.segmentedControl.pending" = "Pending";

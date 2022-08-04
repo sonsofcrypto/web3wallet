@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 struct NFTDetailWireframeContext {
     
@@ -14,6 +15,7 @@ struct NFTDetailWireframeContext {
 enum NFTDetailWireframeDestination {
     
     case underConstruction
+    case send(NFTItem)
     case dismiss
 }
 
@@ -26,6 +28,7 @@ final class DefaultNFTDetailWireframe {
     
     private weak var parent: UIViewController!
     private let context: NFTDetailWireframeContext
+    private let nftSendWireframeFactory: NFTSendWireframeFactory
     private let nftsService: NFTsService
     
     private weak var navigationController: NavigationController!
@@ -33,10 +36,12 @@ final class DefaultNFTDetailWireframe {
     init(
         parent: UIViewController,
         context: NFTDetailWireframeContext,
+        nftSendWireframeFactory: NFTSendWireframeFactory,
         nftsService: NFTsService
     ) {
         self.parent = parent
         self.context = context
+        self.nftSendWireframeFactory = nftSendWireframeFactory
         self.nftsService = nftsService
     }
 }
@@ -79,6 +84,25 @@ extension DefaultNFTDetailWireframe: NFTDetailWireframe {
             alert.makeWireframe(
                 navigationController,
                 context: .underConstructionAlert()
+            ).present()
+            
+        case let .send(nftItem):
+            
+            // TODO: Get network better
+            let service: WalletsConnectionService = ServiceDirectory.assembler.resolve()
+            guard
+                let network = try? service.network
+            else { return }
+            
+            let web3Network = Web3Network.from(network, isOn: false)
+                
+            nftSendWireframeFactory.makeWireframe(
+                presentingIn: navigationController,
+                context: .init(
+                    presentationStyle: .push,
+                    nftItem: nftItem,
+                    network: web3Network
+                )
             ).present()
             
         case .dismiss:

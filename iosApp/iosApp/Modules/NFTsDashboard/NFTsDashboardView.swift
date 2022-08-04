@@ -27,7 +27,7 @@ final class NFTsDashboardViewController: BaseViewController {
         
         configureUI()
         
-        refresh()
+        presenter.present(isPullDownToRefreh: false)
     }
 }
 
@@ -72,9 +72,9 @@ extension NFTsDashboardViewController {
         )
     }
     
-    @objc func refresh() {
+    @objc func pullDownToRefresh() {
         
-        presenter.present()
+        presenter.present(isPullDownToRefreh: true)
     }
 }
 
