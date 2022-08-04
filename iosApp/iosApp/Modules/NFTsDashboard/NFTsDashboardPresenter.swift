@@ -39,6 +39,8 @@ extension DefaultNFTsDashboardPresenter: NFTsDashboardPresenter {
 
     func present() {
         
+        view.update(with: .loading)
+        
         interactor.fetchYourNFTs { [weak self] result in
             
             guard let self = self else { return }

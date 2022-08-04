@@ -68,7 +68,9 @@ extension OpenSeaNFTsService: NFTsService {
     ) {
 
         // TODO: @Annon: Connect here current wallet address
-        let address = "0x0C37f1FC90BF56387B59615508bbd975D448856F"
+        //let address = "0x0C37f1FC90BF56387B59615508bbd975D448856F"
+        
+        let address = "0xed2ab4948bA6A909a7751DEc4F34f303eB8c7236"
         
         guard let urlRequest = makeURLRequest(for: .assets(owner: address)) else {
             
@@ -76,29 +78,38 @@ extension OpenSeaNFTsService: NFTsService {
             return
         }
         
-        URLSession.shared.dataTask(with: urlRequest) { [weak self] data, _, error in
-            
-            guard let self = self else { return }
-            
-            guard let data = data else {
-                
-                onCompletion(.failure(error ?? OpenSeaNFTsServiceError.failedToDownload))
-                return
-            }
-
-            do {
-                
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let assets = try JSONDecoder().decode(AssetList.self, from: data).assets
-                self.nfts = self.makeNFTItems(from: assets)
-                self.collections = self.makeNFTCollections(from: assets)
-                self.updateWeb3WalletNFTListeners()
-                onCompletion(.success(self.nfts))
-            } catch {
-                onCompletion(.failure(error))
-            }
-        }.resume()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            onCompletion(.success([]))
+        }
+        
+        
+//        URLSession.shared.dataTask(with: urlRequest) { [weak self] data, _, error in
+//
+//            guard let self = self else { return }
+//
+//            guard let data = data else {
+//
+//                onCompletion(.failure(error ?? OpenSeaNFTsServiceError.failedToDownload))
+//                return
+//            }
+//
+//            do {
+//
+//                let decoder = JSONDecoder()
+//                decoder.keyDecodingStrategy = .convertFromSnakeCase
+//                let assets = try decoder.decode(AssetList.self, from: data).assets
+//                self.nfts = self.makeNFTItems(from: assets)
+//                self.collections = self.makeNFTCollections(from: assets)
+//                self.updateWeb3WalletNFTListeners()
+//                DispatchQueue.main.async {
+//                    onCompletion(.success(self.nfts))
+//                }
+//            } catch {
+//                DispatchQueue.main.async {
+//                    onCompletion(.failure(error))
+//                }
+//            }
+//        }.resume()
     }
 }
 
@@ -148,7 +159,9 @@ private extension OpenSeaNFTsService {
         
         var urlRequest = URLRequest(url: url)
         urlRequest.allHTTPHeaderFields = [
-            "X-API-KEY": API_KEY
+            "X-API-KEY": API_KEY,
+            "Content-Type": "application/json",
+            "Accept": "application/json"
         ]
         
         return urlRequest
@@ -167,7 +180,7 @@ private extension OpenSeaNFTsService {
                 properties: $0.traits.compactMap {
                     .init(name: $0.traitType, value: $0.value, info: "")
                 },
-                image: $0.imageURL?.absoluteString ?? ""
+                image: $0.imageUrl ?? ""
             )
         }
     }
@@ -186,7 +199,7 @@ private extension OpenSeaNFTsService {
             collections.append(
                 .init(
                     identifier: asset.collection.slug,
-                    coverImage: asset.collection.imageURL?.absoluteString ?? "",
+                    coverImage: asset.collection.imageUrl ?? "",
                     title: asset.collection.name ?? "",
                     author: asset.collection.slug,
                     isVerifiedAccount: false,
@@ -223,9 +236,7 @@ private extension OpenSeaNFTsService {
         let id: Int
         let name: String?
         let description: String?
-        let thumbnailURL: URL?
-        let previewURL: URL?
-        let imageURL: URL?
+        let imageUrl: String?
         let assetContract: AssetContract
         let collection: Collection
         let traits: [Trait]
@@ -243,13 +254,37 @@ private extension OpenSeaNFTsService {
         
         let slug: String // id
         let name: String?
-        let imageURL: URL?
+        let imageUrl: String?
         let description: String
     }
     
     struct Trait: Codable {
         
+        enum CodingKeys: String, CodingKey {
+            
+            case traitType
+            case value
+            
+        }
+        
         let traitType: String
         let value: String
+        
+        init(from decoder: Decoder) throws {
+            
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            
+            self.traitType = try container.decode(String.self, forKey: .traitType)
+            
+            if let value = try? container.decode(Int.self, forKey: .value) {
+                
+                self.value = "\(value)"
+                
+            } else {
+                
+                let value = try container.decode(String.self, forKey: .value)
+                self.value = value
+            }
+        }
     }
 }

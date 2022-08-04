@@ -177,7 +177,11 @@
 
 "nfts.dashboard.collection.title" = "Your Collections";
 "nfts.dashboard.collection.popular.author" = "Created by %@";
+"nfts.dashboard.noContent.title" = "No NFTs available";
+"nfts.dashboard.noContent.body" = "There seems to be no NFTs associated to this wallet address";
+"nfts.dashboard.noContent.cta" = "Refresh";
 
+"nft.detail.section.id" = "NFT ID: %@";
 "nft.detail.section.title.description" = "Description";
 "nft.detail.section.title.properties" = "Properties";
 "nft.detail.button.send" = "Send";
