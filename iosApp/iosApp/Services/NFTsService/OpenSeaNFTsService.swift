@@ -74,9 +74,14 @@ extension OpenSeaNFTsService: NFTsService {
         onCompletion: @escaping (Result<[NFTItem], Error>) -> Void
     ) {
 
-        // TODO: @Annon: Connect here current wallet address
-        let address = ""
-        //let address = walletsConnectionService.wallet.address()
+        guard let address = try? walletsConnectionService.wallet?.address()
+            .toHexStringAddress()
+            .hexString
+        else {
+            
+            onCompletion(.success([]))
+            return
+        }
         
         guard let urlRequest = makeURLRequest(for: .assets(owner: address)) else {
             
@@ -84,38 +89,33 @@ extension OpenSeaNFTsService: NFTsService {
             return
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            onCompletion(.success([]))
-        }
-        
-        
-//        URLSession.shared.dataTask(with: urlRequest) { [weak self] data, _, error in
-//
-//            guard let self = self else { return }
-//
-//            guard let data = data else {
-//
-//                onCompletion(.failure(error ?? OpenSeaNFTsServiceError.failedToDownload))
-//                return
-//            }
-//
-//            do {
-//
-//                let decoder = JSONDecoder()
-//                decoder.keyDecodingStrategy = .convertFromSnakeCase
-//                let assets = try decoder.decode(AssetList.self, from: data).assets
-//                self.nfts = self.makeNFTItems(from: assets)
-//                self.collections = self.makeNFTCollections(from: assets)
-//                self.updateWeb3WalletNFTListeners()
-//                DispatchQueue.main.async {
-//                    onCompletion(.success(self.nfts))
-//                }
-//            } catch {
-//                DispatchQueue.main.async {
-//                    onCompletion(.failure(error))
-//                }
-//            }
-//        }.resume()
+        URLSession.shared.dataTask(with: urlRequest) { [weak self] data, _, error in
+
+            guard let self = self else { return }
+
+            guard let data = data else {
+
+                onCompletion(.failure(error ?? OpenSeaNFTsServiceError.failedToDownload))
+                return
+            }
+
+            do {
+
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let assets = try decoder.decode(AssetList.self, from: data).assets
+                self.nfts = self.makeNFTItems(from: assets)
+                self.collections = self.makeNFTCollections(from: assets)
+                self.updateWeb3WalletNFTListeners()
+                DispatchQueue.main.async {
+                    onCompletion(.success(self.nfts))
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    onCompletion(.failure(error))
+                }
+            }
+        }.resume()
     }
 }
 
