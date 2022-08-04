@@ -291,10 +291,10 @@ private extension DefaultDashboardPresenter {
             for: interactor.wallet(for: network),
             currency: currency
         )
-        if currency.name == "Ethereum" || currency.name == "Cult DAO" {
-            print("=== balance \(currency.name)", cryptoBalance)
-        }
-
+        let fiatBalance = interactor.fiatBalance(
+            for: interactor.wallet(for: network),
+            currency: currency
+        )
         let formatted = currencyFormatter.format(
             bigInt: cryptoBalance,
             currency: currency
@@ -304,7 +304,7 @@ private extension DefaultDashboardPresenter {
             name: currency.name,
             ticker: currency.symbol,
             imageData: interactor.image(for: currency),
-            fiatBalance: "0",
+            fiatBalance: fiatFormatter.string(from: Float(fiatBalance)),
             cryptoBalance: formatted, // "\($0.balance.toString(decimals: $0.decimals)) \($0.symbol)",
             tokenPrice: market?.currentPrice != nil
                 ? fiatFormatter.string(from: market?.currentPrice ?? 0) ?? "-"

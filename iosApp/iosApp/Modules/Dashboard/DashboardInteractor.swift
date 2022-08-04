@@ -38,7 +38,7 @@ protocol DashboardInteractor: AnyObject {
     // TODO: Refactor to be url or image name
     func image(for currency: Currency) -> Data
     func cryptoBalance(for wallet: Wallet?, currency: Currency) -> BigInt
-    func fiatBalance(for wallet: Wallet, currency: Currency) -> BigInt
+    func fiatBalance(for wallet: Wallet?, currency: Currency) -> Double
     func totalFiatBalance() -> Double
     func reloadData()
 
@@ -101,7 +101,6 @@ extension DefaultDashboardInteractor: DashboardInteractor {
     func nfts(for network: Web3Network) -> [NFTItem] {
         nftsService.yourNFTs(forNetwork: network)
     }
-
 }
 
 extension DefaultDashboardInteractor {
@@ -155,18 +154,30 @@ extension DefaultDashboardInteractor {
             return BigInt.Companion().zero()
         }
         let count = walletsStateService.transactionCount(wallet: wallet)
-        if currency.name == "Ethereum" {
-            print("=== nonce \(wallet.network()?.name) \(count)")
-        }
         return walletsStateService.balance(wallet: wallet, currency: currency)
     }
 
-    func fiatBalance(for wallet: Wallet, currency: Currency) -> BigInt {
-        return BigInt.Companion().zero()
+    func fiatBalance(for wallet: Wallet?, currency: Currency) -> Double {
+        let price = currencyMetadataService
+            .market(currency: currency)?
+            .currentPrice?
+            .doubleValue ?? 0
+        let amount = currency.double(
+            balance: cryptoBalance(for: wallet, currency: currency)
+        )
+        return price * amount
     }
 
     func totalFiatBalance() -> Double {
-        return 34234.2
+        var total = 0.0
+        walletsConnectionService.walletsForAllNetwork().forEach { wallet in
+            if let network = wallet.network() {
+                currenciesService.currencies(wallet: wallet).forEach {
+                    total += fiatBalance(for: wallet, currency: $0)
+                }
+            }
+        }
+        return total
     }
 
 

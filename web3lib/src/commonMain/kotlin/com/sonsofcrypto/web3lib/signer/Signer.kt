@@ -2,9 +2,9 @@ package com.sonsofcrypto.web3lib.signer
 
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.model.*
+import com.sonsofcrypto.web3lib.provider.model.BlockTag.Latest
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.provider.model.BlockTag.Latest
 
 interface Signer {
 

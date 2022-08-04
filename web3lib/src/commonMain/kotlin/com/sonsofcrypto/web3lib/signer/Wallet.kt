@@ -5,10 +5,8 @@ import com.sonsofcrypto.web3lib.provider.model.*
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3lib.types.Address
-import com.sonsofcrypto.web3lib.types.AddressBytes
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.utils.hexStringToByteArray
 
 class Wallet: Signer {
     private val keyStoreItem: KeyStoreItem

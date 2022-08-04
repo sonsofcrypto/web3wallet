@@ -4,8 +4,6 @@ import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.provider.model.BlockTag
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
-import com.sonsofcrypto.web3lib.provider.model.toBigIntData
-import com.sonsofcrypto.web3lib.provider.model.toBigIntQnt
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.walletsState.DefaultWalletsStateService
@@ -13,12 +11,13 @@ import com.sonsofcrypto.web3lib.services.walletsState.WalletsStateEvent
 import com.sonsofcrypto.web3lib.services.walletsState.WalletsStateListener
 import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.signer.contracts.ERC20
-import com.sonsofcrypto.web3lib.types.*
-import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.types.Address
+import com.sonsofcrypto.web3lib.types.Bip44
+import com.sonsofcrypto.web3lib.types.ExtKey
+import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.currentThreadId
-import com.sonsofcrypto.web3lib.utils.toHexString
 import kotlinx.coroutines.runBlocking
 
 class WalletStateTest: WalletsStateListener {
