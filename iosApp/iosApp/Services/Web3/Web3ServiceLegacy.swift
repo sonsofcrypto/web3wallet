@@ -17,9 +17,7 @@ protocol Web3ServiceLegacy: AnyObject {
     var allNetworks: [Web3Network] { get }
     var allTokens: [Web3Token] { get }
     var myTokens: [Web3Token] { get }
-    
-    func storeMyTokens(to tokens: [Web3Token])
-    
+
     func networkIcon(for network: Web3Network) -> Data
     func networkIconName(for network: Web3Network) -> String
     func tokenIcon(for token: Web3Token) -> Data

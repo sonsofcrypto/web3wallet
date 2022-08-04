@@ -21,13 +21,13 @@ import kotlin.native.concurrent.SharedImmutable
 import kotlin.time.ExperimentalTime
 
 interface CurrenciesService {
-    fun currencies(wallet: Wallet, network: Network): List<Currency>
-    fun add(currency: Currency, wallet: Wallet, network: Network)
-    fun remove(currency: Currency, wallet: Wallet, network: Network)
+    fun currencies(wallet: Wallet): List<Currency>
+    fun add(currency: Currency, wallet: Wallet)
+    fun remove(currency: Currency, wallet: Wallet)
     /** Replaces currency list of existing currencies (ie remove existing) */
-    fun setSelected(currencies: List<Currency>, wallet: Wallet, network: Network)
+    fun setSelected(currencies: List<Currency>, wallet: Wallet)
 
-    fun generateDefaultCurrenciesIfNeeded(wallet: Wallet, network: Network)
+    fun generateDefaultCurrenciesIfNeeded(wallet: Wallet)
     fun defaultCurrencies(network: Network): List<Currency>
 
     var currencies: List<Currency>
@@ -57,31 +57,29 @@ class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
         }
     }
 
-    override fun currencies(wallet: Wallet, network: Network): List<Currency> {
-        return getCurrencies(id(wallet, network)) ?: listOf()
+    override fun currencies(wallet: Wallet): List<Currency> {
+        return getCurrencies(id(wallet)) ?: listOf()
     }
 
-    override fun add(currency: Currency, wallet: Wallet, network: Network) {
+    override fun add(currency: Currency, wallet: Wallet) {
         setCurrencies(
-            id(wallet, network),
-            currencies(wallet, network) + listOf(currency)
+            id(wallet),
+            currencies(wallet) + listOf(currency)
         )
     }
 
-    override fun remove(currency: Currency, wallet: Wallet, network: Network) {
-        setCurrencies(
-            id(wallet, network),
-            currencies(wallet, network).filter { it != currency }
-        )
+    override fun remove(currency: Currency, wallet: Wallet) {
+        setCurrencies(id(wallet), currencies(wallet).filter { it != currency })
     }
 
-    override fun setSelected(currencies: List<Currency>, wallet: Wallet, network: Network) {
-        setCurrencies(id(wallet, network), currencies)
+    override fun setSelected(currencies: List<Currency>, wallet: Wallet) {
+        setCurrencies(id(wallet), currencies)
     }
 
-    override fun generateDefaultCurrenciesIfNeeded(wallet: Wallet, network: Network) {
-        if (currencies(wallet, network).isEmpty()) {
-            setCurrencies(id(wallet, network), defaultCurrencies(network))
+    override fun generateDefaultCurrenciesIfNeeded(wallet: Wallet) {
+        if (currencies(wallet).isEmpty()) {
+            val network = wallet.network() ?: Network.ethereum()
+            setCurrencies(id(wallet), defaultCurrencies(network))
         }
     }
 
@@ -173,8 +171,8 @@ class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
         }
     }
 
-    private fun id(wallet: Wallet, network: Network): String {
-        return wallet.id() + "-" + network.id()
+    private fun id(wallet: Wallet): String {
+        return wallet.id() + "-" + wallet.network()?.id()
     }
 }
 

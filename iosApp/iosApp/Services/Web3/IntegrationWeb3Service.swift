@@ -50,8 +50,9 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
     }
     
     var allTokens: [Web3Token] {
-        guard let wallet = walletsConnectionService.wallet,
-              let network = walletsConnectionService.network else {
+        guard let network = walletsConnectionService.network,
+              let wallet = walletsConnectionService.wallet(network: network)
+        else {
             return []
         }
 
@@ -68,10 +69,8 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
                     Web3Token.from(
                         currency: currency,
                         network: legacyNetwork,
-                        inWallet: currenciesService.currencies(
-                            wallet: wallet,
-                            network: network
-                        ).contains(currency),
+                        inWallet: currenciesService.currencies(wallet: wallet)
+                            .contains(currency),
                         idx: idx
                     )
                 )
@@ -82,8 +81,8 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
     }
 
     var myTokens: [Web3Token] {
-        guard let wallet = walletsConnectionService.wallet,
-              let network = walletsConnectionService.network else {
+        guard let network = walletsConnectionService.network,
+              let wallet = walletsConnectionService.wallet else {
             return []
         }
 
@@ -92,40 +91,11 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
             isOn: walletsConnectionService.enabledNetworks().contains(network)
         )
 
-        let currencies = currenciesService.currencies(
-            wallet: wallet,
-            network: network
-        )
+        let currencies = currenciesService.currencies(wallet: wallet)
 
         return currencies.toWeb3TokenList(network: web3network, inWallet: true)
     }
-    
-    func storeMyTokens(to tokens: [Web3Token]) {
-        guard let wallet = walletsConnectionService.wallet else {
-            return
-        }
-        
-        tokens.filter { !$0.showInWallet }
-            .forEach {
-                currenciesService.remove(
-                    currency: $0.toCurrency(),
-                    wallet: wallet,
-                    network: walletsConnectionService.network!
-                )
-            }
-        
-        tokens.filter { $0.showInWallet }
-            .forEach {
-                currenciesService.add(
-                    currency: $0.toCurrency(),
-                    wallet: wallet,
-                    network: walletsConnectionService.network!
-                )
-            }
-        
-        tokensChanged()
-    }
-    
+
     func networkIcon(for network: Web3Network) -> Data {
         networkIconName(for: network).loadIconData
     }

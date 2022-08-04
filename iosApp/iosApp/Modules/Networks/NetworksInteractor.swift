@@ -101,12 +101,9 @@ extension DefaultNetworksInteractor: WalletsConnectionListener {
 
     func handle(event: WalletsConnectionEvent) {
         if let network = (event as? WalletsConnectionEvent.NetworkSelected)?.network,
-           let wallet = walletsConnectionService.wallet,
-           currenciesService.currencies(wallet: wallet, network: network).isEmpty {
-                currenciesService.generateDefaultCurrenciesIfNeeded(
-                    wallet: wallet,
-                    network: network
-                )
+           let wallet = walletsConnectionService.wallet(network: network),
+           currenciesService.currencies(wallet: wallet).isEmpty {
+                currenciesService.generateDefaultCurrenciesIfNeeded(wallet: wallet)
         }
 
         emit(event)

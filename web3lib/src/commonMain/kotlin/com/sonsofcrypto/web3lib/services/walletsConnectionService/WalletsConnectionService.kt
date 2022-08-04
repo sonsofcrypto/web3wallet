@@ -31,6 +31,7 @@ interface WalletsConnectionService {
     fun setProvider(network: Network, provider: Provider?)
     fun setProvider(network: Network, provider: ProviderInfo)
 
+    fun walletsForAllNetwork(): List<Wallet>
     fun wallet(network: Network): Wallet?
 
     @Serializable
@@ -72,7 +73,8 @@ class DefaultWalletsConnectionService: WalletsConnectionService {
     private var enabledNetworks: List<Network> = listOf()
         set(value) {
             field = value
-            value.forEach { setProvider(it, provider(it)) }
+            updateProviders()
+            updateWallets()
             emit(WalletsConnectionEvent.NetworksChanged(value))
             storeNetworks(value, wallet)
         }
@@ -119,6 +121,16 @@ class DefaultWalletsConnectionService: WalletsConnectionService {
         setProvider(network, provider(provider, network))
     }
 
+    override fun walletsForAllNetwork(): List<Wallet> {
+        return enabledNetworks.mapNotNull { wallet(it) }
+    }
+
+    private fun updateProviders() {
+        val providers = mutableMapOf<Network, Provider>()
+        enabledNetworks().forEach { setProvider(it, provider(it)) }
+        this.providers = providers
+    }
+
     override fun wallet(network: Network): Wallet? {
         var wallet = wallets[network.id()]
         if (wallet != null)
@@ -130,6 +142,16 @@ class DefaultWalletsConnectionService: WalletsConnectionService {
             return wallet
 
         return null
+    }
+
+    private fun updateWallets() {
+        val wallets = mutableMapOf<String, Wallet>()
+        enabledNetworks().forEach { network ->
+            wallet?.copy(provider(network))?.let {
+                wallets[network.id()] = it
+            }
+        }
+        this.wallets = wallets
     }
 
     private fun defaultNetworks(wallet: Wallet?): List<Network> {

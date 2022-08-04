@@ -34,37 +34,31 @@ sealed class WalletsStateEvent() {
 
 interface WalletsStateListener { fun handle(event: WalletsStateEvent) }
 
-
 interface WalletsStateService {
-
     fun balance(wallet: Wallet, currency: Currency): BigInt
     fun blockNumber(wallet: Wallet): BigInt?
-
-    fun add(
-        listener: WalletsStateListener,
-        wallet: Wallet,
-        currencies: List<Currency>,
-    )
-
+    /** Replaces currencies if any */
+    fun observe(wallet: Wallet, currencies: List<Currency>)
+    /** If wallet is null removes all wallets */
+    fun stopObserving(wallet: Wallet?)
+    /** Add listener for all wallets and currencies */
+    fun add(listener: WalletsStateListener)
     /** if listener is null, removes all listeners */
-    fun remove(listener: WalletsStateListener?, wallet: Wallet? = null)
+    fun remove(listener: WalletsStateListener?)
 }
 
 class DefaultWalletsStateService: WalletsStateService {
     private var blocks: MutableMap<String, BigInt> = mutableMapOf()
     private var balances: MutableMap<String, BigInt> = mutableMapOf()
-    private var listeners: MutableSet<WalletsStateListener>
-    private var listenerWallets: MutableMap<WalletsStateListener, MutableSet<Wallet>>
-    private var listenerWalletCurrencies: MutableMap<String, MutableSet<Currency>>
+    private var listeners: MutableSet<WalletsStateListener> = mutableSetOf()
+    private var wallets: MutableSet<Wallet> = mutableSetOf()
+    private var currencies: MutableMap<String, List<Currency>> = mutableMapOf()
     private val bgScope = CoroutineScope(SupervisorJob() + bgDispatcher)
     private val mainScope = CoroutineScope(SupervisorJob() + uiDispatcher)
     private val store: KeyValueStore
 
     constructor(store: KeyValueStore) {
         this.store = store
-        this.listeners = mutableSetOf()
-        this.listenerWallets = mutableMapOf()
-        this.listenerWalletCurrencies = mutableMapOf()
     }
 
     init { setupFlows() }
@@ -90,70 +84,49 @@ class DefaultWalletsStateService: WalletsStateService {
         }
     }
 
-    override fun add(
-        listener: WalletsStateListener,
-        wallet: Wallet,
-        currencies: List<Currency>
-    ) {
+    override fun add(listener: WalletsStateListener) {
         listeners.add(listener)
-
-        val listerWallets = listenerWallets[listener] ?: mutableSetOf()
-        listerWallets.add(wallet)
-        listenerWallets[listener] = listerWallets
-
-        val listenerId = listenerId(listener, wallet)
-        val currencies = listenerWalletCurrencies[listenerId] ?: mutableSetOf()
-        currencies.addAll(currencies)
-        listenerWalletCurrencies[listenerId] = currencies
     }
 
-    override fun remove(
-        listener: WalletsStateListener?,
-        wallet: Wallet?,
-    ) {
-        if (listener != null && wallet != null) {
-            val listenerId = listenerId(listener, wallet)
-            listenerWalletCurrencies[listenerId] = mutableSetOf()
-            return
-        }
+    override fun remove(listener: WalletsStateListener?) {
         if (listener != null) {
-            listenerWallets[listener] = mutableSetOf()
-            return
-        }
-        listeners = mutableSetOf()
-        listenerWallets = mutableMapOf()
-        listenerWalletCurrencies = mutableMapOf()
+            listeners.remove(listener)
+        } else listeners = mutableSetOf()
     }
 
-    private fun emit(event: WalletsStateEvent) = when(event){
-        is WalletsStateEvent.BlockNumber -> {
-            listeners.forEach {
-                if (listenerWallets[it]?.contains(event.wallet) == true)
-                    it.handle(event)
-            }
-        }
-        is WalletsStateEvent.Balance -> {
+    override fun observe(wallet: Wallet, currencies: List<Currency>) {
+        wallets.add(wallet)
+        this.currencies.put(wallet.id(), currencies)
+    }
 
+    override fun stopObserving(wallet: Wallet?) {
+        if (wallet != null) {
+            wallets.remove(element = wallet)
+            currencies.remove(wallet.id())
+        } else {
+            wallets = mutableSetOf()
+            currencies = mutableMapOf()
         }
+    }
+
+    private fun emit(event: WalletsStateEvent) {
+        listeners.forEach { it.handle(event) }
     }
 
     private suspend fun performLoop() = mainScope.launch {
         if (listeners.isEmpty())
             return@launch
 
+        val allWallets = wallets.toList()
+        val allCurrencies = currencies
         println("=== performLoop ${currentThreadId()}")
 
-        val allWallet: Set<Wallet> = listeners
-            .map { listenerWallets[it] }
-            .mapNotNull { it }
-            .reduce { acc, s ->  (acc + s).toMutableSet() }
-
         bgScope.launch {
-            blockNumbers(allWallet)
+            blockNumbers(allWallets)
         }
     }
 
-    private suspend fun blockNumbers(wallets: Set<Wallet>) = bgDispatcher {
+    private suspend fun blockNumbers(wallets: List<Wallet>) = bgDispatcher {
         for (wallet in wallets) {
             println("=== blockNumbers before block ${currentThreadId()}")
             val block = wallet.provider()?.blockNumber()

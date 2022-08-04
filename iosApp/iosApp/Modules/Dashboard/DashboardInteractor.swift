@@ -6,12 +6,13 @@ import Foundation
 import web3lib
 
 enum DashboardInteractorEvent {
-    case didSelectWallet
-    case didSelectNetwork
-    case didChaneNetwork
-    case didUpdateBlock
-    case didUpdatePriceData
+    case didSelectWallet(wallet: Wallet?)
+    case didSelectNetwork(network: Network?)
+    case didChangeNetworks(networks: [Network])
+    case didUpdateMarketInfo(market: [Currency : Market]?)
     case didUpdateCandles(network: Network, currency: Currency)
+    case didUpdateBlock(blockNumber: BigInt)
+    case didUpdateBalance(wallet: Wallet, currency: Currency, balance: BigInt)
     case didUpdateNFTs
 }
 
@@ -26,7 +27,6 @@ protocol DashboardInteractor: AnyObject {
     func tokenIcon(for token: Web3Token) -> Data
     func priceData(for token: Web3Token) -> [ Web3Candle ]
     func nfts(for network: Web3Network) -> [ NFTItem ]
-    func updateMyWeb3Tokens(to tokens: [Web3Token])
 
     func enabledNetworks() -> [Network]
     func currencies(for network: Network) -> [Currency]
@@ -100,9 +100,6 @@ extension DefaultDashboardInteractor: DashboardInteractor {
         nftsService.yourNFTs(forNetwork: network)
     }
 
-    func updateMyWeb3Tokens(to tokens: [Web3Token]) {
-        web3ServiceLegacy.storeMyTokens(to: tokens)
-    }
 }
 
 extension DefaultDashboardInteractor {
@@ -112,23 +109,19 @@ extension DefaultDashboardInteractor {
     }
 
     func currencies(for network: Network) -> [Currency] {
-        guard let wallet = walletsConnectionService.wallet else {
+        guard let wallet = walletsConnectionService.wallet(network: network) else {
             return []
         }
 
-        return currenciesService.currencies(wallet: wallet, network: network)
+        return currenciesService.currencies(wallet: wallet)
     }
 
     func setCurrencies(_ currencies: [Currency], network: Network) {
-        guard let wallet = walletsConnectionService.wallet else {
+        guard let wallet = walletsConnectionService.wallet(network: network) else {
             return
         }
 
-        currenciesService.setSelected(
-            currencies: currencies,
-            wallet: wallet,
-            network: network
-        )
+        currenciesService.setSelected(currencies: currencies, wallet: wallet)
     }
 
     func metadata(for currency: Currency) -> Market? {
@@ -156,8 +149,8 @@ extension DefaultDashboardInteractor {
             return
         }
 
-        let allCurrencies = walletsConnectionService.enabledNetworks()
-                .map { currenciesService.currencies(wallet: wallet, network: $0) }
+        let allCurrencies = walletsConnectionService.walletsForAllNetwork()
+                .map { currenciesService.currencies(wallet: $0) }
                 .reduce([Currency](), { $0 + $1 })
 
         guard allCurrencies.isEmpty == false else {
@@ -166,16 +159,14 @@ extension DefaultDashboardInteractor {
 
         currencyMetadataService.refreshMarket(
             currencies: allCurrencies,
-            completionHandler: { [weak self] (_, _) in
+            completionHandler: { [weak self] (market, _) in
                 DispatchQueue.main.async {
-                    self?.emit(.didUpdatePriceData)
+                    self?.emit(.didUpdateMarketInfo(market: market))
                 }
             }
         )
 
         reloadCandles()
-
-
         // TODO: Get balance
         // TODO: Refresh nfts
     }
@@ -185,16 +176,13 @@ extension DefaultDashboardInteractor {
             return
         }
         // TODO: Limit to 50 currencies
-        walletsConnectionService.enabledNetworks().forEach { network in
-            currenciesService.currencies(
-                wallet: wallet,
-                network: network
-            ).forEach { currency in
+        walletsConnectionService.walletsForAllNetwork().forEach { wallet in
+            currenciesService.currencies(wallet: wallet).forEach { currency in
                 currencyMetadataService.candles(
                     currency: currency,
                     completionHandler: { [weak self] (_, _ ) in
                         let event = DashboardInteractorEvent.didUpdateCandles(
-                            network: network,
+                            network: wallet.network() ?? Network.ethereum(),
                             currency: currency)
                         self?.emit(event)
                     }
@@ -211,12 +199,14 @@ extension DefaultDashboardInteractor {
 
 // MARK: - Listeners
 
-extension DefaultDashboardInteractor: WalletsConnectionListener {
+extension DefaultDashboardInteractor: WalletsConnectionListener, WalletsStateListener {
 
     func addListener(_ listener: DashboardInteractorLister) {
         
         if listeners.isEmpty {
             walletsConnectionService.addListener(listener: self)
+            walletsStateService.add(listener: self)
+            updateObservingWalletsState()
         }
 
         listeners = listeners + [WeakContainer(listener)]
@@ -231,6 +221,7 @@ extension DefaultDashboardInteractor: WalletsConnectionListener {
         guard let listener = listener else {
             listeners = []
             walletsConnectionService.removeListener(listener: nil)
+            walletsStateService.remove(listener: nil)
             return
         }
 
@@ -238,6 +229,7 @@ extension DefaultDashboardInteractor: WalletsConnectionListener {
 
         if listeners.isEmpty {
             walletsConnectionService.removeListener(listener: nil)
+            walletsStateService.remove(listener: nil)
         }
     }
     
@@ -251,10 +243,16 @@ extension DefaultDashboardInteractor: WalletsConnectionListener {
     }
 
     func handle(event: WalletsConnectionEvent) {
-        print("=== got event", event)
+        print("=== WalletsConnectionEvent ", event)
         if let networksChanged = event as? WalletsConnectionEvent.NetworksChanged {
             reloadData()
+            updateObservingWalletsState()
         }
+        emit(event.toInteractorEvent())
+    }
+
+    func handle(event_ event: WalletsStateEvent) {
+        print("=== WalletsConnectionEvent ", event)
         emit(event.toInteractorEvent())
     }
 
@@ -265,6 +263,16 @@ extension DefaultDashboardInteractor: WalletsConnectionListener {
             self.value = value
         }
     }
+
+    func updateObservingWalletsState() {
+        walletsStateService.stopObserving(wallet: nil)
+        walletsConnectionService.walletsForAllNetwork().forEach {
+            walletsStateService.observe(
+                wallet: $0,
+                currencies: currenciesService.currencies(wallet: $0)
+            )
+        }
+    }
 }
 
 
@@ -273,15 +281,32 @@ extension DefaultDashboardInteractor: WalletsConnectionListener {
 extension WalletsConnectionEvent {
 
     func toInteractorEvent() -> DashboardInteractorEvent {
-        switch self {
-        case is WalletsConnectionEvent.WalletSelected:
-            return .didSelectWallet
-        case is WalletsConnectionEvent.NetworkSelected:
-            return .didSelectNetwork
-        case is WalletsConnectionEvent.NetworksChanged:
-            return .didChaneNetwork
-        default:
-            fatalError("Unhandled event \(self)")
+        if let event = self as? WalletsConnectionEvent.WalletSelected {
+            return .didSelectWallet(wallet: event.wallet)
         }
+        if let event = self as? WalletsConnectionEvent.NetworkSelected {
+            return .didSelectNetwork(network: event.network)
+        }
+        if let event = self as? WalletsConnectionEvent.NetworksChanged {
+            return .didChangeNetworks(networks: event.networks)
+        }
+        fatalError("Unhandled event \(self)")
+    }
+}
+
+extension WalletsStateEvent {
+
+    func toInteractorEvent() -> DashboardInteractorEvent {
+        if let event = self as? WalletsStateEvent.Balance {
+            return .didUpdateBalance(
+                wallet: event.wallet,
+                currency: event.currency,
+                balance: event.balance
+            )
+        }
+        if let event = self as? WalletsStateEvent.BlockNumber {
+            return .didUpdateBlock(blockNumber: event.number)
+        }
+        fatalError("Unhandled event \(self)")
     }
 }

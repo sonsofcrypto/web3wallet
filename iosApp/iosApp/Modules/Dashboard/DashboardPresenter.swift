@@ -155,7 +155,7 @@ extension DefaultDashboardPresenter: DashboardInteractorLister {
 
     func handle(_ event: DashboardInteractorEvent) {
         switch event {
-        case .didUpdatePriceData:
+        case .didUpdateMarketInfo:
             updateView()
         case let .didUpdateCandles(network, currency):
             // TODO(Anon): We dont need to construct viewModel here
