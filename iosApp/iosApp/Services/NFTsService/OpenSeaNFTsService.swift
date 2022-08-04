@@ -2,6 +2,8 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
+import web3lib
+
 enum OpenSeaNFTsServiceError: Error {
     
     case unableToConstructURL
@@ -12,14 +14,19 @@ enum OpenSeaNFTsServiceError: Error {
 final class OpenSeaNFTsService {
     
     private let web3Service: Web3ServiceLegacy
+    private let walletsConnectionService: WalletsConnectionService
     
     private let API_KEY = ""
     
     private var nfts = [NFTItem]()
     private var collections = [NFTCollection]()
     
-    init(web3Service: Web3ServiceLegacy) {
+    init(
+        web3Service: Web3ServiceLegacy,
+        walletsConnectionService: WalletsConnectionService
+    ) {
         self.web3Service = web3Service
+        self.walletsConnectionService = walletsConnectionService
     }
 }
 
@@ -68,9 +75,8 @@ extension OpenSeaNFTsService: NFTsService {
     ) {
 
         // TODO: @Annon: Connect here current wallet address
-        //let address = "0x0C37f1FC90BF56387B59615508bbd975D448856F"
-        
-        let address = "0xed2ab4948bA6A909a7751DEc4F34f303eB8c7236"
+        let address = ""
+        //let address = walletsConnectionService.wallet.address()
         
         guard let urlRequest = makeURLRequest(for: .assets(owner: address)) else {
             
