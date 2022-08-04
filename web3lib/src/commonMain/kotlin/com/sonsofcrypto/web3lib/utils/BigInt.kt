@@ -13,6 +13,7 @@ class BigInt {
 
     fun add(value: BigInt): BigInt = BigInt(storage.add(value.storage))
     fun mul(value: BigInt): BigInt = BigInt(storage.multiply(value.storage))
+    fun div(value: BigInt): BigInt = BigInt(storage.divide(value.storage))
 
     fun toByteArray(): ByteArray = storage.toByteArray()
     fun toHexString(): String = storage.toString(16)
