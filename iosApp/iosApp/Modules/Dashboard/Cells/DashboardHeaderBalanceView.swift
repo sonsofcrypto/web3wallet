@@ -5,39 +5,23 @@
 import UIKit
 
 final class DashboardHeaderBalanceView: UICollectionReusableView {
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet var labelConstraints: [NSLayoutConstraint]!
+    @IBOutlet var leadingLineConstraints: NSLayoutConstraint!
     
-    private lazy var label: UILabel = {
-        let label = UILabel()
-        label.apply(style: .largeTitle, weight: .bold)
-        label.textAlignment = .center
-        self.addSubview(label)
-        label.addConstraints(
-            [
-                .layout(
-                    anchor: .leadingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
-                ),
-                .layout(
-                    anchor: .trailingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
-                ),
-//                .layout(anchor: .topAnchor, constant: .equalTo(constant: Theme.constant.padding * 2)),
-                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: Theme.constant.padding * 1.5))
-            ]
-        )
-        return label
-    }()
-
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.backgroundColor = .red
+        label.apply(style: .largeTitle, weight: .bold)
+        labelConstraints.forEach { $0.constant = Theme.constant.padding }
+        leadingLineConstraints.constant = Theme.constant.padding / 2
     }
 }
+
+// MARK: - ViewModel
 
 extension DashboardHeaderBalanceView {
 
     func update(with balance: String) {
-        
         label.text = balance
     }
 }
