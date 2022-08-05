@@ -73,6 +73,17 @@ final class DefaultDashboardInteractor {
         self.walletsStateService = walletsStateService
         self.priceHistoryService = priceHistoryService
         self.nftsService = nftsService
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(didEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(willEnterBackground),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
     }
 }
 
@@ -225,6 +236,14 @@ extension DefaultDashboardInteractor {
                 )
             }
         }
+    }
+
+    @objc func didEnterBackground() {
+        walletsStateService.start()
+    }
+
+    @objc func willEnterBackground() {
+        walletsStateService.pause()
     }
 }
 
