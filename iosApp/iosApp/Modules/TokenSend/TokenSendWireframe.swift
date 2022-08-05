@@ -5,7 +5,6 @@
 import UIKit
 
 struct TokenSendWireframeContext {
-    
     let presentationStyle: PresentationStyle
     let web3Token: Web3Token?
 }
@@ -58,17 +57,12 @@ final class DefaultTokenSendWireframe {
 extension DefaultTokenSendWireframe: TokenSendWireframe {
     
     func present() {
-        
         let vc = wireUp()
-        
         switch context.presentationStyle {
-            
         case .embed:
             fatalError("This module should not be presented embedded")
-            
         case .present:
             presentingIn.present(vc, animated: true)
-            
         case .push:
             guard let presentingIn = presentingIn as? NavigationController else { return }
             presentingIn.pushViewController(vc, animated: true)
@@ -78,9 +72,7 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
     func navigate(to destination: TokenSendWireframeDestination) {
         
         switch destination {
-            
         case .underConstructionAlert:
-            
             let factory: AlertWireframeFactory = ServiceDirectory.assembler.resolve()
             factory.makeWireframe(
                 navigationController,
@@ -88,7 +80,6 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
             ).present()
             
         case let .qrCodeScan(network, onCompletion):
-            
             let wireframe = qrCodeScanWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(
@@ -100,7 +91,6 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
             wireframe.present()
             
         case let .selectToken(onCompletion):
-            
             let wireframe = tokenPickerWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(
@@ -113,9 +103,7 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
             wireframe.present()
             
         case let .confirmSend(dataIn, onSuccess):
-            
             guard let viewController = navigationController.topViewController else {
-                
                 return
             }
             
@@ -128,9 +116,7 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
     }
     
     func dismiss() {
-        
         if navigationController.viewControllers.count == 1 {
-            
             navigationController.dismiss(animated: true)
         } else {
             navigationController.popViewController(animated: true)
@@ -157,22 +143,16 @@ private extension DefaultTokenSendWireframe {
         
         switch context.presentationStyle {
         case .embed:
-            
             fatalError("This module should not be presented embedded")
         case .present:
-
             vc.hidesBottomBarWhenPushed = true
-            
             let navigationController = NavigationController(rootViewController: vc)
             self.navigationController = navigationController
             return navigationController
 
         case .push:
-            
             vc.hidesBottomBarWhenPushed = true
-            
             if let navigationController = presentingIn as? NavigationController {
-                
                 self.navigationController = navigationController
                 return vc
             }

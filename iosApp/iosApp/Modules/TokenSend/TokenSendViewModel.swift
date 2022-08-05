@@ -5,7 +5,6 @@
 import Foundation
 
 struct TokenSendViewModel {
-    
     let title: String
     let items: [Item]
 }
@@ -13,26 +12,22 @@ struct TokenSendViewModel {
 extension TokenSendViewModel {
     
     struct Fee {
-        
         let id: String
         let name: String
         let value: String
     }
     
     enum Item {
-        
         case address(TokenEnterAddressViewModel)
         case token(TokenEnterAmountViewModel)
         case send(Send)
     }
-    
+
     struct Send {
-        
         let tokenNetworkFeeViewModel: TokenNetworkFeeViewModel
         let buttonState: State
         
         enum State {
-            
             case invalidDestination
             case enterFunds
             case insufficientFunds
@@ -44,12 +39,9 @@ extension TokenSendViewModel {
 extension Array where Element == TokenSendViewModel.Item {
     
     var address: TokenEnterAddressViewModel? {
-        
         var address: TokenEnterAddressViewModel?
         forEach {
-            
             if case let TokenSendViewModel.Item.address(value) = $0 {
-                
                 address = value
             }
         }
@@ -58,30 +50,22 @@ extension Array where Element == TokenSendViewModel.Item {
     }
     
     var token: TokenEnterAmountViewModel? {
-        
         var token: TokenEnterAmountViewModel?
         forEach {
-            
             if case let TokenSendViewModel.Item.token(value) = $0 {
-                
                 token = value
             }
         }
-        
         return token
     }
     
     var send: TokenSendViewModel.Send? {
-        
         var send: TokenSendViewModel.Send?
         forEach {
-            
             if case let TokenSendViewModel.Item.send(value) = $0 {
-                
                 send = value
             }
         }
-        
         return send
     }
 }

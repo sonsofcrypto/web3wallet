@@ -5,7 +5,6 @@
 import Foundation
 
 enum TokenSendPresenterEvent {
-
     case dismiss
     case addressChanged(to: String)
     case pasteAddress
@@ -19,13 +18,11 @@ enum TokenSendPresenterEvent {
 }
 
 protocol TokenSendPresenter: AnyObject {
-
     func present()
     func handle(_ event: TokenSendPresenterEvent)
 }
 
 final class DefaultTokenSendPresenter {
-
     private weak var view: TokenSendView?
     private let interactor: TokenSendInteractor
     private let wireframe: TokenSendWireframe
@@ -58,7 +55,6 @@ final class DefaultTokenSendPresenter {
 extension DefaultTokenSendPresenter: TokenSendPresenter {
 
     func present() {
-        
         updateView(
             with: [
                 .address(
@@ -94,15 +90,10 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
     }
 
     func handle(_ event: TokenSendPresenterEvent) {
-
         switch event {
-            
         case .dismiss:
-            
             wireframe.dismiss()
-
         case .qrCodeScan:
-            
             view?.dismissKeyboard()
             let onQRCodeScanned = makeOnQRCodeScanned()
             wireframe.navigate(
@@ -113,26 +104,20 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
             )
             
         case .selectToken:
-            
             wireframe.navigate(
                 to: .selectToken(
                     onCompletion: makeOnTokenToSelected()
                 )
             )
-            
         case .saveAddress:
-            
             wireframe.navigate(to: .underConstructionAlert)
-            
         case let .addressChanged(address):
-            
             if
                 let currentAddress = self.address,
                 let formattedAddress = formattedAddress,
                 formattedAddress.hasPrefix(address),
                 formattedAddress.count == (address.count + 1)
             {
-                
                 updateAddress(with: String(currentAddress.prefix(currentAddress.length - 1)))
             } else {
                 let isValid = interactor.isAddressValid(address: address, network: token.network)
@@ -143,7 +128,6 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
             }
             
         case .pasteAddress:
-            
             let clipboard = UIPasteboard.general.string ?? ""
             let isValid = interactor.isAddressValid(address: clipboard, network: token.network)
             guard isValid else { return }
@@ -153,43 +137,33 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
             )
             
         case let .tokenChanged(amount):
-            
             updateView(
                 amount: amount,
                 shouldTokenUpdateTextFields: false
             )
             
         case let .feeChanged(identifier):
-            
             guard let fee = fees.first(where: { $0.rawValue == identifier }) else { return }
             self.fee = fee
             updateCTA()
             
         case .feeTapped:
-            
             view?.presentFeePicker(
                 with: makeFees()
             )
             
         case .review:
-            
             sendTapped = true
-            
             let isValidAddress = interactor.isAddressValid(
                 address: address ?? "",
                 network: token.network
             )
             guard let address = address, isValidAddress  else {
-                updateView(
-                    shouldAddressBecomeFirstResponder: true
-                )
+                updateView(shouldAddressBecomeFirstResponder: true)
                 return
             }
-            
             guard let amount = amount, token.balance >= amount, amount > 0 else {
-                updateView(
-                    shouldTokenBecomeFirstResponder: true
-                )
+                updateView(shouldTokenBecomeFirstResponder: true)
                 return
             }
                         
@@ -201,7 +175,6 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                         estimatedFee: makeConfirmationSendEstimatedFee()
                     ),
                     onSuccess: makeOnTokenTransactionSend()
-                    
                 )
             )
         }
@@ -211,9 +184,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
 private extension DefaultTokenSendPresenter {
     
     func makeConfirmationSendEstimatedFee() -> ConfirmationWireframeContext.SendContext.Fee {
-        
         switch fee {
-            
         case .low:
             return .low
         case .medium:
@@ -224,7 +195,6 @@ private extension DefaultTokenSendPresenter {
     }
     
     func makeConfirmationSendToken() -> ConfirmationWireframeContext.SendContext.Token {
-        
         .init(
             iconName: interactor.tokenIconName(for: token),
             token: token,
@@ -235,7 +205,6 @@ private extension DefaultTokenSendPresenter {
     func makeConfirmationSendDestination(
         to address: String
     ) -> ConfirmationWireframeContext.SendContext.Destination {
-        
         .init(
             from: interactor.addressFormattedShort(
                 address: interactor.walletAddress ?? "",
@@ -249,19 +218,16 @@ private extension DefaultTokenSendPresenter {
     }
     
     func makeOnTokenTransactionSend() -> () -> Void {
-        
         {
             print("Transaction send!!!")
         }
     }
 
     func loadToken() {
-        
         token = context.web3Token ?? interactor.defaultToken
     }
     
     func makeOnTokenToSelected() -> (Web3Token) -> Void {
-        
         {
             [weak self] token in
             guard let self = self else { return }
@@ -272,7 +238,6 @@ private extension DefaultTokenSendPresenter {
     }
     
     func updateView(with items: [TokenSendViewModel.Item]) {
-        
         view?.update(
             with: .init(
                 title: Localized("tokenSend.title", arg: token.symbol),
@@ -282,7 +247,6 @@ private extension DefaultTokenSendPresenter {
     }
     
     func makeOnQRCodeScanned() -> (String) -> Void {
-        
         { [weak self] address in
             
             guard let self = self else { return }
@@ -297,18 +261,15 @@ private extension DefaultTokenSendPresenter {
         shouldTokenUpdateTextFields: Bool = false,
         shouldTokenBecomeFirstResponder: Bool = false
     ) {
-        
         updateAddress(
             with: address ?? self.address ?? "",
             becomeFirstResponder: shouldAddressBecomeFirstResponder
         )
-        
         updateToken(
             with: amount ?? self.amount ?? 0,
             shouldUpdateTextFields: shouldTokenUpdateTextFields,
             shouldBecomeFirstResponder: shouldTokenBecomeFirstResponder
         )
-        
         updateCTA()
     }
     
@@ -316,9 +277,7 @@ private extension DefaultTokenSendPresenter {
         with address: String,
         becomeFirstResponder: Bool = false
     ) {
-        
         if !address.contains("...") {
-            
             self.address = address
         }
         
@@ -341,11 +300,8 @@ private extension DefaultTokenSendPresenter {
     }
     
     var formattedAddress: String? {
-        
         guard let address = address else { return nil }
-        
         guard interactor.isAddressValid(address: address, network: token.network) else { return nil }
-        
         return interactor.addressFormattedShort(
             address: address,
             network: token.network
@@ -357,9 +313,7 @@ private extension DefaultTokenSendPresenter {
         shouldUpdateTextFields: Bool,
         shouldBecomeFirstResponder: Bool = false
     ) {
-        
         self.amount = amount
-        
         updateView(
             with: [
                 .token(
@@ -379,12 +333,10 @@ private extension DefaultTokenSendPresenter {
     }
     
     func updateCTA() {
-        
         let isValidAddress = interactor.isAddressValid(
             address: address ?? "",
             network: token.network
         )
-        
         let buttonState: TokenSendViewModel.Send.State
         if !sendTapped {
             buttonState = .ready
@@ -399,7 +351,6 @@ private extension DefaultTokenSendPresenter {
         } else {
             buttonState = .ready
         }
-        
         updateView(
             with: [
                 .send(
@@ -416,10 +367,8 @@ private extension DefaultTokenSendPresenter {
     }
     
     func makeEstimatedFee() -> String {
-        
         let amountInUSD = interactor.networkFeeInUSD(network: token.network, fee: fee)
         let timeInSeconds = interactor.networkFeeInSeconds(network: token.network, fee: fee)
-        
         let min: Double = Double(timeInSeconds) / Double(60)
         if min > 1 {
             return "\(amountInUSD.formatCurrency() ?? "") ~ \(min.toString(decimals: 0)) \(Localized("min"))"
@@ -446,15 +395,11 @@ private extension DefaultTokenSendPresenter {
     }
     
     func makeFeeType() -> TokenNetworkFeeViewModel.FeeType {
-        
         switch fee {
-            
         case .low:
             return .low
-            
         case .medium:
             return .medium
-            
         case .high:
             return .high
         }
@@ -462,9 +407,7 @@ private extension DefaultTokenSendPresenter {
 }
 
 private extension Web3NetworkFee {
-    
     var name: String {
-        
         switch self {
         case .low:
             return Localized("low")
