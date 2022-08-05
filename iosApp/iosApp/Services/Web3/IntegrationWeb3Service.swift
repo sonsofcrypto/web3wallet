@@ -28,12 +28,6 @@ final class IntegrationWeb3Service {
         self.currenciesService = currenciesService
         self.walletsStateService = walletsStateService
         self.defaults = defaults
-        
-        // TODO: @Annon implement
-        //        internalService.onTokensUpdated {
-        //
-        //            self.tokensChanged()
-        //        }
     }
     
 }
@@ -82,18 +76,27 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
 
     var myTokens: [Web3Token] {
         guard let network = walletsConnectionService.network,
-              let wallet = walletsConnectionService.wallet else {
+              let wallet = walletsConnectionService.wallet(network: network) else {
             return []
         }
 
-        let web3network: Web3Network = Web3Network.from(
-            network,
-            isOn: walletsConnectionService.enabledNetworks().contains(network)
-        )
+        var tokens = [Web3Token]()
 
-        let currencies = currenciesService.currencies(wallet: wallet)
+        for network in walletsConnectionService.enabledNetworks() {
+            let web3network: Web3Network = Web3Network.from(
+                network,
+                isOn: walletsConnectionService.enabledNetworks().contains(network)
+            )
+            if let wallet = walletsConnectionService.wallet(network: network) {
+                let currencies = currenciesService.currencies(wallet: wallet)
+                tokens.append(contentsOf:
+                    currencies.toWeb3TokenList(network: web3network, inWallet: true)
+                )
+            }
+        }
 
-        return currencies.toWeb3TokenList(network: web3network, inWallet: true)
+        print("=== currencies", tokens.count)
+        return tokens
     }
 
     func networkIcon(for network: Web3Network) -> Data {
@@ -135,7 +138,7 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
     }
     
     func isValid(address: String, forNetwork network: Web3Network) -> Bool {
-        
+
         address.hasPrefix("0x") && address.count == 42
     }
     

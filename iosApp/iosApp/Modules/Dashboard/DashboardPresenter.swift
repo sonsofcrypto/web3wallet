@@ -123,7 +123,7 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             wireframe.navigate(
                 to: .editTokens(
                     network: network,
-                    selectedTokens: myTokens,
+                    selectedTokens: myTokens.filter { $0.network == network },
                     onCompletion: { [weak self] tokens in
                         self?.selectedTokensHandler(tokens, network: network)
                     }
