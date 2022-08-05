@@ -149,7 +149,6 @@
 "settings.debug.apis" = "APIs";
 "settings.debug.apis.nfts" = "NFTs";
 "settings.debug.apis.nfts.openSea" = "OpenSea";
-"settings.debug.apis.nfts.mock" = "Dummy Data";
 "settings.debug.resetKeyStore" = "Reset keystore";
 
 "settings.root.about" = "About";

@@ -131,14 +131,6 @@ extension DefaultSettingsService: SettingsService {
                                 action: .debugAPIsNFTsOpenSea,
                                 showTickOnSelected: true
                             )
-                        ),
-                        .init(
-                            title: Localized("settings.debug.apis.nfts.mock"),
-                            type: .action(
-                                item: .debugAPIsNFTs,
-                                action: .debugAPIsNFTsMock,
-                                showTickOnSelected: true
-                            )
                         )
                     ],
                     footer: nil
@@ -248,7 +240,7 @@ private extension DefaultSettingsService {
         
         switch action {
             
-        case .debugAPIsNFTsOpenSea, .debugAPIsNFTsMock:
+        case .debugAPIsNFTsOpenSea:
             ServiceDirectory.rebootApp()
             
         case .themeIOS, .themeMiami:
