@@ -65,7 +65,7 @@ final class DefaultDashboardPresenter {
         self.wireframe = wireframe
         self.onboardingService = onboardingService
 
-        interactor.addListener(self)
+        interactor.addListener(self)        
     }
 
     deinit {
