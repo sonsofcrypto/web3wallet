@@ -141,6 +141,10 @@ private extension DashboardViewController {
             image: "tab_icon_dashboard".assetImage,
             tag: 0
         )
+
+        var transform = CATransform3DIdentity
+        transform.m34 = -1.0 / 500.0
+        collectionView.layer.sublayerTransform = transform
     }
     
     @objc func navBarLeftActionTapped() {
@@ -200,7 +204,6 @@ extension DashboardViewController: UICollectionViewDataSource {
     ) -> UICollectionViewCell {
 
         guard let section = viewModel?.sections[indexPath.section] else {
-            
             fatalError("No viewModel for \(indexPath) \(collectionView)")
         }
         
@@ -226,7 +229,6 @@ extension DashboardViewController: UICollectionViewDataSource {
             cell.update(with: nft)
             return cell
         } else {
-            
             fatalError("No viewModel for \(indexPath) \(collectionView)")
         }
     }
@@ -277,21 +279,13 @@ extension DashboardViewController: UICollectionViewDelegate {
         willDisplay cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath
     ) {
-        
-        guard lastVelocity > 0 else {
+        guard lastVelocity > 0, (cell as? DashboardWalletCell) != nil else {
             return
         }
-
-        let rotation = CATransform3DMakeRotation(-3.13 / 2, 1, 0, 0)
-        let anim = CABasicAnimation(keyPath: "transform")
-        anim.fromValue = CATransform3DScale(rotation, 0.5, 0.5, 0)
-        anim.toValue = CATransform3DIdentity
-        anim.duration = 0.3
-        anim.isRemovedOnCompletion = true
-        anim.fillMode = .both
-        anim.timingFunction = CAMediaTimingFunction(name: .easeOut)
-        anim.beginTime = CACurrentMediaTime() + 0.05 * CGFloat(indexPath.item);
-        cell.layer.add(anim, forKey: "transform")
+        cell.layer.add(
+            CAAnimation.buildUp(0.05 * CGFloat(indexPath.item)),
+            forKey: "transform"
+        )
     }
 }
 

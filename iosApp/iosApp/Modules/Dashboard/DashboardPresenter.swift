@@ -23,32 +23,15 @@ enum DashboardPresenterEvent {
 }
 
 protocol DashboardPresenter: AnyObject {
-    
     func present()
     func handle(_ event: DashboardPresenterEvent)
 }
 
 final class DefaultDashboardPresenter {
-    
     private weak var view: DashboardView?
     private let interactor: DashboardInteractor
     private let wireframe: DashboardWireframe
     private let onboardingService: OnboardingService
-    // TODD(Anon): Refactor to shared formatters
-    private let fiatFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.currencyCode = "usd"
-        formatter.numberStyle = .currency
-        return formatter
-    }()
-    // TODD(Anon): Refactor to shared formatters
-    private let pctFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .percent
-        return formatter
-    }()
-    // TODD(Anon): Refactor to shared formatters
-    private let currencyFormatter = CurrencyFormatter()
 
     var expandedNetworks = [String]()
     var notifications = [Web3Notification]()
@@ -140,7 +123,6 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             
         case .didTapDismissNotification:
             break
-            
         default:
             print("Handle \(event)")
         }
@@ -291,7 +273,7 @@ private extension DefaultDashboardPresenter {
             for: interactor.wallet(for: network),
             currency: currency
         )
-        let formatted = currencyFormatter.format(
+        let formatted = Formatter.currency.format(
             bigInt: cryptoBalance,
             currency: currency
         )
@@ -300,13 +282,13 @@ private extension DefaultDashboardPresenter {
             name: currency.name,
             ticker: currency.symbol,
             imageData: interactor.image(for: currency),
-            fiatBalance: fiatFormatter.string(from: Float(fiatBalance)),
+            fiatBalance: Formatter.fiat.string(from: Float(fiatBalance)),
             cryptoBalance: formatted, // "\($0.balance.toString(decimals: $0.decimals)) \($0.symbol)",
             tokenPrice: market?.currentPrice != nil
-                ? fiatFormatter.string(from: market?.currentPrice ?? 0) ?? "-"
+                ? Formatter.fiat.string(from: market?.currentPrice ?? 0) ?? "-"
                 : "-",
             pctChange: market?.priceChangePercentage24h != nil
-                ? pctFormatter.string(from: Float(market?.priceChangePercentage24h ?? 0) * 0.01) ?? "-"
+                ? Formatter.pct.string(from: Float(market?.priceChangePercentage24h ?? 0) * 0.01) ?? "-"
                 : "-",
             priceUp: market?.priceChangePercentage24h?.doubleValue ?? 0 >= 0,
             candles: candlesViewModel(candles: interactor.candles(for: currency))

@@ -16,14 +16,11 @@ final class DashboardNotificationCell: CollectionViewCell {
     private var handler: Handler!
     
     struct Handler {
-        
         let onDismiss: (String) -> Void
     }
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
         clipsToBounds = true
         
@@ -54,6 +51,11 @@ final class DashboardNotificationCell: CollectionViewCell {
         
         layer.transform = CATransform3DIdentity
         layer.removeAllAnimations()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+//        backgroundColor = .red
     }
 }
 
