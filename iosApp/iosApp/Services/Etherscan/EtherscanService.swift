@@ -176,6 +176,8 @@ private extension DefaultEtherscanService {
         let encoder = JSONEncoder()
         let data = try encoder.encode(transactions)
         
+        clearCache()
+        
         defaults.set(fileName, forKey: LATEST_FILE_NAME)
         defaults.set(data, forKey: fileName)
         defaults.synchronize()
