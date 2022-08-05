@@ -48,6 +48,9 @@ extension CandlesViewModel.Candle {
                 Double(Int(candle.timestamp.epochSeconds))
             )
         )
+    }
 
+    static func from(_ candles: [web3lib.Candle]?) -> [CandlesViewModel.Candle] {
+        (candles ?? []).map { CandlesViewModel.Candle.from($0) }
     }
 }

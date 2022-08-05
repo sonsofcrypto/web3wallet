@@ -95,14 +95,10 @@ extension DefaultDashboardPresenter: DashboardPresenter {
         case let .didSelectWallet(networkIdx, currencyIdx):
             let network = interactor.enabledNetworks()[networkIdx]
             let currency = interactor.currencies(for: network)[currencyIdx]
-            let token = Web3Token.from(
-                currency: currency,
-                network: Web3Network.from(network, isOn: true),
-                inWallet: true,
-                idx: currencyIdx
-            )
-            wireframe.navigate(to: .wallet(token: token))
-            
+            if let wallet = interactor.wallet(for: network) {
+                wireframe.navigate(to: .wallet(wallet: wallet, currency: currency))
+            }
+
         case .walletConnectionSettingsAction:
             wireframe.navigate(to: .keyStoreNetworkSettings)
             

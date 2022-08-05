@@ -3,10 +3,9 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
-import UIKit
+import web3lib
 
 enum AccountPresenterEvent {
-
     case receive
     case send
     case swap
@@ -14,17 +13,40 @@ enum AccountPresenterEvent {
 }
 
 protocol AccountPresenter {
-
     func present()
     func handle(_ event: AccountPresenterEvent)
 }
 
 final class DefaultAccountPresenter {
-
     private weak var view: AccountView?
     private let interactor: AccountInteractor
     private let wireframe: AccountWireframe
     private let context: AccountWireframeContext
+
+    // TODD(Anon): Refactor to shared formatters
+    private let fiatFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.currencyCode = "usd"
+        formatter.numberStyle = .currency
+        return formatter
+    }()
+    // TODD(Anon): Refactor to shared formatters
+    private let largeFiatFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.currencyCode = "usd"
+        formatter.numberStyle = .currency
+        formatter.generatesDecimalNumbers = false
+        formatter.maximumFractionDigits = 0
+        return formatter
+    }()
+    // TODD(Anon): Refactor to shared formatters
+    private let pctFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .percent
+        return formatter
+    }()
+    // TODD(Anon): Refactor to shared formatters
+    private let currencyFormatter = CurrencyFormatter()
 
     init(
         view: AccountView,
@@ -42,11 +64,10 @@ final class DefaultAccountPresenter {
 extension DefaultAccountPresenter: AccountPresenter {
 
     func present() {
-        view?.update(with: viewModel(token: context.web3Token))
+        view?.update(with: viewModel())
     }
 
     func handle(_ event: AccountPresenterEvent) {
-
         switch event {
         case .receive:
             wireframe.navigate(to: .receive)
@@ -62,41 +83,47 @@ extension DefaultAccountPresenter: AccountPresenter {
 
 private extension DefaultAccountPresenter {
 
-}
-
-private extension DefaultAccountPresenter {
-
-    func viewModel(token: Web3Token) -> AccountViewModel {
-        
-        .init(
-            currencyName: token.name,
+    func viewModel() -> AccountViewModel {
+        let currency = interactor.currency()
+        let market = interactor.market()
+        let cryptoBalance = interactor.cryptoBalance()
+        let fiatBalance = interactor.fiatBalance()
+        let formattedCrypto = currencyFormatter.format(
+            bigInt: cryptoBalance,
+            currency: currency
+        )
+        let formattedFiat = fiatFormatter.string(from: fiatBalance as NSNumber) ?? "-"
+        let formattedPct = pctFormatter.string(from: Float(market?.priceChangePercentage24h ?? 0) / 100.0) ?? "-"
+        let tmp = largeFiatFormatter.string(from: market?.marketCap ?? 0) ?? "-"
+        return .init(
+            currencyName: currency.name,
             header: .init(
-                balance: (token.symbol == "CULT" ? "20,000" : "4.20 ") + token.symbol,
-                fiatBalance: "$6,900",
-                pct: "+4.5%",
+                balance: formattedCrypto + currency.symbol,
+                fiatBalance: formattedFiat,
+                pct: formattedPct,
                 pctUp: true,
                 buttons: makeButtons()
             ),
-            candles: .loaded(interactor.priceData(for: token).toCandlesViewModelCandle),
+            candles: .loaded(CandlesViewModel.Candle.from(interactor.candles()?.last(n: 60))),
             marketInfo: .init(
-                marketCap: "$460,432,599",
-                price: "$4200",
-                volume: "$68,234,352"
+                marketCap: largeFiatFormatter.string(from: market?.marketCap ?? 0) ?? "-",
+                price: fiatFormatter.string(from: market?.currentPrice ?? 0) ?? "-",
+                volume: largeFiatFormatter.string(from: market?.totalVolume ?? 0) ?? "-"
             ),
-            bonusAction: token.symbol == "CULT" ? .init(title: "Read the manifesto") : nil,
+            bonusAction: currency.symbol == "CULT" ? .init(title: "Read the manifesto") : nil,
             transactions: [
-                .init(
-                    date: "23 Feb 2022",
-                    address: "0xcf6fa3373c3ed7e0c2f502e39be74fd4d6f054ee",
-                    amount: "+ 6.90 " + token.symbol,
-                    isReceive: true
-                ),
-                .init(
-                    date: "14 Jan 2022",
-                    address: "0xcf6fa3373c3ed7e0c2f502e39be74fd4d6f054ee",
-                    amount: "- 4.20 " + token.symbol,
-                    isReceive: false
-                )
+//                .init(
+//                    date: "23 Feb 2022",
+//                    address: "0xcf6fa3373c3ed7e0c2f502e39be74fd4d6f054ee",
+//                    amount: "+ 6.90 " + token.symbol,
+//                    isReceive: true
+//                ),
+//                .init(
+//                    date: "14 Jan 2022",
+//                    address: "0xcf6fa3373c3ed7e0c2f502e39be74fd4d6f054ee",
+//                    amount: "- 4.20 " + token.symbol,
+//                    isReceive: false
+//                )
             ]
         )
     }
@@ -105,7 +132,6 @@ private extension DefaultAccountPresenter {
 private extension DefaultAccountPresenter {
     
     func makeButtons() -> [CustomVerticalButton.ViewModel] {
-        
         [
             .init(
                 title: Localized("receive"),

@@ -6,7 +6,7 @@ import UIKit
 import web3lib
 
 enum DashboardWireframeDestination {
-    case wallet(token: Web3Token)
+    case wallet(wallet: Wallet, currency: Currency)
     case keyStoreNetworkSettings
     case presentUnderConstructionAlert
     case mnemonicConfirmation
@@ -116,9 +116,10 @@ extension DefaultDashboardWireframe: DashboardWireframe {
         }
 
         switch destination {
-        case let .wallet(token):
+        case let .wallet(wallet, currency):
             accountWireframeFactory.makeWireframe(
-                presentingIn: vc, context: .init(web3Token: token)
+                presentingIn: vc,
+                context: .init(wallet: wallet, currency: currency)
             ).present()
 
         case .keyStoreNetworkSettings:

@@ -3,14 +3,14 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 struct AccountWireframeContext {
-    
-    let web3Token: Web3Token
+    let wallet: Wallet
+    let currency: Currency
 }
 
 enum AccountWireframeDestination {
-
     case receive
     case send
     case swap
@@ -23,15 +23,17 @@ protocol AccountWireframe {
 }
 
 final class DefaultAccountWireframe {
-
     private weak var presentingIn: UIViewController?
     private let context: AccountWireframeContext
     private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
     private let tokenSendWireframeFactory: TokenSendWireframeFactory
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
-    private let priceHistoryService: PriceHistoryService
-    
+    private let walletConnectionService: WalletsConnectionService
+    private let walletsStateService: WalletsStateService
+    private let currenciesService: CurrenciesService
+    private let currencyMetadataService: CurrencyMetadataService
+
     private weak var navigationController: NavigationController!
 
     init(
@@ -41,7 +43,10 @@ final class DefaultAccountWireframe {
         tokenSendWireframeFactory: TokenSendWireframeFactory,
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
-        priceHistoryService: PriceHistoryService
+        walletConnectionService: WalletsConnectionService,
+        walletsStateService: WalletsStateService,
+        currenciesService: CurrenciesService,
+        currencyMetadataService: CurrencyMetadataService
     ) {
         self.presentingIn = presentingIn
         self.context = context
@@ -49,14 +54,16 @@ final class DefaultAccountWireframe {
         self.tokenSendWireframeFactory = tokenSendWireframeFactory
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.deepLinkHandler = deepLinkHandler
-        self.priceHistoryService = priceHistoryService
+        self.walletConnectionService = walletConnectionService
+        self.walletsStateService = walletsStateService
+        self.currenciesService = currenciesService
+        self.currencyMetadataService = currencyMetadataService
     }
 }
 
 extension DefaultAccountWireframe: AccountWireframe {
 
     func present() {
-        
         let vc = wireUp()
         let topVc = (presentingIn as? UINavigationController)?.topViewController
 
@@ -71,37 +78,44 @@ extension DefaultAccountWireframe: AccountWireframe {
     func navigate(to destination: AccountWireframeDestination) {
 
         switch destination {
-            
         case .receive:
-            
             let wireframe = tokenReceiveWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
-                context: .init(presentationStyle: .present, web3Token: context.web3Token)
+                context: .init(presentationStyle: .present, web3Token: web3Token(context))
             )
             wireframe.present()
             
         case .send:
-            
             tokenSendWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
-                context: .init(presentationStyle: .present, web3Token: context.web3Token)
+                context: .init(presentationStyle: .present, web3Token: web3Token(context))
             ).present()
             
         case .swap:
-            
             tokenSwapWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(
                     presentationStyle: .present,
-                    tokenFrom: context.web3Token,
+                    tokenFrom: web3Token(context),
                     tokenTo: nil
                 )
             ).present()
             
         case .more:
-            
             deepLinkHandler.handle(deepLink: .degen)
         }
+    }
+
+    func web3Token(_ context: AccountWireframeContext) -> Web3Token {
+        Web3Token.from(
+            currency: context.currency,
+            network: Web3Network.from(
+                context.wallet.network() ?? Network.ethereum(),
+                isOn: true
+            ),
+            inWallet: true,
+            idx: 0
+        )
     }
 }
 
@@ -110,7 +124,12 @@ private extension DefaultAccountWireframe {
     func wireUp() -> UIViewController {
         
         let interactor = DefaultAccountInteractor(
-            priceHistoryService: priceHistoryService
+            wallet: context.wallet,
+            currency: context.currency,
+            walletConnectionService: walletConnectionService,
+            walletsStateService: walletsStateService,
+            currenciesService: currenciesService,
+            currencyMetadataService: currencyMetadataService
         )
         
         let vc: AccountViewController = UIStoryboard(.account).instantiate()
