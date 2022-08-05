@@ -42,6 +42,7 @@ private extension AssemblerBootstrapper {
             WalletsStateServiceAssembler(),
             PriceHistoryServiceAssembler(),
             FeaturesServiceAssembler(),
+            EtherscanServiceAssembler(),
             // DeepLink
             DeepLinkHandlerAssembler(),
             // Modules

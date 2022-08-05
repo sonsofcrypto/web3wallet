@@ -12,13 +12,6 @@ final class NFTsServiceAssembler: AssemblerComponent {
             
             if settingsService.isSelected(
                 item: .debugAPIsNFTs,
-                action: .debugAPIsNFTsMock
-            ) {
-                
-                return DefaultNFTsService()
-                
-            } else if settingsService.isSelected(
-                item: .debugAPIsNFTs,
                 action: .debugAPIsNFTsOpenSea
             ) {
                 

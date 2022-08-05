@@ -42,7 +42,6 @@ extension Setting {
         case themeIOS = "theme.ios"
 
         case debugAPIsNFTsOpenSea = "providers.nfts.opensea"
-        case debugAPIsNFTsMock = "providers.nfts.mock"
 
         case resetKeystore = "reset.keystore"
         

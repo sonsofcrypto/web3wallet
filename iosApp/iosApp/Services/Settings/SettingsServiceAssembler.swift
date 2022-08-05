@@ -20,7 +20,7 @@ final class SettingsServiceAssembler: AssemblerComponent {
                 
                 service.didSelect(
                     item: .debugAPIsNFTs,
-                    action: .debugAPIsNFTsMock,
+                    action: .debugAPIsNFTsOpenSea,
                     fireAction: false
                 )
             }
