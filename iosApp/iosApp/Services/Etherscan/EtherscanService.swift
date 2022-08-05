@@ -61,6 +61,7 @@ final class DefaultEtherscanService {
     private let defaults: UserDefaults
     
     private let LATEST_FILE_NAME = "EtherScanFileNameCached"
+    // TODO: @Anoon to provide API KEY
     private let API_KEY = ""
     
     init(
