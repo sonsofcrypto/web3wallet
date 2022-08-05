@@ -20,7 +20,6 @@ data class CurrencyInfo(
         val ethereum: String?
     ) {
         companion object {
-
             fun from(platforms: Coin.Platforms?): Platforms? {
                 return if (platforms != null) {
                     return Platforms(platforms.ethereum)

@@ -45,7 +45,7 @@ extension DefaultAccountInteractor: AccountInteractor {
     }
 
     func market() -> Market? {
-        currencyMetadataService.market(currency: _currency)
+        return currencyMetadataService.market(currency: _currency)
     }
 
     func candles() -> [Candle]? {

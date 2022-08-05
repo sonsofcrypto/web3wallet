@@ -9,7 +9,7 @@ enum DashboardInteractorEvent {
     case didSelectWallet(wallet: Wallet?)
     case didSelectNetwork(network: Network?)
     case didChangeNetworks(networks: [Network])
-    case didUpdateMarketInfo(market: [Currency : Market]?)
+    case didUpdateMarketInfo(market: [String : Market]?)
     case didUpdateCandles(network: Network, currency: Currency)
     case didUpdateBlock(blockNumber: BigInt)
     case didUpdateBalance(wallet: Wallet, currency: Currency, balance: BigInt)

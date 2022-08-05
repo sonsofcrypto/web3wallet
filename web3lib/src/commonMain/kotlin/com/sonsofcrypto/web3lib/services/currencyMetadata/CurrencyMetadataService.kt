@@ -20,17 +20,17 @@ interface CurrencyMetadataService {
     fun colors(currency: Currency?): Pair<HexColor, HexColor>
 
     suspend fun image(currency: Currency): ByteArray?
-    suspend fun refreshMarket(currencies: List<Currency>): Map<Currency, Market>
+    suspend fun refreshMarket(currencies: List<Currency>): Map<String, Market>
     suspend fun candles(currency: Currency): List<Candle>
 }
 
 class DefaultCurrencyMetadataService: CurrencyMetadataService {
 
-    private var candleCache: MutableMap<Currency, List<Candle>> = mutableMapOf()
-    private var candleUpdate: MutableMap<Currency, Instant> = mutableMapOf()
+    private var candleCache: MutableMap<String, List<Candle>> = mutableMapOf()
+    private var candleUpdate: MutableMap<String, Instant> = mutableMapOf()
 
-    private var market: MutableMap<Currency, Market> = mutableMapOf()
-    private var marketUpdate: MutableMap<Currency, Instant> = mutableMapOf()
+    private var market: MutableMap<String, Market> = mutableMapOf()
+    private var marketUpdate: MutableMap<String, Instant> = mutableMapOf()
 
     private val bundledAssetProvider: BundledAssetProvider
     private val coinGeckoService: CoinGeckoService
@@ -57,11 +57,11 @@ class DefaultCurrencyMetadataService: CurrencyMetadataService {
     }
 
     override fun cachedCandles(currency: Currency?): List<Candle>? {
-        return if (currency != null) candleCache[currency] else null
+        return if (currency != null) candleCache[currency.id()] else null
     }
 
     override fun market(currency: Currency?): Market? {
-        return if (currency != null) market[currency] else null
+        return if (currency != null) market[currency.id()] else null
     }
 
     override fun colors(currency: Currency?): Pair<HexColor, HexColor> {
@@ -74,7 +74,7 @@ class DefaultCurrencyMetadataService: CurrencyMetadataService {
         return bundledAssetProvider.image(id)
     }
 
-    override suspend fun refreshMarket(currencies: List<Currency>): Map<Currency, Market> {
+    override suspend fun refreshMarket(currencies: List<Currency>): Map<String, Market> {
         var markets = withContext(Dispatchers.Default) {
             return@withContext coinGeckoService.market(
                 currencies.map { it.coinGeckoId }.filterNotNull(),
@@ -84,11 +84,11 @@ class DefaultCurrencyMetadataService: CurrencyMetadataService {
             )
         }
 
-        val result: MutableMap<Currency, Market> = mutableMapOf()
+        val result: MutableMap<String, Market> = mutableMapOf()
 
         for (market in markets) {
             currencies.find { it.coinGeckoId == market.id }?.let {
-                result.put(it, market)
+                result.put(it.id(), market)
             }
         }
 
@@ -99,7 +99,7 @@ class DefaultCurrencyMetadataService: CurrencyMetadataService {
     override suspend fun candles(currency: Currency): List<Candle> {
         currency.coinGeckoId?.let {
             val result = coinGeckoService.candles(it, "usd", 30)
-            candleCache.put(currency, result)
+            candleCache.put(currency.id(), result)
             return result
         }
         return listOf()
