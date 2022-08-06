@@ -128,7 +128,7 @@ private extension DashboardViewController {
     }
     
     func notificationsCollectionLayoutSection() -> NSCollectionLayoutSection {
-        let width = (view.bounds.width - Theme.constant.padding * 3) / 2
+        let width = floor((view.bounds.width - Theme.constant.padding * 3)  / 2)
         let group = NSCollectionLayoutGroup.horizontal(
             .estimated(view.bounds.width * 3, height: 64),
             items: [.init(layoutSize: .absolute(width, estimatedH: 64))]
@@ -140,22 +140,24 @@ private extension DashboardViewController {
     }
     
     func walletsCollectionLayoutSection() -> NSCollectionLayoutSection {
-        
-        let inset: CGFloat = Theme.constant.padding * 0.5
-        
+
+        let inset: CGFloat = Theme.constant.padding // * 0.5
+        let width = floor((view.bounds.width - Theme.constant.padding * 3) / 2)
+        let height = round(width * 0.95)
+
         // Item
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(0.5),
-            heightDimension: .fractionalHeight(1)
+            widthDimension: .absolute(width),
+            heightDimension: .absolute(height)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(
-            top: inset,
-            leading: inset,
-            bottom: inset,
-            trailing: inset
-        )
-        
+//        item.contentInsets = NSDirectionalEdgeInsets(
+//            top: inset,
+//            leading: inset,
+//            bottom: inset,
+//            trailing: inset
+//        )
+
         // Group
         let screenWidth: CGFloat = (view.bounds.width)
         let groupSize = NSCollectionLayoutSize(
@@ -163,17 +165,18 @@ private extension DashboardViewController {
             heightDimension: .absolute(screenWidth * 0.4125)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
+        group.interItemSpacing = .fixed(Theme.constant.padding)
         // Section
-        let sectionInset: CGFloat = Theme.constant.padding * 0.5
+        let sectionInset: CGFloat = Theme.constant.padding // * 0.5
         let section = NSCollectionLayoutSection(group: group)
-//        section.contentInsets = .init(
-//            top: sectionInset,
-//            leading: sectionInset,
-//            bottom: sectionInset * 3,
-//            trailing: sectionInset
-//        )
-        
+        section.contentInsets = .init(
+            top: sectionInset,
+            leading: sectionInset,
+            bottom: sectionInset,
+            trailing: sectionInset
+        )
+        section.interGroupSpacing = Theme.constant.padding
+
         let headerItemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(100)

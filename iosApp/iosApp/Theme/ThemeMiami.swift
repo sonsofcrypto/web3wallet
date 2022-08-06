@@ -140,7 +140,7 @@ struct ThemeMiami: Themable {
     var constant: ThemeConstant {
         
         .init(
-            cornerRadius: 14,
+            cornerRadius: 16,
             cornerRadiusSmall: 8,
             shadowRadius: 4,
             cellHeight: 64,

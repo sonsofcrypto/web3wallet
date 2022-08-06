@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class DashboardWalletCell: UICollectionViewCell {
+final class DashboardWalletCell: CollectionViewCell {
 
     @IBOutlet weak var contentStack: UIStackView!
     @IBOutlet weak var topContentStack: UIStackView!
@@ -14,18 +14,16 @@ final class DashboardWalletCell: UICollectionViewCell {
     @IBOutlet weak var pctChangeLabel: UILabel!
     @IBOutlet weak var charView: CandlesView!
     @IBOutlet weak var cryptoBalanceLabel: UILabel!
-    
+
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-                
-        addScreen()
-        
+        backgroundView = DashboardWalletCellBackgroundView()
+
         imageView.layer.cornerRadius = imageView.frame.size.width * 0.5
         imageView.backgroundColor = Theme.colour.labelPrimary
-        
+
         contentStack.setCustomSpacing(13, after: topContentStack)
-        
+
         fiatBalanceLabel.font = Theme.font.dashboardTVBalance
         fiatBalanceLabel.textColor = Theme.colour.labelPrimary
         
@@ -41,11 +39,14 @@ final class DashboardWalletCell: UICollectionViewCell {
     }
 
     override func prepareForReuse() {
-        
         super.prepareForReuse()
-        
         layer.transform = CATransform3DIdentity
         layer.removeAllAnimations()
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        backgroundColor = .red
     }
 }
 
@@ -112,5 +113,40 @@ private extension DashboardWalletCell {
                 .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 4))
             ]
         )
+    }
+}
+
+class DashboardWalletCellBackgroundView: UIView {
+    // 223E7B
+    // 3461BE
+
+    private lazy var gradient: GradientView = {
+        let view = GradientView()
+        view.colors = [UIColor(hexString: "3461BE")!, UIColor(hexString: "223E7B")!]
+        view.direction = .custom(CGPoint(x: 0, y: 0), CGPoint(x: 0, y: 1))
+        insertSubview(view, at: 0)
+        return view
+    }()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configUI()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configUI()
+    }
+
+    func configUI() {
+        clipsToBounds = true
+        layer.cornerRadius = Theme.constant.cornerRadius
+        layer.maskedCorners = CACornerMask.all
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradient.frame = bounds
+        backgroundColor = .red
     }
 }

@@ -14,22 +14,22 @@ final class DashboardHeaderNameView: UICollectionReusableView {
     private var handler: Handler?
     
     struct Handler {
-        
         let onMoreTapped: () -> Void
     }
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
-        
         configureUI()
     }
     
     required init?(coder: NSCoder) {
-        
         super.init(coder: coder)
-        
         configureUI()
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+//        backgroundColor = .green
     }
 }
 
@@ -78,7 +78,7 @@ private extension DashboardHeaderNameView {
         
         groupView.addConstraints(
             [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding * 0.5)),
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 0)),
                 .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
                 .layout(anchor: .topAnchor),
                 .layout(anchor: .bottomAnchor),
@@ -95,7 +95,7 @@ private extension DashboardHeaderNameView {
         addSubview(rightAction)
         rightAction.addConstraints(
             [
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
+                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 0)),
                 .layout(anchor: .centerYAnchor),
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: 30))
             ]
@@ -106,7 +106,7 @@ private extension DashboardHeaderNameView {
         addSubview(view)
         view.addConstraints(
             [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding * 0.5)),
+                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 0)),
                 .layout(anchor: .trailingAnchor, constant: .equalTo(constant: -Theme.constant.padding)),
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: 0.3)),
                 .layout(anchor: .bottomAnchor)

@@ -51,3 +51,15 @@ extension CALayer {
         shadowOpacity = highlighted ? 1 : 0
     }
 }
+
+extension CACornerMask {
+
+    static var all: CACornerMask {
+        [
+            layerMinXMinYCorner,
+            layerMinXMinYCorner,
+            layerMinXMaxYCorner,
+            layerMaxXMaxYCorner
+        ]
+    }
+}

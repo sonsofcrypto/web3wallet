@@ -114,6 +114,13 @@ extension NSCollectionLayoutSize {
         )
     }
 
+    static func absolute(_ width: CGFloat = 100, height: CGFloat = 100) -> Self {
+        .init(
+            widthDimension: .absolute(width),
+            heightDimension: .absolute(height)
+        )
+    }
+
     static func absolute(
         _ width: CGFloat = 100,
         estimatedH: CGFloat = 100

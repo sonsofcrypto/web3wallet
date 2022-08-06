@@ -22,30 +22,22 @@ final class GradientView: UIView {
     }
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
-        
         configureUI()
     }
     
     required init?(coder: NSCoder) {
-        
         super.init(coder: coder)
-        
         configureUI()
     }
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         configureUI()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        
         super.traitCollectionDidChange(previousTraitCollection)
-        
         configureUI()
     }
     
