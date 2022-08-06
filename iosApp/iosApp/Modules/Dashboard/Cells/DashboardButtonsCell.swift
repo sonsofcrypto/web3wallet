@@ -29,7 +29,6 @@ final class DashboardButtonsCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-//        backgroundColor = .red
     }
 }
 

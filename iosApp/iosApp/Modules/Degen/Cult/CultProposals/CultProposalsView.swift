@@ -298,7 +298,7 @@ private extension CultProposalsViewController {
 
         // Section
         let section = NSCollectionLayoutSection(group: outerGroup)
-        section.contentInsets = .paddingDefault
+        section.contentInsets = .padding
         section.interGroupSpacing = Theme.constant.padding * 1.5
         
         let headerItemSize = NSCollectionLayoutSize(

@@ -239,7 +239,7 @@ extension DegenViewController {
             let backgroundItem = NSCollectionLayoutDecorationItem.background(
                 elementKind: "background"
             )
-            backgroundItem.contentInsets = .paddingDefault
+            backgroundItem.contentInsets = .padding
             section.decorationItems = [backgroundItem]
         }
         

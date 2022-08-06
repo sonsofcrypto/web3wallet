@@ -41,10 +41,10 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="WnD-eS-KMs">
-                                                    <rect key="frame" x="0.0" y="8" width="343" height="44"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="60"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BRV-5u-nlb" customClass="Button" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="109" height="44"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="109" height="60"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             <state key="normal" title="Button" image="button:BRV-5u-nlb:image"/>
                                                             <connections>
@@ -52,7 +52,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fK5-V4-qwA" customClass="Button" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="117" y="0.0" width="109" height="44"/>
+                                                            <rect key="frame" x="117" y="0.0" width="109" height="60"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             <state key="normal" title="Button"/>
                                                             <connections>
@@ -60,7 +60,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3B2-ne-SvS" customClass="Button" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="234" y="0.0" width="109" height="44"/>
+                                                            <rect key="frame" x="234" y="0.0" width="109" height="60"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                             <state key="normal" title="Button"/>
                                                             <connections>
@@ -71,10 +71,10 @@
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="WnD-eS-KMs" firstAttribute="top" secondItem="ALr-Vi-5Tt" secondAttribute="top" constant="8" id="A2f-kv-Ci9"/>
+                                                <constraint firstItem="WnD-eS-KMs" firstAttribute="top" secondItem="ALr-Vi-5Tt" secondAttribute="top" id="A2f-kv-Ci9"/>
                                                 <constraint firstItem="WnD-eS-KMs" firstAttribute="leading" secondItem="ALr-Vi-5Tt" secondAttribute="leading" id="C0F-bN-C8v"/>
                                                 <constraint firstAttribute="trailing" secondItem="WnD-eS-KMs" secondAttribute="trailing" id="Mn9-4g-Dxa"/>
-                                                <constraint firstAttribute="bottom" secondItem="WnD-eS-KMs" secondAttribute="bottom" constant="8" id="Uy4-cD-cPc"/>
+                                                <constraint firstAttribute="bottom" secondItem="WnD-eS-KMs" secondAttribute="bottom" id="Uy4-cD-cPc"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="343" height="60"/>
@@ -300,7 +300,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yMk-vr-5Pl" customClass="LineView" customModule="iosApp" customModuleProvider="target">
-                                            <rect key="frame" x="16" y="49.5" width="414" height="0.5"/>
+                                            <rect key="frame" x="0.0" y="49.5" width="430" height="0.5"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="0.29999999999999999" id="cMI-f1-OMx"/>
@@ -311,7 +311,7 @@
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="yMk-vr-5Pl" secondAttribute="trailing" constant="-16" id="0x5-Ly-zXB"/>
                                         <constraint firstAttribute="bottom" secondItem="yMk-vr-5Pl" secondAttribute="bottom" id="3Ad-lR-Ns2"/>
-                                        <constraint firstItem="yMk-vr-5Pl" firstAttribute="leading" secondItem="myi-aA-fBV" secondAttribute="leading" constant="16" id="6VZ-JH-6rV"/>
+                                        <constraint firstItem="yMk-vr-5Pl" firstAttribute="leading" secondItem="myi-aA-fBV" secondAttribute="leading" id="6VZ-JH-6rV"/>
                                         <constraint firstItem="Wyf-9P-KMz" firstAttribute="trailing" secondItem="V3j-Rt-UHL" secondAttribute="trailing" constant="16" id="71W-Lp-EcR"/>
                                         <constraint firstItem="V3j-Rt-UHL" firstAttribute="leading" secondItem="Wyf-9P-KMz" secondAttribute="leading" constant="16" id="lNC-m7-J5K"/>
                                         <constraint firstItem="V3j-Rt-UHL" firstAttribute="top" secondItem="Wyf-9P-KMz" secondAttribute="top" constant="16" id="nL7-lU-FAn"/>
@@ -319,8 +319,8 @@
                                     </constraints>
                                     <connections>
                                         <outlet property="label" destination="V3j-Rt-UHL" id="yRI-QW-YMd"/>
-                                        <outlet property="leadingLineConstraints" destination="6VZ-JH-6rV" id="4j2-Vw-4k3"/>
-                                        <outletCollection property="labelConstraints" destination="lNC-m7-J5K" collectionClass="NSMutableArray" id="B9h-ti-RB4"/>
+                                        <outletCollection property="labelVConstraints" destination="rP2-o6-dw6" collectionClass="NSMutableArray" id="tek-lB-z6B"/>
+                                        <outletCollection property="labelHConstraints" destination="71W-Lp-EcR" collectionClass="NSMutableArray" id="X6o-Rk-crE"/>
                                     </connections>
                                 </collectionReusableView>
                                 <connections>

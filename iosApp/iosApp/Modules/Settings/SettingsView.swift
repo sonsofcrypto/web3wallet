@@ -196,7 +196,7 @@ private extension SettingsViewController{
                 leading: Theme.constant.padding,
                 bottom: 0,
                 trailing: Theme.constant.padding
-            ) : .paddingDefault
+            ) : .padding
         
         let headerItemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
@@ -223,7 +223,7 @@ private extension SettingsViewController{
             let backgroundItem = NSCollectionLayoutDecorationItem.background(
                 elementKind: "background"
             )
-            backgroundItem.contentInsets = .paddingDefault
+            backgroundItem.contentInsets = .padding
             section.decorationItems = [backgroundItem]
         }
         

@@ -81,7 +81,7 @@ extension DashboardViewController {
             withReuseIdentifier: "\(DashboardHeaderNameView.self)"
         )
         collectionView.setCollectionViewLayout(
-            makeCompositionalLayout(),
+            compositionalLayout(),
             animated: false
         )
     }
@@ -89,8 +89,7 @@ extension DashboardViewController {
 
 private extension DashboardViewController {
     
-    func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
-        
+    func compositionalLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { [weak self] sectionIndex, environment in
             guard let self = self else { return nil }
             guard self.viewModel != nil else { return nil }
@@ -98,7 +97,7 @@ private extension DashboardViewController {
             
             switch section.items {
             case .actions:
-                return self.makeButtonsCollectionLayoutSection()
+                return self.buttonsCollectionLayoutSection()
             case .notifications:
                 return self.makeNotificationsCollectionLayoutSection()
             case .nfts:
@@ -109,52 +108,22 @@ private extension DashboardViewController {
         }
     }
     
-    func makeButtonsCollectionLayoutSection() -> NSCollectionLayoutSection {
-        
-        let inset: CGFloat = Theme.constant.padding * 0.5
-        
-        // Item
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1)
+    func buttonsCollectionLayoutSection() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(
+            .fractional(estimatedH: Theme.constant.buttonDashboardActionHeight),
+            insets: .insets(h: 0)
         )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: inset, bottom: 0, trailing: inset)
-        
-        // Group
-        let screenWidth: CGFloat = (view.bounds.width - Theme.constant.padding)
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(screenWidth),
-            heightDimension: .absolute(
-                Theme.constant.buttonDashboardActionHeight + Theme.constant.padding
-            )
-        )
-        let outerGroup = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize, subitems: [item]
-        )
-        
-        // Section
-        let sectionInset: CGFloat = Theme.constant.padding * 0.5
-        let section = NSCollectionLayoutSection(group: outerGroup)
-        section.contentInsets = .init(
-            top: sectionInset,
-            leading: sectionInset,
-            bottom: sectionInset,
-            trailing: sectionInset
-        )
-        
-        let headerItemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(50)
+        let section = NSCollectionLayoutSection(
+            group: .horizontal(.fractional(estimatedH: 100), items: [item]),
+            insets: .padding
         )
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerItemSize,
+            layoutSize: .fractional(estimatedH: 50),
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
         section.boundarySupplementaryItems = [headerItem]
-        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-                
+        section.orthogonalScrollingBehavior = .none
         return section
     }
     

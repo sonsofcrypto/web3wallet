@@ -6,14 +6,14 @@ import UIKit
 
 final class DashboardHeaderBalanceView: UICollectionReusableView {
     @IBOutlet weak var label: UILabel!
-    @IBOutlet var labelConstraints: [NSLayoutConstraint]!
-    @IBOutlet var leadingLineConstraints: NSLayoutConstraint!
+    @IBOutlet var labelHConstraints: [NSLayoutConstraint]!
+    @IBOutlet var labelVConstraints: [NSLayoutConstraint]!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         label.apply(style: .largeTitle, weight: .bold)
-        labelConstraints.forEach { $0.constant = Theme.constant.padding }
-        leadingLineConstraints.constant = Theme.constant.padding / 2
+        labelHConstraints.forEach { $0.constant = Theme.constant.padding }
+        labelVConstraints.forEach { $0.constant = Theme.constant.padding * 1.25 }
     }
 }
 

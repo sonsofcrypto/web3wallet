@@ -148,7 +148,7 @@ private extension NetworksViewController {
         )
         let section = NSCollectionLayoutSection(
             group: group,
-            contentInsets: .init(
+            insets: .init(
                 top: Theme.constant.padding,
                 leading: Theme.constant.padding,
                 bottom: 0,
