@@ -99,11 +99,11 @@ private extension DashboardViewController {
             case .actions:
                 return self.buttonsCollectionLayoutSection()
             case .notifications:
-                return self.makeNotificationsCollectionLayoutSection()
+                return self.notificationsCollectionLayoutSection()
             case .nfts:
                 return self.makeNFTsCollectionLayoutSection()
             case .wallets:
-                return self.makeWalletsCollectionLayoutSection()
+                return self.walletsCollectionLayoutSection()
             }
         }
     }
@@ -127,42 +127,19 @@ private extension DashboardViewController {
         return section
     }
     
-    func makeNotificationsCollectionLayoutSection() -> NSCollectionLayoutSection {
-        // Item
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1)
+    func notificationsCollectionLayoutSection() -> NSCollectionLayoutSection {
+        let width = (view.bounds.width - Theme.constant.padding * 3) / 2
+        let group = NSCollectionLayoutGroup.horizontal(
+            .estimated(view.bounds.width * 3, height: 64),
+            items: [.init(layoutSize: .absolute(width, estimatedH: 64))]
         )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = .init(
-            top: 0,
-            leading: Theme.constant.padding.half,
-            bottom: 0,
-            trailing: Theme.constant.padding.half
-        )
-        // Group
-        let screenWidth: CGFloat = (view.bounds.width - Theme.constant.padding)
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(screenWidth * 0.5),
-            heightDimension: .absolute(64)
-        )
-        let outerGroup = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize, subitems: [item]
-        )
-        // Section
-        let sectionInset: CGFloat = Theme.constant.padding * 0.5
-        let section = NSCollectionLayoutSection(group: outerGroup)
-        section.contentInsets = .init(
-            top: sectionInset,
-            leading: sectionInset,
-            bottom: sectionInset,
-            trailing: sectionInset
-        )
+        let section = NSCollectionLayoutSection(group: group, insets: .padding)
+        section.interGroupSpacing = Theme.constant.padding
         section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
         return section
     }
     
-    func makeWalletsCollectionLayoutSection() -> NSCollectionLayoutSection {
+    func walletsCollectionLayoutSection() -> NSCollectionLayoutSection {
         
         let inset: CGFloat = Theme.constant.padding * 0.5
         
@@ -190,12 +167,12 @@ private extension DashboardViewController {
         // Section
         let sectionInset: CGFloat = Theme.constant.padding * 0.5
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(
-            top: sectionInset,
-            leading: sectionInset,
-            bottom: sectionInset * 3,
-            trailing: sectionInset
-        )
+//        section.contentInsets = .init(
+//            top: sectionInset,
+//            leading: sectionInset,
+//            bottom: sectionInset * 3,
+//            trailing: sectionInset
+//        )
         
         let headerItemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
