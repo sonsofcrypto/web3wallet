@@ -124,10 +124,8 @@ private extension CandlesView {
     }
     
     func attributes(for candles: [CandlesViewModel.Candle]) -> [Attributes] {
-        let sortCandles = candles.sorted(by: { $0.low < $1.low })
-
-        guard let low = sortCandles.first?.low,
-              let high = sortCandles.last?.high else {
+        guard let low = candles.sorted(by: { $0.low < $1.low }).first?.low,
+              let high = candles.sorted(by: { $0.high > $1.high }).first?.high else {
             return []
         }
 

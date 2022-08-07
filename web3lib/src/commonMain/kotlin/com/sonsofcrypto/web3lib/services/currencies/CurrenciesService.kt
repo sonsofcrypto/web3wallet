@@ -1,19 +1,16 @@
 package com.sonsofcrypto.web3lib.services.currencies
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
-import com.sonsofcrypto.web3lib.services.currencies.model.CurrencyInfo
 import com.sonsofcrypto.web3lib.services.currencies.model.ethereumDefaultCurrencies
-import com.sonsofcrypto.web3lib.services.currencies.model.listFrom
 import com.sonsofcrypto.web3lib.services.currencies.model.ropstenDefaultCurrencies
-import com.sonsofcrypto.web3lib.services.currencyMetadata.BundledAssetProvider
 import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3lib.utils.Trie
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
-import com.sonsofcrypto.web3lib.utils.uiDispatcher
-import io.ktor.util.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

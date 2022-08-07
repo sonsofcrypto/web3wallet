@@ -16,7 +16,8 @@ import io.ktor.utils.io.charsets.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.Instant
+import kotlinx.datetime.*
+import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlin.native.concurrent.SharedImmutable
@@ -102,7 +103,7 @@ class DefaultCoinGeckoService : CoinGeckoService {
     ): List<Candle> = withContext(dispatcher) {
         val url = baseURL + "/coins/$coinId/ohlc?vs_currency=$quote&days=$days"
         val listCandles: List<List<Double>> = client.get(url).body()
-        return@withContext listCandles.map {
+        var candles = listCandles.map {
             Candle(
                 timestamp = Instant.fromEpochMilliseconds(it[0].toLong()),
                 open = it[1],
@@ -111,6 +112,35 @@ class DefaultCoinGeckoService : CoinGeckoService {
                 close = it[4],
             )
         }
+        if (days == 30 && !candles.isEmpty()) {
+            candles = fourHourToDaily(candles)
+        }
+        return@withContext candles
+    }
+
+    private fun fourHourToDaily(candles: List<Candle>): List<Candle> {
+        var daily = mutableListOf<Candle>()
+        var day = candles.first().timestamp.toLocalDateTime(TimeZone.UTC).dayOfMonth
+        var prev = candles.first()
+        var open = candles.first().open
+        var high = candles.first().high
+        var low = candles.first().low
+        for (candle in candles) {
+            if (candle.timestamp.toLocalDateTime(TimeZone.UTC).dayOfMonth != day) {
+                daily.add(Candle(prev.timestamp, open, high, low, prev.close))
+                day = candle.timestamp.toLocalDateTime(TimeZone.UTC).dayOfMonth
+                open = candle.open
+                high = candle.high
+                low = candle.low
+            }
+            if (candle.high > high)
+                high = candle.high
+            if (candle.low < low)
+                low = candle.low
+            prev = candle
+        }
+        daily.add(Candle(prev.timestamp, open, high, low, prev.close))
+        return daily
     }
 
     @Throws(Throwable::class)

@@ -37,7 +37,7 @@ final class DashboardWalletCell: CollectionViewCell {
         
         cryptoBalanceLabel.font = Theme.font.dashboardTVTokenBalance
         cryptoBalanceLabel.textColor = Theme.colour.dashboardTVCryptoBallance
-//        charView.backgroundColor = .red
+//        charView.backgroundColor = UIColor.red.withAlpha(0.1)
     }
 
     override func prepareForReuse() {

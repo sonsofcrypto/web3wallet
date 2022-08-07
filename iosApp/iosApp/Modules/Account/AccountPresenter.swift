@@ -104,7 +104,7 @@ private extension DefaultAccountPresenter {
                 pctUp: true,
                 buttons: makeButtons()
             ),
-            candles: .loaded(CandlesViewModel.Candle.from(interactor.candles()?.last(n: 60))),
+            candles: .loaded(CandlesViewModel.Candle.from(interactor.candles()?.last(n: 90))),
             marketInfo: .init(
                 marketCap: largeFiatFormatter.string(from: market?.marketCap ?? 0) ?? "-",
                 price: fiatFormatter.string(from: market?.currentPrice ?? 0) ?? "-",
