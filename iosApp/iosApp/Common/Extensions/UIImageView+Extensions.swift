@@ -30,4 +30,8 @@ extension UIImageView {
             activityIndicator.removeFromSuperview()
         }
     }
+
+    convenience init(named: String) {
+        self.init(image: UIImage(named: named))
+    }
 }

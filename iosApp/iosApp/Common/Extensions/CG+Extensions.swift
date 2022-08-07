@@ -24,6 +24,16 @@ extension CGRect {
     init(zeroOrigin size: CGSize) {
         self.init(origin: .zero, size: size)
     }
+
+    init(center: CGPoint, size: CGSize) {
+        self.init(
+            origin: .init(
+                x: center.x - size.width / 2,
+                y:  center.y - size.height / 2
+            ),
+            size: size
+        )
+    }
 }
 
 extension CGFloat {

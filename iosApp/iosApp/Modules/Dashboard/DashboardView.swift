@@ -12,27 +12,29 @@ protocol DashboardView: AnyObject {
 final class DashboardViewController: BaseViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var backgroundView: DashboardBackgroundView!
 
     var presenter: DashboardPresenter!
-
     var viewModel: DashboardViewModel?
+
     private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
     private var previousYOffset: CGFloat = 0
     private var lastVelocity: CGFloat = 0
-    private var backgroundView: UIScrollView?
-    private var gradientView: GradientView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         presenter.present()
     }
-        
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        backgroundView.layoutForCollectionView(collectionView)
+    }
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         backgroundView?.frame = view.bounds
-        gradientView?.frame = CGRect(zeroOrigin: collectionView.contentSize)
-        layoutBackgroundView()
     }
 }
 
@@ -40,19 +42,13 @@ extension DashboardViewController: DashboardView {
     
     func update(with viewModel: DashboardViewModel) {
         self.viewModel = viewModel
-
         collectionView.reloadData()
-
-        if let btn = navigationItem.leftBarButtonItem as? AnimatedTextBarButton {
-            let nonAnimMode: AnimatedTextButton.Mode = btn.mode == .animating ? .static : .hidden
-            btn.setMode(
-                viewModel.shouldAnimateCardSwitcher ? .animating :  nonAnimMode,
-                animated: true
-            )
-        }
     }
 
-    func updateWallet(_ viewModel: DashboardViewModel.Wallet?, at idxPath: IndexPath) {
+    func updateWallet(
+        _ viewModel: DashboardViewModel.Wallet?,
+        at idxPath: IndexPath
+    ) {
         let cell = collectionView.visibleCells.first(where: {
             collectionView.indexPath(for: $0) == idxPath
         })
@@ -65,7 +61,7 @@ extension DashboardViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         lastVelocity = scrollView.contentOffset.y - previousYOffset
         previousYOffset = scrollView.contentOffset.y
-        layoutBackgroundView()
+        backgroundView?.layoutForCollectionView(collectionView)
     }
 }
 
@@ -134,33 +130,11 @@ private extension DashboardViewController {
         view.backgroundColor = Theme.colour.gradientBottom
         collectionView.layer.sublayerTransform = CATransform3D.m34(-1.0 / 500.0)
 
-        addBackgroundView()
+        let backgroundView = DashboardBackgroundView()
+        view.insertSubview(backgroundView, at: 0)
+        self.backgroundView = backgroundView
+
         configureCollectionCardsLayout()
-    }
-
-    func addBackgroundView() {
-        let scrollView = UIScrollView(frame: view.bounds)
-        scrollView.isUserInteractionEnabled = false
-        view.insertSubview(scrollView, at: 0)
-        backgroundView = scrollView
-
-        let gradientView = GradientView(frame: collectionView.bounds)
-        scrollView.addSubview(gradientView)
-        self.gradientView = gradientView
-
-        let sunsetBackground = UIImageView(
-            image: "themeA-dashboard-bottom-image".assetImage
-        )
-    }
-
-    func layoutBackgroundView() {
-        backgroundView?.contentSize = collectionView.contentSize
-        backgroundView?.contentOffset = CGPoint(
-            x: collectionView.contentOffset.x,
-            y: max(0, collectionView.contentOffset.y)
-        )
-
-        print("=== called", collectionView.contentOffset)
     }
 
     @objc func navBarLeftActionTapped() {
