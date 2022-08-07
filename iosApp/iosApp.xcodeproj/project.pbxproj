@@ -419,7 +419,6 @@
 		1CB8B0E42891040500024E7C /* TokenEnterAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0E32891040500024E7C /* TokenEnterAddressView.swift */; };
 		1CB8B0E62891346B00024E7C /* CultProposalFooterSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB8B0E52891346B00024E7C /* CultProposalFooterSupplementaryView.swift */; };
 		1CB8B0E828916AA900024E7C /* Assets-ThemeIOS.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CB8B0E728916AA900024E7C /* Assets-ThemeIOS.xcassets */; };
-		1CBB9CBC286DA9E90007E2D4 /* DashboarView+CollectionCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBB9CBB286DA9E90007E2D4 /* DashboarView+CollectionCards.swift */; };
 		1CBFDAF828113D2D0054B276 /* TargetActionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */; };
 		1CD3FE20284D5840008312DE /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD3FE1F284D5840008312DE /* FeatureFlags.swift */; };
 		1CD3FE342851D2A0008312DE /* UIView+Animations+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD3FE332851D2A0008312DE /* UIView+Animations+Chat.swift */; };
@@ -986,7 +985,6 @@
 		1CB8B0E32891040500024E7C /* TokenEnterAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenEnterAddressView.swift; sourceTree = "<group>"; };
 		1CB8B0E52891346B00024E7C /* CultProposalFooterSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultProposalFooterSupplementaryView.swift; sourceTree = "<group>"; };
 		1CB8B0E728916AA900024E7C /* Assets-ThemeIOS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets-ThemeIOS.xcassets"; sourceTree = "<group>"; };
-		1CBB9CBB286DA9E90007E2D4 /* DashboarView+CollectionCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DashboarView+CollectionCards.swift"; sourceTree = "<group>"; };
 		1CBFDAF728113D2D0054B276 /* TargetActionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetActionViewModel.swift; sourceTree = "<group>"; };
 		1CD3FE1F284D5840008312DE /* FeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
 		1CD3FE332851D2A0008312DE /* UIView+Animations+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Animations+Chat.swift"; sourceTree = "<group>"; };
@@ -1634,7 +1632,6 @@
 				1C60C214285724D0003BE25D /* DashboardInteractor.swift */,
 				1C60C216285724D0003BE25D /* DashboardPresenter.swift */,
 				1C60C20E285724D0003BE25D /* DashboardView.swift */,
-				1CBB9CBB286DA9E90007E2D4 /* DashboarView+CollectionCards.swift */,
 				1C60C219285724D0003BE25D /* DashboardViewModel.swift */,
 				1C60C21B285724D0003BE25D /* DashboardWireframe.swift */,
 				1C60C218285724D0003BE25D /* DashboardWireframeFactory.swift */,
@@ -2962,7 +2959,6 @@
 				1CD3FE20284D5840008312DE /* FeatureFlags.swift in Sources */,
 				1C60C2E2285724D0003BE25D /* DashboardInteractor.swift in Sources */,
 				1C54DC2A2868193300E378F6 /* Theme.swift in Sources */,
-				1CBB9CBC286DA9E90007E2D4 /* DashboarView+CollectionCards.swift in Sources */,
 				D1ED725F287C1122005805CF /* TokenSendTokenCollectionViewCell.swift in Sources */,
 				1C0643D42892FCB000643C15 /* FeaturesWireframe.swift in Sources */,
 				1C60C36028572555003BE25D /* AppsServiceAssembler.swift in Sources */,

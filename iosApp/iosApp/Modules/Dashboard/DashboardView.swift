@@ -12,11 +12,11 @@ protocol DashboardView: AnyObject {
 final class DashboardViewController: BaseViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var backgroundView: DashboardBackgroundView!
 
     var presenter: DashboardPresenter!
     var viewModel: DashboardViewModel?
 
+    private var backgroundView = DashboardBackgroundView()
     private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
     private var previousYOffset: CGFloat = 0
     private var lastVelocity: CGFloat = 0
@@ -34,7 +34,7 @@ final class DashboardViewController: BaseViewController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        backgroundView?.frame = view.bounds
+        backgroundView.frame = view.bounds
     }
 }
 
@@ -56,105 +56,7 @@ extension DashboardViewController: DashboardView {
     }
 }
 
-extension DashboardViewController: UIScrollViewDelegate {
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        lastVelocity = scrollView.contentOffset.y - previousYOffset
-        previousYOffset = scrollView.contentOffset.y
-        backgroundView?.layoutForCollectionView(collectionView)
-    }
-}
-
-extension DashboardViewController: UIViewControllerTransitioningDelegate {
-
-    func animationController(
-        forPresented presented: UIViewController,
-        presenting: UIViewController,
-        source: UIViewController
-    ) -> UIViewControllerAnimatedTransitioning? {
-        
-        let presentedVc = (presented as? UINavigationController)?.topViewController
-        animatedTransitioning = nil
-
-        if presentedVc?.isKind(of: AccountViewController.self) ?? false {
-            let idxPath = collectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0)
-            let cell = collectionView.cellForItem(at: idxPath)
-            animatedTransitioning = CardFlipAnimatedTransitioning(
-                targetView: cell ?? view
-            )
-        }
-
-        return animatedTransitioning
-    }
-
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let presentedVc = (dismissed as? UINavigationController)?.topViewController
-        animatedTransitioning = nil
-
-        if presentedVc?.isKind(of: AccountViewController.self) ?? false {
-            let idxPath = collectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0)
-            let cell = collectionView.cellForItem(at: idxPath)
-            animatedTransitioning = CardFlipAnimatedTransitioning(
-                targetView: cell ?? view,
-                isPresenting: false
-            )
-        }
-
-        return animatedTransitioning
-    }
-}
-
-private extension DashboardViewController {
-    
-    func configureUI() {
-        title = Localized("web3wallet").uppercased()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            imageName: "chevron.left",
-            target: self,
-            action: #selector(navBarLeftActionTapped)
-        )
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            imageName: "qrcode.viewfinder",
-            target: self,
-            action: #selector(navBarRightActionTapped)
-        )
-        navigationController?.tabBarItem = UITabBarItem(
-            title: Localized("dashboard.tab.title"),
-            image: "tab_icon_dashboard".assetImage,
-            tag: 0
-        )
-
-        transitioningDelegate = self
-        edgeCardsController?.delegate = self
-
-        view.backgroundColor = Theme.colour.gradientBottom
-        collectionView.layer.sublayerTransform = CATransform3D.m34(-1.0 / 500.0)
-
-        let backgroundView = DashboardBackgroundView()
-        view.insertSubview(backgroundView, at: 0)
-        self.backgroundView = backgroundView
-
-        configureCollectionCardsLayout()
-    }
-
-    @objc func navBarLeftActionTapped() {
-        presenter.handle(.walletConnectionSettingsAction)
-    }
-    
-    @objc func navBarRightActionTapped() {
-        presenter.handle(.didScanQRCode)
-    }
-}
-
-extension DashboardViewController: EdgeCardsControllerDelegate {
-
-    func edgeCardsController(
-        vc: EdgeCardsController,
-        didChangeTo mode: EdgeCardsController.DisplayMode
-    ) {
-        presenter.handle(.didInteractWithCardSwitcher)
-    }
-}
+// MARK: - UICollectionViewDataSource
 
 extension DashboardViewController: UICollectionViewDataSource {
 
@@ -205,12 +107,49 @@ extension DashboardViewController: UICollectionViewDataSource {
     ) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            return supplementaryHeaderView(kind: kind, at: indexPath)
+            guard let section = viewModel?.sections[indexPath.section] else {
+                fatalError("Unexpected header idxPath: \(indexPath) \(kind)")
+            }
+            return headerView(kind: kind, at: indexPath, section: section)
         default:
             fatalError("Unexpected supplementary idxPath: \(indexPath) \(kind)")
         }
     }
+
+    func headerView(
+        kind: String,
+        at idxPath: IndexPath,
+        section: DashboardViewModel.Section
+    ) -> UICollectionReusableView {
+        switch section.header {
+        case let .balance(balance):
+            return collectionView.dequeue(DashboardHeaderBalanceView.self,
+                for: idxPath,
+                kind: kind
+            ).update(with: balance)
+
+        case let .title(title):
+            return collectionView.dequeue(
+                DashboardHeaderNameView.self,
+                for: idxPath,
+                kind: kind
+            ).update(with: title, and: nil, handler: nil)
+
+        case let .network(network):
+            return collectionView.dequeue(
+                DashboardHeaderNameView.self,
+                for: idxPath,
+                kind: kind
+            ).update(with: network.name, and: network) { [weak self] in
+                self?.presenter.handle(.didTapEditTokens(network: section.networkId))
+            }
+        case .none:
+            fatalError("Should not configure a section header when type none.")
+        }
+    }
 }
+
+// MARK: - UICollectionViewDelegate
 
 extension DashboardViewController: UICollectionViewDelegate {
 
@@ -251,41 +190,194 @@ extension DashboardViewController: UICollectionViewDelegate {
     }
 }
 
+// MARK: - UIScrollViewDelegate
+
+extension DashboardViewController: UIScrollViewDelegate {
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        lastVelocity = scrollView.contentOffset.y - previousYOffset
+        previousYOffset = scrollView.contentOffset.y
+        backgroundView.layoutForCollectionView(collectionView)
+    }
+}
+
+// MARK: - Config
+
 private extension DashboardViewController {
-    
-    func supplementaryHeaderView(
-        kind: String,
-        at indexPath: IndexPath
-    ) -> UICollectionReusableView {
-        guard let section = viewModel?.sections[indexPath.section] else {
-            fatalError("no section")
+
+    func configureUI() {
+        title = Localized("web3wallet").uppercased()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            imageName: "chevron.left",
+            target: self,
+            action: #selector(navBarLeftActionTapped)
+        )
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            imageName: "qrcode.viewfinder",
+            target: self,
+            action: #selector(navBarRightActionTapped)
+        )
+        navigationController?.tabBarItem = UITabBarItem(
+            title: Localized("dashboard.tab.title"),
+            image: "tab_icon_dashboard".assetImage,
+            tag: 0
+        )
+
+        transitioningDelegate = self
+        edgeCardsController?.delegate = self
+
+        view.backgroundColor = Theme.colour.gradientBottom
+        view.insertSubview(backgroundView, at: 0)
+
+        collectionView.layer.sublayerTransform = CATransform3D.m34(-1.0 / 500.0)
+        collectionView.contentInset = UIEdgeInsets.with(bottom: 180)
+
+        collectionView.register(DashboardHeaderNameView.self, kind: .header)
+        collectionView.setCollectionViewLayout(compositionalLayout(), animated: false)
+    }
+
+    @objc func navBarLeftActionTapped() {
+        presenter.handle(.walletConnectionSettingsAction)
+    }
+
+    @objc func navBarRightActionTapped() {
+        presenter.handle(.didScanQRCode)
+    }
+
+    func compositionalLayout() -> UICollectionViewCompositionalLayout {
+        UICollectionViewCompositionalLayout { [weak self] idx, env in
+            guard let section = self?.viewModel?.sections[idx] else { return nil }
+
+            switch section.items {
+            case .actions:
+                return self?.buttonsCollectionLayoutSection()
+            case .notifications:
+                return self?.notificationsCollectionLayoutSection()
+            case .nfts:
+                return self?.nftsCollectionLayoutSection()
+            case .wallets:
+                return self?.walletsCollectionLayoutSection()
+            }
+        }
+    }
+
+    func buttonsCollectionLayoutSection() -> NSCollectionLayoutSection {
+        let h = Theme.constant.buttonDashboardActionHeight
+        let group = NSCollectionLayoutGroup.horizontal(
+            .fractional(estimatedH: 100),
+            items: [.init(layoutSize: .fractional(estimatedH: h))]
+        )
+        let section = NSCollectionLayoutSection(group: group, insets: .padding)
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: .fractional(estimatedH: 50),
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.boundarySupplementaryItems = [headerItem]
+        section.orthogonalScrollingBehavior = .none
+        return section
+    }
+
+    func notificationsCollectionLayoutSection() -> NSCollectionLayoutSection {
+        let width = floor((view.bounds.width - Theme.constant.padding * 3)  / 2)
+        let group = NSCollectionLayoutGroup.horizontal(
+            .estimated(view.bounds.width * 3, height: 64),
+            items: [.init(layoutSize: .absolute(width, estimatedH: 64))]
+        )
+        let section = NSCollectionLayoutSection(group: group, insets: .padding)
+        section.interGroupSpacing = Theme.constant.padding
+        section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
+        return section
+    }
+
+    func walletsCollectionLayoutSection() -> NSCollectionLayoutSection {
+        let width = floor((view.bounds.width - Theme.constant.padding * 3) / 2)
+        let height = round(width * 0.95)
+        let group = NSCollectionLayoutGroup.horizontal(
+            .fractional(absoluteH: height),
+            items: [.init(.absolute(width, height: height))]
+        )
+        group.interItemSpacing = .fixed(Theme.constant.padding)
+        let section = NSCollectionLayoutSection(group: group, insets: .padding)
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: .fractional(estimatedH: 100),
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.interGroupSpacing = Theme.constant.padding
+        section.boundarySupplementaryItems = [headerItem]
+        return section
+    }
+
+    func nftsCollectionLayoutSection() -> NSCollectionLayoutSection {
+        let width = floor((view.bounds.width - Theme.constant.padding * 3) / 2)
+        let group = NSCollectionLayoutGroup.horizontal(
+            .estimated(view.bounds.width * 3, height: width),
+            items: [.init(.absolute(width, height: width))]
+        )
+        group.interItemSpacing = .fixed(Theme.constant.padding)
+        let section = NSCollectionLayoutSection(group: group, insets: .padding)
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: .fractional(estimatedH: 100),
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.interGroupSpacing = Theme.constant.padding
+        section.boundarySupplementaryItems = [headerItem]
+        section.orthogonalScrollingBehavior = .continuous
+        return section
+    }
+}
+
+// MARK: - EdgeCardsControllerDelegate
+
+extension DashboardViewController: EdgeCardsControllerDelegate {
+
+    func edgeCardsController(
+        vc: EdgeCardsController,
+        didChangeTo mode: EdgeCardsController.DisplayMode
+    ) {
+        presenter.handle(.didInteractWithCardSwitcher)
+    }
+}
+
+
+// MARK: - UIViewControllerTransitioningDelegate
+
+extension DashboardViewController: UIViewControllerTransitioningDelegate {
+
+    func animationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController,
+        source: UIViewController
+    ) -> UIViewControllerAnimatedTransitioning? {
+        let presentedVc = (presented as? UINavigationController)?.topViewController
+        animatedTransitioning = nil
+
+        if presentedVc?.isKind(of: AccountViewController.self) ?? false {
+            let idxPath = collectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0)
+            let cell = collectionView.cellForItem(at: idxPath)
+            animatedTransitioning = CardFlipAnimatedTransitioning(
+                targetView: cell ?? view
+            )
         }
 
-        switch section.header {
-        case .none:
-            fatalError("We should not configure a section header when type is none.")
-        case let .balance(balance):
-            return collectionView.dequeue(
-                DashboardHeaderBalanceView.self,
-                for: indexPath,
-                kind: kind
-            ).update(with: balance)
+        return animatedTransitioning
+    }
 
-        case let .title(title):
-            return collectionView.dequeue(
-                DashboardHeaderNameView.self,
-                for: indexPath,
-                kind: kind
-            ).update(with: title, and: nil, handler: nil)
-            
-        case let .network(network):
-            return collectionView.dequeue(
-                DashboardHeaderNameView.self,
-                for: indexPath,
-                kind: kind
-            ).update(with: network.name, and: network, handler: { [weak self] in
-                self?.presenter.handle(.didTapEditTokens(network: section.networkId))
-            })
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let presentedVc = (dismissed as? UINavigationController)?.topViewController
+        animatedTransitioning = nil
+
+        if presentedVc?.isKind(of: AccountViewController.self) ?? false {
+            let idxPath = collectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0)
+            let cell = collectionView.cellForItem(at: idxPath)
+            animatedTransitioning = CardFlipAnimatedTransitioning(
+                targetView: cell ?? view,
+                isPresenting: false
+            )
         }
+
+        return animatedTransitioning
     }
 }

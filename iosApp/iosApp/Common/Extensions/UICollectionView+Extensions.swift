@@ -31,6 +31,17 @@ extension UICollectionView {
         return supplementary
     }
 
+    func register<T: UICollectionReusableView>(
+        _ type: T.Type,
+        kind: SupplementaryKind
+    ) {
+        register(
+            type,
+            forSupplementaryViewOfKind: kind.string(),
+            withReuseIdentifier: "\(T.self)"
+        )
+    }
+
 
     func deselectAllExcept(_ idxPaths: [IndexPath]? = nil, animated: Bool = true) {
         (indexPathsForSelectedItems ?? [])
@@ -44,5 +55,23 @@ extension UICollectionView {
 
     func deselectAllExcept(_ idxPath: IndexPath, animated: Bool = true) {
         deselectAllExcept([idxPath], animated: animated)
+    }
+
+    enum SupplementaryKind {
+        case header
+        case footer
+        case custom(kind: String)
+
+        func string() -> String {
+            switch self {
+            case .header:
+                return UICollectionView.elementKindSectionHeader
+            case .footer:
+                return UICollectionView.elementKindSectionFooter
+            case let .custom(kind):
+                return kind
+
+            }
+        }
     }
 }

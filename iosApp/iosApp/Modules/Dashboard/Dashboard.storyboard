@@ -337,6 +337,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0vn-er-Mfj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Uww-hV-vPP">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <viewLayoutGuide key="safeArea" id="PZk-q9-eTB"/>
+                </collectionReusableView>
             </objects>
             <point key="canvasLocation" x="221.73913043478262" y="891.96428571428567"/>
         </scene>
