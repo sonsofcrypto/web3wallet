@@ -164,8 +164,6 @@ extension DefaultDashboardInteractor {
 
     func colors(for currency: Currency) -> (String, String) {
         let colors = currencyMetadataService.colors(currency: currency)
-        print("===", colors.first, colors.second)
-        return ("#FFFFFF", "#000000")
         return (
             String(colors.first ?? "#FFFFFF"),
             String(colors.second ?? "#000000")
