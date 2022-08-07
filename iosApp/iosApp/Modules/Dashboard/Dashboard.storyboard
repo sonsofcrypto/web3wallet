@@ -175,11 +175,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="162" height="161"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1" verticalHuggingPriority="1" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="ow4-Z4-kbW" userLabel="contentStack">
+                                                <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1" verticalHuggingPriority="1" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ow4-Z4-kbW" userLabel="contentStack">
                                                     <rect key="frame" x="16" y="16" width="130" height="129"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1" verticalHuggingPriority="1" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8A3-hU-thD" userLabel="topStack">
-                                                            <rect key="frame" x="0.0" y="0.0" width="130" height="32"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="130" height="42.5"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OWw-1t-hHH">
                                                                     <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
@@ -189,16 +189,16 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="HbA-FB-9XM" userLabel="text container">
-                                                                    <rect key="frame" x="40" y="0.0" width="90" height="32"/>
+                                                                    <rect key="frame" x="40" y="0.0" width="90" height="41"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WRz-cH-Yqe">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="41.5" height="11.5"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="41.5" height="20.5"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="vZP-HD-Rcb">
-                                                                            <rect key="frame" x="0.0" y="11.5" width="86" height="20.5"/>
+                                                                            <rect key="frame" x="0.0" y="20.5" width="86" height="20.5"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="td7-Kj-Ach">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="41.5" height="20.5"/>
@@ -219,8 +219,20 @@
                                                             </subviews>
                                                         </stackView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qRw-r1-btA" userLabel="ChartView" customClass="CandlesView" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="48" width="130" height="44.5"/>
+                                                            <rect key="frame" x="0.0" y="50.5" width="130" height="50"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nqb-wv-HUG">
+                                                                    <rect key="frame" x="0.0" y="29.5" width="41.5" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstItem="nqb-wv-HUG" firstAttribute="leading" secondItem="qRw-r1-btA" secondAttribute="leading" id="r0G-Zg-4zC"/>
+                                                                <constraint firstAttribute="bottom" secondItem="nqb-wv-HUG" secondAttribute="bottom" id="yBU-yA-cy5"/>
+                                                            </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="1" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Jq-XN-wNA">
                                                             <rect key="frame" x="0.0" y="108.5" width="130" height="20.5"/>
@@ -244,7 +256,8 @@
                                             <outlet property="contentStack" destination="ow4-Z4-kbW" id="gL3-RK-e0z"/>
                                             <outlet property="cryptoBalanceLabel" destination="3Jq-XN-wNA" id="LwH-ty-KFI"/>
                                             <outlet property="currencyLabel" destination="td7-Kj-Ach" id="yIb-si-cus"/>
-                                            <outlet property="fiatBalanceLabel" destination="WRz-cH-Yqe" id="upD-7P-fVU"/>
+                                            <outlet property="fiatBalanceLabel" destination="nqb-wv-HUG" id="wW1-mi-bRY"/>
+                                            <outlet property="fiatPriceLabel" destination="WRz-cH-Yqe" id="uCy-O1-CF2"/>
                                             <outlet property="imageView" destination="OWw-1t-hHH" id="hYT-my-lha"/>
                                             <outlet property="pctChangeLabel" destination="fL6-oJ-jwS" id="89h-FO-RWx"/>
                                             <outlet property="topContentStack" destination="8A3-hU-thD" id="JqX-M1-JIC"/>

@@ -39,6 +39,7 @@ protocol DashboardInteractor: AnyObject {
     func colors(for currency: Currency) -> (String, String)
     func cryptoBalance(for wallet: Wallet?, currency: Currency) -> BigInt
     func fiatBalance(for wallet: Wallet?, currency: Currency) -> Double
+    func fiatPrice(for wallet: Wallet?, currency: Currency) -> Double
     func totalFiatBalance() -> Double
     func nfts(for network: Web3Network) -> [NFTItem]
     func reloadData()
@@ -187,6 +188,12 @@ extension DefaultDashboardInteractor {
             balance: cryptoBalance(for: wallet, currency: currency)
         )
         return price * amount
+    }
+
+    func fiatPrice(for wallet: Wallet?, currency: Currency) -> Double {
+        currencyMetadataService.market(currency: currency)?
+            .currentPrice?
+            .doubleValue ?? 0
     }
 
     func totalFiatBalance() -> Double {

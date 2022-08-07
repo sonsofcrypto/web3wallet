@@ -74,6 +74,7 @@ extension DashboardViewModel {
         let ticker: String
         let colors: (String, String)?
         let imageData: Data
+        let fiatPrice: String
         let fiatBalance: String
         let cryptoBalance: String
         let tokenPrice: String

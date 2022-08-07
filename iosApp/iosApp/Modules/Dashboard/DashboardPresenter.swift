@@ -273,6 +273,10 @@ private extension DefaultDashboardPresenter {
             for: interactor.wallet(for: network),
             currency: currency
         )
+        let fiatPrice = interactor.fiatPrice(
+            for: interactor.wallet(for: network),
+            currency: currency
+        )
         let formatted = Formatter.currency.format(
             bigInt: cryptoBalance,
             currency: currency
@@ -283,6 +287,7 @@ private extension DefaultDashboardPresenter {
             ticker: currency.symbol.uppercased(),
             colors: interactor.colors(for: currency),
             imageData: interactor.image(for: currency),
+            fiatPrice: Formatter.fiat.string(from: Float(fiatPrice)),
             fiatBalance: Formatter.fiat.string(from: Float(fiatBalance)),
             cryptoBalance: formatted, // "\($0.balance.toString(decimals: $0.decimals)) \($0.symbol)",
             tokenPrice: market?.currentPrice != nil

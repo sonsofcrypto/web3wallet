@@ -10,9 +10,10 @@ final class DashboardWalletCell: CollectionViewCell {
     @IBOutlet weak var topContentStack: UIStackView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var currencyLabel: UILabel!
-    @IBOutlet weak var fiatBalanceLabel: UILabel!
+    @IBOutlet weak var fiatPriceLabel: UILabel!
     @IBOutlet weak var pctChangeLabel: UILabel!
     @IBOutlet weak var charView: CandlesView!
+    @IBOutlet weak var fiatBalanceLabel: UILabel!
     @IBOutlet weak var cryptoBalanceLabel: UILabel!
 
     override func awakeFromNib() {
@@ -24,10 +25,8 @@ final class DashboardWalletCell: CollectionViewCell {
         imageView.layer.cornerRadius = imageView.frame.size.width * 0.5
         imageView.backgroundColor = UIColor(hexString: "3461BE")!
 
-        contentStack.setCustomSpacing(13, after: topContentStack)
-
-        fiatBalanceLabel.font = Theme.font.dashboardTVBalance
-        fiatBalanceLabel.textColor = Theme.colour.labelPrimary
+        fiatPriceLabel.font = Theme.font.dashboardTVBalance
+        fiatPriceLabel.textColor = Theme.colour.labelPrimary
         
         currencyLabel.font = Theme.font.dashboardTVSymbol
         currencyLabel.textColor = Theme.colour.labelPrimary
@@ -35,9 +34,20 @@ final class DashboardWalletCell: CollectionViewCell {
         pctChangeLabel.font = Theme.font.dashboardTVPct
         pctChangeLabel.textColor = Theme.colour.priceUp
         
+        fiatBalanceLabel.font = Theme.font.dashboardTVTokenBalance
+        fiatBalanceLabel.textColor = Theme.colour.dashboardTVCryptoBallance
+        
         cryptoBalanceLabel.font = Theme.font.dashboardTVTokenBalance
         cryptoBalanceLabel.textColor = Theme.colour.dashboardTVCryptoBallance
-//        charView.backgroundColor = UIColor.red.withAlpha(0.1)
+
+        // charView.backgroundColor = UIColor.red.withAlpha(0.1)
+
+        fiatBalanceLabel.text = "$1,245.32"
+        fiatPriceLabel.textColor = Theme.colour.labelPrimary
+        fiatBalanceLabel.isHidden = true
+        
+        contentStack.setCustomSpacing(0, after: fiatBalanceLabel)
+
     }
 
     override func prepareForReuse() {
@@ -60,7 +70,7 @@ extension DashboardWalletCell {
         
         imageView.image = viewModel.imageData.pngImage
         currencyLabel.text = viewModel.ticker
-        fiatBalanceLabel.text = viewModel.fiatBalance
+        fiatPriceLabel.text = viewModel.fiatPrice
         pctChangeLabel.text = viewModel.pctChange
         pctChangeLabel.textColor = viewModel.priceUp
             ? Theme.colour.priceUp
