@@ -20,6 +20,10 @@ extension CGRect {
     var midXY: CGPoint {
         CGPoint(x: midX, y: midY)
     }
+
+    init(zeroOrigin size: CGSize) {
+        self.init(origin: .zero, size: size)
+    }
 }
 
 extension CGFloat {

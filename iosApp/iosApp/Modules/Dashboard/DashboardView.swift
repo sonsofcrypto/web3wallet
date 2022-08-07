@@ -16,13 +16,12 @@ final class DashboardViewController: BaseViewController {
     var presenter: DashboardPresenter!
 
     var viewModel: DashboardViewModel?
-    var animatedTransitioning: UIViewControllerAnimatedTransitioning?
-    var previousYOffset: CGFloat = 0
-    var lastVelocity: CGFloat = 0
-    var backgroundSunsetBottomConstraint: NSLayoutConstraint?
-    var backgroundGradientTopConstraint: NSLayoutConstraint?
-    var backgroundGradientHeightConstraint: NSLayoutConstraint?
-    
+    private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
+    private var previousYOffset: CGFloat = 0
+    private var lastVelocity: CGFloat = 0
+    private var backgroundView: UIScrollView?
+    private var gradientView: GradientView?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -31,8 +30,9 @@ final class DashboardViewController: BaseViewController {
         
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        updateBackgroundGradientTopConstraint()
-        backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
+        backgroundView?.frame = view.bounds
+        gradientView?.frame = CGRect(zeroOrigin: collectionView.contentSize)
+        layoutBackgroundView()
     }
 }
 
@@ -65,7 +65,7 @@ extension DashboardViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         lastVelocity = scrollView.contentOffset.y - previousYOffset
         previousYOffset = scrollView.contentOffset.y
-        updateBackgroundGradientTopConstraint()
+        layoutBackgroundView()
     }
 }
 
@@ -92,7 +92,6 @@ extension DashboardViewController: UIViewControllerTransitioningDelegate {
     }
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
         let presentedVc = (dismissed as? UINavigationController)?.topViewController
         animatedTransitioning = nil
 
@@ -112,60 +111,64 @@ extension DashboardViewController: UIViewControllerTransitioningDelegate {
 private extension DashboardViewController {
     
     func configureUI() {
-        
-        view.backgroundColor = Theme.colour.gradientBottom
-                
-        transitioningDelegate = self
-                
+        title = Localized("web3wallet").uppercased()
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: "chevron.left".assetImage,
-            style: .plain,
+            imageName: "chevron.left",
             target: self,
             action: #selector(navBarLeftActionTapped)
         )
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: "qrcode.viewfinder".assetImage,
-            style: .plain,
+            imageName: "qrcode.viewfinder",
             target: self,
             action: #selector(navBarRightActionTapped)
         )
-
-        edgeCardsController?.delegate = self
-                
-        title = Localized("web3wallet").uppercased()
-        addCustomBackgroundGradientView()
-        configureCollectionCardsLayout()
-        
         navigationController?.tabBarItem = UITabBarItem(
             title: Localized("dashboard.tab.title"),
             image: "tab_icon_dashboard".assetImage,
             tag: 0
         )
 
-        var transform = CATransform3DIdentity
-        transform.m34 = -1.0 / 500.0
-        collectionView.layer.sublayerTransform = transform
+        transitioningDelegate = self
+        edgeCardsController?.delegate = self
+
+        view.backgroundColor = Theme.colour.gradientBottom
+        collectionView.layer.sublayerTransform = CATransform3D.m34(-1.0 / 500.0)
+
+        addBackgroundView()
+        configureCollectionCardsLayout()
     }
-    
+
+    func addBackgroundView() {
+        let scrollView = UIScrollView(frame: view.bounds)
+        scrollView.isUserInteractionEnabled = false
+        view.insertSubview(scrollView, at: 0)
+        backgroundView = scrollView
+
+        let gradientView = GradientView(frame: collectionView.bounds)
+        scrollView.addSubview(gradientView)
+        self.gradientView = gradientView
+
+        let sunsetBackground = UIImageView(
+            image: "themeA-dashboard-bottom-image".assetImage
+        )
+    }
+
+    func layoutBackgroundView() {
+        backgroundView?.contentSize = collectionView.contentSize
+        backgroundView?.contentOffset = CGPoint(
+            x: collectionView.contentOffset.x,
+            y: max(0, collectionView.contentOffset.y)
+        )
+
+        print("=== called", collectionView.contentOffset)
+    }
+
     @objc func navBarLeftActionTapped() {
-        
         presenter.handle(.walletConnectionSettingsAction)
     }
     
     @objc func navBarRightActionTapped() {
-        
         presenter.handle(.didScanQRCode)
-    }
-    
-    func updateBackgroundGradientTopConstraint() {
-        
-        let constant: CGFloat
-        if collectionView.contentOffset.y < 0 {
-            constant = 0
-        } else {
-            constant = -collectionView.contentOffset.y
-        }
-        backgroundGradientTopConstraint?.constant =  constant
     }
 }
 
@@ -182,7 +185,6 @@ extension DashboardViewController: EdgeCardsControllerDelegate {
 extension DashboardViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        
         viewModel?.sections.count ?? 0
     }
 
@@ -190,11 +192,8 @@ extension DashboardViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        
         guard let section = viewModel?.sections[section] else { return 0 }
-        
         guard section.items.count > 4 else { return section.items.count }
-        
         return section.isCollapsed ? 4 : section.items.count
     }
     
@@ -202,32 +201,24 @@ extension DashboardViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-
         guard let section = viewModel?.sections[indexPath.section] else {
             fatalError("No viewModel for \(indexPath) \(collectionView)")
         }
-        
-        let actions = section.items.actions
-        if !actions.isEmpty {
-            
-            let cell = collectionView.dequeue(DashboardButtonsCell.self, for: indexPath)
-            cell.update(with: actions, presenter: presenter)
-            return cell
-        } else if let notification = section.items.notifications(at: indexPath.row) {
-            
-            let cell = collectionView.dequeue(DashboardNotificationCell.self, for: indexPath)
-            cell.update(with: notification, handler: makeNotificationHandler())
-            return cell
+
+        let (cv, idxPath) = (collectionView, indexPath)
+
+        if !section.items.actions.isEmpty {
+            return cv.dequeue(DashboardButtonsCell.self, for: idxPath)
+                .update(with: section.items.actions, presenter: presenter)
+        } else if let notification = section.items.notifications(at: idxPath.item) {
+            return cv.dequeue(DashboardNotificationCell.self, for: indexPath)
+                .update(with: notification)
         } else if let wallet = section.items.wallet(at: indexPath.row) {
-            
-            let cell = collectionView.dequeue(DashboardWalletCell.self, for: indexPath)
-            cell.update(with: wallet)
-            return cell
+            return cv.dequeue(DashboardWalletCell.self, for: indexPath)
+                .update(with: wallet)
         } else if let nft = section.items.nft(at: indexPath.row) {
-            
-            let cell = collectionView.dequeue(DashboardNFTCell.self, for: indexPath)
-            cell.update(with: nft)
-            return cell
+            return cv.dequeue(DashboardNFTCell.self, for: indexPath)
+                .update(with: nft)
         } else {
             fatalError("No viewModel for \(indexPath) \(collectionView)")
         }
@@ -239,7 +230,6 @@ extension DashboardViewController: UICollectionViewDataSource {
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
         switch kind {
-            
         case UICollectionView.elementKindSectionHeader:
             return supplementaryHeaderView(kind: kind, at: indexPath)
         default:
@@ -251,9 +241,7 @@ extension DashboardViewController: UICollectionViewDataSource {
 extension DashboardViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         guard let section = viewModel?.sections[indexPath.section] else { return }
-        
         switch section.items {
         case .actions:
             break
@@ -295,80 +283,35 @@ private extension DashboardViewController {
         kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        
         guard let section = viewModel?.sections[indexPath.section] else {
             fatalError("no section")
         }
-        
+
         switch section.header {
         case .none:
             fatalError("We should not configure a section header when type is none.")
         case let .balance(balance):
-            let supplementary = collectionView.dequeue(
+            return collectionView.dequeue(
                 DashboardHeaderBalanceView.self,
                 for: indexPath,
                 kind: kind
-            )
-            supplementary.update(with: balance)
-            return supplementary
+            ).update(with: balance)
 
         case let .title(title):
-            let supplementary = collectionView.dequeue(
+            return collectionView.dequeue(
                 DashboardHeaderNameView.self,
                 for: indexPath,
                 kind: kind
-            )
-            supplementary.update(
-                with: title,
-                and: nil,
-                handler: nil
-            )
-            return supplementary
+            ).update(with: title, and: nil, handler: nil)
             
         case let .network(network):
-            
-            let supplementary = collectionView.dequeue(
+            return collectionView.dequeue(
                 DashboardHeaderNameView.self,
                 for: indexPath,
                 kind: kind
-            )
-            supplementary.update(
-                with: network.name,
-                and: network,
-                handler: makeDashboardHeaderNameViewHandler(for: section)
-            )
-            return supplementary
+            ).update(with: network.name, and: network, handler: { [weak self] in
+                self?.presenter.handle(.didTapEditTokens(network: section.networkId))
+            })
         }
-    }
-    
-    func makeDashboardHeaderNameViewHandler(
-        for section: DashboardViewModel.Section
-    ) -> DashboardHeaderNameView.Handler {
-        .init(
-            onMoreTapped: makeOnMoreNetworkTapped(for: section)
-        )
-    }
-    
-    func makeOnMoreNetworkTapped(
-        for section: DashboardViewModel.Section
-    ) -> () -> Void {
-        
-        {
-            [weak self] in
-            guard let self = self else { return }
-            self.presenter.handle(.didTapEditTokens(network: section.networkId))
-        }
-    }
-    
-    func makeNotificationHandler() -> DashboardNotificationCell.Handler {
-        
-        let onDismiss: (String) -> Void = { [weak self] id in
-            guard let self = self else { return }
-            self.presenter.handle(.didTapDismissNotification(id: id))
-        }
-        
-        return .init(
-            onDismiss: onDismiss
-        )
     }
 }

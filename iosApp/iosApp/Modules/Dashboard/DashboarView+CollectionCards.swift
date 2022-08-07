@@ -5,75 +5,7 @@
 import Foundation
 
 extension DashboardViewController {
-    
-    var backgroundGradientHeight: CGFloat {
-        if collectionView.frame.size.height > collectionView.contentSize.height {
-            return collectionView.frame.size.height
-        } else {
-            return collectionView.contentSize.height
-        }
-    }
-    
-    func addCustomBackgroundGradientView() {
 
-        // 1 - Add gradient
-        let backgroundGradient = GradientView()
-        backgroundGradient.isDashboard = true
-        view.insertSubview(backgroundGradient, at: 0)
-        
-        backgroundGradient.translatesAutoresizingMaskIntoConstraints = false
-        
-        let topConstraint = backgroundGradient.topAnchor.constraint(
-            equalTo: view.topAnchor
-        )
-        self.backgroundGradientTopConstraint = topConstraint
-        topConstraint.isActive = true
-
-        backgroundGradient.leadingAnchor.constraint(
-            equalTo: view.leadingAnchor
-        ).isActive = true
-
-        backgroundGradient.trailingAnchor.constraint(
-            equalTo: view.trailingAnchor
-        ).isActive = true
-
-        let heightConstraint = backgroundGradient.heightAnchor.constraint(
-            equalToConstant: backgroundGradientHeight
-        )
-        self.backgroundGradientHeightConstraint = heightConstraint
-        heightConstraint.isActive = true
-        
-        // 2 - Add sunset image
-        let sunsetBackground = UIImageView(
-            image: "themeA-dashboard-bottom-image".assetImage
-        )
-        view.insertSubview(sunsetBackground, at: 1)
-        
-        sunsetBackground.translatesAutoresizingMaskIntoConstraints = false
-        
-        let bottomConstraint = backgroundGradient.bottomAnchor.constraint(
-            equalTo: sunsetBackground.bottomAnchor,
-            constant: -18
-        )
-        self.backgroundSunsetBottomConstraint = bottomConstraint
-        bottomConstraint.isActive = true
-
-        sunsetBackground.leadingAnchor.constraint(
-            equalTo: view.leadingAnchor,
-            constant: Theme.constant.padding
-        ).isActive = true
-
-        view.trailingAnchor.constraint(
-            equalTo: sunsetBackground.trailingAnchor,
-            constant: Theme.constant.padding
-        ).isActive = true
-        
-        sunsetBackground.heightAnchor.constraint(
-            equalTo: sunsetBackground.widthAnchor,
-            multiplier: 0.7
-        ).isActive = true
-    }
-    
     func configureCollectionCardsLayout() {
         collectionView.register(
             DashboardHeaderNameView.self,
@@ -211,7 +143,6 @@ private extension DashboardViewController {
     }
         
     var nftSectionBottomOffset: CGFloat {
-        
         let sunsetImageWidth = view.frame.size.width - Theme.constant.padding * 2
         let sunsetImageHeight = sunsetImageWidth * 0.7
         return sunsetImageHeight - Theme.constant.padding * 4

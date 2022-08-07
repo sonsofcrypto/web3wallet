@@ -63,9 +63,9 @@ final class DashboardWalletCell: CollectionViewCell {
 
 extension DashboardWalletCell {
 
-    func update(with viewModel: DashboardViewModel.Wallet?) {
+    func update(with viewModel: DashboardViewModel.Wallet?) -> Self {
         guard let viewModel = viewModel else {
-            return
+            return self
         }
         
         imageView.image = viewModel.imageData.pngImage
@@ -84,6 +84,8 @@ extension DashboardWalletCell {
            let btm = UIColor(hexString: colors.1) {
             (backgroundView as? DashboardWalletCellBackgroundView)?.strokeColors = [top, btm]
         }
+
+        return self
     }
 }
 
@@ -153,8 +155,8 @@ class DashboardWalletCellBackgroundView: UIView {
         clipsToBounds = true
         layer.cornerRadius = Theme.constant.cornerRadius
         layer.maskedCorners = CACornerMask.all
-//        noise.alpha = 0.0
-//        [highlight, highlightBtm].forEach { $0.alpha = 0.0 }
+//        noise.alpha = 0.5
+//        [highlight, highlightBtm].forEach { $0.alpha = 0.5 }
     }
 
     override func layoutSubviews() {

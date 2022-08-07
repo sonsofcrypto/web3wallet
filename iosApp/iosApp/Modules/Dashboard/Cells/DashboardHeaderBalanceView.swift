@@ -8,7 +8,7 @@ final class DashboardHeaderBalanceView: UICollectionReusableView {
     @IBOutlet weak var label: UILabel!
     @IBOutlet var labelHConstraints: [NSLayoutConstraint]!
     @IBOutlet var labelVConstraints: [NSLayoutConstraint]!
-    
+        
     override func awakeFromNib() {
         super.awakeFromNib()
         label.apply(style: .largeTitle, weight: .bold)
@@ -21,7 +21,8 @@ final class DashboardHeaderBalanceView: UICollectionReusableView {
 
 extension DashboardHeaderBalanceView {
 
-    func update(with balance: String) {
+    func update(with balance: String) -> Self {
         label.text = balance
+        return self
     }
 }

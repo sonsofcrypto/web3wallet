@@ -13,11 +13,7 @@ final class DashboardNotificationCell: CollectionViewCell {
     @IBOutlet weak var closeButton: UIButton!
     
     private var viewModel: DashboardViewModel.Notification!
-    private var handler: Handler!
-    
-    struct Handler {
-        let onDismiss: (String) -> Void
-    }
+    private var handler: ((String) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,14 +37,11 @@ final class DashboardNotificationCell: CollectionViewCell {
     }
     
     override func setSelected(_ selected: Bool) {
-        
         // do nothing
     }
 
     override func prepareForReuse() {
-        
         super.prepareForReuse()
-        
         layer.transform = CATransform3DIdentity
         layer.removeAllAnimations()
     }
@@ -57,14 +50,18 @@ final class DashboardNotificationCell: CollectionViewCell {
         super.layoutSubviews()
 //        backgroundColor = .red
     }
+
+    @objc func dismissTapped() {
+        handler?(viewModel.id)
+    }
 }
 
 extension DashboardNotificationCell {
 
     func update(
         with viewModel: DashboardViewModel.Notification,
-        handler: Handler
-    ) {
+        handler: ((String) -> Void)? = nil
+    ) -> Self {
         self.viewModel = viewModel
         self.handler = handler
         
@@ -73,13 +70,7 @@ extension DashboardNotificationCell {
         bodyLabel.text = viewModel.body
         
         closeView.isHidden = !viewModel.canDismiss
-    }
-}
 
-private extension DashboardNotificationCell {
-    
-    @objc func dismissTapped() {
-        
-        handler.onDismiss(viewModel.id)
+        return self
     }
 }

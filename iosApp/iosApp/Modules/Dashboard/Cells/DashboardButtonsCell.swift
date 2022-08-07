@@ -76,8 +76,12 @@ extension DashboardButtonsCell {
 
 extension DashboardButtonsCell {
 
-    func update(with viewModel: [DashboardViewModel.Action], presenter: DashboardPresenter) {
+    func update(
+        with viewModel: [DashboardViewModel.Action],
+        presenter: DashboardPresenter
+    ) -> Self {
         self.viewModel = viewModel
         updateViews()
+        return self
     }
 }

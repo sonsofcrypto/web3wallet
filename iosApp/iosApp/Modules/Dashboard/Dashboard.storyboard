@@ -17,12 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dashboard-palm" translatesAutoresizingMaskIntoConstraints="NO" id="ZXj-ay-gGz">
-                                <rect key="frame" x="248.5" y="-6" width="190.5" height="164.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="ZXj-ay-gGz" secondAttribute="height" multiplier="175:151" id="IvT-fi-RNG"/>
-                                </constraints>
-                            </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cZV-5M-45A" customClass="CollectionView" customModule="iosApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -169,7 +163,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DashboardWalletCell" id="KRw-Bo-3H1" customClass="DashboardWalletCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="126" y="190" width="162" height="161"/>
+                                        <rect key="frame" x="0.0" y="190" width="162" height="161"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="CtI-9b-ZLL">
                                             <rect key="frame" x="0.0" y="0.0" width="162" height="161"/>
@@ -264,14 +258,14 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DashboardNFTCell" id="0I7-Tw-S7A" userLabel="DashboardNFTCell" customClass="DashboardNFTCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="35.5" y="361" width="343" height="162"/>
+                                        <rect key="frame" x="172" y="190.5" width="160" height="160"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="o9u-b1-GI9">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="162"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4MR-RL-mh2">
-                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="162"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -281,7 +275,7 @@
                                                 <constraint firstItem="4MR-RL-mh2" firstAttribute="leading" secondItem="o9u-b1-GI9" secondAttribute="leading" id="vvp-68-LKF"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="343" height="162"/>
+                                        <size key="customSize" width="160" height="160"/>
                                         <connections>
                                             <outlet property="imageView" destination="4MR-RL-mh2" id="PGM-yO-dQ9"/>
                                         </connections>
@@ -331,10 +325,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="cZV-5M-45A" firstAttribute="top" secondItem="1Ea-Xb-sRG" secondAttribute="top" id="2GH-xw-Ctg"/>
-                            <constraint firstItem="L3I-Ob-0Wf" firstAttribute="trailing" secondItem="ZXj-ay-gGz" secondAttribute="trailing" constant="-25" id="2LN-9z-wey"/>
                             <constraint firstItem="cZV-5M-45A" firstAttribute="leading" secondItem="L3I-Ob-0Wf" secondAttribute="leading" id="KNj-Mm-66R"/>
-                            <constraint firstItem="ZXj-ay-gGz" firstAttribute="top" secondItem="L3I-Ob-0Wf" secondAttribute="top" constant="-50" id="TRS-5x-fvK"/>
-                            <constraint firstItem="ZXj-ay-gGz" firstAttribute="width" secondItem="1Ea-Xb-sRG" secondAttribute="width" multiplier="0.46" id="cCq-lD-ccW"/>
                             <constraint firstItem="cZV-5M-45A" firstAttribute="trailing" secondItem="L3I-Ob-0Wf" secondAttribute="trailing" id="kTG-ep-3dB"/>
                             <constraint firstAttribute="bottom" secondItem="cZV-5M-45A" secondAttribute="bottom" id="vKT-Bl-Jdh"/>
                         </constraints>
@@ -347,7 +338,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0vn-er-Mfj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="222" y="892"/>
+            <point key="canvasLocation" x="221.73913043478262" y="891.96428571428567"/>
         </scene>
     </scenes>
     <resources>
@@ -1762,7 +1753,6 @@ AAE19wABNfwAATYCAAE2CgABNgwAATYOAAE2EAABNhIAAUeyAAFHtwABR8QAAUfHAAFH1AABR9kAAUfh
 AAFH5AABR+kAAUfxAAAAAAAABAEAAAAAAAAAaAAAAAAAAAAAAAAAAAABR/Q
 </mutableData>
         </image>
-        <image name="dashboard-palm" width="147" height="173"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

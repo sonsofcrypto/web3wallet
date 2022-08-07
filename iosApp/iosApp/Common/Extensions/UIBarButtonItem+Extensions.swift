@@ -10,13 +10,13 @@ extension UIBarButtonItem {
         imageName: String,
         style: UIBarButtonItem.Style = .plain,
         target: Any?,
-        selector: Selector?
+        action: Selector?
     ) {
         self.init(
             image: imageName.assetImage,
             style: .plain,
             target: target,
-            action: selector
+            action: action
         )
     }
 

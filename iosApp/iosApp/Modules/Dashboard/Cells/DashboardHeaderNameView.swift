@@ -11,12 +11,8 @@ final class DashboardHeaderNameView: UICollectionReusableView {
     private weak var fuelCostLabel: UILabel!
     private weak var rightAction: UILabel!
     
-    private var handler: Handler?
-    
-    struct Handler {
-        let onMoreTapped: () -> Void
-    }
-    
+    private var handler: (()->Void)?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -115,8 +111,7 @@ private extension DashboardHeaderNameView {
     }
     
     @objc func moreTapped() {
-        
-        handler?.onMoreTapped()
+        handler?()
     }
 }
 
@@ -125,8 +120,8 @@ extension DashboardHeaderNameView {
     func update(
         with title: String,
         and network: DashboardViewModel.Section.Header.Network?,
-        handler: Handler?
-    ) {
+        handler: (()->Void)?
+    ) -> Self {
         
         self.handler = handler
         
@@ -137,7 +132,7 @@ extension DashboardHeaderNameView {
             rightAction.isHidden = true
             fuelCostImageView.isHidden = true
             fuelCostLabel.isHidden = true
-            return
+            return self
         }
         
         rightAction.isHidden = false
@@ -146,5 +141,6 @@ extension DashboardHeaderNameView {
         fuelCostImageView.isHidden = false
         fuelCostLabel.isHidden = false
         fuelCostLabel.text = network.fuelCost
+        return self
     }
 }
