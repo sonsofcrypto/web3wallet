@@ -5,13 +5,17 @@
 import UIKit
 
 final class DashboardHeaderNameView: UICollectionReusableView {
-        
-    private weak var label: UILabel!
-    private weak var fuelCostImageView: UIView!
-    private weak var fuelCostLabel: UILabel!
-    private weak var rightAction: UILabel!
+    private lazy var label = UILabel()
+    private lazy var fuelCostImageView = UIImageView(named: "charging_station")
+    private lazy var fuelCostLabel = UILabel()
+    private lazy var rightAction = UILabel()
+    private lazy var lineView = LineView()
+    private lazy var stack = HStackView(
+        [label, fuelCostImageView, fuelCostLabel, UIView(), rightAction],
+        spacing: Theme.constant.padding
+    )
     
-    private var handler: (()->Void)?
+    var btnHandler: (()->Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,95 +29,44 @@ final class DashboardHeaderNameView: UICollectionReusableView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-//        backgroundColor = .green
+        lineView.frame = CGRect(
+            origin: CGPoint(x: 0, y: bounds.maxY - 0.5),
+            size: CGSize(width: bounds.width * 1.1, height: 0.5)
+        )
     }
 }
 
 private extension DashboardHeaderNameView {
     
     func configureUI() {
-        
-        let label = UILabel()
         label.font = Theme.font.networkTitle
         label.textColor = Theme.colour.labelPrimary
-        self.label = label
-        label.addConstraints(
-            [
-                .hugging(layoutAxis: .horizontal, priority: .required)
-            ]
-        )
         
-        let iconImageViewGroup = UIView()
-        iconImageViewGroup.backgroundColor = .clear
-        let iconImageView = UIImageView(
-            image: "dashboard-charging-station".assetImage!
-        )
-        iconImageViewGroup.addSubview(iconImageView)
-        iconImageView.addConstraints(
-            [
-                .layout(anchor: .leadingAnchor),
-                .layout(anchor: .trailingAnchor),
-                .layout(anchor: .centerYAnchor, constant: .equalTo(constant: -2)),
-                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 14)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 14))
-            ]
-        )
-        self.fuelCostImageView = iconImageViewGroup
-        
-        let fuelCostLabel = UILabel()
         fuelCostLabel.font = Theme.font.dashboardSectionFuel
         fuelCostLabel.textColor = Theme.colour.labelPrimary
-        self.fuelCostLabel = fuelCostLabel
-        
-        let groupView = HStackView(
-            [label, iconImageViewGroup, fuelCostLabel],
-            spacing: Theme.constant.padding.half
-        )
-        addSubview(groupView)
-        groupView.setCustomSpacing(Theme.constant.padding, after: label)
-        
-        groupView.addConstraints(
-            [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 0)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .topAnchor),
-                .layout(anchor: .bottomAnchor),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 30))
-            ]
-        )
-        
-        let rightAction = UILabel()
+        fuelCostImageView.contentMode = .bottom
+
+        // TODO: This should be button of certain type
         rightAction.font = Theme.font.body
         rightAction.textColor = Theme.colour.labelPrimary
         rightAction.isHidden = true
         rightAction.add(.targetAction(.init(target: self, selector: #selector(moreTapped))))
-        self.rightAction = rightAction
-        addSubview(rightAction)
-        rightAction.addConstraints(
-            [
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 0)),
-                .layout(anchor: .centerYAnchor),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 30))
-            ]
-        )
-        
-        let view = UIView()
-        view.backgroundColor = Theme.colour.labelPrimary
-        addSubview(view)
-        view.addConstraints(
-            [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 0)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: -Theme.constant.padding)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 0.3)),
-                .layout(anchor: .bottomAnchor)
-            ]
-        )
+
+        let offset = Theme.type.isThemeIOS ? 0 : -Theme.constant.padding.half + 1
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(stack)
+        stack.contraintToSuperView(bottom: offset)
+
+        addSubview(lineView)
+        lineView.isHidden = Theme.type.isThemeIOS
     }
     
     @objc func moreTapped() {
-        handler?()
+        btnHandler?()
     }
 }
+
+// MARK: - ViewModel
 
 extension DashboardHeaderNameView {
 
@@ -122,25 +75,13 @@ extension DashboardHeaderNameView {
         and network: DashboardViewModel.Section.Header.Network?,
         handler: (()->Void)?
     ) -> Self {
-        
-        self.handler = handler
-        
+        btnHandler = handler
         label.text = title.uppercased()
-        
-        guard let network = network else {
-            
-            rightAction.isHidden = true
-            fuelCostImageView.isHidden = true
-            fuelCostLabel.isHidden = true
-            return self
+        rightAction.text = network?.rightActionTitle ?? ""
+        fuelCostLabel.text = network?.fuelCost ?? ""
+        [rightAction, fuelCostImageView, fuelCostLabel].forEach {
+            $0.isHidden = network == nil
         }
-        
-        rightAction.isHidden = false
-        rightAction.text = network.rightActionTitle
-        
-        fuelCostImageView.isHidden = false
-        fuelCostLabel.isHidden = false
-        fuelCostLabel.text = network.fuelCost
         return self
     }
 }
