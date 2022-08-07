@@ -90,8 +90,12 @@ extension DashboardViewController: UICollectionViewDataSource {
             return cv.dequeue(DashboardNotificationCell.self, for: indexPath)
                 .update(with: notification)
         } else if let wallet = section.items.wallet(at: indexPath.row) {
+            if Theme.type.isThemeIOS {
+                return cv.dequeue(DashboardTableWalletCell.self, for: indexPath)
+                    .update(with: wallet)
+            }
             return cv.dequeue(DashboardWalletCell.self, for: indexPath)
-                .update(with: wallet)
+                    .update(with: wallet)
         } else if let nft = section.items.nft(at: indexPath.row) {
             return cv.dequeue(DashboardNFTCell.self, for: indexPath)
                 .update(with: nft)
@@ -184,7 +188,7 @@ extension DashboardViewController: UICollectionViewDelegate {
             return
         }
         cell.layer.add(
-            CAAnimation.buildUp(0.005 * CGFloat(indexPath.item)),
+            CAAnimation.buildUp(0.05 * CGFloat(indexPath.item)),
             forKey: "transform"
         )
     }
@@ -245,7 +249,7 @@ private extension DashboardViewController {
     }
 
     func compositionalLayout() -> UICollectionViewCompositionalLayout {
-        UICollectionViewCompositionalLayout { [weak self] idx, env in
+        let layout = UICollectionViewCompositionalLayout { [weak self] idx, env in
             guard let section = self?.viewModel?.sections[idx] else { return nil }
 
             switch section.items {
@@ -256,9 +260,20 @@ private extension DashboardViewController {
             case .nfts:
                 return self?.nftsCollectionLayoutSection()
             case .wallets:
-                return self?.walletsCollectionLayoutSection()
+                return Theme.type.isThemeIOS
+                    ? self?.walletsTableCollectionLayoutSection()
+                    : self?.walletsCollectionLayoutSection()
             }
         }
+
+        if Theme.type.isThemeIOS {
+            layout.register(
+                DgenCellBackgroundSupplementaryView.self,
+                forDecorationViewOfKind: "background"
+            )
+        }
+
+        return layout
     }
 
     func buttonsCollectionLayoutSection() -> NSCollectionLayoutSection {
@@ -305,6 +320,26 @@ private extension DashboardViewController {
             alignment: .top
         )
         section.interGroupSpacing = Theme.constant.padding
+        section.boundarySupplementaryItems = [headerItem]
+        return section
+    }
+
+    func walletsTableCollectionLayoutSection() -> NSCollectionLayoutSection {
+        let group = NSCollectionLayoutGroup.horizontal(
+            .fractional(absoluteH: 64),
+            items: [.init(.fractional(absoluteH: 64))]
+        )
+        let section = NSCollectionLayoutSection(group: group, insets: .padding)
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: .fractional(estimatedH: 100),
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        let backgroundItem = NSCollectionLayoutDecorationItem.background(
+            elementKind: "background"
+        )
+        backgroundItem.contentInsets = .padding(top: Theme.constant.padding * 3)
+        section.decorationItems = [backgroundItem]
         section.boundarySupplementaryItems = [headerItem]
         return section
     }

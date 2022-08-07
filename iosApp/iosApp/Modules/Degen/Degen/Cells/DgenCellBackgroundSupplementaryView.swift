@@ -9,6 +9,7 @@ final class DgenCellBackgroundSupplementaryView: UICollectionReusableView {
         
         layer.cornerRadius = Theme.constant.cornerRadius
         backgroundColor = Theme.colour.cellBackground
+//        backgroundColor = .red
     }
 
     required init?(coder: NSCoder) {

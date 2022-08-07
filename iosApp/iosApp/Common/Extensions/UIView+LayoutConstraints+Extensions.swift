@@ -385,3 +385,22 @@ extension UIView.Constraint {
         .compression(layoutAxis: axis, priority: priority)
     }
 }
+
+extension UIView {
+
+    func contraintToSuperView(
+        top: CGFloat = 0,
+        left: CGFloat = 0,
+        bottom: CGFloat = 0,
+        right: CGFloat = 0
+    ) {
+        guard let sv = superview else { return }
+
+        sv.addConstraints([
+            leadingAnchor.constraint(equalTo: sv.leadingAnchor, constant: left),
+            trailingAnchor.constraint(equalTo: sv.trailingAnchor, constant: right),
+            topAnchor.constraint(equalTo: sv.topAnchor, constant: top),
+            bottomAnchor.constraint(equalTo: sv.bottomAnchor, constant: bottom),
+        ])
+    }
+}

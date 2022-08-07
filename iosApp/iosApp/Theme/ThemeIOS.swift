@@ -5,9 +5,8 @@
 import UIKit
 
 struct ThemeIOS: Themable {
-    
+
     var name: String {
-        
         "themeIOS"
     }
     
@@ -222,7 +221,7 @@ struct ThemeIOS: Themable {
             footnoteBold: .systemFont(ofSize: 13, weight: .semibold), // line_height = 18
             navTitle: .systemFont(ofSize: 20, weight: .regular), // line_height = 25
             tabBar: .systemFont(ofSize: 11, weight: .semibold), // line_height = 13
-            networkTitle: .init(name: "NaokoAA-BlackItalic", size: 16)!,
+            networkTitle: .systemFont(ofSize: 15, weight: .regular),
             dashboardSectionFuel: .init(name: "NaokoAA-RegularItalic", size: 11)!,
             dashboardTVBalance: .init(name: "OCR-A", size: 16)!,
             dashboardTVSymbol: .init(name: "NaokoAA-Semilight", size: 13)!,

@@ -21,7 +21,6 @@ extension UILabel {
     }
 
     enum Style {
-        
         case largeTitle
         case title1
         case title2
@@ -189,5 +188,25 @@ private extension UILabel {
             range: NSRange(location: 0, length: attrString.length)
         )
         attributedText = attrString
+    }
+}
+
+extension UILabel {
+
+    convenience init(
+        _ font: UIFont? = nil,
+        color: UIColor? = nil,
+        text: String? = nil
+    ) {
+        self.init()
+        if let font = font {
+            self.font = font
+        }
+        if let color = color {
+            self.textColor = color
+        }
+        if let text = text {
+            self.text = text
+        }
     }
 }

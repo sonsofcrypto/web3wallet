@@ -25,11 +25,8 @@ enum TargetActionViewModel {
 extension UIView {
     
     func add(_ viewModel: TargetActionViewModel?) {
-        
         guard let viewModel = viewModel else { return }
-        
         guard case let TargetActionViewModel.targetAction(targetAction) = viewModel else {
-
             return
         }
         

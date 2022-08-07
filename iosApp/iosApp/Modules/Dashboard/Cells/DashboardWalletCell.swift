@@ -5,7 +5,6 @@
 import UIKit
 
 final class DashboardWalletCell: CollectionViewCell {
-
     @IBOutlet weak var contentStack: UIStackView!
     @IBOutlet weak var topContentStack: UIStackView!
     @IBOutlet weak var imageView: UIImageView!
@@ -21,32 +20,20 @@ final class DashboardWalletCell: CollectionViewCell {
         contentView.backgroundColor = .clear
         backgroundColor = .clear
         backgroundView = DashboardWalletCellBackgroundView()
-
         imageView.layer.cornerRadius = imageView.frame.size.width * 0.5
         imageView.backgroundColor = UIColor(hexString: "3461BE")!
-
         fiatPriceLabel.font = Theme.font.dashboardTVBalance
         fiatPriceLabel.textColor = Theme.colour.labelPrimary
-        
         currencyLabel.font = Theme.font.dashboardTVSymbol
         currencyLabel.textColor = Theme.colour.labelPrimary
-        
         pctChangeLabel.font = Theme.font.dashboardTVPct
         pctChangeLabel.textColor = Theme.colour.priceUp
-        
         fiatBalanceLabel.font = Theme.font.dashboardTVTokenBalance
         fiatBalanceLabel.textColor = Theme.colour.dashboardTVCryptoBallance
-        
         cryptoBalanceLabel.font = Theme.font.dashboardTVTokenBalance
         cryptoBalanceLabel.textColor = Theme.colour.dashboardTVCryptoBallance
-
-        // charView.backgroundColor = UIColor.red.withAlpha(0.1)
-
-        fiatBalanceLabel.text = "$1,245.32"
-        fiatPriceLabel.textColor = Theme.colour.labelPrimary
         fiatBalanceLabel.isHidden = true
-        
-        contentStack.setCustomSpacing(0, after: fiatBalanceLabel)
+//        contentStack.setCustomSpacing(0, after: fiatBalanceLabel)
 
     }
 

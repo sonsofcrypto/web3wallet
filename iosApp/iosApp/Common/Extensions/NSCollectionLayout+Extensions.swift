@@ -55,6 +55,20 @@ extension NSDirectionalEdgeInsets {
         )
     }
 
+    static func padding(
+        top: CGFloat = Theme.constant.padding,
+        leading: CGFloat = Theme.constant.padding,
+        bottom: CGFloat = Theme.constant.padding,
+        trailing: CGFloat = Theme.constant.padding
+    ) -> NSDirectionalEdgeInsets {
+        .init(
+            top: top,
+            leading: leading,
+            bottom: bottom,
+            trailing: trailing
+        )
+    }
+
     static func insets(h: CGFloat = 0, v: CGFloat = 0) -> Self {
         .init(top: v, leading: h, bottom: v, trailing: h)
     }

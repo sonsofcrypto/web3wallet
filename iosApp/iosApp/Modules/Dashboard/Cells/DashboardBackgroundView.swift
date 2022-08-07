@@ -25,6 +25,7 @@ class DashboardBackgroundView: UIScrollView {
     func configureUI() {
         [gradientView, topPalm, btmSun, btmLogo, btmMeme].forEach {
             addSubview($0)
+            $0.isHidden = Theme.type.isThemeIOS
         }
         isUserInteractionEnabled = false
     }
