@@ -280,7 +280,8 @@ private extension DefaultDashboardPresenter {
 
         return .init(
             name: currency.name,
-            ticker: currency.symbol,
+            ticker: currency.symbol.uppercased(),
+            colors: interactor.colors(for: currency),
             imageData: interactor.image(for: currency),
             fiatBalance: Formatter.fiat.string(from: Float(fiatBalance)),
             cryptoBalance: formatted, // "\($0.balance.toString(decimals: $0.decimals)) \($0.symbol)",

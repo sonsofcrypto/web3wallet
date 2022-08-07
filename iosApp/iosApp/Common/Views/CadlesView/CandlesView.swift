@@ -143,17 +143,17 @@ private extension CandlesView {
             let yRatio = bounds.height / (high - low)
 
             let candleFrame = CGRect(
-                x: candleWidth * CGFloat(idx),
-                y: (yLength - (candle.high - low)) * yRatio,
-                width: candleWidth,
-                height: (candle.high - candle.low) * yRatio
+                x: replaceNans(candleWidth * CGFloat(idx)),
+                y: replaceNans((yLength - (candle.high - low)) * yRatio),
+                width: replaceNans(candleWidth),
+                height: replaceNans((candle.high - candle.low) * yRatio)
             )
 
             let candleBodyFrame = CGRect(
-                x: candleWidth * CGFloat(idx),
-                y: (yLength - (bodyHigh - low)) * yRatio,
-                width: candleWidth,
-                height: bodyLength * yRatio
+                x: replaceNans(candleWidth * CGFloat(idx)),
+                y: replaceNans((yLength - (bodyHigh - low)) * yRatio),
+                width: replaceNans(candleWidth),
+                height: replaceNans(bodyLength * yRatio)
             )
 
             let candleBounds = CGRect(origin: .zero, size: candleFrame.size)
@@ -248,4 +248,8 @@ private extension CandlesView {
             candles = candles + newCandles
         }
     }
+}
+
+private func replaceNans(_ val: CGFloat) -> CGFloat {
+    val.isNaN ? 0 : val
 }

@@ -18,4 +18,8 @@ extension UIImage {
             draw(in: .init(origin: .zero, size: size))
         }
     }
+
+    func heightWidthwRatio() -> CGFloat {
+        size.height / size.width
+    }
 }

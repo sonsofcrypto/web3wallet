@@ -8,11 +8,12 @@ import web3lib
 final class CurrenciesServiceAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .singleton) { _ -> CurrenciesService in
+        registry.register(scope: .singleton) { resolver -> CurrenciesService in
             DefaultCurrenciesService(
                 store: KeyValueStore(
                     name: "\(DefaultCurrenciesService.self)"
-                )
+                ),
+                currenciesStore: resolver.resolve()
             )
         }
     }

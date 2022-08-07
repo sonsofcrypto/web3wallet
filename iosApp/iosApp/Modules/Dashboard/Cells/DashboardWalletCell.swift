@@ -17,10 +17,12 @@ final class DashboardWalletCell: CollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        contentView.backgroundColor = .clear
+        backgroundColor = .clear
         backgroundView = DashboardWalletCellBackgroundView()
 
         imageView.layer.cornerRadius = imageView.frame.size.width * 0.5
-        imageView.backgroundColor = Theme.colour.labelPrimary
+        imageView.backgroundColor = UIColor(hexString: "3461BE")!
 
         contentStack.setCustomSpacing(13, after: topContentStack)
 
@@ -35,7 +37,7 @@ final class DashboardWalletCell: CollectionViewCell {
         
         cryptoBalanceLabel.font = Theme.font.dashboardTVTokenBalance
         cryptoBalanceLabel.textColor = Theme.colour.dashboardTVCryptoBallance
-
+//        charView.backgroundColor = .red
     }
 
     override func prepareForReuse() {
@@ -46,7 +48,6 @@ final class DashboardWalletCell: CollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        backgroundColor = .red
     }
 }
 
@@ -67,64 +68,64 @@ extension DashboardWalletCell {
         pctChangeLabel.layer.shadowColor = pctChangeLabel.textColor.cgColor
         charView.update(viewModel.candles)
         cryptoBalanceLabel.text = viewModel.cryptoBalance
+
+        if let colors = viewModel.colors,
+           let top = UIColor(hexString: colors.0),
+           let btm = UIColor(hexString: colors.1) {
+            (backgroundView as? DashboardWalletCellBackgroundView)?.strokeColors = [top, btm]
+        }
     }
 }
 
-private extension DashboardWalletCell {
-    
-    func addScreen() {
-        
-        clipsToBounds = false
-        
-        // Add screen
-        let image = "themeA-dashboard-screen".assetImage!
-        let screenView = UIImageView(
-            image: image.resizableImage(
-                withCapInsets: .init(
-                    top: image.size.height * 0.5,
-                    left: image.size.width * 0.5,
-                    bottom: image.size.height * 0.5,
-                    right: image.size.width * 0.5
-                ),
-                resizingMode: .stretch
-            )
-        )
-        insertSubview(screenView, at: 0)
-        screenView.addConstraints(
-            [
-                .layout(anchor: .topAnchor),
-                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: -6)),
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: -4)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: -4))
-            ]
-        )
-
-        // Add mask
-        let maskImage = "themeA-dashboard-mask".assetImage!
-        let maskView = UIImageView(
-            image: maskImage
-        )
-        screenView.addSubview(maskView)
-        maskView.addConstraints(
-            [
-                .layout(anchor: .topAnchor),
-                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: 10)),
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 4)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 4))
-            ]
-        )
-    }
-}
+// MARK: - DashboardWalletCellBackgroundView
 
 class DashboardWalletCellBackgroundView: UIView {
-    // 223E7B
-    // 3461BE
 
-    private lazy var gradient: GradientView = {
+    var strokeColors: [UIColor] = [] {
+        didSet {
+            if strokeColors.isEmpty {
+                strokeGradient.colors = [.white, .white]
+            } else {
+                strokeGradient.colors = strokeColors
+            }
+        }
+    }
+
+    private lazy var strokeGradient: GradientView = {
+        let view = GradientView()
+        view.colors = [.white, .white]
+        view.direction = .custom(CGPoint(x: 0, y: 0), CGPoint(x: 1, y: 1))
+        insertSubview(view, at: 0)
+        return view
+    }()
+
+    private lazy var fillGradient: GradientView = {
         let view = GradientView()
         view.colors = [UIColor(hexString: "3461BE")!, UIColor(hexString: "223E7B")!]
         view.direction = .custom(CGPoint(x: 0, y: 0), CGPoint(x: 0, y: 1))
-        insertSubview(view, at: 0)
+        insertSubview(view, at: 1)
+        view.layer.cornerRadius = Theme.constant.cornerRadius
+        view.layer.maskedCorners = .all
+        return view
+    }()
+
+    private lazy var noise: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "tv_noise"))
+        insertSubview(view, at: 2)
+        return view
+    }()
+
+    private lazy var highlight: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "tv_highlight"))
+        view.contentMode = .scaleAspectFill
+        insertSubview(view, at: 2)
+        return view
+    }()
+
+    private lazy var highlightBtm: UIImageView = {
+        let view = UIImageView(image: UIImage(named: "tv_highlight_btm"))
+        view.contentMode = .scaleAspectFill
+        insertSubview(view, at: 2)
         return view
     }()
 
@@ -142,11 +143,23 @@ class DashboardWalletCellBackgroundView: UIView {
         clipsToBounds = true
         layer.cornerRadius = Theme.constant.cornerRadius
         layer.maskedCorners = CACornerMask.all
+//        noise.alpha = 0.0
+//        [highlight, highlightBtm].forEach { $0.alpha = 0.0 }
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        gradient.frame = bounds
-        backgroundColor = .red
+        strokeGradient.frame = bounds
+        fillGradient.frame = bounds.insetBy(dx: 2, dy: 2)
+        noise.frame = bounds
+
+        let ratio = highlight.image?.heightWidthwRatio() ?? 0
+        var highlightBounds = bounds
+        highlightBounds.size.width = bounds.width
+        highlightBounds.size.height = bounds.width * ratio
+        highlight.frame = highlightBounds
+
+        highlightBounds.origin.y = bounds.height - highlightBounds.height
+        highlightBtm.frame = highlightBounds
     }
 }

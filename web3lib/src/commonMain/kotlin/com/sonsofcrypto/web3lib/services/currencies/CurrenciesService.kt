@@ -24,6 +24,7 @@ interface CurrenciesService {
     fun currencies(wallet: Wallet): List<Currency>
     fun add(currency: Currency, wallet: Wallet)
     fun remove(currency: Currency, wallet: Wallet)
+
     /** Replaces currency list of existing currencies (ie remove existing) */
     fun setSelected(currencies: List<Currency>, wallet: Wallet)
 
@@ -37,15 +38,16 @@ interface CurrenciesService {
 }
 
 @OptIn(ExperimentalTime::class)
-class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
+class DefaultCurrenciesService(
+        val store: KeyValueStore,
+        val currenciesStore: CurrenciesInfoStore,
+    ): CurrenciesService {
 
-    override var currencies: List<Currency> = listOf()
+    override var currencies: List<Currency>
+        get() { return currenciesStore.currencies }
+        set(value) {}
 
     private var selectedCurrencies: MutableMap<String, List<Currency>> = mutableMapOf()
-    private var namesTrie: Trie = Trie()
-    private var symbolsTrie: Trie = Trie()
-    private var namesMap: Map<String, Int> = emptyMap()
-    private var symbolsMap: Map<String, Int> = emptyMap()
     private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
 
     init {
@@ -83,81 +85,20 @@ class DefaultCurrenciesService(val store: KeyValueStore): CurrenciesService {
         }
     }
 
+    override fun currencies(search: String): List<Currency> {
+        return currenciesStore.currencies(search)
+    }
+
+    override suspend fun loadCurrencies() {
+        currenciesStore.loadCurrencies()
+    }
+
     override fun defaultCurrencies(network: Network): List<Currency> {
         return when(network) {
             Network.ethereum() -> ethereumDefaultCurrencies
             Network.ropsten() -> ropstenDefaultCurrencies
             else -> listOf()
         }
-    }
-
-    override fun currencies(search: String): List<Currency> {
-        if (search.isEmpty()) {
-            return emptyList()
-        }
-        val results = mutableSetOf<Currency>()
-        val searchTerm = search.toLowerCasePreservingASCIIRules()
-        namesTrie.wordsStartingWith(searchTerm).forEach {
-            namesMap[it]?.let { idx -> results.add(currencies[idx]) }
-        }
-        symbolsTrie.wordsStartingWith(searchTerm).forEach {
-            symbolsMap[it]?.let { idx -> results.add(currencies[idx]) }
-        }
-        return results.toList()
-    }
-
-    override suspend fun loadCurrencies() = withContext(bgDispatcher) {
-        val singleThreadContext = newSingleThreadContext("coin_cache_loading")
-        withContext(singleThreadContext) {
-            val data = BundledAssetProvider().file("coin_cache", "json")
-            val jsonString = data?.decodeToString() ?: "[]"
-            val currencies = CurrencyInfo.listFrom(jsonString).map {
-                Currency(
-                    name = it.name,
-                    symbol = it.symbol,
-                    decimals = 18u,
-                    type = if(it.platforms?.ethereum != null) Currency.Type.ERC20
-                    else Currency.Type.NATIVE,
-                    address = it.platforms?.ethereum,
-                    coinGeckoId = it.id,
-                )
-            }
-            val namesTrie = Trie()
-            val symbolsTrie = Trie()
-            val namesMap = mutableMapOf<String, Int>()
-            val symbolsMap = mutableMapOf<String, Int>()
-            currencies.forEachIndexed { idx, currency ->
-                val name = currency.name.toLowerCasePreservingASCIIRules()
-                val symbol = currency.symbol.toLowerCasePreservingASCIIRules()
-                namesTrie.insert(name)
-                namesMap.put(name, idx)
-                symbolsTrie.insert(symbol)
-                symbolsMap.put(symbol, idx)
-            }
-            withContext(uiDispatcher) {
-                updateCurrencies(
-                    currencies,
-                    namesTrie,
-                    symbolsTrie,
-                    namesMap,
-                    symbolsMap
-                )
-            }
-        }
-    }
-
-    private fun updateCurrencies(
-        currencies: List<Currency>,
-        namesTrie: Trie,
-        symbolsTrie: Trie,
-        namesMap: Map<String, Int>,
-        symbolsMap: Map<String, Int>,
-    ) {
-        this.currencies = currencies
-        this.namesTrie = namesTrie
-        this.symbolsTrie = symbolsTrie
-        this.namesMap = namesMap
-        this.symbolsMap = symbolsMap
     }
 
     private fun setCurrencies(key: String, currencies: List<Currency>) {

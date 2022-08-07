@@ -37,6 +37,7 @@ protocol DashboardInteractor: AnyObject {
     func candles(for currency: Currency) -> [Candle]?
     // TODO: Refactor to be url or image name
     func image(for currency: Currency) -> Data
+    func colors(for currency: Currency) -> (String, String)
     func cryptoBalance(for wallet: Wallet?, currency: Currency) -> BigInt
     func fiatBalance(for wallet: Wallet?, currency: Currency) -> Double
     func totalFiatBalance() -> Double
@@ -132,6 +133,7 @@ extension DefaultDashboardInteractor {
         return currenciesService.currencies(wallet: wallet)
     }
 
+
     func setCurrencies(_ currencies: [Currency], network: Network) {
         guard let wallet = walletsConnectionService.wallet(network: network) else {
             return
@@ -158,6 +160,16 @@ extension DefaultDashboardInteractor {
 
         image = image ?? UIImage(named: "currency_placeholder")
         return image!.pngData()!
+    }
+
+    func colors(for currency: Currency) -> (String, String) {
+        let colors = currencyMetadataService.colors(currency: currency)
+        print("===", colors.first, colors.second)
+        return ("#FFFFFF", "#000000")
+        return (
+            String(colors.first ?? "#FFFFFF"),
+            String(colors.second ?? "#000000")
+        )
     }
 
     func cryptoBalance(for wallet: Wallet?, currency: Currency) -> BigInt {

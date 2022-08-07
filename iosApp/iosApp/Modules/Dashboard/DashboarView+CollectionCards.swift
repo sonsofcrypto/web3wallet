@@ -140,54 +140,21 @@ private extension DashboardViewController {
     }
     
     func walletsCollectionLayoutSection() -> NSCollectionLayoutSection {
-
-        let inset: CGFloat = Theme.constant.padding // * 0.5
         let width = floor((view.bounds.width - Theme.constant.padding * 3) / 2)
         let height = round(width * 0.95)
-
-        // Item
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(width),
-            heightDimension: .absolute(height)
+        let group = NSCollectionLayoutGroup.horizontal(
+            .fractional(absoluteH: height),
+            items: [.init(.absolute(width, height: height))]
         )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//        item.contentInsets = NSDirectionalEdgeInsets(
-//            top: inset,
-//            leading: inset,
-//            bottom: inset,
-//            trailing: inset
-//        )
-
-        // Group
-        let screenWidth: CGFloat = (view.bounds.width)
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .absolute(screenWidth * 0.4125)
-        )
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.interItemSpacing = .fixed(Theme.constant.padding)
-        // Section
-        let sectionInset: CGFloat = Theme.constant.padding // * 0.5
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(
-            top: sectionInset,
-            leading: sectionInset,
-            bottom: sectionInset,
-            trailing: sectionInset
-        )
-        section.interGroupSpacing = Theme.constant.padding
-
-        let headerItemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(100)
-        )
+        let section = NSCollectionLayoutSection(group: group, insets: .padding)
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerItemSize,
+            layoutSize: .fractional(estimatedH: 100),
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
+        section.interGroupSpacing = Theme.constant.padding
         section.boundarySupplementaryItems = [headerItem]
-        
         return section
     }
     

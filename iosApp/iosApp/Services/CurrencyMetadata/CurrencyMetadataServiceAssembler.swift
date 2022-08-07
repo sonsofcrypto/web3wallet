@@ -8,10 +8,11 @@ import web3lib
 final class CurrencyMetadataServiceAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .singleton) { _ -> CurrencyMetadataService in
+        registry.register(scope: .singleton) { resolver -> CurrencyMetadataService in
             DefaultCurrencyMetadataService(
                 bundledAssetProvider: BundledAssetProvider(),
-                coinGeckoService: DefaultCoinGeckoService()
+                coinGeckoService: DefaultCoinGeckoService(),
+                currenciesInfoStore: resolver.resolve()
             )
         }
     }

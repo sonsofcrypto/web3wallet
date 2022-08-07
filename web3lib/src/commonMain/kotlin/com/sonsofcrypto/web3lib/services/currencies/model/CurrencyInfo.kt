@@ -13,6 +13,7 @@ data class CurrencyInfo(
     val platforms: Platforms?,
     val imageURL: String?,
     val rank: Long?,
+    val colors: List<String>
 ) {
 
     @Serializable

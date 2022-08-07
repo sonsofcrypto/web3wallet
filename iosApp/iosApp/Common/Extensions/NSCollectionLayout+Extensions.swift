@@ -8,9 +8,17 @@ extension NSCollectionLayoutGroup {
 
     static func horizontal(
         _ size: NSCollectionLayoutSize,
-        items: [NSCollectionLayoutItem]
+        items: [NSCollectionLayoutItem],
+        spacing: NSCollectionLayoutSpacing? = nil
     ) -> NSCollectionLayoutGroup {
-        NSCollectionLayoutGroup.horizontal(layoutSize: size, subitems: items)
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: size,
+            subitems: items
+        )
+        if let spacing = spacing {
+            group.interItemSpacing = spacing
+        }
+        return group
     }
 }
 
@@ -54,9 +62,14 @@ extension NSDirectionalEdgeInsets {
 
 extension NSCollectionLayoutItem {
 
-    convenience init(_ size: NSCollectionLayoutSize, insets: NSDirectionalEdgeInsets) {
+    convenience init(
+        _ size: NSCollectionLayoutSize,
+        insets: NSDirectionalEdgeInsets? = nil
+    ) {
         self.init(layoutSize: size)
-        contentInsets = insets
+        if let insets = insets {
+            contentInsets = insets
+        }
     }
 }
 

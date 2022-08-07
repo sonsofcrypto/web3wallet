@@ -57,8 +57,8 @@ extension CACornerMask {
     static var all: CACornerMask {
         [
             layerMinXMinYCorner,
-            layerMinXMinYCorner,
             layerMinXMaxYCorner,
+            layerMaxXMinYCorner,
             layerMaxXMaxYCorner
         ]
     }

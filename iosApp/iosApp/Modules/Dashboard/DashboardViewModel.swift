@@ -72,6 +72,7 @@ extension DashboardViewModel {
     struct Wallet {
         let name: String
         let ticker: String
+        let colors: (String, String)?
         let imageData: Data
         let fiatBalance: String
         let cryptoBalance: String

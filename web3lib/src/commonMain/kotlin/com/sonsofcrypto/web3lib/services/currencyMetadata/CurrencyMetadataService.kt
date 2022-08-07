@@ -3,6 +3,7 @@ package com.sonsofcrypto.web3lib.services.keyStore.CurrencyMetadata
 import com.sonsofcrypto.web3lib.services.coinGecko.CoinGeckoService
 import com.sonsofcrypto.web3lib.services.coinGecko.model.Candle
 import com.sonsofcrypto.web3lib.services.coinGecko.model.Market
+import com.sonsofcrypto.web3lib.services.currencies.CurrenciesInfoStore
 import com.sonsofcrypto.web3lib.services.currencyMetadata.BundledAssetProvider
 import com.sonsofcrypto.web3lib.types.Currency
 import kotlinx.coroutines.Dispatchers
@@ -34,13 +35,16 @@ class DefaultCurrencyMetadataService: CurrencyMetadataService {
 
     private val bundledAssetProvider: BundledAssetProvider
     private val coinGeckoService: CoinGeckoService
+    private val currenciesInfoStore: CurrenciesInfoStore
 
     constructor(
         bundledAssetProvider: BundledAssetProvider,
         coinGeckoService: CoinGeckoService,
+        currenciesInfoStore: CurrenciesInfoStore,
     ) {
         this.bundledAssetProvider = bundledAssetProvider
         this.coinGeckoService = coinGeckoService
+        this.currenciesInfoStore = currenciesInfoStore
     }
 
     override fun cachedImage(currency: Currency?): ByteArray? {
@@ -65,6 +69,15 @@ class DefaultCurrencyMetadataService: CurrencyMetadataService {
     }
 
     override fun colors(currency: Currency?): Pair<HexColor, HexColor> {
+        if (currency != null) {
+            currenciesInfoStore.info(currency)?.colors?.let { colors ->
+                return when {
+                    colors.size > 1 -> Pair(colors[0], colors[1])
+                    colors.size == 1 -> Pair(colors[0], colors[0])
+                    else -> Pair("0xffffff", "0xffffff")
+                }
+            }
+        }
         return Pair("0xffffff", "0xffffff")
     }
 
