@@ -27,7 +27,6 @@ protocol DashboardInteractor: AnyObject {
     var myTokens: [Web3Token] { get }
     func tokenIcon(for token: Web3Token) -> Data
     func priceData(for token: Web3Token) -> [ Web3Candle ]
-    func nfts(for network: Web3Network) -> [ NFTItem ]
 
     func enabledNetworks() -> [Network]
     func wallet(for network: Network) -> Wallet?
@@ -41,6 +40,7 @@ protocol DashboardInteractor: AnyObject {
     func cryptoBalance(for wallet: Wallet?, currency: Currency) -> BigInt
     func fiatBalance(for wallet: Wallet?, currency: Currency) -> Double
     func totalFiatBalance() -> Double
+    func nfts(for network: Web3Network) -> [NFTItem]
     func reloadData()
 
     func addListener(_ listener: DashboardInteractorLister)
@@ -225,7 +225,9 @@ extension DefaultDashboardInteractor {
         )
 
         reloadCandles()
-        nftsService.fetchNFTs { _ in }
+        nftsService.fetchNFTs { [weak self] _ in
+            self?.emit(.didUpdateNFTs)
+        }
     }
 
     func reloadCandles() {

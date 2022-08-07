@@ -33,7 +33,6 @@ final class OpenSeaNFTsService {
 extension OpenSeaNFTsService: NFTsService {
     
     func nft(with identifier: String, onCompletion: (Result<NFTItem, Error>) -> Void) {
-        
         guard let nft = nfts.first(where: { $0.identifier == identifier }) else {
             onCompletion(.failure(OpenSeaNFTsServiceError.notFound))
             return
@@ -45,7 +44,6 @@ extension OpenSeaNFTsService: NFTsService {
         with identifier: String,
         onCompletion: (Result<NFTCollection, Error>) -> Void
     ) {
-        
         guard let collection = collections.first(where: { $0.identifier == identifier }) else {
             onCompletion(.failure(OpenSeaNFTsServiceError.notFound))
             return
@@ -54,24 +52,20 @@ extension OpenSeaNFTsService: NFTsService {
     }
     
     func yourNFTs(forCollection collection: String, onCompletion: (Result<[NFTItem], Error>) -> Void) {
-        
         let nfts = nfts.filter { $0.collectionIdentifier == collection }
         onCompletion(.success(nfts))
     }
     
     func yourNftCollections(onCompletion: (Result<[NFTCollection], Error>) -> Void) {
-        
         onCompletion(.success(collections))
     }
     
     func yourNFTs(forNetwork network: Web3Network) -> [NFTItem] {
-
         // TODO: @Annon discuss how we will implement when we support more than 1 network
         nfts
     }
     
     func yourNFTs() -> [NFTItem] {
-        
         nfts
     }
     
@@ -83,7 +77,6 @@ extension OpenSeaNFTsService: NFTsService {
             .toHexStringAddress()
             .hexString
         else {
-            
             onCompletion(.success([]))
             return
         }

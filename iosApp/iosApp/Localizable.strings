@@ -67,7 +67,7 @@
 "dashboard.button.receive" = "Receive";
 "dashboard.button.send" = "Send";
 "dashboard.button.swap" = "Swap";
-"dashboard.section.nfts" = "NFestival";
+"dashboard.section.nfts" = "NFTs";
 "dashboard.section.Notifications" = "Notifications";
 
 "degen.dappCategory.title.swap" = "Swap";

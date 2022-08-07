@@ -147,6 +147,8 @@ extension DefaultDashboardPresenter: DashboardInteractorLister {
                     at: IndexPath(item: item, section: section + 2)
                 )
             }
+        case .didUpdateNFTs:
+            updateView()
         default:
             ()
         }
@@ -167,8 +169,6 @@ private extension DefaultDashboardPresenter {
     
     func viewModel() -> DashboardViewModel {
         var sections = [DashboardViewModel.Section]()
-        var nfts = [DashboardViewModel.NFT]()
-
         sections.append(
             .init(
                 header: .balance(interactor.totalFiatBalance().formatCurrency() ?? ""),
@@ -197,7 +197,7 @@ private extension DefaultDashboardPresenter {
         sections.append(
             .init(
                 header: .title(Localized("dashboard.section.notifications")),
-                items: makeNotificationItems()
+                items: notificationViewModel()
             )
         )
 
@@ -223,13 +223,13 @@ private extension DefaultDashboardPresenter {
             )
         }
 
+        let nfts = interactor.nfts(for: Web3Network.from(Network.ethereum(), isOn: true))
+
         if !nfts.isEmpty {
             sections.append(
                 .init(
-                    header: .title(
-                        Localized("dashboard.section.nfts").uppercased()
-                    ),
-                    items: .nfts(nfts)
+                    header: .title(Localized("dashboard.section.nfts").uppercased()),
+                    items: .nfts(nftsViewModel(from: nfts))
                 )
             )
         }
@@ -240,7 +240,7 @@ private extension DefaultDashboardPresenter {
         )
     }
     
-    func makeNotificationItems() -> DashboardViewModel.Section.Items {
+    func notificationViewModel() -> DashboardViewModel.Section.Items {
         
         let items: [DashboardViewModel.Notification] = notifications.compactMap {
             .init(
@@ -304,8 +304,7 @@ private extension DefaultDashboardPresenter {
         return .loaded(candles.last(n: 40).map { CandlesViewModel.Candle.from($0) })
     }
     
-    func makeDashboardViewModelNFts(from nfts: [NFTItem]) -> [DashboardViewModel.NFT] {
-        
+    func nftsViewModel(from nfts: [NFTItem]) -> [DashboardViewModel.NFT] {
         nfts.compactMap { .init(image: $0.image, onSelected: makeOnNFTSelected(for: $0)) }
     }
 
@@ -334,20 +333,6 @@ private extension DefaultDashboardPresenter {
     }
 }
 
-extension DefaultDashboardPresenter: Web3ServiceWalletListener {
-    
-    func notificationsChanged() {
-        updateView()
-    }
-    
-    func nftsChanged() {
-        updateView()
-    }
-    
-    func tokensChanged() {
-        updateView()
-    }
-}
 
 private extension DefaultDashboardPresenter {
     
