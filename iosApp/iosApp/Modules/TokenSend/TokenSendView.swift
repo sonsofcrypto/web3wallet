@@ -33,7 +33,7 @@ final class TokenSendViewController: BaseViewController {
 extension TokenSendViewController: TokenSendView {
 
     func update(with viewModel: TokenSendViewModel) {
-
+        
         self.viewModel = viewModel
         
         title = viewModel.title

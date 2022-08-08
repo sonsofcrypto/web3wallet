@@ -131,19 +131,20 @@ private extension TokenPickerViewController {
         
         if viewModel.allowMultiSelection {
             
-            navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: "plus".assetImage,
-                style: .plain,
-                target: self,
-                action: #selector(addCustomToken)
-            )
+            if viewModel.showAddCustomToken {
+                navigationItem.leftBarButtonItem = UIBarButtonItem(
+                    image: "plus".assetImage,
+                    style: .plain,
+                    target: self,
+                    action: #selector(addCustomToken)
+                )
+            }
             navigationItem.rightBarButtonItem = UIBarButtonItem(
                 title: Localized("done"),
                 style: .plain,
                 target: self,
                 action: #selector(doneTapped)
             )
-            collectionView.allowsMultipleSelection = viewModel.allowMultiSelection
         } else {
             
             if (navigationController?.viewControllers.count ?? 0) > 1 {
@@ -163,7 +164,17 @@ private extension TokenPickerViewController {
                     action: #selector(navBarLeftActionTapped)
                 )
             }
+            
+            if viewModel.showAddCustomToken {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(
+                    image: "plus".assetImage,
+                    style: .plain,
+                    target: self,
+                    action: #selector(addCustomToken)
+                )
+            }
         }
+        collectionView.allowsMultipleSelection = viewModel.allowMultiSelection
     }
 
     @objc func addCustomToken() {

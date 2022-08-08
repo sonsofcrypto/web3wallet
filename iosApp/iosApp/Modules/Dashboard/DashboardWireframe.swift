@@ -37,6 +37,7 @@ final class DefaultDashboardWireframe {
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
     private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
+    private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
     private let tokenSendWireframeFactory: TokenSendWireframeFactory
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
@@ -59,6 +60,7 @@ final class DefaultDashboardWireframe {
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
         tokenPickerWireframeFactory: TokenPickerWireframeFactory,
+        tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
         tokenSendWireframeFactory: TokenSendWireframeFactory,
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
@@ -78,6 +80,7 @@ final class DefaultDashboardWireframe {
         self.alertWireframeFactory = alertWireframeFactory
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
         self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
+        self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
         self.tokenSendWireframeFactory = tokenSendWireframeFactory
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
@@ -133,17 +136,42 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             mnemonicConfirmationWireframeFactory.makeWireframe(parent).present()
 
         case .receiveCoins:
-            presentTokenPicker(with: .receive)
+            
+            let source = TokenPickerWireframeContext.Source.select(
+                title: "receive",
+                network: nil,
+                onCompletion: makeOnReceiveTokenSelected()
+            )
+            
+            let factory: TokenPickerWireframeFactory = ServiceDirectory.assembler.resolve()
+            let context = TokenPickerWireframeContext(
+                presentationStyle: .push,
+                source: source,
+                showAddCustomToken: true
+            )
+            factory.makeWireframe(
+                presentingIn: navigationController,
+                context: context
+            ).present()
 
         case .sendCoins:
-            let wireframe = tokenSendWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
-                context: .init(
-                    presentationStyle: .push,
-                    web3Token: nil
-                )
+            
+            let source = TokenPickerWireframeContext.Source.select(
+                title: "send",
+                network: nil,
+                onCompletion: makeOnSendTokenSelected()
             )
-            wireframe.present()
+            
+            let factory: TokenPickerWireframeFactory = ServiceDirectory.assembler.resolve()
+            let context = TokenPickerWireframeContext(
+                presentationStyle: .push,
+                source: source,
+                showAddCustomToken: true
+            )
+            factory.makeWireframe(
+                presentingIn: navigationController,
+                context: context
+            ).present()
             
         case let .scanQRCode(onCompletion):
             let wireframe = qrCodeScanWireframeFactory.makeWireframe(
@@ -167,6 +195,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             ).present()
             
         case let .editTokens(network, selectedTokens, onCompletion):
+            
             let source: TokenPickerWireframeContext.Source = .multiSelectEdit(
                 network: network,
                 selectedTokens: selectedTokens,
@@ -176,7 +205,8 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 presentingIn: parent,
                 context: .init(
                     presentationStyle: .present,
-                    source: source
+                    source: source,
+                    showAddCustomToken: true
                 )
             )
             wireframe.present()
@@ -225,19 +255,32 @@ private extension DefaultDashboardWireframe {
         self.navigationController = navigationController
         return navigationController
     }
-    
-    func presentTokenPicker(
-        with source: TokenPickerWireframeContext.Source
-    ) {
+
+    func makeOnReceiveTokenSelected() -> (Web3Token) -> Void {
         
-        let factory: TokenPickerWireframeFactory = ServiceDirectory.assembler.resolve()
-        let context = TokenPickerWireframeContext(
-            presentationStyle: .push,
-            source: source
-        )
-        factory.makeWireframe(
-            presentingIn: navigationController,
-            context: context
-        ).present()
+        {
+            [weak self] selectedToken in
+            
+            guard let self = self else { return }
+            
+            self.tokenReceiveWireframeFactory.makeWireframe(
+                presentingIn: self.navigationController,
+                context: .init(presentationStyle: .push, web3Token: selectedToken)
+            ).present()
+        }
+    }
+    
+    func makeOnSendTokenSelected() -> (Web3Token) -> Void {
+        
+        {
+            [weak self] selectedToken in
+            
+            guard let self = self else { return }
+            
+            self.tokenSendWireframeFactory.makeWireframe(
+                presentingIn: self.navigationController,
+                context: .init(presentationStyle: .push, web3Token: selectedToken)
+            ).present()
+        }
     }
 }

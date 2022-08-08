@@ -96,8 +96,11 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
                 context: .init(
                     presentationStyle: .present,
                     source: .select(
-                        onCompletion: onCompletion
-                    )
+                        title: "select",
+                        network: nil,
+                        onCompletion: makeOnCompletionDismissWrapped(with: onCompletion)
+                    ),
+                    showAddCustomToken: false
                 )
             )
             wireframe.present()
@@ -125,6 +128,18 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
 }
 
 private extension DefaultTokenSendWireframe {
+    
+    func makeOnCompletionDismissWrapped(
+        with onCompletion: @escaping (Web3Token) -> Void
+    ) -> (Web3Token) -> Void {
+        
+        {
+            [weak self] selectedToken in
+            guard let self = self else { return }
+            onCompletion(selectedToken)
+            self.navigationController.presentedViewController?.dismiss(animated: true)
+        }
+    }
     
     func wireUp() -> UIViewController {
         

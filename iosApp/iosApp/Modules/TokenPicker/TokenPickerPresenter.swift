@@ -69,20 +69,14 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
             
             switch context.source {
                 
-            case .receive:
-                
-                guard let token = findSelectedToken(from: token) else { return }
-                wireframe.navigate(to: .tokenReceive(token))
-
             case .multiSelectEdit:
                 
                 handleTokenTappedOnMultiSelect(token: token)
                 
-            case let .select(onCompletion):
+            case let .select(_, _, onCompletion):
                 
                 guard let token = findSelectedToken(from: token) else { return }
                 onCompletion(token)
-                wireframe.dismiss()
             }
             
         case .addCustomToken:
@@ -192,6 +186,7 @@ private extension DefaultTokenPickerPresenter {
         .init(
             title: Localized("tokenPicker.title.\(context.source.localizedValue)"),
             allowMultiSelection: context.source.isMultiSelect,
+            showAddCustomToken: context.showAddCustomToken,
             content: .loaded(sections: sectionsDisplayed)
         )
     }
@@ -231,14 +226,6 @@ private extension DefaultTokenPickerPresenter {
             let type: TokenPickerViewModel.TokenType
             switch context.source {
                 
-            case .receive, .select:
-                type = .init(
-                    isSelected: nil,
-                    balance: .init(
-                        tokens: token.balance.toString(decimals: 2),
-                        usdTotal: token.usdBalanceString
-                    )
-                )
             case .multiSelectEdit:
                 let isSelected = selectedTokensFiltered.contains(
                     where: {
@@ -247,6 +234,15 @@ private extension DefaultTokenPickerPresenter {
                 )
                 type = .init(
                     isSelected: isSelected,
+                    balance: .init(
+                        tokens: token.balance.toString(decimals: 2),
+                        usdTotal: token.usdBalanceString
+                    )
+                )
+                
+            case .select:
+                type = .init(
+                    isSelected: nil,
                     balance: .init(
                         tokens: token.balance.toString(decimals: 2),
                         usdTotal: token.usdBalanceString
@@ -286,7 +282,7 @@ private extension DefaultTokenPickerPresenter {
             let type: TokenPickerViewModel.TokenType
             switch context.source {
                 
-            case .receive, .select:
+            case .select:
                 type = .init(
                     isSelected: nil,
                     balance: nil

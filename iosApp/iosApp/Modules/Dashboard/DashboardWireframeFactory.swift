@@ -15,6 +15,7 @@ final class DefaultDashboardWireframeFactory {
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
     private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
+    private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
     private let tokenSendWireframeFactory: TokenSendWireframeFactory
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
@@ -34,6 +35,7 @@ final class DefaultDashboardWireframeFactory {
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
         tokenPickerWireframeFactory: TokenPickerWireframeFactory,
+        tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
         tokenSendWireframeFactory: TokenSendWireframeFactory,
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
@@ -52,6 +54,7 @@ final class DefaultDashboardWireframeFactory {
         self.alertWireframeFactory = alertWireframeFactory
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
         self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
+        self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
         self.tokenSendWireframeFactory = tokenSendWireframeFactory
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
@@ -78,6 +81,7 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             alertWireframeFactory: alertWireframeFactory,
             mnemonicConfirmationWireframeFactory: mnemonicConfirmationWireframeFactory,
             tokenPickerWireframeFactory: tokenPickerWireframeFactory,
+            tokenReceiveWireframeFactory: tokenReceiveWireframeFactory,
             tokenSendWireframeFactory: tokenSendWireframeFactory,
             tokenSwapWireframeFactory: tokenSwapWireframeFactory,
             nftDetailWireframeFactory: nftDetailWireframeFactory,
@@ -108,6 +112,7 @@ final class DashboardWireframeFactoryAssembler: AssemblerComponent {
                 alertWireframeFactory: resolver.resolve(),
                 mnemonicConfirmationWireframeFactory: resolver.resolve(),
                 tokenPickerWireframeFactory: resolver.resolve(),
+                tokenReceiveWireframeFactory: resolver.resolve(),
                 tokenSendWireframeFactory: resolver.resolve(),
                 tokenSwapWireframeFactory: resolver.resolve(),
                 nftDetailWireframeFactory: resolver.resolve(),

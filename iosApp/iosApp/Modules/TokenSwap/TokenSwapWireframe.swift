@@ -178,10 +178,25 @@ private extension DefaultTokenSwapWireframe {
             context: .init(
                 presentationStyle: .present,
                 source: .select(
-                    onCompletion: onCompletion
-                )
+                    title: "select",
+                    network: nil,
+                    onCompletion: makeOnCompletionDismissWrapped(with: onCompletion)
+                ),
+                showAddCustomToken: false
             )
         )
         wireframe.present()
+    }
+    
+    func makeOnCompletionDismissWrapped(
+        with onCompletion: @escaping (Web3Token) -> Void
+    ) -> (Web3Token) -> Void {
+        
+        {
+            [weak self] selectedToken in
+            guard let self = self else { return }
+            onCompletion(selectedToken)
+            self.navigationController.presentedViewController?.dismiss(animated: true)
+        }
     }
 }

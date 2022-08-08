@@ -55,6 +55,7 @@ final class DefaultTokenSendPresenter {
 extension DefaultTokenSendPresenter: TokenSendPresenter {
 
     func present() {
+        
         updateView(
             with: [
                 .address(

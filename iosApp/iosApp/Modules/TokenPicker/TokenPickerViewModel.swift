@@ -8,6 +8,7 @@ struct TokenPickerViewModel {
 
     let title: String
     let allowMultiSelection: Bool
+    let showAddCustomToken: Bool
     let content: Content
 }
 
