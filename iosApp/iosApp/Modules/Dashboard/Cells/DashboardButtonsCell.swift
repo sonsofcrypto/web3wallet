@@ -81,6 +81,7 @@ extension DashboardButtonsCell {
         presenter: DashboardPresenter
     ) -> Self {
         self.viewModel = viewModel
+        self.presenter = presenter
         updateViews()
         return self
     }
