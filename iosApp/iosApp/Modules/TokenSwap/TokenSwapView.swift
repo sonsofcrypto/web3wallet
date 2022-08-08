@@ -263,11 +263,11 @@ private extension TokenSwapViewController {
     func makeSwapCellHeight() -> CGFloat {
         var height: CGFloat = 0
         
-        height += 80
+        height += 92
         height += 4
         height += 24
         height += 4
-        height += 80
+        height += 92
         
         height += Theme.constant.padding * 1.5
         height += 32 // provider

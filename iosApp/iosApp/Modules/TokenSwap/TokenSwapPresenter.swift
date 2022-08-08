@@ -78,7 +78,8 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                             tokenMaxDecimals: tokenFrom.decimals,
                             currencyTokenPrice: tokenFrom.usdPrice,
                             shouldUpdateTextFields: false,
-                            shouldBecomeFirstResponder: true
+                            shouldBecomeFirstResponder: true,
+                            networkName: tokenFrom.network.name
                         ),
                         tokenTo: .init(
                             tokenAmount: nil,
@@ -88,7 +89,8 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                             tokenMaxDecimals: tokenTo.decimals,
                             currencyTokenPrice: tokenTo.usdPrice,
                             shouldUpdateTextFields: false,
-                            shouldBecomeFirstResponder: false
+                            shouldBecomeFirstResponder: false,
+                            networkName: tokenTo.network.name
                         ),
                         tokenSwapProviderViewModel: makeTokenSwapProviderViewModel(),
                         tokenSwapPriceViewModel: makeTokenPriceViewModel(),
@@ -122,6 +124,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
             
             wireframe.navigate(
                 to: .selectMyToken(
+                    selectedToken: tokenFrom,
                     onCompletion: makeOnTokenFromSelected()
                 )
             )
@@ -134,6 +137,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
             
             wireframe.navigate(
                 to: .selectToken(
+                    selectedToken: tokenTo,
                     onCompletion: makeOnTokenToSelected()
                 )
             )
@@ -344,7 +348,8 @@ private extension DefaultTokenSwapPresenter {
                             tokenMaxDecimals: tokenFrom.decimals,
                             currencyTokenPrice: tokenFrom.usdPrice,
                             shouldUpdateTextFields: shouldUpdateFromTextField,
-                            shouldBecomeFirstResponder: shouldFromBecomeFirstResponder
+                            shouldBecomeFirstResponder: shouldFromBecomeFirstResponder,
+                            networkName: tokenFrom.network.name
                         ),
                         tokenTo: .init(
                             tokenAmount: amountTo,
@@ -354,7 +359,8 @@ private extension DefaultTokenSwapPresenter {
                             tokenMaxDecimals: tokenTo.decimals,
                             currencyTokenPrice: tokenTo.usdPrice,
                             shouldUpdateTextFields: shouldUpdateToTextField,
-                            shouldBecomeFirstResponder: false
+                            shouldBecomeFirstResponder: false,
+                            networkName: tokenTo.network.name
                         ),
                         tokenSwapProviderViewModel: makeTokenSwapProviderViewModel(),
                         tokenSwapPriceViewModel: makeTokenPriceViewModel(),

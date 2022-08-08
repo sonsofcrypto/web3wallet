@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class TokenPickerItemCell: UICollectionViewCell {
+final class TokenPickerTokenCell: UICollectionViewCell {
     
     @IBOutlet weak var separatorTopView: UIView!
     @IBOutlet weak var separatorTopViewLeadingConstraint: NSLayoutConstraint!
@@ -13,7 +13,6 @@ final class TokenPickerItemCell: UICollectionViewCell {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var symbolLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var networkLabel: UILabel!
     
     @IBOutlet weak var multiSelectView: UIView!
     @IBOutlet weak var multiSelectTick: UIImageView!
@@ -38,9 +37,6 @@ final class TokenPickerItemCell: UICollectionViewCell {
         symbolLabel.font = Theme.font.body
         symbolLabel.textColor = Theme.colour.labelSecondary
 
-        networkLabel.font = Theme.font.callout
-        networkLabel.textColor = Theme.colour.labelSecondary
-        
         multiSelectView.isHidden = true
         
         tokenPriceView.isHidden = true
@@ -64,15 +60,9 @@ final class TokenPickerItemCell: UICollectionViewCell {
         with viewModel: TokenPickerViewModel.Token
     ) {
 
-        iconImageView.image = viewModel.image
+        iconImageView.image = viewModel.imageName.assetImage
         symbolLabel.text = viewModel.symbol.uppercased()
         nameLabel.text = viewModel.name
-        if let network = viewModel.network {
-            networkLabel.isHidden = true
-            networkLabel.text = network
-        } else {
-            networkLabel.isHidden = true
-        }
         
         if let isSelected = viewModel.type.isSelected {
             multiSelectView.isHidden = false

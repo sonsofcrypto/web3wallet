@@ -22,12 +22,14 @@ extension TokenPickerViewModel {
 
     enum Section {
 
-        //case networks(items: [Network])
+        case networks(name: String, items: [Network])
         case tokens(name: String, items: [Token])
         
         var name: String {
             
             switch self {
+            case let .networks(name, _):
+                return name
             case let .tokens(name, _):
                 return name
             }
@@ -36,19 +38,21 @@ extension TokenPickerViewModel {
     
     struct Network {
         
+        let networkId: String
         let iconName: String
         let name: String
+        let isSelected: Bool
     }
     
     struct Token {
         
-        let image: UIImage
+        let tokenId: String
+        let imageName: String
         let symbol: String
         let name: String
         let network: String?
         let type: TokenType
         let position: Position
-        let tokenId: String
         
         enum Position {
             
@@ -84,7 +88,7 @@ extension TokenPickerViewModel {
 
 extension TokenPickerViewModel {
 
-    func sections() -> [TokenPickerViewModel.Section] {
+    var sections: [TokenPickerViewModel.Section] {
         switch content {
         case let .loaded(sections):
             return sections

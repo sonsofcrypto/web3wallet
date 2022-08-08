@@ -205,7 +205,7 @@
 "tokenPicker.title.send" = "Select a token";
 "tokenPicker.title.multiSelectEdit" = "Select tokens";
 "tokenPicker.title.select" = "Select a token";
-"tokenPicker.networks.all" = "All networks";
+"tokenPicker.networks.title" = "Available networks";
 "tokenPicker.myTokens.title" = "My tokens";
 "tokenPicker.other.title" = "All tokens";
 "tokenPicker.featured.title" = "Featured";

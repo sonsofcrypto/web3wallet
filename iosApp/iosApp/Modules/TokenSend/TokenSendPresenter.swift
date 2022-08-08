@@ -74,7 +74,8 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                         tokenMaxDecimals: token.decimals,
                         currencyTokenPrice: token.usdPrice,
                         shouldUpdateTextFields: false,
-                        shouldBecomeFirstResponder: false
+                        shouldBecomeFirstResponder: false,
+                        networkName: token.network.name
                     )
                 ),
                 .send(
@@ -107,6 +108,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
         case .selectToken:
             wireframe.navigate(
                 to: .selectToken(
+                    selectedToken: token,
                     onCompletion: makeOnTokenToSelected()
                 )
             )
@@ -326,7 +328,8 @@ private extension DefaultTokenSendPresenter {
                         tokenMaxDecimals: token.decimals,
                         currencyTokenPrice: token.usdPrice,
                         shouldUpdateTextFields: shouldUpdateTextFields,
-                        shouldBecomeFirstResponder: shouldBecomeFirstResponder
+                        shouldBecomeFirstResponder: shouldBecomeFirstResponder,
+                        networkName: token.network.name
                     )
                 )
             ]

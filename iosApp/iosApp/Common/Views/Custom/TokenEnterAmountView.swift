@@ -14,6 +14,7 @@ struct TokenEnterAmountViewModel {
     let currencyTokenPrice: Double
     let shouldUpdateTextFields: Bool
     let shouldBecomeFirstResponder: Bool
+    let networkName: String
 }
 
 final class TokenEnterAmountView: UIView {
@@ -26,6 +27,7 @@ final class TokenEnterAmountView: UIView {
     @IBOutlet weak var tokenIconImageView: UIImageView!
     @IBOutlet weak var tokenLabel: UILabel!
     @IBOutlet weak var tokenDropdownImageView: UIImageView!
+    @IBOutlet weak var networkLabel: UILabel!
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var maxButton: Button!
     
@@ -72,16 +74,17 @@ final class TokenEnterAmountView: UIView {
         )
         tokenView.addGestureRecognizer(tapGesture)
         tokenIconImageView.layer.cornerRadius = tokenIconImageView.frame.size.width * 0.5
-        tokenLabel.font = Theme.font.body
-        tokenLabel.textColor = Theme.colour.labelPrimary
+        tokenLabel.apply(style: .body)
         tokenDropdownImageView.image = "chevron.down".assetImage
         tokenDropdownImageView.tintColor = Theme.colour.labelPrimary
-        
+        networkLabel.apply(style: .caption2)
+
         balanceLabel.font = Theme.font.footnote
         balanceLabel.textColor = Theme.colour.labelPrimary
         maxButton.style = .secondarySmall(leftImage: nil)
         maxButton.setTitle(Localized("max").uppercased(), for: .normal)
         maxButton.addTarget(self, action: #selector(tokenMaxAmountTapped), for: .touchUpInside)
+        
     }
     
     override func resignFirstResponder() -> Bool {
@@ -108,6 +111,7 @@ extension TokenEnterAmountView {
                 
         tokenIconImageView.image = viewModel.tokenSymbolIconName.assetImage
         tokenLabel.text = viewModel.tokenSymbol
+        networkLabel.text = viewModel.networkName
         
         if viewModel.shouldBecomeFirstResponder {
             

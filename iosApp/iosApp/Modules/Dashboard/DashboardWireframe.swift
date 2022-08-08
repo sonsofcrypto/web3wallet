@@ -145,7 +145,8 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             let context = TokenPickerWireframeContext(
                 presentationStyle: .push,
                 title: .receive,
-                networks: [],
+                selectedNetwork: nil,
+                networks: .all,
                 source: source,
                 showAddCustomToken: true
             )
@@ -164,7 +165,8 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             let context = TokenPickerWireframeContext(
                 presentationStyle: .push,
                 title: .send,
-                networks: [],
+                selectedNetwork: nil,
+                networks: .all,
                 source: source,
                 showAddCustomToken: true
             )
@@ -205,7 +207,8 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 context: .init(
                     presentationStyle: .present,
                     title: .multiSelectEdit,
-                    networks: [network],
+                    selectedNetwork: nil,
+                    networks: .subgroup(networks: [network]),
                     source: source,
                     showAddCustomToken: true
                 )

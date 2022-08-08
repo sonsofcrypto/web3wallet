@@ -8,7 +8,8 @@ import UIKit
 enum TokenPickerPresenterEvent {
 
     case search(searchTerm: String)
-    case selectItem(TokenPickerViewModel.Token)
+    case selectNetwork(TokenPickerViewModel.Network)
+    case selectToken(TokenPickerViewModel.Token)
     case addCustomToken
     case done
     case dismiss
@@ -67,8 +68,16 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
             
             self.searchTerm = searchTerm
             refreshData()
-                        
-        case let .selectItem(token):
+            
+        case let .selectNetwork(network):
+            
+            guard let network = findSelectedNetwork(from: network) else { return }
+            selectedNetwork = network
+            selectedTokens = interactor.myTokens(for: selectedNetwork)
+            refreshTokens()
+            refreshData()
+
+        case let .selectToken(token):
             
             switch context.source {
                 
@@ -110,14 +119,26 @@ private extension DefaultTokenPickerPresenter {
     
     func loadSelectedNetworksIfNeeded() {
         
-        networks = context.networks.isEmpty ? interactor.supportedNetworks : context.networks
+        networks = makeNetworks()
         
-        if let selectedNetwork = selectedNetwork, networks.contains(selectedNetwork) {
+        if let selectedNetwork = context.selectedNetwork, networks.contains(selectedNetwork) {
             
             self.selectedNetwork = selectedNetwork
         } else {
         
             selectedNetwork = networks[0]
+        }
+    }
+    
+    func makeNetworks() -> [Web3Network] {
+        
+        switch context.networks {
+            
+        case .all:
+            return interactor.supportedNetworks
+            
+        case let .subgroup(networks):
+            return networks
         }
     }
     
@@ -129,7 +150,7 @@ private extension DefaultTokenPickerPresenter {
             self.selectedTokens = selectedTokens
             
         default:
-            selectedTokens = interactor.myTokens
+            selectedTokens = interactor.myTokens(for: selectedNetwork)
         }
     }
     
@@ -146,6 +167,11 @@ private extension DefaultTokenPickerPresenter {
         }
         
         refreshData()
+    }
+    
+    func findSelectedNetwork(from network: TokenPickerViewModel.Network) -> Web3Network? {
+        
+        networks.first { $0.id == network.networkId }
     }
     
     func findSelectedToken(from token: TokenPickerViewModel.Token) -> Web3Token? {
@@ -210,19 +236,33 @@ private extension DefaultTokenPickerPresenter {
         
         var sections = [TokenPickerViewModel.Section]()
         
+        if networks.count > 1 {
+            
+            sections.append(
+                .networks(
+                    name: Localized("tokenPicker.networks.title"),
+                    items: makeViewModelNetworks()
+                )
+            )
+        }
+        
         if !selectedTokensFiltered.isEmpty {
             
-            let groupName = Localized("tokenPicker.myTokens.title")
             sections.append(
-                .tokens(name: groupName, items: makeMyViewModelTokens(from: selectedTokensFiltered))
+                .tokens(
+                    name: Localized("tokenPicker.myTokens.title"),
+                    items: makeMyViewModelTokens(from: selectedTokensFiltered)
+                )
             )
         }
 
         if !tokensFiltered.isEmpty {
             
-            let groupName = Localized("tokenPicker.other.title")
             sections.append(
-                .tokens(name: groupName, items: makeOtherViewModelTokens(from: tokensFiltered))
+                .tokens(
+                    name: Localized("tokenPicker.other.title"),
+                    items: makeOtherViewModelTokens(from: tokensFiltered)
+                )
             )
         }
 
@@ -231,6 +271,18 @@ private extension DefaultTokenPickerPresenter {
 }
 
 private extension DefaultTokenPickerPresenter {
+    
+    func makeViewModelNetworks() -> [TokenPickerViewModel.Network] {
+        
+        networks.compactMap {
+            .init(
+                networkId: $0.id,
+                iconName: interactor.networkIconName(for: $0),
+                name: $0.name,
+                isSelected: $0.id == selectedNetwork.id
+            )
+        }
+    }
     
     func makeMyViewModelTokens(
         from tokens: [Web3Token]
@@ -277,13 +329,13 @@ private extension DefaultTokenPickerPresenter {
             }
             
             return .init(
-                image: interactor.tokenIcon(for: token).pngImage ?? "default_token".assetImage!,
+                tokenId: token.coingGeckoId ?? "",
+                imageName: interactor.tokenIconName(for: token),
                 symbol: token.symbol,
                 name: token.name,
                 network: token.network.name,
                 type: type,
-                position: position,
-                tokenId: token.coingGeckoId ?? ""
+                position: position
             )
         }
     }
@@ -327,21 +379,15 @@ private extension DefaultTokenPickerPresenter {
             }
             
             return .init(
-                image: makeTokenImage(from: token),
+                tokenId: token.coingGeckoId ?? "",
+                imageName: interactor.tokenIconName(for: token),
                 symbol: token.symbol,
                 name: token.name,
                 network: token.network.name,
                 type: type,
-                position: position,
-                tokenId: token.coingGeckoId ?? ""
+                position: position
             )
         }
-    }
-    
-    func makeTokenImage(from token: Web3Token) -> UIImage {
-        
-        ((token.coingGeckoId ?? "") + "_large").assetImage
-        ?? "default_token".assetImage!
     }
 }
 

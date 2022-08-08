@@ -8,7 +8,8 @@ struct TokenPickerWireframeContext {
     
     let presentationStyle: PresentationStyle
     let title: TitleKey
-    let networks: [Web3Network]
+    let selectedNetwork: Web3Network?
+    let networks: Networks
     let source: Source
     let showAddCustomToken: Bool
     
@@ -19,6 +20,12 @@ struct TokenPickerWireframeContext {
         case receive = "receive"
         case send = "send"
         case select = "select"
+    }
+    
+    enum Networks {
+        
+        case all
+        case subgroup(networks: [Web3Network])
     }
     
     enum Source {

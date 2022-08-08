@@ -108,13 +108,13 @@ private extension TokenPickerViewController {
         dividerLineView.backgroundColor = navigationController?.bottomLineColor
         
         collectionView.register(
-            TokenPickerGroupCell.self,
+            TokenPickerSectionCell.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: "\(TokenPickerGroupCell.self)"
+            withReuseIdentifier: "\(TokenPickerSectionCell.self)"
         )
 
         collectionView.setCollectionViewLayout(
-            UICollectionViewCompositionalLayout(section: makeTokenItemsCollectionLayoutSection()),
+            compositionalLayout(),
             animated: false
         )
         
@@ -174,6 +174,7 @@ private extension TokenPickerViewController {
                 )
             }
         }
+        collectionView.allowsSelection = true
         collectionView.allowsMultipleSelection = viewModel.allowMultiSelection
     }
 
@@ -222,7 +223,7 @@ extension TokenPickerViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         
-        return viewModel?.sections().count ?? 0
+        return viewModel?.sections.count ?? 0
     }
     
     func collectionView(
@@ -230,11 +231,14 @@ extension TokenPickerViewController: UICollectionViewDataSource {
         numberOfItemsInSection section: Int
     ) -> Int {
         
-        guard let section = viewModel?.sections()[section] else {
+        guard let section = viewModel?.sections[section] else {
             return 0
         }
         
         switch section {
+            
+        case let .networks(_, items):
+            return items.count
             
         case let .tokens(_, items):
             return items.count
@@ -256,7 +260,7 @@ extension TokenPickerViewController: UICollectionViewDataSource {
     ) -> UICollectionReusableView {
         
         guard
-            let section = viewModel?.sections()[indexPath.section]
+            let section = viewModel?.sections[indexPath.section]
         else { fatalError() }
         
         switch kind {
@@ -264,7 +268,7 @@ extension TokenPickerViewController: UICollectionViewDataSource {
         case UICollectionView.elementKindSectionHeader:
             
             let supplementary = collectionView.dequeue(
-                TokenPickerGroupCell.self,
+                TokenPickerSectionCell.self,
                 for: indexPath,
                 kind: kind
             )
@@ -284,16 +288,21 @@ extension TokenPickerViewController: UICollectionViewDelegate {
         didSelectItemAt indexPath: IndexPath
     ) {
        
-        guard let section = viewModel?.sections()[indexPath.section] else {
+        guard let section = viewModel?.sections[indexPath.section] else {
             fatalError()
         }
         
         switch section {
             
+        case let .networks(_, items):
+            
+            let network = items[indexPath.item]
+            presenter.handle(.selectNetwork(network))
+            
         case let .tokens(_, items):
 
             let token = items[indexPath.item]
-            presenter.handle(.selectItem(token))
+            presenter.handle(.selectToken(token))
         }
     }
     
@@ -318,22 +327,30 @@ private extension TokenPickerViewController {
         for collectionView: UICollectionView
     ) -> UICollectionViewCell {
         
-        guard let section = viewModel?.sections()[indexPath.section] else {
+        guard let section = viewModel?.sections[indexPath.section] else {
             fatalError()
         }
         
         switch section {
             
+        case let .networks(_, items):
+            
+            let network = items[indexPath.item]
+            let cell = collectionView.dequeue(
+                TokenPickerNetworkCell.self,
+                for: indexPath
+            )
+            cell.update(with: network)
+            return cell
+            
         case let .tokens(_, items):
             
             let token = items[indexPath.item]
             let cell = collectionView.dequeue(
-                TokenPickerItemCell.self,
+                TokenPickerTokenCell.self,
                 for: indexPath
             )
-            cell.update(
-                with: token
-            )
+            cell.update(with: token)
             return cell
         }
     }
@@ -345,6 +362,68 @@ private extension TokenPickerViewController {
 }
 
 private extension TokenPickerViewController {
+    
+    func compositionalLayout() -> UICollectionViewCompositionalLayout {
+        
+        let layout = UICollectionViewCompositionalLayout { [weak self] idx, _ in
+            
+            guard let self = self else { return nil }
+            
+            guard let section = self.viewModel?.sections[idx] else { return nil }
+            
+            switch section {
+            case .networks:
+                return self.makeNetworkItemsCollectionLayoutSection()
+            case .tokens:
+                return self.makeTokenItemsCollectionLayoutSection()
+            }
+        }
+
+        return layout
+    }
+    
+    func makeNetworkItemsCollectionLayoutSection() -> NSCollectionLayoutSection {
+        
+        // Item
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        // Group
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .estimated(160),
+            heightDimension: .absolute(56)
+        )
+        let outerGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize, subitems: [item]
+        )
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: outerGroup)
+        section.orthogonalScrollingBehavior = .continuous
+        section.interGroupSpacing = Theme.constant.padding.half
+        section.contentInsets = .init(
+            top: 0,
+            leading: Theme.constant.padding,
+            bottom: 0,
+            trailing: Theme.constant.padding
+        )
+        
+        let headerItemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(44)
+        )
+        let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerItemSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.boundarySupplementaryItems = [headerItem]
+
+        return section
+    }
     
     func makeTokenItemsCollectionLayoutSection() -> NSCollectionLayoutSection {
         

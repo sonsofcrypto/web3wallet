@@ -13,7 +13,10 @@ enum TokenSendWireframeDestination {
     
     case underConstructionAlert
     case qrCodeScan(network: Web3Network, onCompletion: (String) -> Void)
-    case selectToken(onCompletion: (Web3Token) -> Void)
+    case selectToken(
+        selectedToken: Web3Token,
+        onCompletion: (Web3Token) -> Void
+    )
     case confirmSend(
         dataIn: ConfirmationWireframeContext.SendContext,
         onSuccess: () -> Void
@@ -90,13 +93,14 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
             )
             wireframe.present()
             
-        case let .selectToken(onCompletion):
+        case let .selectToken(selectedToken, onCompletion):
             let wireframe = tokenPickerWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(
                     presentationStyle: .present,
                     title: .select,
-                    networks: [],
+                    selectedNetwork: selectedToken.network,
+                    networks: .all,
                     source: .select(
                         onCompletion: makeOnCompletionDismissWrapped(with: onCompletion)
                     ),

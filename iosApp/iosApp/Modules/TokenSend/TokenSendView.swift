@@ -206,7 +206,7 @@ private extension TokenSendViewController {
         }
     }
     
-    func makeTokenCellHeight() -> CGFloat { 80 }
+    func makeTokenCellHeight() -> CGFloat { 92 }
     
     func makeCTACellHeight() -> CGFloat {
         
