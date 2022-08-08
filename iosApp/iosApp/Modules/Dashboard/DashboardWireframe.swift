@@ -138,14 +138,14 @@ extension DefaultDashboardWireframe: DashboardWireframe {
         case .receiveCoins:
             
             let source = TokenPickerWireframeContext.Source.select(
-                title: "receive",
-                network: nil,
                 onCompletion: makeOnReceiveTokenSelected()
             )
             
             let factory: TokenPickerWireframeFactory = ServiceDirectory.assembler.resolve()
             let context = TokenPickerWireframeContext(
                 presentationStyle: .push,
+                title: .receive,
+                networks: [],
                 source: source,
                 showAddCustomToken: true
             )
@@ -157,14 +157,14 @@ extension DefaultDashboardWireframe: DashboardWireframe {
         case .sendCoins:
             
             let source = TokenPickerWireframeContext.Source.select(
-                title: "send",
-                network: nil,
                 onCompletion: makeOnSendTokenSelected()
             )
             
             let factory: TokenPickerWireframeFactory = ServiceDirectory.assembler.resolve()
             let context = TokenPickerWireframeContext(
                 presentationStyle: .push,
+                title: .send,
+                networks: [],
                 source: source,
                 showAddCustomToken: true
             )
@@ -197,7 +197,6 @@ extension DefaultDashboardWireframe: DashboardWireframe {
         case let .editTokens(network, selectedTokens, onCompletion):
             
             let source: TokenPickerWireframeContext.Source = .multiSelectEdit(
-                network: network,
                 selectedTokens: selectedTokens,
                 onCompletion: onCompletion
             )
@@ -205,6 +204,8 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 presentingIn: parent,
                 context: .init(
                     presentationStyle: .present,
+                    title: .multiSelectEdit,
+                    networks: [network],
                     source: source,
                     showAddCustomToken: true
                 )

@@ -177,9 +177,9 @@ private extension DefaultTokenSwapWireframe {
             presentingIn: navigationController,
             context: .init(
                 presentationStyle: .present,
+                title: .select,
+                networks: [],
                 source: .select(
-                    title: "select",
-                    network: nil,
                     onCompletion: makeOnCompletionDismissWrapped(with: onCompletion)
                 ),
                 showAddCustomToken: false

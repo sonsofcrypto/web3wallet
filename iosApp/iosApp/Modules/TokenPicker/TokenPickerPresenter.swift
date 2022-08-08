@@ -29,6 +29,8 @@ final class DefaultTokenPickerPresenter {
     
     private var searchTerm: String = ""
     
+    private var selectedNetwork: Web3Network!
+    private var networks: [Web3Network] = []
     private var selectedTokens: [Web3Token] = []
     private var selectedTokensFiltered: [Web3Token] = []
     private var tokens = [Web3Token]()
@@ -51,6 +53,7 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
 
     func present() {
 
+        loadSelectedNetworksIfNeeded()
         loadSelectedTokensIfNeeded()
         refreshTokens()
         refreshData()
@@ -73,7 +76,7 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
                 
                 handleTokenTappedOnMultiSelect(token: token)
                 
-            case let .select(_, _, onCompletion):
+            case let .select(onCompletion):
                 
                 guard let token = findSelectedToken(from: token) else { return }
                 onCompletion(token)
@@ -81,14 +84,13 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
             
         case .addCustomToken:
             
-            wireframe.navigate(to: .addCustomToken)
+            guard let network = networks.first else { return }
+            wireframe.navigate(to: .addCustomToken(network: network))
             
         case .done:
             
             guard
-                case let TokenPickerWireframeContext.Source.multiSelectEdit(
-                    _, _, onCompletion
-                ) = context.source
+                case let TokenPickerWireframeContext.Source.multiSelectEdit(_, onCompletion) = context.source
             else {
                 
                 return
@@ -106,11 +108,24 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
 
 private extension DefaultTokenPickerPresenter {
     
+    func loadSelectedNetworksIfNeeded() {
+        
+        networks = context.networks.isEmpty ? interactor.supportedNetworks : context.networks
+        
+        if let selectedNetwork = selectedNetwork, networks.contains(selectedNetwork) {
+            
+            self.selectedNetwork = selectedNetwork
+        } else {
+        
+            selectedNetwork = networks[0]
+        }
+    }
+    
     func loadSelectedTokensIfNeeded() {
         
         switch context.source {
             
-        case let .multiSelectEdit(_, selectedTokens, _):
+        case let .multiSelectEdit(selectedTokens, _):
             self.selectedTokens = selectedTokens
             
         default:
@@ -151,7 +166,7 @@ private extension DefaultTokenPickerPresenter {
         
         tokens = interactor.tokens(
             filteredBy: searchTerm,
-            for: context.source.network
+            for: selectedNetwork
         )
     }
     
@@ -164,7 +179,7 @@ private extension DefaultTokenPickerPresenter {
         }
         tokensFiltered = interactor.tokens(
             filteredBy: searchTerm,
-            for: context.source.network
+            for: selectedNetwork
         )
 
         let sectionsToDisplay = makeSectionsToDisplay()
@@ -184,7 +199,7 @@ private extension DefaultTokenPickerPresenter {
     ) -> TokenPickerViewModel {
         
         .init(
-            title: Localized("tokenPicker.title.\(context.source.localizedValue)"),
+            title: Localized("tokenPicker.title.\(context.title.rawValue)"),
             allowMultiSelection: context.source.isMultiSelect,
             showAddCustomToken: context.showAddCustomToken,
             content: .loaded(sections: sectionsDisplayed)

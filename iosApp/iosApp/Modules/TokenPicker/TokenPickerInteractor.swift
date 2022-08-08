@@ -7,6 +7,8 @@ import web3lib
 
 protocol TokenPickerInteractor: AnyObject {
 
+    var selectedNetwork: Web3Network? { get }
+    var supportedNetworks: [Web3Network] { get }
     var myTokens: [Web3Token] { get }
     func tokens(
         filteredBy searchTerm: String,
@@ -34,6 +36,20 @@ final class DefaultTokenPickerInteractor {
 }
 
 extension DefaultTokenPickerInteractor: TokenPickerInteractor {
+    
+    var selectedNetwork: Web3Network? {
+        
+        walletsConnectionService.network.map {
+            Web3Network.from($0, isOn: true)
+        }
+    }
+    
+    var supportedNetworks: [Web3Network] {
+        
+        Network.Companion().supported().compactMap {
+            Web3Network.from($0, isOn: false)
+        }
+    }
     
     var myTokens: [Web3Token] {
         

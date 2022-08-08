@@ -7,32 +7,30 @@ import UIKit
 struct TokenPickerWireframeContext {
     
     let presentationStyle: PresentationStyle
+    let title: TitleKey
+    let networks: [Web3Network]
     let source: Source
     let showAddCustomToken: Bool
+    
+    // This will be used to construct the view title as: "tokenPicker.title.<titleKey.rawValue>"
+    enum TitleKey: String {
+        
+        case multiSelectEdit = "multiSelectEdit"
+        case receive = "receive"
+        case send = "send"
+        case select = "select"
+    }
     
     enum Source {
         
         case multiSelectEdit(
-            network: Web3Network?,
             selectedTokens: [Web3Token],
             onCompletion: ([Web3Token]) -> Void
         )
         case select(
-            title: String,
-            network: Web3Network?,
             onCompletion: (Web3Token) -> Void
         )
-        
-        var localizedValue: String {
-            
-            switch self {
-            case .multiSelectEdit:
-                return "multiSelectEdit"
-            case let .select(title, _, _):
-                return title
-            }
-        }
-        
+                
         var isMultiSelect: Bool {
             
             switch self {
@@ -42,22 +40,12 @@ struct TokenPickerWireframeContext {
                 return false
             }
         }
-        
-        var network: Web3Network? {
-            
-            switch self {
-            case let .multiSelectEdit(network, _, _):
-                return network
-            case let .select(_, network, _):
-                return network
-            }
-        }
     }
 }
 
 enum TokenPickerWireframeDestination {
     
-    case addCustomToken
+    case addCustomToken(network: Web3Network)
 }
 
 protocol TokenPickerWireframe {
@@ -113,9 +101,7 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
         
         switch destination {
                         
-        case .addCustomToken:
-            
-            guard let network = context.source.network else { return }
+        case let .addCustomToken(network):
             
             let wireframe = tokenAddWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
