@@ -53,6 +53,8 @@
 		1A4C3E41DA2739ED48CD12F9 /* CultServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3635DC5425C3CA3A2D25 /* CultServiceAssembler.swift */; };
 		1A4C3E81CF175B7B283C13E0 /* AuthenticateContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3B4D97107E875FCF5F38 /* AuthenticateContext.swift */; };
 		1A4C3EB4D429242923984C76 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3378B5287B6A9BDE65CD /* Button.swift */; };
+		1A4C3EFA1AF01AC42720B4C8 /* ThemePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38FE899413D43D7869ED /* ThemePickerView.swift */; };
+		1A4C3F3ECB400A148DC91C13 /* ThemePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E91BE58618FF7BCF1A5 /* ThemePickerCell.swift */; };
 		1A4C3F6836A9B121F54F7100 /* WalletsConnectionServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A030BE46910A7122373 /* WalletsConnectionServiceAssembler.swift */; };
 		1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */; };
 		1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */; };
@@ -605,6 +607,7 @@
 		1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsService.swift; sourceTree = "<group>"; };
 		1A4C3899E48E19268780DC91 /* CurrenciesInfoStoreAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrenciesInfoStoreAssembler.swift; sourceTree = "<group>"; };
 		1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewEffectViewiOS14.swift; sourceTree = "<group>"; };
+		1A4C38FE899413D43D7869ED /* ThemePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemePickerView.swift; sourceTree = "<group>"; };
 		1A4C393772D3384C556C29C3 /* TransformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformView.swift; sourceTree = "<group>"; };
 		1A4C397324C6E3E5BE3E43B8 /* NetworksSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksSectionHeaderView.swift; sourceTree = "<group>"; };
 		1A4C39798419CEB3807348FA /* Error+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Error+Extensions.swift"; sourceTree = "<group>"; };
@@ -619,6 +622,7 @@
 		1A4C3D40E32D58F958911B60 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		1A4C3DBA41AF75471C619124 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		1A4C3DED61DB8FC18EFD5B0B /* SettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
+		1A4C3E91BE58618FF7BCF1A5 /* ThemePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemePickerCell.swift; sourceTree = "<group>"; };
 		1A4C3E976CBAB0A97E8AF408 /* CardFlipTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFlipTransition.swift; sourceTree = "<group>"; };
 		1A4C3ECB03083B9516E13031 /* DashboardTableWalletCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardTableWalletCell.swift; sourceTree = "<group>"; };
 		1A4C3EE3468010FE10976BEE /* mock-candles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "mock-candles.json"; sourceTree = "<group>"; };
@@ -1638,6 +1642,8 @@
 				1C60C21B285724D0003BE25D /* DashboardWireframe.swift */,
 				1C60C218285724D0003BE25D /* DashboardWireframeFactory.swift */,
 				1C60C20F285724D0003BE25D /* Cells */,
+				1A4C38FE899413D43D7869ED /* ThemePickerView.swift */,
+				1A4C3E91BE58618FF7BCF1A5 /* ThemePickerCell.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -3237,6 +3243,8 @@
 				1A4C3A0AF7D911724BCBA623 /* CurrenciesInfoStoreAssembler.swift in Sources */,
 				1A4C32DA0E37E956EC20B67D /* DashboardBackgroundView.swift in Sources */,
 				1A4C3D1FEE4DD4904DEBCFAB /* DashboardTableWalletCell.swift in Sources */,
+				1A4C3EFA1AF01AC42720B4C8 /* ThemePickerView.swift in Sources */,
+				1A4C3F3ECB400A148DC91C13 /* ThemePickerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
