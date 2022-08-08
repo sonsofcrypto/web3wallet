@@ -73,6 +73,7 @@
 		1C228ACD28A3C1AA005316A3 /* ConfirmationTxSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228ACC28A3C1AA005316A3 /* ConfirmationTxSuccessView.swift */; };
 		1C228ACF28A3C774005316A3 /* ConfirmationTxFailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228ACE28A3C774005316A3 /* ConfirmationTxFailedView.swift */; };
 		1C228AD128A4D1BC005316A3 /* BigInt+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228AD028A4D1BC005316A3 /* BigInt+Extensions.swift */; };
+		1C228AC328A0FE41005316A3 /* FeatureShareHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228AC228A0FE41005316A3 /* FeatureShareHelper.swift */; };
 		1C2B06562891D9A6002A8FBF /* FeaturesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2B06552891D9A6002A8FBF /* FeaturesService.swift */; };
 		1C2B06582891D9B0002A8FBF /* FeaturesServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2B06572891D9B0002A8FBF /* FeaturesServiceAssembler.swift */; };
 		1C2B065A28927F92002A8FBF /* EmbeddedErrorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2B065928927F92002A8FBF /* EmbeddedErrorCollectionViewCell.swift */; };
@@ -649,6 +650,7 @@
 		1C228ACC28A3C1AA005316A3 /* ConfirmationTxSuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationTxSuccessView.swift; sourceTree = "<group>"; };
 		1C228ACE28A3C774005316A3 /* ConfirmationTxFailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationTxFailedView.swift; sourceTree = "<group>"; };
 		1C228AD028A4D1BC005316A3 /* BigInt+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BigInt+Extensions.swift"; sourceTree = "<group>"; };
+		1C228AC228A0FE41005316A3 /* FeatureShareHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureShareHelper.swift; sourceTree = "<group>"; };
 		1C2B06552891D9A6002A8FBF /* FeaturesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesService.swift; sourceTree = "<group>"; };
 		1C2B06572891D9B0002A8FBF /* FeaturesServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesServiceAssembler.swift; sourceTree = "<group>"; };
 		1C2B065928927F92002A8FBF /* EmbeddedErrorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedErrorCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1917,6 +1919,7 @@
 			children = (
 				1C60C37D2859CC2A003BE25D /* ShareFactoryHelper.swift */,
 				1CB8B0CD288FAEA800024E7C /* SceneDelegateHelper.swift */,
+				1C228AC228A0FE41005316A3 /* FeatureShareHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -3104,6 +3107,7 @@
 				1C54DC6A2869D60D00E378F6 /* ThemeMiami.swift in Sources */,
 				1CE0064428894F72002D1EB3 /* ConfirmationViewModel+Send.swift in Sources */,
 				1C6720062880059B00C5F044 /* MnemonicNewWireframeFactoryAssembler.swift in Sources */,
+				1C228AC328A0FE41005316A3 /* FeatureShareHelper.swift in Sources */,
 				1C60C2C9285724D0003BE25D /* ChatWireframeFactoryAssembler.swift in Sources */,
 				1CE0064A2889C4D6002D1EB3 /* UITraitCollection+Extensions.swift in Sources */,
 				1C60C2ED285724D0003BE25D /* NetworksInteractor.swift in Sources */,
@@ -3469,6 +3473,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3wallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iosApp/Common/Views/iCarousel/iosApp-Bridging-Header.h";
@@ -3509,6 +3514,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sonsofcrypto.web3wallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "iosApp/Common/Views/iCarousel/iosApp-Bridging-Header.h";

@@ -12,6 +12,7 @@ struct FeatureWireframeContext {
 
 enum FeatureWireframeDestination {
 
+    case vote
     case dismiss
 }
 
@@ -45,6 +46,10 @@ extension DefaultFeatureWireframe: FeatureWireframe {
     func navigate(to destination: FeatureWireframeDestination) {
 
         switch destination {
+            
+        case .vote:
+            
+            FeatureShareHelper().shareVote(on: context.feature, presentingIn: parent)
             
         case .dismiss:
             

@@ -99,9 +99,10 @@ extension DefaultFeaturesPresenter: FeaturesPresenter {
                 )
             )
             
-        case .vote:
+        case let .vote(id):
             
-            wireframe.navigate(to: .comingSoon)
+            guard let feature = allFeatures.find(id: id) else { return }
+            wireframe.navigate(to: .vote(feature: feature))
         }
     }
 }

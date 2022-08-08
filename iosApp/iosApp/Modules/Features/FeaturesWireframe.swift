@@ -11,7 +11,7 @@ struct FeaturesWireframeContext {
 
 enum FeaturesWireframeDestination {
     
-    case comingSoon
+    case vote(feature: Web3Feature)
     case feature(feature: Web3Feature, features: [Web3Feature])
 }
 
@@ -70,18 +70,15 @@ extension DefaultFeaturesWireframe: FeaturesWireframe {
 
         switch destination {
             
+        case let .vote(feature):
+            
+            FeatureShareHelper().shareVote(on: feature, presentingIn: navigationController)
+
         case let .feature(feature, features):
             
             featureWireframeFactory.makeWireframe(
                 parent: navigationController,
                 context: .init(feature: feature, features: features)
-            ).present()
-            
-        case .comingSoon:
-            
-            alertWireframeFactory.makeWireframe(
-                navigationController,
-                context: .underConstructionAlert()
             ).present()
         }
     }
