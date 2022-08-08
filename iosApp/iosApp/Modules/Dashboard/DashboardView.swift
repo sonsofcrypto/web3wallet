@@ -194,7 +194,7 @@ extension DashboardViewController: UICollectionViewDelegate {
             return
         }
         cell.layer.add(
-            CAAnimation.buildUp(0.05 * CGFloat(indexPath.item)),
+            CAAnimation.buildUp(0.005 * CGFloat(indexPath.item)),
             forKey: "transform"
         )
     }
