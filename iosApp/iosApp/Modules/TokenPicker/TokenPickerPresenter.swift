@@ -214,7 +214,7 @@ private extension DefaultTokenPickerPresenter {
             
             let groupName = Localized("tokenPicker.myTokens.title")
             sections.append(
-                .init(name: groupName, items: makeMyViewModelTokens(from: selectedTokensFiltered))
+                .tokens(name: groupName, items: makeMyViewModelTokens(from: selectedTokensFiltered))
             )
         }
 
@@ -222,7 +222,7 @@ private extension DefaultTokenPickerPresenter {
             
             let groupName = Localized("tokenPicker.other.title")
             sections.append(
-                .init(name: groupName, items: makeOtherViewModelTokens(from: tokensFiltered))
+                .tokens(name: groupName, items: makeOtherViewModelTokens(from: tokensFiltered))
             )
         }
 
@@ -407,7 +407,7 @@ private extension Array where Element == TokenPickerViewModel.Section {
         guard isEmpty else { return self }
         
         return [
-            .init(name: Localized("tokenPicker.noResults"), items: [])
+            .tokens(name: Localized("tokenPicker.noResults"), items: [])
         ]
     }
 }

@@ -114,7 +114,7 @@ private extension TokenPickerViewController {
         )
 
         collectionView.setCollectionViewLayout(
-            UICollectionViewCompositionalLayout(section: makeItemsCollectionLayoutSection()),
+            UICollectionViewCompositionalLayout(section: makeTokenItemsCollectionLayoutSection()),
             animated: false
         )
         
@@ -233,10 +233,13 @@ extension TokenPickerViewController: UICollectionViewDataSource {
         guard let section = viewModel?.sections()[section] else {
             return 0
         }
-
-        return section.items.count
+        
+        switch section {
+            
+        case let .tokens(_, items):
+            return items.count
+        }
     }
-    
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -284,8 +287,14 @@ extension TokenPickerViewController: UICollectionViewDelegate {
         guard let section = viewModel?.sections()[indexPath.section] else {
             fatalError()
         }
-        let token = section.items[indexPath.item]
-        presenter.handle(.selectItem(token))
+        
+        switch section {
+            
+        case let .tokens(_, items):
+
+            let token = items[indexPath.item]
+            presenter.handle(.selectItem(token))
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -313,16 +322,20 @@ private extension TokenPickerViewController {
             fatalError()
         }
         
-        let token = section.items[indexPath.item]
-                    
-        let cell = collectionView.dequeue(
-            TokenPickerItemCell.self,
-            for: indexPath
-        )
-        cell.update(
-            with: token
-        )
-        return cell
+        switch section {
+            
+        case let .tokens(_, items):
+            
+            let token = items[indexPath.item]
+            let cell = collectionView.dequeue(
+                TokenPickerItemCell.self,
+                for: indexPath
+            )
+            cell.update(
+                with: token
+            )
+            return cell
+        }
     }
     
     @objc func dismissKeyboard() {
@@ -333,7 +346,7 @@ private extension TokenPickerViewController {
 
 private extension TokenPickerViewController {
     
-    func makeItemsCollectionLayoutSection() -> NSCollectionLayoutSection {
+    func makeTokenItemsCollectionLayoutSection() -> NSCollectionLayoutSection {
         
         // Item
         let itemSize = NSCollectionLayoutSize(
