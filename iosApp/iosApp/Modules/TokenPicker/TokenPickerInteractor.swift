@@ -12,7 +12,7 @@ protocol TokenPickerInteractor: AnyObject {
     var myTokens: [Web3Token] { get }
     func tokens(
         filteredBy searchTerm: String,
-        for network: Web3Network?
+        for network: Web3Network
     ) -> [Web3Token]
     func networkIcon(for network: Web3Network) -> Data
     func tokenIcon(for token: Web3Token) -> Data
@@ -58,13 +58,9 @@ extension DefaultTokenPickerInteractor: TokenPickerInteractor {
     
     func tokens(
         filteredBy searchTerm: String,
-        for network: Web3Network?
+        for network: Web3Network
     ) -> [Web3Token] {
         
-        guard let network = network ?? makeSelectedNetwork() else {
-            return []
-        }
-
         var currencies = searchTerm.isEmpty
         ? currenciesService.currencies
         : currenciesService.currencies(search: searchTerm)
