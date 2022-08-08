@@ -383,7 +383,6 @@ extension DashboardViewController: EdgeCardsControllerDelegate {
     }
 }
 
-
 // MARK: - UIViewControllerTransitioningDelegate
 
 extension DashboardViewController: UIViewControllerTransitioningDelegate {
