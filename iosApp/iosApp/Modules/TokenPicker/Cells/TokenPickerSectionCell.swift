@@ -40,7 +40,7 @@ extension TokenPickerSectionCell {
         
         label.text = viewModel.name
         
-        switch viewModel {
+        switch viewModel.type {
             
         case .networks:
             leadingConstraint.constant = 0

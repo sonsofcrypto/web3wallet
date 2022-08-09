@@ -239,8 +239,9 @@ private extension DefaultTokenPickerPresenter {
         if networks.count > 1 {
             
             sections.append(
-                .networks(
+                .init(
                     name: Localized("tokenPicker.networks.title"),
+                    type: .networks,
                     items: makeViewModelNetworks()
                 )
             )
@@ -249,8 +250,9 @@ private extension DefaultTokenPickerPresenter {
         if !selectedTokensFiltered.isEmpty {
             
             sections.append(
-                .tokens(
+                .init(
                     name: Localized("tokenPicker.myTokens.title"),
+                    type: .tokens,
                     items: makeMyViewModelTokens(from: selectedTokensFiltered)
                 )
             )
@@ -259,8 +261,9 @@ private extension DefaultTokenPickerPresenter {
         if !tokensFiltered.isEmpty {
             
             sections.append(
-                .tokens(
+                .init(
                     name: Localized("tokenPicker.other.title"),
+                    type: .tokens,
                     items: makeOtherViewModelTokens(from: tokensFiltered)
                 )
             )
@@ -272,21 +275,23 @@ private extension DefaultTokenPickerPresenter {
 
 private extension DefaultTokenPickerPresenter {
     
-    func makeViewModelNetworks() -> [TokenPickerViewModel.Network] {
+    func makeViewModelNetworks() -> [TokenPickerViewModel.Item] {
         
         networks.compactMap {
-            .init(
-                networkId: $0.id,
-                iconName: interactor.networkIconName(for: $0),
-                name: $0.name,
-                isSelected: $0.id == selectedNetwork.id
+            .network(
+                .init(
+                    networkId: $0.id,
+                    iconName: interactor.networkIconName(for: $0),
+                    name: $0.name,
+                    isSelected: $0.id == selectedNetwork.id
+                )
             )
         }
     }
     
     func makeMyViewModelTokens(
         from tokens: [Web3Token]
-    ) -> [TokenPickerViewModel.Token] {
+    ) -> [TokenPickerViewModel.Item] {
         
         tokens.compactMap { token in
             
@@ -328,21 +333,23 @@ private extension DefaultTokenPickerPresenter {
                 position = .middle
             }
             
-            return .init(
-                tokenId: token.coingGeckoId ?? "",
-                imageName: interactor.tokenIconName(for: token),
-                symbol: token.symbol,
-                name: token.name,
-                network: token.network.name,
-                type: type,
-                position: position
+            return .token(
+                .init(
+                    tokenId: token.coingGeckoId ?? "",
+                    imageName: interactor.tokenIconName(for: token),
+                    symbol: token.symbol,
+                    name: token.name,
+                    network: token.network.name,
+                    type: type,
+                    position: position
+                )
             )
         }
     }
     
     func makeOtherViewModelTokens(
         from tokens: [Web3Token]
-    ) -> [TokenPickerViewModel.Token] {
+    ) -> [TokenPickerViewModel.Item] {
         
         tokens.compactMap { token in
             
@@ -378,14 +385,16 @@ private extension DefaultTokenPickerPresenter {
                 position = .middle
             }
             
-            return .init(
-                tokenId: token.coingGeckoId ?? "",
-                imageName: interactor.tokenIconName(for: token),
-                symbol: token.symbol,
-                name: token.name,
-                network: token.network.name,
-                type: type,
-                position: position
+            return .token(
+                .init(
+                    tokenId: token.coingGeckoId ?? "",
+                    imageName: interactor.tokenIconName(for: token),
+                    symbol: token.symbol,
+                    name: token.name,
+                    network: token.network.name,
+                    type: type,
+                    position: position
+                )
             )
         }
     }
@@ -453,7 +462,11 @@ private extension Array where Element == TokenPickerViewModel.Section {
         guard isEmpty else { return self }
         
         return [
-            .tokens(name: Localized("tokenPicker.noResults"), items: [])
+            .init(
+                name: Localized("tokenPicker.noResults"),
+                type: .tokens,
+                items: []
+            )
         ]
     }
 }

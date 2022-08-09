@@ -231,18 +231,7 @@ extension TokenPickerViewController: UICollectionViewDataSource {
         numberOfItemsInSection section: Int
     ) -> Int {
         
-        guard let section = viewModel?.sections[section] else {
-            return 0
-        }
-        
-        switch section {
-            
-        case let .networks(_, items):
-            return items.count
-            
-        case let .tokens(_, items):
-            return items.count
-        }
+        viewModel?.sections[section].items.count ?? 0
     }
 
     func collectionView(
@@ -292,16 +281,14 @@ extension TokenPickerViewController: UICollectionViewDelegate {
             fatalError()
         }
         
-        switch section {
+        switch section.items[indexPath.item] {
+        
+        case let .network(network):
             
-        case let .networks(_, items):
-            
-            let network = items[indexPath.item]
             presenter.handle(.selectNetwork(network))
-            
-        case let .tokens(_, items):
 
-            let token = items[indexPath.item]
+        case let .token(token):
+                        
             presenter.handle(.selectToken(token))
         }
     }
@@ -331,21 +318,19 @@ private extension TokenPickerViewController {
             fatalError()
         }
         
-        switch section {
+        switch section.items[indexPath.item] {
+        
+        case let .network(network):
             
-        case let .networks(_, items):
-            
-            let network = items[indexPath.item]
             let cell = collectionView.dequeue(
                 TokenPickerNetworkCell.self,
                 for: indexPath
             )
             cell.update(with: network)
             return cell
-            
-        case let .tokens(_, items):
-            
-            let token = items[indexPath.item]
+
+        case let .token(token):
+                        
             let cell = collectionView.dequeue(
                 TokenPickerTokenCell.self,
                 for: indexPath
@@ -371,7 +356,7 @@ private extension TokenPickerViewController {
             
             guard let section = self.viewModel?.sections[idx] else { return nil }
             
-            switch section {
+            switch section.type {
             case .networks:
                 return self.makeNetworkItemsCollectionLayoutSection()
             case .tokens:

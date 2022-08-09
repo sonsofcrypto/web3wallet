@@ -20,20 +20,23 @@ extension TokenPickerViewModel {
         case error(error: AppsViewModel.Error)
     }
 
-    enum Section {
-
-        case networks(name: String, items: [Network])
-        case tokens(name: String, items: [Token])
+    struct Section {
         
-        var name: String {
-            
-            switch self {
-            case let .networks(name, _):
-                return name
-            case let .tokens(name, _):
-                return name
-            }
+        let name: String
+        let type: `Type`
+        let items: [Item]
+        
+        enum `Type` {
+
+            case networks
+            case tokens
         }
+    }
+    
+    enum Item {
+        
+        case network(Network)
+        case token(Token)
     }
     
     struct Network {
