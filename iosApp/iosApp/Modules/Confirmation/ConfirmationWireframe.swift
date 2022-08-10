@@ -79,10 +79,12 @@ private extension DefaultConfirmationWireframe {
     
     func wireUp() -> UIViewController {
         
+        let interactor = DefaultConfirmationInteractor()
         let vc: ConfirmationViewController = UIStoryboard(.confirmation).instantiate()
         let presenter = DefaultConfirmationPresenter(
             view: vc,
             wireframe: self,
+            interactor: interactor,
             context: context
         )
         vc.presenter = presenter

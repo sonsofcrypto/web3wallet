@@ -215,7 +215,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
         }
     }
     
-    func makeConfirmationSwapEstimatedFee() -> ConfirmationWireframeContext.SwapContext.Fee {
+    func makeConfirmationSwapEstimatedFee() -> Web3NetworkFee {
         
         switch fee {
             

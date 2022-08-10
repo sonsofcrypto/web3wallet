@@ -20,15 +20,18 @@ final class DefaultConfirmationPresenter {
 
     private weak var view: ConfirmationView?
     private let wireframe: ConfirmationWireframe
+    private let interactor: ConfirmationInteractor
     private let context: ConfirmationWireframeContext
     
     init(
         view: ConfirmationView,
         wireframe: ConfirmationWireframe,
+        interactor: ConfirmationInteractor,
         context: ConfirmationWireframeContext
     ) {
         self.view = view
         self.wireframe = wireframe
+        self.interactor = interactor
         self.context = context
     }
 }
@@ -284,10 +287,30 @@ private extension DefaultConfirmationPresenter {
             print("Do swap!")
             print("Authenticated with: \(password) and \(salt)")
 
-        case .send:
+        case let .send(data):
             
-            print("Do send!")
-            print("Authenticated with: \(password) and \(salt)")
+            interactor.send(
+                tokenFrom: data.token.token,
+                toAddress: data.destination.to,
+                balance: data.token.value,
+                fee: data.estimatedFee,
+                password: password,
+                salt: salt
+            ) { [weak self] result in
+                
+                guard let self = self else { return }
+                
+                switch result {
+                    
+                case .success:
+                    
+                    print("SUCCESS SEND!!!")
+                    
+                case .failure:
+                    
+                    print("PRESENT ERROR...")
+                }
+            }
             
         case .sendNFT:
             

@@ -192,7 +192,7 @@ private extension ConfirmationSendNFTView {
         
         let button = Button()
         button.style = .primary
-        button.setTitle(Localized("confirmation.swap.confirm"), for: .normal)
+        button.setTitle(Localized("confirmation.sendNFT.confirm"), for: .normal)
         button.addTarget(self, action: #selector(confirmTapped), for: .touchUpInside)
         return button
     }

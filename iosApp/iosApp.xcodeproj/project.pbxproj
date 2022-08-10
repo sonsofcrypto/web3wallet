@@ -68,6 +68,7 @@
 		1C0643E32892FD2D00643C15 /* FeaturesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0643E22892FD2D00643C15 /* FeaturesCell.swift */; };
 		1C0643E52892FD5200643C15 /* Features.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C0643E42892FD5200643C15 /* Features.storyboard */; };
 		1C228AC528A17744005316A3 /* TokenPickerNetworkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228AC428A17744005316A3 /* TokenPickerNetworkCell.swift */; };
+		1C228AC928A39FDC005316A3 /* ConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228AC828A39FDC005316A3 /* ConfirmationInteractor.swift */; };
 		1C2B06562891D9A6002A8FBF /* FeaturesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2B06552891D9A6002A8FBF /* FeaturesService.swift */; };
 		1C2B06582891D9B0002A8FBF /* FeaturesServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2B06572891D9B0002A8FBF /* FeaturesServiceAssembler.swift */; };
 		1C2B065A28927F92002A8FBF /* EmbeddedErrorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2B065928927F92002A8FBF /* EmbeddedErrorCollectionViewCell.swift */; };
@@ -639,6 +640,7 @@
 		1C0643E22892FD2D00643C15 /* FeaturesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesCell.swift; sourceTree = "<group>"; };
 		1C0643E42892FD5200643C15 /* Features.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Features.storyboard; sourceTree = "<group>"; };
 		1C228AC428A17744005316A3 /* TokenPickerNetworkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenPickerNetworkCell.swift; sourceTree = "<group>"; };
+		1C228AC828A39FDC005316A3 /* ConfirmationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationInteractor.swift; sourceTree = "<group>"; };
 		1C2B06552891D9A6002A8FBF /* FeaturesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesService.swift; sourceTree = "<group>"; };
 		1C2B06572891D9B0002A8FBF /* FeaturesServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesServiceAssembler.swift; sourceTree = "<group>"; };
 		1C2B065928927F92002A8FBF /* EmbeddedErrorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedErrorCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1997,6 +1999,7 @@
 			children = (
 				1C67202A2887EB7F00C5F044 /* Confirmation.storyboard */,
 				1C67202428870FF400C5F044 /* ConfirmationPresenter.swift */,
+				1C228AC828A39FDC005316A3 /* ConfirmationInteractor.swift */,
 				1C67201A28870FCB00C5F044 /* ConfirmationView.swift */,
 				1C67201C28870FD200C5F044 /* ConfirmationViewModel.swift */,
 				1CE0064328894F72002D1EB3 /* ConfirmationViewModel+Send.swift */,
@@ -2953,6 +2956,7 @@
 				1C60C2F0285724D0003BE25D /* NetworksCell.swift in Sources */,
 				1C60C323285724D1003BE25D /* AppsWireframeFactory.swift in Sources */,
 				1C2B065A28927F92002A8FBF /* EmbeddedErrorCollectionViewCell.swift in Sources */,
+				1C228AC928A39FDC005316A3 /* ConfirmationInteractor.swift in Sources */,
 				1CE66BE4284CFB7600AB6ACA /* UITextView+Extensions.swift in Sources */,
 				1C60C2B3285724D0003BE25D /* TokenPickerView.swift in Sources */,
 				1C60C31E285724D1003BE25D /* AppsViewModel.swift in Sources */,

@@ -186,7 +186,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
 
 private extension DefaultTokenSendPresenter {
     
-    func makeConfirmationSendEstimatedFee() -> ConfirmationWireframeContext.SendContext.Fee {
+    func makeConfirmationSendEstimatedFee() -> Web3NetworkFee {
         switch fee {
         case .low:
             return .low

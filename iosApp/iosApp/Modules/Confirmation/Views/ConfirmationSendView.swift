@@ -231,7 +231,7 @@ private extension ConfirmationSendView {
         
         let button = Button()
         button.style = .primary
-        button.setTitle(Localized("confirmation.swap.confirm"), for: .normal)
+        button.setTitle(Localized("confirmation.send.confirm"), for: .normal)
         button.addTarget(self, action: #selector(confirmTapped), for: .touchUpInside)
         return button
     }

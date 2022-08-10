@@ -285,13 +285,13 @@
 "confirmation.to" = "To";
 
 "confirmation.swap.title" = "Confirm Transaction";
-"confirmation.swap.confirm" = "Authenticate & Swap";
+"confirmation.swap.confirm" = "Swap";
 
 "confirmation.send.title" = "Confirm Transaction";
-"confirmation.send.confirm" = "Authenticate & Send";
+"confirmation.send.confirm" = "Send";
 
 "confirmation.sendNFT.title" = "Confirm Transaction";
-"confirmation.sendNFT.confirm" = "Authenticate & Send";
+"confirmation.sendNFT.confirm" = "Send";
 
 "cult.proposals.title" = "Cult.DAO Proposals";
 "cult.proposals.segmentedControl.pending" = "Pending";

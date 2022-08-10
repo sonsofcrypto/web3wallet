@@ -172,7 +172,7 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
 
 private extension DefaultNFTSendPresenter {
     
-    func makeConfirmationSendNFTEstimatedFee() -> ConfirmationWireframeContext.SendNFTContext.Fee {
+    func makeConfirmationSendNFTEstimatedFee() -> Web3NetworkFee {
         
         switch fee {
             
