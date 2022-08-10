@@ -2004,8 +2004,8 @@
 			isa = PBXGroup;
 			children = (
 				1C67202A2887EB7F00C5F044 /* Confirmation.storyboard */,
-				1C67202428870FF400C5F044 /* ConfirmationPresenter.swift */,
 				1C228AC828A39FDC005316A3 /* ConfirmationInteractor.swift */,
+				1C67202428870FF400C5F044 /* ConfirmationPresenter.swift */,
 				1C67201A28870FCB00C5F044 /* ConfirmationView.swift */,
 				1C67201C28870FD200C5F044 /* ConfirmationViewModel.swift */,
 				1CE0064328894F72002D1EB3 /* ConfirmationViewModel+Send.swift */,

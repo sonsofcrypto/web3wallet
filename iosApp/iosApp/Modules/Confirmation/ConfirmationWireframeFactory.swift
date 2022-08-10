@@ -16,13 +16,16 @@ final class DefaultConfirmationWireframeFactory {
 
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
+    private let deepLinkHandler: DeepLinkHandler
 
     init(
         authenticateWireframeFactory: AuthenticateWireframeFactory,
-        alertWireframeFactory: AlertWireframeFactory
+        alertWireframeFactory: AlertWireframeFactory,
+        deepLinkHandler: DeepLinkHandler
     ) {
         self.authenticateWireframeFactory = authenticateWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
+        self.deepLinkHandler = deepLinkHandler
     }
 }
 
@@ -37,7 +40,8 @@ extension DefaultConfirmationWireframeFactory: ConfirmationWireframeFactory {
             presentingIn: presentingIn,
             context: context,
             authenticateWireframeFactory: authenticateWireframeFactory,
-            alertWireframeFactory: alertWireframeFactory
+            alertWireframeFactory: alertWireframeFactory,
+            deepLinkHandler: deepLinkHandler
         )
     }
 }

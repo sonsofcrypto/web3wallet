@@ -133,9 +133,11 @@ struct Web3Token: Equatable {
     let name: String // Ethereum
     let address: String // 0x482828...
     let decimals: Int // 8
+    //let decimals: UInt // 8
     let type: `Type`
     let network: Web3Network //
     let balance: Double
+    //let balance: BigInt// Double
     let showInWallet: Bool
     let usdPrice: Double
     let coingGeckoId: String?

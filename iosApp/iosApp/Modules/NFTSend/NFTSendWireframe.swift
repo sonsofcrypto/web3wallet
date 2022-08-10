@@ -16,8 +16,7 @@ enum NFTSendWireframeDestination {
     case underConstructionAlert
     case qrCodeScan(network: Web3Network, onCompletion: (String) -> Void)
     case confirmSendNFT(
-        dataIn: ConfirmationWireframeContext.SendNFTContext,
-        onSuccess: () -> Void
+        dataIn: ConfirmationWireframeContext.SendNFTContext
     )
 }
 
@@ -96,7 +95,7 @@ extension DefaultNFTSendWireframe: NFTSendWireframe {
             )
             wireframe.present()
             
-        case let .confirmSendNFT(dataIn, onSuccess):
+        case let .confirmSendNFT(dataIn):
             
             guard let viewController = navigationController.topViewController else {
                 
@@ -105,7 +104,7 @@ extension DefaultNFTSendWireframe: NFTSendWireframe {
             
             let wireframe = confirmationWireframeFactory.makeWireframe(
                 presentingIn: viewController,
-                context: .init(type: .sendNFT(dataIn), onSuccessHandler: onSuccess)
+                context: .init(type: .sendNFT(dataIn))
             )
             wireframe.present()
         }

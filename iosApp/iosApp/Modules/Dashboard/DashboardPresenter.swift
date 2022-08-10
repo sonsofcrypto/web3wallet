@@ -118,7 +118,7 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             
         case let .didTapNotification(id):
             guard let notification = notifications.first(where: { $0.id == id }) else { return }
-            guard let deepLink = DeepLink(rawValue: notification.deepLink) else { return }
+            guard let deepLink = DeepLink(identifier: notification.deepLink) else { return }
             wireframe.navigate(to: .deepLink(deepLink))
             
         case .didTapDismissNotification:

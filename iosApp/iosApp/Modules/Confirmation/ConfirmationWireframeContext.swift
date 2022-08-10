@@ -7,12 +7,24 @@ import Foundation
 struct ConfirmationWireframeContext {
     
     let type: `Type`
-    let onSuccessHandler: () -> Void
     
     enum `Type` {
         case swap(SwapContext)
         case send(SendContext)
         case sendNFT(SendNFTContext)
+    }
+    
+    var token: Web3Token? {
+        
+        switch type {
+        case let .send(data):
+            return data.token.token
+        case let .swap(data):
+            return data.tokenFrom.token
+        case let .sendNFT(data):
+            // TODO: Annon to confirm where to push (main network token)? Eg: ETH
+            return nil
+        }
     }
 }
 

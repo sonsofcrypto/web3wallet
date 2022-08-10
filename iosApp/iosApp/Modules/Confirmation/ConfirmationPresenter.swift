@@ -75,7 +75,7 @@ extension DefaultConfirmationPresenter: ConfirmationPresenter {
             
         case .txSuccessCTATapped:
             
-            print("deep link to account")
+            wireframe.navigate(to: .account)
 
         case .txFailedCTATapped:
             

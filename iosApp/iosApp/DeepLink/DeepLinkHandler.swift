@@ -4,13 +4,52 @@
 
 import Foundation
 import UIKit
+import web3lib
 
-enum DeepLink: String {
+enum DeepLink {
     
-    case mnemonicConfirmation = "modal.mnemonic.confirmation"
-    case themesList = "settings.themes"
-    case featuresList = "modal.features"
-    case degen = "degen"
+    case mnemonicConfirmation
+    case themesList
+    case featuresList
+    case degen
+    case account(token: Web3Token)
+    
+    init?(identifier: String) {
+        
+        switch identifier {
+            
+        case DeepLink.mnemonicConfirmation.identifier:
+            self = .mnemonicConfirmation
+            
+        case DeepLink.themesList.identifier:
+            self = .themesList
+            
+        case DeepLink.featuresList.identifier:
+            self = .featuresList
+            
+        case DeepLink.degen.identifier:
+            self = .degen
+
+        default:
+            return nil
+        }
+    }
+    
+    var identifier: String {
+        
+        switch self {
+        case .mnemonicConfirmation:
+            return "modal.mnemonic.confirmation"
+        case .themesList:
+            return "settings.themes"
+        case .featuresList:
+            return "modal.features"
+        case .degen:
+            return "degen"
+        case let .account(token):
+            return "account.\(token.symbol.lowercased())"
+        }
+    }
 }
 
 protocol DeepLinkHandler: AnyObject {
@@ -47,6 +86,11 @@ extension DefaultDeepLinkHandler: DeepLinkHandler {
                 self.openFeaturesList()
             case .degen:
                 self.navigate(to: .degen)
+                
+            case let .account(token):
+                self.navigate(to: .dashboard)
+                self.dashboardNavController?.popToRootViewController(animated: true)
+                self.openAccount(with: token, after: 0.3)
             }
         }
 
@@ -124,14 +168,14 @@ private extension DefaultDeepLinkHandler {
         ) as? TabBarController
     }
     
-    var dashboardVC: DashboardViewController? {
+    var dashboardNavController: NavigationController? {
         
         guard let navigationController = tabBarController?.children.first(
             where: {
                 guard let navigationController = $0 as? NavigationController else {
                     return false
                 }
-                guard navigationController.topViewController is DashboardViewController else {
+                guard navigationController.viewControllers.first is DashboardViewController else {
                     return false
                 }
                 return true
@@ -140,7 +184,12 @@ private extension DefaultDeepLinkHandler {
             return nil
         }
         
-        return navigationController.topViewController as? DashboardViewController
+        return navigationController
+    }
+    
+    var dashboardVC: DashboardViewController? {
+        
+        dashboardNavController?.topViewController as? DashboardViewController
     }
     
     var settingsVC: SettingsViewController? {
@@ -185,18 +234,49 @@ private extension DefaultDeepLinkHandler {
     
     func openFeaturesList() {
         
-        guard let dashboardVC = dashboardVC else { return }
+        guard let dashboardNavController = dashboardNavController else { return }
         let wireframe: FeaturesWireframeFactory = ServiceDirectory.assembler.resolve()
         wireframe.makeWireframe(
-            presentingIn: dashboardVC,
+            presentingIn: dashboardNavController,
             context: .init(presentationStyle: .present)
         ).present()
     }
     
     func openMnemonicConfirmation() {
         
-        guard let dashboardVC = dashboardVC else { return }
+        guard let dashboardNavController = dashboardNavController else { return }
         let wireframe: MnemonicConfirmationWireframeFactory = ServiceDirectory.assembler.resolve()
-        wireframe.makeWireframe(dashboardVC).present()
+        wireframe.makeWireframe(dashboardNavController).present()
+    }
+    
+    func openAccount(
+        with token: Web3Token,
+        after delay: TimeInterval
+    ) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            
+            [weak self] in
+            
+            guard let self = self else { return }
+            
+            self.openAccount(with: token)
+        }
+    }
+    
+    func openAccount(
+        with token: Web3Token
+    ) {
+        
+        guard let dashboardNavController = dashboardNavController else { return }
+        
+        let service: WalletsConnectionService = ServiceDirectory.assembler.resolve()
+        guard let wallet = service.wallet(network: token.network.toNetwork()) else { return }
+        
+        let factory: AccountWireframeFactory = ServiceDirectory.assembler.resolve()
+        factory.makeWireframe(
+            presentingIn: dashboardNavController,
+            context: .init(wallet: wallet, currency: token.toCurrency())
+        ).present()
     }
 }
