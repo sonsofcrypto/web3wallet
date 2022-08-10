@@ -479,7 +479,7 @@ private extension DefaultConfirmationPresenter {
                     
                 case .success:
                     
-                    self.showTransactionFailed()
+                    self.showTransactionSuccess()
                     
                 case .failure:
                     
