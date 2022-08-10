@@ -378,7 +378,7 @@ private extension TokenPickerViewController {
         
         // Group
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .estimated(160),
+            widthDimension: .absolute(144),
             heightDimension: .absolute(56)
         )
         let outerGroup = NSCollectionLayoutGroup.horizontal(
