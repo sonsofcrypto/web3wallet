@@ -17,7 +17,7 @@ class Wallet: Signer {
     private val keyStoreItem: KeyStoreItem
     private val keyStoreService: KeyStoreService
     private var provider: Provider? = null
-    private var key: Key? = null
+    private var key: ByteArray? = null
 
     constructor(
         keyStoreItem: KeyStoreItem,
