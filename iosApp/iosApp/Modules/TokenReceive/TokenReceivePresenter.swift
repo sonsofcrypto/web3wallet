@@ -48,7 +48,7 @@ extension DefaultTokenReceivePresenter: TokenReceivePresenter {
                     .init(
                         name: Localized("tokenReceive.qrcode.name"),
                         symbol: context.web3Token.symbol,
-                        address: context.web3Token.address,
+                        address: interactor.receivingAddress(for: context.web3Token),
                         disclaimer: disclaimer
                     )
                 )

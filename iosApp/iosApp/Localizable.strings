@@ -201,13 +201,13 @@
 "chat.me.message2" = "Perfect, I will check this out";
 "chat.me.message3" = "Also, please tell SonsOfCrypto team that they rock! 🔥";
 
-"tokenPicker.title.receive" = "Receive";
-"tokenPicker.title.send" = "Send";
-"tokenPicker.title.multiSelectEdit" = "Select";
-"tokenPicker.title.select" = "Select";
-"tokenPicker.networks.all" = "All networks";
-"tokenPicker.myTokens.title" = "My tokens";
-"tokenPicker.other.title" = "All tokens";
+"tokenPicker.title.receive" = "Select a currency";
+"tokenPicker.title.send" = "Select a currency";
+"tokenPicker.title.multiSelectEdit" = "Select currencies";
+"tokenPicker.title.select" = "Select a currency";
+"tokenPicker.networks.title" = "Available networks";
+"tokenPicker.myTokens.title" = "My currencies";
+"tokenPicker.other.title" = "All currencies";
 "tokenPicker.featured.title" = "Featured";
 "tokenPicker.popular.title" = "Popular";
 "tokenPicker.noResults" = "No results";

@@ -67,6 +67,7 @@
 		1C0643E02892FCD600643C15 /* FeaturesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0643DF2892FCD600643C15 /* FeaturesViewModel.swift */; };
 		1C0643E32892FD2D00643C15 /* FeaturesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0643E22892FD2D00643C15 /* FeaturesCell.swift */; };
 		1C0643E52892FD5200643C15 /* Features.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C0643E42892FD5200643C15 /* Features.storyboard */; };
+		1C228AC528A17744005316A3 /* TokenPickerNetworkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228AC428A17744005316A3 /* TokenPickerNetworkCell.swift */; };
 		1C2B06562891D9A6002A8FBF /* FeaturesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2B06552891D9A6002A8FBF /* FeaturesService.swift */; };
 		1C2B06582891D9B0002A8FBF /* FeaturesServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2B06572891D9B0002A8FBF /* FeaturesServiceAssembler.swift */; };
 		1C2B065A28927F92002A8FBF /* EmbeddedErrorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2B065928927F92002A8FBF /* EmbeddedErrorCollectionViewCell.swift */; };
@@ -135,8 +136,8 @@
 		1C60C2AC285724D0003BE25D /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1D4285724D0003BE25D /* SettingsPresenter.swift */; };
 		1C60C2AD285724D0003BE25D /* TokenPickerWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1D6285724D0003BE25D /* TokenPickerWireframe.swift */; };
 		1C60C2AE285724D0003BE25D /* TokenPickerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1D7285724D0003BE25D /* TokenPickerInteractor.swift */; };
-		1C60C2AF285724D0003BE25D /* TokenPickerItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1D9285724D0003BE25D /* TokenPickerItemCell.swift */; };
-		1C60C2B0285724D0003BE25D /* TokenPickerGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DA285724D0003BE25D /* TokenPickerGroupCell.swift */; };
+		1C60C2AF285724D0003BE25D /* TokenPickerTokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1D9285724D0003BE25D /* TokenPickerTokenCell.swift */; };
+		1C60C2B0285724D0003BE25D /* TokenPickerSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DA285724D0003BE25D /* TokenPickerSectionCell.swift */; };
 		1C60C2B1285724D0003BE25D /* TokenPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DB285724D0003BE25D /* TokenPickerViewModel.swift */; };
 		1C60C2B2285724D0003BE25D /* TokenPickerWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DC285724D0003BE25D /* TokenPickerWireframeFactoryAssembler.swift */; };
 		1C60C2B3285724D0003BE25D /* TokenPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DD285724D0003BE25D /* TokenPickerView.swift */; };
@@ -637,6 +638,7 @@
 		1C0643DF2892FCD600643C15 /* FeaturesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesViewModel.swift; sourceTree = "<group>"; };
 		1C0643E22892FD2D00643C15 /* FeaturesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesCell.swift; sourceTree = "<group>"; };
 		1C0643E42892FD5200643C15 /* Features.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Features.storyboard; sourceTree = "<group>"; };
+		1C228AC428A17744005316A3 /* TokenPickerNetworkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenPickerNetworkCell.swift; sourceTree = "<group>"; };
 		1C2B06552891D9A6002A8FBF /* FeaturesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesService.swift; sourceTree = "<group>"; };
 		1C2B06572891D9B0002A8FBF /* FeaturesServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesServiceAssembler.swift; sourceTree = "<group>"; };
 		1C2B065928927F92002A8FBF /* EmbeddedErrorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedErrorCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -704,8 +706,8 @@
 		1C60C1D4285724D0003BE25D /* SettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
 		1C60C1D6285724D0003BE25D /* TokenPickerWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenPickerWireframe.swift; sourceTree = "<group>"; };
 		1C60C1D7285724D0003BE25D /* TokenPickerInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenPickerInteractor.swift; sourceTree = "<group>"; };
-		1C60C1D9285724D0003BE25D /* TokenPickerItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenPickerItemCell.swift; sourceTree = "<group>"; };
-		1C60C1DA285724D0003BE25D /* TokenPickerGroupCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenPickerGroupCell.swift; sourceTree = "<group>"; };
+		1C60C1D9285724D0003BE25D /* TokenPickerTokenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenPickerTokenCell.swift; sourceTree = "<group>"; };
+		1C60C1DA285724D0003BE25D /* TokenPickerSectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenPickerSectionCell.swift; sourceTree = "<group>"; };
 		1C60C1DB285724D0003BE25D /* TokenPickerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenPickerViewModel.swift; sourceTree = "<group>"; };
 		1C60C1DC285724D0003BE25D /* TokenPickerWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenPickerWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C60C1DD285724D0003BE25D /* TokenPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenPickerView.swift; sourceTree = "<group>"; };
@@ -1541,8 +1543,9 @@
 		1C60C1D8285724D0003BE25D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				1C60C1DA285724D0003BE25D /* TokenPickerGroupCell.swift */,
-				1C60C1D9285724D0003BE25D /* TokenPickerItemCell.swift */,
+				1C60C1DA285724D0003BE25D /* TokenPickerSectionCell.swift */,
+				1C60C1D9285724D0003BE25D /* TokenPickerTokenCell.swift */,
+				1C228AC428A17744005316A3 /* TokenPickerNetworkCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2653,7 +2656,7 @@
 			);
 			mainGroup = D157F7BE27B69B6300578FF8;
 			packageReferences = (
-				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
+				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
 			projectDirPath = "";
@@ -3035,7 +3038,7 @@
 				D1EF5BCF287BEE92004CAD82 /* MnemonicUpdateInteractor.swift in Sources */,
 				1C60C2E7285724D0003BE25D /* DashboardViewModel.swift in Sources */,
 				1C60C36D2857C605003BE25D /* TokenReceiveWireframeFactoryAssembler.swift in Sources */,
-				1C60C2B0285724D0003BE25D /* TokenPickerGroupCell.swift in Sources */,
+				1C60C2B0285724D0003BE25D /* TokenPickerSectionCell.swift in Sources */,
 				1C60C1AE28572405003BE25D /* Web3ServiceLegacyAssembler.swift in Sources */,
 				D1A12A64287D333900606FC8 /* AuthenticateWireframeFactory.swift in Sources */,
 				1CD843F82874215F00E6D359 /* MnemonicNewCell.swift in Sources */,
@@ -3060,7 +3063,7 @@
 				1CDED5E12897012400DF34A7 /* FeatureViewModel.swift in Sources */,
 				1CB8B0BC288DBEF000024E7C /* CultProposalDetailGuardianView.swift in Sources */,
 				1C9E31B028787A3000DD2031 /* FeesPickerView.swift in Sources */,
-				1C60C2AF285724D0003BE25D /* TokenPickerItemCell.swift in Sources */,
+				1C60C2AF285724D0003BE25D /* TokenPickerTokenCell.swift in Sources */,
 				1CB8B0B1288BD08A00024E7C /* CultProposalCellClosed.swift in Sources */,
 				1C60C353285724D1003BE25D /* CultProposalsViewModel.swift in Sources */,
 				1C60C2E6285724D0003BE25D /* DashboardWireframeFactory.swift in Sources */,
@@ -3122,6 +3125,7 @@
 				1C60C2F2285724D0003BE25D /* NFTDetailView+Content.swift in Sources */,
 				1C6487272832E5150091A12D /* DefaultAppsService.swift in Sources */,
 				1C6720162885E13500C5F044 /* TokenSwapLimitCollectionViewCell.swift in Sources */,
+				1C228AC528A17744005316A3 /* TokenPickerNetworkCell.swift in Sources */,
 				1A4C3C292484B7A62AF950A7 /* CollectionView.swift in Sources */,
 				1C60C332285724D1003BE25D /* NFTsCollectionWireframeFactoryAssembler.swift in Sources */,
 				1CB8B0D6289005E000024E7C /* OpenSeaNFTsService.swift in Sources */,
@@ -3424,7 +3428,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5K4DT22LXR;
+				DEVELOPMENT_TEAM = L4HD966EQA;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3464,7 +3468,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5K4DT22LXR;
+				DEVELOPMENT_TEAM = L4HD966EQA;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3608,7 +3612,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
+		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -3621,7 +3625,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		1C5B603A284675B800ECBD79 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
+			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */

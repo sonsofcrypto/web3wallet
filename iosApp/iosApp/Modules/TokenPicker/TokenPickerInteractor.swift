@@ -7,13 +7,15 @@ import web3lib
 
 protocol TokenPickerInteractor: AnyObject {
 
-    var myTokens: [Web3Token] { get }
+    var selectedNetwork: Web3Network? { get }
+    var supportedNetworks: [Web3Network] { get }
+    func myTokens(for network: Web3Network) -> [Web3Token]
     func tokens(
         filteredBy searchTerm: String,
-        for network: Web3Network?
+        for network: Web3Network
     ) -> [Web3Token]
-    func networkIcon(for network: Web3Network) -> Data
-    func tokenIcon(for token: Web3Token) -> Data
+    func networkIconName(for network: Web3Network) -> String
+    func tokenIconName(for token: Web3Token) -> String
 }
 
 final class DefaultTokenPickerInteractor {
@@ -35,20 +37,39 @@ final class DefaultTokenPickerInteractor {
 
 extension DefaultTokenPickerInteractor: TokenPickerInteractor {
     
-    var myTokens: [Web3Token] {
+    var selectedNetwork: Web3Network? {
         
-        web3ServiceLegacy.myTokens
+        walletsConnectionService.network.map {
+            Web3Network.from($0, isOn: true)
+        }
+    }
+    
+    var supportedNetworks: [Web3Network] {
+
+        walletsConnectionService.enabledNetworks().compactMap {
+            Web3Network.from($0, isOn: false)
+        }
+    }
+    
+    func myTokens(for network: Web3Network) -> [Web3Token] {
+        
+        guard let wallet = walletsConnectionService.wallet(network: network.toNetwork()) else {
+            return []
+        }
+
+        let currencies = currenciesService.currencies(wallet: wallet)
+
+        return currencies.compactMap {
+            
+            Web3Token.from(currency: $0, network: network, inWallet: true, idx: 0)
+        }
     }
     
     func tokens(
         filteredBy searchTerm: String,
-        for network: Web3Network?
+        for network: Web3Network
     ) -> [Web3Token] {
         
-        guard let network = network ?? makeSelectedNetwork() else {
-            return []
-        }
-
         var currencies = searchTerm.isEmpty
         ? currenciesService.currencies
         : currenciesService.currencies(search: searchTerm)
@@ -58,14 +79,14 @@ extension DefaultTokenPickerInteractor: TokenPickerInteractor {
         return currencies.toWeb3TokenList(network: network)
     }
     
-    func networkIcon(for network: Web3Network) -> Data {
+    func networkIconName(for network: Web3Network) -> String {
         
-        web3ServiceLegacy.networkIcon(for: network)
+        web3ServiceLegacy.networkIconName(for: network)
     }
     
-    func tokenIcon(for token: Web3Token) -> Data {
+    func tokenIconName(for token: Web3Token) -> String {
         
-        web3ServiceLegacy.tokenIcon(for: token)
+        web3ServiceLegacy.tokenIconName(for: token)
     }
 
 }

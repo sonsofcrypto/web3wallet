@@ -8,7 +8,8 @@ import UIKit
 enum TokenPickerPresenterEvent {
 
     case search(searchTerm: String)
-    case selectItem(TokenPickerViewModel.Token)
+    case selectNetwork(TokenPickerViewModel.Network)
+    case selectToken(TokenPickerViewModel.Token)
     case addCustomToken
     case done
     case dismiss
@@ -29,6 +30,8 @@ final class DefaultTokenPickerPresenter {
     
     private var searchTerm: String = ""
     
+    private var selectedNetwork: Web3Network!
+    private var networks: [Web3Network] = []
     private var selectedTokens: [Web3Token] = []
     private var selectedTokensFiltered: [Web3Token] = []
     private var tokens = [Web3Token]()
@@ -51,6 +54,7 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
 
     func present() {
 
+        loadSelectedNetworksIfNeeded()
         loadSelectedTokensIfNeeded()
         refreshTokens()
         refreshData()
@@ -64,16 +68,19 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
             
             self.searchTerm = searchTerm
             refreshData()
-                        
-        case let .selectItem(token):
+            
+        case let .selectNetwork(network):
+            
+            guard let network = findSelectedNetwork(from: network) else { return }
+            selectedNetwork = network
+            selectedTokens = interactor.myTokens(for: selectedNetwork)
+            refreshTokens()
+            refreshData()
+
+        case let .selectToken(token):
             
             switch context.source {
                 
-            case .receive:
-                
-                guard let token = findSelectedToken(from: token) else { return }
-                wireframe.navigate(to: .tokenReceive(token))
-
             case .multiSelectEdit:
                 
                 handleTokenTappedOnMultiSelect(token: token)
@@ -82,19 +89,17 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
                 
                 guard let token = findSelectedToken(from: token) else { return }
                 onCompletion(token)
-                wireframe.dismiss()
             }
             
         case .addCustomToken:
             
-            wireframe.navigate(to: .addCustomToken)
+            guard let network = networks.first else { return }
+            wireframe.navigate(to: .addCustomToken(network: network))
             
         case .done:
             
             guard
-                case let TokenPickerWireframeContext.Source.multiSelectEdit(
-                    _, _, onCompletion
-                ) = context.source
+                case let TokenPickerWireframeContext.Source.multiSelectEdit(_, onCompletion) = context.source
             else {
                 
                 return
@@ -112,15 +117,40 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
 
 private extension DefaultTokenPickerPresenter {
     
+    func loadSelectedNetworksIfNeeded() {
+        
+        networks = makeNetworks()
+        
+        if let selectedNetwork = context.selectedNetwork, networks.contains(selectedNetwork) {
+            
+            self.selectedNetwork = selectedNetwork
+        } else {
+        
+            selectedNetwork = networks[0]
+        }
+    }
+    
+    func makeNetworks() -> [Web3Network] {
+        
+        switch context.networks {
+            
+        case .all:
+            return interactor.supportedNetworks
+            
+        case let .subgroup(networks):
+            return networks
+        }
+    }
+    
     func loadSelectedTokensIfNeeded() {
         
         switch context.source {
             
-        case let .multiSelectEdit(_, selectedTokens, _):
+        case let .multiSelectEdit(selectedTokens, _):
             self.selectedTokens = selectedTokens
             
         default:
-            selectedTokens = interactor.myTokens
+            selectedTokens = interactor.myTokens(for: selectedNetwork)
         }
     }
     
@@ -137,6 +167,11 @@ private extension DefaultTokenPickerPresenter {
         }
         
         refreshData()
+    }
+    
+    func findSelectedNetwork(from network: TokenPickerViewModel.Network) -> Web3Network? {
+        
+        networks.first { $0.id == network.networkId }
     }
     
     func findSelectedToken(from token: TokenPickerViewModel.Token) -> Web3Token? {
@@ -157,7 +192,7 @@ private extension DefaultTokenPickerPresenter {
         
         tokens = interactor.tokens(
             filteredBy: searchTerm,
-            for: context.source.network
+            for: selectedNetwork
         )
     }
     
@@ -170,7 +205,7 @@ private extension DefaultTokenPickerPresenter {
         }
         tokensFiltered = interactor.tokens(
             filteredBy: searchTerm,
-            for: context.source.network
+            for: selectedNetwork
         )
 
         let sectionsToDisplay = makeSectionsToDisplay()
@@ -190,8 +225,9 @@ private extension DefaultTokenPickerPresenter {
     ) -> TokenPickerViewModel {
         
         .init(
-            title: Localized("tokenPicker.title.\(context.source.localizedValue)"),
+            title: Localized("tokenPicker.title.\(context.title.rawValue)"),
             allowMultiSelection: context.source.isMultiSelect,
+            showAddCustomToken: context.showAddCustomToken,
             content: .loaded(sections: sectionsDisplayed)
         )
     }
@@ -200,19 +236,36 @@ private extension DefaultTokenPickerPresenter {
         
         var sections = [TokenPickerViewModel.Section]()
         
+        if networks.count > 1 {
+            
+            sections.append(
+                .init(
+                    name: Localized("tokenPicker.networks.title"),
+                    type: .networks,
+                    items: makeViewModelNetworks()
+                )
+            )
+        }
+        
         if !selectedTokensFiltered.isEmpty {
             
-            let groupName = Localized("tokenPicker.myTokens.title")
             sections.append(
-                .init(name: groupName, items: makeMyViewModelTokens(from: selectedTokensFiltered))
+                .init(
+                    name: Localized("tokenPicker.myTokens.title"),
+                    type: .tokens,
+                    items: makeMyViewModelTokens(from: selectedTokensFiltered)
+                )
             )
         }
 
         if !tokensFiltered.isEmpty {
             
-            let groupName = Localized("tokenPicker.other.title")
             sections.append(
-                .init(name: groupName, items: makeOtherViewModelTokens(from: tokensFiltered))
+                .init(
+                    name: Localized("tokenPicker.other.title"),
+                    type: .tokens,
+                    items: makeOtherViewModelTokens(from: tokensFiltered)
+                )
             )
         }
 
@@ -222,23 +275,29 @@ private extension DefaultTokenPickerPresenter {
 
 private extension DefaultTokenPickerPresenter {
     
+    func makeViewModelNetworks() -> [TokenPickerViewModel.Item] {
+        
+        networks.compactMap {
+            .network(
+                .init(
+                    networkId: $0.id,
+                    iconName: interactor.networkIconName(for: $0),
+                    name: $0.name,
+                    isSelected: $0.id == selectedNetwork.id
+                )
+            )
+        }
+    }
+    
     func makeMyViewModelTokens(
         from tokens: [Web3Token]
-    ) -> [TokenPickerViewModel.Token] {
+    ) -> [TokenPickerViewModel.Item] {
         
         tokens.compactMap { token in
             
             let type: TokenPickerViewModel.TokenType
             switch context.source {
                 
-            case .receive, .select:
-                type = .init(
-                    isSelected: nil,
-                    balance: .init(
-                        tokens: token.balance.toString(decimals: 2),
-                        usdTotal: token.usdBalanceString
-                    )
-                )
             case .multiSelectEdit:
                 let isSelected = selectedTokensFiltered.contains(
                     where: {
@@ -247,6 +306,15 @@ private extension DefaultTokenPickerPresenter {
                 )
                 type = .init(
                     isSelected: isSelected,
+                    balance: .init(
+                        tokens: token.balance.toString(decimals: 2),
+                        usdTotal: token.usdBalanceString
+                    )
+                )
+                
+            case .select:
+                type = .init(
+                    isSelected: nil,
                     balance: .init(
                         tokens: token.balance.toString(decimals: 2),
                         usdTotal: token.usdBalanceString
@@ -265,28 +333,30 @@ private extension DefaultTokenPickerPresenter {
                 position = .middle
             }
             
-            return .init(
-                image: interactor.tokenIcon(for: token).pngImage ?? "default_token".assetImage!,
-                symbol: token.symbol,
-                name: token.name,
-                network: token.network.name,
-                type: type,
-                position: position,
-                tokenId: token.coingGeckoId ?? ""
+            return .token(
+                .init(
+                    tokenId: token.coingGeckoId ?? "",
+                    imageName: interactor.tokenIconName(for: token),
+                    symbol: token.symbol,
+                    name: token.name,
+                    network: token.network.name,
+                    type: type,
+                    position: position
+                )
             )
         }
     }
     
     func makeOtherViewModelTokens(
         from tokens: [Web3Token]
-    ) -> [TokenPickerViewModel.Token] {
+    ) -> [TokenPickerViewModel.Item] {
         
         tokens.compactMap { token in
             
             let type: TokenPickerViewModel.TokenType
             switch context.source {
                 
-            case .receive, .select:
+            case .select:
                 type = .init(
                     isSelected: nil,
                     balance: nil
@@ -315,22 +385,18 @@ private extension DefaultTokenPickerPresenter {
                 position = .middle
             }
             
-            return .init(
-                image: makeTokenImage(from: token),
-                symbol: token.symbol,
-                name: token.name,
-                network: token.network.name,
-                type: type,
-                position: position,
-                tokenId: token.coingGeckoId ?? ""
+            return .token(
+                .init(
+                    tokenId: token.coingGeckoId ?? "",
+                    imageName: interactor.tokenIconName(for: token),
+                    symbol: token.symbol,
+                    name: token.name,
+                    network: token.network.name,
+                    type: type,
+                    position: position
+                )
             )
         }
-    }
-    
-    func makeTokenImage(from token: Web3Token) -> UIImage {
-        
-        ((token.coingGeckoId ?? "") + "_large").assetImage
-        ?? "default_token".assetImage!
     }
 }
 
@@ -396,7 +462,11 @@ private extension Array where Element == TokenPickerViewModel.Section {
         guard isEmpty else { return self }
         
         return [
-            .init(name: Localized("tokenPicker.noResults"), items: [])
+            .init(
+                name: Localized("tokenPicker.noResults"),
+                type: .tokens,
+                items: []
+            )
         ]
     }
 }

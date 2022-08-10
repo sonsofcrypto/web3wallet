@@ -13,7 +13,10 @@ enum TokenSendWireframeDestination {
     
     case underConstructionAlert
     case qrCodeScan(network: Web3Network, onCompletion: (String) -> Void)
-    case selectToken(onCompletion: (Web3Token) -> Void)
+    case selectToken(
+        selectedToken: Web3Token,
+        onCompletion: (Web3Token) -> Void
+    )
     case confirmSend(
         dataIn: ConfirmationWireframeContext.SendContext,
         onSuccess: () -> Void
@@ -90,14 +93,18 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
             )
             wireframe.present()
             
-        case let .selectToken(onCompletion):
+        case let .selectToken(selectedToken, onCompletion):
             let wireframe = tokenPickerWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(
                     presentationStyle: .present,
+                    title: .select,
+                    selectedNetwork: selectedToken.network,
+                    networks: .all,
                     source: .select(
-                        onCompletion: onCompletion
-                    )
+                        onCompletion: makeOnCompletionDismissWrapped(with: onCompletion)
+                    ),
+                    showAddCustomToken: false
                 )
             )
             wireframe.present()
@@ -125,6 +132,18 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
 }
 
 private extension DefaultTokenSendWireframe {
+    
+    func makeOnCompletionDismissWrapped(
+        with onCompletion: @escaping (Web3Token) -> Void
+    ) -> (Web3Token) -> Void {
+        
+        {
+            [weak self] selectedToken in
+            guard let self = self else { return }
+            onCompletion(selectedToken)
+            self.navigationController.presentedViewController?.dismiss(animated: true)
+        }
+    }
     
     func wireUp() -> UIViewController {
         

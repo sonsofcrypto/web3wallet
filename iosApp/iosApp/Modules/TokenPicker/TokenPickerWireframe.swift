@@ -7,49 +7,44 @@ import UIKit
 struct TokenPickerWireframeContext {
     
     let presentationStyle: PresentationStyle
+    let title: TitleKey
+    let selectedNetwork: Web3Network?
+    let networks: Networks
     let source: Source
+    let showAddCustomToken: Bool
+    
+    // This will be used to construct the view title as: "tokenPicker.title.<titleKey.rawValue>"
+    enum TitleKey: String {
+        
+        case multiSelectEdit = "multiSelectEdit"
+        case receive = "receive"
+        case send = "send"
+        case select = "select"
+    }
+    
+    enum Networks {
+        
+        case all
+        case subgroup(networks: [Web3Network])
+    }
     
     enum Source {
         
-        case receive
         case multiSelectEdit(
-            network: Web3Network?,
             selectedTokens: [Web3Token],
-            onCompletion: (([Web3Token]) -> Void)
+            onCompletion: ([Web3Token]) -> Void
         )
         case select(
             onCompletion: (Web3Token) -> Void
         )
-        
-        var localizedValue: String {
-            
-            switch self {
-            case .receive:
-                return "receive"
-            case .multiSelectEdit:
-                return "multiSelectEdit"
-            case .select:
-                return "select"
-            }
-        }
-        
+                
         var isMultiSelect: Bool {
             
             switch self {
             case .multiSelectEdit:
                 return true
-            case .receive, .select:
+            case .select:
                 return false
-            }
-        }
-        
-        var network: Web3Network? {
-            
-            switch self {
-            case let .multiSelectEdit(network, _, _):
-                return network
-            case .receive, .select:
-                return nil
             }
         }
     }
@@ -57,8 +52,7 @@ struct TokenPickerWireframeContext {
 
 enum TokenPickerWireframeDestination {
     
-    case tokenReceive(Web3Token)
-    case addCustomToken
+    case addCustomToken(network: Web3Network)
 }
 
 protocol TokenPickerWireframe {
@@ -71,7 +65,6 @@ final class DefaultTokenPickerWireframe {
     
     private weak var presentingIn: UIViewController!
     private let context: TokenPickerWireframeContext
-    private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
     private let tokenAddWireframeFactory: TokenAddWireframeFactory
     private let web3Service: Web3ServiceLegacy
     
@@ -80,13 +73,11 @@ final class DefaultTokenPickerWireframe {
     init(
         presentingIn: UIViewController,
         context: TokenPickerWireframeContext,
-        tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
         tokenAddWireframeFactory: TokenAddWireframeFactory,
         web3Service: Web3ServiceLegacy
     ) {
         self.presentingIn = presentingIn
         self.context = context
-        self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
         self.tokenAddWireframeFactory = tokenAddWireframeFactory
         self.web3Service = web3Service
     }
@@ -116,17 +107,8 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
     func navigate(to destination: TokenPickerWireframeDestination) {
         
         switch destination {
-        case let .tokenReceive(token):
-            
-            let wireframe = tokenReceiveWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
-                context: .init(presentationStyle: .push, web3Token: token)
-            )
-            wireframe.present()
                         
-        case .addCustomToken:
-            
-            guard let network = context.source.network else { return }
+        case let .addCustomToken(network):
             
             let wireframe = tokenAddWireframeFactory.makeWireframe(
                 presentingIn: navigationController,

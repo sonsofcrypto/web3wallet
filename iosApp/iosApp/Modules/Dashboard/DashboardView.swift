@@ -272,6 +272,7 @@ private extension DashboardViewController {
             }
         }
 
+        // TODO: Decouple this
         if Theme.type.isThemeIOS {
             layout.register(
                 DgenCellBackgroundSupplementaryView.self,

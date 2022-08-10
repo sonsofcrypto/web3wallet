@@ -33,7 +33,7 @@ final class TokenSendViewController: BaseViewController {
 extension TokenSendViewController: TokenSendView {
 
     func update(with viewModel: TokenSendViewModel) {
-
+        
         self.viewModel = viewModel
         
         title = viewModel.title
@@ -206,7 +206,7 @@ private extension TokenSendViewController {
         }
     }
     
-    func makeTokenCellHeight() -> CGFloat { 80 }
+    func makeTokenCellHeight() -> CGFloat { 92 }
     
     func makeCTACellHeight() -> CGFloat {
         

@@ -8,6 +8,7 @@ struct TokenPickerViewModel {
 
     let title: String
     let allowMultiSelection: Bool
+    let showAddCustomToken: Bool
     let content: Content
 }
 
@@ -22,18 +23,39 @@ extension TokenPickerViewModel {
     struct Section {
         
         let name: String
-        let items: [Token]
+        let type: `Type`
+        let items: [Item]
+        
+        enum `Type` {
+
+            case networks
+            case tokens
+        }
+    }
+    
+    enum Item {
+        
+        case network(Network)
+        case token(Token)
+    }
+    
+    struct Network {
+        
+        let networkId: String
+        let iconName: String
+        let name: String
+        let isSelected: Bool
     }
     
     struct Token {
         
-        let image: UIImage
+        let tokenId: String
+        let imageName: String
         let symbol: String
         let name: String
         let network: String?
         let type: TokenType
         let position: Position
-        let tokenId: String
         
         enum Position {
             
@@ -69,7 +91,7 @@ extension TokenPickerViewModel {
 
 extension TokenPickerViewModel {
 
-    func sections() -> [TokenPickerViewModel.Section] {
+    var sections: [TokenPickerViewModel.Section] {
         switch content {
         case let .loaded(sections):
             return sections

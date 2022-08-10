@@ -14,8 +14,14 @@ struct TokenSwapWireframeContext {
 enum TokenSwapWireframeDestination {
     
     case underConstructionAlert
-    case selectMyToken(onCompletion: (Web3Token) -> Void)
-    case selectToken(onCompletion: (Web3Token) -> Void)
+    case selectMyToken(
+        selectedToken: Web3Token,
+        onCompletion: (Web3Token) -> Void
+    )
+    case selectToken(
+        selectedToken: Web3Token,
+        onCompletion: (Web3Token) -> Void
+    )
     case confirmSwap(
         dataIn: ConfirmationWireframeContext.SwapContext,
         onSuccess: () -> Void
@@ -92,11 +98,11 @@ extension DefaultTokenSwapWireframe: TokenSwapWireframe {
                 context: .underConstructionAlert()
             ).present()
             
-        case let .selectMyToken(onCompletion):
-            presentTokenPicker(onCompletion: onCompletion)
+        case let .selectMyToken(selectedToken, onCompletion):
+            presentTokenPicker(selectedToken: selectedToken, onCompletion: onCompletion)
             
-        case let .selectToken(onCompletion):
-            presentTokenPicker(onCompletion: onCompletion)
+        case let .selectToken(selectedToken, onCompletion):
+            presentTokenPicker(selectedToken: selectedToken, onCompletion: onCompletion)
         
         case let .confirmSwap(dataIn, onSuccess):
             
@@ -170,6 +176,7 @@ private extension DefaultTokenSwapWireframe {
     }
     
     func presentTokenPicker(
+        selectedToken: Web3Token,
         onCompletion: @escaping (Web3Token) -> Void
     ) {
         
@@ -177,11 +184,27 @@ private extension DefaultTokenSwapWireframe {
             presentingIn: navigationController,
             context: .init(
                 presentationStyle: .present,
+                title: .select,
+                selectedNetwork: selectedToken.network,
+                networks: .all,
                 source: .select(
-                    onCompletion: onCompletion
-                )
+                    onCompletion: makeOnCompletionDismissWrapped(with: onCompletion)
+                ),
+                showAddCustomToken: false
             )
         )
         wireframe.present()
+    }
+    
+    func makeOnCompletionDismissWrapped(
+        with onCompletion: @escaping (Web3Token) -> Void
+    ) -> (Web3Token) -> Void {
+        
+        {
+            [weak self] selectedToken in
+            guard let self = self else { return }
+            onCompletion(selectedToken)
+            self.navigationController.presentedViewController?.dismiss(animated: true)
+        }
     }
 }
