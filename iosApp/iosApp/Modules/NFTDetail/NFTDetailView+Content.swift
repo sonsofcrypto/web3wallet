@@ -6,7 +6,7 @@ extension NFTDetailViewController {
     
     func refreshNFT(with item: NFTItem, and collection: NFTCollection) {
         
-        scrollableContentView.clearSubviews()
+        scrollableContentView.removeAllSubview()
         
         let content = makeNFTContent(with: item, and: collection)
         scrollableContentView.addSubview(content)

@@ -30,12 +30,11 @@ final class ConfirmationViewController: BaseViewController {
 extension ConfirmationViewController: ConfirmationView {
 
     func update(with viewModel: ConfirmationViewModel) {
-
         self.viewModel = viewModel
-        
+
         title = viewModel.title
         
-        view.clearSubviews()
+        view.removeAllSubview()
         
         let content = makeContentView()
         view.addSubview(content)

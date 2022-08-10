@@ -101,8 +101,15 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
 
         let angle = CGFloat(-Double.pi) + 0.001
         fromView?.alpha = 0.0001
+        toView?.alpha = 0
         toView?.layer.cornerRadius = (fromView?.layer.cornerRadius
             ?? Theme.constant.padding) * 4
+        
+        UIView.animateKeyframes(transitionDuration(using: context), animations: {
+            UIView.addKeyframe(0, duration: 0.04) { toView?.alpha = 0 }
+            UIView.addKeyframe(0.04, duration: 0.1) { toView?.alpha = 1 }
+            UIView.addKeyframe(0.14, duration: 0.86) { toView?.alpha = 1 }
+        })
 
         UIView.springAnimate(
             transitionDuration(using: context),
@@ -176,8 +183,13 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
         containerView.layer.sublayerTransform = TransformView.parentSublayerTransform
 
         let angle = CGFloat(Double.pi)
-
         toView?.alpha = 0.0001
+
+        UIView.animateKeyframes(transitionDuration(using: context), animations: {
+            UIView.addKeyframe(0, duration: 0.04) { fromView?.alpha = 1 }
+            UIView.addKeyframe(0.04, duration: 0.1) { fromView?.alpha = 0 }
+            UIView.addKeyframe(0.14, duration: 0.86) { fromView?.alpha = 0 }
+        })
 
         UIView.springAnimate(
             transitionDuration(using: context),

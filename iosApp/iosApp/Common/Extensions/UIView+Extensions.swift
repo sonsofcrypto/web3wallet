@@ -38,6 +38,34 @@ extension UIView {
         )
     }
 
+    class func animateKeyframes(
+        _ duration: TimeInterval,
+        delay: TimeInterval = 0,
+        options: UIView.KeyframeAnimationOptions = [],
+        animations: @escaping () -> Void,
+        completion: ((Bool) -> Void)? = nil
+    ) {
+        animateKeyframes(
+            withDuration: duration,
+            delay: delay,
+            options: options,
+            animations: animations,
+            completion: completion
+        )
+    }
+
+    class func addKeyframe(
+        _ start: Double,
+        duration: Double,
+        animations: @escaping () -> Void
+    ) {
+        addKeyframe(
+            withRelativeStartTime: start,
+            relativeDuration: duration,
+            animations: animations
+        )
+    }
+
     func shakeAnimate() {
         let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
         animation.timingFunction = CAMediaTimingFunction(name: .linear)
@@ -49,8 +77,7 @@ extension UIView {
 
 extension UIView {
     
-    func clearSubviews() {
-        
+    func removeAllSubview() {
         subviews.forEach { $0.removeFromSuperview() }
     }
 }

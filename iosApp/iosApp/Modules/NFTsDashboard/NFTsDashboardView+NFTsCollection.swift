@@ -64,7 +64,7 @@ extension NFTsDashboardViewController {
     
     func refreshNFTsCollections() {
         
-        collectionsView.clearSubviews()
+        collectionsView.removeAllSubview()
         
         let content = makeNFTCollectionsContent()
         collectionsView.addSubview(content)

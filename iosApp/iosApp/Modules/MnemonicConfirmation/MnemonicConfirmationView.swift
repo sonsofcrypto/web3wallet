@@ -198,7 +198,7 @@ private extension MnemonicConfirmationViewController {
         textViewContainer.layer.borderWidth = hasInvalidWords ? 2 : 0
         textViewContainer.layer.borderColor = hasInvalidWords ? Theme.colour.navBarTint.cgColor : nil
         
-        textView.inputAccessoryView?.clearSubviews()
+        textView.inputAccessoryView?.removeAllSubview()
         addWords(viewModel.potentialWords, to: textView.inputAccessoryView)
         
         textView.selectedRange = selectedRange

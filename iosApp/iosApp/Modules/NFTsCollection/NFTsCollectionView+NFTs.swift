@@ -57,7 +57,7 @@ extension NFTsCollectionViewController {
     
     func refreshNFTs() {
         
-        scrollableContentView.clearSubviews()
+        scrollableContentView.removeAllSubview()
         
         let content = makeNFTsContent()
         scrollableContentView.addSubview(content)
