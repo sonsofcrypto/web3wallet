@@ -7,11 +7,14 @@ import Foundation
 enum ConfirmationPresenterEvent {
 
     case confirm
+    case txSuccessCTATapped
+    case txFailedCTATapped
     case dismiss
 }
 
 protocol ConfirmationPresenter {
 
+    var contextType: ConfirmationWireframeContext.`Type` { get }
     func present()
     func handle(_ event: ConfirmationPresenterEvent)
 }
@@ -20,20 +23,28 @@ final class DefaultConfirmationPresenter {
 
     private weak var view: ConfirmationView?
     private let wireframe: ConfirmationWireframe
+    private let interactor: ConfirmationInteractor
     private let context: ConfirmationWireframeContext
     
     init(
         view: ConfirmationView,
         wireframe: ConfirmationWireframe,
+        interactor: ConfirmationInteractor,
         context: ConfirmationWireframeContext
     ) {
         self.view = view
         self.wireframe = wireframe
+        self.interactor = interactor
         self.context = context
     }
 }
 
 extension DefaultConfirmationPresenter: ConfirmationPresenter {
+    
+    var contextType: ConfirmationWireframeContext.`Type` {
+        
+        context.type
+    }
 
     func present() {
         
@@ -51,16 +62,25 @@ extension DefaultConfirmationPresenter: ConfirmationPresenter {
                 
             case .send, .sendNFT:
                 
-                wireframe.navigate(
-                    to: .authenticate(makeAuthenticateContext())
-                )
+                showTransactionInProgress()
+                broadcastTransaction(with: "password", and: "salt")
+//                wireframe.navigate(
+//                    to: .authenticate(makeAuthenticateContext())
+//                )
                                 
             case .swap:
                 
                 wireframe.navigate(to: .underConstruction)
             }
             
+        case .txSuccessCTATapped:
             
+            wireframe.navigate(to: .account)
+
+        case .txFailedCTATapped:
+            
+            wireframe.dismiss()
+
         case .dismiss:
             
             wireframe.dismiss()
@@ -224,6 +244,155 @@ private extension DefaultConfirmationPresenter {
 
 private extension DefaultConfirmationPresenter {
     
+    func showTransactionInProgress() {
+        
+        let viewModel = ConfirmationViewModel(
+            title: makeTitle(),
+            content: .inProgress(
+                .init(
+                    title: makeTransactionInProgressTitle(),
+                    message: makeTransactionInProgressMessage()
+                )
+            )
+        )
+        view?.update(with: viewModel)
+    }
+    
+    func makeTransactionInProgressTitle() -> String {
+        
+        switch context.type {
+        case .send:
+            return Localized("confirmation.tx.inProgress.send.title")
+        case .sendNFT:
+            return Localized("confirmation.tx.inProgress.sendNFT.title")
+        case .swap:
+            return Localized("confirmation.tx.inProgress.swap.title")
+        }
+    }
+    
+    func makeTransactionInProgressMessage() -> String {
+        
+        switch context.type {
+        case .send:
+            return Localized("confirmation.tx.inProgress.send.message")
+        case .sendNFT:
+            return Localized("confirmation.tx.inProgress.sendNFT.message")
+        case .swap:
+            return Localized("confirmation.tx.inProgress.swap.message")
+        }
+    }
+}
+
+private extension DefaultConfirmationPresenter {
+    
+    func showTransactionSuccess() {
+        
+        let viewModel = ConfirmationViewModel(
+            title: makeTitle(),
+            content: .success(
+                .init(
+                    title: makeTransactionSuccessTitle(),
+                    message: makeTransactionSuccessMessage(),
+                    cta: makeTransactionSucessCTA()
+                )
+            )
+        )
+        view?.update(with: viewModel)
+    }
+    
+    func makeTransactionSuccessTitle() -> String {
+        
+        switch context.type {
+        case .send:
+            return Localized("confirmation.tx.success.send.title")
+        case .sendNFT:
+            return Localized("confirmation.tx.success.sendNFT.title")
+        case .swap:
+            return Localized("confirmation.tx.success.swap.title")
+        }
+    }
+    
+    func makeTransactionSuccessMessage() -> String {
+        
+        switch context.type {
+        case .send:
+            return Localized("confirmation.tx.success.send.message")
+        case .sendNFT:
+            return Localized("confirmation.tx.success.sendNFT.message")
+        case .swap:
+            return Localized("confirmation.tx.success.swap.message")
+        }
+    }
+    
+    func makeTransactionSucessCTA() -> String {
+        
+        switch context.type {
+        case .send:
+            return Localized("confirmation.tx.success.send.cta")
+        case .sendNFT:
+            return Localized("confirmation.tx.success.sendNFT.cta")
+        case .swap:
+            return Localized("confirmation.tx.success.swap.cta")
+        }
+    }
+}
+
+private extension DefaultConfirmationPresenter {
+    
+    func showTransactionFailed() {
+        
+        let viewModel = ConfirmationViewModel(
+            title: makeTitle(),
+            content: .failed(
+                .init(
+                    title: makeTransactionFailedTitle(),
+                    message: makeTransactionFailedMessage(),
+                    cta: makeTransactionFailedCTA()
+                )
+            )
+        )
+        view?.update(with: viewModel)
+    }
+    
+    func makeTransactionFailedTitle() -> String {
+        
+        switch context.type {
+        case .send:
+            return Localized("confirmation.tx.failed.send.title")
+        case .sendNFT:
+            return Localized("confirmation.tx.failed.sendNFT.title")
+        case .swap:
+            return Localized("confirmation.tx.failed.swap.title")
+        }
+    }
+    
+    func makeTransactionFailedMessage() -> String {
+        
+        switch context.type {
+        case .send:
+            return Localized("confirmation.tx.failed.send.message")
+        case .sendNFT:
+            return Localized("confirmation.tx.failed.sendNFT.message")
+        case .swap:
+            return Localized("confirmation.tx.failed.swap.message")
+        }
+    }
+    
+    func makeTransactionFailedCTA() -> String {
+        
+        switch context.type {
+        case .send:
+            return Localized("confirmation.tx.failed.send.cta")
+        case .sendNFT:
+            return Localized("confirmation.tx.failed.sendNFT.cta")
+        case .swap:
+            return Localized("confirmation.tx.failed.swap.cta")
+        }
+    }
+}
+
+private extension DefaultConfirmationPresenter {
+    
     func makeAuthenticateContext() -> AuthenticateContext {
 
         .init(
@@ -277,6 +446,15 @@ private extension DefaultConfirmationPresenter {
         and salt: String
     ) {
         
+        showTransactionInProgress()
+        broadcastTransaction(with: password, and: salt)
+    }
+
+    func broadcastTransaction(
+        with password: String,
+        and salt: String
+    ) {
+       
         switch context.type {
             
         case .swap:
@@ -284,10 +462,30 @@ private extension DefaultConfirmationPresenter {
             print("Do swap!")
             print("Authenticated with: \(password) and \(salt)")
 
-        case .send:
+        case let .send(data):
             
-            print("Do send!")
-            print("Authenticated with: \(password) and \(salt)")
+            interactor.send(
+                tokenFrom: data.token.token,
+                toAddress: data.destination.to,
+                balance: data.token.value,
+                fee: data.estimatedFee,
+                password: password,
+                salt: salt
+            ) { [weak self] result in
+                
+                guard let self = self else { return }
+                
+                switch result {
+                    
+                case .success:
+                    
+                    self.showTransactionSuccess()
+                    
+                case .failure:
+                    
+                    print("PRESENT ERROR...")
+                }
+            }
             
         case .sendNFT:
             
@@ -295,5 +493,4 @@ private extension DefaultConfirmationPresenter {
             print("Authenticated with: \(password) and \(salt)")
         }
     }
-
 }

@@ -23,8 +23,7 @@ enum TokenSwapWireframeDestination {
         onCompletion: (Web3Token) -> Void
     )
     case confirmSwap(
-        dataIn: ConfirmationWireframeContext.SwapContext,
-        onSuccess: () -> Void
+        dataIn: ConfirmationWireframeContext.SwapContext
     )
 }
 
@@ -104,7 +103,7 @@ extension DefaultTokenSwapWireframe: TokenSwapWireframe {
         case let .selectToken(selectedToken, onCompletion):
             presentTokenPicker(selectedToken: selectedToken, onCompletion: onCompletion)
         
-        case let .confirmSwap(dataIn, onSuccess):
+        case let .confirmSwap(dataIn):
             
             guard let viewController = navigationController.topViewController else {
                 
@@ -113,7 +112,7 @@ extension DefaultTokenSwapWireframe: TokenSwapWireframe {
             
             let wireframe = confirmationWireframeFactory.makeWireframe(
                 presentingIn: viewController,
-                context: .init(type: .swap(dataIn), onSuccessHandler: onSuccess)
+                context: .init(type: .swap(dataIn))
             )
             wireframe.present()
         }

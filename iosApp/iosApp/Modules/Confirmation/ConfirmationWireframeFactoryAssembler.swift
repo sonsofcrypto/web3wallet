@@ -10,7 +10,8 @@ final class ConfirmationWireframeFactoryAssembler: AssemblerComponent {
             
             DefaultConfirmationWireframeFactory(
                 authenticateWireframeFactory: resolver.resolve(),
-                alertWireframeFactory: resolver.resolve()
+                alertWireframeFactory: resolver.resolve(),
+                deepLinkHandler: resolver.resolve()
             )
         }
     }

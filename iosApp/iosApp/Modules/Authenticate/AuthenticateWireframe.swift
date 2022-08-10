@@ -71,7 +71,6 @@ private extension DefaultAuthenticateWireframe {
     
     var keyStoreItemTarget: KeyStoreItem? {
         
-        // TODO: @Annon Fix keyStoreService.selected, returning nil
         context.keyStoreItem ?? keyStoreService.selected
     }
 

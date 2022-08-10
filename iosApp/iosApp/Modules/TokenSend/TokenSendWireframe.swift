@@ -18,8 +18,7 @@ enum TokenSendWireframeDestination {
         onCompletion: (Web3Token) -> Void
     )
     case confirmSend(
-        dataIn: ConfirmationWireframeContext.SendContext,
-        onSuccess: () -> Void
+        dataIn: ConfirmationWireframeContext.SendContext
     )
 }
 
@@ -109,14 +108,14 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
             )
             wireframe.present()
             
-        case let .confirmSend(dataIn, onSuccess):
+        case let .confirmSend(dataIn):
             guard let viewController = navigationController.topViewController else {
                 return
             }
             
             let wireframe = confirmationWireframeFactory.makeWireframe(
                 presentingIn: viewController,
-                context: .init(type: .send(dataIn), onSuccessHandler: onSuccess)
+                context: .init(type: .send(dataIn))
             )
             wireframe.present()
         }

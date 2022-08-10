@@ -208,14 +208,13 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                         tokenTo: makeConfirmationSwapTokenTo(),
                         provider: makeConfirmationProvider(),
                         estimatedFee: makeConfirmationSwapEstimatedFee()
-                    ),
-                    onSuccess: makeOnTokenTransactionSend()
+                    )
                 )
             )
         }
     }
     
-    func makeConfirmationSwapEstimatedFee() -> ConfirmationWireframeContext.SwapContext.Fee {
+    func makeConfirmationSwapEstimatedFee() -> Web3NetworkFee {
         
         switch fee {
             
@@ -225,13 +224,6 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
             return .medium
         case .high:
             return .high
-        }
-    }
-    
-    func makeOnTokenTransactionSend() -> () -> Void {
-        
-        {
-            print("Transaction send!!!")
         }
     }
     

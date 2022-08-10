@@ -169,6 +169,8 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                 updateView(shouldTokenBecomeFirstResponder: true)
                 return
             }
+            
+            view?.dismissKeyboard()
                         
             wireframe.navigate(
                 to: .confirmSend(
@@ -176,8 +178,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                         token: makeConfirmationSendToken(),
                         destination: makeConfirmationSendDestination(to: address),
                         estimatedFee: makeConfirmationSendEstimatedFee()
-                    ),
-                    onSuccess: makeOnTokenTransactionSend()
+                    )
                 )
             )
         }
@@ -186,7 +187,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
 
 private extension DefaultTokenSendPresenter {
     
-    func makeConfirmationSendEstimatedFee() -> ConfirmationWireframeContext.SendContext.Fee {
+    func makeConfirmationSendEstimatedFee() -> Web3NetworkFee {
         switch fee {
         case .low:
             return .low
@@ -220,12 +221,6 @@ private extension DefaultTokenSendPresenter {
         )
     }
     
-    func makeOnTokenTransactionSend() -> () -> Void {
-        {
-            print("Transaction send!!!")
-        }
-    }
-
     func loadToken() {
         token = context.web3Token ?? interactor.defaultToken
     }

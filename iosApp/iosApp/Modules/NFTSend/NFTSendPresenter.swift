@@ -162,8 +162,7 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
                         nftItem: context.nftItem,
                         destination: makeConfirmationSendNFTDestination(to: address),
                         estimatedFee: makeConfirmationSendNFTEstimatedFee()
-                    ),
-                    onSuccess: makeOnNFTTransactionSend()
+                    )
                 )
             )
         }
@@ -172,7 +171,7 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
 
 private extension DefaultNFTSendPresenter {
     
-    func makeConfirmationSendNFTEstimatedFee() -> ConfirmationWireframeContext.SendNFTContext.Fee {
+    func makeConfirmationSendNFTEstimatedFee() -> Web3NetworkFee {
         
         switch fee {
             
@@ -201,14 +200,6 @@ private extension DefaultNFTSendPresenter {
         )
     }
     
-    func makeOnNFTTransactionSend() -> () -> Void {
-        
-        {
-            // TODO: @Anoon go to dashboard?
-            print("NFT sent!!!")
-        }
-    }
-        
     func updateView(with items: [NFTSendViewModel.Item]) {
         
         view?.update(

@@ -35,15 +35,13 @@ extension ConfirmationViewController: ConfirmationView {
         
         title = viewModel.title
         
+        view.clearSubviews()
+        
         let content = makeContentView()
         view.addSubview(content)
         
         content.addConstraints(
-            [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: Theme.constant.padding))
-            ]
+            .toEdges(padding: Theme.constant.padding)
         )
     }
 }
@@ -56,13 +54,10 @@ extension ConfirmationViewController: UIViewControllerTransitioningDelegate, Mod
         source: UIViewController
     ) -> UIPresentationController? {
         
-        // Calling here presenter.present() to load the viewModel
-        presenter?.present()
-
         let navBarHeight: CGFloat = 44
         var contentHeight: CGFloat = 0
         
-        switch viewModel.content {
+        switch presenter.contextType {
             
         case .swap:
             
@@ -122,7 +117,27 @@ private extension ConfirmationViewController {
     func makeContentView() -> UIView {
         
         switch viewModel.content {
+
+        case let .inProgress(viewModel):
             
+            return ConfirmationTxInProgressView(
+                viewModel: viewModel
+            )
+
+        case let .success(viewModel):
+            
+            return ConfirmationTxSuccessView(
+                viewModel: viewModel,
+                handler: makeConfirmationTxSuccessViewHandler()
+            )
+
+        case let .failed(viewModel):
+            
+            return ConfirmationTxFailedView(
+                viewModel: viewModel,
+                handler: makeConfirmationTxFailedViewHandler()
+            )
+
         case let .swap(viewModel):
             
             return ConfirmationSwapView(
@@ -152,6 +167,34 @@ private extension ConfirmationViewController {
             [weak self] in
             guard let self = self else { return }
             self.presenter.handle(.confirm)
+        }
+    }
+    
+    func makeConfirmationTxSuccessViewHandler() -> ConfirmationTxSuccessView.Handler {
+        
+        .init(onCTATapped: makeTxSuccessOnCTATapped())
+    }
+    
+    func makeTxSuccessOnCTATapped() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.txSuccessCTATapped)
+        }
+    }
+    
+    func makeConfirmationTxFailedViewHandler() -> ConfirmationTxFailedView.Handler {
+        
+        .init(onCTATapped: makeTxFailedOnCTATapped())
+    }
+    
+    func makeTxFailedOnCTATapped() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.txFailedCTATapped)
         }
     }
 }
