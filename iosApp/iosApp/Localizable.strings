@@ -293,6 +293,33 @@
 "confirmation.sendNFT.title" = "Confirm Transaction";
 "confirmation.sendNFT.confirm" = "Send";
 
+"confirmation.tx.inProgress.send.title" = "Broadcasting transaction...";
+"confirmation.tx.inProgress.send.message" = "This may take up to 1 min depending on how busy is the network";
+"confirmation.tx.inProgress.swap.title" = "Broadcasting transaction...";
+"confirmation.tx.inProgress.swap.message" = "This may take up to 1 min depending on how busy is the network";
+"confirmation.tx.inProgress.sendNFT.title" = "Broadcasting transaction...";
+"confirmation.tx.inProgress.sendNFT.message" = "This may take up to 1 min depending on how busy is the network";
+
+"confirmation.tx.success.send.title" = "Broadcasted! 🎉";
+"confirmation.tx.success.send.message" = "The transaction is now broadcasted, you can see it now in your account.";
+"confirmation.tx.success.send.cta" = "Go to Account";
+"confirmation.tx.success.swap.title" = "Broadcasted! 🎉";
+"confirmation.tx.success.swap.message" = "The transaction is now broadcasted, you can see it now in your account.";
+"confirmation.tx.success.swap.cta" = "Go to Account";
+"confirmation.tx.success.sendNFT.title" = "Broadcasted! 🎉";
+"confirmation.tx.success.sendNFT.message" = "The transaction is now broadcasted, you can see it now in your account.";
+"confirmation.tx.success.sendNFT.cta" = "Go to Account";
+
+"confirmation.tx.failed.send.title" = "Oops ☹️";
+"confirmation.tx.failed.send.message" = "The transaction did not succeed this time, please try again.";
+"confirmation.tx.failed.send.cta" = "Retry";
+"confirmation.tx.failed.swap.title" = "Oops ☹️";
+"confirmation.tx.failed.swap.message" = "The transaction did not succeed this time, please try again.";
+"confirmation.tx.failed.swap.cta" = "Retry";
+"confirmation.tx.failed.sendNFT.title" = "Oops ☹️";
+"confirmation.tx.failed.sendNFT.message" = "The transaction did not succeed this time, please try again.";
+"confirmation.tx.failed.sendNFT.cta" = "Retry";
+
 "cult.proposals.title" = "Cult.DAO Proposals";
 "cult.proposals.segmentedControl.pending" = "Pending";
 "cult.proposals.segmentedControl.closed" = "Closed";

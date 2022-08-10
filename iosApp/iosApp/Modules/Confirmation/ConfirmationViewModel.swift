@@ -11,8 +11,34 @@ struct ConfirmationViewModel {
     
     enum Content {
         
+        case inProgress(TxInProgressViewModel)
+        case success(TxSuccessViewModel)
+        case failed(TxFailedViewModel)
         case swap(SwapViewModel)
         case send(SendViewModel)
         case sendNFT(SendNFTViewModel)
+    }
+}
+
+extension ConfirmationViewModel {
+    
+    struct TxInProgressViewModel {
+        
+        let title: String
+        let message: String
+    }
+    
+    struct TxSuccessViewModel {
+        
+        let title: String
+        let message: String
+        let cta: String
+    }
+
+    struct TxFailedViewModel {
+        
+        let title: String
+        let message: String
+        let cta: String
     }
 }
