@@ -3,9 +3,11 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 protocol TokenReceiveInteractor: AnyObject {
 
+    func receivingAddress(for token: Web3Token) -> String
 }
 
 final class DefaultTokenReceiveInteractor {
@@ -22,4 +24,15 @@ final class DefaultTokenReceiveInteractor {
 
 extension DefaultTokenReceiveInteractor: TokenReceiveInteractor {
 
+    func receivingAddress(for token: Web3Token) -> String {
+        
+        let walletsConnectionService: WalletsConnectionService = ServiceDirectory.assembler.resolve()
+        
+        guard let address = try? walletsConnectionService.wallet(network: token.network.toNetwork())?.address() else {
+            
+            fatalError("Unable to read wallet address from network \(token.network.name)")
+        }
+        
+        return address.toHexStringAddress().hexString
+    }
 }

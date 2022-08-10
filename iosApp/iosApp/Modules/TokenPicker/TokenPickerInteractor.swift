@@ -45,8 +45,8 @@ extension DefaultTokenPickerInteractor: TokenPickerInteractor {
     }
     
     var supportedNetworks: [Web3Network] {
-        
-        Network.Companion().supported().compactMap {
+
+        walletsConnectionService.enabledNetworks().compactMap {
             Web3Network.from($0, isOn: false)
         }
     }
