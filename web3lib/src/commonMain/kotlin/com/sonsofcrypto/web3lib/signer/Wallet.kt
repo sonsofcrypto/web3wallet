@@ -4,14 +4,20 @@ import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.model.*
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
+import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
 import com.sonsofcrypto.web3lib.types.Address
+import com.sonsofcrypto.web3lib.types.Bip44
+import com.sonsofcrypto.web3lib.types.ExtKey
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.bip39.Bip39
+import com.sonsofcrypto.web3lib.utils.bip39.WordList
 
 class Wallet: Signer {
     private val keyStoreItem: KeyStoreItem
     private val keyStoreService: KeyStoreService
     private var provider: Provider? = null
+    private var key: Key? = null
 
     constructor(
         keyStoreItem: KeyStoreItem,
@@ -33,6 +39,23 @@ class Wallet: Signer {
     }
 
     fun network(): Network? = provider?.network
+
+    fun isUnlocked(): Boolean = (key != null)
+
+    @Throws(Throwable::class)
+    fun unlock(password: String, salt: String) {
+        val secretStorage = keyStoreService.secretStorage(keyStoreItem, password)
+        if (secretStorage == null) {
+            throw Error.FailedToUnlockWallet
+        }
+        val result = secretStorage.decrypt(password)
+        if (result.mnemonic != null) {
+            val wordList = WordList.fromLocaleString(result.mnemonicLocale)
+            val bip39 = Bip39(result.mnemonic.split(" "), salt, wordList)
+            val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
+            key = bip44.deriveChildKey(keyStoreItem.derivationPath).key
+        } else key = result.key
+    }
 
     @Throws(Throwable::class)
     override fun address(): Address {
@@ -108,6 +131,10 @@ class Wallet: Signer {
         /** When calling methods that require provider while one is not connected */
         data class ProviderConnectionError(val wallet: Wallet) :
             Error("Provider not connected for ${wallet.id()}")
+
+        /** Failed to unlock wallet */
+        object FailedToUnlockWallet: Error("Failed to unlock wallet")
+
     }
 }
 
