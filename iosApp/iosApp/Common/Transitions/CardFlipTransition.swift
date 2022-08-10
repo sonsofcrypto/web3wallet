@@ -100,8 +100,9 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
         )
 
         let angle = CGFloat(-Double.pi) + 0.001
-
         fromView?.alpha = 0.0001
+        toView?.layer.cornerRadius = (fromView?.layer.cornerRadius
+            ?? Theme.constant.padding) * 4
 
         UIView.springAnimate(
             transitionDuration(using: context),
@@ -109,6 +110,7 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
             velocity: 0.6,
             animations: {
                 transformView.layer.transform = CATransform3DMakeRotation(angle, 0, 1, 0)
+                toView?.layer.cornerRadius = 0
                 toView?.transform = CGAffineTransform(scaleX: -1, y: 1)
                 snap?.transform = CGAffineTransform(
                     scaleX: snapScale.width,
@@ -189,6 +191,9 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
                     0
                 )
                 snap?.transform = CGAffineTransform(scaleX: -1, y: 1)
+
+                fromView?.layer.cornerRadius = (toView?.layer.cornerRadius
+                    ?? Theme.constant.padding) * 4
                 fromView?.transform = CGAffineTransform(
                     scaleX: snapScale.width,
                     y: snapScale.height
