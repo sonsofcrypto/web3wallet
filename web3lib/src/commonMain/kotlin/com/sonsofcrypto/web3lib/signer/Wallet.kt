@@ -9,14 +9,25 @@ import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
+import com.sonsofcrypto.web3lib.utils.timerFlow
+import com.sonsofcrypto.web3lib.utils.zeroOut
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlin.time.Duration.Companion.seconds
+
+private val autoLockInterval = 5.seconds
 
 class Wallet: Signer {
     private val keyStoreItem: KeyStoreItem
     private val keyStoreService: KeyStoreService
     private var provider: Provider? = null
     private var key: ByteArray? = null
+    private var lockJob: Job? = null
 
     constructor(
         keyStoreItem: KeyStoreItem,
@@ -30,6 +41,8 @@ class Wallet: Signer {
 
     fun id(): String = keyStoreItem.uuid
 
+    fun network(): Network? = provider?.network
+
     override fun provider(): Provider? = provider
 
     override fun connect(provider: Provider): Signer {
@@ -37,24 +50,33 @@ class Wallet: Signer {
         return this
     }
 
-    fun network(): Network? = provider?.network
-
-    fun isUnlocked(): Boolean = (key != null)
-
     @Throws(Throwable::class)
     fun unlock(password: String, salt: String) {
         val secretStorage = keyStoreService.secretStorage(keyStoreItem, password)
-        if (secretStorage == null) {
-            throw Error.FailedToUnlockWallet
-        }
+            ?: throw Error.FailedToUnlockWallet
+
         val result = secretStorage.decrypt(password)
+
         if (result.mnemonic != null) {
             val wordList = WordList.fromLocaleString(result.mnemonicLocale)
             val bip39 = Bip39(result.mnemonic.split(" "), salt, wordList)
             val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
             key = bip44.deriveChildKey(keyStoreItem.derivationPath).key
         } else key = result.key
+
+        lockJob = timerFlow(autoLockInterval)
+            .onEach { lock() }
+            .launchIn(CoroutineScope(bgDispatcher))
     }
+
+    fun lock() {
+        lockJob?.cancel()
+        lockJob = null
+        key?.zeroOut()
+        key = null
+    }
+
+    fun isUnlocked(): Boolean = (key != null)
 
     @Throws(Throwable::class)
     override fun address(): Address {
@@ -92,7 +114,7 @@ class Wallet: Signer {
     }
 
     override suspend fun sendTransaction(transaction: TransactionRequest): TransactionResponse {
-        TODO("Transform to raw")
+        return provider!!.sendRawTransaction()
     }
 
     override suspend fun getChainId() {

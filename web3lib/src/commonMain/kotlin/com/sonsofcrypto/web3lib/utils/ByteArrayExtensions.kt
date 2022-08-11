@@ -69,3 +69,8 @@ fun ByteArray.byteArrayWithByteAt(idx: Int): ByteArray {
     return array
 }
 
+/** Sets all the byte values to zero */
+fun ByteArray.zeroOut() {
+    for (idx in this.indices) { set(idx, 0) }
+}
+
