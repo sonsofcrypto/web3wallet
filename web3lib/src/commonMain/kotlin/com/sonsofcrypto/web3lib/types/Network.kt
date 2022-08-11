@@ -45,13 +45,6 @@ data class Network(
         fun rinkeby() = Network("Rinkeby", 4u, Type.L1_TEST, null, Currency.ethereum())
         fun goerli() = Network("Goerli", 5u, Type.L1_TEST, null, Currency.ethereum())
 
-        fun supported(): List<Network> = listOf(
-            Network.ethereum(),
-            Network.ropsten(),
-            Network.rinkeby(),
-            Network.goerli(),
-        )
-
         fun fromChainId(chainId: UInt): Network = when(chainId) {
             3u -> ropsten()
             4u -> rinkeby()
