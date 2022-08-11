@@ -17,7 +17,7 @@ final class NFTsServiceAssembler: AssemblerComponent {
                 
                 return OpenSeaNFTsService(
                     web3Service: resolver.resolve(),
-                    walletsConnectionService: resolver.resolve()
+                    networksService: resolver.resolve()
                 )
                 
             } else {

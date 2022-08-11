@@ -6,7 +6,7 @@ import Foundation
 import web3lib
 
 protocol NetworkInteractorLister: AnyObject {
-    func handle(_ event: WalletsConnectionEvent)
+    func handle(_ event: NetworksEvent)
 }
 
 protocol NetworksInteractor: AnyObject {
@@ -26,21 +26,21 @@ protocol NetworksInteractor: AnyObject {
 final class DefaultNetworksInteractor {
 
     var selected: Network? {
-        get { walletsConnectionService.network }
-        set { walletsConnectionService.network = newValue }
+        get { networksService.network }
+        set { networksService.network = newValue }
     }
 
-    private let walletsConnectionService: WalletsConnectionService
+    private let networksService: NetworksService
     private let currencyMetadataService: CurrencyMetadataService
     private let currenciesService: CurrenciesService
     private var listeners: [WeakContainer] = []
 
     init(
-        _ walletsConnectionService: WalletsConnectionService,
+        _ networksService: NetworksService,
         currenciesService: CurrenciesService,
         currencyMetadataService: CurrencyMetadataService
     ) {
-        self.walletsConnectionService = walletsConnectionService
+        self.networksService = networksService
         self.currenciesService = currenciesService
         self.currencyMetadataService = currencyMetadataService
     }
@@ -49,7 +49,7 @@ final class DefaultNetworksInteractor {
 extension DefaultNetworksInteractor: NetworksInteractor {
 
     func networks() -> [Network] {
-        Network.Companion().supported()
+        NetworksServiceCompanion().supportedNetworks()
     }
 
     func image(_ network: Network) -> Data {
@@ -58,25 +58,25 @@ extension DefaultNetworksInteractor: NetworksInteractor {
     }
 
     func provider(_ network: Network) -> Provider? {
-        walletsConnectionService.provider(network: network)
+        networksService.provider(network: network)
     }
 
     func isEnabled(_ network: Network) -> Bool {
-        walletsConnectionService.enabledNetworks().contains(network)
+        networksService.enabledNetworks().contains(network)
     }
 
     func set(_ network: Network, enabled: Bool) {
-        walletsConnectionService.setNetwork(network: network, enabled: enabled)
+        networksService.setNetwork(network: network, enabled: enabled)
     }
 }
 
 // MARK: - Listeners
 
-extension DefaultNetworksInteractor: WalletsConnectionListener {
+extension DefaultNetworksInteractor: NetworksListener {
 
     func addListener(_ listener: NetworkInteractorLister) {
         if listeners.isEmpty {
-            walletsConnectionService.add(listener: self)
+            networksService.add(listener_: self)
         }
         listeners = listeners + [WeakContainer(listener)]
     }
@@ -84,24 +84,24 @@ extension DefaultNetworksInteractor: WalletsConnectionListener {
     func removeListener(_ listener: NetworkInteractorLister?) {
         guard let listener = listener else {
             listeners = []
-            walletsConnectionService.remove(listener: nil)
+            networksService.remove(listener_: nil)
             return
         }
 
         listeners = listeners.filter { $0.value !== listener }
 
         if listeners.isEmpty {
-            walletsConnectionService.remove(listener: nil)
+            networksService.remove(listener_: nil)
         }
     }
 
-    private func emit(_ event: WalletsConnectionEvent) {
+    private func emit(_ event: NetworksEvent) {
         listeners.forEach { $0.value?.handle(event) }
     }
 
-    func handle(event: WalletsConnectionEvent) {
-        if let networks = (event as? WalletsConnectionEvent.NetworksChanged) {
-            walletsConnectionService.walletsForAllNetwork().forEach {
+    func handle(event_: NetworksEvent) {
+        if let networks = (event_ as? NetworksEvent.NetworkDidChange) {
+            networksService.walletsForEnabledNetworks().forEach {
                 if currenciesService.currencies(wallet: $0).isEmpty {
                     currenciesService.generateDefaultCurrenciesIfNeeded(
                         wallet: $0
@@ -110,7 +110,7 @@ extension DefaultNetworksInteractor: WalletsConnectionListener {
             }
         }
 
-        emit(event)
+        emit(event_)
     }
 
     private class WeakContainer {

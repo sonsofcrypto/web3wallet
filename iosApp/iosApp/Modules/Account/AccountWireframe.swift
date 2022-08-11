@@ -29,7 +29,7 @@ final class DefaultAccountWireframe {
     private let tokenSendWireframeFactory: TokenSendWireframeFactory
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
-    private let walletConnectionService: WalletsConnectionService
+    private let networksService: NetworksService
     private let walletsStateService: WalletsStateService
     private let currenciesService: CurrenciesService
     private let currencyMetadataService: CurrencyMetadataService
@@ -43,7 +43,7 @@ final class DefaultAccountWireframe {
         tokenSendWireframeFactory: TokenSendWireframeFactory,
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
-        walletConnectionService: WalletsConnectionService,
+        networksService: NetworksService,
         walletsStateService: WalletsStateService,
         currenciesService: CurrenciesService,
         currencyMetadataService: CurrencyMetadataService
@@ -54,7 +54,7 @@ final class DefaultAccountWireframe {
         self.tokenSendWireframeFactory = tokenSendWireframeFactory
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.deepLinkHandler = deepLinkHandler
-        self.walletConnectionService = walletConnectionService
+        self.networksService = networksService
         self.walletsStateService = walletsStateService
         self.currenciesService = currenciesService
         self.currencyMetadataService = currencyMetadataService
@@ -126,7 +126,7 @@ private extension DefaultAccountWireframe {
         let interactor = DefaultAccountInteractor(
             wallet: context.wallet,
             currency: context.currency,
-            walletConnectionService: walletConnectionService,
+            networksService: networksService,
             walletsStateService: walletsStateService,
             currenciesService: currenciesService,
             currencyMetadataService: currencyMetadataService

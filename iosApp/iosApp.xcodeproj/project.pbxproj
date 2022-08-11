@@ -55,7 +55,7 @@
 		1A4C3EB4D429242923984C76 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3378B5287B6A9BDE65CD /* Button.swift */; };
 		1A4C3EFA1AF01AC42720B4C8 /* ThemePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C38FE899413D43D7869ED /* ThemePickerView.swift */; };
 		1A4C3F3ECB400A148DC91C13 /* ThemePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E91BE58618FF7BCF1A5 /* ThemePickerCell.swift */; };
-		1A4C3F6836A9B121F54F7100 /* WalletsConnectionServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A030BE46910A7122373 /* WalletsConnectionServiceAssembler.swift */; };
+		1A4C3F6836A9B121F54F7100 /* NetworksServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A030BE46910A7122373 /* NetworksServiceAssembler.swift */; };
 		1A4C3F98A4FAA65828C73E5C /* NFTsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */; };
 		1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */; };
 		1C0643D42892FCB000643C15 /* FeaturesWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0643D32892FCB000643C15 /* FeaturesWireframe.swift */; };
@@ -620,7 +620,7 @@
 		1A4C39C4B0802356E1007E01 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAppCategory.swift; sourceTree = "<group>"; };
 		1A4C39D6ADB830082AC3CEA6 /* Authenticate.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Authenticate.storyboard; sourceTree = "<group>"; };
-		1A4C3A030BE46910A7122373 /* WalletsConnectionServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletsConnectionServiceAssembler.swift; sourceTree = "<group>"; };
+		1A4C3A030BE46910A7122373 /* NetworksServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksServiceAssembler.swift; sourceTree = "<group>"; };
 		1A4C3B4D97107E875FCF5F38 /* AuthenticateContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateContext.swift; sourceTree = "<group>"; };
 		1A4C3B70AA1B0BC942B15671 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		1A4C3C08E08B50822B0A46C8 /* CurrencyMetadataServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyMetadataServiceAssembler.swift; sourceTree = "<group>"; };
@@ -1179,12 +1179,12 @@
 			path = Assembler;
 			sourceTree = "<group>";
 		};
-		1A4C3127E3A7AFFBF86C7DD3 /* WalletsConnectionService */ = {
+		1A4C3127E3A7AFFBF86C7DD3 /* Networks */ = {
 			isa = PBXGroup;
 			children = (
-				1A4C3A030BE46910A7122373 /* WalletsConnectionServiceAssembler.swift */,
+				1A4C3A030BE46910A7122373 /* NetworksServiceAssembler.swift */,
 			);
-			path = WalletsConnectionService;
+			path = Networks;
 			sourceTree = "<group>";
 		};
 		1A4C35A602BDFD544714CB8F /* NFTsService */ = {
@@ -1278,7 +1278,7 @@
 				1CD3FE8728559EF2008312DE /* Web3 */,
 				1A4C38E57534723ADC9F3D57 /* CurrencyMetadata */,
 				1A4C36A308B86BF401D803B6 /* Currencies */,
-				1A4C3127E3A7AFFBF86C7DD3 /* WalletsConnectionService */,
+				1A4C3127E3A7AFFBF86C7DD3 /* Networks */,
 				1A4C3B1326058125DEAA66B4 /* WalletsStateService */,
 			);
 			path = Services;
@@ -2671,7 +2671,7 @@
 			);
 			mainGroup = D157F7BE27B69B6300578FF8;
 			packageReferences = (
-				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
 			);
 			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
 			projectDirPath = "";
@@ -3258,7 +3258,7 @@
 				1A4C327E988FE454C9AE05CC /* UIEdgeInsets+Extensions.swift in Sources */,
 				1A4C3A127E059F4973AAE8A9 /* CurrenciesService.swift in Sources */,
 				1A4C36D33E738CDC80BE8575 /* TokenPickerInteractor2.swift in Sources */,
-				1A4C3F6836A9B121F54F7100 /* WalletsConnectionServiceAssembler.swift in Sources */,
+				1A4C3F6836A9B121F54F7100 /* NetworksServiceAssembler.swift in Sources */,
 				1A4C3B9C62DFDDC589C8E7DB /* WalletsStateServiceAssembler.swift in Sources */,
 				1A4C32E16E608336683F1F57 /* ServiceDirectory.swift in Sources */,
 				1A4C3905A345E618C2AC2D37 /* Assembler.swift in Sources */,
@@ -3632,7 +3632,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -3645,7 +3645,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		1C5B603A284675B800ECBD79 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */

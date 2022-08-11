@@ -10,7 +10,8 @@ final class NFTDetailWireframeFactoryAssembler: AssemblerComponent {
             
             DefaultNFTDetailWireframeFactory(
                 nftSendWireframeFactory: resolver.resolve(),
-                nftsService: resolver.resolve()
+                nftsService: resolver.resolve(),
+                networksService: resolver.resolve()
             )
         }
     }

@@ -16,7 +16,7 @@ protocol AccountInteractor: AnyObject {
 final class DefaultAccountInteractor {
     private let wallet: Wallet
     private let _currency: Currency
-    private let walletConnectionService: WalletsConnectionService
+    private let networksService: NetworksService
     private let walletsStateService: WalletsStateService
     private let currenciesService: CurrenciesService
     private let currencyMetadataService: CurrencyMetadataService
@@ -24,14 +24,14 @@ final class DefaultAccountInteractor {
     init(
         wallet: Wallet,
         currency: Currency,
-        walletConnectionService: WalletsConnectionService,
+        networksService: NetworksService,
         walletsStateService: WalletsStateService,
         currenciesService: CurrenciesService,
         currencyMetadataService: CurrencyMetadataService
     ) {
         self.wallet = wallet
         self._currency = currency
-        self.walletConnectionService = walletConnectionService
+        self.networksService = networksService
         self.walletsStateService = walletsStateService
         self.currenciesService = currenciesService
         self.currencyMetadataService = currencyMetadataService

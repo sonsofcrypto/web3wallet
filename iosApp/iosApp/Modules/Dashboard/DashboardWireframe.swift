@@ -44,7 +44,7 @@ final class DefaultDashboardWireframe {
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let onboardingService: OnboardingService
     private let deepLinkHandler: DeepLinkHandler
-    private let walletsConnectionService: WalletsConnectionService
+    private let networksService: NetworksService
     private let currenciesService: CurrenciesService
     private let currencyMetadataService: CurrencyMetadataService
     private let walletsStateService: WalletsStateService
@@ -67,7 +67,7 @@ final class DefaultDashboardWireframe {
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         onboardingService: OnboardingService,
         deepLinkHandler: DeepLinkHandler,
-        walletsConnectionService: WalletsConnectionService,
+        networksService: NetworksService,
         currenciesService: CurrenciesService,
         currencyMetadataService: CurrencyMetadataService,
         walletsStateService: WalletsStateService,
@@ -87,7 +87,7 @@ final class DefaultDashboardWireframe {
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.onboardingService = onboardingService
         self.deepLinkHandler = deepLinkHandler
-        self.walletsConnectionService = walletsConnectionService
+        self.networksService = networksService
         self.currenciesService = currenciesService
         self.currencyMetadataService = currencyMetadataService
         self.walletsStateService = walletsStateService
@@ -238,7 +238,7 @@ private extension DefaultDashboardWireframe {
     func wireUp() -> UIViewController {
         
         let interactor = DefaultDashboardInteractor(
-            walletsConnectionService: walletsConnectionService,
+            networksService: networksService,
             currenciesService: currenciesService,
             currencyMetadataService: currencyMetadataService,
             walletsStateService: walletsStateService,

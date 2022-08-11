@@ -169,7 +169,7 @@ private extension DefaultMnemonicNewInteractor {
 
     func addresses(bip44: Bip44) -> [String: String] {
         var addresses = [String: String]()
-        Network.supported().forEach {
+        NetworksServiceCompanion().supportedNetworks().forEach {
             let path = $0.defaultDerivationPath()
             let xpub = try! bip44.deriveChildKey(path: path).xpub()
             addresses[path] = $0.address(pubKey: xpub).toHexString(prefix: true)

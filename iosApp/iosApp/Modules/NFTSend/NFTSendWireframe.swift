@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 struct NFTSendWireframeContext {
     
@@ -33,6 +34,7 @@ final class DefaultNFTSendWireframe {
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let web3Service: Web3ServiceLegacy
+    private let networksService: NetworksService
     
     private weak var navigationController: NavigationController!
     
@@ -41,13 +43,15 @@ final class DefaultNFTSendWireframe {
         context: NFTSendWireframeContext,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
-        web3Service: Web3ServiceLegacy
+        web3Service: Web3ServiceLegacy,
+        networksService: NetworksService
     ) {
         self.presentingIn = presentingIn
         self.context = context
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.confirmationWireframeFactory = confirmationWireframeFactory
         self.web3Service = web3Service
+        self.networksService = networksService
     }
 }
 
@@ -126,7 +130,8 @@ private extension DefaultNFTSendWireframe {
     func wireUp() -> UIViewController {
         
         let interactor = DefaultNFTSendInteractor(
-            web3Service: web3Service
+            web3Service: web3Service,
+            networksService: networksService
         )
         let vc: NFTSendViewController = UIStoryboard(.nftSend).instantiate()
         let presenter = DefaultNFTSendPresenter(

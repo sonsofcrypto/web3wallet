@@ -41,9 +41,9 @@ extension DefaultTokenSendInteractor: TokenSendInteractor {
     
     var walletAddress: String? {
         
-        let service: WalletsConnectionService = ServiceDirectory.assembler.resolve()
+        let service: NetworksService = ServiceDirectory.assembler.resolve()
         
-        return try? service.wallet?.address()
+        return try? service.wallet()?.address()
             .toHexStringAddress()
             .hexString
     }

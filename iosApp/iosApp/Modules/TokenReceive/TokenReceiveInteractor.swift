@@ -26,9 +26,9 @@ extension DefaultTokenReceiveInteractor: TokenReceiveInteractor {
 
     func receivingAddress(for token: Web3Token) -> String {
         
-        let walletsConnectionService: WalletsConnectionService = ServiceDirectory.assembler.resolve()
+        let networksService: NetworksService = ServiceDirectory.assembler.resolve()
         
-        guard let address = try? walletsConnectionService.wallet(network: token.network.toNetwork())?.address() else {
+        guard let address = try? networksService.wallet(network: token.network.toNetwork())?.address() else {
             
             fatalError("Unable to read wallet address from network \(token.network.name)")
         }

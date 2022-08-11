@@ -14,7 +14,7 @@ enum OpenSeaNFTsServiceError: Error {
 final class OpenSeaNFTsService {
     
     private let web3Service: Web3ServiceLegacy
-    private let walletsConnectionService: WalletsConnectionService
+    private let networksService: NetworksService
     
     private let API_KEY = ""
     
@@ -23,10 +23,10 @@ final class OpenSeaNFTsService {
     
     init(
         web3Service: Web3ServiceLegacy,
-        walletsConnectionService: WalletsConnectionService
+        networksService: NetworksService
     ) {
         self.web3Service = web3Service
-        self.walletsConnectionService = walletsConnectionService
+        self.networksService = networksService
     }
 }
 
@@ -73,7 +73,7 @@ extension OpenSeaNFTsService: NFTsService {
         onCompletion: @escaping (Result<[NFTItem], Error>) -> Void
     ) {
 
-        guard let address = try? walletsConnectionService.wallet?.address()
+        guard let address = try? networksService.wallet()?.address()
             .toHexStringAddress()
             .hexString
         else {

@@ -5,7 +5,6 @@ import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
-import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.types.Network
 
 class NetworkServiceTests {

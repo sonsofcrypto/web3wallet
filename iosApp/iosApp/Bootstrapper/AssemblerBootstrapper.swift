@@ -36,7 +36,7 @@ private extension AssemblerBootstrapper {
             ChatServiceAssembler(),
             CultServiceAssembler(),
             Web3ServiceLegacyAssembler(),
-            WalletsConnectionServiceAssembler(),
+            NetworksServiceAssembler(),
             CurrenciesInfoStoreAssembler(),
             CurrenciesServiceAssembler(),
             CurrencyMetadataServiceAssembler(),

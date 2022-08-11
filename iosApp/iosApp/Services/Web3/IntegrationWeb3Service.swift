@@ -10,7 +10,7 @@ private let currenciesKeyValueStore = "currenciesKeyValueStore"
 
 final class IntegrationWeb3Service {
 
-    let walletsConnectionService: WalletsConnectionService
+    let networksService: NetworksService
     private let currenciesService: CurrenciesService
     private let walletsStateService: WalletsStateService
     private let defaults: UserDefaults
@@ -19,12 +19,12 @@ final class IntegrationWeb3Service {
     private var listeners: [Web3ServiceWalletListener] = []
 
     init(
-        walletsConnectionService: WalletsConnectionService,
+        networksService: NetworksService,
         currenciesService: CurrenciesService,
         walletsStateService: WalletsStateService,
         defaults: UserDefaults = .standard
     ) {
-        self.walletsConnectionService = walletsConnectionService
+        self.networksService = networksService
         self.currenciesService = currenciesService
         self.walletsStateService = walletsStateService
         self.defaults = defaults
@@ -35,24 +35,24 @@ final class IntegrationWeb3Service {
 extension IntegrationWeb3Service: Web3ServiceLegacy {
     
     var allNetworks: [Web3Network] {
-        Network.Companion().supported().map {
+        NetworksServiceCompanion().supportedNetworks().map {
             Web3Network.from(
                 $0,
-                isOn: walletsConnectionService.enabledNetworks().contains($0)
+                isOn: networksService.enabledNetworks().contains($0)
             )
         }
     }
     
     var allTokens: [Web3Token] {
-        guard let network = walletsConnectionService.network,
-              let wallet = walletsConnectionService.wallet(network: network)
+        guard let network = networksService.network,
+              let wallet = networksService.wallet(network: network)
         else {
             return []
         }
 
         let legacyNetwork: Web3Network = Web3Network.from(
             network,
-            isOn: walletsConnectionService.enabledNetworks().contains(network)
+            isOn: networksService.enabledNetworks().contains(network)
         )
 
         if supported.isEmpty {
@@ -75,19 +75,19 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
     }
 
     var myTokens: [Web3Token] {
-        guard let network = walletsConnectionService.network,
-              let wallet = walletsConnectionService.wallet(network: network) else {
+        guard let network = networksService.network,
+              let wallet = networksService.wallet(network: network) else {
             return []
         }
 
         var tokens = [Web3Token]()
 
-        for network in walletsConnectionService.enabledNetworks() {
+        for network in networksService.enabledNetworks() {
             let web3network: Web3Network = Web3Network.from(
                 network,
-                isOn: walletsConnectionService.enabledNetworks().contains(network)
+                isOn: networksService.enabledNetworks().contains(network)
             )
-            if let wallet = walletsConnectionService.wallet(network: network) {
+            if let wallet = networksService.wallet(network: network) {
                 let currencies = currenciesService.currencies(wallet: wallet)
                 tokens.append(contentsOf:
                     currencies.toWeb3TokenList(network: web3network, inWallet: true)
@@ -157,7 +157,7 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
     }
     
     func update(network: Web3Network, active: Bool) {
-        walletsConnectionService.setNetwork(network: network.toNetwork(), enabled: active)
+        networksService.setNetwork(network: network.toNetwork(), enabled: active)
     }
     
     func networkFeeInUSD(network: Web3Network, fee: Web3NetworkFee) -> BigInt {
@@ -176,7 +176,8 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
     }
     
     var currentEthBlock: String {
-        guard let wallet = walletsConnectionService.wallet else {
+        guard let network = networksService.network,
+              let wallet = networksService.wallet(network: network) else {
             return ""
         }
         return walletsStateService.blockNumber(wallet: wallet)?.toDecimalString() ?? ""
@@ -188,7 +189,7 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
         
         if notificationId == "modal.mnemonic.confirmation" {
             
-            let walletId = walletsConnectionService.wallet?.id() ?? ""
+            let walletId = networksService.wallet()?.id() ?? ""
             defaults.set(true, forKey: "\(notificationId).\(walletId)")
             defaults.synchronize()
             listeners.forEach { $0.notificationsChanged() }
@@ -199,7 +200,7 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
         
         var notifications = [Web3Notification]()
         
-        if let walletId = walletsConnectionService.wallet?.id(),
+        if let walletId = networksService.wallet()?.id(),
             !defaults.bool(forKey: "modal.mnemonic.confirmation.\(walletId)")
         {
             

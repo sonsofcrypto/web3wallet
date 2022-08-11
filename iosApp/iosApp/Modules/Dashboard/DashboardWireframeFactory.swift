@@ -22,7 +22,7 @@ final class DefaultDashboardWireframeFactory {
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let onboardingService: OnboardingService
     private let deepLinkHandler: DeepLinkHandler
-    private let walletsConnectionService: WalletsConnectionService
+    private let networksService: NetworksService
     private let currenciesService: CurrenciesService
     private let currencyMetadataService: CurrencyMetadataService
     private let walletsStateService: WalletsStateService
@@ -42,7 +42,7 @@ final class DefaultDashboardWireframeFactory {
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         onboardingService: OnboardingService,
         deepLinkHandler: DeepLinkHandler,
-        walletsConnectionService: WalletsConnectionService,
+        networksService: NetworksService,
         currenciesService: CurrenciesService,
         currencyMetadataService: CurrencyMetadataService,
         walletsStateService: WalletsStateService,
@@ -61,7 +61,7 @@ final class DefaultDashboardWireframeFactory {
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.onboardingService = onboardingService
         self.deepLinkHandler = deepLinkHandler
-        self.walletsConnectionService = walletsConnectionService
+        self.networksService = networksService
         self.currenciesService = currenciesService
         self.currencyMetadataService = currencyMetadataService
         self.walletsStateService = walletsStateService
@@ -88,7 +88,7 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
             onboardingService: onboardingService,
             deepLinkHandler: deepLinkHandler,
-            walletsConnectionService: walletsConnectionService,
+            networksService: networksService,
             currenciesService: currenciesService,
             currencyMetadataService: currencyMetadataService,
             walletsStateService: walletsStateService,
@@ -119,7 +119,7 @@ final class DashboardWireframeFactoryAssembler: AssemblerComponent {
                 qrCodeScanWireframeFactory: resolver.resolve(),
                 onboardingService: resolver.resolve(),
                 deepLinkHandler: resolver.resolve(),
-                walletsConnectionService: resolver.resolve(),
+                networksService: resolver.resolve(),
                 currenciesService: resolver.resolve(),
                 currencyMetadataService: resolver.resolve(),
                 walletsStateService: resolver.resolve(),

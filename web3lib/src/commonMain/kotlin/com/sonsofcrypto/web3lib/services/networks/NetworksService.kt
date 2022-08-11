@@ -15,7 +15,7 @@ sealed class NetworksEvent() {
     /** Emitted when `KeyStoreItem` is set */
     object KeyStoreItemDidChange: NetworksEvent()
     /** Emitted when selected `network` changes */
-    data class NetworksDidChange(val network: Network?): NetworksEvent()
+    data class NetworkDidChange(val network: Network?): NetworksEvent()
     /** Emitted when `enabledNetworks` changes */
     data class EnabledNetworksDidChange(val networks: List<Network>): NetworksEvent()
 }
@@ -45,6 +45,8 @@ interface NetworksService {
     fun walletsForEnabledNetworks(): List<Wallet>
     /** `Wallet` for network */
     fun wallet(network: Network): Wallet?
+    /** `Wallet` for selected network */
+    fun wallet(): Wallet?
     /** Add listener for `NetworksEvent`s */
     fun add(listener: NetworksListener)
     /** Remove listener for `NetworksEvent`s, if null removes all listeners */
@@ -77,7 +79,7 @@ class DefaultNetworksService(
         set(value) {
             field = value
             store[selectedNetworkKey(keyStoreItem)] = value
-            emit(NetworksEvent.NetworksDidChange(value))
+            emit(NetworksEvent.NetworkDidChange(value))
         }
 
     private var enabledNetworks: List<Network> = listOf()
@@ -130,6 +132,11 @@ class DefaultNetworksService(
             wallets[network.id()] = Wallet(it, keyStoreService, provider(network))
         }
         return wallets[network.id()]
+    }
+
+    override fun wallet(): Wallet? {
+        network?.let { return wallet(it) }
+        return null
     }
 
     override fun add(listener: NetworksListener) {

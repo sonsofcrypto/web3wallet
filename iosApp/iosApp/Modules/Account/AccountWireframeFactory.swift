@@ -19,7 +19,7 @@ final class DefaultAccountWireframeFactory {
     private let tokenSendWireframeFactory: TokenSendWireframeFactory
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
-    private let walletConnectionService: WalletsConnectionService
+    private let networksService: NetworksService
     private let walletsStateService: WalletsStateService
     private let currenciesService: CurrenciesService
     private let currencyMetadataService: CurrencyMetadataService
@@ -29,7 +29,7 @@ final class DefaultAccountWireframeFactory {
         tokenSendWireframeFactory: TokenSendWireframeFactory,
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
-        walletConnectionService: WalletsConnectionService,
+        networksService: NetworksService,
         walletsStateService: WalletsStateService,
         currenciesService: CurrenciesService,
         currencyMetadataService: CurrencyMetadataService
@@ -38,7 +38,7 @@ final class DefaultAccountWireframeFactory {
         self.tokenSendWireframeFactory = tokenSendWireframeFactory
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.deepLinkHandler = deepLinkHandler
-        self.walletConnectionService = walletConnectionService
+        self.networksService = networksService
         self.walletsStateService = walletsStateService
         self.currenciesService = currenciesService
         self.currencyMetadataService = currencyMetadataService
@@ -59,7 +59,7 @@ extension DefaultAccountWireframeFactory: AccountWireframeFactory {
             tokenSendWireframeFactory: tokenSendWireframeFactory,
             tokenSwapWireframeFactory: tokenSwapWireframeFactory,
             deepLinkHandler: deepLinkHandler,
-            walletConnectionService: walletConnectionService,
+            networksService: networksService,
             walletsStateService: walletsStateService,
             currenciesService: currenciesService,
             currencyMetadataService: currencyMetadataService
@@ -77,7 +77,7 @@ final class AccountWireframeFactoryAssembler: AssemblerComponent {
                 tokenSendWireframeFactory: resolver.resolve(),
                 tokenSwapWireframeFactory: resolver.resolve(),
                 deepLinkHandler: resolver.resolve(),
-                walletConnectionService: resolver.resolve(),
+                networksService: resolver.resolve(),
                 walletsStateService: resolver.resolve(),
                 currenciesService: resolver.resolve(),
                 currencyMetadataService: resolver.resolve()

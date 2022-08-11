@@ -6,7 +6,7 @@ import Foundation
 import web3lib
 
 enum DashboardInteractorEvent {
-    case didSelectWallet(wallet: Wallet?)
+    case didSelectKeyStoreItem
     case didSelectNetwork(network: Network?)
     case didChangeNetworks(networks: [Network])
     case didUpdateMarketInfo(market: [String : Market]?)
@@ -50,7 +50,7 @@ protocol DashboardInteractor: AnyObject {
 
 final class DefaultDashboardInteractor {
 
-    private let walletsConnectionService: WalletsConnectionService
+    private let networksService: NetworksService
     private let currenciesService: CurrenciesService
     private let currencyMetadataService: CurrencyMetadataService
     private let walletsStateService: WalletsStateService
@@ -60,7 +60,7 @@ final class DefaultDashboardInteractor {
     private var listeners: [WeakContainer] = []
 
     init(
-        walletsConnectionService: WalletsConnectionService,
+        networksService: NetworksService,
         currenciesService: CurrenciesService,
         currencyMetadataService: CurrencyMetadataService,
         walletsStateService: WalletsStateService,
@@ -69,7 +69,7 @@ final class DefaultDashboardInteractor {
         nftsService: NFTsService
     ) {
         self.web3ServiceLegacy = web3ServiceLegacy
-        self.walletsConnectionService = walletsConnectionService
+        self.networksService = networksService
         self.currenciesService = currenciesService
         self.currencyMetadataService = currencyMetadataService
         self.walletsStateService = walletsStateService
@@ -119,15 +119,15 @@ extension DefaultDashboardInteractor: DashboardInteractor {
 extension DefaultDashboardInteractor {
 
     func enabledNetworks() -> [Network] {
-        walletsConnectionService.enabledNetworks()
+        networksService.enabledNetworks()
     }
 
     func wallet(for network: Network) -> Wallet? {
-        walletsConnectionService.wallet(network: network)
+        networksService.wallet(network: network)
     }
 
     func currencies(for network: Network) -> [Currency] {
-        guard let wallet = walletsConnectionService.wallet(network: network) else {
+        guard let wallet = networksService.wallet(network: network) else {
             return []
         }
 
@@ -136,7 +136,7 @@ extension DefaultDashboardInteractor {
 
 
     func setCurrencies(_ currencies: [Currency], network: Network) {
-        guard let wallet = walletsConnectionService.wallet(network: network) else {
+        guard let wallet = networksService.wallet(network: network) else {
             return
         }
 
@@ -198,7 +198,7 @@ extension DefaultDashboardInteractor {
 
     func totalFiatBalance() -> Double {
         var total = 0.0
-        walletsConnectionService.walletsForAllNetwork().forEach { wallet in
+        networksService.walletsForEnabledNetworks().forEach { wallet in
             if let network = wallet.network() {
                 currenciesService.currencies(wallet: wallet).forEach {
                     total += fiatBalance(for: wallet, currency: $0)
@@ -210,11 +210,11 @@ extension DefaultDashboardInteractor {
 
 
     func reloadData() {
-        guard let wallet = walletsConnectionService.wallet else {
+        guard let wallet = networksService.wallet() else {
             return
         }
 
-        let allCurrencies = walletsConnectionService.walletsForAllNetwork()
+        let allCurrencies = networksService.walletsForEnabledNetworks()
                 .map { currenciesService.currencies(wallet: $0) }
                 .reduce([Currency](), { $0 + $1 })
 
@@ -238,11 +238,11 @@ extension DefaultDashboardInteractor {
     }
 
     func reloadCandles() {
-        guard let wallet = walletsConnectionService.wallet else {
+        guard let wallet = networksService.wallet() else {
             return
         }
         // TODO: Limit to 50 currencies
-        walletsConnectionService.walletsForAllNetwork().forEach { wallet in
+        networksService.walletsForEnabledNetworks().forEach { wallet in
             currenciesService.currencies(wallet: wallet).forEach { currency in
                 currencyMetadataService.candles(
                     currency: currency,
@@ -268,12 +268,13 @@ extension DefaultDashboardInteractor {
 
 // MARK: - Listeners
 
-extension DefaultDashboardInteractor: WalletsConnectionListener, WalletsStateListener {
+extension DefaultDashboardInteractor: NetworksListener, WalletsStateListener {
+
 
     func addListener(_ listener: DashboardInteractorLister) {
         if listeners.isEmpty {
-            walletsConnectionService.add(listener: self)
-            walletsStateService.add(listener_: self)
+            networksService.add(listener_: self)
+            walletsStateService.add(listener: self)
             updateObservingWalletsState()
         }
 
@@ -283,16 +284,16 @@ extension DefaultDashboardInteractor: WalletsConnectionListener, WalletsStateLis
     func removeListener(_ listener: DashboardInteractorLister?) {
         guard let listener = listener else {
             listeners = []
-            walletsConnectionService.remove(listener: nil)
-            walletsStateService.remove(listener_: nil)
+            networksService.remove(listener_: nil)
+            walletsStateService.remove(listener: nil)
             return
         }
 
         listeners = listeners.filter { $0.value !== listener }
 
         if listeners.isEmpty {
-            walletsConnectionService.remove(listener: nil)
-            walletsStateService.remove(listener_: nil)
+            networksService.remove(listener_: nil)
+            walletsStateService.remove(listener: nil)
         }
     }
 
@@ -300,17 +301,17 @@ extension DefaultDashboardInteractor: WalletsConnectionListener, WalletsStateLis
         listeners.forEach { $0.value?.handle(event) }
     }
 
-    func handle(event: WalletsConnectionEvent) {
-        print("=== WalletsConnectionEvent ", event)
-        if let networksChanged = event as? WalletsConnectionEvent.NetworksChanged {
+    func handle(event_ event: NetworksEvent) {
+        print("=== NetworksEvent ", event)
+        if let networksChanged = event as? NetworksEvent.NetworkDidChange {
             reloadData()
             updateObservingWalletsState()
         }
         emit(event.toInteractorEvent())
     }
 
-    func handle(event_ event: WalletsStateEvent) {
-        print("=== WalletsConnectionEvent ", event)
+    func handle(event: WalletsStateEvent) {
+        print("=== NetworksEvent ", event)
         emit(event.toInteractorEvent())
     }
 
@@ -325,7 +326,7 @@ extension DefaultDashboardInteractor: WalletsConnectionListener, WalletsStateLis
     func updateObservingWalletsState() {
         print("=== update observing wallet")
         walletsStateService.stopObserving(wallet: nil)
-        walletsConnectionService.walletsForAllNetwork().forEach {
+        networksService.walletsForEnabledNetworks().forEach {
             walletsStateService.observe(
                 wallet: $0,
                 currencies: currenciesService.currencies(wallet: $0)
@@ -340,18 +341,18 @@ extension DefaultDashboardInteractor: WalletsConnectionListener, WalletsStateLis
 }
 
 
-// MARK: - WalletsConnectionEvent
+// MARK: - NetworksEvent
 
-extension WalletsConnectionEvent {
+extension NetworksEvent {
 
     func toInteractorEvent() -> DashboardInteractorEvent {
-        if let event = self as? WalletsConnectionEvent.WalletSelected {
-            return .didSelectWallet(wallet: event.wallet)
+        if let event = self as? NetworksEvent.KeyStoreItemDidChange {
+            return .didSelectKeyStoreItem
         }
-        if let event = self as? WalletsConnectionEvent.NetworkSelected {
+        if let event = self as? NetworksEvent.NetworkDidChange {
             return .didSelectNetwork(network: event.network)
         }
-        if let event = self as? WalletsConnectionEvent.NetworksChanged {
+        if let event = self as? NetworksEvent.EnabledNetworksDidChange {
             return .didChangeNetworks(networks: event.networks)
         }
         fatalError("Unhandled event \(self)")

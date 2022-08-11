@@ -19,7 +19,7 @@ final class DefaultKeyStoreWireframeFactory {
 
     private let keyStoreService: KeyStoreService
     private let settingsService: SettingsService
-    private let walletsConnectionService: WalletsConnectionService
+    private let networksService: NetworksService
     private let newMnemonic: MnemonicNewWireframeFactory
     private let updateMnemonic: MnemonicUpdateWireframeFactory
     private let importMnemonic: MnemonicImportWireframeFactory
@@ -27,14 +27,14 @@ final class DefaultKeyStoreWireframeFactory {
     init(
         keyStoreService: KeyStoreService,
         settingsService: SettingsService,
-        walletsConnectionService: WalletsConnectionService,
+        networksService: NetworksService,
         newMnemonic: MnemonicNewWireframeFactory,
         updateMnemonic: MnemonicUpdateWireframeFactory,
         importMnemonic: MnemonicImportWireframeFactory
     ) {
         self.keyStoreService = keyStoreService
         self.settingsService = settingsService
-        self.walletsConnectionService = walletsConnectionService
+        self.networksService = networksService
         self.newMnemonic = newMnemonic
         self.updateMnemonic = updateMnemonic
         self.importMnemonic = importMnemonic
@@ -53,7 +53,7 @@ extension DefaultKeyStoreWireframeFactory: KeyStoreWireframeFactory {
             parent: parent,
             window: window,
             keyStoreService: keyStoreService,
-            walletsConnectionService: walletsConnectionService,
+            networksService: networksService,
             newMnemonic: newMnemonic,
             updateMnemonic: updateMnemonic,
             importMnemonic: importMnemonic,
@@ -69,7 +69,7 @@ final class KeyStoreWireframeFactoryAssembler: AssemblerComponent {
             DefaultKeyStoreWireframeFactory(
                 keyStoreService: resolver.resolve(),
                 settingsService: resolver.resolve(),
-                walletsConnectionService: resolver.resolve(),
+                networksService: resolver.resolve(),
                 newMnemonic: resolver.resolve(),
                 updateMnemonic: resolver.resolve(),
                 importMnemonic: resolver.resolve()

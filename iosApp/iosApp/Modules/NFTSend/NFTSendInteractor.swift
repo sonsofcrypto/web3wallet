@@ -29,19 +29,19 @@ protocol NFTSendInteractor: AnyObject {
 final class DefaultNFTSendInteractor {
 
     private let web3Service: Web3ServiceLegacy
-     
-    init(web3Service: Web3ServiceLegacy) {
+    private let networksService: NetworksService
+
+
+    init(web3Service: Web3ServiceLegacy, networksService: NetworksService) {
         self.web3Service = web3Service
+        self.networksService = networksService
     }
 }
 
 extension DefaultNFTSendInteractor: NFTSendInteractor {
     
     var walletAddress: String? {
-        
-        let service: WalletsConnectionService = ServiceDirectory.assembler.resolve()
-        
-        return try? service.wallet?.address()
+        return try? networksService.wallet()?.address()
             .toHexStringAddress()
             .hexString
     }

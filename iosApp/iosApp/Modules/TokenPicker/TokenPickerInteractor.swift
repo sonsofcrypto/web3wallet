@@ -21,16 +21,16 @@ protocol TokenPickerInteractor: AnyObject {
 final class DefaultTokenPickerInteractor {
 
     private let web3ServiceLegacy: Web3ServiceLegacy
-    private let walletsConnectionService: WalletsConnectionService
+    private let networksService: NetworksService
     private let currenciesService: CurrenciesService
 
     init(
         web3ServiceLegacy: Web3ServiceLegacy,
-        walletsConnectionService: WalletsConnectionService = ServiceDirectory.assembler.resolve(),
+        networksService: NetworksService = ServiceDirectory.assembler.resolve(),
         currenciesService: CurrenciesService = ServiceDirectory.assembler.resolve()
     ) {
         self.web3ServiceLegacy = web3ServiceLegacy
-        self.walletsConnectionService = walletsConnectionService
+        self.networksService = networksService
         self.currenciesService = currenciesService
     }
 }
@@ -39,21 +39,21 @@ extension DefaultTokenPickerInteractor: TokenPickerInteractor {
     
     var selectedNetwork: Web3Network? {
         
-        walletsConnectionService.network.map {
+        networksService.network.map {
             Web3Network.from($0, isOn: true)
         }
     }
     
     var supportedNetworks: [Web3Network] {
 
-        walletsConnectionService.enabledNetworks().compactMap {
+        networksService.enabledNetworks().compactMap {
             Web3Network.from($0, isOn: false)
         }
     }
     
     func myTokens(for network: Web3Network) -> [Web3Token] {
         
-        guard let wallet = walletsConnectionService.wallet(network: network.toNetwork()) else {
+        guard let wallet = networksService.wallet(network: network.toNetwork()) else {
             return []
         }
 
@@ -95,7 +95,7 @@ private extension DefaultTokenPickerInteractor {
     
     func makeSelectedNetwork() -> Web3Network? {
         
-        guard let selectedNetwork = walletsConnectionService.network else {
+        guard let selectedNetwork = networksService.network else {
             return nil
         }
         

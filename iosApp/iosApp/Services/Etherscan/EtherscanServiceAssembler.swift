@@ -9,7 +9,7 @@ final class EtherscanServiceAssembler: AssemblerComponent {
         registry.register(scope: .singleton) { resolver -> EtherscanService in
             
             DefaultEtherscanService(
-                walletsConnectionService: resolver.resolve()
+                networksService: resolver.resolve()
             )
         }
     }

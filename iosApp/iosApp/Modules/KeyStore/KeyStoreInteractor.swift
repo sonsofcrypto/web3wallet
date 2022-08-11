@@ -15,14 +15,14 @@ protocol KeyStoreInteractor: AnyObject {
 final class DefaultKeyStoreInteractor {
 
     private var keyStoreService: KeyStoreService
-    private var walletsConnectionService: WalletsConnectionService
+    private var networksService: NetworksService
 
     init(
         _ keyStoreService: KeyStoreService,
-        walletsConnectionService: WalletsConnectionService
+        networksService: NetworksService
     ) {
         self.keyStoreService = keyStoreService
-        self.walletsConnectionService = walletsConnectionService
+        self.networksService = networksService
     }
 }
 
@@ -51,10 +51,6 @@ private extension DefaultKeyStoreInteractor {
             return
         }
 
-        walletsConnectionService.wallet = Wallet(
-            keyStoreItem: keyStoreItem,
-            keyStoreService: keyStoreService,
-            provider: nil
-        )
+        networksService.keyStoreItem = keyStoreItem
     }
 }
