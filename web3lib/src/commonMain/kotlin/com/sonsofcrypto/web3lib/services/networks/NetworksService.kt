@@ -20,6 +20,7 @@ sealed class NetworksEvent() {
     data class EnabledNetworksDidChange(val networks: List<Network>): NetworksEvent()
 }
 
+/** `NetworksEvent` listener */
 interface NetworksListener { fun handle(event: NetworksEvent) }
 
 /** Network service manages enabled `Network`s, `Wallet`s and `Provider`s
@@ -91,6 +92,8 @@ class DefaultNetworksService(
     private var providers: MutableMap<Network, Provider> = mutableMapOf()
     private var wallets: MutableMap<String, Wallet> = mutableMapOf()
     private var listeners: List<NetworksListener> = listOf()
+
+    init { keyStoreItem = keyStoreService.selected }
 
     override fun enabledNetworks(): List<Network> = enabledNetworks
 

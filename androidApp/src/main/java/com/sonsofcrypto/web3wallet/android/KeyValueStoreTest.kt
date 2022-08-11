@@ -2,6 +2,7 @@ package com.sonsofcrypto.web3wallet.android
 
 import androidx.annotation.Keep
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
+import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.types.Network
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
@@ -50,7 +51,7 @@ class KeyValueStoreTest {
     }
 
     fun testStoreNetworks() {
-        val networks: List<Network> = Network.supported()
+        val networks: List<Network> = NetworksService.supportedNetworks()
         val encoded = Json.encodeToString(networks)
         val store = KeyValueStore("networksTest")
         store.set("why", encoded)
