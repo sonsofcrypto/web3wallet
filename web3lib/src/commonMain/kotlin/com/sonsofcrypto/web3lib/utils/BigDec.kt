@@ -24,6 +24,8 @@ class BigDec {
         storage.divide(value.storage, decimalMode = decimalMode)
     )
 
+    fun isZero(): Boolean = storage.isZero()
+
     fun toBigInt(): BigInt = BigInt(storage.toBigInteger())
     fun toHexString(): String = storage.toString(16)
     fun toDecimalString(): String = toString()

@@ -15,6 +15,7 @@ class BigInt {
     fun mul(value: BigInt): BigInt = BigInt(storage.multiply(value.storage))
     fun div(value: BigInt): BigInt = BigInt(storage.divide(value.storage))
     fun pow(value: Long): BigInt = BigInt(storage.pow(value))
+    fun isZero(): Boolean = storage.isZero()
 
     fun toByteArray(): ByteArray = storage.toByteArray()
     fun toHexString(): String = storage.toString(16)
