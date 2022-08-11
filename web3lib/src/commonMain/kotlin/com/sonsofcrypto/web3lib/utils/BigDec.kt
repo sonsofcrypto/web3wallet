@@ -31,6 +31,10 @@ class BigDec {
 
     override fun toString(): String = storage.toString(10)
 
+    override fun equals(other: Any?): Boolean  {
+        return storage == (other as? BigDec)?.storage
+    }
+
     companion object {
 
         fun zero(): BigDec = BigDec.from(0)
