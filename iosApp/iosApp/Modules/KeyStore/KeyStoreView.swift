@@ -357,6 +357,8 @@ extension KeyStoreViewController {
     }
 }
 
+// MARK: - UIViewControllerTransitioningDelegate
+
 extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
 
     func animationController(
@@ -364,21 +366,21 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
         presenting: UIViewController,
         source: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
-        
+
         guard viewModel?.transitionStyle == .cardFlip else {
             return nil
         }
 
-        let presentedVc = (presented as? UINavigationController)?.topViewController
-        animatedTransitioning = nil
-
-        if presentedVc?.isKind(of: MnemonicNewViewController.self) ?? false {
-            animatedTransitioning = CardFlipAnimatedTransitioning(
-                targetView: targetView() ?? view
-            )
+        guard let vc = (presented as? UINavigationController)?.topViewController else {
+            animatedTransitioning = nil
+            return nil
         }
 
-        if presentedVc?.isKind(of: MnemonicUpdateViewController.self) ?? false {
+        animatedTransitioning = nil
+
+        if vc.isKind(of: MnemonicNewViewController.self) ||
+           vc.isKind(of: MnemonicUpdateViewController.self) ||
+           vc.isKind(of: MnemonicImportViewController.self) {
             animatedTransitioning = CardFlipAnimatedTransitioning(
                 targetView: targetView() ?? view
             )
@@ -392,23 +394,22 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
             return nil
         }
 
-        let presentedVc = (dismissed as? UINavigationController)?.topViewController
+        guard let vc = (dismissed as? UINavigationController)?.topViewController else {
+            animatedTransitioning = nil
+            return nil
+        }
+
         animatedTransitioning = nil
 
-        if presentedVc?.isKind(of: MnemonicNewViewController.self) ?? false {
+        if vc.isKind(of: MnemonicNewViewController.self) ||
+           vc.isKind(of: MnemonicUpdateViewController.self) ||
+           vc.isKind(of: MnemonicImportViewController.self) {
             animatedTransitioning = CardFlipAnimatedTransitioning(
                 targetView: targetView() ?? view,
-                isPresenting: false
+                isPresenting: false,
+                scaleAdjustment: 0.05
             )
         }
-
-        if presentedVc?.isKind(of: MnemonicUpdateViewController.self) ?? false {
-            animatedTransitioning = CardFlipAnimatedTransitioning(
-                targetView: targetView() ?? view,
-                isPresenting: false
-            )
-        }
-
         return animatedTransitioning
     }
 
