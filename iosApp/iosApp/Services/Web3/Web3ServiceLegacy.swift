@@ -33,7 +33,7 @@ protocol Web3ServiceLegacy: AnyObject {
     ) -> String
     
     func update(network: Web3Network, active: Bool)
-    func networkFeeInUSD(network: Web3Network, fee: Web3NetworkFee) -> Double
+    func networkFeeInUSD(network: Web3Network, fee: Web3NetworkFee) -> BigInt
     func networkFeeInSeconds(network: Web3Network, fee: Web3NetworkFee) -> Int
     func networkFeeInNetworkToken(network: Web3Network, fee: Web3NetworkFee) -> String
     
@@ -161,12 +161,18 @@ extension Web3Token {
     
     var usdBalance: BigInt {
         
-        balance * usdPrice
+        let bigDecBalance = balance.toBigDec(decimals: decimals)
+        let bigDecUsdPrice = usdPrice.toBigDec(decimals: 2)
+        let bigDecDecimals = BigDec.Companion().from(string: "100", base: 10)
+
+        let result = bigDecBalance.mul(value: bigDecUsdPrice).mul(value: bigDecDecimals)
+        
+        return result.toBigInt()
     }
     
     var usdBalanceString: String {
         
-        usdBalance.toCurrencyString()
+        usdBalance.toDecimalString().appending(decimals: 2)
     }
 }
 
@@ -204,12 +210,12 @@ extension Web3Token {
             symbol: currency.symbol.uppercased(),
             name: currency.name,
             address: currency.address ?? "",
-            decimals: UInt(currency.decimals),
+            decimals: UInt(8),//UInt(currency.decimals),
             type: .normal,
             network: network,
-            balance: .zero,
+            balance: currency.symbol.lowercased() == "eth" ? try! BigInt.Companion().from(string: "5230000", base: Int32(10)) : .zero,
             showInWallet: inWallet,
-            usdPrice: .zero,
+            usdPrice: currency.symbol.lowercased() == "eth" ? try! BigInt.Companion().from(string: "193000", base: Int32(10)) : .zero,
             coingGeckoId: currency.coinGeckoId,
             rank: rank
         )

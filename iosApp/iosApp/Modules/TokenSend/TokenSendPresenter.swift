@@ -371,9 +371,9 @@ private extension DefaultTokenSendPresenter {
         let timeInSeconds = interactor.networkFeeInSeconds(network: token.network, fee: fee)
         let min: Double = Double(timeInSeconds) / Double(60)
         if min > 1 {
-            return "\(amountInUSD.formatCurrency() ?? "") ~ \(min.toString(decimals: 0)) \(Localized("min"))"
+            return "\(amountInUSD.formatStringCurrency()) ~ \(min.toString(decimals: 0)) \(Localized("min"))"
         } else {
-            return "\(amountInUSD.formatCurrency() ?? "") ~ \(timeInSeconds) \(Localized("sec"))"
+            return "\(amountInUSD.formatStringCurrency()) ~ \(timeInSeconds) \(Localized("sec"))"
         }
     }
     

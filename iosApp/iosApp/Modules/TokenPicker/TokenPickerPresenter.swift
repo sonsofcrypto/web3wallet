@@ -307,8 +307,8 @@ private extension DefaultTokenPickerPresenter {
                 type = .init(
                     isSelected: isSelected,
                     balance: .init(
-                        tokens: token.balance.toString(type: .short, decimals: token.decimals),
-                        usdTotal: token.usdBalanceString
+                        tokens: token.balance.formatString(type: .short, decimals: token.decimals),
+                        usdTotal: token.usdBalance.formatString(type: .short, decimals: 2)
                     )
                 )
                 
@@ -316,8 +316,8 @@ private extension DefaultTokenPickerPresenter {
                 type = .init(
                     isSelected: nil,
                     balance: .init(
-                        tokens: token.balance.toString(decimals: 2),
-                        usdTotal: token.usdBalanceString
+                        tokens: token.balance.formatString(decimals: token.decimals),
+                        usdTotal: token.usdBalance.formatString(decimals: 2)
                     )
                 )
             }
@@ -359,7 +359,12 @@ private extension DefaultTokenPickerPresenter {
             case .select:
                 type = .init(
                     isSelected: nil,
-                    balance: nil
+                    balance: token.usdBalance > .zero
+                    ? .init(
+                        tokens: token.balance.formatString(decimals: token.decimals),
+                        usdTotal: token.usdBalance.formatString(decimals: 2)
+                    )
+                    : nil
                 )
             case .multiSelectEdit:
 
@@ -368,9 +373,15 @@ private extension DefaultTokenPickerPresenter {
                         $0.network.name == token.network.name && $0.symbol == token.symbol
                     }
                 )
+                
                 type = .init(
                     isSelected: isSelected,
-                    balance: nil
+                    balance: token.usdBalance > .zero
+                    ? .init(
+                        tokens: token.balance.formatString(decimals: token.decimals),
+                        usdTotal: token.usdBalance.formatString(decimals: 2)
+                    )
+                    : nil
                 )
             }
             

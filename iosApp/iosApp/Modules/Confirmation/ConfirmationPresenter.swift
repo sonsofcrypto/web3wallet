@@ -137,21 +137,21 @@ private extension DefaultConfirmationPresenter {
         
         let usdTokenFromValue = (
             data.tokenFrom.value * data.tokenFrom.token.usdPrice
-        ).toCurrencyString()
+        ).formatStringCurrency()
         let tokenFrom = ConfirmationViewModel.SwapViewModel.Token(
             iconName: data.tokenFrom.iconName,
             symbol: data.tokenFrom.token.symbol,
-            value: data.tokenFrom.value.toString(decimals: data.tokenFrom.token.decimals),
+            value: data.tokenFrom.value.formatString(decimals: data.tokenFrom.token.decimals),
             usdValue: usdTokenFromValue
         )
 
         let usdTokenToValue = (
             data.tokenTo.value * data.tokenTo.token.usdPrice
-        ).toCurrencyString()
+        ).formatStringCurrency()
         let tokenTo = ConfirmationViewModel.SwapViewModel.Token(
             iconName: data.tokenTo.iconName,
             symbol: data.tokenTo.token.symbol,
-            value: data.tokenTo.value.toString(decimals: data.tokenFrom.token.decimals),
+            value: data.tokenTo.value.formatString(decimals: data.tokenFrom.token.decimals),
             usdValue: usdTokenToValue
         )
         
@@ -185,11 +185,11 @@ private extension DefaultConfirmationPresenter {
         
         let usdToken = (
             data.token.value * data.token.token.usdPrice
-        ).toCurrencyString()
+        ).formatStringCurrency()
         let token = ConfirmationViewModel.SendViewModel.Token(
             iconName: data.token.iconName,
             symbol: data.token.token.symbol,
-            value: data.token.value.toString(decimals: data.token.token.decimals),
+            value: data.token.value.formatString(decimals: data.token.token.decimals),
             usdValue: usdToken
         )
         

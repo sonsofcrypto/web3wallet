@@ -6,34 +6,68 @@ import web3lib
 
 extension BigInt {
     
+    static func fromString(
+        _ text: String?,
+        decimals: UInt
+    ) -> BigInt {
+        
+        guard let text = text, !text.isEmpty else {
+            return .zero
+        }
+        
+        do {
+            guard let currentDecimals = text.decimals else {
+                
+                return try BigInt.Companion().from(
+                    string: text,
+                    base: Int32(10)
+                )
+            }
+            
+            let numberWithoutDecimals = text.split(separator: ".")[0]
+            let fullDecimals = currentDecimals.addRemainingDecimals(upTo: decimals)
+            
+            return try BigInt.Companion().from(
+                string: numberWithoutDecimals + fullDecimals,
+                base: Int32(10)
+            )
+            
+        } catch {
+            
+            return .zero
+        }
+    }
+    
     static var zero: BigInt {
         
         BigInt.Companion().from(int: 0)
     }
     
-    static func > (left: BigInt, right: BigInt) -> Bool {
+    static func < (left: BigInt, right: BigInt) -> Bool {
         
-        // TODO: Implement propertly
-        left.isEqual(right)
+        left.compare(other: right) == -1
     }
     
     static func == (left: BigInt, right: BigInt) -> Bool {
         
-        left.isEqual(right)
+        left.compare(other: right) == 0
     }
     
+    static func != (left: BigInt, right: BigInt) -> Bool {
+        
+        left.compare(other: right) != 0
+    }
+    
+    static func > (left: BigInt, right: BigInt) -> Bool {
+        
+        left.compare(other: right) == 1
+    }
+
     static func >= (left: BigInt, right: BigInt) -> Bool {
         
-        // TODO: Implement propertly
-        left.isEqual(right)
+        left > right || left == right
     }
         
-    static func < (left: BigInt, right: BigInt) -> Bool {
-        
-        // TODO: Implement propertly
-        left.isEqual(right)
-    }
-    
     static func * (left: BigInt, right: BigInt) -> BigInt {
         
         left.mul(value: right)
@@ -41,13 +75,21 @@ extension BigInt {
     
     static func / (left: BigInt, right: BigInt) -> BigInt {
         
-        left.div(value: right)
+        guard right != .zero else { return .zero }
+        
+        do {
+            
+            return try left.div(value: right)
+        } catch {
+            
+            return .zero
+        }
+        
     }
     
     static func min (left: BigInt, right: BigInt) -> BigInt {
         
-        // TODO: Implement
-        left.div(value: right)
+        left < right ? left : right
     }
 }
 
@@ -60,58 +102,105 @@ extension BigInt {
         case max
     }
     
-    func toString(
+    func toBigDec(
+        decimals: UInt
+    ) -> BigDec {
+        
+        let string = formatString(type: .max, decimals: decimals)
+        return BigDec.Companion().from(string: string, base: Int32(10))
+    }
+    
+    func formatString(
         type: FormatType = .max,
         decimals: UInt
     ) -> String {
         
-        ""
+        switch type {
+        case .short:
+            return toDecimalString().add(decimals: decimals)
+        case .long:
+            return toDecimalString().add(decimals: decimals)
+        case .max:
+            return toDecimalString().add(decimals: decimals)
+        }
     }
     
-    func toCurrencyString(
+    func formatStringCurrency(
         type: FormatType = .max,
-        with currencyCode: String = "USD",
-        decimals: Int = 2
+        currencyCode: String = "USD",
+        decimals: UInt = 2
     ) -> String {
         
-        // TODO: Implement
-        return ""
+        switch type {
+        case .short:
+            return String.currencySymbol(with: currencyCode)
+            + formatString(type: type, decimals: decimals)
+        case .long:
+            return String.currencySymbol(with: currencyCode)
+            + formatString(type: type, decimals: decimals)
+        case .max:
+            return String.currencySymbol(with: currencyCode)
+            + formatString(type: type, decimals: decimals)
+        }
     }
 }
-//
-//extension String {
-//
-//    func formatCurrency(
-//        with currencyCode: String = "USD",
-//        maximumFractionDigits: Int = 2
-//    ) -> String {
-//
-//        let formatter = NumberFormatter()
-//        formatter.numberStyle = .currency
-//        formatter.currencyCode = currencyCode
-//        formatter.maximumFractionDigits = maximumFractionDigits
-//
-//        // formatted(.currency(code: "USD"))
-//        var currencySymbol: String? = formatter.string(from: 0)
-//        if currencyCode == "USD" {
-//            currencySymbol = currencySymbol?.replacingOccurrences(of: "US", with: "")
-//        }
-//        currencySymbol = currencySymbol?.replacingOccurrences(of: "0.00", with: "")
-//
-//        let currencyValue =
-//
-//        guard let currencySymbol = currencySymbol else { return self }
-//
-//        return currencySymbol + " " + self
-//    }
-//}
 
-//private extension String {
-//
-//    func makeCurrencyValue(
-//        with fractionDigits: Int = 2
-//    ) {
-//
-//        guard string.count
-//    }
-//}
+private extension String {
+    
+    func add(decimals: UInt) -> String {
+        
+        var updatedString = self
+        var decimalsString = ""
+        
+        for _ in 0..<decimals {
+            
+            let decimal = !updatedString.isEmpty ? updatedString.removeLast() : "0"
+            decimalsString = String(decimal) + decimalsString
+        }
+        
+        return (updatedString.isEmpty ? "0" : updatedString) + "." + decimalsString
+    }
+    
+    func removeTrailingCharacters(n: Int) -> String {
+        
+        var string = self
+        var index = n
+        while index > 0 {
+            string.removeLast()
+            index -= 1
+        }
+        return string
+    }
+    
+    func addRemainingDecimals(upTo: UInt) -> String {
+        
+        let missingDecimals = Int(upTo) - count
+        
+        guard missingDecimals > 0 else { return self }
+        
+        var toReturn = self
+        
+        for _ in 0...missingDecimals {
+            toReturn += "0"
+        }
+        
+        return toReturn
+    }
+    
+    var thowsandFormatted: String {
+        
+        var result = ""
+        var thowsandCount = 0
+        for i in 0...(count - 1) {
+            
+            result.append(self[i])
+            thowsandCount += 1
+            
+            if thowsandCount == 3 && i != (count - 1) {
+                thowsandCount = 0
+                result.append(",")
+            }
+        }
+        return result
+    }
+}
