@@ -132,14 +132,12 @@ struct Web3Token: Equatable {
     let symbol: String // ETH
     let name: String // Ethereum
     let address: String // 0x482828...
-    let decimals: Int // 8
-    //let decimals: UInt // 8
+    let decimals: UInt // 8
     let type: `Type`
     let network: Web3Network //
-    let balance: Double
-    //let balance: BigInt// Double
+    let balance: BigInt
     let showInWallet: Bool
-    let usdPrice: Double
+    let usdPrice: BigInt
     let coingGeckoId: String?
     let rank: Int
 }
@@ -161,14 +159,14 @@ extension Web3Token {
         self.network.id == network.id && self.symbol == symbol
     }
     
-    var usdBalance: Double {
+    var usdBalance: BigInt {
         
         balance * usdPrice
     }
     
     var usdBalanceString: String {
         
-        usdBalance.formatCurrency() ?? ""
+        usdBalance.toCurrencyString()
     }
 }
 
@@ -206,12 +204,12 @@ extension Web3Token {
             symbol: currency.symbol.uppercased(),
             name: currency.name,
             address: currency.address ?? "",
-            decimals: Int(currency.decimals),
+            decimals: UInt(currency.decimals),
             type: .normal,
             network: network,
-            balance: 0.0,
+            balance: .zero,
             showInWallet: inWallet,
-            usdPrice: 0.0,
+            usdPrice: .zero,
             coingGeckoId: currency.coinGeckoId,
             rank: rank
         )

@@ -3,15 +3,16 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 struct TokenEnterAmountViewModel {
     
-    let tokenAmount: Double?
+    let tokenAmount: BigInt?
     let tokenSymbolIconName: String
     let tokenSymbol: String
-    let tokenMaxAmount: Double
-    let tokenMaxDecimals: Int
-    let currencyTokenPrice: Double
+    let tokenMaxAmount: BigInt
+    let tokenMaxDecimals: UInt
+    let currencyTokenPrice: BigInt
     let shouldUpdateTextFields: Bool
     let shouldBecomeFirstResponder: Bool
     let networkName: String
@@ -38,7 +39,7 @@ final class TokenEnterAmountView: UIView {
     
     private var viewModel: TokenEnterAmountViewModel!
     private var onTokenTapped: (() -> Void)?
-    private var onTokenChanged: ((Double) -> Void)?
+    private var onTokenChanged: ((BigInt) -> Void)?
     private var mode: Mode = .token
     
     override func awakeFromNib() {
@@ -98,7 +99,7 @@ extension TokenEnterAmountView {
     func update(
         with viewModel: TokenEnterAmountViewModel,
         onTokenTapped: (() -> Void)? = nil,
-        onTokenChanged: ((Double) -> Void)? = nil
+        onTokenChanged: ((BigInt) -> Void)? = nil
     ) {
         
         self.viewModel = viewModel
@@ -139,13 +140,13 @@ extension TokenEnterAmountView: UITextFieldDelegate {
         
         applyTextValidation(to: textField)
         
-        let double = Double(textField.text ?? "0") ?? 0
-        
         switch mode {
         case .token:
-            onTokenChanged?(double)
+            let value = BigInt.Companion().from(string: textField.text ?? "0", base: Int32(viewModel.tokenMaxDecimals))
+            onTokenChanged?(value)
         case .usd:
-            let tokenAmount = double / viewModel.currencyTokenPrice
+            let value = BigInt.Companion().from(string: textField.text ?? "0", base: 2)
+            let tokenAmount = value / viewModel.currencyTokenPrice
             onTokenChanged?(tokenAmount)
         }
     }
@@ -201,7 +202,7 @@ private extension TokenEnterAmountView {
             )
         case .usd:
             let maxAmount = viewModel.tokenMaxAmount * viewModel.currencyTokenPrice
-            sendAmountTextField.text = maxAmount.toString()
+            sendAmountTextField.text = maxAmount.toString(decimals: viewModel.tokenMaxDecimals)
         }
         
         onTokenChanged?(viewModel.tokenMaxAmount)
@@ -217,8 +218,11 @@ private extension TokenEnterAmountView {
             
             if forceUpdate {
                 
-                let usdAmount = Double(sendAmountTextField.text ?? "0") ?? 0
-                if usdAmount == 0 {
+                let usdAmount = BigInt.Companion().from(
+                    string: sendAmountTextField.text ?? "0",
+                    base: 2
+                )
+                if usdAmount == .zero {
                     sendAmountTextField.text = nil
                 } else {
                     let tokenAmount = usdAmount / viewModel.currencyTokenPrice
@@ -228,8 +232,8 @@ private extension TokenEnterAmountView {
                 }
             } else if viewModel.shouldUpdateTextFields {
                 
-                let tokenAmount = viewModel.tokenAmount ?? 0
-                if tokenAmount == 0 {
+                let tokenAmount = viewModel.tokenAmount ?? .zero
+                if tokenAmount == .zero {
                     sendAmountTextField.text = nil
                 } else {
                     sendAmountTextField.text = tokenAmount.toString(
@@ -245,8 +249,11 @@ private extension TokenEnterAmountView {
             
             if forceUpdate {
                 
-                let tokenAmount = Double(sendAmountTextField.text ?? "0") ?? 0
-                if tokenAmount == 0 {
+                let tokenAmount = BigInt.Companion().from(
+                    string: sendAmountTextField.text ?? "0",
+                    base: Int32(viewModel.tokenMaxDecimals)
+                )
+                if tokenAmount == .zero {
                     sendAmountTextField.text = nil
                 } else {
                     let value = tokenAmount * viewModel.currencyTokenPrice
@@ -256,8 +263,8 @@ private extension TokenEnterAmountView {
                 }
             } else if viewModel.shouldUpdateTextFields {
                 
-                let tokenAmount = viewModel.tokenAmount ?? 0
-                if tokenAmount == 0 {
+                let tokenAmount = viewModel.tokenAmount ?? .zero
+                if tokenAmount == .zero {
                     sendAmountTextField.text = nil
                 } else {
                     let value = tokenAmount * viewModel.currencyTokenPrice
@@ -280,12 +287,18 @@ private extension TokenEnterAmountView {
         switch mode {
             
         case .token:
-            let amount = Double(sendAmountTextField.text ?? "0") ?? 0
+            let amount = BigInt.Companion().from(
+                string: sendAmountTextField.text ?? "0",
+                base: 2
+            )
             let currencyAmount = amount * viewModel.currencyTokenPrice
-            sendAmountLabel.text = currencyAmount.formatCurrency()
+            sendAmountLabel.text = currencyAmount.toCurrencyString()
             
         case .usd:
-            let amount = Double(sendAmountTextField.text ?? "0") ?? 0
+            let amount = BigInt.Companion().from(
+                string: sendAmountTextField.text ?? "0",
+                base: Int32(viewModel.tokenMaxDecimals)
+            )
             let tokenAmount = amount / viewModel.currencyTokenPrice
             sendAmountLabel.text = tokenAmount.toString(
                 decimals: viewModel.tokenMaxDecimals
@@ -305,7 +318,7 @@ private extension TokenEnterAmountView {
             let maxBalanceAmountUsd = viewModel.tokenMaxAmount * viewModel.currencyTokenPrice
             balanceLabel.text = Localized(
                 "tokenSwap.cell.balance",
-                arg: maxBalanceAmountUsd.formatCurrency() ?? ""
+                arg: maxBalanceAmountUsd.toCurrencyString()
             )
         }
     }

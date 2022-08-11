@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 enum TokenSendPresenterEvent {
     case dismiss
@@ -10,7 +11,7 @@ enum TokenSendPresenterEvent {
     case pasteAddress
     case saveAddress
     case selectToken
-    case tokenChanged(to: Double)
+    case tokenChanged(to: BigInt)
     case feeChanged(to: String)
     case qrCodeScan
     case feeTapped
@@ -31,7 +32,7 @@ final class DefaultTokenSendPresenter {
     private var sendTapped = false
     private var address: String?
     private var token: Web3Token!
-    private var amount: Double?
+    private var amount: BigInt?
     private var fee: Web3NetworkFee = .low
     
     private var items = [TokenSendViewModel.Item]()
@@ -165,7 +166,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                 updateView(shouldAddressBecomeFirstResponder: true)
                 return
             }
-            guard let amount = amount, token.balance >= amount, amount > 0 else {
+            guard let amount = amount, token.balance >= amount, amount > .zero else {
                 updateView(shouldTokenBecomeFirstResponder: true)
                 return
             }
@@ -202,7 +203,7 @@ private extension DefaultTokenSendPresenter {
         .init(
             iconName: interactor.tokenIconName(for: token),
             token: token,
-            value: amount ?? 0
+            value: amount ?? .zero
         )
     }
     
@@ -230,7 +231,7 @@ private extension DefaultTokenSendPresenter {
             [weak self] token in
             guard let self = self else { return }
             self.token = token
-            let newAmount = min(self.amount ?? 0, token.balance)
+            let newAmount = BigInt.min(left: self.amount ?? .zero, right: token.balance)
             self.updateToken(with: newAmount, shouldUpdateTextFields: true)
         }
     }
@@ -255,7 +256,7 @@ private extension DefaultTokenSendPresenter {
     func updateView(
         address: String? = nil,
         shouldAddressBecomeFirstResponder: Bool = false,
-        amount: Double? = nil,
+        amount: BigInt? = nil,
         shouldTokenUpdateTextFields: Bool = false,
         shouldTokenBecomeFirstResponder: Bool = false
     ) {
@@ -264,7 +265,7 @@ private extension DefaultTokenSendPresenter {
             becomeFirstResponder: shouldAddressBecomeFirstResponder
         )
         updateToken(
-            with: amount ?? self.amount ?? 0,
+            with: amount ?? self.amount ?? .zero,
             shouldUpdateTextFields: shouldTokenUpdateTextFields,
             shouldBecomeFirstResponder: shouldTokenBecomeFirstResponder
         )
@@ -307,7 +308,7 @@ private extension DefaultTokenSendPresenter {
     }
 
     func updateToken(
-        with amount: Double,
+        with amount: BigInt,
         shouldUpdateTextFields: Bool,
         shouldBecomeFirstResponder: Bool = false
     ) {
@@ -341,11 +342,11 @@ private extension DefaultTokenSendPresenter {
             buttonState = .ready
         } else if !isValidAddress {
             buttonState = .invalidDestination
-        } else if (amount ?? 0) == 0 {
+        } else if (amount ?? .zero) == .zero {
             buttonState = .insufficientFunds
-        } else if (amount ?? 0) > token.balance {
+        } else if (amount ?? .zero) > token.balance {
             buttonState = .insufficientFunds
-        } else if (amount ?? 0) == 0 {
+        } else if (amount ?? .zero) == .zero {
             buttonState = .enterFunds
         } else {
             buttonState = .ready

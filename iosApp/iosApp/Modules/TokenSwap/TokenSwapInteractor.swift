@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 struct SwapDataIn {
     
@@ -11,24 +12,24 @@ struct SwapDataIn {
     let tokenTo: Web3Token
     
     enum `Type` {
-        case calculateAmountTo(amountFrom: Double)
-        case calculateAmountFrom(amountTo: Double)
+        case calculateAmountTo(amountFrom: BigInt)
+        case calculateAmountFrom(amountTo: BigInt)
         
-        var amountFrom: Double {
+        var amountFrom: BigInt {
             
             switch self {
             case let .calculateAmountTo(amount):
                 return amount
             case .calculateAmountFrom:
-                return 0
+                return BigInt.zero
             }
         }
         
-        var amountTo: Double {
+        var amountTo: BigInt {
             
             switch self {
             case .calculateAmountTo:
-                return 0
+                return BigInt.zero
             case let .calculateAmountFrom(amount):
                 return amount
             }
@@ -38,8 +39,8 @@ struct SwapDataIn {
 
 struct SwapDataOut {
     
-    let amountFrom: Double?
-    let amountTo: Double?
+    let amountFrom: BigInt?
+    let amountTo: BigInt?
 }
 
 protocol TokenSwapInteractor: AnyObject {
@@ -169,12 +170,12 @@ private extension DefaultTokenSwapInteractor {
         
         let amountTo = dataIn.type.amountTo
         
-        guard amountTo > 0 else {
+        guard amountTo > BigInt.zero else {
             
             onCompletion(
                 .init(
-                    amountFrom: 0,
-                    amountTo: 0
+                    amountFrom: .zero,
+                    amountTo: .zero
                 )
             )
             return
@@ -200,12 +201,12 @@ private extension DefaultTokenSwapInteractor {
         
         let amountFrom = dataIn.type.amountFrom
         
-        guard amountFrom > 0 else {
+        guard amountFrom > BigInt.zero else {
             
             onCompletion(
                 .init(
-                    amountFrom: 0,
-                    amountTo: 0
+                    amountFrom: .zero,
+                    amountTo: .zero
                 )
             )
             return

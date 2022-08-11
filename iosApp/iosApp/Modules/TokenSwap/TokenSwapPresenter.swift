@@ -3,15 +3,16 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 enum TokenSwapPresenterEvent {
 
     case limitSwapTapped
     case dismiss
     case tokenFromTapped
-    case tokenFromChanged(to: Double)
+    case tokenFromChanged(to: BigInt)
     case tokenToTapped
-    case tokenToChanged(to: Double)
+    case tokenToChanged(to: BigInt)
     case swapFlip
     case providerTapped
     case slippageTapped
@@ -37,9 +38,9 @@ final class DefaultTokenSwapPresenter {
     private var fees = [Web3NetworkFee]()
     
     private var tokenFrom: Web3Token!
-    private var amountFrom: Double?
+    private var amountFrom: BigInt?
     private var tokenTo: Web3Token!
-    private var amountTo: Double?
+    private var amountTo: BigInt?
 
     private var fee: Web3NetworkFee = .low
     
@@ -64,7 +65,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
 
     func present() {
         
-        let insufficientFunds = (amountFrom ?? 0) > tokenFrom.balance || tokenFrom.balance == 0
+        let insufficientFunds = (amountFrom ?? .zero) > tokenFrom.balance || tokenFrom.balance == .zero
         
         return updateView(
             with: [
@@ -186,7 +187,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
             
         case .review:
             
-            guard (amountFrom ?? 0) > 0 else {
+            guard (amountFrom ?? .zero) > .zero else {
                 
                 refreshView(
                     with: .init(amountFrom: nil, amountTo: nil),
@@ -197,7 +198,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                 return
             }
             
-            guard tokenFrom.balance >= (amountFrom ?? 0) else { return }
+            guard tokenFrom.balance >= (amountFrom ?? .zero) else { return }
             
             guard !calculatingSwap else { return }
             
@@ -232,7 +233,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
         .init(
             iconName: interactor.tokenIconName(for: tokenFrom),
             token: tokenFrom,
-            value: amountFrom ?? 0
+            value: amountFrom ?? .zero
         )
     }
     
@@ -241,7 +242,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
         .init(
             iconName: interactor.tokenIconName(for: tokenTo),
             token: tokenTo,
-            value: amountTo ?? 0
+            value: amountTo ?? .zero
         )
     }
     
@@ -274,7 +275,7 @@ private extension DefaultTokenSwapPresenter {
     }
         
     func updateSwap(
-        amountFrom: Double,
+        amountFrom: BigInt,
         shouldUpdateTextFields: Bool
     ) {
         
@@ -297,7 +298,7 @@ private extension DefaultTokenSwapPresenter {
     }
     
     func updateSwap(
-        amountTo: Double,
+        amountTo: BigInt,
         shouldUpdateTextFields: Bool
     ) {
         
@@ -326,7 +327,7 @@ private extension DefaultTokenSwapPresenter {
         amountFrom = swapDataOut.amountFrom
         amountTo = swapDataOut.amountTo
         
-        let insufficientFunds = (amountFrom ?? 0) > tokenFrom.balance || tokenFrom.balance == 0
+        let insufficientFunds = (amountFrom ?? .zero) > tokenFrom.balance || tokenFrom.balance == .zero
         
         updateView(
             with: [
@@ -459,7 +460,7 @@ private extension DefaultTokenSwapPresenter {
             [weak self] token in
             guard let self = self else { return }
             self.tokenFrom = token
-            self.refreshView(with: .init(amountFrom: 0, amountTo: 0))
+            self.refreshView(with: .init(amountFrom: .zero, amountTo: .zero))
         }
     }
     
@@ -469,7 +470,7 @@ private extension DefaultTokenSwapPresenter {
             [weak self] token in
             guard let self = self else { return }
             self.tokenTo = token
-            self.updateSwap(amountFrom: self.amountFrom ?? 0, shouldUpdateTextFields: false)
+            self.updateSwap(amountFrom: self.amountFrom ?? .zero, shouldUpdateTextFields: false)
         }
     }
 }

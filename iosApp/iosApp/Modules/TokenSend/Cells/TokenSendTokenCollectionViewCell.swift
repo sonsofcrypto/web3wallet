@@ -2,6 +2,8 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
+import web3lib
+
 final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var tokenView: TokenEnterAmountView!
@@ -9,7 +11,7 @@ final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
     struct Handler {
         
         let onTokenTapped: (() -> Void)?
-        let onTokenChanged: ((Double) -> Void)?
+        let onTokenChanged: ((BigInt) -> Void)?
     }
         
     override func resignFirstResponder() -> Bool {

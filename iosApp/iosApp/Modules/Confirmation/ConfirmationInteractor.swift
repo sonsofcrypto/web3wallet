@@ -2,12 +2,14 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
+import web3lib
+
 protocol ConfirmationInteractor {
     
     func send(
         tokenFrom: Web3Token,
         toAddress: String,
-        balance: Double,
+        balance: BigInt,
         fee: Web3NetworkFee,
         password: String,
         salt: String,
@@ -24,7 +26,7 @@ extension DefaultConfirmationInteractor: ConfirmationInteractor {
     func send(
         tokenFrom: Web3Token,
         toAddress: String,
-        balance: Double,
+        balance: BigInt,
         fee: Web3NetworkFee,
         password: String,
         salt: String,

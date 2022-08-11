@@ -307,7 +307,7 @@ private extension DefaultTokenPickerPresenter {
                 type = .init(
                     isSelected: isSelected,
                     balance: .init(
-                        tokens: token.balance.toString(decimals: 2),
+                        tokens: token.balance.toString(type: .short, decimals: token.decimals),
                         usdTotal: token.usdBalanceString
                     )
                 )

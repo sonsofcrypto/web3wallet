@@ -2,6 +2,8 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
+import web3lib
+
 final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var stackView: UIStackView!
@@ -20,9 +22,9 @@ final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
     struct Handler {
 
         let onTokenFromTapped: (() -> Void)
-        let onTokenFromAmountChanged: ((Double) -> Void)?
+        let onTokenFromAmountChanged: ((BigInt) -> Void)?
         let onTokenToTapped: (() -> Void)
-        let onTokenToAmountChanged: ((Double) -> Void)?
+        let onTokenToAmountChanged: ((BigInt) -> Void)?
         let onSwapFlip: (() -> Void)
         let onProviderTapped: () -> Void
         let onSlippageTapped: () -> Void
