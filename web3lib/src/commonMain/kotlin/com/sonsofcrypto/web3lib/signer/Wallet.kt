@@ -114,7 +114,7 @@ class Wallet: Signer {
     }
 
     override suspend fun sendTransaction(transaction: TransactionRequest): TransactionResponse {
-        return provider!!.sendRawTransaction()
+        TODO("Not yet implemented")
     }
 
     override suspend fun getChainId() {

@@ -24,12 +24,13 @@ class BigDec {
         storage.divide(value.storage, decimalMode = decimalMode)
     )
 
-    fun isZero(): Boolean = storage.isZero()
-
     fun toBigInt(): BigInt = BigInt(storage.toBigInteger())
     fun toHexString(): String = storage.toString(16)
     fun toDecimalString(): String = toString()
     fun toDouble(): Double = storage.doubleValue(false)
+
+    fun compare(other: BigDec): Int = storage.compare(other.storage)
+    fun isZero(): Boolean =  storage.isZero()
 
     override fun toString(): String = storage.toString(10)
 
