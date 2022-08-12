@@ -206,18 +206,44 @@ extension Web3Token {
         inWallet: Bool,
         idx rank: Int
     ) -> Web3Token {
-        return Web3Token(
+        
+        Web3Token(
             symbol: currency.symbol.uppercased(),
             name: currency.name,
             address: currency.address ?? "",
             decimals: UInt(8),//UInt(currency.decimals),
             type: .normal,
             network: network,
-            balance: currency.symbol.lowercased() == "eth" ? try! BigInt.Companion().from(string: "5230000", base: Int32(10)) : .zero,
+            // TODO: @Annon - Fix me and find a more efficient way...!
+            balance: Web3Token.cryptoBalance(for: currency),
             showInWallet: inWallet,
-            usdPrice: currency.symbol.lowercased() == "eth" ? try! BigInt.Companion().from(string: "193000", base: Int32(10)) : .zero,
+            // TODO: @Annon - Fix me and find a more efficient way...!
+            usdPrice: Web3Token.fiatPrice(for: currency),
             coingGeckoId: currency.coinGeckoId,
             rank: rank
+        )
+    }
+    
+    private static func cryptoBalance(for currency: Currency) -> BigInt {
+        
+        let walletsConnectionService: WalletsConnectionService = ServiceDirectory.assembler.resolve()
+        let walletsStateService: WalletsStateService = ServiceDirectory.assembler.resolve()
+        
+        guard let network = walletsConnectionService.network,
+              let wallet = walletsConnectionService.wallet(network: network) else {
+            return .zero
+        }
+
+        return walletsStateService.balance(wallet: wallet, currency: currency)
+    }
+    
+    private static func fiatPrice(for currency: Currency) -> BigInt {
+        
+        let currencyMetadataService: CurrencyMetadataService = ServiceDirectory.assembler.resolve()
+        let price = currencyMetadataService.market(currency: currency)?.currentPrice?.doubleValue ?? 0
+        return BigInt.fromString(
+            "\(price)",
+            decimals: 2
         )
     }
 
