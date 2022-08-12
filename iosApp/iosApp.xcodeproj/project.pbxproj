@@ -72,6 +72,7 @@
 		1C228ACB28A3B122005316A3 /* ConfirmationTxInProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228ACA28A3B122005316A3 /* ConfirmationTxInProgressView.swift */; };
 		1C228ACD28A3C1AA005316A3 /* ConfirmationTxSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228ACC28A3C1AA005316A3 /* ConfirmationTxSuccessView.swift */; };
 		1C228ACF28A3C774005316A3 /* ConfirmationTxFailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228ACE28A3C774005316A3 /* ConfirmationTxFailedView.swift */; };
+		1C228AD128A4D1BC005316A3 /* BigInt+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228AD028A4D1BC005316A3 /* BigInt+Extensions.swift */; };
 		1C2B06562891D9A6002A8FBF /* FeaturesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2B06552891D9A6002A8FBF /* FeaturesService.swift */; };
 		1C2B06582891D9B0002A8FBF /* FeaturesServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2B06572891D9B0002A8FBF /* FeaturesServiceAssembler.swift */; };
 		1C2B065A28927F92002A8FBF /* EmbeddedErrorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2B065928927F92002A8FBF /* EmbeddedErrorCollectionViewCell.swift */; };
@@ -647,6 +648,7 @@
 		1C228ACA28A3B122005316A3 /* ConfirmationTxInProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationTxInProgressView.swift; sourceTree = "<group>"; };
 		1C228ACC28A3C1AA005316A3 /* ConfirmationTxSuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationTxSuccessView.swift; sourceTree = "<group>"; };
 		1C228ACE28A3C774005316A3 /* ConfirmationTxFailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationTxFailedView.swift; sourceTree = "<group>"; };
+		1C228AD028A4D1BC005316A3 /* BigInt+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BigInt+Extensions.swift"; sourceTree = "<group>"; };
 		1C2B06552891D9A6002A8FBF /* FeaturesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesService.swift; sourceTree = "<group>"; };
 		1C2B06572891D9B0002A8FBF /* FeaturesServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturesServiceAssembler.swift; sourceTree = "<group>"; };
 		1C2B065928927F92002A8FBF /* EmbeddedErrorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedErrorCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2089,6 +2091,7 @@
 				1CB3A1D12840D6B70092D667 /* CG+Extensions.swift */,
 				1CB3A1DE2840D6B70092D667 /* Data+Extension.swift */,
 				1C54DBDF285E1A0E00E378F6 /* Double+Extensions.swift */,
+				1C228AD028A4D1BC005316A3 /* BigInt+Extensions.swift */,
 				1A4C39798419CEB3807348FA /* Error+Extensions.swift */,
 				1CB3A1DA2840D6B70092D667 /* Formatter+Extensions.swift */,
 				1CB3A1D02840D6B70092D667 /* Int+Extensions.swift */,
@@ -3072,6 +3075,7 @@
 				1C60C2A8285724D0003BE25D /* SettingsViewModel.swift in Sources */,
 				1CDED601289C4C5200DF34A7 /* NFTSendWireframeFactoryAssembler.swift in Sources */,
 				1C54DC072860E5CB00E378F6 /* NetworkPickerWireframeFactory.swift in Sources */,
+				1C228AD128A4D1BC005316A3 /* BigInt+Extensions.swift in Sources */,
 				1C60C35A285724D1003BE25D /* DegenInteractor.swift in Sources */,
 				1C60C2EE285724D0003BE25D /* NetworksWireframeFactory.swift in Sources */,
 				1CB8B0CC288FAC7B00024E7C /* DeepLinkHandler.swift in Sources */,

@@ -160,9 +160,9 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
         walletsConnectionService.setNetwork(network: network.toNetwork(), enabled: active)
     }
     
-    func networkFeeInUSD(network: Web3Network, fee: Web3NetworkFee) -> Double {
+    func networkFeeInUSD(network: Web3Network, fee: Web3NetworkFee) -> BigInt {
         // TODO: return fees
-        return 0.0
+        return .zero
     }
     
     func networkFeeInSeconds(network: Web3Network, fee: Web3NetworkFee) -> Int {

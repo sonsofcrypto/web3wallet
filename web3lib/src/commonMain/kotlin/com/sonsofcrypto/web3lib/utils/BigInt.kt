@@ -13,6 +13,7 @@ class BigInt {
 
     fun add(value: BigInt): BigInt = BigInt(storage.add(value.storage))
     fun mul(value: BigInt): BigInt = BigInt(storage.multiply(value.storage))
+    @Throws(Throwable::class)
     fun div(value: BigInt): BigInt = BigInt(storage.divide(value.storage))
     fun pow(value: Long): BigInt = BigInt(storage.pow(value))
 
@@ -33,6 +34,7 @@ class BigInt {
 
         fun zero(): BigInt = BigInt.from(0)
 
+        @Throws(Throwable::class)
         fun from(string: String, base: Int = 10): BigInt {
             return BigInt(BigInteger.parseString(string, base))
         }

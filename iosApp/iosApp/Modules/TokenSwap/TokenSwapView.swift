@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 protocol TokenSwapView: AnyObject {
 
@@ -384,7 +385,7 @@ private extension TokenSwapViewController {
         }
     }
     
-    func makeOnTokenFromAmountChanged() -> (Double) -> Void {
+    func makeOnTokenFromAmountChanged() -> (BigInt) -> Void {
         
         {
             [weak self] amount in
@@ -403,7 +404,7 @@ private extension TokenSwapViewController {
         }
     }
     
-    func makeOnTokenToAmountChanged() -> (Double) -> Void {
+    func makeOnTokenToAmountChanged() -> (BigInt) -> Void {
         
         {
             [weak self] amount in

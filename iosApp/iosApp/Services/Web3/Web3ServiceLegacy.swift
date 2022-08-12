@@ -33,7 +33,7 @@ protocol Web3ServiceLegacy: AnyObject {
     ) -> String
     
     func update(network: Web3Network, active: Bool)
-    func networkFeeInUSD(network: Web3Network, fee: Web3NetworkFee) -> Double
+    func networkFeeInUSD(network: Web3Network, fee: Web3NetworkFee) -> BigInt
     func networkFeeInSeconds(network: Web3Network, fee: Web3NetworkFee) -> Int
     func networkFeeInNetworkToken(network: Web3Network, fee: Web3NetworkFee) -> String
     
@@ -132,14 +132,12 @@ struct Web3Token: Equatable {
     let symbol: String // ETH
     let name: String // Ethereum
     let address: String // 0x482828...
-    let decimals: Int // 8
-    //let decimals: UInt // 8
+    let decimals: UInt // 8
     let type: `Type`
     let network: Web3Network //
-    let balance: Double
-    //let balance: BigInt// Double
+    let balance: BigInt
     let showInWallet: Bool
-    let usdPrice: Double
+    let usdPrice: BigInt
     let coingGeckoId: String?
     let rank: Int
 }
@@ -161,14 +159,20 @@ extension Web3Token {
         self.network.id == network.id && self.symbol == symbol
     }
     
-    var usdBalance: Double {
+    var usdBalance: BigInt {
         
-        balance * usdPrice
+        let bigDecBalance = balance.toBigDec(decimals: decimals)
+        let bigDecUsdPrice = usdPrice.toBigDec(decimals: 2)
+        let bigDecDecimals = BigDec.Companion().from(string: "100", base: 10)
+
+        let result = bigDecBalance.mul(value: bigDecUsdPrice).mul(value: bigDecDecimals)
+        
+        return result.toBigInt()
     }
     
     var usdBalanceString: String {
         
-        usdBalance.formatCurrency() ?? ""
+        usdBalance.toDecimalString().appending(decimals: 2)
     }
 }
 
@@ -202,18 +206,44 @@ extension Web3Token {
         inWallet: Bool,
         idx rank: Int
     ) -> Web3Token {
-        return Web3Token(
+        
+        Web3Token(
             symbol: currency.symbol.uppercased(),
             name: currency.name,
             address: currency.address ?? "",
-            decimals: Int(currency.decimals),
+            decimals: UInt(8),//UInt(currency.decimals),
             type: .normal,
             network: network,
-            balance: 0.0,
+            // TODO: @Annon - Fix me and find a more efficient way...!
+            balance: Web3Token.cryptoBalance(for: currency),
             showInWallet: inWallet,
-            usdPrice: 0.0,
+            // TODO: @Annon - Fix me and find a more efficient way...!
+            usdPrice: Web3Token.fiatPrice(for: currency),
             coingGeckoId: currency.coinGeckoId,
             rank: rank
+        )
+    }
+    
+    private static func cryptoBalance(for currency: Currency) -> BigInt {
+        
+        let walletsConnectionService: WalletsConnectionService = ServiceDirectory.assembler.resolve()
+        let walletsStateService: WalletsStateService = ServiceDirectory.assembler.resolve()
+        
+        guard let network = walletsConnectionService.network,
+              let wallet = walletsConnectionService.wallet(network: network) else {
+            return .zero
+        }
+
+        return walletsStateService.balance(wallet: wallet, currency: currency)
+    }
+    
+    private static func fiatPrice(for currency: Currency) -> BigInt {
+        
+        let currencyMetadataService: CurrencyMetadataService = ServiceDirectory.assembler.resolve()
+        let price = currencyMetadataService.market(currency: currency)?.currentPrice?.doubleValue ?? 0
+        return BigInt.fromString(
+            "\(price)",
+            decimals: 2
         )
     }
 

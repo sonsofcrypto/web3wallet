@@ -137,3 +137,46 @@ extension String {
         data(using: .isoLatin1, allowLossyConversion: false)
     }
 }
+
+extension String {
+    
+    func appending(decimals: UInt) -> String {
+        
+        var decimalsString = ""
+        for _ in 0..<decimals {
+            decimalsString = "0" + decimalsString
+        }
+        
+        return self + decimalsString
+    }
+    
+    var decimals: String? {
+        
+        let split = self.split(separator: ".")
+        
+        guard split.count == 2 else { return nil }
+        
+        return String(split[1])
+    }
+    
+    var stringDroppingLast: String {
+        
+        guard count > 0 else { return "" }
+        
+        var string = self
+        _ = string.removeLast()
+        return string
+    }
+    
+    static func currencySymbol(
+        with currencyCode: String = "USD"
+    ) -> String {
+        
+        0.formatted(
+            .currency(code: "USD")
+        ).replacingOccurrences(
+            of: "0.00",
+            with: ""
+        )
+    }
+}

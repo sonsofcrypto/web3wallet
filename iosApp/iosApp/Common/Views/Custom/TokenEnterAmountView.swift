@@ -2,16 +2,18 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
+import Foundation
 import UIKit
+import web3lib
 
 struct TokenEnterAmountViewModel {
     
-    let tokenAmount: Double?
+    let tokenAmount: BigInt?
     let tokenSymbolIconName: String
     let tokenSymbol: String
-    let tokenMaxAmount: Double
-    let tokenMaxDecimals: Int
-    let currencyTokenPrice: Double
+    let tokenMaxAmount: BigInt
+    let tokenMaxDecimals: UInt
+    let currencyTokenPrice: BigInt
     let shouldUpdateTextFields: Bool
     let shouldBecomeFirstResponder: Bool
     let networkName: String
@@ -38,8 +40,11 @@ final class TokenEnterAmountView: UIView {
     
     private var viewModel: TokenEnterAmountViewModel!
     private var onTokenTapped: (() -> Void)?
-    private var onTokenChanged: ((Double) -> Void)?
+    private var onTokenChanged: ((BigInt) -> Void)?
     private var mode: Mode = .token
+    
+    private var isFlipEvent = false
+    private var latestTokenAmount: BigInt?
     
     override func awakeFromNib() {
         
@@ -98,7 +103,7 @@ extension TokenEnterAmountView {
     func update(
         with viewModel: TokenEnterAmountViewModel,
         onTokenTapped: (() -> Void)? = nil,
-        onTokenChanged: ((Double) -> Void)? = nil
+        onTokenChanged: ((BigInt) -> Void)? = nil
     ) {
         
         self.viewModel = viewModel
@@ -139,14 +144,48 @@ extension TokenEnterAmountView: UITextFieldDelegate {
         
         applyTextValidation(to: textField)
         
-        let double = Double(textField.text ?? "0") ?? 0
-        
         switch mode {
         case .token:
-            onTokenChanged?(double)
+            
+            if let decimals = textField.text?.decimals, decimals.count > viewModel.tokenMaxDecimals {
+
+                textField.text = textField.text?.stringDroppingLast
+                return
+            }
+            
+            let value = BigInt.fromString(
+                textField.text,
+                decimals: viewModel.tokenMaxDecimals
+            )
+            
+            // NOTE: This is to not lose precision when flipping between token / usd values,
+            // we store the last tokenAmount and use it later
+            if !isFlipEvent {
+                latestTokenAmount = value
+            }
+            onTokenChanged?(value)
+            isFlipEvent = false
         case .usd:
-            let tokenAmount = double / viewModel.currencyTokenPrice
+            
+            if let decimals = textField.text?.decimals, decimals.count > 2 {
+                
+                textField.text = textField.text?.stringDroppingLast
+                return
+            }
+
+            let value = BigInt.fromString(
+                textField.text,
+                decimals: 2
+            )
+            let tokenAmount = value / viewModel.currencyTokenPrice
+            
+            // NOTE: This is to not lose precision when flipping between token / usd values,
+            // we store the last tokenAmount and use it later
+            if !isFlipEvent {
+                latestTokenAmount = tokenAmount
+            }
             onTokenChanged?(tokenAmount)
+            isFlipEvent = false
         }
     }
 }
@@ -196,18 +235,20 @@ private extension TokenEnterAmountView {
         
         switch mode {
         case .token:
-            sendAmountTextField.text = viewModel.tokenMaxAmount.toString(
+            sendAmountTextField.text = viewModel.tokenMaxAmount.formatString(
                 decimals: viewModel.tokenMaxDecimals
             )
         case .usd:
-            let maxAmount = viewModel.tokenMaxAmount * viewModel.currencyTokenPrice
-            sendAmountTextField.text = maxAmount.toString()
+            let maxBalanceAmountUsd = makeCurrencyUsdPrice(with: viewModel.tokenMaxAmount)
+            sendAmountTextField.text = maxBalanceAmountUsd.formatString(decimals: 2)
         }
+        
+        latestTokenAmount = viewModel.tokenMaxAmount
         
         onTokenChanged?(viewModel.tokenMaxAmount)
     }
     
-    func updateSendAmountTextField(forceUpdate: Bool = false) {
+    func updateSendAmountTextField(isFlip: Bool = false) {
         
         switch mode {
         case .token:
@@ -215,24 +256,27 @@ private extension TokenEnterAmountView {
             let hasDecimals = viewModel.tokenMaxDecimals > 0
             sendAmountTextField.keyboardType = hasDecimals ? .decimalPad : .numberPad
             
-            if forceUpdate {
+            if isFlip {
                 
-                let usdAmount = Double(sendAmountTextField.text ?? "0") ?? 0
-                if usdAmount == 0 {
+                let usdAmount = BigInt.fromString(
+                    sendAmountTextField.text,
+                    decimals: 2
+                )
+                if usdAmount == .zero {
                     sendAmountTextField.text = nil
                 } else {
-                    let tokenAmount = usdAmount / viewModel.currencyTokenPrice
-                    sendAmountTextField.text = tokenAmount.toString(
+                    let tokenAmount = makeTokenAmountFromUsdPrice(with: usdAmount)
+                    sendAmountTextField.text = tokenAmount.formatString(
                         decimals: viewModel.tokenMaxDecimals
                     )
                 }
             } else if viewModel.shouldUpdateTextFields {
                 
-                let tokenAmount = viewModel.tokenAmount ?? 0
-                if tokenAmount == 0 {
+                let tokenAmount = viewModel.tokenAmount ?? .zero
+                if tokenAmount == .zero {
                     sendAmountTextField.text = nil
                 } else {
-                    sendAmountTextField.text = tokenAmount.toString(
+                    sendAmountTextField.text = tokenAmount.formatString(
                         decimals: viewModel.tokenMaxDecimals
                     )
                 }
@@ -243,51 +287,68 @@ private extension TokenEnterAmountView {
             
             sendAmountTextField.keyboardType = .decimalPad
             
-            if forceUpdate {
+            if isFlip {
+
+                let tokenAmount = BigInt.fromString(
+                    sendAmountTextField.text,
+                    decimals: viewModel.tokenMaxDecimals
+                )
                 
-                let tokenAmount = Double(sendAmountTextField.text ?? "0") ?? 0
-                if tokenAmount == 0 {
+                let usdAmount = makeCurrencyUsdPrice(with: tokenAmount)
+                if usdAmount == .zero {
                     sendAmountTextField.text = nil
                 } else {
-                    let value = tokenAmount * viewModel.currencyTokenPrice
-                    sendAmountTextField.text = value.toString(
-                        decimals: viewModel.tokenMaxDecimals
+                    sendAmountTextField.text = usdAmount.formatString(
+                        type: .max,
+                        decimals: 2
                     )
                 }
             } else if viewModel.shouldUpdateTextFields {
                 
-                let tokenAmount = viewModel.tokenAmount ?? 0
-                if tokenAmount == 0 {
+                let tokenAmount = viewModel.tokenAmount ?? .zero
+                let usdAmount = makeCurrencyUsdPrice(with: tokenAmount)
+                if usdAmount == .zero {
                     sendAmountTextField.text = nil
                 } else {
-                    let value = tokenAmount * viewModel.currencyTokenPrice
-                    sendAmountTextField.text = value.toString(
-                        decimals: viewModel.tokenMaxDecimals
+                    sendAmountTextField.text = usdAmount.formatString(
+                        type: .max,
+                        decimals: 2
                     )
                 }
             }
             
             sendCurrencySymbol.isHidden = false
-            sendCurrencySymbol.text = 0.formatCurrency(maximumFractionDigits: 0)?.replacingOccurrences(
-                of: "0",
-                with: ""
-            )
+            
+            // TODO: In the future if we want to support EUR or any other local currency we will need to pass here
+            // the currency symbol
+            sendCurrencySymbol.text = String.currencySymbol(with: "USD")
         }
     }
     
-    func updateSendAmountLabel() {
+    func updateSendAmountLabel(isFlip: Bool = false) {
         
         switch mode {
             
         case .token:
-            let amount = Double(sendAmountTextField.text ?? "0") ?? 0
-            let currencyAmount = amount * viewModel.currencyTokenPrice
-            sendAmountLabel.text = currencyAmount.formatCurrency()
+            var tokenAmount = BigInt.fromString(
+                sendAmountTextField.text,
+                decimals: viewModel.tokenMaxDecimals
+            )
+            tokenAmount = isFlip || isFlipEvent
+            ? latestTokenAmount ?? tokenAmount
+            : tokenAmount
+            let currencyAmount = makeCurrencyUsdPrice(with: tokenAmount)
+            sendAmountLabel.text = currencyAmount.formatStringCurrency()
             
         case .usd:
-            let amount = Double(sendAmountTextField.text ?? "0") ?? 0
-            let tokenAmount = amount / viewModel.currencyTokenPrice
-            sendAmountLabel.text = tokenAmount.toString(
+            let usdAmount = BigInt.fromString(
+                sendAmountTextField.text,
+                decimals: 2
+            )
+            let tokenAmount = isFlip || isFlipEvent
+            ? latestTokenAmount ?? makeTokenAmountFromUsdPrice(with: usdAmount)
+            : makeTokenAmountFromUsdPrice(with: usdAmount)
+            sendAmountLabel.text = tokenAmount.formatString(
                 decimals: viewModel.tokenMaxDecimals
             ) + " \(viewModel.tokenSymbol)"
         }
@@ -299,26 +360,71 @@ private extension TokenEnterAmountView {
         case .token:
             balanceLabel.text = Localized(
                 "tokenSwap.cell.balance",
-                arg: viewModel.tokenMaxAmount.toString(decimals: viewModel.tokenMaxDecimals)
+                arg: viewModel.tokenMaxAmount.formatString(decimals: viewModel.tokenMaxDecimals)
             )
         case .usd:
-            let maxBalanceAmountUsd = viewModel.tokenMaxAmount * viewModel.currencyTokenPrice
+            let maxBalanceAmountUsd = makeCurrencyUsdPrice(with: viewModel.tokenMaxAmount)
             balanceLabel.text = Localized(
                 "tokenSwap.cell.balance",
-                arg: maxBalanceAmountUsd.formatCurrency() ?? ""
+                arg: maxBalanceAmountUsd.formatStringCurrency()
             )
         }
     }
     
     @objc func flipMode() {
         
+        isFlipEvent = true
+
         mode = mode == .token ? .usd : .token
         
-        updateSendAmountTextField(forceUpdate: true)
-        updateSendAmountLabel()
+        updateSendAmountTextField(isFlip: true)
+        updateSendAmountLabel(isFlip: true)
         updateBalanceLabel()
         
         sendAmountTextField.becomeFirstResponder()
     }
 }
 
+private extension TokenEnterAmountView {
+    
+    func makeCurrencyUsdPrice(
+        with amount: BigInt
+    ) -> BigInt {
+        
+        let bigDecBalance = amount.toBigDec(decimals: viewModel.tokenMaxDecimals)
+        let bigDecUsdPrice = viewModel.currencyTokenPrice.toBigDec(decimals: 2)
+        let bigDecDecimals = BigDec.Companion().from(string: "100", base: 10)
+
+        let result = bigDecBalance.mul(value: bigDecUsdPrice).mul(value: bigDecDecimals)
+        
+        return result.toBigInt()
+    }
+    
+    func makeTokenAmountFromUsdPrice(
+        with usdAmount: BigInt
+    ) -> BigInt {
+        
+        let usdMaxAmount = makeCurrencyUsdPrice(with: viewModel.tokenMaxAmount)
+        
+        guard usdMaxAmount != usdAmount else { return viewModel.tokenMaxAmount }
+        
+        let bigDecUsdAmount = usdAmount.toBigDec(decimals: 2)
+        let bigDecUsdPrice = viewModel.currencyTokenPrice.toBigDec(decimals: 2)
+        
+        let tokenDecimalsBigInt = BigInt.Companion().from(uint: 10).pow(value: Int64(viewModel.tokenMaxDecimals))
+
+        let result = bigDecUsdAmount.div(value: bigDecUsdPrice).mul(
+            value:  tokenDecimalsBigInt.toBigDec(decimals: 0)
+        )
+        
+        return result.toBigInt()
+    }
+}
+
+private extension UInt {
+    
+    var bigDec: BigDec {
+        
+        BigDec.Companion().from(uint: UInt32(self))
+    }
+}

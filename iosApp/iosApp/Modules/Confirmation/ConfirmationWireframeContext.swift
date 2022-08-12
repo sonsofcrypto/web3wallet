@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 struct ConfirmationWireframeContext {
     
@@ -41,7 +42,7 @@ extension ConfirmationWireframeContext {
             
             let iconName: String
             let token: Web3Token
-            let value: Double
+            let value: BigInt
         }
         
         struct Provider {
@@ -62,7 +63,7 @@ extension ConfirmationWireframeContext {
             
             let iconName: String
             let token: Web3Token
-            let value: Double
+            let value: BigInt
         }
         
         struct Destination {

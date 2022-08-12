@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 protocol TokenSendView: AnyObject {
 
@@ -351,7 +352,7 @@ private extension TokenSendViewController {
         }
     }
     
-    func makeOnTokenChanged() -> (Double) -> Void {
+    func makeOnTokenChanged() -> (BigInt) -> Void {
         
         {
             [weak self] value in
