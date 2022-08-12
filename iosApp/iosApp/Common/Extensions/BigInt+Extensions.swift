@@ -18,8 +18,9 @@ extension BigInt {
         do {
             guard let currentDecimals = text.decimals else {
                 
+                let fullDecimals = "".addRemainingDecimals(upTo: decimals)
                 return try BigInt.Companion().from(
-                    string: text,
+                    string: text.trimFinalDotIfNeeded + fullDecimals,
                     base: Int32(10)
                 )
             }
@@ -140,12 +141,19 @@ extension BigInt {
             + formatString(type: type, decimals: decimals)
         case .max:
             return String.currencySymbol(with: currencyCode)
-            + formatString(type: type, decimals: decimals)
+            + formatString(type: type, decimals: decimals).thowsandFormatted
         }
     }
 }
 
 private extension String {
+    
+    var trimFinalDotIfNeeded: String {
+        
+        guard hasSuffix(".") else { return self }
+        
+        return replacingOccurrences(of: ".", with: "")
+    }
     
     func add(decimals: UInt) -> String {
         
@@ -180,7 +188,7 @@ private extension String {
         
         var toReturn = self
         
-        for _ in 0...missingDecimals {
+        for _ in 0..<missingDecimals {
             toReturn += "0"
         }
         
@@ -189,18 +197,26 @@ private extension String {
     
     var thowsandFormatted: String {
         
+        let split = split(separator: ".")
+        
+        guard split.count == 2 else { return self }
+        
+        guard split[0].count > 3 else { return self }
+        
+        let stringToFormat = String(split[0])
+        let lastIndex = (stringToFormat.count - 1)
         var result = ""
         var thowsandCount = 0
-        for i in 0...(count - 1) {
+        for i in 0...lastIndex {
             
-            result.append(self[i])
+            result = stringToFormat[lastIndex-i] + result
             thowsandCount += 1
             
-            if thowsandCount == 3 && i != (count - 1) {
+            if thowsandCount == 3 && i != lastIndex {
                 thowsandCount = 0
-                result.append(",")
+                result = "," + result
             }
         }
-        return result
+        return result + "." + split[1]
     }
 }

@@ -183,9 +183,7 @@ private extension DefaultConfirmationPresenter {
         forSend data: ConfirmationWireframeContext.SendContext
     ) -> ConfirmationViewModel.Content {
         
-        let usdToken = (
-            data.token.value * data.token.token.usdPrice
-        ).formatStringCurrency()
+        let usdToken = data.token.token.usdBalance.formatStringCurrency()
         let token = ConfirmationViewModel.SendViewModel.Token(
             iconName: data.token.iconName,
             symbol: data.token.token.symbol,
