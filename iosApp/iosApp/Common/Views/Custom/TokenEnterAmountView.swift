@@ -430,6 +430,8 @@ private extension TokenEnterAmountView {
         with fiatAmount: BigInt
     ) -> BigInt {
         
+        guard viewModel.currencyTokenPrice != .zero else { return .zero }
+        
         let fiatMaxAmount = makeCurrencyFiatPrice(with: viewModel.tokenMaxAmount)
         
         guard fiatMaxAmount != fiatAmount else { return viewModel.tokenMaxAmount }

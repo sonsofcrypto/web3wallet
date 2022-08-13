@@ -53,17 +53,22 @@
                                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="YLL-66-nbB">
                                                                             <rect key="frame" x="0.0" y="0.0" width="397" height="44"/>
                                                                             <subviews>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6n5-v0-M5A">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="41.5" height="44"/>
-                                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                                    <nil key="textColor"/>
-                                                                                    <nil key="highlightedColor"/>
-                                                                                </label>
-                                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3bU-Bq-OeW" customClass="TextField" customModule="iosApp" customModuleProvider="target">
-                                                                                    <rect key="frame" x="45.5" y="0.0" width="191.5" height="44"/>
-                                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                                    <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
-                                                                                </textField>
+                                                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bZM-Yo-I6V">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="237" height="44"/>
+                                                                                    <subviews>
+                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6n5-v0-M5A">
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="41.5" height="44"/>
+                                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                            <nil key="textColor"/>
+                                                                                            <nil key="highlightedColor"/>
+                                                                                        </label>
+                                                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3bU-Bq-OeW" customClass="TextField" customModule="iosApp" customModuleProvider="target">
+                                                                                            <rect key="frame" x="41.5" y="0.0" width="195.5" height="44"/>
+                                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                                            <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                                                                        </textField>
+                                                                                    </subviews>
+                                                                                </stackView>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pVw-oL-xtI">
                                                                                     <rect key="frame" x="241" y="0.0" width="156" height="44"/>
                                                                                     <subviews>
@@ -245,17 +250,22 @@
                                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="M0a-aD-ddm">
                                                                             <rect key="frame" x="0.0" y="0.0" width="397" height="44"/>
                                                                             <subviews>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7v-ta-ZcB">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="41.5" height="44"/>
-                                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                                    <nil key="textColor"/>
-                                                                                    <nil key="highlightedColor"/>
-                                                                                </label>
-                                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N1t-qH-Vnf" customClass="TextField" customModule="iosApp" customModuleProvider="target">
-                                                                                    <rect key="frame" x="45.5" y="0.0" width="191.5" height="44"/>
-                                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                                    <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
-                                                                                </textField>
+                                                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HZQ-Cg-5dn">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="237" height="44"/>
+                                                                                    <subviews>
+                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7v-ta-ZcB">
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="41.5" height="44"/>
+                                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                                            <nil key="textColor"/>
+                                                                                            <nil key="highlightedColor"/>
+                                                                                        </label>
+                                                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N1t-qH-Vnf" customClass="TextField" customModule="iosApp" customModuleProvider="target">
+                                                                                            <rect key="frame" x="41.5" y="0.0" width="195.5" height="44"/>
+                                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                                            <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                                                                        </textField>
+                                                                                    </subviews>
+                                                                                </stackView>
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GKV-BU-si0">
                                                                                     <rect key="frame" x="241" y="0.0" width="156" height="44"/>
                                                                                     <subviews>
