@@ -120,7 +120,7 @@ extension BigInt {
         case .short:
             return toDecimalString().add(decimals: decimals)
         case .long:
-            return toDecimalString().add(decimals: decimals)
+            return toDecimalString().add(decimals: decimals).trimFinalZerosIfDecimal
         case .max:
             return toDecimalString().add(decimals: decimals)
         }
@@ -128,8 +128,8 @@ extension BigInt {
     
     func formatStringCurrency(
         type: FormatType = .max,
-        currencyCode: String = "USD",
-        decimals: UInt = 2
+        decimals: UInt = 2,
+        currencyCode: String = "USD"
     ) -> String {
         
         switch type {
@@ -138,7 +138,7 @@ extension BigInt {
             + formatString(type: type, decimals: decimals)
         case .long:
             return String.currencySymbol(with: currencyCode)
-            + formatString(type: type, decimals: decimals)
+            + formatString(type: type, decimals: decimals).trimFinalZerosIfDecimal.thowsandFormatted
         case .max:
             return String.currencySymbol(with: currencyCode)
             + formatString(type: type, decimals: decimals).thowsandFormatted
@@ -153,6 +153,34 @@ private extension String {
         guard hasSuffix(".") else { return self }
         
         return replacingOccurrences(of: ".", with: "")
+    }
+    
+    var trimFinalZerosIfDecimal: String {
+        
+        guard let decimals = decimals else { return self }
+        
+        let lastIndex = decimals.count - 1
+        var newDecimals = ""
+        var deleteModelOn = true
+        for i in 0...lastIndex {
+            
+            let character = decimals[lastIndex-i]
+
+            guard deleteModelOn else {
+                
+                newDecimals = String(character) + newDecimals
+                continue
+            }
+            
+            guard character != "0" else { continue }
+            
+            deleteModelOn = false
+            newDecimals = String(character) + newDecimals
+        }
+        
+        let nonDecimalPart = split(separator: ".")[0]
+        
+        return nonDecimalPart + (newDecimals.isEmpty ? "" : "." + newDecimals)
     }
     
     func add(decimals: UInt) -> String {

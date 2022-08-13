@@ -35,7 +35,7 @@ final class TokenEnterAmountView: UIView {
     
     private enum Mode {
         case token
-        case usd
+        case fiat
     }
     
     private var viewModel: TokenEnterAmountViewModel!
@@ -45,6 +45,7 @@ final class TokenEnterAmountView: UIView {
     
     private var isFlipEvent = false
     private var latestTokenAmount: BigInt?
+    private var latestFiatAmount: BigInt?
     
     override func awakeFromNib() {
         
@@ -153,19 +154,22 @@ extension TokenEnterAmountView: UITextFieldDelegate {
                 return
             }
             
-            let value = BigInt.fromString(
+            var tokenAmount = BigInt.fromString(
                 textField.text,
                 decimals: viewModel.tokenMaxDecimals
             )
             
-            // NOTE: This is to not lose precision when flipping between token / usd values,
+            // NOTE: This is to not lose precision when flipping between token / fiat values,
             // we store the last tokenAmount and use it later
-            if !isFlipEvent {
-                latestTokenAmount = value
+            if let latestTokenAmount = latestTokenAmount, isFlipEvent {
+                tokenAmount = latestTokenAmount
+            } else if !isFlipEvent {
+                latestTokenAmount = tokenAmount
             }
-            onTokenChanged?(value)
+            onTokenChanged?(tokenAmount)
+            
             isFlipEvent = false
-        case .usd:
+        case .fiat:
             
             if let decimals = textField.text?.decimals, decimals.count > 2 {
                 
@@ -173,18 +177,23 @@ extension TokenEnterAmountView: UITextFieldDelegate {
                 return
             }
 
-            let value = BigInt.fromString(
+            let fiatAmount = BigInt.fromString(
                 textField.text,
                 decimals: 2
             )
-            let tokenAmount = value / viewModel.currencyTokenPrice
             
-            // NOTE: This is to not lose precision when flipping between token / usd values,
+            var tokenAmount = makeTokenAmountFromFiatPrice(with: fiatAmount)
+            
+            // NOTE: This is to not lose precision when flipping between token / fiat values,
             // we store the last tokenAmount and use it later
-            if !isFlipEvent {
+            if let latestTokenAmount = latestTokenAmount, isFlipEvent {
+                tokenAmount = latestTokenAmount
+            } else if !isFlipEvent {
                 latestTokenAmount = tokenAmount
+                latestFiatAmount = fiatAmount
             }
             onTokenChanged?(tokenAmount)
+            
             isFlipEvent = false
         }
     }
@@ -238,9 +247,9 @@ private extension TokenEnterAmountView {
             sendAmountTextField.text = viewModel.tokenMaxAmount.formatString(
                 decimals: viewModel.tokenMaxDecimals
             )
-        case .usd:
-            let maxBalanceAmountUsd = makeCurrencyUsdPrice(with: viewModel.tokenMaxAmount)
-            sendAmountTextField.text = maxBalanceAmountUsd.formatString(decimals: 2)
+        case .fiat:
+            let maxBalanceAmountFiat = makeCurrencyFiatPrice(with: viewModel.tokenMaxAmount)
+            sendAmountTextField.text = maxBalanceAmountFiat.formatString(decimals: 2)
         }
         
         latestTokenAmount = viewModel.tokenMaxAmount
@@ -258,14 +267,16 @@ private extension TokenEnterAmountView {
             
             if isFlip {
                 
-                let usdAmount = BigInt.fromString(
+                let fiatAmount = BigInt.fromString(
                     sendAmountTextField.text,
                     decimals: 2
                 )
-                if usdAmount == .zero {
+                if fiatAmount == .zero {
                     sendAmountTextField.text = nil
                 } else {
-                    let tokenAmount = makeTokenAmountFromUsdPrice(with: usdAmount)
+                    let tokenAmount = latestTokenAmount ?? makeTokenAmountFromFiatPrice(
+                        with: fiatAmount
+                    )
                     sendAmountTextField.text = tokenAmount.formatString(
                         decimals: viewModel.tokenMaxDecimals
                     )
@@ -283,22 +294,22 @@ private extension TokenEnterAmountView {
             }
             
             sendCurrencySymbol.isHidden = true
-        case .usd:
+        case .fiat:
             
             sendAmountTextField.keyboardType = .decimalPad
             
             if isFlip {
 
-                let tokenAmount = BigInt.fromString(
+                let tokenAmount = latestTokenAmount ?? BigInt.fromString(
                     sendAmountTextField.text,
                     decimals: viewModel.tokenMaxDecimals
                 )
                 
-                let usdAmount = makeCurrencyUsdPrice(with: tokenAmount)
-                if usdAmount == .zero {
+                let fiatAmount = latestFiatAmount ?? makeCurrencyFiatPrice(with: tokenAmount)
+                if fiatAmount == .zero {
                     sendAmountTextField.text = nil
                 } else {
-                    sendAmountTextField.text = usdAmount.formatString(
+                    sendAmountTextField.text = fiatAmount.formatString(
                         type: .max,
                         decimals: 2
                     )
@@ -306,11 +317,11 @@ private extension TokenEnterAmountView {
             } else if viewModel.shouldUpdateTextFields {
                 
                 let tokenAmount = viewModel.tokenAmount ?? .zero
-                let usdAmount = makeCurrencyUsdPrice(with: tokenAmount)
-                if usdAmount == .zero {
+                let fiatAmount = makeCurrencyFiatPrice(with: tokenAmount)
+                if fiatAmount == .zero {
                     sendAmountTextField.text = nil
                 } else {
-                    sendAmountTextField.text = usdAmount.formatString(
+                    sendAmountTextField.text = fiatAmount.formatString(
                         type: .max,
                         decimals: 2
                     )
@@ -330,25 +341,36 @@ private extension TokenEnterAmountView {
         switch mode {
             
         case .token:
-            var tokenAmount = BigInt.fromString(
-                sendAmountTextField.text,
-                decimals: viewModel.tokenMaxDecimals
-            )
-            tokenAmount = isFlip || isFlipEvent
-            ? latestTokenAmount ?? tokenAmount
-            : tokenAmount
-            let currencyAmount = makeCurrencyUsdPrice(with: tokenAmount)
-            sendAmountLabel.text = currencyAmount.formatStringCurrency()
             
-        case .usd:
-            let usdAmount = BigInt.fromString(
+            if isFlip || isFlipEvent, let latestFiatAmount = latestFiatAmount {
+                
+                sendAmountLabel.text = latestFiatAmount.formatStringCurrency(
+                    type: .max
+                )
+            } else {
+                
+                let tokenAmount = BigInt.fromString(
+                    sendAmountTextField.text,
+                    decimals: viewModel.tokenMaxDecimals
+                )
+                let fiatAmount = makeCurrencyFiatPrice(with: tokenAmount)
+                self.latestFiatAmount = fiatAmount
+                
+                sendAmountLabel.text = fiatAmount.formatStringCurrency(
+                    type: .max
+                )
+            }
+            
+        case .fiat:
+            let fiatAmount = BigInt.fromString(
                 sendAmountTextField.text,
                 decimals: 2
             )
             let tokenAmount = isFlip || isFlipEvent
-            ? latestTokenAmount ?? makeTokenAmountFromUsdPrice(with: usdAmount)
-            : makeTokenAmountFromUsdPrice(with: usdAmount)
+            ? latestTokenAmount ?? makeTokenAmountFromFiatPrice(with: fiatAmount)
+            : makeTokenAmountFromFiatPrice(with: fiatAmount)
             sendAmountLabel.text = tokenAmount.formatString(
+                type: .max,
                 decimals: viewModel.tokenMaxDecimals
             ) + " \(viewModel.tokenSymbol)"
         }
@@ -358,15 +380,19 @@ private extension TokenEnterAmountView {
         
         switch mode {
         case .token:
-            balanceLabel.text = Localized(
-                "tokenSwap.cell.balance",
-                arg: viewModel.tokenMaxAmount.formatString(decimals: viewModel.tokenMaxDecimals)
+            let arg = viewModel.tokenMaxAmount.formatString(
+                type: .long,
+                decimals: viewModel.tokenMaxDecimals
             )
-        case .usd:
-            let maxBalanceAmountUsd = makeCurrencyUsdPrice(with: viewModel.tokenMaxAmount)
             balanceLabel.text = Localized(
                 "tokenSwap.cell.balance",
-                arg: maxBalanceAmountUsd.formatStringCurrency()
+                arg: arg
+            )
+        case .fiat:
+            let maxBalanceAmountFiat = makeCurrencyFiatPrice(with: viewModel.tokenMaxAmount)
+            balanceLabel.text = Localized(
+                "tokenSwap.cell.balance",
+                arg: maxBalanceAmountFiat.formatStringCurrency(type: .max)
             )
         }
     }
@@ -375,7 +401,7 @@ private extension TokenEnterAmountView {
         
         isFlipEvent = true
 
-        mode = mode == .token ? .usd : .token
+        mode = mode == .token ? .fiat : .token
         
         updateSendAmountTextField(isFlip: true)
         updateSendAmountLabel(isFlip: true)
@@ -387,33 +413,33 @@ private extension TokenEnterAmountView {
 
 private extension TokenEnterAmountView {
     
-    func makeCurrencyUsdPrice(
+    func makeCurrencyFiatPrice(
         with amount: BigInt
     ) -> BigInt {
         
         let bigDecBalance = amount.toBigDec(decimals: viewModel.tokenMaxDecimals)
-        let bigDecUsdPrice = viewModel.currencyTokenPrice.toBigDec(decimals: 2)
+        let bigDecFiatPrice = viewModel.currencyTokenPrice.toBigDec(decimals: 2)
         let bigDecDecimals = BigDec.Companion().from(string: "100", base: 10)
 
-        let result = bigDecBalance.mul(value: bigDecUsdPrice).mul(value: bigDecDecimals)
+        let result = bigDecBalance.mul(value: bigDecFiatPrice).mul(value: bigDecDecimals)
         
         return result.toBigInt()
     }
     
-    func makeTokenAmountFromUsdPrice(
-        with usdAmount: BigInt
+    func makeTokenAmountFromFiatPrice(
+        with fiatAmount: BigInt
     ) -> BigInt {
         
-        let usdMaxAmount = makeCurrencyUsdPrice(with: viewModel.tokenMaxAmount)
+        let fiatMaxAmount = makeCurrencyFiatPrice(with: viewModel.tokenMaxAmount)
         
-        guard usdMaxAmount != usdAmount else { return viewModel.tokenMaxAmount }
+        guard fiatMaxAmount != fiatAmount else { return viewModel.tokenMaxAmount }
         
-        let bigDecUsdAmount = usdAmount.toBigDec(decimals: 2)
-        let bigDecUsdPrice = viewModel.currencyTokenPrice.toBigDec(decimals: 2)
+        let bigDecFiatAmount = fiatAmount.toBigDec(decimals: 2)
+        let bigDecFiatPrice = viewModel.currencyTokenPrice.toBigDec(decimals: 2)
         
         let tokenDecimalsBigInt = BigInt.Companion().from(uint: 10).pow(value: Int64(viewModel.tokenMaxDecimals))
 
-        let result = bigDecUsdAmount.div(value: bigDecUsdPrice).mul(
+        let result = bigDecFiatAmount.div(value: bigDecFiatPrice).mul(
             value:  tokenDecimalsBigInt.toBigDec(decimals: 0)
         )
         
