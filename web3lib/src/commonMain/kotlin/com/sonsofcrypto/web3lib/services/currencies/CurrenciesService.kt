@@ -17,16 +17,20 @@ import kotlinx.serialization.json.Json
 import kotlin.native.concurrent.SharedImmutable
 import kotlin.time.ExperimentalTime
 
+/** `CurrenciesService` tracks currencies for selected wallets */
 interface CurrenciesService {
+    /** Tracked currencies for `Wallet` */
     fun currencies(wallet: Wallet): List<Currency>
+    /** Add currency for `Wallet` */
     fun add(currency: Currency, wallet: Wallet)
+    /** Removes currency for `Wallet`*/
     fun remove(currency: Currency, wallet: Wallet)
-
     /** Replaces currency list of existing currencies (ie remove existing) */
-    fun setSelected(currencies: List<Currency>, wallet: Wallet)
-
+    fun setCurrencies(currencies: List<Currency>, wallet: Wallet)
+    /** Generates defaults currencies for wallet if no currencies are present */
     fun generateDefaultCurrenciesIfNeeded(wallet: Wallet)
-    fun defaultCurrencies(network: Network): List<Currency>
+    /** List default currencies for `Wallet` (based on wallet `Network`) */
+    fun defaultCurrencies(wallet: Wallet): List<Currency>
 
     var currencies: List<Currency>
     fun currencies(search: String): List<Currency>
@@ -71,14 +75,14 @@ class DefaultCurrenciesService(
         setCurrencies(id(wallet), currencies(wallet).filter { it != currency })
     }
 
-    override fun setSelected(currencies: List<Currency>, wallet: Wallet) {
+    override fun setCurrencies(currencies: List<Currency>, wallet: Wallet) {
         setCurrencies(id(wallet), currencies)
     }
 
     override fun generateDefaultCurrenciesIfNeeded(wallet: Wallet) {
         if (currencies(wallet).isEmpty()) {
             val network = wallet.network() ?: Network.ethereum()
-            setCurrencies(id(wallet), defaultCurrencies(network))
+            setCurrencies(id(wallet), defaultCurrencies(wallet))
         }
     }
 
@@ -90,8 +94,8 @@ class DefaultCurrenciesService(
         currenciesStore.loadCurrencies()
     }
 
-    override fun defaultCurrencies(network: Network): List<Currency> {
-        return when(network) {
+    override fun defaultCurrencies(wallet: Wallet): List<Currency> {
+        return when(wallet.network()) {
             Network.ethereum() -> ethereumDefaultCurrencies
             Network.ropsten() -> ropstenDefaultCurrencies
             else -> listOf()
