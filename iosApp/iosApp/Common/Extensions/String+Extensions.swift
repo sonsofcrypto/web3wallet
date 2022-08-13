@@ -172,11 +172,15 @@ extension String {
         with currencyCode: String = "USD"
     ) -> String {
         
-        0.formatted(
+        let symbol = 0.formatted(
             .currency(code: "USD")
         ).replacingOccurrences(
             of: "0.00",
             with: ""
         )
+        
+        guard currencyCode == "USD" else { return symbol }
+        
+        return symbol.replacingOccurrences(of: "US", with: "")
     }
 }
