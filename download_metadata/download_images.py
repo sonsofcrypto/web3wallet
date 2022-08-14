@@ -37,12 +37,7 @@ def download_image(file_name: str, url: str):
 
 headers = requests.utils.default_headers()
 default_agent = headers['User-Agent']
-
-headers.update(
-    {
-        'User-Agent': default_agent + ' (' + platform.platform() + ')',
-    }
-)
+headers.update({'User-Agent': default_agent + ' (' + platform.platform() + ')'})
 
 
 with open('coin_cache.json', 'r') as file:
@@ -78,6 +73,6 @@ for i in reversed(range(3649, len(coins)-300)):
 	if failed_in_row > 5:
 		print("Bailing out")
 		os.exit(1)
-	time.sleep(3.0)
+	time.sleep(1.21)
 
 # 654
