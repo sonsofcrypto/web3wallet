@@ -9,7 +9,7 @@ struct FeatureShareHelper {
         presentingIn: UIViewController
     ) {
         
-        let text = Localized("feature.vote.text", arg: "#" + web3Feature.hashTag)
+        let text = Localized("feature.vote.text", arg: "#" + web3Feature.hashTag) // eg: #WIP1001
         // TODO: @Annon to confirm final URL here
         let deepLinkURL = "https://www.sonsofcrypto/web3wallet?feature=\(web3Feature.hashTag)"
         let image = "overscroll_anon".assetImage!
