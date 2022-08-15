@@ -51,9 +51,11 @@ class DefaultCurrencyMetadataService: CurrencyMetadataService {
         if (currency == null) {
             return null
         }
-        val id = (currency?.coinGeckoId ?: currency?.symbol) + "_large"
-        bundledAssetProvider.image(id)?.let {
-            return it
+
+        (currency?.coinGeckoId ?: currency?.symbol)?.let { id ->
+            bundledAssetProvider.image(id)?.let {
+                return it
+            }
         }
 
         // TODO: Check cache
