@@ -9,9 +9,15 @@
       "scale" : "2x"
     },
     {
-      "filename" : "dream-token@3x.png",
+      "filename" : "dream-token@3x.jpeg",
       "idiom" : "universal",
       "scale" : "3x"
+    },
+    {
+      "filename" : "dream-token@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x",
+      "unassigned" : true
     }
   ],
   "info" : {
