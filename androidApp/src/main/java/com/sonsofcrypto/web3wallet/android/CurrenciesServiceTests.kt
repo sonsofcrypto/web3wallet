@@ -1,8 +1,8 @@
 package com.sonsofcrypto.web3wallet.android
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
-import com.sonsofcrypto.web3lib.services.currencies.DefaultCurrenciesInfoStore
-import com.sonsofcrypto.web3lib.services.currencies.DefaultCurrenciesService
+import com.sonsofcrypto.web3lib.services.currency.DefaultCurrenciesInfoStore
+import com.sonsofcrypto.web3lib.services.currency.DefaultCurrenciesService
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService
 import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.types.Currency
