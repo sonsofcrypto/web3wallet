@@ -8,26 +8,22 @@ import kotlinx.serialization.Serializable
 data class Currency(
     val name: String,
     val symbol: String,
-    val decimals: UInt,
+    val decimals: UInt?,
     val type: Type,
     val address: AddressHexString?,
-    val coinGeckoId: String?
+    val coinGeckoId: String?,
 ) {
-    enum class Type() {
-        NATIVE, ERC20, UNKNOWN
+    @Serializable
+    enum class Type(val value: Int) {
+        UNKNOWN(0), NATIVE(1), ERC20(2)
     }
 
     fun id(): String {
-        return coinGeckoId ?: (symbol + (address ?: name))
+        coinGeckoId?.let { return coinGeckoId + (address ?: "") }
+        return (symbol + (address ?: name))
     }
 
-    fun double(balance: BigInt): Double {
-        if (balance == null) {
-            return 0.0
-        }
-        val divisor = BigInt.from(10).pow(decimals.toLong())
-        return BigDec.from(balance).div(BigDec.from(divisor)).toDouble()
-    }
+    fun decimals(): UInt = this.decimals ?: 18u
 
     companion object {
         fun ethereum(): Currency = Currency(
