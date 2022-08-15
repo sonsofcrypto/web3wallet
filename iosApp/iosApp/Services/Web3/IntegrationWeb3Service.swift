@@ -111,7 +111,7 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
         var image: UIImage?
 
         if let id = token.coingGeckoId {
-            image = UIImage(named: id + "_large")
+            image = UIImage(named: id)
         }
 
         image = image ?? UIImage(named: "currency_placeholder")
@@ -122,7 +122,7 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
         guard let coinGeckoId = token.toCurrency().coinGeckoId else {
             return "t.circle.fill"
         }
-        return "\(coinGeckoId)_large"
+        return coinGeckoId
     }
     
     func addWalletListener(_ listener: Web3ServiceWalletListener) {

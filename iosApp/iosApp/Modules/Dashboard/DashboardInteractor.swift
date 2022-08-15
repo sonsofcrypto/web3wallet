@@ -156,7 +156,7 @@ extension DefaultDashboardInteractor {
         var image: UIImage?
 
         if let id = currency.coinGeckoId {
-            image = UIImage(named: id + "_large")
+            image = UIImage(named: id)
         }
 
         image = image ?? UIImage(named: "currency_placeholder")
