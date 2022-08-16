@@ -33,7 +33,7 @@ interface CurrencyStoreService {
     fun search(term: String, network: Network, limit: Int): List<Currency>
 
     /** Restores all caches from previous session. Can take awhile */
-    suspend fun loadCaches(networks: List<Network>)
+    suspend fun loadCaches(networks: List<Network>): Job
 
     /** Add currency to store (custom user input currency) */
     fun add(currency: Currency, network: Network)
@@ -51,6 +51,7 @@ class DefaultCurrencyStoreService: CurrencyStoreService {
     private var userCurrencies: MutableMap<String, List<Currency>> = mutableMapOf()
     private var metadatas: Map<String, CurrencyMetadata> = emptyMap()
     private var markets: Map<String, CurrencyMarketData> = emptyMap()
+    private var listeners: MutableSet<CurrencyStoreListener> = mutableSetOf()
     private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
     /** Temporary performance optimization, remove when switching to sqllite */
     private var tries: MutableMap<String, Trie> = mutableMapOf()
@@ -77,32 +78,25 @@ class DefaultCurrencyStoreService: CurrencyStoreService {
     }
 
     override fun currencies(network: Network, limit: Int): List<Currency> {
-        TODO("Not yet implemented")
+        return if (limit <= 0) currencies[network.id()] ?: emptyList()
+            else currencies[network.id()]?.subList(0, limit) ?: emptyList()
     }
 
     override fun search(term: String, network: Network, limit: Int): List<Currency> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun loadCaches(networks: List<Network>) {
-        scope.launch {
-            handlesCacheResults(
-                networks.map { async { loadCurrencyCaches(it) } }.awaitAll(),
-                async { loadMetadataCaches() }.await(),
-                async { loadMarketCaches() }.await(),
-            )
-        }
+    override suspend fun loadCaches(networks: List<Network>) = scope.launch {
+        val metadata = async { loadMetadataCaches() }
+        val markets = async { loadMarketCaches() }
+        handlesCacheResults(
+            networks.map { async { loadCurrencyCaches(it) } }.awaitAll(),
+            metadata.await(),
+            markets.await(),
+        )
     }
 
     override fun add(currency: Currency, network: Network) {
-        TODO("Not yet implemented")
-    }
-
-    override fun add(listener: CurrencyStoreListener) {
-        TODO("Not yet implemented")
-    }
-
-    private fun emit(event: CurrencyStoreEvent) {
         TODO("Not yet implemented")
     }
 
@@ -110,8 +104,16 @@ class DefaultCurrencyStoreService: CurrencyStoreService {
         TODO("Not yet implemented")
     }
 
+    override fun add(listener: CurrencyStoreListener) {
+        listeners.add(listener)
+    }
+
+    private fun emit(event: CurrencyStoreEvent) {
+        listeners.forEach { it.handle(event) }
+    }
+
     override fun remove(listener: CurrencyStoreListener?) {
-        TODO("Not yet implemented")
+        listeners.remove(listener)
     }
 
     private suspend fun loadCurrencyCaches(
@@ -124,8 +126,8 @@ class DefaultCurrencyStoreService: CurrencyStoreService {
         val trie = Trie()
         val idxMap = mutableMapOf<String, Int>()
         currencies.forEachIndexed { idx, currency ->
-            val name = currency.name.toLowerCasePreservingASCIIRules()
-            val symbol = currency.symbol.toLowerCasePreservingASCIIRules()
+            val name = currency.name
+            val symbol = currency.symbol
             trie.insert(name)
             trie.insert(symbol)
             idxMap.put(name, idx)
@@ -156,6 +158,7 @@ class DefaultCurrencyStoreService: CurrencyStoreService {
             tries.put(it.network.id(), it.trie)
             idxMaps.put(it.network.id(), it.idxMap)
         }
+        emit(CurrencyStoreEvent.CacheLoaded)
     }
 
     private data class CurrencyCache(

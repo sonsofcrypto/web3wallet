@@ -31,9 +31,10 @@ class MainActivity : AppCompatActivity() {
 //        ProviderTest().runAll()
 //        CoinGeckoTest(this.applicationContext).runAll()
 //        Web3ServiceTests().runAll()
-        CurrenciesServiceTests().runAll()
+//        CurrenciesServiceTests().runAll()
 //        WalletStateTest().runAll()
 //        CurrencyFormatterTest().runAll()
+        CurrencyStoreServiceTest().runAll()
         println("=== all tests executed ===")
     }
 }

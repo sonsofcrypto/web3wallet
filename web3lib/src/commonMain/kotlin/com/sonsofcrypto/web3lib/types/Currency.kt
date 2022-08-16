@@ -2,6 +2,7 @@ package com.sonsofcrypto.web3lib.types
 
 import com.sonsofcrypto.web3lib.utils.BigDec
 import com.sonsofcrypto.web3lib.utils.BigInt
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,7 +16,9 @@ data class Currency(
 ) {
     @Serializable
     enum class Type(val value: Int) {
-        UNKNOWN(0), NATIVE(1), ERC20(2)
+        @SerialName("0") UNKNOWN(0),
+        @SerialName("1") NATIVE(1),
+        @SerialName("2") ERC20(2),
     }
 
     fun id(): String {
