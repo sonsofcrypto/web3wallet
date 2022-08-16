@@ -4,7 +4,7 @@ import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.services.coinGecko.CoinGeckoService
 import com.sonsofcrypto.web3lib.services.coinGecko.model.Candle
 import com.sonsofcrypto.web3lib.services.coinGecko.model.toCurrencyMarketData
-import com.sonsofcrypto.web3lib.services.currencyMetadata.BundledAssetProvider
+import com.sonsofcrypto.web3lib.utils.BundledAssetProvider
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.Trie

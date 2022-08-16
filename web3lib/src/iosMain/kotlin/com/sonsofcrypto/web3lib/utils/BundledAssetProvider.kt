@@ -1,6 +1,5 @@
-package com.sonsofcrypto.web3lib.services.currencyMetadata
+package com.sonsofcrypto.web3lib.utils
 
-import com.sonsofcrypto.web3lib.utils.extensions.toByteArray
 import platform.Foundation.NSBundle
 import platform.Foundation.NSData
 import platform.Foundation.dataWithContentsOfURL
@@ -12,7 +11,7 @@ actual class BundledAssetProvider {
     actual constructor() {}
 
     actual fun image(id: String): ByteArray? {
-        val image = UIImage.Companion.imageNamed(id)
+        val image = UIImage.imageNamed(id)
         if (image != null) {
             return UIImagePNGRepresentation(image)?.toByteArray()
         }

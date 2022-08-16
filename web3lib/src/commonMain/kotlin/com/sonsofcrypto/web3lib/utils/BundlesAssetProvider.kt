@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib.services.currencyMetadata
+package com.sonsofcrypto.web3lib.utils
 
 expect class BundledAssetProvider {
     constructor()
