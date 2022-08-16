@@ -7,6 +7,7 @@ import com.sonsofcrypto.web3lib.services.currencyStore.DefaultCurrencyStoreServi
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
+import com.sonsofcrypto.web3lib.utils.subListTo
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
@@ -18,6 +19,7 @@ import java.time.Instant
 
 class CurrencyStoreServiceTest: CurrencyStoreListener {
 
+    private val service = DefaultCurrencyStoreService()
     private val scope = CoroutineScope(bgDispatcher)
 
     fun runAll() {
@@ -31,7 +33,6 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
     fun testCacheLoading() {
         val listener = this
         scope.launch {
-            val service = DefaultCurrencyStoreService()
             service.add(listener)
             val start = Clock.systemUTC().instant()
             val job = service.loadCaches(NetworksService.supportedNetworks())
@@ -42,8 +43,14 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
         }
     }
 
+    fun testSearch() {
+        val currencies = service.search("E", Network.ethereum(), 0)
+        assertTrue(currencies.size == 237, "Search error ${currencies.size}")
+    }
+
     override fun handle(event: CurrencyStoreEvent) {
         println("=== event $event")
+        testSearch()
     }
 }
 

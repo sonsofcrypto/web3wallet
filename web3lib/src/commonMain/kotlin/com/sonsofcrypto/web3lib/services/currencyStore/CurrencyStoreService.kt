@@ -6,11 +6,13 @@ import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.Trie
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
+import com.sonsofcrypto.web3lib.utils.subListTo
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import io.ktor.util.*
 import kotlinx.coroutines.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import kotlin.math.min
 import kotlin.native.concurrent.SharedImmutable
 
 /** `CurrencyStoreService` handles currencies list and associated metadata. */
@@ -51,6 +53,9 @@ class DefaultCurrencyStoreService: CurrencyStoreService {
     private var userCurrencies: MutableMap<String, List<Currency>> = mutableMapOf()
     private var metadatas: Map<String, CurrencyMetadata> = emptyMap()
     private var markets: Map<String, CurrencyMarketData> = emptyMap()
+
+    private var candles: MutableMap<String, List<Candle>> = mutableMapOf()
+
     private var listeners: MutableSet<CurrencyStoreListener> = mutableSetOf()
     private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
     /** Temporary performance optimization, remove when switching to sqllite */
@@ -79,11 +84,19 @@ class DefaultCurrencyStoreService: CurrencyStoreService {
 
     override fun currencies(network: Network, limit: Int): List<Currency> {
         return if (limit <= 0) currencies[network.id()] ?: emptyList()
-            else currencies[network.id()]?.subList(0, limit) ?: emptyList()
+        else currencies[network.id()]?.subListTo(limit) ?: emptyList()
     }
 
     override fun search(term: String, network: Network, limit: Int): List<Currency> {
-        TODO("Not yet implemented")
+        val idxMap = idxMaps[network.id()]
+        val currencies = currencies[network.id()]
+        val words = tries[network.id()]?.wordsStartingWith(
+            term.toLowerCasePreservingASCIIRules()
+        ) ?: emptyList()
+        return (if (limit <= 0) words else words.subListTo(limit))
+            .mapNotNull { idxMap?.get(it) }
+            .toSet()
+            .mapNotNull { currencies?.get(it) }
     }
 
     override suspend fun loadCaches(networks: List<Network>) = scope.launch {
@@ -126,8 +139,8 @@ class DefaultCurrencyStoreService: CurrencyStoreService {
         val trie = Trie()
         val idxMap = mutableMapOf<String, Int>()
         currencies.forEachIndexed { idx, currency ->
-            val name = currency.name
-            val symbol = currency.symbol
+            val name = currency.name.toLowerCasePreservingASCIIRules()
+            val symbol = currency.symbol.toLowerCasePreservingASCIIRules()
             trie.insert(name)
             trie.insert(symbol)
             idxMap.put(name, idx)
