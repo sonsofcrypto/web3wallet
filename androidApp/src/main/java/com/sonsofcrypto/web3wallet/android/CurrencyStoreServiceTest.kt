@@ -20,13 +20,14 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
         DefaultCoinGeckoService(),
         KeyValueStore("CurrencyStoreServiceTest.Market"),
         KeyValueStore("CurrencyStoreServiceTest.Candle"),
+        KeyValueStore("CurrencyStoreServiceTest.UserCurrency"),
     )
 
     private val scope = CoroutineScope(bgDispatcher)
 
     fun runAll() {
         testCacheLoading()
-        testMarkets()
+//        testMarkets()
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
@@ -42,7 +43,7 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
             job.join()
             val duration = Duration.between(start, Clock.systemUTC().instant())
             val count = service.currencies(Network.ethereum(), 0).count()
-            println("=== Load time ${duration.seconds} ${duration.toMillis()} ${count}")
+            println("=== Load time ${duration.toMillis()} ${count}")
         }
     }
 

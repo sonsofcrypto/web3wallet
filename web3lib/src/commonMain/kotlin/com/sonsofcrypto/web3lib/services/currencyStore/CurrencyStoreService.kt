@@ -56,10 +56,10 @@ interface CurrencyStoreService {
 class DefaultCurrencyStoreService(
     private val coinGeckoService: CoinGeckoService,
     private val marketStore: KeyValueStore,
-    private val candleStore: KeyValueStore
+    private val candleStore: KeyValueStore,
+    private val userCurrencyStore: KeyValueStore
 ): CurrencyStoreService {
     private var currencies: MutableMap<String, List<Currency>> = mutableMapOf()
-    private var userCurrencies: MutableMap<String, List<Currency>> = mutableMapOf()
     private var metadatas: Map<String, CurrencyMetadata> = emptyMap()
     private var bundledMarkets: Map<String, CurrencyMarketData> = emptyMap()
     private var markets: MutableMap<String, CurrencyMarketData> = mutableMapOf()
@@ -144,11 +144,27 @@ class DefaultCurrencyStoreService(
     }
 
     override fun add(currency: Currency, network: Network) {
-        TODO("Not yet implemented")
+        currencies.put(network.id(), currencies(network, 0) + listOf(currency))
+        userCurrencyStore.set(
+            network.id(),
+            Json.encodeToString(userCurrencies(network) + listOf(currency))
+        )
     }
 
     override fun remove(currency: Currency, network: Network) {
-        TODO("Not yet implemented")
+        userCurrencyStore.set(
+            network.id(),
+            userCurrencies(network).filter { it.id() != currency.id() }
+        )
+        currencies.put(
+            network.id(),
+            currencies(network, 0).filter { it.id() != currency.id() }
+        )
+    }
+
+    private fun userCurrencies(network: Network): List<Currency> {
+        val str = userCurrencyStore.get<String>(network.id()) ?: "[]"
+        return jsonDecode(str) ?: listOf()
     }
 
     override fun add(listener: CurrencyStoreListener) {
@@ -172,7 +188,7 @@ class DefaultCurrencyStoreService(
         val currencies = csJson.decodeFromString<List<Currency>>(jsonString)
         val trie = Trie()
         val idxMap = mutableMapOf<String, Int>()
-        currencies.forEachIndexed { idx, currency ->
+        (currencies + userCurrencies(network)).forEachIndexed { idx, currency ->
             val name = currency.name.toLowerCasePreservingASCIIRules()
             val symbol = currency.symbol.toLowerCasePreservingASCIIRules()
             trie.insert(name)
