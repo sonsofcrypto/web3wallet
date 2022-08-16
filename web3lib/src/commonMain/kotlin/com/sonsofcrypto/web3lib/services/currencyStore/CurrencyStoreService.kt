@@ -100,6 +100,7 @@ class DefaultCurrencyStoreService(
                     markets.put(it.key, it.value)
                     marketStore.set(it.key, Json.encodeToString(it.value))
                 }
+                emit(CurrencyStoreEvent.MarketData)
             }
             return@withContext resultMap
         }
@@ -111,6 +112,7 @@ class DefaultCurrencyStoreService(
             withContext(uiDispatcher) {
                 candleStore.set(currency.id(), Json.encodeToString(result))
                 candles.set(currency.id(), result)
+                emit(CurrencyStoreEvent.Candles(result, currency))
             }
             return@withContext result
         }
