@@ -488,6 +488,12 @@
 		1CE66BD22848ED4000AB6ACA /* PresentationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BD12848ED4000AB6ACA /* PresentationStyle.swift */; };
 		1CE66BD72848F16A00AB6ACA /* UITabBarController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BD62848F16A00AB6ACA /* UITabBarController+Extensions.swift */; };
 		1CE66BE4284CFB7600AB6ACA /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BE3284CFB7600AB6ACA /* UITextView+Extensions.swift */; };
+		D108AB4328AB9EB0005E0A63 /* cache_markets.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB3D28AB9EB0005E0A63 /* cache_markets.json */; };
+		D108AB4428AB9EB0005E0A63 /* cache_currencies_3.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB3E28AB9EB0005E0A63 /* cache_currencies_3.json */; };
+		D108AB4528AB9EB0005E0A63 /* cache_metadatas.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB3F28AB9EB0005E0A63 /* cache_metadatas.json */; };
+		D108AB4628AB9EB0005E0A63 /* cache_currencies_1.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB4028AB9EB0005E0A63 /* cache_currencies_1.json */; };
+		D108AB4728AB9EB0005E0A63 /* cache_currencies_4.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB4128AB9EB0005E0A63 /* cache_currencies_4.json */; };
+		D108AB4828AB9EB0005E0A63 /* cache_currencies_5.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB4228AB9EB0005E0A63 /* cache_currencies_5.json */; };
 		D10F52E7289662BD00A2F435 /* NSCollectionLayout+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10F52E6289662BD00A2F435 /* NSCollectionLayout+Extensions.swift */; };
 		D112391E284B2A3C00D39A0C /* StringAttributed+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D112391D284B2A3C00D39A0C /* StringAttributed+Extensions.swift */; };
 		D1123920284B423D00D39A0C /* cult_manifesto.pdf in Resources */ = {isa = PBXBuildFile; fileRef = D112391F284B423D00D39A0C /* cult_manifesto.pdf */; };
@@ -536,7 +542,6 @@
 		D1A67141283D6BAE0042A448 /* web3lib.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D1A6713F283D6BAE0042A448 /* web3lib.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D1ABCE57289D548C00312539 /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ABCE56289D548C00312539 /* LineView.swift */; };
 		D1BC5303284B5B89007E6FF4 /* CultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BC5302284B5B89007E6FF4 /* CultService.swift */; };
-		D1C07571289402B000B37754 /* coin_cache.json in Resources */ = {isa = PBXBuildFile; fileRef = D1C07570289402B000B37754 /* coin_cache.json */; };
 		D1ED725F287C1122005805CF /* TokenSendTokenCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ED725C287C1122005805CF /* TokenSendTokenCollectionViewCell.swift */; };
 		D1ED7260287C1122005805CF /* TokenSendCTACollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ED725D287C1122005805CF /* TokenSendCTACollectionViewCell.swift */; };
 		D1ED7261287C1122005805CF /* TokenSendToCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ED725E287C1122005805CF /* TokenSendToCollectionViewCell.swift */; };
@@ -1063,6 +1068,12 @@
 		1CE66BD12848ED4000AB6ACA /* PresentationStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationStyle.swift; sourceTree = "<group>"; };
 		1CE66BD62848F16A00AB6ACA /* UITabBarController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarController+Extensions.swift"; sourceTree = "<group>"; };
 		1CE66BE3284CFB7600AB6ACA /* UITextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
+		D108AB3D28AB9EB0005E0A63 /* cache_markets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_markets.json; sourceTree = "<group>"; };
+		D108AB3E28AB9EB0005E0A63 /* cache_currencies_3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_currencies_3.json; sourceTree = "<group>"; };
+		D108AB3F28AB9EB0005E0A63 /* cache_metadatas.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_metadatas.json; sourceTree = "<group>"; };
+		D108AB4028AB9EB0005E0A63 /* cache_currencies_1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_currencies_1.json; sourceTree = "<group>"; };
+		D108AB4128AB9EB0005E0A63 /* cache_currencies_4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_currencies_4.json; sourceTree = "<group>"; };
+		D108AB4228AB9EB0005E0A63 /* cache_currencies_5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_currencies_5.json; sourceTree = "<group>"; };
 		D10F52E6289662BD00A2F435 /* NSCollectionLayout+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSCollectionLayout+Extensions.swift"; sourceTree = "<group>"; };
 		D112391D284B2A3C00D39A0C /* StringAttributed+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StringAttributed+Extensions.swift"; sourceTree = "<group>"; };
 		D112391F284B423D00D39A0C /* cult_manifesto.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = cult_manifesto.pdf; sourceTree = "<group>"; };
@@ -1116,7 +1127,6 @@
 		D1A6713F283D6BAE0042A448 /* web3lib.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = web3lib.xcframework; path = ../web3lib/build/XCFrameworks/debug/web3lib.xcframework; sourceTree = "<group>"; };
 		D1ABCE56289D548C00312539 /* LineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
 		D1BC5302284B5B89007E6FF4 /* CultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultService.swift; sourceTree = "<group>"; };
-		D1C07570289402B000B37754 /* coin_cache.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = coin_cache.json; sourceTree = "<group>"; };
 		D1ED725C287C1122005805CF /* TokenSendTokenCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenSendTokenCollectionViewCell.swift; sourceTree = "<group>"; };
 		D1ED725D287C1122005805CF /* TokenSendCTACollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenSendCTACollectionViewCell.swift; sourceTree = "<group>"; };
 		D1ED725E287C1122005805CF /* TokenSendToCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenSendToCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -2027,6 +2037,12 @@
 			children = (
 				1C9B46FA281427B800F6C40B /* under-construction.gif */,
 				D112391F284B423D00D39A0C /* cult_manifesto.pdf */,
+				D108AB4028AB9EB0005E0A63 /* cache_currencies_1.json */,
+				D108AB3E28AB9EB0005E0A63 /* cache_currencies_3.json */,
+				D108AB4128AB9EB0005E0A63 /* cache_currencies_4.json */,
+				D108AB4228AB9EB0005E0A63 /* cache_currencies_5.json */,
+				D108AB3D28AB9EB0005E0A63 /* cache_markets.json */,
+				D108AB3F28AB9EB0005E0A63 /* cache_metadatas.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2377,7 +2393,6 @@
 			children = (
 				D157F7D827B69B6400578FF8 /* Info.plist */,
 				D14ECE3827B833E500228F90 /* Localizable.strings */,
-				D1C07570289402B000B37754 /* coin_cache.json */,
 				D157F7CA27B69B6300578FF8 /* AppDelegate.swift */,
 				1CD3FE1F284D5840008312DE /* FeatureFlags.swift */,
 				D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */,
@@ -2671,7 +2686,7 @@
 			);
 			mainGroup = D157F7BE27B69B6300578FF8;
 			packageReferences = (
-				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
+				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
 			projectDirPath = "";
@@ -2692,6 +2707,7 @@
 				1C54DC1D2862354C00E378F6 /* QRCodeScan.storyboard in Resources */,
 				1CDED5E42897016E00DF34A7 /* Feature.storyboard in Resources */,
 				1C671FFC287FE02200C5F044 /* TokenSwap.storyboard in Resources */,
+				D108AB4528AB9EB0005E0A63 /* cache_metadatas.json in Resources */,
 				1CB8B0A6288A824C00024E7C /* Degen.storyboard in Resources */,
 				1C54DC5C28683DDA00E378F6 /* NaokoAA-Semilight-Italic.otf in Resources */,
 				1CAC5604286EFFC300CCB2B6 /* SFProText-RegularItalic.otf in Resources */,
@@ -2710,6 +2726,7 @@
 				1CAC5605286EFFC300CCB2B6 /* SFProText-Semibold.otf in Resources */,
 				1CAC55A4286DF26100CCB2B6 /* Networks.storyboard in Resources */,
 				1C54DC5828683DDA00E378F6 /* NaokoAA-BlackItalic.otf in Resources */,
+				D108AB4728AB9EB0005E0A63 /* cache_currencies_4.json in Resources */,
 				1C54DC5E28683DDA00E378F6 /* NaokoAA-Medium-Italic.otf in Resources */,
 				1C67202B2887EB7F00C5F044 /* Confirmation.storyboard in Resources */,
 				1CAC560B286EFFC300CCB2B6 /* SFProDisplay-Semibold.otf in Resources */,
@@ -2726,6 +2743,7 @@
 				1C54DC5528683DDA00E378F6 /* NaokoAA-Regular-Italic.otf in Resources */,
 				D157F7D727B69B6400578FF8 /* LaunchScreen.storyboard in Resources */,
 				1CAC560C286EFFC300CCB2B6 /* SFProDisplay-BoldItalic.otf in Resources */,
+				D108AB4828AB9EB0005E0A63 /* cache_currencies_5.json in Resources */,
 				D11A990227B8615B00EDFDD0 /* GothicA1-Light.ttf in Resources */,
 				1C54DC5228683DDA00E378F6 /* NaokoAA-Extrabold-Italic.otf in Resources */,
 				1CAC5607286EFFC300CCB2B6 /* SFProDisplay-SemiboldItalic.otf in Resources */,
@@ -2745,6 +2763,7 @@
 				D11A990027B8615B00EDFDD0 /* GothicA1-ExtraLight.ttf in Resources */,
 				D1123920284B423D00D39A0C /* cult_manifesto.pdf in Resources */,
 				1CAC5601286EFFC300CCB2B6 /* SFProText-Regular.otf in Resources */,
+				D108AB4328AB9EB0005E0A63 /* cache_markets.json in Resources */,
 				1C54DC5D28683DDA00E378F6 /* NaokoAA-Black.otf in Resources */,
 				1CDED609289C4C8200DF34A7 /* NFTSend.storyboard in Resources */,
 				1CB8B0AB288B065100024E7C /* CultProposals.storyboard in Resources */,
@@ -2762,13 +2781,14 @@
 				D11A990127B8615B00EDFDD0 /* GothicA1-Regular.ttf in Resources */,
 				1CAC5606286EFFC300CCB2B6 /* SFProText-SemiboldItalic.otf in Resources */,
 				1C54DC5628683DDA00E378F6 /* NaokoAA-Regular.otf in Resources */,
-				D1C07571289402B000B37754 /* coin_cache.json in Resources */,
+				D108AB4428AB9EB0005E0A63 /* cache_currencies_3.json in Resources */,
 				1C54DBDC285DD10000E378F6 /* Dashboard.storyboard in Resources */,
 				1CB8B0DE2890557400024E7C /* NFTDetail.storyboard in Resources */,
 				1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */,
 				1CAC5602286EFFC300CCB2B6 /* SFProText-Bold.otf in Resources */,
 				1C54DC5728683DDA00E378F6 /* NaokoAA-Medium.otf in Resources */,
 				1C60C327285724D1003BE25D /* MnemonicConfirmation.storyboard in Resources */,
+				D108AB4628AB9EB0005E0A63 /* cache_currencies_1.json in Resources */,
 				1A4C33A130E35EBC0BC27B07 /* mock-candles.json in Resources */,
 				1A4C3A41389B5EC22F3B2B88 /* Authenticate.storyboard in Resources */,
 			);
@@ -3632,7 +3652,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
+		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -3645,7 +3665,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		1C5B603A284675B800ECBD79 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
+			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
