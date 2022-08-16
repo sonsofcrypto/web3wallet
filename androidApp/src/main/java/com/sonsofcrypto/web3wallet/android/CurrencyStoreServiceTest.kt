@@ -1,9 +1,12 @@
 package com.sonsofcrypto.web3wallet.android
 
+import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
+import com.sonsofcrypto.web3lib.services.coinGecko.DefaultCoinGeckoService
 import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreEvent
 import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreListener
 import com.sonsofcrypto.web3lib.services.currencyStore.DefaultCurrencyStoreService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
+import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -13,11 +16,17 @@ import java.time.Duration
 
 class CurrencyStoreServiceTest: CurrencyStoreListener {
 
-    private val service = DefaultCurrencyStoreService()
+    private val service = DefaultCurrencyStoreService(
+        DefaultCoinGeckoService(),
+        KeyValueStore("CurrencyStoreServiceTest.Market"),
+        KeyValueStore("CurrencyStoreServiceTest.Candle"),
+    )
+
     private val scope = CoroutineScope(bgDispatcher)
 
     fun runAll() {
         testCacheLoading()
+        testMarkets()
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
@@ -35,6 +44,13 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
             val count = service.currencies(Network.ethereum(), 0).count()
             println("=== Load time ${duration.seconds} ${duration.toMillis()} ${count}")
         }
+    }
+
+    fun testMarkets() = scope.launch {
+        val markets = service.fetchMarketData(listOf(Currency.ethereum()))
+        val candles = service.fetchCandles(Currency.ethereum())
+        assertTrue(markets != null, "Failed to fetch markets")
+        assertTrue(candles != null, "Failed to fetch candles")
     }
 
     fun testSearch() {

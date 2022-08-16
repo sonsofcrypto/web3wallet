@@ -1,7 +1,9 @@
 package com.sonsofcrypto.web3lib.services.currencyStore
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
+import com.sonsofcrypto.web3lib.services.coinGecko.CoinGeckoService
 import com.sonsofcrypto.web3lib.services.coinGecko.model.Candle
+import com.sonsofcrypto.web3lib.services.coinGecko.model.toCurrencyMarketData
 import com.sonsofcrypto.web3lib.services.currencyMetadata.BundledAssetProvider
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
@@ -9,10 +11,12 @@ import com.sonsofcrypto.web3lib.utils.Trie
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import com.sonsofcrypto.web3lib.utils.extensions.subListTo
+import com.sonsofcrypto.web3lib.utils.logExceptionHandler
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import io.ktor.util.*
 import kotlinx.coroutines.*
 import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlin.native.concurrent.SharedImmutable
 
@@ -26,7 +30,7 @@ interface CurrencyStoreService {
     fun candles(currency: Currency): List<Candle>?
 
     /** Downloads and caches market data for currency */
-    suspend fun fetchMarketData(currencies: List<Currency>): CurrencyMarketData?
+    suspend fun fetchMarketData(currencies: List<Currency>): Map<String, CurrencyMarketData>?
     /** Downloads and caches candles for currency */
     suspend fun fetchCandles(currency: Currency): List<Candle>?
 
@@ -48,16 +52,19 @@ interface CurrencyStoreService {
     /** Remove listener for all events, if null */
     fun remove(listener: CurrencyStoreListener?)
 }
-class DefaultCurrencyStoreService: CurrencyStoreService {
+
+class DefaultCurrencyStoreService(
+    private val coinGeckoService: CoinGeckoService,
+    private val marketStore: KeyValueStore,
+    private val candleStore: KeyValueStore
+): CurrencyStoreService {
     private var currencies: MutableMap<String, List<Currency>> = mutableMapOf()
     private var userCurrencies: MutableMap<String, List<Currency>> = mutableMapOf()
     private var metadatas: Map<String, CurrencyMetadata> = emptyMap()
     private var bundledMarkets: Map<String, CurrencyMarketData> = emptyMap()
-    private var markets: Map<String, CurrencyMarketData> = emptyMap()
+    private var markets: MutableMap<String, CurrencyMarketData> = mutableMapOf()
     private var candles: MutableMap<String, List<Candle>> = mutableMapOf()
     private var listeners: MutableSet<CurrencyStoreListener> = mutableSetOf()
-    private var marketsStore = KeyValueStore("CurrencyStoreService.Markets")
-    private var candleStore = KeyValueStore("CurrencyStoreService.Candles")
     private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
     /** Temporary performance optimization, remove when switching to sqllite */
     private var tries: MutableMap<String, Trie> = mutableMapOf()
@@ -70,7 +77,7 @@ class DefaultCurrencyStoreService: CurrencyStoreService {
     override fun marketData(currency: Currency): CurrencyMarketData? {
         val id = currency.id()
         return markets[id]
-            ?: marketsStore.get<String>(id)?.let { return jsonDecode(it) }
+            ?: marketStore.get<String>(id)?.let { return jsonDecode(it) }
             ?: bundledMarkets.get(id)
     }
 
@@ -80,12 +87,33 @@ class DefaultCurrencyStoreService: CurrencyStoreService {
             ?: candleStore.get<String>(id)?.let { return jsonDecode(it) }
     }
 
-    override suspend fun fetchMarketData(currencies: List<Currency>): CurrencyMarketData? {
-        TODO("Not yet implemented")
+    override suspend fun fetchMarketData(
+        currencies: List<Currency>): Map<String, CurrencyMarketData>? {
+        return withContext(bgDispatcher + logExceptionHandler) {
+            val ids = currencies.mapNotNull{ it.coinGeckoId }
+            val resultMap = mutableMapOf<String, CurrencyMarketData>()
+            coinGeckoService.market(ids, "usd", 0, "24h").forEach {
+                resultMap.put(it.id, it.toCurrencyMarketData())
+            }
+            withContext(uiDispatcher) {
+                resultMap.forEach {
+                    markets.put(it.key, it.value)
+                    marketStore.set(it.key, Json.encodeToString(it.value))
+                }
+            }
+            return@withContext resultMap
+        }
     }
 
     override suspend fun fetchCandles(currency: Currency): List<Candle>? {
-        TODO("Not yet implemented")
+        return withContext(bgDispatcher + logExceptionHandler) {
+            val result = coinGeckoService.candles(currency.id(), "usd", 30)
+            withContext(uiDispatcher) {
+                candleStore.set(currency.id(), Json.encodeToString(result))
+                candles.set(currency.id(), result)
+            }
+            return@withContext result
+        }
     }
 
     override fun currencies(network: Network, limit: Int): List<Currency> {
