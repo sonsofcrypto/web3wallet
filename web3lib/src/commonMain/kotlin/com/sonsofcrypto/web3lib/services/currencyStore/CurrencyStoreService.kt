@@ -1,18 +1,19 @@
 package com.sonsofcrypto.web3lib.services.currencyStore
 
+import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.services.coinGecko.model.Candle
 import com.sonsofcrypto.web3lib.services.currencyMetadata.BundledAssetProvider
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.Trie
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
-import com.sonsofcrypto.web3lib.utils.subListTo
+import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
+import com.sonsofcrypto.web3lib.utils.extensions.subListTo
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import io.ktor.util.*
 import kotlinx.coroutines.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import kotlin.math.min
 import kotlin.native.concurrent.SharedImmutable
 
 /** `CurrencyStoreService` handles currencies list and associated metadata. */
@@ -47,16 +48,16 @@ interface CurrencyStoreService {
     /** Remove listener for all events, if null */
     fun remove(listener: CurrencyStoreListener?)
 }
-
 class DefaultCurrencyStoreService: CurrencyStoreService {
     private var currencies: MutableMap<String, List<Currency>> = mutableMapOf()
     private var userCurrencies: MutableMap<String, List<Currency>> = mutableMapOf()
     private var metadatas: Map<String, CurrencyMetadata> = emptyMap()
+    private var bundledMarkets: Map<String, CurrencyMarketData> = emptyMap()
     private var markets: Map<String, CurrencyMarketData> = emptyMap()
-
     private var candles: MutableMap<String, List<Candle>> = mutableMapOf()
-
     private var listeners: MutableSet<CurrencyStoreListener> = mutableSetOf()
+    private var marketsStore = KeyValueStore("CurrencyStoreService.Markets")
+    private var candleStore = KeyValueStore("CurrencyStoreService.Candles")
     private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
     /** Temporary performance optimization, remove when switching to sqllite */
     private var tries: MutableMap<String, Trie> = mutableMapOf()
@@ -67,11 +68,16 @@ class DefaultCurrencyStoreService: CurrencyStoreService {
     }
 
     override fun marketData(currency: Currency): CurrencyMarketData? {
-        return markets.get(currency.coinGeckoId ?: currency.id())
+        val id = currency.id()
+        return markets[id]
+            ?: marketsStore.get<String>(id)?.let { return jsonDecode(it) }
+            ?: bundledMarkets.get(id)
     }
 
     override fun candles(currency: Currency): List<Candle>? {
-        TODO("Not yet implemented")
+        val id = currency.id()
+        return candles[id]
+            ?: candleStore.get<String>(id)?.let { return jsonDecode(it) }
     }
 
     override suspend fun fetchMarketData(currencies: List<Currency>): CurrencyMarketData? {
@@ -165,7 +171,7 @@ class DefaultCurrencyStoreService: CurrencyStoreService {
         marketDataCache: Map<String, CurrencyMarketData>,
     ) = withContext(uiDispatcher) {
         metadatas = metadataCache
-        markets = marketDataCache
+        bundledMarkets = marketDataCache
         currencyCache.forEach {
             currencies.put(it.network.id(), it.currencies)
             tries.put(it.network.id(), it.trie)

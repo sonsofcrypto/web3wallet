@@ -12,8 +12,8 @@ import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
+import com.sonsofcrypto.web3lib.utils.extensions.zeroOut
 import com.sonsofcrypto.web3lib.utils.timerFlow
-import com.sonsofcrypto.web3lib.utils.zeroOut
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn

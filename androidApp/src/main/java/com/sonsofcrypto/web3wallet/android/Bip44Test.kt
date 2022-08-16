@@ -3,8 +3,8 @@ package com.sonsofcrypto.web3wallet.android
 import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
-import com.sonsofcrypto.web3lib.utils.hexStringToByteArray
-import com.sonsofcrypto.web3lib.utils.toHexString
+import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
+import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 
 class Bip44Test {
 

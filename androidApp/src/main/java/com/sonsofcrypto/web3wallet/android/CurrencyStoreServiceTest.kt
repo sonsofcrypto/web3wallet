@@ -2,20 +2,14 @@ package com.sonsofcrypto.web3wallet.android
 
 import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreEvent
 import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreListener
-import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
 import com.sonsofcrypto.web3lib.services.currencyStore.DefaultCurrencyStoreService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
-import com.sonsofcrypto.web3lib.utils.subListTo
-import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.time.Clock
 import java.time.Duration
-import java.time.Instant
 
 class CurrencyStoreServiceTest: CurrencyStoreListener {
 

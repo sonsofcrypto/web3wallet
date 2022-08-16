@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib.utils
+package com.sonsofcrypto.web3lib.utils.extensions
 
 import kotlin.math.min
 

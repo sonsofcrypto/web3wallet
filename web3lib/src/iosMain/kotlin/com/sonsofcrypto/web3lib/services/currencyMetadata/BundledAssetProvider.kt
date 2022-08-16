@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3lib.services.currencyMetadata
 
-import com.sonsofcrypto.web3lib.utils.toByteArray
+import com.sonsofcrypto.web3lib.utils.extensions.toByteArray
 import platform.Foundation.NSBundle
 import platform.Foundation.NSData
 import platform.Foundation.dataWithContentsOfURL
