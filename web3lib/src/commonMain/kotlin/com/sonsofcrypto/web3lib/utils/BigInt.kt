@@ -2,7 +2,17 @@ package com.sonsofcrypto.web3lib.utils
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import com.ionspin.kotlin.bignum.integer.Sign
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Serializer
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
+@Serializable(with = BigIntSerializer::class)
 class BigInt {
 
     internal val storage: BigInteger
@@ -47,5 +57,21 @@ class BigInt {
         fun from(uint: UInt): BigInt = BigInt(BigInteger.fromUInt(uint))
         fun from(long: Long): BigInt = BigInt(BigInteger.fromLong(long))
         fun from(ulong: ULong): BigInt = BigInt(BigInteger.fromULong(ulong))
+    }
+}
+
+@Serializer(forClass = BigInt::class)
+object BigIntSerializer : KSerializer<BigInt> {
+
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor(
+        "BigInt", PrimitiveKind.STRING
+    )
+
+    override fun serialize(encoder: Encoder, value: BigInt) {
+        encoder.encodeString("${value.toString()}")
+    }
+
+    override fun deserialize(decoder: Decoder): BigInt {
+        return BigInt.from(decoder.decodeString())
     }
 }

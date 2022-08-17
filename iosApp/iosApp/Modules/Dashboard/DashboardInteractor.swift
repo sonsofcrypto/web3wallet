@@ -107,7 +107,11 @@ extension DefaultDashboardInteractor: DashboardInteractor {
     }
 
     func fiatBalance(for network: Network, currency: Currency) -> Double {
-        fatalError("fiatBalance(for:currency:) has not been implemented")
+        CurrencyFormatter.Companion().crypto(
+            amount: cryptoBalance(for: network, currency: currency),
+            decimals: currency.decimals(),
+            mul: marketdata(for: currency)?.currentPrice?.doubleValue ?? 0.0
+        )
     }
 
     func fiatPrice(for wallet: Wallet?, currency: Currency) -> Double {
@@ -222,7 +226,9 @@ extension DefaultDashboardInteractor: NetworksListener, WalletListener {
 
     func handle(event__: WalletEvent) {
         print("=== WalletEvent ", event__)
-        emit(event__.toInteractorEvent())
+        if let event = event__.toInteractorEvent() {
+            emit(event)
+        }
     }
 
     private class WeakContainer {
@@ -255,7 +261,7 @@ extension NetworksEvent {
 
 extension WalletEvent {
 
-    func toInteractorEvent() -> DashboardInteractorEvent {
+    func toInteractorEvent() -> DashboardInteractorEvent? {
         if let event = self as? WalletEvent.Balance {
             return .didUpdateBalance(
                 network: event.network,
@@ -269,6 +275,7 @@ extension WalletEvent {
                 blockNumber: event.number
             )
         }
-        fatalError("Unhandled event \(self)")
+
+        return nil
     }
 }

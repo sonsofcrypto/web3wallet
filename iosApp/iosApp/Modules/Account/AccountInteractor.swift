@@ -64,9 +64,9 @@ extension DefaultAccountInteractor: AccountInteractor {
         let price = currencyStoreService.marketData(currency: _currency)?
             .currentPrice?
             .doubleValue ?? 0
-        return CurrencyFormatter.crypto(
+        return CurrencyFormatter.Companion().crypto(
             amount: cryptoBalance(),
-            decimals: _currency.decimals,
+            decimals: _currency.decimals(),
             mul: price
         )
     }
