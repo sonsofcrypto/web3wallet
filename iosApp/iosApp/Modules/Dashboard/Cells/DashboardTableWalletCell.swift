@@ -30,7 +30,7 @@ class DashboardTableWalletCell: CollectionViewCell {
 extension DashboardTableWalletCell {
     
     func update(with viewModel: DashboardViewModel.Wallet?) -> Self {
-        currencyImageView.image = UIImage(data: viewModel?.imageData ?? Data())
+        currencyImageView.image = UIImage(data: viewModel?.imageName ?? Data())
         fiatPriceLabel.text = viewModel?.fiatPrice
         currencyNameLabel.text = viewModel?.name
         pctChangeLabel.text = viewModel?.pctChange

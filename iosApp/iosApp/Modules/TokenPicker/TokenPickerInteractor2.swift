@@ -17,7 +17,7 @@
 //    private let currencyStoreService: CurrencyStoreService
 //
 //    init(currenciesService: CurrenciesService) {
-//        self.currencyService = currencyService
+//        self.currencyStoreService = currencyStoreService
 //    }
 //}
 //

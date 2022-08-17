@@ -32,7 +32,6 @@ final class DefaultAccountWireframe {
     private let networksService: NetworksService
     private let walletService: WalletService
     private let currencyStoreService: CurrencyStoreService
-    private let currencyMetadataService: CurrencyMetadataService
 
     private weak var navigationController: NavigationController!
 
@@ -45,8 +44,7 @@ final class DefaultAccountWireframe {
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
         walletService: WalletService,
-        currencyStoreService: CurrencyStoreService,
-        currencyMetadataService: CurrencyMetadataService
+        currencyStoreService: CurrencyStoreService
     ) {
         self.presentingIn = presentingIn
         self.context = context
@@ -56,8 +54,7 @@ final class DefaultAccountWireframe {
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
         self.walletService = walletService
-        self.currencyService = currencyService
-        self.currencyMetadataService = currencyMetadataService
+        self.currencyStoreService = currencyStoreService
     }
 }
 
@@ -128,8 +125,7 @@ private extension DefaultAccountWireframe {
             currency: context.currency,
             networksService: networksService,
             walletService: walletService,
-            currencyStoreService: currencyStoreService,
-            currencyMetadataService: currencyMetadataService
+            currencyStoreService: currencyStoreService
         )
         
         let vc: AccountViewController = UIStoryboard(.account).instantiate()

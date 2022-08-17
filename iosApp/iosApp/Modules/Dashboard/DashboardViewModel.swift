@@ -42,13 +42,11 @@ extension DashboardViewModel {
 extension DashboardViewModel {
 
     struct Action {
-
         let title: String
         let imageName: String
         let type: `Type`
 
         enum `Type` {
-
             case send
             case receive
             case swap
@@ -72,8 +70,8 @@ extension DashboardViewModel {
     struct Wallet {
         let name: String
         let ticker: String
-        let colors: (String, String)?
-        let imageData: Data
+        let colors: [String]
+        let imageName: String
         let fiatPrice: String
         let fiatBalance: String
         let cryptoBalance: String
@@ -85,7 +83,6 @@ extension DashboardViewModel {
 }
 
 extension DashboardViewModel {
-
     struct NFT {
         let image: String
         let onSelected: () -> Void
@@ -93,7 +90,6 @@ extension DashboardViewModel {
 }
 
 extension DashboardViewModel.Section {
-    
     var hasSectionHeader: Bool {
         switch header {
         case .none:
@@ -102,7 +98,7 @@ extension DashboardViewModel.Section {
             return true
         }
     }
-    
+
     var isCollapsed: Bool {
         switch header {
         case let .network(network):

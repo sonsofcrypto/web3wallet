@@ -200,20 +200,3 @@ private extension DefaultAccountPresenter {
         }
     }
 }
-
-private extension Array where Element == Web3Candle {
-    
-    var toCandlesViewModelCandle: [CandlesViewModel.Candle] {
-        
-        compactMap {
-            .init(
-                open: $0.open,
-                high: $0.high,
-                low: $0.low,
-                close: $0.close,
-                volume: $0.volume,
-                period: $0.period
-            )
-        }
-    }
-}

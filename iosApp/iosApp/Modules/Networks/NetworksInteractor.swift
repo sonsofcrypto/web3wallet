@@ -16,7 +16,7 @@ protocol NetworksInteractor: AnyObject {
     func isEnabled(_ network: Network) -> Bool
 
     func networks() -> [Network]
-    func image(_ network: Network) -> Data
+    func imageName(_ network: Network) -> String
     func provider(_ network: Network) -> Provider?
 
     func addListener(_ listener: NetworkInteractorLister)
@@ -31,18 +31,10 @@ final class DefaultNetworksInteractor {
     }
 
     private let networksService: NetworksService
-    private let currencyMetadataService: CurrencyMetadataService
-    private let currencyStoreService: CurrencyStoreService
     private var listeners: [WeakContainer] = []
 
-    init(
-        _ networksService: NetworksService,
-        currencyStoreService: CurrencyStoreService,
-        currencyMetadataService: CurrencyMetadataService
-    ) {
+    init(_ networksService: NetworksService) {
         self.networksService = networksService
-        self.currencyService = currencyService
-        self.currencyMetadataService = currencyMetadataService
     }
 }
 
@@ -52,9 +44,8 @@ extension DefaultNetworksInteractor: NetworksInteractor {
         NetworksServiceCompanion().supportedNetworks()
     }
 
-    func image(_ network: Network) -> Data {
-        currencyMetadataService.cachedImage(currency: network.nativeCurrency)?
-            .toDataFull() ?? UIImage(named: "currency_placeholder")!.pngData()!
+    func imageName(_ network: Network) -> String {
+        network.nativeCurrency.coinGeckoId ?? "currency_placeholder"
     }
 
     func provider(_ network: Network) -> Provider? {
@@ -76,7 +67,7 @@ extension DefaultNetworksInteractor: NetworksListener {
 
     func addListener(_ listener: NetworkInteractorLister) {
         if listeners.isEmpty {
-            networksService.add(listener_: self)
+            networksService.add(listener__: self)
         }
         listeners = listeners + [WeakContainer(listener)]
     }
@@ -84,14 +75,14 @@ extension DefaultNetworksInteractor: NetworksListener {
     func removeListener(_ listener: NetworkInteractorLister?) {
         guard let listener = listener else {
             listeners = []
-            networksService.remove(listener_: nil)
+            networksService.remove(listener__: nil)
             return
         }
 
         listeners = listeners.filter { $0.value !== listener }
 
         if listeners.isEmpty {
-            networksService.remove(listener_: nil)
+            networksService.remove(listener__: nil)
         }
     }
 
@@ -100,16 +91,6 @@ extension DefaultNetworksInteractor: NetworksListener {
     }
 
     func handle(event_: NetworksEvent) {
-        if let networks = (event_ as? NetworksEvent.NetworkDidChange) {
-            networksService.walletsForEnabledNetworks().forEach {
-                if currenciesService.currencies(wallet: $0).isEmpty {
-                    currenciesService.generateDefaultCurrenciesIfNeeded(
-                        wallet: $0
-                    )
-                }
-            }
-        }
-
         emit(event_)
     }
 

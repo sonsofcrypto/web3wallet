@@ -52,9 +52,7 @@ extension DefaultNetworksPresenter: NetworksPresenter, NetworkInteractorLister {
             guard let network = network(chainId) else {
                 return
             }
-            let enabled = interactor.isEnabled(network)
-            let w3Network = Web3Network.from(network, isOn: enabled)
-            wireframe.navigate(to: .editNetwork(w3Network))
+            wireframe.navigate(to: .editNetwork(network))
         case let .didSwitchNetwork(chainId, isOn):
             if let network = network(chainId) {
                 interactor.set(network, enabled: isOn)
@@ -109,7 +107,7 @@ private extension DefaultNetworksPresenter {
             chainId: network.chainId,
             name: network.name,
             connected: interactor.isEnabled(network),
-            imageData: interactor.image(network),
+            imageName: interactor.imageName(network),
             connectionType: formattedProvider(interactor.provider(network)),
             isSelected: interactor.selected == network
         )

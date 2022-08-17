@@ -225,33 +225,22 @@ extension Web3Token {
     }
     
     private static func cryptoBalance(for currency: Currency) -> BigInt {
-        
-        let walletsConnectionService: WalletsConnectionService = ServiceDirectory.assembler.resolve()
-        let walletsStateService: WalletsStateService = ServiceDirectory.assembler.resolve()
-        
-        guard let network = walletsConnectionService.network,
-              let wallet = walletsConnectionService.wallet(network: network) else {
-            return .zero
-        }
-
-        return walletsStateService.balance(wallet: wallet, currency: currency)
+        let walletService: WalletService = ServiceDirectory.assembler.resolve()
+        guard let network = walletService.selectedNetwork() else { return .zero }
+        return walletService.balance(network: network, currency: currency)
     }
     
     private static func fiatPrice(for currency: Currency) -> BigInt {
-        
-        let currencyMetadataService: CurrencyMetadataService = ServiceDirectory.assembler.resolve()
-        let price = currencyMetadataService.market(currency: currency)?.currentPrice?.doubleValue ?? 0
-        return BigInt.fromString(
-            "\(price)",
-            decimals: 2
-        )
+        let currencyStoreService: CurrencyStoreService = ServiceDirectory.assembler.resolve()
+        let price = currencyStoreService.marketData(currency: currency)?.currentPrice?.doubleValue
+        return BigInt.fromString("\(price)", decimals: 2)
     }
 
     func toCurrency() -> Currency {
         return Currency(
             name: name,
             symbol: symbol.lowercased(),
-            decimals: UInt32(decimals),
+            decimals: KotlinUInt(value: UInt32(decimals)),
             type: name == "Ethereum" ? .native : .erc20,
             address: address,
             coinGeckoId: coingGeckoId

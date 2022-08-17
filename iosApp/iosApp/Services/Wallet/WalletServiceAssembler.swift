@@ -8,7 +8,7 @@ import web3lib
 final class WalletServiceAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .singleton) { resolver -> WalletsStateService in
+        registry.register(scope: .singleton) { resolver -> WalletService in
             DefaultWalletService(
                 networkService: resolver.resolve(),
                 currencyStoreService: resolver.resolve(),

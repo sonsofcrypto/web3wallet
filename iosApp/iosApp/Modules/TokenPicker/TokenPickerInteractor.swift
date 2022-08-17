@@ -27,40 +27,33 @@ final class DefaultTokenPickerInteractor {
     init(
         web3ServiceLegacy: Web3ServiceLegacy,
         networksService: NetworksService = ServiceDirectory.assembler.resolve(),
-        currenciesService: CurrenciesService = ServiceDirectory.assembler.resolve()
+        currencyStoreService: CurrencyStoreService = ServiceDirectory.assembler.resolve()
     ) {
         self.web3ServiceLegacy = web3ServiceLegacy
         self.networksService = networksService
-        self.currencyService = currencyService
+        self.currencyStoreService = currencyStoreService
     }
 }
 
 extension DefaultTokenPickerInteractor: TokenPickerInteractor {
     
     var selectedNetwork: Web3Network? {
-        
         networksService.network.map {
             Web3Network.from($0, isOn: true)
         }
     }
     
     var supportedNetworks: [Web3Network] {
-
         networksService.enabledNetworks().compactMap {
             Web3Network.from($0, isOn: false)
         }
     }
     
     func myTokens(for network: Web3Network) -> [Web3Token] {
-        
-        guard let wallet = networksService.wallet(network: network.toNetwork()) else {
-            return []
-        }
-
-        let currencies = currenciesService.currencies(wallet: wallet)
-
-        return currencies.compactMap {
-            
+        currencyStoreService.currencies(
+            network: network.toNetwork(),
+            limit: 0
+        ).compactMap {
             Web3Token.from(currency: $0, network: network, inWallet: true, idx: 0)
         }
     }
@@ -69,13 +62,12 @@ extension DefaultTokenPickerInteractor: TokenPickerInteractor {
         filteredBy searchTerm: String,
         for network: Web3Network
     ) -> [Web3Token] {
-        
-        var currencies = searchTerm.isEmpty
-        ? currenciesService.currencies
-        : currenciesService.currencies(search: searchTerm)
+        let libNetwork = network.toNetwork()
+        let service = currencyStoreService
+        let currencies = searchTerm.isEmpty
+            ? service.currencies(network: libNetwork, limit: 1000)
+            : service.search(term: searchTerm, network: libNetwork, limit: 1000)
 
-        currencies = currencies.first(n: 1000)
-            
         return currencies.toWeb3TokenList(network: network)
     }
     

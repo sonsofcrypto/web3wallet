@@ -56,7 +56,7 @@ final class DefaultDashboardWireframeFactory {
         self.onboardingService = onboardingService
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
-        self.currencyService = currencyService
+        self.currencyStoreService = currencyStoreService
         self.walletService = walletService
         self.nftsService = nftsService
     }

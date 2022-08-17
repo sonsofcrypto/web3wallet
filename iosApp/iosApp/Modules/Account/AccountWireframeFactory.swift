@@ -14,7 +14,6 @@ protocol AccountWireframeFactory {
 }
 
 final class DefaultAccountWireframeFactory {
-
     private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
     private let tokenSendWireframeFactory: TokenSendWireframeFactory
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
@@ -22,7 +21,6 @@ final class DefaultAccountWireframeFactory {
     private let networksService: NetworksService
     private let walletService: WalletService
     private let currencyStoreService: CurrencyStoreService
-    private let currencyMetadataService: CurrencyMetadataService
 
     init(
         tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
@@ -31,8 +29,7 @@ final class DefaultAccountWireframeFactory {
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
         walletService: WalletService,
-        currencyStoreService: CurrencyStoreService,
-        currencyMetadataService: CurrencyMetadataService
+        currencyStoreService: CurrencyStoreService
     ) {
         self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
         self.tokenSendWireframeFactory = tokenSendWireframeFactory
@@ -40,8 +37,7 @@ final class DefaultAccountWireframeFactory {
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
         self.walletService = walletService
-        self.currencyService = currencyService
-        self.currencyMetadataService = currencyMetadataService
+        self.currencyStoreService = currencyStoreService
     }
 }
 
@@ -61,8 +57,7 @@ extension DefaultAccountWireframeFactory: AccountWireframeFactory {
             deepLinkHandler: deepLinkHandler,
             networksService: networksService,
             walletService: walletService,
-            currencyStoreService: currencyStoreService,
-            currencyMetadataService: currencyMetadataService
+            currencyStoreService: currencyStoreService
         )
     }
 }
@@ -78,9 +73,8 @@ final class AccountWireframeFactoryAssembler: AssemblerComponent {
                 tokenSwapWireframeFactory: resolver.resolve(),
                 deepLinkHandler: resolver.resolve(),
                 networksService: resolver.resolve(),
-                walletsStateService: resolver.resolve(),
-                currenciesService: resolver.resolve(),
-                currencyMetadataService: resolver.resolve()
+                walletService: resolver.resolve(),
+                currencyStoreService: resolver.resolve()
             )
         }
     }

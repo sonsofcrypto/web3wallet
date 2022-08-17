@@ -8,7 +8,7 @@ import web3lib
 final class CurrencyStoreServiceAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .singleton) { resolver -> CurrenciesService in
+        registry.register(scope: .singleton) { resolver -> CurrencyStoreService in
             DefaultCurrencyStoreService(
                 coinGeckoService: DefaultCoinGeckoService(),
                 marketStore: KeyValueStore(name: "CurrencyStoreService.Market"),

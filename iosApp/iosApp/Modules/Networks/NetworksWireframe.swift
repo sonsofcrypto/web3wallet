@@ -7,34 +7,26 @@ import web3lib
 
 enum NetworksWireframeDestination {
     case dashboard
-    case editNetwork(Web3Network)
+    case editNetwork(Network)
 }
 
 protocol NetworksWireframe {
-
     func present()
     func navigate(to destination: NetworksWireframeDestination)
 }
 
 final class DefaultNetworksWireframe {
-
     private weak var parent: UIViewController?
     private let alertWireframeFactory: AlertWireframeFactory
     private let networksService: NetworksService
-    private let currencyStoreService: CurrencyStoreService
-    private let currencyMetadataService: CurrencyMetadataService
 
     init(
         parent: UIViewController?,
         networksService: NetworksService,
-        currencyStoreService: CurrencyStoreService,
-        currencyMetadataService: CurrencyMetadataService,
         alertWireframeFactory: AlertWireframeFactory
     ) {
         self.parent = parent
         self.networksService = networksService
-        self.currencyService = currencyService
-        self.currencyMetadataService = currencyMetadataService
         self.alertWireframeFactory = alertWireframeFactory
     }
 }
@@ -70,11 +62,7 @@ extension DefaultNetworksWireframe: NetworksWireframe {
 extension DefaultNetworksWireframe {
 
     private func wireUp() -> UIViewController {
-        let interactor = DefaultNetworksInteractor(
-            networksService,
-            currencyStoreService: currencyStoreService,
-            currencyMetadataService: currencyMetadataService
-        )
+        let interactor = DefaultNetworksInteractor(networksService)
         let vc: NetworksViewController = UIStoryboard(.networks).instantiate()
         let presenter = DefaultNetworksPresenter(
             view: vc,

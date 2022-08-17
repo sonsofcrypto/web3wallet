@@ -58,7 +58,9 @@ class DefaultCurrencyStoreService(
     private var markets: MutableMap<String, CurrencyMarketData> = mutableMapOf()
     private var candles: MutableMap<String, List<Candle>> = mutableMapOf()
     private var listeners: MutableSet<CurrencyStoreListener> = mutableSetOf()
-    private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
+    private val scope = CoroutineScope(
+        SupervisorJob() + bgDispatcher + logExceptionHandler
+    )
     /** Temporary performance optimization, remove when switching to sqllite */
     private var tries: MutableMap<String, Trie> = mutableMapOf()
     private var idxMaps: MutableMap<String, Map<String, Int>> = mutableMapOf()

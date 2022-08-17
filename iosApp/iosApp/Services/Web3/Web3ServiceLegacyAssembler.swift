@@ -9,8 +9,8 @@ final class Web3ServiceLegacyAssembler: AssemblerComponent {
         registry.register(scope: .singleton) { resolver -> Web3ServiceLegacy in
             IntegrationWeb3Service(
                 networksService: resolver.resolve(),
-                currenciesService: resolver.resolve(),
-                walletsStateService: resolver.resolve()
+                currencyStoreService: resolver.resolve(),
+                walletService: resolver.resolve()
             )
         }
     }

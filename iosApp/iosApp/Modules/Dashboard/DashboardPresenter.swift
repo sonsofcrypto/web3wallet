@@ -35,8 +35,7 @@ final class DefaultDashboardPresenter {
 
     var expandedNetworks = [String]()
     var notifications = [Web3Notification]()
-    var myTokens = [Web3Token]()
-    
+
     init(
         view: DashboardView,
         interactor: DashboardInteractor,
@@ -90,25 +89,29 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             view?.update(with: viewModel())
             
         case .receiveAction:
-            wireframe.navigate(to: .receiveCoins)
+            wireframe.navigate(to: .receive)
             
         case .sendAction:
-            wireframe.navigate(to: .sendCoins)
+            wireframe.navigate(to: .send)
             
         case .didScanQRCode:
             wireframe.navigate(to: .scanQRCode(onCompletion: makeOnQRCodeScanned()))
             
         case let .didTapEditTokens(networkId):
-            guard let network = interactor.allNetworks.first(where: {
-                $0.id == networkId
+            guard let network = interactor.enabledNetworks().first(where: {
+                $0.id() == networkId
             }) else { return }
+
+            let web3Network = Web3Network.from(network, isOn: true)
 
             wireframe.navigate(
                 to: .editTokens(
-                    network: network,
-                    selectedTokens: myTokens.filter { $0.network == network },
+                    network: web3Network,
+                    selectedTokens: interactor.currencies(for: network).map {
+                        Web3Token.from(currency: $0, network: web3Network, inWallet: true, idx: 0)
+                    },
                     onCompletion: { [weak self] tokens in
-                        self?.selectedTokensHandler(tokens, network: network)
+                        self?.selectedTokensHandler(tokens, network: web3Network)
                     }
                 )
             )
@@ -158,9 +161,7 @@ extension DefaultDashboardPresenter: DashboardInteractorLister {
 private extension DefaultDashboardPresenter {
     
     func updateView() {
-        
-        self.notifications = interactor.notifications
-        self.myTokens = interactor.myTokens
+        notifications = interactor.notifications()
         view?.update(with: viewModel())
     }
 }
@@ -214,10 +215,9 @@ private extension DefaultDashboardPresenter {
                         )
                     ),
                     items: .wallets(
-                        walletsViewModel(
-                            from: network,
-                            currencies:  interactor.currencies(for: network)
-                        )
+                        interactor.currencies(for: network).map {
+                            walletViewModel(network, currency: $0)
+                        }
                     )
                 )
             )
@@ -253,28 +253,16 @@ private extension DefaultDashboardPresenter {
         }
         return .notifications(items)
     }
-    
-    func walletsViewModel(from network: Network, currencies: [Currency]) -> [DashboardViewModel.Wallet] {
-        currencies.map {
-            walletViewModel(
-                network,
-                currency: $0,
-                market: interactor.metadata(for: $0)
-            )
-        }
-    }
 
-    func walletViewModel(_ network: Network, currency: Currency, market: Market?) -> DashboardViewModel.Wallet {
+    func walletViewModel(_ network: Network, currency: Currency) -> DashboardViewModel.Wallet {
+        let market = interactor.marketdata(for: currency)
+        let metadata = interactor.metadata(for: currency)
         let cryptoBalance = interactor.cryptoBalance(
-            for: interactor.wallet(for: network),
+            for: network,
             currency: currency
         )
         let fiatBalance = interactor.fiatBalance(
-            for: interactor.wallet(for: network),
-            currency: currency
-        )
-        let fiatPrice = interactor.fiatPrice(
-            for: interactor.wallet(for: network),
+            for: network,
             currency: currency
         )
         let formatted = Formatter.currency.format(
@@ -285,11 +273,11 @@ private extension DefaultDashboardPresenter {
         return .init(
             name: currency.name,
             ticker: currency.symbol.uppercased(),
-            colors: interactor.colors(for: currency),
-            imageData: interactor.image(for: currency),
-            fiatPrice: Formatter.fiat.string(from: Float(fiatPrice)),
+            colors: metadata?.colors ?? ["#FFFFFF", "#000000"],
+            imageName: currency.coinGeckoId ?? "currency_placeholder",
+            fiatPrice: Formatter.fiat.string(from: Float(market?.currentPrice ?? 0)),
             fiatBalance: Formatter.fiat.string(from: Float(fiatBalance)),
-            cryptoBalance: formatted, // "\($0.balance.toString(decimals: $0.decimals)) \($0.symbol)",
+            cryptoBalance: formatted,
             tokenPrice: market?.currentPrice != nil
                 ? Formatter.fiat.string(from: market?.currentPrice ?? 0) ?? "-"
                 : "-",

@@ -7,7 +7,8 @@ import web3lib
 
 protocol AccountInteractor: AnyObject {
     func currency() -> Currency
-    func market() -> Market?
+    func metadata() -> CurrencyMetadata?
+    func market() -> CurrencyMarketData?
     func candles() -> [Candle]?
     func cryptoBalance() -> BigInt
     func fiatBalance() -> Double
@@ -15,26 +16,25 @@ protocol AccountInteractor: AnyObject {
 
 final class DefaultAccountInteractor {
     private let wallet: Wallet
+    private let network: Network
     private let _currency: Currency
     private let networksService: NetworksService
     private let walletService: WalletService
     private let currencyStoreService: CurrencyStoreService
-    private let currencyMetadataService: CurrencyMetadataService
 
     init(
         wallet: Wallet,
         currency: Currency,
         networksService: NetworksService,
         walletService: WalletService,
-        currencyStoreService: CurrencyStoreService,
-        currencyMetadataService: CurrencyMetadataService
+        currencyStoreService: CurrencyStoreService
     ) {
         self.wallet = wallet
+        self.network = wallet.network() ?? Network.ethereum()
         self._currency = currency
         self.networksService = networksService
         self.walletService = walletService
-        self.currencyService = currencyService
-        self.currencyMetadataService = currencyMetadataService
+        self.currencyStoreService = currencyStoreService
     }
 }
 
@@ -44,24 +44,26 @@ extension DefaultAccountInteractor: AccountInteractor {
         self._currency
     }
 
-    func market() -> Market? {
-        return currencyMetadataService.market(currency: _currency)
+    func metadata() -> CurrencyMetadata? {
+        currencyStoreService.metadata(currency: _currency)
+    }
+
+    func market() -> CurrencyMarketData? {
+        currencyStoreService.marketData(currency: _currency)
     }
 
     func candles() -> [Candle]? {
-        currencyMetadataService.cachedCandles(currency: _currency)
+        currencyStoreService.candles(currency: _currency)
     }
 
     func cryptoBalance() -> BigInt {
-        let count = walletsStateService.transactionCount(wallet: wallet)
-        return walletsStateService.balance(wallet: wallet, currency: _currency)
+        walletService.balance(network: network, currfency: _currency)
     }
 
     func fiatBalance() -> Double {
-        let price = currencyMetadataService
-                .market(currency: _currency)?
-                .currentPrice?
-                .doubleValue ?? 0
+        let price = currencyStoreService.marketData(currency: _currency)?
+            .currentPrice?
+            .doubleValue ?? 0
         let amount = _currency.double(balance: cryptoBalance())
         return price * amount
     }
