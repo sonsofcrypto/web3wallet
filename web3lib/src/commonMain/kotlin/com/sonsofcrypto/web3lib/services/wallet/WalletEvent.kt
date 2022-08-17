@@ -1,6 +1,5 @@
 package com.sonsofcrypto.web3lib.services.wallet
 
-import com.sonsofcrypto.web3lib.services.walletsState.WalletsStateEvent
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt

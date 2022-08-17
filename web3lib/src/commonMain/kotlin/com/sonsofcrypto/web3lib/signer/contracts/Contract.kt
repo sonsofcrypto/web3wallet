@@ -70,6 +70,8 @@ class ERC20(address: Address.HexString) : Contract(address) {
      */
     fun transfer(to: Address.HexString, amount: BigInt): DataHexString = DataHexString(
         keccak256("decimals(address,uint256)".encodeToByteArray()).copyOfRange(0, 4)
+//            + abiEncode(to)
+//            + abiEncode(amount)
     )
 
     /**

@@ -3,7 +3,7 @@ package com.sonsofcrypto.web3wallet.android
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.sonsofcrypto.web3lib.services.currencyMetadata.BundledAssetProviderApplication
+import com.sonsofcrypto.web3lib.utils.BundledAssetProviderApplication
 import com.sonsofcrypto.web3lib.utils.secureRand
 
 class MainActivity : AppCompatActivity() {
