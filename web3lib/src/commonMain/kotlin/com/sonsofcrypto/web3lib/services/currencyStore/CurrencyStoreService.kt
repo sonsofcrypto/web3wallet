@@ -12,6 +12,7 @@ import com.sonsofcrypto.web3lib.utils.extensions.jsonEncode
 import com.sonsofcrypto.web3lib.utils.extensions.subListTo
 import io.ktor.util.*
 import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 /** `CurrencyStoreService` handles currencies list and associated metadata. */
 interface CurrencyStoreService {
@@ -82,34 +83,33 @@ class DefaultCurrencyStoreService(
     }
 
     override suspend fun fetchMarketData(
-        currencies: List<Currency>): Map<String, CurrencyMarketData>? {
-        return withContext(bgDispatcher + logExceptionHandler) {
-            val ids = currencies.mapNotNull{ it.coinGeckoId }
-            val resultMap = mutableMapOf<String, CurrencyMarketData>()
-            coinGeckoService.market(ids, "usd", 0, "24h").forEach {
-                resultMap.put(it.id, it.toCurrencyMarketData())
-            }
-            withContext(uiDispatcher) {
-                resultMap.forEach {
-                    markets.put(it.key, it.value)
-                    marketStore.set(it.key, jsonEncode(it.value))
-                }
-                emit(CurrencyStoreEvent.MarketData)
-            }
-            return@withContext resultMap
+        currencies: List<Currency>
+    ): Map<String, CurrencyMarketData>? = withContext(scope.coroutineContext) {
+        val ids = currencies.mapNotNull{ it.coinGeckoId }
+        val resultMap = mutableMapOf<String, CurrencyMarketData>()
+        coinGeckoService.market(ids, "usd", 0, "24h").forEach {
+            resultMap.put(it.id, it.toCurrencyMarketData())
         }
+        withContext(uiDispatcher) {
+            resultMap.forEach {
+                markets.put(it.key, it.value)
+                marketStore.set(it.key, jsonEncode(it.value))
+            }
+            emit(CurrencyStoreEvent.MarketData)
+        }
+        return@withContext resultMap
     }
 
-    override suspend fun fetchCandles(currency: Currency): List<Candle>? {
-        return withContext(bgDispatcher + logExceptionHandler) {
-            val result = coinGeckoService.candles(currency.id(), "usd", 30)
-            withContext(uiDispatcher) {
-                candleStore.set(currency.id(), jsonEncode(result))
-                candles.set(currency.id(), result)
-                emit(CurrencyStoreEvent.Candles(result, currency))
-            }
-            return@withContext result
+    override suspend fun fetchCandles(
+        currency: Currency
+    ): List<Candle>? = withContext(scope.coroutineContext) {
+        val result = coinGeckoService.candles(currency.id(), "usd", 30)
+        withContext(uiDispatcher) {
+            candleStore.set(currency.id(), jsonEncode(result))
+            candles.set(currency.id(), result)
+            emit(CurrencyStoreEvent.Candles(result, currency))
         }
+        return@withContext result
     }
 
     override fun currencies(network: Network, limit: Int): List<Currency> {

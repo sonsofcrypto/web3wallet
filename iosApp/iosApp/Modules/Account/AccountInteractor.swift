@@ -57,14 +57,17 @@ extension DefaultAccountInteractor: AccountInteractor {
     }
 
     func cryptoBalance() -> BigInt {
-        walletService.balance(network: network, currfency: _currency)
+        walletService.balance(network: network, currency: _currency)
     }
 
     func fiatBalance() -> Double {
         let price = currencyStoreService.marketData(currency: _currency)?
             .currentPrice?
             .doubleValue ?? 0
-        let amount = _currency.double(balance: cryptoBalance())
-        return price * amount
+        return CurrencyFormatter.crypto(
+            amount: cryptoBalance(),
+            decimals: _currency.decimals,
+            mul: price
+        )
     }
 }

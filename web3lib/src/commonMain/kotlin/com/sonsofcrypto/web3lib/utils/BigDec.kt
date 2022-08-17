@@ -50,6 +50,9 @@ class BigDec {
         fun from(uint: UInt): BigDec = BigDec(BigDecimal.fromUInt(uint))
         fun from(long: Long): BigDec = BigDec(BigDecimal.fromLong(long))
         fun from(ulong: ULong): BigDec = BigDec(BigDecimal.fromULong(ulong))
+        fun from(double: Double): BigDec = BigDec(
+            BigDecimal.fromDouble(double, decimalMode)
+        )
         fun from(bigInt: BigInt): BigDec = BigDec(
             BigDecimal.fromBigInteger(bigInt.storage)
         )

@@ -20,4 +20,14 @@ class CurrencyFormatter {
             .mul(BigDec.from(currency.decimals()))
             .toBigInt()
     }
+
+    companion object {
+
+        fun crypto(amount: BigInt, decimals: UInt, mul: Double): Double {
+            return BigDec.from(amount)
+                .div(BigDec.from(BigInt.from(10).pow(decimals.toLong())))
+                .mul(BigDec.from(mul))
+                .toDouble()
+        }
+    }
 }

@@ -9,7 +9,7 @@ enum DashboardInteractorEvent {
     case didSelectKeyStoreItem
     case didSelectNetwork(network: Network?)
     case didChangeNetworks(networks: [Network])
-    case didUpdateMarketInfo(market: [String : Market]?)
+    case didUpdateMarketdata(market: [String : CurrencyMarketData]?)
     case didUpdateCandles(network: Network, currency: Currency)
     case didUpdateBlock(network: Network, blockNumber: BigInt)
     case didUpdateBalance(network: Network, currency: Currency, balance: BigInt)
@@ -144,11 +144,11 @@ extension DefaultDashboardInteractor: DashboardInteractor {
             return
         }
 
-        currencyStoreService.refreshMarket(
+        currencyStoreService.fetchMarketData(
             currencies: allCurrencies,
             completionHandler: { [weak self] (market, _) in
                 DispatchQueue.main.async {
-                    self?.emit(.didUpdateMarketInfo(market: market))
+                    self?.emit(.didUpdateMarketdata(market: market))
                 }
             }
         )
@@ -158,26 +158,13 @@ extension DefaultDashboardInteractor: DashboardInteractor {
     }
 
     func reloadCandles() {
-        guard let wallet = networksService.wallet() else {
-            return
-        }
-        walletService.networks().forEach { network in
-            walletService.currencies(network: network).forEach { currency in
-                currencyStoreService.fetchCandles(currency: currency)
-            }
-        }
-        // TODO: Limit to 50 currencies
-        networksService.walletsForEnabledNetworks().forEach { wallet in
-            currenciesService.currencies(wallet: wallet).forEach { currency in
-                currencyMetadataService.candles(
-                    currency: currency,
-                    completionHandler: { [weak self] (_, _ ) in
-                        let event = DashboardInteractorEvent.didUpdateCandles(
-                            network: wallet.network() ?? Network.ethereum(),
-                            currency: currency)
-                        self?.emit(event)
-                    }
-                )
+        for network in walletService.networks() {
+            for currency in walletService.currencies(network: network) {
+                currencyStoreService.fetchCandles(currency: currency) { [weak self] _,_ in
+                    self?.emit(
+                        .didUpdateCandles(network: network, currency: currency)
+                    )
+                }
             }
         }
     }

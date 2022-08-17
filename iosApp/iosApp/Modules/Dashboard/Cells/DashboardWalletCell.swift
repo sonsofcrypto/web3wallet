@@ -55,7 +55,7 @@ extension DashboardWalletCell {
             return self
         }
         
-        imageView.image = viewModel.imageName.pngImage
+        imageView.image = UIImage(named: viewModel.imageName)
         currencyLabel.text = viewModel.ticker
         fiatPriceLabel.text = viewModel.fiatPrice
         pctChangeLabel.text = viewModel.pctChange
