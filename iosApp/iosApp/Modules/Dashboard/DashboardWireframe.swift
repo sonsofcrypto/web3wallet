@@ -45,11 +45,8 @@ final class DefaultDashboardWireframe {
     private let onboardingService: OnboardingService
     private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
-    private let currenciesService: CurrenciesService
-    private let currencyMetadataService: CurrencyMetadataService
-    private let walletsStateService: WalletsStateService
-    private let web3ServiceLegacy: Web3ServiceLegacy
-    private let priceHistoryService: PriceHistoryService
+    private let currencyStoreService: CurrencyStoreService
+    private let walletService: WalletService
     private let nftsService: NFTsService
     
     private weak var navigationController: NavigationController!
@@ -68,11 +65,8 @@ final class DefaultDashboardWireframe {
         onboardingService: OnboardingService,
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
-        currenciesService: CurrenciesService,
-        currencyMetadataService: CurrencyMetadataService,
-        walletsStateService: WalletsStateService,
-        web3ServiceLegacy: Web3ServiceLegacy,
-        priceHistoryService: PriceHistoryService,
+        currencyStoreService: CurrencyStoreService,
+        walletService: WalletService,
         nftsService: NFTsService
     ) {
         self.parent = parent
@@ -88,11 +82,8 @@ final class DefaultDashboardWireframe {
         self.onboardingService = onboardingService
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
-        self.currenciesService = currenciesService
-        self.currencyMetadataService = currencyMetadataService
-        self.walletsStateService = walletsStateService
-        self.web3ServiceLegacy = web3ServiceLegacy
-        self.priceHistoryService = priceHistoryService
+        self.currencyService = currencyService
+        self.walletService = walletService
         self.nftsService = nftsService
     }
 }
@@ -136,7 +127,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             mnemonicConfirmationWireframeFactory.makeWireframe(parent).present()
 
         case .receiveCoins:
-            
+
             let source = TokenPickerWireframeContext.Source.select(
                 onCompletion: makeOnReceiveTokenSelected()
             )
@@ -197,7 +188,6 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             ).present()
             
         case let .editTokens(network, selectedTokens, onCompletion):
-            
             let source: TokenPickerWireframeContext.Source = .multiSelectEdit(
                 selectedTokens: selectedTokens,
                 onCompletion: onCompletion
@@ -227,7 +217,6 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             wireframe.present()
             
         case let .deepLink(deepLink):
-            
             deepLinkHandler.handle(deepLink: deepLink)
         }
     }
@@ -236,14 +225,10 @@ extension DefaultDashboardWireframe: DashboardWireframe {
 private extension DefaultDashboardWireframe {
 
     func wireUp() -> UIViewController {
-        
         let interactor = DefaultDashboardInteractor(
             networksService: networksService,
-            currenciesService: currenciesService,
-            currencyMetadataService: currencyMetadataService,
-            walletsStateService: walletsStateService,
-            web3ServiceLegacy: web3ServiceLegacy,
-            priceHistoryService: priceHistoryService,
+            currencyStoreService: currencyStoreService,
+            walletService: walletService,
             nftsService: nftsService
         )
 
@@ -261,7 +246,6 @@ private extension DefaultDashboardWireframe {
     }
 
     func makeOnReceiveTokenSelected() -> (Web3Token) -> Void {
-        
         {
             [weak self] selectedToken in
             
@@ -275,7 +259,6 @@ private extension DefaultDashboardWireframe {
     }
     
     func makeOnSendTokenSelected() -> (Web3Token) -> Void {
-        
         {
             [weak self] selectedToken in
             

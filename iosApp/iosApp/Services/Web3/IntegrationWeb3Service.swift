@@ -11,8 +11,8 @@ private let currenciesKeyValueStore = "currenciesKeyValueStore"
 final class IntegrationWeb3Service {
 
     let networksService: NetworksService
-    private let currenciesService: CurrenciesService
-    private let walletsStateService: WalletsStateService
+    private let currencyStoreService: CurrencyStoreService
+    private let walletService: WalletService
     private let defaults: UserDefaults
 
     private var supported: [Web3Token] = []
@@ -20,13 +20,13 @@ final class IntegrationWeb3Service {
 
     init(
         networksService: NetworksService,
-        currenciesService: CurrenciesService,
-        walletsStateService: WalletsStateService,
+        currencyStoreService: CurrencyStoreService,
+        walletService: WalletService,
         defaults: UserDefaults = .standard
     ) {
         self.networksService = networksService
-        self.currenciesService = currenciesService
-        self.walletsStateService = walletsStateService
+        self.currencyService = currencyService
+        self.walletService = walletService
         self.defaults = defaults
     }
     

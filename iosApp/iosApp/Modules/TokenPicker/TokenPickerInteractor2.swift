@@ -14,10 +14,10 @@
 //
 //final class DefaultTokenPickerInteractor2 {
 //
-//    private let currenciesService: CurrenciesService
+//    private let currencyStoreService: CurrencyStoreService
 //
 //    init(currenciesService: CurrenciesService) {
-//        self.currenciesService = currenciesService
+//        self.currencyService = currencyService
 //    }
 //}
 //

@@ -21,19 +21,19 @@ final class DefaultNetworksWireframe {
     private weak var parent: UIViewController?
     private let alertWireframeFactory: AlertWireframeFactory
     private let networksService: NetworksService
-    private let currenciesService: CurrenciesService
+    private let currencyStoreService: CurrencyStoreService
     private let currencyMetadataService: CurrencyMetadataService
 
     init(
         parent: UIViewController?,
         networksService: NetworksService,
-        currenciesService: CurrenciesService,
+        currencyStoreService: CurrencyStoreService,
         currencyMetadataService: CurrencyMetadataService,
         alertWireframeFactory: AlertWireframeFactory
     ) {
         self.parent = parent
         self.networksService = networksService
-        self.currenciesService = currenciesService
+        self.currencyService = currencyService
         self.currencyMetadataService = currencyMetadataService
         self.alertWireframeFactory = alertWireframeFactory
     }
@@ -72,7 +72,7 @@ extension DefaultNetworksWireframe {
     private func wireUp() -> UIViewController {
         let interactor = DefaultNetworksInteractor(
             networksService,
-            currenciesService: currenciesService,
+            currencyStoreService: currencyStoreService,
             currencyMetadataService: currencyMetadataService
         )
         let vc: NetworksViewController = UIStoryboard(.networks).instantiate()

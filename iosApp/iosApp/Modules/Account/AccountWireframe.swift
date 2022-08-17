@@ -30,8 +30,8 @@ final class DefaultAccountWireframe {
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
-    private let walletsStateService: WalletsStateService
-    private let currenciesService: CurrenciesService
+    private let walletService: WalletService
+    private let currencyStoreService: CurrencyStoreService
     private let currencyMetadataService: CurrencyMetadataService
 
     private weak var navigationController: NavigationController!
@@ -44,8 +44,8 @@ final class DefaultAccountWireframe {
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
-        walletsStateService: WalletsStateService,
-        currenciesService: CurrenciesService,
+        walletService: WalletService,
+        currencyStoreService: CurrencyStoreService,
         currencyMetadataService: CurrencyMetadataService
     ) {
         self.presentingIn = presentingIn
@@ -55,8 +55,8 @@ final class DefaultAccountWireframe {
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
-        self.walletsStateService = walletsStateService
-        self.currenciesService = currenciesService
+        self.walletService = walletService
+        self.currencyService = currencyService
         self.currencyMetadataService = currencyMetadataService
     }
 }
@@ -127,8 +127,8 @@ private extension DefaultAccountWireframe {
             wallet: context.wallet,
             currency: context.currency,
             networksService: networksService,
-            walletsStateService: walletsStateService,
-            currenciesService: currenciesService,
+            walletService: walletService,
+            currencyStoreService: currencyStoreService,
             currencyMetadataService: currencyMetadataService
         )
         

@@ -3,7 +3,6 @@ package com.sonsofcrypto.web3lib.utils
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
 
 expect val bgDispatcher: CoroutineDispatcher
 

@@ -20,8 +20,8 @@ final class DefaultAccountWireframeFactory {
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
-    private let walletsStateService: WalletsStateService
-    private let currenciesService: CurrenciesService
+    private let walletService: WalletService
+    private let currencyStoreService: CurrencyStoreService
     private let currencyMetadataService: CurrencyMetadataService
 
     init(
@@ -30,8 +30,8 @@ final class DefaultAccountWireframeFactory {
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
-        walletsStateService: WalletsStateService,
-        currenciesService: CurrenciesService,
+        walletService: WalletService,
+        currencyStoreService: CurrencyStoreService,
         currencyMetadataService: CurrencyMetadataService
     ) {
         self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
@@ -39,8 +39,8 @@ final class DefaultAccountWireframeFactory {
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
-        self.walletsStateService = walletsStateService
-        self.currenciesService = currenciesService
+        self.walletService = walletService
+        self.currencyService = currencyService
         self.currencyMetadataService = currencyMetadataService
     }
 }
@@ -60,8 +60,8 @@ extension DefaultAccountWireframeFactory: AccountWireframeFactory {
             tokenSwapWireframeFactory: tokenSwapWireframeFactory,
             deepLinkHandler: deepLinkHandler,
             networksService: networksService,
-            walletsStateService: walletsStateService,
-            currenciesService: currenciesService,
+            walletService: walletService,
+            currencyStoreService: currencyStoreService,
             currencyMetadataService: currencyMetadataService
         )
     }

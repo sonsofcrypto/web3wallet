@@ -14,18 +14,18 @@ final class DefaultNetworksWireframeFactory {
 
     private let alertWireframeFactory: AlertWireframeFactory
     private let networksService: NetworksService
-    private let currenciesService: CurrenciesService
+    private let currencyStoreService: CurrencyStoreService
     private let currencyMetadataService: CurrencyMetadataService
 
     init(
         alertWireframeFactory: AlertWireframeFactory,
         networksService: NetworksService,
-        currenciesService: CurrenciesService,
+        currencyStoreService: CurrencyStoreService,
         currencyMetadataService: CurrencyMetadataService
     ) {
         self.alertWireframeFactory = alertWireframeFactory
         self.networksService = networksService
-        self.currenciesService = currenciesService
+        self.currencyService = currencyService
         self.currencyMetadataService = currencyMetadataService
     }
 }
@@ -37,7 +37,7 @@ extension DefaultNetworksWireframeFactory: NetworksWireframeFactory {
         DefaultNetworksWireframe(
             parent: parent,
             networksService: networksService,
-            currenciesService: currenciesService,
+            currencyStoreService: currencyStoreService,
             currencyMetadataService: currencyMetadataService,
             alertWireframeFactory: alertWireframeFactory
         )

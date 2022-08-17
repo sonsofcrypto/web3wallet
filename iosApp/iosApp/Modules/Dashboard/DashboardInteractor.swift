@@ -51,9 +51,9 @@ protocol DashboardInteractor: AnyObject {
 final class DefaultDashboardInteractor {
 
     private let networksService: NetworksService
-    private let currenciesService: CurrenciesService
+    private let currencyStoreService: CurrencyStoreService
     private let currencyMetadataService: CurrencyMetadataService
-    private let walletsStateService: WalletsStateService
+    private let walletService: WalletService
     private let web3ServiceLegacy: Web3ServiceLegacy
     private let priceHistoryService: PriceHistoryService
     private let nftsService: NFTsService
@@ -61,18 +61,18 @@ final class DefaultDashboardInteractor {
 
     init(
         networksService: NetworksService,
-        currenciesService: CurrenciesService,
+        currencyStoreService: CurrencyStoreService,
         currencyMetadataService: CurrencyMetadataService,
-        walletsStateService: WalletsStateService,
+        walletService: WalletService,
         web3ServiceLegacy: Web3ServiceLegacy,
         priceHistoryService: PriceHistoryService,
         nftsService: NFTsService
     ) {
         self.web3ServiceLegacy = web3ServiceLegacy
         self.networksService = networksService
-        self.currenciesService = currenciesService
+        self.currencyService = currencyService
         self.currencyMetadataService = currencyMetadataService
-        self.walletsStateService = walletsStateService
+        self.walletService = walletService
         self.priceHistoryService = priceHistoryService
         self.nftsService = nftsService
 

@@ -32,16 +32,16 @@ final class DefaultNetworksInteractor {
 
     private let networksService: NetworksService
     private let currencyMetadataService: CurrencyMetadataService
-    private let currenciesService: CurrenciesService
+    private let currencyStoreService: CurrencyStoreService
     private var listeners: [WeakContainer] = []
 
     init(
         _ networksService: NetworksService,
-        currenciesService: CurrenciesService,
+        currencyStoreService: CurrencyStoreService,
         currencyMetadataService: CurrencyMetadataService
     ) {
         self.networksService = networksService
-        self.currenciesService = currenciesService
+        self.currencyService = currencyService
         self.currencyMetadataService = currencyMetadataService
     }
 }

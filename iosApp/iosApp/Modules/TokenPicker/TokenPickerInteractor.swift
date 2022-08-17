@@ -22,7 +22,7 @@ final class DefaultTokenPickerInteractor {
 
     private let web3ServiceLegacy: Web3ServiceLegacy
     private let networksService: NetworksService
-    private let currenciesService: CurrenciesService
+    private let currencyStoreService: CurrencyStoreService
 
     init(
         web3ServiceLegacy: Web3ServiceLegacy,
@@ -31,7 +31,7 @@ final class DefaultTokenPickerInteractor {
     ) {
         self.web3ServiceLegacy = web3ServiceLegacy
         self.networksService = networksService
-        self.currenciesService = currenciesService
+        self.currencyService = currencyService
     }
 }
 

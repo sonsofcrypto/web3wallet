@@ -23,11 +23,8 @@ final class DefaultDashboardWireframeFactory {
     private let onboardingService: OnboardingService
     private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
-    private let currenciesService: CurrenciesService
-    private let currencyMetadataService: CurrencyMetadataService
-    private let walletsStateService: WalletsStateService
-    private let web3ServiceLegacy: Web3ServiceLegacy
-    private let priceHistoryService: PriceHistoryService
+    private let currencyStoreService: CurrencyStoreService
+    private let walletService: WalletService
     private let nftsService: NFTsService
 
     init(
@@ -43,11 +40,8 @@ final class DefaultDashboardWireframeFactory {
         onboardingService: OnboardingService,
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
-        currenciesService: CurrenciesService,
-        currencyMetadataService: CurrencyMetadataService,
-        walletsStateService: WalletsStateService,
-        web3ServiceLegacy: Web3ServiceLegacy,
-        priceHistoryService: PriceHistoryService,
+        currencyStoreService: CurrencyStoreService,
+        walletService: WalletService,
         nftsService: NFTsService
     ) {
         self.accountWireframeFactory = accountWireframeFactory
@@ -62,11 +56,8 @@ final class DefaultDashboardWireframeFactory {
         self.onboardingService = onboardingService
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
-        self.currenciesService = currenciesService
-        self.currencyMetadataService = currencyMetadataService
-        self.walletsStateService = walletsStateService
-        self.web3ServiceLegacy = web3ServiceLegacy
-        self.priceHistoryService = priceHistoryService
+        self.currencyService = currencyService
+        self.walletService = walletService
         self.nftsService = nftsService
     }
 }
@@ -89,11 +80,8 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             onboardingService: onboardingService,
             deepLinkHandler: deepLinkHandler,
             networksService: networksService,
-            currenciesService: currenciesService,
-            currencyMetadataService: currencyMetadataService,
-            walletsStateService: walletsStateService,
-            web3ServiceLegacy: web3ServiceLegacy,
-            priceHistoryService: priceHistoryService,
+            currencyStoreService: currencyStoreService,
+            walletService: walletService,
             nftsService: nftsService
         )
     }
@@ -104,9 +92,7 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
 final class DashboardWireframeFactoryAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
-
         registry.register(scope: .instance) { resolver -> DashboardWireframeFactory in
-
             DefaultDashboardWireframeFactory(
                 accountWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
@@ -120,11 +106,8 @@ final class DashboardWireframeFactoryAssembler: AssemblerComponent {
                 onboardingService: resolver.resolve(),
                 deepLinkHandler: resolver.resolve(),
                 networksService: resolver.resolve(),
-                currenciesService: resolver.resolve(),
-                currencyMetadataService: resolver.resolve(),
-                walletsStateService: resolver.resolve(),
-                web3ServiceLegacy: resolver.resolve(),
-                priceHistoryService: resolver.resolve(),
+                currencyStoreService: resolver.resolve(),
+                walletService: resolver.resolve(),
                 nftsService: resolver.resolve()
             )
         }

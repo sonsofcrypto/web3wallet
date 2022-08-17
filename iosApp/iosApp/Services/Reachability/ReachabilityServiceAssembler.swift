@@ -3,11 +3,8 @@
 // SPDX-License-Identifier: MIT
 
 final class ReachabilityServiceAssembler: AssemblerComponent {
-    
     func register(to registry: AssemblerRegistry) {
-        
         registry.register(scope: .singleton) { resolver -> ReachabilityService in
-            
             DefaultReachabilityService()
         }
     }

@@ -17,23 +17,23 @@ final class DefaultAccountInteractor {
     private let wallet: Wallet
     private let _currency: Currency
     private let networksService: NetworksService
-    private let walletsStateService: WalletsStateService
-    private let currenciesService: CurrenciesService
+    private let walletService: WalletService
+    private let currencyStoreService: CurrencyStoreService
     private let currencyMetadataService: CurrencyMetadataService
 
     init(
         wallet: Wallet,
         currency: Currency,
         networksService: NetworksService,
-        walletsStateService: WalletsStateService,
-        currenciesService: CurrenciesService,
+        walletService: WalletService,
+        currencyStoreService: CurrencyStoreService,
         currencyMetadataService: CurrencyMetadataService
     ) {
         self.wallet = wallet
         self._currency = currency
         self.networksService = networksService
-        self.walletsStateService = walletsStateService
-        self.currenciesService = currenciesService
+        self.walletService = walletService
+        self.currencyService = currencyService
         self.currencyMetadataService = currencyMetadataService
     }
 }
