@@ -29,7 +29,7 @@ sealed class WalletEvent() {
     /** Tracked currencies changed */
     data class Currencies(
         val network: Network,
-        val currencies: List<Currencies>
+        val currencies: List<Currency>
     ): WalletEvent()
 }
 

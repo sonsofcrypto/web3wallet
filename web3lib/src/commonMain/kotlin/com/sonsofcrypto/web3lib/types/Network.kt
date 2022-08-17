@@ -12,7 +12,7 @@ data class Network(
     val nativeCurrency: Currency,
 ) {
 
-    fun id(): String = hashCode().toString()
+    fun id(): String = chainId.toString()
 
     fun defaultDerivationPath(): String {
         return "m/44'/60'/0'/0/0"

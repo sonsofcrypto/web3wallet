@@ -9,6 +9,8 @@ import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.Trie
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
+import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
+import com.sonsofcrypto.web3lib.utils.extensions.jsonEncode
 import com.sonsofcrypto.web3lib.utils.extensions.subListTo
 import com.sonsofcrypto.web3lib.utils.logExceptionHandler
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
@@ -96,7 +98,7 @@ class DefaultCurrencyStoreService(
             withContext(uiDispatcher) {
                 resultMap.forEach {
                     markets.put(it.key, it.value)
-                    marketStore.set(it.key, csJson.encodeToString(it.value))
+                    marketStore.set(it.key, jsonEncode(it.value))
                 }
                 emit(CurrencyStoreEvent.MarketData)
             }
@@ -108,7 +110,7 @@ class DefaultCurrencyStoreService(
         return withContext(bgDispatcher + logExceptionHandler) {
             val result = coinGeckoService.candles(currency.id(), "usd", 30)
             withContext(uiDispatcher) {
-                candleStore.set(currency.id(), csJson.encodeToString(result))
+                candleStore.set(currency.id(), jsonEncode(result))
                 candles.set(currency.id(), result)
                 emit(CurrencyStoreEvent.Candles(result, currency))
             }
@@ -147,7 +149,7 @@ class DefaultCurrencyStoreService(
         currencies.put(network.id(), currencies(network, 0) + listOf(currency))
         userCurrencyStore.set(
             network.id(),
-            csJson.encodeToString(userCurrencies(network) + listOf(currency))
+            jsonEncode(userCurrencies(network) + listOf(currency))
         )
     }
 
@@ -185,7 +187,7 @@ class DefaultCurrencyStoreService(
         val name = "cache_currencies_${network.chainId}"
         val data = BundledAssetProvider().file(name, "json")
         val jsonString = data?.decodeToString() ?: "[]"
-        val currencies = csJson.decodeFromString<List<Currency>>(jsonString)
+        val currencies = jsonDecode<List<Currency>>(jsonString) ?: emptyList()
         val trie = Trie()
         val idxMap = mutableMapOf<String, Int>()
         (currencies + userCurrencies(network)).forEachIndexed { idx, currency ->
@@ -201,12 +203,12 @@ class DefaultCurrencyStoreService(
 
     private suspend fun loadMetadataCaches(): Map<String, CurrencyMetadata> =
         withContext(bgDispatcher) {
-            csJson.decodeFromString(file("cache_metadatas") ?: "{}")
+            jsonDecode(file("cache_metadatas") ?: "{}") ?: emptyMap()
         }
 
     private suspend fun loadMarketCaches(): Map<String, CurrencyMarketData> =
         withContext(bgDispatcher) {
-            csJson.decodeFromString(file("cache_markets") ?: "{}")
+            jsonDecode(file("cache_markets") ?: "{}") ?: emptyMap()
         }
 
     private suspend fun handlesCacheResults(
@@ -234,21 +236,4 @@ class DefaultCurrencyStoreService(
     private fun file(name: String): String? {
         return BundledAssetProvider().file(name, "json")?.decodeToString()
     }
-}
-
-@SharedImmutable
-private val csJson = Json {
-    encodeDefaults = true
-    isLenient = true
-    ignoreUnknownKeys = true
-    coerceInputValues = true
-    allowStructuredMapKeys = true
-    useAlternativeNames = false
-    prettyPrint = true
-    useArrayPolymorphism = true
-    explicitNulls = false
-}
-
-private inline fun <reified T> jsonDecode(string: String): T? {
-    return csJson.decodeFromString<T>(string)
 }
