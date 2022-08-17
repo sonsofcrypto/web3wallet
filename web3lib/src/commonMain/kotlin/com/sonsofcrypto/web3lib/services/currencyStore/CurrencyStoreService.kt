@@ -9,7 +9,6 @@ import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.Trie
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
-import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import com.sonsofcrypto.web3lib.utils.extensions.subListTo
 import com.sonsofcrypto.web3lib.utils.logExceptionHandler
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
@@ -75,16 +74,15 @@ class DefaultCurrencyStoreService(
     }
 
     override fun marketData(currency: Currency): CurrencyMarketData? {
-        val id = currency.id()
-        return markets[id]
-            ?: marketStore.get<String>(id)?.let { return jsonDecode(it) }
-            ?: bundledMarkets.get(id)
+        markets[currency.id()]?.let { return it }
+        marketStore.get<String>(currency.id())?.let { return jsonDecode(it) }
+        return bundledMarkets.get(currency.id())
     }
 
     override fun candles(currency: Currency): List<Candle>? {
-        val id = currency.id()
-        return candles[id]
-            ?: candleStore.get<String>(id)?.let { return jsonDecode(it) }
+        candles[currency.id()]?.let { return it }
+        candleStore.get<String>(currency.id())?.let { return jsonDecode(it) }
+        return null
     }
 
     override suspend fun fetchMarketData(
@@ -98,7 +96,7 @@ class DefaultCurrencyStoreService(
             withContext(uiDispatcher) {
                 resultMap.forEach {
                     markets.put(it.key, it.value)
-                    marketStore.set(it.key, Json.encodeToString(it.value))
+                    marketStore.set(it.key, csJson.encodeToString(it.value))
                 }
                 emit(CurrencyStoreEvent.MarketData)
             }
@@ -110,7 +108,7 @@ class DefaultCurrencyStoreService(
         return withContext(bgDispatcher + logExceptionHandler) {
             val result = coinGeckoService.candles(currency.id(), "usd", 30)
             withContext(uiDispatcher) {
-                candleStore.set(currency.id(), Json.encodeToString(result))
+                candleStore.set(currency.id(), csJson.encodeToString(result))
                 candles.set(currency.id(), result)
                 emit(CurrencyStoreEvent.Candles(result, currency))
             }
@@ -149,7 +147,7 @@ class DefaultCurrencyStoreService(
         currencies.put(network.id(), currencies(network, 0) + listOf(currency))
         userCurrencyStore.set(
             network.id(),
-            Json.encodeToString(userCurrencies(network) + listOf(currency))
+            csJson.encodeToString(userCurrencies(network) + listOf(currency))
         )
     }
 
@@ -249,4 +247,8 @@ private val csJson = Json {
     prettyPrint = true
     useArrayPolymorphism = true
     explicitNulls = false
+}
+
+private inline fun <reified T> jsonDecode(string: String): T? {
+    return csJson.decodeFromString<T>(string)
 }
