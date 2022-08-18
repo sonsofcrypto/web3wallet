@@ -39,6 +39,25 @@ extension DashboardViewModel {
     }
 }
 
+extension DashboardViewModel.Section.Items {
+
+    func isSameKind(_ other: DashboardViewModel.Section.Items?) -> Bool {
+        guard let other = other else { return false }
+        switch (self, other) {
+        case (.actions, .actions):
+            return true
+        case (.notifications, .notifications):
+            return true
+        case (.wallets, .wallets):
+            return true
+        case (.nfts, .nfts):
+            return true
+        default:
+            return false
+        }
+    }
+}
+
 extension DashboardViewModel {
 
     struct Action {

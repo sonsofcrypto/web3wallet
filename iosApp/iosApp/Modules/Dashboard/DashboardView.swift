@@ -41,8 +41,38 @@ final class DashboardViewController: BaseViewController {
 extension DashboardViewController: DashboardView {
     
     func update(with viewModel: DashboardViewModel) {
+        if self.viewModel?.sections.count != viewModel.sections.count {
+            self.viewModel = viewModel
+            collectionView.reloadData()
+            return
+        }
+
+        var sectionsToReload = [Int]()
+        var sectionsToUpdate = [Int]()
+
+        for (idx, section) in viewModel.sections.enumerated() {
+            let prevSection = self.viewModel?.sections[idx]
+            if section.items.count != prevSection?.items.count
+               || !section.items.isSameKind(prevSection?.items) {
+                sectionsToReload.append(idx)
+            } else {
+                sectionsToUpdate.append(idx)
+            }
+        }
+
         self.viewModel = viewModel
-        collectionView.reloadData()
+
+        collectionView.performBatchUpdates {
+            collectionView.reloadSections(IndexSet(sectionsToReload))
+        }
+
+        collectionView.visibleCells.forEach {
+            if let idxPath = collectionView.indexPath(for: $0),
+               sectionsToUpdate.contains(idxPath.section) {
+                let items = viewModel.sections[idxPath.section].items
+                update(cell: $0, idx: idxPath.item, items: items)
+            }
+        }
     }
 
     func updateWallet(
@@ -53,6 +83,17 @@ extension DashboardViewController: DashboardView {
             collectionView.indexPath(for: $0) == idxPath
         })
         (cell as? DashboardWalletCell)?.update(with: viewModel)
+    }
+
+    func update(
+        cell: UICollectionViewCell,
+        idx: Int,
+        items: DashboardViewModel.Section.Items
+    ) {
+        (cell as? DashboardButtonsCell)?.update(with: items.actions, presenter: presenter)
+        (cell as? DashboardNotificationCell)?.update(with: items.notifications(at: idx))
+        (cell as? DashboardWalletCell)?.update(with: items.wallet(at: idx))
+        (cell as? DashboardNFTCell)?.update(with: items.nft(at: idx))
     }
 }
 
@@ -77,7 +118,7 @@ extension DashboardViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        guard let section = viewModel?.sections[indexPath.section] else {
+        guard let section = viewModel?.sections[safe: indexPath.section] else {
             fatalError("No viewModel for \(indexPath) \(collectionView)")
         }
 
@@ -190,7 +231,9 @@ extension DashboardViewController: UICollectionViewDelegate {
         willDisplay cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath
     ) {
-        guard lastVelocity > 0, (cell as? DashboardWalletCell) != nil else {
+        let cv = collectionView
+        guard lastVelocity > 0, (cell as? DashboardWalletCell) != nil,
+              (cv.isTracking || cv.isDragging || cv.isDecelerating)  else {
             return
         }
         cell.layer.add(

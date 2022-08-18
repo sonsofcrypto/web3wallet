@@ -28,7 +28,8 @@ final class DashboardNFTCell: CollectionViewCell {
 
 extension DashboardNFTCell {
 
-    func update(with viewModel: DashboardViewModel.NFT) -> Self {
+    func update(with viewModel: DashboardViewModel.NFT?) -> Self {
+        guard let viewModel = viewModel else { return self }
         imageView.load(url: viewModel.image)
         return self
     }

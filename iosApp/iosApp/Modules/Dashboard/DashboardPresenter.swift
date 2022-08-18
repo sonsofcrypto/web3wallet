@@ -136,20 +136,8 @@ extension DefaultDashboardPresenter: DashboardInteractorLister {
 
     func handle(_ event: DashboardInteractorEvent) {
         switch event {
-        case .didUpdateMarketdata, .didUpdateNFTs, .didChangeNetworks:
+        case .didUpdateMarketdata, .didUpdateNFTs, .didChangeNetworks, .didUpdateCandles:
             updateView()
-        case let .didUpdateCandles(network, currency):
-            // TODO(Anon): We dont need to construct viewModel here
-            // TODO(Anon): Refactor ugly AF
-            let section = interactor.enabledNetworks().firstIndex(where: { $0 == network })
-            let item = interactor.currencies(for: network).firstIndex(where: { $0 == currency })
-            if let section = section, let item = item {
-                let viewModel = viewModel()
-                view?.updateWallet(
-                    viewModel.sections[section + 2].items.wallet(at: item),
-                    at: IndexPath(item: item, section: section + 2)
-                )
-            }
         default:
             ()
         }

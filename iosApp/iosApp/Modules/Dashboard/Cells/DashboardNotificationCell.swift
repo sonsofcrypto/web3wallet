@@ -59,9 +59,14 @@ final class DashboardNotificationCell: CollectionViewCell {
 extension DashboardNotificationCell {
 
     func update(
-        with viewModel: DashboardViewModel.Notification,
+        with viewModel: DashboardViewModel.Notification?,
         handler: ((String) -> Void)? = nil
     ) -> Self {
+
+        guard let viewModel = viewModel else {
+            return self
+        }
+
         self.viewModel = viewModel
         self.handler = handler
         
