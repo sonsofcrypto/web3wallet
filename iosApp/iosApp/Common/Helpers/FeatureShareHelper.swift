@@ -9,15 +9,15 @@ struct FeatureShareHelper {
         presentingIn: UIViewController
     ) {
         
-        let text = Localized("feature.vote.text", arg: "#" + web3Feature.hashTag) // eg: #WIP1001
-        // TODO: @Annon to confirm final URL here
-        let deepLinkURL = "https://www.sonsofcrypto/web3wallet?feature=\(web3Feature.hashTag)"
-        let image = "overscroll_anon".assetImage!
+        let text = Localized(
+            "feature.vote.text",
+            arg: "#" + web3Feature.hashTag
+        ).addingPercentEncoding(
+            withAllowedCharacters: .urlHostAllowed
+        ) ?? ""
         
-        ShareFactoryHelper().share(
-            items: [image, text, deepLinkURL],
-            presentingIn: presentingIn
-        )
+        guard let url = "https://www.twitter.com/intent/tweet?text=\(text)".url else { return }
         
+        UIApplication.shared.open(url)
     }
 }
