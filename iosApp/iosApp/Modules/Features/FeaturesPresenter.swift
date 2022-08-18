@@ -27,7 +27,7 @@ final class DefaultFeaturesPresenter {
     
     private var allFeatures = [Web3Feature]()
     
-    private var filterSectionType: FeaturesViewModel.Section.`Type` = .all
+    private var filterSectionType: FeaturesViewModel.Section.`Type` = .infrastructure
     private var filterText: String = ""
 
     init(

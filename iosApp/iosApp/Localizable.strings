@@ -364,7 +364,7 @@
 "feature.summary.header" = "Details";
 "feature.title.of" = "of";
 "feature.button.vote" = "Vote";
-"feature.hashTag" = "%@";
+"feature.hashTag" = "WIP%@";
 "feature.vote.text" = "@sonsofcrypto please cast my vote for %@!";
 
 "mnemonic.error.invalid" = "Invalid mnemonic, the words entered are invalid.";

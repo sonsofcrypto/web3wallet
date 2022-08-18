@@ -158,24 +158,24 @@ private extension FeaturesViewController {
     func setSegmented() {
         
         let segmentControl = SegmentedControl()
+//        segmentControl.insertSegment(
+//            withTitle: Localized("features.segmentedControl.all"),
+//            at: 0,
+//            animated: false
+//        )
         segmentControl.insertSegment(
-            withTitle: Localized("features.segmentedControl.all"),
+            withTitle: Localized("features.segmentedControl.infrastructure"),
             at: 0,
             animated: false
         )
         segmentControl.insertSegment(
-            withTitle: Localized("features.segmentedControl.infrastructure"),
+            withTitle: Localized("features.segmentedControl.integrations"),
             at: 1,
             animated: false
         )
         segmentControl.insertSegment(
-            withTitle: Localized("features.segmentedControl.integrations"),
-            at: 2,
-            animated: false
-        )
-        segmentControl.insertSegment(
             withTitle: Localized("features.segmentedControl.features"),
-            at: 3,
+            at: 2,
             animated: false
         )
         
@@ -208,9 +208,9 @@ private extension FeaturesViewController {
         
         switch sender.selectedSegmentIndex {
             
-        case 0: sectionType = .all
-        case 1: sectionType = .infrastructure
-        case 2: sectionType = .integrations
+        //case 0: sectionType = .all
+        case 0: sectionType = .infrastructure
+        case 1: sectionType = .integrations
         default: sectionType = .features
         }
         
