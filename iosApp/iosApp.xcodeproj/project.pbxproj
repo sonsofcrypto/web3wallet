@@ -355,6 +355,9 @@
 		1C7FC97428ACC9C300FC9175 /* FeatureServiceRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97328ACC9C300FC9175 /* FeatureServiceRunner.swift */; };
 		1C7FC97728ACC9F400FC9175 /* Web3FeatureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97628ACC9F400FC9175 /* Web3FeatureData.swift */; };
 		1C7FC97928AD2E7D00FC9175 /* FeatureServiceRunnerAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97828AD2E7D00FC9175 /* FeatureServiceRunnerAssembler.swift */; };
+		1C7FC97B28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97A28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift */; };
+		1C7FC97D28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97C28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift */; };
+		1C7FC97F28AE9A2600FC9175 /* Network+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97E28AE9A2600FC9175 /* Network+Extensions.swift */; };
 		1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46D92813DE4800F6C40B /* BaseViewController.swift */; };
 		1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1C9B46FA281427B800F6C40B /* under-construction.gif */; };
 		1C9E3195287580B600DD2031 /* TokenSendWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */; };
@@ -935,6 +938,9 @@
 		1C7FC97328ACC9C300FC9175 /* FeatureServiceRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureServiceRunner.swift; sourceTree = "<group>"; };
 		1C7FC97628ACC9F400FC9175 /* Web3FeatureData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3FeatureData.swift; sourceTree = "<group>"; };
 		1C7FC97828AD2E7D00FC9175 /* FeatureServiceRunnerAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureServiceRunnerAssembler.swift; sourceTree = "<group>"; };
+		1C7FC97A28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateDeleteCell.swift; sourceTree = "<group>"; };
+		1C7FC97C28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C7FC97E28AE9A2600FC9175 /* Network+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Network+Extensions.swift"; sourceTree = "<group>"; };
 		1C9B46D92813DE4800F6C40B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1C9B46FA281427B800F6C40B /* under-construction.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "under-construction.gif"; sourceTree = "<group>"; };
 		1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendWireframe.swift; sourceTree = "<group>"; };
@@ -1275,8 +1281,6 @@
 				1A4C35BE139AFC345B42DE7F /* Apps */,
 				1CE66BC82848EA9000AB6ACA /* Chat */,
 				D1BC5304284B5B8E007E6FF4 /* CultService */,
-				1A4C36A308B86BF401D803B6 /* Currencies */,
-				1A4C38E57534723ADC9F3D57 /* CurrencyMetadata */,
 				1A4C3888D4FA37BEB1285C02 /* Degen */,
 				1CDED615289CF4AD00DF34A7 /* Etherscan */,
 				1C2B06542891D992002A8FBF /* Features */,
@@ -1584,6 +1588,7 @@
 				1C60C1E5285724D0003BE25D /* KeyStoreViewModel.swift */,
 				1C60C1EB285724D0003BE25D /* KeyStoreWireframe.swift */,
 				1C60C1E3285724D0003BE25D /* KeyStoreWireframeFactory.swift */,
+				1C7FC97C28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift */,
 				1C60C1E6285724D0003BE25D /* ButtonSheetView */,
 				1C0643CD2892EA1800643C15 /* Cells */,
 			);
@@ -2134,6 +2139,7 @@
 				D10F52E6289662BD00A2F435 /* NSCollectionLayout+Extensions.swift */,
 				1CB3A1E22840D6B70092D667 /* NSLocalizedString+Extension.swift */,
 				1CB3A1D62840D6B70092D667 /* String+Extensions.swift */,
+				1C7FC97E28AE9A2600FC9175 /* Network+Extensions.swift */,
 				D112391D284B2A3C00D39A0C /* StringAttributed+Extensions.swift */,
 				1CB3A1D92840D6B70092D667 /* UIApplication+Extensions.swift */,
 				1CB3A1DD2840D6B70092D667 /* UIBarButtonItem+Extensions.swift */,
@@ -2553,12 +2559,12 @@
 			isa = PBXGroup;
 			children = (
 				D1EF5BC2287BEE92004CAD82 /* MnemonicUpdate.storyboard */,
-				D1EF5BC0287BEE92004CAD82 /* MnemonicUpdateWireframe.swift */,
 				D1EF5BBF287BEE92004CAD82 /* MnemonicUpdateContext.swift */,
 				D1EF5BC6287BEE92004CAD82 /* MnemonicUpdateInteractor.swift */,
 				D1EF5BC3287BEE92004CAD82 /* MnemonicUpdatePresenter.swift */,
 				D1EF5BC4287BEE92004CAD82 /* MnemonicUpdateView.swift */,
 				D1EF5BC1287BEE92004CAD82 /* MnemonicUpdateViewModel.swift */,
+				D1EF5BC0287BEE92004CAD82 /* MnemonicUpdateWireframe.swift */,
 				D1EF5BC5287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift */,
 				1C672007288005C300C5F044 /* MnemonicUpdateWireframeFactoryAssembler.swift */,
 				D1EF5BBD287BEE92004CAD82 /* Cells */,
@@ -2570,6 +2576,7 @@
 			isa = PBXGroup;
 			children = (
 				D1EF5BBE287BEE92004CAD82 /* MnemonicUpdateCell.swift */,
+				1C7FC97A28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2680,7 +2687,7 @@
 			);
 			mainGroup = D157F7BE27B69B6300578FF8;
 			packageReferences = (
-				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
+				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
 			projectDirPath = "";
@@ -2849,6 +2856,7 @@
 				1CB3A1F22840D6B70092D667 /* Data+Extension.swift in Sources */,
 				1CB8B0D2288FBAA100024E7C /* SettingsWireframeFactoryAssembler.swift in Sources */,
 				1C60C2F6285724D0003BE25D /* NFTDetailWireframeFactory.swift in Sources */,
+				1C7FC97F28AE9A2600FC9175 /* Network+Extensions.swift in Sources */,
 				1C672008288005C300C5F044 /* MnemonicUpdateWireframeFactoryAssembler.swift in Sources */,
 				1C6487432832E7EA0091A12D /* SettingsServiceAssembler.swift in Sources */,
 				D1EF5BCE287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift in Sources */,
@@ -2933,6 +2941,7 @@
 				1C60C2EF285724D0003BE25D /* NetworksWireframe.swift in Sources */,
 				D1EF5BC7287BEE92004CAD82 /* MnemonicUpdateCell.swift in Sources */,
 				1CE66BD72848F16A00AB6ACA /* UITabBarController+Extensions.swift in Sources */,
+				1C7FC97D28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift in Sources */,
 				1C6487342832E64A0091A12D /* DefaultNFTsService.swift in Sources */,
 				1C60C2EC285724D0003BE25D /* NetworksView.swift in Sources */,
 				1C60C3652857C5EC003BE25D /* TokenReceiveViewModel.swift in Sources */,
@@ -3179,6 +3188,7 @@
 				1C60C2B1285724D0003BE25D /* TokenPickerViewModel.swift in Sources */,
 				1A4C3B697503D478741295DB /* TextField.swift in Sources */,
 				1C60C2B2285724D0003BE25D /* TokenPickerWireframeFactoryAssembler.swift in Sources */,
+				1C7FC97B28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift in Sources */,
 				1C9E3195287580B600DD2031 /* TokenSendWireframe.swift in Sources */,
 				D1EF5BC8287BEE92004CAD82 /* MnemonicUpdateContext.swift in Sources */,
 				1CD843F62874215F00E6D359 /* SectionLabelFooter.swift in Sources */,
@@ -3648,7 +3658,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
+		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -3661,7 +3671,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		1C5B603A284675B800ECBD79 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
+			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */

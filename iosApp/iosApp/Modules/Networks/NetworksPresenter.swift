@@ -58,9 +58,12 @@ extension DefaultNetworksPresenter: NetworksPresenter, NetworkInteractorLister {
                 interactor.set(network, enabled: isOn)
             }
         case let .didSelectNetwork(chainId):
-            if let network = network(chainId) {
-                interactor.selected = network
+            
+            guard let network = network(chainId) else { return }
+            if !interactor.isEnabled(network) {
+                interactor.set(network, enabled: true)
             }
+            interactor.selected = network
             wireframe.navigate(to: .dashboard)
         }
         view?.update(with: viewModel())
@@ -74,10 +77,10 @@ extension DefaultNetworksPresenter: NetworksPresenter, NetworkInteractorLister {
 private extension DefaultNetworksPresenter {
 
     func viewModel() -> NetworksViewModel {
-        let l1s = interactor.networks().filter { $0.type == .l1 }
-        let l2s = interactor.networks().filter { $0.type == .l2 }
-        let l1sTest = interactor.networks().filter { $0.type == .l1Test }
-        let l2sTest = interactor.networks().filter { $0.type == .l2Test }
+        let l1s = interactor.networks().filter { $0.type == .l1 }.sortedByName
+        let l2s = interactor.networks().filter { $0.type == .l2 }.sortedByName
+        let l1sTest = interactor.networks().filter { $0.type == .l1Test }.sortedByName
+        let l2sTest = interactor.networks().filter { $0.type == .l2Test }.sortedByName
 
         return .init(
             header: Localized("networks.header"),

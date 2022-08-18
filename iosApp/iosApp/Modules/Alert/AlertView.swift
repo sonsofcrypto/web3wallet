@@ -13,6 +13,7 @@ protocol AlertView: AnyObject {
 final class DefaultAlertView: BaseViewController {
     
     var presenter: AlertPresenter!
+    var contentHeight: CGFloat!
 
     private var viewModel: AlertViewModel!
     
@@ -34,7 +35,8 @@ extension DefaultAlertView: UIViewControllerTransitioningDelegate, ModalDismissD
         
         AlertSheetPresentationController(
             presentedViewController: presented,
-            presenting: presenting
+            presenting: presenting,
+            contentHeight: contentHeight
         )
     }
 
@@ -170,13 +172,26 @@ private extension DefaultAlertView {
         actions.forEach { item in
             
             let button = Button()
-            button.style = .primary
+            switch item.type {
+                
+            case .primary:
+                button.style = .primary
+            case .secondary:
+                button.style = .secondary
+            case .destructive:
+                button.style = .primary
+                button.backgroundColor = Theme.colour.destructive
+            }
             button.setTitle(item.title, for: .normal)
             
             if let action = item.action {
                 
                 button.add(action)
+                
             } else if actions.count == 1 {
+                
+                button.add(.targetAction(.init(target: self, selector: #selector(dismissAction))))
+            } else {
                 
                 button.add(.targetAction(.init(target: self, selector: #selector(dismissAction))))
             }
@@ -185,5 +200,5 @@ private extension DefaultAlertView {
         }
         
         return actionViews
-    }
+    }    
 }

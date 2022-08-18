@@ -34,6 +34,8 @@ class Button: UIButton {
         switch style {
         case .primary:
             size.height = Theme.constant.buttonPrimaryHeight
+        case .secondary:
+            size.height = Theme.constant.buttonSecondaryHeight
         case .secondarySmall:
             size.height = Theme.constant.buttonSecondarySmallHeight
         case .dashboardAction:
@@ -48,6 +50,7 @@ extension Button {
     
     enum Style {
         case primary
+        case secondary
         case secondarySmall(leftImage: UIImage?)
         case dashboardAction(leftImage: UIImage?)
     }
@@ -73,6 +76,23 @@ private extension Button {
             tintColor = Theme.colour.buttonPrimaryText
             layer.cornerRadius = Theme.constant.cornerRadiusSmall
             setTitleColor(Theme.colour.buttonPrimaryText, for: .normal)
+        case .secondary:
+            var configuration = UIButton.Configuration.plain()
+            configuration.titleTextAttributesTransformer = .init{ incoming in
+                var outgoing = incoming
+                outgoing.font = Theme.font.title3
+                return outgoing
+            }
+            configuration.titlePadding = Theme.constant.padding * 0.5
+            configuration.imagePadding = Theme.constant.padding * 0.5
+            self.configuration = configuration
+            updateConfiguration()
+            backgroundColor = .clear
+            tintColor = Theme.colour.buttonSecondaryText
+            layer.cornerRadius = Theme.constant.cornerRadiusSmall
+            layer.borderWidth = 1
+            layer.borderColor = Theme.colour.buttonSecondaryText.cgColor
+            setTitleColor(Theme.colour.buttonSecondaryText, for: .normal)
         case let .secondarySmall(leftImage):
             updateSecondaryStyle(leftImage: leftImage)
             layer.cornerRadius = Theme.constant.buttonSecondarySmallHeight.half
