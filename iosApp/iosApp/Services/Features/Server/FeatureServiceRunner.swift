@@ -124,24 +124,25 @@ private extension FeatureServiceRunner {
     func generateJSONData() {
         
         print("[Feature][➡️] Generating JSON File...")
-        featuresService.fetchAllFeatures { result in
-            
-            switch result {
-                
-            case let .success(features):
-                
-                let paths = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
-                let cachesDirectory: URL = URL(string: "\(paths[0].absoluteString)web3wallet-improvement-proposals.json")!
-                                
-                let jsonData = try! JSONEncoder().encode(features)
-                try! jsonData.write(to: cachesDirectory)
-                
-                print("[Feature][✅] JSON File generated and stored at: \(cachesDirectory.absoluteString)")
-
-            case let .failure(error):
-                print("[Feature][❌][Failed] Unable to generate JSON file with error: \(error.localizedDescription)!")
-            }
+        
+        let features: [Web3Feature] = Web3FeatureData.allFeatures.compactMap {
+            .init(
+                id: $0.id,
+                title: $0.title,
+                body: $0.body,
+                image: $0.image,
+                category: $0.category,
+                creationDate: $0.creationDate,
+                votes: featureVotingCacheService.metadata(for: $0)?.votes ?? 0
+            )
         }
-        print("[Feature][➡️] Generate JSON File!")
+        
+        let paths = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
+        let cachesDirectory: URL = URL(string: "\(paths[0].absoluteString)proposals-list.json")!
+                        
+        let jsonData = try! JSONEncoder().encode(features)
+        try! jsonData.write(to: cachesDirectory)
+        
+        print("[Feature][✅] JSON File generated and stored at: \(cachesDirectory.absoluteString)")
     }
 }

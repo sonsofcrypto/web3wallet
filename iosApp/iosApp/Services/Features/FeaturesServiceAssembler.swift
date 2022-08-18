@@ -11,7 +11,8 @@ final class FeaturesServiceAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> FeaturesService in
             
             DefaultFeaturesService(
-                featureVotingCacheService: resolver.resolve()
+                featureVotingCacheService: resolver.resolve(),
+                defaults: .standard
             )
         }
     }
