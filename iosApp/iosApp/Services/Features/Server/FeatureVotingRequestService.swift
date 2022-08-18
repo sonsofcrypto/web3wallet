@@ -93,7 +93,7 @@ final class TwitterFeatureVotingRequestService: FeatureVotingRequestService {
 private extension TwitterFeatureVotingRequestService {
     
     var host: String { "api.twitter.com" }
-    var BEARER_TOKEN: String { "AAAAAAAAAAAAAAAAAAAAAPT9fwEAAAAAAfNoVYsC7HEysxHxNLU1aJrK7Oc%3DFKrgXGgY5LjJ13O6AdptHjtg4ym0wNwGI6ZnzW3CRwJ9nt0bbb" }
+    var BEARER_TOKEN: String { "" }
     var maxResults: Int { 100 }
     
     enum Details {
