@@ -98,7 +98,7 @@ private extension TwitterFeatureVotingRequestService {
     
     enum Details {
         
-        case votesFrom(hashtag: String, startTime: Date)
+        case votesFrom(hashtag: String, startTime: String)
         case votesSinceId(hashtag: String, sinceId: String)
         
         var path: String {
@@ -122,10 +122,9 @@ private extension TwitterFeatureVotingRequestService {
             
         case let .votesFrom(hashtag, startTime):
             urlComponents.path = details.path
-            let dateString = startTime.formatDate(using: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
             urlComponents.queryItems = [
                 .init(name: "query", value: hashtag),
-                .init(name: "start_time", value: dateString), // ISO 8601
+                .init(name: "start_time", value: startTime), // ISO 8601
                 .init(name: "max_results", value: "100")
             ]
         case let .votesSinceId(hashtag, sinceId):

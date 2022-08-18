@@ -9,7 +9,7 @@ struct Web3FeatureData: Equatable {
     let body: String
     let image: String // asset name in project bundle
     let category: Web3Feature.Category
-    let creationDate: Date // UTC time for when we should start searching for votes
+    let creationDate: String // UTC time for when we should start searching for votes
 }
 
 extension Web3FeatureData {
@@ -23,36 +23,36 @@ extension Web3FeatureData {
         
         [
             .init(
-                id: "abcde12345",
-                title: "This is now a long title to test what happens",
-                body: "This is actually much cooler that you may think. Stay tunned!",
+                id: "1002",
+                title: "Matic support",
+                body: "Matic support description, TBC",
                 image: "",
                 category: .infrastructure,
-                creationDate: "2022-08-11T00:00:00.000Z".date() ?? Date()
+                creationDate: "2022-08-18T00:00:00.000Z"
             ),
             .init(
                 id: "1001",
-                title: "Feature 2",
-                body: "Anoon will this with exciting details, this is gonna be a very long description, he loves to write!",
+                title: "Solana support",
+                body: "Solana support description, TBC",
                 image: "",
                 category: .infrastructure,
-                creationDate: "2022-08-15T00:00:00.000Z".date() ?? Date()
+                creationDate: "2022-08-18T00:00:00.000Z"
             ),
             .init(
                 id: "2001",
-                title: "Feature 3",
-                body: "Anoon will this with exciting details, this is gonna be a very long description, he loves to write!",
+                title: "Integration 1",
+                body: "Integration 1 description, TBC",
                 image: "dashboard-palm",
                 category: .integrations,
-                creationDate: "2022-08-15T00:00:00.000Z".date() ?? Date()
+                creationDate: "2022-08-18T00:00:00.000Z"
             ),
             .init(
                 id: "3001",
-                title: "Feature 4",
-                body: "Anoon will this with exciting details, this is gonna be a very long description, he loves to write!",
+                title: "Currency Swap",
+                body: "Currency Swap description, TBC",
                 image: "dashboard-palm",
                 category: .features,
-                creationDate: "2022-08-15T00:00:00.000Z".date() ?? Date()
+                creationDate: "2022-08-18T00:00:00.000Z"
             )
         ]
     }

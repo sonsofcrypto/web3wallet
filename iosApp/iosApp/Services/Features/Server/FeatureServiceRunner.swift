@@ -131,7 +131,7 @@ private extension FeatureServiceRunner {
             case let .success(features):
                 
                 let paths = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
-                let cachesDirectory: URL = URL(string: "\(paths[0].absoluteString)features.json")!
+                let cachesDirectory: URL = URL(string: "\(paths[0].absoluteString)web3wallet-improvement-proposals.json")!
                                 
                 let jsonData = try! JSONEncoder().encode(features)
                 try! jsonData.write(to: cachesDirectory)

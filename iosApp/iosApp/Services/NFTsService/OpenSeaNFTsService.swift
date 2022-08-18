@@ -268,7 +268,6 @@ private extension OpenSeaNFTsService {
             
             case traitType
             case value
-            
         }
         
         let traitType: String
