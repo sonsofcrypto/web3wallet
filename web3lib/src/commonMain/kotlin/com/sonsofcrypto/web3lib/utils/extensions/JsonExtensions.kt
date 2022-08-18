@@ -22,6 +22,6 @@ inline fun <reified T> jsonDecode(string: String): T? {
     return stdJson.decodeFromString<T>(string)
 }
 
-inline fun <reified T> jsonEncode(value: T) {
-    stdJson.encodeToString<T>(value)
+inline fun <reified T> jsonEncode(value: T): String {
+    return stdJson.encodeToString<T>(value)
 }

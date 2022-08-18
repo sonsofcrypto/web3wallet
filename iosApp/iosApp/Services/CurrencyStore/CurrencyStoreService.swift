@@ -9,7 +9,7 @@ final class CurrencyStoreServiceAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .singleton) { resolver -> CurrencyStoreService in
-            DefaultCurrencyStoreService(
+            let service = DefaultCurrencyStoreService(
                 coinGeckoService: DefaultCoinGeckoService(),
                 marketStore: KeyValueStore(name: "CurrencyStoreService.Market"),
                 candleStore: KeyValueStore(name: "CurrencyStoreService.Candle"),
@@ -17,6 +17,8 @@ final class CurrencyStoreServiceAssembler: AssemblerComponent {
                     name: "CurrencyStoreService.UserCurrency"
                 )
             )
+            service.loadCaches(NetworksServiceCompanion().supportedNetworks())
+            return service
         }
     }
 }
