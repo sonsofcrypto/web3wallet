@@ -136,7 +136,7 @@ extension DefaultDashboardPresenter: DashboardInteractorLister {
 
     func handle(_ event: DashboardInteractorEvent) {
         switch event {
-        case .didUpdateMarketdata:
+        case .didUpdateMarketdata, .didUpdateNFTs, .didChangeNetworks:
             updateView()
         case let .didUpdateCandles(network, currency):
             // TODO(Anon): We dont need to construct viewModel here
@@ -150,8 +150,6 @@ extension DefaultDashboardPresenter: DashboardInteractorLister {
                     at: IndexPath(item: item, section: section + 2)
                 )
             }
-        case .didUpdateNFTs:
-            updateView()
         default:
             ()
         }
