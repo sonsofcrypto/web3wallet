@@ -105,6 +105,7 @@ class DefaultWalletService(
         this.currencies[network.id()] = currencies
         currenciesCache.set(network.id(), jsonEncode(currencies))
         emit(WalletEvent.Currencies(network, currencies))
+        currencyStoreService.cacheMetadata(currencies)
     }
 
     override fun address(network: Network): AddressHexString? {

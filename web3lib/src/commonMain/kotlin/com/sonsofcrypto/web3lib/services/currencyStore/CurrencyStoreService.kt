@@ -12,7 +12,6 @@ import com.sonsofcrypto.web3lib.utils.extensions.jsonEncode
 import com.sonsofcrypto.web3lib.utils.extensions.subListTo
 import io.ktor.util.*
 import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
 
 /** `CurrencyStoreService` handles currencies list and associated metadata. */
 interface CurrencyStoreService {
@@ -22,6 +21,9 @@ interface CurrencyStoreService {
     fun marketData(currency: Currency): CurrencyMarketData?
     /** Latest known (cached) candles for currency */
     fun candles(currency: Currency): List<Candle>?
+
+    /** Add metadata to fast cache. Does not have to wait for `loadCaches` */
+    fun cacheMetadata(currencies: List<Currency>)
 
     /** Downloads and caches market data for currency */
     suspend fun fetchMarketData(currencies: List<Currency>): Map<String, CurrencyMarketData>?
@@ -51,6 +53,7 @@ class DefaultCurrencyStoreService(
     private val coinGeckoService: CoinGeckoService,
     private val marketStore: KeyValueStore,
     private val candleStore: KeyValueStore,
+    private val metadataStore: KeyValueStore,
     private val userCurrencyStore: KeyValueStore
 ): CurrencyStoreService {
     private var currencies: MutableMap<String, List<Currency>> = mutableMapOf()
@@ -67,7 +70,7 @@ class DefaultCurrencyStoreService(
     private var idxMaps: MutableMap<String, Map<String, Int>> = mutableMapOf()
 
     override fun metadata(currency: Currency): CurrencyMetadata? {
-        return metadatas.get(currency.coinGeckoId ?: currency.id())
+        return metadatas.get(currency.id()) ?: metadataStore[currency.id()]
     }
 
     override fun marketData(currency: Currency): CurrencyMarketData? {
@@ -137,6 +140,10 @@ class DefaultCurrencyStoreService(
             metadata.await(),
             markets.await(),
         )
+    }
+
+    override fun cacheMetadata(currencies: List<Currency>) {
+        currencies.forEach { metadataStore[it.id()] = it  }
     }
 
     override fun add(currency: Currency, network: Network) {
