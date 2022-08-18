@@ -8,9 +8,11 @@ final class FeaturesServiceAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
         
-        registry.register(scope: .instance) { _ -> FeaturesService in
+        registry.register(scope: .instance) { resolver -> FeaturesService in
             
-            DefaultFeaturesService()
+            DefaultFeaturesService(
+                featureVotingCacheService: resolver.resolve()
+            )
         }
     }
 }

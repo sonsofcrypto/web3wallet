@@ -184,3 +184,13 @@ extension String {
         return symbol.replacingOccurrences(of: "US", with: "")
     }
 }
+
+extension String {
+    
+    func date(using dateFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ") -> Date? {
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = dateFormat
+        return formatter.date(from: self)
+    }
+}

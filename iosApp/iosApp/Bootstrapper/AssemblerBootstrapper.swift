@@ -39,6 +39,9 @@ private extension AssemblerBootstrapper {
             WalletServiceAssembler(),
             Web3ServiceLegacyAssembler(),
             FeaturesServiceAssembler(),
+            FeatureVotingCacheServiceAssembler(),
+            FeatureVotingRequestServiceAssembler(),
+            FeatureServiceRunnerAssembler(),
             EtherscanServiceAssembler(),
             // DeepLink
             DeepLinkHandlerAssembler(),
