@@ -19,13 +19,16 @@ final class DefaultMnemonicUpdateWireframeFactory {
 
     private let keyStoreService: KeyStoreService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
-
+    private let alertWireframeFactory: AlertWireframeFactory
+    
     init(
         keyStoreService: KeyStoreService,
-        authenticateWireframeFactory: AuthenticateWireframeFactory
+        authenticateWireframeFactory: AuthenticateWireframeFactory,
+        alertWireframeFactory: AlertWireframeFactory
     ) {
         self.keyStoreService = keyStoreService
         self.authenticateWireframeFactory = authenticateWireframeFactory
+        self.alertWireframeFactory = alertWireframeFactory
     }
 }
 
@@ -41,7 +44,8 @@ extension DefaultMnemonicUpdateWireframeFactory: MnemonicUpdateWireframeFactory 
             parent: parent,
             context: context,
             keyStoreService: keyStoreService,
-            authenticateWireframeFactory: authenticateWireframeFactory
+            authenticateWireframeFactory: authenticateWireframeFactory,
+            alertWireframeFactory: alertWireframeFactory
         )
     }
 }

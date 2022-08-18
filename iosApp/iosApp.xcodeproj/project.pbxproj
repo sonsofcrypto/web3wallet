@@ -2553,12 +2553,12 @@
 			isa = PBXGroup;
 			children = (
 				D1EF5BC2287BEE92004CAD82 /* MnemonicUpdate.storyboard */,
-				D1EF5BC0287BEE92004CAD82 /* MnemonicUpdateWireframe.swift */,
 				D1EF5BBF287BEE92004CAD82 /* MnemonicUpdateContext.swift */,
 				D1EF5BC6287BEE92004CAD82 /* MnemonicUpdateInteractor.swift */,
 				D1EF5BC3287BEE92004CAD82 /* MnemonicUpdatePresenter.swift */,
 				D1EF5BC4287BEE92004CAD82 /* MnemonicUpdateView.swift */,
 				D1EF5BC1287BEE92004CAD82 /* MnemonicUpdateViewModel.swift */,
+				D1EF5BC0287BEE92004CAD82 /* MnemonicUpdateWireframe.swift */,
 				D1EF5BC5287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift */,
 				1C672007288005C300C5F044 /* MnemonicUpdateWireframeFactoryAssembler.swift */,
 				D1EF5BBD287BEE92004CAD82 /* Cells */,

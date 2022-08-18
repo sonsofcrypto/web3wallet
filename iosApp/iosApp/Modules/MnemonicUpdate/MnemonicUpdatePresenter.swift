@@ -29,14 +29,13 @@ protocol MnemonicUpdatePresenter {
 final class DefaultMnemonicUpdatePresenter {
 
     private let context: MnemonicUpdateContext
+    private weak var view: MnemonicUpdateView?
     private let interactor: MnemonicUpdateInteractor
     private let wireframe: MnemonicUpdateWireframe
 
     private var password: String = ""
     private var salt: String = ""
     private var customDerivation: Bool = false
-
-    private weak var view: MnemonicUpdateView?
 
     init(
         context: MnemonicUpdateContext,
@@ -114,8 +113,11 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
         case .didSelectDismiss:
             view?.dismiss(animated: true, completion: {})
         case .deleteWallet:
-            interactor.delete(context.keyStoreItem)
-            handle(.didSelectDismiss)
+            wireframe.navigate(
+                to: .confirmationAlert(
+                    onConfirm: .targetAction(.init(target: self, selector: #selector(onDeleteConfirmed)))
+                )
+            )
         }
     }
 }
@@ -123,6 +125,19 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
 // MARK: - Action handlers
 
 private extension DefaultMnemonicUpdatePresenter {
+    
+    @objc func onDeleteConfirmed() {
+        
+        interactor.delete(context.keyStoreItem)
+        // NOTE: The following call dismisses the alert
+        view?.dismiss(
+            animated: true,
+            completion: { [weak self] in
+                guard let self = self else { return }
+                self.view?.dismiss(animated: true, completion: {})
+            }
+        )
+    }
 
     func handleAuthenticateResult(_ result: AuthenticateContext.AuthResult) {
         switch result {

@@ -147,6 +147,7 @@ struct ThemeMiami: Themable {
             cellHeightSmall: 46,
             padding: 16,
             buttonPrimaryHeight: 46,
+            buttonSecondaryHeight: 46,
             buttonSecondarySmallHeight: 24,
             buttonDashboardActionHeight: 32
         )

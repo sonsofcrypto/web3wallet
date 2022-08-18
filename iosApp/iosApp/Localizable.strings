@@ -166,6 +166,11 @@
 "alert.underConstruction.title" = "Under construction";
 "alert.underConstruction.message" = "App is under very active development and this corner is not quite ready yet. Check back soon.";
 
+"alert.deleteWallet.title" = "⚠️ Warning ⚠️";
+"alert.deleteWallet.message" = "Are you sure you would like to delete your wallet?\n\nYou could still import again after but make sure you have your mnemonic backed up first.";
+"alert.deleteWallet.action.confirm" = "Yes, delete wallet";
+"alert.deleteWallet.action.cancel" = "Cancel";
+
 "mnemonicConfirmation.title" = "Confirm Mnemonic";
 "mnemonicConfirmation.confirm.wallet" = "Please enter the 12 word phrase you were given when you created your wallet.";
 "mnemonicConfirmation.salt" = "Salt mnemonic";

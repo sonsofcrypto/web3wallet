@@ -64,6 +64,7 @@ private extension DefaultAlertWireframe {
             wireframe: self
         )
         vc.presenter = presenter
+        vc.contentHeight = context.contentHeight
         let navigationController = NavigationController(rootViewController: vc)
         navigationController.modalPresentationStyle = .custom
         navigationController.transitioningDelegate = vc

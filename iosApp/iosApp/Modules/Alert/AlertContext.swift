@@ -18,7 +18,15 @@ struct AlertContext {
     struct Action {
         
         let title: String
+        let type: `Type`
         let action: TargetActionViewModel?
+        
+        enum `Type` {
+            
+            case primary
+            case secondary
+            case destructive
+        }
     }
 }
 
@@ -35,6 +43,7 @@ extension AlertContext {
             actions: [
                 .init(
                     title: Localized("OK"),
+                    type: .primary,
                     action: onOkTapped
                 )
             ],

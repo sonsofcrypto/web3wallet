@@ -6,11 +6,26 @@ import UIKit
 
 final class AlertSheetPresentationController: UIPresentationController {
     
+    private var contentHeight: CGFloat!
+    
+    init(
+        presentedViewController: UIViewController,
+        presenting presentingViewController: UIViewController?,
+        contentHeight: CGFloat
+    ) {
+        
+        self.contentHeight = contentHeight
+        
+        super.init(
+            presentedViewController: presentedViewController,
+            presenting: presentingViewController
+        )
+    }
+    
     private weak var bgView: UIView?
 
     override var frameOfPresentedViewInContainerView: CGRect {
         
-        let contentHeight: CGFloat = 500
         let size: CGSize = .init(
             width: containerViewBounds().width - (Theme.constant.padding * 2),
             height: contentHeight

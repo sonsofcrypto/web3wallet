@@ -192,6 +192,7 @@ struct ThemeConstant {
     let cellHeightSmall: CGFloat
     let padding: CGFloat
     let buttonPrimaryHeight: CGFloat
+    let buttonSecondaryHeight: CGFloat
     let buttonSecondarySmallHeight: CGFloat
     let buttonDashboardActionHeight: CGFloat
 }
