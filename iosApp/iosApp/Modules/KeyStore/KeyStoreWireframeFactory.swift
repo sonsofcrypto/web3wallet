@@ -23,6 +23,7 @@ final class DefaultKeyStoreWireframeFactory {
     private let newMnemonic: MnemonicNewWireframeFactory
     private let updateMnemonic: MnemonicUpdateWireframeFactory
     private let importMnemonic: MnemonicImportWireframeFactory
+    private let alertWireframeFactory: AlertWireframeFactory
 
     init(
         keyStoreService: KeyStoreService,
@@ -30,7 +31,8 @@ final class DefaultKeyStoreWireframeFactory {
         networksService: NetworksService,
         newMnemonic: MnemonicNewWireframeFactory,
         updateMnemonic: MnemonicUpdateWireframeFactory,
-        importMnemonic: MnemonicImportWireframeFactory
+        importMnemonic: MnemonicImportWireframeFactory,
+        alertWireframeFactory: AlertWireframeFactory
     ) {
         self.keyStoreService = keyStoreService
         self.settingsService = settingsService
@@ -38,6 +40,7 @@ final class DefaultKeyStoreWireframeFactory {
         self.newMnemonic = newMnemonic
         self.updateMnemonic = updateMnemonic
         self.importMnemonic = importMnemonic
+        self.alertWireframeFactory = alertWireframeFactory
     }
 }
 
@@ -57,23 +60,8 @@ extension DefaultKeyStoreWireframeFactory: KeyStoreWireframeFactory {
             newMnemonic: newMnemonic,
             updateMnemonic: updateMnemonic,
             importMnemonic: importMnemonic,
-            settingsService: settingsService
+            settingsService: settingsService,
+            alertWireframeFactory: alertWireframeFactory
         )
-    }
-}
-
-final class KeyStoreWireframeFactoryAssembler: AssemblerComponent {
-
-    func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .instance) { resolver -> KeyStoreWireframeFactory in
-            DefaultKeyStoreWireframeFactory(
-                keyStoreService: resolver.resolve(),
-                settingsService: resolver.resolve(),
-                networksService: resolver.resolve(),
-                newMnemonic: resolver.resolve(),
-                updateMnemonic: resolver.resolve(),
-                importMnemonic: resolver.resolve()
-            )
-        }
     }
 }

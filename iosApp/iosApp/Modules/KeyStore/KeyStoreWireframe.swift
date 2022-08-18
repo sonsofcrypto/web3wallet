@@ -37,6 +37,7 @@ final class DefaultKeyStoreWireframe {
     private let updateMnemonic: MnemonicUpdateWireframeFactory
     private let importMnemonic: MnemonicImportWireframeFactory
     private let settingsService: SettingsService
+    private let alertWireframeFactory: AlertWireframeFactory
 
     private weak var vc: UIViewController?
 
@@ -48,7 +49,8 @@ final class DefaultKeyStoreWireframe {
         newMnemonic: MnemonicNewWireframeFactory,
         updateMnemonic: MnemonicUpdateWireframeFactory,
         importMnemonic: MnemonicImportWireframeFactory,
-        settingsService: SettingsService
+        settingsService: SettingsService,
+        alertWireframeFactory: AlertWireframeFactory
     ) {
         self.parent = parent
         self.window = window
@@ -58,6 +60,7 @@ final class DefaultKeyStoreWireframe {
         self.updateMnemonic = updateMnemonic
         self.importMnemonic = importMnemonic
         self.settingsService = settingsService
+        self.alertWireframeFactory = alertWireframeFactory
     }
 }
 
@@ -104,8 +107,11 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
             )
             updateMnemonic.makeWireframe(vc, context: context).present()
         default:
-            print("Navigate to", destination)
-
+            guard let vc = vc else { return }
+            alertWireframeFactory.makeWireframe(
+                vc,
+                context: .underConstructionAlert()
+            ).present()
         }
     }
 }

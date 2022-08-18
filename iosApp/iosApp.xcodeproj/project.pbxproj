@@ -356,6 +356,7 @@
 		1C7FC97728ACC9F400FC9175 /* Web3FeatureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97628ACC9F400FC9175 /* Web3FeatureData.swift */; };
 		1C7FC97928AD2E7D00FC9175 /* FeatureServiceRunnerAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97828AD2E7D00FC9175 /* FeatureServiceRunnerAssembler.swift */; };
 		1C7FC97B28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97A28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift */; };
+		1C7FC97D28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97C28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift */; };
 		1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46D92813DE4800F6C40B /* BaseViewController.swift */; };
 		1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1C9B46FA281427B800F6C40B /* under-construction.gif */; };
 		1C9E3195287580B600DD2031 /* TokenSendWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */; };
@@ -937,6 +938,7 @@
 		1C7FC97628ACC9F400FC9175 /* Web3FeatureData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3FeatureData.swift; sourceTree = "<group>"; };
 		1C7FC97828AD2E7D00FC9175 /* FeatureServiceRunnerAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureServiceRunnerAssembler.swift; sourceTree = "<group>"; };
 		1C7FC97A28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateDeleteCell.swift; sourceTree = "<group>"; };
+		1C7FC97C28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C9B46D92813DE4800F6C40B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1C9B46FA281427B800F6C40B /* under-construction.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "under-construction.gif"; sourceTree = "<group>"; };
 		1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendWireframe.swift; sourceTree = "<group>"; };
@@ -1584,6 +1586,7 @@
 				1C60C1E5285724D0003BE25D /* KeyStoreViewModel.swift */,
 				1C60C1EB285724D0003BE25D /* KeyStoreWireframe.swift */,
 				1C60C1E3285724D0003BE25D /* KeyStoreWireframeFactory.swift */,
+				1C7FC97C28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift */,
 				1C60C1E6285724D0003BE25D /* ButtonSheetView */,
 				1C0643CD2892EA1800643C15 /* Cells */,
 			);
@@ -2934,6 +2937,7 @@
 				1C60C2EF285724D0003BE25D /* NetworksWireframe.swift in Sources */,
 				D1EF5BC7287BEE92004CAD82 /* MnemonicUpdateCell.swift in Sources */,
 				1CE66BD72848F16A00AB6ACA /* UITabBarController+Extensions.swift in Sources */,
+				1C7FC97D28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift in Sources */,
 				1C6487342832E64A0091A12D /* DefaultNFTsService.swift in Sources */,
 				1C60C2EC285724D0003BE25D /* NetworksView.swift in Sources */,
 				1C60C3652857C5EC003BE25D /* TokenReceiveViewModel.swift in Sources */,
