@@ -99,7 +99,7 @@ private extension TextField {
     
     func makeClearButton() -> UIButton {
         
-        let button = UIButton(type: .system)
+        let button = UIButton(type: .custom)
         button.setImage(
             "xmark.circle.fill".assetImage,
             for: .normal
