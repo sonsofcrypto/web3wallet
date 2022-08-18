@@ -17,7 +17,10 @@ final class CurrencyStoreServiceAssembler: AssemblerComponent {
                     name: "CurrencyStoreService.UserCurrency"
                 )
             )
-            service.loadCaches(NetworksServiceCompanion().supportedNetworks())
+            service.loadCaches(
+                networks: NetworksServiceCompanion().supportedNetworks(),
+                completionHandler: { _, _ in () }
+            )
             return service
         }
     }
