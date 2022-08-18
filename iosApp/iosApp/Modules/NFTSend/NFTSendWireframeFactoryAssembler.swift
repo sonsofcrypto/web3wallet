@@ -11,7 +11,8 @@ final class NFTSendWireframeFactoryAssembler: AssemblerComponent {
             DefaultNFTSendWireframeFactory(
                 qrCodeScanWireframeFactory: resolver.resolve(),
                 confirmationWireframeFactory: resolver.resolve(),
-                web3Service: resolver.resolve()
+                web3Service: resolver.resolve(),
+                networksService: resolver.resolve()
             )
         }
     }

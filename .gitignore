@@ -183,7 +183,11 @@ packages/react-devtools-timeline/dist
 /captures
 .externalNativeBuild
 .cxx
+.env
 local.properties
+
+download_metadata/node_modules
+download_metadata/.env
 
 crypto/iosMain
 crypto/androidMain

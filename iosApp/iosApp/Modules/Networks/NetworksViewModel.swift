@@ -34,12 +34,11 @@ extension NetworksViewModel {
 }
 
 extension NetworksViewModel {
-
     struct Network {
         let chainId: UInt32
         let name: String
         let connected: Bool
-        let imageData: Data
+        let imageName: String
         let connectionType: String
         let isSelected: Bool
     }

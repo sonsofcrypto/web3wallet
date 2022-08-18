@@ -270,7 +270,7 @@ private extension DefaultDeepLinkHandler {
         
         guard let dashboardNavController = dashboardNavController else { return }
         
-        let service: WalletsConnectionService = ServiceDirectory.assembler.resolve()
+        let service: NetworksService = ServiceDirectory.assembler.resolve()
         guard let wallet = service.wallet(network: token.network.toNetwork()) else { return }
         
         let factory: AccountWireframeFactory = ServiceDirectory.assembler.resolve()

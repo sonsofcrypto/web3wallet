@@ -55,7 +55,7 @@ extension DashboardWalletCell {
             return self
         }
         
-        imageView.image = viewModel.imageData.pngImage
+        imageView.image = UIImage(named: viewModel.imageName)
         currencyLabel.text = viewModel.ticker
         fiatPriceLabel.text = viewModel.fiatPrice
         pctChangeLabel.text = viewModel.pctChange
@@ -66,11 +66,10 @@ extension DashboardWalletCell {
         charView.update(viewModel.candles)
         cryptoBalanceLabel.text = viewModel.cryptoBalance
 
-        if let colors = viewModel.colors,
-           let top = UIColor(hexString: colors.0),
-           let btm = UIColor(hexString: colors.1) {
-            (backgroundView as? DashboardWalletCellBackgroundView)?.strokeColors = [top, btm]
-        }
+        let colors = viewModel.colors
+        let top = UIColor(hexString: colors.first ?? "#FFFFFF")!
+        let btm = UIColor(hexString: colors.last ?? colors.first ?? "#000000")!
+        (backgroundView as? DashboardWalletCellBackgroundView)?.strokeColors = [top, btm]
 
         return self
     }

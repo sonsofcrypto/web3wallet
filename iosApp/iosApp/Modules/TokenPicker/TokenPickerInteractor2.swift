@@ -14,10 +14,10 @@
 //
 //final class DefaultTokenPickerInteractor2 {
 //
-//    private let currenciesService: CurrenciesService
+//    private let currencyStoreService: CurrencyStoreService
 //
 //    init(currenciesService: CurrenciesService) {
-//        self.currenciesService = currenciesService
+//        self.currencyStoreService = currencyStoreService
 //    }
 //}
 //
@@ -35,7 +35,7 @@
 //        var image: UIImage?
 //
 //        if let id = currency. {
-//            image = UIImage(named: id + "_large")
+//            image = UIImage(named: id)
 //        }
 //
 //        image = image ?? UIImage(named: "currency_placeholder")

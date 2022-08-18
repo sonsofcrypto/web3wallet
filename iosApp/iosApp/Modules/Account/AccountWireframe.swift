@@ -29,10 +29,9 @@ final class DefaultAccountWireframe {
     private let tokenSendWireframeFactory: TokenSendWireframeFactory
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
-    private let walletConnectionService: WalletsConnectionService
-    private let walletsStateService: WalletsStateService
-    private let currenciesService: CurrenciesService
-    private let currencyMetadataService: CurrencyMetadataService
+    private let networksService: NetworksService
+    private let walletService: WalletService
+    private let currencyStoreService: CurrencyStoreService
 
     private weak var navigationController: NavigationController!
 
@@ -43,10 +42,9 @@ final class DefaultAccountWireframe {
         tokenSendWireframeFactory: TokenSendWireframeFactory,
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
-        walletConnectionService: WalletsConnectionService,
-        walletsStateService: WalletsStateService,
-        currenciesService: CurrenciesService,
-        currencyMetadataService: CurrencyMetadataService
+        networksService: NetworksService,
+        walletService: WalletService,
+        currencyStoreService: CurrencyStoreService
     ) {
         self.presentingIn = presentingIn
         self.context = context
@@ -54,10 +52,9 @@ final class DefaultAccountWireframe {
         self.tokenSendWireframeFactory = tokenSendWireframeFactory
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.deepLinkHandler = deepLinkHandler
-        self.walletConnectionService = walletConnectionService
-        self.walletsStateService = walletsStateService
-        self.currenciesService = currenciesService
-        self.currencyMetadataService = currencyMetadataService
+        self.networksService = networksService
+        self.walletService = walletService
+        self.currencyStoreService = currencyStoreService
     }
 }
 
@@ -126,10 +123,9 @@ private extension DefaultAccountWireframe {
         let interactor = DefaultAccountInteractor(
             wallet: context.wallet,
             currency: context.currency,
-            walletConnectionService: walletConnectionService,
-            walletsStateService: walletsStateService,
-            currenciesService: currenciesService,
-            currencyMetadataService: currencyMetadataService
+            networksService: networksService,
+            walletService: walletService,
+            currencyStoreService: currencyStoreService
         )
         
         let vc: AccountViewController = UIStoryboard(.account).instantiate()

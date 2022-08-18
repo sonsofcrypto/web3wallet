@@ -57,7 +57,7 @@ protocol EtherscanService {
 
 final class DefaultEtherscanService {
     
-    private let walletsConnectionService: WalletsConnectionService
+    private let networksService: NetworksService
     private let defaults: UserDefaults
     
     private let LATEST_FILE_NAME = "EtherScanFileNameCached"
@@ -65,10 +65,10 @@ final class DefaultEtherscanService {
     private let API_KEY = ""
     
     init(
-        walletsConnectionService: WalletsConnectionService,
+        networksService: NetworksService,
         defaults: UserDefaults = .standard
     ) {
-        self.walletsConnectionService = walletsConnectionService
+        self.networksService = networksService
         self.defaults = defaults
     }
 }

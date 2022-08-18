@@ -4,7 +4,7 @@ import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import com.sonsofcrypto.web3lib.provider.model.toBigIntData
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.utils.hexStringToByteArray
+import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.keccak256
 
 private val abiParamLen = 32
@@ -70,6 +70,8 @@ class ERC20(address: Address.HexString) : Contract(address) {
      */
     fun transfer(to: Address.HexString, amount: BigInt): DataHexString = DataHexString(
         keccak256("decimals(address,uint256)".encodeToByteArray()).copyOfRange(0, 4)
+//            + abiEncode(to)
+//            + abiEncode(amount)
     )
 
     /**

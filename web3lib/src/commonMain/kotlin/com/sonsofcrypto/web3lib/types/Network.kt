@@ -12,7 +12,7 @@ data class Network(
     val nativeCurrency: Currency,
 ) {
 
-    fun id(): String = hashCode().toString()
+    fun id(): String = chainId.toString()
 
     fun defaultDerivationPath(): String {
         return "m/44'/60'/0'/0/0"
@@ -44,13 +44,6 @@ data class Network(
         fun ropsten() = Network("Ropsten", 3u, Type.L1_TEST, null, Currency.ethereum())
         fun rinkeby() = Network("Rinkeby", 4u, Type.L1_TEST, null, Currency.ethereum())
         fun goerli() = Network("Goerli", 5u, Type.L1_TEST, null, Currency.ethereum())
-
-        fun supported(): List<Network> = listOf(
-            Network.ethereum(),
-            Network.ropsten(),
-            Network.rinkeby(),
-            Network.goerli(),
-        )
 
         fun fromChainId(chainId: UInt): Network = when(chainId) {
             3u -> ropsten()

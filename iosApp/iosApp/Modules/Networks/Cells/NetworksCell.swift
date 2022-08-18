@@ -80,7 +80,7 @@ extension NetworksCell {
         self.onOffHandler = onOffHandler
         self.settingsHandler = settingsHandler
         
-        iconImageView.image = UIImage(data: viewModel.imageData)
+        iconImageView.image = UIImage(named: viewModel.imageName)
         titleLabel.text = viewModel.name
 
         switchControl.setOn(viewModel.connected, animated: true)

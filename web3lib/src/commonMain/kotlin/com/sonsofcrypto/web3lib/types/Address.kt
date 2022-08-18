@@ -9,7 +9,7 @@ typealias AddressHexString = String
 /** Address */
 sealed class Address() {
     data class Bytes(val data: AddressBytes) : Address()
-    data class HexString(val hexString: String) : Address()
+    data class HexString(val hexString: AddressHexString) : Address()
     data class Name(val name: String) : Address()
 
     companion object {
@@ -26,6 +26,9 @@ fun Address.toHexStringAddress(): Address.HexString = when (this) {
     is Address.Bytes -> Address.HexString(DataHexString(this.data))
     else -> TODO("Resolve name address")
 }
+
+fun Address.toHexString(): AddressHexString = this.toHexStringAddress().hexString
+
 
 fun Address.jsonPrimitive(): JsonPrimitive = when (this) {
     is Address.HexString -> JsonPrimitive(hexString)

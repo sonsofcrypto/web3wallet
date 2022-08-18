@@ -32,7 +32,7 @@ final class DefaultKeyStoreWireframe {
     private weak var parent: UIViewController?
     private weak var window: UIWindow?
     private let keyStoreService: KeyStoreService
-    private let walletsConnectionService: WalletsConnectionService
+    private let networksService: NetworksService
     private let newMnemonic: MnemonicNewWireframeFactory
     private let updateMnemonic: MnemonicUpdateWireframeFactory
     private let importMnemonic: MnemonicImportWireframeFactory
@@ -44,7 +44,7 @@ final class DefaultKeyStoreWireframe {
         parent: UIViewController?,
         window: UIWindow?,
         keyStoreService: KeyStoreService,
-        walletsConnectionService: WalletsConnectionService,
+        networksService: NetworksService,
         newMnemonic: MnemonicNewWireframeFactory,
         updateMnemonic: MnemonicUpdateWireframeFactory,
         importMnemonic: MnemonicImportWireframeFactory,
@@ -53,7 +53,7 @@ final class DefaultKeyStoreWireframe {
         self.parent = parent
         self.window = window
         self.keyStoreService = keyStoreService
-        self.walletsConnectionService = walletsConnectionService
+        self.networksService = networksService
         self.newMnemonic = newMnemonic
         self.updateMnemonic = updateMnemonic
         self.importMnemonic = importMnemonic
@@ -115,7 +115,7 @@ private extension DefaultKeyStoreWireframe {
     func wireUp() -> UIViewController {
         let interactor = DefaultKeyStoreInteractor(
             keyStoreService,
-            walletsConnectionService: walletsConnectionService
+            networksService: networksService
         )
         let vc: KeyStoreViewController = UIStoryboard(.keyStore).instantiate()
         let presenter = DefaultKeyStorePresenter(

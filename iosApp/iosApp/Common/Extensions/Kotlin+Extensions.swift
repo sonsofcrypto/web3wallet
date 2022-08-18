@@ -24,8 +24,4 @@ extension Network {
     static func ropsten() -> Network {
         Network.Companion().ropsten()
     }
-
-    static func supported() -> [Network] {
-        Network.Companion().supported()
-    }
 }

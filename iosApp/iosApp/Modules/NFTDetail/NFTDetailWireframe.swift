@@ -30,19 +30,23 @@ final class DefaultNFTDetailWireframe {
     private let context: NFTDetailWireframeContext
     private let nftSendWireframeFactory: NFTSendWireframeFactory
     private let nftsService: NFTsService
-    
+    private let networksService: NetworksService
+
+
     private weak var navigationController: NavigationController!
     
     init(
         parent: UIViewController,
         context: NFTDetailWireframeContext,
         nftSendWireframeFactory: NFTSendWireframeFactory,
-        nftsService: NFTsService
+        nftsService: NFTsService,
+        networksService: NetworksService
     ) {
         self.parent = parent
         self.context = context
         self.nftSendWireframeFactory = nftSendWireframeFactory
         self.nftsService = nftsService
+        self.networksService = networksService
     }
 }
 
@@ -87,12 +91,7 @@ extension DefaultNFTDetailWireframe: NFTDetailWireframe {
             ).present()
             
         case let .send(nftItem):
-            
-            // TODO: Get network better
-            let service: WalletsConnectionService = ServiceDirectory.assembler.resolve()
-            guard
-                let network = try? service.network
-            else { return }
+            guard let network = try? networksService.network else { return }
             
             let web3Network = Web3Network.from(network, isOn: false)
                 

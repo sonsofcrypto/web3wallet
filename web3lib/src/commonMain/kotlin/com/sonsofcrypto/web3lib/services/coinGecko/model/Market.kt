@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3lib.services.coinGecko.model
 
+import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyMarketData
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -51,4 +52,15 @@ data class Market(
     val atlDate: String?,
     @SerialName("last_updated")
     val lastUpdated: String?,
+)
+
+fun Market.toCurrencyMarketData(): CurrencyMarketData = CurrencyMarketData(
+    currentPrice = this.currentPrice,
+    marketCap = this.marketCap,
+    marketCapRank = this.marketCapRank,
+    fullyDilutedValuation = this.fullyDilutedValuation,
+    totalVolume = this.totalVolume,
+    priceChangePercentage24h = this.priceChangePercentage24h,
+    circulatingSupply = this.circulatingSupply,
+    totalSupply = this.totalSupply,
 )

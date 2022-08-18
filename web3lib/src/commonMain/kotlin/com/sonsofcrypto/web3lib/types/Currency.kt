@@ -1,33 +1,30 @@
 package com.sonsofcrypto.web3lib.types
 
-import com.sonsofcrypto.web3lib.utils.BigDec
-import com.sonsofcrypto.web3lib.utils.BigInt
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Currency(
     val name: String,
     val symbol: String,
-    val decimals: UInt,
+    val decimals: UInt?,
     val type: Type,
     val address: AddressHexString?,
-    val coinGeckoId: String?
+    val coinGeckoId: String?,
 ) {
-    enum class Type() {
-        NATIVE, ERC20, UNKNOWN
+    @Serializable
+    enum class Type(val value: Int) {
+        @SerialName("0") UNKNOWN(0),
+        @SerialName("1") NATIVE(1),
+        @SerialName("2") ERC20(2),
     }
 
     fun id(): String {
-        return coinGeckoId ?: (symbol + (address ?: name))
+        coinGeckoId?.let { return coinGeckoId }
+        return (symbol + (address ?: name))
     }
 
-    fun double(balance: BigInt): Double {
-        if (balance == null) {
-            return 0.0
-        }
-        val divisor = BigInt.from(10).pow(decimals.toLong())
-        return BigDec.from(balance).div(BigDec.from(divisor)).toDouble()
-    }
+    fun decimals(): UInt = this.decimals ?: 18u
 
     companion object {
         fun ethereum(): Currency = Currency(

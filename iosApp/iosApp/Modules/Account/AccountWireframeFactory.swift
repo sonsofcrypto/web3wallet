@@ -14,34 +14,30 @@ protocol AccountWireframeFactory {
 }
 
 final class DefaultAccountWireframeFactory {
-
     private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
     private let tokenSendWireframeFactory: TokenSendWireframeFactory
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
-    private let walletConnectionService: WalletsConnectionService
-    private let walletsStateService: WalletsStateService
-    private let currenciesService: CurrenciesService
-    private let currencyMetadataService: CurrencyMetadataService
+    private let networksService: NetworksService
+    private let walletService: WalletService
+    private let currencyStoreService: CurrencyStoreService
 
     init(
         tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
         tokenSendWireframeFactory: TokenSendWireframeFactory,
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
-        walletConnectionService: WalletsConnectionService,
-        walletsStateService: WalletsStateService,
-        currenciesService: CurrenciesService,
-        currencyMetadataService: CurrencyMetadataService
+        networksService: NetworksService,
+        walletService: WalletService,
+        currencyStoreService: CurrencyStoreService
     ) {
         self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
         self.tokenSendWireframeFactory = tokenSendWireframeFactory
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.deepLinkHandler = deepLinkHandler
-        self.walletConnectionService = walletConnectionService
-        self.walletsStateService = walletsStateService
-        self.currenciesService = currenciesService
-        self.currencyMetadataService = currencyMetadataService
+        self.networksService = networksService
+        self.walletService = walletService
+        self.currencyStoreService = currencyStoreService
     }
 }
 
@@ -59,10 +55,9 @@ extension DefaultAccountWireframeFactory: AccountWireframeFactory {
             tokenSendWireframeFactory: tokenSendWireframeFactory,
             tokenSwapWireframeFactory: tokenSwapWireframeFactory,
             deepLinkHandler: deepLinkHandler,
-            walletConnectionService: walletConnectionService,
-            walletsStateService: walletsStateService,
-            currenciesService: currenciesService,
-            currencyMetadataService: currencyMetadataService
+            networksService: networksService,
+            walletService: walletService,
+            currencyStoreService: currencyStoreService
         )
     }
 }
@@ -77,10 +72,9 @@ final class AccountWireframeFactoryAssembler: AssemblerComponent {
                 tokenSendWireframeFactory: resolver.resolve(),
                 tokenSwapWireframeFactory: resolver.resolve(),
                 deepLinkHandler: resolver.resolve(),
-                walletConnectionService: resolver.resolve(),
-                walletsStateService: resolver.resolve(),
-                currenciesService: resolver.resolve(),
-                currencyMetadataService: resolver.resolve()
+                networksService: resolver.resolve(),
+                walletService: resolver.resolve(),
+                currencyStoreService: resolver.resolve()
             )
         }
     }

@@ -23,8 +23,8 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlin.native.concurrent.SharedImmutable
 
+/** Coing Gecko api service*/
 interface CoinGeckoService {
-
     /**
      * @param ids - Currency ids (ethereum, bitcoin ... ) if `null` returns all
      * @param quote - The target currency of market data (usd, eur, jpy, etc.)
@@ -38,7 +38,6 @@ interface CoinGeckoService {
         page: Int,
         change: String
     ): List<Market>
-
     /**
      * @param coinId - coin id (ethereum, bitcoin ...)
      * @param quote - The target currency of market data (usd, eur, jpy, etc.)
@@ -47,7 +46,6 @@ interface CoinGeckoService {
      */
     @Throws(Throwable::class)
     suspend fun candles(coinId: String, quote: String, days: Int): List<Candle>
-
     /** List of all coin gecko known coins */
     @Throws(Throwable::class)
     suspend fun coinsList(): List<Coin>

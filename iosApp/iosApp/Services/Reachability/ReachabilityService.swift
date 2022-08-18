@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: MIT
 
 enum ReachabilityServiceConnection {
-
     case cellular
     case wifi
     case unavailable
@@ -11,9 +10,7 @@ enum ReachabilityServiceConnection {
 }
 
 extension ReachabilityServiceConnection {
-    
     var isReachable: Bool {
-        
         switch self {
         case .cellular, .wifi:
             return true
@@ -24,7 +21,6 @@ extension ReachabilityServiceConnection {
 }
 
 protocol ReachabilityService: AnyObject {
-    
     var connection: ReachabilityServiceConnection { get }
     func addObserver(
         _ observer: AnyObject,
@@ -34,27 +30,22 @@ protocol ReachabilityService: AnyObject {
 }
 
 final class DefaultReachabilityService {
-    
     private var observers = [ObjectIdentifier: (ReachabilityServiceConnection) -> Void]()
     private var reachability = try? Reachability()
     private var prevConnectionUpdate: ReachabilityServiceConnection?
 }
 
 extension DefaultReachabilityService: Bootstrapper {
-    
     func boot() {
-            
         registerForUpdates()
         startListening()
     }
 }
 
 extension DefaultReachabilityService: ReachabilityService {
-        
+
     var connection: ReachabilityServiceConnection {
-        
         guard let reachability = reachability else { return .none }
-        
         switch reachability.connection {
         case .cellular:
             return .cellular
@@ -69,14 +60,11 @@ extension DefaultReachabilityService: ReachabilityService {
         _ observer: AnyObject,
         onChange: @escaping (ReachabilityServiceConnection) -> Void
     ) {
-        
         registerObserver(observer, onChange: onChange)
-        
         onChange(connection)
     }
     
     func removeObserver(_ observer: AnyObject) {
-        
         let identifier = ObjectIdentifier(observer)
         observers[identifier] = nil
     }
@@ -85,14 +73,11 @@ extension DefaultReachabilityService: ReachabilityService {
 private extension DefaultReachabilityService {
     
     func startListening() {
-        
         try? reachability?.startNotifier()
     }
     
     func registerForUpdates() {
-        
         if reachability?.whenReachable == nil {
-
             reachability?.whenReachable = { [weak self] reachability in
                 guard let self = self else { return }
                 self.notifyObservers()
@@ -100,7 +85,6 @@ private extension DefaultReachabilityService {
         }
 
         if reachability?.whenUnreachable == nil {
-
             reachability?.whenUnreachable = { [weak self] reachability in
                 guard let self = self else { return }
                 self.notifyObservers()
@@ -109,20 +93,18 @@ private extension DefaultReachabilityService {
     }
     
     @objc func notifyObservers() {
-        
         let newConnection = connection
-        
+
         guard newConnection != prevConnectionUpdate else { return }
-        
+
         self.prevConnectionUpdate = newConnection
-        
+
         observers.forEach { (_, value) in
             value(newConnection)
         }
     }
     
     func registerObserver(_ observer: AnyObject, onChange: @escaping (ReachabilityServiceConnection) -> Void) {
-        
         let identifier = ObjectIdentifier(observer)
         observers[identifier] = onChange
     }

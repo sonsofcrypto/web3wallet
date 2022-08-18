@@ -1,7 +1,6 @@
 package com.sonsofcrypto.web3lib.utils
 
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import platform.Foundation.NSString
 import platform.Foundation.NSUTF8StringEncoding
 import platform.Foundation.stringWithCString
@@ -14,8 +13,19 @@ actual val uiDispatcher: CoroutineDispatcher
 actual val bgDispatcher: CoroutineDispatcher
     get() = Dispatchers.Default
 
+actual val logExceptionHandler: CoroutineExceptionHandler
+    get() = CoroutineExceptionHandler { _, err -> println(err) }
+
 actual fun currentThreadId(): String {
     val cString = dispatch_queue_get_label(dispatch_get_current_queue())
     val string = NSString.stringWithCString(cString, encoding = NSUTF8StringEncoding)
     return "$string"
+}
+
+actual suspend fun <T> withUICxt(block: suspend CoroutineScope.() -> T): T {
+    return withContext(SupervisorJob() + uiDispatcher, block)
+}
+
+actual suspend fun <T> withBgCxt(block: suspend CoroutineScope.() -> T): T {
+    return withContext(SupervisorJob() + bgDispatcher, block)
 }

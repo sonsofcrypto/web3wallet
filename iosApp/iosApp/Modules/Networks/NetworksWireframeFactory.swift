@@ -6,39 +6,28 @@ import UIKit
 import web3lib
 
 protocol NetworksWireframeFactory {
-
     func makeWireframe(_ parent: UIViewController) -> NetworksWireframe
 }
 
 final class DefaultNetworksWireframeFactory {
-
     private let alertWireframeFactory: AlertWireframeFactory
-    private let walletsConnectionService: WalletsConnectionService
-    private let currenciesService: CurrenciesService
-    private let currencyMetadataService: CurrencyMetadataService
+    private let networksService: NetworksService
 
     init(
         alertWireframeFactory: AlertWireframeFactory,
-        walletsConnectionService: WalletsConnectionService,
-        currenciesService: CurrenciesService,
-        currencyMetadataService: CurrencyMetadataService
+        networksService: NetworksService
     ) {
         self.alertWireframeFactory = alertWireframeFactory
-        self.walletsConnectionService = walletsConnectionService
-        self.currenciesService = currenciesService
-        self.currencyMetadataService = currencyMetadataService
+        self.networksService = networksService
     }
 }
 
 extension DefaultNetworksWireframeFactory: NetworksWireframeFactory {
 
     func makeWireframe(_ parent: UIViewController) -> NetworksWireframe {
-        
         DefaultNetworksWireframe(
             parent: parent,
-            walletsConnectionService: walletsConnectionService,
-            currenciesService: currenciesService,
-            currencyMetadataService: currencyMetadataService,
+            networksService: networksService,
             alertWireframeFactory: alertWireframeFactory
         )
     }
@@ -52,9 +41,7 @@ final class NetworksWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> NetworksWireframeFactory in
             DefaultNetworksWireframeFactory(
                 alertWireframeFactory: resolver.resolve(),
-                walletsConnectionService: resolver.resolve(),
-                currenciesService: resolver.resolve(),
-                currencyMetadataService: resolver.resolve()
+                networksService: resolver.resolve()
             )
         }
     }
