@@ -181,7 +181,6 @@ struct ThemeColour {
     let toastAlertBackgroundColor: UIColor
     
     let destructive: UIColor
-
 }
 
 struct ThemeConstant {

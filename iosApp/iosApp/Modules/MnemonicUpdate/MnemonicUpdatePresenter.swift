@@ -16,8 +16,8 @@ enum MnemonicUpdatePresenterEvent {
     case didChangeCustomDerivation(path: String)
     case didTapAddAccount
     case didSelectCta
-    case didSelectDeleteCta
     case didSelectDismiss
+    case deleteWallet
 }
 
 protocol MnemonicUpdatePresenter {
@@ -111,10 +111,11 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
             } catch {
                 // TODO(web3dgn): - Handle error
             }
-        case .didSelectDeleteCta:
-            print("Delete wallet...")
         case .didSelectDismiss:
             view?.dismiss(animated: true, completion: {})
+        case .deleteWallet:
+            interactor.delete(context.keyStoreItem)
+            handle(.didSelectDismiss)
         }
     }
 }
@@ -153,18 +154,19 @@ private extension DefaultMnemonicUpdatePresenter {
         .init(
             sectionsItems: [
                 mnemonicSectionItems(),
-                optionsSectionItems()
+                optionsSectionItems(),
+                deleteItems()
             ],
-            headers: [.none, .none],
+            headers: [.none, .none, .none],
             footers: [
                 .attrStr(
                     text: Localized("newMnemonic.footer"),
                     highlightWords: Constant.mnemonicHighlightWords
                 ),
+                .none,
                 .none
             ],
-            cta: Localized("newMnemonic.cta.update"),
-            deleteCta: Localized("newMnemonic.cta.delete")
+            cta: Localized("newMnemonic.cta.update")
         )
     }
 
@@ -192,6 +194,14 @@ private extension DefaultMnemonicUpdatePresenter {
                 title: Localized("newMnemonic.iCould.title"),
                 onOff: interactor.iCloudSecretStorage
             ),
+        ]
+    }
+    
+    func deleteItems() -> [MnemonicUpdateViewModel.Item] {
+        [
+            MnemonicUpdateViewModel.Item.delete(
+                title: Localized("newMnemonic.cta.delete")
+            )
         ]
     }
 }

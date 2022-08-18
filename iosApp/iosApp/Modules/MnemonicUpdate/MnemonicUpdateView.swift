@@ -19,7 +19,6 @@ final class MnemonicUpdateViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var ctaButton: Button!
-    @IBOutlet weak var ctaDeleteButton: Button!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,10 +37,6 @@ final class MnemonicUpdateViewController: BaseViewController {
         presenter.handle(.didSelectCta)
     }
     
-    @IBAction func deleteCtaAction(_ sender: Any) {
-        presenter.handle(.didSelectDeleteCta)
-    }
-
     @IBAction func dismissAction(_ sender: Any?) {
         presenter.handle(.didSelectDismiss)
     }
@@ -60,7 +55,6 @@ extension MnemonicUpdateViewController: MnemonicUpdateView {
         }
 
         ctaButton.setTitle(viewModel.cta, for: .normal)
-        ctaDeleteButton.setTitle(viewModel.deleteCta, for: .normal)
 
         let cells = cv.indexPathsForVisibleItems
         let idxs = IndexSet(0..<viewModel.sectionsItems.count)
@@ -162,6 +156,15 @@ extension MnemonicUpdateViewController: UICollectionViewDataSource {
                 selectSegmentAction: { idx in () },
                 textChangeHandler: { text in () },
                 switchHandler: { onOff in () }
+            )
+            
+        case let .delete(title):
+            return collectionView.dequeue(
+                MnemonicUpdateDeleteCell.self,
+                for: idxPath
+            ).update(
+                with: title,
+                handler: makeMnemonicUpdateDeleteCellHandler()
             )
         }
     }
@@ -303,12 +306,30 @@ private extension MnemonicUpdateViewController {
             action: #selector(dismissAction(_:))
         )
         
+        collectionView.register(
+            MnemonicUpdateDeleteCell.self,
+            forCellWithReuseIdentifier: MnemonicUpdateDeleteCell.className
+        )
+        
         ctaButton.style = .primary
-        ctaDeleteButton.isHidden = true
     }
 
     func needsReload(_ preViewModel: MnemonicUpdateViewModel?, viewModel: MnemonicUpdateViewModel) -> Bool {
         preViewModel?.sectionsItems[1].count != viewModel.sectionsItems[1].count
+    }
+    
+    func makeMnemonicUpdateDeleteCellHandler() -> MnemonicUpdateDeleteCell.Handler {
+        
+        .init(onDelete: makeMnemonicUpdateDeleteCellOnDelete())
+    }
+    
+    func makeMnemonicUpdateDeleteCellOnDelete() -> () -> Void {
+        
+        {
+            [weak self] in
+            guard let self = self else { return }
+            self.presenter.handle(.deleteWallet)
+        }
     }
 }
 

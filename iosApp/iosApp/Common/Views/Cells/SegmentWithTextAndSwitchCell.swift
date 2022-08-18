@@ -4,7 +4,7 @@
 
 import UIKit
 
-class SegmentWithTextAndSwitchCell: CollectionViewCell {
+final class SegmentWithTextAndSwitchCell: CollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var segmentControl: SegmentedControl!

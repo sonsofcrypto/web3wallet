@@ -5,11 +5,10 @@
 import Foundation
 
 struct MnemonicUpdateViewModel {
-    var sectionsItems: [[Item]]
-    var headers: [Header]
-    var footers: [Footer]
-    var cta: String
-    var deleteCta: String
+    let sectionsItems: [[Item]]
+    let headers: [Header]
+    let footers: [Footer]
+    let cta: String
 }
 
 // MARK: - Access utilities
@@ -39,6 +38,7 @@ extension MnemonicUpdateViewModel {
         case `switch`(title: String, onOff: Bool)
         case switchWithTextInput(switchWithTextInput: SwitchWithTextInput)
         case segmentWithTextAndSwitchInput(segmentWithTextAndSwitchInput: SegmentWithTextAndSwitchInput)
+        case delete(title: String)
     }
 
     enum Header {
