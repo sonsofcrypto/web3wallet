@@ -75,7 +75,9 @@ final class DefaultDashboardInteractor {
 extension DefaultDashboardInteractor: DashboardInteractor {
 
     func enabledNetworks() -> [Network] {
-        networksService.enabledNetworks()
+        var networks = networksService.enabledNetworks()
+        networks = networks.sortedByName
+        return networks
     }
 
     func wallet(for network: Network) -> Wallet? {
