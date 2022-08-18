@@ -3,49 +3,10 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
-import UIKit
 
-struct Web3Feature {
+enum FeaturesServiceErrors: Error {
     
-    let id: String
-    let title: String
-    let body: String
-    let image: Data
-    let votes: Int
-    let category: Category
-    let creationDate: Date
-    let endDate: Date
-    
-    enum Category {
-        
-        case infrastructure
-        case integrations
-        case features
-    }
-}
-
-extension Web3Feature {
-    
-    var hashTag: String {
-        
-        Localized("feature.hashTag", arg: id)
-    }
-}
-
-extension Web3Feature.Category {
-    
-    var stringValue: String {
-        
-        switch self {
-            
-        case .infrastructure:
-            return Localized("features.segmentedControl.infrastructure")
-        case .integrations:
-            return Localized("features.segmentedControl.integrations")
-        case .features:
-            return Localized("features.segmentedControl.infrastructure")
-        }
-    }
+    case unableToFetch
 }
 
 protocol FeaturesService {
@@ -55,65 +16,96 @@ protocol FeaturesService {
 
 final class DefaultFeaturesService {
     
+    let featureVotingCacheService: FeatureVotingCacheService
+    let defaults: UserDefaults
+    
+    init(
+        featureVotingCacheService: FeatureVotingCacheService,
+        defaults: UserDefaults
+    ) {
+        
+        self.featureVotingCacheService = featureVotingCacheService
+        self.defaults = defaults
+    }
 }
 
 extension DefaultFeaturesService: FeaturesService {
     
     func fetchAllFeatures(onCompletion: @escaping (Result<[Web3Feature], Error>) -> Void) {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+        guard let url = makeDownloadUrl() else {
             
-            guard let self = self else { return }
-            onCompletion(.success(self.allFeatures))
+            let error = FeaturesServiceErrors.unableToFetch
+            return returnCachedListOrError(error: error, onCompletion: onCompletion)
         }
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            
+            DispatchQueue.main.async { [weak self] in
+                
+                guard let self = self else { return }
+                
+                if let error = error {
+                    
+                    return self.returnCachedListOrError(error: error, onCompletion: onCompletion)
+                }
+                
+                guard let data = data else {
+                    
+                    let error = FeaturesServiceErrors.unableToFetch
+                    return self.returnCachedListOrError(error: error, onCompletion: onCompletion)
+                }
+                
+                do {
+                    let result = try JSONDecoder().decode([Web3Feature].self, from: data)
+                    self.storeResults(result)
+                    onCompletion(.success(result))
+                    
+                } catch let error {
+                    
+                    self.returnCachedListOrError(error: error, onCompletion: onCompletion)
+                }
+            }
+        }.resume()
     }
 }
 
 private extension DefaultFeaturesService {
     
-    var allFeatures: [Web3Feature] {
+    func makeDownloadUrl() -> URL? {
         
-        [
-            .init(
-                id: "1002",
-                title: "This is now a long title to test what happens",
-                body: "This is actually much cooler that you may think. Stay tunned!",
-                image: "dashboard-palm".assetImage!.pngData()!,
-                votes: 34,
-                category: .infrastructure,
-                creationDate: Date(),
-                endDate: Date().addingTimeInterval(2*24*60*60)
-            ),
-            .init(
-                id: "1001",
-                title: "Feature 2",
-                body: "Anoon will this with exciting details, this is gonna be a very long description, he loves to write!",
-                image: "dashboard-palm".assetImage!.pngData()!,
-                votes: 44,
-                category: .infrastructure,
-                creationDate: Date().addingTimeInterval(-8*24*60*60),
-                endDate: Date().addingTimeInterval(5*24*60*60)
-            ),
-            .init(
-                id: "2001",
-                title: "Feature 3",
-                body: "Anoon will this with exciting details, this is gonna be a very long description, he loves to write!",
-                image: "dashboard-palm".assetImage!.pngData()!,
-                votes: 104,
-                category: .integrations,
-                creationDate: Date().addingTimeInterval(-5*24*60*60),
-                endDate: Date().addingTimeInterval(24*60*60)
-            ),
-            .init(
-                id: "3001",
-                title: "Feature 4",
-                body: "Anoon will this with exciting details, this is gonna be a very long description, he loves to write!",
-                image: "dashboard-palm".assetImage!.pngData()!,
-                votes: 434,
-                category: .features,
-                creationDate: Date().addingTimeInterval(-2*24*60*60),
-                endDate: Date().addingTimeInterval(2*24*60*60)
-            )
-        ]
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "https"
+        urlComponents.host = "raw.githubusercontent.com"
+        urlComponents.path = "/sonsofcrypto/web3wallet-improvment-proposals/c178b5d1f27071b47e2e45abf81342cd9eb60b31/proposals-list.json"
+        return urlComponents.url
+    }
+    
+    var userDefaultsCachedKey: String { "w3w-improvement-proposals-list" }
+    
+    func storeResults(_ features: [Web3Feature]) {
+        
+        guard let data = try? JSONEncoder().encode(features) else { return }
+        defaults.set(data, forKey: userDefaultsCachedKey)
+    }
+    
+    func returnCachedListOrError(
+        error: Error,
+        onCompletion: @escaping (Result<[Web3Feature], Error>) -> Void
+    ) {
+        
+        guard let data = defaults.data(forKey: userDefaultsCachedKey) else {
+            
+            onCompletion(.failure(error))
+            return
+        }
+        
+        do {
+            let result = try JSONDecoder().decode([Web3Feature].self, from: data)
+            onCompletion(.success(result))
+        } catch let error {
+            
+            onCompletion(.failure(error))
+        }
     }
 }

@@ -55,8 +55,7 @@ extension DefaultFeaturePresenter: FeaturePresenter {
             
         case .vote:
             
-            // TODO: Open link
-            print("Open twitter link")
+            wireframe.navigate(to: .vote)
         }
     }
 }

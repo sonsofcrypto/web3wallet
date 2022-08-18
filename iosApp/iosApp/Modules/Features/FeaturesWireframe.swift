@@ -11,8 +11,9 @@ struct FeaturesWireframeContext {
 
 enum FeaturesWireframeDestination {
     
-    case comingSoon
+    case vote(feature: Web3Feature)
     case feature(feature: Web3Feature, features: [Web3Feature])
+    case dismiss
 }
 
 protocol FeaturesWireframe {
@@ -70,6 +71,10 @@ extension DefaultFeaturesWireframe: FeaturesWireframe {
 
         switch destination {
             
+        case let .vote(feature):
+            
+            FeatureShareHelper().shareVote(on: feature, presentingIn: navigationController)
+
         case let .feature(feature, features):
             
             featureWireframeFactory.makeWireframe(
@@ -77,12 +82,16 @@ extension DefaultFeaturesWireframe: FeaturesWireframe {
                 context: .init(feature: feature, features: features)
             ).present()
             
-        case .comingSoon:
+        case .dismiss:
             
-            alertWireframeFactory.makeWireframe(
-                navigationController,
-                context: .underConstructionAlert()
-            ).present()
+            switch context.presentationStyle {
+            case .embed:
+                fatalError("Not implemented")
+            case .present:
+                presentingIn.presentedViewController?.dismiss(animated: true)
+            case .push:
+                navigationController.popViewController(animated: true)
+            }
         }
     }
 }

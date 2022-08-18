@@ -251,7 +251,10 @@ private extension DashboardViewController {
     }
 
     @objc func navBarRightActionTapped() {
-        presenter.handle(.didScanQRCode)
+        
+        let runner: FeatureServiceRunner = ServiceDirectory.assembler.resolve()
+        runner.run()
+        //presenter.handle(.didScanQRCode)
     }
 
     func compositionalLayout() -> UICollectionViewCompositionalLayout {
@@ -382,7 +385,6 @@ extension DashboardViewController: EdgeCardsControllerDelegate {
         presenter.handle(.didInteractWithCardSwitcher)
     }
 }
-
 
 // MARK: - UIViewControllerTransitioningDelegate
 

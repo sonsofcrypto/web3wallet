@@ -10,6 +10,7 @@ enum FeaturesPresenterEvent {
     case filterBy(text: String)
     case vote(id: String)
     case select(id: String)
+    case dismiss
 }
 
 protocol FeaturesPresenter {
@@ -27,7 +28,7 @@ final class DefaultFeaturesPresenter {
     
     private var allFeatures = [Web3Feature]()
     
-    private var filterSectionType: FeaturesViewModel.Section.`Type` = .all
+    private var filterSectionType: FeaturesViewModel.Section.`Type` = .infrastructure
     private var filterText: String = ""
 
     init(
@@ -99,9 +100,14 @@ extension DefaultFeaturesPresenter: FeaturesPresenter {
                 )
             )
             
-        case .vote:
+        case let .vote(id):
             
-            wireframe.navigate(to: .comingSoon)
+            guard let feature = allFeatures.find(id: id) else { return }
+            wireframe.navigate(to: .vote(feature: feature))
+            
+        case .dismiss:
+            
+            wireframe.navigate(to: .dismiss)
         }
     }
 }

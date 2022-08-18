@@ -365,7 +365,10 @@
 "feature.title.of" = "of";
 "feature.button.vote" = "Vote";
 "feature.hashTag" = "WIP%@";
+"feature.vote.text" = "@sonsofcrypto please cast my vote for %@!";
 
 "mnemonic.error.invalid" = "Invalid mnemonic, the words entered are invalid.";
 "mnemonic.error.invalid.wordCount" = "Typically 12 (or 15, 18, 21, 24) words separated by spaces.";
 "mnemonic.error.invalid.wordCount.highlight0" = "12 (or 15, 18, 21, 24) words";
+
+
