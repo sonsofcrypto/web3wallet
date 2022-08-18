@@ -221,6 +221,13 @@ private extension FeaturesViewController {
     
     func configureUI() {
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: .init(systemName: "xmark"),
+            style: .plain,
+            target: self,
+            action: #selector(dimissTapped)
+        )
+        
         topContainerView.backgroundColor = Theme.colour.navBarBackground
         dividerLineView.backgroundColor = navigationController?.bottomLineColor
         
@@ -249,6 +256,11 @@ private extension FeaturesViewController {
 
 //        navigationItem.searchController = searchController
 //        searchController.searchResultsUpdater = self
+    }
+    
+    @objc func dimissTapped() {
+        
+        presenter.handle(.dismiss)
     }
     
     @objc func didPullToRefresh(_ sender: Any) {

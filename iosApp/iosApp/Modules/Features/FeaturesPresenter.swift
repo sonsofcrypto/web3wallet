@@ -10,6 +10,7 @@ enum FeaturesPresenterEvent {
     case filterBy(text: String)
     case vote(id: String)
     case select(id: String)
+    case dismiss
 }
 
 protocol FeaturesPresenter {
@@ -103,6 +104,10 @@ extension DefaultFeaturesPresenter: FeaturesPresenter {
             
             guard let feature = allFeatures.find(id: id) else { return }
             wireframe.navigate(to: .vote(feature: feature))
+            
+        case .dismiss:
+            
+            wireframe.navigate(to: .dismiss)
         }
     }
 }
