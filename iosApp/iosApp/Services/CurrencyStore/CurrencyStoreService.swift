@@ -13,6 +13,7 @@ final class CurrencyStoreServiceAssembler: AssemblerComponent {
                 coinGeckoService: DefaultCoinGeckoService(),
                 marketStore: KeyValueStore(name: "CurrencyStoreService.Market"),
                 candleStore: KeyValueStore(name: "CurrencyStoreService.Candle"),
+                metadataStore: KeyValueStore(name: "CurrencyStoreService.Metadata"),
                 userCurrencyStore: KeyValueStore(
                     name: "CurrencyStoreService.UserCurrency"
                 )

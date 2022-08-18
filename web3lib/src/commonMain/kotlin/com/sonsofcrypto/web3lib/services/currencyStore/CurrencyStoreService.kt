@@ -58,6 +58,7 @@ class DefaultCurrencyStoreService(
 ): CurrencyStoreService {
     private var currencies: MutableMap<String, List<Currency>> = mutableMapOf()
     private var metadatas: Map<String, CurrencyMetadata> = emptyMap()
+    private var metadataToCache: MutableSet<Currency> = mutableSetOf()
     private var bundledMarkets: Map<String, CurrencyMarketData> = emptyMap()
     private var markets: MutableMap<String, CurrencyMarketData> = mutableMapOf()
     private var candles: MutableMap<String, List<Candle>> = mutableMapOf()
@@ -143,7 +144,8 @@ class DefaultCurrencyStoreService(
     }
 
     override fun cacheMetadata(currencies: List<Currency>) {
-        currencies.forEach { metadataStore[it.id()] = it  }
+        if (metadatas.isEmpty()) metadataToCache.addAll(currencies)
+        else currencies.forEach { metadataStore[it.id()] = metadata(it) }
     }
 
     override fun add(currency: Currency, network: Network) {
@@ -224,6 +226,7 @@ class DefaultCurrencyStoreService(
             tries.put(it.network.id(), it.trie)
             idxMaps.put(it.network.id(), it.idxMap)
         }
+        cacheMetadata(metadataToCache.toList())
         emit(CurrencyStoreEvent.CacheLoaded)
     }
 
