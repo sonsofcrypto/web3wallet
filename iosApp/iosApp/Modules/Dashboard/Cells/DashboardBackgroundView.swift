@@ -53,8 +53,8 @@ class DashboardBackgroundView: UIScrollView {
     }
 
     func layoutForCollectionView(_ cv: UICollectionView) {
-        let maxY = cv.contentSize.height - cv.bounds.height
-        contentSize = cv.contentSize
+        contentSize = cv.contentSize.sizeAddingToHeight(cv.contentInset.bottom)
+        let maxY = max(0, contentSize.height - cv.bounds.height)
         contentOffset = CGPoint(
             x: cv.contentOffset.x,
             y: min(maxY, max(0, cv.contentOffset.y))

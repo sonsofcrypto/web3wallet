@@ -9,6 +9,14 @@ extension CGSize {
     init(length: CGFloat) {
         self.init(width: length, height: length)
     }
+
+    func sizeAddingToHeight(_ adjustment: CGFloat) -> CGSize {
+        CGSize(width: width, height: height + adjustment)
+    }
+
+    func max(_ otherSize: CGSize) -> CGSize {
+        otherSize.width >= width && otherSize.height >= height ? otherSize : self
+    }
 }
 
 extension CGRect {
@@ -37,9 +45,8 @@ extension CGRect {
 }
 
 extension CGFloat {
-    
+
     var half: CGFloat {
-        
         self * 0.5
     }
 }
