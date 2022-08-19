@@ -22,37 +22,6 @@ final class DefaultAccountPresenter {
     private let interactor: AccountInteractor
     private let wireframe: AccountWireframe
     private let context: AccountWireframeContext
-    private let dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .short
-        return dateFormatter
-    }()
-
-    // TODD(Anon): Refactor to shared formatters
-    private let fiatFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.currencyCode = "usd"
-        formatter.numberStyle = .currency
-        return formatter
-    }()
-    // TODD(Anon): Refactor to shared formatters
-    private let largeFiatFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.currencyCode = "usd"
-        formatter.numberStyle = .currency
-        formatter.generatesDecimalNumbers = false
-        formatter.maximumFractionDigits = 0
-        return formatter
-    }()
-    // TODD(Anon): Refactor to shared formatters
-    private let pctFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .percent
-        return formatter
-    }()
-    // TODD(Anon): Refactor to shared formatters
-    private let currencyFormatter = CurrencyFormatter()
 
     init(
         view: AccountView,
@@ -74,6 +43,10 @@ extension DefaultAccountPresenter: AccountPresenter {
         interactor.fetchTransactions{ [weak self] _ in  self?.updateView() }
     }
 
+    func updateView() {
+        view?.update(with: viewModel())
+    }
+
     func handle(_ event: AccountPresenterEvent) {
         switch event {
         case .receive:
@@ -93,30 +66,32 @@ private extension DefaultAccountPresenter {
     func viewModel() -> AccountViewModel {
         let currency = interactor.currency()
         let market = interactor.market()
-        let cryptoBalance = interactor.cryptoBalance()
-        let fiatBalance = interactor.fiatBalance()
-        let formattedCrypto = currencyFormatter.format(
-            bigInt: cryptoBalance,
-            currency: currency
-        )
-        let formattedFiat = fiatFormatter.string(from: fiatBalance as NSNumber) ?? "-"
-        let formattedPct = pctFormatter.string(from: Float(truncating: market?.priceChangePercentage24h ?? 0) / 100.0) 
+        let pct = market?.priceChangePercentage24h
+        
         return .init(
             currencyName: currency.name,
             header: .init(
-                balance: formattedCrypto + currency.symbol,
-                fiatBalance: formattedFiat,
-                pct: formattedPct,
+                balance: Formatter.currency.string(
+                    interactor.cryptoBalance(),
+                    currency: currency,
+                    style: .regularSymbol
+                ),
+                fiatBalance: Formatter.fiat.string(interactor.fiatBalance()),
+                pct: Formatter.pct.string(pct, div: true),
                 pctUp: true,
                 buttons: headerButtonViewModels()
             ),
-            candles: .loaded(CandlesViewModel.Candle.from(interactor.candles()?.last(n: 90))),
-            marketInfo: .init(
-                marketCap: largeFiatFormatter.string(from: market?.marketCap ?? 0) ?? "-",
-                price: fiatFormatter.string(from: market?.currentPrice ?? 0) ?? "-",
-                volume: largeFiatFormatter.string(from: market?.totalVolume ?? 0) ?? "-"
+            candles: .loaded(
+                CandlesViewModel.Candle.from(interactor.candles()?.last(n: 90))
             ),
-            bonusAction: currency.symbol == "cult" ? .init(title: "Read the manifesto") : nil,
+            marketInfo: .init(
+                marketCap: Formatter.fiat.string(market?.marketCap),
+                price: Formatter.fiat.string(market?.currentPrice),
+                volume: Formatter.fiat.string(market?.totalVolume)
+            ),
+            bonusAction: currency.symbol == "cult"
+                ? AccountViewModel.BonusAction(title: "Read the manifesto")
+                : nil,
             transactions: interactor.transactions().map {
                 transactionViewModel($0)
             }
@@ -136,14 +111,10 @@ private extension DefaultAccountPresenter {
         _ transaction: AccountInteractorTransaction
     ) -> AccountViewModel.Transaction {
          AccountViewModel.Transaction(
-            date: dateFormatter.string(from: transaction.date),
+            date: Formatter.date.string(transaction.date),
             address: transaction.address,
             amount: transaction.amount,
             isReceive: transaction.isReceive
         )
-    }
-
-    func updateView() {
-        view?.update(with: viewModel())
     }
 }

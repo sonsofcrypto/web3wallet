@@ -107,7 +107,7 @@ extension DefaultDashboardInteractor: DashboardInteractor {
     }
 
     func fiatBalance(for network: Network, currency: Currency) -> Double {
-        CurrencyFormatter.Companion().crypto(
+        web3lib.CurrencyFormatter.Companion().crypto(
             amount: cryptoBalance(for: network, currency: currency),
             decimals: currency.decimals(),
             mul: marketdata(for: currency)?.currentPrice?.doubleValue ?? 0.0

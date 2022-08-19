@@ -251,8 +251,8 @@ private extension DefaultDashboardPresenter {
             for: network,
             currency: currency
         )
-        let formatted = Formatter.currency.format(
-            bigInt: cryptoBalance,
+        let formatted = Formatter.currency.string(
+            cryptoBalance,
             currency: currency
         )
 
@@ -261,15 +261,11 @@ private extension DefaultDashboardPresenter {
             ticker: currency.symbol.uppercased(),
             colors: metadata?.colors ?? ["#FFFFFF", "#000000"],
             imageName: currency.coinGeckoId ?? "currency_placeholder",
-            fiatPrice: Formatter.fiat.string(from: Float(truncating: market?.currentPrice ?? 0)),
-            fiatBalance: Formatter.fiat.string(from: Float(fiatBalance)),
+            fiatPrice: Formatter.fiat.string(Float(truncating: market?.currentPrice ?? 0)),
+            fiatBalance: Formatter.fiat.string(Float(fiatBalance)),
             cryptoBalance: formatted,
-            tokenPrice: market?.currentPrice != nil
-                ? Formatter.fiat.string(from: market?.currentPrice ?? 0) ?? "-"
-                : "-",
-            pctChange: market?.priceChangePercentage24h != nil
-                ? Formatter.pct.string(from: Float(truncating: market?.priceChangePercentage24h ?? 0) * 0.01)
-                : "-",
+            tokenPrice: Formatter.fiat.string(market?.currentPrice),
+            pctChange: Formatter.pct.string(market?.priceChangePercentage24h),
             priceUp: market?.priceChangePercentage24h?.doubleValue ?? 0 >= 0,
             candles: candlesViewModel(candles: interactor.candles(for: currency))
         )
