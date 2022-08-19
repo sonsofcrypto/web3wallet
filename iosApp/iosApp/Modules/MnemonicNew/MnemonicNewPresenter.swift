@@ -36,6 +36,7 @@ final class DefaultMnemonicNewPresenter {
 
     private var password: String = ""
     private var salt: String = ""
+    private var ctaTapped = false
 
     private weak var view: MnemonicNewView?
 
@@ -49,10 +50,6 @@ final class DefaultMnemonicNewPresenter {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
-    }
-
-    private func updateView() {
-        view?.update(with: viewModel())
     }
 }
 
@@ -94,6 +91,15 @@ extension DefaultMnemonicNewPresenter: MnemonicNewPresenter {
                 options: [.expirationDate: Date().addingTimeInterval(30.0)]
             )
         case .didSelectCta:
+            
+            ctaTapped = true
+            
+            guard isValidForm else {
+                
+                updateView()
+                return
+            }
+            
             do {
                 if interactor.passwordType == .bio {
                     password = interactor.generatePassword()
@@ -123,6 +129,35 @@ extension DefaultMnemonicNewPresenter: MnemonicNewPresenter {
 // MARK: - WalletsViewModel utilities
 
 private extension DefaultMnemonicNewPresenter {
+    
+    func updateView() {
+        
+        view?.update(with: viewModel())
+    }
+    
+    var isValidForm: Bool {
+        
+        passwordErrorMessage == nil
+    }
+    
+    var passwordErrorMessage: String? {
+        
+        guard ctaTapped else { return nil }
+        
+        switch interactor.passwordType {
+            
+        case .pin:
+            let validator = PasswordValidatorHelper()
+            return validator.validate(password, type: .pin)
+
+        case .pass:
+            let validator = PasswordValidatorHelper()
+            return validator.validate(password, type: .pass)
+            
+        default:
+            return nil
+        }
+    }
 
     func viewModel() -> MnemonicNewViewModel {
         .init(
@@ -185,6 +220,7 @@ private extension DefaultMnemonicNewPresenter {
                     selectedSegment: selectedPasswordTypeIdx(),
                     password: password,
                     placeholder: Localized("newMnemonic.passType.placeholder"),
+                    errorMessage: passwordErrorMessage,
                     onOffTitle: Localized("newMnemonic.passType.allowFaceId"),
                     onOff: interactor.passUnlockWithBio
                 )

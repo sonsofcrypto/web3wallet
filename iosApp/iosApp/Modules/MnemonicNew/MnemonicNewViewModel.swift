@@ -103,6 +103,7 @@ extension MnemonicNewViewModel {
         let selectedSegment: Int
         let password: String
         let placeholder: String
+        let errorMessage: String?
         let onOffTitle: String
         let onOff: Bool
     }

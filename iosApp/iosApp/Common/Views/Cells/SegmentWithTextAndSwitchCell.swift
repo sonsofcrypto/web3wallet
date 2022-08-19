@@ -94,7 +94,10 @@ extension SegmentWithTextAndSwitchCell {
         textChangeHandler: ((String)->Void)?,
         switchHandler: ((Bool)->Void)?
     ) -> SegmentWithTextAndSwitchCell {
-        update(
+        
+        print("[AA] errorMessage: \(viewModel.errorMessage ?? "all good")")
+
+        return update(
             title: viewModel.title ,
             password: viewModel.password ,
             placeholder: viewModel.placeholder ,
