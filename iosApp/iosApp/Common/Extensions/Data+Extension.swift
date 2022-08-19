@@ -12,28 +12,9 @@ extension Data {
     func hexString() -> String {
         reduce("") { $0 + String(format: "%02x", $1) }
     }
-
-    static func fromHexString(_ str: String?) -> Data? {
-        guard let str = str?.stripHexPrefix() else {
-            return nil
-        }
-        var bytes = Array<UInt8>()
-        var strBuffer = ""
-
-        for char in str {
-            strBuffer.append(char)
-            if strBuffer.count == 2 {
-                bytes.append(UInt8(strBuffer, radix: 16)!)
-                strBuffer = ""
-            }
-        }
-
-        return Data(bytes)
-    }
 }
 
 extension Data {
-    
     var pngImage: UIImage? { .init(data: self) }
 }
 

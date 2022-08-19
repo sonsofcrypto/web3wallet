@@ -84,19 +84,16 @@ extension DefaultEtherscanService: EtherscanService {
         let transactionFileCached = defaults.string(forKey: LATEST_FILE_NAME)
         
         guard transactionFileTarget == transactionFileCached else {
-            
             clearCache()
             return []
         }
         
         guard let data = defaults.data(forKey: transactionFileTarget) else {
-            
             clearCache()
             return []
         }
         
         guard let transactions = try? loadTransactions(from: data) else {
-            
             clearCache()
             return []
         }
@@ -110,23 +107,18 @@ extension DefaultEtherscanService: EtherscanService {
     ) {
         
         guard let urlRequest = makeURLRequest(for: .transactions(address: walletAddress)) else {
-
             onCompletion(.failure(EtherscanServiceError.unableToConstructURL))
             return
         }
         
         URLSession.shared.dataTask(with: urlRequest) { [weak self] data, _, error in
-
             guard let self = self else { return }
-
             guard let data = data else {
-
                 onCompletion(.failure(error ?? EtherscanServiceError.failedToDownload))
                 return
             }
 
             do {
-
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let transactions = try decoder.decode(
@@ -151,7 +143,6 @@ extension DefaultEtherscanService: EtherscanService {
 private extension DefaultEtherscanService {
     
     func clearCache() {
-        
         guard let transactionFileCached = defaults.string(forKey: LATEST_FILE_NAME) else {
             
             return
@@ -161,7 +152,6 @@ private extension DefaultEtherscanService {
     }
     
     func makeFileName(for wallet: String, nonce: String) -> String {
-        
         "\(wallet)_\(nonce)"
     }
     
@@ -200,13 +190,11 @@ private extension DefaultEtherscanService {
     var host: String { "api.etherscan.io" }
     
     enum Details {
-        
         case transactions(
             address: String
         )
         
         var path: String {
-            
             switch self {
             case .transactions:
                 return "/api"
@@ -223,7 +211,6 @@ private extension DefaultEtherscanService {
         urlComponents.host = host
         
         switch details {
-            
         case let .transactions(address):
             urlComponents.path = details.path
             urlComponents.queryItems = [
@@ -246,7 +233,6 @@ private extension DefaultEtherscanService {
             "Content-Type": "application/json",
             "Accept": "application/json"
         ]
-        
         return urlRequest
     }
 }

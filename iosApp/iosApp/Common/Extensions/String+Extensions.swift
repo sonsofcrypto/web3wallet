@@ -9,12 +9,10 @@ import Foundation
 extension String {
     
     var themeImage: String {
-        
         Theme.name + "-" + self
     }
     
     var url: URL? {
-        
         URL(string: self)
     }
 
@@ -78,32 +76,16 @@ extension String {
     }
 }
 
-// MARK: - Hex
-
-extension String {
-
-    func stripHexPrefix() -> String {
-        if hasPrefix("0x") {
-            return String(self[index(startIndex, offsetBy: 2)...])
-        }
-        return self
-    }
-}
-
 // MARK - Sane accessors
 
 extension String {
-
-    var length: Int {
-        return count
-    }
 
     subscript(i: Int) -> String {
         return self[i ..< i + 1]
     }
 
     func substring(fromIndex: Int) -> String {
-        return self[min(fromIndex, length) ..< length]
+        return self[min(fromIndex, count) ..< count]
     }
 
     func substring(toIndex: Int) -> String {
@@ -112,14 +94,14 @@ extension String {
 
     subscript (r: Range<Int>) -> String {
         let range = Range(uncheckedBounds: (lower: max(0, min(length, r.lowerBound)),
-            upper: min(length, max(0, r.upperBound))))
+            upper: min(count, max(0, r.upperBound))))
         let start = index(startIndex, offsetBy: range.lowerBound)
         let end = index(start, offsetBy: range.upperBound - range.lowerBound)
         return String(self[start ..< end])
     }
 
     func substringMax(_ length: Int) -> String {
-        self.substring(toIndex: self.length > length ? length : self.length)
+        self.substring(toIndex: count > length ? length : count)
     }
 }
 
@@ -141,28 +123,21 @@ extension String {
 extension String {
     
     func appending(decimals: UInt) -> String {
-        
         var decimalsString = ""
         for _ in 0..<decimals {
             decimalsString = "0" + decimalsString
         }
-        
         return self + decimalsString
     }
     
     var decimals: String? {
-        
         let split = self.split(separator: ".")
-        
         guard split.count == 2 else { return nil }
-        
         return String(split[1])
     }
     
     var stringDroppingLast: String {
-        
         guard count > 0 else { return "" }
-        
         var string = self
         _ = string.removeLast()
         return string
@@ -171,7 +146,6 @@ extension String {
     static func currencySymbol(
         with currencyCode: String = "USD"
     ) -> String {
-        
         let symbol = 0.formatted(
             .currency(code: "USD")
         ).replacingOccurrences(
