@@ -21,6 +21,7 @@ private extension SeparatorView {
     
     func configureUI() {
         backgroundColor = Theme.colour.separatorTransparent
+        translatesAutoresizingMaskIntoConstraints = false
         addConstraints([heightAnchor.constraint(equalToConstant: 0.5)])
     }
 }
