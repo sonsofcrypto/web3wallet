@@ -35,5 +35,13 @@ data class Currency(
             address = null,
             coinGeckoId = "ethereum",
         )
+        fun cult(): Currency = Currency(
+            name = "Cult DAO",
+            symbol = "cult",
+            decimals = 18u,
+            type = Type.ERC20,
+            address = null,
+            coinGeckoId = "cult-dao",
+        )
     }
 }
