@@ -150,7 +150,7 @@ extension DefaultDashboardInteractor: DashboardInteractor {
             return
         }
 
-        try? currencyStoreService.fetchMarketData(
+        currencyStoreService.fetchMarketData(
             currencies: allCurrencies,
             completionHandler: { [weak self] (market, _) in
                 DispatchQueue.main.async {
@@ -168,7 +168,7 @@ extension DefaultDashboardInteractor: DashboardInteractor {
     func reloadCandles() {
         for network in walletService.networks() {
             for currency in walletService.currencies(network: network) {
-                try? currencyStoreService.fetchCandles(currency: currency) { [weak self] _,_ in
+                currencyStoreService.fetchCandles(currency: currency) { [weak self] _,_ in
                     self?.emit(
                         .didUpdateCandles(network: network, currency: currency)
                     )
@@ -222,7 +222,7 @@ extension DefaultDashboardInteractor: NetworksListener, WalletListener {
 
     func handle(event_ event: NetworksEvent) {
         print("=== NetworksEvent ", event)
-        if let networksChanged = event as? NetworksEvent.NetworkDidChange {
+        if let _ = event as? NetworksEvent.NetworkDidChange {
             reloadData()
         }
         emit(event.toInteractorEvent())
@@ -250,7 +250,7 @@ extension DefaultDashboardInteractor: NetworksListener, WalletListener {
 extension NetworksEvent {
 
     func toInteractorEvent() -> DashboardInteractorEvent {
-        if let event = self as? NetworksEvent.KeyStoreItemDidChange {
+        if let _ = self as? NetworksEvent.KeyStoreItemDidChange {
             return .didSelectKeyStoreItem
         }
         if let event = self as? NetworksEvent.NetworkDidChange {

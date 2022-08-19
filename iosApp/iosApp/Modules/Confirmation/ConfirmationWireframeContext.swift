@@ -22,7 +22,7 @@ struct ConfirmationWireframeContext {
             return data.token.token
         case let .swap(data):
             return data.tokenFrom.token
-        case let .sendNFT(data):
+        case .sendNFT:
             // TODO: Annon to confirm where to push (main network token)? Eg: ETH
             return nil
         }

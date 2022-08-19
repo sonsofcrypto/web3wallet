@@ -96,7 +96,7 @@ extension DefaultMnemonicImportInteractor: MnemonicImportInteractor {
 
         do {
             let bip39 = try Bip39(mnemonic: mnemonic, salt: salt, worldList: .english)
-            let bip44 = try Bip44(seed: try bip39.seed(), version: .mainnetprv)
+            let _ = try Bip44(seed: try bip39.seed(), version: .mainnetprv)
             return nil
         } catch {
             return error

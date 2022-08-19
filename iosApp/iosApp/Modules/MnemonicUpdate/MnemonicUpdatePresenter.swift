@@ -87,11 +87,11 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
         case .didTapDelete:
             // TODO(web3dgn): Present are you sure as this will delete wallet
             interactor.delete(context.keyStoreItem)
-        case let .didChangeAddAccount(toCustom):
+        case .didChangeAddAccount:
             () // TODO: When implementing accounts
-        case let .didChangeAccount(idx):
+        case .didChangeAccount:
             () // TODO: When implementing accounts
-        case let .didChangeCustomDerivation(path):
+        case .didChangeCustomDerivation:
             () // TODO: When implementing accounts
         case .didTapAddAccount:
             () // TODO: When implementing accounts
@@ -141,7 +141,7 @@ private extension DefaultMnemonicUpdatePresenter {
 
     func handleAuthenticateResult(_ result: AuthenticateContext.AuthResult) {
         switch result {
-        case let .success(password, salt):
+        case let .success((password, salt)):
             self.password = password
             self.salt = salt
             do {
@@ -155,7 +155,7 @@ private extension DefaultMnemonicUpdatePresenter {
                 // lines failed to unlock wallet. Tapping OK `wireframe.navigate(to: .dismiss)`
                 // This is unrecoverable error but dont wanna crash the app for it
             }
-        case let .failure(error):
+        case .failure:
             wireframe.navigate(to: .dismiss)
         }
     }

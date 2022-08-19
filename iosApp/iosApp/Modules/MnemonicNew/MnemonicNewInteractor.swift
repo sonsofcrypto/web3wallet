@@ -72,7 +72,7 @@ extension DefaultMnemonicNewInteractor: MnemonicNewInteractor {
 
     func generateNewMnemonic() {
         do {
-            let (bip39, bip44) = try bip39bip44()
+            let (bip39, _) = try bip39bip44()
             self.bip39 = bip39
             mnemonic = bip39.mnemonic
             locale = bip39.worldList.localeString()

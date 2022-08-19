@@ -91,7 +91,7 @@ extension DefaultNFTDetailWireframe: NFTDetailWireframe {
             ).present()
             
         case let .send(nftItem):
-            guard let network = try? networksService.network else { return }
+            guard let network = networksService.network else { return }
             
             let web3Network = Web3Network.from(network, isOn: false)
                 

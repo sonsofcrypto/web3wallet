@@ -261,14 +261,14 @@ private extension DefaultDashboardPresenter {
             ticker: currency.symbol.uppercased(),
             colors: metadata?.colors ?? ["#FFFFFF", "#000000"],
             imageName: currency.coinGeckoId ?? "currency_placeholder",
-            fiatPrice: Formatter.fiat.string(from: Float(market?.currentPrice ?? 0)),
+            fiatPrice: Formatter.fiat.string(from: Float(truncating: market?.currentPrice ?? 0)),
             fiatBalance: Formatter.fiat.string(from: Float(fiatBalance)),
             cryptoBalance: formatted,
             tokenPrice: market?.currentPrice != nil
                 ? Formatter.fiat.string(from: market?.currentPrice ?? 0) ?? "-"
                 : "-",
             pctChange: market?.priceChangePercentage24h != nil
-                ? Formatter.pct.string(from: Float(market?.priceChangePercentage24h ?? 0) * 0.01) ?? "-"
+                ? Formatter.pct.string(from: Float(truncating: market?.priceChangePercentage24h ?? 0) * 0.01)
                 : "-",
             priceUp: market?.priceChangePercentage24h?.doubleValue ?? 0 >= 0,
             candles: candlesViewModel(candles: interactor.candles(for: currency))
@@ -317,8 +317,7 @@ private extension DefaultDashboardPresenter {
     
     func makeOnQRCodeScanned() -> (String) -> Void {
         {
-            [weak self] qrCode in
-            guard let self = self else { return }
+            qrCode in
             // TODO: @Annon Check here what to do with the code?
             print("QR code scanned: \(qrCode)")
         }

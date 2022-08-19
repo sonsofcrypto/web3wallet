@@ -93,8 +93,7 @@ private extension DefaultAccountPresenter {
             currency: currency
         )
         let formattedFiat = fiatFormatter.string(from: fiatBalance as NSNumber) ?? "-"
-        let formattedPct = pctFormatter.string(from: Float(market?.priceChangePercentage24h ?? 0) / 100.0) ?? "-"
-        let tmp = largeFiatFormatter.string(from: market?.marketCap ?? 0) ?? "-"
+        let formattedPct = pctFormatter.string(from: Float(truncating: market?.priceChangePercentage24h ?? 0) / 100.0) 
         return .init(
             currencyName: currency.name,
             header: .init(

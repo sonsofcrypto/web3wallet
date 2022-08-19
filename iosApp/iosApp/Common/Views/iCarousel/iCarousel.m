@@ -54,7 +54,7 @@
 #pragma clang diagnostic ignored "-Wdouble-promotion"
 #pragma clang diagnostic ignored "-Wselector"
 #pragma clang diagnostic ignored "-Wgnu"
-
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
 #define MIN_TOGGLE_DURATION 0.2
 #define MAX_TOGGLE_DURATION 0.4

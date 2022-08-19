@@ -30,12 +30,12 @@ extension NetworksViewController: NetworksView {
         if self.viewModel?.count() != viewModel.count() {
             self.viewModel = viewModel
             collectionView.reloadData()
-            collectionView.deselectAllExcept(viewModel.selectedIndexPaths() ?? [])
+            collectionView.deselectAllExcept(viewModel.selectedIndexPaths())
             return
         }
 
         self.viewModel = viewModel
-        collectionView.deselectAllExcept(viewModel.selectedIndexPaths() ?? [])
+        collectionView.deselectAllExcept(viewModel.selectedIndexPaths())
         collectionView.visibleCells.forEach {
             let idxPath = collectionView.indexPath(for: $0)
             update(cell: $0 as? NetworksCell, with: networkViewModel(idxPath))
@@ -89,7 +89,6 @@ extension NetworksViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        let idxPath = indexPath
         if let viewModel = networkViewModel(indexPath) {
             presenter.handle(.didSelectNetwork(chainId: viewModel.chainId))
         }

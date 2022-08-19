@@ -82,7 +82,7 @@ extension DashboardViewController: DashboardView {
         let cell = collectionView.visibleCells.first(where: {
             collectionView.indexPath(for: $0) == idxPath
         })
-        (cell as? DashboardWalletCell)?.update(with: viewModel)
+        let _ = (cell as? DashboardWalletCell)?.update(with: viewModel)
     }
 
     func update(
@@ -90,10 +90,10 @@ extension DashboardViewController: DashboardView {
         idx: Int,
         items: DashboardViewModel.Section.Items
     ) {
-        (cell as? DashboardButtonsCell)?.update(with: items.actions, presenter: presenter)
-        (cell as? DashboardNotificationCell)?.update(with: items.notifications(at: idx))
-        (cell as? DashboardWalletCell)?.update(with: items.wallet(at: idx))
-        (cell as? DashboardNFTCell)?.update(with: items.nft(at: idx))
+        let _ = (cell as? DashboardButtonsCell)?.update(with: items.actions, presenter: presenter)
+        let _ = (cell as? DashboardNotificationCell)?.update(with: items.notifications(at: idx))
+        let _ = (cell as? DashboardWalletCell)?.update(with: items.wallet(at: idx))
+        let _ = (cell as? DashboardNFTCell)?.update(with: items.nft(at: idx))
     }
 }
 
@@ -212,8 +212,7 @@ extension DashboardViewController: UICollectionViewDelegate {
             } else {
                 presenter.handle(.didTapNotification(id: notification.id))
             }
-        case let .wallets(wallets):
-            let wallet = wallets[indexPath.item]
+        case .wallets:
             presenter.handle(
                 .didSelectWallet(
                     networkIdx: indexPath.section - 2,

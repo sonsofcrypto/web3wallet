@@ -29,7 +29,7 @@ class ThemePickerViewController: UIViewController, ThemePickerView {
         firstAppear = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             UIView.springAnimate {
-                self.collectionView.visibleCells.map {
+                self.collectionView.visibleCells.forEach {
                     ($0 as? ThemePickerCell)?.layer.transform = CATransform3DIdentity
                 }
             }

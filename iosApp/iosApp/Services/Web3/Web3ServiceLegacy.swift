@@ -233,7 +233,7 @@ extension Web3Token {
     private static func fiatPrice(for currency: Currency) -> BigInt {
         let currencyStoreService: CurrencyStoreService = ServiceDirectory.assembler.resolve()
         let price = currencyStoreService.marketData(currency: currency)?.currentPrice?.doubleValue
-        return BigInt.fromString("\(price)", decimals: 2)
+        return BigInt.fromString("\(price ?? 0)", decimals: 2)
     }
 
     func toCurrency() -> Currency {

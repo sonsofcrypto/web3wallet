@@ -116,7 +116,6 @@ class EdgeCardsController: BaseViewController {
             setupSwipeToFroms(displayMode, velocityX: velocityX)
             swipeProgress = 0
         case .changed:
-            let velocityX = recognizer.velocity(in: view).x
             let translation = recognizer.translation(in: view)
             swipeProgress = translation.x / view.bounds.width
             layout()

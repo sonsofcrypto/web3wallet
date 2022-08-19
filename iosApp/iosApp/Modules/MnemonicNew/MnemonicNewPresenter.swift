@@ -61,7 +61,6 @@ final class DefaultMnemonicNewPresenter {
 extension DefaultMnemonicNewPresenter: MnemonicNewPresenter {
 
     func present() {
-        let start = Date()
         interactor.generateNewMnemonic()
         updateView()
     }

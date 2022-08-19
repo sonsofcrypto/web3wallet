@@ -44,11 +44,7 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
     }
     
     var allTokens: [Web3Token] {
-        guard let network = networksService.network,
-              let wallet = networksService.wallet(network: network)
-        else {
-            return []
-        }
+        guard let network = networksService.network else { return [] }
 
         let legacyNetwork: Web3Network = Web3Network.from(
             network,
@@ -84,11 +80,6 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
     }
 
     var myTokens: [Web3Token] {
-        guard let network = networksService.network,
-              let wallet = networksService.wallet(network: network) else {
-            return []
-        }
-
         var tokens = [Web3Token]()
 
         for network in networksService.enabledNetworks() {

@@ -9,15 +9,9 @@
       "scale" : "2x"
     },
     {
-      "filename" : "metis-token@3x.jpeg",
-      "idiom" : "universal",
-      "scale" : "3x"
-    },
-    {
       "filename" : "metis-token@3x.png",
       "idiom" : "universal",
-      "scale" : "3x",
-      "unassigned" : true
+      "scale" : "3x"
     }
   ],
   "info" : {
