@@ -29,6 +29,11 @@ extension CGRect {
         CGPoint(x: midX, y: midY)
     }
 
+    var midXmaxY: CGPoint {
+        CGPoint(x: midX, y: maxY)
+    }
+
+
     init(zeroOrigin size: CGSize) {
         self.init(origin: .zero, size: size)
     }

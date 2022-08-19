@@ -10,8 +10,8 @@ class CollectionViewCell: UICollectionViewCell {
         didSet { setSelected(isSelected) }
     }
 
-    private (set) var bottomSeparatorView: UIView!
-    
+    private(set) var bottomSeparatorView = LineView()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -30,6 +30,16 @@ class CollectionViewCell: UICollectionViewCell {
         layer.borderWidth = isSelected ? 1.0 : 0.0
         layer.borderColor = Theme.colour.labelPrimary.cgColor
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        bottomSeparatorView.frame = CGRect(
+            x: Theme.constant.padding,
+            y: bounds.maxY - 0.5,
+            width: bounds.width - Theme.constant.padding, height:
+            0.5
+        )
+    }
 }
 
 private extension CollectionViewCell {
@@ -38,34 +48,15 @@ private extension CollectionViewCell {
         clipsToBounds = false
         backgroundColor = Theme.colour.cellBackground
         layer.cornerRadius = Theme.constant.cornerRadius
-        configureSeparator()
+        contentView.addSubview(bottomSeparatorView)
+        bottomSeparatorView.isHidden = true
         setSelected(isSelected)
-    }
-
-    func configureSeparator() {
-        
-        let separator = SeparatorView()
-        contentView.addSubview(separator)
-        separator.addConstraints(
-            [
-                .layout(
-                    anchor: .leadingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
-                ),
-                .layout(anchor: .bottomAnchor),
-                .layout(anchor: .trailingAnchor)
-            ]
-        )
-        self.bottomSeparatorView = separator
-        
-        separator.isHidden = true
     }
 }
 
 extension CollectionViewCell {
 
     enum Style {
-        
         case top
         case bottom
         case middle
@@ -73,7 +64,6 @@ extension CollectionViewCell {
     }
 
     func update(for style: CollectionViewCell.Style) {
-        
         switch style {
         case .top:
             layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
@@ -82,12 +72,7 @@ extension CollectionViewCell {
         case .middle:
             layer.maskedCorners = []
         case .single:
-            layer.maskedCorners = [
-                .layerMinXMinYCorner,
-                .layerMaxXMinYCorner,
-                .layerMinXMaxYCorner,
-                .layerMaxXMaxYCorner
-            ]
+            layer.maskedCorners = .all
         }
     }
 }
