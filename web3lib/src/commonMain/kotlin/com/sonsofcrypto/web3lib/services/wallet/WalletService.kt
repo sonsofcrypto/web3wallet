@@ -109,7 +109,7 @@ class DefaultWalletService(
     }
 
     override fun address(network: Network): AddressHexString? {
-        return networkService.wallet()?.address()?.toHexString()
+        return networkService.wallet(network)?.address()?.toHexString()
     }
 
     override fun balance(network: Network, currency: Currency): BigInt {
