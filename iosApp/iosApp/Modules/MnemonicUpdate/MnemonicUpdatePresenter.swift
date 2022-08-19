@@ -172,7 +172,11 @@ private extension DefaultMnemonicUpdatePresenter {
                 optionsSectionItems(),
                 deleteItems()
             ],
-            headers: [.none, .none, .none],
+            headers: [
+                .none,
+                .none,
+                .none
+            ],
             footers: [
                 .attrStr(
                     text: Localized("newMnemonic.footer"),
@@ -208,7 +212,7 @@ private extension DefaultMnemonicUpdatePresenter {
             MnemonicUpdateViewModel.Item.switch(
                 title: Localized("newMnemonic.iCould.title"),
                 onOff: interactor.iCloudSecretStorage
-            ),
+            )
         ]
     }
     

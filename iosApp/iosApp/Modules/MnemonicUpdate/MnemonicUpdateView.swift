@@ -47,6 +47,7 @@ final class MnemonicUpdateViewController: BaseViewController {
 extension MnemonicUpdateViewController: MnemonicUpdateView {
 
     func update(with viewModel: MnemonicUpdateViewModel) {
+        
         let needsReload = self.needsReload(self.viewModel, viewModel: viewModel)
         self.viewModel = viewModel
 
@@ -60,12 +61,12 @@ extension MnemonicUpdateViewController: MnemonicUpdateView {
         let idxs = IndexSet(0..<viewModel.sectionsItems.count)
 
         if needsReload && didAppear {
-            cv.performBatchUpdates({ cv.reloadSections(idxs) })
+            cv.performBatchUpdates { cv.reloadSections(idxs) }
             return
         }
         
         didAppear
-            ? cv.performBatchUpdates({ cv.reconfigureItems(at: cells) })
+            ? cv.performBatchUpdates { cv.reconfigureItems(at: cells) }
             : cv.reloadData()
     }
 }
@@ -125,7 +126,10 @@ extension MnemonicUpdateViewController: UICollectionViewDataSource {
                 for: idxPath
             ).update(
                 with: name,
-                textChangeHandler: { value in self.nameDidChange(value) }
+                textChangeHandler: { [weak self] value in
+                    guard let self = self else { return }
+                    self.nameDidChange(value)
+                }
             )
 
         case let .switch(title, onOff):
@@ -135,7 +139,10 @@ extension MnemonicUpdateViewController: UICollectionViewDataSource {
             ).update(
                 with: title,
                 onOff: onOff,
-                handler: { value in self.iCloudBackupDidChange(value) }
+                handler: { [weak self] value in
+                    guard let self = self else { return }
+                    self.iCloudBackupDidChange(value)
+                }
             )
         case let .switchWithTextInput(switchWithTextInput):
             return collectionView.dequeue(

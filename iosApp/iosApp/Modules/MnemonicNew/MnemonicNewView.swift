@@ -129,7 +129,10 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
                 for: idxPath
             ).update(
                 with: name,
-                textChangeHandler: { value in self.nameDidChange(value) }
+                textChangeHandler: { [weak self] value in
+                    guard let self = self else { return }
+                    self.nameDidChange(value)
+                }
             )
 
         case let .switch(title, onOff):
@@ -139,7 +142,10 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
             ).update(
                 with: title,
                 onOff: onOff,
-                handler: { value in self.iCloudBackupDidChange(value) }
+                handler: { [weak self] value in
+                    guard let self = self else { return }
+                    self.iCloudBackupDidChange(value)
+                }
             )
         case let .switchWithTextInput(switchWithTextInput):
             return collectionView.dequeue(
@@ -147,9 +153,18 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
                 for: idxPath
             ).update(
                 with: switchWithTextInput,
-                switchAction: { onOff in self.saltSwitchDidChange(onOff) },
-                textChangeHandler: { text in self.saltTextDidChange(text) },
-                descriptionAction: { self.saltLearnMoreAction() }
+                switchAction: { [weak self] onOff in
+                    guard let self = self else { return }
+                    self.saltSwitchDidChange(onOff)
+                },
+                textChangeHandler: { [weak self] text in
+                    guard let self = self else { return }
+                    self.saltTextDidChange(text)
+                },
+                descriptionAction: { [weak self] in
+                    guard let self = self else { return }
+                    self.saltLearnMoreAction()
+                }
             )
         case let .segmentWithTextAndSwitchInput(segmentWithTextAndSwitchInput):
             return collectionView.dequeue(
@@ -157,9 +172,18 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
                 for: idxPath
             ).update(
                 with: segmentWithTextAndSwitchInput,
-                selectSegmentAction: { idx in self.passTypeDidChange(idx) },
-                textChangeHandler: { text in self.passwordDidChange(text) },
-                switchHandler: { onOff in self.allowFaceIdDidChange(onOff) }
+                selectSegmentAction: { [weak self] idx in
+                    guard let self = self else { return }
+                    self.passTypeDidChange(idx)
+                },
+                textChangeHandler: { [weak self] text in
+                    guard let self = self else { return }
+                    self.passwordDidChange(text)
+                },
+                switchHandler: { [weak self] onOff in
+                    guard let self = self else { return }
+                    self.allowFaceIdDidChange(onOff)
+                }
             )
         }
     }
