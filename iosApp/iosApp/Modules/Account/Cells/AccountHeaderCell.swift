@@ -10,7 +10,6 @@ final class AccountHeaderCell: UICollectionViewCell {
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var balanceFiatLabel: UILabel!
     @IBOutlet weak var buttonsStackView: UIStackView!
-    @IBOutlet weak var buttonsStackViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var receiveButton: VerticalButton!
     @IBOutlet weak var sendButton: VerticalButton!
     @IBOutlet weak var tradeButton: VerticalButton!
@@ -35,7 +34,6 @@ final class AccountHeaderCell: UICollectionViewCell {
         let spacingBetweenButtons = Theme.constant.padding * CGFloat(5)
         let windowWidth = SceneDelegateHelper().window?.frame.width ?? 0
         let height = (windowWidth - spacingBetweenButtons) / CGFloat(4)
-        buttonsStackViewHeightConstraint.constant = CGFloat(height)
     }
 }
 
@@ -68,8 +66,13 @@ extension AccountHeaderCell {
         let buttons = [receiveButton, sendButton, tradeButton, moreButton]
 
         for (idx, btn) in buttons.enumerated() {
-            btn?.titleLabel?.text = viewModel.buttons[idx].title
-            btn?.imageView?.image = UIImage(named: viewModel.buttons[idx].imageName)
+            let btnViewModel = viewModel.buttons[idx]
+            btn?.setTitle(btnViewModel.title, for: .normal)
+            btn?.setImage(
+                UIImage(named: viewModel.buttons[idx].imageName),
+                for: .normal
+            )
+            btn?.setNeedsLayout()
         }
     }
 }

@@ -6,7 +6,6 @@ import UIKit
 import WebKit
 
 protocol AccountView: AnyObject {
-
     func update(with viewModel: AccountViewModel)
 }
 
@@ -19,9 +18,7 @@ final class AccountViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
 
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         configureUI()
         presenter?.present()
     }
@@ -30,9 +27,7 @@ final class AccountViewController: BaseViewController {
 extension AccountViewController: AccountView {
 
     func update(with viewModel: AccountViewModel) {
-        
         self.viewModel = viewModel
-        
         title = viewModel.currencyName
         collectionView.reloadData()
 
@@ -54,7 +49,6 @@ extension AccountViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        
         Section(rawValue: section)?.cellCount(viewModel) ?? 0
     }
 
@@ -62,7 +56,6 @@ extension AccountViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        
         switch Section(rawValue: indexPath.section)! {
         case .header:
             let cell = collectionView.dequeue(AccountHeaderCell.self, for: indexPath)

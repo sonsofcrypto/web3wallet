@@ -17,6 +17,12 @@ extension CGSize {
     func max(_ otherSize: CGSize) -> CGSize {
         otherSize.width >= width && otherSize.height >= height ? otherSize : self
     }
+
+    func sizeWithHeight(_ wihtHeight: CGFloat) -> CGSize {
+        var size = self
+        size.height = wihtHeight
+        return size
+    }
 }
 
 extension CGRect {

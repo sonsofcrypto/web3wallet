@@ -100,10 +100,10 @@ private extension DefaultAccountPresenter {
 
     func headerButtonViewModels() -> [AccountViewModel.Header.Button] {
         [
-            .init(title: Localized("receive"), imageName: "receive-button".themeImage),
-            .init(title: Localized("send"), imageName: "send-button".themeImage),
-            .init(title: Localized("swap"), imageName: "swap-button".themeImage),
-            .init(title: Localized("more"), imageName: "more-button".themeImage)
+            .init(title: Localized("receive"), imageName: "receive_large".themeImage),
+            .init(title: Localized("send"), imageName: "send_large".themeImage),
+            .init(title: Localized("swap"), imageName: "swap_large".themeImage),
+            .init(title: Localized("more"), imageName: "more_large".themeImage)
         ]
     }
 

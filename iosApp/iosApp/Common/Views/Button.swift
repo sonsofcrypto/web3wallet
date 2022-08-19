@@ -21,14 +21,11 @@ class Button: UIButton {
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        
         super.traitCollectionDidChange(previousTraitCollection)
-        
         configure(for: style)
     }
     
     override var intrinsicContentSize: CGSize {
-        
         var size = super.intrinsicContentSize
         
         switch style {
@@ -59,7 +56,6 @@ extension Button {
 private extension Button {
     
     func configure(for style: Style = .primary) {
-        
         switch style {
         case .primary:
             var configuration = UIButton.Configuration.plain()
@@ -124,13 +120,9 @@ private extension Button {
         titleLabel?.textAlignment = .natural
         
         if let leftImage = leftImage {
-            
             setImage(
-                leftImage.withRenderingMode(
-                    .alwaysTemplate
-                ).withTintColor(
-                    Theme.colour.buttonSecondaryText
-                ),
+                leftImage.withRenderingMode(.alwaysTemplate)
+                    .withTintColor(Theme.colour.buttonSecondaryText),
                 for: .normal
             )
         }
@@ -142,6 +134,11 @@ final class VerticalButton: Button {
     
     override var style: Button.Style {
         didSet { super.style = style }
+    }
+
+
+    override var intrinsicContentSize: CGSize {
+        super.intrinsicContentSize.sizeWithHeight(52)
     }
 
     override func layoutSubviews() {
