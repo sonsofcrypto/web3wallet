@@ -250,7 +250,13 @@ class DefaultWalletService(
     ) = withUICxt {
         val network = wallet.network()!!
         networksState[balanceKey(network, currency)] = balance
-        networksStateCache.set(balanceKey(network, currency), jsonEncode(balance))
+        networksState[transactionCountKey(network)] = transactionCount
+        networksStateCache.set(
+            balanceKey(network, currency), jsonEncode(balance)
+        )
+        networksStateCache.set(
+            transactionCountKey(network), jsonEncode(transactionCount)
+        )
         emit(WalletEvent.TransactionCount(network, transactionCount))
         emit(WalletEvent.Balance(network, currency, balance))
     }

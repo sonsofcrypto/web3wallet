@@ -17,7 +17,6 @@ extension BigInt {
         
         do {
             guard let currentDecimals = text.decimals else {
-                
                 let fullDecimals = "".addRemainingDecimals(upTo: decimals)
                 return try BigInt.Companion().from(
                     string: text.trimFinalDotIfNeeded + fullDecimals,
@@ -34,7 +33,6 @@ extension BigInt {
             )
             
         } catch {
-            
             return .zero
         }
     }

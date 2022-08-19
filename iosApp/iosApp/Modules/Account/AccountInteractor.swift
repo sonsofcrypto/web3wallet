@@ -96,7 +96,7 @@ extension DefaultAccountInteractor: AccountInteractor {
         // TODO: - Filter by currency
         return transactionService.cachedTransactionHistory(
             for: address,
-            nonce: walletService.blockNumber(network: network).toDecimalString()
+            nonce: walletService.transactionCount(network: network).toDecimalString()
         ).map {
             let isReceive = $0.to == self.address()
             return .init(

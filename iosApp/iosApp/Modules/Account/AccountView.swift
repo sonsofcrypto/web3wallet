@@ -135,11 +135,9 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         referenceSizeForHeaderInSection section: Int
     ) -> CGSize {
-        
         guard let section = Section(rawValue: section), section == .transactions else {
             return .zero
         }
-
         return CGSize(
             width: view.bounds.width - Theme.constant.padding * 2,
             height: Constant.sectionHeaderHeight
@@ -151,11 +149,9 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat {
-        
         guard let section = Section(rawValue: section), section == .marketInfo else {
             return 0
         }
-
         return Theme.constant.padding
     }
 }

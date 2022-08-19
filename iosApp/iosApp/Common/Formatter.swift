@@ -6,7 +6,6 @@ import Foundation
 import web3lib
 
 class Formatter {
-
     static let currency = CurrencyFormatter()
     static let fiat = FiatFormatter()
     static let pct = PctFormatter()
