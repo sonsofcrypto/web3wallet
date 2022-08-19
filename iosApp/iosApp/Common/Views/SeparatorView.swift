@@ -5,20 +5,14 @@
 import UIKit
 
 final class SeparatorView: UIView {
-    
-    @IBOutlet weak var heightConstraint: NSLayoutConstraint?
-    
+
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
-        
         configureUI()
     }
     
     required init?(coder: NSCoder) {
-        
         super.init(coder: coder)
-        
         configureUI()
     }
 }
@@ -26,18 +20,7 @@ final class SeparatorView: UIView {
 private extension SeparatorView {
     
     func configureUI() {
-        
         backgroundColor = Theme.colour.separatorTransparent
-
-        let separatorHeight: CGFloat = 0.5
-        if let heightConstraint = heightConstraint {
-            heightConstraint.constant = separatorHeight
-        } else {
-            addConstraints(
-                [
-                    .layout(anchor: .heightAnchor, constant: .equalTo(constant: separatorHeight))
-                ]
-            )
-        }
+        addConstraints([heightAnchor.constraint(equalToConstant: 0.5)])
     }
 }

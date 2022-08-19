@@ -81,30 +81,24 @@
                                                                         </switch>
                                                                     </subviews>
                                                                 </stackView>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qWd-03-bRn" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="39" width="265" height="1"/>
+                                                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="265" placeholderIntrinsicHeight="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="qWd-03-bRn" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="39" width="265" height="33.5"/>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="1" id="JGT-Tq-Hi0"/>
-                                                                    </constraints>
-                                                                    <connections>
-                                                                        <outlet property="heightConstraint" destination="JGT-Tq-Hi0" id="cu8-yu-M2n"/>
-                                                                    </connections>
                                                                 </view>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="GXC-A4-ytl">
-                                                                    <rect key="frame" x="0.0" y="48" width="265" height="53"/>
+                                                                    <rect key="frame" x="0.0" y="80.5" width="265" height="20.5"/>
                                                                     <subviews>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="rCU-bv-kz8">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="265" height="53"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="265" height="20.5"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cfx-pk-BMV">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="41.5" height="53"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="41.5" height="20.5"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tv7-kV-CiH">
-                                                                                    <rect key="frame" x="49.5" y="0.0" width="215.5" height="53"/>
+                                                                                    <rect key="frame" x="49.5" y="0.0" width="215.5" height="20.5"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>

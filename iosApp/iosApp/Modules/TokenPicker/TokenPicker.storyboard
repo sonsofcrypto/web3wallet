@@ -152,25 +152,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="460" height="82"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DN1-TC-OCv" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="460" placeholderIntrinsicHeight="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="DN1-TC-OCv" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="460" height="0.5"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="0.25" id="eIf-iU-RG6"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <outlet property="heightConstraint" destination="eIf-iU-RG6" id="Crb-Bp-eYZ"/>
-                                                    </connections>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nCy-9g-L6Z" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="82" width="460" height="0.0"/>
+                                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="460" placeholderIntrinsicHeight="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="nCy-9g-L6Z" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="81.5" width="460" height="0.5"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="0.25" id="JkP-r4-b3m"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <outlet property="heightConstraint" destination="JkP-r4-b3m" id="CIw-ql-a2d"/>
-                                                    </connections>
                                                 </view>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="6sH-32-iZ0">
                                                     <rect key="frame" x="16" y="16" width="428" height="50"/>

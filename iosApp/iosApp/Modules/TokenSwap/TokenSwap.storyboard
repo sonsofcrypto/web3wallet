@@ -651,25 +651,13 @@
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
-                                            <view tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dGh-Di-wtl" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
+                                            <view tag="100" contentMode="scaleToFill" placeholderIntrinsicWidth="224" placeholderIntrinsicHeight="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dGh-Di-wtl" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="44" width="224" height="0.5"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="0.5" id="gYb-hM-9eT"/>
-                                                </constraints>
-                                                <connections>
-                                                    <outlet property="heightConstraint" destination="gYb-hM-9eT" id="cNI-d5-jgB"/>
-                                                </connections>
                                             </view>
-                                            <view tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FRe-dU-N0b" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
+                                            <view tag="100" contentMode="scaleToFill" placeholderIntrinsicWidth="224" placeholderIntrinsicHeight="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="FRe-dU-N0b" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="87.5" width="224" height="0.5"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="0.5" id="Zoe-XD-DaC"/>
-                                                </constraints>
-                                                <connections>
-                                                    <outlet property="heightConstraint" destination="Zoe-XD-DaC" id="FGn-tI-nG6"/>
-                                                </connections>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
