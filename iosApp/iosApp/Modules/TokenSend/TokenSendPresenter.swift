@@ -122,7 +122,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                 formattedAddress.hasPrefix(address),
                 formattedAddress.count == (address.count + 1)
             {
-                updateAddress(with: String(currentAddress.prefix(currentAddress.length - 1)))
+                updateAddress(with: String(currentAddress.prefix(currentAddress.count - 1)))
             } else {
                 let isValid = interactor.isAddressValid(address: address, network: token.network)
                 updateView(

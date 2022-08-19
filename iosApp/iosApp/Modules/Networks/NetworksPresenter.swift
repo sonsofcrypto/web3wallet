@@ -77,10 +77,10 @@ extension DefaultNetworksPresenter: NetworksPresenter, NetworkInteractorLister {
 private extension DefaultNetworksPresenter {
 
     func viewModel() -> NetworksViewModel {
-        let l1s = interactor.networks().filter { $0.type == .l1 }.sortedByName
-        let l2s = interactor.networks().filter { $0.type == .l2 }.sortedByName
-        let l1sTest = interactor.networks().filter { $0.type == .l1Test }.sortedByName
-        let l2sTest = interactor.networks().filter { $0.type == .l2Test }.sortedByName
+        let l1s = interactor.networks().filter { $0.type == .l1 }
+        let l2s = interactor.networks().filter { $0.type == .l2 }
+        let l1sTest = interactor.networks().filter { $0.type == .l1Test }
+        let l2sTest = interactor.networks().filter { $0.type == .l2Test }
 
         return .init(
             header: Localized("networks.header"),

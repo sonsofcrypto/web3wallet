@@ -6,14 +6,12 @@ import Foundation
 import web3lib
 
 struct EtherscanTransactionResponse: Codable {
-    
     let status: String
     let message: String
     let result: [EtherscanTransaction]
 }
 
 struct EtherscanTransaction: Codable {
-    
     let blockNumber: String
     let timeStamp: String
     let hash: String

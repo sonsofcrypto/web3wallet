@@ -19,8 +19,9 @@ final class DefaultAccountWireframeFactory {
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
-    private let walletService: WalletService
     private let currencyStoreService: CurrencyStoreService
+    private let walletService: WalletService
+    private let transactionService: EtherscanService
 
     init(
         tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
@@ -28,16 +29,18 @@ final class DefaultAccountWireframeFactory {
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
+        currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
-        currencyStoreService: CurrencyStoreService
+        transactionService: EtherscanService
     ) {
         self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
         self.tokenSendWireframeFactory = tokenSendWireframeFactory
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
-        self.walletService = walletService
         self.currencyStoreService = currencyStoreService
+        self.walletService = walletService
+        self.transactionService = transactionService
     }
 }
 
@@ -47,7 +50,6 @@ extension DefaultAccountWireframeFactory: AccountWireframeFactory {
         presentingIn: UIViewController,
         context: AccountWireframeContext
     ) -> AccountWireframe {
-        
         DefaultAccountWireframe(
             presentingIn: presentingIn,
             context: context,
@@ -56,8 +58,9 @@ extension DefaultAccountWireframeFactory: AccountWireframeFactory {
             tokenSwapWireframeFactory: tokenSwapWireframeFactory,
             deepLinkHandler: deepLinkHandler,
             networksService: networksService,
+            currencyStoreService: currencyStoreService,
             walletService: walletService,
-            currencyStoreService: currencyStoreService
+            transactionService: transactionService
         )
     }
 }
@@ -73,8 +76,9 @@ final class AccountWireframeFactoryAssembler: AssemblerComponent {
                 tokenSwapWireframeFactory: resolver.resolve(),
                 deepLinkHandler: resolver.resolve(),
                 networksService: resolver.resolve(),
+                currencyStoreService: resolver.resolve(),
                 walletService: resolver.resolve(),
-                currencyStoreService: resolver.resolve()
+                transactionService: resolver.resolve()
             )
         }
     }

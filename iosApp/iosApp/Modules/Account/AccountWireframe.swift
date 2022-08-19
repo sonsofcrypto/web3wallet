@@ -30,8 +30,9 @@ final class DefaultAccountWireframe {
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
-    private let walletService: WalletService
     private let currencyStoreService: CurrencyStoreService
+    private let walletService: WalletService
+    private let transactionService: EtherscanService
 
     private weak var navigationController: NavigationController!
 
@@ -43,8 +44,9 @@ final class DefaultAccountWireframe {
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
+        currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
-        currencyStoreService: CurrencyStoreService
+        transactionService: EtherscanService
     ) {
         self.presentingIn = presentingIn
         self.context = context
@@ -53,8 +55,9 @@ final class DefaultAccountWireframe {
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
-        self.walletService = walletService
         self.currencyStoreService = currencyStoreService
+        self.walletService = walletService
+        self.transactionService = transactionService
     }
 }
 
@@ -124,8 +127,9 @@ private extension DefaultAccountWireframe {
             wallet: context.wallet,
             currency: context.currency,
             networksService: networksService,
+            currencyStoreService: currencyStoreService,
             walletService: walletService,
-            currencyStoreService: currencyStoreService
+            transactionService: transactionService
         )
         
         let vc: AccountViewController = UIStoryboard(.account).instantiate()

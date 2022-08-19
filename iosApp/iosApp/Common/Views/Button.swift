@@ -141,15 +141,10 @@ private extension Button {
 final class VerticalButton: Button {
     
     override var style: Button.Style {
-        
-        didSet {
-            
-            super.style = style
-        }
+        didSet { super.style = style }
     }
 
     override func layoutSubviews() {
-        
         super.layoutSubviews()
 
         guard let imageView = self.imageView, let label = self.titleLabel else {

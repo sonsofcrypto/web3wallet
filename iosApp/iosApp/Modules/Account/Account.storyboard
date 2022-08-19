@@ -28,14 +28,14 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AccountHeaderCell" id="8W1-Hj-gqe" customClass="AccountHeaderCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="35.5" y="50" width="343" height="172"/>
+                                        <rect key="frame" x="35.5" y="50" width="343" height="182"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Qij-nH-iTV">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="172"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="182"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="gyr-ex-ozb">
-                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="172"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="182"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6KU-Qs-Nm1">
                                                             <rect key="frame" x="0.0" y="0.0" width="343" height="28"/>
@@ -44,37 +44,41 @@
                                                                 <constraint firstAttribute="height" constant="28" id="QEy-JP-fZX"/>
                                                             </constraints>
                                                         </view>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" ambiguous="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wXg-oV-Iuc">
-                                                            <rect key="frame" x="0.0" y="44" width="343" height="20.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="999" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wXg-oV-Iuc">
+                                                            <rect key="frame" x="0.0" y="44" width="343" height="13.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" placeholderIntrinsicWidth="343" placeholderIntrinsicHeight="15.666666666666671" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="frE-mH-NxF">
-                                                            <rect key="frame" x="0.0" y="80.5" width="343" height="3.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="frE-mH-NxF">
+                                                            <rect key="frame" x="0.0" y="73.5" width="343" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="7II-i7-8uf">
-                                                            <rect key="frame" x="0.0" y="100" width="343" height="72"/>
+                                                            <rect key="frame" x="0.0" y="110" width="343" height="72"/>
                                                             <subviews>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ywh-EX-shd" customClass="CustomVerticalButton" customModule="iosApp" customModuleProvider="target">
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FKn-Y4-uAY" customClass="VerticalButton" customModule="iosApp" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="74" height="72"/>
-                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                </view>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4YI-Qp-GcI" customClass="CustomVerticalButton" customModule="iosApp" customModuleProvider="target">
+                                                                    <state key="normal" title="Button"/>
+                                                                    <buttonConfiguration key="configuration" style="plain" title="Receive"/>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cFF-B5-RXU" customClass="VerticalButton" customModule="iosApp" customModuleProvider="target">
                                                                     <rect key="frame" x="90" y="0.0" width="73.5" height="72"/>
-                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                </view>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lwx-vg-7Y2" customClass="CustomVerticalButton" customModule="iosApp" customModuleProvider="target">
+                                                                    <state key="normal" title="Button"/>
+                                                                    <buttonConfiguration key="configuration" style="plain" title="Send"/>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tZE-vf-ZPB" customClass="VerticalButton" customModule="iosApp" customModuleProvider="target">
                                                                     <rect key="frame" x="179.5" y="0.0" width="74" height="72"/>
-                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                </view>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OR9-vr-mIX" customClass="CustomVerticalButton" customModule="iosApp" customModuleProvider="target">
+                                                                    <state key="normal" title="Button"/>
+                                                                    <buttonConfiguration key="configuration" style="plain" title="Swap"/>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I6m-XL-A4s" customClass="VerticalButton" customModule="iosApp" customModuleProvider="target">
                                                                     <rect key="frame" x="269.5" y="0.0" width="73.5" height="72"/>
-                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                </view>
+                                                                    <state key="normal" title="Button"/>
+                                                                    <buttonConfiguration key="configuration" style="plain" title="More"/>
+                                                                </button>
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="72" id="omh-7m-TyE"/>
@@ -90,21 +94,21 @@
                                                 <constraint firstItem="gyr-ex-ozb" firstAttribute="leading" secondItem="Qij-nH-iTV" secondAttribute="leading" id="cLK-ga-dkZ"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="343" height="172"/>
+                                        <size key="customSize" width="343" height="182"/>
                                         <connections>
                                             <outlet property="balanceFiatLabel" destination="frE-mH-NxF" id="pV5-Ly-bzj"/>
                                             <outlet property="balanceLabel" destination="wXg-oV-Iuc" id="IGd-6G-TZd"/>
                                             <outlet property="buttonsStackView" destination="7II-i7-8uf" id="d90-HY-NkQ"/>
                                             <outlet property="buttonsStackViewHeightConstraint" destination="omh-7m-TyE" id="rdW-Te-PFg"/>
                                             <outlet property="containerStack" destination="gyr-ex-ozb" id="utc-oR-fRb"/>
-                                            <outlet property="moreButton" destination="OR9-vr-mIX" id="o4y-E4-avJ"/>
-                                            <outlet property="receiveButton" destination="Ywh-EX-shd" id="1oJ-Vp-Sug"/>
-                                            <outlet property="sendButton" destination="4YI-Qp-GcI" id="rOy-Dh-xD0"/>
-                                            <outlet property="tradeButton" destination="Lwx-vg-7Y2" id="J7N-5s-wwS"/>
+                                            <outlet property="moreButton" destination="I6m-XL-A4s" id="ErD-jC-uy8"/>
+                                            <outlet property="receiveButton" destination="FKn-Y4-uAY" id="vlD-mZ-9Df"/>
+                                            <outlet property="sendButton" destination="cFF-B5-RXU" id="iPE-4Z-Pzg"/>
+                                            <outlet property="tradeButton" destination="tZE-vf-ZPB" id="yy5-oT-dAS"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AccountChartCell" id="ZhV-w9-hbX" customClass="AccountChartCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="35.5" y="222" width="343" height="162"/>
+                                        <rect key="frame" x="35.5" y="232" width="343" height="162"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="PGT-MF-m2u">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="162"/>
@@ -128,7 +132,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AccountMarketInfoCell" id="Cni-hw-7JF" customClass="AccountMarketInfoCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="35.5" y="384" width="343" height="71"/>
+                                        <rect key="frame" x="35.5" y="394" width="343" height="71"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Y3N-Ee-kwW">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="71"/>
@@ -209,7 +213,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="AccountBonusCell" reuseIdentifier="AccountBonusCell" id="cZn-or-oHc" userLabel="AcocuntBonusCell" customClass="AccountBonusCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="35.5" y="455" width="343" height="64"/>
+                                        <rect key="frame" x="35.5" y="465" width="343" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="B4b-Oh-0ZP">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="64"/>
@@ -244,7 +248,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AccountTransactionCell" id="tUn-dI-zOn" customClass="AccountTransactionCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="35.5" y="519" width="343" height="64"/>
+                                        <rect key="frame" x="35.5" y="529" width="343" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ut0-JX-Zx1">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="64"/>

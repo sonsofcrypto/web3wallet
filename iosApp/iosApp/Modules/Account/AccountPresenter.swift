@@ -22,6 +22,12 @@ final class DefaultAccountPresenter {
     private let interactor: AccountInteractor
     private let wireframe: AccountWireframe
     private let context: AccountWireframeContext
+    private let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+        return dateFormatter
+    }()
 
     // TODD(Anon): Refactor to shared formatters
     private let fiatFormatter: NumberFormatter = {
@@ -64,7 +70,8 @@ final class DefaultAccountPresenter {
 extension DefaultAccountPresenter: AccountPresenter {
 
     func present() {
-        view?.update(with: viewModel())
+        updateView()
+        interactor.fetchTransactions{ [weak self] _ in  self?.updateView() }
     }
 
     func handle(_ event: AccountPresenterEvent) {
@@ -101,7 +108,7 @@ private extension DefaultAccountPresenter {
                 fiatBalance: formattedFiat,
                 pct: formattedPct,
                 pctUp: true,
-                buttons: makeButtons()
+                buttons: headerButtonViewModels()
             ),
             candles: .loaded(CandlesViewModel.Candle.from(interactor.candles()?.last(n: 90))),
             marketInfo: .init(
@@ -109,93 +116,34 @@ private extension DefaultAccountPresenter {
                 price: fiatFormatter.string(from: market?.currentPrice ?? 0) ?? "-",
                 volume: largeFiatFormatter.string(from: market?.totalVolume ?? 0) ?? "-"
             ),
-            bonusAction: currency.symbol == "CULT" ? .init(title: "Read the manifesto") : nil,
-            transactions: [
-//                .init(
-//                    date: "23 Feb 2022",
-//                    address: "0xcf6fa3373c3ed7e0c2f502e39be74fd4d6f054ee",
-//                    amount: "+ 6.90 " + token.symbol,
-//                    isReceive: true
-//                ),
-//                .init(
-//                    date: "14 Jan 2022",
-//                    address: "0xcf6fa3373c3ed7e0c2f502e39be74fd4d6f054ee",
-//                    amount: "- 4.20 " + token.symbol,
-//                    isReceive: false
-//                )
-            ]
+            bonusAction: currency.symbol == "cult" ? .init(title: "Read the manifesto") : nil,
+            transactions: interactor.transactions().map {
+                transactionViewModel($0)
+            }
         )
     }
-}
 
-private extension DefaultAccountPresenter {
-    
-    func makeButtons() -> [CustomVerticalButton.ViewModel] {
+    func headerButtonViewModels() -> [AccountViewModel.Header.Button] {
         [
-            .init(
-                title: Localized("receive"),
-                imageName: "receive-button".themeImage,
-                onTap: makeOnReceieveTap()
-            ),
-            .init(
-                title: Localized("send"),
-                imageName: "send-button".themeImage,
-                onTap: makeOnSendTap()
-            ),
-            .init(
-                title: Localized("swap"),
-                imageName: "swap-button".themeImage,
-                onTap: makeOnSwapTap()
-            ),
-            .init(
-                title: Localized("more"),
-                imageName: "more-button".themeImage,
-                onTap: makeOnMoreTap()
-            )
+            .init(title: Localized("receive"), imageName: "receive-button".themeImage),
+            .init(title: Localized("send"), imageName: "send-button".themeImage),
+            .init(title: Localized("swap"), imageName: "swap-button".themeImage),
+            .init(title: Localized("more"), imageName: "more-button".themeImage)
         ]
     }
-    
-    func makeOnReceieveTap() -> () -> Void {
-        
-        {
-            [weak self] in
-            
-            guard let self = self else { return }
-            
-            self.handle(.receive)
-        }
+
+    func transactionViewModel(
+        _ transaction: AccountInteractorTransaction
+    ) -> AccountViewModel.Transaction {
+         AccountViewModel.Transaction(
+            date: dateFormatter.string(from: transaction.date),
+            address: transaction.address,
+            amount: transaction.amount,
+            isReceive: transaction.isReceive
+        )
     }
-    
-    func makeOnSendTap() -> () -> Void {
-        
-        {
-            [weak self] in
-            
-            guard let self = self else { return }
-            
-            self.handle(.send)
-        }
-    }
-    
-    func makeOnSwapTap() -> () -> Void {
-        
-        {
-            [weak self] in
-            
-            guard let self = self else { return }
-            
-            self.handle(.swap)
-        }
-    }
-    
-    func makeOnMoreTap() -> () -> Void {
-        
-        {
-            [weak self] in
-            
-            guard let self = self else { return }
-            
-            self.handle(.more)
-        }
+
+    func updateView() {
+        view?.update(with: viewModel())
     }
 }

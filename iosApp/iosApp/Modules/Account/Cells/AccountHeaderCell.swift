@@ -11,10 +11,10 @@ final class AccountHeaderCell: UICollectionViewCell {
     @IBOutlet weak var balanceFiatLabel: UILabel!
     @IBOutlet weak var buttonsStackView: UIStackView!
     @IBOutlet weak var buttonsStackViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var receiveButton: CustomVerticalButton!
-    @IBOutlet weak var sendButton: CustomVerticalButton!
-    @IBOutlet weak var tradeButton: CustomVerticalButton!
-    @IBOutlet weak var moreButton: CustomVerticalButton!
+    @IBOutlet weak var receiveButton: VerticalButton!
+    @IBOutlet weak var sendButton: VerticalButton!
+    @IBOutlet weak var tradeButton: VerticalButton!
+    @IBOutlet weak var moreButton: VerticalButton!
     
     private var viewModel: AccountViewModel.Header!
     
@@ -43,45 +43,33 @@ extension AccountHeaderCell {
     
     @IBAction func receiveAction() {
 
-        viewModel.buttons[0].onTap()
     }
 
     @IBAction func sendAction() {
 
-        viewModel.buttons[1].onTap()
     }
 
     @IBAction func tradeAction() {
-
-        viewModel.buttons[2].onTap()
     }
 
     @IBAction func moreAction() {
 
-        viewModel.buttons[3].onTap()
     }
 }
 
 extension AccountHeaderCell {
 
     func update(with viewModel: AccountViewModel.Header) {
-        
         self.viewModel = viewModel
-        
+
         balanceLabel.text = viewModel.balance
         balanceFiatLabel.text = viewModel.fiatBalance
-        
-        receiveButton.update(
-            with: viewModel.buttons[0]
-        )
-        sendButton.update(
-            with: viewModel.buttons[1]
-        )
-        tradeButton.update(
-            with: viewModel.buttons[2]
-        )
-        moreButton.update(
-            with: viewModel.buttons[3]
-        )
+
+        let buttons = [receiveButton, sendButton, tradeButton, moreButton]
+
+        for (idx, btn) in buttons.enumerated() {
+            btn?.titleLabel?.text = viewModel.buttons[idx].title
+            btn?.imageView?.image = UIImage(named: viewModel.buttons[idx].imageName)
+        }
     }
 }
