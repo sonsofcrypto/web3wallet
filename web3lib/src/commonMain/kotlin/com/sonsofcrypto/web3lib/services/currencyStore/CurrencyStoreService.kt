@@ -26,8 +26,10 @@ interface CurrencyStoreService {
     fun cacheMetadata(currencies: List<Currency>)
 
     /** Downloads and caches market data for currency */
+    @Throws(Throwable::class)
     suspend fun fetchMarketData(currencies: List<Currency>): Map<String, CurrencyMarketData>?
     /** Downloads and caches candles for currency */
+    @Throws(Throwable::class)
     suspend fun fetchCandles(currency: Currency): List<Candle>?
 
     /** Currencies for network order by rank. For all limit <= 0 */
@@ -86,6 +88,7 @@ class DefaultCurrencyStoreService(
         return null
     }
 
+    @Throws(Throwable::class)
     override suspend fun fetchMarketData(
         currencies: List<Currency>
     ): Map<String, CurrencyMarketData>? = withContext(scope.coroutineContext) {
@@ -104,6 +107,7 @@ class DefaultCurrencyStoreService(
         return@withContext resultMap
     }
 
+    @Throws(Throwable::class)
     override suspend fun fetchCandles(
         currency: Currency
     ): List<Candle>? = withContext(scope.coroutineContext) {

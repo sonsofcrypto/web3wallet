@@ -24,6 +24,7 @@ class WalletServiceTest {
             DefaultCoinGeckoService(),
             KeyValueStore("WalletServiceTest.marketStore"),
             KeyValueStore("WalletServiceTest.candleStore"),
+            KeyValueStore("WalletServiceTest.metadataStore"),
             KeyValueStore("WalletServiceTest.userCurrencyStore"),
         )
         val keyStoreService = DefaultKeyStoreService(

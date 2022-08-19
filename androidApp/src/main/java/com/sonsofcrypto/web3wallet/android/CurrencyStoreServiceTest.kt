@@ -9,6 +9,7 @@ import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
+import com.sonsofcrypto.web3lib.utils.logExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.time.Clock
@@ -20,6 +21,7 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
         DefaultCoinGeckoService(),
         KeyValueStore("CurrencyStoreServiceTest.Market"),
         KeyValueStore("CurrencyStoreServiceTest.Candle"),
+        KeyValueStore("CurrencyStoreServiceTest.MetadataStore"),
         KeyValueStore("CurrencyStoreServiceTest.UserCurrency"),
     )
 
@@ -27,7 +29,7 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
 
     fun runAll() {
         testCacheLoading()
-//        testMarkets()
+        testMarkets()
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
@@ -48,10 +50,14 @@ class CurrencyStoreServiceTest: CurrencyStoreListener {
     }
 
     fun testMarkets() = scope.launch {
-        val markets = service.fetchMarketData(listOf(Currency.ethereum()))
-        val candles = service.fetchCandles(Currency.ethereum())
-        assertTrue(markets != null, "Failed to fetch markets")
-        assertTrue(candles != null, "Failed to fetch candles")
+        try {
+            val markets = service.fetchMarketData(listOf(Currency.ethereum()))
+            val candles = service.fetchCandles(Currency.ethereum())
+            assertTrue(markets != null, "Failed to fetch markets")
+            assertTrue(candles != null, "Failed to fetch candles")
+        } catch (err: Throwable) {
+            println("=== Caught $err")
+        }
     }
 
     fun testSearch() {

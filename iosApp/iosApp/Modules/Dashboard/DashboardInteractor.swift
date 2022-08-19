@@ -150,7 +150,7 @@ extension DefaultDashboardInteractor: DashboardInteractor {
             return
         }
 
-        currencyStoreService.fetchMarketData(
+        try? currencyStoreService.fetchMarketData(
             currencies: allCurrencies,
             completionHandler: { [weak self] (market, _) in
                 DispatchQueue.main.async {
@@ -160,13 +160,15 @@ extension DefaultDashboardInteractor: DashboardInteractor {
         )
 
         reloadCandles()
-        nftsService.fetchNFTs { [weak self] _ in  self?.emit(.didUpdateNFTs) }
+        nftsService.fetchNFTs { [weak self] _ in
+            DispatchQueue.main.async { self?.emit(.didUpdateNFTs) }
+        }
     }
 
     func reloadCandles() {
         for network in walletService.networks() {
             for currency in walletService.currencies(network: network) {
-                currencyStoreService.fetchCandles(currency: currency) { [weak self] _,_ in
+                try? currencyStoreService.fetchCandles(currency: currency) { [weak self] _,_ in
                     self?.emit(
                         .didUpdateCandles(network: network, currency: currency)
                     )
