@@ -37,7 +37,7 @@ extension MnemonicUpdateViewModel {
         case name(name: Name)
         case `switch`(title: String, onOff: Bool)
         case switchWithTextInput(switchWithTextInput: SwitchWithTextInput)
-        case segmentWithTextAndSwitchInput(segmentWithTextAndSwitchInput: SegmentWithTextAndSwitchInput)
+        case segmentWithTextAndSwitchInput(viewModel: SegmentWithTextAndSwitchCellViewModel)
         case delete(title: String)
     }
 
@@ -89,20 +89,5 @@ extension MnemonicUpdateViewModel {
         let placeholder: String
         let description: String
         let descriptionHighlightedWords: [String]
-    }
-}
-
-// MARK: - SwitchWithTextInput
-
-extension MnemonicUpdateViewModel {
-
-    struct SegmentWithTextAndSwitchInput {
-        let title: String
-        let segmentOptions: [String]
-        let selectedSegment: Int
-        let password: String
-        let placeholder: String
-        let onOffTitle: String
-        let onOff: Bool
     }
 }

@@ -258,13 +258,6 @@ extension MnemonicUpdateViewController: UICollectionViewDelegateFlowLayout {
                     ? Constant.cellSaltOpenHeight
                     : Constant.cellHeight
             )
-        case let .segmentWithTextAndSwitchInput(segmentWithTextAndSwitchInput):
-            return CGSize(
-                width: width,
-                height: segmentWithTextAndSwitchInput.selectedSegment != 2
-                    ? Constant.cellPassOpenHeight
-                    : Constant.cellHeight
-            )
         default:
             return CGSize(width: width, height: Constant.cellHeight)
         }

@@ -82,6 +82,7 @@ extension DefaultMnemonicNewPresenter: MnemonicNewPresenter {
             updateView()
         case let .passwordDidChange(text):
             password = text
+            updateView()
         case let .allowFaceIdDidChange(onOff):
             interactor.passUnlockWithBio = onOff
         case .didTapMnemonic:
@@ -91,15 +92,8 @@ extension DefaultMnemonicNewPresenter: MnemonicNewPresenter {
                 options: [.expirationDate: Date().addingTimeInterval(30.0)]
             )
         case .didSelectCta:
-            
             ctaTapped = true
-            
-            guard isValidForm else {
-                
-                updateView()
-                return
-            }
-            
+            guard isValidForm else { return updateView() }
             do {
                 if interactor.passwordType == .bio {
                     password = interactor.generatePassword()
@@ -214,12 +208,17 @@ private extension DefaultMnemonicNewPresenter {
                 )
             ),
             MnemonicNewViewModel.Item.segmentWithTextAndSwitchInput(
-                segmentWithTextAndSwitchInput: .init(
+                viewModel: .init(
                     title: Localized("newMnemonic.passType.title"),
                     segmentOptions: passwordTypes().map { "\($0)".lowercased() },
                     selectedSegment: selectedPasswordTypeIdx(),
                     password: password,
-                    placeholder: Localized("newMnemonic.passType.placeholder"),
+                    passwordKeyboardType: interactor.passwordType == .pin
+                    ? .numberPad
+                    : .default,
+                    placeholder: interactor.passwordType == .pin
+                    ? Localized("newMnemonic.pinType.placeholder")
+                    : Localized("newMnemonic.passType.placeholder"),
                     errorMessage: passwordErrorMessage,
                     onOffTitle: Localized("newMnemonic.passType.allowFaceId"),
                     onOff: interactor.passUnlockWithBio
@@ -232,7 +231,7 @@ private extension DefaultMnemonicNewPresenter {
 // MARK: - Utilities
 
 private extension DefaultMnemonicNewPresenter {
-
+    
     func selectedPasswordTypeIdx() -> Int {
         let values = KeyStoreItem.PasswordType.values()
         for idx in 0..<values.size {

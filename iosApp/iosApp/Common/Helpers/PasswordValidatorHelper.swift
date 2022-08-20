@@ -30,7 +30,7 @@ private extension PasswordValidatorHelper {
             return Localized("validation.error.pin.min.length")
         }
 
-        guard text.isValidRegex(#"^(\d)(?!\1+$)\d{7}$"#) else {
+        guard text[0] != text[1] else {
             
             return Localized("validation.error.pin.weak")
         }

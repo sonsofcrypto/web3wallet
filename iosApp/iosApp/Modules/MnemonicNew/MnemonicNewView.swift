@@ -19,7 +19,7 @@ final class MnemonicNewViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var ctaButton: Button!
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -47,7 +47,7 @@ final class MnemonicNewViewController: BaseViewController {
 extension MnemonicNewViewController: MnemonicNewView {
 
     func update(with viewModel: MnemonicNewViewModel) {
-        let needsReload = self.needsReload(self.viewModel, viewModel: viewModel)
+        
         self.viewModel = viewModel
 
         guard let cv = collectionView else {
@@ -57,12 +57,6 @@ extension MnemonicNewViewController: MnemonicNewView {
         ctaButton.setTitle(viewModel.cta, for: .normal)
 
         let cells = cv.indexPathsForVisibleItems
-        let idxs = IndexSet(0..<viewModel.sectionsItems.count)
-
-        if needsReload && didAppear {
-            cv.performBatchUpdates({ cv.reloadSections(idxs) })
-            return
-        }
         
         didAppear
             ? cv.performBatchUpdates({ cv.reconfigureItems(at: cells) })
@@ -295,12 +289,12 @@ extension MnemonicNewViewController: UICollectionViewDelegateFlowLayout {
                     ? Constant.cellSaltOpenHeight
                     : Constant.cellHeight
             )
-        case let .segmentWithTextAndSwitchInput(segmentWithTextAndSwitchInput):
+        case let .segmentWithTextAndSwitchInput(viewModel):
             return CGSize(
                 width: width,
-                height: segmentWithTextAndSwitchInput.selectedSegment != 2
-                    ? Constant.cellPassOpenHeight
-                    : Constant.cellHeight
+                height: viewModel.selectedSegment != 2
+                ? (viewModel.hasHint ? Constant.cellPassOpenHeightHint : Constant.cellPassOpenHeight)
+                : Constant.cellHeight
             )
         default:
             return CGSize(width: width, height: Constant.cellHeight)
@@ -331,9 +325,6 @@ extension MnemonicNewViewController: UICollectionViewDelegateFlowLayout {
 
 extension MnemonicNewViewController: UIScrollViewDelegate {
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        collectionView.visibleCells.forEach { $0.resignFirstResponder() }
-    }
 }
 
 // MARK: - Configure UI
@@ -350,11 +341,50 @@ private extension MnemonicNewViewController {
             action: #selector(dismissAction(_:))
         )
         
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        //collectionView.allowsSelection = false
+        let constraint = collectionView.bottomAnchor.constraint(
+            equalTo: view.keyboardLayoutGuide.topAnchor
+        )
+        constraint.priority = .required
+        constraint.isActive = true
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(showKeyboard),
+            name: UIApplication.keyboardWillShowNotification,
+            object: nil
+        )
+        
         ctaButton.style = .primary
     }
-
-    func needsReload(_ preViewModel: MnemonicNewViewModel?, viewModel: MnemonicNewViewModel) -> Bool {
-        preViewModel?.sectionsItems[1].count != viewModel.sectionsItems[1].count
+    
+    @objc func showKeyboard(notification: Notification) {
+        
+        guard
+            let firstResponder = collectionView.firstResponder,
+            let keyboardFrame = notification.userInfo?[
+                UIResponder.keyboardFrameEndUserInfoKey
+            ] as? NSValue
+        else { return }
+        
+        let frame = view.convert(firstResponder.bounds, from: firstResponder)
+        let y = frame.maxY + Theme.constant.padding * 2
+        let keyboardY = keyboardFrame.cgRectValue.origin.y - 40
+         
+        guard y > keyboardY else { return }
+        
+        if
+            let collectionView = collectionView,
+            let indexPath = self.collectionView.indexPath(
+                for: self.collectionView.visibleCells.last!
+            )
+        {
+            collectionView.scrollToItem(
+                at: indexPath,
+                at: .top,
+                animated: true
+            )
+        }
     }
 }
 
@@ -367,6 +397,7 @@ private extension MnemonicNewViewController {
         static let cellHeight: CGFloat = 46
         static let cellSaltOpenHeight: CGFloat = 142
         static let cellPassOpenHeight: CGFloat = 138
+        static let cellPassOpenHeightHint: CGFloat = 138 + 16
         static let footerHeight: CGFloat = 80
     }
 }

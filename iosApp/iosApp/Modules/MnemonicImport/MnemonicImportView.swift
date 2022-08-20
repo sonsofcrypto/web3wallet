@@ -67,7 +67,7 @@ extension MnemonicImportViewController: MnemonicImportView {
             cv.performBatchUpdates({ cv.reloadSections(idxs) })
             return
         }
-
+        
         updateFootersIfNeeded(viewModel)
 
         didAppear && equalSectionCnt
@@ -148,7 +148,10 @@ extension MnemonicImportViewController: UICollectionViewDataSource {
                 for: idxPath
             ).update(
                 with: name,
-                textChangeHandler: { value in self.nameDidChange(value) }
+                textChangeHandler: { [weak self] value in
+                    guard let self = self else { return }
+                    self.nameDidChange(value)
+                }
             )
 
         case let .switch(title, onOff):
@@ -158,7 +161,10 @@ extension MnemonicImportViewController: UICollectionViewDataSource {
             ).update(
                 with: title,
                 onOff: onOff,
-                handler: { value in self.iCloudBackupDidChange(value) }
+                handler: { [weak self] value in
+                    guard let self = self else { return }
+                    self.iCloudBackupDidChange(value)
+                }
             )
         case let .switchWithTextInput(switchWithTextInput):
             return collectionView.dequeue(
@@ -166,9 +172,18 @@ extension MnemonicImportViewController: UICollectionViewDataSource {
                 for: idxPath
             ).update(
                 with: switchWithTextInput,
-                switchAction: { onOff in self.saltSwitchDidChange(onOff) },
-                textChangeHandler: { text in self.saltTextDidChange(text) },
-                descriptionAction: { self.saltLearnMoreAction() }
+                switchAction: { [weak self] onOff in
+                    guard let self = self else { return }
+                    self.saltSwitchDidChange(onOff)
+                },
+                textChangeHandler: { [weak self] text in
+                    guard let self = self else { return }
+                    self.saltTextDidChange(text)
+                },
+                descriptionAction: { [weak self] in
+                    guard let self = self else { return }
+                    self.saltLearnMoreAction()
+                }
             )
         case let .segmentWithTextAndSwitchInput(segmentWithTextAndSwitchInput):
             return collectionView.dequeue(
@@ -176,9 +191,27 @@ extension MnemonicImportViewController: UICollectionViewDataSource {
                 for: idxPath
             ).update(
                 with: segmentWithTextAndSwitchInput,
-                selectSegmentAction: { idx in self.passTypeDidChange(idx) },
-                textChangeHandler: { text in self.passwordDidChange(text) },
-                switchHandler: { onOff in self.allowFaceIdDidChange(onOff) }
+                selectSegmentAction: { [weak self] idx in
+                    guard let self = self else { return }
+                    self.passTypeDidChange(idx)
+                },
+                textChangeHandler: { [weak self] text in
+                    guard let self = self else { return }
+                    if let indexPath = self.collectionView.indexPath(
+                        for: self.collectionView.visibleCells.last!
+                    ) {
+                        self.collectionView.selectItem(
+                            at: indexPath,
+                            animated: true,
+                            scrollPosition: .top
+                        )
+                    }
+                    self.passwordDidChange(text)
+                },
+                switchHandler: { [weak self] onOff in
+                    guard let self = self else { return }
+                    self.allowFaceIdDidChange(onOff)
+                }
             )
         }
     }
@@ -343,9 +376,6 @@ extension MnemonicImportViewController: UICollectionViewDelegateFlowLayout {
 
 extension MnemonicImportViewController: UIScrollViewDelegate {
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        collectionView.visibleCells.forEach { $0.resignFirstResponder() }
-    }
 }
 
 // MARK: - Configure UI
@@ -362,7 +392,49 @@ private extension MnemonicImportViewController {
             action: #selector(dismissAction(_:))
         )
         
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        let constraint = collectionView.bottomAnchor.constraint(
+            equalTo: view.keyboardLayoutGuide.topAnchor
+        )
+        constraint.priority = .required
+        constraint.isActive = true
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(showKeyboard),
+            name: UIApplication.keyboardWillShowNotification,
+            object: nil
+        )
+        
         ctaButton.style = .primary
+    }
+    
+    @objc func showKeyboard(notification: Notification) {
+        
+        guard
+            let firstResponder = collectionView.firstResponder,
+            let keyboardFrame = notification.userInfo?[
+                UIResponder.keyboardFrameEndUserInfoKey
+            ] as? NSValue
+        else { return }
+        
+        let frame = view.convert(firstResponder.bounds, from: firstResponder)
+        let y = frame.maxY + Theme.constant.padding * 2
+        let keyboardY = keyboardFrame.cgRectValue.origin.y - 40
+         
+        guard y > keyboardY else { return }
+        
+        if
+            let collectionView = collectionView,
+            let indexPath = self.collectionView.indexPath(
+                for: self.collectionView.visibleCells.last!
+            )
+        {
+            collectionView.scrollToItem(
+                at: indexPath,
+                at: .top,
+                animated: true
+            )
+        }
     }
 
     func needsReload(_ preViewModel: MnemonicImportViewModel?, viewModel: MnemonicImportViewModel) -> Bool {

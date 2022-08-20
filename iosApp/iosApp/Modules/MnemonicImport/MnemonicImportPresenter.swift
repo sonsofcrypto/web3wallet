@@ -39,7 +39,8 @@ final class DefaultMnemonicImportPresenter {
 
     private var password: String = ""
     private var salt: String = ""
-
+    private var ctaTapped = false
+    
     private var mnemonic = ""
     private var selectedLocation = 0
 
@@ -83,7 +84,6 @@ extension DefaultMnemonicImportPresenter: MnemonicImportPresenter {
             interactor.iCloudSecretStorage = onOff
         case let .saltSwitchDidChange(onOff):
             interactor.saltMnemonic = onOff
-            updateView()
         case let .didChangeSalt(salt):
              self.salt = salt
         case .saltLearnMoreAction:
@@ -104,6 +104,8 @@ extension DefaultMnemonicImportPresenter: MnemonicImportPresenter {
                 options: [.expirationDate: Date().addingTimeInterval(30.0)]
             )
         case .didSelectCta:
+            ctaTapped = true
+            guard isValidForm else { return updateView() }
             do {
                 if interactor.passwordType == .bio {
                     password = interactor.generatePassword()
@@ -131,7 +133,33 @@ extension DefaultMnemonicImportPresenter: MnemonicImportPresenter {
 
 private extension DefaultMnemonicImportPresenter {
     
-    func updateView(updateMnemonic: Bool = false) {
+    var isValidForm: Bool {
+        
+        passwordErrorMessage == nil
+    }
+    
+    var passwordErrorMessage: String? {
+        
+        guard ctaTapped else { return nil }
+        
+        switch interactor.passwordType {
+            
+        case .pin:
+            let validator = PasswordValidatorHelper()
+            return validator.validate(password, type: .pin)
+
+        case .pass:
+            let validator = PasswordValidatorHelper()
+            return validator.validate(password, type: .pass)
+            
+        default:
+            return nil
+        }
+    }
+    
+    func updateView(
+        updateMnemonic: Bool = false
+    ) {
         
         view?.update(
             with: viewModel(
@@ -218,12 +246,18 @@ private extension DefaultMnemonicImportPresenter {
                 )
             ),
             MnemonicImportViewModel.Item.segmentWithTextAndSwitchInput(
-                segmentWithTextAndSwitchInput: .init(
+                viewModel: .init(
                     title: Localized("newMnemonic.passType.title"),
                     segmentOptions: passwordTypes().map { "\($0)".lowercased() },
                     selectedSegment: selectedPasswordTypeIdx(),
                     password: password,
-                    placeholder: Localized("newMnemonic.passType.placeholder"),
+                    passwordKeyboardType: interactor.passwordType == .pin
+                    ? .numberPad
+                    : .default,
+                    placeholder: interactor.passwordType == .pin
+                    ? Localized("newMnemonic.pinType.placeholder")
+                    : Localized("newMnemonic.passType.placeholder"),
+                    errorMessage: passwordErrorMessage,
                     onOffTitle: Localized("newMnemonic.passType.allowFaceId"),
                     onOff: interactor.passUnlockWithBio
                 )
