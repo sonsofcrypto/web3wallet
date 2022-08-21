@@ -1,7 +1,10 @@
 package com.sonsofcrypto.web3lib.services.wallet
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
-import com.sonsofcrypto.web3lib.provider.model.*
+import com.sonsofcrypto.web3lib.provider.model.BlockTag
+import com.sonsofcrypto.web3lib.provider.model.Transaction
+import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
+import com.sonsofcrypto.web3lib.provider.model.TransactionResponse
 import com.sonsofcrypto.web3lib.services.currencyStore.*
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent.EnabledNetworksDidChange
@@ -13,7 +16,6 @@ import com.sonsofcrypto.web3lib.types.*
 import com.sonsofcrypto.web3lib.utils.*
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import com.sonsofcrypto.web3lib.utils.extensions.jsonEncode
-import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
