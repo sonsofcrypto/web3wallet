@@ -118,6 +118,13 @@ private extension TokenPickerViewController {
             animated: false
         )
         
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        let constraint = collectionView.bottomAnchor.constraint(
+            equalTo: view.keyboardLayoutGuide.topAnchor
+        )
+        constraint.priority = .required
+        constraint.isActive = true
+        
         var insets = collectionView.contentInset
         insets.bottom += view.safeAreaInsets.bottom
         collectionView.contentInset = insets

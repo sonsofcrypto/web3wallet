@@ -11,12 +11,15 @@ struct MnemonicUpdateContext {
 
     let keyStoreItem: KeyStoreItem
     let didUpdateKeyStoreItemHandler: KeyStoreItemHandler?
+    let onKeyStoreItemDeleted: (() -> Void)?
 
     init(
         keyStoreItem: KeyStoreItem,
-        updateHandler: KeyStoreItemHandler? = nil
+        updateHandler: KeyStoreItemHandler? = nil,
+        onKeyStoreItemDeleted: (() -> Void)? = nil
     ) {
         self.keyStoreItem = keyStoreItem
         self.didUpdateKeyStoreItemHandler = updateHandler
+        self.onKeyStoreItemDeleted = onKeyStoreItemDeleted
     }
 }

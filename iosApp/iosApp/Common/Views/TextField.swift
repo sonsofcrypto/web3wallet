@@ -101,7 +101,7 @@ private extension TextField {
         
         let button = UIButton(type: .custom)
         button.setImage(
-            "xmark.circle.fill".assetImage,
+            .init(systemName: "xmark.circle.fill"),
             for: .normal
         )
         button.tintColor = Theme.colour.labelSecondary

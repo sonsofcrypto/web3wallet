@@ -125,6 +125,7 @@
 "newMnemonic.passType.password" = "Password";
 "newMnemonic.passType.faceId" = "Face ID";
 "newMnemonic.passType.touchId" = "Touch ID";
+"newMnemonic.pinType.placeholder" = "Enter pin";
 "newMnemonic.passType.placeholder" = "Enter password";
 "newMnemonic.passType.allowFaceId" = "Allow unlock with FaceID";
 "newMnemonic.pasteboard" = "Mnemonic copied to pasteboard";
@@ -376,4 +377,11 @@
 "mnemonic.error.invalid.wordCount" = "Typically 12 (or 15, 18, 21, 24) words separated by spaces.";
 "mnemonic.error.invalid.wordCount.highlight0" = "12 (or 15, 18, 21, 24) words";
 
+"validation.error.pin.min.length" = "Minimum 8 characters";
+"validation.error.pin.weak" = "First 2 digits should be different";
 
+"validation.error.pass.min.lenght" = "Minimum 8 characters";
+"validation.error.pass.min.capital" = "At least one capital letter needed";
+"validation.error.pass.min.lowercase" = "At least one lowercase letter needed";
+"validation.error.pass.min.digit" = "At least one digit needed";
+"validation.error.pass.min.special" = "At least one special character needed";

@@ -217,10 +217,12 @@ extension KeyStoreViewController {
         }
 
         logoContainer.isHidden = !viewModel.isEmpty
+        logoContainer.alpha = 1.0
+        logoView.alpha = 1.0
     }
 
     func selectedIdxPaths() -> [IndexPath] {
-        guard let viewModel = viewModel else {
+        guard let viewModel = viewModel, !viewModel.items.isEmpty else {
             return []
         }
 
@@ -401,6 +403,8 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
 
         animatedTransitioning = nil
 
+        guard targetView() != nil else { return nil }
+
         if vc.isKind(of: MnemonicNewViewController.self) ||
            vc.isKind(of: MnemonicUpdateViewController.self) ||
            vc.isKind(of: MnemonicImportViewController.self) {
@@ -410,6 +414,7 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
                 scaleAdjustment: 0.05
             )
         }
+        
         return animatedTransitioning
     }
 

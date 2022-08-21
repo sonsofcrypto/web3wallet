@@ -359,12 +359,7 @@ private extension DefaultTokenPickerPresenter {
             case .select:
                 type = .init(
                     isSelected: nil,
-                    balance: token.usdBalance > .zero
-                    ? .init(
-                        tokens: token.balance.formatString(decimals: token.decimals),
-                        usdTotal: token.usdBalance.formatString(decimals: 2)
-                    )
-                    : nil
+                    balance: nil
                 )
             case .multiSelectEdit:
 

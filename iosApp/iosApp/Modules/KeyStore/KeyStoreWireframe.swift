@@ -9,10 +9,11 @@ enum KeyStoreWireframeDestination {
 
     typealias KeyStoreItemHandler = (KeyStoreItem)->Void
 
+    case hideNetworksAndDashboard
     case networks
     case dashBoard
     case dashBoardOnboarding
-    case keyStoreItem(item: KeyStoreItem, handler: KeyStoreItemHandler)
+    case keyStoreItem(item: KeyStoreItem, handler: KeyStoreItemHandler, onDeleted: ()->Void)
     case newMnemonic(handler: KeyStoreItemHandler)
     case importMnemonic(handler: KeyStoreItemHandler)
     case connectHardwareWaller
@@ -88,6 +89,8 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
     func navigate(to destination: KeyStoreWireframeDestination) {
         let edgeVc = parent as? EdgeCardsController
         switch destination {
+        case .hideNetworksAndDashboard:
+            edgeVc?.setDisplayMode(.bottomCard)
         case .networks:
             edgeVc?.setDisplayMode(.overviewTopCard, animated: true)
         case .dashBoard:
@@ -100,10 +103,11 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
         case let .importMnemonic(handler):
             let context = MnemonicImportContext(createHandler: handler)
             importMnemonic.makeWireframe(vc, context: context).present()
-        case let .keyStoreItem(keyStoreItem, handler):
+        case let .keyStoreItem(keyStoreItem, handler, onDeleted):
             let context = MnemonicUpdateContext(
                 keyStoreItem: keyStoreItem,
-                updateHandler: handler
+                updateHandler: handler,
+                onKeyStoreItemDeleted: onDeleted
             )
             updateMnemonic.makeWireframe(vc, context: context).present()
         default:

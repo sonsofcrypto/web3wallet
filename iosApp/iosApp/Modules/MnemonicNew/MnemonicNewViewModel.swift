@@ -37,7 +37,16 @@ extension MnemonicNewViewModel {
         case name(name: Name)
         case `switch`(title: String, onOff: Bool)
         case switchWithTextInput(switchWithTextInput: SwitchWithTextInput)
-        case segmentWithTextAndSwitchInput(segmentWithTextAndSwitchInput: SegmentWithTextAndSwitchInput)
+        case segmentWithTextAndSwitchInput(viewModel: SegmentWithTextAndSwitchCellViewModel)
+        
+        var segmentWithTextAndSwitchInput: SegmentWithTextAndSwitchCellViewModel? {
+            switch self {
+            case let .segmentWithTextAndSwitchInput(viewModel):
+                return viewModel
+            default:
+                return nil
+            }
+        }
     }
 
     enum Header {
@@ -90,20 +99,5 @@ extension MnemonicNewViewModel {
         let placeholder: String
         let description: String
         let descriptionHighlightedWords: [String]
-    }
-}
-
-// MARK: - SwitchWithTextInput
-
-extension MnemonicNewViewModel {
-
-    struct SegmentWithTextAndSwitchInput {
-        let title: String
-        let segmentOptions: [String]
-        let selectedSegment: Int
-        let password: String
-        let placeholder: String
-        let onOffTitle: String
-        let onOff: Bool
     }
 }

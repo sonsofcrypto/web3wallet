@@ -92,7 +92,7 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             wireframe.navigate(to: .receive)
             
         case .sendAction:
-            wireframe.navigate(to: .send)
+            wireframe.navigate(to: .send(addressTo: nil))
             
         case .didScanQRCode:
             wireframe.navigate(to: .scanQRCode(onCompletion: makeOnQRCodeScanned()))
@@ -313,9 +313,9 @@ private extension DefaultDashboardPresenter {
     
     func makeOnQRCodeScanned() -> (String) -> Void {
         {
-            qrCode in
-            // TODO: @Annon Check here what to do with the code?
-            print("QR code scanned: \(qrCode)")
+            [weak self] addressTo in
+            guard let self = self else { return }
+            self.wireframe.navigate(to: .send(addressTo: addressTo))
         }
     }
 }

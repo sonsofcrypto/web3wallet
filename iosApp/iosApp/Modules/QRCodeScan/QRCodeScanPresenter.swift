@@ -23,6 +23,8 @@ final class DefaultQRCodeScanPresenter {
     private let wireframe: QRCodeScanWireframe
     private let context: QRCodeScanWireframeContext
     
+    private var qrCodeDetected = false
+    
     init(
         view: QRCodeScanView,
         interactor: QRCodeScanInteractor,
@@ -52,6 +54,10 @@ extension DefaultQRCodeScanPresenter: QRCodeScanPresenter {
             switch context.type {
                 
             case .`default`:
+                // NOTE: This guard is to prevent calling multiple times wireframe.navigate(to: .qrCode())
+                // since the view keeps firing multiple times the same code being scanned
+                guard !qrCodeDetected else { return }
+                qrCodeDetected = true
                 wireframe.navigate(to: .qrCode(qrCode))
                 
             case let .network(network):
@@ -65,6 +71,10 @@ extension DefaultQRCodeScanPresenter: QRCodeScanPresenter {
                     updateView(with: failureMessage)
                     return
                 }
+                // NOTE: This guard is to prevent calling multiple times wireframe.navigate(to: .qrCode())
+                // since the view keeps firing multiple times the same code being scanned
+                guard !qrCodeDetected else { return }
+                qrCodeDetected = true
                 wireframe.navigate(to: .qrCode(address))
             }
             

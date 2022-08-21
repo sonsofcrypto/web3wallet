@@ -168,3 +168,14 @@ extension String {
         return formatter.date(from: self)
     }
 }
+
+extension String {
+    
+    func isValidRegex(_ regex: String) -> Bool {
+        
+        range(
+            of: regex,
+            options: .regularExpression
+        ) != nil
+    }
+}

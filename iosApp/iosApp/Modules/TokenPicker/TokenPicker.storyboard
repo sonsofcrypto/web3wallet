@@ -298,7 +298,7 @@
                         <viewLayoutGuide key="safeArea" id="sTJ-sP-662"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="md3-vt-1dq" secondAttribute="bottom" id="Pth-bD-oT1"/>
+                            <constraint firstAttribute="bottom" secondItem="md3-vt-1dq" secondAttribute="bottom" priority="750" id="Pth-bD-oT1"/>
                             <constraint firstItem="md3-vt-1dq" firstAttribute="leading" secondItem="sTJ-sP-662" secondAttribute="leading" id="Vyg-hk-b4c"/>
                             <constraint firstItem="md3-vt-1dq" firstAttribute="top" secondItem="unt-fL-27U" secondAttribute="bottom" id="XJV-8R-axs"/>
                             <constraint firstItem="sTJ-sP-662" firstAttribute="trailing" secondItem="md3-vt-1dq" secondAttribute="trailing" id="ag9-vD-gzh"/>

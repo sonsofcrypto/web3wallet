@@ -357,6 +357,7 @@
 		1C7FC97928AD2E7D00FC9175 /* FeatureServiceRunnerAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97828AD2E7D00FC9175 /* FeatureServiceRunnerAssembler.swift */; };
 		1C7FC97B28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97A28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift */; };
 		1C7FC97D28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97C28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift */; };
+		1C7FC98128AFB32600FC9175 /* PasswordValidatorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98028AFB32600FC9175 /* PasswordValidatorHelper.swift */; };
 		1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46D92813DE4800F6C40B /* BaseViewController.swift */; };
 		1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1C9B46FA281427B800F6C40B /* under-construction.gif */; };
 		1C9E3195287580B600DD2031 /* TokenSendWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */; };
@@ -939,6 +940,7 @@
 		1C7FC97828AD2E7D00FC9175 /* FeatureServiceRunnerAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureServiceRunnerAssembler.swift; sourceTree = "<group>"; };
 		1C7FC97A28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateDeleteCell.swift; sourceTree = "<group>"; };
 		1C7FC97C28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C7FC98028AFB32600FC9175 /* PasswordValidatorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordValidatorHelper.swift; sourceTree = "<group>"; };
 		1C9B46D92813DE4800F6C40B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1C9B46FA281427B800F6C40B /* under-construction.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "under-construction.gif"; sourceTree = "<group>"; };
 		1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendWireframe.swift; sourceTree = "<group>"; };
@@ -1932,6 +1934,7 @@
 				1C60C37D2859CC2A003BE25D /* ShareFactoryHelper.swift */,
 				1CB8B0CD288FAEA800024E7C /* SceneDelegateHelper.swift */,
 				1C228AC228A0FE41005316A3 /* FeatureShareHelper.swift */,
+				1C7FC98028AFB32600FC9175 /* PasswordValidatorHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2684,7 +2687,7 @@
 			);
 			mainGroup = D157F7BE27B69B6300578FF8;
 			packageReferences = (
-				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
+				1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = D157F7C827B69B6300578FF8 /* Products */;
 			projectDirPath = "";
@@ -2853,6 +2856,7 @@
 				1CB3A1F22840D6B70092D667 /* Data+Extension.swift in Sources */,
 				1CB8B0D2288FBAA100024E7C /* SettingsWireframeFactoryAssembler.swift in Sources */,
 				1C60C2F6285724D0003BE25D /* NFTDetailWireframeFactory.swift in Sources */,
+				1C7FC98128AFB32600FC9175 /* PasswordValidatorHelper.swift in Sources */,
 				1C672008288005C300C5F044 /* MnemonicUpdateWireframeFactoryAssembler.swift in Sources */,
 				1C6487432832E7EA0091A12D /* SettingsServiceAssembler.swift in Sources */,
 				D1EF5BCE287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift in Sources */,
@@ -3468,7 +3472,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5K4DT22LXR;
+				DEVELOPMENT_TEAM = L4HD966EQA;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3509,7 +3513,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5K4DT22LXR;
+				DEVELOPMENT_TEAM = L4HD966EQA;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3654,7 +3658,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
+		1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -3667,7 +3671,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		1C5B603A284675B800ECBD79 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
+			package = 1C5B6039284675B800ECBD79 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
