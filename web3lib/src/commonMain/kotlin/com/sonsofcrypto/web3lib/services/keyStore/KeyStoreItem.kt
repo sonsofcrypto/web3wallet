@@ -24,8 +24,7 @@ data class KeyStoreItem(
     /** What type password was used [PIN, PASS, BIO,] */
     val passwordType: PasswordType = PasswordType.BIO,
     /** Account derivations path, coin_type (60) replaced with appropriate
-     * value for each network
-     */
+     * value for each network */
     val derivationPath: String = "m/44'/60'/0'/0/0",
     /** Key is a derivation path eg m/44'/60'/0'/0/0, values are hex strings*/
     val addresses: Map<String, String>,
