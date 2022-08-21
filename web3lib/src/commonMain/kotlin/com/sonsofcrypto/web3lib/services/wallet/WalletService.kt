@@ -15,12 +15,9 @@ import com.sonsofcrypto.web3lib.types.*
 import com.sonsofcrypto.web3lib.utils.*
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import com.sonsofcrypto.web3lib.utils.extensions.jsonEncode
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.withContext
 import kotlin.time.Duration.Companion.seconds
 
 /** `WalletService` higher level "manager" wallet state manager. Should suffice
@@ -53,9 +50,14 @@ interface WalletService {
     /** Retrieves private key from secure storage for 5 secs. */
     @Throws(Throwable::class)
     fun unlock(password: String, salt: String, network: Network)
-    /** Transfers native currency or ERC20 token. Must call unlock wallet pior*/
+    /** Transfers native currency or ERC20 token. Must call unlock wallet prior */
     @Throws(Throwable::class)
-    suspend fun transfer(currency: Currency, amount: BigInt, network: Network)
+    suspend fun transfer(
+        to: AddressHexString,
+        currency: Currency,
+        amount: BigInt,
+        network: Network
+    )
     /** List of transactions for wallet */
     fun transactions(network: Network): List<Transaction>
 
@@ -140,8 +142,13 @@ class DefaultWalletService(
         networkService.wallet(network)?.unlock(password, salt)
     }
 
-    override suspend fun transfer(currency: Currency, amount: BigInt, network: Network) {
-        TODO("Not yet implemented")
+    override suspend fun transfer(
+        to: AddressHexString,
+        currency: Currency,
+        amount: BigInt,
+        network: Network
+    ) = withContext(bgDispatcher) {
+        
     }
 
     override fun transactions(network: Network): List<Transaction> {
@@ -183,7 +190,7 @@ class DefaultWalletService(
         val wallets = networks().map { networkService.wallet(it) }
         val transactionCounts = networks().map { transactionCount(it) }
         val currencies = networks().map { currencies(it) }
-        withContext(SupervisorJob() + bgDispatcher + logExceptionHandler) {
+        scope.launch(logExceptionHandler) {
             wallets.forEachIndexed { idx, wallet ->
                 if (wallet != null) {
                     blockNumber(wallet)
