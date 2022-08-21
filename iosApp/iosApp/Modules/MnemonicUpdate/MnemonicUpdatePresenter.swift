@@ -10,7 +10,6 @@ enum MnemonicUpdatePresenterEvent {
     case didTapMnemonic
     case didChangeName(name: String)
     case didChangeICouldBackup(onOff: Bool)
-    case didTapDelete
     case didChangeAddAccount(toCustom: Bool)
     case didChangeAccount(idx: Int)
     case didChangeCustomDerivation(path: String)
@@ -84,9 +83,6 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
             interactor.name = name
         case let .didChangeICouldBackup(onOff):
             interactor.iCloudSecretStorage = onOff
-        case .didTapDelete:
-            // TODO(web3dgn): Present are you sure as this will delete wallet
-            interactor.delete(context.keyStoreItem)
         case .didChangeAddAccount:
             () // TODO: When implementing accounts
         case .didChangeAccount:
@@ -129,6 +125,7 @@ private extension DefaultMnemonicUpdatePresenter {
     @objc func onDeleteConfirmed() {
         
         interactor.delete(context.keyStoreItem)
+        context.onKeyStoreItemDeleted?()
         // NOTE: The following call dismisses the alert
         view?.dismiss(
             animated: true,

@@ -114,7 +114,16 @@ extension DefaultMnemonicUpdateInteractor: MnemonicUpdateInteractor {
     }
 
     func delete(_ keyStoreItem: KeyStoreItem) {
-        keyStoreService.remove(item: keyStoreItem)
+        
+        if keyStoreItem.uuid == keyStoreService.selected?.uuid {
+        
+            keyStoreService.remove(item: keyStoreItem)
+            keyStoreService.selected = keyStoreService.items().first
+        } else {
+            
+            keyStoreService.remove(item: keyStoreItem)
+        }
+        
     }
 }
 

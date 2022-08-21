@@ -32,8 +32,6 @@ final class DefaultKeyStorePresenter {
         sheetMode: .compact
     )
     
-    private var selectedIndex: Int?
-    
     init(
         view: KeyStoreView,
         interactor: KeyStoreInteractor,
@@ -60,7 +58,6 @@ extension DefaultKeyStorePresenter: KeyStorePresenter {
     func handle(_ event: KeyStorePresenterEvent) {
         switch event {
         case let .didSelectKeyStoreItemtAt(idx):
-            selectedIndex = idx
             handleDidSelectItem(at: idx)
         case let .didSelectAccessory(idx):
             handleDidSelectAccessory(at: idx)
@@ -91,10 +88,19 @@ private extension DefaultKeyStorePresenter {
         let item = interactor.items[idx]
         
         wireframe.navigate(
-            to: .keyStoreItem(item: item) {
-                [weak self] item in
-                self?.handleDidUpdateNewKeyStoreItem(item)
-            }
+            to: .keyStoreItem(
+                item: item,
+                handler: { [weak self] item in
+                    self?.handleDidUpdateNewKeyStoreItem(item)
+                },
+                onDeleted: { [weak self] in
+                    guard let self = self else { return }
+                    if self.interactor.items.isEmpty {
+                        self.wireframe.navigate(to: .hideNetworksAndDashboard)
+                    }
+                    self.present()
+                }
+            )
         )
     }
 
@@ -190,11 +196,6 @@ private extension DefaultKeyStorePresenter {
     }
     
     func makeSelectedIdxs() -> Int? {
-        
-        if let index = selectedIndex {
-            
-            return index
-        }
         
         if let index = interactor.items.firstIndex(of: interactor.selected) {
             

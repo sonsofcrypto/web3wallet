@@ -217,10 +217,12 @@ extension KeyStoreViewController {
         }
 
         logoContainer.isHidden = !viewModel.isEmpty
+        logoContainer.alpha = 1.0
+        logoView.alpha = 1.0
     }
 
     func selectedIdxPaths() -> [IndexPath] {
-        guard let viewModel = viewModel else {
+        guard let viewModel = viewModel, !viewModel.items.isEmpty else {
             return []
         }
 
