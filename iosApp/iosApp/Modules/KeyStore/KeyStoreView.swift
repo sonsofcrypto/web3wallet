@@ -403,6 +403,8 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
 
         animatedTransitioning = nil
 
+        guard targetView() != nil else { return nil }
+
         if vc.isKind(of: MnemonicNewViewController.self) ||
            vc.isKind(of: MnemonicUpdateViewController.self) ||
            vc.isKind(of: MnemonicImportViewController.self) {
@@ -412,6 +414,7 @@ extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
                 scaleAdjustment: 0.05
             )
         }
+        
         return animatedTransitioning
     }
 
