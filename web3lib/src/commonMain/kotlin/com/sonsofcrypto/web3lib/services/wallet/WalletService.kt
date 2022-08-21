@@ -95,8 +95,9 @@ class DefaultWalletService(
     override fun networks(): List<Network> = networkService.enabledNetworks()
 
     override fun currencies(network: Network): List<Currency> {
-        currencies[network.id()]?.let { return it }
-        currenciesCache.get<String>(network.id())?.let {
+        val key = "${network.id()}_${networkService.wallet(network)?.id()}"
+        currencies[key]?.let { return it }
+        currenciesCache.get<String>(key)?.let {
             jsonDecode<List<Currency>>(it)?.let { curr -> return curr }
         }
         setCurrencies(defaultCurrencies(network), network)
@@ -104,8 +105,9 @@ class DefaultWalletService(
     }
 
     override fun setCurrencies(currencies: List<Currency>, network: Network) {
-        this.currencies[network.id()] = currencies
-        currenciesCache.set(network.id(), jsonEncode(currencies))
+        val key = "${network.id()}_${networkService.wallet(network)?.id()}"
+        this.currencies[key] = currencies
+        currenciesCache.set(key, jsonEncode(currencies))
         emit(WalletEvent.Currencies(network, currencies))
         currencyStoreService.cacheMetadata(currencies)
     }
