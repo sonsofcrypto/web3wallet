@@ -1,9 +1,7 @@
 package com.sonsofcrypto.web3lib.services.wallet
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
-import com.sonsofcrypto.web3lib.provider.model.BlockTag
-import com.sonsofcrypto.web3lib.provider.model.Transaction
-import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
+import com.sonsofcrypto.web3lib.provider.model.*
 import com.sonsofcrypto.web3lib.services.currencyStore.*
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent.EnabledNetworksDidChange
@@ -15,6 +13,7 @@ import com.sonsofcrypto.web3lib.types.*
 import com.sonsofcrypto.web3lib.utils.*
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import com.sonsofcrypto.web3lib.utils.extensions.jsonEncode
+import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -83,6 +82,7 @@ class DefaultWalletService(
     private val currencies: MutableMap<String, List<Currency>> = mutableMapOf()
     private val networksState: MutableMap<String, BigInt> = mutableMapOf()
     private var listeners: MutableSet<WalletListener> = mutableSetOf()
+    private var pendingTransactions: List<Transaction> = mutableListOf()
     private var pollingJob: Job? = null
     private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
 
@@ -142,13 +142,51 @@ class DefaultWalletService(
         networkService.wallet(network)?.unlock(password, salt)
     }
 
+    @Throws(Throwable::class)
     override suspend fun transfer(
         to: AddressHexString,
         currency: Currency,
         amount: BigInt,
         network: Network
-    ) = withContext(bgDispatcher) {
-        
+    ): Unit = withContext(bgDispatcher) {
+        withContext(uiDispatcher) {
+            val from = address(network)!!
+            val nonce = transactionCount(network)
+            val provider = networkService.provider(network)
+            val key =
+            val transaction = Transaction(
+                to = Address.HexString(to),
+                from = Address.HexString(from),
+                nonce = nonce,
+                gasLimit = BigInt.zero(),
+                value = amount,
+                chainId = BigInt.from(network.chainId),
+                type = TransactionType.EIP1559,
+            )
+            withContext(bgDispatcher) {
+                val feeData = provider.feeData()
+                val populatedTx = transaction.copy(
+                    maxPriorityFeePerGas = feeData.maxPriorityFeePerGas,
+                    maxFeePerGas = feeData.maxFeePerGas,
+                )
+                val gasEstimate = provider.estimateGas(populatedTx)
+                val populatedTxWithGas = populatedTx.copy(gasLimit = gasEstimate)
+                val rlpData = populatedTxWithGas.encodeEIP1559()
+                val digest = keccak256(rlpData)
+                val signature = sign(digest, key.key)
+
+                val signedTransaction = populatedTxWithGas.copy(
+                    r = BigInt.from(signature.copyOfRange(0, 32)),
+                    s = BigInt.from(signature.copyOfRange(32, 64)),
+                    v = BigInt.from(signature[64].toInt()),
+                )
+
+                val rlpDataSigned = signedTransaction.encodeEIP1559()
+                val rlpHexStringSigned = rlpDataSigned.toHexString()
+
+                val result = provider.sendRawTransaction(DataHexString(rlpDataSigned))
+            }
+        }
     }
 
     override fun transactions(network: Network): List<Transaction> {

@@ -23,28 +23,28 @@ enum class TransactionType(val value: Int) {
 }
 
 data class Transaction(
-    val hash: String?,
+    val hash: String? = null,
     val to: Address.HexString?,
     val from: Address.HexString?,
     val nonce: BigInt,
-    val gasLimit: BigInt,
-    val gasPrice: BigInt?,
-    val input: DataHexString,
+    val gasLimit: BigInt = BigInt.zero(),
+    val gasPrice: BigInt? = null,
+    val input: DataHexString = "",
     val value: BigInt,
     val chainId: BigInt,
     val type: TransactionType?,
 
     /** Signature */
-    val r: BigInt?,
-    val s: BigInt?,
-    val v: BigInt?,
+    val r: BigInt? = null,
+    val s: BigInt? = null,
+    val v: BigInt? = null,
 
     /** Based on `type` `EIP-2930` or EIP-1559 */
-    val accessList: AccessList?,
+    val accessList: AccessList? = null,
 
     /** EIP-1559 */
-    val maxPriorityFeePerGas: BigInt?,
-    val maxFeePerGas: BigInt?,
+    val maxPriorityFeePerGas: BigInt? = BigInt.zero(),
+    val maxFeePerGas: BigInt? = BigInt.zero(),
 
     /** In response only */
     val blockHash: String? = null,
