@@ -56,7 +56,7 @@ interface WalletService {
         currency: Currency,
         amount: BigInt,
         network: Network
-    )
+    ): TransactionResponse
     /** List of transactions for wallet */
     fun transactions(network: Network): List<Transaction>
 
@@ -82,7 +82,7 @@ class DefaultWalletService(
     private val currencies: MutableMap<String, List<Currency>> = mutableMapOf()
     private val networksState: MutableMap<String, BigInt> = mutableMapOf()
     private var listeners: MutableSet<WalletListener> = mutableSetOf()
-    private var pendingTransactions: List<Transaction> = mutableListOf()
+    private var pendingTransactions: MutableList<TransactionResponse> = mutableListOf()
     private var pollingJob: Job? = null
     private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
 
@@ -150,45 +150,12 @@ class DefaultWalletService(
         currency: Currency,
         amount: BigInt,
         network: Network
-    ): Unit = withContext(bgDispatcher) {
-        withContext(uiDispatcher) {
-            val from = address(network)!!
-            val nonce = transactionCount(network)
-            val provider = networkService.provider(network)
-            val key =
-            val transaction = Transaction(
-                to = Address.HexString(to),
-                from = Address.HexString(from),
-                nonce = nonce,
-                gasLimit = BigInt.zero(),
-                value = amount,
-                chainId = BigInt.from(network.chainId),
-                type = TransactionType.EIP1559,
-            )
-            withContext(bgDispatcher) {
-                val feeData = provider.feeData()
-                val populatedTx = transaction.copy(
-                    maxPriorityFeePerGas = feeData.maxPriorityFeePerGas,
-                    maxFeePerGas = feeData.maxFeePerGas,
-                )
-                val gasEstimate = provider.estimateGas(populatedTx)
-                val populatedTxWithGas = populatedTx.copy(gasLimit = gasEstimate)
-                val rlpData = populatedTxWithGas.encodeEIP1559()
-                val digest = keccak256(rlpData)
-                val signature = sign(digest, key.key)
-
-                val signedTransaction = populatedTxWithGas.copy(
-                    r = BigInt.from(signature.copyOfRange(0, 32)),
-                    s = BigInt.from(signature.copyOfRange(32, 64)),
-                    v = BigInt.from(signature[64].toInt()),
-                )
-
-                val rlpDataSigned = signedTransaction.encodeEIP1559()
-                val rlpHexStringSigned = rlpDataSigned.toHexString()
-
-                val result = provider.sendRawTransaction(DataHexString(rlpDataSigned))
-            }
-        }
+    ): TransactionResponse = withContext(bgDispatcher) {
+        val request = TransactionRequest(to = Address.HexString(to), value = amount)
+        val wallet = networkService.wallet(network)
+        val response = wallet!!.sendTransaction(request)
+        withUICxt { pendingTransactions.add(response) }
+        return@withContext response
     }
 
     override fun transactions(network: Network): List<Transaction> {

@@ -4,43 +4,80 @@ import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.model.*
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
-import com.sonsofcrypto.web3lib.types.Address
-import com.sonsofcrypto.web3lib.types.Bip44
-import com.sonsofcrypto.web3lib.types.ExtKey
-import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.utils.bgDispatcher
+import com.sonsofcrypto.web3lib.services.wallet.WalletService
+import com.sonsofcrypto.web3lib.types.*
+import com.sonsofcrypto.web3lib.utils.*
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
+import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.extensions.zeroOut
-import com.sonsofcrypto.web3lib.utils.timerFlow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.withContext
 import kotlin.time.Duration.Companion.seconds
+
+/** Generic signer interface */
+interface Signer {
+    /** Returns provider if connected */
+    fun provider(): Provider?
+    /** Returns a new instance of the Signer, connected to provider. */
+    fun connect(provider: Provider): Signer;
+    /** Returns the checksum address */
+    @Throws(Throwable::class)
+    fun address(): Address
+
+    /** Signed prefixed-message. Bytes or encoded string as a UTF8-message */
+    suspend fun signMessage(message: ByteArray): ByteArray
+    /** Signs a transaction and returns the fully serialized, signed transaction
+     * The transaction MUST be signed, and NO additional properties to be added.*/
+    @Throws(Throwable::class)
+    suspend fun signTransaction(transaction: TransactionRequest): DataHexString
+
+    /** Populates "from" if unspecified, and calls with the transaction */
+    @Throws(Throwable::class)
+    suspend fun call(transaction: TransactionRequest, block: BlockTag = BlockTag.Latest): DataHexString
+    /** Populates all fields, signs and sends it to the network */
+    @Throws(Throwable::class)
+    suspend fun sendTransaction(transaction: TransactionRequest): TransactionResponse
+
+    /** Balance of network native currency */
+    @Throws(Throwable::class)
+    suspend fun getBalance(block: BlockTag): BigInt
+    /** Count of all the sent transactions (nonce) */
+    @Throws(Throwable::class)
+    suspend fun getTransactionCount(address: Address, block: BlockTag): BigInt
+    /** Populates `from` if unspecified, and estimates the fee */
+    @Throws(Throwable::class)
+    suspend fun estimateGas(transaction: TransactionRequest): BigInt
+
+    /** Chain id of network */
+    @Throws(Throwable::class)
+    suspend fun getChainId(): Unit
+    /** Gas price */
+    @Throws(Throwable::class)
+    suspend fun gasPrice(): BigInt
+    /** FeeData */
+    @Throws(Throwable::class)
+    suspend fun feeData(): FeeData
+
+    /** Resolves name using selected resolver */
+    @Throws(Throwable::class)
+    suspend fun resolveName(name: String): Address.HexString?
+}
 
 private val autoLockInterval = 5.seconds
 
-class Wallet: Signer {
-    private val keyStoreItem: KeyStoreItem
-    private val keyStoreService: KeyStoreService
-    private var provider: Provider? = null
+class Wallet(
+    private val keyStoreItem: KeyStoreItem,
+    private val keyStoreService: KeyStoreService,
+    private var provider: Provider? = null,
+): Signer {
     private var key: ByteArray? = null
     private var lockJob: Job? = null
 
-    constructor(
-        keyStoreItem: KeyStoreItem,
-        keyStoreService: KeyStoreService,
-        provider: Provider? = null,
-    ) {
-        this.keyStoreItem = keyStoreItem
-        this.keyStoreService = keyStoreService
-        this.provider = provider
-    }
-
     fun id(): String = keyStoreItem.uuid
-
     fun network(): Network? = provider?.network
 
     override fun provider(): Provider? = provider
@@ -49,6 +86,8 @@ class Wallet: Signer {
         this.provider = provider
         return this
     }
+
+    fun isUnlocked(): Boolean = (key != null)
 
     @Throws(Throwable::class)
     fun unlock(password: String, salt: String) {
@@ -76,8 +115,6 @@ class Wallet: Signer {
         key = null
     }
 
-    fun isUnlocked(): Boolean = (key != null)
-
     @Throws(Throwable::class)
     override fun address(): Address {
         val path = keyStoreItem.derivationPath
@@ -104,8 +141,8 @@ class Wallet: Signer {
         return provider!!.getTransactionCount(address, block)
     }
 
-    override suspend fun estimateGas(transaction: Transaction): BigInt {
-        TODO("Not yet implemented")
+    override suspend fun estimateGas(transaction: TransactionRequest): BigInt {
+        return provider!!.estimateGas(transaction)
     }
 
     @Throws(Throwable::class)
@@ -113,8 +150,51 @@ class Wallet: Signer {
         return provider!!.call(transaction, block)
     }
 
+    @Throws(Throwable::class)
     override suspend fun sendTransaction(transaction: TransactionRequest): TransactionResponse {
-        TODO("Not yet implemented")
+        val provider = provider()
+        val network = network()
+        val address = address().toHexStringAddress()
+        val key = key?.copyOf()
+
+        if (provider == null || network == null || address == null)
+            throw Error.ProviderConnectionError(this)
+
+        if (key == null)
+            throw Error.FailedToUnlockWallet
+
+        val feeData = provider.feeData()
+        val populatedTx = transaction.copy(
+            from = address.toHexStringAddress(),
+            nonce = getTransactionCount(address, block = BlockTag.Latest),
+            chainId = network.chainId.toInt(),
+            type = TransactionType.EIP1559,
+            maxPriorityFeePerGas = feeData.maxPriorityFeePerGas,
+            maxFeePerGas = feeData.maxFeePerGas,
+        )
+        val gasEstimate = provider.estimateGas(populatedTx)
+        val populatedTxWithGas = populatedTx.copy(gasLimit = gasEstimate)
+        val signature = sign(keccak256(populatedTxWithGas.encodeEIP1559()), key)
+        val signedTransaction = populatedTxWithGas.copy(
+            r = BigInt.from(signature.copyOfRange(0, 32)),
+            s = BigInt.from(signature.copyOfRange(32, 64)),
+            v = BigInt.from(signature[64].toInt()),
+        )
+        val signedRawTx = signedTransaction.encodeEIP1559()
+        key.zeroOut()
+
+        val hash = provider.sendRawTransaction(signedRawTx.toHexString())
+        return TransactionResponse(
+            hash = hash,
+            blockNumber = null,
+            blockHash = null,
+            timestamp = null,
+            confirmations = 0u,
+            from = address,
+            raw = signedRawTx,
+            gasLimit = transaction.gasLimit,
+            gasPrice = transaction.gasPrice,
+        )
     }
 
     override suspend fun getChainId() {
@@ -142,20 +222,15 @@ class Wallet: Signer {
         message: String? = null,
         cause: Throwable? = null
     ) : Exception(message, cause) {
-
         constructor(cause: Throwable) : this(null, cause)
-
         /** Missing Address for derivation path */
         data class MissingAddressError(val path: String, val itemId: String) :
             Error("Missing address $path for item $itemId")
-
         /** When calling methods that require provider while one is not connected */
         data class ProviderConnectionError(val wallet: Wallet) :
             Error("Provider not connected for ${wallet.id()}")
-
         /** Failed to unlock wallet */
         object FailedToUnlockWallet: Error("Failed to unlock wallet")
-
     }
 }
 
