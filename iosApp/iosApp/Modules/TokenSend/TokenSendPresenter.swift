@@ -49,7 +49,7 @@ final class DefaultTokenSendPresenter {
         self.wireframe = wireframe
         self.context = context
         
-        loadToken()
+        loadContext()
     }
 }
 
@@ -61,7 +61,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
             with: [
                 .address(
                     .init(
-                        value: nil,
+                        value: formattedAddress ?? address,
                         isValid: false,
                         becomeFirstResponder: true
                     )
@@ -116,6 +116,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
         case .saveAddress:
             wireframe.navigate(to: .underConstructionAlert)
         case let .addressChanged(address):
+            guard !isAddress(address: address, equalTo: context.addressTo) else { return }
             if
                 let currentAddress = self.address,
                 let formattedAddress = formattedAddress,
@@ -188,6 +189,16 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
 
 private extension DefaultTokenSendPresenter {
     
+    func isAddress(address: String, equalTo addressTo: String?) -> Bool {
+        
+        guard let addressTo = addressTo else { return false }
+        let addressToCompare = interactor.addressFormattedShort(
+            address: addressTo,
+            network: token.network
+        )
+        return address == addressToCompare
+    }
+    
     func makeConfirmationSendEstimatedFee() -> Web3NetworkFee {
         switch fee {
         case .low:
@@ -222,7 +233,8 @@ private extension DefaultTokenSendPresenter {
         )
     }
     
-    func loadToken() {
+    func loadContext() {
+        address = context.addressTo
         token = context.web3Token ?? interactor.defaultToken
     }
     

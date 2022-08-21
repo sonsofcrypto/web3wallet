@@ -6,7 +6,19 @@ import UIKit
 
 struct TokenSendWireframeContext {
     let presentationStyle: PresentationStyle
+    let addressTo: String?
     let web3Token: Web3Token?
+    
+    init(
+        presentationStyle: PresentationStyle,
+        addressTo: String? = nil,
+        web3Token: Web3Token? = nil
+    ) {
+        
+        self.presentationStyle = presentationStyle
+        self.addressTo = addressTo
+        self.web3Token = web3Token
+    }
 }
 
 enum TokenSendWireframeDestination {
