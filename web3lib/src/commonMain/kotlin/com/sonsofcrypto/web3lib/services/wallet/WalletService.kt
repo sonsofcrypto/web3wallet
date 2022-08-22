@@ -4,6 +4,7 @@ import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.provider.model.BlockTag
 import com.sonsofcrypto.web3lib.provider.model.Transaction
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
+import com.sonsofcrypto.web3lib.provider.model.TransactionResponse
 import com.sonsofcrypto.web3lib.services.currencyStore.*
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent.EnabledNetworksDidChange
@@ -57,7 +58,7 @@ interface WalletService {
         currency: Currency,
         amount: BigInt,
         network: Network
-    )
+    ): TransactionResponse
     /** List of transactions for wallet */
     fun transactions(network: Network): List<Transaction>
 
@@ -83,6 +84,7 @@ class DefaultWalletService(
     private val currencies: MutableMap<String, List<Currency>> = mutableMapOf()
     private val networksState: MutableMap<String, BigInt> = mutableMapOf()
     private var listeners: MutableSet<WalletListener> = mutableSetOf()
+    private var pendingTransactions: MutableList<TransactionResponse> = mutableListOf()
     private var pollingJob: Job? = null
     private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
 
@@ -95,8 +97,9 @@ class DefaultWalletService(
     override fun networks(): List<Network> = networkService.enabledNetworks()
 
     override fun currencies(network: Network): List<Currency> {
-        currencies[network.id()]?.let { return it }
-        currenciesCache.get<String>(network.id())?.let {
+        val key = "${network.id()}_${networkService.wallet(network)?.id()}"
+        currencies[key]?.let { return it }
+        currenciesCache.get<String>(key)?.let {
             jsonDecode<List<Currency>>(it)?.let { curr -> return curr }
         }
         setCurrencies(defaultCurrencies(network), network)
@@ -104,8 +107,9 @@ class DefaultWalletService(
     }
 
     override fun setCurrencies(currencies: List<Currency>, network: Network) {
-        this.currencies[network.id()] = currencies
-        currenciesCache.set(network.id(), jsonEncode(currencies))
+        val key = "${network.id()}_${networkService.wallet(network)?.id()}"
+        this.currencies[key] = currencies
+        currenciesCache.set(key, jsonEncode(currencies))
         emit(WalletEvent.Currencies(network, currencies))
         currencyStoreService.cacheMetadata(currencies)
     }
@@ -142,13 +146,18 @@ class DefaultWalletService(
         networkService.wallet(network)?.unlock(password, salt)
     }
 
+    @Throws(Throwable::class)
     override suspend fun transfer(
         to: AddressHexString,
         currency: Currency,
         amount: BigInt,
         network: Network
-    ) = withContext(bgDispatcher) {
-        
+    ): TransactionResponse = withContext(bgDispatcher) {
+        val request = TransactionRequest(to = Address.HexString(to), value = amount)
+        val wallet = networkService.wallet(network)
+        val response = wallet!!.sendTransaction(request)
+        withUICxt { pendingTransactions.add(response) }
+        return@withContext response
     }
 
     override fun transactions(network: Network): List<Transaction> {

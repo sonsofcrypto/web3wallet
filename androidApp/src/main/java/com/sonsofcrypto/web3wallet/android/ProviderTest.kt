@@ -745,16 +745,15 @@ class ProviderTest {
             BlockTag.Latest
         )
         println("=== nonce $nonce")
-        val transaction = Transaction(
-            hash = null,
+        val transaction = TransactionRequest(
             to = Address.HexString("0x789f1263215d4bcB7a109dE72b4c87116CFac5c4"),
             from = Address.HexString("0x13d32628Cb60EeaBC55c62Db770A27355a3F86b2"),
             nonce = nonce,
             gasLimit = BigInt.zero(),
             gasPrice = null,
-            input = "",
+            data = "",
             value = BigInt.from("1400000000000000"),
-            chainId = BigInt.from(provider.network.chainId),
+            chainId = provider.network.chainId.toInt(),
             type = TransactionType.EIP1559,
             r = null,
             s = null,

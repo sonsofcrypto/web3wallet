@@ -53,7 +53,7 @@ open class ProviderBase(override val network: Network): Provider() {
     }
 
     @Throws(Throwable::class)
-    override suspend fun estimateGas(transaction: Transaction): BigInt {
+    override suspend fun estimateGas(transaction: TransactionRequest): BigInt {
         TODO("Not yet implemented")
     }
 
