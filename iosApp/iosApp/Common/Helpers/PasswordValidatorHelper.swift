@@ -25,7 +25,7 @@ private extension PasswordValidatorHelper {
     
     func makePinValidationError(for text: String) -> String? {
         
-        guard text.isValidRegex(#"(?=.{8,})"#) else {
+        guard text.isValidRegex(#"(?=.{6,})"#) else {
             
             return Localized("validation.error.pin.min.length")
         }
@@ -58,11 +58,6 @@ private extension PasswordValidatorHelper {
         guard text.isValidRegex(#"(?=.*\d)"#) else {
             
             return Localized("validation.error.pass.min.digit")
-        }
-
-        guard text.isValidRegex(#"(?=.*[ !$%&?._-])"#) else {
-            
-            return Localized("validation.error.pass.min.special")
         }
                 
         return nil

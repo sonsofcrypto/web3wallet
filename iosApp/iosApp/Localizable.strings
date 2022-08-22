@@ -377,11 +377,10 @@
 "mnemonic.error.invalid.wordCount" = "Typically 12 (or 15, 18, 21, 24) words separated by spaces.";
 "mnemonic.error.invalid.wordCount.highlight0" = "12 (or 15, 18, 21, 24) words";
 
-"validation.error.pin.min.length" = "Minimum 8 characters";
+"validation.error.pin.min.length" = "Minimum 6 characters";
 "validation.error.pin.weak" = "First 2 digits should be different";
 
 "validation.error.pass.min.lenght" = "Minimum 8 characters";
 "validation.error.pass.min.capital" = "At least one capital letter needed";
 "validation.error.pass.min.lowercase" = "At least one lowercase letter needed";
 "validation.error.pass.min.digit" = "At least one digit needed";
-"validation.error.pass.min.special" = "At least one special character needed";
