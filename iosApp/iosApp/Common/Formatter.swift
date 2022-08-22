@@ -16,7 +16,7 @@ class Formatter {
 
 class CurrencyFormatter {
 
-    var placeholder: String = "0.0"
+    var placeholder: String = "-"
 
     let formatter = web3lib.CurrencyFormatter()
 
