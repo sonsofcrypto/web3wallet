@@ -1,1 +1,1 @@
-[{"name": "Ethereum", "symbol": "eth", "type": 1, "coinGeckoId": "ethereum"}, {"name": "Tether", "symbol": "usdt", "address": "0x6EE856Ae55B6E1A249f04cd3b947141bc146273c", "type": 2, "coinGeckoId": "tether", "decimals": 6}]
+[{"name": "Ethereum", "symbol": "eth", "type": 1, "coinGeckoId": "ethereum"}, {"name": "Tether", "symbol": "usdt", "address": "0xB404c51BBC10dcBE948077F18a4B8E553D160084", "type": 2, "coinGeckoId": "tether", "decimals": 6}]
