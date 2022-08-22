@@ -293,7 +293,7 @@ class DefaultWalletService(
                             data = contract.balanceOf(address),
                         )
                     )
-                    val balance = contract.abiDecode(encodedBalance)
+                    val balance = abiDecode(encodedBalance)
                     updateBalance(wallet, currency, balance, newTransactionCount)
                 }
                 else -> { println("Unhandled balance") }

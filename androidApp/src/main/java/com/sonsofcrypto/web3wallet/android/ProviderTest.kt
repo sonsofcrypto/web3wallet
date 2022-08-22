@@ -1,6 +1,7 @@
 package com.sonsofcrypto.web3wallet.android
 
 import com.sonsofcrypto.web3lib.provider.JsonRpcErrorResponse
+import com.sonsofcrypto.web3lib.provider.ProviderAlchemy
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.provider.model.*
 import com.sonsofcrypto.web3lib.types.Address
@@ -8,6 +9,7 @@ import com.sonsofcrypto.web3lib.types.Bip44
 import com.sonsofcrypto.web3lib.types.ExtKey
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.abiEncode
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
@@ -32,8 +34,8 @@ private val providerJson = Json {
 class ProviderTest {
 
     fun runAll() {
-        testQuantityHexString()
-        testBlockNumber()
+//        testQuantityHexString()
+//        testBlockNumber()
 //        testGasPrice()
 //        testGetBalance()
 //        testGetStorageAt()
@@ -50,7 +52,7 @@ class ProviderTest {
 //        testGetTransactionByBlockIndex()
 //        testGetTransactionReceipt()
 //        testGetUncleBlock()
-//        testGetLogs()
+        testGetLogs()
 //        testSendTransaction()
 //        testNewFilter()
 //        testSendTransaction2()
@@ -605,31 +607,28 @@ class ProviderTest {
     }
 
     fun testGetLogs() = runBlocking {
-        val provider = ProviderPocket(Network.ethereum())
+        val provider = ProviderAlchemy(Network.ropsten())
         val hash = keccak256("Transfer(address,address,uint256)".toByteArray())
-        // 0xddf252ad
-        //   ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
-        val signature = DataHexString(hash) // DataHexString(hash.copyOfRange(0, 4))
-        println("=== signarure $signature")
+        val signature = DataHexString(hash)
+        val address = DataHexString(abiEncode(Address.HexString("0x58aEBEC033A2D55e35e44E6d7B43725b069F6Abc")))
+
         val result = provider.getLogs(
             FilterRequest(
-                BlockTag.Number(15201128),
+//                BlockTag.Number(15201128),
+                BlockTag.Number(0),
                 BlockTag.Number(15201130),
-                Address.HexString("0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce"),
+                Address.HexString("0xB404c51BBC10dcBE948077F18a4B8E553D160084"),
                 listOf(
                     Topic.TopicValue(signature),
+                    Topic.TopicValue(address),
                     Topic.TopicValue(null),
-                    Topic.TopicValue(null),
-                ),
+                )
             )
         )
-
-//        val data = """
-//            [{"address":"0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce","topics":["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef","0x0000000000000000000000001522900b6dafac587d499a862861c0869be6e428","0x0000000000000000000000002fe25e374a43caa1552d6a10d60eddf962b69a38"],"data":"0x00000000000000000000000000000000000000000022e66ecc0194fefd880000","blockNumber":"0xe7f368","transactionHash":"0xb54673b5e8a9ffd573589f2f9674fec1978f6be02059f536d27de6e34dad422f","transactionIndex":"0x52","blockHash":"0xbeb188e6a41562b812ff32c82432f0fc48675e28eef17c098af7bfb25327b14b","logIndex":"0xa0","removed":false}]
-//        """.trimIndent()
-//        val json = Json.decodeFromString(JsonArray.serializer(), data)
-//        val result = Log.fromHexifiedJsonObject(json)
-        println("=== result $result")
+        println("=== result ${result.size}")
+        result.forEach {
+            println("$it")
+        }
     }
 
     fun testNewFilter() = runBlocking {
