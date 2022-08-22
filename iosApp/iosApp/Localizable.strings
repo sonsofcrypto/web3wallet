@@ -143,8 +143,10 @@
 
 "settings.root.themes" = "Themes";
 "settings.theme" = "Theme";
-"settings.theme.miami" = "Theme Miami";
-"settings.theme.ios" = "Theme IOS";
+"settings.theme.miami.light" = "Theme Miami Light";
+"settings.theme.miami.dark" = "Theme Miami Dark";
+"settings.theme.ios.light" = "Theme IOS Light";
+"settings.theme.ios.dark" = "Theme IOS Dark";
 
 "settings.root.developerMenu" = "Developer Menu";
 "settings.debug.apis" = "APIs";

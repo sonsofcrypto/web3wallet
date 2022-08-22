@@ -8,14 +8,21 @@ var Theme: Themable = appTheme {
     didSet { ServiceDirectory.rebootApp() }
 }
 
+enum ThemeStyle: String {
+    case light
+    case dark
+}
+
 var appTheme: Themable {
     let service: SettingsService = ServiceDirectory.assembler.resolve()
-    if service.isSelected(item: .theme, action: .themeMiami) {
-        return ThemeMiami()
-    } else if service.isSelected(item: .theme, action: .themeIOS) {
-        return ThemeIOS()
+    if service.isSelected(item: .theme, action: .themeMiamiLight) {
+        return ThemeMiami(style: .light)
+    } else if service.isSelected(item: .theme, action: .themeMiamiDark) {
+        return ThemeMiami(style: .dark)
+    } else if service.isSelected(item: .theme, action: .themeIOSLight) {
+        return ThemeIOS(style: .light)
     } else {
-        return ThemeIOS()
+        return ThemeIOS(style: .dark)
     }
 }
 
@@ -74,7 +81,7 @@ enum ThemeType {
     case themeMiami
     case themeVanilla
     
-    var isThemeA: Bool {
+    var isThemeMiami: Bool {
         self == .themeMiami
     }
     

@@ -5,6 +5,14 @@
 import UIKit
 
 struct ThemeIOS: Themable {
+    
+    let style: ThemeStyle
+    
+    init(
+        style: ThemeStyle
+    ) {
+        self.style = style
+    }
 
     var name: String {
         "themeIOS"
@@ -12,164 +20,166 @@ struct ThemeIOS: Themable {
     
     var statusBarStyle: ThemeStatusBarStyle {
         
-        .init(lightMode: .dark, darkMode: .light)
+        isDarkMode
+        ? .init(lightMode: .light, darkMode: .light)
+        : .init(lightMode: .dark, darkMode: .dark)
     }
     
     var type: ThemeType { .themeVanilla }
     
     var colour: ThemeColour {
         
-        let pallete = ThemeColourPalette(name: name)
+        let pallete = ThemeColourPalette(isDarkMode: isDarkMode)
         return .init(
             gradientTop: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemBlack :
                 pallete.systemF2F2F7
             },
             gradientBottom: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemBlack :
                 pallete.systemF2F2F7
             },
             navBarBackground: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemBlack :
                 pallete.systemF2F2F7
             },
             navBarTint: pallete.systemOrange,
             navBarTitle: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemWhite :
                 pallete.systemBlack
             },
             tabBarBackground: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemBlack :
                 pallete.systemF2F2F7
             },
             tabBarTint: pallete.systemBlue,
             tabBarTintSelected: pallete.systemPink,
             backgroundBasePrimary: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemBlack :
                 pallete.systemF2F2F7
             },
             backgroundBaseSecondary: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system1C1C1E :
                 pallete.systemWhite
             },
             fillPrimary: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system787880.withAlpha(0.36) :
                 pallete.system787880.withAlpha(0.2)
             },
             fillSecondary: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system787880.withAlpha(0.32) :
                 pallete.system787880.withAlpha(0.16)
             },
             fillTertiary: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system767680.withAlpha(0.24) :
                 pallete.system767680.withAlpha(0.12)
             },
             fillQuaternary: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system767680.withAlpha(0.18) :
                 pallete.system747480.withAlpha(0.08)
             },
             separator: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system38383A :
                 pallete.systemC6C6C8
             },
             separatorTransparent: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system545458.withAlpha(0.65) :
                 pallete.system3C3C43.withAlpha(0.36)
             },
             labelPrimary: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemWhite :
                 pallete.systemBlack
             },
             labelSecondary: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemEBEBF5.withAlpha(0.6) :
                 pallete.system3C3C43.withAlpha(0.6)
             },
             labelTertiary: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemEBEBF5.withAlpha(0.3) :
                 pallete.system3C3C43.withAlpha(0.3)
             },
             labelQuaternary: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemEBEBF5.withAlpha(0.18) :
                 pallete.system3C3C43.withAlpha(0.18)
             },
             buttonBackgroundPrimary: pallete.systemBlue,
             buttonPrimaryText: pallete.systemWhite,
             buttonBackgroundSecondary: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system767680.withAlpha(0.24) :
                 pallete.system767680.withAlpha(0.12)
             },
             buttonSecondaryText: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemWhite :
                 pallete.systemBlack
             },
             switchThumbTintColor: pallete.systemWhite,
             switchBackgroundColor: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemEBEBF5.withAlpha(0.6) :
                 pallete.system3C3C43.withAlpha(0.3)
             },
             switchOnTint: pallete.systemOrange,
             switchDisabledThumbTint: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system48484A :
                 pallete.systemC7C7CC
             },
             switchDisabledBackgroundColor: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system767680.withAlpha(0.24) :
                 pallete.system767680.withAlpha(0.12)
             },
             textFieldTextColour: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemWhite :
                 pallete.systemBlack
             },
             textFieldPlaceholderColour: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemEBEBF5.withAlpha(0.6) :
                 pallete.system3C3C43.withAlpha(0.6)
             },
             segmentedControlBackground: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system767680.withAlpha(0.24) :
                 pallete.system767680.withAlpha(0.12)
             },
             segmentedControlBackgroundSelected: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system2C2C2E :
                 pallete.systemWhite
             },
             segmentedControlText: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemWhite :
                 pallete.systemBlack
             },
             segmentedControlTextSelected: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemWhite :
                 pallete.systemBlack
             },
             cellBackground: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system1C1C1E :
                 pallete.systemWhite
             },
@@ -181,12 +191,12 @@ struct ThemeIOS: Themable {
             candleRed: pallete.systemPink,
             dashboardTVCryptoBallance: pallete.systemOrange,
             activityIndicator: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemWhite :
                 pallete.systemBlack
             },
             toastAlertBackgroundColor: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemWhite :
                 pallete.systemBlack
             },
@@ -249,6 +259,18 @@ struct ThemeIOS: Themable {
 
 private extension ThemeIOS {
     
+    var isDarkMode: Bool {
+        switch style {
+        case .dark:
+            return true
+        case .light:
+            return false
+        }
+    }
+}
+
+private extension ThemeIOS {
+    
     struct ThemeColourPalette {
         
         let systemBlack: UIColor
@@ -277,20 +299,56 @@ private extension ThemeIOS {
         let systemC7C7CC: UIColor
         let system2C2C2E: UIColor
         
-        init(name: String) {
+        init(isDarkMode: Bool) {
                         
-            self.systemBlack = .init(named: "\(name)-system-black")!
-            self.systemBlue = .init(named: "\(name)-system-blue")!
-            self.systemGreen = .init(named: "\(name)-system-green")!
-            self.systemGray = .init(named: "\(name)-system-gray")!
-            self.systemMarine = .init(named: "\(name)-system-marine")!
-            self.systemOrange = .init(named: "\(name)-system-orange")!
-            self.systemPurple = .init(named: "\(name)-system-purple")!
-            self.systemPink =  .init(named: "\(name)-system-pink")!
-            self.systemRed = .init(named: "\(name)-system-red")!
-            self.systemTeal = .init(named: "\(name)-system-teal")!
-            self.systemWhite = .init(named: "\(name)-system-white")!
-            self.systemYellow = .init(named: "\(name)-system-yellow")!
+            self.systemBlack = .init(rgb: 0x000000)
+            self.systemBlue = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0x4E80E9) :
+                .init(rgb: 0x376FE6)
+            }
+            self.systemGray = .init(rgb: 0x8E8E92)
+            self.systemGreen = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0x78D539) :
+                .init(rgb: 0x85DA4E)
+            }
+            self.systemMarine = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0x2C52A0) :
+                .init(rgb: 0x305CB4)
+            }
+            self.systemOrange = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0xF08D1D) :
+                .init(rgb: 0xF29A36)
+            }
+            self.systemPurple = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0x852B9C) :
+                .init(rgb: 0x952FAF)
+            }
+            self.systemPink = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0xEF318E) :
+                .init(rgb: 0xF1499B)
+            }
+            self.systemRed = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0xEF421D) :
+                .init(rgb: 0xE6350F)
+            }
+            self.systemTeal = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0x10AFA8) :
+                .init(rgb: 0x13CEC4)
+            }
+            self.systemWhite = .init(rgb: 0xFFFFFF)
+            self.systemYellow = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0xEFC21D) :
+                .init(rgb: 0xF1C836)
+            }
             self.systemEBEBF5 = .init(rgb: 0xEBEBF5)
             self.system1C1C1E = .init(rgb: 0x1C1C1E)
             self.system3C3C43 = .init(rgb: 0x3C3C43)
