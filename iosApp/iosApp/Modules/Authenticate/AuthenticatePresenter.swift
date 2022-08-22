@@ -116,11 +116,24 @@ private extension DefaultAuthenticatePresenter {
         .init(
             title: Localized("authenticate.title.unlock"),
             password: password,
+            passType: makePassType(),
             passwordPlaceholder: Localized("authenticate.placeholder.password"),
             salt: salt,
             saltPlaceholder: Localized("authenticate.placeholder.salt"),
             needsPassword: keyStoreItem.passwordType != .bio,
             needsSalt: keyStoreItem.saltMnemonic
         )
+    }
+    
+    func makePassType() -> AuthenticateViewModel.PassType {
+        
+        switch keyStoreItem.passwordType {
+        case .pin:
+            return .pin
+        case .pass:
+            return .pass
+        default:
+            fatalError("This should never happen, the wireframe will guard against this")
+        }
     }
 }

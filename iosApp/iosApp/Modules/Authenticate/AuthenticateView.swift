@@ -44,19 +44,31 @@ extension AuthenticateViewController {
 extension AuthenticateViewController: AuthenticateView {
 
     func update(with viewModel: AuthenticateViewModel) {
-        // TODO(web3dgn): UI is complete crap. fields to have password type
-        // background of this view is crap. Needs to animate up when keyboard
-        // comes up. I'd suggest CALayerTransform3D on `view`. I will implement
-        // something so that it is automatic on `PreferredSizePresentationControlelr`
+        
         self.viewModel = viewModel
+        
         title = viewModel.title
+        
         passwordTextField.text = viewModel.password
         passwordTextField.placeholderAttrText = viewModel.passwordPlaceholder
+        
         saltTextField.text = viewModel.salt
         saltTextField.placeholderAttrText = viewModel.saltPlaceholder
+        
         catButton.setTitle(viewModel.title, for: .normal)
-        passwordTextField.isHidden = !viewModel.needsPassword
-        saltTextField.isHidden = !viewModel.needsSalt
+        
+        passwordTextField.superview?.isHidden = !viewModel.needsPassword
+        saltTextField.superview?.isHidden = !viewModel.needsSalt
+        
+        switch viewModel.passType {
+        case .pin:
+            passwordTextField.keyboardType = .numberPad
+        case .pass:
+            passwordTextField.keyboardType = .`default`
+            passwordTextField.returnKeyType = .done
+        }
+        
+        passwordTextField.becomeFirstResponder()
     }
 
     func animateError() {
@@ -74,6 +86,12 @@ private extension AuthenticateViewController {
             target: self,
             action: #selector(dismissAction(_:))
         )
+        passwordTextField.textAlignment = .center
+        passwordTextField.superview?.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        passwordTextField.superview?.backgroundColor = Theme.colour.cellBackground
+        saltTextField.textAlignment = .center
+        saltTextField.superview?.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        saltTextField.superview?.backgroundColor = Theme.colour.cellBackground
     }
 }
 
@@ -104,7 +122,7 @@ extension AuthenticateViewController: UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         updatePresenter(textField)
-        textField.resignFirstResponder()
+        presenter.handle(.didConfirm)
         return false
     }
 

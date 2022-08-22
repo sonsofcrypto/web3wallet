@@ -12,7 +12,6 @@ struct ThemeMiami: Themable {
     var statusBarStyle: ThemeStatusBarStyle {
         .init(lightMode: .light, darkMode: .light)
     }
-    
 
     var colour: ThemeColour {
         let pallete = ThemeColourPalette(name: name)
