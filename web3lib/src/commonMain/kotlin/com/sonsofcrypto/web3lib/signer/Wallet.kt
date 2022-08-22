@@ -101,7 +101,7 @@ class Wallet(
             key = bip44.deriveChildKey(keyStoreItem.derivationPath).key
         } else key = result.key
 
-        lockJob = timerFlow(autoLockInterval)
+        lockJob = timerFlow(autoLockInterval, initialDelay = autoLockInterval)
             .onEach { lock() }
             .launchIn(CoroutineScope(bgDispatcher))
     }
@@ -170,6 +170,7 @@ class Wallet(
             maxPriorityFeePerGas = feeData.maxPriorityFeePerGas,
             maxFeePerGas = feeData.maxFeePerGas,
         )
+        println("=== balance ${getBalance(BlockTag.Latest) }")
         val gasEstimate = provider.estimateGas(populatedTx)
         val populatedTxWithGas = populatedTx.copy(gasLimit = gasEstimate)
         val signature = sign(keccak256(populatedTxWithGas.encodeEIP1559()), key)
@@ -180,7 +181,6 @@ class Wallet(
         )
         val signedRawTx = signedTransaction.encodeEIP1559()
         key.zeroOut()
-
         val hash = provider.sendRawTransaction(signedRawTx.toHexString())
         return TransactionResponse(
             hash = hash,
