@@ -132,8 +132,9 @@ extension DashboardViewController: UICollectionViewDataSource {
                 .update(with: notification)
         } else if let wallet = section.items.wallet(at: indexPath.row) {
             if Theme.type.isThemeIOS {
+                let isLast = (section.items.count - 1) == indexPath.item
                 return cv.dequeue(DashboardTableWalletCell.self, for: indexPath)
-                    .update(with: wallet)
+                    .update(with: wallet, showBottomSeparator: !isLast)
             }
             return cv.dequeue(DashboardWalletCell.self, for: indexPath)
                     .update(with: wallet)

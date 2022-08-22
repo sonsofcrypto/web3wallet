@@ -4,7 +4,8 @@
 
 import UIKit
 
-class DashboardTableWalletCell: CollectionViewCell {
+final class DashboardTableWalletCell: CollectionViewCell {
+    
     @IBOutlet weak var currencyImageView: UIImageView!
     @IBOutlet weak var currencyNameLabel: UILabel!
     @IBOutlet weak var fiatPriceLabel: UILabel!
@@ -23,20 +24,27 @@ class DashboardTableWalletCell: CollectionViewCell {
         fiatBalanceLabel.apply(style: .callout, colour: Theme.colour.labelSecondary)
         chevronView.tintColor = Theme.colour.labelSecondary
     }
+    
+    override func setSelected(_ selected: Bool) {
+        // do nothing
+    }
 }
 
 // MARK: - ViewModel
 
 extension DashboardTableWalletCell {
     
-    func update(with viewModel: DashboardViewModel.Wallet?) -> Self {
-        currencyImageView.image = UIImage(named: viewModel?.imageName ?? "")
-        fiatPriceLabel.text = viewModel?.fiatPrice
-        currencyNameLabel.text = viewModel?.name
-        pctChangeLabel.text = viewModel?.pctChange
-        cryptoBalanceLabel.text = viewModel?.cryptoBalance
-        fiatBalanceLabel.text = viewModel?.fiatBalance
-        bottomSeparatorView.isHidden = false
+    func update(
+        with viewModel: DashboardViewModel.Wallet,
+        showBottomSeparator: Bool = true
+    ) -> Self {
+        currencyImageView.image = viewModel.imageName.assetImage
+        fiatPriceLabel.text = viewModel.fiatPrice
+        currencyNameLabel.text = viewModel.name
+        pctChangeLabel.text = viewModel.pctChange
+        cryptoBalanceLabel.text = viewModel.cryptoBalance
+        fiatBalanceLabel.text = viewModel.fiatBalance
+        bottomSeparatorView.isHidden = !showBottomSeparator
         return self
     }
 }
