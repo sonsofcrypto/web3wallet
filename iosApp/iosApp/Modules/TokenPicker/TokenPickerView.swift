@@ -119,14 +119,17 @@ private extension TokenPickerViewController {
         )
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let sceneHelper = SceneDelegateHelper()
         let constraint = collectionView.bottomAnchor.constraint(
-            equalTo: view.keyboardLayoutGuide.topAnchor
+            equalTo: view.keyboardLayoutGuide.topAnchor,
+            constant: sceneHelper.window?.safeAreaInsets.bottom ?? 0
         )
         constraint.priority = .required
         constraint.isActive = true
         
         var insets = collectionView.contentInset
-        insets.bottom += view.safeAreaInsets.bottom
+        insets.bottom += sceneHelper.window?.safeAreaInsets.bottom ?? 0
         collectionView.contentInset = insets
         
         addCustomBackgroundGradientView()        
