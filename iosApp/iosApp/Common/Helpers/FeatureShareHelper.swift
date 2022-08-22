@@ -9,14 +9,18 @@ struct FeatureShareHelper {
         presentingIn: UIViewController
     ) {
         
-        let text = Localized(
+        var text = Localized(
             "feature.vote.text",
             arg: "#" + web3Feature.hashTag
-        ).addingPercentEncoding(
+        )
+        
+        text.append("\n\n\(web3Feature.imageUrl)")
+        
+        let textEncoded = text.addingPercentEncoding(
             withAllowedCharacters: .urlHostAllowed
         ) ?? ""
         
-        guard let url = "https://www.twitter.com/intent/tweet?text=\(text)".url else { return }
+        guard let url = "https://www.twitter.com/intent/tweet?text=\(textEncoded)".url else { return }
         
         UIApplication.shared.open(url)
     }

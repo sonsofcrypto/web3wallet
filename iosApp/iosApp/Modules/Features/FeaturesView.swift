@@ -305,7 +305,7 @@ private extension FeaturesViewController {
             bottom: Theme.constant.padding,
             trailing: Theme.constant.padding
         )
-        section.interGroupSpacing = Theme.constant.padding * 1.5
+        section.interGroupSpacing = Theme.constant.padding
         
         let headerItemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),

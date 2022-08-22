@@ -354,7 +354,7 @@
 "cult.proposal.parsing.rewardDistribution.per" = "per";
 "cult.proposal.parsing.cultRewardAllocation" = "%@% of Total Supply";
 
-"features.title" = "Upcoming Features";
+"features.title" = "Improvement Proposals";
 "features.section.all.description" = "Description here for section all, @Annon to fill up.";
 "features.section.infrastructure.description" = "Description here for section infrastructure, @Annon to fill up.";
 "features.section.integrations.description" = "Description here for section integrations, @Annon to fill up.";
