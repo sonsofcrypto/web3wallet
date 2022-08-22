@@ -109,7 +109,6 @@
 		1C54DC1D2862354C00E378F6 /* QRCodeScan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */; };
 		1C54DC1F2862373C00E378F6 /* QRCodeScanInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC1E2862373C00E378F6 /* QRCodeScanInteractor.swift */; };
 		1C54DC2A2868193300E378F6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC292868193300E378F6 /* Theme.swift */; };
-		1C54DC352868204000E378F6 /* Colours-ThemeA.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC342868204000E378F6 /* Colours-ThemeA.xcassets */; };
 		1C54DC5128683DDA00E378F6 /* NaokoAA-Light-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4328683DD900E378F6 /* NaokoAA-Light-Italic.otf */; };
 		1C54DC5228683DDA00E378F6 /* NaokoAA-Extrabold-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4428683DD900E378F6 /* NaokoAA-Extrabold-Italic.otf */; };
 		1C54DC5328683DDA00E378F6 /* NaokoAA-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4528683DD900E378F6 /* NaokoAA-Bold.otf */; };
@@ -127,7 +126,7 @@
 		1C54DC662869A48A00E378F6 /* DashboardHeaderBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC652869A48A00E378F6 /* DashboardHeaderBalanceView.swift */; };
 		1C54DC682869BE6500E378F6 /* DashboardButtonsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC672869BE6500E378F6 /* DashboardButtonsCell.swift */; };
 		1C54DC6A2869D60D00E378F6 /* ThemeMiami.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC692869D60D00E378F6 /* ThemeMiami.swift */; };
-		1C54DC74286A1D4C00E378F6 /* Assets-ThemeA.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC73286A1D4B00E378F6 /* Assets-ThemeA.xcassets */; };
+		1C54DC74286A1D4C00E378F6 /* Assets-ThemeMiami.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC73286A1D4B00E378F6 /* Assets-ThemeMiami.xcassets */; };
 		1C5B603B284675B800ECBD79 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5B603A284675B800ECBD79 /* Kingfisher */; };
 		1C60C1AA28571B95003BE25D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */; };
 		1C60C1AC28571BB6003BE25D /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1AB28571BB6003BE25D /* UIImageView+Extensions.swift */; };
@@ -487,7 +486,6 @@
 		1CE006482889A08A002D1EB3 /* Alert.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CE006472889A08A002D1EB3 /* Alert.storyboard */; };
 		1CE0064A2889C4D6002D1EB3 /* UITraitCollection+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE006492889C4D6002D1EB3 /* UITraitCollection+Extensions.swift */; };
 		1CE0064C2889E0E6002D1EB3 /* ThemeIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0064B2889E0E6002D1EB3 /* ThemeIOS.swift */; };
-		1CE0064E2889E604002D1EB3 /* Colours-ThemeIOS.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CE0064D2889E604002D1EB3 /* Colours-ThemeIOS.xcassets */; };
 		1CE66BCA2848EA9900AB6ACA /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BC92848EA9900AB6ACA /* ChatService.swift */; };
 		1CE66BCC2848EA9F00AB6ACA /* DefaultChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCB2848EA9F00AB6ACA /* DefaultChatService.swift */; };
 		1CE66BCE2848EAA600AB6ACA /* ChatServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */; };
@@ -693,7 +691,6 @@
 		1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QRCodeScan.storyboard; sourceTree = "<group>"; };
 		1C54DC1E2862373C00E378F6 /* QRCodeScanInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanInteractor.swift; sourceTree = "<group>"; };
 		1C54DC292868193300E378F6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
-		1C54DC342868204000E378F6 /* Colours-ThemeA.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Colours-ThemeA.xcassets"; sourceTree = "<group>"; };
 		1C54DC4328683DD900E378F6 /* NaokoAA-Light-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Light-Italic.otf"; sourceTree = "<group>"; };
 		1C54DC4428683DD900E378F6 /* NaokoAA-Extrabold-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Extrabold-Italic.otf"; sourceTree = "<group>"; };
 		1C54DC4528683DD900E378F6 /* NaokoAA-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Bold.otf"; sourceTree = "<group>"; };
@@ -711,7 +708,7 @@
 		1C54DC652869A48A00E378F6 /* DashboardHeaderBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardHeaderBalanceView.swift; sourceTree = "<group>"; };
 		1C54DC672869BE6500E378F6 /* DashboardButtonsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardButtonsCell.swift; sourceTree = "<group>"; };
 		1C54DC692869D60D00E378F6 /* ThemeMiami.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeMiami.swift; sourceTree = "<group>"; };
-		1C54DC73286A1D4B00E378F6 /* Assets-ThemeA.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets-ThemeA.xcassets"; sourceTree = "<group>"; };
+		1C54DC73286A1D4B00E378F6 /* Assets-ThemeMiami.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets-ThemeMiami.xcassets"; sourceTree = "<group>"; };
 		1C60C1A928571B95003BE25D /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1AB28571BB6003BE25D /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 		1C60C1AD28572405003BE25D /* Web3ServiceLegacyAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3ServiceLegacyAssembler.swift; sourceTree = "<group>"; };
@@ -1070,7 +1067,6 @@
 		1CE006472889A08A002D1EB3 /* Alert.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Alert.storyboard; sourceTree = "<group>"; };
 		1CE006492889C4D6002D1EB3 /* UITraitCollection+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITraitCollection+Extensions.swift"; sourceTree = "<group>"; };
 		1CE0064B2889E0E6002D1EB3 /* ThemeIOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeIOS.swift; sourceTree = "<group>"; };
-		1CE0064D2889E604002D1EB3 /* Colours-ThemeIOS.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Colours-ThemeIOS.xcassets"; sourceTree = "<group>"; };
 		1CE66BC92848EA9900AB6ACA /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		1CE66BCB2848EA9F00AB6ACA /* DefaultChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChatService.swift; sourceTree = "<group>"; };
 		1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceAssembler.swift; sourceTree = "<group>"; };
@@ -2408,11 +2404,9 @@
 				1CD3FE1F284D5840008312DE /* FeatureFlags.swift */,
 				D157F7CC27B69B6300578FF8 /* SceneDelegate.swift */,
 				1C9E31AD287732A700DD2031 /* Assets-Old.xcassets */,
-				1C54DC73286A1D4B00E378F6 /* Assets-ThemeA.xcassets */,
+				1C54DC73286A1D4B00E378F6 /* Assets-ThemeMiami.xcassets */,
 				1CB8B0E728916AA900024E7C /* Assets-ThemeIOS.xcassets */,
 				D157F7D327B69B6400578FF8 /* Assets.xcassets */,
-				1C54DC342868204000E378F6 /* Colours-ThemeA.xcassets */,
-				1CE0064D2889E604002D1EB3 /* Colours-ThemeIOS.xcassets */,
 				D15CB4FD2893D1AC00E4A25E /* Currencies.xcassets */,
 				1C6487072832DC550091A12D /* Bootstrapper */,
 				D15B06C527B6D247008C3C62 /* Common */,
@@ -2712,7 +2706,6 @@
 				1CB8B0A6288A824C00024E7C /* Degen.storyboard in Resources */,
 				1C54DC5C28683DDA00E378F6 /* NaokoAA-Semilight-Italic.otf in Resources */,
 				1CAC5604286EFFC300CCB2B6 /* SFProText-RegularItalic.otf in Resources */,
-				1C54DC352868204000E378F6 /* Colours-ThemeA.xcassets in Resources */,
 				1C60C2C8285724D0003BE25D /* Chat.storyboard in Resources */,
 				1C54DC5B28683DDA00E378F6 /* NaokoAA-Semilight.otf in Resources */,
 				1C54DC5128683DDA00E378F6 /* NaokoAA-Light-Italic.otf in Resources */,
@@ -2752,7 +2745,7 @@
 				1CB8B0DC28904F6C00024E7C /* NFTsCollection.storyboard in Resources */,
 				1C9E31AE287732A700DD2031 /* Assets-Old.xcassets in Resources */,
 				D15CB4FE2893D1AC00E4A25E /* Currencies.xcassets in Resources */,
-				1C54DC74286A1D4C00E378F6 /* Assets-ThemeA.xcassets in Resources */,
+				1C54DC74286A1D4C00E378F6 /* Assets-ThemeMiami.xcassets in Resources */,
 				D11A990727B8615B00EDFDD0 /* GothicA1-Medium.ttf in Resources */,
 				1C54DC5A28683DDA00E378F6 /* NaokoAA-Extrabold.otf in Resources */,
 				1C54DBDE285DD15400E378F6 /* Account.storyboard in Resources */,
@@ -2770,7 +2763,6 @@
 				1CB8B0AB288B065100024E7C /* CultProposals.storyboard in Resources */,
 				D157F7D427B69B6400578FF8 /* Assets.xcassets in Resources */,
 				D11A990327B8615B00EDFDD0 /* GothicA1-Thin.ttf in Resources */,
-				1CE0064E2889E604002D1EB3 /* Colours-ThemeIOS.xcassets in Resources */,
 				1CD843EA287218C800E6D359 /* OCR-A Regular.ttf in Resources */,
 				D1976B14287EFAE10063FC9C /* MnemonicImport.storyboard in Resources */,
 				D11A990927B8615B00EDFDD0 /* GothicA1-SemiBold.ttf in Resources */,

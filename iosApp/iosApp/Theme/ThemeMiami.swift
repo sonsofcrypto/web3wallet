@@ -6,22 +6,29 @@ import UIKit
 
 struct ThemeMiami: Themable {
     
-    var name: String { "themeA" }
+    let style: ThemeStyle
+    
+    init(
+        style: ThemeStyle
+    ) {
+        self.style = style
+    }
+    
+    var name: String { "themeMiami" }
     var type: ThemeType { .themeMiami }
 
     var statusBarStyle: ThemeStatusBarStyle {
         .init(lightMode: .light, darkMode: .light)
     }
-    
 
     var colour: ThemeColour {
-        let pallete = ThemeColourPalette(name: name)
+        let pallete = ThemeColourPalette(isDarkMode: isDarkMode)
         return .init(
             gradientTop: .init { traits in
-                traits.isDarkMode ? pallete.systemPink : pallete.systemBlue
+                isDarkMode ? pallete.systemPink : pallete.systemBlue
             },
             gradientBottom: .init { traits in
-                traits.isDarkMode ? pallete.systemPurple : pallete.systemFC78A9
+                isDarkMode ? pallete.systemPurple : pallete.systemFC78A9
             },
             navBarBackground: pallete.system1C1C1E,
             navBarTint: pallete.systemOrange,
@@ -31,17 +38,17 @@ struct ThemeMiami: Themable {
             tabBarTintSelected: pallete.systemPink,
             backgroundBasePrimary: pallete.systemBlack,
             backgroundBaseSecondary: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system1C1C1E :
                 pallete.systemF2F2F7
             },
             fillPrimary: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system787880.withAlpha(0.36) :
                 pallete.system787880.withAlpha(0.2)
             },
             fillSecondary: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system787880.withAlpha(0.32) :
                 pallete.system787880.withAlpha(0.16)
             },
@@ -54,11 +61,11 @@ struct ThemeMiami: Themable {
             labelTertiary: pallete.systemEBEBF5.withAlpha(0.3),
             labelQuaternary: pallete.systemEBEBF5.withAlpha(0.18),
             buttonBackgroundPrimary: .init { traits in
-                traits.isDarkMode ? pallete.systemPink : pallete.systemBlue
+                isDarkMode ? pallete.systemPink : pallete.systemBlue
             },
             buttonPrimaryText: pallete.systemWhite,
             buttonBackgroundSecondary: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system787880.withAlpha(0.36) :
                 pallete.system787880.withAlpha(0.2)
             },
@@ -68,14 +75,14 @@ struct ThemeMiami: Themable {
             switchOnTint: pallete.systemOrange,
             switchDisabledThumbTint: pallete.systemEBEBF5.withAlpha(0.6),
             switchDisabledBackgroundColor: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system787880.withAlpha(0.32) :
                 pallete.system787880.withAlpha(0.16)
             },
             textFieldTextColour: pallete.systemWhite,
             textFieldPlaceholderColour: pallete.systemEBEBF5.withAlpha(0.6),
             segmentedControlBackground: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.system767680.withAlpha(0.18) :
                 pallete.system767680.withAlpha(0.08)
             },
@@ -83,7 +90,7 @@ struct ThemeMiami: Themable {
             segmentedControlText: pallete.systemWhite,
             segmentedControlTextSelected: pallete.systemWhite,
             cellBackground: .init { traits in
-                traits.isDarkMode ?
+                isDarkMode ?
                 pallete.systemEBEBF5.withAlpha(0.18) :
                 pallete.systemEBEBF5.withAlpha(0.18)
                 //pallete.systemBlack.withAlpha(0.2)
@@ -156,6 +163,18 @@ struct ThemeMiami: Themable {
 
 private extension ThemeMiami {
     
+    var isDarkMode: Bool {
+        switch style {
+        case .dark:
+            return true
+        case .light:
+            return false
+        }
+    }
+}
+
+private extension ThemeMiami {
+    
     struct ThemeColourPalette {
         
         let systemBlack: UIColor
@@ -178,20 +197,56 @@ private extension ThemeMiami {
         let system767680: UIColor
         let systemFC78A9: UIColor
         
-        init(name: String) {
+        init(isDarkMode: Bool) {
                         
-            self.systemBlack = .init(named: "\(name)-system-black")!
-            self.systemBlue = .init(named: "\(name)-system-blue")!
-            self.systemGreen = .init(named: "\(name)-system-green")!
-            self.systemGray = .init(named: "\(name)-system-gray")!
-            self.systemMarine = .init(named: "\(name)-system-marine")!
-            self.systemOrange = .init(named: "\(name)-system-orange")!
-            self.systemPurple = .init(named: "\(name)-system-purple")!
-            self.systemPink =  .init(named: "\(name)-system-pink")!
-            self.systemRed = .init(named: "\(name)-system-red")!
-            self.systemTeal = .init(named: "\(name)-system-teal")!
-            self.systemWhite = .init(named: "\(name)-system-white")!
-            self.systemYellow = .init(named: "\(name)-system-yellow")!
+            self.systemBlack = .init(rgb: 0x000000)
+            self.systemBlue = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0x4E80E9) :
+                .init(rgb: 0x3770E6)
+            }
+            self.systemGray = .init(rgb: 0x8E8E92)
+            self.systemGreen = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0x78D63A) :
+                .init(rgb: 0x85DA4E)
+            }
+            self.systemMarine = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0x2C52A1) :
+                .init(rgb: 0x315CB4)
+            }
+            self.systemOrange = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0xF08D1D) :
+                .init(rgb: 0xF29A36)
+            }
+            self.systemPurple = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0x852B9C) :
+                .init(rgb: 0x9630B0)
+            }
+            self.systemPink = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0xF0328E) :
+                .init(rgb: 0xF24A9B)
+            }
+            self.systemRed = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0xF0421D) :
+                .init(rgb: 0xE6350F)
+            }
+            self.systemTeal = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0x10B0A8) :
+                .init(rgb: 0x13CEC4)
+            }
+            self.systemWhite = .init(rgb: 0xFFFFFF)
+            self.systemYellow = .init { traits in
+                isDarkMode ?
+                .init(rgb: 0xF0C21D) :
+                .init(rgb: 0xF2C936)
+            }
             self.systemEBEBF5 = .init(rgb: 0xEBEBF5)
             self.system1C1C1E = .init(rgb: 0x1C1C1E)
             self.systemC6C6C8 = .init(rgb: 0xC6C6C8)

@@ -12,7 +12,7 @@ final class SegmentedControl: UISegmentedControl {
         
         let frame: CGRect = .init(
             origin: .zero,
-            size: .init(width: windowWidth * 0.6, height: 32)
+            size: .init(width: windowWidth * 0.5, height: 32)
         )
 
         self.init(frame: frame)

@@ -22,7 +22,7 @@ class LineView: UIView {
 
     override var intrinsicContentSize: CGSize {
         var size = super.intrinsicContentSize
-        size.height = 0.5
+        size.height = 0.33
         return size
     }
 }

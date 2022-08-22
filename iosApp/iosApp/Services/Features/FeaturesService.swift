@@ -77,7 +77,7 @@ private extension DefaultFeaturesService {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "raw.githubusercontent.com"
-        urlComponents.path = "/sonsofcrypto/web3wallet-improvment-proposals/c178b5d1f27071b47e2e45abf81342cd9eb60b31/proposals-list.json"
+        urlComponents.path = "/sonsofcrypto/web3wallet-improvement-proposals/master/proposals-list.json"
         return urlComponents.url
     }
     

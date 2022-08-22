@@ -345,7 +345,7 @@ private extension TokenEnterAmountView {
             if isFlip || isFlipEvent, let latestFiatAmount = latestFiatAmount {
                 
                 sendAmountLabel.text = latestFiatAmount.formatStringCurrency(
-                    type: .max
+                    type: .long
                 )
             } else {
                 
@@ -357,7 +357,7 @@ private extension TokenEnterAmountView {
                 self.latestFiatAmount = fiatAmount
                 
                 sendAmountLabel.text = fiatAmount.formatStringCurrency(
-                    type: .max
+                    type: .long
                 )
             }
             
@@ -370,7 +370,7 @@ private extension TokenEnterAmountView {
             ? latestTokenAmount ?? makeTokenAmountFromFiatPrice(with: fiatAmount)
             : makeTokenAmountFromFiatPrice(with: fiatAmount)
             sendAmountLabel.text = tokenAmount.formatString(
-                type: .max,
+                type: .long,
                 decimals: viewModel.tokenMaxDecimals
             ) + " \(viewModel.tokenSymbol)"
         }
@@ -385,13 +385,13 @@ private extension TokenEnterAmountView {
                 decimals: viewModel.tokenMaxDecimals
             )
             balanceLabel.text = Localized(
-                "tokenSwap.cell.balance",
+                "tokenEnter.balance",
                 arg: arg
             )
         case .fiat:
             let maxBalanceAmountFiat = makeCurrencyFiatPrice(with: viewModel.tokenMaxAmount)
             balanceLabel.text = Localized(
-                "tokenSwap.cell.balance",
+                "tokenEnter.balance",
                 arg: maxBalanceAmountFiat.formatStringCurrency(type: .max)
             )
         }

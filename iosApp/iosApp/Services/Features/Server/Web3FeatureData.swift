@@ -7,7 +7,7 @@ struct Web3FeatureData: Equatable {
     let id: String
     let title: String
     let body: String
-    let image: String // asset name in project bundle
+    let imageUrl: String // URL pointing to a valid image in imgur, eg: https://imgur.com/gallery/XXXXX
     let category: Web3Feature.Category
     let creationDate: String // UTC time for when we should start searching for votes
 }
@@ -26,7 +26,7 @@ extension Web3FeatureData {
                 id: "1002",
                 title: "Matic support",
                 body: "Matic support description, TBC",
-                image: "",
+                imageUrl: "https://imgur.com/gallery/jX0vvpz",
                 category: .infrastructure,
                 creationDate: "2022-08-18T00:00:00.000Z"
             ),
@@ -34,7 +34,7 @@ extension Web3FeatureData {
                 id: "1001",
                 title: "Solana support",
                 body: "Solana support description, TBC",
-                image: "",
+                imageUrl: "https://imgur.com/gallery/jX0vvpz",
                 category: .infrastructure,
                 creationDate: "2022-08-18T00:00:00.000Z"
             ),
@@ -42,7 +42,7 @@ extension Web3FeatureData {
                 id: "2001",
                 title: "Integration 1",
                 body: "Integration 1 description, TBC",
-                image: "dashboard-palm",
+                imageUrl: "https://imgur.com/gallery/jX0vvpz",
                 category: .integrations,
                 creationDate: "2022-08-18T00:00:00.000Z"
             ),
@@ -50,7 +50,7 @@ extension Web3FeatureData {
                 id: "3001",
                 title: "Currency Swap",
                 body: "Currency Swap description, TBC",
-                image: "dashboard-palm",
+                imageUrl: "https://imgur.com/gallery/jX0vvpz",
                 category: .features,
                 creationDate: "2022-08-18T00:00:00.000Z"
             )

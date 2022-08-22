@@ -38,8 +38,10 @@ extension Setting {
 
     enum ActionIdentifier: String {
         
-        case themeMiami = "theme.miami"
-        case themeIOS = "theme.ios"
+        case themeMiamiLight = "theme.miami.light"
+        case themeMiamiDark = "theme.miami.dark"
+        case themeIOSLight = "theme.ios.light"
+        case themeIOSDark = "theme.ios.dark"
 
         case debugAPIsNFTsOpenSea = "providers.nfts.opensea"
 

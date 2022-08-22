@@ -19,26 +19,52 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="E48-x9-g35">
                                 <rect key="frame" x="16" y="60" width="382" height="786"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AhO-XF-m2S" customClass="TextField" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="382" height="34"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="ozv-nd-HZD" id="tEC-ch-L3r"/>
-                                        </connections>
-                                    </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uru-02-rXu" customClass="TextField" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="382" height="34"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="ozv-nd-HZD" id="Ma6-lQ-n65"/>
-                                        </connections>
-                                    </textField>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="haj-Q2-b1G">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="44"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AhO-XF-m2S" customClass="TextField" customModule="iosApp" customModuleProvider="target">
+                                                <rect key="frame" x="8" y="0.0" width="366" height="44"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="ozv-nd-HZD" id="tEC-ch-L3r"/>
+                                                </connections>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="AhO-XF-m2S" secondAttribute="bottom" id="3vH-on-A7o"/>
+                                            <constraint firstAttribute="height" constant="44" id="Gj0-4h-UZ7"/>
+                                            <constraint firstItem="AhO-XF-m2S" firstAttribute="top" secondItem="haj-Q2-b1G" secondAttribute="top" id="cMI-wE-9Gn"/>
+                                            <constraint firstAttribute="trailing" secondItem="AhO-XF-m2S" secondAttribute="trailing" constant="8" id="gLq-3i-BUC"/>
+                                            <constraint firstItem="AhO-XF-m2S" firstAttribute="leading" secondItem="haj-Q2-b1G" secondAttribute="leading" constant="8" id="u33-eg-0Ol"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mfT-vT-kQF">
+                                        <rect key="frame" x="0.0" y="60" width="382" height="44"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Uru-02-rXu" customClass="TextField" customModule="iosApp" customModuleProvider="target">
+                                                <rect key="frame" x="8" y="0.0" width="366" height="44"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="ozv-nd-HZD" id="Ma6-lQ-n65"/>
+                                                </connections>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="26f-uR-cEc"/>
+                                            <constraint firstItem="Uru-02-rXu" firstAttribute="leading" secondItem="mfT-vT-kQF" secondAttribute="leading" constant="8" id="H1X-TQ-0kE"/>
+                                            <constraint firstAttribute="trailing" secondItem="Uru-02-rXu" secondAttribute="trailing" constant="8" id="Jif-nW-Fw0"/>
+                                            <constraint firstItem="Uru-02-rXu" firstAttribute="top" secondItem="mfT-vT-kQF" secondAttribute="top" id="RVM-LU-sVG"/>
+                                            <constraint firstAttribute="bottom" secondItem="Uru-02-rXu" secondAttribute="bottom" id="cPy-hk-boS"/>
+                                        </constraints>
+                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VGT-Xr-nTb">
-                                        <rect key="frame" x="0.0" y="100" width="382" height="639"/>
+                                        <rect key="frame" x="0.0" y="120" width="382" height="619"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3yx-4L-4tF" customClass="Button" customModule="iosApp" customModuleProvider="target">

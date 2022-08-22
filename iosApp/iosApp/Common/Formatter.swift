@@ -21,23 +21,27 @@ class CurrencyFormatter {
     let formatter = web3lib.CurrencyFormatter()
 
     enum Style {
-        case regular
-        case regularSymbol
+        case short
+        case long
+        case max
     }
 
     func string(
         _ amount: BigInt?,
         currency: Currency,
-        style: Style = .regular
+        style: Style = .max
     ) -> String {
         guard let amount = amount else { return placeholder }
-        let num = formatter.format(bigInt: amount, currency: currency)
+        let amountFormatted: String
         switch style {
-        case .regular:
-            return num
-        case .regularSymbol:
-            return num + currency.symbol.uppercased()
+        case .short:
+            amountFormatted =  amount.formatString(type: .short, decimals: currency.decimals?.uintValue ?? 18)
+        case .long:
+            amountFormatted =  amount.formatString(type: .long, decimals: currency.decimals?.uintValue ?? 18)
+        case .max:
+            amountFormatted = amount.formatString(type: .max, decimals: currency.decimals?.uintValue ?? 18)
         }
+        return amountFormatted + currency.symbol.uppercased()
     }
 }
 

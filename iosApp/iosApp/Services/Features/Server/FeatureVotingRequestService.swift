@@ -65,7 +65,7 @@ final class TwitterFeatureVotingRequestService: FeatureVotingRequestService {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 
-                //print("[Feature][Data] Response -> \(String(data: data, encoding: .utf8))")
+                //print("[Feature][⬇️] Response -> \(String(data: data, encoding: .utf8))")
                 
                 let data = try decoder.decode(TweetSearchRecentRespoonse.self, from: data)
                 

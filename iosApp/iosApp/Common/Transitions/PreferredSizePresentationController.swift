@@ -55,7 +55,8 @@ class PreferredSizePresentationController: UIPresentationController {
             return .init(
                 origin: .init(
                     x: (bounds.width - size.width) / 2,
-                    y: (bounds.height - size.height) / 2
+                    // NOTE: bounds.height - keyboard.height so the view is centered above the keyboard
+                    y: ((bounds.height - 216) - size.height) / 1.5
                 ),
                 size: size
             )

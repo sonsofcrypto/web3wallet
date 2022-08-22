@@ -60,18 +60,34 @@ extension DefaultSettingsService: SettingsService {
                     title: nil,
                     items: [
                         .init(
-                            title: Localized("settings.theme.miami"),
+                            title: Localized("settings.theme.miami.light"),
                             type: .action(
                                 item: .theme,
-                                action: .themeMiami,
+                                action: .themeMiamiLight,
                                 showTickOnSelected: true
                             )
                         ),
                         .init(
-                            title: Localized("settings.theme.ios"),
+                            title: Localized("settings.theme.miami.dark"),
                             type: .action(
                                 item: .theme,
-                                action: .themeIOS,
+                                action: .themeMiamiDark,
+                                showTickOnSelected: true
+                            )
+                        ),
+                        .init(
+                            title: Localized("settings.theme.ios.light"),
+                            type: .action(
+                                item: .theme,
+                                action: .themeIOSLight,
+                                showTickOnSelected: true
+                            )
+                        ),
+                        .init(
+                            title: Localized("settings.theme.ios.dark"),
+                            type: .action(
+                                item: .theme,
+                                action: .themeIOSDark,
                                 showTickOnSelected: true
                             )
                         )
@@ -243,7 +259,7 @@ private extension DefaultSettingsService {
         case .debugAPIsNFTsOpenSea:
             ServiceDirectory.rebootApp()
             
-        case .themeIOS, .themeMiami:
+        case .themeIOSLight, .themeIOSDark, .themeMiamiLight, .themeMiamiDark:
             Theme = appTheme
             
         case .resetKeystore:

@@ -14,7 +14,7 @@ final class SettingsServiceAssembler: AssemblerComponent {
             )
             if !service.isInitialized(item: .theme) {
                 
-                service.didSelect(item: .theme, action: .themeMiami, fireAction: false)
+                service.didSelect(item: .theme, action: .themeMiamiLight, fireAction: false)
             }
             if !service.isInitialized(item: .debugAPIsNFTs) {
                 

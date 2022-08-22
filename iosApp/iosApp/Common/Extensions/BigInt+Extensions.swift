@@ -118,9 +118,9 @@ extension BigInt {
         case .short:
             return toDecimalString().add(decimals: decimals)
         case .long:
-            return toDecimalString().add(decimals: decimals).trimFinalZerosIfDecimal
+            return toDecimalString().add(decimals: decimals).trimDecimals(upToMax: 4).trimFinalZerosIfDecimal(min: 1)
         case .max:
-            return toDecimalString().add(decimals: decimals)
+            return toDecimalString().add(decimals: decimals).trimFinalZerosIfDecimal(min: 1)
         }
     }
     
@@ -133,13 +133,13 @@ extension BigInt {
         switch type {
         case .short:
             return String.currencySymbol(with: currencyCode)
-            + formatString(type: type, decimals: decimals)
+            + toDecimalString().add(decimals: decimals)
         case .long:
             return String.currencySymbol(with: currencyCode)
-            + formatString(type: type, decimals: decimals).trimFinalZerosIfDecimal.thowsandFormatted
+            + toDecimalString().add(decimals: decimals).trimFinalZerosIfDecimal(min: 2).thowsandFormatted
         case .max:
             return String.currencySymbol(with: currencyCode)
-            + formatString(type: type, decimals: decimals).thowsandFormatted
+            + toDecimalString().add(decimals: decimals).trimFinalZerosIfDecimal(min: 2).thowsandFormatted
         }
     }
 }
@@ -153,7 +153,37 @@ private extension String {
         return replacingOccurrences(of: ".", with: "")
     }
     
-    var trimFinalZerosIfDecimal: String {
+    func trimDecimals(upToMax: Int) -> String {
+        
+        guard let decimals = decimals, decimals.count > upToMax else { return self }
+        
+        let lastIndex = upToMax - 1
+        var newDecimals = ""
+        var deleteModelOn = true
+        for i in 0...lastIndex {
+            
+            let character = decimals[lastIndex-i]
+
+            guard deleteModelOn else {
+                
+                newDecimals = String(character) + newDecimals
+                continue
+            }
+            
+            guard i < upToMax else { continue }
+            
+            deleteModelOn = false
+            newDecimals = String(character) + newDecimals
+        }
+        
+        let nonDecimalPart = split(separator: ".")[0]
+        
+        return nonDecimalPart + "." + newDecimals
+    }
+    
+    func trimFinalZerosIfDecimal(
+        min minDecimals: Int = 2
+    ) -> String {
         
         guard let decimals = decimals else { return self }
         
@@ -178,7 +208,18 @@ private extension String {
         
         let nonDecimalPart = split(separator: ".")[0]
         
-        return nonDecimalPart + (newDecimals.isEmpty ? "" : "." + newDecimals)
+        return nonDecimalPart + (newDecimals.isEmpty ? ".\(makeDecimalZeros(with: minDecimals))" : "." + newDecimals)
+    }
+    
+    func makeDecimalZeros(
+        with minDecimals: Int
+    ) -> String {
+        
+        var zeros = ""
+        for _ in 0..<minDecimals {
+            zeros += "0"
+        }
+        return zeros
     }
     
     func add(decimals: UInt) -> String {

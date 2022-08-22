@@ -95,9 +95,9 @@ private extension FeatureServiceRunner {
                 self.fetch(feature: feature)
 
                 
-            case .failure:
+            case let .failure(error):
                 
-                print("[Feature][❌][\(feature.hashTag)] 1 - Moving to next feature")
+                print("[Feature][❌][\(feature.hashTag)] 🚨 ERROR 🚨 \(error) -> Moving to next feature")
                 self.removeFeatureAndGoNext(feature: feature)
             }
         }
@@ -130,7 +130,7 @@ private extension FeatureServiceRunner {
                 id: $0.id,
                 title: $0.title,
                 body: $0.body,
-                image: $0.image,
+                imageUrl: $0.imageUrl,
                 category: $0.category,
                 creationDate: $0.creationDate,
                 votes: featureVotingCacheService.metadata(for: $0)?.votes ?? 0

@@ -20,8 +20,8 @@ final class SeparatorView: UIView {
 private extension SeparatorView {
     
     func configureUI() {
-        backgroundColor = Theme.colour.separatorTransparent
+        backgroundColor = Theme.colour.separator
         translatesAutoresizingMaskIntoConstraints = false
-        addConstraints([heightAnchor.constraint(equalToConstant: 0.5)])
+        addConstraints([heightAnchor.constraint(equalToConstant: 0.33)])
     }
 }

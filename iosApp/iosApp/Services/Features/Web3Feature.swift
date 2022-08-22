@@ -16,7 +16,7 @@ struct Web3Feature: Codable, Equatable {
         case id
         case title
         case body
-        case image
+        case imageUrl = "image_url"
         case category
         case creationDate = "creation_date"
         case votes
@@ -25,7 +25,7 @@ struct Web3Feature: Codable, Equatable {
     let id: String
     let title: String
     let body: String
-    let image: String // asset name in project bundle
+    let imageUrl: String // asset n ame in project bundle
     let category: Category
     // UTC time for when we should start searching for votes
     let creationDate: String // "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
@@ -43,7 +43,7 @@ struct Web3Feature: Codable, Equatable {
         id: String,
         title: String,
         body: String,
-        image: String,
+        imageUrl: String,
         category: Category,
         creationDate: String,
         votes: Int
@@ -52,7 +52,7 @@ struct Web3Feature: Codable, Equatable {
         self.id = id
         self.title = title
         self.body = body
-        self.image = image
+        self.imageUrl = imageUrl
         self.category = category
         self.creationDate = creationDate
         self.votes = votes
@@ -64,7 +64,7 @@ struct Web3Feature: Codable, Equatable {
         try container.encode(id, forKey: .id)
         try container.encode(title, forKey: .title)
         try container.encode(body, forKey: .body)
-        try container.encode(image, forKey: .image)
+        try container.encode(imageUrl, forKey: .imageUrl)
         try container.encode(category.rawValue, forKey: .category)
         try container.encode(creationDate, forKey: .creationDate)
         try container.encode(votes, forKey: .votes)
@@ -77,7 +77,7 @@ struct Web3Feature: Codable, Equatable {
         id = try container.decode(String.self, forKey: .id)
         title = try container.decode(String.self, forKey: .title)
         body = try container.decode(String.self, forKey: .body)
-        image = try container.decode(String.self, forKey: .image)
+        imageUrl = try container.decode(String.self, forKey: .imageUrl)
         let category = try container.decode(String.self, forKey: .category)
         switch category {
         case Category.infrastructure.rawValue:

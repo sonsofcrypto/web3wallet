@@ -308,7 +308,7 @@ private extension DefaultTokenPickerPresenter {
                     isSelected: isSelected,
                     balance: .init(
                         tokens: token.balance.formatString(type: .short, decimals: token.decimals),
-                        usdTotal: token.usdBalance.formatString(type: .short, decimals: 2)
+                        usdTotal: token.usdBalance.formatStringCurrency(type: .short, decimals: 2)
                     )
                 )
                 
@@ -317,7 +317,7 @@ private extension DefaultTokenPickerPresenter {
                     isSelected: nil,
                     balance: .init(
                         tokens: token.balance.formatString(decimals: token.decimals),
-                        usdTotal: token.usdBalance.formatString(decimals: 2)
+                        usdTotal: token.usdBalance.formatStringCurrency(decimals: 2)
                     )
                 )
             }

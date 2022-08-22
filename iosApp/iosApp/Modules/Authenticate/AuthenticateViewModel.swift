@@ -8,9 +8,15 @@ struct AuthenticateViewModel {
     
     let title: String
     let password: String
+    let passType: PassType
     let passwordPlaceholder: String
     let salt: String
     let saltPlaceholder: String
     let needsPassword: Bool
     let needsSalt: Bool
+    
+    enum PassType {
+        case pin
+        case pass
+    }
 }

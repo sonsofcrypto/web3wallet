@@ -253,7 +253,8 @@ private extension DefaultDashboardPresenter {
         )
         let formatted = Formatter.currency.string(
             cryptoBalance,
-            currency: currency
+            currency: currency,
+            style: .long
         )
 
         return .init(
