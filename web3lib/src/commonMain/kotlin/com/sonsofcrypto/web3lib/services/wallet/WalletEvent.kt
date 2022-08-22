@@ -30,6 +30,11 @@ sealed class WalletEvent() {
         val network: Network,
         val currencies: List<Currency>
     ): WalletEvent()
+
+    /** New pending transaction broadcast */
+    data class NewPendingTransaction(
+        val hash: String
+    ): WalletEvent()
 }
 
 interface WalletListener { fun handle(event: WalletEvent) }

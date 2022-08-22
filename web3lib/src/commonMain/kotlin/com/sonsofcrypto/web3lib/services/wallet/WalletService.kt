@@ -153,11 +153,31 @@ class DefaultWalletService(
         amount: BigInt,
         network: Network
     ): TransactionResponse = withContext(bgDispatcher) {
-        val request = TransactionRequest(to = Address.HexString(to), value = amount)
+        val request = transferTransactionRequest(to, currency, amount)
         val wallet = networkService.wallet(network)
         val response = wallet!!.sendTransaction(request)
-        withUICxt { pendingTransactions.add(response) }
+        withUICxt {
+            pendingTransactions.add(response)
+            emit(WalletEvent.NewPendingTransaction(response.hash))
+        }
         return@withContext response
+    }
+
+    @Throws(Throwable::class)
+    private fun transferTransactionRequest(
+        to: AddressHexString,
+        currency: Currency,
+        amount: BigInt
+    ): TransactionRequest {
+        if (currency.type == Currency.Type.NATIVE)
+            return TransactionRequest(to = Address.HexString(to), value = amount)
+        if (currency.type == Currency.Type.ERC20 && currency.address != null)
+            return TransactionRequest(
+                to = Address.HexString(currency.address!!),
+                data = ERC20(Address.HexString(currency.address!!))
+                    .transfer(Address.HexString(to), amount)
+            )
+        throw Error.UnableToSendTransaction
     }
 
     override fun transactions(network: Network): List<Transaction> {
@@ -297,5 +317,17 @@ class DefaultWalletService(
             Network.goerli() -> goerliDefaultCurrencies
             else -> emptyList()
         }
+    }
+
+    /** Errors */
+    sealed class Error(
+        message: String? = null,
+        cause: Throwable? = null
+    ) : Throwable(message, cause) {
+
+        constructor(cause: Throwable) : this(null, cause)
+
+        /** Unable to sent transactions */
+        object UnableToSendTransaction : Error("Unable to sent transactions")
     }
 }

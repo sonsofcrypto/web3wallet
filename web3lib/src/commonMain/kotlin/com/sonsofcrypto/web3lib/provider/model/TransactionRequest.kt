@@ -44,14 +44,17 @@ fun TransactionRequest.encodeEIP1559(): ByteArray {
     var items = listOf(
         RlpItem(QuantityHexString(chainId!!).toByteArrayQnt()),
         RlpItem(
-            if (nonce?.isZero() == true) ByteArray(0)
+            if (nonce == null || nonce?.isZero() == true) ByteArray(0)
             else QuantityHexString(nonce!!).toByteArrayQnt()
         ),
         RlpItem(QuantityHexString(maxPriorityFeePerGas ?: BigInt.zero()).toByteArrayQnt()),
         RlpItem(QuantityHexString(maxFeePerGas ?: BigInt.zero()).toByteArrayQnt()),
         RlpItem(QuantityHexString(gasLimit!!).toByteArrayQnt()),
         RlpItem(to?.hexString?.toByteArrayData() ?: ByteArray(0)),
-        RlpItem(QuantityHexString(value!!).toByteArrayQnt()),
+        RlpItem(
+            if (value == null || value?.isZero() == true) ByteArray(0)
+            else QuantityHexString(value!!).toByteArrayQnt()
+        ),
         RlpItem(if(data == null) ByteArray(0) else data.toByteArrayData()),
         RlpList(
             accessList?.map {
