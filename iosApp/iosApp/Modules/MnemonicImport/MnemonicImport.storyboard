@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RC7-Mo-ain">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="782"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="19" id="SDo-ag-mEq">
                                     <size key="itemSize" width="343" height="149"/>
@@ -234,21 +234,32 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="327" height="0.5"/>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 </view>
-                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Pin" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Eth-cU-Ld1" customClass="TextField" customModule="iosApp" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="14.5" width="311" height="17"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
-                                                                </textField>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="nNd-qF-gb0">
+                                                                    <rect key="frame" x="0.0" y="2.5" width="327" height="41.5"/>
+                                                                    <subviews>
+                                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Pin" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="D3X-q4-RA3" customClass="TextField" customModule="iosApp" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="327" height="17"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                                                        </textField>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sEO-Mw-Bsl">
+                                                                            <rect key="frame" x="0.0" y="21" width="327" height="20.5"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                </stackView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="46" id="1VZ-uJ-gA5"/>
-                                                                <constraint firstItem="Eth-cU-Ld1" firstAttribute="leading" secondItem="nId-fj-OZp" secondAttribute="leading" id="9Qz-kb-VGH"/>
                                                                 <constraint firstItem="ALJ-qL-8rl" firstAttribute="top" secondItem="nId-fj-OZp" secondAttribute="top" id="AWM-Sf-JqH"/>
-                                                                <constraint firstItem="Eth-cU-Ld1" firstAttribute="centerY" secondItem="nId-fj-OZp" secondAttribute="centerY" id="HYp-Y3-oua"/>
+                                                                <constraint firstItem="nNd-qF-gb0" firstAttribute="centerY" secondItem="nId-fj-OZp" secondAttribute="centerY" id="BK4-7f-hbP"/>
+                                                                <constraint firstAttribute="trailing" secondItem="nNd-qF-gb0" secondAttribute="trailing" id="Fcc-yu-2f9"/>
                                                                 <constraint firstItem="ALJ-qL-8rl" firstAttribute="leading" secondItem="nId-fj-OZp" secondAttribute="leading" id="LCa-BV-ES1"/>
                                                                 <constraint firstAttribute="trailing" secondItem="ALJ-qL-8rl" secondAttribute="trailing" id="SqV-aO-eVA"/>
-                                                                <constraint firstAttribute="trailing" secondItem="Eth-cU-Ld1" secondAttribute="trailing" constant="16" id="gOD-Hc-Z15"/>
+                                                                <constraint firstItem="nNd-qF-gb0" firstAttribute="leading" secondItem="nId-fj-OZp" secondAttribute="leading" id="rEs-fg-sKb"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JqS-Fy-1pJ">
@@ -299,10 +310,11 @@
                                             <outlet property="group1" destination="nId-fj-OZp" id="tZ7-3O-UhM"/>
                                             <outlet property="group2" destination="JqS-Fy-1pJ" id="7qV-O9-lq9"/>
                                             <outlet property="hStack" destination="eLr-Fq-O8V" id="ohD-7o-DeD"/>
+                                            <outlet property="hintLabel" destination="sEO-Mw-Bsl" id="tpf-Ce-uMn"/>
                                             <outlet property="onOffSwitch" destination="0fI-cU-S30" id="6ge-0n-zMe"/>
                                             <outlet property="segmentControl" destination="mlZ-c0-cNx" id="MP6-ot-G9B"/>
                                             <outlet property="switchLabel" destination="obB-S5-ceg" id="zeX-ON-YhK"/>
-                                            <outlet property="textField" destination="Eth-cU-Ld1" id="Ht4-1x-hFk"/>
+                                            <outlet property="textField" destination="D3X-q4-RA3" id="bHn-Vk-92c"/>
                                             <outlet property="titleLabel" destination="dPx-sd-A2j" id="y1y-aN-ewg"/>
                                             <outlet property="vStack" destination="71Z-hd-jcL" id="Ned-EH-YVF"/>
                                         </connections>
@@ -353,8 +365,8 @@
                             <constraint firstItem="RC7-Mo-ain" firstAttribute="trailing" secondItem="qxm-99-VhP" secondAttribute="trailing" id="2Gf-gC-wMH"/>
                             <constraint firstItem="RC7-Mo-ain" firstAttribute="leading" secondItem="qxm-99-VhP" secondAttribute="leading" id="4HT-3i-g4x"/>
                             <constraint firstItem="TOp-SW-Pkz" firstAttribute="leading" secondItem="qxm-99-VhP" secondAttribute="leading" constant="16" id="63u-tq-IAa"/>
-                            <constraint firstItem="TOp-SW-Pkz" firstAttribute="top" secondItem="RC7-Mo-ain" secondAttribute="bottom" constant="16" id="74W-lb-XBT"/>
                             <constraint firstItem="TOp-SW-Pkz" firstAttribute="bottom" secondItem="qxm-99-VhP" secondAttribute="bottom" id="OOC-HA-z3t"/>
+                            <constraint firstItem="qxm-99-VhP" firstAttribute="bottom" secondItem="RC7-Mo-ain" secondAttribute="bottom" priority="750" id="VG8-kY-IlF"/>
                             <constraint firstItem="qxm-99-VhP" firstAttribute="trailing" secondItem="TOp-SW-Pkz" secondAttribute="trailing" constant="16" id="gJ8-kn-EVy"/>
                             <constraint firstItem="RC7-Mo-ain" firstAttribute="top" secondItem="sR2-sg-55A" secondAttribute="top" id="oQg-nh-Km7"/>
                         </constraints>
