@@ -96,6 +96,24 @@ class ERC20(address: Address.HexString) : Contract(address) {
     )
 }
 
+class ERC721(address: Address.HexString): Contract(address) {
+
+    /**
+     * function transferFrom(address from, address to, uint256 tokenId)
+     */
+    fun transferFrom(
+        from: Address.HexString,
+        to: Address.HexString,
+        tokenId: BigInt,
+    ) = DataHexString(
+        keccak256("transferFrom(address,address,uint256)".encodeToByteArray())
+            .copyOfRange(0, 4) +
+            abiEncode(from) +
+            abiEncode(to) +
+            abiEncode(tokenId)
+    )
+}
+
 class CultGovernor: Contract(
     Address.HexString("0x0831172B9b136813b0B35e7cc898B1398bB4d7e7")
 ) {
