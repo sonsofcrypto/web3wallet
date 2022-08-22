@@ -16,7 +16,6 @@ import com.sonsofcrypto.web3lib.utils.extensions.jsonEncode
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlin.contracts.contract
 import kotlin.time.Duration.Companion.seconds
 
 /** `WalletService` higher level "manager" wallet state manager. Should suffice

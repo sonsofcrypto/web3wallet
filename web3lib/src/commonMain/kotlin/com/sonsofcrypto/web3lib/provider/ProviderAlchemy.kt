@@ -3,8 +3,6 @@ package com.sonsofcrypto.web3lib.provider
 import com.sonsofcrypto.web3lib.types.Network
 import io.ktor.client.*
 import io.ktor.client.plugins.*
-import io.ktor.client.plugins.auth.*
-import io.ktor.client.plugins.auth.providers.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.http.*
