@@ -31,7 +31,7 @@ final class DashboardHeaderNameView: UICollectionReusableView {
         super.layoutSubviews()
         lineView.frame = CGRect(
             origin: CGPoint(x: 0, y: bounds.maxY - 0.5),
-            size: CGSize(width: bounds.width * 1.1, height: 0.5)
+            size: CGSize(width: bounds.width * 1.1, height: 0.33)
         )
     }
 }
