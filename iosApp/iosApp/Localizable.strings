@@ -259,7 +259,6 @@
 "tokenSend.cell.token.placeholder" = "0";
 "tokenSend.cell.currency.placeholder" = "0.0";
 "tokenSend.cell.currency.label.usd" = "USD";
-"tokenSend.cell.balance" = "Balance: %@";
 "tokenSend.missing.address" = "Invalid address";
 
 "nftSend.title" = "Send NFT";
@@ -268,7 +267,6 @@
 "tokenSwap.title" = "Token Swap";
 "tokenSwap.segment.swap" = "Swap";
 "tokenSwap.segment.limit" = "Limit";
-"tokenSwap.cell.balance" = "Balance: %@";
 "tokenSwap.cell.provider" = "Provider";
 "tokenSwap.cell.price" = "Price";
 "tokenSwap.cell.slippage" = "Slippage";
@@ -384,3 +382,5 @@
 "validation.error.pass.min.capital" = "At least one capital letter needed";
 "validation.error.pass.min.lowercase" = "At least one lowercase letter needed";
 "validation.error.pass.min.digit" = "At least one digit needed";
+
+"tokenEnter.balance" = "Balance: %@";
