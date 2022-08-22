@@ -11,7 +11,7 @@ final class DashboardHeaderNameView: UICollectionReusableView {
     private lazy var rightAction = UILabel()
     private lazy var lineView = LineView()
     private lazy var stack = HStackView(
-        [label, fuelCostImageView, fuelCostLabel, UIView(), rightAction],
+        [label, UIView(), rightAction],
         spacing: Theme.constant.padding
     )
     
@@ -30,8 +30,8 @@ final class DashboardHeaderNameView: UICollectionReusableView {
     override func layoutSubviews() {
         super.layoutSubviews()
         lineView.frame = CGRect(
-            origin: CGPoint(x: 0, y: bounds.maxY - 0.5),
-            size: CGSize(width: bounds.width * 1.1, height: 0.33)
+            origin: CGPoint(x: 0, y: (Theme.type.isThemeIOS ? bounds.maxY + 4 : bounds.maxY - 0.5)),
+            size: CGSize(width: bounds.width * (Theme.type.isThemeIOS ? 1 : 1.1), height: 0.33)
         )
     }
 }
@@ -58,7 +58,7 @@ private extension DashboardHeaderNameView {
         stack.contraintToSuperView(bottom: offset)
 
         addSubview(lineView)
-        lineView.isHidden = Theme.type.isThemeIOS
+//        lineView.isHidden = Theme.type.isThemeIOS
     }
     
     @objc func moreTapped() {
