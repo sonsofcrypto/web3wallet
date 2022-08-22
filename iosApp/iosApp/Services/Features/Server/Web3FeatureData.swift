@@ -15,7 +15,7 @@ struct Web3FeatureData: Equatable {
 extension Web3FeatureData {
     
     var hashTag: String {
-        
+
         "#\(Localized("feature.hashTag", arg: id))"
     }
     

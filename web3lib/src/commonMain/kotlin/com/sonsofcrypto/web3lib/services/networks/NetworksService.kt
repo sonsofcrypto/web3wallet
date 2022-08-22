@@ -2,6 +2,7 @@ package com.sonsofcrypto.web3lib.services.networks
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.provider.Provider
+import com.sonsofcrypto.web3lib.provider.ProviderAlchemy
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
@@ -172,7 +173,15 @@ class DefaultNetworksService(
     }
 
     private fun defaultProvider(network: Network): Provider {
-        return store[providerKey(network)] ?: ProviderPocket(network)
+        val provider: Provider? = store[providerKey(network)]
+        if (provider != null)
+            return provider
+        return when(network.chainId) {
+            Network.ropsten().chainId -> ProviderAlchemy(network)
+            Network.rinkeby().chainId -> ProviderAlchemy(network)
+            Network.goerli().chainId -> ProviderAlchemy(network)
+            else -> ProviderPocket(network)
+        }
     }
 
     private fun getStoredNetworks(item: KeyStoreItem?): List<Network>? {

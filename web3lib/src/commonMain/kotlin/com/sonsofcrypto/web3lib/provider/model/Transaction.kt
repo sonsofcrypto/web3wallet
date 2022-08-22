@@ -60,7 +60,7 @@ fun Transaction.encodeEIP1559(): ByteArray {
 
     var items = listOf(
         RlpItem(QuantityHexString(chainId).toByteArrayQnt()),
-        RlpItem(QuantityHexString(nonce).toByteArrayQnt()),
+        RlpItem(if (nonce.isZero()) ByteArray(0) else QuantityHexString(nonce).toByteArrayQnt()),
         RlpItem(QuantityHexString(maxPriorityFeePerGas ?: BigInt.zero()).toByteArrayQnt()),
         RlpItem(QuantityHexString(maxFeePerGas ?: BigInt.zero()).toByteArrayQnt()),
         RlpItem(QuantityHexString(gasLimit).toByteArrayQnt()),

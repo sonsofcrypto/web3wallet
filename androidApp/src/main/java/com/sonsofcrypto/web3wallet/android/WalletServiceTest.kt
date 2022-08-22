@@ -1,6 +1,8 @@
 package com.sonsofcrypto.web3wallet.android
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
+import com.sonsofcrypto.web3lib.provider.ProviderAlchemy
+import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.services.coinGecko.DefaultCoinGeckoService
 import com.sonsofcrypto.web3lib.services.currencyStore.DefaultCurrencyStoreService
 import com.sonsofcrypto.web3lib.services.currencyStore.ethereumDefaultCurrencies
