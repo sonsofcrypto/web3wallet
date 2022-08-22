@@ -7,6 +7,7 @@ import com.sonsofcrypto.web3lib.provider.model.toByteArrayQnt
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
+import com.sonsofcrypto.web3lib.utils.extensions.toByteArray
 import com.sonsofcrypto.web3lib.utils.keccak256
 
 private val abiParamLen = 32
@@ -18,14 +19,17 @@ open class Contract(
 
     fun abiEncode(address: Address.HexString): ByteArray {
         val addressBytes = address.hexString.hexStringToByteArray()
-        var result = ByteArray(abiParamLen - addressBytes.size)
-        return result + addressBytes
+        return ByteArray(abiParamLen - addressBytes.size) + addressBytes
     }
 
     fun abiEncode(bigInt: BigInt): ByteArray {
         val bigIntBytes = bigInt.toByteArray()
-        var result = ByteArray(abiParamLen - bigIntBytes.size)
-        return result + bigIntBytes
+        return ByteArray(abiParamLen - bigIntBytes.size) + bigIntBytes
+    }
+
+    fun abiEncode(uint: UInt): ByteArray {
+        val uintBytes = uint.toByteArray()
+        return ByteArray(abiParamLen - uintBytes.size) + uintBytes
     }
 
     fun abiDecode(value: String): BigInt {
@@ -35,8 +39,6 @@ open class Contract(
         stripped = if (stripped.length % 2 == 0) stripped else "0" + stripped
         return stripped.toBigIntData()
     }
-    // 0xa9059cbb0000000000000000000000003af975a365a767c4de34df23d2fc677e02985cb2000000000000000000000000000000000000000000000000000000002644e7d0
-    // 0xa9059cbb000000000000000000000000dbf95f925a4ffa270f9a4b5fc55f8d72ccb5a98f0000000000000000000000000000000000000000000000000000000000989680
 }
 
 class ERC20(address: Address.HexString) : Contract(address) {
@@ -91,5 +93,20 @@ class ERC20(address: Address.HexString) : Contract(address) {
     fun balanceOf(account: Address.HexString): DataHexString = DataHexString(
         keccak256("balanceOf(address)".encodeToByteArray()).copyOfRange(0, 4) +
             abiEncode(account)
+    )
+}
+
+class CultGovernor: Contract(
+    Address.HexString("0x0831172B9b136813b0B35e7cc898B1398bB4d7e7")
+) {
+    /**
+     * @notice Cast a vote for a proposal
+     * @param proposalId The id of the proposal to vote on
+     * @param support The support value for the vote. 0=against, 1=for, 2=abstain
+     */
+    fun castVote(proposalId: UInt, support: UInt) = DataHexString(
+        keccak256("castVote(uint256,uint8)".encodeToByteArray()).copyOfRange(0, 4) +
+            abiEncode(proposalId) +
+            abiEncode(support)
     )
 }

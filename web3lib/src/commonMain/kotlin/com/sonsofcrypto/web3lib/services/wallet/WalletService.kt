@@ -1,10 +1,7 @@
 package com.sonsofcrypto.web3lib.services.wallet
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
-import com.sonsofcrypto.web3lib.provider.model.BlockTag
-import com.sonsofcrypto.web3lib.provider.model.Transaction
-import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
-import com.sonsofcrypto.web3lib.provider.model.TransactionResponse
+import com.sonsofcrypto.web3lib.provider.model.*
 import com.sonsofcrypto.web3lib.services.currencyStore.*
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent
 import com.sonsofcrypto.web3lib.services.networks.NetworksEvent.EnabledNetworksDidChange
@@ -19,6 +16,7 @@ import com.sonsofcrypto.web3lib.utils.extensions.jsonEncode
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlin.contracts.contract
 import kotlin.time.Duration.Companion.seconds
 
 /** `WalletService` higher level "manager" wallet state manager. Should suffice
@@ -57,6 +55,13 @@ interface WalletService {
         to: AddressHexString,
         currency: Currency,
         amount: BigInt,
+        network: Network
+    ): TransactionResponse
+    /** Call smart contract function */
+    @Throws(Throwable::class)
+    suspend fun contractCall(
+        contractAddress: AddressHexString,
+        data: DataHexString,
         network: Network
     ): TransactionResponse
     /** List of transactions for wallet */
@@ -152,7 +157,7 @@ class DefaultWalletService(
         currency: Currency,
         amount: BigInt,
         network: Network
-    ): TransactionResponse = withContext(bgDispatcher) {
+    ): TransactionResponse = withBgCxt {
         val request = transferTransactionRequest(to, currency, amount)
         val wallet = networkService.wallet(network)
         val response = wallet!!.sendTransaction(request)
@@ -160,7 +165,26 @@ class DefaultWalletService(
             pendingTransactions.add(response)
             emit(WalletEvent.NewPendingTransaction(response.hash))
         }
-        return@withContext response
+        return@withBgCxt response
+    }
+
+    @Throws(Throwable::class)
+    override suspend fun contractCall(
+        contractAddress: AddressHexString,
+        data: DataHexString,
+        network: Network
+    ): TransactionResponse = withBgCxt {
+        val request = TransactionRequest(
+            to = Address.HexString(contractAddress),
+            data = data
+        )
+        val wallet = networkService.wallet(network)
+        val response = wallet!!.sendTransaction(request)
+        withUICxt {
+            pendingTransactions.add(response)
+            emit(WalletEvent.NewPendingTransaction(response.hash))
+        }
+        return@withBgCxt response
     }
 
     @Throws(Throwable::class)
