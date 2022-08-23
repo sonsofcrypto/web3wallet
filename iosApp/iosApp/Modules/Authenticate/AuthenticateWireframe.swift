@@ -50,10 +50,14 @@ extension DefaultAuthenticateWireframe: AuthenticateWireframe {
             !interactor.canUnlockWithBio(keyStoreItemTarget)
         else {
             
+            // NOTE: Passing this as a local variable otherwise in the closure below having a weak self
+            // by the time is called back the wireframe is already deallocated and self? is nil.
+            let context = context
             interactor.unlockWithBiometrics(
                 keyStoreItemTarget,
                 title: context.title,
-                handler: { [weak self] result in self?.context.handler(result)}
+                handler: { result in
+                    context.handler(result)}
             )
             return
         }

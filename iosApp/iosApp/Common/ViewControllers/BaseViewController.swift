@@ -20,7 +20,7 @@ class BaseViewController: UIViewController {
     deinit {
         
         #if DEBUG
-        print("[DEBUG] deinit \(String(describing: self))")
+        print("[DEBUG][ViewController] deinit \(String(describing: self))")
         #endif
     }
 }
