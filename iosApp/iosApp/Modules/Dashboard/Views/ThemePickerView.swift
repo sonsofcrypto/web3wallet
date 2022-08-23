@@ -23,9 +23,11 @@ class ThemePickerViewController: UIViewController, ThemePickerView {
 //            print("=== here")
 //        }
 //    }
-
+    
     override func viewDidAppear(_ animated: Bool) {
+        
         super.viewDidAppear(animated)
+        
         firstAppear = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             UIView.springAnimate {
@@ -34,8 +36,6 @@ class ThemePickerViewController: UIViewController, ThemePickerView {
                 }
             }
         }
-
-
     }
 }
 
@@ -79,5 +79,35 @@ extension ThemePickerViewController: UICollectionViewDelegateFlowLayout {
 
 extension ThemePickerViewController: UICollectionViewDelegate {
 
-
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            
+            UIView.springAnimate(
+                animations: { [weak self] in
+                    guard let cell = self?.collectionView.cellForItem(at: indexPath) else { return }
+                    cell.layer.transform = CATransform3DMakeScale(1.25, 1.25, 1)
+                },
+                completion: { [weak self] _ in
+                    self?.dismiss(animated: true) {
+                        let settingsService: SettingsService = ServiceDirectory.assembler.resolve()
+                        switch indexPath.item {
+                        case 0:
+                            settingsService.didSelect(item: .theme, action: .themeMiamiLight)
+                        case 1:
+                            settingsService.didSelect(item: .theme, action: .themeMiamiDark)
+                        case 2:
+                            settingsService.didSelect(item: .theme, action: .themeIOSLight)
+                        case 3:
+                            settingsService.didSelect(item: .theme, action: .themeIOSDark)
+                        default:
+                            break
+                        }
+                    }
+                }
+            )
+        }
+    }
 }
