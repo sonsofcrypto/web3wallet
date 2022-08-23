@@ -103,9 +103,14 @@ extension DefaultCultProposalsPresenter: CultProposalsPresenter {
                 )
             )
             
-        case .approveProposal, .rejectProposal:
-            
-            wireframe.navigate(to: .comingSoon)
+        case let .approveProposal(id):
+            interactor.castVote(id, support: true) { [weak self] result in
+                // TODO(Sancho): Do nothing
+            }
+        case let .rejectProposal(id):
+            interactor.castVote(id, support: false) { [weak self] result in
+                // TODO(Sancho): error
+            }
         }
     }
 }
@@ -212,15 +217,11 @@ private extension DefaultCultProposalsPresenter {
     }
     
     func findProposal(with id: String) -> CultProposal? {
-     
         if let proposal = closedProposals.first(where: { $0.id == id }) {
-            
             return proposal
         } else if let proposal = pendingProposals.first(where: { $0.id == id }) {
-            
             return proposal
         } else {
-            
             return nil
         }
     }

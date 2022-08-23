@@ -9,9 +9,7 @@ final class CultServiceAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
 
         registry.register(scope: .singleton) { resolver -> CultService in
-            DefaultCultService(
-                web3Service: resolver.resolve()
-            )
+            DefaultCultService(walletService: resolver.resolve())
         }
     }
 }

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 enum ConfirmationWireframeDestination {
     
@@ -21,6 +22,7 @@ final class DefaultConfirmationWireframe {
     
     private weak var presentingIn: UIViewController!
     private let context: ConfirmationWireframeContext
+    private let walletService: WalletService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
@@ -30,12 +32,14 @@ final class DefaultConfirmationWireframe {
     init(
         presentingIn: UIViewController,
         context: ConfirmationWireframeContext,
+        walletService: WalletService,
         authenticateWireframeFactory: AuthenticateWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         deepLinkHandler: DeepLinkHandler
     ) {
         self.presentingIn = presentingIn
         self.context = context
+        self.walletService = walletService
         self.authenticateWireframeFactory = authenticateWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.deepLinkHandler = deepLinkHandler
@@ -90,7 +94,7 @@ private extension DefaultConfirmationWireframe {
     
     func wireUp() -> UIViewController {
         
-        let interactor = DefaultConfirmationInteractor()
+        let interactor = DefaultConfirmationInteractor(walletService: walletService)
         let vc: ConfirmationViewController = UIStoryboard(.confirmation).instantiate()
         let presenter = DefaultConfirmationPresenter(
             view: vc,

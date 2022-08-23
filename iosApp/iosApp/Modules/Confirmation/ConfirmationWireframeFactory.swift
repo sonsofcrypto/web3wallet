@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 protocol ConfirmationWireframeFactory {
 
@@ -14,15 +15,18 @@ protocol ConfirmationWireframeFactory {
 
 final class DefaultConfirmationWireframeFactory {
 
+    private let walletService: WalletService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
 
     init(
+        walletService: WalletService,
         authenticateWireframeFactory: AuthenticateWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         deepLinkHandler: DeepLinkHandler
     ) {
+        self.walletService = walletService
         self.authenticateWireframeFactory = authenticateWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.deepLinkHandler = deepLinkHandler
@@ -35,13 +39,29 @@ extension DefaultConfirmationWireframeFactory: ConfirmationWireframeFactory {
         presentingIn: UIViewController,
         context: ConfirmationWireframeContext
     ) -> ConfirmationWireframe {
-        
         DefaultConfirmationWireframe(
             presentingIn: presentingIn,
             context: context,
+            walletService: walletService,
             authenticateWireframeFactory: authenticateWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
             deepLinkHandler: deepLinkHandler
         )
+    }
+}
+
+// MARK: - Factory
+
+final class ConfirmationWireframeFactoryAssembler: AssemblerComponent {
+
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> ConfirmationWireframeFactory in
+            DefaultConfirmationWireframeFactory(
+                walletService: resolver.resolve(),
+                authenticateWireframeFactory: resolver.resolve(),
+                alertWireframeFactory: resolver.resolve(),
+                deepLinkHandler: resolver.resolve()
+            )
+        }
     }
 }

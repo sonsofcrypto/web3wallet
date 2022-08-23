@@ -3,38 +3,71 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
-enum CultServiceErrors: Error {
-    
+enum CultServiceError: Error {
     case unableToFetch
+    case failedProposalId
+    case noResponse
 }
 
 protocol CultService {
-    
+
     func fetchProposals(
-        onCompletion: @escaping (Result<[CultProposal], Error>) -> Void
+        handler: @escaping (Result<[CultProposal], Error>) -> Void
+    )
+
+    func castVote(
+        _ id: Int,
+        support: Bool,
+        handler: @escaping (Result<TransactionResponse, Error>) -> Void
     )
 }
 
 final class DefaultCultService {
     
-    let web3Service: Web3ServiceLegacy
+    let walletService: WalletService
     
-    init(web3Service: Web3ServiceLegacy) {
-        
-        self.web3Service = web3Service
+    init(walletService: WalletService) {
+        self.walletService = walletService
     }
 }
 
 extension DefaultCultService: CultService {
 
+    func castVote(
+        _ id: Int,
+        support: Bool,
+        handler: @escaping (Result<TransactionResponse, Error>) -> Void
+    ) {
+        let contract = CultGovernor()
+        let supportInt = UInt32(support ? 1 : 0)
+
+        walletService.contractSend(
+            contractAddress: contract.address.hexString,
+            data: contract.castVote(proposalId: UInt32(id), support: supportInt),
+            network: Network.ethereum(),
+            completionHandler:  { response, error in
+                if let error = error {
+                    handler(.failure(error))
+                    return
+                }
+                guard let response = response else {
+                    handler(.failure(CultServiceError.noResponse))
+                    return
+                }
+                handler(.success(response))
+            }
+        )
+    }
+
     func fetchProposals(
-        onCompletion: @escaping (Result<[CultProposal], Error>) -> Void
+        handler: @escaping (Result<[CultProposal], Error>) -> Void
     ) {
         
         guard let url = URL(string: "https://api.cultdao.io/static/proposals.json") else {
             
-            onCompletion(.failure(CultServiceErrors.unableToFetch))
+            handler(.failure(CultServiceError.unableToFetch))
             return
         }
         
@@ -44,24 +77,24 @@ extension DefaultCultService: CultService {
                 
                 if let error = error {
                     
-                    onCompletion(.failure(error))
+                    handler(.failure(error))
                     return
                 }
                 
                 guard let data = data else {
                     
-                    onCompletion(.failure(CultServiceErrors.unableToFetch))
+                    handler(.failure(CultServiceError.unableToFetch))
                     return
                 }
                 
                 do {
                     
                     let result = try JSONDecoder().decode(CultProposalServiceJSON.self, from: data)
-                    onCompletion(.success(self.makeCultProposals(from: result.proposals)))
+                    handler(.success(self.makeCultProposals(from: result.proposals)))
                     
                 } catch let error {
                     
-                    onCompletion(.failure(error))
+                    handler(.failure(error))
                 }
             }
         }.resume()
@@ -99,12 +132,12 @@ private extension DefaultCultService {
     func makeStatus(
         from proposal: CultProposalJSON
     ) -> CultProposal.Status? {
+
+        let currentBlock = walletService.blockNumber(network: Network.ethereum())
+
+        guard proposal.startBlock < currentBlock.toDecimalString() else { return nil }
         
-        let currentBlock = web3Service.currentEthBlock
-        
-        guard proposal.startBlock < currentBlock else { return nil }
-        
-        if proposal.endBlock > currentBlock {
+        if proposal.endBlock > currentBlock.toDecimalString() {
             
             return .pending
         } else {
