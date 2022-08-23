@@ -12,7 +12,7 @@ final class CultProposalsWireframeFactoryAssembler: AssemblerComponent {
 
             DefaultCultProposalsWireframeFactory(
                 cultProposalWireframeFactory: resolver.resolve(),
-                alertWireframeFactory: resolver.resolve(),
+                confirmationWireframeFactory: resolver.resolve(),
                 cultService: resolver.resolve()
             )
         }

@@ -12,16 +12,16 @@ protocol CultProposalsWireframeFactory {
 final class DefaultCultProposalsWireframeFactory {
 
     private let cultProposalWireframeFactory: CultProposalWireframeFactory
-    private let alertWireframeFactory: AlertWireframeFactory
+    private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let cultService: CultService
 
     init(
         cultProposalWireframeFactory: CultProposalWireframeFactory,
-        alertWireframeFactory: AlertWireframeFactory,
+        confirmationWireframeFactory: ConfirmationWireframeFactory,
         cultService: CultService
     ) {
         self.cultProposalWireframeFactory = cultProposalWireframeFactory
-        self.alertWireframeFactory = alertWireframeFactory
+        self.confirmationWireframeFactory = confirmationWireframeFactory
         self.cultService = cultService
     }
 }
@@ -33,7 +33,7 @@ extension DefaultCultProposalsWireframeFactory: CultProposalsWireframeFactory {
         DefaultCultProposalsWireframe(
             parent: parent,
             cultProposalWireframeFactory: cultProposalWireframeFactory,
-            alertWireframeFactory: alertWireframeFactory,
+            confirmationWireframeFactory: confirmationWireframeFactory,
             cultService: cultService
         )
     }

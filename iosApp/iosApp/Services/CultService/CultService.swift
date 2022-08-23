@@ -16,12 +16,6 @@ protocol CultService {
     func fetchProposals(
         handler: @escaping (Result<[CultProposal], Error>) -> Void
     )
-
-    func castVote(
-        _ id: Int,
-        support: Bool,
-        handler: @escaping (Result<TransactionResponse, Error>) -> Void
-    )
 }
 
 final class DefaultCultService {
@@ -34,32 +28,6 @@ final class DefaultCultService {
 }
 
 extension DefaultCultService: CultService {
-
-    func castVote(
-        _ id: Int,
-        support: Bool,
-        handler: @escaping (Result<TransactionResponse, Error>) -> Void
-    ) {
-        let contract = CultGovernor()
-        let supportInt = UInt32(support ? 1 : 0)
-
-        walletService.contractSend(
-            contractAddress: contract.address.hexString,
-            data: contract.castVote(proposalId: UInt32(id), support: supportInt),
-            network: Network.ethereum(),
-            completionHandler:  { response, error in
-                if let error = error {
-                    handler(.failure(error))
-                    return
-                }
-                guard let response = response else {
-                    handler(.failure(CultServiceError.noResponse))
-                    return
-                }
-                handler(.success(response))
-            }
-        )
-    }
 
     func fetchProposals(
         handler: @escaping (Result<[CultProposal], Error>) -> Void

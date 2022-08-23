@@ -61,13 +61,10 @@ extension DefaultConfirmationPresenter: ConfirmationPresenter {
             
             switch context.type {
                 
-            case .send, .sendNFT:
+            case .send, .sendNFT, .cultCastVote:
                 
                 showTransactionInProgress()
                 broadcastTransaction(with: "password", and: "salt")
-//                wireframe.navigate(
-//                    to: .authenticate(makeAuthenticateContext())
-//                )
                                 
             case .swap:
                 
@@ -96,19 +93,14 @@ private extension DefaultConfirmationPresenter {
         let content: ConfirmationViewModel.Content
         
         switch context.type {
-            
         case let .swap(swapData):
-            
             content = makeViewModelContent(forSwap: swapData)
-            
         case let .send(sendData):
-            
             content = makeViewModelContent(forSend: sendData)
-
         case let .sendNFT(sendNFTData):
-            
             content = makeViewModelContent(forSendNFT: sendNFTData)
-
+        case let .cultCastVote(cultCastVoteData):
+            content = makeViewModelContent(forCultCastVote: cultCastVoteData)
         }
         
         return .init(title: makeTitle(), content: content)
@@ -116,20 +108,7 @@ private extension DefaultConfirmationPresenter {
     
     func makeTitle() -> String {
         
-        switch context.type {
-            
-        case .swap:
-            
-            return Localized("confirmation.swap.title")
-            
-        case .send:
-            
-            return Localized("confirmation.send.title")
-
-        case .sendNFT:
-            
-            return Localized("confirmation.sendNFT.title")
-        }
+        Localized("confirmation.\(context.type.localizedTag).title")
     }
     
     func makeViewModelContent(
@@ -239,6 +218,18 @@ private extension DefaultConfirmationPresenter {
             )
         )
     }
+    
+    func makeViewModelContent(
+        forCultCastVote data: ConfirmationWireframeContext.CultCastVoteContext
+    ) -> ConfirmationViewModel.Content {
+        
+        .cultCastVote(
+            .init(
+                action: data.approve ? Localized("approve") : Localized("reject"),
+                name: data.cultProposal.title
+            )
+        )
+    }
 }
 
 private extension DefaultConfirmationPresenter {
@@ -259,26 +250,12 @@ private extension DefaultConfirmationPresenter {
     
     func makeTransactionInProgressTitle() -> String {
         
-        switch context.type {
-        case .send:
-            return Localized("confirmation.tx.inProgress.send.title")
-        case .sendNFT:
-            return Localized("confirmation.tx.inProgress.sendNFT.title")
-        case .swap:
-            return Localized("confirmation.tx.inProgress.swap.title")
-        }
+        Localized("confirmation.tx.inProgress.\(context.type.localizedTag).title")
     }
     
     func makeTransactionInProgressMessage() -> String {
         
-        switch context.type {
-        case .send:
-            return Localized("confirmation.tx.inProgress.send.message")
-        case .sendNFT:
-            return Localized("confirmation.tx.inProgress.sendNFT.message")
-        case .swap:
-            return Localized("confirmation.tx.inProgress.swap.message")
-        }
+        Localized("confirmation.tx.inProgress.\(context.type.localizedTag).message")
     }
 }
 
@@ -301,38 +278,17 @@ private extension DefaultConfirmationPresenter {
     
     func makeTransactionSuccessTitle() -> String {
         
-        switch context.type {
-        case .send:
-            return Localized("confirmation.tx.success.send.title")
-        case .sendNFT:
-            return Localized("confirmation.tx.success.sendNFT.title")
-        case .swap:
-            return Localized("confirmation.tx.success.swap.title")
-        }
+        Localized("confirmation.tx.success.\(context.type.localizedTag).title")
     }
     
     func makeTransactionSuccessMessage() -> String {
         
-        switch context.type {
-        case .send:
-            return Localized("confirmation.tx.success.send.message")
-        case .sendNFT:
-            return Localized("confirmation.tx.success.sendNFT.message")
-        case .swap:
-            return Localized("confirmation.tx.success.swap.message")
-        }
+        Localized("confirmation.tx.success.\(context.type.localizedTag).message")
     }
     
     func makeTransactionSucessCTA() -> String {
         
-        switch context.type {
-        case .send:
-            return Localized("confirmation.tx.success.send.cta")
-        case .sendNFT:
-            return Localized("confirmation.tx.success.sendNFT.cta")
-        case .swap:
-            return Localized("confirmation.tx.success.swap.cta")
-        }
+        Localized("confirmation.tx.success.\(context.type.localizedTag).cta")
     }
 }
 
@@ -355,38 +311,17 @@ private extension DefaultConfirmationPresenter {
     
     func makeTransactionFailedTitle() -> String {
         
-        switch context.type {
-        case .send:
-            return Localized("confirmation.tx.failed.send.title")
-        case .sendNFT:
-            return Localized("confirmation.tx.failed.sendNFT.title")
-        case .swap:
-            return Localized("confirmation.tx.failed.swap.title")
-        }
+        Localized("confirmation.tx.failed.\(context.type.localizedTag).title")
     }
     
     func makeTransactionFailedMessage() -> String {
         
-        switch context.type {
-        case .send:
-            return Localized("confirmation.tx.failed.send.message")
-        case .sendNFT:
-            return Localized("confirmation.tx.failed.sendNFT.message")
-        case .swap:
-            return Localized("confirmation.tx.failed.swap.message")
-        }
+        Localized("confirmation.tx.failed.\(context.type.localizedTag).message")
     }
     
     func makeTransactionFailedCTA() -> String {
         
-        switch context.type {
-        case .send:
-            return Localized("confirmation.tx.failed.send.cta")
-        case .sendNFT:
-            return Localized("confirmation.tx.failed.sendNFT.cta")
-        case .swap:
-            return Localized("confirmation.tx.failed.swap.cta")
-        }
+        Localized("confirmation.tx.failed.\(context.type.localizedTag).cta")
     }
 }
 
@@ -403,21 +338,7 @@ private extension DefaultConfirmationPresenter {
     
     func makeAuthenticateTitle() -> String {
         
-        switch context.type {
-            
-        case .swap:
-            
-            return Localized("authenticate.title.swap")
-                    
-        case .send:
-            
-            return Localized("authenticate.title.send")
-            
-        case .sendNFT:
-            
-            return Localized("authenticate.title.sendNFT")
-
-        }
+        Localized("authenticate.title.\(context.type.localizedTag)")
     }
     
     func makeOnAuthenticatedHandler() -> (Result<(String, String), Error>) -> Void {
@@ -484,6 +405,22 @@ private extension DefaultConfirmationPresenter {
                 password: password,
                 salt: salt,
                 network: Network.Companion().ethereum(),
+                handler: { [weak self] result in
+                    switch result {
+                    case .success:
+                        self?.showTransactionSuccess()
+                    case let .failure(error):
+                        self?.showTransactionFailed(error)
+                    }
+                }
+            )
+            
+        case let .cultCastVote(data):
+            interactor.castVote(
+                proposalId: data.cultProposal.id,
+                support: data.approve,
+                password: password,
+                salt: salt,
                 handler: { [weak self] result in
                     switch result {
                     case .success:

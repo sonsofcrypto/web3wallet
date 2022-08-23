@@ -78,6 +78,13 @@ extension ConfirmationViewController: UIViewControllerTransitioningDelegate, Mod
             contentHeight += Theme.constant.padding
             contentHeight += 342
             contentHeight += Theme.constant.padding
+            
+        case .cultCastVote:
+            
+            contentHeight += navBarHeight
+            contentHeight += Theme.constant.padding
+            contentHeight += 250
+            contentHeight += Theme.constant.padding
         }
         
         return ConfirmationSheetPresentationController(
@@ -98,7 +105,7 @@ private extension ConfirmationViewController {
     func configureUI() {
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: "xmark".assetImage,
+            image: UIImage(systemName: "xmark"),
             style: .plain,
             target: self,
             action: #selector(dismissAction)
@@ -154,6 +161,13 @@ private extension ConfirmationViewController {
         case let .sendNFT(viewModel):
 
             return ConfirmationSendNFTView(
+                viewModel: viewModel,
+                onConfirmHandler: makeConfirmationHandler()
+            )
+            
+        case let .cultCastVote(viewModel):
+
+            return ConfirmationCultCastVoteView(
                 viewModel: viewModel,
                 onConfirmHandler: makeConfirmationHandler()
             )

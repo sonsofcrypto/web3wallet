@@ -10,12 +10,6 @@ protocol CultProposalsInteractor: AnyObject {
     func fetchProposals(
         onCompletion: @escaping (Result<[CultProposal], Error>) -> Void
     )
-
-    func castVote(
-        _ id: String,
-        support: Bool,
-        handler: @escaping (Result<TransactionResponse, Error>) -> Void
-    )
 }
 
 final class DefaultCultProposalsInteractor {
@@ -34,17 +28,4 @@ extension DefaultCultProposalsInteractor: CultProposalsInteractor {
     ) {
         cultService.fetchProposals(handler: onCompletion)
     }
-
-    func castVote(
-        _ id: String,
-        support: Bool,
-        handler: @escaping (Result<TransactionResponse, Error>) -> Void
-    ) {
-        guard let id = try? id.int() else {
-            handler(.failure(CultServiceError.failedProposalId))
-            return
-        }
-        cultService.castVote(id, support: support, handler: handler)
-    }
 }
-

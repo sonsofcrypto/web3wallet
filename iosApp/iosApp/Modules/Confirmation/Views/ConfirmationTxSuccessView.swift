@@ -85,6 +85,7 @@ private extension ConfirmationTxSuccessView {
             ]
         )
         let imageView = UIImageView(image: image?.applyingSymbolConfiguration(config))
+        imageView.contentMode = .scaleAspectFit
         imageView.addConstraints(
             [
                 .layout(anchor: .widthAnchor, constant: .equalTo(constant: 60)),

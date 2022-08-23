@@ -104,13 +104,11 @@ extension DefaultCultProposalsPresenter: CultProposalsPresenter {
             )
             
         case let .approveProposal(id):
-            interactor.castVote(id, support: true) { [weak self] result in
-                // TODO(Sancho): Do nothing
-            }
+            guard let proposal = findProposal(with: id) else { return }
+            wireframe.navigate(to: .castVote(proposal: proposal, approve: true))
         case let .rejectProposal(id):
-            interactor.castVote(id, support: false) { [weak self] result in
-                // TODO(Sancho): error
-            }
+            guard let proposal = findProposal(with: id) else { return }
+            wireframe.navigate(to: .castVote(proposal: proposal, approve: false))
         }
     }
 }

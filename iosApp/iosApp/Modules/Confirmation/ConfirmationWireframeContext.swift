@@ -13,6 +13,16 @@ struct ConfirmationWireframeContext {
         case swap(SwapContext)
         case send(SendContext)
         case sendNFT(SendNFTContext)
+        case cultCastVote(CultCastVoteContext)
+        
+        var localizedTag: String {
+            switch self {
+            case .swap: return "swap"
+            case .send: return "send"
+            case .sendNFT: return "sendNFT"
+            case .cultCastVote: return "cultCastVote"
+            }
+        }
     }
     
     var token: Web3Token? {
@@ -22,7 +32,7 @@ struct ConfirmationWireframeContext {
             return data.token.token
         case let .swap(data):
             return data.tokenFrom.token
-        case .sendNFT:
+        case .sendNFT, .cultCastVote:
             // TODO: Annon to confirm where to push (main network token)? Eg: ETH
             return nil
         }
@@ -84,5 +94,11 @@ extension ConfirmationWireframeContext {
             let from: String
             let to: String
         }
+    }
+    
+    struct CultCastVoteContext {
+        
+        let cultProposal: CultProposal
+        let approve: Bool
     }
 }

@@ -6,8 +6,8 @@ import UIKit
 
 enum CultProposalsWireframeDestination {
     
-    case comingSoon
     case proposal(proposal: CultProposal, proposals: [CultProposal])
+    case castVote(proposal: CultProposal, approve: Bool)
 }
 
 protocol CultProposalsWireframe {
@@ -19,7 +19,7 @@ final class DefaultCultProposalsWireframe {
 
     private weak var parent: UIViewController!
     private let cultProposalWireframeFactory: CultProposalWireframeFactory
-    private let alertWireframeFactory: AlertWireframeFactory
+    private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let cultService: CultService
 
     private weak var vc: UIViewController!
@@ -27,12 +27,12 @@ final class DefaultCultProposalsWireframe {
     init(
         parent: UIViewController,
         cultProposalWireframeFactory: CultProposalWireframeFactory,
-        alertWireframeFactory: AlertWireframeFactory,
+        confirmationWireframeFactory: ConfirmationWireframeFactory,
         cultService: CultService
     ) {
         self.parent = parent
         self.cultProposalWireframeFactory = cultProposalWireframeFactory
-        self.alertWireframeFactory = alertWireframeFactory
+        self.confirmationWireframeFactory = confirmationWireframeFactory
         self.cultService = cultService
     }
 }
@@ -57,11 +57,14 @@ extension DefaultCultProposalsWireframe: CultProposalsWireframe {
                 context: .init(proposal: proposal, proposals: proposals)
             ).present()
             
-        case .comingSoon:
-            
-            alertWireframeFactory.makeWireframe(
-                vc,
-                context: .underConstructionAlert()
+        case let .castVote(proposal, approve):
+            confirmationWireframeFactory.makeWireframe(
+                presentingIn: vc,
+                context: .init(
+                    type: .cultCastVote(
+                        .init(cultProposal: proposal, approve: approve)
+                    )
+                )
             ).present()
         }
     }

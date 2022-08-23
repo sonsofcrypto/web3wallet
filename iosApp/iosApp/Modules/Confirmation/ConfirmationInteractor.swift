@@ -25,6 +25,14 @@ protocol ConfirmationInteractor {
         network: Network,
         handler: @escaping (Result<TransactionResponse, Error>) -> Void
     )
+    
+    func castVote(
+        proposalId: String,
+        support: Bool,
+        password: String,
+        salt: String,
+        handler: @escaping (Result<TransactionResponse, Error>) -> Void
+    )
 }
 
 final class DefaultConfirmationInteractor {
@@ -121,9 +129,55 @@ extension DefaultConfirmationInteractor: ConfirmationInteractor {
             handler(.failure(error))
         }
     }
+    
+    func castVote(
+        proposalId: String,
+        support: Bool,
+        password: String,
+        salt: String,
+        handler: @escaping (Result<TransactionResponse, Error>) -> Void
+    ) {
+        do {
+            
+            guard let id = try? proposalId.int() else {
+                handler(.failure(ConfirmationInteractorError.failedProposalId))
+                return
+            }
+
+            let network = Network.ethereum()
+            try walletService.unlock(
+                password: password,
+                salt: salt,
+                network: network
+            )
+
+            let contract = CultGovernor()
+            let supportInt = UInt32(support ? 1 : 0)
+
+            walletService.contractSend(
+                contractAddress: contract.address.hexString,
+                data: contract.castVote(proposalId: UInt32(id), support: supportInt),
+                network: network,
+                completionHandler:  { response, error in
+                    if let error = error {
+                        handler(.failure(error))
+                        return
+                    }
+                    guard let response = response else {
+                        handler(.failure(ConfirmationInteractorError.noResponse))
+                        return
+                    }
+                    handler(.success(response))
+                }
+            )
+        } catch {
+            handler(.failure(error))
+        }
+    }
 }
 
 enum ConfirmationInteractorError: Error {
     case noResponse
     case failedToParseTokenId
+    case failedProposalId
 }

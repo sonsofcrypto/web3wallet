@@ -17,6 +17,7 @@ struct ConfirmationViewModel {
         case swap(SwapViewModel)
         case send(SendViewModel)
         case sendNFT(SendNFTViewModel)
+        case cultCastVote(CultCastVoteViewModel)
     }
 }
 

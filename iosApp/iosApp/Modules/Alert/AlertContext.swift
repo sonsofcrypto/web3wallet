@@ -50,4 +50,27 @@ extension AlertContext {
             contentHeight: 500
         )
     }
+    
+    static func error(
+        title: String = Localized("error.alert.title"),
+        message: String,
+        onOkTapped: TargetActionViewModel? = nil,
+        contentHeight: CGFloat = 500
+    ) -> Self {
+        
+        .init(
+            title: title,
+            // TODO: @Annon to provide nice gift
+            media: .gift(named: "under-construction", size: .init(width: 240, height: 285)),
+            message: message,
+            actions: [
+                .init(
+                    title: Localized("OK"),
+                    type: .primary,
+                    action: onOkTapped
+                )
+            ],
+            contentHeight: contentHeight
+        )
+    }
 }
