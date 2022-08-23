@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3lib.services.wallet
 
+import com.sonsofcrypto.web3lib.provider.model.Log
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt
@@ -34,6 +35,12 @@ sealed class WalletEvent() {
     /** New pending transaction broadcast */
     data class NewPendingTransaction(
         val hash: String
+    ): WalletEvent()
+
+    /** Fetched transfer logs for currency */
+    data class TransferLogs(
+        val currency: Currency,
+        val logs: List<Log>
     ): WalletEvent()
 }
 

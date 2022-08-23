@@ -282,7 +282,7 @@ class WalletServiceTest {
         scope.launch {
             walletService.unlock(password, "", Network.ethereum())
             val contract = CultGovernor()
-            val result = walletService.contractCall(
+            val result = walletService.contractSend(
                 contract.address.hexString,
                 contract.castVote(126u, 1u),
                 Network.ethereum()
@@ -353,7 +353,7 @@ class WalletServiceTest {
         scope.launch {
             walletService.unlock(password, "", Network.ethereum())
             val contract = ERC721(Address.HexString("0xf79E73dE6934B767De0fAa120d059811A40276d9"))
-            val result = walletService.contractCall(
+            val result = walletService.contractSend(
                 contract.address.hexString,
                 contract.transferFrom(
                     Address.HexString("0x58aEBEC033A2D55e35e44E6d7B43725b069F6Abc"),

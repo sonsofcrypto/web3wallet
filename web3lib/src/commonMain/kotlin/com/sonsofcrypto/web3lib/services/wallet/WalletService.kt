@@ -44,6 +44,8 @@ interface WalletService {
     fun blockNumber(network: Network): BigInt
     /** Last known transaction count wallet (in network wallet is connected to) */
     fun transactionCount(network: Network): BigInt
+    /** Transfer logs for ERC20 only. Always empty for native */
+    fun transferLogs(currency: Currency, network: Network): List<Log>
 
     /** Retrieves private key from secure storage for 5 secs. */
     @Throws(Throwable::class)
@@ -58,13 +60,14 @@ interface WalletService {
     ): TransactionResponse
     /** Call smart contract function */
     @Throws(Throwable::class)
-    suspend fun contractCall(
+    suspend fun contractSend(
         contractAddress: AddressHexString,
         data: DataHexString,
         network: Network
     ): TransactionResponse
-    /** List of transactions for wallet */
-    fun transactions(network: Network): List<Transaction>
+    /** Transfer logs for ERC20 only. Always empty for native */
+    @Throws(Throwable::class)
+    suspend fun fetchTransferLogs(currency: Currency, network: Network): List<Log>
 
     /** Begins polling networks events */
     fun startPolling()
@@ -83,12 +86,15 @@ class DefaultWalletService(
     private val networkService: NetworksService,
     private val currencyStoreService: CurrencyStoreService,
     private val currenciesCache: KeyValueStore,
-    private val networksStateCache: KeyValueStore
+    private val networksStateCache: KeyValueStore,
+    private val transferLogsCache: KeyValueStore
 ): WalletService, NetworksListener {
     private val currencies: MutableMap<String, List<Currency>> = mutableMapOf()
     private val networksState: MutableMap<String, BigInt> = mutableMapOf()
+    private val transferLogs: MutableMap<String, List<Log>> = mutableMapOf()
+    private val transferLogsNonce: MutableMap<String,BigInt> = mutableMapOf()
     private var listeners: MutableSet<WalletListener> = mutableSetOf()
-    private var pendingTransactions: MutableList<TransactionResponse> = mutableListOf()
+    private var pending: MutableMap<String, List<TransactionResponse>> = mutableMapOf()
     private var pollingJob: Job? = null
     private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
 
@@ -146,6 +152,24 @@ class DefaultWalletService(
         return BigInt.zero()
     }
 
+    override fun transferLogs(currency: Currency, network: Network): List<Log> {
+        transferLogs[transferLogsKey(currency, network)]?.let { return it }
+        transferLogsCache.get<String>(transferLogsKey(currency, network))?.let {
+            jsonDecode<List<Log>>(it)?.let { logs -> return logs }
+        }
+        return listOf()
+    }
+
+    private fun addPending(
+        response: TransactionResponse,
+        currency: Currency,
+        network: Network
+    ) {
+        val key = pendingKey(currency, network)
+        pending[key] = (pending[key] ?: listOf()) + listOf(response)
+    }
+
+
     override fun unlock(password: String, salt: String, network: Network) {
         networkService.wallet(network)?.unlock(password, salt)
     }
@@ -161,14 +185,14 @@ class DefaultWalletService(
         val wallet = networkService.wallet(network)
         val response = wallet!!.sendTransaction(request)
         withUICxt {
-            pendingTransactions.add(response)
+            addPending(response, currency, network)
             emit(WalletEvent.NewPendingTransaction(response.hash))
         }
         return@withBgCxt response
     }
 
     @Throws(Throwable::class)
-    override suspend fun contractCall(
+    override suspend fun contractSend(
         contractAddress: AddressHexString,
         data: DataHexString,
         network: Network
@@ -180,7 +204,6 @@ class DefaultWalletService(
         val wallet = networkService.wallet(network)
         val response = wallet!!.sendTransaction(request)
         withUICxt {
-            pendingTransactions.add(response)
             emit(WalletEvent.NewPendingTransaction(response.hash))
         }
         return@withBgCxt response
@@ -203,8 +226,37 @@ class DefaultWalletService(
         throw Error.UnableToSendTransaction
     }
 
-    override fun transactions(network: Network): List<Transaction> {
-        TODO("Not yet implemented")
+    @Throws(Throwable::class)
+    override suspend fun fetchTransferLogs(
+        currency: Currency,
+        network: Network
+    ): List<Log> = withBgCxt {
+        val wallet = withUICxt { return@withUICxt networkService.wallet(network) }
+        val nonce = withUICxt { return@withUICxt transactionCount(network) }
+        val lastNonce = withUICxt { return@withUICxt transferLogNonce(currency, network) }
+        if (nonce == lastNonce) {
+            val logs = withUICxt { transferLogs(currency, network) }
+            return@withBgCxt logs
+        }
+        val logs = wallet?.getTransferLogs(currency) ?: listOf()
+        withUICxt {
+            val key = transferLogsKey(currency, network)
+            val nonceKey = transferLogsNonceKey(currency, network)
+            transferLogs[key] = logs
+            transferLogsNonce[nonceKey] = transactionCount(network)
+            transferLogsCache.set(key, jsonEncode(logs))
+            transferLogsCache.set(nonceKey, jsonEncode(transactionCount(network)))
+            emit(WalletEvent.TransferLogs(currency, logs))
+        }
+        return@withBgCxt logs
+    }
+
+    private fun transferLogNonce(currency: Currency, network: Network): BigInt {
+        transferLogsNonce[transferLogsNonceKey(currency, network)]?.let { return it }
+        transferLogsCache.get<String>(transferLogsNonceKey(currency, network))?.let {
+            jsonDecode<BigInt>(it)?.let { nonce -> return nonce }
+        }
+        return BigInt.zero()
     }
 
     override fun add(listener: WalletListener) {
@@ -330,6 +382,18 @@ class DefaultWalletService(
 
     private fun transactionCountKey(network: Network): String {
         return "transactionCount_${network.id()}"
+    }
+
+    private fun pendingKey(currency: Currency, network: Network): String {
+        return "pending_${currency.id()}_${network.id()}"
+    }
+
+    private fun transferLogsKey(currency: Currency, network: Network): String {
+        return "transferLogs_${currency.id()}_${network.id()}"
+    }
+
+    private fun transferLogsNonceKey(currency: Currency, network: Network): String {
+        return "transferLogsNonce_${currency.id()}_${network.id()}"
     }
 
     private fun defaultCurrencies(network: Network): List<Currency> {

@@ -1,6 +1,7 @@
 package com.sonsofcrypto.web3lib.signer
 
 import com.sonsofcrypto.web3lib.provider.Provider
+import com.sonsofcrypto.web3lib.provider.ProviderAlchemy
 import com.sonsofcrypto.web3lib.provider.model.*
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
@@ -9,6 +10,7 @@ import com.sonsofcrypto.web3lib.utils.*
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.extensions.zeroOut
+import io.ktor.utils.io.core.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -48,6 +50,9 @@ interface Signer {
     /** Populates `from` if unspecified, and estimates the fee */
     @Throws(Throwable::class)
     suspend fun estimateGas(transaction: TransactionRequest): BigInt
+    /** Get transfer logs for ERC20 */
+    @Throws(Throwable::class)
+    suspend fun getTransferLogs(currency: Currency): List<Log>
 
     /** Chain id of network */
     @Throws(Throwable::class)
@@ -140,6 +145,44 @@ class Wallet(
 
     override suspend fun estimateGas(transaction: TransactionRequest): BigInt {
         return provider!!.estimateGas(transaction)
+    }
+
+    @Throws(Throwable::class)
+    override suspend fun getTransferLogs(currency: Currency): List<Log> {
+        if (currency.type != Currency.Type.ERC20 || currency.address == null) {
+            return listOf()
+        }
+        val hash = keccak256("Transfer(address,address,uint256)".toByteArray())
+        val signature = DataHexString(hash)
+        val address = address().toHexStringAddress().hexString
+        val abiAddress = DataHexString(abiEncode(Address.HexString(address)))
+        val fromLogs = provider?.getLogs(
+            FilterRequest(
+                BlockTag.Earliest,
+                BlockTag.Latest,
+                Address.HexString(currency.address),
+                listOf(
+                    Topic.TopicValue(signature),
+                    Topic.TopicValue(abiAddress),
+                    Topic.TopicValue(null),
+                )
+            )
+        ) ?: listOf()
+        val toLogs = provider?.getLogs(
+            FilterRequest(
+                BlockTag.Earliest,
+                BlockTag.Latest,
+                Address.HexString(currency.address),
+                listOf(
+                    Topic.TopicValue(signature),
+                    Topic.TopicValue(null),
+                    Topic.TopicValue(abiAddress),
+                )
+            )
+        ) ?: listOf()
+
+        return fromLogs.mapNotNull { it as? Log } +
+            toLogs.mapNotNull { it as? Log }
     }
 
     @Throws(Throwable::class)
