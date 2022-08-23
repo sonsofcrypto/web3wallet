@@ -71,7 +71,6 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
     }
 
     func handle(_ event: MnemonicUpdatePresenterEvent) {
-        
         switch event {
         case .didTapMnemonic:
             let mnemonicStr = interactor.mnemonic.joined(separator: " ")

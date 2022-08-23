@@ -116,7 +116,7 @@ extension BigInt {
         
         switch type {
         case .short:
-            return toDecimalString().add(decimals: decimals)
+            return toDecimalString().add(decimals: decimals).trimDecimals(upToMax: 4).trimFinalZerosIfDecimal(min: 1)
         case .long:
             return toDecimalString().add(decimals: decimals).trimDecimals(upToMax: 4).trimFinalZerosIfDecimal(min: 1)
         case .max:
@@ -132,7 +132,7 @@ extension BigInt {
         
         switch type {
         case .short:
-            return String.currencySymbol(with: currencyCode)
+            return String.currencySymbol(with: currencyCode).trimFinalZerosIfDecimal(min: 2).thowsandFormatted
             + toDecimalString().add(decimals: decimals)
         case .long:
             return String.currencySymbol(with: currencyCode)
