@@ -19,6 +19,11 @@ final class MnemonicNewViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var ctaButton: Button!
+    
+    deinit {
+        
+        NotificationCenter.default.removeObserver(self)
+    }
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -350,7 +355,8 @@ private extension MnemonicNewViewController {
         constraint.isActive = true
         
         NotificationCenter.default.addObserver(
-            self, selector: #selector(showKeyboard),
+            self,
+            selector: #selector(showKeyboard),
             name: UIApplication.keyboardWillShowNotification,
             object: nil
         )
