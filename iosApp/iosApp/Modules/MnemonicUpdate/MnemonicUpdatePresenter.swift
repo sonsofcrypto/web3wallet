@@ -58,7 +58,7 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
     func present() {
         
         updateView()
-        
+
         wireframe.navigate(
             to: .authenticate(
                 context: .init(
@@ -146,10 +146,10 @@ private extension DefaultMnemonicUpdatePresenter {
                     password: password,
                     salt: salt
                 )
+                updateView()
+                
             } catch {
-                // TODO(web3dgn): Present alert with ok, something along the
-                // lines failed to unlock wallet. Tapping OK `wireframe.navigate(to: .dismiss)`
-                // This is unrecoverable error but dont wanna crash the app for it
+                wireframe.navigate(to: .dismiss)
             }
         case .failure:
             wireframe.navigate(to: .dismiss)

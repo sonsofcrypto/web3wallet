@@ -115,26 +115,16 @@ extension AuthenticateViewController: UIViewControllerTransitioningDelegate, Mod
 }
 
 extension AuthenticateViewController: UITextFieldDelegate {
-
-    func textFieldDidEndEditing(_ textField: UITextField) {
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
         updatePresenter(textField)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        updatePresenter(textField)
         presenter.handle(.didConfirm)
         return false
     }
-
-    func textField(
-        _ textField: UITextField,
-        shouldChangeCharactersIn range: NSRange,
-        replacementString string: String
-    ) -> Bool {
-        updatePresenter(textField)
-        return true
-    }
-
+    
     func updatePresenter(_ textField: UITextField) {
         
         if textField == passwordTextField {
