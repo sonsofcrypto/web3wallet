@@ -25,3 +25,23 @@ extension Network {
         Network.Companion().ropsten()
     }
 }
+
+func abiDecodeBigInt(_ value: String) -> BigInt {
+    AbiEncodeKt.abiDecodeBigInt(value: value)
+}
+
+func abiDecodeAddress(_ value: String) -> Address.HexString {
+    AbiEncodeKt.abiDecodeAddress(value: value)
+}
+
+func abiEncodeAddress(_ address: Address.HexString) -> KotlinByteArray {
+    AbiEncodeKt.abiEncode(address: address)
+}
+
+func abiEncodeBigInt(_ bigInt: BigInt) -> KotlinByteArray {
+    AbiEncodeKt.abiEncode(bigInt: bigInt)
+}
+
+func abiEncodeUInt(_ uint: UInt32) -> KotlinByteArray {
+    AbiEncodeKt.abiEncode(uint: uint)
+}

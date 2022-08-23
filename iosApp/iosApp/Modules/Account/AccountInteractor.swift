@@ -14,11 +14,12 @@ protocol AccountInteractor: AnyObject {
     func cryptoBalance() -> BigInt
     func fiatBalance() -> Double
     func transactions() -> [AccountInteractorTransaction]
-    func fetchTransactions(_ handler: @escaping ([EtherscanTransaction]) -> ())
+    func fetchTransactions(_ handler: @escaping ([AccountInteractorTransaction]) -> ())
 }
 
 struct AccountInteractorTransaction {
-    let date: Date
+    let date: Date?
+    let blockNumber: String
     let address: String
     let amount: String
     let isReceive: Bool
@@ -92,32 +93,83 @@ extension DefaultAccountInteractor: AccountInteractor {
         guard let address = walletService.address(network: network) else {
             return []
         }
-        // TODO: - Parse amount from Transaction.Input
-        // TODO: - Filter by currency
-        return transactionService.cachedTransactionHistory(
-            for: address,
-            nonce: walletService.transactionCount(network: network).toDecimalString()
-        ).map {
-            let isReceive = $0.to == self.address()
-            return .init(
-                date: Date(timeIntervalSince1970: (try? $0.timeStamp.double()) ?? 0),
-                address: isReceive ? $0.from : $0.to,
-                amount: $0.value,
-                isReceive: isReceive
-            )
+        guard currency().type != .erc20 else {
+            let logs = walletService.transferLogs(currency: currency(), network: network)
+            return toTransactions(from: logs)
         }
+        return toTransactions(from:
+            transactionService.cachedTransactionHistory(
+                for: address,
+                network: network,
+                nonce: walletService.transactionCount(network: network).toDecimalString()
+            )
+        )
     }
 
-    func fetchTransactions(_ handler: @escaping ([EtherscanTransaction]) -> ()) {
+    func fetchTransactions(_ handler: @escaping ([AccountInteractorTransaction]) -> ()) {
         guard let address = walletService.address(network: network) else { return }
-        transactionService.fetchTransactionHistory(for: address) { result in
+        guard currency().type != .erc20 else {
+            walletService.fetchTransferLogs(
+                currency: currency(),
+                network: network,
+                completionHandler: { [weak self] logs, error in
+                    print(error)
+                    handler(self?.toTransactions(from: logs ?? []) ?? [])
+                }
+            )
+            return
+        }
+
+        transactionService.fetchTransactionHistory(for: address, network: network) { [weak self] result in
             switch result {
             case let .success(transactions):
-                handler(transactions)
+                handler(self?.toTransactions(from: transactions) ?? [])
             case let .failure(error):
                 print(error)
                 handler([])
             }
         }
+    }
+
+    func toTransactions(
+        from transactions: [EtherscanTransaction]
+    ) -> [AccountInteractorTransaction] {
+        transactions
+            .filter { $0.value != "0" }
+            .map {
+                let isReceive = $0.to == self.address()
+                return .init(
+                    date: Date(timeIntervalSince1970: (try? $0.timeStamp.double()) ?? 0),
+                    blockNumber: $0.blockNumber,
+                    address: isReceive ? $0.from : $0.to,
+                    amount: Formatter.currency.string(
+                        BigInt.fromString($0.value, decimals: 10),
+                        currency: currency()
+                    ),
+                    isReceive: isReceive
+                )
+        }
+    }
+
+    func toTransactions(
+        from transactions: [Log]
+    ) -> [AccountInteractorTransaction] {
+        transactions.map {
+            guard let topic1 = ($0.topics?[1] as? Topic.TopicValue)?.value,
+                  let topic2 = ($0.topics?[2] as? Topic.TopicValue)?.value else {
+                return nil
+            }
+            let from: Address.HexString = abiDecodeAddress(topic1)
+            let to: Address.HexString = abiDecodeAddress(topic2)
+            let amount: BigInt = abiDecodeBigInt($0.data)
+            let isReceive = to.hexString == self.address()
+            return .init(
+                date: nil,
+                blockNumber: $0.blockNumber.toDecimalString(),
+                address: isReceive ? from.hexString : to.hexString,
+                amount: Formatter.currency.string(amount, currency: currency()),
+                isReceive: isReceive
+            )
+        }.compactMap { $0 }
     }
 }

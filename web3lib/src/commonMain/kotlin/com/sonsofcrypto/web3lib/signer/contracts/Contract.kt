@@ -1,12 +1,10 @@
 package com.sonsofcrypto.web3lib.signer.contracts
 
 import com.sonsofcrypto.web3lib.provider.model.DataHexString
-import com.sonsofcrypto.web3lib.provider.model.toBigIntData
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.abiDecodeAddress
 import com.sonsofcrypto.web3lib.utils.abiEncode
-import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
-import com.sonsofcrypto.web3lib.utils.extensions.toByteArray
 import com.sonsofcrypto.web3lib.utils.keccak256
 
 
@@ -14,6 +12,10 @@ open class Contract(
     var address: Address.HexString
 ) {
     open class Event()
+
+    fun decodeAddress(value: String): Address.HexString {
+        return abiDecodeAddress(value)
+    }
 }
 
 class ERC20(address: Address.HexString) : Contract(address) {

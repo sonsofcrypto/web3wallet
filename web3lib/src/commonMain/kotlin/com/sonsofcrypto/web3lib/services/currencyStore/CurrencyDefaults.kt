@@ -50,7 +50,7 @@ val ropstenDefaultCurrencies = listOf(
         symbol = "usdt",
         decimals = 6u,
         type = Currency.Type.ERC20,
-        address = "0x6EE856Ae55B6E1A249f04cd3b947141bc146273c",
+        address = "0xB404c51BBC10dcBE948077F18a4B8E553D160084",
         coinGeckoId = "tether",
     ),
 )

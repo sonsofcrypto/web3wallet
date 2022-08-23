@@ -1,7 +1,6 @@
 package com.sonsofcrypto.web3lib.signer
 
 import com.sonsofcrypto.web3lib.provider.Provider
-import com.sonsofcrypto.web3lib.provider.ProviderAlchemy
 import com.sonsofcrypto.web3lib.provider.model.*
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService

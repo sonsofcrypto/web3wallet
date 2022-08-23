@@ -23,7 +23,7 @@ class ProviderAlchemy: ProviderJsonRpc {
     ) : super(
         network = network,
         client = HttpClient() {
-            Logging { level = LogLevel.ALL; logger = Logger.SIMPLE }
+            Logging { level = LogLevel.NONE; logger = Logger.SIMPLE }
             install(ContentNegotiation) {
                 json(
                     providerJson,

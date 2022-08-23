@@ -44,11 +44,13 @@ protocol EtherscanService {
 
     func cachedTransactionHistory(
         for walletAddress: String,
+        network: Network,
         nonce: String
     ) -> [EtherscanTransaction]
     
     func fetchTransactionHistory(
         for address: String,
+        network: Network,
         onCompletion: @escaping (Result<[EtherscanTransaction], Error>) -> Void
     )
 }
@@ -75,10 +77,15 @@ extension DefaultEtherscanService: EtherscanService {
     
     func cachedTransactionHistory(
         for walletAddress: String,
+        network: Network,
         nonce: String
     ) -> [EtherscanTransaction] {
         
-        let transactionFileTarget = makeFileName(for: walletAddress, nonce: nonce)
+        let transactionFileTarget = makeFileName(
+            for: walletAddress,
+            network: network,
+            nonce: nonce
+        )
         let transactionFileCached = defaults.string(forKey: LATEST_FILE_NAME)
         
         guard transactionFileTarget == transactionFileCached else {
@@ -101,10 +108,14 @@ extension DefaultEtherscanService: EtherscanService {
     
     func fetchTransactionHistory(
         for walletAddress: String,
+        network: Network,
         onCompletion: @escaping (Result<[EtherscanTransaction], Error>) -> Void
     ) {
         
-        guard let urlRequest = makeURLRequest(for: .transactions(address: walletAddress)) else {
+        guard let urlRequest = makeURLRequest(
+            for: .transactions(address: walletAddress),
+            network: network
+        ) else {
             onCompletion(.failure(EtherscanServiceError.unableToConstructURL))
             return
         }
@@ -124,7 +135,11 @@ extension DefaultEtherscanService: EtherscanService {
                     from: data
                 ).result
                 
-                try self.storeNewTransactions(with: walletAddress, and: transactions)
+                try self.storeNewTransactions(
+                    with: walletAddress,
+                    network: network,
+                    and: transactions
+                )
                 
                 DispatchQueue.main.async {
                     onCompletion(.success(transactions))
@@ -149,18 +164,23 @@ private extension DefaultEtherscanService {
         defaults.synchronize()
     }
     
-    func makeFileName(for wallet: String, nonce: String) -> String {
-        "\(wallet)_\(nonce)"
+    func makeFileName(for wallet: String, network: Network, nonce: String) -> String {
+        "\(wallet)_\(network)_\(nonce)"
     }
     
     func storeNewTransactions(
         with walletAddress: String,
+        network: Network,
         and transactions: [EtherscanTransaction]
     ) throws {
         
-        guard let nonce = transactions.first?.nonce else { return }
+        guard let nonce = try? transactions.first?.nonce.int() else { return }
         
-        let fileName = makeFileName(for: walletAddress, nonce: nonce)
+        let fileName = makeFileName(
+            for: walletAddress,
+            network: network,
+            nonce: "\(nonce + 1)"
+        )
         
         let encoder = JSONEncoder()
         let data = try encoder.encode(transactions)
@@ -173,7 +193,6 @@ private extension DefaultEtherscanService {
     }
     
     func loadTransactions(from data: Data) throws -> [EtherscanTransaction] {
-        
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return try decoder.decode(
@@ -185,7 +204,14 @@ private extension DefaultEtherscanService {
 
 private extension DefaultEtherscanService {
     
-    var host: String { "api.etherscan.io" }
+    func host(_ network: Network) -> String {
+        switch network.chainId {
+        case 3: return "api-ropsten.etherscan.io"
+        case 4: return "api-rinkeby.etherscan.io"
+        case 5: return "api-goerli.etherscan.io"
+        default: return "api.etherscan.io"
+        }
+    }
     
     enum Details {
         case transactions(
@@ -201,12 +227,13 @@ private extension DefaultEtherscanService {
     }
     
     func makeURLRequest(
-        for details: Details
+        for details: Details,
+        network: Network
     ) -> URLRequest? {
         
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
-        urlComponents.host = host
+        urlComponents.host = host(network)
         
         switch details {
         case let .transactions(address):

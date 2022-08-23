@@ -111,7 +111,9 @@ private extension DefaultAccountPresenter {
         _ transaction: AccountInteractorTransaction
     ) -> AccountViewModel.Transaction {
          AccountViewModel.Transaction(
-            date: Formatter.date.string(transaction.date),
+            date: transaction.date == nil
+                ? transaction.blockNumber
+                : Formatter.date.string(transaction.date),
             address: transaction.address,
             amount: transaction.amount,
             isReceive: transaction.isReceive

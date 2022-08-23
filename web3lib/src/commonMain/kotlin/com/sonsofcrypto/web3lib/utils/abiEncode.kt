@@ -22,10 +22,19 @@ fun abiEncode(uint: UInt): ByteArray {
     return ByteArray(abiParamLen - uintBytes.size) + uintBytes
 }
 
-fun abiDecode(value: String): BigInt {
+fun abiDecodeBigInt(value: String): BigInt {
     var idx = 2
     while (value[idx] == '0' && idx<(value.length-2)) {  idx += 1 }
     var stripped = value.substring(idx)
     stripped = if (stripped.length % 2 == 0) stripped else "0" + stripped
     return stripped.toBigIntData()
 }
+
+fun abiDecodeAddress(value: String): Address.HexString {
+    var idx = 2
+    while (value[idx] == '0' && idx<(value.length-2)) {  idx += 1 }
+    var stripped = value.substring(idx)
+    stripped = if (stripped.length % 2 == 0) stripped else "0" + stripped
+    return Address.HexString("0x" + stripped)
+}
+
