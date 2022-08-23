@@ -15,6 +15,7 @@ final class TokenPickerViewController: BaseViewController {
     var context: TokenPickerWireframeContext!
 
     private var viewModel: TokenPickerViewModel?
+    private let sceneHelper = SceneDelegateHelper()
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchContainerBox: UIView!
@@ -27,6 +28,7 @@ final class TokenPickerViewController: BaseViewController {
 
     private var backgroundGradientTopConstraint: NSLayoutConstraint?
     private var backgroundGradientHeightConstraint: NSLayoutConstraint?
+    private var bottomKeyboardLayoutConstraint: NSLayoutConstraint!
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -34,6 +36,11 @@ final class TokenPickerViewController: BaseViewController {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    deinit {
+        
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func viewDidLoad() {
@@ -88,6 +95,19 @@ private extension TokenPickerViewController {
     
     func configureUI() {
         
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showKeyboard),
+            name: UIApplication.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(hideKeyboard),
+            name: UIApplication.keyboardWillHideNotification,
+            object: nil
+        )
+        
         view.backgroundColor = Theme.colour.gradientBottom
         
         searchContainerBox.backgroundColor = Theme.colour.navBarBackground
@@ -107,32 +127,39 @@ private extension TokenPickerViewController {
                 
         dividerLineView.backgroundColor = navigationController?.bottomLineColor
         
+        //addCollectionViewBottomInset()
         collectionView.register(
             TokenPickerSectionCell.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: "\(TokenPickerSectionCell.self)"
         )
-
         collectionView.setCollectionViewLayout(
             compositionalLayout(),
             animated: false
         )
-        
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
-        let sceneHelper = SceneDelegateHelper()
-        let constraint = collectionView.bottomAnchor.constraint(
+        bottomKeyboardLayoutConstraint = collectionView.bottomAnchor.constraint(
             equalTo: view.keyboardLayoutGuide.topAnchor,
             constant: sceneHelper.window?.safeAreaInsets.bottom ?? 0
         )
-        constraint.priority = .required
-        constraint.isActive = true
-        
-        var insets = collectionView.contentInset
-        insets.bottom += sceneHelper.window?.safeAreaInsets.bottom ?? 0
-        collectionView.contentInset = insets
+        bottomKeyboardLayoutConstraint.priority = .required
+        bottomKeyboardLayoutConstraint.isActive = true
         
         addCustomBackgroundGradientView()        
+    }
+    
+    @objc func showKeyboard() {
+        addCollectionViewBottomInset()
+    }
+    
+    @objc func hideKeyboard() {
+        collectionView.contentInset = .zero
+    }
+    
+    func addCollectionViewBottomInset() {
+        let bottom = sceneHelper.window?.safeAreaInsets.bottom ?? 0
+        collectionView.contentInset = .init(top: 0, left: 0, bottom: bottom, right: 0)
     }
     
     func updateNavigationBarIcons() {
