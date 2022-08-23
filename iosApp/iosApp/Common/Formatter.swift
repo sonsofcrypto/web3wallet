@@ -85,6 +85,7 @@ class PctFormatter {
         formatter.positivePrefix = "+"
         formatter.negativePrefix = "-"
         formatter.numberStyle = .percent
+        formatter.maximumFractionDigits = 2
         return formatter
     }()
 

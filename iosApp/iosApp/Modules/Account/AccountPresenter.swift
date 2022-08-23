@@ -78,7 +78,7 @@ private extension DefaultAccountPresenter {
                 ),
                 fiatBalance: Formatter.fiat.string(interactor.fiatBalance()),
                 pct: Formatter.pct.string(pct, div: true),
-                pctUp: true,
+                pctUp: market?.priceChangePercentage24h?.doubleValue ?? 0 >= 0,
                 buttons: headerButtonViewModels()
             ),
             candles: .loaded(

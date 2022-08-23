@@ -9,6 +9,7 @@ extension NumberFormatter {
     static let pct: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .percent
+        formatter.maximumFractionDigits = 2
         return formatter
     }()
 

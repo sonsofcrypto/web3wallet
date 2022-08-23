@@ -266,7 +266,7 @@ private extension DefaultDashboardPresenter {
             fiatBalance: Formatter.fiat.string(Float(fiatBalance)),
             cryptoBalance: formatted,
             tokenPrice: Formatter.fiat.string(market?.currentPrice),
-            pctChange: Formatter.pct.string(market?.priceChangePercentage24h),
+            pctChange: Formatter.pct.string(market?.priceChangePercentage24h, div: true),
             priceUp: market?.priceChangePercentage24h?.doubleValue ?? 0 >= 0,
             candles: candlesViewModel(candles: interactor.candles(for: currency))
         )

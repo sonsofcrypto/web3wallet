@@ -98,7 +98,7 @@ struct ThemeMiami: Themable {
             keystoreEnumFill: pallete.systemBlue,
             keystoreEnumText: pallete.systemWhite,
             priceUp: pallete.systemGreen,
-            priceDown: pallete.systemRed,
+            priceDown: pallete.systemPink,
             candleGreen: pallete.systemTeal,
             candleRed: pallete.systemPink,
             dashboardTVCryptoBallance: pallete.systemOrange,

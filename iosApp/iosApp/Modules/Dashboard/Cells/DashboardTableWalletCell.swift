@@ -42,6 +42,11 @@ extension DashboardTableWalletCell {
         fiatPriceLabel.text = viewModel.fiatPrice
         currencyNameLabel.text = viewModel.name
         pctChangeLabel.text = viewModel.pctChange
+        if viewModel.priceUp {
+            pctChangeLabel.apply(style: .callout, colour: Theme.colour.candleGreen)
+        } else {
+            pctChangeLabel.apply(style: .callout, colour: Theme.colour.candleRed)
+        }
         cryptoBalanceLabel.text = viewModel.cryptoBalance
         fiatBalanceLabel.text = viewModel.fiatBalance
         bottomSeparatorView.isHidden = !showBottomSeparator

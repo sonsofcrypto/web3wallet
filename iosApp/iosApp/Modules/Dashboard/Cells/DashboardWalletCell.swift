@@ -46,10 +46,9 @@ final class DashboardWalletCell: CollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
     }
-
+    
     override func setSelected(_ selected: Bool) {
-        super.setSelected(selected)
-        layer.borderWidth = 0.0
+        // do nothing
     }
 }
 
