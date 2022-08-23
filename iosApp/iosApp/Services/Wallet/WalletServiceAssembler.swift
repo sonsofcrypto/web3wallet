@@ -17,6 +17,9 @@ final class WalletServiceAssembler: AssemblerComponent {
                 ),
                 networksStateCache: KeyValueStore(
                     name: "WalletService.networksState"
+                ),
+                transferLogsCache: KeyValueStore(
+                    name: "WalletService.transferLogsCache"
                 )
             )
         }
