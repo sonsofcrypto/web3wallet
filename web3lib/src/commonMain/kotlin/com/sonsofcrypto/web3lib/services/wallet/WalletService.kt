@@ -294,6 +294,7 @@ class DefaultWalletService(
         val wallets = networks().map { networkService.wallet(it) }
         val transactionCounts = networks().map { transactionCount(it) }
         val currencies = networks().map { currencies(it) }
+        val pending = pending.toMap()
         scope.launch(logExceptionHandler) {
             wallets.forEachIndexed { idx, wallet ->
                 if (wallet != null) {
@@ -305,6 +306,7 @@ class DefaultWalletService(
                     )
                 }
             }
+            processPending(pending)
         }
     }
 
@@ -351,6 +353,15 @@ class DefaultWalletService(
                 else -> { println("Unhandled balance") }
             }
         }
+    }
+
+    private suspend fun processPending(pending: Map<String, List<TransactionResponse>>) {
+        val remaining: MutableMap<String, List<TransactionResponse>> = mutableMapOf()
+        val processed: MutableMap<String, List<TransactionReceipt>> = mutableMapOf()
+        for ((key, value) in pending) {
+            println("$key = $value")
+        }
+
     }
 
     private suspend fun updateBalance(
