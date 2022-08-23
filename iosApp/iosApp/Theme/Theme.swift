@@ -191,7 +191,6 @@ struct ThemeColour {
 }
 
 struct ThemeConstant {
-    
     let cornerRadius: CGFloat
     let cornerRadiusSmall: CGFloat
     let shadowRadius: CGFloat

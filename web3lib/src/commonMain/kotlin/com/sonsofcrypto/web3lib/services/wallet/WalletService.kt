@@ -291,7 +291,7 @@ class DefaultWalletService(
 
     override fun startPolling() {
         if (pollingJob == null)
-            pollingJob = timerFlow(pollInterval, initialDelay = 0.25.seconds)
+            pollingJob = timerFlow(pollInterval, initialDelay = 0.1.seconds)
                 .onEach { poll() }
                 .launchIn(scope)
     }

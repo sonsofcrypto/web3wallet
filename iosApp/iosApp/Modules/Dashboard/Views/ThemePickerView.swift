@@ -14,21 +14,20 @@ class ThemePickerViewController: UIViewController, ThemePickerView {
 
     private var firstAppear: Bool = true
 
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        if firstAppear && !collectionView.visibleCells.isEmpty {
-//            let cell = collectionView.visibleCells.first as? ThemePickerCell
-//            cell?.imageView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-//            firstAppear = false
-//            print("=== here")
-//        }
-//    }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+    }
+
     override func viewDidAppear(_ animated: Bool) {
-        
         super.viewDidAppear(animated)
-        
-        firstAppear = false
+
+        collectionView.scrollToItem(
+            at: IndexPath(item: selectedThemeIndex(), section: 0),
+            at: .centeredHorizontally,
+            animated: false
+        )
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             UIView.springAnimate {
                 self.collectionView.visibleCells.forEach {
@@ -36,6 +35,27 @@ class ThemePickerViewController: UIViewController, ThemePickerView {
                 }
             }
         }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            self.firstAppear = false
+        }
+    }
+
+    private func selectedThemeIndex() -> Int {
+        let settingsService: SettingsService = ServiceDirectory.assembler.resolve()
+        if settingsService.isSelected(item: .theme, action: .themeMiamiLight) {
+            return 0
+        }
+        if settingsService.isSelected(item: .theme, action: .themeMiamiDark) {
+            return 1
+        }
+        if settingsService.isSelected(item: .theme, action: .themeIOSLight) {
+            return 2
+        }
+        if settingsService.isSelected(item: .theme, action: .themeIOSDark) {
+            return 3
+        }
+        return 0
     }
 }
 
@@ -91,7 +111,7 @@ extension ThemePickerViewController: UICollectionViewDelegate {
                     cell.layer.transform = CATransform3DMakeScale(1.25, 1.25, 1)
                 },
                 completion: { [weak self] _ in
-                    self?.dismiss(animated: true) {
+                    self?.dismiss(animated: false) {
                         let settingsService: SettingsService = ServiceDirectory.assembler.resolve()
                         switch indexPath.item {
                         case 0:
