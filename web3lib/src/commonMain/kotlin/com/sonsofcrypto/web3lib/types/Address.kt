@@ -1,15 +1,20 @@
 package com.sonsofcrypto.web3lib.types
 
 import com.sonsofcrypto.web3lib.provider.model.DataHexString
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonPrimitive
 
 typealias AddressBytes = ByteArray
 typealias AddressHexString = String
 
 /** Address */
+@Serializable
 sealed class Address() {
+    @Serializable
     data class Bytes(val data: AddressBytes) : Address()
+    @Serializable
     data class HexString(val hexString: AddressHexString) : Address()
+    @Serializable
     data class Name(val name: String) : Address()
 
     companion object {

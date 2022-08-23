@@ -3,9 +3,13 @@ package com.sonsofcrypto.web3lib.provider.model
 import com.sonsofcrypto.web3lib.provider.utils.stringValue
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.jsonPrimitive
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.*
 
+@Serializable
 sealed class Topic {
+
+    @Serializable
     data class TopicList(val list: List<Topic>): Topic() {
 
         @Throws(Throwable::class)
@@ -33,6 +37,7 @@ sealed class Topic {
         }
     }
 
+    @Serializable
     data class TopicValue(val value: DataHexString?): Topic() {
 
         fun jsonPrimitive(): JsonElement {
