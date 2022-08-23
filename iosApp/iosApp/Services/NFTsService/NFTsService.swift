@@ -39,6 +39,9 @@ struct NFTItem {
     let properties: [Property]
     /** URL pointing to the NFT image **/
     let image: String
+    let address: String
+    let schemaName: String
+    let tokenId: String
     
     struct Property {
         

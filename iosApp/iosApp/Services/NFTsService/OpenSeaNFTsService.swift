@@ -184,7 +184,10 @@ private extension OpenSeaNFTsService {
                 properties: $0.traits.compactMap {
                     .init(name: $0.traitType, value: $0.value, info: "")
                 },
-                image: $0.imageUrl ?? ""
+                image: $0.imageUrl ?? "",
+                address: $0.assetContract.address,
+                schemaName: $0.assetContract.schemaName,
+                tokenId: $0.tokenId
             )
         }
     }
@@ -244,6 +247,7 @@ private extension OpenSeaNFTsService {
         let assetContract: AssetContract
         let collection: Collection
         let traits: [Trait]
+        let tokenId: String
     }
     
     struct AssetContract: Codable {
