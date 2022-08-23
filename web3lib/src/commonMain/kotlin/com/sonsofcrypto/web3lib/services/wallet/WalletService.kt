@@ -273,7 +273,10 @@ class DefaultWalletService(
     override fun handle(event: NetworksEvent) {
         when (event) {
             NetworksEvent.KeyStoreItemDidChange,
-            is EnabledNetworksDidChange -> startPolling()
+            is EnabledNetworksDidChange -> {
+                pausePolling()
+                startPolling()
+            }
             else -> {}
         }
     }
@@ -384,27 +387,33 @@ class DefaultWalletService(
     }
 
     private fun blockNumKey(network: Network): String {
-        return "blockNumber_${network.id()}"
+        val wallet = networkService.wallet(network)
+        return "blockNumber_${wallet?.id()}_${network.id()}"
     }
 
     private fun balanceKey(network: Network, currency: Currency): String {
-        return "balanace_${network.id()}_${currency.id()}"
+        val wallet = networkService.wallet(network)
+        return "balanace_${wallet?.id()}_${network.id()}_${currency.id()}"
     }
 
     private fun transactionCountKey(network: Network): String {
-        return "transactionCount_${network.id()}"
+        val wallet = networkService.wallet(network)
+        return "transactionCount_${wallet?.id()}_${network.id()}"
     }
 
     private fun pendingKey(currency: Currency, network: Network): String {
-        return "pending_${currency.id()}_${network.id()}"
+        val wallet = networkService.wallet(network)
+        return "pending_${wallet?.id()}_${currency.id()}_${network.id()}"
     }
 
     private fun transferLogsKey(currency: Currency, network: Network): String {
-        return "transferLogs_${currency.id()}_${network.id()}"
+        val wallet = networkService.wallet(network)
+        return "transferLogs_${wallet?.id()}_${currency.id()}_${network.id()}"
     }
 
     private fun transferLogsNonceKey(currency: Currency, network: Network): String {
-        return "transferLogsNonce_${currency.id()}_${network.id()}"
+        val wallet = networkService.wallet(network)
+        return "transferLogsNonce_${wallet?.id()}_${currency.id()}_${network.id()}"
     }
 
     private fun defaultCurrencies(network: Network): List<Currency> {

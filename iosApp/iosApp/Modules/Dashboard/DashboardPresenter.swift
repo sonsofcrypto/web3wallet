@@ -136,7 +136,9 @@ extension DefaultDashboardPresenter: DashboardInteractorLister {
 
     func handle(_ event: DashboardInteractorEvent) {
         switch event {
-        case .didUpdateMarketdata, .didUpdateNFTs, .didChangeNetworks, .didUpdateCandles:
+        case .didUpdateBalance, .didUpdateMarketdata, .didUpdateNFTs,
+             .didUpdateCandles, .didSelectKeyStoreItem, .didSelectNetwork,
+             .didChangeNetworks:
             updateView()
         default:
             ()
