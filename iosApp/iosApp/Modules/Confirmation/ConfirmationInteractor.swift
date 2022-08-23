@@ -13,12 +13,17 @@ protocol ConfirmationInteractor {
         fee: Web3NetworkFee,
         password: String,
         salt: String,
-        onCompletion: @escaping (Result<Bool, Error>) -> Void
+        handler: @escaping (Result<TransactionResponse, Error>) -> Void
     )
 }
 
 final class DefaultConfirmationInteractor {
-    
+
+    private let walletService: WalletService
+
+    init(walletService: WalletService) {
+        self.walletService = walletService
+    }
 }
 
 extension DefaultConfirmationInteractor: ConfirmationInteractor {
@@ -30,13 +35,82 @@ extension DefaultConfirmationInteractor: ConfirmationInteractor {
         fee: Web3NetworkFee,
         password: String,
         salt: String,
-        onCompletion: @escaping (Result<Bool, Error>) -> Void
+        handler: @escaping (Result<TransactionResponse, Error>) -> Void
     ) {
-     
-        // TODO: @Annon to fill up
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            
-            onCompletion(.success(true))
+        do {
+            try walletService.unlock(
+                password: password,
+                salt: salt,
+                network: tokenFrom.network.toNetwork()
+            )
+
+            walletService.transfer(
+                to: toAddress,
+                currency: tokenFrom.toCurrency(),
+                amount: balance,
+                network: tokenFrom.network.toNetwork(),
+                completionHandler: { response, error in
+                    if let error = error {
+                        handler(.failure(error))
+                        return
+                    }
+                    guard let response = response else {
+                        handler(.failure(ConfirmationInteractorError.noResponse))
+                        return
+                    }
+                    handler(.success(response))
+                }
+            )
+
+        } catch {
+            handler(.failure(error))
         }
     }
+
+    func sendNFT(
+        password: String,
+        salt: String,
+        handler: @escaping (Result<TransactionResponse, Error>) -> Void
+    ) {
+        let address = ""
+        let from = ""
+        let to = ""
+        let network: Network! = nil
+        let tokenId = 0
+
+        do {
+            try walletService.unlock(
+                password: password,
+                salt: salt,
+                network: network
+            )
+            let contract = ERC721(address: Address.HexString(hexString: address))
+            walletService.contractSend(
+                contractAddress: contract.address.hexString,
+                data: contract.transferFrom(
+                    from: Address.HexString(hexString: from),
+                    to: Address.HexString(hexString: to),
+                    tokenId: BigInt.Companion().from(long: Int64(tokenId))
+                ),
+                network: network,
+                completionHandler: { response, error in
+                    if let error = error {
+                        handler(.failure(error))
+                        return
+                    }
+                    guard let response = response else {
+                        handler(.failure(ConfirmationInteractorError.noResponse))
+                        return
+                    }
+                    handler(.success(response))
+                }
+            )
+        } catch {
+            handler(.failure(error))
+        }
+    }
+}
+
+enum ConfirmationInteractorError: Error {
+    case noResponse
 }

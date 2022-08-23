@@ -454,14 +454,11 @@ private extension DefaultConfirmationPresenter {
     ) {
        
         switch context.type {
-            
         case .swap:
-            
             print("Do swap!")
             print("Authenticated with: \(password) and \(salt)")
 
         case let .send(data):
-            
             interactor.send(
                 tokenFrom: data.token.token,
                 toAddress: data.destination.to,
@@ -474,19 +471,14 @@ private extension DefaultConfirmationPresenter {
                 guard let self = self else { return }
                 
                 switch result {
-                    
                 case .success:
-                    
                     self.showTransactionSuccess()
-                    
                 case .failure:
-                    
                     print("PRESENT ERROR...")
                 }
             }
             
         case .sendNFT:
-            
             print("Do send NFT!")
             print("Authenticated with: \(password) and \(salt)")
         }
