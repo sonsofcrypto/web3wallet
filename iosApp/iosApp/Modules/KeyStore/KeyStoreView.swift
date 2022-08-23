@@ -29,7 +29,6 @@ final class KeyStoreViewController: BaseViewController {
     @IBOutlet weak var buttonHandleView: UIView!
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -217,8 +216,6 @@ extension KeyStoreViewController {
         }
 
         logoContainer.isHidden = !viewModel.isEmpty
-        logoContainer.alpha = 1.0
-        logoView.alpha = 1.0
     }
 
     func selectedIdxPaths() -> [IndexPath] {

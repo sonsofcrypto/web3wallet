@@ -13,7 +13,7 @@ val stdJson = Json {
     coerceInputValues = true
     allowStructuredMapKeys = true
     useAlternativeNames = false
-    prettyPrint = true
+    prettyPrint = false
     useArrayPolymorphism = true
     explicitNulls = false
 }

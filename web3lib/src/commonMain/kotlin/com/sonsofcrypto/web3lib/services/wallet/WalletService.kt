@@ -153,6 +153,14 @@ class DefaultWalletService(
         return BigInt.zero()
     }
 
+    private fun recordedTransactionCount(network: Network): BigInt? {
+        networksState[transactionCountKey(network)]?.let { return it }
+        networksStateCache.get<String>(transactionCountKey(network))?.let {
+            jsonDecode<BigInt>(it)?.let { balance -> return balance }
+        }
+        return null
+    }
+
     override fun transferLogs(currency: Currency, network: Network): List<Log> {
         transferLogs[transferLogsKey(currency, network)]?.let { return it }
         transferLogsCache.get<String>(transferLogsKey(currency, network))?.let {
@@ -283,7 +291,7 @@ class DefaultWalletService(
 
     override fun startPolling() {
         if (pollingJob == null)
-            pollingJob = timerFlow(pollInterval)
+            pollingJob = timerFlow(pollInterval, initialDelay = 0.25.seconds)
                 .onEach { poll() }
                 .launchIn(scope)
     }
@@ -295,7 +303,7 @@ class DefaultWalletService(
 
     private suspend fun poll() = withContext(SupervisorJob() + uiDispatcher) {
         val wallets = networks().map { networkService.wallet(it) }
-        val transactionCounts = networks().map { transactionCount(it) }
+        val transactionCounts = networks().map { recordedTransactionCount(it) }
         val currencies = networks().map { currencies(it) }
         val pending = pending.toMap()
         scope.launch(logExceptionHandler) {
@@ -325,14 +333,14 @@ class DefaultWalletService(
 
     private suspend fun transactionCountAndBalance(
         wallet: Wallet,
-        transactionCount: BigInt,
+        transactionCount: BigInt?,
         currencies: List<Currency>
     ) {
         val newTransactionCount = wallet.getTransactionCount(
             wallet.address(),
             BlockTag.Latest
         )
-        if (transactionCount == newTransactionCount)
+        if (transactionCount != null && transactionCount == newTransactionCount)
             return
         // TODO: Get transaction from nonce and only update IRC20s in transaction
         currencies.forEach { currency ->
