@@ -50,7 +50,7 @@ final class DefaultMnemonicNewInteractor {
     var entropySize: Bip39.EntropySize = .es128
     var name: String = ""
     var passUnlockWithBio: Bool = true
-    var iCloudSecretStorage: Bool = true
+    var iCloudSecretStorage: Bool = false
     var saltMnemonic: Bool = false
     var passwordType: KeyStoreItem.PasswordType = .bio
     var derivationPath: String = Network.ethereum().defaultDerivationPath()
