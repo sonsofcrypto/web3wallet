@@ -46,10 +46,20 @@ class Button: UIButton {
 extension Button {
     
     enum Style {
-        case primary
+        case primary(action: PrimaryAction)
         case secondary
         case secondarySmall(leftImage: UIImage?)
         case dashboardAction(leftImage: UIImage?)
+        
+        enum PrimaryAction {
+            
+            case `default`
+            case delete
+        }
+        
+        static var primary: Self {
+            .primary(action: .`default`)
+        }
     }
 }
 
@@ -57,7 +67,7 @@ private extension Button {
     
     func configure(for style: Style = .primary) {
         switch style {
-        case .primary:
+        case let .primary(action):
             var configuration = UIButton.Configuration.plain()
             configuration.titleTextAttributesTransformer = .init{ incoming in
                 var outgoing = incoming
@@ -68,7 +78,12 @@ private extension Button {
             configuration.imagePadding = Theme.constant.padding * 0.5
             self.configuration = configuration
             updateConfiguration()
-            backgroundColor = Theme.colour.buttonBackgroundPrimary
+            switch action {
+            case .`default`:
+                backgroundColor = Theme.colour.buttonBackgroundPrimary
+            case .delete:
+                backgroundColor = Theme.colour.destructive
+            }
             tintColor = Theme.colour.buttonPrimaryText
             layer.cornerRadius = Theme.constant.cornerRadiusSmall
             setTitleColor(Theme.colour.buttonPrimaryText, for: .normal)
