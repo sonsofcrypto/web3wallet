@@ -9,7 +9,7 @@ final class SwitchCollectionViewCell: CollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var onOffSwitch: OnOffSwitch!
 
-    var switchChangeHandler: ((Bool)->Void)?
+    private var switchChangeHandler: ((Bool)->Void)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,6 +37,7 @@ extension SwitchCollectionViewCell {
         onOff: Bool,
         handler: ((Bool)->Void)? = nil
     ) -> Self {
+        switchChangeHandler = handler
         titleLabel.text = title
         onOffSwitch.setOn(onOff, animated: false)
         return self
