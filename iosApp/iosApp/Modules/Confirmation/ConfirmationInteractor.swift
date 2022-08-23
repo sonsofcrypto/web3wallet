@@ -15,6 +15,16 @@ protocol ConfirmationInteractor {
         salt: String,
         handler: @escaping (Result<TransactionResponse, Error>) -> Void
     )
+
+    func sendNFT(
+        from: String,
+        to: String,
+        nft: NFTItem,
+        password: String,
+        salt: String,
+        network: Network,
+        handler: @escaping (Result<TransactionResponse, Error>) -> Void
+    )
 }
 
 final class DefaultConfirmationInteractor {
@@ -68,29 +78,31 @@ extension DefaultConfirmationInteractor: ConfirmationInteractor {
     }
 
     func sendNFT(
+        from: String,
+        to: String,
+        nft: NFTItem,
         password: String,
         salt: String,
+        network: Network,
         handler: @escaping (Result<TransactionResponse, Error>) -> Void
     ) {
-        let address = ""
-        let from = ""
-        let to = ""
-        let network: Network! = nil
-        let tokenId = 0
-
+        guard let tokenIdInt = try? nft.tokenId.int() else {
+            handler(.failure(ConfirmationInteractorError.failedToParseTokenId))
+            return
+        }
         do {
             try walletService.unlock(
                 password: password,
                 salt: salt,
                 network: network
             )
-            let contract = ERC721(address: Address.HexString(hexString: address))
+            let contract = ERC721(address: Address.HexString(hexString: nft.address))
             walletService.contractSend(
                 contractAddress: contract.address.hexString,
                 data: contract.transferFrom(
                     from: Address.HexString(hexString: from),
                     to: Address.HexString(hexString: to),
-                    tokenId: BigInt.Companion().from(long: Int64(tokenId))
+                    tokenId: BigInt.Companion().from(long: Int64(tokenIdInt))
                 ),
                 network: network,
                 completionHandler: { response, error in
@@ -113,4 +125,5 @@ extension DefaultConfirmationInteractor: ConfirmationInteractor {
 
 enum ConfirmationInteractorError: Error {
     case noResponse
+    case failedToParseTokenId
 }

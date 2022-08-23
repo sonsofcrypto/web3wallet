@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 enum ConfirmationPresenterEvent {
 
@@ -337,7 +338,7 @@ private extension DefaultConfirmationPresenter {
 
 private extension DefaultConfirmationPresenter {
     
-    func showTransactionFailed() {
+    func showTransactionFailed(_ error: Error? = nil) {
         
         let viewModel = ConfirmationViewModel(
             title: makeTitle(),
@@ -456,7 +457,6 @@ private extension DefaultConfirmationPresenter {
         switch context.type {
         case .swap:
             print("Do swap!")
-            print("Authenticated with: \(password) and \(salt)")
 
         case let .send(data):
             interactor.send(
@@ -465,22 +465,34 @@ private extension DefaultConfirmationPresenter {
                 balance: data.token.value,
                 fee: data.estimatedFee,
                 password: password,
-                salt: salt
-            ) { [weak self] result in
-                
-                guard let self = self else { return }
-                
-                switch result {
-                case .success:
-                    self.showTransactionSuccess()
-                case .failure:
-                    print("PRESENT ERROR...")
+                salt: salt,
+                handler: { [weak self] result in
+                    switch result {
+                    case .success:
+                        self?.showTransactionSuccess()
+                    case let .failure(error):
+                        self?.showTransactionFailed(error)
+                    }
                 }
-            }
+            )
             
-        case .sendNFT:
-            print("Do send NFT!")
-            print("Authenticated with: \(password) and \(salt)")
+        case let .sendNFT(data):
+            interactor.sendNFT(
+                from: data.destination.from,
+                to: data.destination.to,
+                nft: data.nftItem,
+                password: password,
+                salt: salt,
+                network: Network.Companion().ethereum(),
+                handler: { [weak self] result in
+                    switch result {
+                    case .success:
+                        self?.showTransactionSuccess()
+                    case let .failure(error):
+                        self?.showTransactionFailed(error)
+                    }
+                }
+            )
         }
     }
 }
