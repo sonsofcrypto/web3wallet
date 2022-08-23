@@ -100,6 +100,7 @@ class DefaultWalletService(
 
     init {
         networkService.add(this)
+        startPolling()
     }
 
     override fun selectedNetwork(): Network? = networkService.network
@@ -168,7 +169,6 @@ class DefaultWalletService(
         val key = pendingKey(currency, network)
         pending[key] = (pending[key] ?: listOf()) + listOf(response)
     }
-
 
     override fun unlock(password: String, salt: String, network: Network) {
         networkService.wallet(network)?.unlock(password, salt)
