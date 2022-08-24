@@ -216,6 +216,10 @@ extension KeyStoreViewController {
         }
 
         logoContainer.isHidden = !viewModel.isEmpty
+        // NOTE: Here is safe to set alpha to 1 since isHidden above would take care if showing
+        // or not the logo
+        logoContainer.alpha = 1
+        logoView.alpha = 1
     }
 
     func selectedIdxPaths() -> [IndexPath] {

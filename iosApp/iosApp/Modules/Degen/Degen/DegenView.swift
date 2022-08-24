@@ -59,7 +59,7 @@ extension DegenViewController: DegenView {
     func update(with viewModel: DegenViewModel) {
         
         self.viewModel = viewModel
-        collectionView.reloadData()
+        collectionView?.reloadData()
         
         updateBackgroundGradient(after: 0.05)
     }
@@ -312,6 +312,11 @@ extension DegenViewController: UIScrollViewDelegate {
     }
     
     func updateBackgroundGradientTopConstraint() {
+        
+        // NOTE: Doing this guard since this method can be called before the view has called
+        // view did load (because of networksService sending an update) that a network has
+        // been selected
+        guard let collectionView = collectionView else { return }
         
         let constant: CGFloat
         if collectionView.contentOffset.y < 0 {
