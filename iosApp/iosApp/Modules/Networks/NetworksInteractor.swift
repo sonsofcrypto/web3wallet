@@ -62,7 +62,44 @@ extension DefaultNetworksInteractor: NetworksInteractor {
     }
 
     func set(_ network: Network, enabled: Bool) {
+        
+        // TODO: @Annon to remove this when the app does not crash if no networks selected
+        // at launch
+        guard !isDisablingLastNetwork(network: network, enabled: enabled) else { return }
+        
         networksService.setNetwork(network: network, enabled: enabled)
+        let enabledNetworks = networksService.enabledNetworks()
+        if
+            let selectedNetwork = networksService.network,
+            !enabledNetworks.contains(network: selectedNetwork)
+        {
+            // Switch selected network if we disabled it and there are other networks enabled
+            selected = enabledNetworks.first
+        } else if selected == nil {
+            // if no selected network, select the first one from enabledNetworks, this will
+            // happen when enabling back the first network after unselecting them all.
+            selected = enabledNetworks.first
+        }
+    }
+}
+
+private extension DefaultNetworksInteractor {
+    
+    func isDisablingLastNetwork(network: Network, enabled: Bool) -> Bool {
+        guard !enabled else { return false }
+        let enabledNetworks = networksService.enabledNetworks()
+        guard enabledNetworks.count == 1 else { return false }
+        guard network.chainId == enabledNetworks[0].chainId else { return false }
+        return true
+    }
+}
+
+private extension Array where Element == Network {
+    
+    func contains(network: Network) -> Bool {
+        reduce(into: false) {
+            $0 = $0 || ($1.chainId == network.chainId)
+        }
     }
 }
 
