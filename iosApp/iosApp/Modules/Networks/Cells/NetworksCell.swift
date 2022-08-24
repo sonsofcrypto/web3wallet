@@ -85,7 +85,6 @@ extension NetworksCell {
         titleLabel.text = viewModel.name
 
         switchControl.setOn(viewModel.connected, animated: true)
-        switchControl.isEnabled = viewModel.connected
         connectionLabel.text = viewModel.connectionType        
     }
 }
