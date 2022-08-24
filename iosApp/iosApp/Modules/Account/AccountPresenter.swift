@@ -74,7 +74,7 @@ private extension DefaultAccountPresenter {
                 balance: Formatter.currency.string(
                     interactor.cryptoBalance(),
                     currency: currency,
-                    style: .long
+                    style: .long(minDecimals: 8)
                 ),
                 fiatBalance: Formatter.fiat.string(interactor.fiatBalance()),
                 pct: Formatter.pct.string(pct, div: true),
