@@ -12,6 +12,13 @@ protocol Web3ServiceWalletListener: AnyObject {
     func tokensChanged()
 }
 
+extension Web3ServiceWalletListener {
+    
+    func nftsChanged() {}
+    func notificationsChanged() {}
+    func tokensChanged() {}
+}
+
 protocol Web3ServiceLegacy: AnyObject {
 
     var allNetworks: [Web3Network] { get }

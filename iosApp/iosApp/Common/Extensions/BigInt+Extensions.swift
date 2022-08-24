@@ -97,8 +97,12 @@ extension BigInt {
     enum FormatType {
         
         case short
-        case long
+        case long(minDecimals: Int)
         case max
+        
+        static var long: Self {
+            .long(minDecimals: 4)
+        }
     }
     
     func toBigDec(
@@ -116,9 +120,9 @@ extension BigInt {
         
         switch type {
         case .short:
-            return toDecimalString().add(decimals: decimals).trimDecimals(upToMax: 4).trimFinalZerosIfDecimal(min: 1)
-        case .long:
-            return toDecimalString().add(decimals: decimals).trimDecimals(upToMax: 4).trimFinalZerosIfDecimal(min: 1)
+            return toDecimalString().add(decimals: decimals).trimDecimals(minDecimals: 4).trimFinalZerosIfDecimal(min: 1)
+        case let .long(minDecimals):
+            return toDecimalString().add(decimals: decimals).trimDecimals(minDecimals: minDecimals).trimFinalZerosIfDecimal(min: 1)
         case .max:
             return toDecimalString().add(decimals: decimals).trimFinalZerosIfDecimal(min: 1)
         }
@@ -153,11 +157,11 @@ private extension String {
         return replacingOccurrences(of: ".", with: "")
     }
     
-    func trimDecimals(upToMax: Int) -> String {
+    func trimDecimals(minDecimals: Int) -> String {
         
-        guard let decimals = decimals, decimals.count > upToMax else { return self }
+        guard let decimals = decimals, decimals.count > minDecimals else { return self }
         
-        let lastIndex = upToMax - 1
+        let lastIndex = minDecimals - 1
         var newDecimals = ""
         var deleteModelOn = true
         for i in 0...lastIndex {
@@ -170,7 +174,7 @@ private extension String {
                 continue
             }
             
-            guard i < upToMax else { continue }
+            guard i < minDecimals else { continue }
             
             deleteModelOn = false
             newDecimals = String(character) + newDecimals
@@ -207,6 +211,13 @@ private extension String {
         }
         
         let nonDecimalPart = split(separator: ".")[0]
+        
+        if !newDecimals.isEmpty {
+            
+            while newDecimals.count < minDecimals {
+                newDecimals += "0"
+            }
+        }
         
         return nonDecimalPart + (newDecimals.isEmpty ? ".\(makeDecimalZeros(with: minDecimals))" : "." + newDecimals)
     }

@@ -206,13 +206,7 @@ extension DashboardViewController: UICollectionViewDelegate {
             break
         case let .notifications(notifications):
             let notification = notifications[indexPath.item]
-            if indexPath.item == 1 {
-                let vc: ThemePickerViewController = UIStoryboard(.dashboard).instantiate()
-                vc.modalPresentationStyle = .custom
-                present(vc, animated: false)
-            } else {
-                presenter.handle(.didTapNotification(id: notification.id))
-            }
+            presenter.handle(.didTapNotification(id: notification.id))
         case .wallets:
             presenter.handle(
                 .didSelectWallet(

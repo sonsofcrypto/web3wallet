@@ -64,6 +64,8 @@
 "networks.cell.connection" = "Connection:";
 "networks.cell.status" = "Status:";
 "networks.cell.explorer" = "Explorer:";
+"networks.provider.pokt.network" = "Pokt.network";
+"networks.provider.alchyme" = "Alchyme";
 
 "dashboard.tab.title" = "Wallet";
 "dashboard.button.receive" = "Receive";
@@ -186,7 +188,7 @@
 
 "nfts.dashboard.collection.title" = "Your Collections";
 "nfts.dashboard.collection.popular.author" = "Created by %@";
-"nfts.dashboard.noContent.title" = "No NFTs available";
+"nfts.dashboard.noContent.title" = "No NFTs detected";
 "nfts.dashboard.noContent.body" = "There seems to be no NFTs associated to this wallet address";
 "nfts.dashboard.noContent.cta" = "Refresh";
 

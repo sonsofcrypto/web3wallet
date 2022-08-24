@@ -6,9 +6,11 @@ final class DegenServiceAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
         
-        registry.register(scope: .singleton) { _ -> DegenService in
+        registry.register(scope: .singleton) { resolver -> DegenService in
             
-            DefaultDegenService()
+            DefaultDegenService(
+                walletService: resolver.resolve()
+            )
         }
     }
 }

@@ -144,7 +144,8 @@ extension DefaultAccountInteractor: AccountInteractor {
                     address: isReceive ? $0.from : $0.to,
                     amount: Formatter.currency.string(
                         BigInt.fromString($0.value, decimals: 10),
-                        currency: currency()
+                        currency: currency(),
+                        style: .long(minDecimals: 8)
                     ),
                     isReceive: isReceive
                 )
@@ -167,7 +168,11 @@ extension DefaultAccountInteractor: AccountInteractor {
                 date: nil,
                 blockNumber: $0.blockNumber.toDecimalString(),
                 address: isReceive ? from.hexString : to.hexString,
-                amount: Formatter.currency.string(amount, currency: currency()),
+                amount: Formatter.currency.string(
+                    amount,
+                    currency: currency(),
+                    style: .long(minDecimals: 8)
+                ),
                 isReceive: isReceive
             )
         }.compactMap { $0 }

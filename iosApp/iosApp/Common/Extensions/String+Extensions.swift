@@ -147,7 +147,7 @@ extension String {
         with currencyCode: String = "USD"
     ) -> String {
         let symbol = 0.formatted(
-            .currency(code: "USD")
+            .currency(code: currencyCode)
         ).replacingOccurrences(
             of: "0.00",
             with: ""

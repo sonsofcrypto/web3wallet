@@ -20,6 +20,7 @@ final class DefaultDashboardWireframeFactory {
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
+    private let themePickerWireframeFactory: ThemePickerWireframeFactory
     private let onboardingService: OnboardingService
     private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
@@ -37,6 +38,7 @@ final class DefaultDashboardWireframeFactory {
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
+        themePickerWireframeFactory: ThemePickerWireframeFactory,
         onboardingService: OnboardingService,
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
@@ -53,6 +55,7 @@ final class DefaultDashboardWireframeFactory {
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
+        self.themePickerWireframeFactory = themePickerWireframeFactory
         self.onboardingService = onboardingService
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
@@ -77,6 +80,7 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             tokenSwapWireframeFactory: tokenSwapWireframeFactory,
             nftDetailWireframeFactory: nftDetailWireframeFactory,
             qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
+            themePickerWireframeFactory: themePickerWireframeFactory,
             onboardingService: onboardingService,
             deepLinkHandler: deepLinkHandler,
             networksService: networksService,
@@ -84,32 +88,5 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             walletService: walletService,
             nftsService: nftsService
         )
-    }
-}
-
-// MARK: - Assembler
-
-final class DashboardWireframeFactoryAssembler: AssemblerComponent {
-
-    func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .instance) { resolver -> DashboardWireframeFactory in
-            DefaultDashboardWireframeFactory(
-                accountWireframeFactory: resolver.resolve(),
-                alertWireframeFactory: resolver.resolve(),
-                mnemonicConfirmationWireframeFactory: resolver.resolve(),
-                tokenPickerWireframeFactory: resolver.resolve(),
-                tokenReceiveWireframeFactory: resolver.resolve(),
-                tokenSendWireframeFactory: resolver.resolve(),
-                tokenSwapWireframeFactory: resolver.resolve(),
-                nftDetailWireframeFactory: resolver.resolve(),
-                qrCodeScanWireframeFactory: resolver.resolve(),
-                onboardingService: resolver.resolve(),
-                deepLinkHandler: resolver.resolve(),
-                networksService: resolver.resolve(),
-                currencyStoreService: resolver.resolve(),
-                walletService: resolver.resolve(),
-                nftsService: resolver.resolve()
-            )
-        }
     }
 }

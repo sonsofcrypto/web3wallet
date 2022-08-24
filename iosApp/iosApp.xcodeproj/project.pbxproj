@@ -358,6 +358,10 @@
 		1C7FC98128AFB32600FC9175 /* PasswordValidatorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98028AFB32600FC9175 /* PasswordValidatorHelper.swift */; };
 		1C7FC98328B5272500FC9175 /* ConfirmationCultCastVoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98228B5272500FC9175 /* ConfirmationCultCastVoteView.swift */; };
 		1C7FC98528B5274000FC9175 /* ConfirmationViewModel+CultCastVote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98428B5274000FC9175 /* ConfirmationViewModel+CultCastVote.swift */; };
+		1C7FC98828B60A1A00FC9175 /* ThemePickerWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98728B60A1A00FC9175 /* ThemePickerWireframe.swift */; };
+		1C7FC98A28B60A2600FC9175 /* ThemePickerWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98928B60A2500FC9175 /* ThemePickerWireframeFactory.swift */; };
+		1C7FC98C28B60A2D00FC9175 /* ThemePickerWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98B28B60A2D00FC9175 /* ThemePickerWireframeFactoryAssembler.swift */; };
+		1C7FC99028B60CEC00FC9175 /* DashboardWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98F28B60CEC00FC9175 /* DashboardWireframeFactoryAssembler.swift */; };
 		1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46D92813DE4800F6C40B /* BaseViewController.swift */; };
 		1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1C9B46FA281427B800F6C40B /* under-construction.gif */; };
 		1C9E3195287580B600DD2031 /* TokenSendWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */; };
@@ -940,6 +944,10 @@
 		1C7FC98028AFB32600FC9175 /* PasswordValidatorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordValidatorHelper.swift; sourceTree = "<group>"; };
 		1C7FC98228B5272500FC9175 /* ConfirmationCultCastVoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationCultCastVoteView.swift; sourceTree = "<group>"; };
 		1C7FC98428B5274000FC9175 /* ConfirmationViewModel+CultCastVote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmationViewModel+CultCastVote.swift"; sourceTree = "<group>"; };
+		1C7FC98728B60A1A00FC9175 /* ThemePickerWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePickerWireframe.swift; sourceTree = "<group>"; };
+		1C7FC98928B60A2500FC9175 /* ThemePickerWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePickerWireframeFactory.swift; sourceTree = "<group>"; };
+		1C7FC98B28B60A2D00FC9175 /* ThemePickerWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePickerWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C7FC98F28B60CEC00FC9175 /* DashboardWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C9B46D92813DE4800F6C40B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1C9B46FA281427B800F6C40B /* under-construction.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "under-construction.gif"; sourceTree = "<group>"; };
 		1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendWireframe.swift; sourceTree = "<group>"; };
@@ -1318,8 +1326,6 @@
 			children = (
 				1A4C3A57271F5E51E72C6685 /* AnimatedTextBarButton.swift */,
 				1A4C3DA3993DB4402FA7010C /* AnimatedTextButton.swift */,
-				1A4C32EA04CA65C9DFEE9504 /* ThemePickerCell.swift */,
-				1A4C3D0633392F79141C7CA0 /* ThemePickerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1488,6 +1494,7 @@
 		1C60C1C7285724D0003BE25D /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				1C7FC98628B60A0B00FC9175 /* ThemePicker */,
 				1C60C244285724D0003BE25D /* Account */,
 				1C60C1FA285724D0003BE25D /* Alert */,
 				1C60C253285724D0003BE25D /* Apps */,
@@ -1669,6 +1676,7 @@
 				1C60C219285724D0003BE25D /* DashboardViewModel.swift */,
 				1C60C21B285724D0003BE25D /* DashboardWireframe.swift */,
 				1C60C218285724D0003BE25D /* DashboardWireframeFactory.swift */,
+				1C7FC98F28B60CEC00FC9175 /* DashboardWireframeFactoryAssembler.swift */,
 				1C60C20F285724D0003BE25D /* Cells */,
 				1A4C3BE75AF0C650D5E6D82E /* Views */,
 			);
@@ -2050,6 +2058,18 @@
 				1C7FC97628ACC9F400FC9175 /* Web3FeatureData.swift */,
 			);
 			path = Server;
+			sourceTree = "<group>";
+		};
+		1C7FC98628B60A0B00FC9175 /* ThemePicker */ = {
+			isa = PBXGroup;
+			children = (
+				1A4C32EA04CA65C9DFEE9504 /* ThemePickerCell.swift */,
+				1A4C3D0633392F79141C7CA0 /* ThemePickerView.swift */,
+				1C7FC98728B60A1A00FC9175 /* ThemePickerWireframe.swift */,
+				1C7FC98928B60A2500FC9175 /* ThemePickerWireframeFactory.swift */,
+				1C7FC98B28B60A2D00FC9175 /* ThemePickerWireframeFactoryAssembler.swift */,
+			);
+			path = ThemePicker;
 			sourceTree = "<group>";
 		};
 		1C9B46F92814279F00F6C40B /* Resources */ = {
@@ -3081,6 +3101,7 @@
 				1C671FF2287FDFD500C5F044 /* TokenSwapWireframe.swift in Sources */,
 				1C60C35C285724D1003BE25D /* DegenPresenter.swift in Sources */,
 				1A4C3B6D2DFADBE2EF71F3A5 /* SettingsService.swift in Sources */,
+				1C7FC98C28B60A2D00FC9175 /* ThemePickerWireframeFactoryAssembler.swift in Sources */,
 				1C671FF0287FDFB900C5F044 /* TokenSwapViewModel.swift in Sources */,
 				1CB8B0E42891040500024E7C /* TokenEnterAddressView.swift in Sources */,
 				1A4C34ABFF1DD20804DED956 /* AppsService.swift in Sources */,
@@ -3115,6 +3136,7 @@
 				1C64871E2832E3D60091A12D /* KeyChainService.swift in Sources */,
 				1CB3A1F42840D6B70092D667 /* UICollectionView+Extensions.swift in Sources */,
 				1A4C308B6FA11A032039F086 /* CandlesView.swift in Sources */,
+				1C7FC99028B60CEC00FC9175 /* DashboardWireframeFactoryAssembler.swift in Sources */,
 				1CB3A1EC2840D6B70092D667 /* UIView+LayoutConstraints+Extensions.swift in Sources */,
 				1A4C3C28443621328248F5A7 /* CandlesViewViewModel.swift in Sources */,
 				1C60C2AD285724D0003BE25D /* TokenPickerWireframe.swift in Sources */,
@@ -3153,6 +3175,7 @@
 				1C60C34F285724D1003BE25D /* CultProposalsWireframe.swift in Sources */,
 				1C60C352285724D1003BE25D /* CultProposalsWireframeFactory.swift in Sources */,
 				1C60C2AC285724D0003BE25D /* SettingsPresenter.swift in Sources */,
+				1C7FC98828B60A1A00FC9175 /* ThemePickerWireframe.swift in Sources */,
 				1CE0064028894F41002D1EB3 /* ConfirmationSendView.swift in Sources */,
 				1CDED5EE2897E88900DF34A7 /* FeaturesHeaderSupplementaryView.swift in Sources */,
 				1CB8B0B3288BD6EC00024E7C /* Float+Extensions.swift in Sources */,
@@ -3275,6 +3298,7 @@
 				1CDED5EC2897C5F300DF34A7 /* ScrollView.swift in Sources */,
 				1A4C3341E51D9D180FAC1962 /* NetworksSectionHeaderView.swift in Sources */,
 				1A4C327E988FE454C9AE05CC /* UIEdgeInsets+Extensions.swift in Sources */,
+				1C7FC98A28B60A2600FC9175 /* ThemePickerWireframeFactory.swift in Sources */,
 				1A4C3A127E059F4973AAE8A9 /* CurrencyStoreService.swift in Sources */,
 				1A4C36D33E738CDC80BE8575 /* TokenPickerInteractor2.swift in Sources */,
 				1A4C3F6836A9B121F54F7100 /* NetworksServiceAssembler.swift in Sources */,

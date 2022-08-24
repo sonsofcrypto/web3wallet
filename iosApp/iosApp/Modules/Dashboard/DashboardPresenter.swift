@@ -32,6 +32,8 @@ final class DefaultDashboardPresenter {
     private let interactor: DashboardInteractor
     private let wireframe: DashboardWireframe
     private let onboardingService: OnboardingService
+    // TODO: @Annon move to web3lib listening for mnemonic updates notifications
+    private let web3ServiceLegacy: Web3ServiceLegacy
 
     var expandedNetworks = [String]()
     var notifications = [Web3Notification]()
@@ -40,18 +42,22 @@ final class DefaultDashboardPresenter {
         view: DashboardView,
         interactor: DashboardInteractor,
         wireframe: DashboardWireframe,
-        onboardingService: OnboardingService
+        onboardingService: OnboardingService,
+        web3ServiceLegacy: Web3ServiceLegacy = ServiceDirectory.assembler.resolve()
     ) {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
         self.onboardingService = onboardingService
+        self.web3ServiceLegacy = web3ServiceLegacy
 
-        interactor.addListener(self)        
+        interactor.addListener(self)
+        web3ServiceLegacy.addWalletListener(self)
     }
 
     deinit {
         interactor.removeListener(self)
+        web3ServiceLegacy.removeWalletListener(self)
     }
 }
 
@@ -122,7 +128,11 @@ extension DefaultDashboardPresenter: DashboardPresenter {
         case let .didTapNotification(id):
             guard let notification = notifications.first(where: { $0.id == id }) else { return }
             guard let deepLink = DeepLink(identifier: notification.deepLink) else { return }
-            wireframe.navigate(to: .deepLink(deepLink))
+            if deepLink.identifier == DeepLink.themesList.identifier {
+                wireframe.navigate(to: .themePicker)
+            } else {
+                wireframe.navigate(to: .deepLink(deepLink))
+            }
             
         case .didTapDismissNotification:
             break
@@ -320,5 +330,13 @@ private extension DefaultDashboardPresenter {
             guard let self = self else { return }
             self.wireframe.navigate(to: .send(addressTo: addressTo))
         }
+    }
+}
+
+extension DefaultDashboardPresenter: Web3ServiceWalletListener {
+    
+    func notificationsChanged() {
+        
+        updateView()
     }
 }

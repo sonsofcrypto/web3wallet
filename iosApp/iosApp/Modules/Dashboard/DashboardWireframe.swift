@@ -21,6 +21,7 @@ enum DashboardWireframeDestination {
     )
     case tokenSwap
     case deepLink(DeepLink)
+    case themePicker
 }
 
 protocol DashboardWireframe {
@@ -42,6 +43,7 @@ final class DefaultDashboardWireframe {
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
+    private let themePickerWireframeFactory: ThemePickerWireframeFactory
     private let onboardingService: OnboardingService
     private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
@@ -62,6 +64,7 @@ final class DefaultDashboardWireframe {
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
+        themePickerWireframeFactory: ThemePickerWireframeFactory,
         onboardingService: OnboardingService,
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
@@ -79,6 +82,7 @@ final class DefaultDashboardWireframe {
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
+        self.themePickerWireframeFactory = themePickerWireframeFactory
         self.onboardingService = onboardingService
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
@@ -215,6 +219,13 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             
         case let .deepLink(deepLink):
             deepLinkHandler.handle(deepLink: deepLink)
+            
+        case .themePicker:
+            
+            guard let presentingIn = navigationController.topViewController else { return }
+            themePickerWireframeFactory.makeWireframe(
+                presentingIn: presentingIn
+            ).present()
         }
     }
 }

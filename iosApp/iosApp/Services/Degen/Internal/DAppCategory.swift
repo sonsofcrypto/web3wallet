@@ -4,7 +4,8 @@
 
 import Foundation
 
-enum DAppCategory {
+enum DAppCategory: Equatable {
+    
     case swap
     case cult
     case stakeYield
@@ -14,8 +15,9 @@ enum DAppCategory {
     case mixer
     case governance
 
-    static var active: [DAppCategory] {
-        [.swap, .cult]
+    static func active(includingCult includeCult: Bool) -> [DAppCategory] {
+        
+        includeCult ? [.swap, .cult] : [.swap]
     }
     
     static var inactive: [DAppCategory] {

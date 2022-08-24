@@ -185,20 +185,17 @@ private extension TokenSendViewController {
                 
             case 0:
                 return self.makeCollectionLayoutSection(
-                    sectionIndex: sectionIndex,
-                    withCellHeight: Theme.constant.cellHeightSmall
+                    sectionIndex: sectionIndex
                 )
                 
             case 1:
                 return self.makeCollectionLayoutSection(
-                    sectionIndex: sectionIndex,
-                    withCellHeight: self.makeTokenCellHeight()
+                    sectionIndex: sectionIndex
                 )
                 
             case 2:
                 return self.makeCollectionLayoutSection(
-                    sectionIndex: sectionIndex,
-                    withCellHeight: self.makeCTACellHeight()
+                    sectionIndex: sectionIndex
                 )
                 
             default:
@@ -207,39 +204,21 @@ private extension TokenSendViewController {
         }
     }
     
-    func makeTokenCellHeight() -> CGFloat { 92 }
-    
-    func makeCTACellHeight() -> CGFloat {
-        
-        var height: CGFloat = 0
-        
-        //height += Theme.constant.cellHeightSmall
-        //height += Theme.constant.padding
-        //height += 36 // fees view
-        height += Theme.constant.padding * 2
-        height += 24
-        height += Theme.constant.padding
-        height += Theme.constant.buttonPrimaryHeight
-        
-        return height
-    }
-    
     func makeCollectionLayoutSection(
-        sectionIndex: Int,
-        withCellHeight cellHeight: CGFloat
+        sectionIndex: Int
     ) -> NSCollectionLayoutSection {
         
         // Item
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1)
+            heightDimension: .estimated(100)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         // Group
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(cellHeight)
+            heightDimension: .estimated(100)
         )
         let outerGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize, subitems: [item]

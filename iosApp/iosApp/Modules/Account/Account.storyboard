@@ -63,21 +63,33 @@
                                                                     <rect key="frame" x="0.0" y="0.0" width="74" height="48"/>
                                                                     <state key="normal" title="Button"/>
                                                                     <buttonConfiguration key="configuration" style="plain" title="Receive"/>
+                                                                    <connections>
+                                                                        <action selector="receiveAction" destination="8W1-Hj-gqe" eventType="touchUpInside" id="uST-ds-cHc"/>
+                                                                    </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cFF-B5-RXU" customClass="VerticalButton" customModule="iosApp" customModuleProvider="target">
                                                                     <rect key="frame" x="90" y="0.0" width="73.5" height="48"/>
                                                                     <state key="normal" title="Button"/>
                                                                     <buttonConfiguration key="configuration" style="plain" title="Send"/>
+                                                                    <connections>
+                                                                        <action selector="sendAction" destination="8W1-Hj-gqe" eventType="touchUpInside" id="0Hi-aV-GwM"/>
+                                                                    </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tZE-vf-ZPB" customClass="VerticalButton" customModule="iosApp" customModuleProvider="target">
                                                                     <rect key="frame" x="179.5" y="0.0" width="74" height="48"/>
                                                                     <state key="normal" title="Button"/>
                                                                     <buttonConfiguration key="configuration" style="plain" title="Swap"/>
+                                                                    <connections>
+                                                                        <action selector="tradeAction" destination="8W1-Hj-gqe" eventType="touchUpInside" id="ie2-Kw-gTl"/>
+                                                                    </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I6m-XL-A4s" customClass="VerticalButton" customModule="iosApp" customModuleProvider="target">
                                                                     <rect key="frame" x="269.5" y="0.0" width="73.5" height="48"/>
                                                                     <state key="normal" title="Button"/>
                                                                     <buttonConfiguration key="configuration" style="plain" title="More"/>
+                                                                    <connections>
+                                                                        <action selector="moreAction" destination="8W1-Hj-gqe" eventType="touchUpInside" id="V39-6u-S1t"/>
+                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                         </stackView>

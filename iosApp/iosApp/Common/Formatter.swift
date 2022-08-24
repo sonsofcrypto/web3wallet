@@ -22,8 +22,12 @@ class CurrencyFormatter {
 
     enum Style {
         case short
-        case long
+        case long(minDecimals: Int)
         case max
+        
+        static var long: Self {
+            .long(minDecimals: 4)
+        }
     }
 
     func string(
@@ -36,8 +40,8 @@ class CurrencyFormatter {
         switch style {
         case .short:
             amountFormatted =  amount.formatString(type: .short, decimals: currency.decimals?.uintValue ?? 18)
-        case .long:
-            amountFormatted =  amount.formatString(type: .long, decimals: currency.decimals?.uintValue ?? 18)
+        case let .long(minDecimals):
+            amountFormatted =  amount.formatString(type: .long(minDecimals: minDecimals), decimals: currency.decimals?.uintValue ?? 18)
         case .max:
             amountFormatted = amount.formatString(type: .max, decimals: currency.decimals?.uintValue ?? 18)
         }

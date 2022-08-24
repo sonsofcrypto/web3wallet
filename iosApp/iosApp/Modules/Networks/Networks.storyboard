@@ -81,7 +81,7 @@
                                                                         </switch>
                                                                     </subviews>
                                                                 </stackView>
-                                                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="265" placeholderIntrinsicHeight="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="qWd-03-bRn" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
+                                                                <view contentMode="scaleToFill" placeholderIntrinsicWidth="265" placeholderIntrinsicHeight="0.33000000000000002" translatesAutoresizingMaskIntoConstraints="NO" id="qWd-03-bRn" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="39" width="265" height="33.5"/>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 </view>
