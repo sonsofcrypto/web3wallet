@@ -20,6 +20,7 @@ enum DashboardPresenterEvent {
     case didTapEditTokens(network: String)
     case didTapNotification(id: String)
     case didTapDismissNotification(id: String)
+    case pullDownToRefresh
 }
 
 protocol DashboardPresenter: AnyObject {
@@ -136,6 +137,12 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             
         case .didTapDismissNotification:
             break
+        case .pullDownToRefresh:
+            // TODO: @Annon to plug in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                self?.updateView()
+            }
+
         default:
             print("Handle \(event)")
         }

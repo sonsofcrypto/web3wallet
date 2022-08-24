@@ -12,6 +12,7 @@ protocol DashboardView: AnyObject {
 final class DashboardViewController: BaseViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    private let refreshControl = UIRefreshControl()
 
     var presenter: DashboardPresenter!
     var viewModel: DashboardViewModel?
@@ -41,6 +42,9 @@ final class DashboardViewController: BaseViewController {
 extension DashboardViewController: DashboardView {
     
     func update(with viewModel: DashboardViewModel) {
+        
+        refreshControl.endRefreshing()
+        
         if self.viewModel?.sections.count != viewModel.sections.count {
             self.viewModel = viewModel
             collectionView.reloadData()
@@ -281,6 +285,15 @@ private extension DashboardViewController {
 
         collectionView.register(DashboardHeaderNameView.self, kind: .header)
         collectionView.setCollectionViewLayout(compositionalLayout(), animated: false)
+        collectionView.refreshControl = refreshControl
+        
+        refreshControl.tintColor = Theme.colour.activityIndicator
+        refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
+    }
+    
+    @objc func didPullToRefresh(_ sender: Any) {
+
+        presenter.handle(.pullDownToRefresh)
     }
 
     @objc func navBarLeftActionTapped() {
