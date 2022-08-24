@@ -10,6 +10,7 @@ enum AccountPresenterEvent {
     case send
     case swap
     case more
+    case pullDownToRefresh
 }
 
 protocol AccountPresenter {
@@ -57,6 +58,11 @@ extension DefaultAccountPresenter: AccountPresenter {
             wireframe.navigate(to: .swap)
         case .more:
             wireframe.navigate(to: .more)
+        case .pullDownToRefresh:
+            // TODO: @Annon to plug in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                self?.updateView()
+            }
         }
     }
 }

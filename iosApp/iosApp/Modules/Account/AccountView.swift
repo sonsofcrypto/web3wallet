@@ -16,6 +16,7 @@ final class AccountViewController: BaseViewController {
     private var viewModel: AccountViewModel!
     
     @IBOutlet weak var collectionView: UICollectionView!
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,9 +28,11 @@ final class AccountViewController: BaseViewController {
 extension AccountViewController: AccountView {
     
     func update(with viewModel: AccountViewModel) {
+        
         self.viewModel = viewModel
         title = viewModel.currencyName
         collectionView.reloadData()
+        refreshControl.endRefreshing()
         
         let btnLabel = (navigationItem.rightBarButtonItem?.customView as? UILabel)
         btnLabel?.text = viewModel.header.pct
@@ -218,11 +221,20 @@ private extension AccountViewController {
         var insets = collectionView.contentInset
         insets.bottom += Theme.constant.padding
         collectionView.contentInset = insets
+        collectionView.refreshControl = refreshControl
+        
+        refreshControl.tintColor = Theme.colour.activityIndicator
+        refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
     }
     
     @objc func dismissAction() {
         
         dismiss(animated: true)
+    }
+    
+    @objc func didPullToRefresh(_ sender: Any) {
+
+        presenter.handle(.pullDownToRefresh)
     }
 }
 
