@@ -27,6 +27,7 @@ extension Setting {
     enum ItemIdentifier: String {
         
         case theme = "theme"
+        case improvement = "improvement"
         case debug = "debug"
         
         case about = "about"
@@ -43,6 +44,8 @@ extension Setting {
         case themeIOSLight = "theme.ios.light"
         case themeIOSDark = "theme.ios.dark"
 
+        case improvementProposals = "improvement.proposals"
+        
         case debugAPIsNFTsOpenSea = "providers.nfts.opensea"
 
         case resetKeystore = "reset.keystore"

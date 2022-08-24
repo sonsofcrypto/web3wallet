@@ -96,6 +96,10 @@ extension DefaultSettingsService: SettingsService {
                 )
             ]
             
+        case .improvement:
+            
+            return []
+            
         case .debug:
             
             return [
@@ -261,6 +265,11 @@ private extension DefaultSettingsService {
             
         case .themeIOSLight, .themeIOSDark, .themeMiamiLight, .themeMiamiDark:
             Theme = appTheme
+            
+        case .improvementProposals:
+            guard let deepLink = DeepLink(identifier: DeepLink.featuresList.identifier) else { return }
+            let deepLinkHandler: DeepLinkHandler = ServiceDirectory.assembler.resolve()
+            deepLinkHandler.handle(deepLink: deepLink)
             
         case .resetKeystore:
             keyStoreService.items().forEach {

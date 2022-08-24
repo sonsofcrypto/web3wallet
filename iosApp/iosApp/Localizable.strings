@@ -152,6 +152,8 @@
 "settings.theme.ios.light" = "Theme IOS Light";
 "settings.theme.ios.dark" = "Theme IOS Dark";
 
+"settings.root.improvementProposals" = "Improvement Proposals";
+
 "settings.root.developerMenu" = "Developer Menu";
 "settings.debug.apis" = "APIs";
 "settings.debug.apis.nfts" = "NFTs";
