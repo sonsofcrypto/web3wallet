@@ -18,4 +18,7 @@ final class AccountBonusCell: CollectionViewCell {
         
         chevronImage.tintColor = Theme.colour.labelPrimary
     }
+    
+    override func setSelected(_ selected: Bool) {}
+
 }

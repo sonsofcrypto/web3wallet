@@ -11,6 +11,8 @@ class CollectionViewCell: UICollectionViewCell {
     }
 
     private(set) var bottomSeparatorView = LineView()
+    var separatorViewLeadingPadding: CGFloat = Theme.constant.padding
+    var separatorViewTrailingPadding: CGFloat = 0
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,9 +36,10 @@ class CollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         bottomSeparatorView.frame = CGRect(
-            x: Theme.constant.padding,
+            x: separatorViewLeadingPadding,
             y: bounds.maxY - 0.33,
-            width: bounds.width - Theme.constant.padding, height: 0.33
+            width: bounds.width - separatorViewLeadingPadding - separatorViewTrailingPadding,
+            height: 0.33
         )
     }
 }

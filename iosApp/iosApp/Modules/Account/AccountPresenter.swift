@@ -98,10 +98,29 @@ private extension DefaultAccountPresenter {
             bonusAction: currency.symbol == "cult"
                 ? AccountViewModel.BonusAction(title: "Read the manifesto")
                 : nil,
-            transactions: interactor.transactions().map {
-                transactionViewModel($0)
-            }
+            transactions: makeTransactions()
         )
+    }
+    
+    func makeTransactions() -> [AccountViewModel.Transaction] {
+        
+        var transactions = interactor.transactions().map {
+            transactionViewModel($0)
+        }
+        
+        if transactions.isEmpty && !interactor.loadingTransactions {
+            
+            return [.empty(text: Localized("account.marketInfo.transactions.empty"))]
+        }
+        
+        if interactor.loadingTransactions {
+            transactions.insert(
+                .loading(text: Localized("account.marketInfo.transactions.loading")),
+                at: 0
+            )
+        }
+        
+        return transactions
     }
 
     func headerButtonViewModels() -> [AccountViewModel.Header.Button] {
@@ -116,13 +135,19 @@ private extension DefaultAccountPresenter {
     func transactionViewModel(
         _ transaction: AccountInteractorTransaction
     ) -> AccountViewModel.Transaction {
-         AccountViewModel.Transaction(
-            date: transaction.date == nil
-                ? transaction.blockNumber
-                : Formatter.date.string(transaction.date),
-            address: transaction.address,
-            amount: transaction.amount,
-            isReceive: transaction.isReceive
+        .data(
+            .init(
+                date: transaction.date == nil
+                    ? transaction.blockNumber
+                    : Formatter.date.string(transaction.date),
+                address: Formatter.address.string(
+                    transaction.address,
+                    digits: 14,
+                    for: interactor.network
+                ),
+                amount: transaction.amount,
+                isReceive: transaction.isReceive
+            )
         )
     }
 }

@@ -102,6 +102,8 @@
 "account.marketInfo.price" = "Price";
 "account.marketInfo.volume" = "24h volume";
 "account.marketInfo.transactions" = "Transactions";
+"account.marketInfo.transactions.empty" = "No transactions";
+"account.marketInfo.transactions.loading" = "Fetching latest transactions\nThis may take a few minutes...";
 
 "keyStore.newMnemonic" = "Create new wallet";
 "keyStore.importMnemonic" = "Import wallet";

@@ -14,6 +14,8 @@ final class AccountChartCell: CollectionViewCell {
         
         layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
     }
+    
+    override func setSelected(_ selected: Bool) {}
 }
 
 extension AccountChartCell {

@@ -22,5 +22,5 @@ final class AccountSectionHeader: UICollectionReusableView {
         
         super.layoutSubviews()
         label.layer.transform = CATransform3DMakeTranslation(0, -bounds.height * 0.2, 0)
-    }
+    }    
 }

@@ -49,10 +49,38 @@ extension AccountViewModel {
 
 extension AccountViewModel {
 
-    struct Transaction {
-        let date: String
-        let address: String
-        let amount: String
-        let isReceive: Bool
+    enum Transaction {
+     
+        case empty(text: String)
+        case loading(text: String)
+        case data(Data)
+        
+        struct Data {
+            let date: String
+            let address: String
+            let amount: String
+            let isReceive: Bool
+        }
+        
+        var empty: String? {
+            switch self {
+            case let .empty(text): return text
+            default: return nil
+            }
+        }
+        
+        var loading: String? {
+            switch self {
+            case let .loading(text): return text
+            default: return nil
+            }
+        }
+        
+        var data: Data? {
+            switch self {
+            case let .data(data): return data
+            default: return nil
+            }
+        }
     }
 }

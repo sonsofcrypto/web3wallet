@@ -32,6 +32,8 @@ final class AccountMarketInfoCell: CollectionViewCell {
 
         layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
     }
+    
+    override func setSelected(_ selected: Bool) {}
 }
 
 // MARK: - AccountViewModel

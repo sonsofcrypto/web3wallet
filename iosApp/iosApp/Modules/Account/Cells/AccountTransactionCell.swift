@@ -20,16 +20,19 @@ final class AccountTransactionCell: CollectionViewCell {
         amountLabel.apply(style: .subheadline)
         layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
     }
+    
+    override func setSelected(_ selected: Bool) {}
 }
 
 extension AccountTransactionCell {
 
-    func update(with viewModel: AccountViewModel.Transaction?) {
+    func update(with transaction: AccountViewModel.Transaction) {
         
-        dateLabel.text = viewModel?.date
-        amountLabel.text = viewModel?.amount
-        addressLabel.text = viewModel?.address
-        amountLabel.textColor = (viewModel?.isReceive ?? false)
+        guard let viewModel = transaction.data else { return }
+        dateLabel.text = viewModel.date
+        amountLabel.text = viewModel.amount
+        addressLabel.text = viewModel.address
+        amountLabel.textColor = viewModel.isReceive
             ? Theme.colour.priceUp
             : Theme.colour.priceDown
         //amountLabel.layer.shadowColor = amountLabel.textColor.cgColor

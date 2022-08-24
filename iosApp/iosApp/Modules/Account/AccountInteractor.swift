@@ -7,6 +7,8 @@ import web3lib
 
 protocol AccountInteractor: AnyObject {
     func address() -> String
+    var network: Network { get }
+    var loadingTransactions: Bool { get }
     func currency() -> Currency
     func metadata() -> CurrencyMetadata?
     func market() -> CurrencyMarketData?
@@ -27,7 +29,7 @@ struct AccountInteractorTransaction {
 
 final class DefaultAccountInteractor {
     private let wallet: Wallet
-    private let network: Network
+    private (set) var network: Network
     private let _currency: Currency
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
@@ -57,7 +59,18 @@ extension DefaultAccountInteractor: AccountInteractor {
     func address() -> String {
         walletService.address(network: network) ?? ""
     }
-
+    
+    var loadingTransactions: Bool {
+        
+        // TODO: Annon to update the logic here
+        // We need to return the state the wallet is in at this point, either fetching or not
+        // and when we finish fetching, we need to register for wallet updates so we can tell
+        // the presenter to refresh (which will call this method and since this will be false
+        // will hide the loading cell
+        // NOTE: Leaving this as false so everything works as up until now
+        return false
+    }
+    
     func currency() -> Currency {
         self._currency
     }

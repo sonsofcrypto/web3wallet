@@ -297,6 +297,70 @@
                                             <outlet property="dateLabel" destination="oZ5-JT-aZA" id="hlu-GY-MYH"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AccountTransactionEmptyCell" id="UKj-lo-F0j" userLabel="AccountTransactionEmptyCell" customClass="AccountTransactionEmptyCell" customModule="iosApp" customModuleProvider="target">
+                                        <rect key="frame" x="35.5" y="593" width="343" height="64"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="69y-3g-55e">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="64"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="AyA-op-m7E">
+                                                    <rect key="frame" x="16" y="22" width="311" height="20.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Qm-oF-48W">
+                                                            <rect key="frame" x="0.0" y="0.0" width="311" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="AyA-op-m7E" firstAttribute="leading" secondItem="69y-3g-55e" secondAttribute="leading" constant="16" id="Iff-oO-RSz"/>
+                                                <constraint firstItem="AyA-op-m7E" firstAttribute="centerY" secondItem="69y-3g-55e" secondAttribute="centerY" id="QD3-fK-koZ"/>
+                                                <constraint firstAttribute="trailing" secondItem="AyA-op-m7E" secondAttribute="trailing" constant="16" id="cb1-Ba-ErW"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="343" height="64"/>
+                                        <connections>
+                                            <outlet property="label" destination="0Qm-oF-48W" id="P1W-wJ-Zvb"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AccountTransactionLoadingCell" id="4VZ-2I-OUX" userLabel="AccountTransactionEmptyCell" customClass="AccountTransactionLoadingCell" customModule="iosApp" customModuleProvider="target">
+                                        <rect key="frame" x="35.5" y="657" width="343" height="64"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="s8A-m6-3e1">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="64"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="JKU-q5-W1s">
+                                                    <rect key="frame" x="16" y="8" width="311" height="48.5"/>
+                                                    <subviews>
+                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="hbx-Hc-cpC">
+                                                            <rect key="frame" x="0.0" y="0.0" width="311" height="20"/>
+                                                        </activityIndicatorView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izQ-Ee-Z3e">
+                                                            <rect key="frame" x="0.0" y="28" width="311" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="JKU-q5-W1s" secondAttribute="trailing" constant="16" id="afh-th-tNR"/>
+                                                <constraint firstItem="JKU-q5-W1s" firstAttribute="leading" secondItem="s8A-m6-3e1" secondAttribute="leading" constant="16" id="daa-bG-KVL"/>
+                                                <constraint firstItem="JKU-q5-W1s" firstAttribute="centerY" secondItem="s8A-m6-3e1" secondAttribute="centerY" id="uGJ-Xr-chw"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="343" height="64"/>
+                                        <connections>
+                                            <outlet property="activityIndicator" destination="hbx-Hc-cpC" id="Z14-pV-kJK"/>
+                                            <outlet property="label" destination="izQ-Ee-Z3e" id="hxP-Y1-iD1"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="AccountSectionHeader" id="QcB-Ko-dkf" customClass="AccountSectionHeader" customModule="iosApp" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>

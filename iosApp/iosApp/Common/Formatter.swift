@@ -10,6 +10,7 @@ class Formatter {
     static let fiat = FiatFormatter()
     static let pct = PctFormatter()
     static let date = DateTimeFormatter()
+    static let address = NetworkAddressFormatter()
 }
 
 // MARK: - Currency
@@ -130,5 +131,22 @@ class DateTimeFormatter {
     func string(_ timestamp: Double?) -> String {
         guard let timestamp = timestamp else { return placeholder }
         return string(Date(timeIntervalSince1970: timestamp))
+    }
+}
+
+final class NetworkAddressFormatter {
+    
+    func string(
+        _ address: String,
+        digits: Int = 8,
+        for network: Network
+    ) -> String {
+        
+        switch network.name.lowercased() {
+        case "ethereum":
+            return address.prefix(2 + digits) + "..." + address.suffix(digits)
+        default:
+            return address.prefix(2 + digits) + "..." + address.suffix(digits)
+        }
     }
 }

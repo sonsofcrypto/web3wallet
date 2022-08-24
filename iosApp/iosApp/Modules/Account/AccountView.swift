@@ -78,16 +78,36 @@ extension AccountViewController: UICollectionViewDataSource {
             cell.update(with: viewModel.marketInfo)
             return cell
         case .transactions:
-            let cell = collectionView.dequeue(AccountTransactionCell.self, for: indexPath)
-            cell.update(with: viewModel.transactions[indexPath.item])
+            let transaction = viewModel.transactions[indexPath.item]
+            let cell: CollectionViewCell
+            switch transaction {
+            case .empty:
+                let _cell = collectionView.dequeue(AccountTransactionEmptyCell.self, for: indexPath)
+                _cell.update(with: transaction)
+                cell = _cell
+            case .loading:
+                let _cell = collectionView.dequeue(AccountTransactionLoadingCell.self, for: indexPath)
+                _cell.update(with: transaction)
+                cell = _cell
+            case .data:
+                let _cell = collectionView.dequeue(AccountTransactionCell.self, for: indexPath)
+                _cell.update(with: transaction)
+                cell = _cell
+            }
+            cell.separatorViewLeadingPadding = Theme.constant.padding
+            cell.separatorViewTrailingPadding = Theme.constant.padding
             if viewModel.transactions.count == 1 {
                 cell.update(for: .single)
+                cell.bottomSeparatorView.isHidden = true
             } else if indexPath.item == 0 {
                 cell.update(for: .top)
+                cell.bottomSeparatorView.isHidden = false
             } else if indexPath.item == (viewModel.transactions.count) - 1 {
                 cell.update(for: .bottom)
+                cell.bottomSeparatorView.isHidden = true
             } else {
                 cell.update(for: .middle)
+                cell.bottomSeparatorView.isHidden = false
             }
             return cell
         }
@@ -129,7 +149,14 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
         case .marketInfo:
             return CGSize(width: width, height: Constant.marketInfoHeight)
         case .transactions:
-            return CGSize(width: width, height: Constant.transactionsHeight)
+            switch viewModel.transactions[indexPath.item] {
+            case .empty:
+                return CGSize(width: width, height: Constant.transactionsHeight * 0.75)
+            case .loading:
+                return CGSize(width: width, height: Constant.transactionsHeight * 1.5)
+            case .data:
+                return CGSize(width: width, height: Constant.transactionsHeight)
+            }
         }
     }
     
