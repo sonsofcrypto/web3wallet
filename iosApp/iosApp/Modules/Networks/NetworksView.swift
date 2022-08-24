@@ -71,12 +71,7 @@ extension NetworksViewController: UICollectionViewDataSource {
     func update(cell: NetworksCell?, with viewModel: NetworksViewModel.Network?) {
         cell?.update(
             with: viewModel,
-            onOffHandler: { [weak self] (id, on) in
-                self?.handleNetworkToggle(id, on)
-            },
-            settingsHandler: { [weak self] id in
-                self?.handleSettingsAction(id)
-            }
+            handler: makeNetworkCellHandler()
         )
     }
 }
@@ -180,9 +175,19 @@ private extension NetworksViewController {
     }
 }
 
-// MARK: - Actions
-
 private extension NetworksViewController {
+    
+    func makeNetworkCellHandler() -> NetworksCell.Handler {
+        
+        .init(
+            onOffHandler: { [weak self] (id, on) in
+                self?.handleNetworkToggle(id, on)
+            },
+            settingsHandler: { [weak self] id in
+                self?.handleSettingsAction(id)
+            }
+        )
+    }
 
     func handleNetworkToggle(_ chainId: UInt32, _ isOn: Bool) {
         presenter.handle(.didSwitchNetwork(chainId: chainId, isOn: isOn))

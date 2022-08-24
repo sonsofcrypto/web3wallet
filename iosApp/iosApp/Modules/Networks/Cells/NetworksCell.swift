@@ -13,9 +13,12 @@ final class NetworksCell: CollectionViewCell {
     @IBOutlet weak var connectionTitleLabel: UILabel!
     @IBOutlet weak var connectionLabel: UILabel!
 
-    var onOffHandler: ((UInt32, Bool) -> Void)? = nil
-    var settingsHandler: ((UInt32) -> Void)? = nil
+    struct Handler {
+        let onOffHandler: ((UInt32, Bool) -> Void)
+        let settingsHandler: ((UInt32) -> Void)
+    }
     
+    private var handler: Handler!
     private var id: UInt32 = 0
 
     override func awakeFromNib() {
@@ -57,11 +60,11 @@ final class NetworksCell: CollectionViewCell {
 extension NetworksCell {
  
     @objc func switchAction(_ sender: UISwitch) {
-        onOffHandler?(id, sender.isOn)
+        handler.onOffHandler(id, sender.isOn)
     }
     
     @objc func settingsAction() {
-        settingsHandler?(id)
+        handler.settingsHandler(id)
     }
 }
 
@@ -69,16 +72,14 @@ extension NetworksCell {
 
     func update(
         with viewModel: NetworksViewModel.Network?,
-        onOffHandler: ((UInt32, Bool) -> Void)? = nil,
-        settingsHandler: ((UInt32) -> Void)? = nil
+        handler: Handler
     ) {
         guard let viewModel = viewModel else {
             return
         }
 
         self.id = viewModel.chainId
-        self.onOffHandler = onOffHandler
-        self.settingsHandler = settingsHandler
+        self.handler = handler
         
         iconImageView.image = UIImage(named: viewModel.imageName)
         titleLabel.text = viewModel.name
