@@ -12,8 +12,7 @@ protocol DegenInteractor: AnyObject {
 
 final class DefaultDegenInteractor {
 
-
-    private var degenService: DegenService
+    private let degenService: DegenService
 
     init(_ degenService: DegenService) {
         
