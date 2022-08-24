@@ -26,8 +26,6 @@ final class TokenPickerViewController: BaseViewController {
     
     private var searchTerm = ""
 
-    private var backgroundGradientTopConstraint: NSLayoutConstraint?
-    private var backgroundGradientHeightConstraint: NSLayoutConstraint?
     private var bottomKeyboardLayoutConstraint: NSLayoutConstraint!
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -50,14 +48,6 @@ final class TokenPickerViewController: BaseViewController {
         configureUI()
         
         presenter?.present()
-    }
-    
-    override func viewWillLayoutSubviews() {
-        
-        super.viewWillLayoutSubviews()
-        
-        updateBackgroundGradientTopConstraint()
-        backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,8 +76,6 @@ extension TokenPickerViewController: TokenPickerView {
         collectionView.reloadData()
         
         updateNavigationBarIcons()
-        
-        updateBackgroundGradient(after: 0.05)
     }
 }
 
@@ -122,7 +110,7 @@ private extension TokenPickerViewController {
         searchTextField.delegate = self
         searchTextField.placeholder = Localized("search")
         searchTextField.addDoneInputAccessoryView(
-            with: .targetAction(.init(target: self, selector: #selector(dismissKeyboard)))
+            with: .targetAction(.init(target: self, selector: #selector(clearSearchAnddismissKeyboard)))
         )
                 
         dividerLineView.backgroundColor = navigationController?.bottomLineColor
@@ -145,8 +133,6 @@ private extension TokenPickerViewController {
         )
         bottomKeyboardLayoutConstraint.priority = .required
         bottomKeyboardLayoutConstraint.isActive = true
-        
-        addCustomBackgroundGradientView()        
     }
     
     @objc func showKeyboard() {
@@ -229,31 +215,6 @@ private extension TokenPickerViewController {
         
         presenter.handle(.dismiss)
     }
-    
-    func updateBackgroundGradient(after delay: TimeInterval) {
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
-            guard let self = self else { return }
-            self.updateBackgroundGradient()
-        }
-    }
-    
-    func updateBackgroundGradient() {
-        
-        updateBackgroundGradientTopConstraint()
-        backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
-    }
-    
-    func updateBackgroundGradientTopConstraint() {
-        
-        let constant: CGFloat
-        if collectionView.contentOffset.y < 0 {
-            constant = 0
-        } else {
-            constant = -collectionView.contentOffset.y
-        }
-        backgroundGradientTopConstraint?.constant =  constant
-    }
 }
 
 extension TokenPickerViewController: UICollectionViewDataSource {
@@ -329,11 +290,6 @@ extension TokenPickerViewController: UICollectionViewDelegate {
             presenter.handle(.selectToken(token))
         }
     }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        updateBackgroundGradientTopConstraint()
-    }
 }
 
 extension TokenPickerViewController: UITextFieldDelegate {
@@ -377,6 +333,12 @@ private extension TokenPickerViewController {
         }
     }
     
+    @objc func clearSearchAnddismissKeyboard() {
+        
+        searchTextField.text = ""
+        dismissKeyboard()
+    }
+
     @objc func dismissKeyboard() {
         
         searchTextField.resignFirstResponder()
@@ -480,49 +442,5 @@ private extension TokenPickerViewController {
         section.boundarySupplementaryItems = [headerItem]
 
         return section
-    }
-}
-
-extension TokenPickerViewController: UIScrollViewDelegate {
-
-    func addCustomBackgroundGradientView() {
-
-        // 1 - Add gradient
-        let backgroundGradient = GradientView()
-        backgroundGradient.isDashboard = true
-        view.insertSubview(backgroundGradient, at: 0)
-        
-        backgroundGradient.translatesAutoresizingMaskIntoConstraints = false
-        
-        let topConstraint = backgroundGradient.topAnchor.constraint(
-            equalTo: searchContainerBox.bottomAnchor
-        )
-        self.backgroundGradientTopConstraint = topConstraint
-        topConstraint.isActive = true
-
-        backgroundGradient.leadingAnchor.constraint(
-            equalTo: view.leadingAnchor
-        ).isActive = true
-
-        backgroundGradient.trailingAnchor.constraint(
-            equalTo: view.trailingAnchor
-        ).isActive = true
-
-        let heightConstraint = backgroundGradient.heightAnchor.constraint(
-            equalToConstant: backgroundGradientHeight
-        )
-        self.backgroundGradientHeightConstraint = heightConstraint
-        heightConstraint.isActive = true
-    }
-
-    var backgroundGradientHeight: CGFloat {
-        
-        if collectionView.frame.size.height > collectionView.contentSize.height {
-            
-            return collectionView.frame.size.height
-        } else {
-            
-            return collectionView.contentSize.height
-        }
     }
 }
