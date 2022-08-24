@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 protocol DegenWireframeFactory {
 
@@ -15,17 +16,20 @@ final class DefaultDegenWireframeFactory {
     private let cultProposalsWireframeFactory: CultProposalsWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let degenService: DegenService
+    private let networksService: NetworksService
 
     init(
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         cultProposalsWireframeFactory: CultProposalsWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        degenService: DegenService
+        degenService: DegenService,
+        networksService: NetworksService
     ) {
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.cultProposalsWireframeFactory = cultProposalsWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.degenService = degenService
+        self.networksService = networksService
     }
 }
 
@@ -38,7 +42,8 @@ extension DefaultDegenWireframeFactory: DegenWireframeFactory {
             tokenSwapWireframeFactory: tokenSwapWireframeFactory,
             cultProposalsWireframeFactory: cultProposalsWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
-            degenService: degenService
+            degenService: degenService,
+            networksService: networksService
         )
     }
 }

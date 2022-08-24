@@ -20,7 +20,7 @@ protocol NetworksInteractor: AnyObject {
     func provider(_ network: Network) -> Provider?
 
     func addListener(_ listener: NetworkInteractorLister)
-    func removeListener(_ listener: NetworkInteractorLister?)
+    func removeListener(_ listener: NetworkInteractorLister)
 }
 
 final class DefaultNetworksInteractor {
@@ -35,6 +35,11 @@ final class DefaultNetworksInteractor {
 
     init(_ networksService: NetworksService) {
         self.networksService = networksService
+    }
+    
+    deinit {
+        
+        print("[DEBUG][Interactor] deinit \(String(describing: self))")
     }
 }
 
@@ -66,24 +71,13 @@ extension DefaultNetworksInteractor: NetworksInteractor {
 extension DefaultNetworksInteractor: NetworksListener {
 
     func addListener(_ listener: NetworkInteractorLister) {
-        if listeners.isEmpty {
-            networksService.add(listener__: self)
-        }
-        listeners = listeners + [WeakContainer(listener)]
+        listeners = [WeakContainer(listener)]
+        networksService.add(listener__: self)
     }
 
-    func removeListener(_ listener: NetworkInteractorLister?) {
-        guard let listener = listener else {
-            listeners = []
-            networksService.remove(listener__: nil)
-            return
-        }
-
-        listeners = listeners.filter { $0.value !== listener }
-
-        if listeners.isEmpty {
-            networksService.remove(listener__: nil)
-        }
+    func removeListener(_ listener: NetworkInteractorLister) {
+        listeners = []
+        networksService.remove(listener__: self)
     }
 
     private func emit(_ event: NetworksEvent) {

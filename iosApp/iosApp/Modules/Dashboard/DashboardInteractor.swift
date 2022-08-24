@@ -36,7 +36,7 @@ protocol DashboardInteractor: AnyObject {
 
     func reloadData()
     func addListener(_ listener: DashboardInteractorLister)
-    func removeListener(_ listener: DashboardInteractorLister?)
+    func removeListener(_ listener: DashboardInteractorLister)
 }
 
 final class DefaultDashboardInteractor {
@@ -69,6 +69,11 @@ final class DefaultDashboardInteractor {
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
+    }
+    
+    deinit {
+        
+        print("[DEBUG][Interactor] deinit \(String(describing: self))")
     }
 }
 
@@ -188,30 +193,16 @@ extension DefaultDashboardInteractor: DashboardInteractor {
 
 extension DefaultDashboardInteractor: NetworksListener, WalletListener {
 
-
     func addListener(_ listener: DashboardInteractorLister) {
-        if listeners.isEmpty {
-            networksService.add(listener__: self)
-            walletService.add(listener_: self)
-        }
-
-        listeners = listeners + [WeakContainer(listener)]
+        listeners = [WeakContainer(listener)]
+        networksService.add(listener__: self)
+        walletService.add(listener_: self)
     }
 
-    func removeListener(_ listener: DashboardInteractorLister?) {
-        guard let listener = listener else {
-            listeners = []
-            networksService.remove(listener__: nil)
-            walletService.remove(listener_: nil)
-            return
-        }
-
-        listeners = listeners.filter { $0.value !== listener }
-
-        if listeners.isEmpty {
-            networksService.remove(listener__: nil)
-            walletService.remove(listener_: nil)
-        }
+    func removeListener(_ listener: DashboardInteractorLister) {
+        listeners = []
+        networksService.remove(listener__: self)
+        walletService.remove(listener_: self)
     }
 
     private func emit(_ event: DashboardInteractorEvent) {
@@ -235,7 +226,6 @@ extension DefaultDashboardInteractor: NetworksListener, WalletListener {
 
     private class WeakContainer {
         weak var value: DashboardInteractorLister?
-
         init(_ value: DashboardInteractorLister) {
             self.value = value
         }

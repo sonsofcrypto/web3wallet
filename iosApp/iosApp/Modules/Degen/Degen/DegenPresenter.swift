@@ -4,6 +4,7 @@
 
 import Foundation
 import UIKit
+import web3lib
 
 enum DegenPresenterEvent {
     case didSelectCategory(idx: Int)
@@ -18,10 +19,9 @@ protocol DegenPresenter {
 
 final class DefaultDegenPresenter {
 
+    private weak var view: DegenView?
     private let interactor: DegenInteractor
     private let wireframe: DegenWireframe
-
-    private weak var view: DegenView?
 
     init(
         view: DegenView,
@@ -31,6 +31,13 @@ final class DefaultDegenPresenter {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
+        
+        interactor.addListener(self)
+    }
+    
+    deinit {
+        print("[DEBUG][Presenter] deinit \(String(describing: self))")
+        interactor.removeListener(self)
     }
 }
 
@@ -55,6 +62,17 @@ extension DefaultDegenPresenter: DegenPresenter {
         }
     }
 }
+
+extension DefaultDegenPresenter: DegenInteractorLister {
+
+    func handle(networkEvent event: NetworksEvent) {
+        
+        guard event is NetworksEvent.NetworkDidChange else { return }
+
+        view?.popToRootAndRefresh()
+    }
+}
+
 
 private extension DefaultDegenPresenter {
 

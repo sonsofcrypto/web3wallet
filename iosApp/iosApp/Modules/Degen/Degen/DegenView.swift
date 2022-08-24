@@ -7,6 +7,7 @@ import UIKit
 protocol DegenView: AnyObject {
 
     func update(with viewModel: DegenViewModel)
+    func popToRootAndRefresh()
 }
 
 final class DegenViewController: BaseViewController {
@@ -61,6 +62,12 @@ extension DegenViewController: DegenView {
         collectionView.reloadData()
         
         updateBackgroundGradient(after: 0.05)
+    }
+    
+    func popToRootAndRefresh() {
+        
+        navigationController?.popToRootViewController(animated: false)
+        presenter.present()
     }
 }
 

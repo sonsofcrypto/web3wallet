@@ -12,7 +12,8 @@ final class DegenWireframeFactoryAssembler: AssemblerComponent {
                 tokenSwapWireframeFactory: resolver.resolve(),
                 cultProposalsWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
-                degenService: resolver.resolve()
+                degenService: resolver.resolve(),
+                networksService: resolver.resolve()
             )
         }
     }

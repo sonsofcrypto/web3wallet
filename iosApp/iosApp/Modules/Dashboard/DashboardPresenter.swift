@@ -52,12 +52,12 @@ final class DefaultDashboardPresenter {
         self.web3ServiceLegacy = web3ServiceLegacy
 
         interactor.addListener(self)
-        web3ServiceLegacy.addWalletListener(self)
+//        web3ServiceLegacy.addWalletListener(self)
     }
 
     deinit {
         interactor.removeListener(self)
-        web3ServiceLegacy.removeWalletListener(self)
+        //web3ServiceLegacy.removeWalletListener(self)
     }
 }
 

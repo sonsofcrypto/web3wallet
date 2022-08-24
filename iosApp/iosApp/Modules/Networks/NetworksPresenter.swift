@@ -40,7 +40,7 @@ final class DefaultNetworksPresenter {
     }
 }
 
-extension DefaultNetworksPresenter: NetworksPresenter, NetworkInteractorLister {
+extension DefaultNetworksPresenter: NetworksPresenter {
 
     func present() {
         view?.update(with: viewModel())
@@ -68,6 +68,9 @@ extension DefaultNetworksPresenter: NetworksPresenter, NetworkInteractorLister {
         }
         view?.update(with: viewModel())
     }
+}
+
+extension DefaultNetworksPresenter: NetworkInteractorLister {
 
     func handle(_ event: NetworksEvent) {
         view?.update(with: viewModel())

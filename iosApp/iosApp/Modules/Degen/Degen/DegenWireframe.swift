@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 enum DegenWireframeDestination {
     
@@ -23,6 +24,7 @@ final class DefaultDegenWireframe {
     private let cultProposalsWireframeFactory: CultProposalsWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let degenService: DegenService
+    private let networksService: NetworksService
 
     private weak var navigationController: NavigationController!
 
@@ -31,7 +33,8 @@ final class DefaultDegenWireframe {
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         cultProposalsWireframeFactory: CultProposalsWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        degenService: DegenService
+        degenService: DegenService,
+        networksService: NetworksService
     ) {
         
         self.parent = parent
@@ -39,6 +42,7 @@ final class DefaultDegenWireframe {
         self.cultProposalsWireframeFactory = cultProposalsWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.degenService = degenService
+        self.networksService = networksService
     }
 }
 
@@ -81,7 +85,10 @@ private extension DefaultDegenWireframe {
 
     func wireUp() -> UIViewController {
         
-        let interactor = DefaultDegenInteractor(degenService)
+        let interactor = DefaultDegenInteractor(
+            degenService,
+            networksService: networksService
+        )
         let vc: DegenViewController = UIStoryboard(.degen).instantiate()
         let presenter = DefaultDegenPresenter(
             view: vc,
