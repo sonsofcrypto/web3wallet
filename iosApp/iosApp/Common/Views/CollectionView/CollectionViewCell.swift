@@ -35,9 +35,8 @@ class CollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         bottomSeparatorView.frame = CGRect(
             x: Theme.constant.padding,
-            y: bounds.maxY - 0.5,
-            width: bounds.width - Theme.constant.padding, height:
-            0.5
+            y: bounds.maxY - 0.33,
+            width: bounds.width - Theme.constant.padding, height: 0.33
         )
     }
 }
