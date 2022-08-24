@@ -64,6 +64,8 @@
 "networks.cell.connection" = "Connection:";
 "networks.cell.status" = "Status:";
 "networks.cell.explorer" = "Explorer:";
+"networks.provider.pokt.network" = "Pokt.network";
+"networks.provider.alchyme" = "Alchyme";
 
 "dashboard.tab.title" = "Wallet";
 "dashboard.button.receive" = "Receive";
