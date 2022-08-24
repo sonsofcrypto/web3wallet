@@ -42,8 +42,15 @@ final class DashboardViewController: BaseViewController {
 extension DashboardViewController: DashboardView {
     
     func update(with viewModel: DashboardViewModel) {
-        
-        refreshControl.endRefreshing()
+
+        // NOTE: When refreshing if we don't call reloadData after ending refreshing causes
+        // a weird glitch
+        if refreshControl.isRefreshing {
+            self.viewModel = viewModel
+            collectionView.reloadData()
+            refreshControl.endRefreshing()
+            return
+        }
         
         if self.viewModel?.sections.count != viewModel.sections.count {
             self.viewModel = viewModel
