@@ -10,13 +10,13 @@ protocol AccountView: AnyObject {
 }
 
 final class AccountViewController: BaseViewController {
-
+    
     var presenter: AccountPresenter!
-
+    
     private var viewModel: AccountViewModel!
     
     @IBOutlet weak var collectionView: UICollectionView!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -25,33 +25,33 @@ final class AccountViewController: BaseViewController {
 }
 
 extension AccountViewController: AccountView {
-
+    
     func update(with viewModel: AccountViewModel) {
         self.viewModel = viewModel
         title = viewModel.currencyName
         collectionView.reloadData()
-
+        
         let btnLabel = (navigationItem.rightBarButtonItem?.customView as? UILabel)
         btnLabel?.text = viewModel.header.pct
         btnLabel?.textColor = viewModel.header.pctUp
-            ? Theme.colour.priceUp
-            : Theme.colour.priceDown
+        ? Theme.colour.priceUp
+        : Theme.colour.priceDown
     }
 }
 
 extension AccountViewController: UICollectionViewDataSource {
-
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         Section.all().count
     }
-
+    
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
         Section(rawValue: section)?.cellCount(viewModel) ?? 0
     }
-
+    
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -59,7 +59,7 @@ extension AccountViewController: UICollectionViewDataSource {
         switch Section(rawValue: indexPath.section)! {
         case .header:
             let cell = collectionView.dequeue(AccountHeaderCell.self, for: indexPath)
-            cell.update(with: viewModel.header)
+            cell.update(with: viewModel.header, handler: makeHeaderHandler())
             return cell
         case .chart:
             let cell = collectionView.dequeue(AccountChartCell.self, for: indexPath)
@@ -89,7 +89,7 @@ extension AccountViewController: UICollectionViewDataSource {
             return cell
         }
     }
-
+    
     public func collectionView(
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
@@ -110,14 +110,14 @@ extension AccountViewController: UICollectionViewDataSource {
 }
 
 extension AccountViewController: UICollectionViewDelegateFlowLayout {
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let section = Section(rawValue: indexPath.section) else {
             return .zero
         }
-
+        
         let width = view.bounds.width - Theme.constant.padding * 2
-
+        
         switch section {
         case .header:
             return CGSize(width: width, height: Constant.headerHeight)
@@ -129,7 +129,7 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: width, height: Constant.transactionsHeight)
         }
     }
-
+    
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -143,7 +143,7 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
             height: Constant.sectionHeaderHeight
         )
     }
-
+    
     public func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -157,12 +157,12 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension AccountViewController: UICollectionViewDelegate {
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let section = Section(rawValue: indexPath.section) else {
             return;
         }
-
+        
         if section == .marketInfo && indexPath.item == 1 {
             // TODO: Get presenter to present bonus action view
             let webViewController = WebViewController()
@@ -176,15 +176,15 @@ extension AccountViewController: UICollectionViewDelegate {
 }
 
 extension AccountViewController {
-
+    
     enum Section: Int {
         case header = 0
         case chart
         case marketInfo
         case transactions
-
+        
         func cellCount(_ viewModel: AccountViewModel) -> Int {
-
+            
             switch self {
             case .marketInfo:
                 return viewModel.bonusAction != nil ? 2 : 1
@@ -194,7 +194,7 @@ extension AccountViewController {
                 return 1
             }
         }
-
+        
         static func all() -> [Section] {
             [.header, .chart, marketInfo, transactions]
         }
@@ -206,7 +206,7 @@ private extension AccountViewController {
     func configureUI() {
         
         title = Localized("wallets")
-
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem.glowLabel()
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: "chevron.left".assetImage,
@@ -214,7 +214,7 @@ private extension AccountViewController {
             target: self,
             action: #selector(dismissAction)
         )
-
+        
         var insets = collectionView.contentInset
         insets.bottom += Theme.constant.padding
         collectionView.contentInset = insets
@@ -226,8 +226,45 @@ private extension AccountViewController {
     }
 }
 
-extension AccountViewController {
+private extension AccountViewController {
+    
+    func makeHeaderHandler() -> AccountHeaderCell.Handler {
+        
+        .init(
+            onReceiveTapped: makeOnReceiveTapped(),
+            onSendTapped: makeOnSendTapped(),
+            onSwapTapped: makeOnSwapTapped(),
+            onMoreTapped: makeOnMoreTapped()
+        )
+    }
+    
+    func makeOnReceiveTapped() -> () -> Void {
+        {
+            [weak self] in self?.presenter.handle(.receive)
+        }
+    }
+    
+    func makeOnSendTapped() -> () -> Void {
+        {
+            [weak self] in self?.presenter.handle(.send)
+        }
+    }
+    
+    func makeOnSwapTapped() -> () -> Void {
+        {
+            [weak self] in self?.presenter.handle(.swap)
+        }
+    }
+    
+    func makeOnMoreTapped() -> () -> Void {
+        {
+            [weak self] in self?.presenter.handle(.more)
+        }
+    }
+}
 
+extension AccountViewController {
+    
     enum Constant {
         static let headerHeight: CGFloat = 172
         static let chartHeight: CGFloat = 162

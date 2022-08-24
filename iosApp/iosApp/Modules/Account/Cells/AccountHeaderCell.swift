@@ -15,7 +15,15 @@ final class AccountHeaderCell: UICollectionViewCell {
     @IBOutlet weak var tradeButton: VerticalButton!
     @IBOutlet weak var moreButton: VerticalButton!
     
+    struct Handler {
+        let onReceiveTapped: () -> Void
+        let onSendTapped: () -> Void
+        let onSwapTapped: () -> Void
+        let onMoreTapped: () -> Void
+    }
+    
     private var viewModel: AccountViewModel.Header!
+    private var handler: Handler!
     
     override func awakeFromNib() {
         
@@ -30,35 +38,36 @@ final class AccountHeaderCell: UICollectionViewCell {
         )
         containerStack.bringSubviewToFront(balanceLabel)
         balanceLabel.clipsToBounds = false
-        
-        let spacingBetweenButtons = Theme.constant.padding * CGFloat(5)
-        let windowWidth = SceneDelegateHelper().window?.frame.width ?? 0
-        let height = (windowWidth - spacingBetweenButtons) / CGFloat(4)
     }
 }
 
 extension AccountHeaderCell {
     
     @IBAction func receiveAction() {
-
+        handler.onReceiveTapped()
     }
 
     @IBAction func sendAction() {
-
+        handler.onSendTapped()
     }
 
     @IBAction func tradeAction() {
+        handler.onSwapTapped()
     }
 
     @IBAction func moreAction() {
-
+        handler.onMoreTapped()
     }
 }
 
 extension AccountHeaderCell {
 
-    func update(with viewModel: AccountViewModel.Header) {
+    func update(
+        with viewModel: AccountViewModel.Header,
+        handler: Handler
+    ) {
         self.viewModel = viewModel
+        self.handler = handler
 
         balanceLabel.text = viewModel.balance
         balanceFiatLabel.text = viewModel.fiatBalance
