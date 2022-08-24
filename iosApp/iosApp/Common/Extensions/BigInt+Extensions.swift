@@ -208,6 +208,13 @@ private extension String {
         
         let nonDecimalPart = split(separator: ".")[0]
         
+        if !newDecimals.isEmpty {
+            
+            while newDecimals.count < minDecimals {
+                newDecimals += "0"
+            }
+        }
+        
         return nonDecimalPart + (newDecimals.isEmpty ? ".\(makeDecimalZeros(with: minDecimals))" : "." + newDecimals)
     }
     

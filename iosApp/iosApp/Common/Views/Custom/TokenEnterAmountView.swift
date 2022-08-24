@@ -84,6 +84,7 @@ final class TokenEnterAmountView: UIView {
         tokenDropdownImageView.image = "chevron.down".assetImage
         tokenDropdownImageView.tintColor = Theme.colour.labelPrimary
         networkLabel.apply(style: .caption2)
+        networkLabel.isHidden = true
 
         balanceLabel.font = Theme.font.footnote
         balanceLabel.textColor = Theme.colour.labelPrimary

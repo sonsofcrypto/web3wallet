@@ -251,8 +251,7 @@ private extension TokenSwapViewController {
                 
             case 0:
                 return self.makeCollectionLayoutSection(
-                    sectionIndex: sectionIndex,
-                    withCellHeight: self.makeSwapCellHeight()
+                    sectionIndex: sectionIndex
                 )
                 
             default:
@@ -261,38 +260,14 @@ private extension TokenSwapViewController {
         }
     }
     
-    func makeSwapCellHeight() -> CGFloat {
-        var height: CGFloat = 0
-        
-        height += 92
-        height += 4
-        height += 24
-        height += 4
-        height += 92
-        
-        height += Theme.constant.padding * 1.5
-        height += 32 // provider
-        height += Theme.constant.padding.half
-        height += 24 // slippage fee
-        height += Theme.constant.padding.half
-        height += 24 // price fee
-        height += Theme.constant.padding.half
-        height += 24 // estimated fee
-        height += Theme.constant.padding
-        height += Theme.constant.buttonPrimaryHeight // review
-        
-        return height
-    }
-    
     func makeCollectionLayoutSection(
-        sectionIndex: Int,
-        withCellHeight cellHeight: CGFloat
+        sectionIndex: Int
     ) -> NSCollectionLayoutSection {
         
         // Item
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1)
+            heightDimension: .estimated(100)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
@@ -300,7 +275,7 @@ private extension TokenSwapViewController {
         let screenWidth: CGFloat = (view.bounds.width - Theme.constant.padding)
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(screenWidth),
-            heightDimension: .estimated(cellHeight)
+            heightDimension: .estimated(100)
         )
         let outerGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize, subitems: [item]

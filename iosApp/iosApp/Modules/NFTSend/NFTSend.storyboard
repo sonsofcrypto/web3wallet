@@ -37,14 +37,14 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zmd-Pu-wxe" customClass="TokenEnterAddressView" customModule="iosApp" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="413" height="46"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Jyb-QH-x3h">
+                                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Jyb-QH-x3h">
                                                             <rect key="frame" x="0.0" y="0.0" width="413" height="46"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D2g-aN-w63">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="383" height="46"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="379" height="46"/>
                                                                     <subviews>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="g8t-jL-P33">
-                                                                            <rect key="frame" x="8" y="0.0" width="367" height="46"/>
+                                                                            <rect key="frame" x="12" y="0.0" width="355" height="46"/>
                                                                             <subviews>
                                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YgD-gn-XLs">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="22" height="46"/>
@@ -55,7 +55,7 @@
                                                                                     <buttonConfiguration key="configuration" style="plain"/>
                                                                                 </button>
                                                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bUo-Im-Ybn" customClass="TextField" customModule="iosApp" customModuleProvider="target">
-                                                                                    <rect key="frame" x="30" y="0.0" width="337" height="46"/>
+                                                                                    <rect key="frame" x="30" y="0.0" width="325" height="46"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                                                 </textField>
@@ -64,9 +64,9 @@
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <constraints>
-                                                                        <constraint firstItem="g8t-jL-P33" firstAttribute="leading" secondItem="D2g-aN-w63" secondAttribute="leading" constant="8" id="KpA-Yn-jpB"/>
+                                                                        <constraint firstItem="g8t-jL-P33" firstAttribute="leading" secondItem="D2g-aN-w63" secondAttribute="leading" constant="12" id="KpA-Yn-jpB"/>
                                                                         <constraint firstAttribute="bottom" secondItem="g8t-jL-P33" secondAttribute="bottom" id="guz-8U-SsM"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="g8t-jL-P33" secondAttribute="trailing" constant="8" id="lNv-Oh-px6"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="g8t-jL-P33" secondAttribute="trailing" constant="12" id="lNv-Oh-px6"/>
                                                                         <constraint firstItem="g8t-jL-P33" firstAttribute="top" secondItem="D2g-aN-w63" secondAttribute="top" id="oSM-YI-lJ7"/>
                                                                     </constraints>
                                                                 </view>
@@ -165,28 +165,28 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="413" height="24"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="VMO-CK-cA4">
-                                                                    <rect key="frame" x="8" y="0.0" width="397" height="24"/>
+                                                                    <rect key="frame" x="12" y="0.0" width="389" height="24"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="asB-cb-AfK">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="248.5" height="24"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="240.5" height="24"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yX7-NM-VhP">
-                                                                            <rect key="frame" x="256.5" y="0.0" width="16" height="24"/>
+                                                                            <rect key="frame" x="248.5" y="0.0" width="16" height="24"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="16" id="yCz-BY-UXG"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4M-Vq-udt">
-                                                                            <rect key="frame" x="280.5" y="0.0" width="41.5" height="24"/>
+                                                                            <rect key="frame" x="272.5" y="0.0" width="41.5" height="24"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HOH-JW-gb6" customClass="Button" customModule="iosApp" customModuleProvider="target">
-                                                                            <rect key="frame" x="330" y="0.0" width="67" height="24"/>
+                                                                            <rect key="frame" x="322" y="0.0" width="67" height="24"/>
                                                                             <state key="normal" title="Button"/>
                                                                             <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                                                         </button>
@@ -196,10 +196,10 @@
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstItem="VMO-CK-cA4" firstAttribute="top" secondItem="Ptd-NA-j8a" secondAttribute="top" id="3CR-ed-bIS"/>
-                                                                <constraint firstAttribute="trailing" secondItem="VMO-CK-cA4" secondAttribute="trailing" constant="8" id="bTT-5u-9mh"/>
+                                                                <constraint firstAttribute="trailing" secondItem="VMO-CK-cA4" secondAttribute="trailing" constant="12" id="bTT-5u-9mh"/>
                                                                 <constraint firstAttribute="bottom" secondItem="VMO-CK-cA4" secondAttribute="bottom" id="kFR-py-5a5"/>
                                                                 <constraint firstAttribute="height" constant="24" id="kwe-Pt-JTx"/>
-                                                                <constraint firstItem="VMO-CK-cA4" firstAttribute="leading" secondItem="Ptd-NA-j8a" secondAttribute="leading" constant="8" id="xqO-sa-6XY"/>
+                                                                <constraint firstItem="VMO-CK-cA4" firstAttribute="leading" secondItem="Ptd-NA-j8a" secondAttribute="leading" constant="12" id="xqO-sa-6XY"/>
                                                             </constraints>
                                                             <connections>
                                                                 <outlet property="nameLabel" destination="asB-cb-AfK" id="oq9-Xc-xNS"/>

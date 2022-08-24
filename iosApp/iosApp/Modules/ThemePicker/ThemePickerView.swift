@@ -9,7 +9,8 @@ protocol ThemePickerView: AnyObject {
 
 }
 
-class ThemePickerViewController: UIViewController, ThemePickerView {
+final class ThemePickerViewController: UIViewController, ThemePickerView {
+    
     @IBOutlet weak var collectionView: UICollectionView!
 
     private var firstAppear: Bool = true
@@ -96,7 +97,6 @@ extension ThemePickerViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-
 extension ThemePickerViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -111,6 +111,7 @@ extension ThemePickerViewController: UICollectionViewDelegate {
                     cell.layer.transform = CATransform3DMakeScale(1.25, 1.25, 1)
                 },
                 completion: { [weak self] _ in
+                    // TODO: Think on how to move to presenter/wireframe
                     self?.dismiss(animated: false) {
                         let settingsService: SettingsService = ServiceDirectory.assembler.resolve()
                         switch indexPath.item {
