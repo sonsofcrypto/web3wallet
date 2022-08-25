@@ -18,7 +18,7 @@ struct FeatureShareHelper {
             withAllowedCharacters: .urlHostAllowed
         ) ?? ""
 
-        let imgUrl = "https://sonsofcrypto.com/web3wallet-improvement-proposals/?id=" + web3Feature.id
+        let imgUrl = "https://sonsofcrypto.com/web3wallet-improvement-proposals/\(web3Feature.id).html"
         guard let url = "https://www.twitter.com/intent/tweet?text=\(textEncoded)&url=\(imgUrl)".url else { return }
         
         UIApplication.shared.open(url)
