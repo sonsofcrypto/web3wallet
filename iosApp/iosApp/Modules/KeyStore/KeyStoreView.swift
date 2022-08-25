@@ -20,6 +20,7 @@ final class KeyStoreViewController: BaseViewController {
     private var prevViewSize: CGSize = .zero
     private var needsLayoutUI: Bool = false
     private var firstAppear: Bool = true
+    private var viewDidAppear: Bool = false
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var logoContainer: UIView!
@@ -69,6 +70,7 @@ final class KeyStoreViewController: BaseViewController {
         animateIntro()
         collectionView.deselectAllExcept(selectedIdxPaths())
         buttonsCollectionView.deselectAllExcept()
+        viewDidAppear = true
     }
 
     override func viewSafeAreaInsetsDidChange() {
@@ -94,7 +96,8 @@ extension KeyStoreViewController: KeyStoreView {
         buttonsCollectionView.deselectAllExcept()
         collectionView.deselectAllExcept(
             selectedIdxPaths(),
-            animated: presentedViewController == nil
+            animated: presentedViewController == nil,
+            scrollPosition: .centeredVertically
         )
     }
 
@@ -151,7 +154,11 @@ extension KeyStoreViewController: UICollectionViewDelegate {
         presenter.handle(.didSelectKeyStoreItemtAt(idx: indexPath.item))
     }
 
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
         layoutButtonsBackground()
     }
 
@@ -168,15 +175,11 @@ extension KeyStoreViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         
-        if collectionView == buttonsCollectionView {
-            return CGSize(
-                width: view.bounds.width - Theme.constant.padding * 2,
-                height: Theme.constant.buttonPrimaryHeight
-            )
-        }
-        return CGSize(
+        .init(
             width: view.bounds.width - Theme.constant.padding * 2,
-            height: Theme.constant.cellHeight
+            height: collectionView == buttonsCollectionView
+            ? Theme.constant.buttonPrimaryHeight
+            : Theme.constant.cellHeight
         )
     }
 }
@@ -188,6 +191,8 @@ extension KeyStoreViewController {
     func configureUI() {
         
         title = Localized("wallets")
+        
+        collectionView.showsVerticalScrollIndicator = false
         
         configureInsets()
         
@@ -216,6 +221,8 @@ extension KeyStoreViewController {
         }
 
         logoContainer.isHidden = !viewModel.isEmpty
+        
+        guard viewDidAppear else { return }
         // NOTE: Here is safe to set alpha to 1 since isHidden above would take care if showing
         // or not the logo
         logoContainer.alpha = 1
@@ -272,8 +279,7 @@ extension KeyStoreViewController {
             - buttonsCollectionView.safeAreaInsets.top
             + 2
         buttonsCollectionView.contentInset.top = inset
-        collectionView.contentInset.bottom = view.bounds.height
-            - Theme.constant.buttonPrimaryHeight - inset
+        collectionView.contentInset.bottom = view.bounds.height - inset
     }
 
     func layoutButtonsBackground() {
