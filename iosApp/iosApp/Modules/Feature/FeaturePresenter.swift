@@ -87,6 +87,7 @@ private extension DefaultFeaturePresenter {
             .init(
                 id: $0.id,
                 name: $0.title,
+                imageUrl: $0.imageUrl,
                 status: .init(
                     title: $0.category.stringValue + " | " + $0.hashTag,
                     color: Theme.colour.navBarTint

@@ -6,6 +6,7 @@ import UIKit
 
 final class FeatureDetailViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var imageView: FeatureDetailImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var statusView: FeatureDetailStatusView!
     @IBOutlet weak var summaryView: FeatureDetailSummaryView!
@@ -37,8 +38,8 @@ final class FeatureDetailViewCell: UICollectionViewCell {
         self.viewModel = viewModel
         self.handler = handler
         
+        imageView.update(with: viewModel.imageUrl)
         titleLabel.text = viewModel.name
-        
         statusView.update(with: viewModel.status)
         summaryView.update(with: viewModel.summary)
         

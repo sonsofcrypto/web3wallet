@@ -15,6 +15,7 @@ struct FeatureViewModel {
         
         let id: String
         let name: String
+        let imageUrl: String
         let status: Status
         let summary: Summary
         let voteButton: String

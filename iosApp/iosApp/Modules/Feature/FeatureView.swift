@@ -142,6 +142,7 @@ private extension FeatureViewController {
         )
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.clipsToBounds = false
     }
     
     @objc func dismissTapped() {
