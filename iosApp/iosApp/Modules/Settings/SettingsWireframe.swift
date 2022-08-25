@@ -36,10 +36,9 @@ struct SettingsWireframeContext {
                         ),
                         .init(
                             title: Localized("settings.root.improvementProposals"),
-                            type: .action(
+                            type: .item(
                                 item: .improvement,
-                                action: .improvementProposals,
-                                showTickOnSelected: false
+                                action: .improvementProposals
                             )
                         ),
                         .init(

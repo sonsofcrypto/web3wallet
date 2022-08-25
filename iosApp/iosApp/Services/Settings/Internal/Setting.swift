@@ -12,13 +12,18 @@ struct Setting: Equatable {
     enum `Type`: Equatable {
         
         case item(
-            ItemIdentifier
+            item: ItemIdentifier,
+            action: ActionIdentifier?
         )
         case action(
             item: ItemIdentifier?,
             action: ActionIdentifier,
             showTickOnSelected: Bool
         )
+        
+        static func item(_ item: ItemIdentifier) -> Self {
+            .item(item: item, action: nil)
+        }
     }
 }
 

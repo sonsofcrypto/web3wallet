@@ -54,14 +54,22 @@ extension DefaultSettingsPresenter: SettingsPresenter {
             
             switch setting.type {
                 
-            case let .item(identifier):
+            case let .item(item, action):
                 
-                let groups = interactor.settings(for: identifier)
-                let context = SettingsWireframeContext(
-                    title: setting.title,
-                    groups: groups
+                guard let action = action else {
+                    
+                    let groups = interactor.settings(for: item)
+                    let context = SettingsWireframeContext(
+                        title: setting.title,
+                        groups: groups
+                    )
+                    wireframe.navigate(to: .settings(context: context))
+                    return
+                }
+                interactor.didSelect(
+                    item: item,
+                    action: action
                 )
-                wireframe.navigate(to: .settings(context: context))
                 
             case let .action(item, action, _):
                 
