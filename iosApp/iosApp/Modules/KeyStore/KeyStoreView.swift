@@ -221,7 +221,7 @@ extension KeyStoreViewController {
         }
 
         logoContainer.isHidden = !viewModel.isEmpty
-        
+
         guard viewDidAppear else { return }
         // NOTE: Here is safe to set alpha to 1 since isHidden above would take care if showing
         // or not the logo
