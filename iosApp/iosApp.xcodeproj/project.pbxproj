@@ -365,6 +365,7 @@
 		1C7FC99628B691CA00FC9175 /* AccountTransactionLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC99528B691CA00FC9175 /* AccountTransactionLoadingCell.swift */; };
 		1C7FC99828B7612000FC9175 /* FeatureDetailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC99728B7612000FC9175 /* FeatureDetailImageView.swift */; };
 		1C7FC99A28B7C6FF00FC9175 /* ConfirmationWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC99928B7C6FF00FC9175 /* ConfirmationWireframeFactoryAssembler.swift */; };
+		1C7FC99C28B81DFA00FC9175 /* NFTDetailView+Content+Other.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC99B28B81DFA00FC9175 /* NFTDetailView+Content+Other.swift */; };
 		1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46D92813DE4800F6C40B /* BaseViewController.swift */; };
 		1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1C9B46FA281427B800F6C40B /* under-construction.gif */; };
 		1C9E3195287580B600DD2031 /* TokenSendWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */; };
@@ -953,6 +954,7 @@
 		1C7FC99528B691CA00FC9175 /* AccountTransactionLoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTransactionLoadingCell.swift; sourceTree = "<group>"; };
 		1C7FC99728B7612000FC9175 /* FeatureDetailImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureDetailImageView.swift; sourceTree = "<group>"; };
 		1C7FC99928B7C6FF00FC9175 /* ConfirmationWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
+		1C7FC99B28B81DFA00FC9175 /* NFTDetailView+Content+Other.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NFTDetailView+Content+Other.swift"; sourceTree = "<group>"; };
 		1C9B46D92813DE4800F6C40B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1C9B46FA281427B800F6C40B /* under-construction.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "under-construction.gif"; sourceTree = "<group>"; };
 		1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendWireframe.swift; sourceTree = "<group>"; };
@@ -1727,6 +1729,7 @@
 				1C60C230285724D0003BE25D /* NFTDetailView+Content+Image.swift */,
 				1C60C22E285724D0003BE25D /* NFTDetailView+Content+Price.swift */,
 				1C60C232285724D0003BE25D /* NFTDetailView+Content+Properties.swift */,
+				1C7FC99B28B81DFA00FC9175 /* NFTDetailView+Content+Other.swift */,
 				1C60C231285724D0003BE25D /* NFTDetailView+Shared.swift */,
 				1C60C22C285724D0003BE25D /* NFTDetailViewModel.swift */,
 				1C60C227285724D0003BE25D /* NFTDetailWireframe.swift */,
@@ -3047,6 +3050,7 @@
 				1C54DBF3285E83A300E378F6 /* TokenAddPresenter.swift in Sources */,
 				1C60C2F3285724D0003BE25D /* NFTDetailWireframe.swift in Sources */,
 				1C228ACF28A3C774005316A3 /* ConfirmationTxFailedView.swift in Sources */,
+				1C7FC99C28B81DFA00FC9175 /* NFTDetailView+Content+Other.swift in Sources */,
 				1C60C2CF285724D0003BE25D /* AlertView.swift in Sources */,
 				D116CF3227C31ECC005542AA /* iCarousel.m in Sources */,
 				1CD843FE2874245400E6D359 /* SwitchCollectionViewCell.swift in Sources */,

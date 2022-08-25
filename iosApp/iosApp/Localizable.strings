@@ -199,6 +199,11 @@
 "nft.detail.section.id" = "NFT ID: %@";
 "nft.detail.section.title.description" = "Description";
 "nft.detail.section.title.properties" = "Properties";
+"nft.detail.section.title.other" = "Other";
+"nft.detail.section.title.other.contractAddress" = "Contract Address";
+"nft.detail.section.title.other.schemaName" = "Schema Name";
+"nft.detail.section.title.other.tokenId" = "Token ID";
+"nft.detail.section.title.other.network" = "Network";
 "nft.detail.button.send" = "Send";
 
 "chat" = "web3chat";

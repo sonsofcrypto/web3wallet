@@ -43,6 +43,7 @@ private extension NFTDetailViewController {
         ]
         
         content.append(contentsOf: makeProperties(with: item))
+        content.append(contentsOf: makeOther(with: item))
         
         content.append(makeSendButton())
         
