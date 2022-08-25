@@ -16,7 +16,7 @@ final class NFTsDashboardViewController: BaseViewController {
     
     private (set) weak var mainScrollView: ScrollView?
     weak var loadingView: UIActivityIndicatorView?
-    weak var noContentView: UIView?
+    weak var noContentView: ScrollView?
     weak var carousel: iCarousel?
     weak var collectionsView: UIView?
 
@@ -44,8 +44,9 @@ extension NFTsDashboardViewController: NFTsDashboardView {
             showLoading()
         case .error:
             // TODO: Improve and show error
-            showNoNFTs()
+            break
         case .loaded:
+            noContentView?.refreshControl?.endRefreshing()
             mainScrollView?.refreshControl?.endRefreshing()
             self.viewModel = viewModel
             if viewModel.nfts.isEmpty {
@@ -57,7 +58,6 @@ extension NFTsDashboardViewController: NFTsDashboardView {
     }
     
     func popToRootAndRefresh() {
-        
         navigationController?.popToRootViewController(animated: false)
         presenter.present(isPullDownToRefreh: true)
     }
@@ -83,6 +83,11 @@ extension NFTsDashboardViewController {
     @objc func pullDownToRefresh() {
         
         presenter.present(isPullDownToRefreh: true)
+    }
+    
+    @objc func refreshNoContent() {
+        showLoading()
+        presenter.present(isPullDownToRefreh: false)
     }
 }
 
@@ -145,28 +150,14 @@ private extension NFTsDashboardViewController {
         let noContentView = makeNoContentView()
         view.addSubview(noContentView)
         self.noContentView = noContentView
-        noContentView.addConstraints(
-            [
-                .layout(
-                    anchor: .topAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
-                ),
-                .layout(
-                    anchor: .leadingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
-                ),
-                .layout(
-                    anchor: .trailingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
-                )
-            ]
-        )
-        
+        noContentView.addConstraints(.toEdges)
+        noContentView.overScrollView.image = "overscroll_ape".assetImage
+        noContentView.overScrollView.layer.transform = CATransform3DMakeTranslation(0, -20, 0)
+
         let mainScrollView = makeMainScrollView()
         view.addSubview(mainScrollView)
         self.mainScrollView = mainScrollView
         mainScrollView.addConstraints(.toEdges)
-        
         mainScrollView.overScrollView.image = "overscroll_ape".assetImage
         mainScrollView.overScrollView.layer.transform = CATransform3DMakeTranslation(0, -20, 0)
     }

@@ -54,7 +54,7 @@ extension NFTsDashboardViewController {
     }
 }
 
-private extension NFTsDashboardViewController {
+extension NFTsDashboardViewController {
     
     var nftsCollectionHeight: CGFloat {
         

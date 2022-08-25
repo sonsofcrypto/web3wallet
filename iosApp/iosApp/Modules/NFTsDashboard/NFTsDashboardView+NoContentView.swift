@@ -6,7 +6,15 @@ import UIKit
 
 extension NFTsDashboardViewController {
     
-    func makeNoContentView() -> UIView {
+    func makeNoContentView() -> ScrollView {
+        
+        let scrollView = ScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = Theme.colour.activityIndicator
+        refreshControl.addTarget(self, action: #selector(pullDownToRefresh), for: .valueChanged)
+        scrollView.refreshControl = refreshControl
         
         let imageViewGroup = UIView()
         imageViewGroup.backgroundColor = .clear
@@ -37,7 +45,7 @@ extension NFTsDashboardViewController {
         let ctaButton = Button()
         ctaButton.style = .primary
         ctaButton.setTitle(Localized("nfts.dashboard.noContent.cta"), for: .normal)
-        ctaButton.addTarget(self, action: #selector(pullDownToRefresh), for: .touchUpInside)
+        ctaButton.addTarget(self, action: #selector(refreshNoContent), for: .touchUpInside)
         
         let stackView = VStackView(
             [
@@ -68,6 +76,20 @@ extension NFTsDashboardViewController {
             ]
         )
         
-        return view
+        scrollView.addSubview(view)
+        view.addConstraints(
+            [
+                .layout(
+                    anchor: .topAnchor,
+                    constant: .equalTo(
+                        constant: Theme.constant.padding
+                    )
+                ),
+                .layout(anchor: .centerXAnchor),
+                .layout(anchor: .widthAnchor)
+            ]
+        )
+        
+        return scrollView
     }
 }
