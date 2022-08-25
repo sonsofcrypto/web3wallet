@@ -13,6 +13,7 @@ protocol NFTsDashboardPresenter {
 
     func present(isPullDownToRefreh: Bool)
     func handle(_ event: NFTsDashboardPresenterEvent)
+    func releaseResources()
 }
 
 final class DefaultNFTsDashboardPresenter {
@@ -20,6 +21,7 @@ final class DefaultNFTsDashboardPresenter {
     private weak var view: NFTsDashboardView!
     private let interactor: NFTsDashboardInteractor
     private let wireframe: NFTsDashboardWireframe
+    private let nftsService: NFTsService
     
     private var latestNFTs: [NFTItem]?
     private var latestCollections: [NFTCollection]?
@@ -27,11 +29,21 @@ final class DefaultNFTsDashboardPresenter {
     init(
         view: NFTsDashboardView,
         interactor: NFTsDashboardInteractor,
-        wireframe: NFTsDashboardWireframe
+        wireframe: NFTsDashboardWireframe,
+        nftsService: NFTsService
     ) {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
+        self.nftsService = nftsService
+        
+        nftsService.addListener(self)
+        interactor.addListener(self)
+    }
+    
+    deinit {
+        print("[DEBUG][Presenter] deinit \(String(describing: self))")
+        interactor.removeListener(self)
     }
 }
 
@@ -64,6 +76,11 @@ extension DefaultNFTsDashboardPresenter: NFTsDashboardPresenter {
             guard let nftItem = nftItem else { return }
             wireframe.navigate(to: .viewNFT(nftItem: nftItem))
         }
+    }
+    
+    func releaseResources() {
+        
+        nftsService.removeListener(self)
     }
 }
 
@@ -146,5 +163,21 @@ private extension DefaultNFTsDashboardPresenter {
         view.update(
             with: .loaded(nfts: nfts, collections: collections)
         )
+    }
+}
+
+extension DefaultNFTsDashboardPresenter: NFTsServiceListener {
+    
+    func nftsChanged() {
+        // Here we call to force a refresh in the view
+        present(isPullDownToRefreh: true)
+    }
+}
+
+extension DefaultNFTsDashboardPresenter: NFTsDashboardInteractorLister {
+    
+    func popToRootAndRefresh() {
+        // Here we call to force a refresh in the view
+        view.popToRootAndRefresh()
     }
 }

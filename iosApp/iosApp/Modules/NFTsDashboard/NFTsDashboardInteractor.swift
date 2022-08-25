@@ -3,6 +3,11 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
+
+protocol NFTsDashboardInteractorLister: AnyObject {
+    func popToRootAndRefresh()
+}
 
 protocol NFTsDashboardInteractor: AnyObject {
 
@@ -13,14 +18,22 @@ protocol NFTsDashboardInteractor: AnyObject {
     func fetchYourNFTsCollections(
         onCompletion: (Result<[NFTCollection], Error>) -> Void
     )
+    func addListener(_ listener: NFTsDashboardInteractorLister)
+    func removeListener(_ listener: NFTsDashboardInteractorLister)
 }
 
 final class DefaultNFTsDashboardInteractor {
 
-    private var service: NFTsService
+    private let networksService: NetworksService
+    private let service: NFTsService
+    
+    private var listener: WeakContainer?
 
-    init(service: NFTsService) {
-        
+    init(
+        networksService: NetworksService,
+        service: NFTsService
+    ) {
+        self.networksService = networksService
         self.service = service
     }
 }
@@ -50,5 +63,30 @@ extension DefaultNFTsDashboardInteractor: NFTsDashboardInteractor {
     func fetchYourNFTsCollections(onCompletion: (Result<[NFTCollection], Error>) -> Void) {
         
         service.yourNftCollections(onCompletion: onCompletion)
+    }
+}
+
+extension DefaultNFTsDashboardInteractor: NetworksListener {
+
+    func addListener(_ listener: NFTsDashboardInteractorLister) {
+        self.listener = WeakContainer(listener)
+        networksService.add(listener__: self)
+    }
+
+    func removeListener(_ listener: NFTsDashboardInteractorLister) {
+        self.listener = nil
+        networksService.remove(listener__: self)
+    }
+
+    func handle(event_ event: NetworksEvent) {
+        guard event is NetworksEvent.NetworkDidChange else { return }
+        listener?.value?.popToRootAndRefresh()
+    }
+
+    private class WeakContainer {
+        weak var value: NFTsDashboardInteractorLister?
+        init(_ value: NFTsDashboardInteractorLister) {
+            self.value = value
+        }
     }
 }

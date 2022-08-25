@@ -6,7 +6,7 @@ extension NFTsDashboardViewController {
     
     func refreshNFTs() {
         
-        carousel.reloadData()
+        carousel?.reloadData()
     }
 }
 

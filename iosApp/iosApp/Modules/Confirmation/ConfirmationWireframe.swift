@@ -10,6 +10,8 @@ enum ConfirmationWireframeDestination {
     case authenticate(AuthenticateContext)
     case underConstruction
     case account
+    case nftsDashboard
+    case cultProposals
 }
 
 protocol ConfirmationWireframe {
@@ -26,6 +28,7 @@ final class DefaultConfirmationWireframe {
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
+    private let nftsService: NFTsService
     
     private weak var navigationController: UINavigationController!
     
@@ -35,7 +38,8 @@ final class DefaultConfirmationWireframe {
         walletService: WalletService,
         authenticateWireframeFactory: AuthenticateWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        deepLinkHandler: DeepLinkHandler
+        deepLinkHandler: DeepLinkHandler,
+        nftsService: NFTsService
     ) {
         self.presentingIn = presentingIn
         self.context = context
@@ -43,6 +47,7 @@ final class DefaultConfirmationWireframe {
         self.authenticateWireframeFactory = authenticateWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.deepLinkHandler = deepLinkHandler
+        self.nftsService = nftsService
     }
 }
 
@@ -59,9 +64,7 @@ extension DefaultConfirmationWireframe: ConfirmationWireframe {
         switch destination {
 
         case let .authenticate(context):
-            
             guard let parent = navigationController.topViewController else { return }
-            
             let wireframe = authenticateWireframeFactory.makeWireframe(
                 parent,
                 context: context
@@ -69,23 +72,25 @@ extension DefaultConfirmationWireframe: ConfirmationWireframe {
             wireframe.present()
             
         case .underConstruction:
-            
             alertWireframeFactory.makeWireframe(
                 navigationController,
                 context: .underConstructionAlert()
             ).present()
             
         case .account:
-            
             guard let token = context.token else { return }
-            
             let deepLink = DeepLink.account(token: token)
             deepLinkHandler.handle(deepLink: deepLink)
+            
+        case .nftsDashboard:
+            deepLinkHandler.handle(deepLink: .nftsDashboard)
+
+        case .cultProposals:
+            deepLinkHandler.handle(deepLink: .cultProposals)
         }
     }
     
     func dismiss() {
-        
         navigationController.dismiss(animated: true)
     }
 }
@@ -93,8 +98,10 @@ extension DefaultConfirmationWireframe: ConfirmationWireframe {
 private extension DefaultConfirmationWireframe {
     
     func wireUp() -> UIViewController {
-        
-        let interactor = DefaultConfirmationInteractor(walletService: walletService)
+        let interactor = DefaultConfirmationInteractor(
+            walletService: walletService,
+            nftsService: nftsService
+        )
         let vc: ConfirmationViewController = UIStoryboard(.confirmation).instantiate()
         let presenter = DefaultConfirmationPresenter(
             view: vc,

@@ -11,7 +11,8 @@ final class NFTsDashboardWireframeFactoryAssembler: AssemblerComponent {
             DefaultNFTsDashboardWireframeFactory(
                 nftsCollectionWireframeFactory: resolver.resolve(),
                 nftDetailWireframeFactory: resolver.resolve(),
-                nftsService: resolver.resolve()
+                nftsService: resolver.resolve(),
+                networksService: resolver.resolve()
             )
         }
     }

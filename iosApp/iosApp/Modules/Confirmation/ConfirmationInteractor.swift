@@ -38,9 +38,14 @@ protocol ConfirmationInteractor {
 final class DefaultConfirmationInteractor {
 
     private let walletService: WalletService
+    private let nftsService: NFTsService
 
-    init(walletService: WalletService) {
+    init(
+        walletService: WalletService,
+        nftsService: NFTsService
+    ) {
         self.walletService = walletService
+        self.nftsService = nftsService
     }
 }
 
@@ -122,6 +127,7 @@ extension DefaultConfirmationInteractor: ConfirmationInteractor {
                         handler(.failure(ConfirmationInteractorError.noResponse))
                         return
                     }
+                    self.nftsService.nftSent(identifier: nft.identifier)
                     handler(.success(response))
                 }
             )

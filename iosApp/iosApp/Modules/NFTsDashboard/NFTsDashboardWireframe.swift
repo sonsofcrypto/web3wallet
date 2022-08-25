@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 enum NFTsDashboardWireframeDestination {
 
@@ -21,6 +22,7 @@ final class DefaultNFTsDashboardWireframe {
     private let nftsCollectionWireframeFactory: NFTsCollectionWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let nftsService: NFTsService
+    private let networksService: NetworksService
 
     private weak var navigationController: NavigationController!
     
@@ -28,12 +30,14 @@ final class DefaultNFTsDashboardWireframe {
         parent: TabBarController,
         nftsCollectionWireframeFactory: NFTsCollectionWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
-        nftsService: NFTsService
+        nftsService: NFTsService,
+        networksService: NetworksService
     ) {
         self.parent = parent
         self.nftsCollectionWireframeFactory = nftsCollectionWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.nftsService = nftsService
+        self.networksService = networksService
     }
 }
 
@@ -94,12 +98,14 @@ private extension DefaultNFTsDashboardWireframe {
             .nftsDashboard
         ).instantiate()
         let interactor = DefaultNFTsDashboardInteractor(
+            networksService: networksService,
             service: nftsService
         )
         let presenter = DefaultNFTsDashboardPresenter(
             view: view,
             interactor: interactor,
-            wireframe: self
+            wireframe: self,
+            nftsService: nftsService
         )
         view.presenter = presenter
         return view

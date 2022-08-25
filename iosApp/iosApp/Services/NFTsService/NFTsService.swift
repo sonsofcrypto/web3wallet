@@ -4,6 +4,10 @@
 
 import Foundation
 
+protocol NFTsServiceListener: AnyObject {
+    func nftsChanged()
+}
+
 protocol NFTsService: AnyObject {
 
     func nft(
@@ -29,6 +33,10 @@ protocol NFTsService: AnyObject {
     ) -> [NFTItem]
     
     func yourNFTs() -> [NFTItem]
+    func nftSent(identifier: String)
+    
+    func addListener(_ listener: NFTsServiceListener)
+    func removeListener(_ listener: NFTsServiceListener)
 }
 
 struct NFTItem {

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 protocol NFTsDashboardWireframeFactory {
 
@@ -14,17 +15,20 @@ final class DefaultNFTsDashboardWireframeFactory {
     private let nftsCollectionWireframeFactory: NFTsCollectionWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let nftsService: NFTsService
+    private let networksService: NetworksService
 
     private weak var window: UIWindow?
 
     init(
         nftsCollectionWireframeFactory: NFTsCollectionWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
-        nftsService: NFTsService
+        nftsService: NFTsService,
+        networksService: NetworksService
     ) {
         self.nftsCollectionWireframeFactory = nftsCollectionWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.nftsService = nftsService
+        self.networksService = networksService
     }
 }
 
@@ -36,7 +40,8 @@ extension DefaultNFTsDashboardWireframeFactory: NFTsDashboardWireframeFactory {
             parent: parent,
             nftsCollectionWireframeFactory: nftsCollectionWireframeFactory,
             nftDetailWireframeFactory: nftDetailWireframeFactory,
-            nftsService: nftsService
+            nftsService: nftsService,
+            networksService: networksService
         )
     }
 }

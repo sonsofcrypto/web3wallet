@@ -19,17 +19,20 @@ final class DefaultConfirmationWireframeFactory {
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
+    private let nftsService: NFTsService
 
     init(
         walletService: WalletService,
         authenticateWireframeFactory: AuthenticateWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        deepLinkHandler: DeepLinkHandler
+        deepLinkHandler: DeepLinkHandler,
+        nftsService: NFTsService
     ) {
         self.walletService = walletService
         self.authenticateWireframeFactory = authenticateWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.deepLinkHandler = deepLinkHandler
+        self.nftsService = nftsService
     }
 }
 
@@ -45,23 +48,9 @@ extension DefaultConfirmationWireframeFactory: ConfirmationWireframeFactory {
             walletService: walletService,
             authenticateWireframeFactory: authenticateWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
-            deepLinkHandler: deepLinkHandler
+            deepLinkHandler: deepLinkHandler,
+            nftsService: nftsService
         )
     }
 }
 
-// MARK: - Factory
-
-final class ConfirmationWireframeFactoryAssembler: AssemblerComponent {
-
-    func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .instance) { resolver -> ConfirmationWireframeFactory in
-            DefaultConfirmationWireframeFactory(
-                walletService: resolver.resolve(),
-                authenticateWireframeFactory: resolver.resolve(),
-                alertWireframeFactory: resolver.resolve(),
-                deepLinkHandler: resolver.resolve()
-            )
-        }
-    }
-}

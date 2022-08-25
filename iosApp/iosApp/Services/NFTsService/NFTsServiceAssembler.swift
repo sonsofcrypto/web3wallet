@@ -8,22 +8,11 @@ final class NFTsServiceAssembler: AssemblerComponent {
         
         registry.register(scope: .singleton) { resolver -> NFTsService in
             
-            let settingsService: SettingsService = resolver.resolve()
-            
-            if settingsService.isSelected(
-                item: .debugAPIsNFTs,
-                action: .debugAPIsNFTsOpenSea
-            ) {
-                
-                return OpenSeaNFTsService(
-                    web3Service: resolver.resolve(),
-                    networksService: resolver.resolve()
-                )
-                
-            } else {
-                
-                return DefaultNFTsService()
-            }
+            OpenSeaNFTsService(
+                web3Service: resolver.resolve(),
+                networksService: resolver.resolve(),
+                defaults: .standard
+            )
         }
     }
 }

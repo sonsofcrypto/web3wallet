@@ -7,27 +7,29 @@ import UIKit
 protocol NFTsDashboardView: AnyObject {
 
     func update(with viewModel: NFTsDashboardViewModel)
+    func popToRootAndRefresh()
 }
 
 final class NFTsDashboardViewController: BaseViewController {
 
     var presenter: NFTsDashboardPresenter!
     
-    private (set) weak var mainScrollView: ScrollView!
-    weak var loadingView: UIActivityIndicatorView!
-    weak var noContentView: UIView!
-    weak var carousel: iCarousel!
-    weak var collectionsView: UIView!
+    private (set) weak var mainScrollView: ScrollView?
+    weak var loadingView: UIActivityIndicatorView?
+    weak var noContentView: UIView?
+    weak var carousel: iCarousel?
+    weak var collectionsView: UIView?
 
     private (set) var viewModel: NFTsDashboardViewModel?
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         configureUI()
-        
         presenter.present(isPullDownToRefreh: false)
+    }
+    
+    deinit {
+        presenter.releaseResources()
     }
 }
 
@@ -44,7 +46,7 @@ extension NFTsDashboardViewController: NFTsDashboardView {
             // TODO: Improve and show error
             showNoNFTs()
         case .loaded:
-            mainScrollView.refreshControl?.endRefreshing()
+            mainScrollView?.refreshControl?.endRefreshing()
             self.viewModel = viewModel
             if viewModel.nfts.isEmpty {
                 showNoNFTs()
@@ -52,6 +54,12 @@ extension NFTsDashboardViewController: NFTsDashboardView {
                 showNFTs()
             }
         }
+    }
+    
+    func popToRootAndRefresh() {
+        
+        navigationController?.popToRootViewController(animated: false)
+        presenter.present(isPullDownToRefreh: true)
     }
 }
 
@@ -82,30 +90,30 @@ private extension NFTsDashboardViewController {
     
     func showLoading() {
         
-        loadingView.isHidden = false
-        loadingView.startAnimating()
-        noContentView.isHidden = true
-        mainScrollView.isHidden = true
+        loadingView?.isHidden = false
+        loadingView?.startAnimating()
+        noContentView?.isHidden = true
+        mainScrollView?.isHidden = true
     }
 
     func hideLoading() {
         
-        loadingView.isHidden = true
-        loadingView.stopAnimating()
+        loadingView?.isHidden = true
+        loadingView?.stopAnimating()
     }
 
     func showNoNFTs() {
         
         hideLoading()
-        noContentView.isHidden = false
-        mainScrollView.isHidden = true
+        noContentView?.isHidden = false
+        mainScrollView?.isHidden = true
     }
 
     func showNFTs() {
         
         hideLoading()
-        noContentView.isHidden = true
-        mainScrollView.isHidden = false
+        noContentView?.isHidden = true
+        mainScrollView?.isHidden = false
         refreshNFTs()
         refreshNFTsCollections()
     }

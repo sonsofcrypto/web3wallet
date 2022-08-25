@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import web3lib
+import Foundation
 
 enum OpenSeaNFTsServiceError: Error {
     
@@ -15,22 +16,27 @@ final class OpenSeaNFTsService {
     
     private let web3Service: Web3ServiceLegacy
     private let networksService: NetworksService
+    private let defaults: UserDefaults
     
     private let API_KEY = ""
     
     private var nfts = [NFTItem]()
     private var collections = [NFTCollection]()
     
+    private var listeners: [NFTsServiceListener] = []
+    
     init(
         web3Service: Web3ServiceLegacy,
-        networksService: NetworksService
+        networksService: NetworksService,
+        defaults: UserDefaults
     ) {
         self.web3Service = web3Service
         self.networksService = networksService
+        self.defaults = defaults
     }
 }
 
-extension OpenSeaNFTsService: NFTsService {
+extension OpenSeaNFTsService: NFTsService {    
     
     func nft(with identifier: String, onCompletion: (Result<NFTItem, Error>) -> Void) {
         guard let nft = nfts.first(where: { $0.identifier == identifier }) else {
@@ -81,6 +87,11 @@ extension OpenSeaNFTsService: NFTsService {
             return
         }
         
+        guard networksService.network == Network.Companion().ethereum() else {
+            onCompletion(.success([]))
+            return
+        }
+        
         guard let urlRequest = makeURLRequest(for: .assets(owner: address)) else {
 
             onCompletion(.failure(OpenSeaNFTsServiceError.unableToConstructURL))
@@ -102,8 +113,10 @@ extension OpenSeaNFTsService: NFTsService {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let assets = try decoder.decode(AssetList.self, from: data).assets
-                self.nfts = self.makeNFTItems(from: assets)
-                self.collections = self.makeNFTCollections(from: assets)
+                self.nfts = self.filteredNFTs(from: self.makeNFTItems(from: assets))
+                self.collections = self.makeNFTCollections(
+                    from: assets.excluding(self.nftIdsPendingSent)
+                )
                 self.updateWeb3WalletNFTListeners()
                 DispatchQueue.main.async {
                     onCompletion(.success(self.nfts))
@@ -115,9 +128,69 @@ extension OpenSeaNFTsService: NFTsService {
             }
         }.resume()
     }
+    
+    func nftSent(identifier: String) {
+        var nfts = nftIdsPendingSent
+        nfts.append(identifier)
+        storeNFTIdsPendingSent(with: nfts)
+        broadcastNFTsChanged()
+    }
+    
+    func addListener(_ listener: NFTsServiceListener) {
+        guard !listeners.contains(where: { $0 === listener}) else { return }
+        listeners.append(listener)
+    }
+    
+    func removeListener(_ listener: NFTsServiceListener) {
+        listeners.removeAll { $0 === listener }
+    }
 }
 
 private extension OpenSeaNFTsService {
+    
+    func filteredNFTs(from nfts: [NFTItem]) -> [NFTItem] {
+        
+        var toRemove = [String]()
+        var toExclude = [String]()
+        nftIdsPendingSent.forEach { nftId in
+            if nfts.contains(where: { $0.identifier == nftId }) {
+                toExclude.append(nftId)
+            } else {
+                toRemove.append(nftId)
+            }
+        }
+        storeNFTIdsPendingSent(with: toExclude)
+        return nfts.filter { nftItem in
+            let id = toExclude.first { nftItem.identifier == $0 }
+            return nftItem.identifier != id
+        }
+    }
+    
+    func broadcastNFTsChanged() {
+        
+        listeners.forEach { $0.nftsChanged() }
+    }
+    
+    var nftIdsPendingSent: [String] {
+        
+        guard let data = defaults.data(forKey: nftsPendingSendKey) else { return [] }
+        return (try? JSONDecoder().decode([String].self, from: data)) ?? []
+    }
+    
+    func storeNFTIdsPendingSent(with pendingSent: [String]) {
+        
+        guard let data = try? JSONEncoder().encode(pendingSent) else { return }
+        defaults.set(data, forKey: nftsPendingSendKey)
+        defaults.synchronize()
+    }
+    
+    var nftsPendingSendKey: String {
+        let address = try? networksService.wallet()?.address()
+            .toHexStringAddress()
+            .hexString
+        
+        return "\(address ?? "-").nfts.pending.sent"
+    }
     
     var host: String { "api.opensea.io" }
     
@@ -293,5 +366,13 @@ private extension OpenSeaNFTsService {
                 self.value = value
             }
         }
+    }
+}
+
+private extension Array where Element == OpenSeaNFTsService.Asset {
+    
+    func excluding(_ nftIds: [String]) -> [OpenSeaNFTsService.Asset] {
+        
+        filter { asset in !nftIds.contains { asset.id.stringValue == $0 } }
     }
 }

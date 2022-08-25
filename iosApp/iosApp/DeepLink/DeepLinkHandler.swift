@@ -12,6 +12,8 @@ enum DeepLink {
     case themesList
     case featuresList
     case degen
+    case cultProposals
+    case nftsDashboard
     case account(token: Web3Token)
     
     init?(identifier: String) {
@@ -30,6 +32,12 @@ enum DeepLink {
         case DeepLink.degen.identifier:
             self = .degen
 
+        case DeepLink.cultProposals.identifier:
+            self = .cultProposals
+
+        case DeepLink.nftsDashboard.identifier:
+            self = .nftsDashboard
+
         default:
             return nil
         }
@@ -46,6 +54,10 @@ enum DeepLink {
             return "modal.features"
         case .degen:
             return "degen"
+        case .cultProposals:
+            return "cult.proposals"
+        case .nftsDashboard:
+            return "nfts.dashboard"
         case let .account(token):
             return "account.\(token.symbol.lowercased())"
         }
@@ -86,6 +98,21 @@ extension DefaultDeepLinkHandler: DeepLinkHandler {
                 self.openFeaturesList()
             case .degen:
                 self.navigate(to: .degen)
+            case .cultProposals:
+                self.navigate(to: .degen)
+                if
+                    let degenNavController = self.degenNavController,
+                    let vc = degenNavController.viewControllers.first(
+                    where: { $0 is CultProposalsViewController }
+                ) {
+                    degenNavController.popToViewController(vc, animated: true)
+                } else {
+                    self.openCultProposals()
+                }
+                
+            case .nftsDashboard:
+                self.navigate(to: .nfts)
+                self.nftsDashboardNavController?.popToRootViewController(animated: true)
                 
             case let .account(token):
                 self.navigate(to: .dashboard)
@@ -140,18 +167,13 @@ private extension DefaultDeepLinkHandler {
         guard let tabBarVC = tabBarController else { return }
         
         switch destination {
-            
         case .dashboard:
-            
             tabBarVC.selectedIndex = 0
         case .degen:
-            
             tabBarVC.selectedIndex = 1
         case .nfts:
-            
-            tabBarVC.selectedIndex = 3
+            tabBarVC.selectedIndex = 2
         case .settings:
-            
             tabBarVC.selectedIndex = FeatureFlag.showAppsTab.isEnabled ? 4 : 3
         }
     }
@@ -192,6 +214,44 @@ private extension DefaultDeepLinkHandler {
         dashboardNavController?.topViewController as? DashboardViewController
     }
     
+    var degenNavController: NavigationController? {
+        
+        guard let navigationController = tabBarController?.children.first(
+            where: {
+                guard let navigationController = $0 as? NavigationController else {
+                    return false
+                }
+                guard navigationController.viewControllers.first is DegenViewController else {
+                    return false
+                }
+                return true
+            }
+        ) as? NavigationController else {
+            return nil
+        }
+        
+        return navigationController
+    }
+    
+    var nftsDashboardNavController: NavigationController? {
+        
+        guard let navigationController = tabBarController?.children.first(
+            where: {
+                guard let navigationController = $0 as? NavigationController else {
+                    return false
+                }
+                guard navigationController.viewControllers.first is NFTsDashboardViewController else {
+                    return false
+                }
+                return true
+            }
+        ) as? NavigationController else {
+            return nil
+        }
+        
+        return navigationController
+    }
+    
     var settingsVC: SettingsViewController? {
         
         guard let navigationController = tabBarController?.children.first(
@@ -217,9 +277,7 @@ private extension DefaultDeepLinkHandler {
     func openThemeMenu() {
         
         guard let settingsVC = settingsVC else { return }
-        
         guard settingsVC.title != Localized("settings.theme") else { return }
-        
         let settingsService: SettingsService = ServiceDirectory.assembler.resolve()
         
         let wireframe: SettingsWireframeFactory = ServiceDirectory.assembler.resolve()
@@ -233,7 +291,6 @@ private extension DefaultDeepLinkHandler {
     }
     
     func openFeaturesList() {
-        
         guard let dashboardNavController = dashboardNavController else { return }
         let wireframe: FeaturesWireframeFactory = ServiceDirectory.assembler.resolve()
         wireframe.makeWireframe(
@@ -243,7 +300,6 @@ private extension DefaultDeepLinkHandler {
     }
     
     func openMnemonicConfirmation() {
-        
         guard let dashboardNavController = dashboardNavController else { return }
         let wireframe: MnemonicConfirmationWireframeFactory = ServiceDirectory.assembler.resolve()
         wireframe.makeWireframe(dashboardNavController).present()
@@ -253,13 +309,8 @@ private extension DefaultDeepLinkHandler {
         with token: Web3Token,
         after delay: TimeInterval
     ) {
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            
-            [weak self] in
-            
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
             guard let self = self else { return }
-            
             self.openAccount(with: token)
         }
     }
@@ -267,9 +318,7 @@ private extension DefaultDeepLinkHandler {
     func openAccount(
         with token: Web3Token
     ) {
-        
         guard let dashboardNavController = dashboardNavController else { return }
-        
         let service: NetworksService = ServiceDirectory.assembler.resolve()
         guard let wallet = service.wallet(network: token.network.toNetwork()) else { return }
         
@@ -278,5 +327,11 @@ private extension DefaultDeepLinkHandler {
             presentingIn: dashboardNavController,
             context: .init(wallet: wallet, currency: token.toCurrency())
         ).present()
+    }
+    
+    func openCultProposals() {
+        guard let degenNavController = degenNavController else { return }
+        let factory: CultProposalsWireframeFactory = ServiceDirectory.assembler.resolve()
+        factory.makeWireframe(degenNavController).present()
     }
 }

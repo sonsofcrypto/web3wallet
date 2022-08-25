@@ -232,7 +232,6 @@ extension DefaultDashboardInteractor: NetworksListener, WalletListener {
     }
 }
 
-
 // MARK: - NetworksEvent
 
 extension NetworksEvent {

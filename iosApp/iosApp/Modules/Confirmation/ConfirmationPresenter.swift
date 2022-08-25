@@ -71,8 +71,16 @@ extension DefaultConfirmationPresenter: ConfirmationPresenter {
             }
             
         case .txSuccessCTATapped:
-            
-            wireframe.navigate(to: .account)
+            switch context.type {
+            case .send:
+                wireframe.navigate(to: .account)
+            case .sendNFT:
+                wireframe.navigate(to: .nftsDashboard)
+            case .cultCastVote:
+                wireframe.navigate(to: .cultProposals)
+            case .swap:
+                break
+            }
 
         case .txFailedCTATapped:
             
@@ -360,15 +368,10 @@ private extension DefaultConfirmationPresenter {
             [weak self] result in
             
             guard let self = self else { return }
-            
             switch result {
-                
             case let .success((password, salt)):
-                
                 self.handleSuccessfulAuthentication(with: password, and: salt)
-                
             case let .failure(error):
-                
                 print("error: \(error)")
             }
         }
