@@ -171,6 +171,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                 updateView(shouldTokenBecomeFirstResponder: true)
                 return
             }
+            guard let walletAddress = interactor.walletAddress else { return }
             
             view?.dismissKeyboard()
                         
@@ -178,7 +179,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
                 to: .confirmSend(
                     dataIn: .init(
                         token: makeConfirmationSendToken(),
-                        destination: makeConfirmationSendDestination(to: address),
+                        destination: makeConfirmationSendDestination(from: walletAddress, to: address),
                         estimatedFee: makeConfirmationSendEstimatedFee()
                     )
                 )
@@ -219,17 +220,12 @@ private extension DefaultTokenSendPresenter {
     }
     
     func makeConfirmationSendDestination(
+        from walletAddress: String,
         to address: String
     ) -> ConfirmationWireframeContext.SendContext.Destination {
         .init(
-            from: interactor.addressFormattedShort(
-                address: interactor.walletAddress ?? "",
-                network: token.network
-            ),
-            to: interactor.addressFormattedShort(
-                address: address,
-                network: token.network
-            )
+            from: walletAddress,
+            to: address
         )
     }
     

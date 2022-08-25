@@ -162,7 +162,7 @@ private extension DefaultConfirmationPresenter {
         forSend data: ConfirmationWireframeContext.SendContext
     ) -> ConfirmationViewModel.Content {
         
-        let usdToken = data.token.token.usdBalance.formatStringCurrency()
+        let usdToken = data.token.token.usdPrice(for: data.token.value).formatStringCurrency()
         let token = ConfirmationViewModel.SendViewModel.Token(
             iconName: data.token.iconName,
             symbol: data.token.token.symbol,
@@ -171,8 +171,14 @@ private extension DefaultConfirmationPresenter {
         )
         
         let destination = ConfirmationViewModel.SendViewModel.Destination(
-            from: data.destination.from,
-            to: data.destination.to
+            from: Formatter.address.string(
+                data.destination.from,
+                for: data.token.token.network.toNetwork()
+            ),
+            to: Formatter.address.string(
+                data.destination.to,
+                for: data.token.token.network.toNetwork()
+            )
         )
 
         // TODO: @Annon to show price here
@@ -196,9 +202,17 @@ private extension DefaultConfirmationPresenter {
         forSendNFT data: ConfirmationWireframeContext.SendNFTContext
     ) -> ConfirmationViewModel.Content {
         
+        // TODO: Fix when supporting sending NFTs on different networks...
+        let network = Network.Companion().ethereum()
         let destination = ConfirmationViewModel.SendNFTViewModel.Destination(
-            from: data.destination.from,
-            to: data.destination.to
+            from: Formatter.address.string(
+                data.destination.from,
+                for:network
+            ),
+            to: Formatter.address.string(
+                data.destination.to,
+                for: network
+            )
         )
 
         // TODO: @Annon to show price here
@@ -382,7 +396,7 @@ private extension DefaultConfirmationPresenter {
             interactor.send(
                 tokenFrom: data.token.token,
                 toAddress: data.destination.to,
-                balance: data.token.value,
+                amount: data.token.value,
                 fee: data.estimatedFee,
                 password: password,
                 salt: salt,

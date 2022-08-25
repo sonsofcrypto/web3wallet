@@ -177,6 +177,17 @@ extension Web3Token {
         return result.toBigInt()
     }
     
+    func usdPrice(for value: BigInt) -> BigInt {
+        
+        let bigDecBalance = value.toBigDec(decimals: decimals)
+        let bigDecUsdPrice = usdPrice.toBigDec(decimals: 2)
+        let bigDecDecimals = BigDec.Companion().from(string: "100", base: 10)
+
+        let result = bigDecBalance.mul(value: bigDecUsdPrice).mul(value: bigDecDecimals)
+        
+        return result.toBigInt()
+    }
+    
     var usdBalanceString: String {
         
         usdBalance.toDecimalString().appending(decimals: 2)

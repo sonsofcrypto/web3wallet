@@ -155,12 +155,14 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
                 )
                 return
             }
+            
+            guard let walletAddress = interactor.walletAddress else { return }
                                     
             wireframe.navigate(
                 to: .confirmSendNFT(
                     dataIn: .init(
                         nftItem: context.nftItem,
-                        destination: makeConfirmationSendNFTDestination(to: address),
+                        destination: makeConfirmationSendNFTDestination(from: walletAddress, to: address),
                         estimatedFee: makeConfirmationSendNFTEstimatedFee()
                     )
                 )
@@ -185,18 +187,13 @@ private extension DefaultNFTSendPresenter {
     }
     
     func makeConfirmationSendNFTDestination(
+        from walletAddress: String,
         to address: String
     ) -> ConfirmationWireframeContext.SendNFTContext.Destination {
         
         .init(
-            from: interactor.addressFormattedShort(
-                address: interactor.walletAddress ?? "",
-                network: context.network
-            ),
-            to: interactor.addressFormattedShort(
-                address: address,
-                network: context.network
-            )
+            from: walletAddress,
+            to: address
         )
     }
     

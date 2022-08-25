@@ -9,7 +9,7 @@ protocol ConfirmationInteractor {
     func send(
         tokenFrom: Web3Token,
         toAddress: String,
-        balance: BigInt,
+        amount: BigInt,
         fee: Web3NetworkFee,
         password: String,
         salt: String,
@@ -49,7 +49,7 @@ extension DefaultConfirmationInteractor: ConfirmationInteractor {
     func send(
         tokenFrom: Web3Token,
         toAddress: String,
-        balance: BigInt,
+        amount: BigInt,
         fee: Web3NetworkFee,
         password: String,
         salt: String,
@@ -65,7 +65,7 @@ extension DefaultConfirmationInteractor: ConfirmationInteractor {
             walletService.transfer(
                 to: toAddress,
                 currency: tokenFrom.toCurrency(),
-                amount: balance,
+                amount: amount,
                 network: tokenFrom.network.toNetwork(),
                 completionHandler: { response, error in
                     if let error = error {
