@@ -170,7 +170,7 @@
 "settings.about.discord" = "Discord";
 "settings.about.twitter" = "Twitter";
 "settings.about.telegram" = "Telegram";
-"settings.about.fotter" = "Section footer here...";
+"settings.about.fotter" = "sons Of crypto";
 "settings.about.contactUs" = "Contact Us";
 "settings.about.mail" = "Mail";
 
@@ -374,10 +374,10 @@
 "cult.proposal.parsing.cultRewardAllocation" = "%@% of Total Supply";
 
 "features.title" = "Improvement Proposals";
-"features.section.all.description" = "Description here for section all, @Annon to fill up.";
-"features.section.infrastructure.description" = "Description here for section infrastructure, @Annon to fill up.";
-"features.section.integrations.description" = "Description here for section integrations, @Annon to fill up.";
-"features.section.features.description" = "Description here for section features, @Annon to fill up.";
+"features.section.all.description" = "All proposals";
+"features.section.infrastructure.description" = "Support for standards and protocols";
+"features.section.integrations.description" = "Direct smart contracts / defi / web3 products integrations and support for L1 & L2 chains";
+"features.section.features.description" = "Various app usability improvements and features";
 "features.segmentedControl.all" = "All";
 "features.segmentedControl.infrastructure" = "Infrastructure";
 "features.segmentedControl.integrations" = "Integrations";

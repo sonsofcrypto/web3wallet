@@ -227,7 +227,7 @@ extension DefaultSettingsService: SettingsService {
                         )
                     ],
                     footer: .init(
-                        text: "TODO: @Annon to fill this footer with some text that actually makes sense.",
+                        text: Localized("settings.about.fotter"),
                         textAlignment: .leading
                     )
                 )
