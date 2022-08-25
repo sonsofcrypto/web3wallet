@@ -79,15 +79,12 @@ extension MnemonicUpdateCell {
 extension MnemonicUpdateCell {
 
     func animateCopiedToPasteboard() {
-        
-        hideMnemonicAfterSecondsCount = hideMnemonicAfterSeconds
-        refreshCountdownLabel()
 
         if overlay.alpha == 1 {
             UIView.animate(
                 withDuration: 0.2,
-                animations: { [weak self] in self?.overlay.alpha = 0 },
-                completion: nil
+                animations: { [weak self] in self?.overlay.alpha = 0; self?.resetCountdownLabel() },
+                completion: { [weak self] _ in self?.resetCountdownLabel() }
             )
             return
         }
@@ -102,8 +99,8 @@ extension MnemonicUpdateCell {
                 UIView.animate(
                     withDuration: 0.2,
                     delay: 0.5,
-                    animations: { [weak self] in self?.overlay.alpha = 0 },
-                    completion: nil
+                    animations: { [weak self] in self?.overlay.alpha = 0; self?.resetCountdownLabel() },
+                    completion: { [weak self] _ in self?.resetCountdownLabel() }
                 )
             }
         )
@@ -144,6 +141,12 @@ private extension MnemonicUpdateCell {
         guard hideMnemonicAfterSecondsCount == 0 else { return }
         refreshCountdownLabel()
         autoHideMnemonic()
+    }
+    
+    func resetCountdownLabel() {
+        hideMnemonicAfterSecondsCount = hideMnemonicAfterSeconds
+        refreshCountdownLabel()
+        scheduleAutohideMnemonic()
     }
     
     func refreshCountdownLabel() {
