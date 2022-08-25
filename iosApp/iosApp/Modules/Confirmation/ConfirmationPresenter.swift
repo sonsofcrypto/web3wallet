@@ -63,8 +63,7 @@ extension DefaultConfirmationPresenter: ConfirmationPresenter {
                 
             case .send, .sendNFT, .cultCastVote:
                 
-                showTransactionInProgress()
-                broadcastTransaction(with: "password", and: "salt")
+                wireframe.navigate(to: .authenticate(makeAuthenticateContext()))
                                 
             case .swap:
                 
