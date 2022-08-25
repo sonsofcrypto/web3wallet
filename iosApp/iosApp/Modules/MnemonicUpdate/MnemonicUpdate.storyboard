@@ -42,6 +42,24 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                 </textView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S4C-Fi-6Lu">
+                                                    <rect key="frame" x="243.5" y="68" width="82" height="61"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ULt-Hj-U79">
+                                                            <rect key="frame" x="20" y="20" width="42" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstItem="ULt-Hj-U79" firstAttribute="centerX" secondItem="S4C-Fi-6Lu" secondAttribute="centerX" id="1xU-t2-6mR"/>
+                                                        <constraint firstAttribute="width" constant="20" id="PfI-Tc-9g6"/>
+                                                        <constraint firstItem="ULt-Hj-U79" firstAttribute="centerY" secondItem="S4C-Fi-6Lu" secondAttribute="centerY" id="bzP-ke-8zz"/>
+                                                        <constraint firstAttribute="height" constant="20" id="g5B-5C-zAU"/>
+                                                    </constraints>
+                                                </view>
                                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g8w-PR-vgq">
                                                     <rect key="frame" x="1" y="1" width="341" height="147"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="W1r-8H-izA">
@@ -75,6 +93,8 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="g8w-PR-vgq" secondAttribute="trailing" constant="1" id="D0H-Me-Kly"/>
                                                 <constraint firstAttribute="bottom" secondItem="eSV-tY-oCm" secondAttribute="bottom" constant="16" id="PDE-G2-yQ9"/>
+                                                <constraint firstAttribute="trailing" secondItem="S4C-Fi-6Lu" secondAttribute="trailing" constant="12" id="VR7-tP-Ux2"/>
+                                                <constraint firstAttribute="bottom" secondItem="S4C-Fi-6Lu" secondAttribute="bottom" constant="12" id="epB-4k-2xf"/>
                                                 <constraint firstItem="eSV-tY-oCm" firstAttribute="top" secondItem="ldd-2d-QGe" secondAttribute="top" constant="16" id="iSp-Vc-t4e"/>
                                                 <constraint firstAttribute="trailing" secondItem="eSV-tY-oCm" secondAttribute="trailing" constant="16" id="lmq-j7-d1n"/>
                                                 <constraint firstItem="g8w-PR-vgq" firstAttribute="top" secondItem="ldd-2d-QGe" secondAttribute="top" constant="1" id="mZQ-Eb-jt1"/>
@@ -85,6 +105,8 @@
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="343" height="149"/>
                                         <connections>
+                                            <outlet property="countdownLabel" destination="ULt-Hj-U79" id="hok-dX-TCP"/>
+                                            <outlet property="countdownView" destination="S4C-Fi-6Lu" id="eKy-bn-sjW"/>
                                             <outlet property="overlay" destination="g8w-PR-vgq" id="EKR-75-AdR"/>
                                             <outlet property="overlayLabel" destination="IRj-Qt-mpq" id="cPw-au-NLu"/>
                                             <outlet property="textView" destination="eSV-tY-oCm" id="r51-WE-ans"/>
