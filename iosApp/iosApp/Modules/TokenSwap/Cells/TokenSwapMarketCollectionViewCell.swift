@@ -47,7 +47,7 @@ final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
         imageView.isUserInteractionEnabled = true
         
         loadingIndicator.isHidden = true
-        loadingIndicator.color = Theme.colour.labelSecondary
+        loadingIndicator.color = Theme.colour.activityIndicator
         
         tokenTo.maxButton.isHidden = true
         

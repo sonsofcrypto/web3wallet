@@ -16,7 +16,7 @@ extension UIImageView {
     func load(url: URL, placeholder: UIImage? = nil) {
         
         let activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.color = Theme.colour.fillTertiary
+        activityIndicator.color = Theme.colour.activityIndicator
         activityIndicator.startAnimating()
         addSubview(activityIndicator)
         activityIndicator.addConstraints(

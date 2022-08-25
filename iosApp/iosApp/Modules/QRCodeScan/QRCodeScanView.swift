@@ -233,7 +233,7 @@ private extension QRCodeScanViewController {
         
         let activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.startAnimating()
-        activityIndicator.color = Theme.colour.fillPrimary
+        activityIndicator.color = Theme.colour.activityIndicator
         view.addSubview(activityIndicator)
         activityIndicator.addConstraints(
             [
