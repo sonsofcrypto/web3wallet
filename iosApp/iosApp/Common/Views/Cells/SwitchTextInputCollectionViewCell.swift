@@ -22,6 +22,8 @@ final class SwitchTextInputCollectionViewCell: CollectionViewCell {
         super.awakeFromNib()
         configureUI()
     }
+    
+    override func setSelected(_ selected: Bool) {}
 }
 
 extension SwitchTextInputCollectionViewCell {

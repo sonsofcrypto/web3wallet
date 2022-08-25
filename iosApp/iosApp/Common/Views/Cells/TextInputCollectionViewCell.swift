@@ -29,6 +29,8 @@ final class TextInputCollectionViewCell: CollectionViewCell {
     override func resignFirstResponder() -> Bool {
         textField.resignFirstResponder()
     }
+    
+    override func setSelected(_ selected: Bool) {}
 }
 
 extension TextInputCollectionViewCell: UITextFieldDelegate {

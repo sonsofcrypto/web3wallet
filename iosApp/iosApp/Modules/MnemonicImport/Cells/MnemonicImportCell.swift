@@ -31,6 +31,8 @@ final class MnemonicImportCell: CollectionViewCell {
         
         configure()
     }
+    
+    override func setSelected(_ selected: Bool) {}
 
     func update(
         with viewModel: MnemonicImportViewModel.Mnemonic,

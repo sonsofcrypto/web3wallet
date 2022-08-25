@@ -327,9 +327,10 @@
 "confirmation.tx.success.swap.cta" = "Go to Account";
 "confirmation.tx.success.sendNFT.title" = "Broadcasted! 🎉";
 "confirmation.tx.success.sendNFT.message" = "The transaction is now broadcasted, you can see it now in your account.";
-"confirmation.tx.success.sendNFT.cta" = "Go to Account";
+"confirmation.tx.success.sendNFT.cta" = "Done";
+"confirmation.tx.success.cultCastVote.title" = "Vote casted! 🎉";
 "confirmation.tx.success.cultCastVote.message" = "The transaction is now broadcasted, your vote will be counted soon.";
-"confirmation.tx.success.cultCastVote.cta" = "Go to List";
+"confirmation.tx.success.cultCastVote.cta" = "Done";
 
 "confirmation.tx.failed.send.title" = "Oops 😬";
 "confirmation.tx.failed.send.message" = "The transaction did not succeed this time, please try again.";
