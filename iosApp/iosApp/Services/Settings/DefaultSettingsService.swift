@@ -272,10 +272,12 @@ private extension DefaultSettingsService {
             deepLinkHandler.handle(deepLink: deepLink)
             
         case .resetKeystore:
-            keyStoreService.items().forEach {
-                keyStoreService.remove(item: $0)
-            }
-            ServiceDirectory.rebootApp()
+            guard let presentingVC = SceneDelegateHelper().rootVC else { return }
+            let factory: AlertWireframeFactory = ServiceDirectory.assembler.resolve()
+            factory.makeWireframe(
+                presentingVC,
+                context: makeResetKeystoreAlertContext()
+            ).present()
             
         case .aboutWebsite:
             UIApplication.shared.open(
@@ -312,5 +314,35 @@ private extension DefaultSettingsService {
                 "mailto:sonsofcrypto@protonmail.com".url!
             )
         }
+    }
+    
+    func makeResetKeystoreAlertContext() -> AlertContext {
+        
+        .init(
+            title: Localized("alert.resetKeystore.title"),
+            media: nil,
+            message: Localized("alert.resetKeystore.message"),
+            actions: [
+                .init(
+                    title: Localized("alert.resetKeystore.action.confirm"),
+                    type: .destructive,
+                    action: .targetAction(.init(target: self, selector: #selector(resetKeystore)))
+                ),
+                .init(
+                    title: Localized("alert.resetKeystore.action.cancel"),
+                    type: .secondary,
+                    action: nil
+                )
+            ],
+            contentHeight: 350
+        )
+    }
+    
+    @objc func resetKeystore() {
+        
+        keyStoreService.items().forEach {
+            keyStoreService.remove(item: $0)
+        }
+        ServiceDirectory.rebootApp()
     }
 }

@@ -35,6 +35,15 @@ protocol Themable {
     var constant: ThemeConstant { get }
 }
 
+extension Themable {
+    
+    var isThemeIOSDarkSelected: Bool {
+        
+        let service: SettingsService = ServiceDirectory.assembler.resolve()
+        return service.isSelected(item: .theme, action: .themeIOSDark)
+    }
+}
+
 struct ThemeStatusBarStyle {
     let lightMode: Style
     let darkMode: Style

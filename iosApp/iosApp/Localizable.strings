@@ -178,9 +178,15 @@
 "alert.underConstruction.message" = "App is under very active development and this corner is not quite ready yet. Check back soon.";
 
 "alert.deleteWallet.title" = "⚠️ Warning ⚠️";
-"alert.deleteWallet.message" = "Are you sure you would like to delete your wallet?\n\nYou could still import again after but make sure you have your mnemonic backed up first.";
+"alert.deleteWallet.message" = "Are you sure you would like to delete your wallet?\n\nYou could still import again after, but make sure you have your mnemonic backed up first.";
 "alert.deleteWallet.action.confirm" = "Yes, delete wallet";
 "alert.deleteWallet.action.cancel" = "Cancel";
+
+"alert.resetKeystore.title" = "🚨🚨🚨 Warning 🚨🚨🚨";
+"alert.resetKeystore.message" = "Are you sure you would like to delete all your wallets?\n\nYou could still import them again after, but make sure you have your mnemonics backed up first.";
+"alert.resetKeystore.action.confirm" = "Yes, delete wallets";
+"alert.resetKeystore.action.cancel" = "Cancel";
+
 
 "mnemonicConfirmation.title" = "Confirm Mnemonic";
 "mnemonicConfirmation.confirm.wallet" = "Please enter the 12 word phrase you were given when you created your wallet.";

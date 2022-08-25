@@ -107,7 +107,11 @@ private extension AlertSheetPresentationController {
     func newBGView() -> UIView {
         
         let bgView = UIView(frame: containerViewBounds())
-        bgView.backgroundColor = UIColor.black.withAlpha(0.55)
+        if Theme.isThemeIOSDarkSelected {
+            bgView.backgroundColor = UIColor.white.withAlpha(0.15)
+        } else {
+            bgView.backgroundColor = UIColor.black.withAlpha(0.55)
+        }
         bgView.alpha = 0
         let tap = UITapGestureRecognizer(
             target: self,
