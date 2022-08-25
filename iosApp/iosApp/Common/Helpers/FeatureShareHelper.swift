@@ -8,19 +8,18 @@ struct FeatureShareHelper {
         on web3Feature: Web3Feature,
         presentingIn: UIViewController
     ) {
-        
-        var text = Localized(
-            "feature.vote.text",
-            arg: "#" + web3Feature.hashTag
+        var text = String(
+            format: Localized("feature.vote.text"),
+            web3Feature.id,
+            web3Feature.title
         )
-        
-        text.append("\n\n\(web3Feature.imageUrl)")
-        
+
         let textEncoded = text.addingPercentEncoding(
             withAllowedCharacters: .urlHostAllowed
         ) ?? ""
-        
-        guard let url = "https://www.twitter.com/intent/tweet?text=\(textEncoded)".url else { return }
+
+        let imgUrl = "https://sonsofcrypto.com/web3wallet-improvement-proposals/?id=" + web3Feature.id
+        guard let url = "https://www.twitter.com/intent/tweet?text=\(textEncoded)&url=\(imgUrl)".url else { return }
         
         UIApplication.shared.open(url)
     }
