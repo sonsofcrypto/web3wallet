@@ -50,7 +50,10 @@ extension TokenNetworkFeeView {
         
         self.handler = handler
 
-        networkEstimateFeeLabel.text = viewModel.estimatedFee
+        // TODO: @Annon - to reenable when working
+        //networkEstimateFeeLabel.text = viewModel.estimatedFee
+        networkTokenIcon.isHidden = true
+        networkEstimateFeeLabel.text = "🤷🏻‍♂️"
         
         switch viewModel.feeType {
         case .low:

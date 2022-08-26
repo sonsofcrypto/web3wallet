@@ -162,7 +162,7 @@ private extension DefaultConfirmationPresenter {
         
         // TODO: @Annon to show price here
         let feeValueInToken = "value token"
-        let feeValueInUSD = "value usd"
+        let feeValueInUSD = "🤷🏻‍♂️"
         let estimatedFee = ConfirmationViewModel.SwapViewModel.Fee(
             value: feeValueInToken,
             usdValue: feeValueInUSD
@@ -182,11 +182,32 @@ private extension DefaultConfirmationPresenter {
         forSend data: ConfirmationWireframeContext.SendContext
     ) -> ConfirmationViewModel.Content {
         
+        var value = data.token.value.formatString(
+            type: .long(minDecimals: 10),
+            decimals: data.token.token.decimals
+        )
+        if value.nonDecimals.count > 10 {
+            value = data.token.value.formatString(
+                type: .long(minDecimals: 4),
+                decimals: data.token.token.decimals
+            )
+        } else if value.nonDecimals.count > 6 {
+            value = data.token.value.formatString(
+                type: .long(minDecimals: 5),
+                decimals: data.token.token.decimals
+            )
+        } else if value.nonDecimals.count > 3 {
+            value = data.token.value.formatString(
+                type: .long(minDecimals: 7),
+                decimals: data.token.token.decimals
+            )
+        }
+        
         let usdToken = data.token.token.usdPrice(for: data.token.value).formatStringCurrency()
         let token = ConfirmationViewModel.SendViewModel.Token(
             iconName: data.token.iconName,
             symbol: data.token.token.symbol,
-            value: data.token.value.formatString(decimals: data.token.token.decimals),
+            value: value + " \(data.token.token.symbol)",
             usdValue: usdToken
         )
         
@@ -203,7 +224,7 @@ private extension DefaultConfirmationPresenter {
 
         // TODO: @Annon to show price here
         let feeValueInToken = "value token"
-        let feeValueInUSD = "value usd"
+        let feeValueInUSD = "🤷🏻‍♂️"
         let estimatedFee = ConfirmationViewModel.SendViewModel.Fee(
             value: feeValueInToken,
             usdValue: feeValueInUSD
@@ -237,7 +258,7 @@ private extension DefaultConfirmationPresenter {
 
         // TODO: @Annon to show price here
         let feeValueInToken = "value token"
-        let feeValueInUSD = "value usd"
+        let feeValueInUSD = "🤷🏻‍♂️"
         let estimatedFee = ConfirmationViewModel.SendNFTViewModel.Fee(
             value: feeValueInToken,
             usdValue: feeValueInUSD

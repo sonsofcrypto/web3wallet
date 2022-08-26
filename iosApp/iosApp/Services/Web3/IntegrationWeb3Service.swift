@@ -171,7 +171,7 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
     
     func networkFeeInNetworkToken(network: Web3Network, fee: Web3NetworkFee) -> String {
         // TODO: return fees
-        return "==="
+        return "🤷🏻‍♂️"
     }
     
     var currentEthBlock: String {
