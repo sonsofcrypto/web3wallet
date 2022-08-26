@@ -51,7 +51,9 @@ extension DefaultNFTsDashboardPresenter: NFTsDashboardPresenter {
 
     func present(isPullDownToRefreh: Bool) {
         
-        view.update(with: .loading)
+        if !isPullDownToRefreh {
+            view.update(with: .loading)
+        }
         
         interactor.fetchYourNFTs(isPullDownToRefreh: isPullDownToRefreh) { [weak self] result in
             
