@@ -436,7 +436,57 @@ private extension DefaultTokenSwapPresenter {
     
     func makeTokenPriceViewModel() -> TokenSwapPriceViewModel {
         
-        let value = "0.588392859"
+        guard tokenFrom.usdPrice != 0, tokenTo.usdPrice != 0 else {
+            
+            return .init(value: "1 \(tokenFrom.symbol) ≈ ? \(tokenTo.symbol)")
+        }
+        
+        guard let fromAmount = try? BigInt.Companion().from(
+            string: "1".appending(decimals: tokenFrom.decimals),
+            base: 10
+        ) else {
+            
+            return .init(value: "1 \(tokenFrom.symbol) ≈ ? \(tokenTo.symbol)")
+        }
+        
+        let tokenFromAmountBigDec = fromAmount.toBigDec(
+            decimals: tokenFrom.decimals
+        )
+        let tokenFromUSDPriceBigDec = tokenFrom.usdPrice.bigDec
+        let tokenToUSDPriceBigDec = tokenTo.usdPrice.bigDec
+        let amountToDecimals = BigDec.Companion().from(
+            string: "1".appending(decimals: tokenTo.decimals),
+            base: 10
+        )
+
+        let amountTo = tokenFromAmountBigDec.mul(
+            value: tokenFromUSDPriceBigDec
+        ).div(
+            value: tokenToUSDPriceBigDec
+        ).mul( // this is to add the decimals for the token we convert to
+            value: amountToDecimals
+        )
+        
+        var value = amountTo.toBigInt().formatString(
+            type: .long(minDecimals: 10),
+            decimals: tokenTo.decimals
+        )
+        if value.nonDecimals.count > 10 {
+            value = amountTo.toBigInt().formatString(
+                type: .long(minDecimals: 4),
+                decimals: tokenTo.decimals
+            )
+        } else if value.nonDecimals.count > 6 {
+            value = amountTo.toBigInt().formatString(
+                type: .long(minDecimals: 5),
+                decimals: tokenTo.decimals
+            )
+        } else if value.nonDecimals.count > 3 {
+            value = amountTo.toBigInt().formatString(
+                type: .long(minDecimals: 7),
+                decimals: tokenTo.decimals
+            )
+        }
         return .init(value: "1 \(tokenFrom.symbol) ≈ \(value) \(tokenTo.symbol)")
     }
     
@@ -460,7 +510,8 @@ private extension DefaultTokenSwapPresenter {
             [weak self] token in
             guard let self = self else { return }
             self.tokenFrom = token
-            self.refreshView(with: .init(amountFrom: .zero, amountTo: .zero))
+            self.amountFrom = .zero
+            self.updateSwap(amountTo: self.amountTo ?? .zero, shouldUpdateTextFields: true)
         }
     }
     
@@ -470,7 +521,7 @@ private extension DefaultTokenSwapPresenter {
             [weak self] token in
             guard let self = self else { return }
             self.tokenTo = token
-            self.updateSwap(amountFrom: self.amountFrom ?? .zero, shouldUpdateTextFields: false)
+            self.updateSwap(amountFrom: self.amountFrom ?? .zero, shouldUpdateTextFields: true)
         }
     }
 }

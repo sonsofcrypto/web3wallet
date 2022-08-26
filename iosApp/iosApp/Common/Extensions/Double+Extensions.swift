@@ -2,7 +2,14 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
+import web3lib
+
 extension Double {
+    
+    var bigDec: BigDec {
+        
+        BigDec.Companion().from(double: self)
+    }
     
     func toString(decimals: Int = 2) -> String {
         

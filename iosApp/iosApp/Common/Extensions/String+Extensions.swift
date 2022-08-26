@@ -130,6 +130,12 @@ extension String {
         return self + decimalsString
     }
     
+    var nonDecimals: String {
+        let split = self.split(separator: ".")
+        guard split.count == 2 else { return self }
+        return String(split[0])
+    }
+    
     var decimals: String? {
         let split = self.split(separator: ".")
         guard split.count == 2 else { return nil }

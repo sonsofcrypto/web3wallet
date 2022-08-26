@@ -181,13 +181,32 @@ private extension DefaultTokenSwapInteractor {
             return
         }
         
-        let amountFrom = amountTo * dataIn.tokenTo.usdPrice / dataIn.tokenFrom.usdPrice
+        let tokenToAmountBigDec = amountTo.toBigDec(decimals: dataIn.tokenTo.decimals)
+        let tokenToUSDPriceBigDec = dataIn.tokenTo.usdPrice.bigDec
+        let tokenFromUSDPriceBigDec = dataIn.tokenFrom.usdPrice.bigDec
+        let amountFromDecimals = BigDec.Companion().from(
+            string: "1".appending(decimals: dataIn.tokenFrom.decimals),
+            base: 10
+        )
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+        let amountFrom: BigDec
+        if dataIn.tokenFrom.usdPrice != 0 {
+            amountFrom = tokenToAmountBigDec.mul(
+                value: tokenToUSDPriceBigDec
+            ).div(
+                value: tokenFromUSDPriceBigDec
+            ).mul( // this is to add the decimals for the token we convert to
+                value: amountFromDecimals
+            )
+        } else {
+            amountFrom = Double(0).bigDec
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
            
             onCompletion(
                 .init(
-                    amountFrom: amountFrom,
+                    amountFrom: amountFrom.toBigInt(),
                     amountTo: amountTo
                 )
             )
@@ -212,14 +231,33 @@ private extension DefaultTokenSwapInteractor {
             return
         }
         
-        let amountTo = amountFrom * dataIn.tokenFrom.usdPrice / dataIn.tokenTo.usdPrice
+        let tokenFromAmountBigDec = amountFrom.toBigDec(decimals: dataIn.tokenFrom.decimals)
+        let tokenFromUSDPriceBigDec = dataIn.tokenFrom.usdPrice.bigDec
+        let tokenToUSDPriceBigDec = dataIn.tokenTo.usdPrice.bigDec
+        let amountToDecimals = BigDec.Companion().from(
+            string: "1".appending(decimals: dataIn.tokenTo.decimals),
+            base: 10
+        )
+
+        let amountTo: BigDec
+        if dataIn.tokenTo.usdPrice != 0 {
+            amountTo = tokenFromAmountBigDec.mul(
+                value: tokenFromUSDPriceBigDec
+            ).div(
+                value: tokenToUSDPriceBigDec
+            ).mul( // this is to add the decimals for the token we convert to
+                value: amountToDecimals
+            )
+        } else {
+            amountTo = Double(0).bigDec
+        }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
            
             onCompletion(
                 .init(
                     amountFrom: amountFrom,
-                    amountTo: amountTo
+                    amountTo: amountTo.toBigInt()
                 )
             )
         }

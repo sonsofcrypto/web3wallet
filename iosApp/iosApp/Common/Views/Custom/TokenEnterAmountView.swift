@@ -13,7 +13,7 @@ struct TokenEnterAmountViewModel {
     let tokenSymbol: String
     let tokenMaxAmount: BigInt
     let tokenMaxDecimals: UInt
-    let currencyTokenPrice: BigInt
+    let currencyTokenPrice: Double
     let shouldUpdateTextFields: Bool
     let shouldBecomeFirstResponder: Bool
     let networkName: String
@@ -419,8 +419,8 @@ private extension TokenEnterAmountView {
     ) -> BigInt {
         
         let bigDecBalance = amount.toBigDec(decimals: viewModel.tokenMaxDecimals)
-        let bigDecFiatPrice = viewModel.currencyTokenPrice.toBigDec(decimals: 2)
-        let bigDecDecimals = BigDec.Companion().from(string: "100", base: 10)
+        let bigDecFiatPrice = viewModel.currencyTokenPrice.bigDec
+        let bigDecDecimals = Double(100).bigDec
 
         let result = bigDecBalance.mul(value: bigDecFiatPrice).mul(value: bigDecDecimals)
         
@@ -438,9 +438,10 @@ private extension TokenEnterAmountView {
         guard fiatMaxAmount != fiatAmount else { return viewModel.tokenMaxAmount }
         
         let bigDecFiatAmount = fiatAmount.toBigDec(decimals: 2)
-        let bigDecFiatPrice = viewModel.currencyTokenPrice.toBigDec(decimals: 2)
+        let bigDecFiatPrice = viewModel.currencyTokenPrice.bigDec
         
-        let tokenDecimalsBigInt = BigInt.Companion().from(uint: 10).pow(value: Int64(viewModel.tokenMaxDecimals))
+        let tokenDecimalsBigInt = BigInt.Companion().from(uint: 10).pow(value: Int64(viewModel.tokenMaxDecimals)
+        )
 
         let result = bigDecFiatAmount.div(value: bigDecFiatPrice).mul(
             value:  tokenDecimalsBigInt.toBigDec(decimals: 0)

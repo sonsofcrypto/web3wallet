@@ -144,7 +144,7 @@ struct Web3Token: Equatable {
     let network: Web3Network //
     let balance: BigInt
     let showInWallet: Bool
-    let usdPrice: BigInt
+    let usdPrice: Double
     let coingGeckoId: String?
     let rank: Int
 }
@@ -169,7 +169,7 @@ extension Web3Token {
     var usdBalance: BigInt {
         
         let bigDecBalance = balance.toBigDec(decimals: decimals)
-        let bigDecUsdPrice = usdPrice.toBigDec(decimals: 2)
+        let bigDecUsdPrice = BigDec.Companion().from(double: usdPrice)
         let bigDecDecimals = BigDec.Companion().from(string: "100", base: 10)
 
         let result = bigDecBalance.mul(value: bigDecUsdPrice).mul(value: bigDecDecimals)
@@ -180,17 +180,12 @@ extension Web3Token {
     func usdPrice(for value: BigInt) -> BigInt {
         
         let bigDecBalance = value.toBigDec(decimals: decimals)
-        let bigDecUsdPrice = usdPrice.toBigDec(decimals: 2)
+        let bigDecUsdPrice = BigDec.Companion().from(double: usdPrice)
         let bigDecDecimals = BigDec.Companion().from(string: "100", base: 10)
 
         let result = bigDecBalance.mul(value: bigDecUsdPrice).mul(value: bigDecDecimals)
         
         return result.toBigInt()
-    }
-    
-    var usdBalanceString: String {
-        
-        usdBalance.toDecimalString().appending(decimals: 2)
     }
 }
 
@@ -248,10 +243,9 @@ extension Web3Token {
         return walletService.balance(network: network, currency: currency)
     }
     
-    private static func fiatPrice(for currency: Currency) -> BigInt {
+    private static func fiatPrice(for currency: Currency) -> Double {
         let currencyStoreService: CurrencyStoreService = ServiceDirectory.assembler.resolve()
-        let price = currencyStoreService.marketData(currency: currency)?.currentPrice?.doubleValue
-        return BigInt.fromString("\(price ?? 0)", decimals: 2)
+        return currencyStoreService.marketData(currency: currency)?.currentPrice?.doubleValue ?? 0
     }
 
     func toCurrency() -> Currency {

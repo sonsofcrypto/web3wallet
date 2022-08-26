@@ -98,10 +98,14 @@ extension BigInt {
         
         case short
         case long(minDecimals: Int)
-        case max
+        case max(trimFinalZeros: Bool)
         
         static var long: Self {
             .long(minDecimals: 4)
+        }
+        
+        static var max: Self {
+            .max(trimFinalZeros: true)
         }
     }
     
@@ -109,7 +113,7 @@ extension BigInt {
         decimals: UInt
     ) -> BigDec {
         
-        let string = formatString(type: .max, decimals: decimals)
+        let string = formatString(type: .max(trimFinalZeros: false), decimals: decimals)
         return BigDec.Companion().from(string: string, base: Int32(10))
     }
     
@@ -123,8 +127,12 @@ extension BigInt {
             return toDecimalString().add(decimals: decimals).trimDecimals(minDecimals: 4).trimFinalZerosIfDecimal(min: 1)
         case let .long(minDecimals):
             return toDecimalString().add(decimals: decimals).trimDecimals(minDecimals: minDecimals).trimFinalZerosIfDecimal(min: 1)
-        case .max:
-            return toDecimalString().add(decimals: decimals).trimFinalZerosIfDecimal(min: 1)
+        case let .max(trimFinalZeros):
+            if trimFinalZeros {
+                return toDecimalString().add(decimals: decimals).trimFinalZerosIfDecimal(min: 1)
+            } else {
+                return toDecimalString().add(decimals: decimals)
+            }
         }
     }
     
@@ -145,6 +153,23 @@ extension BigInt {
             return String.currencySymbol(with: currencyCode)
             + toDecimalString().add(decimals: decimals).trimFinalZerosIfDecimal(min: 2).thowsandFormatted
         }
+    }
+}
+
+extension String {
+    
+    func add(decimals: UInt) -> String {
+        
+        var updatedString = self
+        var decimalsString = ""
+        
+        for _ in 0..<decimals {
+            
+            let decimal = !updatedString.isEmpty ? updatedString.removeLast() : "0"
+            decimalsString = String(decimal) + decimalsString
+        }
+        
+        return (updatedString.isEmpty ? "0" : updatedString) + "." + decimalsString
     }
 }
 
@@ -231,20 +256,6 @@ private extension String {
             zeros += "0"
         }
         return zeros
-    }
-    
-    func add(decimals: UInt) -> String {
-        
-        var updatedString = self
-        var decimalsString = ""
-        
-        for _ in 0..<decimals {
-            
-            let decimal = !updatedString.isEmpty ? updatedString.removeLast() : "0"
-            decimalsString = String(decimal) + decimalsString
-        }
-        
-        return (updatedString.isEmpty ? "0" : updatedString) + "." + decimalsString
     }
     
     func removeTrailingCharacters(n: Int) -> String {
