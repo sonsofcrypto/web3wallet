@@ -36,7 +36,7 @@ final class DefaultMailService: NSObject, MailService {
         }
         let mail = MFMailComposeViewController()
         mail.mailComposeDelegate = self
-        mail.setToRecipients(["sonsofcrypto@proponmail.com"])
+        mail.setToRecipients(["sonsofcrypto@protonmail.com"])
         mail.setSubject(context.subject.string)
         presentingIn?.present(mail, animated: true)
     }
