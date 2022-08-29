@@ -12,6 +12,7 @@ final class ConfirmationTxSuccessView: UIView {
     struct Handler {
         
         let onCTATapped: () -> Void
+        let onCTASecondaryTapped: () -> Void
     }
     
     init(
@@ -39,7 +40,9 @@ private extension ConfirmationTxSuccessView {
         let views: [UIView] = [
             makeOnSuccessView(),
             makeLabel(with: .body, and: viewModel.title),
-            makeLabel(with: .footnote, and: viewModel.message)
+            makeLabel(with: .footnote, and: viewModel.message),
+            makeViewEtherScanButton(),
+            makeCTAButton()
         ]
         
         let stackView = VStackView(views)
@@ -56,23 +59,13 @@ private extension ConfirmationTxSuccessView {
             [
                 .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
                 .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .centerYAnchor, constant: .equalTo(constant: (Theme.constant.padding + 40).half))
+                .layout(anchor: .centerYAnchor, constant: .equalTo( constant: Theme.constant.padding))
             ]
         )
 
         addSubview(wrapperView)
         
         wrapperView.addConstraints(.toEdges)
-        
-        let cta = makeCTAButton()
-        addSubview(cta)
-        cta.addConstraints(
-            [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: Theme.constant.padding))
-            ]
-        )
     }
     
     func makeOnSuccessView() -> UIView {
@@ -99,7 +92,7 @@ private extension ConfirmationTxSuccessView {
         
         imageView.addConstraints(
             [
-                .layout(anchor: .topAnchor),
+                .layout(anchor: .topAnchor, constant: .equalTo(constant: Theme.constant.padding)),
                 .layout(anchor: .bottomAnchor),
                 .layout(anchor: .centerXAnchor)
             ]
@@ -130,8 +123,22 @@ private extension ConfirmationTxSuccessView {
         return button
     }
     
+    func makeViewEtherScanButton() -> Button {
+        
+        let button = Button()
+        button.style = .secondary
+        button.setTitle(viewModel.ctaSecondary, for: .normal)
+        button.addTarget(self, action: #selector(onCTASecondaryTapped), for: .touchUpInside)
+        return button
+    }
+    
     @objc func onCTATapped() {
         
         handler.onCTATapped()
+    }
+    
+    @objc func onCTASecondaryTapped() {
+        
+        handler.onCTASecondaryTapped()
     }
 }

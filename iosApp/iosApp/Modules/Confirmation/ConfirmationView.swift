@@ -84,7 +84,7 @@ extension ConfirmationViewController: UIViewControllerTransitioningDelegate, Mod
             
             contentHeight += navBarHeight
             contentHeight += Theme.constant.padding
-            contentHeight += 250
+            contentHeight += 270
             contentHeight += Theme.constant.padding
         }
         
@@ -149,66 +149,51 @@ private extension ConfirmationViewController {
             
             return ConfirmationSwapView(
                 viewModel: viewModel,
-                onConfirmHandler: makeConfirmationHandler()
+                onConfirmHandler: makePresenterEventTapped(.confirm)
             )
 
         case let .send(viewModel):
             
             return ConfirmationSendView(
                 viewModel: viewModel,
-                onConfirmHandler: makeConfirmationHandler()
+                onConfirmHandler: makePresenterEventTapped(.confirm)
             )
             
         case let .sendNFT(viewModel):
 
             return ConfirmationSendNFTView(
                 viewModel: viewModel,
-                onConfirmHandler: makeConfirmationHandler()
+                onConfirmHandler: makePresenterEventTapped(.confirm)
             )
             
         case let .cultCastVote(viewModel):
 
             return ConfirmationCultCastVoteView(
                 viewModel: viewModel,
-                onConfirmHandler: makeConfirmationHandler()
+                onConfirmHandler: makePresenterEventTapped(.confirm)
             )
-        }
-    }
-    
-    func makeConfirmationHandler() -> () -> Void {
-        
-        {
-            [weak self] in
-            guard let self = self else { return }
-            self.presenter.handle(.confirm)
         }
     }
     
     func makeConfirmationTxSuccessViewHandler() -> ConfirmationTxSuccessView.Handler {
         
-        .init(onCTATapped: makeTxSuccessOnCTATapped())
-    }
-    
-    func makeTxSuccessOnCTATapped() -> () -> Void {
-        
-        {
-            [weak self] in
-            guard let self = self else { return }
-            self.presenter.handle(.txSuccessCTATapped)
-        }
+        .init(
+            onCTATapped: makePresenterEventTapped(.txSuccessCTATapped),
+            onCTASecondaryTapped: makePresenterEventTapped(.txSuccessCTASecondaryTapped)
+        )
     }
     
     func makeConfirmationTxFailedViewHandler() -> ConfirmationTxFailedView.Handler {
         
-        .init(onCTATapped: makeTxFailedOnCTATapped())
+        .init(onCTATapped: makePresenterEventTapped(.txFailedCTATapped))
     }
     
-    func makeTxFailedOnCTATapped() -> () -> Void {
+    func makePresenterEventTapped(_ event: ConfirmationPresenterEvent) -> () -> Void {
         
         {
             [weak self] in
             guard let self = self else { return }
-            self.presenter.handle(.txFailedCTATapped)
+            self.presenter.handle(event)
         }
     }
 }

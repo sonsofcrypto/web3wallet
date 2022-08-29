@@ -347,6 +347,7 @@
 "confirmation.tx.success.cultCastVote.title" = "Vote casted! 🎉";
 "confirmation.tx.success.cultCastVote.message" = "The transaction is now broadcasted, your vote will be counted soon.";
 "confirmation.tx.success.cultCastVote.cta" = "Done";
+"confirmation.tx.success.viewEtherScan" = "View on Etherscan";
 
 "confirmation.tx.failed.send.title" = "Oops 😬";
 "confirmation.tx.failed.send.message" = "The transaction did not succeed this time, please try again.";
@@ -425,3 +426,5 @@
 "validation.error.pass.min.digit" = "At least one digit needed";
 
 "tokenEnter.balance" = "Balance: %@";
+
+"webView.title.txDetails" = "Transaction Details";

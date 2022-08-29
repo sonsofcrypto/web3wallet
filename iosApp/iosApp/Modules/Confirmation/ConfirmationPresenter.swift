@@ -9,6 +9,7 @@ enum ConfirmationPresenterEvent {
 
     case confirm
     case txSuccessCTATapped
+    case txSuccessCTASecondaryTapped
     case txFailedCTATapped
     case dismiss
 }
@@ -26,6 +27,8 @@ final class DefaultConfirmationPresenter {
     private let wireframe: ConfirmationWireframe
     private let interactor: ConfirmationInteractor
     private let context: ConfirmationWireframeContext
+    
+    private var txHash: String?
     
     init(
         view: ConfirmationView,
@@ -78,6 +81,10 @@ extension DefaultConfirmationPresenter: ConfirmationPresenter {
             case .swap:
                 break
             }
+            
+        case .txSuccessCTASecondaryTapped:
+            guard let txHash = txHash else { return }
+            wireframe.navigate(to: .viewEtherscan(txHash: txHash))
 
         case .txFailedCTATapped:
             wireframe.dismiss()
@@ -268,22 +275,12 @@ private extension DefaultConfirmationPresenter {
             title: makeTitle(),
             content: .inProgress(
                 .init(
-                    title: makeTransactionInProgressTitle(),
-                    message: makeTransactionInProgressMessage()
+                    title: Localized("confirmation.tx.inProgress.\(context.type.localizedTag).title"),
+                    message: Localized("confirmation.tx.inProgress.\(context.type.localizedTag).message")
                 )
             )
         )
         view?.update(with: viewModel)
-    }
-    
-    func makeTransactionInProgressTitle() -> String {
-        
-        Localized("confirmation.tx.inProgress.\(context.type.localizedTag).title")
-    }
-    
-    func makeTransactionInProgressMessage() -> String {
-        
-        Localized("confirmation.tx.inProgress.\(context.type.localizedTag).message")
     }
 }
 
@@ -295,28 +292,14 @@ private extension DefaultConfirmationPresenter {
             title: makeTitle(),
             content: .success(
                 .init(
-                    title: makeTransactionSuccessTitle(),
-                    message: makeTransactionSuccessMessage(),
-                    cta: makeTransactionSucessCTA()
+                    title: Localized("confirmation.tx.success.\(context.type.localizedTag).title"),
+                    message: Localized("confirmation.tx.success.\(context.type.localizedTag).message"),
+                    cta: Localized("confirmation.tx.success.\(context.type.localizedTag).cta"),
+                    ctaSecondary: Localized("confirmation.tx.success.viewEtherScan")
                 )
             )
         )
         view?.update(with: viewModel)
-    }
-    
-    func makeTransactionSuccessTitle() -> String {
-        
-        Localized("confirmation.tx.success.\(context.type.localizedTag).title")
-    }
-    
-    func makeTransactionSuccessMessage() -> String {
-        
-        Localized("confirmation.tx.success.\(context.type.localizedTag).message")
-    }
-    
-    func makeTransactionSucessCTA() -> String {
-        
-        Localized("confirmation.tx.success.\(context.type.localizedTag).cta")
     }
 }
 
@@ -328,28 +311,13 @@ private extension DefaultConfirmationPresenter {
             title: makeTitle(),
             content: .failed(
                 .init(
-                    title: makeTransactionFailedTitle(),
-                    message: makeTransactionFailedMessage(),
-                    cta: makeTransactionFailedCTA()
+                    title: Localized("confirmation.tx.failed.\(context.type.localizedTag).title"),
+                    message: Localized("confirmation.tx.failed.\(context.type.localizedTag).message"),
+                    cta: Localized("confirmation.tx.failed.\(context.type.localizedTag).cta")
                 )
             )
         )
         view?.update(with: viewModel)
-    }
-    
-    func makeTransactionFailedTitle() -> String {
-        
-        Localized("confirmation.tx.failed.\(context.type.localizedTag).title")
-    }
-    
-    func makeTransactionFailedMessage() -> String {
-        
-        Localized("confirmation.tx.failed.\(context.type.localizedTag).message")
-    }
-    
-    func makeTransactionFailedCTA() -> String {
-        
-        Localized("confirmation.tx.failed.\(context.type.localizedTag).cta")
     }
 }
 
@@ -358,15 +326,10 @@ private extension DefaultConfirmationPresenter {
     func makeAuthenticateContext() -> AuthenticateContext {
 
         .init(
-            title: makeAuthenticateTitle(),
+            title: Localized("authenticate.title.\(context.type.localizedTag)"),
             keyStoreItem: nil,
             handler: makeOnAuthenticatedHandler()
         )
-    }
-    
-    func makeAuthenticateTitle() -> String {
-        
-        Localized("authenticate.title.\(context.type.localizedTag)")
     }
     
     func makeOnAuthenticatedHandler() -> (Result<(String, String), Error>) -> Void {
@@ -388,7 +351,6 @@ private extension DefaultConfirmationPresenter {
         with password: String,
         and salt: String
     ) {
-        
         showTransactionInProgress()
         broadcastTransaction(with: password, and: salt)
     }
@@ -412,7 +374,8 @@ private extension DefaultConfirmationPresenter {
                 salt: salt,
                 handler: { [weak self] result in
                     switch result {
-                    case .success:
+                    case let .success(response):
+                        self?.txHash = response.hash
                         self?.showTransactionSuccess()
                     case let .failure(error):
                         self?.showTransactionFailed(error)
@@ -430,7 +393,8 @@ private extension DefaultConfirmationPresenter {
                 network: Network.Companion().ethereum(),
                 handler: { [weak self] result in
                     switch result {
-                    case .success:
+                    case let .success(response):
+                        self?.txHash = response.hash
                         self?.showTransactionSuccess()
                     case let .failure(error):
                         self?.showTransactionFailed(error)
@@ -446,7 +410,8 @@ private extension DefaultConfirmationPresenter {
                 salt: salt,
                 handler: { [weak self] result in
                     switch result {
-                    case .success:
+                    case let .success(response):
+                        self?.txHash = response.hash
                         self?.showTransactionSuccess()
                     case let .failure(error):
                         self?.showTransactionFailed(error)

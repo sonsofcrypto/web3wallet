@@ -78,7 +78,8 @@ private extension AssemblerBootstrapper {
             FeaturesWireframeFactoryAssembler(),
             FeatureWireframeFactoryAssembler(),
             ThemePickerWireframeFactoryAssembler(),
-            MailServiceAssembler()
+            MailServiceAssembler(),
+            WebViewWireframeFactoryAssembler()
         ]
     }
 }

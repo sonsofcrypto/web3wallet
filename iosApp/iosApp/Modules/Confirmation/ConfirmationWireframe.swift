@@ -12,6 +12,7 @@ enum ConfirmationWireframeDestination {
     case account
     case nftsDashboard
     case cultProposals
+    case viewEtherscan(txHash: String)
 }
 
 protocol ConfirmationWireframe {
@@ -87,6 +88,9 @@ extension DefaultConfirmationWireframe: ConfirmationWireframe {
 
         case .cultProposals:
             deepLinkHandler.handle(deepLink: .cultProposals)
+            
+        case let .viewEtherscan(txHash):
+            EtherscanHelper().view(txHash: txHash, presentingIn: navigationController)
         }
     }
     
