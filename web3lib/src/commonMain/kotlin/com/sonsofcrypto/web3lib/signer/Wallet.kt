@@ -52,6 +52,8 @@ interface Signer {
     /** Get transfer logs for ERC20 */
     @Throws(Throwable::class)
     suspend fun getTransferLogs(currency: Currency): List<Log>
+    /** Get transaction receipt */
+    suspend fun getTransactionReceipt(hash: String): TransactionReceipt
 
     /** Chain id of network */
     @Throws(Throwable::class)
@@ -133,6 +135,58 @@ class Wallet(
         TODO("Not yet implemented")
     }
 
+    @Throws(Throwable::class)
+    override suspend fun call(transaction: TransactionRequest, block: BlockTag): DataHexString {
+        return provider!!.call(transaction, block)
+    }
+
+    @Throws(Throwable::class)
+    override suspend fun sendTransaction(transaction: TransactionRequest): TransactionResponse {
+        val provider = provider()
+        val network = network()
+        val address = address().toHexStringAddress()
+        val key = key?.copyOf()
+
+        if (provider == null || network == null || address == null)
+            throw Error.ProviderConnectionError(this)
+
+        if (key == null)
+            throw Error.FailedToUnlockWallet
+
+        val feeData = provider.feeData()
+        val populatedTx = transaction.copy(
+            from = address.toHexStringAddress(),
+            nonce = getTransactionCount(address, block = BlockTag.Latest),
+            chainId = network.chainId.toInt(),
+            type = TransactionType.EIP1559,
+            maxPriorityFeePerGas = feeData.maxPriorityFeePerGas,
+            maxFeePerGas = feeData.maxFeePerGas,
+        )
+        val gasEstimate = provider.estimateGas(populatedTx)
+        val populatedTxWithGas = populatedTx.copy(gasLimit = gasEstimate)
+        val signature = sign(keccak256(populatedTxWithGas.encodeEIP1559()), key)
+        val signedTransaction = populatedTxWithGas.copy(
+            r = BigInt.from(signature.copyOfRange(0, 32)),
+            s = BigInt.from(signature.copyOfRange(32, 64)),
+            v = BigInt.from(signature[64].toInt()),
+        )
+        val signedRawTx = signedTransaction.encodeEIP1559()
+        key.zeroOut()
+        val nonce = signedTransaction.nonce!!
+        val hash = provider.sendRawTransaction(DataHexString(signedRawTx))
+        return TransactionResponse(
+            hash = hash,
+            blockNumber = null,
+            blockHash = null,
+            timestamp = null,
+            confirmations = 0u,
+            from = address,
+            raw = signedRawTx,
+            gasLimit = transaction.gasLimit,
+            gasPrice = transaction.gasPrice,
+        )
+    }
+
     override suspend fun getBalance(block: BlockTag): BigInt {
         return provider!!.getBalance(address(), block)
     }
@@ -184,56 +238,8 @@ class Wallet(
             toLogs.mapNotNull { it as? Log }
     }
 
-    @Throws(Throwable::class)
-    override suspend fun call(transaction: TransactionRequest, block: BlockTag): DataHexString {
-        return provider!!.call(transaction, block)
-    }
-
-    @Throws(Throwable::class)
-    override suspend fun sendTransaction(transaction: TransactionRequest): TransactionResponse {
-        val provider = provider()
-        val network = network()
-        val address = address().toHexStringAddress()
-        val key = key?.copyOf()
-
-        if (provider == null || network == null || address == null)
-            throw Error.ProviderConnectionError(this)
-
-        if (key == null)
-            throw Error.FailedToUnlockWallet
-
-        val feeData = provider.feeData()
-        val populatedTx = transaction.copy(
-            from = address.toHexStringAddress(),
-            nonce = getTransactionCount(address, block = BlockTag.Latest),
-            chainId = network.chainId.toInt(),
-            type = TransactionType.EIP1559,
-            maxPriorityFeePerGas = feeData.maxPriorityFeePerGas,
-            maxFeePerGas = feeData.maxFeePerGas,
-        )
-        val gasEstimate = provider.estimateGas(populatedTx)
-        val populatedTxWithGas = populatedTx.copy(gasLimit = gasEstimate)
-        val signature = sign(keccak256(populatedTxWithGas.encodeEIP1559()), key)
-        val signedTransaction = populatedTxWithGas.copy(
-            r = BigInt.from(signature.copyOfRange(0, 32)),
-            s = BigInt.from(signature.copyOfRange(32, 64)),
-            v = BigInt.from(signature[64].toInt()),
-        )
-        val signedRawTx = signedTransaction.encodeEIP1559()
-        key.zeroOut()
-        val nonce = signedTransaction.nonce!!
-        val hash = provider.sendRawTransaction(DataHexString(signedRawTx))
-        return TransactionResponse(
-            hash = hash,
-            blockNumber = null,
-            blockHash = null,
-            timestamp = null,
-            confirmations = 0u,
-            from = address,
-            raw = signedRawTx,
-            gasLimit = transaction.gasLimit,
-            gasPrice = transaction.gasPrice,
-        )
+    override suspend fun getTransactionReceipt(hash: String): TransactionReceipt {
+        return provider!!.getTransactionReceipt(hash)
     }
 
     override suspend fun getChainId() {

@@ -16,6 +16,7 @@ import com.sonsofcrypto.web3lib.utils.extensions.jsonEncode
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 /** `WalletService` higher level "manager" wallet state manager. Should suffice
@@ -46,6 +47,10 @@ interface WalletService {
     fun transactionCount(network: Network): BigInt
     /** Transfer logs for ERC20 only. Always empty for native */
     fun transferLogs(currency: Currency, network: Network): List<Log>
+    /** Pending transactions for network */
+    fun pendingTransactions(network: Network): List<PendingInfo>
+    /** Pending transfer transactions */
+    fun pendingTransactions(network: Network, currency: Currency): List<PendingInfo>
 
     /** Retrieves private key from secure storage for 5 secs. */
     @Throws(Throwable::class)
@@ -58,7 +63,7 @@ interface WalletService {
         amount: BigInt,
         network: Network
     ): TransactionResponse
-    /** Call smart contract function */
+    /** Call smart contract function. */
     @Throws(Throwable::class)
     suspend fun contractSend(
         contractAddress: AddressHexString,
@@ -94,7 +99,7 @@ class DefaultWalletService(
     private val transferLogs: MutableMap<String, List<Log>> = mutableMapOf()
     private val transferLogsNonce: MutableMap<String,BigInt> = mutableMapOf()
     private var listeners: MutableSet<WalletListener> = mutableSetOf()
-    private var pending: MutableMap<String, List<TransactionResponse>> = mutableMapOf()
+    private var pending: MutableList<PendingInfo> = mutableListOf()
     private var pollingJob: Job? = null
     private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
 
@@ -153,6 +158,19 @@ class DefaultWalletService(
         return BigInt.zero()
     }
 
+    override fun pendingTransactions(network: Network): List<PendingInfo> {
+        return pending.filter { it.network.id() == network.id() }
+    }
+
+    override fun pendingTransactions(
+        network: Network,
+        currency: Currency
+    ): List<PendingInfo> = pending.filter {
+        it.network.id() == network.id()
+            && it as? PendingInfo.Transfer != null
+            && it.currency.id() == currency.id()
+    }
+
     private fun recordedTransactionCount(network: Network): BigInt? {
         networksState[transactionCountKey(network)]?.let { return it }
         networksStateCache.get<String>(transactionCountKey(network))?.let {
@@ -169,13 +187,9 @@ class DefaultWalletService(
         return listOf()
     }
 
-    private fun addPending(
-        response: TransactionResponse,
-        currency: Currency,
-        network: Network
-    ) {
-        val key = pendingKey(currency, network)
-        pending[key] = (pending[key] ?: listOf()) + listOf(response)
+    private fun addPending(info: PendingInfo) {
+        pending.add(info)
+        emit(WalletEvent.NewPendingTransaction(info))
     }
 
     override fun unlock(password: String, salt: String, network: Network) {
@@ -193,8 +207,8 @@ class DefaultWalletService(
         val wallet = networkService.wallet(network)
         val response = wallet!!.sendTransaction(request)
         withUICxt {
-            addPending(response, currency, network)
-            emit(WalletEvent.NewPendingTransaction(response.hash))
+            addPending(PendingInfo.Transfer(network, currency, to, amount, response))
+            scheduleUpdate(3.seconds)
         }
         return@withBgCxt response
     }
@@ -212,7 +226,8 @@ class DefaultWalletService(
         val wallet = networkService.wallet(network)
         val response = wallet!!.sendTransaction(request)
         withUICxt {
-            emit(WalletEvent.NewPendingTransaction(response.hash))
+            addPending(PendingInfo.Contract(network, contractAddress, response))
+            scheduleUpdate(3.seconds)
         }
         return@withBgCxt response
     }
@@ -254,7 +269,7 @@ class DefaultWalletService(
             transferLogsNonce[nonceKey] = transactionCount(network)
             transferLogsCache.set(key, jsonEncode(logs))
             transferLogsCache.set(nonceKey, jsonEncode(transactionCount(network)))
-            emit(WalletEvent.TransferLogs(currency, logs))
+            emit(WalletEvent.TransferLogs(network, currency, logs))
         }
         return@withBgCxt logs
     }
@@ -305,8 +320,11 @@ class DefaultWalletService(
         val wallets = networks().map { networkService.wallet(it) }
         val transactionCounts = networks().map { recordedTransactionCount(it) }
         val currencies = networks().map { currencies(it) }
-        val pending = pending.toMap()
+        val pendingTransactions = pending.toList()
+        val walletsMap = networks().map { it.id() to networkService.wallet(it) }
+            .toMap()
         scope.launch(logExceptionHandler) {
+            processPending(pendingTransactions, walletsMap)
             wallets.forEachIndexed { idx, wallet ->
                 if (wallet != null) {
                     blockNumber(wallet)
@@ -317,7 +335,6 @@ class DefaultWalletService(
                     )
                 }
             }
-            processPending(pending)
         }
     }
 
@@ -366,13 +383,37 @@ class DefaultWalletService(
         }
     }
 
-    private suspend fun processPending(pending: Map<String, List<TransactionResponse>>) {
-        val remaining: MutableMap<String, List<TransactionResponse>> = mutableMapOf()
-        val processed: MutableMap<String, List<TransactionReceipt>> = mutableMapOf()
-        for ((key, value) in pending) {
-            println("$key = $value")
+    private suspend fun processPending(
+        pendingTransactions: List<PendingInfo>,
+        wallets: Map<String, Wallet?>
+    ) {
+        val remaining: MutableList<PendingInfo> = mutableListOf()
+        val receipts: MutableList<ReceiptInfo> = mutableListOf()
+        for (info in pendingTransactions) {
+            val wallet = wallets[info.network.id()]
+            if (wallet != null) {
+                try {
+                    val receipt = wallet.getTransactionReceipt(info.response.hash)
+                    receipts.add(info.toReceiptInfo(receipt))
+                } catch (error: Throwable) {
+                    remaining.add(info)
+                    println("=== Receipt error")
+                }
+            } else {
+                remaining.add(info)
+            }
         }
+        withUICxt {
+            pending = remaining
+            receipts.forEach { emit(WalletEvent.TransactionReceipt(it)) }
+        }
+    }
 
+    private fun scheduleUpdate(duration: Duration) {
+        scope.launch {
+            delay(duration)
+            poll()
+        }
     }
 
     private suspend fun updateBalance(
