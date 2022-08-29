@@ -228,7 +228,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
         }
     }
     
-    func makeConfirmationSwapTokenFrom() -> ConfirmationWireframeContext.SwapContext.Token {
+    func makeConfirmationSwapTokenFrom() -> ConfirmationWireframeContext.CurrencyData {
         
         .init(
             iconName: interactor.tokenIconName(for: tokenFrom),
@@ -237,7 +237,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
         )
     }
     
-    func makeConfirmationSwapTokenTo() -> ConfirmationWireframeContext.SwapContext.Token {
+    func makeConfirmationSwapTokenTo() -> ConfirmationWireframeContext.CurrencyData {
         
         .init(
             iconName: interactor.tokenIconName(for: tokenTo),

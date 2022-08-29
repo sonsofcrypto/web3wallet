@@ -104,11 +104,9 @@ extension DefaultCultProposalsPresenter: CultProposalsPresenter {
             )
             
         case let .approveProposal(id):
-            guard let proposal = findProposal(with: id) else { return }
-            wireframe.navigate(to: .castVote(proposal: proposal, approve: true))
+            castVote(proposalId: id, approve: true)
         case let .rejectProposal(id):
-            guard let proposal = findProposal(with: id) else { return }
-            wireframe.navigate(to: .castVote(proposal: proposal, approve: false))
+            castVote(proposalId: id, approve: false)
         }
     }
 }
@@ -223,4 +221,50 @@ private extension DefaultCultProposalsPresenter {
             return nil
         }
     }
+    
+    func castVote(proposalId id: String, approve: Bool) {
+        
+        guard interactor.hasCultBalance else {
+            
+            wireframe.navigate(to: .alert(context: makeNoCultAlertContext()))
+            return
+        }
+        guard let proposal = findProposal(with: id) else { return }
+        wireframe.navigate(to: .castVote(proposal: proposal, approve: approve))
+    }
+    
+    func makeNoCultAlertContext() -> AlertContext {
+        
+        .init(
+            title: Localized("cult.proposals.alert.noCult.title"),
+            media: .image(named: "cult-dao-big-icon", size: .init(length: 100)),
+            message: Localized("cult.proposals.alert.noCult.message"),
+            actions: [
+                .init(
+                    title: Localized("cult.proposals.alert.noCult.action.getCult"),
+                    type: .primary,
+                    action: .targetAction(.init(target: self, selector: #selector(getCultTapped)))
+                ),
+                .init(
+                    title: Localized("cancel"),
+                    type: .secondary,
+                    action: nil
+                )
+            ],
+            contentHeight: 385
+        )
+    }
+    
+    @objc func getCultTapped() {
+        
+        view?.dismiss(
+            animated: true,
+            completion: { [weak self] in
+                guard let self = self else { return }
+                self.wireframe.navigate(to: .getCult)
+            }
+        )
+        
+    }
 }
+

@@ -125,7 +125,7 @@ private extension DefaultMnemonicUpdateWireframe {
                     action: onConfirm
                 ),
                 .init(
-                    title: Localized("alert.deleteWallet.action.cancel"),
+                    title: Localized("cancel"),
                     type: .secondary,
                     action: nil
                 )

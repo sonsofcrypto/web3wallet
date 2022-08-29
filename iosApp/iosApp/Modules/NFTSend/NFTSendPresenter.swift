@@ -189,7 +189,7 @@ private extension DefaultNFTSendPresenter {
     func makeConfirmationSendNFTDestination(
         from walletAddress: String,
         to address: String
-    ) -> ConfirmationWireframeContext.SendNFTContext.Destination {
+    ) -> ConfirmationWireframeContext.AddressData {
         
         .init(
             from: walletAddress,

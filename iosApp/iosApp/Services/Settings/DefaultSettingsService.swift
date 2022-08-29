@@ -329,7 +329,7 @@ private extension DefaultSettingsService {
                     action: .targetAction(.init(target: self, selector: #selector(resetKeystore)))
                 ),
                 .init(
-                    title: Localized("alert.resetKeystore.action.cancel"),
+                    title: Localized("cancel"),
                     type: .secondary,
                     action: nil
                 )

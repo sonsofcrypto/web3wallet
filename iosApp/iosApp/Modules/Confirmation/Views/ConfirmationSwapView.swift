@@ -91,6 +91,8 @@ private extension ConfirmationSwapView {
     func makeTokenView(with imageName: String) -> UIView {
         
         let image = UIImageView(image: imageName.assetImage)
+        image.layer.cornerRadius = 16
+        image.clipsToBounds = true
         
         let view = UIView()
         view.backgroundColor = .clear

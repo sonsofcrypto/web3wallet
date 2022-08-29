@@ -12,6 +12,7 @@ struct AlertContext {
     
     enum Media {
         
+        case image(named: String, size: CGSize)
         case gift(named: String, size: CGSize)
     }
 

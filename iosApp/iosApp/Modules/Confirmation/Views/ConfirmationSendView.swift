@@ -89,6 +89,8 @@ private extension ConfirmationSendView {
     func makeTokenView(with iconName: String) -> UIView {
         
         let image = UIImageView(image: iconName.assetImage)
+        image.layer.cornerRadius = 16
+        image.clipsToBounds = true
         
         let view = UIView()
         view.backgroundColor = .clear

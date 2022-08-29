@@ -53,6 +53,7 @@
 "pending" = "Pending";
 "closed" = "Closed";
 "error" = "Error";
+"cancel" = "Cancel";
 
 "error.alert.title" = "Oops! 😬";
 
@@ -180,13 +181,10 @@
 "alert.deleteWallet.title" = "⚠️ Warning ⚠️";
 "alert.deleteWallet.message" = "Are you sure you would like to delete your wallet?\n\nYou could still import again after, but make sure you have your mnemonic backed up first.";
 "alert.deleteWallet.action.confirm" = "Yes, delete wallet";
-"alert.deleteWallet.action.cancel" = "Cancel";
 
 "alert.resetKeystore.title" = "🚨🚨🚨 Warning 🚨🚨🚨";
 "alert.resetKeystore.message" = "Are you sure you would like to delete all your wallets?\n\nYou could still import them again after, but make sure you have your mnemonics backed up first.";
 "alert.resetKeystore.action.confirm" = "Yes, delete wallets";
-"alert.resetKeystore.action.cancel" = "Cancel";
-
 
 "mnemonicConfirmation.title" = "Confirm Mnemonic";
 "mnemonicConfirmation.confirm.wallet" = "Please enter the 12 word phrase you were given when you created your wallet.";
@@ -369,6 +367,9 @@
 "cult.proposals.result.audits" = "Audits";
 "cult.proposals.footer.text" = "Cult.DAO";
 "cult.proposals.error.failure.castVote" = "Failed to cast your vote.\n\nError: %@";
+"cult.proposals.alert.noCult.title" = "No CULT";
+"cult.proposals.alert.noCult.message" = "Your CULT balance is 0 for this wallet.\nYou need some CULT in order to cast your vote.";
+"cult.proposals.alert.noCult.action.getCult" = "Get CULT";
 
 "cult.proposal.title" = "Proposal";
 "cult.proposal.title.of" = "of";

@@ -119,15 +119,39 @@ private extension DefaultAlertView {
     }
     
     func makeAlertMedia(with media: AlertContext.Media?) -> [UIView] {
-        
         guard let media = media else { return [] }
-        
         switch media {
-            
+        case let .image(named, size):
+            return makeAlertImage(with: named, size: size)
         case let .gift(named, size):
-            
             return makeAlertMediaGif(with: named, size: size)
         }
+    }
+    
+    func makeAlertImage(with name: String, size: CGSize) -> [UIView] {
+        
+        let imageView = UIImageView()
+        imageView.backgroundColor = .clear
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = name.assetImage
+
+        let wrappingView = UIView()
+        wrappingView.backgroundColor = .clear
+        wrappingView.clipsToBounds = true
+        wrappingView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        wrappingView.addSubview(imageView)
+        
+        imageView.addConstraints(
+            [
+                .layout(anchor: .topAnchor),
+                .layout(anchor: .bottomAnchor),
+                .layout(anchor: .centerXAnchor),
+                .layout(anchor: .widthAnchor, constant: .equalTo(constant: size.width)),
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: size.height))
+            ]
+        )
+        
+        return [wrappingView]
     }
     
     func makeAlertMediaGif(with gifName: String, size: CGSize) -> [UIView] {

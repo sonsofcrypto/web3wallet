@@ -211,7 +211,7 @@ private extension DefaultTokenSendPresenter {
         }
     }
     
-    func makeConfirmationSendToken() -> ConfirmationWireframeContext.SendContext.Token {
+    func makeConfirmationSendToken() -> ConfirmationWireframeContext.CurrencyData {
         .init(
             iconName: interactor.tokenIconName(for: token),
             token: token,
@@ -222,7 +222,7 @@ private extension DefaultTokenSendPresenter {
     func makeConfirmationSendDestination(
         from walletAddress: String,
         to address: String
-    ) -> ConfirmationWireframeContext.SendContext.Destination {
+    ) -> ConfirmationWireframeContext.AddressData {
         .init(
             from: walletAddress,
             to: address

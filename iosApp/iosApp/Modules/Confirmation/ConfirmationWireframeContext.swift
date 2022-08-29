@@ -41,22 +41,27 @@ struct ConfirmationWireframeContext {
 
 extension ConfirmationWireframeContext {
     
+    struct CurrencyData {
+        let iconName: String
+        let token: Web3Token
+        let value: BigInt
+    }
+    
+    struct AddressData {
+        let from: String
+        let to: String
+    }
+}
+
+extension ConfirmationWireframeContext {
+    
     struct SwapContext {
-        
-        let tokenFrom: Token
-        let tokenTo: Token
+        let tokenFrom: CurrencyData
+        let tokenTo: CurrencyData
         let provider: Provider
         let estimatedFee: Web3NetworkFee
         
-        struct Token {
-            
-            let iconName: String
-            let token: Web3Token
-            let value: BigInt
-        }
-        
         struct Provider {
-            
             let iconName: String
             let name: String
             let slippage: String
@@ -64,40 +69,18 @@ extension ConfirmationWireframeContext {
     }
     
     struct SendContext {
-        
-        let token: Token
-        let destination: Destination
+        let token: CurrencyData
+        let destination: AddressData
         let estimatedFee: Web3NetworkFee
-        
-        struct Token {
-            
-            let iconName: String
-            let token: Web3Token
-            let value: BigInt
-        }
-        
-        struct Destination {
-            
-            let from: String
-            let to: String
-        }
     }
     
     struct SendNFTContext {
-        
         let nftItem: NFTItem
-        let destination: Destination
+        let destination: AddressData
         let estimatedFee: Web3NetworkFee
-                
-        struct Destination {
-            
-            let from: String
-            let to: String
-        }
     }
     
     struct CultCastVoteContext {
-        
         let cultProposal: CultProposal
         let approve: Bool
     }

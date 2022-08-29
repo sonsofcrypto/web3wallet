@@ -134,7 +134,7 @@ private extension DefaultConfirmationPresenter {
         let tokenFrom = ConfirmationViewModel.SwapViewModel.Token(
             iconName: data.tokenFrom.iconName,
             symbol: data.tokenFrom.token.symbol,
-            value: data.tokenFrom.value.formatString(decimals: data.tokenFrom.token.decimals),
+            value: data.tokenFrom.currencyFormatted + " \(data.tokenFrom.token.symbol)",
             usdValue: usdTokenFromValue
         )
 
@@ -150,7 +150,7 @@ private extension DefaultConfirmationPresenter {
         let tokenTo = ConfirmationViewModel.SwapViewModel.Token(
             iconName: data.tokenTo.iconName,
             symbol: data.tokenTo.token.symbol,
-            value: data.tokenTo.value.formatString(decimals: data.tokenFrom.token.decimals),
+            value: data.tokenTo.currencyFormatted + " \(data.tokenTo.token.symbol)",
             usdValue: usdTokenToValue
         )
         
@@ -182,32 +182,11 @@ private extension DefaultConfirmationPresenter {
         forSend data: ConfirmationWireframeContext.SendContext
     ) -> ConfirmationViewModel.Content {
         
-        var value = data.token.value.formatString(
-            type: .long(minDecimals: 10),
-            decimals: data.token.token.decimals
-        )
-        if value.nonDecimals.count > 10 {
-            value = data.token.value.formatString(
-                type: .long(minDecimals: 4),
-                decimals: data.token.token.decimals
-            )
-        } else if value.nonDecimals.count > 6 {
-            value = data.token.value.formatString(
-                type: .long(minDecimals: 5),
-                decimals: data.token.token.decimals
-            )
-        } else if value.nonDecimals.count > 3 {
-            value = data.token.value.formatString(
-                type: .long(minDecimals: 7),
-                decimals: data.token.token.decimals
-            )
-        }
-        
         let usdToken = data.token.token.usdPrice(for: data.token.value).formatStringCurrency()
         let token = ConfirmationViewModel.SendViewModel.Token(
             iconName: data.token.iconName,
             symbol: data.token.token.symbol,
-            value: value + " \(data.token.token.symbol)",
+            value: data.token.currencyFormatted + " \(data.token.token.symbol)",
             usdValue: usdToken
         )
         
@@ -480,5 +459,33 @@ private extension DefaultConfirmationPresenter {
                 }
             )
         }
+    }
+}
+
+private extension ConfirmationWireframeContext.CurrencyData {
+    
+    var currencyFormatted: String {
+        
+        var currencyFormatted = value.formatString(
+            type: .long(minDecimals: 10),
+            decimals: token.decimals
+        )
+        if currencyFormatted.nonDecimals.count > 10 {
+            currencyFormatted = value.formatString(
+                type: .long(minDecimals: 4),
+                decimals: token.decimals
+            )
+        } else if currencyFormatted.nonDecimals.count > 6 {
+            currencyFormatted = value.formatString(
+                type: .long(minDecimals: 5),
+                decimals: token.decimals
+            )
+        } else if currencyFormatted.nonDecimals.count > 3 {
+            currencyFormatted = value.formatString(
+                type: .long(minDecimals: 7),
+                decimals: token.decimals
+            )
+        }
+        return currencyFormatted
     }
 }

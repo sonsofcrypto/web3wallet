@@ -7,6 +7,7 @@ import UIKit
 protocol CultProposalsView: AnyObject {
 
     func update(with viewModel: CultProposalsViewModel)
+    func dismiss(animated flag: Bool, completion: (() -> Void)?)
 }
 
 final class CultProposalsViewController: BaseViewController {
