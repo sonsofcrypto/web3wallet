@@ -96,9 +96,7 @@ extension DefaultSettingsService: SettingsService {
                 )
             ]
             
-        case .improvement:
-            
-            return []
+        case .improvement: return []
             
         case .debug:
             
@@ -232,6 +230,7 @@ extension DefaultSettingsService: SettingsService {
                     )
                 )
             ]
+        case .feedback: return []
         }
     }
     
@@ -313,6 +312,10 @@ private extension DefaultSettingsService {
             UIApplication.shared.open(
                 "mailto:sonsofcrypto@protonmail.com".url!
             )
+            
+        case .feedbackReport:
+            let mailService: MailService = ServiceDirectory.assembler.resolve()
+            mailService.sendMail(context: .init(subject: .beta))
         }
     }
     

@@ -77,7 +77,8 @@ private extension AssemblerBootstrapper {
             ConfirmationWireframeFactoryAssembler(),
             FeaturesWireframeFactoryAssembler(),
             FeatureWireframeFactoryAssembler(),
-            ThemePickerWireframeFactoryAssembler()
+            ThemePickerWireframeFactoryAssembler(),
+            MailServiceAssembler()
         ]
     }
 }

@@ -366,6 +366,9 @@
 		1C7FC99828B7612000FC9175 /* FeatureDetailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC99728B7612000FC9175 /* FeatureDetailImageView.swift */; };
 		1C7FC99A28B7C6FF00FC9175 /* ConfirmationWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC99928B7C6FF00FC9175 /* ConfirmationWireframeFactoryAssembler.swift */; };
 		1C7FC99C28B81DFA00FC9175 /* NFTDetailView+Content+Other.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC99B28B81DFA00FC9175 /* NFTDetailView+Content+Other.swift */; };
+		1C7FC9A028BCBA9700FC9175 /* MailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC99F28BCBA9600FC9175 /* MailHelper.swift */; };
+		1C7FC9A328BCC5DE00FC9175 /* MailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9A228BCC5DD00FC9175 /* MailService.swift */; };
+		1C7FC9A528BCC5E900FC9175 /* MailServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9A428BCC5E900FC9175 /* MailServiceAssembler.swift */; };
 		1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46D92813DE4800F6C40B /* BaseViewController.swift */; };
 		1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1C9B46FA281427B800F6C40B /* under-construction.gif */; };
 		1C9E3195287580B600DD2031 /* TokenSendWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */; };
@@ -955,6 +958,9 @@
 		1C7FC99728B7612000FC9175 /* FeatureDetailImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureDetailImageView.swift; sourceTree = "<group>"; };
 		1C7FC99928B7C6FF00FC9175 /* ConfirmationWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C7FC99B28B81DFA00FC9175 /* NFTDetailView+Content+Other.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NFTDetailView+Content+Other.swift"; sourceTree = "<group>"; };
+		1C7FC99F28BCBA9600FC9175 /* MailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailHelper.swift; sourceTree = "<group>"; };
+		1C7FC9A228BCC5DD00FC9175 /* MailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailService.swift; sourceTree = "<group>"; };
+		1C7FC9A428BCC5E900FC9175 /* MailServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailServiceAssembler.swift; sourceTree = "<group>"; };
 		1C9B46D92813DE4800F6C40B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1C9B46FA281427B800F6C40B /* under-construction.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "under-construction.gif"; sourceTree = "<group>"; };
 		1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendWireframe.swift; sourceTree = "<group>"; };
@@ -1291,19 +1297,20 @@
 				1A4C35BE139AFC345B42DE7F /* Apps */,
 				1CE66BC82848EA9000AB6ACA /* Chat */,
 				D1BC5304284B5B8E007E6FF4 /* CultService */,
+				1A4C36A308B86BF401D803B6 /* CurrencyStore */,
 				1A4C3888D4FA37BEB1285C02 /* Degen */,
 				1CDED615289CF4AD00DF34A7 /* Etherscan */,
 				1C2B06542891D992002A8FBF /* Features */,
 				1C64871C2832E3B90091A12D /* Keychain */,
 				1A4C378CF260A81DDB68B039 /* KeyStore */,
+				1C7FC9A128BCC5CF00FC9175 /* Mail */,
+				1A4C3127E3A7AFFBF86C7DD3 /* Networks */,
 				1A4C35A602BDFD544714CB8F /* NFTsService */,
 				1A4C39EC4A83EE79DD0F101F /* Onboarding */,
 				1C6487102832DE380091A12D /* Reachability */,
 				1A4C30349A9657E321920184 /* Settings */,
-				1CD3FE8728559EF2008312DE /* Web3 */,
-				1A4C36A308B86BF401D803B6 /* CurrencyStore */,
-				1A4C3127E3A7AFFBF86C7DD3 /* Networks */,
 				1A4C3B1326058125DEAA66B4 /* Wallet */,
+				1CD3FE8728559EF2008312DE /* Web3 */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1948,6 +1955,7 @@
 				1CB8B0CD288FAEA800024E7C /* SceneDelegateHelper.swift */,
 				1C228AC228A0FE41005316A3 /* FeatureShareHelper.swift */,
 				1C7FC98028AFB32600FC9175 /* PasswordValidatorHelper.swift */,
+				1C7FC99F28BCBA9600FC9175 /* MailHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2078,6 +2086,15 @@
 				1C7FC98B28B60A2D00FC9175 /* ThemePickerWireframeFactoryAssembler.swift */,
 			);
 			path = ThemePicker;
+			sourceTree = "<group>";
+		};
+		1C7FC9A128BCC5CF00FC9175 /* Mail */ = {
+			isa = PBXGroup;
+			children = (
+				1C7FC9A228BCC5DD00FC9175 /* MailService.swift */,
+				1C7FC9A428BCC5E900FC9175 /* MailServiceAssembler.swift */,
+			);
+			path = Mail;
 			sourceTree = "<group>";
 		};
 		1C9B46F92814279F00F6C40B /* Resources */ = {
@@ -2939,6 +2956,7 @@
 				1C6720122885D5AF00C5F044 /* TokenSwapSlippageView.swift in Sources */,
 				1CE0064C2889E0E6002D1EB3 /* ThemeIOS.swift in Sources */,
 				1C60C2D6285724D0003BE25D /* MnemonicNewWireframeFactory.swift in Sources */,
+				1C7FC9A528BCC5E900FC9175 /* MailServiceAssembler.swift in Sources */,
 				1CB8B0D0288FB76300024E7C /* DeepLinkHandlerAssembler.swift in Sources */,
 				1C60C35B285724D1003BE25D /* DegenViewModel.swift in Sources */,
 				1CDED5DD2897011700DF34A7 /* FeatureView.swift in Sources */,
@@ -2954,6 +2972,7 @@
 				1CDED5F22897ED7800DF34A7 /* SettingsSectionHeaderViewCell.swift in Sources */,
 				1C60C2D9285724D0003BE25D /* MnemonicNewView.swift in Sources */,
 				1C60C32F285724D1003BE25D /* NFTsCollectionView+NFTs.swift in Sources */,
+				1C7FC9A328BCC5DE00FC9175 /* MailService.swift in Sources */,
 				1CB3A1F62840D6B70092D667 /* NSLocalizedString+Extension.swift in Sources */,
 				1C60C358285724D1003BE25D /* DegenView.swift in Sources */,
 				1A4C3B1D9B56685FF628A0AD /* DegenService.swift in Sources */,
@@ -3302,6 +3321,7 @@
 				1A4C3B25A582595A7B1E8EA9 /* PreferredSizePresentationController.swift in Sources */,
 				1A4C3001CAC79A77987DA8AE /* Error+Extensions.swift in Sources */,
 				1A4C30D6ED56A03136C4CA71 /* Kotlin+Extensions.swift in Sources */,
+				1C7FC9A028BCBA9700FC9175 /* MailHelper.swift in Sources */,
 				1A4C31D59C7D2B84D247FDDD /* TransformView.swift in Sources */,
 				1C7FC98328B5272500FC9175 /* ConfirmationCultCastVoteView.swift in Sources */,
 				1CB8B0C4288DD97300024E7C /* CultProposalStatus.swift in Sources */,

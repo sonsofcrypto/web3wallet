@@ -34,12 +34,12 @@ extension Setting {
         case theme = "theme"
         case improvement = "improvement"
         case debug = "debug"
-        
-        case about = "about"
-        
         case debugAPIs = "debug.apis"
         case debugAPIsNFTs = "debug.apis.nfts"
+
+        case about = "about"
         
+        case feedback = "feedback"        
     }
 
     enum ActionIdentifier: String {
@@ -62,5 +62,7 @@ extension Setting {
         case aboutTwitter = "about.twitter"
         case aboutDiscord = "about.discord"
         case aboutMail = "about.mail"
+        
+        case feedbackReport = "feedback.report"
     }
 }

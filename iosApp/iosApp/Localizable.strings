@@ -175,6 +175,10 @@
 "settings.about.contactUs" = "Contact Us";
 "settings.about.mail" = "Mail";
 
+"settings.root.feedback" = "Beta Feedback / Report Issue 🪲";
+"settings.root.feedback.subject" = "App Feedback %@";
+"settings.root.feedback.subject.beta" = "Beta %@ Feedback / Report 🪲";
+
 "alert.underConstruction.title" = "Under construction";
 "alert.underConstruction.message" = "App is under very active development and this corner is not quite ready yet. Check back soon.";
 
@@ -185,6 +189,9 @@
 "alert.resetKeystore.title" = "🚨🚨🚨 Warning 🚨🚨🚨";
 "alert.resetKeystore.message" = "Are you sure you would like to delete all your wallets?\n\nYou could still import them again after, but make sure you have your mnemonics backed up first.";
 "alert.resetKeystore.action.confirm" = "Yes, delete wallets";
+
+"alert.email.notDetected.title" = "No Email";
+"alert.email.notDetected.message" = "No email client detected for this device.";
 
 "mnemonicConfirmation.title" = "Confirm Mnemonic";
 "mnemonicConfirmation.confirm.wallet" = "Please enter the 12 word phrase you were given when you created your wallet.";

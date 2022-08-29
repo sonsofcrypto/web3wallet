@@ -134,6 +134,7 @@ private extension DefaultAlertView {
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
         imageView.image = name.assetImage
+        imageView.tintColor = Theme.colour.labelPrimary.withAlpha(0.75)
 
         let wrappingView = UIView()
         wrappingView.backgroundColor = .clear

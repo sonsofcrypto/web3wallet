@@ -57,6 +57,19 @@ struct SettingsWireframeContext {
                         )
                     ],
                     footer: nil
+                ),
+                .init(
+                    title: nil,
+                    items: [
+                        .init(
+                            title: Localized("settings.root.feedback"),
+                            type: .item(
+                                item: .feedback,
+                                action: .feedbackReport
+                            )
+                        )
+                    ],
+                    footer: nil
                 )
             ]
         )
