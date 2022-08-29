@@ -25,6 +25,7 @@ struct AccountInteractorTransaction {
     let address: String
     let amount: String
     let isReceive: Bool
+    let txHash: String
 }
 
 final class DefaultAccountInteractor {
@@ -164,7 +165,8 @@ extension DefaultAccountInteractor: AccountInteractor {
                         currency: currency(),
                         style: .long(minDecimals: 8)
                     ),
-                    isReceive: isReceive
+                    isReceive: isReceive,
+                    txHash: $0.hash
                 )
         }
     }
@@ -190,7 +192,8 @@ extension DefaultAccountInteractor: AccountInteractor {
                     currency: currency(),
                     style: .long(minDecimals: 8)
                 ),
-                isReceive: isReceive
+                isReceive: isReceive,
+                txHash: $0.transactionHash
             )
         }.compactMap { $0 }
     }

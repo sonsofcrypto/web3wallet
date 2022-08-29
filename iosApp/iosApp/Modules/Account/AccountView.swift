@@ -200,9 +200,13 @@ extension AccountViewController: UICollectionViewDelegate {
         }
         
         if section == .address {
-            
             UIPasteboard.general.string = viewModel.address.address
             return view.presentToastAlert(with: Localized("account.action.copy.toast"))
+        }
+        
+        if section == .transactions {
+            guard let txHash = viewModel.transactions[indexPath.item].data?.txHash else { return }
+            return EtherscanHelper().view(txHash: txHash, presentingIn: self)
         }
         
         if section == .marketInfo && indexPath.item == 1 {

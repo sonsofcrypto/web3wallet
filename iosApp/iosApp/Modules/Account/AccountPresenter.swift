@@ -147,7 +147,8 @@ private extension DefaultAccountPresenter {
                     for: interactor.network
                 ),
                 amount: transaction.amount,
-                isReceive: transaction.isReceive
+                isReceive: transaction.isReceive,
+                txHash: transaction.txHash
             )
         )
     }

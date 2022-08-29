@@ -69,6 +69,7 @@ extension AccountViewModel {
             let address: String
             let amount: String
             let isReceive: Bool
+            let txHash: String
         }
         
         var empty: String? {

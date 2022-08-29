@@ -9,6 +9,7 @@ final class AccountTransactionCell: CollectionViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var chevronView: UIImageView!
 
     override func awakeFromNib() {
         
@@ -18,6 +19,8 @@ final class AccountTransactionCell: CollectionViewCell {
         addressLabel.apply(style: .callout)
         addressLabel.textColor = Theme.colour.labelSecondary
         amountLabel.apply(style: .subheadline)
+        chevronView.tintColor = Theme.colour.labelSecondary
+        chevronView.image = .init(systemName: "chevron.right")
         layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
     }
     

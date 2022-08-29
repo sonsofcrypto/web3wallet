@@ -330,8 +330,12 @@
                                                                 </label>
                                                             </subviews>
                                                         </stackView>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="arrow_cell_forward" translatesAutoresizingMaskIntoConstraints="NO" id="8MG-GT-vQY">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="8MG-GT-vQY">
                                                             <rect key="frame" x="310" y="0.0" width="9" height="48"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="12" id="TQo-t4-PAp"/>
+                                                                <constraint firstAttribute="height" constant="12" id="eci-83-8Tb"/>
+                                                            </constraints>
                                                         </imageView>
                                                     </subviews>
                                                 </stackView>
@@ -501,7 +505,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="arrow_cell_forward" width="9" height="15"/>
         <image name="button:BRV-5u-nlb:image" width="35" height="35">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMSAAGGoF8QD05T
@@ -1913,6 +1916,7 @@ AAE19wABNfwAATYCAAE2CgABNgwAATYOAAE2EAABNhIAAUeyAAFHtwABR8QAAUfHAAFH1AABR9kAAUfh
 AAFH5AABR+kAAUfxAAAAAAAABAEAAAAAAAAAaAAAAAAAAAAAAAAAAAABR/Q
 </mutableData>
         </image>
+        <image name="chevron.right" catalog="system" width="96" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
