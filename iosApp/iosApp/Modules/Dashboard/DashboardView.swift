@@ -37,6 +37,10 @@ final class DashboardViewController: BaseViewController {
         super.viewWillLayoutSubviews()
         backgroundView.frame = view.bounds
     }
+    
+    deinit {
+        presenter.releaseResources()
+    }
 }
 
 extension DashboardViewController: DashboardView {

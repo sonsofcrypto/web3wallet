@@ -65,7 +65,7 @@ class FiatFormatter {
 
     func string(_ amount: Float?) -> String {
         guard let amount = amount else { return placeholder }
-        return fiat.string(from: amount)
+        return fiat.string(from: amount).cleanUSCurency
     }
 
     func string(_ amount: Double?) -> String {
@@ -76,6 +76,13 @@ class FiatFormatter {
     func string(_ amount: KotlinDouble?) -> String {
         guard let amount = amount?.floatValue else { return placeholder }
         return string(amount)
+    }
+}
+
+private extension String {
+    // TODO: Review this to work for other currencies
+    var cleanUSCurency: String {
+        replacingOccurrences(of: "US", with: "")
     }
 }
 

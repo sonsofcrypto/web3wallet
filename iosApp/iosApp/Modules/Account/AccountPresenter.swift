@@ -44,10 +44,6 @@ extension DefaultAccountPresenter: AccountPresenter {
         interactor.fetchTransactions{ [weak self] _ in  self?.updateView() }
     }
 
-    func updateView() {
-        view?.update(with: viewModel())
-    }
-
     func handle(_ event: AccountPresenterEvent) {
         switch event {
         case .receive:
@@ -65,6 +61,10 @@ extension DefaultAccountPresenter: AccountPresenter {
 }
 
 private extension DefaultAccountPresenter {
+    
+    func updateView() {
+        view?.update(with: viewModel())
+    }
 
     func viewModel() -> AccountViewModel {
         let currency = interactor.currency()
@@ -151,5 +151,12 @@ private extension DefaultAccountPresenter {
                 txHash: transaction.txHash
             )
         )
+    }
+}
+
+extension DefaultAccountPresenter: Web3ServiceWalletListener {
+    
+    func notificationsChanged() {
+        updateView()
     }
 }

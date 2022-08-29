@@ -26,6 +26,7 @@ enum DashboardPresenterEvent {
 protocol DashboardPresenter: AnyObject {
     func present()
     func handle(_ event: DashboardPresenterEvent)
+    func releaseResources()
 }
 
 final class DefaultDashboardPresenter {
@@ -53,12 +54,11 @@ final class DefaultDashboardPresenter {
         self.web3ServiceLegacy = web3ServiceLegacy
 
         interactor.addListener(self)
-//        web3ServiceLegacy.addWalletListener(self)
+        web3ServiceLegacy.addWalletListener(self)
     }
 
     deinit {
         interactor.removeListener(self)
-        //web3ServiceLegacy.removeWalletListener(self)
     }
 }
 
@@ -147,6 +147,11 @@ extension DefaultDashboardPresenter: DashboardPresenter {
         default:
             print("Handle \(event)")
         }
+    }
+    
+    func releaseResources() {
+        
+        web3ServiceLegacy.removeWalletListener(self)
     }
 }
 
