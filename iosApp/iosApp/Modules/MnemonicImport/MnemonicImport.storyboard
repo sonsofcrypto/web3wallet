@@ -375,6 +375,7 @@
                     <connections>
                         <outlet property="collectionView" destination="RC7-Mo-ain" id="SRO-Vn-vpA"/>
                         <outlet property="ctaButton" destination="Qaj-TS-eJX" id="RtR-Qa-d0H"/>
+                        <outlet property="ctaButtonBottomConstraint" destination="OOC-HA-z3t" id="De9-HB-K9w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cQx-oo-5Mw" sceneMemberID="firstResponder"/>

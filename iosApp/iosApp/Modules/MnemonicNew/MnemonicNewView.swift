@@ -19,6 +19,7 @@ final class MnemonicNewViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var ctaButton: Button!
+    @IBOutlet weak var ctaButtonBottomConstraint: NSLayoutConstraint!
     
     deinit {
         
@@ -362,6 +363,11 @@ private extension MnemonicNewViewController {
         )
         
         ctaButton.style = .primary
+        
+        let helper = SceneDelegateHelper()
+        ctaButtonBottomConstraint.constant = helper.window?.safeAreaInsets.bottom == 0
+        ? -Theme.constant.padding
+        : 0
     }
     
     @objc func showKeyboard(notification: Notification) {

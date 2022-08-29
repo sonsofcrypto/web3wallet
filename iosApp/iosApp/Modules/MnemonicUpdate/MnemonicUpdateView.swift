@@ -19,6 +19,7 @@ final class MnemonicUpdateViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var ctaButton: Button!
+    @IBOutlet weak var ctaButtonBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -312,6 +313,11 @@ private extension MnemonicUpdateViewController {
         )
         
         ctaButton.style = .primary
+        
+        let helper = SceneDelegateHelper()
+        ctaButtonBottomConstraint.constant = helper.window?.safeAreaInsets.bottom == 0
+        ? -Theme.constant.padding
+        : 0
     }
 
     func needsReload(_ preViewModel: MnemonicUpdateViewModel?, viewModel: MnemonicUpdateViewModel) -> Bool {
