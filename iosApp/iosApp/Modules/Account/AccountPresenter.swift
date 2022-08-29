@@ -59,10 +59,7 @@ extension DefaultAccountPresenter: AccountPresenter {
         case .more:
             wireframe.navigate(to: .more)
         case .pullDownToRefresh:
-            // TODO: @Annon to plug in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                self?.updateView()
-            }
+            interactor.fetchTransactions{ [weak self] _ in  self?.updateView() }
         }
     }
 }

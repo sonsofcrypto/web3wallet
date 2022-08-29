@@ -35,6 +35,7 @@ protocol DashboardInteractor: AnyObject {
     func notifications() -> [Web3Notification]
 
     func reloadData()
+    func reloadBalances()
     func addListener(_ listener: DashboardInteractorLister)
     func removeListener(_ listener: DashboardInteractorLister)
 }
@@ -143,6 +144,9 @@ extension DefaultDashboardInteractor: DashboardInteractor {
         return total
     }
 
+    func reloadBalances() {
+        walletService.reloadAllBalances()
+    }
 
     func reloadData() {
         let allCurrencies = walletService.networks()

@@ -74,9 +74,12 @@ interface WalletService {
     @Throws(Throwable::class)
     suspend fun fetchTransferLogs(currency: Currency, network: Network): List<Log>
 
+    /** Reload all balances */
+    fun reloadAllBalances()
+
     /** Begins polling networks events */
     fun startPolling()
-    /** Pauses pooling of network events */
+    /** Pauses polling of network events */
     fun pausePolling()
 
     /** Add listener for `WalletEvent`s */
@@ -100,6 +103,7 @@ class DefaultWalletService(
     private val transferLogsNonce: MutableMap<String,BigInt> = mutableMapOf()
     private var listeners: MutableSet<WalletListener> = mutableSetOf()
     private var pending: MutableList<PendingInfo> = mutableListOf()
+    private var didReloadOnLastBlock: Boolean = false
     private var pollingJob: Job? = null
     private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
 
@@ -323,6 +327,8 @@ class DefaultWalletService(
         val pendingTransactions = pending.toList()
         val walletsMap = networks().map { it.id() to networkService.wallet(it) }
             .toMap()
+        val force = !didReloadOnLastBlock
+        didReloadOnLastBlock = !didReloadOnLastBlock
         scope.launch(logExceptionHandler) {
             processPending(pendingTransactions, walletsMap)
             wallets.forEachIndexed { idx, wallet ->
@@ -331,7 +337,8 @@ class DefaultWalletService(
                     transactionCountAndBalance(
                         wallet,
                         transactionCounts[idx],
-                        currencies[idx]
+                        currencies[idx],
+                        force
                     )
                 }
             }
@@ -351,13 +358,14 @@ class DefaultWalletService(
     private suspend fun transactionCountAndBalance(
         wallet: Wallet,
         transactionCount: BigInt?,
-        currencies: List<Currency>
+        currencies: List<Currency>,
+        force: Boolean = false
     ) {
         val newTransactionCount = wallet.getTransactionCount(
             wallet.address(),
             BlockTag.Latest
         )
-        if (transactionCount != null && transactionCount == newTransactionCount)
+        if (!force && transactionCount != null && transactionCount == newTransactionCount)
             return
         // TODO: Get transaction from nonce and only update IRC20s in transaction
         currencies.forEach { currency ->
@@ -379,6 +387,26 @@ class DefaultWalletService(
                     updateBalance(wallet, currency, balance, newTransactionCount)
                 }
                 else -> { println("Unhandled balance") }
+            }
+        }
+    }
+
+    override fun reloadAllBalances() {
+        val wallets = networks().map { networkService.wallet(it) }
+        val transactionCounts = networks().map { recordedTransactionCount(it) }
+        val currencies = networks().map { currencies(it) }
+        didReloadOnLastBlock = true
+        scope.launch(logExceptionHandler) {
+            wallets.forEachIndexed { idx, wallet ->
+                if (wallet != null) {
+                    blockNumber(wallet)
+                    transactionCountAndBalance(
+                        wallet,
+                        transactionCounts[idx],
+                        currencies[idx],
+                        true
+                    )
+                }
             }
         }
     }

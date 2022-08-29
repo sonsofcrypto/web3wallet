@@ -138,10 +138,11 @@ extension DefaultDashboardPresenter: DashboardPresenter {
         case .didTapDismissNotification:
             break
         case .pullDownToRefresh:
-            // TODO: @Annon to plug in
+            // Currencies balance & reload market data
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
                 self?.updateView()
             }
+
 
         default:
             print("Handle \(event)")
