@@ -105,6 +105,7 @@
 "account.marketInfo.transactions" = "Transactions";
 "account.marketInfo.transactions.empty" = "No transactions";
 "account.marketInfo.transactions.loading" = "Fetching latest transactions\nThis may take a few minutes...";
+"account.action.copy.toast" = "Address copied to your clipboard";
 
 "keyStore.newMnemonic" = "Create new wallet";
 "keyStore.importMnemonic" = "Import wallet";

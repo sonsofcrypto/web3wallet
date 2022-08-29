@@ -95,8 +95,8 @@ private extension MnemonicConfirmationViewController {
         
         title = Localized("mnemonicConfirmation.title")
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: Localized("close"),
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: .init(systemName: "xmark"),
             style: .plain,
             target: self,
             action: #selector(dismissTapped)

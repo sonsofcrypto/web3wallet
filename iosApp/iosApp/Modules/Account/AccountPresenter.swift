@@ -87,6 +87,10 @@ private extension DefaultAccountPresenter {
                 pctUp: market?.priceChangePercentage24h?.doubleValue ?? 0 >= 0,
                 buttons: headerButtonViewModels()
             ),
+            address: .init(
+                address: interactor.address(),
+                copyIcon: "square.on.square"
+            ),
             candles: .loaded(
                 CandlesViewModel.Candle.from(interactor.candles()?.last(n: 90))
             ),

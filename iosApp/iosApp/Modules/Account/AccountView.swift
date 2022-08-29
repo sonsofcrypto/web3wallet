@@ -64,6 +64,10 @@ extension AccountViewController: UICollectionViewDataSource {
             let cell = collectionView.dequeue(AccountHeaderCell.self, for: indexPath)
             cell.update(with: viewModel.header, handler: makeHeaderHandler())
             return cell
+        case .address:
+            let cell = collectionView.dequeue(AccountAddressCell.self, for: indexPath)
+            cell.update(with: viewModel.address)
+            return cell
         case .chart:
             let cell = collectionView.dequeue(AccountChartCell.self, for: indexPath)
             cell.update(with: viewModel.candles)
@@ -144,6 +148,8 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
         switch section {
         case .header:
             return CGSize(width: width, height: Constant.headerHeight)
+        case .address:
+            return CGSize(width: width, height: Constant.addressHeight)
         case .chart:
             return CGSize(width: width, height: Constant.chartHeight)
         case .marketInfo:
@@ -190,7 +196,13 @@ extension AccountViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let section = Section(rawValue: indexPath.section) else {
-            return;
+            return
+        }
+        
+        if section == .address {
+            
+            UIPasteboard.general.string = viewModel.address.address
+            return view.presentToastAlert(with: Localized("account.action.copy.toast"))
         }
         
         if section == .marketInfo && indexPath.item == 1 {
@@ -209,6 +221,7 @@ extension AccountViewController {
     
     enum Section: Int {
         case header = 0
+        case address
         case chart
         case marketInfo
         case transactions
@@ -226,7 +239,7 @@ extension AccountViewController {
         }
         
         static func all() -> [Section] {
-            [.header, .chart, marketInfo, transactions]
+            [.header, .address, .chart, marketInfo, transactions]
         }
     }
 }
@@ -306,6 +319,7 @@ extension AccountViewController {
     
     enum Constant {
         static let headerHeight: CGFloat = 144
+        static let addressHeight: CGFloat = 71
         static let chartHeight: CGFloat = 162
         static let marketInfoHeight: CGFloat = 71
         static let transactionsHeight: CGFloat = 72

@@ -137,7 +137,7 @@ private extension TokenSendViewController {
         } else {
             
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                title: Localized("close"),
+                image: .init(systemName: "xmark"),
                 style: .plain,
                 target: self,
                 action: #selector(navBarLeftActionTapped)

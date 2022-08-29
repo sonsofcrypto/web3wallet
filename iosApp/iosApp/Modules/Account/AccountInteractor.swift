@@ -59,6 +59,7 @@ final class DefaultAccountInteractor {
 extension DefaultAccountInteractor: AccountInteractor {
 
     func address() -> String {
+        // TODO: Review this if correct Annon, should not this be currency.address and if nil this?
         walletService.address(network: network) ?? ""
     }
 
@@ -116,26 +117,31 @@ extension DefaultAccountInteractor: AccountInteractor {
         loadingTransactions = true
 
         guard currency().type != .erc20 else {
-            walletService.fetchTransferLogs(
+            return walletService.fetchTransferLogs(
                 currency: currency(),
                 network: network,
-                completionHandler: { [weak self] logs, error in
-                    print(error)
-                    DispatchQueue.main.async { self?.loadingTransactions = false }
-                    handler(self?.toTransactions(from: logs ?? []) ?? [])
+                completionHandler: { logs, error in
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        if let error = error { print(error) }
+                        self.loadingTransactions = false
+                        handler(self.toTransactions(from: logs ?? []))
+                    }
                 }
             )
-            return
         }
 
-        transactionService.fetchTransactionHistory(for: address, network: network) { [weak self] result in
-            switch result {
-            case let .success(transactions):
-                DispatchQueue.main.async { self?.loadingTransactions = false }
-                handler(self?.toTransactions(from: transactions) ?? [])
-            case let .failure(error):
-                print(error)
-                handler([])
+        transactionService.fetchTransactionHistory(for: address, network: network) { result in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.loadingTransactions = false
+                switch result {
+                case let .success(transactions):
+                    handler(self.toTransactions(from: transactions))
+                case let .failure(error):
+                    print(error)
+                    handler([])
+                }
             }
         }
     }
@@ -152,7 +158,7 @@ extension DefaultAccountInteractor: AccountInteractor {
                     blockNumber: $0.blockNumber,
                     address: isReceive ? $0.from : $0.to,
                     amount: Formatter.currency.string(
-                        BigInt.fromString($0.value, decimals: 10),
+                        BigInt.fromString($0.value, decimals: 0),
                         currency: currency(),
                         style: .long(minDecimals: 8)
                     ),

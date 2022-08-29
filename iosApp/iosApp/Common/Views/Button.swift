@@ -37,6 +37,8 @@ class Button: UIButton {
             size.height = Theme.constant.buttonSecondarySmallHeight
         case .dashboardAction:
             size.height = Theme.constant.buttonDashboardActionHeight
+        case .accountAction:
+            break
         }
         
         return size
@@ -50,6 +52,7 @@ extension Button {
         case secondary
         case secondarySmall(leftImage: UIImage?)
         case dashboardAction(leftImage: UIImage?)
+        case accountAction
         
         enum PrimaryAction {
             
@@ -110,6 +113,10 @@ private extension Button {
         case let .dashboardAction(leftImage):
             updateSecondaryStyle(leftImage: leftImage)
             layer.cornerRadius = Theme.constant.buttonDashboardActionHeight.half
+        case .accountAction:
+            backgroundColor = Theme.colour.cellBackground
+            tintColor = Theme.colour.labelPrimary
+            imageView?.tintColor = Theme.colour.labelPrimary
         }
         invalidateIntrinsicContentSize()
     }
@@ -151,9 +158,13 @@ final class VerticalButton: Button {
         didSet { super.style = style }
     }
 
-
     override var intrinsicContentSize: CGSize {
         super.intrinsicContentSize.sizeWithHeight(52)
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        style = .accountAction
     }
 
     override func layoutSubviews() {
@@ -163,8 +174,6 @@ final class VerticalButton: Button {
             return
         }
         
-        backgroundColor = Theme.colour.labelTertiary
-
         imageView.center.x = bounds.width / 2
         imageView.center.y = bounds.height * 0.3333
         imageView.contentMode = .center

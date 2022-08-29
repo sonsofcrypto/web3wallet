@@ -212,7 +212,7 @@
                                             <outlet property="volumeValueLabel" destination="6pJ-Jc-fDt" id="gom-X2-8nB"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="AccountBonusCell" reuseIdentifier="AccountBonusCell" id="cZn-or-oHc" userLabel="AcocuntBonusCell" customClass="AccountBonusCell" customModule="iosApp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="AccountAddressCell" reuseIdentifier="AccountAddressCell" id="cZn-or-oHc" customClass="AccountAddressCell" customModule="iosApp" customModuleProvider="target">
                                         <rect key="frame" x="35.5" y="465" width="343" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="B4b-Oh-0ZP">
@@ -222,29 +222,63 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="w7c-or-1OB">
                                                     <rect key="frame" x="16" y="0.0" width="311" height="64"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="1" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Kg-Gn-0Lf">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="1" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Kg-Gn-0Lf">
                                                             <rect key="frame" x="0.0" y="22" width="286" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="500" verticalHuggingPriority="500" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="arrow_cell_forward" translatesAutoresizingMaskIntoConstraints="NO" id="YPe-sg-Ew9">
-                                                            <rect key="frame" x="302" y="24.5" width="9" height="15"/>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="500" verticalHuggingPriority="500" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" image="square.on.square" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="YPe-sg-Ew9">
+                                                            <rect key="frame" x="302" y="24.5" width="16" height="16"/>
                                                         </imageView>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="w7c-or-1OB" secondAttribute="trailing" constant="16" id="Any-TT-MjV"/>
-                                                <constraint firstItem="w7c-or-1OB" firstAttribute="leading" secondItem="B4b-Oh-0ZP" secondAttribute="leading" constant="16" id="BUm-5X-uwY"/>
+                                                <constraint firstItem="w7c-or-1OB" firstAttribute="centerX" secondItem="B4b-Oh-0ZP" secondAttribute="centerX" id="Ga2-jt-cDQ"/>
                                                 <constraint firstItem="w7c-or-1OB" firstAttribute="top" secondItem="B4b-Oh-0ZP" secondAttribute="top" id="VJU-UE-qOf"/>
                                                 <constraint firstAttribute="bottom" secondItem="w7c-or-1OB" secondAttribute="bottom" id="fwb-cy-aaD"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="343" height="64"/>
                                         <connections>
-                                            <outlet property="chevronImage" destination="YPe-sg-Ew9" id="FqK-Ik-9fn"/>
+                                            <outlet property="copyImage" destination="YPe-sg-Ew9" id="tJj-uB-ai9"/>
                                             <outlet property="titleLabel" destination="3Kg-Gn-0Lf" id="gDb-E3-vpv"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="AccountBonusCell" reuseIdentifier="AccountBonusCell" id="Yhw-PU-5e1" userLabel="AcocuntBonusCell" customClass="AccountBonusCell" customModule="iosApp" customModuleProvider="target">
+                                        <rect key="frame" x="35.5" y="465" width="343" height="64"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Dv6-lP-YS1">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="64"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="fNu-VE-4LZ">
+                                                    <rect key="frame" x="16" y="0.0" width="311" height="64"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="1" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aXh-N9-qTA">
+                                                            <rect key="frame" x="0.0" y="22" width="286" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="500" verticalHuggingPriority="500" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="arrow_cell_forward" translatesAutoresizingMaskIntoConstraints="NO" id="RaJ-kj-7bz">
+                                                            <rect key="frame" x="302" y="24.5" width="9" height="15"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="fNu-VE-4LZ" secondAttribute="trailing" constant="16" id="4j7-An-50L"/>
+                                                <constraint firstItem="fNu-VE-4LZ" firstAttribute="leading" secondItem="Dv6-lP-YS1" secondAttribute="leading" constant="16" id="lQg-Hh-eD1"/>
+                                                <constraint firstAttribute="bottom" secondItem="fNu-VE-4LZ" secondAttribute="bottom" id="o2P-Ic-qWY"/>
+                                                <constraint firstItem="fNu-VE-4LZ" firstAttribute="top" secondItem="Dv6-lP-YS1" secondAttribute="top" id="rBU-ge-QHS"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="343" height="64"/>
+                                        <connections>
+                                            <outlet property="chevronImage" destination="RaJ-kj-7bz" id="ZXm-A1-TNJ"/>
+                                            <outlet property="titleLabel" destination="aXh-N9-qTA" id="Al0-Ar-nwb"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AccountTransactionCell" id="tUn-dI-zOn" customClass="AccountTransactionCell" customModule="iosApp" customModuleProvider="target">
@@ -409,6 +443,7 @@
     </scenes>
     <resources>
         <image name="arrow_cell_forward" width="9" height="15"/>
+        <image name="square.on.square" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

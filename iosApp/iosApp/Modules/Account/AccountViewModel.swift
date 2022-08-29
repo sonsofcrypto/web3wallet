@@ -8,6 +8,7 @@ struct AccountViewModel {
 
     let currencyName: String
     let header: AccountViewModel.Header
+    let address: AddressViewModel
     let candles: CandlesViewModel
     let marketInfo: AccountViewModel.MarketInfo
     let bonusAction: AccountViewModel.BonusAction?
@@ -28,6 +29,14 @@ extension AccountViewModel {
             let title: String
             let imageName: String
         }
+    }
+}
+
+extension AccountViewModel {
+
+    struct AddressViewModel {
+        let address: String
+        let copyIcon: String
     }
 }
 

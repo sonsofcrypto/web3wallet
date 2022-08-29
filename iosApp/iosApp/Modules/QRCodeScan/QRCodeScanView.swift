@@ -101,7 +101,7 @@ private extension QRCodeScanViewController {
         guard showBackButton else {
             
             return UIBarButtonItem(
-                title: Localized("close"),
+                image: .init(systemName: "xmark"),
                 style: .plain,
                 target: self,
                 action: #selector(closeTapped)
