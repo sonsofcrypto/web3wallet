@@ -30,12 +30,13 @@ protocol MailService {
 
 final class DefaultMailService: NSObject, MailService {
     func sendMail(context: MailContext) {
-        guard !MFMailComposeViewController.canSendMail() else {
+        guard MFMailComposeViewController.canSendMail() else {
             showAlertNoEmailDetected()
             return
         }
         let mail = MFMailComposeViewController()
         mail.mailComposeDelegate = self
+        mail.setToRecipients(["sonsofcrypto@proponmail.com"])
         mail.setSubject(context.subject.string)
         presentingIn?.present(mail, animated: true)
     }
