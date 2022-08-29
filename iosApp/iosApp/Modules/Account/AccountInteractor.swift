@@ -36,6 +36,8 @@ final class DefaultAccountInteractor {
     private let walletService: WalletService
     private let transactionService: EtherscanService
 
+    private(set) var loadingTransactions: Bool = false
+
     init(
         wallet: Wallet,
         currency: Currency,
@@ -59,18 +61,7 @@ extension DefaultAccountInteractor: AccountInteractor {
     func address() -> String {
         walletService.address(network: network) ?? ""
     }
-    
-    var loadingTransactions: Bool {
-        
-        // TODO: Annon to update the logic here
-        // We need to return the state the wallet is in at this point, either fetching or not
-        // and when we finish fetching, we need to register for wallet updates so we can tell
-        // the presenter to refresh (which will call this method and since this will be false
-        // will hide the loading cell
-        // NOTE: Leaving this as false so everything works as up until now
-        return false
-    }
-    
+
     func currency() -> Currency {
         self._currency
     }
@@ -121,12 +112,16 @@ extension DefaultAccountInteractor: AccountInteractor {
 
     func fetchTransactions(_ handler: @escaping ([AccountInteractorTransaction]) -> ()) {
         guard let address = walletService.address(network: network) else { return }
+
+        loadingTransactions = true
+
         guard currency().type != .erc20 else {
             walletService.fetchTransferLogs(
                 currency: currency(),
                 network: network,
                 completionHandler: { [weak self] logs, error in
                     print(error)
+                    DispatchQueue.main.async { self?.loadingTransactions = false }
                     handler(self?.toTransactions(from: logs ?? []) ?? [])
                 }
             )
@@ -136,6 +131,7 @@ extension DefaultAccountInteractor: AccountInteractor {
         transactionService.fetchTransactionHistory(for: address, network: network) { [weak self] result in
             switch result {
             case let .success(transactions):
+                DispatchQueue.main.async { self?.loadingTransactions = false }
                 handler(self?.toTransactions(from: transactions) ?? [])
             case let .failure(error):
                 print(error)
