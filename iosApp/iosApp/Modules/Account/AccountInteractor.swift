@@ -133,8 +133,12 @@ extension DefaultAccountInteractor: AccountInteractor {
 
         transactionService.fetchTransactionHistory(for: address, network: network) { result in
             DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
+                guard let self = self else {
+                    return
+                }
+
                 self.loadingTransactions = false
+
                 switch result {
                 case let .success(transactions):
                     handler(self.toTransactions(from: transactions))
