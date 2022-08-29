@@ -28,6 +28,7 @@ extension KeyStoreViewModel {
     struct KeyStoreItem {
         
         let title: String
+        let address: String?
     }
 }
 

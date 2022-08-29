@@ -8,6 +8,7 @@ final class KeyStoreCell: CollectionViewCell {
     
     @IBOutlet weak var indexImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var accessoryButton: UIButton!
     @IBOutlet weak var arrowForward: UIImageView!
     
@@ -16,9 +17,10 @@ final class KeyStoreCell: CollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
                 
-        titleLabel.font = Theme.font.title3
-        titleLabel.textColor = Theme.colour.labelPrimary
-
+        titleLabel.apply(style: .title3)
+        
+        subtitleLabel.apply(style: .footnote)
+        subtitleLabel.textColor = Theme.colour.labelSecondary
 
         accessoryButton.addTarget(
             self,
@@ -56,6 +58,8 @@ extension KeyStoreCell {
 
         indexImage.image = image.applyingSymbolConfiguration(config)
         titleLabel.text = viewModel?.title
+        subtitleLabel.text = viewModel?.address
+        subtitleLabel.isHidden = viewModel?.address?.isEmpty ?? true
         return self
     }
 }

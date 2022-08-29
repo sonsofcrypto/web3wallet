@@ -180,11 +180,15 @@ private extension DefaultKeyStorePresenter {
 
     func viewModel(_ state: KeyStoreViewModel.State = .loaded) -> KeyStoreViewModel {
         
-        .init(
+        
+        return .init(
             isEmpty: interactor.items.isEmpty,
             state: state,
             items: interactor.items.map {
-                KeyStoreViewModel.KeyStoreItem(title: $0.name)
+                KeyStoreViewModel.KeyStoreItem(
+                    title: $0.name,
+                    address: $0.addressFormatted
+                )
             },
             selectedIdxs: [
                 makeSelectedIdxs()
@@ -232,4 +236,18 @@ private extension Array where Element == KeyStoreItem {
         
         firstIndex(where: { $0.uuid == keyStoreItem?.uuid })
     }
+}
+
+private extension KeyStoreItem {
+    
+    var addressFormatted: String? {
+        guard let address = addresses[derivationPath] else { return nil }
+        return Formatter.address.string(
+            address,
+            digits: 10,
+            for: .ethereum()
+        )
+        
+    }
+    
 }
