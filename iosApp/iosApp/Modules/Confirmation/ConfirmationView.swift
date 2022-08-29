@@ -7,6 +7,7 @@ import UIKit
 protocol ConfirmationView: AnyObject {
 
     func update(with viewModel: ConfirmationViewModel)
+    func dismiss(animated flag: Bool, completion: (() -> Void)?)
 }
 
 final class ConfirmationViewController: BaseViewController {

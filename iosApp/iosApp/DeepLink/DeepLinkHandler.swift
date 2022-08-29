@@ -115,6 +115,7 @@ extension DefaultDeepLinkHandler: DeepLinkHandler {
                 self.nftsDashboardNavController?.popToRootViewController(animated: true)
                 
             case let .account(token):
+                if self.isAccountPresented { return }
                 self.navigate(to: .dashboard)
                 self.dashboardNavController?.popToRootViewController(animated: true)
                 self.openAccount(with: token, after: 0.3)
@@ -127,13 +128,18 @@ extension DefaultDeepLinkHandler: DeepLinkHandler {
 
 private extension DefaultDeepLinkHandler {
     
+    var isAccountPresented: Bool {
+        guard let presentedVC = dashboardNavController?.presentedViewController else { return false }
+        guard let navController = presentedVC as? NavigationController else { return false }
+        return navController.topViewController is AccountViewController
+    }
+    
     func dismissAnyModals(
         completion: @escaping (() -> Void)
     ) {
         
         guard let rootVC = SceneDelegateHelper().rootVC else {
-            completion()
-            return
+            return completion()
         }
         
         dismissPresentedVCs(
@@ -150,13 +156,11 @@ private extension DefaultDeepLinkHandler {
     ) {
         
         if let presentedVC = viewController?.presentedViewController {
-            
-            dismissPresentedVCs(for: presentedVC, completion: completion)
+            return dismissPresentedVCs(for: presentedVC, completion: completion)
         }
         
         guard let viewController = viewController else {
-            completion()
-            return
+            return completion()
         }
 
         viewController.dismiss(animated: animated, completion: completion)

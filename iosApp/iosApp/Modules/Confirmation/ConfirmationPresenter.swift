@@ -58,22 +58,19 @@ extension DefaultConfirmationPresenter: ConfirmationPresenter {
         switch event {
             
         case .confirm:
-            
             switch context.type {
-                
             case .send, .sendNFT, .cultCastVote:
-                
                 wireframe.navigate(to: .authenticate(makeAuthenticateContext()))
-                                
             case .swap:
-                
                 wireframe.navigate(to: .underConstruction)
             }
             
         case .txSuccessCTATapped:
             switch context.type {
             case .send:
-                wireframe.navigate(to: .account)
+                view?.dismiss(animated: true) { [weak self] in
+                    self?.wireframe.navigate(to: .account)
+                }
             case .sendNFT:
                 wireframe.navigate(to: .nftsDashboard)
             case .cultCastVote:
@@ -83,11 +80,9 @@ extension DefaultConfirmationPresenter: ConfirmationPresenter {
             }
 
         case .txFailedCTATapped:
-            
             wireframe.dismiss()
 
         case .dismiss:
-            
             wireframe.dismiss()
         }
     }
