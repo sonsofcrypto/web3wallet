@@ -47,6 +47,7 @@ final class DefaultTokenSendWireframe {
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
+    private let alertWireframeFactory: AlertWireframeFactory
     private let web3Service: Web3ServiceLegacy
     
     private weak var navigationController: NavigationController!
@@ -57,6 +58,7 @@ final class DefaultTokenSendWireframe {
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         tokenPickerWireframeFactory: TokenPickerWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
+        alertWireframeFactory: AlertWireframeFactory,
         web3Service: Web3ServiceLegacy
     ) {
         self.presentingIn = presentingIn
@@ -64,6 +66,7 @@ final class DefaultTokenSendWireframe {
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
         self.confirmationWireframeFactory = confirmationWireframeFactory
+        self.alertWireframeFactory = alertWireframeFactory
         self.web3Service = web3Service
     }
 }
@@ -121,10 +124,12 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
             wireframe.present()
             
         case let .confirmSend(dataIn):
+            guard dataIn.destination.from != dataIn.destination.to else {
+                return presentSendingToSameAddressAlert()
+            }
             guard let viewController = navigationController.topViewController else {
                 return
             }
-            
             let wireframe = confirmationWireframeFactory.makeWireframe(
                 presentingIn: viewController,
                 context: .init(type: .send(dataIn))
@@ -191,5 +196,20 @@ private extension DefaultTokenSendWireframe {
             self.navigationController = navigationController
             return navigationController
         }
+    }
+    
+    func presentSendingToSameAddressAlert() {
+        alertWireframeFactory.makeWireframe(
+            navigationController,
+            context: .init(
+                title: Localized("alert.send.transaction.toYourself.title"),
+                media: .image(named: "hand.raised", size: .init(length: 40)),
+                message: Localized("alert.send.transaction.toYourself.message"),
+                actions: [
+                    .init(title: Localized("Ok"), type: .primary, action: nil)
+                ],
+                contentHeight: 230
+            )
+        ).present()
     }
 }

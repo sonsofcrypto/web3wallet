@@ -33,6 +33,7 @@ final class DefaultNFTSendWireframe {
     private let context: NFTSendWireframeContext
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
+    private let alertWireframeFactory: AlertWireframeFactory
     private let web3Service: Web3ServiceLegacy
     private let networksService: NetworksService
     
@@ -43,6 +44,7 @@ final class DefaultNFTSendWireframe {
         context: NFTSendWireframeContext,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
+        alertWireframeFactory: AlertWireframeFactory,
         web3Service: Web3ServiceLegacy,
         networksService: NetworksService
     ) {
@@ -50,6 +52,7 @@ final class DefaultNFTSendWireframe {
         self.context = context
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.confirmationWireframeFactory = confirmationWireframeFactory
+        self.alertWireframeFactory = alertWireframeFactory
         self.web3Service = web3Service
         self.networksService = networksService
     }
@@ -78,9 +81,7 @@ extension DefaultNFTSendWireframe: NFTSendWireframe {
     func navigate(to destination: NFTSendWireframeDestination) {
         
         switch destination {
-            
         case .underConstructionAlert:
-            
             let factory: AlertWireframeFactory = ServiceDirectory.assembler.resolve()
             factory.makeWireframe(
                 navigationController,
@@ -88,7 +89,6 @@ extension DefaultNFTSendWireframe: NFTSendWireframe {
             ).present()
             
         case let .qrCodeScan(network, onCompletion):
-            
             let wireframe = qrCodeScanWireframeFactory.makeWireframe(
                 presentingIn: navigationController,
                 context: .init(
@@ -98,14 +98,13 @@ extension DefaultNFTSendWireframe: NFTSendWireframe {
                 )
             )
             wireframe.present()
-            
         case let .confirmSendNFT(dataIn):
-            
+            guard dataIn.destination.from != dataIn.destination.to else {
+                return presentSendingToSameAddressAlert()
+            }
             guard let viewController = navigationController.topViewController else {
-                
                 return
             }
-            
             let wireframe = confirmationWireframeFactory.makeWireframe(
                 presentingIn: viewController,
                 context: .init(type: .sendNFT(dataIn))
@@ -169,5 +168,20 @@ private extension DefaultNFTSendWireframe {
             self.navigationController = navigationController
             return navigationController
         }
+    }
+    
+    func presentSendingToSameAddressAlert() {
+        alertWireframeFactory.makeWireframe(
+            navigationController,
+            context: .init(
+                title: Localized("alert.send.transaction.toYourself.title"),
+                media: .image(named: "hand.raised", size: .init(length: 40)),
+                message: Localized("alert.send.transaction.toYourself.message"),
+                actions: [
+                    .init(title: Localized("Ok"), type: .primary, action: nil)
+                ],
+                contentHeight: 230
+            )
+        ).present()
     }
 }

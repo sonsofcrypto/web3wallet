@@ -17,17 +17,20 @@ final class DefaultNFTSendWireframeFactory {
 
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
+    private let alertWireframeFactory: AlertWireframeFactory
     private let web3Service: Web3ServiceLegacy
     private let networksService: NetworksService
 
     init(
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
+        alertWireframeFactory: AlertWireframeFactory,
         web3Service: Web3ServiceLegacy,
         networksService: NetworksService
     ) {
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.confirmationWireframeFactory = confirmationWireframeFactory
+        self.alertWireframeFactory = alertWireframeFactory
         self.web3Service = web3Service
         self.networksService = networksService
     }
@@ -45,6 +48,7 @@ extension DefaultNFTSendWireframeFactory: NFTSendWireframeFactory {
             context: context,
             qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
             confirmationWireframeFactory: confirmationWireframeFactory,
+            alertWireframeFactory: alertWireframeFactory,
             web3Service: web3Service,
             networksService: networksService
         )
