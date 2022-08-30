@@ -46,9 +46,9 @@ private extension ConfirmationTxInProgressView {
         wrapperView.addSubview(stackView)
         stackView.addConstraints(
             [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .centerYAnchor, constant: .equalTo(constant: Theme.constant.padding))
+                .layout(anchor: .leadingAnchor),
+                .layout(anchor: .trailingAnchor),
+                .layout(anchor: .centerYAnchor, constant: .equalTo(constant: Theme.constant.padding * 2))
             ]
         )
 

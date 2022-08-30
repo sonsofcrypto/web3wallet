@@ -40,7 +40,7 @@ extension ConfirmationViewModel {
     struct TxFailedViewModel {
         
         let title: String
-        let message: String
+        let error: String
         let cta: String
         let ctaSecondary: String
     }

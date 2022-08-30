@@ -51,7 +51,7 @@ private extension ConfirmationTxFailedView {
         wrapperView.tag = 12
         
         wrapperView.addSubview(stackView)
-        stackView.addConstraints(.toEdges(padding: Theme.constant.padding))
+        stackView.addConstraints(.toEdges)
         addSubview(wrapperView)
         wrapperView.addConstraints(.toEdges)
     }
@@ -61,13 +61,12 @@ private extension ConfirmationTxFailedView {
         let views: [UIView] = [
             makeOnFailedView(),
             makeLabel(with: .body, and: viewModel.title),
-            makeLabel(with: .footnote, and: viewModel.message),
+            makeLabel(with: .footnote, and: viewModel.error),
+            .empty
         ]
         
         let stackView = VStackView(views)
-        stackView.spacing = Theme.constant.padding
-        stackView.setCustomSpacing(Theme.constant.padding, after: views[0])
-        stackView.setCustomSpacing(Theme.constant.padding, after: views[1])
+        stackView.spacing = Theme.constant.padding.half
         
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
@@ -78,7 +77,8 @@ private extension ConfirmationTxFailedView {
             [
                 .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
                 .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .centerYAnchor, constant: .equalTo(constant: Theme.constant.padding))
+                .layout(anchor: .topAnchor),
+                .layout(anchor: .bottomAnchor)
             ]
         )
         return wrapperView
@@ -98,7 +98,7 @@ private extension ConfirmationTxFailedView {
         imageView.addConstraints(
             [
                 .layout(anchor: .widthAnchor, constant: .equalTo(constant: 60)),
-                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 60))
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 40))
             ]
         )
         
@@ -136,6 +136,11 @@ private extension ConfirmationTxFailedView {
         button.style = .secondary
         button.setTitle(viewModel.ctaSecondary, for: .normal)
         button.addTarget(self, action: #selector(onCTASecondaryTapped), for: .touchUpInside)
+        button.addConstraints(
+            [
+                .compression(layoutAxis: .vertical, priority: .required)
+            ]
+        )
         return button
     }
     
@@ -145,6 +150,11 @@ private extension ConfirmationTxFailedView {
         button.style = .primary
         button.setTitle(viewModel.cta, for: .normal)
         button.addTarget(self, action: #selector(onCTATapped), for: .touchUpInside)
+        button.addConstraints(
+            [
+                .compression(layoutAxis: .vertical, priority: .required)
+            ]
+        )
         return button
     }
     
