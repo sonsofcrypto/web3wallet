@@ -8,7 +8,7 @@ struct FeatureShareHelper {
         on web3Feature: Web3Feature,
         presentingIn: UIViewController
     ) {
-        var text = String(
+        let text = String(
             format: Localized("feature.vote.text"),
             web3Feature.id,
             web3Feature.title
