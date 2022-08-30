@@ -10,6 +10,12 @@ extension UIView {
         
         UITraitCollection.current.userInterfaceStyle == .dark
     }
+    
+    static var empty: UIView {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }
 }
 
 extension UIView {

@@ -51,7 +51,7 @@ private extension ConfirmationTxSuccessView {
         wrapperView.tag = 12
 
         wrapperView.addSubview(stackView)
-        stackView.addConstraints(.toEdges(padding: Theme.constant.padding))
+        stackView.addConstraints(.toEdges)
         addSubview(wrapperView)
         wrapperView.addConstraints(.toEdges)
     }
@@ -66,8 +66,6 @@ private extension ConfirmationTxSuccessView {
         
         let stackView = VStackView(views)
         stackView.spacing = Theme.constant.padding
-        stackView.setCustomSpacing(Theme.constant.padding, after: views[0])
-        stackView.setCustomSpacing(Theme.constant.padding, after: views[1])
         
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
@@ -76,9 +74,9 @@ private extension ConfirmationTxSuccessView {
         wrapperView.addSubview(stackView)
         stackView.addConstraints(
             [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .centerYAnchor, constant: .equalTo(constant: Theme.constant.padding))
+                .layout(anchor: .leadingAnchor),
+                .layout(anchor: .trailingAnchor),
+                .layout(anchor: .topAnchor)
             ]
         )
         return wrapperView
@@ -108,7 +106,7 @@ private extension ConfirmationTxSuccessView {
         
         imageView.addConstraints(
             [
-                .layout(anchor: .topAnchor, constant: .equalTo(constant: Theme.constant.padding)),
+                .layout(anchor: .topAnchor),
                 .layout(anchor: .bottomAnchor),
                 .layout(anchor: .centerXAnchor)
             ]
