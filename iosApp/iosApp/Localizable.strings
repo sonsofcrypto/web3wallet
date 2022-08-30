@@ -194,6 +194,9 @@
 "alert.email.notDetected.title" = "No Email";
 "alert.email.notDetected.message" = "No email client detected for this device.";
 
+"alert.send.transaction.toYourself.title" = "Invalid To Address";
+"alert.send.transaction.toYourself.message" = "Please enter an address that is different to your current one.";
+
 "mnemonicConfirmation.title" = "Confirm Mnemonic";
 "mnemonicConfirmation.confirm.wallet" = "Please enter the 12 word phrase you were given when you created your wallet.";
 "mnemonicConfirmation.salt" = "Salt mnemonic";

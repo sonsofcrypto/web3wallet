@@ -12,6 +12,7 @@ final class TokenSendWireframeFactoryAssembler: AssemblerComponent {
                 qrCodeScanWireframeFactory: resolver.resolve(),
                 tokenPickerWireframeFactory: resolver.resolve(),
                 confirmationWireframeFactory: resolver.resolve(),
+                alertWireframeFactory: resolver.resolve(),
                 web3Service: resolver.resolve()
             )
         }
