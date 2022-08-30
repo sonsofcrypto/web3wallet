@@ -11,7 +11,8 @@ final class ConfirmationWireframeFactoryAssembler: AssemblerComponent {
                 authenticateWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
                 deepLinkHandler: resolver.resolve(),
-                nftsService: resolver.resolve()
+                nftsService: resolver.resolve(),
+                mailService: resolver.resolve()
             )
         }
     }

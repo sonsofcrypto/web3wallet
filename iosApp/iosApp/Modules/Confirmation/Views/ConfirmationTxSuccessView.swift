@@ -38,18 +38,37 @@ private extension ConfirmationTxSuccessView {
     func configureUI() {
         
         let views: [UIView] = [
-            makeOnSuccessView(),
-            makeLabel(with: .body, and: viewModel.title),
-            makeLabel(with: .footnote, and: viewModel.message),
+            makeSuccessView(),
             makeViewEtherScanButton(),
             makeCTAButton()
         ]
         
         let stackView = VStackView(views)
         stackView.spacing = Theme.constant.padding
+
+        let wrapperView = UIView()
+        wrapperView.backgroundColor = .clear
+        wrapperView.tag = 12
+
+        wrapperView.addSubview(stackView)
+        stackView.addConstraints(.toEdges(padding: Theme.constant.padding))
+        addSubview(wrapperView)
+        wrapperView.addConstraints(.toEdges)
+    }
+    
+    func makeSuccessView() -> UIView {
+        
+        let views: [UIView] = [
+            makeOnSuccessView(),
+            makeLabel(with: .body, and: viewModel.title),
+            makeLabel(with: .footnote, and: viewModel.message),
+        ]
+        
+        let stackView = VStackView(views)
+        stackView.spacing = Theme.constant.padding
         stackView.setCustomSpacing(Theme.constant.padding, after: views[0])
         stackView.setCustomSpacing(Theme.constant.padding, after: views[1])
-
+        
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         wrapperView.tag = 12
@@ -59,13 +78,10 @@ private extension ConfirmationTxSuccessView {
             [
                 .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
                 .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .centerYAnchor, constant: .equalTo( constant: Theme.constant.padding))
+                .layout(anchor: .centerYAnchor, constant: .equalTo(constant: Theme.constant.padding))
             ]
         )
-
-        addSubview(wrapperView)
-        
-        wrapperView.addConstraints(.toEdges)
+        return wrapperView
     }
     
     func makeOnSuccessView() -> UIView {

@@ -20,19 +20,22 @@ final class DefaultConfirmationWireframeFactory {
     private let alertWireframeFactory: AlertWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
     private let nftsService: NFTsService
+    private let mailService: MailService
 
     init(
         walletService: WalletService,
         authenticateWireframeFactory: AuthenticateWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
-        nftsService: NFTsService
+        nftsService: NFTsService,
+        mailService: MailService
     ) {
         self.walletService = walletService
         self.authenticateWireframeFactory = authenticateWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.deepLinkHandler = deepLinkHandler
         self.nftsService = nftsService
+        self.mailService = mailService
     }
 }
 
@@ -49,7 +52,8 @@ extension DefaultConfirmationWireframeFactory: ConfirmationWireframeFactory {
             authenticateWireframeFactory: authenticateWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
             deepLinkHandler: deepLinkHandler,
-            nftsService: nftsService
+            nftsService: nftsService,
+            mailService: mailService
         )
     }
 }

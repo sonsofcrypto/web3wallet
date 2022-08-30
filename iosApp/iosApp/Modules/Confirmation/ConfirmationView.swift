@@ -185,7 +185,10 @@ private extension ConfirmationViewController {
     
     func makeConfirmationTxFailedViewHandler() -> ConfirmationTxFailedView.Handler {
         
-        .init(onCTATapped: makePresenterEventTapped(.txFailedCTATapped))
+        .init(
+            onCTATapped: makePresenterEventTapped(.txFailedCTATapped),
+            onCTASecondaryTapped: makePresenterEventTapped(.txFailedCTASecondaryTapped)
+        )
     }
     
     func makePresenterEventTapped(_ event: ConfirmationPresenterEvent) -> () -> Void {
