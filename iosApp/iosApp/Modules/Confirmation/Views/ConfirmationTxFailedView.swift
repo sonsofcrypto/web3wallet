@@ -12,6 +12,7 @@ final class ConfirmationTxFailedView: UIView {
     struct Handler {
         
         let onCTATapped: () -> Void
+        let onCTASecondaryTapped: () -> Void
     }
     
     init(
@@ -37,16 +38,37 @@ private extension ConfirmationTxFailedView {
     func configureUI() {
         
         let views: [UIView] = [
+            makeFailureView(),
+            makeReportIssueButton(),
+            makeCTAButton()
+        ]
+        
+        let stackView = VStackView(views)
+        stackView.spacing = Theme.constant.padding
+        
+        let wrapperView = UIView()
+        wrapperView.backgroundColor = .clear
+        wrapperView.tag = 12
+        
+        wrapperView.addSubview(stackView)
+        stackView.addConstraints(.toEdges(padding: Theme.constant.padding))
+        addSubview(wrapperView)
+        wrapperView.addConstraints(.toEdges)
+    }
+    
+    func makeFailureView() -> UIView {
+        
+        let views: [UIView] = [
             makeOnFailedView(),
             makeLabel(with: .body, and: viewModel.title),
-            makeLabel(with: .footnote, and: viewModel.message)
+            makeLabel(with: .footnote, and: viewModel.message),
         ]
         
         let stackView = VStackView(views)
         stackView.spacing = Theme.constant.padding
         stackView.setCustomSpacing(Theme.constant.padding, after: views[0])
         stackView.setCustomSpacing(Theme.constant.padding, after: views[1])
-
+        
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         wrapperView.tag = 12
@@ -56,23 +78,10 @@ private extension ConfirmationTxFailedView {
             [
                 .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
                 .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .centerYAnchor, constant: .equalTo(constant: (Theme.constant.padding + 40).half))
+                .layout(anchor: .centerYAnchor, constant: .equalTo(constant: Theme.constant.padding))
             ]
         )
-
-        addSubview(wrapperView)
-        
-        wrapperView.addConstraints(.toEdges)
-        
-        let cta = makeCTAButton()
-        addSubview(cta)
-        cta.addConstraints(
-            [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .bottomAnchor, constant: .equalTo(constant: Theme.constant.padding))
-            ]
-        )
+        return wrapperView
     }
     
     func makeOnFailedView() -> UIView {
@@ -92,7 +101,7 @@ private extension ConfirmationTxFailedView {
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: 60))
             ]
         )
-
+        
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         wrapperView.addSubview(imageView)
@@ -104,7 +113,7 @@ private extension ConfirmationTxFailedView {
                 .layout(anchor: .centerXAnchor)
             ]
         )
-            
+        
         return wrapperView
     }
     
@@ -121,6 +130,15 @@ private extension ConfirmationTxFailedView {
         return label
     }
     
+    func makeReportIssueButton() -> Button {
+        
+        let button = Button()
+        button.style = .secondary
+        button.setTitle(viewModel.ctaSecondary, for: .normal)
+        button.addTarget(self, action: #selector(onCTASecondaryTapped), for: .touchUpInside)
+        return button
+    }
+    
     func makeCTAButton() -> Button {
         
         let button = Button()
@@ -133,5 +151,10 @@ private extension ConfirmationTxFailedView {
     @objc func onCTATapped() {
         
         handler.onCTATapped()
+    }
+    
+    @objc func onCTASecondaryTapped() {
+        
+        handler.onCTASecondaryTapped()
     }
 }

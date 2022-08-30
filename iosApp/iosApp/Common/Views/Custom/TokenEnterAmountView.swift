@@ -221,7 +221,7 @@ private extension TokenEnterAmountView {
             viewModel.tokenMaxDecimals > 0,
             textField.text == "00"
         {
-            textField.text = "0"
+            textField.text = "0.0"
         } else if
             viewModel.tokenMaxDecimals > 0,
             let text = textField.text,

@@ -6,7 +6,10 @@ import Foundation
 import MessageUI
 
 struct MailContext {
+    
     let subject: Subject
+    let body: String?
+    
     enum Subject {
         case app
         case beta
@@ -21,6 +24,14 @@ struct MailContext {
                 return Localized("settings.root.feedback.subject.beta", arg: versionFormatted)
             }
         }
+    }
+    
+    init(
+        subject: Subject,
+        body: String? = nil
+    ) {
+        self.subject = subject
+        self.body = body
     }
 }
 
@@ -38,6 +49,9 @@ final class DefaultMailService: NSObject, MailService {
         mail.mailComposeDelegate = self
         mail.setToRecipients(["sonsofcrypto@protonmail.com"])
         mail.setSubject(context.subject.string)
+        if let body = context.body {
+            mail.setMessageBody(body, isHTML: false)
+        }
         presentingIn?.present(mail, animated: true)
     }
 }
@@ -57,7 +71,7 @@ private extension DefaultMailService {
     
     var presentingIn: UIViewController? {
         let sceneHelper = SceneDelegateHelper()
-        return sceneHelper.rootVC
+        return sceneHelper.rootVC?.topPresentedViewController
     }
     
     func showAlertNoEmailDetected() {
@@ -82,5 +96,15 @@ private extension DefaultMailService {
                 contentHeight: 294
             )
         ).present()
+    }
+}
+
+private extension UIViewController {
+    
+    var topPresentedViewController: UIViewController {
+        if let presentedViewController = presentedViewController {
+            return presentedViewController.topPresentedViewController
+        }
+        return self
     }
 }

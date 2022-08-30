@@ -13,6 +13,7 @@ enum ConfirmationWireframeDestination {
     case nftsDashboard
     case cultProposals
     case viewEtherscan(txHash: String)
+    case report(error: Error)
 }
 
 protocol ConfirmationWireframe {
@@ -30,6 +31,7 @@ final class DefaultConfirmationWireframe {
     private let alertWireframeFactory: AlertWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
     private let nftsService: NFTsService
+    private let mailService: MailService
     
     private weak var navigationController: UINavigationController!
     
@@ -40,7 +42,8 @@ final class DefaultConfirmationWireframe {
         authenticateWireframeFactory: AuthenticateWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
-        nftsService: NFTsService
+        nftsService: NFTsService,
+        mailService: MailService
     ) {
         self.presentingIn = presentingIn
         self.context = context
@@ -49,6 +52,7 @@ final class DefaultConfirmationWireframe {
         self.alertWireframeFactory = alertWireframeFactory
         self.deepLinkHandler = deepLinkHandler
         self.nftsService = nftsService
+        self.mailService = mailService
     }
 }
 
@@ -91,6 +95,10 @@ extension DefaultConfirmationWireframe: ConfirmationWireframe {
             
         case let .viewEtherscan(txHash):
             EtherscanHelper().view(txHash: txHash, presentingIn: navigationController)
+            
+        case let .report(error):
+            let body = Localized("report.txFailed.error.body", arg: error.localizedDescription)
+            mailService.sendMail(context: .init(subject: .beta, body: body))
         }
     }
     

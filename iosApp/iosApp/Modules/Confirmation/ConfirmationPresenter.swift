@@ -11,6 +11,7 @@ enum ConfirmationPresenterEvent {
     case txSuccessCTATapped
     case txSuccessCTASecondaryTapped
     case txFailedCTATapped
+    case txFailedCTASecondaryTapped
     case dismiss
 }
 
@@ -29,6 +30,7 @@ final class DefaultConfirmationPresenter {
     private let context: ConfirmationWireframeContext
     
     private var txHash: String?
+    private var error: Error?
     
     init(
         view: ConfirmationView,
@@ -88,6 +90,10 @@ extension DefaultConfirmationPresenter: ConfirmationPresenter {
 
         case .txFailedCTATapped:
             wireframe.dismiss()
+        
+        case .txFailedCTASecondaryTapped:
+            guard let error = error else { return }
+            wireframe.navigate(to: .report(error: error))
 
         case .dismiss:
             wireframe.dismiss()
@@ -286,8 +292,8 @@ private extension DefaultConfirmationPresenter {
 
 private extension DefaultConfirmationPresenter {
     
-    func showTransactionSuccess() {
-        
+    func showTransactionSuccess(_ response: TransactionResponse) {
+        self.txHash = response.hash
         let viewModel = ConfirmationViewModel(
             title: makeTitle(),
             content: .success(
@@ -306,14 +312,15 @@ private extension DefaultConfirmationPresenter {
 private extension DefaultConfirmationPresenter {
     
     func showTransactionFailed(_ error: Error? = nil) {
-        
+        self.error = error
         let viewModel = ConfirmationViewModel(
             title: makeTitle(),
             content: .failed(
                 .init(
                     title: Localized("confirmation.tx.failed.\(context.type.localizedTag).title"),
                     message: Localized("confirmation.tx.failed.\(context.type.localizedTag).message"),
-                    cta: Localized("confirmation.tx.failed.\(context.type.localizedTag).cta")
+                    cta: Localized("confirmation.tx.failed.\(context.type.localizedTag).cta"),
+                    ctaSecondary: Localized("confirmation.tx.failed.report")
                 )
             )
         )
@@ -359,7 +366,8 @@ private extension DefaultConfirmationPresenter {
         with password: String,
         and salt: String
     ) {
-       
+        txHash = nil
+        error = nil
         switch context.type {
         case .swap:
             print("Do swap!")
@@ -375,8 +383,7 @@ private extension DefaultConfirmationPresenter {
                 handler: { [weak self] result in
                     switch result {
                     case let .success(response):
-                        self?.txHash = response.hash
-                        self?.showTransactionSuccess()
+                        self?.showTransactionSuccess(response)
                     case let .failure(error):
                         self?.showTransactionFailed(error)
                     }
@@ -394,8 +401,7 @@ private extension DefaultConfirmationPresenter {
                 handler: { [weak self] result in
                     switch result {
                     case let .success(response):
-                        self?.txHash = response.hash
-                        self?.showTransactionSuccess()
+                        self?.showTransactionSuccess(response)
                     case let .failure(error):
                         self?.showTransactionFailed(error)
                     }
@@ -411,8 +417,7 @@ private extension DefaultConfirmationPresenter {
                 handler: { [weak self] result in
                     switch result {
                     case let .success(response):
-                        self?.txHash = response.hash
-                        self?.showTransactionSuccess()
+                        self?.showTransactionSuccess(response)
                     case let .failure(error):
                         self?.showTransactionFailed(error)
                     }

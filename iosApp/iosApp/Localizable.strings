@@ -362,6 +362,7 @@
 "confirmation.tx.failed.cultCastVote.title" = "Oops 😬";
 "confirmation.tx.failed.cultCastVote.message" = "The transaction did not succeed this time, please try again.";
 "confirmation.tx.failed.cultCastVote.cta" = "Retry";
+"confirmation.tx.failed.report" = "Report Error";
 
 "cult.proposals.title" = "Cult.DAO Proposals";
 "cult.proposals.segmentedControl.pending" = "Pending";
@@ -429,3 +430,5 @@
 "tokenEnter.balance" = "Balance: %@";
 
 "webView.title.txDetails" = "Transaction Details";
+
+"report.txFailed.error.body" = "Hi team,\n\nI've just got a transaction failure with the following error: \n\n%@\n\nThanks!\n\nPS: Thanks for reporting this failure, this really helps us improving the app! \n❤️❤️❤️";

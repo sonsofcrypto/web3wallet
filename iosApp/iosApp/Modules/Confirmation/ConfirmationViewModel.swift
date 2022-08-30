@@ -42,5 +42,6 @@ extension ConfirmationViewModel {
         let title: String
         let message: String
         let cta: String
+        let ctaSecondary: String
     }
 }
