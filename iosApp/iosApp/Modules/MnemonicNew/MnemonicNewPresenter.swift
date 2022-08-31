@@ -181,48 +181,81 @@ private extension DefaultMnemonicNewPresenter {
     }
 
     func optionsSectionItems() -> [MnemonicNewViewModel.Item] {
-        [
-            MnemonicNewViewModel.Item.name(
-                name: .init(
-                    title: Localized("newMnemonic.name.title"),
-                    value: interactor.name,
-                    placeholder: Localized("newMnemonic.name.placeholder")
+        if FeatureFlag.showSaltMnemonic.isEnabled {
+            return [
+                MnemonicNewViewModel.Item.name(
+                    name: .init(
+                        title: Localized("newMnemonic.name.title"),
+                        value: interactor.name,
+                        placeholder: Localized("newMnemonic.name.placeholder")
+                    )
+                ),
+                MnemonicNewViewModel.Item.switch(
+                    title: Localized("newMnemonic.iCould.title"),
+                    onOff: interactor.iCloudSecretStorage
+                ),
+                MnemonicNewViewModel.Item.switchWithTextInput(
+                    switchWithTextInput: .init(
+                        title: Localized("newMnemonic.salt.title"),
+                        onOff: interactor.saltMnemonic,
+                        text: salt,
+                        placeholder: Localized("newMnemonic.salt.placeholder"),
+                        description: Localized("newMnemonic.salt.description"),
+                        descriptionHighlightedWords: [
+                            Localized("newMnemonic.salt.descriptionHighlight")
+                        ]
+                    )
+                ),
+                MnemonicNewViewModel.Item.segmentWithTextAndSwitchInput(
+                    viewModel: .init(
+                        title: Localized("newMnemonic.passType.title"),
+                        segmentOptions: passwordTypes().map { "\($0)".lowercased() },
+                        selectedSegment: selectedPasswordTypeIdx(),
+                        password: password,
+                        passwordKeyboardType: interactor.passwordType == .pin
+                        ? .numberPad
+                        : .default,
+                        placeholder: interactor.passwordType == .pin
+                        ? Localized("newMnemonic.pinType.placeholder")
+                        : Localized("newMnemonic.passType.placeholder"),
+                        errorMessage: passwordErrorMessage,
+                        onOffTitle: Localized("newMnemonic.passType.allowFaceId"),
+                        onOff: interactor.passUnlockWithBio
+                    )
                 )
-            ),
-            MnemonicNewViewModel.Item.switch(
-                title: Localized("newMnemonic.iCould.title"),
-                onOff: interactor.iCloudSecretStorage
-            ),
-            MnemonicNewViewModel.Item.switchWithTextInput(
-                switchWithTextInput: .init(
-                    title: Localized("newMnemonic.salt.title"),
-                    onOff: interactor.saltMnemonic,
-                    text: salt,
-                    placeholder: Localized("newMnemonic.salt.placeholder"),
-                    description: Localized("newMnemonic.salt.description"),
-                    descriptionHighlightedWords: [
-                        Localized("newMnemonic.salt.descriptionHighlight")
-                    ]
+            ]
+        } else {
+            return [
+                MnemonicNewViewModel.Item.name(
+                    name: .init(
+                        title: Localized("newMnemonic.name.title"),
+                        value: interactor.name,
+                        placeholder: Localized("newMnemonic.name.placeholder")
+                    )
+                ),
+                MnemonicNewViewModel.Item.switch(
+                    title: Localized("newMnemonic.iCould.title"),
+                    onOff: interactor.iCloudSecretStorage
+                ),
+                MnemonicNewViewModel.Item.segmentWithTextAndSwitchInput(
+                    viewModel: .init(
+                        title: Localized("newMnemonic.passType.title"),
+                        segmentOptions: passwordTypes().map { "\($0)".lowercased() },
+                        selectedSegment: selectedPasswordTypeIdx(),
+                        password: password,
+                        passwordKeyboardType: interactor.passwordType == .pin
+                        ? .numberPad
+                        : .default,
+                        placeholder: interactor.passwordType == .pin
+                        ? Localized("newMnemonic.pinType.placeholder")
+                        : Localized("newMnemonic.passType.placeholder"),
+                        errorMessage: passwordErrorMessage,
+                        onOffTitle: Localized("newMnemonic.passType.allowFaceId"),
+                        onOff: interactor.passUnlockWithBio
+                    )
                 )
-            ),
-            MnemonicNewViewModel.Item.segmentWithTextAndSwitchInput(
-                viewModel: .init(
-                    title: Localized("newMnemonic.passType.title"),
-                    segmentOptions: passwordTypes().map { "\($0)".lowercased() },
-                    selectedSegment: selectedPasswordTypeIdx(),
-                    password: password,
-                    passwordKeyboardType: interactor.passwordType == .pin
-                    ? .numberPad
-                    : .default,
-                    placeholder: interactor.passwordType == .pin
-                    ? Localized("newMnemonic.pinType.placeholder")
-                    : Localized("newMnemonic.passType.placeholder"),
-                    errorMessage: passwordErrorMessage,
-                    onOffTitle: Localized("newMnemonic.passType.allowFaceId"),
-                    onOff: interactor.passUnlockWithBio
-                )
-            )
-        ]
+            ]
+        }
     }
 }
 

@@ -24,6 +24,9 @@ final class TextInputCollectionViewCell: CollectionViewCell {
         titleLabel.textColor = Theme.colour.labelPrimary
         
         textField.delegate = self
+        textField.addDoneInputAccessoryView(
+            with: .targetAction(.init(target: self, selector: #selector(resignFirstResponder)))
+        )
     }
     
     override func resignFirstResponder() -> Bool {

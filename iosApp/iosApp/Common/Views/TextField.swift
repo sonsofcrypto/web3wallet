@@ -43,7 +43,7 @@ extension TextField {
                 )
             )
         )
-        view.backgroundColor = Theme.colour.navBarBackground
+        view.backgroundColor = Theme.colour.textFieldInputAccessoryViewBGColor
         
         let doneAction = UIButton(type: .custom)
         doneAction.titleLabel?.font = Theme.font.bodyBold

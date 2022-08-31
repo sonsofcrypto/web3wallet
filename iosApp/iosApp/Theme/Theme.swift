@@ -175,6 +175,7 @@ struct ThemeColour {
 
     let textFieldTextColour: UIColor
     let textFieldPlaceholderColour: UIColor
+    let textFieldInputAccessoryViewBGColor: UIColor
 
     let segmentedControlBackground: UIColor
     let segmentedControlBackgroundSelected: UIColor
