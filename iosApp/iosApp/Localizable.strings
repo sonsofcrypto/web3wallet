@@ -78,22 +78,22 @@
 "degen.dappCategory.title.swap" = "Swap";
 "degen.dappCategory.title.cult" = "Cult.DAO";
 "degen.dappCategory.title.stakeYield" = "Staking and Yield farms";
-"degen.dappCategory.title.landBorrow" = "Landing / Borrowing";
+"degen.dappCategory.title.landBorrow" = "Borrowing / Lending";
 "degen.dappCategory.title.derivative" = "Derivatives";
 "degen.dappCategory.title.bridge" = "Bridges";
 "degen.dappCategory.title.mixer" = "Mixers";
-"degen.dappCategory.title.governance" = "Governanece";
+"degen.dappCategory.title.governance" = "Governance";
 
 "degen.dappCategory.subTitle.swap" = "Swap like a Degen";
 "degen.dappCategory.subTitle.cult" = "Decentralization revolution";
-"degen.dappCategory.subTitle.stakeYield" = "Stake your coins and recieve rewards";
-"degen.dappCategory.subTitle.landBorrow" = "Borrow or your land coins to earn interest";
+"degen.dappCategory.subTitle.stakeYield" = "Stake your coins and receive rewards";
+"degen.dappCategory.subTitle.landBorrow" = "Borrow or lend your coins to earn interest";
 "degen.dappCategory.subTitle.derivative" = "Futures, perpetual and other derivatives";
-"degen.dappCategory.subTitle.bridge" = "Bridge beween L1s and L2s";
+"degen.dappCategory.subTitle.bridge" = "Bridge between L1s and L2s";
 "degen.dappCategory.subTitle.mixer" = "Regain your privacy";
-"degen.dappCategory.subTitle.governance" = "Participate in governance decisions";
+"degen.dappCategory.subTitle.governance" = "Participate in governance\ndecisions";
 
-"degen.section.title" = "Explore world of web3. Interact with smart contracts directly, not via web2 frontends.";
+"degen.section.title" = "Explore the web3 world. Interact directly from the app with smart contracts, not via web2 frontends.";
 
 "amms" = "AMMs";
 "swap" = "Swap";
@@ -153,12 +153,12 @@
 "settings.theme" = "Theme";
 "settings.theme.miami.light" = "Theme Miami Light";
 "settings.theme.miami.dark" = "Theme Miami Dark";
-"settings.theme.ios.light" = "Theme IOS Light";
-"settings.theme.ios.dark" = "Theme IOS Dark";
+"settings.theme.ios.light" = "Theme iOS Light";
+"settings.theme.ios.dark" = "Theme iOS Dark";
 
-"settings.root.improvementProposals" = "Improvement Proposals";
+"settings.root.improvementProposals" = "Improvement proposals";
 
-"settings.root.developerMenu" = "Developer Menu";
+"settings.root.developerMenu" = "Developer menu";
 "settings.debug.apis" = "APIs";
 "settings.debug.apis.nfts" = "NFTs";
 "settings.debug.apis.nfts.openSea" = "OpenSea";
@@ -173,12 +173,12 @@
 "settings.about.twitter" = "Twitter";
 "settings.about.telegram" = "Telegram";
 "settings.about.fotter" = "sons Of crypto";
-"settings.about.contactUs" = "Contact Us";
+"settings.about.contactUs" = "Contact us";
 "settings.about.mail" = "Mail";
 
-"settings.root.feedback" = "Beta Feedback / Report Issue 🪲";
-"settings.root.feedback.subject" = "App Feedback %@";
-"settings.root.feedback.subject.beta" = "Beta %@ Feedback / Report 🪲";
+"settings.root.feedback" = "Beta feedback / Report issue 🪲";
+"settings.root.feedback.subject" = "App feedback %@";
+"settings.root.feedback.subject.beta" = "Beta %@ feedback / Report 🪲";
 
 "alert.underConstruction.title" = "Under construction";
 "alert.underConstruction.message" = "App is under very active development and this corner is not quite ready yet. Check back soon.";
@@ -395,7 +395,7 @@
 "cult.proposal.parsing.rewardDistribution.per" = "per";
 "cult.proposal.parsing.cultRewardAllocation" = "%@% of Total Supply";
 
-"features.title" = "Improvement Proposals";
+"features.title" = "Improvement proposals";
 "features.section.all.description" = "All proposals";
 "features.section.infrastructure.description" = "Support for standards and protocols";
 "features.section.integrations.description" = "Direct smart contracts / defi / web3 products integrations and support for L1 & L2 chains";
