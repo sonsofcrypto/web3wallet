@@ -64,12 +64,11 @@ extension DefaultAuthenticatePresenter: AuthenticatePresenter {
                 case let .success(password):
                     self?.password = password.0
                     self?.updateView()
-                default:
-                    ()
+                case .failure:
+                    self?.handle(.didCancel)
                 }
             }
         )
-        
     }
 
     func handle(_ event: AuthenticatePresenterEvent) {
@@ -133,7 +132,7 @@ private extension DefaultAuthenticatePresenter {
         case .pass:
             return .pass
         default:
-            fatalError("This should never happen, the wireframe will guard against this")
+            return .pass
         }
     }
 }
