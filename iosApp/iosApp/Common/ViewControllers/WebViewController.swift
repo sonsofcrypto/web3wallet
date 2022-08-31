@@ -5,17 +5,29 @@
 import UIKit
 import WebKit
 
-class WebViewController: UIViewController {
+final class WebViewController: UIViewController {
 
     let webView = WKWebView()
         
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(webView)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: .init(systemName: "xmark"),
+            style: .plain,
+            target: self,
+            action: #selector(dimissTapped)
+        )
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         webView.frame = view.bounds
+    }
+}
+
+private extension WebViewController {
+    @objc func dimissTapped() {
+        dismiss(animated: true)
     }
 }
