@@ -59,8 +59,8 @@ private extension FeatureServiceRunner {
         }
         
         let meta = featureVotingCacheService.metadata(for: feature)
-        print("[Feature][🟠][\(feature.hashTag)] Cached meta votes: \(meta?.votes ?? 0)")
-        print("[Feature][↗️][\(feature.hashTag)] Fetching votes...")
+        print("[Feature][\(feature.hashTag)][1️⃣][🟠] Cached meta votes: \(meta?.votes ?? 0)")
+        print("[Feature][\(feature.hashTag)][2️⃣][↗️] Fetching votes...")
         
         featureVotingRequestService.fetchVotes(for: feature, sinceId: meta?.latestId) { [weak self] result in
             guard let self = self else { return }
@@ -68,11 +68,11 @@ private extension FeatureServiceRunner {
                 
             case let .success(data):
                 
-                print("[Feature][✅][\(feature.hashTag)] 1 - Success with total votes: \(data?.totalVotes ?? 0).")
+                print("[Feature][\(feature.hashTag)][3️⃣][✅] 1 - Success with total votes: \(data?.totalVotes ?? 0).")
                 
                 guard let data = data, data.totalVotes > 0 else {
                 
-                    print("[Feature][✅][\(feature.hashTag)] 2 - No more votes so moving next.")
+                    print("[Feature][\(feature.hashTag)][4️⃣][✅] 2 - No more votes so moving next.")
                     return self.removeFeatureAndGoNext(feature: feature)
                 }
                 
@@ -81,23 +81,23 @@ private extension FeatureServiceRunner {
                     votes: (meta?.votes ?? 0) + data.totalVotes,
                     latestId: data.latestId
                 )
-                print("[Feature][✅][\(feature.hashTag)] 2 - Caching new metadata \(newMeta).")
+                print("[Feature][\(feature.hashTag)][4️⃣][✅] 2 - Caching new metadata \(newMeta).")
                 self.featureVotingCacheService.store(metadata: newMeta)
 
                 guard data.hasMoreVotes else {
                     
-                    print("[Feature][✅][\(feature.hashTag)] 3 - No more votes so moving next.")
+                    print("[Feature][\(feature.hashTag)][5️⃣][✅] 3 - No more votes so moving next.")
                     return self.removeFeatureAndGoNext(feature: feature)
                 }
                 
-                print("[Feature][✅][\(feature.hashTag)] 3 - Still more votes so fetching again.")
+                print("[Feature][\(feature.hashTag)][5️⃣][✅] 3 - Still more votes so fetching again.")
                 
                 self.fetch(feature: feature)
 
                 
             case let .failure(error):
                 
-                print("[Feature][❌][\(feature.hashTag)] 🚨 ERROR 🚨 \(error) -> Moving to next feature")
+                print("[Feature][\(feature.hashTag)][3️⃣][❌] 🚨 ERROR 🚨 \(error) -> Moving to next feature")
                 self.removeFeatureAndGoNext(feature: feature)
             }
         }
@@ -138,11 +138,17 @@ private extension FeatureServiceRunner {
         }
         
         let paths = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
-        let cachesDirectory: URL = URL(string: "\(paths[0].absoluteString)proposals-list.json")!
+        let proposalsDirectory: URL = URL(string: "\(paths[0].absoluteString)proposals-list.json")!
                         
         let jsonData = try! JSONEncoder().encode(features)
-        try! jsonData.write(to: cachesDirectory)
+        try! jsonData.write(to: proposalsDirectory)
         
-        print("[Feature][✅] JSON File generated and stored at: \(cachesDirectory.absoluteString)")
+        print("[Feature][✅] JSON File generated and stored at: \(proposalsDirectory.absoluteString)")
+        
+        let metadataDirectory: URL = URL(string: "\(paths[0].absoluteString)features-metadata-dict.json")!
+        let jsonMetadata = try! JSONEncoder().encode(featureVotingCacheService.cachedMetadata)
+        try! jsonMetadata.write(to: metadataDirectory)
+        
+        print("[Feature][✅] JSON File generated and stored at: \(metadataDirectory.absoluteString)")
     }
 }
