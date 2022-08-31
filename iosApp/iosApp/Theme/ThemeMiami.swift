@@ -81,6 +81,7 @@ struct ThemeMiami: Themable {
             },
             textFieldTextColour: pallete.systemWhite,
             textFieldPlaceholderColour: pallete.systemEBEBF5.withAlpha(0.6),
+            textFieldInputAccessoryViewBGColor: pallete.system1C1C1E,
             segmentedControlBackground: .init { traits in
                 isDarkMode ?
                 pallete.system767680.withAlpha(0.18) :

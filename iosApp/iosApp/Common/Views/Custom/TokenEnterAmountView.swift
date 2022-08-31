@@ -60,6 +60,9 @@ final class TokenEnterAmountView: UIView {
         sendAmountTextField.font = Theme.font.title3
         sendAmountTextField.placeholderAttrText = "0"
         sendAmountTextField.delegate = self
+        sendAmountTextField.addDoneInputAccessoryView(
+            with: .targetAction(.init(target: self, selector: #selector(resignFirstResponder)))
+        )
         
         let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(flipMode))
         flipImageView.image = "arrow.left.arrow.right".assetImage

@@ -158,6 +158,11 @@ struct ThemeIOS: Themable {
                 pallete.systemEBEBF5.withAlpha(0.6) :
                 pallete.system3C3C43.withAlpha(0.6)
             },
+            textFieldInputAccessoryViewBGColor: .init { traits in
+                isDarkMode ?
+                .init(rgb: 0x242424) :
+                .init(rgb: 0xCFCFCF)
+            },
             segmentedControlBackground: .init { traits in
                 isDarkMode ?
                 pallete.system767680.withAlpha(0.24) :

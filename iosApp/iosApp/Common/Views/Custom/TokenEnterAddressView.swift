@@ -45,6 +45,10 @@ final class TokenEnterAddressView: UIView {
         textField.placeholderAttrText = Localized("tokenSend.cell.address.textField.placeholder")
         textField.delegate = self
         textField.textContentType = .none
+        textField.addDoneInputAccessoryView(
+            with: .targetAction(.init(target: self, selector: #selector(resignFirstResponder)))
+        )
+
 
         let pasteAction = UIButton(type: .custom)
         pasteAction.setTitle(Localized("paste"), for: .normal)
@@ -68,8 +72,7 @@ final class TokenEnterAddressView: UIView {
     }
     
     override func resignFirstResponder() -> Bool {
-        
-        return textField.resignFirstResponder()
+        textField.resignFirstResponder()
     }
 }
 
