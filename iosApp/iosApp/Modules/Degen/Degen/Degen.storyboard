@@ -114,6 +114,9 @@
                                                         </stackView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="1000" verticalHuggingPriority="10" image="chevron.right" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="4cC-DP-zda">
                                                             <rect key="frame" x="301.5" y="2" width="12.5" height="42.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="12" id="RJ8-w6-oym"/>
+                                                            </constraints>
                                                         </imageView>
                                                     </subviews>
                                                 </stackView>
