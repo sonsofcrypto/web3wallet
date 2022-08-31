@@ -46,7 +46,7 @@ class CurrencyFormatter {
         case .max:
             amountFormatted = amount.formatString(type: .max, decimals: currency.decimals?.uintValue ?? 18)
         }
-        return amountFormatted + currency.symbol.uppercased()
+        return amountFormatted + " " + currency.symbol.uppercased()
     }
 }
 
@@ -60,6 +60,7 @@ class FiatFormatter {
         let formatter = NumberFormatter()
         formatter.currencyCode = "usd"
         formatter.numberStyle = .currency
+        formatter.locale = .english
         return formatter
     }()
 
@@ -76,6 +77,11 @@ class FiatFormatter {
     func string(_ amount: KotlinDouble?) -> String {
         guard let amount = amount?.floatValue else { return placeholder }
         return string(amount)
+    }
+    
+    func string(_ amount: BigInt?) -> String {
+        guard let amount = amount else { return placeholder }
+        return amount.formatStringCurrency(type: .long, decimals: 2)
     }
 }
 
@@ -98,6 +104,7 @@ class PctFormatter {
         formatter.negativePrefix = "-"
         formatter.numberStyle = .percent
         formatter.maximumFractionDigits = 2
+        formatter.locale = .english
         return formatter
     }()
 

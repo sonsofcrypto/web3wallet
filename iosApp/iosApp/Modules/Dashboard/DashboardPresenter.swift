@@ -183,7 +183,9 @@ private extension DefaultDashboardPresenter {
         var sections = [DashboardViewModel.Section]()
         sections.append(
             .init(
-                header: .balance(interactor.totalFiatBalance().formatCurrency() ?? ""),
+                header: .balance(
+                    Formatter.fiat.string(interactor.totalFiatBalance())
+                ),
                 items: .actions(
                     [
                         .init(

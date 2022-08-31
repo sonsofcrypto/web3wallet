@@ -152,15 +152,18 @@ extension String {
     static func currencySymbol(
         with currencyCode: String = "USD"
     ) -> String {
-        let symbol = 0.formatted(
-            .currency(code: currencyCode)
+        let formatter = NumberFormatter()
+        formatter.currencyCode = "usd"
+        formatter.numberStyle = .currency
+        formatter.locale = .english
+
+        let symbol = formatter.string(
+            from: 0
         ).replacingOccurrences(
             of: "0.00",
             with: ""
         )
-        
         guard currencyCode == "USD" else { return symbol }
-        
         return symbol.replacingOccurrences(of: "US", with: "")
     }
 }
@@ -171,6 +174,7 @@ extension String {
         
         let formatter = DateFormatter()
         formatter.dateFormat = dateFormat
+        formatter.locale = .english
         return formatter.date(from: self)
     }
 }

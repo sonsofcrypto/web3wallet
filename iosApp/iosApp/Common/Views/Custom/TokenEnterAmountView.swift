@@ -205,14 +205,25 @@ private extension TokenEnterAmountView {
     func applyTextValidation(to textField: UITextField) {
         
         if
-            textField == sendAmountTextField,
             viewModel.tokenMaxDecimals > 0,
-            textField.text == "."
+            textField.text == "." || textField.text == ","
         {
             textField.text = "0."
         }
         
+        let totalDots = textField.text?.reduce(into: 0) {
+            $0 = $0 + (($1 == "." || $1 == ",") ? 1 : 0)
+        } ?? 0
+        
         if
+            totalDots > 1,
+            let text = textField.text,
+            (text.last == "." || text.last == ",")
+        {
+            var string = text
+            _ = string.removeLast()
+            textField.text = string
+        } else if
             viewModel.tokenMaxDecimals == 0,
             textField.text == "0"
         {
@@ -222,14 +233,16 @@ private extension TokenEnterAmountView {
             textField.text == "00"
         {
             textField.text = "0.0"
-        } else if
-            viewModel.tokenMaxDecimals > 0,
-            let text = textField.text,
-            text.count == 2,
-            text[0] == "0",
-            text[1] != "."
-        {
-            textField.text = text[0] + "." + text[1]
+//        } else if
+//            viewModel.tokenMaxDecimals > 0,
+//            let text = textField.text,
+//            text.count == 2,
+//            text[0] == "0",
+//            (text[1] != "." || text[1] != ",")
+//        {
+//            textField.text = text[0] + "." + text[1]
+        } else if textField.text?.contains(",") ?? false {
+            textField.text = textField.text?.replacingOccurrences(of: ",", with: ".")
         }
     }
     

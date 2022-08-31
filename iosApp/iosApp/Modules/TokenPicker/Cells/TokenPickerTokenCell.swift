@@ -19,7 +19,6 @@ final class TokenPickerTokenCell: UICollectionViewCell {
     
     @IBOutlet weak var tokenPriceView: UIView!
     @IBOutlet weak var tokenLabel: UILabel!
-    @IBOutlet weak var tokenSymbolLabel: UILabel!
     @IBOutlet weak var usdPriceLabel: UILabel!
     
     @IBOutlet weak var separatorBottomView: UIView!
@@ -43,14 +42,6 @@ final class TokenPickerTokenCell: UICollectionViewCell {
         tokenLabel.font = Theme.font.body
         tokenLabel.textColor = Theme.colour.labelPrimary
         tokenLabel.textAlignment = .right
-        tokenSymbolLabel.font = Theme.font.callout
-        tokenSymbolLabel.textColor = Theme.colour.labelSecondary
-        tokenSymbolLabel.textAlignment = .right
-        tokenSymbolLabel.addConstraints(
-            [
-                .hugging(layoutAxis: .horizontal, priority: .required)
-            ]
-        )
         usdPriceLabel.font = Theme.font.callout
         usdPriceLabel.textColor = Theme.colour.labelSecondary
         usdPriceLabel.textAlignment = .right
@@ -79,7 +70,6 @@ final class TokenPickerTokenCell: UICollectionViewCell {
             symbolLabel.isHidden = true
             tokenPriceView.isHidden = false
             tokenLabel.text = balance.tokens
-            tokenSymbolLabel.text = viewModel.symbol.uppercased()
             usdPriceLabel.text = balance.usdTotal
         } else {
             

@@ -307,8 +307,12 @@ private extension DefaultTokenPickerPresenter {
                 type = .init(
                     isSelected: isSelected,
                     balance: .init(
-                        tokens: token.balance.formatString(type: .long, decimals: token.decimals),
-                        usdTotal: token.usdBalance.formatStringCurrency(type: .long, decimals: 2)
+                        tokens: Formatter.currency.string(
+                            token.balance,
+                            currency: token.toCurrency(),
+                            style: .long
+                        ),
+                        usdTotal: Formatter.fiat.string(token.usdBalance)
                     )
                 )
                 
@@ -316,8 +320,12 @@ private extension DefaultTokenPickerPresenter {
                 type = .init(
                     isSelected: nil,
                     balance: .init(
-                        tokens: token.balance.formatString(type: .long, decimals: token.decimals),
-                        usdTotal: token.usdBalance.formatStringCurrency(type: .long, decimals: 2)
+                        tokens: Formatter.currency.string(
+                            token.balance,
+                            currency: token.toCurrency(),
+                            style: .long
+                        ),
+                        usdTotal: Formatter.fiat.string(token.usdBalance)
                     )
                 )
             }
