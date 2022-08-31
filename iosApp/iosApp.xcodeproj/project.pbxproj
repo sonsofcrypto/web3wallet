@@ -373,6 +373,7 @@
 		1C7FC9B628BCF5C700FC9175 /* EtherscanHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9B528BCF5C700FC9175 /* EtherscanHelper.swift */; };
 		1C7FC9B828BCF95E00FC9175 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9B728BCF95E00FC9175 /* WebViewController.swift */; };
 		1C7FC9BA28BD00C200FC9175 /* AccountAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9B928BD00C200FC9175 /* AccountAddressCell.swift */; };
+		1C7FC9BC28BFA4F000FC9175 /* features-metadata-dict.json in Resources */ = {isa = PBXBuildFile; fileRef = 1C7FC9BB28BFA4EF00FC9175 /* features-metadata-dict.json */; };
 		1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46D92813DE4800F6C40B /* BaseViewController.swift */; };
 		1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1C9B46FA281427B800F6C40B /* under-construction.gif */; };
 		1C9E3195287580B600DD2031 /* TokenSendWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */; };
@@ -969,6 +970,7 @@
 		1C7FC9B528BCF5C700FC9175 /* EtherscanHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanHelper.swift; sourceTree = "<group>"; };
 		1C7FC9B728BCF95E00FC9175 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		1C7FC9B928BD00C200FC9175 /* AccountAddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAddressCell.swift; sourceTree = "<group>"; };
+		1C7FC9BB28BFA4EF00FC9175 /* features-metadata-dict.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "features-metadata-dict.json"; sourceTree = "<group>"; };
 		1C9B46D92813DE4800F6C40B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1C9B46FA281427B800F6C40B /* under-construction.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "under-construction.gif"; sourceTree = "<group>"; };
 		1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendWireframe.swift; sourceTree = "<group>"; };
@@ -2075,6 +2077,7 @@
 		1C7FC97528ACC9D100FC9175 /* Server */ = {
 			isa = PBXGroup;
 			children = (
+				1C7FC9BB28BFA4EF00FC9175 /* features-metadata-dict.json */,
 				1C7FC96D28ACAF6B00FC9175 /* FeatureVotingCacheService.swift */,
 				1C7FC97128ACB04500FC9175 /* FeatureVotingCacheServiceAssembler.swift */,
 				1C7FC96928AAA34C00FC9175 /* FeatureVotingRequestService.swift */,
@@ -2835,6 +2838,7 @@
 				1CD843EA287218C800E6D359 /* OCR-A Regular.ttf in Resources */,
 				D1976B14287EFAE10063FC9C /* MnemonicImport.storyboard in Resources */,
 				D11A990927B8615B00EDFDD0 /* GothicA1-SemiBold.ttf in Resources */,
+				1C7FC9BC28BFA4F000FC9175 /* features-metadata-dict.json in Resources */,
 				1C9E31A3287580E500DD2031 /* TokenSend.storyboard in Resources */,
 				D157F7D227B69B6300578FF8 /* Main.storyboard in Resources */,
 				1CAC5608286EFFC300CCB2B6 /* SFProDisplay-RegularItalic.otf in Resources */,
