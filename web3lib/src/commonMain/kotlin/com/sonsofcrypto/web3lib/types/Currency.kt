@@ -40,7 +40,15 @@ data class Currency(
             symbol = "cult",
             decimals = 18u,
             type = Type.ERC20,
-            address = null,
+            address = "0xf0f9d895aca5c8678f706fb8216fa22957685a13",
+            coinGeckoId = "cult-dao",
+        )
+        fun usdt(): Currency = Currency(
+            name = "Tether Usd",
+            symbol = "usdt",
+            decimals = 6u,
+            type = Type.ERC20,
+            address = "0xdac17f958d2ee523a2206206994597c13d831ec7",
             coinGeckoId = "cult-dao",
         )
     }
