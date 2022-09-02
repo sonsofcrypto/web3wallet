@@ -14,7 +14,6 @@ import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.uniswap.DefaultUniswapService
 import com.sonsofcrypto.web3lib.services.uniswap.PoolFee
-import com.sonsofcrypto.web3lib.services.uniswap.UniswapService.PoolFee
 import com.sonsofcrypto.web3lib.services.uniswap.UniswapService
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.UniswapV3PoolState
 import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletService
