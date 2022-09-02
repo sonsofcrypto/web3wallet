@@ -12,7 +12,8 @@ import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
 import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
-import com.sonsofcrypto.web3lib.services.uniswap.UniswapFeeAmount
+import com.sonsofcrypto.web3lib.services.uniswap.DefaultUniswapService
+import com.sonsofcrypto.web3lib.services.uniswap.UniswapService.PoolFee
 import com.sonsofcrypto.web3lib.services.uniswap.UniswapService
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.UniswapV3PoolState
 import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletService
@@ -48,12 +49,12 @@ class UniswapTests {
     }
 
     fun testGetPoolAddress() {
-        val service = UniswapService()
+        val service = DefaultUniswapService()
         val address = service.getPoolAddress(
             "0x1111111111111111111111111111111111111111",
             "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
             "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-            UniswapFeeAmount.LOW,
+            UniswapService.PoolFee.LOW,
             "0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54"
         )
         assertTrue(
@@ -64,14 +65,14 @@ class UniswapTests {
             "0x1111111111111111111111111111111111111111",
             "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
             "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-            UniswapFeeAmount.LOW,
+            UniswapService.PoolFee.LOW,
             "0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54"
         )
         val addressesUnsorted = service.getPoolAddress(
             "0x1111111111111111111111111111111111111111",
             "0x6B175474E89094C44Da98b954EedeAC495271d0F",
             "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-            UniswapFeeAmount.LOW,
+            UniswapService.PoolFee.LOW,
             "0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54"
         )
         assertTrue(
@@ -86,12 +87,12 @@ class UniswapTests {
         val networkService = result.networkService
         val walletService = result.walletService
         val password = result.password
-        val service = UniswapService()
+        val service = DefaultUniswapService()
         val address = service.getPoolAddress(
             "0x1F98431c8aD98523631AE4a59f267346ea31F984",
             "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
             "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-            UniswapFeeAmount.LOW,
+            UniswapService.PoolFee.LOW,
             "0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54"
         )
         val poolState = UniswapV3PoolState(Address.HexString(address))
@@ -130,12 +131,12 @@ class UniswapTests {
         val networkService = result.networkService
         val walletService = result.walletService
         val password = result.password
-        val service = UniswapService()
+        val service = DefaultUniswapService()
         val address = service.getPoolAddress(
             "0x1F98431c8aD98523631AE4a59f267346ea31F984",
             "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
             "0x6b175474e89094c44da98b954eedeac495271d0f",
-            UniswapFeeAmount.LOW,
+            UniswapService.PoolFee.LOW,
             "0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54"
         )
         println("=== address $address")

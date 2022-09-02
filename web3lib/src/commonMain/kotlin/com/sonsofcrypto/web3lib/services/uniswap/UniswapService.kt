@@ -42,7 +42,7 @@ interface UniswapService {
         factoryAddress: AddressHexString,
         tokenAddressA: AddressHexString,
         tokenAddressB: AddressHexString,
-        feeAmount: UniswapFeeAmount,
+        feeAmount: PoolFee,
         poolInitHash: DataHexString,
     ): AddressHexString
 
@@ -83,12 +83,37 @@ interface UniswapService {
 
 class DefaultUniswapService: UniswapService {
 
-    fun getPoolAddress(
+    override var inputCurrency: Currency = Currency.ethereum()
+    override var outputCurrency: Currency = Currency.cult()
+
+    override var inputAmount: BigInt = BigInt.zero()
+    override fun outputAmount(): BigInt {
+        return BigInt.zero()
+    }
+
+    override fun outputState(): UniswapService.OutputState {
+        TODO("Implement")
+    }
+
+    override fun approvalState(): UniswapService.ApprovalState {
+        TODO("Implement")
+    }
+
+    override suspend fun requestApproval(currency: Currency, wallet: Wallet) {
+        TODO("Implement")
+
+    }
+
+    override suspend fun executeSwap() {
+        TODO("Implement")
+    }
+
+    override fun getPoolAddress(
         factoryAddress: AddressHexString,
         tokenAddressA: AddressHexString,
         tokenAddressB: AddressHexString,
         feeAmount: UniswapService.PoolFee,
-        poolInitHash: DataHexString,
+        poolInitHash: DataHexString
     ): AddressHexString {
         val addresses = this.sortedAddresses(tokenAddressA, tokenAddressB)
         val salt = keccak256(
@@ -104,6 +129,14 @@ class DefaultUniswapService: UniswapService {
         ).copyOfRange(12, 32)
 
         return Address.Bytes(poolAddressBytes).toHexString()
+    }
+
+    override fun add(listener: UniswapListener) {
+        TODO("Not yet implemented")
+    }
+
+    override fun remove(listener: UniswapListener?) {
+        TODO("Not yet implemented")
     }
 
     fun getPoolData() {
