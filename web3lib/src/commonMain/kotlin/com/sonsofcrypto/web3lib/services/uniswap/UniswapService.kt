@@ -2,12 +2,18 @@ package com.sonsofcrypto.web3lib.services.uniswap
 
 import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import com.sonsofcrypto.web3lib.signer.Wallet
+import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.*
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.abiEncode
+import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.keccak256
 import io.ktor.utils.io.core.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.*
 
 /** Uniswap service events */
 sealed class UniswapEvent() {
@@ -33,7 +39,6 @@ interface UniswapService {
     val outputState: OutputState
 
     suspend fun requestApproval(currency: Currency, wallet: Wallet)
-
     suspend fun executeSwap()
 
     fun getPoolAddress(
@@ -48,9 +53,9 @@ interface UniswapService {
         LOWEST(100u), LOW(500u), MEDIUM(3000u), HIGH(10000u)
     }
 
-    /** Add listener for `WalletEvent`s */
+    /** Add listener for `Uniswap`s */
     fun add(listener: UniswapListener)
-    /** Remove listener for `WalletEvent`s, if null removes all listeners */
+    /** Remove listener for `Uniswap`s, if null removes all listeners */
     fun remove(listener: UniswapListener?)
 
     /** Note that fee is in hundredths of basis points (e.g. the fee for a pool at
@@ -78,6 +83,8 @@ interface UniswapService {
         DOES_NO_APPLY, LOADING, NEEDS_APPROVAL, APPROVING, APPROVED
     }
 }
+
+private val QUOTE_DEBOUNCE_MS = 750L
 
 class DefaultUniswapService: UniswapService {
     override var inputCurrency: Currency = Currency.ethereum()
@@ -114,6 +121,24 @@ class DefaultUniswapService: UniswapService {
     override var outputState: UniswapService.OutputState = UniswapService.OutputState.Unavailable
         private set
 
+    private val network = Network.ethereum()
+    private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
+    private val quoteFlow = MutableSharedFlow<Triple<Currency, Currency, BigInt>>(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+
+    init {
+        quoteFlow
+            .debounce(QUOTE_DEBOUNCE_MS)
+            .flatMapLatest { input ->
+                val (input, output, value) = input
+                fetchQuotes(input, output, value)
+            }
+            .onEach { /** update state based on it */}
+            .launchIn(scope)
+    }
+
     override suspend fun requestApproval(currency: Currency, wallet: Wallet) {
         TODO("Implement")
 
@@ -123,18 +148,24 @@ class DefaultUniswapService: UniswapService {
         TODO("Implement")
     }
 
-    private fun currenciesChanged(input: Currency, outputCurrency: Currency) {
-        // UPDATE flow
+    private fun currenciesChanged(input: Currency, output: Currency) {
+        val poolsAddresses = UniswapService.PoolFee.values().map {
+            getPoolAddress(
+                factoryAddress(network),
+                wrappedAddress(input),
+                wrappedAddress(output),
+                it,
+                poolInitHash(network)
+            )
+        }
+        
         // GET POLL
         // FETCH QUOUTES
         // FETCH aprroval
     }
 
     private fun inputChanged(input: Currency, outputCurrency: Currency, value: BigInt) {
-        // UPDATE flow
-        // GET POLL
         // FETCH QUOUTES
-        // FETCH aprroval
     }
 
     override fun getPoolAddress(
@@ -147,17 +178,22 @@ class DefaultUniswapService: UniswapService {
         val addresses = this.sortedAddresses(tokenAddressA, tokenAddressB)
         val salt = keccak256(
             abiEncode(Address.HexString(addresses.first)) +
-                    abiEncode(Address.HexString(addresses.second)) +
-                    abiEncode(feeAmount.value)
+                abiEncode(Address.HexString(addresses.second)) +
+                abiEncode(feeAmount.value)
         )
         val poolAddressBytes = keccak256(
             "0xff".hexStringToByteArray() +
-                    factoryAddress.hexStringToByteArray() +
-                    salt +
-                    poolInitHash.hexStringToByteArray()
+                factoryAddress.hexStringToByteArray() +
+                salt +
+                poolInitHash.hexStringToByteArray()
         ).copyOfRange(12, 32)
 
         return Address.Bytes(poolAddressBytes).toHexString()
+    }
+
+    private fun fetchQuotes(input: Currency, output: Currency, value: BigInt): Flow<BigInt> = flow {
+        TODO("Not yet implemented")
+
     }
 
     override fun add(listener: UniswapListener) {
@@ -172,7 +208,35 @@ class DefaultUniswapService: UniswapService {
 
     }
 
-    fun sortedAddresses(
+    private fun wrappedAddress(currency: Currency): AddressHexString {
+        return if (currency.type == Currency.Type.NATIVE)
+            // TODO: Add support for test nets
+            when(network) {
+                Network.ethereum() -> "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+                else -> "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+            }
+        else currency.address!!
+    }
+
+    // TODO: Add support for test nets
+    private fun factoryAddress(network: Network): AddressHexString = when(network) {
+        Network.ethereum() -> "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+        else -> "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+    }
+
+    // TODO: Add support for test nets
+    private fun routerAddress(network: Network): AddressHexString = when(network) {
+        Network.ethereum() -> "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45"
+        else -> "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45"
+    }
+
+    // TODO: Add support for test nets
+    private fun poolInitHash(network: Network): AddressHexString = when(network) {
+        Network.ethereum() -> "0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54"
+        else -> "0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54"
+    }
+
+    private fun sortedAddresses(
         addressA: AddressHexString,
         addressB: AddressHexString
     ): Pair<AddressHexString, AddressHexString> {
