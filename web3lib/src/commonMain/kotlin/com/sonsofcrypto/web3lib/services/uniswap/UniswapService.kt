@@ -95,7 +95,7 @@ class DefaultUniswapService: UniswapService {
             field = value
             inputChanged(inputCurrency, outputCurrency, value)
         }
-    overrid
+
     override var outputAmount: BigInt = BigInt.zero()
         get() {
             val state = outputState
@@ -130,7 +130,7 @@ class DefaultUniswapService: UniswapService {
         // FETCH aprroval
     }
 
-    private fun inputChanged(input: Currency, outputCurrency: Currency) {
+    private fun inputChanged(input: Currency, outputCurrency: Currency, value: BigInt) {
         // UPDATE flow
         // GET POLL
         // FETCH QUOUTES
