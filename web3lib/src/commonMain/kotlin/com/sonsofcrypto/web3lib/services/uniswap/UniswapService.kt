@@ -1,8 +1,6 @@
 package com.sonsofcrypto.web3lib.services.uniswap
 
 import com.sonsofcrypto.web3lib.provider.model.DataHexString
-import com.sonsofcrypto.web3lib.services.wallet.WalletEvent
-import com.sonsofcrypto.web3lib.services.wallet.WalletListener
 import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.types.*
 import com.sonsofcrypto.web3lib.utils.BigInt
@@ -28,12 +26,12 @@ interface UniswapListener { fun handle(event: UniswapEvent) }
 interface UniswapService {
     var inputCurrency: Currency
     var outputCurrency: Currency
-
     var inputAmount: BigInt
-    fun outputAmount(): BigInt
-    fun outputState(): OutputState
+    val outputAmount: BigInt
+    val poolsState: PoolsState
+    val approvalState: ApprovalState
+    val outputState: OutputState
 
-    fun approvalState(): ApprovalState
     suspend fun requestApproval(currency: Currency, wallet: Wallet)
 
     suspend fun executeSwap()
@@ -82,22 +80,39 @@ interface UniswapService {
 }
 
 class DefaultUniswapService: UniswapService {
-
     override var inputCurrency: Currency = Currency.ethereum()
+        set(value) {
+            field = value
+            currenciesChanged(value, outputCurrency)
+        }
     override var outputCurrency: Currency = Currency.cult()
-
+        set(value) {
+            field = value
+            currenciesChanged(inputCurrency, value)
+        }
     override var inputAmount: BigInt = BigInt.zero()
-    override fun outputAmount(): BigInt {
-        return BigInt.zero()
-    }
+        set(value) {
+            field = value
+            inputChanged(inputCurrency, outputCurrency, value)
+        }
+    overrid
+    override var outputAmount: BigInt = BigInt.zero()
+        get() {
+            val state = outputState
+            return when (state) {
+                is UniswapService.OutputState.Loading -> return state.previous
+                is UniswapService.OutputState.Valid -> return state.quote
+                else -> return BigInt.zero()
+            }
+        }
+        private set
 
-    override fun outputState(): UniswapService.OutputState {
-        TODO("Implement")
-    }
-
-    override fun approvalState(): UniswapService.ApprovalState {
-        TODO("Implement")
-    }
+    override var poolsState: UniswapService.PoolsState = UniswapService.PoolsState.Loading
+        private set
+    override var approvalState: UniswapService.ApprovalState = UniswapService.ApprovalState.LOADING
+        private set
+    override var outputState: UniswapService.OutputState = UniswapService.OutputState.Unavailable
+        private set
 
     override suspend fun requestApproval(currency: Currency, wallet: Wallet) {
         TODO("Implement")
@@ -106,6 +121,20 @@ class DefaultUniswapService: UniswapService {
 
     override suspend fun executeSwap() {
         TODO("Implement")
+    }
+
+    private fun currenciesChanged(input: Currency, outputCurrency: Currency) {
+        // UPDATE flow
+        // GET POLL
+        // FETCH QUOUTES
+        // FETCH aprroval
+    }
+
+    private fun inputChanged(input: Currency, outputCurrency: Currency) {
+        // UPDATE flow
+        // GET POLL
+        // FETCH QUOUTES
+        // FETCH aprroval
     }
 
     override fun getPoolAddress(
