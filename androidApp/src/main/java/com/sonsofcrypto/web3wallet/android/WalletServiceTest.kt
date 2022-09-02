@@ -59,6 +59,7 @@ class WalletServiceTest {
             currencyStoreService,
             KeyValueStore("WalletServiceTest.currencies"),
             KeyValueStore("WalletServiceTest.networkState"),
+            KeyValueStore("WalletServiceTest.transferLogCache"),
         )
         walletService.setCurrencies(ethereumDefaultCurrencies, Network.ethereum())
         walletService = DefaultWalletService(
@@ -66,6 +67,7 @@ class WalletServiceTest {
             currencyStoreService,
             KeyValueStore("WalletServiceTest.currencies"),
             KeyValueStore("WalletServiceTest.networkState"),
+            KeyValueStore("WalletServiceTest.transferLogCache"),
         )
         assertTrue(
             walletService.currencies(Network.ethereum()).size == 4,
@@ -130,6 +132,7 @@ class WalletServiceTest {
             currencyStoreService,
             KeyValueStore("WalletServiceTest.currencies"),
             KeyValueStore("WalletServiceTest.networkState"),
+            KeyValueStore("WalletServiceTest.transferLogCache"),
         )
         walletService.setCurrencies(ropstenDefaultCurrencies, Network.ropsten())
         walletService.unlock(password, "", Network.ropsten())
@@ -201,6 +204,7 @@ class WalletServiceTest {
             currencyStoreService,
             KeyValueStore("WalletServiceTest.currencies"),
             KeyValueStore("WalletServiceTest.networkState"),
+            KeyValueStore("WalletServiceTest.transferLogCache"),
         )
         walletService.setCurrencies(ropstenDefaultCurrencies, Network.ropsten())
         scope.launch {
@@ -277,6 +281,7 @@ class WalletServiceTest {
             currencyStoreService,
             KeyValueStore("WalletServiceTest.currencies"),
             KeyValueStore("WalletServiceTest.networkState"),
+            KeyValueStore("WalletServiceTest.transferLogCache"),
         )
         walletService.setCurrencies(ethereumDefaultCurrencies, Network.ropsten())
         scope.launch {
@@ -348,6 +353,7 @@ class WalletServiceTest {
             currencyStoreService,
             KeyValueStore("WalletServiceTest.currencies"),
             KeyValueStore("WalletServiceTest.networkState"),
+            KeyValueStore("WalletServiceTest.transferLogCache"),
         )
         walletService.setCurrencies(ethereumDefaultCurrencies, Network.ropsten())
         scope.launch {

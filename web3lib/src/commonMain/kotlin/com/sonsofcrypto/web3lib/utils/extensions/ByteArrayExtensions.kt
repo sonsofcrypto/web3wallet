@@ -32,11 +32,31 @@ fun ByteArray.toUInt(): UInt {
     for (i in bytes-this.size until paddedArray.size) {
         paddedArray[i] = this[i-(bytes-this.size)]
     }
+    return (
+        ((paddedArray[0].toUInt() and 0xFFu) shl 24) or
+        ((paddedArray[1].toUInt() and 0xFFu) shl 16) or
+        ((paddedArray[2].toUInt() and 0xFFu) shl 8) or
+        (paddedArray[3].toUInt() and 0xFFu)
+    )
+}
 
-    return (((paddedArray[0].toUInt() and 0xFFu) shl 24) or
-            ((paddedArray[1].toUInt() and 0xFFu) shl 16) or
-            ((paddedArray[2].toUInt() and 0xFFu) shl 8) or
-            (paddedArray[3].toUInt() and 0xFFu))
+fun ByteArray.toUInt_8(): UInt {
+    val bytes = 8
+    val paddedArray = ByteArray(bytes)
+    for (i in 0 until bytes-this.size) paddedArray[i] = 0
+    for (i in bytes-this.size until paddedArray.size) {
+        paddedArray[i] = this[i-(bytes-this.size)]
+    }
+    return (
+        ((paddedArray[0].toUInt() and 0xFFu) shl 56) or
+        ((paddedArray[1].toUInt() and 0xFFu) shl 48) or
+        ((paddedArray[2].toUInt() and 0xFFu) shl 40) or
+        ((paddedArray[3].toUInt() and 0xFFu) shl 32) or
+        ((paddedArray[4].toUInt() and 0xFFu) shl 24) or
+        ((paddedArray[5].toUInt() and 0xFFu) shl 16) or
+        ((paddedArray[6].toUInt() and 0xFFu) shl 8) or
+        (paddedArray[7].toUInt() and 0xFFu)
+    )
 }
 
 /** BitArray */

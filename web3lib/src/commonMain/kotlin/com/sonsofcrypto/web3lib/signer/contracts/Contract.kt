@@ -9,7 +9,7 @@ import com.sonsofcrypto.web3lib.utils.keccak256
 
 
 open class Contract(
-    var address: Address.HexString
+    open var address: Address.HexString
 ) {
     open class Event()
 
