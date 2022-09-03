@@ -22,7 +22,9 @@ import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.bip39.localeString
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.seconds
 
 val FACTORY_ADDRESS = "0x1F98431c8aD98523631AE4a59f267346ea31F984";
 val ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
@@ -42,7 +44,7 @@ class UniswapTests {
 //        testGetPoolData()
 //        testGetAllPoolData()
 //        testInitState()
-        testApproval()
+        testSwap()
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
@@ -177,106 +179,22 @@ class UniswapTests {
         }
     }
 
-    fun testNext() {
+    fun testSwap() {
         println(networksService)
         val network = Network.ethereum()
-        val wallet = networksService.wallet(network)
+        val wallet = networksService.wallet(network)!!
         val service = DefaultUniswapService()
-        service.provider = wallet?.provider()!!
+        service.provider = wallet.provider()!!
+        service.wallet = wallet
         service.inputCurrency = Currency.ethereum()
         service.outputCurrency = Currency.usdt()
-        service.inputAmount = BigInt.from("1000000000000000000")
-        val addresses = PoolFee.values().map {
-            val input = service.inputCurrency
-            val output = service.outputCurrency
-            wallet.unlock(password, "")
-            service.poolAddress(input, output, it, network)
-        }
-
-//        scope.launch {
-//            UniswapService.PoolFee.values().forEach { fee ->
-//                val result = service.fetchQuote(
-//                    service.inputCurrency,
-//                    service.outputCurrency,
-//                    service.inputAmount,
-//                    fee
-//                )
-//                println("=== ${fee.value} $result")
-//            }
-//        }
-        // ===   500 1607420097
-        // ===  3000 1607124142
-        // === 10000 1609133243
-
-//        val poolState = UniswapV3PoolState(Address.HexString(address))
-//        scope.launch {
-//            val wallet = networkService.wallet(Network.ethereum())
-//            wallet?.unlock(password, "")
-//            val provider = wallet!!.provider()!!
-//            println("=== slot0 call")
-//            val resultSlot0 = provider.call(
-//                TransactionRequest(
-//                    to = poolState.address,
-//                    data = poolState.slot0()
-//                ),
-//                BlockTag.Latest
-//            )
-//            val slot0 = poolState.decodeSlot(resultSlot0)
-//            println("=== slot0 $slot0")
-//            println("=== liquidity call")
-//            val resultLiquidity = provider.call(
-//                TransactionRequest(
-//                    to = poolState.address,
-//                    data = poolState.liquidity()
-//                ),
-//                BlockTag.Latest
-//            )
-//            val liquidity = poolState.decodeLiquidity(resultLiquidity)
-//            println("=== liquidity $liquidity")
-//        }
-    }
-
-
-    fun testSwap() {
-        val service = DefaultUniswapService()
-        val address = service.poolAddress(
-            "0x1F98431c8aD98523631AE4a59f267346ea31F984",
-            "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-            "0x6b175474e89094c44da98b954eedeac495271d0f",
-            PoolFee.LOW,
-            "0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54"
-        )
-        println("=== address $address")
-        return;
-        val poolState = UniswapV3PoolState(Address.HexString(address))
+        service.inputAmount = BigInt.from("1000000000000000")
         scope.launch {
-            val wallet = networksService.wallet(Network.ethereum())
-            wallet?.unlock(password, "")
-            val provider = wallet!!.provider()!!
-            println("=== slot0 call")
-            val resultSlot0 = provider.call(
-                TransactionRequest(
-                    to = poolState.address,
-                    data = poolState.slot0()
-                ),
-                BlockTag.Latest
-            )
-            val slot0 = poolState.decodeSlot(resultSlot0)
-            println("=== slot0 $slot0")
-            println("=== liquidity call")
-            val resultLiquidity = provider.call(
-                TransactionRequest(
-                    to = poolState.address,
-                    data = poolState.liquidity()
-                ),
-                BlockTag.Latest
-            )
-            val liquidity = poolState.decodeLiquidity(resultLiquidity)
-            println("=== liquidity $liquidity")
-
+            wallet.unlock(password, "")
+            delay(15.seconds)
+            service.executeSwap()
         }
     }
-
 
     fun initKeyStoreService(): KeyStoreService {
         // 0x58aEBEC033A2D55e35e44E6d7B43725b069F6Abc

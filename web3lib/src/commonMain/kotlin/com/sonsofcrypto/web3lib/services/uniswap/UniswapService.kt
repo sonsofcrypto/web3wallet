@@ -76,7 +76,7 @@ interface UniswapService {
     fun remove(listener: UniswapListener?)
 }
 
-private val QUOTE_DEBOUNCE_MS = 750L
+private val QUOTE_DEBOUNCE_MS = 1.seconds
 private val UINT256_MAX = BigInt.from("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", 16)
 
 class DefaultUniswapService(): UniswapService {
@@ -156,10 +156,12 @@ class DefaultUniswapService(): UniswapService {
     }
 
     @Throws(Throwable::class)
-    override suspend fun executeSwap(wallet: Wallet): TransactionResponse = withBgCxt{
+    override suspend fun executeSwap(): TransactionResponse {
         val state = outputState as? OutputState.Valid
         if (state == null)
             throw Throwable("No valid quote")
+        if (wallet == null)
+            throw Throwable("No wallet")
         val minAmount = BigDec.from(state.quote).mul(BigDec.from(0.98)).toBigInt()
         val params = IV3SwapRouter.ExactInputSingleParams(
             tokenIn = wrappedAddress(inputCurrency),
@@ -178,7 +180,6 @@ class DefaultUniswapService(): UniswapService {
         if (outputCurrency.type == Currency.Type.NATIVE) {
             callDatas.add(router.unwrapWETH9(minAmount).toByteArrayData())
         }
-
         val request = TransactionRequest(
             to = router.address,
             gasLimit = BigInt.from(300000),
@@ -186,7 +187,9 @@ class DefaultUniswapService(): UniswapService {
             value = if (inputCurrency.type == Currency.Type.NATIVE) inputAmount
                 else BigInt.zero()
         )
-        return@withBgCxt wallet.sendTransaction(request)
+        println("=== REQUEST $request")
+        TODO("Enable return")
+        // return withBgCxt { wallet!!.sendTransaction(request) }
     }
 
     private fun currencyChanged(input: Currency, output: Currency) {
