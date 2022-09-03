@@ -73,6 +73,17 @@ class IV3SwapRouter(address: Address.HexString): Contract(address) {
     )
 
     /**
+     * @notice Unwraps the contract's WETH9 balance and sends it to msg.sender as ETH.
+     * @dev The amountMinimum parameter prevents malicious contracts from stealing WETH9 from users.
+     * @param amountMinimum The minimum amount of WETH9 to unwrap
+     *
+     * function unwrapWETH9(uint256 amountMinimum) external payable;
+     */
+    fun unwrapWETH9(amountMinimum: BigInt): DataHexString = DataHexString(
+        abiEncode(amountMinimum)
+    )
+
+    /**
      * @notice Call multiple functions in the current contract and return the data from all of them if they all succeed
      * @dev The `msg.value` should not be trusted for any method callable from multicall.
      * @param deadline The time by which this function must be called before failing
@@ -81,10 +92,12 @@ class IV3SwapRouter(address: Address.HexString): Contract(address) {
      *
      * function multicall(uint256 deadline, bytes[] calldata data) external payable returns (bytes[] memory results);
      */
-    fun multicall(deadline: Instant, calldata: List<ByteArray>): ByteArray {
+    fun multicall(deadline: Instant, calldata: List<ByteArray>): DataHexString {
         var data = keccak256(
             "multicall(uint256,bytes[])".encodeToByteArray()
         ).copyOfRange(0, 4)
+
+        data += abiEncode(BigInt.from(deadline.epochSeconds))
 
         /// MethodID: 0x5ae401dc
         /// 000000000000000000000000000000000000000000000000000000006311b9b8
@@ -176,6 +189,6 @@ class IV3SwapRouter(address: Address.HexString): Contract(address) {
         } else {
             throw Exception("Unsupported number of calldatas ${calldata.size}, needs refactor")
         }
-        return data
+        return DataHexString(data)
     }
 }

@@ -6,6 +6,8 @@ import com.sonsofcrypto.web3lib.provider.call
 import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.provider.model.TransactionResponse
+import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
+import com.sonsofcrypto.web3lib.services.uniswap.contracts.IV3SwapRouter
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.Quoter
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.UniswapV3PoolState
 import com.sonsofcrypto.web3lib.signer.Wallet
@@ -16,7 +18,9 @@ import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
+import kotlinx.datetime.Clock
 import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Duration.Companion.minutes
 
 /** Note that fee is in hundredths of basis points (e.g. the fee for a pool at
  *  the 0.3% tier is 3000; the fee for a pool at the 0.01% tier is 100).*/
@@ -40,7 +44,7 @@ sealed class PoolsState {
 sealed class OutputState {
     object Unavailable: OutputState()
     data class Loading(val quote: BigInt, val request: QuoteRequest): OutputState()
-    data class Valid(val quote: BigInt, val request: QuoteRequest): OutputState()
+    data class Valid(val quote: BigInt, val fee: PoolFee, val request: QuoteRequest): OutputState()
 }
 
 /** State of ERC20 approval for router contract*/
@@ -152,21 +156,37 @@ class DefaultUniswapService(): UniswapService {
     }
 
     @Throws(Throwable::class)
-    override suspend fun executeSwap(): TransactionResponse = withBgCxt{
-        delay(2.seconds)
-        withUICxt {
-            return@withUICxt TransactionResponse(
-                hash = "mock hash",
-                blockNumber = null,
-                blockHash = "HASH",
-                timestamp = null,
-                confirmations = 1u,
-                from = Address.HexString(""),
-                raw = null,
-                gasLimit = null,
-                gasPrice = null,
-            )
+    override suspend fun executeSwap(wallet: Wallet): TransactionResponse = withBgCxt{
+        val state = outputState as? OutputState.Valid
+        if (state == null)
+            throw Throwable("No valid quote")
+        val minAmount = BigDec.from(state.quote).mul(BigDec.from(0.98)).toBigInt()
+        val params = IV3SwapRouter.ExactInputSingleParams(
+            tokenIn = wrappedAddress(inputCurrency),
+            tokenOut = wrappedAddress(outputCurrency),
+            fee = state.fee.value,
+            recipient = if (outputCurrency.type == Currency.Type.NATIVE)
+                IV3SwapRouter.ExactInputSingleParams.Recipient.This
+                else IV3SwapRouter.ExactInputSingleParams.Recipient.MsgSender,
+            amountIn = state.quote,
+            amountOutMinimum = minAmount,
+            sqrtPriceLimitX96 = BigInt.zero(),
+        )
+        val router = IV3SwapRouter(Address.HexString(routerAddress(provider.network)))
+        var callDatas: MutableList<ByteArray> = mutableListOf()
+        callDatas.add(router.exactInputSingle(params).toByteArrayData())
+        if (outputCurrency.type == Currency.Type.NATIVE) {
+            callDatas.add(router.unwrapWETH9(minAmount).toByteArrayData())
         }
+
+        val request = TransactionRequest(
+            to = router.address,
+            gasLimit = BigInt.from(300000),
+            data = router.multicall(Clock.System.now() + 10.minutes, callDatas),
+            value = if (inputCurrency.type == Currency.Type.NATIVE) inputAmount
+                else BigInt.zero()
+        )
+        return@withBgCxt wallet.sendTransaction(request)
     }
 
     private fun currencyChanged(input: Currency, output: Currency) {
@@ -248,7 +268,7 @@ class DefaultUniswapService(): UniswapService {
 
     suspend fun handleQuote(quote: BigInt, fee: PoolFee, request: QuoteRequest) = withUICxt {
         if (quote.isZero()) outputState = OutputState.Unavailable
-        else outputState = OutputState.Valid(quote, request)
+        else outputState = OutputState.Valid(quote, fee, request)
     }
 
     /** Pools */
