@@ -6,6 +6,7 @@ import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import com.sonsofcrypto.web3lib.provider.call
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.Quoter
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.UniswapV3PoolState
+import com.sonsofcrypto.web3lib.services.wallet.WalletListener
 import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.signer.contracts.ERC20
 import com.sonsofcrypto.web3lib.types.Network
@@ -122,6 +123,7 @@ class DefaultUniswapService: UniswapService {
     override var wallet: Wallet? = null
 
     private val network = Network.ethereum()
+    private var listeners: MutableSet<UniswapListener> = mutableSetOf()
     private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
     private var poolsStateJob: Job? = null
     private val quoteFlow = MutableSharedFlow<QuoteRequest>(
@@ -370,14 +372,16 @@ class DefaultUniswapService: UniswapService {
     /** Listeners */
 
     override fun add(listener: UniswapListener) {
-        TODO("Not yet implemented")
+        listeners.add(listener)
     }
 
     override fun remove(listener: UniswapListener?) {
-        TODO("Not yet implemented")
+        if (listener != null) listeners.remove(listener)
+        else listeners = mutableSetOf()
     }
 
     private fun emit(event: UniswapEvent) {
+        listeners.forEach { it.handle(event)}
         println("=== $event")
     }
 
