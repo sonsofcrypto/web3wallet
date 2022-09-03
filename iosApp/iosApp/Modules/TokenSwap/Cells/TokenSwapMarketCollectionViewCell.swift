@@ -15,6 +15,7 @@ final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var tokenSwapPriceView: TokenSwapPriceView!
     @IBOutlet weak var tokenSwapSlippageView: TokenSwapSlippageView!
     @IBOutlet weak var networkFeeView: TokenNetworkFeeView!
+    @IBOutlet weak var approveButton: Button!
     @IBOutlet weak var button: Button!
 
     private var handler: Handler!
@@ -29,6 +30,7 @@ final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
         let onProviderTapped: () -> Void
         let onSlippageTapped: () -> Void
         let onNetworkFeesTapped: () -> Void
+        let onApproveCTATapped: () -> Void
         let onCTATapped: () -> Void
     }
     
@@ -50,7 +52,14 @@ final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
         loadingIndicator.color = Theme.colour.activityIndicator
         
         tokenTo.maxButton.isHidden = true
-        
+
+        approveButton.style = .primary
+        approveButton.addTarget(self, action: #selector(approveButtonTapped), for: .touchUpInside)
+        var approveConfiguration = approveButton.configuration ?? .plain()
+        approveConfiguration.imagePlacement = .trailing
+        approveButton.configuration = approveConfiguration
+        approveButton.updateConfiguration()
+
         button.style = .primary
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         var configuration = button.configuration ?? .plain()
@@ -88,8 +97,6 @@ extension TokenSwapMarketCollectionViewCell {
         
         self.handler = handler
     
-        hideLoading()
-
         tokenFrom.update(
             with: viewModel.tokenFrom,
             onTokenTapped: handler.onTokenFromTapped,
@@ -131,23 +138,47 @@ extension TokenSwapMarketCollectionViewCell {
             handler: handler.onNetworkFeesTapped
         )
         
+        if viewModel.isCalculating {
+            showLoading()
+        } else {
+            hideLoading()
+        }
+        
+        button.setImage(
+            viewModel.providerAsset.assetImage?.resize(
+                to: .init(width: 24, height: 24)
+            ),
+            for: .normal
+        )
+        
+        switch viewModel.approveState {
+        case .approve:
+            approveButton.isHidden = false
+            approveButton.hideLoading()
+            approveButton.setTitle(Localized("tokenSwap.cell.button.state.approve"), for: .normal)
+            approveButton.isEnabled = true
+        case .approving:
+            approveButton.isHidden = false
+            approveButton.showLoading()
+            approveButton.setTitle(Localized("tokenSwap.cell.button.state.approving"), for: .normal)
+            approveButton.isEnabled = true
+        case .approved:
+            approveButton.isHidden = true
+        }
+        
         switch viewModel.buttonState {
-        case let .swap(providerIconName):
-            button.setTitle(Localized("tokenSwap.cell.market.swap"), for: .normal)
-            button.setImage(
-                providerIconName.assetImage?.resize(
-                    to: .init(width: 24, height: 24)
-                ),
-                for: .normal
-            )
-        case let .insufficientFunds(providerIconName):
-            button.setTitle(Localized("insufficientFunds"), for: .normal)
-            button.setImage(
-                providerIconName.assetImage?.resize(
-                    to: .init(width: 24, height: 24)
-                ),
-                for: .normal
-            )
+        case .loading:
+            button.hideLoading()
+            button.setTitle(Localized("tokenSwap.cell.button.state.swap"), for: .normal)
+            button.isEnabled = false
+        case let .invalid(text):
+            button.hideLoading()
+            button.setTitle(text, for: .normal)
+            button.isEnabled = false
+        case .swap:
+            button.hideLoading()
+            button.setTitle(Localized("tokenSwap.cell.button.state.swap"), for: .normal)
+            button.isEnabled = viewModel.approveState == .approved
         }
     }
 }
@@ -165,6 +196,11 @@ private extension TokenSwapMarketCollectionViewCell {
     @objc func flip() {
         
         handler.onSwapFlip()
+    }
+    
+    @objc func approveButtonTapped() {
+        
+        handler.onApproveCTATapped()
     }
     
     @objc func buttonTapped() {

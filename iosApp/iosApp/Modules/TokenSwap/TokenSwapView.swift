@@ -18,7 +18,6 @@ final class TokenSwapViewController: BaseViewController {
 
     var presenter: TokenSwapPresenter!
 
-    @IBOutlet weak var providerLogo: UIImageView!
     private weak var segmentControl: SegmentedControl!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var feesPickerView: FeesPickerView!
@@ -151,12 +150,7 @@ extension TokenSwapViewController: UICollectionViewDelegate {
 private extension TokenSwapViewController {
     
     func configureUI() {
-        
-        // TODO: Pass provider logo when multiple here
-        providerLogo.image = "uniswap-logo-overlay".assetImage?.withTintColor(
-            Theme.colour.labelSecondary
-        )
-            
+                    
         if (navigationController?.viewControllers.count ?? 0) > 1 {
             
             navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -338,26 +332,17 @@ private extension TokenSwapViewController {
     func makeTokenSwapHandler() -> TokenSwapMarketCollectionViewCell.Handler {
         
         .init(
-            onTokenFromTapped: makeOnTokenFromTapped(),
+            onTokenFromTapped: makeOnTapped(.tokenFromTapped),
             onTokenFromAmountChanged: makeOnTokenFromAmountChanged(),
-            onTokenToTapped: makeOnTokenToTapped(),
+            onTokenToTapped: makeOnTapped(.tokenToTapped),
             onTokenToAmountChanged: makeOnTokenToAmountChanged(),
-            onSwapFlip: makeOnSwapFlip(),
-            onProviderTapped: makeOnProviderTapped(),
-            onSlippageTapped: makeOnSlippageTapped(),
-            onNetworkFeesTapped: makeOnNetworkFeesTapped(),
-            onCTATapped: makeOnCTATapped()
+            onSwapFlip: makeOnTapped(.swapFlip),
+            onProviderTapped: makeOnTapped(.providerTapped),
+            onSlippageTapped: makeOnTapped(.slippageTapped),
+            onNetworkFeesTapped: makeOnTapped(.feeTapped),
+            onApproveCTATapped: makeOnTapped(.approve),
+            onCTATapped: makeOnTapped(.review)
         )
-    }
-    
-    func makeOnTokenFromTapped() -> () -> Void {
-        
-        {
-            [weak self] in
-            guard let self = self else { return }
-            self.dismissKeyboard()
-            self.presenter.handle(.tokenFromTapped)
-        }
     }
     
     func makeOnTokenFromAmountChanged() -> (BigInt) -> Void {
@@ -366,16 +351,6 @@ private extension TokenSwapViewController {
             [weak self] amount in
             guard let self = self else { return }
             self.presenter.handle(.tokenFromChanged(to: amount))
-        }
-    }
-    
-    func makeOnTokenToTapped() -> () -> Void {
-        
-        {
-            [weak self] in
-            guard let self = self else { return }
-            self.dismissKeyboard()
-            self.presenter.handle(.tokenToTapped)
         }
     }
     
@@ -388,48 +363,12 @@ private extension TokenSwapViewController {
         }
     }
     
-    func makeOnSwapFlip() -> () -> Void {
+    func makeOnTapped(_ event: TokenSwapPresenterEvent) -> () -> Void {
         
         {
             [weak self] in
             guard let self = self else { return }
-            self.presenter.handle(.swapFlip)
-        }
-    }
-    
-    func makeOnProviderTapped() -> () -> Void {
-        
-        {
-            [weak self] in
-            guard let self = self else { return }
-            self.presenter.handle(.providerTapped)
-        }
-    }
-    
-    func makeOnSlippageTapped() -> () -> Void {
-        
-        {
-            [weak self] in
-            guard let self = self else { return }
-            self.presenter.handle(.slippageTapped)
-        }
-    }
-    
-    func makeOnNetworkFeesTapped() -> () -> Void {
-        
-        {
-            [weak self] in
-            guard let self = self else { return }
-            self.presenter.handle(.feeTapped)
-        }
-    }
-    
-    func makeOnCTATapped() -> () -> Void {
-        
-        {
-            [weak self] in
-            guard let self = self else { return }
-            self.presenter.handle(.review)
+            self.presenter.handle(event)
         }
     }
 }

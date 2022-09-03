@@ -25,8 +25,8 @@
 "sec" = "sec";
 "save" = "Save";
 "max" = "Max";
-"enterFunds" = "Enter Funds";
-"insufficientFunds" = "Insufficient Funds";
+"enterFunds" = "Enter funds";
+"insufficientFunds" = "Insufficient funds";
 "low" = "Low";
 "medium" = "Average";
 "high" = "Fast";
@@ -301,7 +301,13 @@
 "tokenSwap.cell.price" = "Price";
 "tokenSwap.cell.slippage" = "Slippage";
 "tokenSwap.cell.estimatedFee" = "Estimated Fee";
-"tokenSwap.cell.market.swap" = "Swap with";
+"tokenSwap.cell.button.state.swap" = "Swap with";
+"tokenSwap.cell.button.state.approve" = "Approve";
+"tokenSwap.cell.button.state.approving" = "Approving";
+"tokenSwap.cell.button.state.loading" = "Loading";
+"tokenSwap.cell.button.state.enterAmount" = "Enter an amount";
+"tokenSwap.cell.button.state.insufficientBalance" = "Insufficient %@ balance";
+"tokenSwap.cell.button.state.noPoolsFound" = "No pools found";
 
 "authenticate.title.unlock" = "Unlock";
 "authenticate.title.swap" = "Swap";

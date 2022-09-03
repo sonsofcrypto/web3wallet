@@ -163,6 +163,7 @@ struct ThemeColour {
     let labelQuaternary: UIColor
     
     let buttonBackgroundPrimary: UIColor
+    let buttonBackgroundPrimaryDisabled: UIColor
     let buttonPrimaryText: UIColor
     let buttonBackgroundSecondary: UIColor
     let buttonSecondaryText: UIColor

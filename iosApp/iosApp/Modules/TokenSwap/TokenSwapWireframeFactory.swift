@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 protocol TokenSwapWireframeFactory {
 
@@ -18,17 +19,20 @@ final class DefaultTokenSwapWireframeFactory {
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let web3Service: Web3ServiceLegacy
+    private let swapService: UniswapService
 
     init(
         tokenPickerWireframeFactory: TokenPickerWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        web3Service: Web3ServiceLegacy
+        web3Service: Web3ServiceLegacy,
+        swapService: UniswapService
     ) {
         self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
         self.confirmationWireframeFactory = confirmationWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.web3Service = web3Service
+        self.swapService = swapService
     }
 }
 
@@ -45,7 +49,8 @@ extension DefaultTokenSwapWireframeFactory: TokenSwapWireframeFactory {
             tokenPickerWireframeFactory: tokenPickerWireframeFactory,
             confirmationWireframeFactory: confirmationWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
-            web3Service: web3Service
+            web3Service: web3Service,
+            swapService: swapService
         )
     }
 }
