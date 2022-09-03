@@ -92,8 +92,10 @@ class DefaultUniswapService(): UniswapService {
         }
     override var inputAmount: BigInt = BigInt.zero()
         set(value) {
-            field = value
-            inputChanged(inputCurrency, outputCurrency, value)
+            if (field.compare(value) != 0) {
+                field = value
+                inputChanged(inputCurrency, outputCurrency, value)
+            }
         }
     override var outputAmount: BigInt = BigInt.zero()
         get() {
@@ -162,15 +164,17 @@ class DefaultUniswapService(): UniswapService {
             throw Throwable("No valid quote")
         if (wallet == null)
             throw Throwable("No wallet")
-        val minAmount = BigDec.from(state.quote).mul(BigDec.from(0.98)).toBigInt()
+        val minAmount = BigDec.from(state.quote).mul(BigDec.from(0.969)).toBigInt()
+//        val minAmount = BigInt.from(400000)
         val params = IV3SwapRouter.ExactInputSingleParams(
             tokenIn = wrappedAddress(inputCurrency),
             tokenOut = wrappedAddress(outputCurrency),
             fee = state.fee.value,
+//            recipient = IV3SwapRouter.ExactInputSingleParams.Recipient.HexAddress(wallet!!.address().toHexString()),
             recipient = if (outputCurrency.type == Currency.Type.NATIVE)
                 IV3SwapRouter.ExactInputSingleParams.Recipient.This
                 else IV3SwapRouter.ExactInputSingleParams.Recipient.MsgSender,
-            amountIn = state.quote,
+            amountIn = inputAmount,
             amountOutMinimum = minAmount,
             sqrtPriceLimitX96 = BigInt.zero(),
         )
@@ -188,8 +192,7 @@ class DefaultUniswapService(): UniswapService {
                 else BigInt.zero()
         )
         println("=== REQUEST $request")
-        TODO("Enable return")
-        // return withBgCxt { wallet!!.sendTransaction(request) }
+         return withBgCxt { wallet!!.sendTransaction(request) }
     }
 
     private fun currencyChanged(input: Currency, output: Currency) {
@@ -213,8 +216,14 @@ class DefaultUniswapService(): UniswapService {
     private fun inputChanged(input: Currency, output: Currency, value: BigInt) {
         val curr = outputState
         val fees = poolsState.validFees()
-        if (poolsState is PoolsState.NoPoolsFound)
-            OutputState.Unavailable
+        if (inputAmount.isZero()) {
+            outputState = OutputState.Unavailable
+            return
+        }
+        if (poolsState is PoolsState.NoPoolsFound) {
+            outputState = OutputState.Unavailable
+            return
+        }
         if (fees.isEmpty())
             return
         outputState = when (curr) {
@@ -293,7 +302,7 @@ class DefaultUniswapService(): UniswapService {
                     valid.add(fee)
                 }
             } catch (err: Throwable) {
-                println("Error fetching pool state $fee, $err")
+                println("Error fetching pool state $fee, $err ${input.address}")
             }
         }
         return@withBgCxt valid
@@ -375,7 +384,7 @@ class DefaultUniswapService(): UniswapService {
                 ApprovalState.NEEDS_APPROVAL
             } else if (amount.isZero() && !allowance.isZero()) {
                 ApprovalState.APPROVED
-            } else if (amount.compare(allowance) < 0) {
+            } else if (amount.compare(allowance) > 0) {
                 ApprovalState.APPROVED
             } else {
                 ApprovalState.NEEDS_APPROVAL

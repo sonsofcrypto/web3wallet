@@ -1,7 +1,6 @@
 package com.sonsofcrypto.web3wallet.android
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
-import com.sonsofcrypto.web3lib.provider.ProviderVoid
 import com.sonsofcrypto.web3lib.provider.model.BlockTag
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.services.coinGecko.DefaultCoinGeckoService
@@ -44,7 +43,9 @@ class UniswapTests {
 //        testGetPoolData()
 //        testGetAllPoolData()
 //        testInitState()
-        testSwap()
+//        testSwapTokenToken()
+//        testSwapNativeToken()
+        testSwapTokenNative()
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
@@ -179,7 +180,24 @@ class UniswapTests {
         }
     }
 
-    fun testSwap() {
+    fun testSwapTokenToken() {
+        println(networksService)
+        val network = Network.ethereum()
+        val wallet = networksService.wallet(network)!!
+        val service = DefaultUniswapService()
+        service.provider = wallet.provider()!!
+        service.wallet = wallet
+        service.inputCurrency = Currency.dai()
+        service.outputCurrency = Currency.usdt()
+        service.inputAmount = BigInt.from("500000000000000000")
+        scope.launch {
+            delay(15.seconds)
+            wallet.unlock(password, "")
+            service.executeSwap()
+        }
+    }
+
+    fun testSwapNativeToken() {
         println(networksService)
         val network = Network.ethereum()
         val wallet = networksService.wallet(network)!!
@@ -187,11 +205,28 @@ class UniswapTests {
         service.provider = wallet.provider()!!
         service.wallet = wallet
         service.inputCurrency = Currency.ethereum()
-        service.outputCurrency = Currency.usdt()
-        service.inputAmount = BigInt.from("1000000000000000")
+        service.outputCurrency = Currency.dai()
+        service.inputAmount = BigInt.from("5000000000000000000")
         scope.launch {
-            wallet.unlock(password, "")
             delay(15.seconds)
+            wallet.unlock(password, "")
+            service.executeSwap()
+        }
+    }
+
+    fun testSwapTokenNative() {
+        println(networksService)
+        val network = Network.ethereum()
+        val wallet = networksService.wallet(network)!!
+        val service = DefaultUniswapService()
+        service.provider = wallet.provider()!!
+        service.wallet = wallet
+        service.inputCurrency = Currency.dai()
+        service.outputCurrency = Currency.ethereum()
+        service.inputAmount = BigInt.from(1500000000000000000)
+        scope.launch {
+            delay(15.seconds)
+            wallet.unlock(password, "")
             service.executeSwap()
         }
     }
