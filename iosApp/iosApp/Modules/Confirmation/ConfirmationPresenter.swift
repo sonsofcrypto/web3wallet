@@ -64,10 +64,8 @@ extension DefaultConfirmationPresenter: ConfirmationPresenter {
             
         case .confirm:
             switch context.type {
-            case .send, .sendNFT, .cultCastVote:
+            case .send, .sendNFT, .cultCastVote, .approveUniswap, .swap:
                 wireframe.navigate(to: .authenticate(makeAuthenticateContext()))
-            case .swap:
-                wireframe.navigate(to: .underConstruction)
             }
             
         case .txSuccessCTATapped:
@@ -80,8 +78,8 @@ extension DefaultConfirmationPresenter: ConfirmationPresenter {
                 wireframe.navigate(to: .nftsDashboard)
             case .cultCastVote:
                 wireframe.navigate(to: .cultProposals)
-            case .swap:
-                break
+            case .swap, .approveUniswap:
+                wireframe.dismiss()
             }
             
         case .txSuccessCTASecondaryTapped:
@@ -116,6 +114,8 @@ private extension DefaultConfirmationPresenter {
             content = makeViewModelContent(forSendNFT: sendNFTData)
         case let .cultCastVote(cultCastVoteData):
             content = makeViewModelContent(forCultCastVote: cultCastVoteData)
+        case let .approveUniswap(approveUniswapData):
+            content = makeViewModelContent(forApproveUniswap: approveUniswapData)
         }
         
         return .init(title: makeTitle(), content: content)
@@ -271,6 +271,27 @@ private extension DefaultConfirmationPresenter {
             )
         )
     }
+    
+    func makeViewModelContent(
+        forApproveUniswap data: ConfirmationWireframeContext.ApproveUniswapContext
+    ) -> ConfirmationViewModel.Content {
+        
+        // TODO: @Annon to show price here
+        let feeValueInToken = "value token"
+        let feeValueInUSD = "🤷🏻‍♂️"
+        let estimatedFee = ConfirmationViewModel.ApproveUniswapViewModel.Fee(
+            value: feeValueInToken,
+            usdValue: feeValueInUSD
+        )
+        
+        return .approveUniswap(
+            .init(
+                iconName: data.iconName,
+                symbol: data.token.symbol,
+                fee: estimatedFee
+            )
+        )
+    }
 }
 
 private extension DefaultConfirmationPresenter {
@@ -369,8 +390,26 @@ private extension DefaultConfirmationPresenter {
         txHash = nil
         error = nil
         switch context.type {
-        case .swap:
-            print("Do swap!")
+        case let .approveUniswap(context):
+            context.onApproved((password: password, salt: salt))
+            wireframe.dismiss()
+            
+        case let .swap(context):
+            interactor.executeSwap(
+                network: context.tokenFrom.token.network.toNetwork(),
+                password: password,
+                salt: salt,
+                swapService: context.swapService,
+                handler: { [weak self] result in
+                    switch result {
+                    case let .success(response):
+                        self?.txHash = response.hash
+                        self?.showTransactionSuccess()
+                    case let .failure(error):
+                        self?.showTransactionFailed(error)
+                    }
+                }
+            )
 
         case let .send(data):
             interactor.send(

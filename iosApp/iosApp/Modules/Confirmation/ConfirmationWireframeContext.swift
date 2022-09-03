@@ -14,6 +14,7 @@ struct ConfirmationWireframeContext {
         case send(SendContext)
         case sendNFT(SendNFTContext)
         case cultCastVote(CultCastVoteContext)
+        case approveUniswap(ApproveUniswapContext)
         
         var localizedTag: String {
             switch self {
@@ -21,6 +22,7 @@ struct ConfirmationWireframeContext {
             case .send: return "send"
             case .sendNFT: return "sendNFT"
             case .cultCastVote: return "cultCastVote"
+            case .approveUniswap: return "approveUniswap"
             }
         }
     }
@@ -32,7 +34,7 @@ struct ConfirmationWireframeContext {
             return data.token.token
         case let .swap(data):
             return data.tokenFrom.token
-        case .sendNFT, .cultCastVote:
+        case .sendNFT, .cultCastVote, .approveUniswap:
             // TODO: Annon to confirm where to push (main network token)? Eg: ETH
             return nil
         }
@@ -60,6 +62,7 @@ extension ConfirmationWireframeContext {
         let tokenTo: CurrencyData
         let provider: Provider
         let estimatedFee: Web3NetworkFee
+        let swapService: UniswapService
         
         struct Provider {
             let iconName: String
@@ -83,5 +86,11 @@ extension ConfirmationWireframeContext {
     struct CultCastVoteContext {
         let cultProposal: CultProposal
         let approve: Bool
+    }
+    
+    struct ApproveUniswapContext {
+        let iconName: String
+        let token: Web3Token
+        let onApproved: (((password: String, salt: String)) -> Void)
     }
 }

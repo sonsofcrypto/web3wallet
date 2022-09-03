@@ -64,12 +64,16 @@ protocol TokenSwapInteractor: AnyObject {
     var outputAmountState: TokenSwapInteractorOutputAmountState { get }
     var approvingState: TokenSwapInteractorApprovalState { get }
     var swapState: TokenSwapInteractorSwapState { get }
+    
+    func approveUniswapProtocol(token: Web3Token, password: String, salt: String)
+    
+    var swapService: UniswapService { get }
 }
 
 final class DefaultTokenSwapInteractor {
 
     private let web3Service: Web3ServiceLegacy
-    private let swapService: UniswapService
+    let swapService: UniswapService
     
     private var listener: WeakContainer?
     
@@ -200,6 +204,27 @@ extension DefaultTokenSwapInteractor: TokenSwapInteractor {
             return .swap
         }
     }
+    
+    func approveUniswapProtocol(
+        token: Web3Token,
+        password: String,
+        salt: String
+    ) {
+        let networksService: NetworksService = ServiceDirectory.assembler.resolve()
+        let network = networksService.network ?? .ethereum()
+        let wallet = networksService.wallet(network: network)!
+        
+        do {
+            try wallet.unlock(password: password, salt: salt)
+            swapService.requestApproval(
+                currency: token.toCurrency(),
+                wallet: wallet,
+                completionHandler: { _ in }
+            )
+        } catch {
+            // do nothing
+        }
+    }
 }
 
 private extension DefaultTokenSwapInteractor {
@@ -207,9 +232,8 @@ private extension DefaultTokenSwapInteractor {
     func configureUniswapService() {
         // TODO: We should inject here a swap service not uniswapService so this confirguration can
         // be abstracted
-        let walletService: WalletService = ServiceDirectory.assembler.resolve()
         let networksService: NetworksService = ServiceDirectory.assembler.resolve()
-        let network = walletService.selectedNetwork() ?? .ethereum()
+        let network = networksService.network ?? .ethereum()
         let wallet = networksService.wallet(network: network)!
         let provider = networksService.provider(network: network)
         swapService.wallet = wallet
@@ -230,6 +254,7 @@ extension DefaultTokenSwapInteractor: UniswapListener {
     }
     
     func handle(event___ event: UniswapEvent) {
+        print("[SWAP][EVENT] - \(event)")
         emit(event)
     }
 

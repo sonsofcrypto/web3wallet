@@ -188,7 +188,20 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
             )
             
         case .approve:
-            print("Present approve")
+            wireframe.navigate(
+                to: .confirmApproval(
+                    iconName: interactor.tokenIconName(for: tokenTo),
+                    token: tokenTo,
+                    onApproved: { [weak self] (password, salt) in
+                        guard let self = self else { return }
+                        self.interactor.approveUniswapProtocol(
+                            token: self.tokenTo,
+                            password: password,
+                            salt: salt
+                        )
+                    }
+                )
+            )
             
         case .review:
             
@@ -211,7 +224,8 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                             tokenFrom: makeConfirmationSwapTokenFrom(),
                             tokenTo: makeConfirmationSwapTokenTo(),
                             provider: makeConfirmationProvider(),
-                            estimatedFee: makeConfirmationSwapEstimatedFee()
+                            estimatedFee: makeConfirmationSwapEstimatedFee(),
+                            swapService: interactor.swapService
                         )
                     )
                 )
@@ -358,6 +372,11 @@ private extension DefaultTokenSwapPresenter {
         guard !isCalculating else {
             // NOTE: Here is we are still calculating a quote we don't want to show the approve
             // button yet in case that we need to, we will do once the quote is retrieved
+            return .approved
+        }
+        guard interactor.swapState != .notAvailable else {
+            // NOTE: Here is we know that there is no pool available to do the swap, we do not
+            // show approved since you would not be able to swap anyway
             return .approved
         }
         switch interactor.approvingState {

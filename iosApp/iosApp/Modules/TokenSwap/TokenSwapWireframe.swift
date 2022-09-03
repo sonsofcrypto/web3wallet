@@ -26,6 +26,11 @@ enum TokenSwapWireframeDestination {
     case confirmSwap(
         dataIn: ConfirmationWireframeContext.SwapContext
     )
+    case confirmApproval(
+        iconName: String,
+        token: Web3Token,
+        onApproved: ((password: String, salt: String)) -> Void
+    )
 }
 
 protocol TokenSwapWireframe {
@@ -90,12 +95,9 @@ extension DefaultTokenSwapWireframe: TokenSwapWireframe {
         switch destination {
             
         case .underConstructionAlert:
-            
             guard let viewController = navigationController.topViewController else {
-                
                 return
             }
-            
             alertWireframeFactory.makeWireframe(
                 viewController,
                 context: .underConstructionAlert()
@@ -108,15 +110,30 @@ extension DefaultTokenSwapWireframe: TokenSwapWireframe {
             presentTokenPicker(selectedToken: selectedToken, onCompletion: onCompletion)
         
         case let .confirmSwap(dataIn):
-            
             guard let viewController = navigationController.topViewController else {
-                
                 return
             }
-            
             let wireframe = confirmationWireframeFactory.makeWireframe(
                 presentingIn: viewController,
                 context: .init(type: .swap(dataIn))
+            )
+            wireframe.present()
+            
+        case let .confirmApproval(iconName, token, onApproved):
+            guard let viewController = navigationController.topViewController else {
+                return
+            }
+            let wireframe = confirmationWireframeFactory.makeWireframe(
+                presentingIn: viewController,
+                context: .init(
+                    type: .approveUniswap(
+                        .init(
+                            iconName: iconName,
+                            token: token,
+                            onApproved: onApproved
+                        )
+                    )
+                )
             )
             wireframe.present()
         }

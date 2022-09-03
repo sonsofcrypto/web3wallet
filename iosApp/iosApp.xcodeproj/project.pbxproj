@@ -509,6 +509,8 @@
 		1CE66BD72848F16A00AB6ACA /* UITabBarController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BD62848F16A00AB6ACA /* UITabBarController+Extensions.swift */; };
 		1CE66BE4284CFB7600AB6ACA /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BE3284CFB7600AB6ACA /* UITextView+Extensions.swift */; };
 		1CEF3D1B28C35FB20092BC0E /* UniswapServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEF3D1A28C35FB20092BC0E /* UniswapServiceAssembler.swift */; };
+		1CEF3D1D28C3A2D80092BC0E /* ConfirmationViewModel+ApproveUniswap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEF3D1C28C3A2D80092BC0E /* ConfirmationViewModel+ApproveUniswap.swift */; };
+		1CEF3D1F28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEF3D1E28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift */; };
 		D108AB4328AB9EB0005E0A63 /* cache_markets.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB3D28AB9EB0005E0A63 /* cache_markets.json */; };
 		D108AB4428AB9EB0005E0A63 /* cache_currencies_3.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB3E28AB9EB0005E0A63 /* cache_currencies_3.json */; };
 		D108AB4528AB9EB0005E0A63 /* cache_metadatas.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB3F28AB9EB0005E0A63 /* cache_metadatas.json */; };
@@ -1107,6 +1109,8 @@
 		1CE66BD62848F16A00AB6ACA /* UITabBarController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITabBarController+Extensions.swift"; sourceTree = "<group>"; };
 		1CE66BE3284CFB7600AB6ACA /* UITextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
 		1CEF3D1A28C35FB20092BC0E /* UniswapServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniswapServiceAssembler.swift; sourceTree = "<group>"; };
+		1CEF3D1C28C3A2D80092BC0E /* ConfirmationViewModel+ApproveUniswap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmationViewModel+ApproveUniswap.swift"; sourceTree = "<group>"; };
+		1CEF3D1E28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationApproveUniswapView.swift; sourceTree = "<group>"; };
 		D108AB3D28AB9EB0005E0A63 /* cache_markets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_markets.json; sourceTree = "<group>"; };
 		D108AB3E28AB9EB0005E0A63 /* cache_currencies_3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_currencies_3.json; sourceTree = "<group>"; };
 		D108AB3F28AB9EB0005E0A63 /* cache_metadatas.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_metadatas.json; sourceTree = "<group>"; };
@@ -2067,6 +2071,7 @@
 				1CDED611289C64F900DF34A7 /* ConfirmationViewModel+SendNFT.swift */,
 				1C7FC98428B5274000FC9175 /* ConfirmationViewModel+CultCastVote.swift */,
 				1CE0064128894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift */,
+				1CEF3D1C28C3A2D80092BC0E /* ConfirmationViewModel+ApproveUniswap.swift */,
 				1C67201E28870FDB00C5F044 /* ConfirmationWireframe.swift */,
 				1C67202C2887EECB00C5F044 /* ConfirmationWireframeContext.swift */,
 				1C67202028870FE100C5F044 /* ConfirmationWireframeFactory.swift */,
@@ -2371,6 +2376,7 @@
 				1CDED613289C65B800DF34A7 /* ConfirmationSendNFTView.swift */,
 				1C7FC98228B5272500FC9175 /* ConfirmationCultCastVoteView.swift */,
 				1CE0063F28894F41002D1EB3 /* ConfirmationSendView.swift */,
+				1CEF3D1E28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift */,
 				1CE0063A288884D2002D1EB3 /* ConfirmationSwapView.swift */,
 				1C228ACA28A3B122005316A3 /* ConfirmationTxInProgressView.swift */,
 				1C228ACC28A3C1AA005316A3 /* ConfirmationTxSuccessView.swift */,
@@ -3101,6 +3107,7 @@
 				1C60C1AC28571BB6003BE25D /* UIImageView+Extensions.swift in Sources */,
 				1CE66BCA2848EA9900AB6ACA /* ChatService.swift in Sources */,
 				1C2B06562891D9A6002A8FBF /* FeaturesService.swift in Sources */,
+				1CEF3D1D28C3A2D80092BC0E /* ConfirmationViewModel+ApproveUniswap.swift in Sources */,
 				1C7FC9B628BCF5C700FC9175 /* EtherscanHelper.swift in Sources */,
 				1C6487362832E6650091A12D /* NFTsServiceAssembler.swift in Sources */,
 				1C54DBF3285E83A300E378F6 /* TokenAddPresenter.swift in Sources */,
@@ -3346,6 +3353,7 @@
 				1C60C2D0285724D0003BE25D /* AlertPresenter.swift in Sources */,
 				1C60C2BA285724D0003BE25D /* KeyStoreViewModel.swift in Sources */,
 				1C60C2B8285724D0003BE25D /* KeyStoreWireframeFactory.swift in Sources */,
+				1CEF3D1F28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift in Sources */,
 				1C60C307285724D1003BE25D /* NFTsDashboardInteractor.swift in Sources */,
 				1CE0063D288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift in Sources */,
 				1C6720102884A9BF00C5F044 /* UIImage+Extension.swift in Sources */,

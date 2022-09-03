@@ -86,6 +86,13 @@ extension ConfirmationViewController: UIViewControllerTransitioningDelegate, Mod
             contentHeight += Theme.constant.padding
             contentHeight += 270
             contentHeight += Theme.constant.padding
+            
+        case .approveUniswap:
+            
+            contentHeight += navBarHeight
+            contentHeight += Theme.constant.padding
+            contentHeight += 300
+            contentHeight += Theme.constant.padding
         }
         
         return ConfirmationSheetPresentationController(
@@ -169,6 +176,12 @@ private extension ConfirmationViewController {
         case let .cultCastVote(viewModel):
 
             return ConfirmationCultCastVoteView(
+                viewModel: viewModel,
+                onConfirmHandler: makePresenterEventTapped(.confirm)
+            )
+            
+        case let .approveUniswap(viewModel):
+            return ConfirmationApproveUniswapView(
                 viewModel: viewModel,
                 onConfirmHandler: makePresenterEventTapped(.confirm)
             )
