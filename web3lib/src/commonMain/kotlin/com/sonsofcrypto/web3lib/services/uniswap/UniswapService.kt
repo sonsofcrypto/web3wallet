@@ -59,7 +59,7 @@ interface UniswapService {
     val approvalState: ApprovalState
     val outputState: OutputState
     var provider: Provider
-    val wallet: Wallet?
+    var wallet: Wallet?
 
     suspend fun requestApproval(currency: Currency, wallet: Wallet)
     suspend fun executeSwap()
