@@ -71,7 +71,7 @@ interface UniswapService {
 }
 
 private val QUOTE_DEBOUNCE_MS = 750L
-private val UINT256_MAX = BigInt.from("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", 16)
+private val UINT256_MAX = BigInt.from("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", 16)
 
 class DefaultUniswapService(): UniswapService {
     override var inputCurrency: Currency = Currency.ethereum()
@@ -130,9 +130,13 @@ class DefaultUniswapService(): UniswapService {
     )
 
     init {
+        println("=== WTF1")
         quoteFlow
             .debounce(QUOTE_DEBOUNCE_MS)
-            .flatMapLatest { request -> fetchBestQuote(request) }
+            .flatMapLatest { request ->
+                println("=== WTF2")
+                fetchBestQuote(request)
+            }
             .onEach {
                 val (quote, fee, request) = it
                 handleQuote(quote, fee, request)
@@ -196,6 +200,7 @@ class DefaultUniswapService(): UniswapService {
     suspend fun fetchBestQuote(
         request: QuoteRequest
     ): Flow<Triple<BigInt, PoolFee, QuoteRequest>> = flow {
+        println("=== ffff")
         if (request.amountIn.isZero()) {
             emit(Triple(request.amountIn, PoolFee.LOW, request))
             return@flow

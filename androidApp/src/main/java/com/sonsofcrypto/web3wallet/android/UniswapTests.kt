@@ -1,6 +1,7 @@
 package com.sonsofcrypto.web3wallet.android
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
+import com.sonsofcrypto.web3lib.provider.ProviderVoid
 import com.sonsofcrypto.web3lib.provider.model.BlockTag
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.services.coinGecko.DefaultCoinGeckoService
@@ -165,6 +166,7 @@ class UniswapTests {
         val wallet = networksService.wallet(network)
         val service = DefaultUniswapService()
         service.provider = wallet?.provider()!!
+        service.wallet = wallet
         service.inputCurrency = Currency.ethereum()
         service.outputCurrency = Currency.usdt()
         service.inputAmount = BigInt.from("1000000000000000000")
