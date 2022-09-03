@@ -5,7 +5,10 @@ import com.sonsofcrypto.web3lib.signer.contracts.Contract
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.abiEncode
 import com.sonsofcrypto.web3lib.utils.keccak256
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 
 class IV3SwapRouter(address: Address.HexString): Contract(address) {
     /**
@@ -23,22 +26,28 @@ class IV3SwapRouter(address: Address.HexString): Contract(address) {
         val tokenIn: AddressHexString,
         val tokenOut: AddressHexString,
         val fee: UInt,
-        val recipient: AddressHexString,
+        val recipient: Recipient,
         val amountIn: BigInt,
         val amountOutMinimum: BigInt,
         val sqrtPriceLimitX96: BigInt
     ) {
-        fun abiEncoded(): ByteArray {
-            TODO("Implement")
-            // 0x414bf389
-            // 000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
-            // 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
-            // 00000000000000000000000000000000000000000000000000000000000001f4
-            // 00000000000000000000000058aebec033a2d55e35e44e6d7b43725b069f6abc
-            // 00000000000000000000000000000000000000000000000000000000630f8979
-            // 00000000000000000000000000000000000000000000000000038d7ea4c68000
-            // 0000000000000000000000000000000000000000000000000000000000000000
-            // 0000000000000000000000000000000000000000000000000000000000000000
+        fun encoded(): ByteArray = abiEncode(Address.HexString(tokenIn)) +
+            abiEncode(Address.HexString(tokenOut)) +
+            abiEncode(fee) +
+            recipient.abiEncoded() +
+            abiEncode(amountOutMinimum) +
+            abiEncode(sqrtPriceLimitX96)
+
+        sealed class Recipient() {
+            data class HexAddress(val address: AddressHexString): Recipient()
+            object This: Recipient()
+            object MsgSender: Recipient()
+
+            fun abiEncoded(): ByteArray = when (this) {
+                is HexAddress -> abiEncode(Address.HexString(this.address))
+                is This -> abiEncode(BigInt.from(1))
+                is MsgSender -> abiEncode(BigInt.from(2))
+            }
         }
     }
 
@@ -58,8 +67,91 @@ class IV3SwapRouter(address: Address.HexString): Contract(address) {
      */
     fun exactInputSingle(params: ExactInputSingleParams) = DataHexString(
         keccak256(
-            "exactInputSingle((address,address,uint24,address,uint256,uint256,uint256,uint160))"
+            "exactInputSingle((address,address,uint24,address,uint256,uint256,uint160))"
                 .encodeToByteArray()
-        ).copyOfRange(0, 4) + params.abiEncoded()
+        ).copyOfRange(0, 4)
+        + params.encoded()
     )
+
+    /**
+     * @notice Call multiple functions in the current contract and return the data from all of them if they all succeed
+     * @dev The `msg.value` should not be trusted for any method callable from multicall.
+     * @param deadline The time by which this function must be called before failing
+     * @param data The encoded function data for each of the calls to make to this contract
+     * @return results The results from each of the calls passed in via data
+     *
+     * function multicall(uint256 deadline, bytes[] calldata data) external payable returns (bytes[] memory results);
+     */
+    fun multicall(deadline: Instant, calldata: List<ByteArray>): ByteArray {
+        var data = keccak256(
+            "multicall(uint256,bytes[])".encodeToByteArray()
+        ).copyOfRange(0, 4)
+
+        /// MethodID: 0x5ae401dc
+        /// 000000000000000000000000000000000000000000000000000000006311b9b8
+        /// 0000000000000000000000000000000000000000000000000000000000000040 // Offset of array ?
+        /// 0000000000000000000000000000000000000000000000000000000000000001 // Number of elements
+        /// 0000000000000000000000000000000000000000000000000000000000000020 // Off Set of string (next line)
+        /// 00000000000000000000000000000000000000000000000000000000000000e4 // String len pad right to 32 bytes
+        /// 04e45aaf
+        /// 0000000000000000000000001f9840a85d5af5bf1d1762f925bdaddc4201f984
+        /// 0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f
+        /// 0000000000000000000000000000000000000000000000000000000000000bb8
+        /// 00000000000000000000000058aebec033a2d55e35e44e6d7b43725b069f6abc
+        /// 00000000000000000000000000000000000000000000000025be36228d3f92a0
+        /// 0000000000000000000000000000000000000000000000000000000000000000
+        /// 0000000000000000000000000000000000000000000000000000000000000000
+        /// 00000000000000000000000000000000000000000000000000000000
+
+        /// 0000000000000000000000000000000000000000000000000000000000000020
+        /// 0000000000000000000000000000000000000000000000000000000000000003
+        /// 686d6d0000000000000000000000000000000000000000000000000000000000
+
+        //0x5ae401dc
+        /// 000000000000000000000000000000000000000000000000000000006311fea9
+        /// 0000000000000000000000000000000000000000000000000000000000000040
+        /// 0000000000000000000000000000000000000000000000000000000000000002
+        /// 0000000000000000000000000000000000000000000000000000000000000040
+        /// 0000000000000000000000000000000000000000000000000000000000000160
+        /// 00000000000000000000000000000000000000000000000000000000000000e4
+        /// 04e45aaf0000000000000000000000006b175474e89094c44da98b954eedeac4
+        /// 95271d0f000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead908
+        /// 3c756cc200000000000000000000000000000000000000000000000000000000
+        /// 000001f400000000000000000000000000000000000000000000000000000000
+        /// 0000000200000000000000000000000000000000000000000000000002be38a2
+        /// b03e50670000000000000000000000000000000000000000000000000000597a
+        /// 677660c800000000000000000000000000000000000000000000000000000000
+        /// 0000000000000000000000000000000000000000000000000000000000000000
+        /// 0000000000000000000000000000000000000000000000000000000000000044
+        /// 49404b7c0000000000000000000000000000000000000000000000000000597a
+        /// 677660c800000000000000000000000058aebec033a2d55e35e44e6d7b43725b
+        /// 069f6abc00000000000000000000000000000000000000000000000000000000
+
+        // Encode first param
+        // Encode offset of array start 64 (guess from lenghts en)
+        // Encode number of elements of array
+        // Encode start of first string 64
+        // (length of heads plust first lenght) Start of second start (for some reason length / 32 - 1)
+        // Lenght of first string
+        // First string
+        // Lenght of second sctring
+        // Second string
+
+        // TODO: Refactor
+        if (calldata.size == 1) {
+            data += abiEncode(BigInt.from(64))
+            data += abiEncode(BigInt.from(1))
+            data += abiEncode(BigInt.from(32))
+            val remainder = calldata[0].size % 32
+            if (remainder != 0) {
+                // var byteArray = ByteArray(calldata[0])
+            } else data + calldata[0]
+        } else if (calldata.size == 2){
+
+        } else {
+            throw Exception("Unsupported number of calldatas ${calldata.size}, needs refactor")
+        }
+
+        return data
+    }
 }

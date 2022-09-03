@@ -5,6 +5,7 @@ import com.sonsofcrypto.web3lib.provider.ProviderVoid
 import com.sonsofcrypto.web3lib.provider.call
 import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
+import com.sonsofcrypto.web3lib.provider.model.TransactionResponse
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.Quoter
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.UniswapV3PoolState
 import com.sonsofcrypto.web3lib.signer.Wallet
@@ -62,7 +63,8 @@ interface UniswapService {
     var wallet: Wallet?
 
     suspend fun requestApproval(currency: Currency, wallet: Wallet)
-    suspend fun executeSwap()
+    @Throws(Throwable::class)
+    suspend fun executeSwap(): TransactionResponse
 
     /** Add listener for `Uniswap`s */
     fun add(listener: UniswapListener)
@@ -149,8 +151,22 @@ class DefaultUniswapService(): UniswapService {
         }
     }
 
-    override suspend fun executeSwap() {
-        TODO("Implement")
+    @Throws(Throwable::class)
+    override suspend fun executeSwap(): TransactionResponse = withBgCxt{
+        delay(2.seconds)
+        withUICxt {
+            return@withUICxt TransactionResponse(
+                hash = "mock hash",
+                blockNumber = null,
+                blockHash = "HASH",
+                timestamp = null,
+                confirmations = 1u,
+                from = Address.HexString(""),
+                raw = null,
+                gasLimit = null,
+                gasPrice = null,
+            )
+        }
     }
 
     private fun currencyChanged(input: Currency, output: Currency) {
