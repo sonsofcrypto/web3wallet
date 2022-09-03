@@ -352,7 +352,7 @@ class DefaultUniswapService(): UniswapService {
                 ApprovalState.NEEDS_APPROVAL
             } else if (amount.isZero() && !allowance.isZero()) {
                 ApprovalState.APPROVED
-            } else if (amount.compare(allowance) >= 0) {
+            } else if (amount.compare(allowance) < 0) {
                 ApprovalState.APPROVED
             } else {
                 ApprovalState.NEEDS_APPROVAL
