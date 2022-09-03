@@ -2,10 +2,7 @@ package com.sonsofcrypto.web3lib.signer.contracts
 
 import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import com.sonsofcrypto.web3lib.types.Address
-import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.utils.abiDecodeAddress
-import com.sonsofcrypto.web3lib.utils.abiEncode
-import com.sonsofcrypto.web3lib.utils.keccak256
+import com.sonsofcrypto.web3lib.utils.*
 
 
 open class Contract(
@@ -71,6 +68,46 @@ class ERC20(address: Address.HexString) : Contract(address) {
         keccak256("balanceOf(address)".encodeToByteArray()).copyOfRange(0, 4) +
             abiEncode(account)
     )
+
+    /**
+     * @dev Returns the remaining number of tokens that `spender` will be
+     * allowed to spend on behalf of `owner` through {transferFrom}. This is
+     * zero by default.
+     *
+     * This value changes when {approve} or {transferFrom} are called.
+     *
+     * function allowance(address owner, address spender) → uint256
+     */
+    fun allowance(owner: Address.HexString, spender: Address.HexString): DataHexString = DataHexString(
+        keccak256("allowance(address,address)".encodeToByteArray()).copyOfRange(0, 4) +
+            abiEncode(owner) +
+            abiEncode(spender)
+    )
+
+    fun decodeAllowance(data: DataHexString): BigInt = abiDecodeBigInt(data)
+
+    /**
+     * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * IMPORTANT: Beware that changing an allowance with this method brings the risk
+     * that someone may use both the old and the new allowance by unfortunate
+     * transaction ordering. One possible solution to mitigate this race
+     * condition is to first reduce the spender's allowance to 0 and set the
+     * desired value afterwards:
+     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+     *
+     * Emits an {Approval} event.
+     * function approve(address spender, uint256 amount) external returns (bool);
+     */
+    fun approve(spender: Address.HexString, amount: BigInt): DataHexString = DataHexString(
+        keccak256("approve(address,uint256)".encodeToByteArray()).copyOfRange(0, 4) +
+            abiEncode(spender) +
+            abiEncode(amount)
+    )
+
+    fun decodeApprove(data: DataHexString): BigInt = abiDecodeBigInt(data)
 }
 
 class ERC721(address: Address.HexString): Contract(address) {

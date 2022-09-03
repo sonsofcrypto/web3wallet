@@ -7,6 +7,7 @@ import com.sonsofcrypto.web3lib.provider.call
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.Quoter
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.UniswapV3PoolState
 import com.sonsofcrypto.web3lib.signer.Wallet
+import com.sonsofcrypto.web3lib.signer.contracts.ERC20
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.*
 import com.sonsofcrypto.web3lib.utils.*
@@ -17,17 +18,6 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-
-/** Uniswap service events */
-sealed class UniswapEvent() {
-
-    /** Received new quote */
-    data class Quote(
-        val inputCurrency: Currency,
-        val outputCurrency: Currency,
-        val amount: BigInt,
-    ): UniswapEvent()
-}
 
 /** Note that fee is in hundredths of basis points (e.g. the fee for a pool at
  *  the 0.3% tier is 3000; the fee for a pool at the 0.01% tier is 100).*/
@@ -71,6 +61,7 @@ interface UniswapService {
     val approvalState: ApprovalState
     val outputState: OutputState
     var provider: Provider
+    val wallet: Wallet?
 
     suspend fun requestApproval(currency: Currency, wallet: Wallet)
     suspend fun executeSwap()
@@ -82,14 +73,6 @@ interface UniswapService {
 }
 
 private val QUOTE_DEBOUNCE_MS = 750L
-
-data class QuoteRequest (
-    val input: Currency,
-    val output: Currency,
-    val amountIn: BigInt,
-    val fees: List<PoolFee>,
-    val provider: Provider
-)
 
 class DefaultUniswapService: UniswapService {
     override var inputCurrency: Currency = Currency.ethereum()
@@ -120,15 +103,23 @@ class DefaultUniswapService: UniswapService {
     override var poolsState: PoolsState = PoolsState.Loading
         private set(value) {
             field = value
-            println("=== $value")
+            emit(UniswapEvent.PoolsState(value))
             inputChanged(inputCurrency, outputCurrency, inputAmount)
         }
     override var approvalState: ApprovalState = ApprovalState.LOADING
-        private set
+        private set(value) {
+            field = value
+            emit(UniswapEvent.ApprovalState(value))
+            inputChanged(inputCurrency, outputCurrency, inputAmount)
+        }
     override var outputState: OutputState = OutputState.Unavailable
-        private set
+        private set(value) {
+            field = value
+            emit(UniswapEvent.OutputState(value))
+        }
 
     override var provider: Provider = ProviderVoid(Network.ethereum())
+    override var wallet: Wallet? = null
 
     private val network = Network.ethereum()
     private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
@@ -150,7 +141,10 @@ class DefaultUniswapService: UniswapService {
     }
 
     override suspend fun requestApproval(currency: Currency, wallet: Wallet) {
-        TODO("Implement")
+        approvalState = ApprovalState.APPROVING
+        scope.launch {
+
+        }
 
     }
 
@@ -161,12 +155,18 @@ class DefaultUniswapService: UniswapService {
     private fun currencyChanged(input: Currency, output: Currency) {
         poolsStateJob?.cancel(null)
         poolsState = PoolsState.Loading
+        approvalState = ApprovalState.LOADING
+        val owner = wallet?.address()?.toHexStringAddress()?.hexString
+        val spender = routerAddress(provider.network)
+        val amount = inputAmount
         poolsStateJob = scope.launch {
             val fees = fetchValidPoolFeeProtocols(input, output, provider)
             withUICxt {
                 poolsState = if (fees.isEmpty()) PoolsState.NoPoolsFound
                 else PoolsState.Valid(fees)
             }
+            val state = fetchApprovalState(input, owner, spender, amount, provider)
+            withUICxt { approvalState = state }
         }
     }
 
@@ -205,9 +205,6 @@ class DefaultUniswapService: UniswapService {
             results.add(Triple(quote, it, request))
         }
         results.sortWith(ComparatorFetchQuoteTriple)
-        results.forEach {
-            println("=== ${it.first} ${it.second}")
-        }
         emit(results.last())
     }
 
@@ -235,7 +232,6 @@ class DefaultUniswapService: UniswapService {
     suspend fun handleQuote(quote: BigInt, fee: PoolFee, request: QuoteRequest) = withUICxt {
         if (quote.isZero()) outputState = OutputState.Unavailable
         else outputState = OutputState.Valid(quote, request)
-        emit(UniswapEvent.Quote(request.input, request.output, request.amountIn))
     }
 
     /** Pools */
@@ -315,6 +311,62 @@ class DefaultUniswapService: UniswapService {
         return results
     }
 
+    /** Approval */
+
+    suspend fun fetchApprovalState(
+        currency: Currency,
+        owner: AddressHexString?,
+        spender: AddressHexString,
+        amount: BigInt,
+        provider: Provider
+    ): ApprovalState {
+        val tokenAddress = wrappedAddress(currency)
+        val erc20 = ERC20(Address.HexString(tokenAddress))
+        if (owner == null)
+            return ApprovalState.DOES_NO_APPLY
+        try {
+            val data = erc20.allowance(
+                Address.HexString(owner),
+                Address.HexString(spender)
+            )
+            val result = provider.call(tokenAddress, data)
+            val allowance = erc20.decodeAllowance(result)
+            return if (allowance.isZero()) {
+                ApprovalState.NEEDS_APPROVAL
+            } else if (amount.isZero() && !allowance.isZero()) {
+                ApprovalState.APPROVED
+            } else if (amount.compare(allowance) >= 0) {
+                ApprovalState.APPROVED
+            } else {
+                ApprovalState.NEEDS_APPROVAL
+            }
+        } catch (err: Throwable) {
+            println("Error approving $err")
+            return ApprovalState.NEEDS_APPROVAL
+        }
+    }
+
+    suspend fun approve(
+        currency: Currency,
+        owner: AddressHexString,
+        spender: AddressHexString,
+        amount: BigInt,
+        provider: Provider
+    ): ApprovalState {
+        val tokenAddress = wrappedAddress(currency)
+        val erc20 = ERC20(Address.HexString(tokenAddress))
+        try {
+            val data = erc20.approve(Address.HexString(spender), amount)
+            val result = provider.call(tokenAddress, data)
+            val status = erc20.decodeApprove(result)
+            return if (status.isZero()) ApprovalState.NEEDS_APPROVAL
+            else ApprovalState.APPROVED
+        } catch (err: Throwable) {
+            println("Error approving $err")
+            return ApprovalState.NEEDS_APPROVAL
+        }
+    }
+
     /** Listeners */
 
     override fun add(listener: UniswapListener) {
@@ -326,7 +378,7 @@ class DefaultUniswapService: UniswapService {
     }
 
     private fun emit(event: UniswapEvent) {
-
+        println("=== $event")
     }
 
     private fun wrappedAddress(currency: Currency): AddressHexString {
@@ -372,6 +424,14 @@ class DefaultUniswapService: UniswapService {
         else Pair(addressB, addressA)
     }
 }
+
+data class QuoteRequest (
+    val input: Currency,
+    val output: Currency,
+    val amountIn: BigInt,
+    val fees: List<PoolFee>,
+    val provider: Provider
+)
 
 class ComparatorFetchQuoteTriple {
     companion object : Comparator<Triple<BigInt, PoolFee, QuoteRequest>> {
