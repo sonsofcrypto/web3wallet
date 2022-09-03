@@ -73,7 +73,10 @@ interface UniswapService {
 private val QUOTE_DEBOUNCE_MS = 750L
 private val UINT256_MAX = BigInt.from("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", 16)
 
-class DefaultUniswapService: UniswapService {
+class DefaultUniswapService(
+    override var provider: Provider = ProviderVoid(Network.ethereum()),
+    override var wallet: Wallet? = null
+): UniswapService {
     override var inputCurrency: Currency = Currency.ethereum()
         set(value) {
             field = value
@@ -116,9 +119,6 @@ class DefaultUniswapService: UniswapService {
             field = value
             emit(UniswapEvent.OutputState(value))
         }
-
-    override var provider: Provider = ProviderVoid(Network.ethereum())
-    override var wallet: Wallet? = null
 
     private val network = Network.ethereum()
     private var listeners: MutableSet<UniswapListener> = mutableSetOf()
