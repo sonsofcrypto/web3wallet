@@ -7,7 +7,6 @@ import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.abiEncode
 import com.sonsofcrypto.web3lib.utils.keccak256
-import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
 class IV3SwapRouter(address: Address.HexString): Contract(address) {
@@ -142,16 +141,41 @@ class IV3SwapRouter(address: Address.HexString): Contract(address) {
             data += abiEncode(BigInt.from(64))
             data += abiEncode(BigInt.from(1))
             data += abiEncode(BigInt.from(32))
+            data += abiEncode(BigInt.from(calldata[0].size))
+
             val remainder = calldata[0].size % 32
             if (remainder != 0) {
-                // var byteArray = ByteArray(calldata[0])
-            } else data + calldata[0]
-        } else if (calldata.size == 2){
+                var rightPadded = ByteArray(calldata[0].size + remainder)
+                calldata[0].forEachIndexed { idx, byte -> rightPadded.set(idx, byte) }
+                data += rightPadded
+            } else data += calldata[0]
+
+        } else if (calldata.size == 2) {
+            data += abiEncode(BigInt.from(64))
+            data += abiEncode(BigInt.from(2))
+            data += abiEncode(BigInt.from(64))
+            data += abiEncode(BigInt.from(calldata[0].size))
+
+
+            var remainder = calldata[1].size % 32
+            if (remainder != 0) {
+                var rightPadded = ByteArray(calldata[0].size + remainder)
+                calldata[0].forEachIndexed { idx, byte -> rightPadded.set(idx, byte) }
+                data += rightPadded
+            } else data += calldata[0]
+
+            data += abiEncode(BigInt.from(calldata[1].size))
+
+            remainder = calldata[1].size % 32
+            if (remainder != 0) {
+                var rightPadded = ByteArray(calldata[1].size + remainder)
+                calldata[1].forEachIndexed { idx, byte -> rightPadded.set(idx, byte) }
+                data += rightPadded
+            } else data += calldata[1]
 
         } else {
             throw Exception("Unsupported number of calldatas ${calldata.size}, needs refactor")
         }
-
         return data
     }
 }
