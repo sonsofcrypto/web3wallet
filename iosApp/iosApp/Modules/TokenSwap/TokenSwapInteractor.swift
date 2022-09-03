@@ -6,7 +6,6 @@ import Foundation
 import web3lib
 
 struct SwapDataIn {
-    
     let tokenFrom: Web3Token
     let tokenTo: Web3Token
     let inputAmount: BigInt
@@ -53,9 +52,7 @@ protocol TokenSwapInteractor: AnyObject {
     func defaultTokenFrom() -> Web3Token
     func defaultTokenTo() -> Web3Token
     
-    func swapTokenAmount(
-        dataIn: SwapDataIn
-    )
+    func swapTokenAmount(dataIn: SwapDataIn)
     
     func addListener(_ listener: SwapInteractorLister)
     func removeListener(_ listener: SwapInteractorLister)
@@ -81,7 +78,6 @@ final class DefaultTokenSwapInteractor {
         web3Service: Web3ServiceLegacy,
         swapService: UniswapService
     ) {
-        
         self.web3Service = web3Service
         self.swapService = swapService
         
@@ -175,20 +171,20 @@ extension DefaultTokenSwapInteractor: TokenSwapInteractor {
         default:
             break
         }
-        switch swapService.approvalState {
-        case .loading:
-            return .loading
-        default:
-            break
-        }
+//        switch swapService.approvalState {
+//        case is ApprovalState.Loading:
+//            return .loading
+//        default:
+//            break
+//        }
         return .ready
     }
     
     var approvingState: TokenSwapInteractorApprovalState {
         switch swapService.approvalState {
-        case .needsApproval:
+        case is ApprovalState.NeedsApproval:
             return .approve
-        case .approving:
+        case is ApprovalState.Approving:
             return .approving
         default:
             return .approved

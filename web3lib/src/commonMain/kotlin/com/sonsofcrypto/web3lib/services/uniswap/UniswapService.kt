@@ -48,8 +48,22 @@ sealed class OutputState {
 }
 
 /** State of ERC20 approval for router contract*/
-enum class ApprovalState {
-    DOES_NO_APPLY, LOADING, NEEDS_APPROVAL, APPROVING, APPROVED
+sealed class ApprovalState(open val currency: Currency) {
+    data class DoesNotApply(override val currency: Currency): ApprovalState(currency)
+    data class Unknown(override val currency: Currency): ApprovalState(currency)
+    data class Loading(override val currency: Currency): ApprovalState(currency)
+    data class NeedsApproval(override val currency: Currency): ApprovalState(currency)
+    data class Approving(override val currency: Currency): ApprovalState(currency)
+    data class Approved(override val currency: Currency): ApprovalState(currency)
+
+    fun needsApproval(currency: Currency): Boolean {
+        if (this.currency != currency)
+            return true
+        return when(this) {
+            is Approved -> false
+            else -> true
+        }
+    }
 }
 
 interface UniswapListener { fun handle(event: UniswapEvent) }
@@ -82,13 +96,17 @@ private val UINT256_MAX = BigInt.from("fffffffffffffffffffffffffffffffffffffffff
 class DefaultUniswapService(): UniswapService {
     override var inputCurrency: Currency = Currency.ethereum()
         set(value) {
-            field = value
-            currencyChanged(value, outputCurrency)
+            if (field != value) {
+                field = value
+                currencyChanged(value, outputCurrency)
+            }
         }
     override var outputCurrency: Currency = Currency.cult()
         set(value) {
-            field = value
-            currencyChanged(inputCurrency, value)
+            if (field != value) {
+                field = value
+                currencyChanged(inputCurrency, value)
+            }
         }
     override var inputAmount: BigInt = BigInt.zero()
         set(value) {
@@ -113,7 +131,7 @@ class DefaultUniswapService(): UniswapService {
             emit(UniswapEvent.PoolsState(value))
             inputChanged(inputCurrency, outputCurrency, inputAmount)
         }
-    override var approvalState: ApprovalState = ApprovalState.LOADING
+    override var approvalState: ApprovalState = ApprovalState.Unknown(Currency.ethereum())
         private set(value) {
             field = value
             emit(UniswapEvent.ApprovalState(value))
@@ -149,7 +167,7 @@ class DefaultUniswapService(): UniswapService {
     }
 
     override suspend fun requestApproval(currency: Currency, wallet: Wallet) {
-        approvalState = ApprovalState.APPROVING
+        approvalState = ApprovalState.Approving(currency)
         val spender = routerAddress(provider.network)
         scope.launch {
             val state = approve(currency, spender, wallet)
@@ -159,18 +177,19 @@ class DefaultUniswapService(): UniswapService {
 
     @Throws(Throwable::class)
     override suspend fun executeSwap(): TransactionResponse {
+        if (approvalState == ApprovalState.Unknown(inputCurrency)) {
+            throw Throwable("Unknown approval state")
+        }
         val state = outputState as? OutputState.Valid
         if (state == null)
             throw Throwable("No valid quote")
         if (wallet == null)
             throw Throwable("No wallet")
         val minAmount = BigDec.from(state.quote).mul(BigDec.from(0.969)).toBigInt()
-//        val minAmount = BigInt.from(400000)
         val params = IV3SwapRouter.ExactInputSingleParams(
             tokenIn = wrappedAddress(inputCurrency),
             tokenOut = wrappedAddress(outputCurrency),
             fee = state.fee.value,
-//            recipient = IV3SwapRouter.ExactInputSingleParams.Recipient.HexAddress(wallet!!.address().toHexString()),
             recipient = if (outputCurrency.type == Currency.Type.NATIVE)
                 IV3SwapRouter.ExactInputSingleParams.Recipient.This
                 else IV3SwapRouter.ExactInputSingleParams.Recipient.MsgSender,
@@ -192,13 +211,16 @@ class DefaultUniswapService(): UniswapService {
                 else BigInt.zero()
         )
         println("=== REQUEST $request")
-         return withBgCxt { wallet!!.sendTransaction(request) }
+        return withBgCxt { wallet!!.sendTransaction(request) }
     }
 
     private fun currencyChanged(input: Currency, output: Currency) {
         poolsStateJob?.cancel(null)
         poolsState = PoolsState.Loading
-        approvalState = ApprovalState.LOADING
+        outputState = OutputState.Unavailable
+        val needsApproval = approvalState.needsApproval(inputCurrency)
+        if (needsApproval)
+            approvalState = ApprovalState.Loading(inputCurrency)
         val owner = wallet?.address()?.toHexStringAddress()?.hexString
         val spender = routerAddress(provider.network)
         val amount = inputAmount
@@ -208,8 +230,10 @@ class DefaultUniswapService(): UniswapService {
                 poolsState = if (fees.isEmpty()) PoolsState.NoPoolsFound
                 else PoolsState.Valid(fees)
             }
-            val state = fetchApprovalState(input, owner, spender, amount, provider)
-            withUICxt { approvalState = state }
+            if (needsApproval) {
+                val state = fetchApprovalState(input, owner, spender, amount, provider)
+                withUICxt { approvalState = state }
+            }
         }
     }
 
@@ -372,7 +396,7 @@ class DefaultUniswapService(): UniswapService {
         val tokenAddress = wrappedAddress(currency)
         val erc20 = ERC20(Address.HexString(tokenAddress))
         if (owner == null)
-            return ApprovalState.DOES_NO_APPLY
+            return ApprovalState.DoesNotApply(currency)
         try {
             val data = erc20.allowance(
                 Address.HexString(owner),
@@ -381,17 +405,17 @@ class DefaultUniswapService(): UniswapService {
             val result = provider.call(tokenAddress, data)
             val allowance = erc20.decodeAllowance(result)
             return if (allowance.isZero()) {
-                ApprovalState.NEEDS_APPROVAL
+                ApprovalState.NeedsApproval(currency)
             } else if (amount.isZero() && !allowance.isZero()) {
-                ApprovalState.APPROVED
+                ApprovalState.Approved(currency)
             } else if (amount.compare(allowance) > 0) {
-                ApprovalState.APPROVED
+                ApprovalState.Approved(currency)
             } else {
-                ApprovalState.NEEDS_APPROVAL
+                ApprovalState.NeedsApproval(currency)
             }
         } catch (err: Throwable) {
             println("[Error] approving $err")
-            return ApprovalState.NEEDS_APPROVAL
+            return ApprovalState.Unknown(currency)
         }
     }
 
@@ -412,10 +436,10 @@ class DefaultUniswapService(): UniswapService {
                 try {
                     val receipt = wallet.provider()!!.getTransactionReceipt(response.hash)
                     if (receipt.status == 1) {
-                        return ApprovalState.APPROVED
+                        return ApprovalState.Approved(currency)
                     }
                     if (receipt.status == 0) {
-                        return ApprovalState.NEEDS_APPROVAL
+                        return ApprovalState.NeedsApproval(currency)
                     }
                     throwCount = 0
                 } catch (err: Throwable) {
@@ -423,10 +447,10 @@ class DefaultUniswapService(): UniswapService {
                     println("[Error] Receipt error $throwCount $err")
                 }
             }
-            return ApprovalState.NEEDS_APPROVAL
+            return ApprovalState.Unknown(currency)
         } catch (err: Throwable) {
             println("[Error] approving $err")
-            return ApprovalState.NEEDS_APPROVAL
+            return ApprovalState.NeedsApproval(currency)
         }
     }
 
