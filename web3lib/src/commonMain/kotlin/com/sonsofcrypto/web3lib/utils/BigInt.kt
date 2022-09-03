@@ -2,8 +2,6 @@ package com.sonsofcrypto.web3lib.utils
 
 import com.ionspin.kotlin.bignum.integer.BigInteger
 import com.ionspin.kotlin.bignum.integer.Sign
-import com.sonsofcrypto.web3lib.services.uniswap.QuoteRequest
-import com.sonsofcrypto.web3lib.services.uniswap.UniswapService
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Serializer

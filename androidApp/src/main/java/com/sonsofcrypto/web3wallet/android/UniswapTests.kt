@@ -158,6 +158,23 @@ class UniswapTests {
         service.inputAmount = BigInt.from("1000000000000000000")
     }
 
+    fun testApproval() {
+        println(networksService)
+        val network = Network.ethereum()
+        val wallet = networksService.wallet(network)
+        val service = DefaultUniswapService()
+        service.provider = wallet?.provider()!!
+        service.inputCurrency = Currency.ethereum()
+        service.outputCurrency = Currency.usdt()
+        service.inputAmount = BigInt.from("1000000000000000000")
+        scope
+        val addresses = PoolFee.values().map {
+            val input = service.inputCurrency
+            val output = service.outputCurrency
+            service.poolAddress(input, output, it, network)
+        }
+    }
+
     fun testNext() {
         println(networksService)
         val network = Network.ethereum()

@@ -4,9 +4,10 @@ import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
 import com.sonsofcrypto.web3lib.signer.contracts.Contract
 import com.sonsofcrypto.web3lib.types.Address
-import com.sonsofcrypto.web3lib.utils.*
-import com.sonsofcrypto.web3lib.utils.extensions.toHexString
-import com.sonsofcrypto.web3lib.utils.extensions.toUInt
+import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.abiDecodeBigInt
+import com.sonsofcrypto.web3lib.utils.abiDecodeUInt
+import com.sonsofcrypto.web3lib.utils.keccak256
 
 class UniswapV3PoolState(address: Address.HexString): Contract(address) {
     /**

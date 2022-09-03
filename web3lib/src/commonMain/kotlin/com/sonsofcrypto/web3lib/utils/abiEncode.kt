@@ -4,7 +4,6 @@ import com.sonsofcrypto.web3lib.provider.model.toBigIntData
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toByteArray
-import com.sonsofcrypto.web3lib.utils.extensions.toUInt
 import com.sonsofcrypto.web3lib.utils.extensions.toUInt_8
 
 private val abiParamLen = 32

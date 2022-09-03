@@ -2,23 +2,20 @@ package com.sonsofcrypto.web3lib.services.uniswap
 
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.ProviderVoid
-import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import com.sonsofcrypto.web3lib.provider.call
+import com.sonsofcrypto.web3lib.provider.model.DataHexString
+import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.Quoter
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.UniswapV3PoolState
-import com.sonsofcrypto.web3lib.services.wallet.WalletListener
 import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.signer.contracts.ERC20
-import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.*
 import com.sonsofcrypto.web3lib.utils.*
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.seconds
 
 /** Note that fee is in hundredths of basis points (e.g. the fee for a pool at
  *  the 0.3% tier is 3000; the fee for a pool at the 0.01% tier is 100).*/
@@ -74,6 +71,7 @@ interface UniswapService {
 }
 
 private val QUOTE_DEBOUNCE_MS = 750L
+private val UINT256_MAX = BigInt.from("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff", 16)
 
 class DefaultUniswapService: UniswapService {
     override var inputCurrency: Currency = Currency.ethereum()
@@ -144,10 +142,11 @@ class DefaultUniswapService: UniswapService {
 
     override suspend fun requestApproval(currency: Currency, wallet: Wallet) {
         approvalState = ApprovalState.APPROVING
+        val spender = routerAddress(provider.network)
         scope.launch {
-
+            val state = approve(currency, spender, wallet)
+            withUICxt { approvalState = state }
         }
-
     }
 
     override suspend fun executeSwap() {
@@ -350,19 +349,33 @@ class DefaultUniswapService: UniswapService {
 
     suspend fun approve(
         currency: Currency,
-        owner: AddressHexString,
         spender: AddressHexString,
-        amount: BigInt,
-        provider: Provider
+        wallet: Wallet
     ): ApprovalState {
         val tokenAddress = wrappedAddress(currency)
         val erc20 = ERC20(Address.HexString(tokenAddress))
         try {
-            val data = erc20.approve(Address.HexString(spender), amount)
-            val result = provider.call(tokenAddress, data)
-            val status = erc20.decodeApprove(result)
-            return if (status.isZero()) ApprovalState.NEEDS_APPROVAL
-            else ApprovalState.APPROVED
+            val data = erc20.approve(Address.HexString(spender), UINT256_MAX)
+            val request = TransactionRequest(to = erc20.address, data = data)
+            val response = wallet!!.sendTransaction(request)
+            var throwCount = 0
+            while (throwCount < 10) {
+                delay(5.seconds)
+                try {
+                    val receipt = wallet.provider()!!.getTransactionReceipt(response.hash)
+                    println("${receipt.status} $receipt")
+                    if (receipt.status == 1 && receipt.confirmations?.isZero() == false) {
+                        return ApprovalState.APPROVED
+                    }
+                    if (receipt.status == 0) {
+                        return ApprovalState.NEEDS_APPROVAL
+                    }
+                    throwCount = 0
+                } catch (err: Throwable) {
+                    throwCount += 1
+                    println("Receipt error $throwCount $err")
+                }
+            }
         } catch (err: Throwable) {
             println("Error approving $err")
             return ApprovalState.NEEDS_APPROVAL

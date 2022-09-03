@@ -1,8 +1,5 @@
 package com.sonsofcrypto.web3lib.services.uniswap
 
-import com.sonsofcrypto.web3lib.types.Currency
-import com.sonsofcrypto.web3lib.utils.BigInt
-
 /** Uniswap service events */
 sealed class UniswapEvent() {
 

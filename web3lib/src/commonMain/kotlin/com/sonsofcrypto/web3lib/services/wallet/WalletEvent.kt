@@ -1,9 +1,6 @@
 package com.sonsofcrypto.web3lib.services.wallet
 
 import com.sonsofcrypto.web3lib.provider.model.Log
-import com.sonsofcrypto.web3lib.signer.Wallet
-import com.sonsofcrypto.web3lib.signer.contracts.Contract
-import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BigInt

@@ -5,7 +5,6 @@ import com.sonsofcrypto.web3lib.signer.contracts.Contract
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.AddressHexString
 import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.utils.abiEncode
 import com.sonsofcrypto.web3lib.utils.keccak256
 
 class IV3SwapRouter(address: Address.HexString): Contract(address) {
