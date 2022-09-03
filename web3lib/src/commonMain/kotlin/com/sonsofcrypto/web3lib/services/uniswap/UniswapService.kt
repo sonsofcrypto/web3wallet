@@ -342,7 +342,7 @@ class DefaultUniswapService(): UniswapService {
                 ApprovalState.NEEDS_APPROVAL
             }
         } catch (err: Throwable) {
-            println("Error approving $err")
+            println("[Error] approving $err")
             return ApprovalState.NEEDS_APPROVAL
         }
     }
@@ -354,19 +354,16 @@ class DefaultUniswapService(): UniswapService {
     ): ApprovalState {
         val tokenAddress = wrappedAddress(currency)
         val erc20 = ERC20(Address.HexString(tokenAddress))
-        println("=== approving")
         try {
             val data = erc20.approve(Address.HexString(spender), UINT256_MAX)
             val request = TransactionRequest(to = erc20.address, data = data)
             val response = wallet!!.sendTransaction(request)
-            println("=== response $response")
             var throwCount = 0
             while (throwCount < 10) {
                 delay(5.seconds)
                 try {
                     val receipt = wallet.provider()!!.getTransactionReceipt(response.hash)
-                    println("=== reciept ${receipt.status} $receipt")
-                    if (receipt.status == 1 && receipt.confirmations?.isZero() == false) {
+                    if (receipt.status == 1) {
                         return ApprovalState.APPROVED
                     }
                     if (receipt.status == 0) {
@@ -375,12 +372,12 @@ class DefaultUniswapService(): UniswapService {
                     throwCount = 0
                 } catch (err: Throwable) {
                     throwCount += 1
-                    println("Receipt error $throwCount $err")
+                    println("[Error] Receipt error $throwCount $err")
                 }
             }
             return ApprovalState.NEEDS_APPROVAL
         } catch (err: Throwable) {
-            println("Error approving $err")
+            println("[Error] approving $err")
             return ApprovalState.NEEDS_APPROVAL
         }
     }
