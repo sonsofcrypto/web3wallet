@@ -376,6 +376,7 @@ class DefaultUniswapService: UniswapService {
                     println("Receipt error $throwCount $err")
                 }
             }
+            return ApprovalState.NEEDS_APPROVAL
         } catch (err: Throwable) {
             println("Error approving $err")
             return ApprovalState.NEEDS_APPROVAL
@@ -415,7 +416,7 @@ class DefaultUniswapService: UniswapService {
     }
 
     // TODO: Add support for test nets
-    private fun routerAddress(network: Network): AddressHexString = when(network) {
+    fun routerAddress(network: Network): AddressHexString = when(network) {
         Network.ethereum() -> "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45"
         else -> "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45"
     }

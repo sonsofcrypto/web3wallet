@@ -40,7 +40,8 @@ class UniswapTests {
 //        testGetPoolAddress()
 //        testGetPoolData()
 //        testGetAllPoolData()
-        testInitState()
+//        testInitState()
+        testApproval()
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
@@ -167,11 +168,9 @@ class UniswapTests {
         service.inputCurrency = Currency.ethereum()
         service.outputCurrency = Currency.usdt()
         service.inputAmount = BigInt.from("1000000000000000000")
-        scope
-        val addresses = PoolFee.values().map {
-            val input = service.inputCurrency
-            val output = service.outputCurrency
-            service.poolAddress(input, output, it, network)
+        val spender = service.routerAddress(network)
+        scope.launch {
+            service.approve(service.inputCurrency, spender, wallet)
         }
     }
 
