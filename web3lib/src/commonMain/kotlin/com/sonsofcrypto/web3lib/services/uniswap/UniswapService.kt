@@ -130,13 +130,9 @@ class DefaultUniswapService(): UniswapService {
     )
 
     init {
-        println("=== WTF1")
         quoteFlow
             .debounce(QUOTE_DEBOUNCE_MS)
-            .flatMapLatest { request ->
-                println("=== WTF2")
-                fetchBestQuote(request)
-            }
+            .flatMapLatest { request -> fetchBestQuote(request) }
             .onEach {
                 val (quote, fee, request) = it
                 handleQuote(quote, fee, request)
@@ -200,7 +196,6 @@ class DefaultUniswapService(): UniswapService {
     suspend fun fetchBestQuote(
         request: QuoteRequest
     ): Flow<Triple<BigInt, PoolFee, QuoteRequest>> = flow {
-        println("=== ffff")
         if (request.amountIn.isZero()) {
             emit(Triple(request.amountIn, PoolFee.LOW, request))
             return@flow
@@ -359,16 +354,18 @@ class DefaultUniswapService(): UniswapService {
     ): ApprovalState {
         val tokenAddress = wrappedAddress(currency)
         val erc20 = ERC20(Address.HexString(tokenAddress))
+        println("=== approving")
         try {
             val data = erc20.approve(Address.HexString(spender), UINT256_MAX)
             val request = TransactionRequest(to = erc20.address, data = data)
             val response = wallet!!.sendTransaction(request)
+            println("=== response $response")
             var throwCount = 0
             while (throwCount < 10) {
                 delay(5.seconds)
                 try {
                     val receipt = wallet.provider()!!.getTransactionReceipt(response.hash)
-                    println("${receipt.status} $receipt")
+                    println("=== reciept ${receipt.status} $receipt")
                     if (receipt.status == 1 && receipt.confirmations?.isZero() == false) {
                         return ApprovalState.APPROVED
                     }
@@ -401,7 +398,6 @@ class DefaultUniswapService(): UniswapService {
 
     private fun emit(event: UniswapEvent) {
         listeners.forEach { it.handle(event)}
-        println("=== $event")
     }
 
     private fun wrappedAddress(currency: Currency): AddressHexString {
