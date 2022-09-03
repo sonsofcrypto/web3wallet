@@ -5,7 +5,6 @@ import com.sonsofcrypto.web3lib.provider.model.BlockTag
 import com.sonsofcrypto.web3lib.provider.model.TransactionRequest
 import com.sonsofcrypto.web3lib.services.coinGecko.DefaultCoinGeckoService
 import com.sonsofcrypto.web3lib.services.currencyStore.DefaultCurrencyStoreService
-import com.sonsofcrypto.web3lib.services.currencyStore.ethereumDefaultCurrencies
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
@@ -14,10 +13,7 @@ import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.services.uniswap.DefaultUniswapService
 import com.sonsofcrypto.web3lib.services.uniswap.PoolFee
-import com.sonsofcrypto.web3lib.services.uniswap.UniswapService
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.UniswapV3PoolState
-import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletService
-import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.types.*
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
@@ -44,7 +40,7 @@ class UniswapTests {
 //        testGetPoolAddress()
 //        testGetPoolData()
 //        testGetAllPoolData()
-        testQuote()
+        testInitState()
     }
 
     fun assertTrue(actual: Boolean, message: String? = null) {
@@ -53,7 +49,7 @@ class UniswapTests {
 
     fun testGetPoolAddress() {
         val service = DefaultUniswapService()
-        val address = service.getPoolAddress(
+        val address = service.poolAddress(
             "0x1111111111111111111111111111111111111111",
             "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
             "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -64,14 +60,14 @@ class UniswapTests {
             address == "0x90B1b09A9715CaDbFD9331b3A7652B24BfBEfD32".toLowerCase(),
             "Unexpected pool address ${address}"
         )
-        val addressesSorted = service.getPoolAddress(
+        val addressesSorted = service.poolAddress(
             "0x1111111111111111111111111111111111111111",
             "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
             "0x6B175474E89094C44Da98b954EedeAC495271d0F",
             PoolFee.LOW,
             "0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54"
         )
-        val addressesUnsorted = service.getPoolAddress(
+        val addressesUnsorted = service.poolAddress(
             "0x1111111111111111111111111111111111111111",
             "0x6B175474E89094C44Da98b954EedeAC495271d0F",
             "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -86,7 +82,7 @@ class UniswapTests {
 
     fun testGetPoolData() {
         val service = DefaultUniswapService()
-        val address = service.getPoolAddress(
+        val address = service.poolAddress(
             "0x1F98431c8aD98523631AE4a59f267346ea31F984",
             "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
             "0x6B175474E89094C44Da98b954EedeAC495271d0F",
@@ -124,12 +120,17 @@ class UniswapTests {
 
     fun testGetAllPoolData() {
         println(networksService)
-        val wallet = networksService.wallet(Network.ethereum())
+        val network = Network.ethereum()
+        val wallet = networksService.wallet(network)
         val service = DefaultUniswapService()
         service.provider = wallet?.provider()!!
         service.inputCurrency = Currency.ethereum()
         service.outputCurrency = Currency.usdt()
-        val addresses = service.poolsAddresses(service.inputCurrency, service.outputCurrency)
+        val addresses = PoolFee.values().map {
+            val input = service.inputCurrency
+            val output = service.outputCurrency
+            service.poolAddress(input, output, it, network)
+        }
         scope.launch {
             val result = service.fetchPoolsStates(addresses)
             result.forEach { (key, value) ->
@@ -146,16 +147,31 @@ class UniswapTests {
         }
     }
 
-    fun testQuote() {
+    fun testInitState() {
         println(networksService)
-        val wallet = networksService.wallet(Network.ethereum())
+        val network = Network.ethereum()
+        val wallet = networksService.wallet(network)
         val service = DefaultUniswapService()
         service.provider = wallet?.provider()!!
         service.inputCurrency = Currency.ethereum()
         service.outputCurrency = Currency.usdt()
         service.inputAmount = BigInt.from("1000000000000000000")
-        val addresses = service.poolsAddresses(service.inputCurrency, service.outputCurrency)
+    }
 
+    fun testNext() {
+        println(networksService)
+        val network = Network.ethereum()
+        val wallet = networksService.wallet(network)
+        val service = DefaultUniswapService()
+        service.provider = wallet?.provider()!!
+        service.inputCurrency = Currency.ethereum()
+        service.outputCurrency = Currency.usdt()
+        service.inputAmount = BigInt.from("1000000000000000000")
+        val addresses = PoolFee.values().map {
+            val input = service.inputCurrency
+            val output = service.outputCurrency
+            service.poolAddress(input, output, it, network)
+        }
 
 //        scope.launch {
 //            UniswapService.PoolFee.values().forEach { fee ->
@@ -203,7 +219,7 @@ class UniswapTests {
 
     fun testSwap() {
         val service = DefaultUniswapService()
-        val address = service.getPoolAddress(
+        val address = service.poolAddress(
             "0x1F98431c8aD98523631AE4a59f267346ea31F984",
             "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
             "0x6b175474e89094c44da98b954eedeac495271d0f",

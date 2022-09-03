@@ -12,6 +12,7 @@ import com.sonsofcrypto.web3lib.types.*
 import com.sonsofcrypto.web3lib.utils.*
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
@@ -38,7 +39,12 @@ enum class PoolFee(val value: UInt) {
 sealed class PoolsState {
     object NoPoolsFound: PoolsState()
     object Loading: PoolsState()
-    data class Valid(val poolState: Int): PoolsState()
+    data class Valid(val poolFees: List<PoolFee>): PoolsState()
+
+    fun validFees(): List<PoolFee> = when(this) {
+        is PoolsState.Valid -> this.poolFees
+        else -> listOf()
+    }
 }
 
 /** Quote output state */
@@ -69,18 +75,6 @@ interface UniswapService {
     suspend fun requestApproval(currency: Currency, wallet: Wallet)
     suspend fun executeSwap()
 
-    fun getPoolAddress(
-        factoryAddress: AddressHexString,
-        tokenAddressA: AddressHexString,
-        tokenAddressB: AddressHexString,
-        feeAmount: PoolFee,
-        poolInitHash: DataHexString,
-    ): AddressHexString
-
-    enum class UniswapFeeAmount(val value: UInt) {
-        LOWEST(100u), LOW(500u), MEDIUM(3000u), HIGH(10000u)
-    }
-
     /** Add listener for `Uniswap`s */
     fun add(listener: UniswapListener)
     /** Remove listener for `Uniswap`s, if null removes all listeners */
@@ -93,6 +87,7 @@ data class QuoteRequest (
     val input: Currency,
     val output: Currency,
     val amountIn: BigInt,
+    val fees: List<PoolFee>,
     val provider: Provider
 )
 
@@ -100,12 +95,12 @@ class DefaultUniswapService: UniswapService {
     override var inputCurrency: Currency = Currency.ethereum()
         set(value) {
             field = value
-            inputChanged(value, outputCurrency, inputAmount)
+            currencyChanged(value, outputCurrency)
         }
     override var outputCurrency: Currency = Currency.cult()
         set(value) {
             field = value
-            inputChanged(inputCurrency, value, inputAmount)
+            currencyChanged(inputCurrency, value)
         }
     override var inputAmount: BigInt = BigInt.zero()
         set(value) {
@@ -123,7 +118,11 @@ class DefaultUniswapService: UniswapService {
         }
         private set
     override var poolsState: PoolsState = PoolsState.Loading
-        private set
+        private set(value) {
+            field = value
+            println("=== $value")
+            inputChanged(inputCurrency, outputCurrency, inputAmount)
+        }
     override var approvalState: ApprovalState = ApprovalState.LOADING
         private set
     override var outputState: OutputState = OutputState.Unavailable
@@ -133,6 +132,7 @@ class DefaultUniswapService: UniswapService {
 
     private val network = Network.ethereum()
     private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
+    private var poolsStateJob: Job? = null
     private val quoteFlow = MutableSharedFlow<QuoteRequest>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
@@ -158,20 +158,39 @@ class DefaultUniswapService: UniswapService {
         TODO("Implement")
     }
 
+    private fun currencyChanged(input: Currency, output: Currency) {
+        poolsStateJob?.cancel(null)
+        poolsState = PoolsState.Loading
+        poolsStateJob = scope.launch {
+            val fees = fetchValidPoolFeeProtocols(input, output, provider)
+            withUICxt {
+                poolsState = if (fees.isEmpty()) PoolsState.NoPoolsFound
+                else PoolsState.Valid(fees)
+            }
+        }
+    }
+
     private fun inputChanged(input: Currency, output: Currency, value: BigInt) {
         val curr = outputState
+        val fees = poolsState.validFees()
+        if (poolsState is PoolsState.NoPoolsFound)
+            OutputState.Unavailable
+        if (fees.isEmpty())
+            return
         outputState = when (curr) {
             is OutputState.Loading -> OutputState.Loading(curr.quote, curr.request)
             is OutputState.Valid -> OutputState.Loading(curr.quote, curr.request)
             else -> OutputState.Loading(
                 BigInt.zero(),
-                QuoteRequest(input, output, BigInt.zero(), provider)
+                QuoteRequest(input, output, BigInt.zero(), fees, provider)
             )
         }
         scope.launch {
-            quoteFlow.emit(QuoteRequest(input, output, value, provider))
+            quoteFlow.emit(QuoteRequest(input, output, value, fees, provider))
         }
     }
+
+    /** Quotes */
 
     suspend fun fetchBestQuote(
         request: QuoteRequest
@@ -219,19 +238,45 @@ class DefaultUniswapService: UniswapService {
         emit(UniswapEvent.Quote(request.input, request.output, request.amountIn))
     }
 
-    fun poolsAddresses(input: Currency, output: Currency): List<AddressHexString> {
-        return PoolFee.values().map {
-            getPoolAddress(
-                factoryAddress(network),
-                wrappedAddress(input),
-                wrappedAddress(output),
-                it,
-                poolInitHash(network)
-            )
+    /** Pools */
+
+    suspend fun fetchValidPoolFeeProtocols(
+        input: Currency,
+        output: Currency,
+        provider: Provider
+    ): List<PoolFee> = withBgCxt {
+        val network = provider.network
+        val valid: MutableList<PoolFee> = mutableListOf()
+        PoolFee.values().forEach { fee ->
+            val address = poolAddress(input, output, fee, network)
+            val poolState = UniswapV3PoolState(Address.HexString(address))
+            try {
+                val resultSlot0 = provider.call(address, poolState.slot0())
+                val slot0 = poolState.decodeSlot(resultSlot0)
+                if (slot0.unlocked) {
+                    valid.add(fee)
+                }
+            } catch (err: Throwable) {
+                println("Error fetching pool state $fee, $err")
+            }
         }
+        return@withBgCxt valid
     }
 
-    override fun getPoolAddress(
+    fun poolAddress(
+        input: Currency,
+        output: Currency,
+        fee: PoolFee,
+        network: Network
+    ): AddressHexString = poolAddress(
+        factoryAddress(network),
+        wrappedAddress(input),
+        wrappedAddress(output),
+        fee,
+        poolInitHash(network)
+    )
+
+    fun poolAddress(
         factoryAddress: AddressHexString,
         tokenAddressA: AddressHexString,
         tokenAddressB: AddressHexString,
@@ -270,6 +315,7 @@ class DefaultUniswapService: UniswapService {
         return results
     }
 
+    /** Listeners */
 
     override fun add(listener: UniswapListener) {
         TODO("Not yet implemented")
