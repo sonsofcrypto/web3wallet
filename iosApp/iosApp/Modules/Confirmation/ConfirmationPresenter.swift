@@ -404,7 +404,7 @@ private extension DefaultConfirmationPresenter {
                     switch result {
                     case let .success(response):
                         self?.txHash = response.hash
-                        self?.showTransactionSuccess()
+                        self?.showTransactionSuccess(response)
                     case let .failure(error):
                         print("[ERROR]", error)
                         self?.showTransactionFailed(error)
