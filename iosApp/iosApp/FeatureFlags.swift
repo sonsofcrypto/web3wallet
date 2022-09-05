@@ -16,7 +16,7 @@ enum FeatureFlag {
         case .showSaltMnemonic:
             return false
         case .runVotingCount:
-            return true
+            return false
         case .showAppsTab:
             return false
         case .embedChatInTab:
