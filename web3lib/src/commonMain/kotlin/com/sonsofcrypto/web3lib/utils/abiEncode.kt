@@ -4,6 +4,7 @@ import com.sonsofcrypto.web3lib.provider.model.toBigIntData
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toByteArray
+import com.sonsofcrypto.web3lib.utils.extensions.toUInt_8
 
 private val abiParamLen = 32
 
@@ -38,3 +39,4 @@ fun abiDecodeAddress(value: String): Address.HexString {
     return Address.HexString("0x" + stripped)
 }
 
+fun abiDecodeUInt(bytes: ByteArray): UInt = bytes.takeLast(8).toByteArray().toUInt_8()

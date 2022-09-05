@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 struct TokenSwapWireframeContext {
     
@@ -25,6 +26,11 @@ enum TokenSwapWireframeDestination {
     case confirmSwap(
         dataIn: ConfirmationWireframeContext.SwapContext
     )
+    case confirmApproval(
+        iconName: String,
+        token: Web3Token,
+        onApproved: ((password: String, salt: String)) -> Void
+    )
 }
 
 protocol TokenSwapWireframe {
@@ -41,6 +47,7 @@ final class DefaultTokenSwapWireframe {
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let web3Service: Web3ServiceLegacy
+    private let swapService: UniswapService
     
     private weak var navigationController: NavigationController!
     
@@ -50,7 +57,8 @@ final class DefaultTokenSwapWireframe {
         tokenPickerWireframeFactory: TokenPickerWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        web3Service: Web3ServiceLegacy
+        web3Service: Web3ServiceLegacy,
+        swapService: UniswapService
     ) {
         self.presentingIn = presentingIn
         self.context = context
@@ -58,6 +66,7 @@ final class DefaultTokenSwapWireframe {
         self.confirmationWireframeFactory = confirmationWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.web3Service = web3Service
+        self.swapService = swapService
     }
 }
 
@@ -86,12 +95,9 @@ extension DefaultTokenSwapWireframe: TokenSwapWireframe {
         switch destination {
             
         case .underConstructionAlert:
-            
             guard let viewController = navigationController.topViewController else {
-                
                 return
             }
-            
             alertWireframeFactory.makeWireframe(
                 viewController,
                 context: .underConstructionAlert()
@@ -104,15 +110,30 @@ extension DefaultTokenSwapWireframe: TokenSwapWireframe {
             presentTokenPicker(selectedToken: selectedToken, onCompletion: onCompletion)
         
         case let .confirmSwap(dataIn):
-            
             guard let viewController = navigationController.topViewController else {
-                
                 return
             }
-            
             let wireframe = confirmationWireframeFactory.makeWireframe(
                 presentingIn: viewController,
                 context: .init(type: .swap(dataIn))
+            )
+            wireframe.present()
+            
+        case let .confirmApproval(iconName, token, onApproved):
+            guard let viewController = navigationController.topViewController else {
+                return
+            }
+            let wireframe = confirmationWireframeFactory.makeWireframe(
+                presentingIn: viewController,
+                context: .init(
+                    type: .approveUniswap(
+                        .init(
+                            iconName: iconName,
+                            token: token,
+                            onApproved: onApproved
+                        )
+                    )
+                )
             )
             wireframe.present()
         }
@@ -134,7 +155,8 @@ private extension DefaultTokenSwapWireframe {
     func wireUp() -> UIViewController {
         
         let interactor = DefaultTokenSwapInteractor(
-            web3Service: web3Service
+            web3Service: web3Service,
+            swapService: swapService
         )
         let vc: TokenSwapViewController = UIStoryboard(.tokenSwap).instantiate()
         let presenter = DefaultTokenSwapPresenter(

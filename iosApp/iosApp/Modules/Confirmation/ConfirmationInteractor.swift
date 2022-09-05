@@ -33,6 +33,14 @@ protocol ConfirmationInteractor {
         salt: String,
         handler: @escaping (Result<TransactionResponse, Error>) -> Void
     )
+    
+    func executeSwap(
+        network: Network,
+        password: String,
+        salt: String,
+        swapService: UniswapService,
+        handler: @escaping (Result<TransactionResponse, Error>) -> Void
+    )
 }
 
 final class DefaultConfirmationInteractor {
@@ -176,6 +184,35 @@ extension DefaultConfirmationInteractor: ConfirmationInteractor {
                     handler(.success(response))
                 }
             )
+        } catch {
+            handler(.failure(error))
+        }
+    }
+    
+    func executeSwap(
+        network: Network,
+        password: String,
+        salt: String,
+        swapService: UniswapService,
+        handler: @escaping (Result<TransactionResponse, Error>) -> Void
+    ) {
+        do {
+            try walletService.unlock(
+                password: password,
+                salt: salt,
+                network: network
+            )
+            swapService.executeSwap { response, error in
+                if let error = error {
+                    handler(.failure(error))
+                    return
+                }
+                guard let response = response else {
+                    handler(.failure(ConfirmationInteractorError.noResponse))
+                    return
+                }
+                handler(.success(response))
+            }
         } catch {
             handler(.failure(error))
         }

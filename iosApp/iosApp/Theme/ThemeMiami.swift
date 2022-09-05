@@ -63,6 +63,7 @@ struct ThemeMiami: Themable {
             buttonBackgroundPrimary: .init { traits in
                 isDarkMode ? pallete.systemPink : pallete.systemBlue
             },
+            buttonBackgroundPrimaryDisabled: pallete.systemGray,
             buttonPrimaryText: pallete.systemWhite,
             buttonBackgroundSecondary: .init { traits in
                 isDarkMode ?

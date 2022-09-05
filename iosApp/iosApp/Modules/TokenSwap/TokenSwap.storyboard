@@ -17,13 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="uniswap-logo-overlay" translatesAutoresizingMaskIntoConstraints="NO" id="EfH-ZL-VFh">
-                                <rect key="frame" x="123" y="608" width="168" height="194"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="168" id="GyH-lm-rfO"/>
-                                    <constraint firstAttribute="height" constant="194" id="VjP-Nc-hZ2"/>
-                                </constraints>
-                            </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="74Y-Ma-gMe">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -35,14 +28,14 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TokenSwapMarketCollectionViewCell" id="XPz-rC-pjp" customClass="TokenSwapMarketCollectionViewCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.5" y="0.0" width="413" height="382"/>
+                                        <rect key="frame" x="0.5" y="0.0" width="413" height="422"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="91N-vQ-8do">
-                                            <rect key="frame" x="0.0" y="0.0" width="413" height="382"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="413" height="422"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="DCQ-vs-lQ3">
-                                                    <rect key="frame" x="0.0" y="0.0" width="413" height="382"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="413" height="422"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="21L-BR-j7M" customClass="TokenEnterAmountView" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="413" height="96"/>
@@ -206,20 +199,20 @@
                                                                 <outlet property="tokenView" destination="pVw-oL-xtI" id="Uvq-6W-782"/>
                                                             </connections>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VoC-hc-D9V">
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VoC-hc-D9V">
                                                             <rect key="frame" x="0.0" y="100" width="413" height="28"/>
                                                             <subviews>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dr7-UQ-HPR">
+                                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dr7-UQ-HPR">
                                                                     <rect key="frame" x="194.5" y="0.0" width="24" height="24"/>
                                                                     <subviews>
-                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.down" translatesAutoresizingMaskIntoConstraints="NO" id="TFP-JZ-At3">
+                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="arrow.down" translatesAutoresizingMaskIntoConstraints="NO" id="TFP-JZ-At3">
                                                                             <rect key="frame" x="4" y="4" width="16" height="16"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="16" id="IjV-FG-tmS"/>
                                                                                 <constraint firstAttribute="width" constant="16" id="NmU-gk-hhW"/>
                                                                             </constraints>
                                                                         </imageView>
-                                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="3OJ-L7-APo">
+                                                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="3OJ-L7-APo">
                                                                             <rect key="frame" x="2" y="2" width="20" height="20"/>
                                                                         </activityIndicatorView>
                                                                     </subviews>
@@ -241,7 +234,7 @@
                                                                 <constraint firstItem="dr7-UQ-HPR" firstAttribute="centerX" secondItem="VoC-hc-D9V" secondAttribute="centerX" id="wdK-Pv-rgU"/>
                                                             </constraints>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RQJ-L1-jlw" customClass="TokenEnterAmountView" customModule="iosApp" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RQJ-L1-jlw" customClass="TokenEnterAmountView" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="132" width="413" height="96"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DjE-Xw-PkE">
@@ -403,7 +396,7 @@
                                                                 <outlet property="tokenView" destination="GKV-BU-si0" id="xYj-PS-iSY"/>
                                                             </connections>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SOB-Sd-QMS" userLabel="TokenProviderView" customClass="TokenSwapProviderView" customModule="iosApp" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SOB-Sd-QMS" userLabel="TokenProviderView" customClass="TokenSwapProviderView" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="232" width="413" height="32"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="X17-UH-rTK">
@@ -436,7 +429,7 @@
                                                                 <outlet property="nameLabel" destination="c8c-2z-XZ1" id="d9T-YB-9px"/>
                                                             </connections>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D02-UJ-q3V" userLabel="TokenSwapPriceView" customClass="TokenSwapPriceView" customModule="iosApp" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D02-UJ-q3V" userLabel="TokenSwapPriceView" customClass="TokenSwapPriceView" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="268" width="413" height="24"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="dzr-xD-m2N">
@@ -470,7 +463,7 @@
                                                                 <outlet property="valueLabel" destination="myD-MB-TnA" id="3OW-6p-aYO"/>
                                                             </connections>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rS4-TF-qqV" userLabel="TokenSwapSlippageView" customClass="TokenSwapSlippageView" customModule="iosApp" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rS4-TF-qqV" userLabel="TokenSwapSlippageView" customClass="TokenSwapSlippageView" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="296" width="413" height="24"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="0Z8-FI-Wl9">
@@ -503,7 +496,7 @@
                                                                 <outlet property="nameLabel" destination="TPG-Ui-sfT" id="5oh-fH-SSk"/>
                                                             </connections>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dvm-cW-HHx" customClass="TokenNetworkFeeView" customModule="iosApp" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dvm-cW-HHx" customClass="TokenNetworkFeeView" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="324" width="413" height="24"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="gel-GY-4tl">
@@ -550,11 +543,33 @@
                                                                 <outlet property="networkTokenIcon" destination="zIS-oD-Pqi" id="Phe-7x-Rsx"/>
                                                             </connections>
                                                         </view>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wiM-GP-EgD" customClass="Button" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="352" width="413" height="30"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" title="Button"/>
-                                                        </button>
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZGe-SJ-lsn">
+                                                            <rect key="frame" x="0.0" y="352" width="413" height="70"/>
+                                                            <subviews>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="yif-0m-PHW">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="413" height="76"/>
+                                                                    <subviews>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rlU-J3-ycC" customClass="Button" customModule="iosApp" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="413" height="34"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="Button"/>
+                                                                        </button>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wiM-GP-EgD" customClass="Button" customModule="iosApp" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="42" width="413" height="34"/>
+                                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                            <state key="normal" title="Button"/>
+                                                                        </button>
+                                                                    </subviews>
+                                                                </stackView>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="trailing" secondItem="yif-0m-PHW" secondAttribute="trailing" id="4NJ-fU-UJz"/>
+                                                                <constraint firstAttribute="height" constant="100" id="ET5-oQ-UHL"/>
+                                                                <constraint firstItem="yif-0m-PHW" firstAttribute="top" secondItem="ZGe-SJ-lsn" secondAttribute="top" id="mJq-th-fMr"/>
+                                                                <constraint firstItem="yif-0m-PHW" firstAttribute="leading" secondItem="ZGe-SJ-lsn" secondAttribute="leading" id="w7H-O1-foP"/>
+                                                            </constraints>
+                                                        </view>
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstItem="RQJ-L1-jlw" firstAttribute="top" secondItem="VoC-hc-D9V" secondAttribute="bottom" id="pVF-Hz-6mN"/>
@@ -568,8 +583,9 @@
                                                 <constraint firstItem="DCQ-vs-lQ3" firstAttribute="leading" secondItem="91N-vQ-8do" secondAttribute="leading" id="wQi-sr-TPd"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <size key="customSize" width="413" height="382"/>
+                                        <size key="customSize" width="413" height="422"/>
                                         <connections>
+                                            <outlet property="approveButton" destination="rlU-J3-ycC" id="Nft-0e-r3Q"/>
                                             <outlet property="button" destination="wiM-GP-EgD" id="X4X-LP-Zwu"/>
                                             <outlet property="imageView" destination="TFP-JZ-At3" id="dD1-Y2-LkS"/>
                                             <outlet property="loadingIndicator" destination="3OJ-L7-APo" id="Lu1-Nv-0Br"/>
@@ -583,7 +599,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TokenSwapLimitCollectionViewCell" id="Lbb-Ef-Z55" customClass="TokenSwapLimitCollectionViewCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.5" y="392" width="413" height="382"/>
+                                        <rect key="frame" x="0.5" y="432" width="413" height="382"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="9O1-d6-3kE">
                                             <rect key="frame" x="0.0" y="0.0" width="413" height="382"/>
@@ -701,9 +717,7 @@
                             <constraint firstItem="74Y-Ma-gMe" firstAttribute="leading" secondItem="18A-Or-4yN" secondAttribute="leading" id="4Jw-D7-Tgy"/>
                             <constraint firstItem="18A-Or-4yN" firstAttribute="bottom" secondItem="74Y-Ma-gMe" secondAttribute="bottom" id="9iX-gX-uQV"/>
                             <constraint firstItem="e16-94-oLm" firstAttribute="top" secondItem="96v-2a-j6q" secondAttribute="top" id="AFz-nB-xoQ"/>
-                            <constraint firstItem="18A-Or-4yN" firstAttribute="bottom" secondItem="EfH-ZL-VFh" secondAttribute="bottom" constant="60" id="LWL-as-pRk"/>
                             <constraint firstItem="e16-94-oLm" firstAttribute="bottom" secondItem="18A-Or-4yN" secondAttribute="bottom" id="MCq-9L-cHR"/>
-                            <constraint firstItem="EfH-ZL-VFh" firstAttribute="centerX" secondItem="96v-2a-j6q" secondAttribute="centerX" id="Pdj-x8-SHg"/>
                             <constraint firstItem="e16-94-oLm" firstAttribute="leading" secondItem="18A-Or-4yN" secondAttribute="leading" id="Uah-Vu-dfR"/>
                             <constraint firstItem="e16-94-oLm" firstAttribute="trailing" secondItem="18A-Or-4yN" secondAttribute="trailing" id="VfC-xA-fQM"/>
                             <constraint firstItem="74Y-Ma-gMe" firstAttribute="top" secondItem="18A-Or-4yN" secondAttribute="top" id="rB1-Pr-n0h"/>
@@ -712,7 +726,6 @@
                     <connections>
                         <outlet property="collectionView" destination="74Y-Ma-gMe" id="ISC-jX-ra4"/>
                         <outlet property="feesPickerView" destination="e16-94-oLm" id="hUQ-yj-gRV"/>
-                        <outlet property="providerLogo" destination="EfH-ZL-VFh" id="BWp-bB-62G"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u1d-mp-e5e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -722,7 +735,6 @@
     </scenes>
     <resources>
         <image name="arrow.down" width="128" height="128"/>
-        <image name="uniswap-logo-overlay" width="168" height="194"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -7,27 +7,33 @@ import UIKit
 class Button: UIButton {
     
     var style: Style = .primary {
-        didSet { configure(for: style) }
+        didSet { configure() }
+    }
+    
+    override var isEnabled: Bool {
+        didSet {
+            //alpha = isEnabled ? 1 : 0.75
+            updateBackgroundColor()
+        }
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure(for: style)
+        configure()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        configure(for: style)
+        configure()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        configure(for: style)
+        configure()
     }
     
     override var intrinsicContentSize: CGSize {
         var size = super.intrinsicContentSize
-        
         switch style {
         case .primary:
             size.height = Theme.constant.buttonPrimaryHeight
@@ -40,7 +46,6 @@ class Button: UIButton {
         case .accountAction:
             break
         }
-        
         return size
     }
 }
@@ -68,9 +73,9 @@ extension Button {
 
 private extension Button {
     
-    func configure(for style: Style = .primary) {
+    func configure() {
         switch style {
-        case let .primary(action):
+        case .primary:
             var configuration = UIButton.Configuration.plain()
             configuration.titleTextAttributesTransformer = .init{ incoming in
                 var outgoing = incoming
@@ -81,12 +86,7 @@ private extension Button {
             configuration.imagePadding = Theme.constant.padding * 0.5
             self.configuration = configuration
             updateConfiguration()
-            switch action {
-            case .`default`:
-                backgroundColor = Theme.colour.buttonBackgroundPrimary
-            case .delete:
-                backgroundColor = Theme.colour.destructive
-            }
+            updateBackgroundColor()
             tintColor = Theme.colour.buttonPrimaryText
             layer.cornerRadius = Theme.constant.cornerRadiusSmall
             setTitleColor(Theme.colour.buttonPrimaryText, for: .normal)
@@ -101,7 +101,7 @@ private extension Button {
             configuration.imagePadding = Theme.constant.padding * 0.5
             self.configuration = configuration
             updateConfiguration()
-            backgroundColor = .clear
+            updateBackgroundColor()
             tintColor = Theme.colour.buttonSecondaryText
             layer.cornerRadius = Theme.constant.cornerRadiusSmall
             layer.borderWidth = 1
@@ -114,11 +114,31 @@ private extension Button {
             updateSecondaryStyle(leftImage: leftImage)
             layer.cornerRadius = Theme.constant.buttonDashboardActionHeight.half
         case .accountAction:
-            backgroundColor = Theme.colour.cellBackground
+            updateBackgroundColor()
             tintColor = Theme.colour.labelPrimary
             imageView?.tintColor = Theme.colour.labelPrimary
         }
         invalidateIntrinsicContentSize()
+    }
+    
+    func updateBackgroundColor() {
+        switch style {
+        case let .primary(action):
+            if isEnabled  {
+                switch action {
+                case .`default`:
+                    backgroundColor = Theme.colour.buttonBackgroundPrimary
+                case .delete:
+                    backgroundColor = Theme.colour.destructive
+                }
+            } else {
+                backgroundColor = Theme.colour.cellBackground
+            }
+        case .secondary, .secondarySmall, .dashboardAction:
+            backgroundColor = .clear
+        case .accountAction:
+            backgroundColor = Theme.colour.cellBackground
+        }
     }
     
     func updateSecondaryStyle(leftImage: UIImage?) {
@@ -133,8 +153,7 @@ private extension Button {
         configuration.imagePadding = Theme.constant.padding * 0.5
         self.configuration = configuration
         updateConfiguration()
-        
-        backgroundColor = .clear
+        updateBackgroundColor()
         tintColor = Theme.colour.buttonSecondaryText
         layer.borderWidth = 0.5
         layer.borderColor = Theme.colour.buttonSecondaryText.cgColor

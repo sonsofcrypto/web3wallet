@@ -5,6 +5,20 @@
 import UIKit
 
 extension UIButton {
+    
+    func showLoading() {
+        var configuration = configuration
+        configuration?.showsActivityIndicator = true
+        self.configuration = configuration
+        updateConfiguration()
+    }
+    
+    func hideLoading() {
+        var configuration = configuration
+        configuration?.showsActivityIndicator = false
+        self.configuration = configuration
+        updateConfiguration()
+    }
 
     func removeAllTargets() {
         allTargets.forEach {

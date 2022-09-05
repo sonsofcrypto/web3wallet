@@ -25,8 +25,8 @@
 "sec" = "sec";
 "save" = "Save";
 "max" = "Max";
-"enterFunds" = "Enter Funds";
-"insufficientFunds" = "Insufficient Funds";
+"enterFunds" = "Enter funds";
+"insufficientFunds" = "Insufficient funds";
 "low" = "Low";
 "medium" = "Average";
 "high" = "Fast";
@@ -301,7 +301,13 @@
 "tokenSwap.cell.price" = "Price";
 "tokenSwap.cell.slippage" = "Slippage";
 "tokenSwap.cell.estimatedFee" = "Estimated Fee";
-"tokenSwap.cell.market.swap" = "Swap with";
+"tokenSwap.cell.button.state.swap" = "Swap with";
+"tokenSwap.cell.button.state.approve" = "Approve";
+"tokenSwap.cell.button.state.approving" = "Approving";
+"tokenSwap.cell.button.state.loading" = "Loading";
+"tokenSwap.cell.button.state.enterAmount" = "Enter an amount";
+"tokenSwap.cell.button.state.insufficientBalance" = "Insufficient %@ balance";
+"tokenSwap.cell.button.state.noPoolsFound" = "No pools found";
 
 "authenticate.title.unlock" = "Unlock";
 "authenticate.title.swap" = "Swap";
@@ -330,6 +336,11 @@
 "confirmation.cultCastVote.title" = "Confirm Transaction";
 "confirmation.cultCastVote.confirm" = "Vote";
 
+"confirmation.approveUniswap.title" = "Confirm Approval";
+"confirmation.approveUniswap.permission.title" = "Give permission to the Uniswap Protocol to access your %@?";
+"confirmation.approveUniswap.permission.message" = "By granting permission, you are allowing the Uniswap Protocol contract to access your %@ funds.";
+"confirmation.approveUniswap.confirm" = "Approve";
+
 "confirmation.tx.inProgress.send.title" = "Broadcasting transaction...";
 "confirmation.tx.inProgress.send.message" = "This may take up to 1 min\ndepending on how busy is the network";
 "confirmation.tx.inProgress.swap.title" = "Broadcasting transaction...";
@@ -343,8 +354,8 @@
 "confirmation.tx.success.send.message" = "The transaction is now broadcasted, you can see it now in your account.";
 "confirmation.tx.success.send.cta" = "Go to Account";
 "confirmation.tx.success.swap.title" = "Broadcasted! 🎉";
-"confirmation.tx.success.swap.message" = "The transaction is now broadcasted, you can see it now in your account.";
-"confirmation.tx.success.swap.cta" = "Go to Account";
+"confirmation.tx.success.swap.message" = "The transaction is now broadcasted, you can see it below on Etherscan.";
+"confirmation.tx.success.swap.cta" = "Done";
 "confirmation.tx.success.sendNFT.title" = "Broadcasted! 🎉";
 "confirmation.tx.success.sendNFT.message" = "The transaction is now broadcasted, you can see it now in your account.";
 "confirmation.tx.success.sendNFT.cta" = "Done";

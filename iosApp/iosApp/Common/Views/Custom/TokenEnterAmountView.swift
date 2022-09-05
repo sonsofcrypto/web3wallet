@@ -17,6 +17,32 @@ struct TokenEnterAmountViewModel {
     let shouldUpdateTextFields: Bool
     let shouldBecomeFirstResponder: Bool
     let networkName: String
+    let tokenInputEnabled: Bool
+    
+    init(
+        tokenAmount: BigInt?,
+        tokenSymbolIconName: String,
+        tokenSymbol: String,
+        tokenMaxAmount: BigInt,
+        tokenMaxDecimals: UInt,
+        currencyTokenPrice: Double,
+        shouldUpdateTextFields: Bool,
+        shouldBecomeFirstResponder: Bool,
+        networkName: String,
+        tokenInputEnabled: Bool = true
+    ) {
+        
+        self.tokenAmount = tokenAmount
+        self.tokenSymbolIconName = tokenSymbolIconName
+        self.tokenSymbol = tokenSymbol
+        self.tokenMaxAmount = tokenMaxAmount
+        self.tokenMaxDecimals = tokenMaxDecimals
+        self.currencyTokenPrice = currencyTokenPrice
+        self.shouldUpdateTextFields = shouldUpdateTextFields
+        self.shouldBecomeFirstResponder = shouldBecomeFirstResponder
+        self.networkName = networkName
+        self.tokenInputEnabled = tokenInputEnabled
+    }
 }
 
 final class TokenEnterAmountView: UIView {
@@ -58,7 +84,6 @@ final class TokenEnterAmountView: UIView {
         sendCurrencySymbol.textColor = Theme.colour.labelPrimary
         sendCurrencySymbol.isHidden = true
         sendAmountTextField.font = Theme.font.title3
-        sendAmountTextField.placeholderAttrText = "0"
         sendAmountTextField.delegate = self
         sendAmountTextField.addDoneInputAccessoryView(
             with: .targetAction(.init(target: self, selector: #selector(resignFirstResponder)))
@@ -115,6 +140,8 @@ extension TokenEnterAmountView {
         self.onTokenTapped = onTokenTapped
         self.onTokenChanged = onTokenChanged
         
+        sendAmountTextField.isUserInteractionEnabled = viewModel.tokenInputEnabled
+        updatePlaceholder()
         updateSendAmountTextField()
         updateSendAmountLabel()
         updateBalanceLabel()
@@ -124,7 +151,6 @@ extension TokenEnterAmountView {
         networkLabel.text = viewModel.networkName
         
         if viewModel.shouldBecomeFirstResponder {
-            
             sendAmountTextField.becomeFirstResponder()
         }
     }
@@ -169,8 +195,8 @@ extension TokenEnterAmountView: UITextFieldDelegate {
                 tokenAmount = latestTokenAmount
             } else if !isFlipEvent {
                 latestTokenAmount = tokenAmount
+                onTokenChanged?(tokenAmount)
             }
-            onTokenChanged?(tokenAmount)
             
             isFlipEvent = false
         case .fiat:
@@ -195,8 +221,8 @@ extension TokenEnterAmountView: UITextFieldDelegate {
             } else if !isFlipEvent {
                 latestTokenAmount = tokenAmount
                 latestFiatAmount = fiatAmount
+                onTokenChanged?(tokenAmount)
             }
-            onTokenChanged?(tokenAmount)
             
             isFlipEvent = false
         }
@@ -414,6 +440,10 @@ private extension TokenEnterAmountView {
         }
     }
     
+    func updatePlaceholder() {
+        sendAmountTextField.placeholderAttrText = mode == .token ? "0.0" : "0.00"
+    }
+    
     @objc func flipMode() {
         
         isFlipEvent = true
@@ -423,6 +453,7 @@ private extension TokenEnterAmountView {
         updateSendAmountTextField(isFlip: true)
         updateSendAmountLabel(isFlip: true)
         updateBalanceLabel()
+        updatePlaceholder()
         
         sendAmountTextField.becomeFirstResponder()
     }

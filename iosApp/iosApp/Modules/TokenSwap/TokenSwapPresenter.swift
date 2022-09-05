@@ -18,6 +18,7 @@ enum TokenSwapPresenterEvent {
     case slippageTapped
     case feeChanged(to: String)
     case feeTapped
+    case approve
     case review
 }
 
@@ -44,8 +45,6 @@ final class DefaultTokenSwapPresenter {
 
     private var fee: Web3NetworkFee = .low
     
-    private var calculatingSwap = false
-
     init(
         view: TokenSwapView,
         interactor: TokenSwapInteractor,
@@ -57,7 +56,13 @@ final class DefaultTokenSwapPresenter {
         self.wireframe = wireframe
         self.context = context
         
+        interactor.addListener(self)
         loadTokens()
+    }
+    
+    deinit {
+        print("[DEBUG][Presenter] deinit \(String(describing: self))")
+        interactor.removeListener(self)
     }
 }
 
@@ -65,9 +70,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
 
     func present() {
         
-        let insufficientFunds = (amountFrom ?? .zero) > tokenFrom.balance || tokenFrom.balance == .zero
-        
-        return updateView(
+        updateView(
             with: [
                 .swap(
                     .init(
@@ -91,7 +94,8 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                             currencyTokenPrice: tokenTo.usdPrice,
                             shouldUpdateTextFields: false,
                             shouldBecomeFirstResponder: false,
-                            networkName: tokenTo.network.name
+                            networkName: tokenTo.network.name,
+                            tokenInputEnabled: false
                         ),
                         tokenSwapProviderViewModel: makeTokenSwapProviderViewModel(),
                         tokenSwapPriceViewModel: makeTokenPriceViewModel(),
@@ -100,9 +104,10 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                             estimatedFee: makeEstimatedFee(),
                             feeType: makeFeeType()
                         ),
-                        buttonState: insufficientFunds
-                        ? .insufficientFunds(providerIconName: makeSelectedProviderIconName())
-                        : .swap(providerIconName: makeSelectedProviderIconName())
+                        isCalculating: isCalculating,
+                        providerAsset: makeSelectedProviderIconName(),
+                        approveState: makeApproveState(),
+                        buttonState: makeButtonState()
                     )
                 )//,
                 //.limit
@@ -131,8 +136,8 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
             )
         
         case let .tokenFromChanged(amount):
-            
-            updateSwap(amountFrom: amount, shouldUpdateTextFields: false)
+            refreshView()
+            updateSwap(amountFrom: amount)
             
         case .tokenToTapped:
             
@@ -143,9 +148,8 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                 )
             )
             
-        case let .tokenToChanged(amount):
-            
-            updateSwap(amountTo: amount, shouldUpdateTextFields: false)
+        case .tokenToChanged:
+            break
             
         case .swapFlip:
             
@@ -160,9 +164,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
             tokenTo = currentTokenFrom
             
             refreshView(
-                with: .init(amountFrom: amountFrom, amountTo: amountTo),
-                shouldUpdateFromTextField: true,
-                shouldUpdateToTextField: true
+                shouldUpdateFromTextField: true
             )
             
         case .providerTapped:
@@ -177,7 +179,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
             
             guard let fee = fees.first(where: { $0.rawValue == identifier }) else { return }
             self.fee = fee
-            refreshView(with: .init(amountFrom: amountFrom, amountTo: amountTo))
+            refreshView()
             
         case .feeTapped:
             
@@ -185,14 +187,28 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                 with: makeFees()
             )
             
+        case .approve:
+            wireframe.navigate(
+                to: .confirmApproval(
+                    iconName: interactor.tokenIconName(for: tokenTo),
+                    token: tokenTo,
+                    onApproved: { [weak self] (password, salt) in
+                        guard let self = self else { return }
+                        self.interactor.approveUniswapProtocol(
+                            token: self.tokenTo,
+                            password: password,
+                            salt: salt
+                        )
+                    }
+                )
+            )
+            
         case .review:
             
             guard (amountFrom ?? .zero) > .zero else {
                 
                 refreshView(
-                    with: .init(amountFrom: nil, amountTo: nil),
                     shouldUpdateFromTextField: true,
-                    shouldUpdateToTextField: true,
                     shouldFromBecomeFirstResponder: true
                 )
                 return
@@ -200,18 +216,22 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
             
             guard tokenFrom.balance >= (amountFrom ?? .zero) else { return }
             
-            guard !calculatingSwap else { return }
-            
-            wireframe.navigate(
-                to: .confirmSwap(
-                    dataIn: .init(
-                        tokenFrom: makeConfirmationSwapTokenFrom(),
-                        tokenTo: makeConfirmationSwapTokenTo(),
-                        provider: makeConfirmationProvider(),
-                        estimatedFee: makeConfirmationSwapEstimatedFee()
+            switch interactor.swapState {
+            case .swap:
+                wireframe.navigate(
+                    to: .confirmSwap(
+                        dataIn: .init(
+                            tokenFrom: makeConfirmationSwapTokenFrom(),
+                            tokenTo: makeConfirmationSwapTokenTo(),
+                            provider: makeConfirmationProvider(),
+                            estimatedFee: makeConfirmationSwapEstimatedFee(),
+                            swapService: interactor.swapService
+                        )
                     )
                 )
-            )
+            default:
+                break
+            }
         }
     }
     
@@ -274,61 +294,26 @@ private extension DefaultTokenSwapPresenter {
         )
     }
         
-    func updateSwap(
-        amountFrom: BigInt,
-        shouldUpdateTextFields: Bool
-    ) {
+    func updateSwap(amountFrom: BigInt) {
         
         self.amountFrom = amountFrom
         
         let swapDataIn = SwapDataIn(
-            type: .calculateAmountTo(amountFrom: amountFrom),
             tokenFrom: tokenFrom,
-            tokenTo: tokenTo
+            tokenTo: tokenTo,
+            inputAmount: amountFrom
         )
-        
-        calculatingSwap = true
-        
-        interactor.swapTokenAmount(dataIn: swapDataIn) { [weak self] swapDataOut in
-            
-            guard let self = self else { return }
-            self.calculatingSwap = false
-            self.refreshView(with: swapDataOut, shouldUpdateToTextField: true)
-        }
-    }
-    
-    func updateSwap(
-        amountTo: BigInt,
-        shouldUpdateTextFields: Bool
-    ) {
-        
-        self.amountTo = amountTo
-        
-        let swapDataIn = SwapDataIn(
-            type: .calculateAmountFrom(amountTo: amountTo),
-            tokenFrom: tokenFrom,
-            tokenTo: tokenTo
-        )
-        
-        interactor.swapTokenAmount(dataIn: swapDataIn) { [weak self] swapDataOut in
-            
-            guard let self = self else { return }
-            self.refreshView(with: swapDataOut, shouldUpdateFromTextField: true)
-        }
+                
+        interactor.swapTokenAmount(dataIn: swapDataIn)
     }
     
     func refreshView(
-        with swapDataOut: SwapDataOut,
         shouldUpdateFromTextField: Bool = false,
-        shouldUpdateToTextField: Bool = false,
         shouldFromBecomeFirstResponder: Bool = false
     ) {
         
-        amountFrom = swapDataOut.amountFrom
-        amountTo = swapDataOut.amountTo
-        
-        let insufficientFunds = (amountFrom ?? .zero) > tokenFrom.balance || tokenFrom.balance == .zero
-        
+        amountTo = interactor.outputAmount
+                
         updateView(
             with: [
                 .swap(
@@ -351,9 +336,10 @@ private extension DefaultTokenSwapPresenter {
                             tokenMaxAmount: tokenTo.balance,
                             tokenMaxDecimals: tokenTo.decimals,
                             currencyTokenPrice: tokenTo.usdPrice,
-                            shouldUpdateTextFields: shouldUpdateToTextField,
+                            shouldUpdateTextFields: true,
                             shouldBecomeFirstResponder: false,
-                            networkName: tokenTo.network.name
+                            networkName: tokenTo.network.name,
+                            tokenInputEnabled: false
                         ),
                         tokenSwapProviderViewModel: makeTokenSwapProviderViewModel(),
                         tokenSwapPriceViewModel: makeTokenPriceViewModel(),
@@ -362,18 +348,74 @@ private extension DefaultTokenSwapPresenter {
                             estimatedFee: makeEstimatedFee(),
                             feeType: makeFeeType()
                         ),
-                        buttonState: insufficientFunds
-                        ? .insufficientFunds(
-                            providerIconName: makeSelectedProviderIconName()
-                        )
-                        : .swap(
-                            providerIconName: makeSelectedProviderIconName()
-                        )
+                        isCalculating: isCalculating,
+                        providerAsset: makeSelectedProviderIconName(),
+                        approveState: makeApproveState(),
+                        buttonState: makeButtonState()
                     )
                 )//,
 //                .limit
             ]
         )
+    }
+    
+    var isCalculating: Bool {
+        interactor.outputAmountState == .loading && amountFrom != nil && amountFrom != .zero
+    }
+    
+    func makeApproveState() -> TokenSwapViewModel.Swap.ApproveState {
+        guard amounFromtGreaterThanZero && !insufficientFunds else {
+            // NOTE: This simply hides the Approve button since we won't be able to swap
+            // anyway
+            return .approved
+        }
+        guard !isCalculating else {
+            // NOTE: Here is we are still calculating a quote we don't want to show the approve
+            // button yet in case that we need to, we will do once the quote is retrieved
+            return .approved
+        }
+        guard interactor.swapState != .notAvailable else {
+            // NOTE: Here is we know that there is no pool available to do the swap, we do not
+            // show approved since you would not be able to swap anyway
+            return .approved
+        }
+        switch interactor.approvingState {
+        case .approve:
+            return .approve
+        case .approving:
+            return .approving
+        case .approved:
+            return .approved
+        }
+    }
+    
+    func makeButtonState() -> TokenSwapViewModel.Swap.ButtonState {
+        guard amounFromtGreaterThanZero else {
+            return .invalid(text: Localized("tokenSwap.cell.button.state.enterAmount"))
+        }
+        guard !insufficientFunds else {
+            return .invalid(
+                text: Localized(
+                    "tokenSwap.cell.button.state.insufficientBalance",
+                    arg: tokenFrom.symbol
+                )
+            )
+        }
+        if isCalculating { return .loading }
+        switch interactor.swapState {
+        case .notAvailable:
+            return .invalid(text: Localized("tokenSwap.cell.button.state.noPoolsFound"))
+        case .swap:
+            return .swap
+        }
+    }
+    
+    var amounFromtGreaterThanZero: Bool {
+        amountFrom != nil && amountFrom != .zero
+    }
+    
+    var insufficientFunds: Bool {
+        (amountFrom ?? .zero) > tokenFrom.balance || tokenFrom.balance == .zero
     }
     
     func makeEstimatedFee() -> String {
@@ -511,7 +553,9 @@ private extension DefaultTokenSwapPresenter {
             guard let self = self else { return }
             self.tokenFrom = token
             self.amountFrom = .zero
-            self.updateSwap(amountTo: self.amountTo ?? .zero, shouldUpdateTextFields: true)
+            self.amountTo = .zero
+            self.refreshView(shouldUpdateFromTextField: true, shouldFromBecomeFirstResponder: true)
+            self.updateSwap(amountFrom: .zero)
         }
     }
     
@@ -521,7 +565,7 @@ private extension DefaultTokenSwapPresenter {
             [weak self] token in
             guard let self = self else { return }
             self.tokenTo = token
-            self.updateSwap(amountFrom: self.amountFrom ?? .zero, shouldUpdateTextFields: true)
+            self.updateSwap(amountFrom: self.amountFrom ?? .zero)
         }
     }
 }
@@ -538,5 +582,12 @@ private extension Web3NetworkFee {
         case .high:
             return Localized("high")
         }
+    }
+}
+
+extension DefaultTokenSwapPresenter: SwapInteractorLister {
+    
+    func handle(swapEvent event: UniswapEvent) {
+        refreshView()
     }
 }

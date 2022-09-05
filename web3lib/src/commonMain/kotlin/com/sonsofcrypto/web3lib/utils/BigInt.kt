@@ -74,3 +74,9 @@ object BigIntSerializer : KSerializer<BigInt> {
         return BigInt.from(decoder.decodeString())
     }
 }
+
+class ComparatorBigInt {
+    companion object : Comparator<BigInt> {
+        override fun compare(a: BigInt, b: BigInt): Int = a.compare(b)
+    }
+}

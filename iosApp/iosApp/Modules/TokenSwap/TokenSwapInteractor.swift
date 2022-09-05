@@ -6,41 +6,29 @@ import Foundation
 import web3lib
 
 struct SwapDataIn {
-    
-    let type: `Type`
     let tokenFrom: Web3Token
     let tokenTo: Web3Token
-    
-    enum `Type` {
-        case calculateAmountTo(amountFrom: BigInt)
-        case calculateAmountFrom(amountTo: BigInt)
-        
-        var amountFrom: BigInt {
-            
-            switch self {
-            case let .calculateAmountTo(amount):
-                return amount
-            case .calculateAmountFrom:
-                return BigInt.zero
-            }
-        }
-        
-        var amountTo: BigInt {
-            
-            switch self {
-            case .calculateAmountTo:
-                return BigInt.zero
-            case let .calculateAmountFrom(amount):
-                return amount
-            }
-        }
-    }
+    let inputAmount: BigInt
 }
 
-struct SwapDataOut {
-    
-    let amountFrom: BigInt?
-    let amountTo: BigInt?
+protocol SwapInteractorLister: AnyObject {
+    func handle(swapEvent event: UniswapEvent)
+}
+
+enum TokenSwapInteractorOutputAmountState {
+    case loading
+    case ready
+}
+
+enum TokenSwapInteractorApprovalState {
+    case approve
+    case approving
+    case approved
+}
+
+enum TokenSwapInteractorSwapState {
+    case notAvailable
+    case swap
 }
 
 protocol TokenSwapInteractor: AnyObject {
@@ -64,21 +52,36 @@ protocol TokenSwapInteractor: AnyObject {
     func defaultTokenFrom() -> Web3Token
     func defaultTokenTo() -> Web3Token
     
-    func swapTokenAmount(
-        dataIn: SwapDataIn,
-        onCompletion: @escaping (SwapDataOut) -> Void
-    )
+    func swapTokenAmount(dataIn: SwapDataIn)
+    
+    func addListener(_ listener: SwapInteractorLister)
+    func removeListener(_ listener: SwapInteractorLister)
+    
+    var outputAmount: BigInt { get }
+    var outputAmountState: TokenSwapInteractorOutputAmountState { get }
+    var approvingState: TokenSwapInteractorApprovalState { get }
+    var swapState: TokenSwapInteractorSwapState { get }
+    
+    func approveUniswapProtocol(token: Web3Token, password: String, salt: String)
+    
+    var swapService: UniswapService { get }
 }
 
 final class DefaultTokenSwapInteractor {
 
     private let web3Service: Web3ServiceLegacy
+    let swapService: UniswapService
+    
+    private var listener: WeakContainer?
     
     init(
-        web3Service: Web3ServiceLegacy
+        web3Service: Web3ServiceLegacy,
+        swapService: UniswapService
     ) {
-        
         self.web3Service = web3Service
+        self.swapService = swapService
+        
+        configureUniswapService()
     }
 }
 
@@ -145,121 +148,121 @@ extension DefaultTokenSwapInteractor: TokenSwapInteractor {
     }
 
     func swapTokenAmount(
-        dataIn: SwapDataIn,
-        onCompletion: @escaping (SwapDataOut) -> Void
+        dataIn: SwapDataIn
     ) {
         
-        switch dataIn.type {
-            
-        case .calculateAmountFrom:
-            calculateTokenFrom(dataIn: dataIn, onCompletion: onCompletion)
-            
-        case .calculateAmountTo:
-            calculateTokenTo(dataIn: dataIn, onCompletion: onCompletion)
-        }
+        swapService.inputAmount = dataIn.inputAmount
+        swapService.inputCurrency = dataIn.tokenFrom.toCurrency()
+        swapService.outputCurrency = dataIn.tokenTo.toCurrency()
     }
 
+    var outputAmount: BigInt { swapService.outputAmount }
+    
+    var outputAmountState: TokenSwapInteractorOutputAmountState {
+        switch swapService.outputState {
+        case is OutputState.Loading:
+            return .loading
+        default:
+            break
+        }
+        switch swapService.poolsState {
+        case is PoolsState.Loading:
+            return .loading
+        default:
+            break
+        }
+//        switch swapService.approvalState {
+//        case is ApprovalState.Loading:
+//            return .loading
+//        default:
+//            break
+//        }
+        return .ready
+    }
+    
+    var approvingState: TokenSwapInteractorApprovalState {
+        switch swapService.approvalState {
+        case is ApprovalState.NeedsApproval:
+            return .approve
+        case is ApprovalState.Approving:
+            return .approving
+        default:
+            return .approved
+        }
+    }
+    
+    var swapState: TokenSwapInteractorSwapState {
+        // 1 - Check pool state
+        switch swapService.poolsState {
+        case is PoolsState.NoPoolsFound:
+            return .notAvailable
+        default:
+            return .swap
+        }
+    }
+    
+    func approveUniswapProtocol(
+        token: Web3Token,
+        password: String,
+        salt: String
+    ) {
+        let networksService: NetworksService = ServiceDirectory.assembler.resolve()
+        let network = networksService.network ?? .ethereum()
+        let wallet = networksService.wallet(network: network)!
+        
+        do {
+            try wallet.unlock(password: password, salt: salt)
+            swapService.requestApproval(
+                currency: token.toCurrency(),
+                wallet: wallet,
+                completionHandler: { _ in }
+            )
+        } catch {
+            // do nothing
+        }
+    }
 }
 
 private extension DefaultTokenSwapInteractor {
     
-    func calculateTokenFrom(
-        dataIn: SwapDataIn,
-        onCompletion: @escaping (SwapDataOut) -> Void
-    ) {
-        
-        let amountTo = dataIn.type.amountTo
-        
-        guard amountTo > BigInt.zero else {
-            
-            onCompletion(
-                .init(
-                    amountFrom: .zero,
-                    amountTo: .zero
-                )
-            )
-            return
-        }
-        
-        let tokenToAmountBigDec = amountTo.toBigDec(decimals: dataIn.tokenTo.decimals)
-        let tokenToUSDPriceBigDec = dataIn.tokenTo.usdPrice.bigDec
-        let tokenFromUSDPriceBigDec = dataIn.tokenFrom.usdPrice.bigDec
-        let amountFromDecimals = BigDec.Companion().from(
-            string: "1".appending(decimals: dataIn.tokenFrom.decimals),
-            base: 10
-        )
-        
-        let amountFrom: BigDec
-        if dataIn.tokenFrom.usdPrice != 0 {
-            amountFrom = tokenToAmountBigDec.mul(
-                value: tokenToUSDPriceBigDec
-            ).div(
-                value: tokenFromUSDPriceBigDec
-            ).mul( // this is to add the decimals for the token we convert to
-                value: amountFromDecimals
-            )
-        } else {
-            amountFrom = Double(0).bigDec
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-           
-            onCompletion(
-                .init(
-                    amountFrom: amountFrom.toBigInt(),
-                    amountTo: amountTo
-                )
-            )
-        }
+    func configureUniswapService() {
+        // TODO: We should inject here a swap service not uniswapService so this confirguration can
+        // be abstracted
+        let networksService: NetworksService = ServiceDirectory.assembler.resolve()
+        let network = networksService.network ?? .ethereum()
+        let wallet = networksService.wallet(network: network)!
+        let provider = networksService.provider(network: network)
+        swapService.wallet = wallet
+        swapService.provider = provider
+    }
+}
+
+extension DefaultTokenSwapInteractor: UniswapListener {
+    
+    func addListener(_ listener: SwapInteractorLister) {
+        self.listener = WeakContainer(listener)
+        swapService.add(listener___: self)
     }
     
-    func calculateTokenTo(
-        dataIn: SwapDataIn,
-        onCompletion: @escaping (SwapDataOut) -> Void
-    ) {
-        
-        let amountFrom = dataIn.type.amountFrom
-        
-        guard amountFrom > BigInt.zero else {
-            
-            onCompletion(
-                .init(
-                    amountFrom: .zero,
-                    amountTo: .zero
-                )
-            )
-            return
-        }
-        
-        let tokenFromAmountBigDec = amountFrom.toBigDec(decimals: dataIn.tokenFrom.decimals)
-        let tokenFromUSDPriceBigDec = dataIn.tokenFrom.usdPrice.bigDec
-        let tokenToUSDPriceBigDec = dataIn.tokenTo.usdPrice.bigDec
-        let amountToDecimals = BigDec.Companion().from(
-            string: "1".appending(decimals: dataIn.tokenTo.decimals),
-            base: 10
-        )
+    func removeListener(_ listener: SwapInteractorLister) {
+        self.listener = nil
+        swapService.remove(listener___: self)
+    }
+    
+    func handle(event___ event: UniswapEvent) {
+        print("[SWAP][EVENT] - \(event)")
+        emit(event)
+    }
 
-        let amountTo: BigDec
-        if dataIn.tokenTo.usdPrice != 0 {
-            amountTo = tokenFromAmountBigDec.mul(
-                value: tokenFromUSDPriceBigDec
-            ).div(
-                value: tokenToUSDPriceBigDec
-            ).mul( // this is to add the decimals for the token we convert to
-                value: amountToDecimals
-            )
-        } else {
-            amountTo = Double(0).bigDec
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-           
-            onCompletion(
-                .init(
-                    amountFrom: amountFrom,
-                    amountTo: amountTo.toBigInt()
-                )
-            )
+    private func emit(_ event: UniswapEvent) {
+        listener?.value?.handle(swapEvent: event)
+    }
+
+    private class WeakContainer {
+        weak var value: SwapInteractorLister?
+
+        init(_ value: SwapInteractorLister) {
+            self.value = value
         }
     }
 }

@@ -26,12 +26,23 @@ extension TokenSwapViewModel {
         let tokenSwapPriceViewModel: TokenSwapPriceViewModel
         let tokenSwapSlippageViewModel: TokenSwapSlippageViewModel
         let tokenNetworkFeeViewModel: TokenNetworkFeeViewModel
-        let buttonState: State
+        let isCalculating: Bool
+        let providerAsset: String
+        let approveState: ApproveState
+        let buttonState: ButtonState
 
-        enum State {
+        enum ApproveState {
             
-            case swap(providerIconName: String)
-            case insufficientFunds(providerIconName: String)
+            case approve
+            case approving
+            case approved
+        }
+        
+        enum ButtonState {
+            
+            case loading
+            case invalid(text: String)
+            case swap
         }
     }
 }
