@@ -45,8 +45,8 @@ final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
         imageView.image = "arrow.up.arrow.down".assetImage
         imageView.isHidden = false
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(flip))
-        imageView.addGestureRecognizer(tapGesture)
-        imageView.isUserInteractionEnabled = true
+        imageView.superview?.superview?.addGestureRecognizer(tapGesture)
+        imageView.superview?.superview?.isUserInteractionEnabled = true
         
         loadingIndicator.isHidden = true
         loadingIndicator.color = Theme.colour.activityIndicator
