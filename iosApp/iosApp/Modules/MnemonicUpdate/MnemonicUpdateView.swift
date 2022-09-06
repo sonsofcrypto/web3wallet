@@ -21,8 +21,16 @@ final class MnemonicUpdateViewController: BaseViewController {
     @IBOutlet weak var ctaButton: Button!
     @IBOutlet weak var ctaButtonBottomConstraint: NSLayoutConstraint!
     
+    deinit {
+        #if DEBUG
+        print("[DEBUG][ViewController] deinit \(String(describing: self))")
+        #endif
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        registerForBackgroundNotifications()
         configureUI()
         presenter?.present()
     }
@@ -318,6 +326,19 @@ private extension MnemonicUpdateViewController {
         ctaButtonBottomConstraint.constant = helper.window?.safeAreaInsets.bottom == 0
         ? -Theme.constant.padding
         : 0
+    }
+    
+    func registerForBackgroundNotifications() {
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(didEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
+    }
+    
+    @objc func didEnterBackground() {
+        presenter.handle(.didSelectDismiss)
     }
 
     func needsReload(_ preViewModel: MnemonicUpdateViewModel?, viewModel: MnemonicUpdateViewModel) -> Bool {
