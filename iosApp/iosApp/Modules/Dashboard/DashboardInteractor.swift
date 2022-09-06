@@ -66,7 +66,7 @@ final class DefaultDashboardInteractor {
             object: nil
         )
         NotificationCenter.default.addObserver(
-            self, selector: #selector(willEnterBackground),
+            self, selector: #selector(willEnterForeground),
             name: UIApplication.willEnterForegroundNotification,
             object: nil
         )
@@ -75,6 +75,7 @@ final class DefaultDashboardInteractor {
     deinit {
         
         print("[DEBUG][Interactor] deinit \(String(describing: self))")
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -185,11 +186,11 @@ extension DefaultDashboardInteractor: DashboardInteractor {
     }
 
     @objc func didEnterBackground() {
-        walletService.startPolling()
+        walletService.pausePolling()
     }
 
-    @objc func willEnterBackground() {
-        walletService.pausePolling()
+    @objc func willEnterForeground() {
+        walletService.startPolling()
     }
 }
 
