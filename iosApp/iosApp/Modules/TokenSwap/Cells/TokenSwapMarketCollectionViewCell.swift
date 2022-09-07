@@ -62,14 +62,10 @@ final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
 
         button.style = .primary
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        var configuration = button.configuration ?? .plain()
-        configuration.imagePlacement = .trailing
-        button.configuration = configuration
-        button.updateConfiguration()
         
-        stackView.setCustomSpacing(Theme.constant.padding * 1.5, after: tokenTo)
-        stackView.setCustomSpacing(Theme.constant.padding.half, after: tokenSwapProviderView)
-        stackView.setCustomSpacing(Theme.constant.padding.half, after: tokenSwapPriceView)
+        stackView.setCustomSpacing(Theme.constant.padding, after: tokenTo)
+        stackView.setCustomSpacing(Theme.constant.padding.half.half, after: tokenSwapProviderView)
+        stackView.setCustomSpacing(Theme.constant.padding.half.half, after: tokenSwapPriceView)
         stackView.setCustomSpacing(Theme.constant.padding.half, after: tokenSwapSlippageView)
         stackView.setCustomSpacing(Theme.constant.padding, after: networkFeeView)
     }
@@ -169,17 +165,29 @@ extension TokenSwapMarketCollectionViewCell {
         switch viewModel.buttonState {
         case .loading:
             button.hideLoading()
+            button.style = .primary
             button.setTitle(Localized("tokenSwap.cell.button.state.swap"), for: .normal)
             button.isEnabled = false
         case let .invalid(text):
             button.hideLoading()
+            button.style = .primary
             button.setTitle(text, for: .normal)
             button.isEnabled = false
+        case let .swapAnyway(text: text):
+            button.hideLoading()
+            button.setTitle(text, for: .normal)
+            button.style = .primary(action: .destructive)
+            button.isEnabled = viewModel.approveState == .approved
         case .swap:
             button.hideLoading()
             button.setTitle(Localized("tokenSwap.cell.button.state.swap"), for: .normal)
+            button.style = .primary
             button.isEnabled = viewModel.approveState == .approved
         }
+        var configuration = button.configuration ?? .plain()
+        configuration.imagePlacement = .trailing
+        button.configuration = configuration
+        button.updateConfiguration()
     }
 }
 

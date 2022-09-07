@@ -309,6 +309,7 @@
 "tokenSwap.cell.button.state.enterAmount" = "Enter an amount";
 "tokenSwap.cell.button.state.insufficientBalance" = "Insufficient %@ balance";
 "tokenSwap.cell.button.state.noPoolsFound" = "No pools found";
+"tokenSwap.cell.button.state.swapAnyway" = "Swap anyway (-%@%)";
 
 "authenticate.title.unlock" = "Unlock";
 "authenticate.title.swap" = "Swap";

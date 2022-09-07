@@ -43,6 +43,7 @@ extension TokenSwapViewModel {
             case loading
             case invalid(text: String)
             case swap
+            case swapAnyway(text: String)
         }
     }
 }

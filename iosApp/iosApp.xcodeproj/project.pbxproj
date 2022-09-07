@@ -511,6 +511,7 @@
 		1CEF3D1B28C35FB20092BC0E /* UniswapServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEF3D1A28C35FB20092BC0E /* UniswapServiceAssembler.swift */; };
 		1CEF3D1D28C3A2D80092BC0E /* ConfirmationViewModel+ApproveUniswap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEF3D1C28C3A2D80092BC0E /* ConfirmationViewModel+ApproveUniswap.swift */; };
 		1CEF3D1F28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEF3D1E28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift */; };
+		1CEF3D2128C89C870092BC0E /* Currency+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEF3D2028C89C870092BC0E /* Currency+Extensions.swift */; };
 		D108AB4328AB9EB0005E0A63 /* cache_markets.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB3D28AB9EB0005E0A63 /* cache_markets.json */; };
 		D108AB4428AB9EB0005E0A63 /* cache_currencies_3.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB3E28AB9EB0005E0A63 /* cache_currencies_3.json */; };
 		D108AB4528AB9EB0005E0A63 /* cache_metadatas.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB3F28AB9EB0005E0A63 /* cache_metadatas.json */; };
@@ -1111,6 +1112,7 @@
 		1CEF3D1A28C35FB20092BC0E /* UniswapServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniswapServiceAssembler.swift; sourceTree = "<group>"; };
 		1CEF3D1C28C3A2D80092BC0E /* ConfirmationViewModel+ApproveUniswap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmationViewModel+ApproveUniswap.swift"; sourceTree = "<group>"; };
 		1CEF3D1E28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationApproveUniswapView.swift; sourceTree = "<group>"; };
+		1CEF3D2028C89C870092BC0E /* Currency+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Currency+Extensions.swift"; sourceTree = "<group>"; };
 		D108AB3D28AB9EB0005E0A63 /* cache_markets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_markets.json; sourceTree = "<group>"; };
 		D108AB3E28AB9EB0005E0A63 /* cache_currencies_3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_currencies_3.json; sourceTree = "<group>"; };
 		D108AB3F28AB9EB0005E0A63 /* cache_metadatas.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_metadatas.json; sourceTree = "<group>"; };
@@ -2201,6 +2203,7 @@
 				1A4C3344D0CA25811B047B12 /* CAAnimation+Extension.swift */,
 				1CB3A1E12840D6B70092D667 /* CALayer+Extension.swift */,
 				1CB3A1D12840D6B70092D667 /* CG+Extensions.swift */,
+				1CEF3D2028C89C870092BC0E /* Currency+Extensions.swift */,
 				1CB3A1DE2840D6B70092D667 /* Data+Extension.swift */,
 				1C7FC96B28ACA82100FC9175 /* Date+Extensions.swift */,
 				1C54DBDF285E1A0E00E378F6 /* Double+Extensions.swift */,
@@ -2209,10 +2212,10 @@
 				1CB3A1DA2840D6B70092D667 /* Formatter+Extensions.swift */,
 				1CB3A1D02840D6B70092D667 /* Int+Extensions.swift */,
 				1A4C301CA1E59BEACD136BCD /* Kotlin+Extensions.swift */,
+				1C25874328BFB20B0005BCE9 /* Locale+Extensions.swift */,
 				D10F52E6289662BD00A2F435 /* NSCollectionLayout+Extensions.swift */,
 				1CB3A1E22840D6B70092D667 /* NSLocalizedString+Extension.swift */,
 				1CB3A1D62840D6B70092D667 /* String+Extensions.swift */,
-				1C25874328BFB20B0005BCE9 /* Locale+Extensions.swift */,
 				D112391D284B2A3C00D39A0C /* StringAttributed+Extensions.swift */,
 				1CB3A1DD2840D6B70092D667 /* UIBarButtonItem+Extensions.swift */,
 				1CB3A1D42840D6B70092D667 /* UIButton+Extensions.swift */,
@@ -3317,6 +3320,7 @@
 				1CD843F72874215F00E6D359 /* SegmentWithTextAndSwitchCell.swift in Sources */,
 				1C60C386285AFB20003BE25D /* Web3ServiceLocalStorageAssembler.swift in Sources */,
 				1C60C301285724D1003BE25D /* NFTsDashboardView.swift in Sources */,
+				1CEF3D2128C89C870092BC0E /* Currency+Extensions.swift in Sources */,
 				1C60C36F2857C613003BE25D /* TokenReceiveInteractor.swift in Sources */,
 				1C60C359285724D1003BE25D /* DegenWireframe.swift in Sources */,
 				1C60C315285724D1003BE25D /* AccountWireframeFactory.swift in Sources */,

@@ -50,7 +50,7 @@ private extension MnemonicUpdateDeleteCell {
     func configureUI() {
         
         let button = Button(type: .custom)
-        button.style = .primary(action: .delete)
+        button.style = .primary(action: .destructive)
         button.addTarget(self, action: #selector(onDeleteTapped), for: .touchUpInside)
         self.button = button
         addSubview(button)

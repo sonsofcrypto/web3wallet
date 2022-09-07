@@ -42,8 +42,10 @@ final class DefaultTokenSwapPresenter {
     private var amountFrom: BigInt?
     private var tokenTo: Web3Token!
     private var amountTo: BigInt?
-
+    private var invalidQuote: Bool = false
+    
     private var fee: Web3NetworkFee = .low
+    private let priceImpactWarningThreashold = 0.1
     
     init(
         view: TokenSwapView,
@@ -137,8 +139,8 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
         
         case let .tokenFromChanged(amount):
             refreshView()
-            updateSwap(amountFrom: amount)
-            
+            getQuote(for: amount)
+
         case .tokenToTapped:
             
             wireframe.navigate(
@@ -153,19 +155,17 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
             
         case .swapFlip:
             
-            let currentAmountFrom = amountFrom
-            let currentAmountTo = amountTo
-            amountFrom = currentAmountTo
-            amountTo = currentAmountFrom
-            
+            amountFrom = .zero
+            amountTo = .zero
+            invalidQuote = true
+
             let currentTokenFrom = tokenFrom
             let currentTokenTo = tokenTo
             tokenFrom = currentTokenTo
             tokenTo = currentTokenFrom
             
-            refreshView(
-                shouldUpdateFromTextField: true
-            )
+            getQuote(for: amountFrom ?? .zero)
+            refreshView(shouldUpdateFromTextField: true)
             
         case .providerTapped:
             
@@ -294,17 +294,18 @@ private extension DefaultTokenSwapPresenter {
         )
     }
         
-    func updateSwap(amountFrom: BigInt) {
-        
+    func getQuote(for amountFrom: BigInt) {
         self.amountFrom = amountFrom
-        
-        let swapDataIn = SwapDataIn(
+        interactor.getQuote(dataIn: dataIn)
+    }
+    
+    var dataIn: SwapDataIn {
+        .init(
             tokenFrom: tokenFrom,
             tokenTo: tokenTo,
-            inputAmount: amountFrom
+            inputAmount: amountFrom ?? .zero
         )
-                
-        interactor.swapTokenAmount(dataIn: swapDataIn)
+
     }
     
     func refreshView(
@@ -312,7 +313,9 @@ private extension DefaultTokenSwapPresenter {
         shouldFromBecomeFirstResponder: Bool = false
     ) {
         
-        amountTo = interactor.outputAmount
+        if !invalidQuote {
+            amountTo = interactor.outputAmount
+        }
                 
         updateView(
             with: [
@@ -406,7 +409,9 @@ private extension DefaultTokenSwapPresenter {
         case .notAvailable:
             return .invalid(text: Localized("tokenSwap.cell.button.state.noPoolsFound"))
         case .swap:
-            return .swap
+            return priceImpact >= priceImpactWarningThreashold ? .swapAnyway(
+                text: Localized("tokenSwap.cell.button.state.swapAnyway", arg: (priceImpact * 100).toString())
+            ) : .swap
         }
     }
     
@@ -554,8 +559,9 @@ private extension DefaultTokenSwapPresenter {
             self.tokenFrom = token
             self.amountFrom = .zero
             self.amountTo = .zero
+            self.invalidQuote = true
+            self.getQuote(for: .zero)
             self.refreshView(shouldUpdateFromTextField: true, shouldFromBecomeFirstResponder: true)
-            self.updateSwap(amountFrom: .zero)
         }
     }
     
@@ -565,8 +571,26 @@ private extension DefaultTokenSwapPresenter {
             [weak self] token in
             guard let self = self else { return }
             self.tokenTo = token
-            self.updateSwap(amountFrom: self.amountFrom ?? .zero)
+            self.getQuote(for: self.amountFrom ?? .zero)
         }
+    }
+    
+    var priceImpact: Double {
+        guard
+            let tokenFrom = tokenFrom,
+            let tokenTo = tokenTo,
+            let amountFrom = amountFrom,
+            let amountTo = amountTo
+        else {
+            return 0.0
+        }
+            
+        return PriceImpactCalculator().calculate(
+            fromCurrency: tokenFrom.toCurrency(),
+            toCurrency: tokenTo.toCurrency(),
+            fromAmount: amountFrom,
+            toAmount: amountTo
+        )
     }
 }
 
@@ -588,6 +612,21 @@ private extension Web3NetworkFee {
 extension DefaultTokenSwapPresenter: SwapInteractorLister {
     
     func handle(swapEvent event: UniswapEvent) {
+        guard interactor.isCurrentQuote(dataIn: dataIn) else { return }
+        invalidQuote = false
         refreshView()
+    }
+}
+
+private struct PriceImpactCalculator {
+    func calculate(
+        fromCurrency: Currency,
+        toCurrency: Currency,
+        fromAmount: BigInt,
+        toAmount: BigInt
+    ) -> Double {
+        let fromFiatValue = fromCurrency.fiatValue(for: fromAmount)
+        let toFiatValue = toCurrency.fiatValue(for: toAmount)
+        return 1 - (toFiatValue/fromFiatValue)
     }
 }

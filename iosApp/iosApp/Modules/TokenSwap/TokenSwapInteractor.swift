@@ -52,7 +52,8 @@ protocol TokenSwapInteractor: AnyObject {
     func defaultTokenFrom() -> Web3Token
     func defaultTokenTo() -> Web3Token
     
-    func swapTokenAmount(dataIn: SwapDataIn)
+    func getQuote(dataIn: SwapDataIn)
+    func isCurrentQuote(dataIn: SwapDataIn) -> Bool
     
     func addListener(_ listener: SwapInteractorLister)
     func removeListener(_ listener: SwapInteractorLister)
@@ -82,6 +83,11 @@ final class DefaultTokenSwapInteractor {
         self.swapService = swapService
         
         configureUniswapService()
+    }
+    
+    deinit {
+        
+        print("[DEBUG][Interactor] deinit \(String(describing: self))")
     }
 }
 
@@ -147,13 +153,20 @@ extension DefaultTokenSwapInteractor: TokenSwapInteractor {
         web3Service.myTokens[safe: 1] ?? web3Service.allTokens[1]
     }
 
-    func swapTokenAmount(
+    func getQuote(
         dataIn: SwapDataIn
     ) {
         
         swapService.inputAmount = dataIn.inputAmount
         swapService.inputCurrency = dataIn.tokenFrom.toCurrency()
         swapService.outputCurrency = dataIn.tokenTo.toCurrency()
+    }
+    
+    func isCurrentQuote(dataIn: SwapDataIn) -> Bool {
+        guard swapService.inputAmount == dataIn.inputAmount else { return false }
+        guard swapService.inputCurrency.symbol == dataIn.tokenFrom.toCurrency().symbol else { return false }
+        guard swapService.outputCurrency.symbol == dataIn.tokenTo.toCurrency().symbol else { return false }
+        return true
     }
 
     var outputAmount: BigInt { swapService.outputAmount }
