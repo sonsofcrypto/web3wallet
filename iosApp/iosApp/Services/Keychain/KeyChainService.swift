@@ -92,6 +92,7 @@ extension DefaultKeyChainService: KeyChainService {
         let query = [
             kSecAttrAccount: id,
             kSecAttrService: type.serviceString(),
+            kSecAttrSynchronizable: kSecAttrSynchronizableAny,
             kSecClass: kSecClassGenericPassword
         ] as CFDictionary
 
