@@ -127,7 +127,7 @@ private extension NFTsDashboardViewController {
         
         title = Localized("nfts")
         
-        let gradient = GradientView()
+        let gradient = ThemeGradientView()
         view.addSubview(gradient)
         gradient.addConstraints(.toEdges)
         

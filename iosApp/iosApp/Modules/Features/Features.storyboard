@@ -13,7 +13,7 @@
         <scene sceneID="Phh-yi-ZV8">
             <objects>
                 <viewController storyboardIdentifier="FeaturesViewController" title="iosApp" id="4hk-9p-GXg" userLabel="FeaturesViewController" customClass="FeaturesViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="wfx-It-eJq" customClass="GradientView" customModule="iosApp" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="wfx-It-eJq" customClass="ThemeGradientView" customModule="iosApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

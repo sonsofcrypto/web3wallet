@@ -67,7 +67,7 @@ extension ChatViewController {
     
     func configureUI() {
         
-        (view as? GradientView)?.colors = [
+        (view as? ThemeGradientView)?.colors = [
             Theme.colour.backgroundBaseSecondary,
             Theme.colour.backgroundBasePrimary
         ]

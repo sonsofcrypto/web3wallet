@@ -34,7 +34,6 @@ final class DashboardWalletCell: CollectionViewCell {
         cryptoBalanceLabel.textColor = Theme.colour.dashboardTVCryptoBallance
         fiatBalanceLabel.isHidden = true
 //        contentStack.setCustomSpacing(0, after: fiatBalanceLabel)
-
     }
 
     override func prepareForReuse() {
@@ -43,10 +42,6 @@ final class DashboardWalletCell: CollectionViewCell {
         layer.removeAllAnimations()
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-    
     override func setSelected(_ selected: Bool) {
         // do nothing
     }
@@ -74,7 +69,6 @@ extension DashboardWalletCell {
         let top = UIColor(hexString: colors.first ?? "#FFFFFF")!
         let btm = UIColor(hexString: colors.last ?? colors.first ?? "#000000")!
         (backgroundView as? DashboardWalletCellBackgroundView)?.strokeColors = [top, btm]
-
         return self
     }
 }
@@ -154,7 +148,7 @@ class DashboardWalletCellBackgroundView: UIView {
         strokeGradient.frame = bounds
         fillGradient.frame = bounds.insetBy(dx: 2, dy: 2)
         noise.frame = bounds
-
+        
         let ratio = highlight.image?.heightWidthwRatio() ?? 0
         var highlightBounds = bounds
         highlightBounds.size.width = bounds.width

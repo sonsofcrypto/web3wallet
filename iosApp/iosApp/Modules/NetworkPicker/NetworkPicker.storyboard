@@ -14,7 +14,7 @@
         <scene sceneID="MRz-Xm-kIx">
             <objects>
                 <viewController storyboardIdentifier="NetworkPickerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DL4-pg-h12" customClass="NetworkPickerViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ser-Jc-ZTh" customClass="GradientView" customModule="iosApp" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="ser-Jc-ZTh" customClass="ThemeGradientView" customModule="iosApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

@@ -259,8 +259,7 @@ extension DegenViewController: UIScrollViewDelegate {
     func addCustomBackgroundGradientView() {
 
         // 1 - Add gradient
-        let backgroundGradient = GradientView()
-        backgroundGradient.isDashboard = true
+        let backgroundGradient = ThemeGradientView()
         view.insertSubview(backgroundGradient, at: 0)
         
         backgroundGradient.translatesAutoresizingMaskIntoConstraints = false

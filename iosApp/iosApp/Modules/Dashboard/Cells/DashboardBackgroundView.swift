@@ -6,7 +6,7 @@ import UIKit
 
 class DashboardBackgroundView: UIScrollView {
 
-    private lazy var gradientView = GradientView(frame: bounds)
+    private lazy var gradientView = ThemeGradientView(frame: bounds)
     private lazy var topPalm = UIImageView(named: "dashboard-palm")
     private lazy var btmSun = UIImageView(named: "overscroll_sun")
     private lazy var btmLogo = UIImageView(named: "overscroll_logo")

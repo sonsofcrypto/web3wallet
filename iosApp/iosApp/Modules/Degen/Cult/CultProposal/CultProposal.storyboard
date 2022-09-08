@@ -13,7 +13,7 @@
         <scene sceneID="Fr1-uG-lF7">
             <objects>
                 <viewController storyboardIdentifier="CultProposalViewController" title="iosApp" id="Ils-A0-WHs" userLabel="CultProposalViewController" customClass="CultProposalViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="rOn-DG-lms" customClass="GradientView" customModule="iosApp" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="rOn-DG-lms" customClass="ThemeGradientView" customModule="iosApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

@@ -13,7 +13,7 @@
         <scene sceneID="WNo-m1-1K1">
             <objects>
                 <viewController storyboardIdentifier="DegenViewController" id="i2E-Ob-kIj" userLabel="DegenViewController" customClass="DegenViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="6p4-oc-krt" customClass="GradientView" customModule="iosApp" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="6p4-oc-krt" customClass="ThemeGradientView" customModule="iosApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

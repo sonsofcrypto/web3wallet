@@ -14,7 +14,7 @@
         <scene sceneID="flV-P5-rmj">
             <objects>
                 <viewController storyboardIdentifier="NetworksViewController" title="networks" id="zw8-Cw-Ktp" customClass="NetworksViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ltN-H6-u41" customClass="GradientView" customModule="iosApp" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="ltN-H6-u41" customClass="ThemeGradientView" customModule="iosApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

@@ -12,7 +12,7 @@
         <scene sceneID="Ohv-U7-Vy4">
             <objects>
                 <viewController storyboardIdentifier="ConfirmationViewController" id="gWu-KS-ixk" customClass="ConfirmationViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="zcF-0J-4PJ" customClass="GradientView" customModule="iosApp" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="zcF-0J-4PJ" customClass="ThemeGradientView" customModule="iosApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="7II-LO-5h4"/>
