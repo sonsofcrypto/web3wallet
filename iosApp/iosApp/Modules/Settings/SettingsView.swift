@@ -251,10 +251,13 @@ private extension SettingsViewController {
                 size: .init(length: 80)
             )
         )
+        
         version.apply(style: .footnote)
         version.textAlignment = .center
-        version.text = "v" + ServiceDirectory.makeVersionNumber()
+        version.text =  ServiceDirectory.makeVersionNumber()
+                        + " (" + ServiceDirectory.makeBuildNumber() + ")"
         collectionView.overScrollView.addSubview(version)
+        
         
         collectionView.overScrollView.centerXAnchor.constraint(
             equalTo: version.centerXAnchor
