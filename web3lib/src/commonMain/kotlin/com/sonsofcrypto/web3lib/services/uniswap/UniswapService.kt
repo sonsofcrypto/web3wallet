@@ -394,6 +394,7 @@ class DefaultUniswapService(): UniswapService {
         provider: Provider
     ): ApprovalState {
         val tokenAddress = wrappedAddress(currency)
+
         val erc20 = ERC20(Address.HexString(tokenAddress))
         if (owner == null)
             return ApprovalState.DoesNotApply(currency)
@@ -408,7 +409,7 @@ class DefaultUniswapService(): UniswapService {
                 ApprovalState.NeedsApproval(currency)
             } else if (amount.isZero() && !allowance.isZero()) {
                 ApprovalState.Approved(currency)
-            } else if (amount.compare(allowance) > 0) {
+            } else if (amount.isLessThan(allowance)) {
                 ApprovalState.Approved(currency)
             } else {
                 ApprovalState.NeedsApproval(currency)

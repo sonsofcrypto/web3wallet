@@ -31,6 +31,7 @@ class BigInt {
     fun toDecimalString(): String = toString()
 
     fun compare(other: BigInt): Int = storage.compare(other.storage)
+    fun isLessThan(other: BigInt): Boolean = storage.compare(other.storage) == -1
     fun isZero(): Boolean =  storage.isZero()
 
     override fun toString(): String = storage.toString(10)
