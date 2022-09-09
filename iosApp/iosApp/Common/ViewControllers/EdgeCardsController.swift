@@ -539,8 +539,19 @@ extension EdgeCardsController: UIGestureRecognizerDelegate {
         _ gestureRecognizer: UIGestureRecognizer,
         shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
     ) -> Bool {
-        
-        SceneDelegateHelper().canSwipeToWallets
+        true
+    }
+
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard displayMode == .master,
+              let tabVc = master as? UITabBarController,
+              let navVc = tabVc.selectedViewController as? UINavigationController,
+              let visibleVc = navVc.visibleViewController,
+              visibleVc == navVc.viewControllers[safe: 0]
+        else {
+            return gestureRecognizer.isKind(of: UITapGestureRecognizer.self)
+        }
+        return true
     }
 }
 
@@ -584,17 +595,17 @@ extension UIViewController {
 
     /// If this view controller has been pushed onto a drawer controller, return it.
     var edgeCardsController: EdgeCardsController? {
-        return findParentDrawer(self)
+        return findParent(self)
     }
     
-    private func findParentDrawer( _ vc: UIViewController?) -> EdgeCardsController? {
+    private func findParent(_ vc: UIViewController?) -> EdgeCardsController? {
         // Look for `EdgeCardsController` in parents
         if let parent = vc?.parent {
             return (parent as? EdgeCardsController) ?? parent.edgeCardsController
         }
-        // Check wether presenting is `EdgeCardsController`
-        if let drawer = vc?.presentingViewController as? EdgeCardsController {
-            return drawer
+        // Check weather presenting is `EdgeCardsController`
+        if let edgeVc = vc?.presentingViewController as? EdgeCardsController {
+            return edgeVc
         }
         // Look for `EdgeCardsController` in presenting VC parents
         return vc?.presentingViewController?.edgeCardsController

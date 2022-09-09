@@ -33,10 +33,8 @@ final class NavigationController: UINavigationController {
         navigationBar.compactScrollEdgeAppearance = appearance
         navigationBar.tintColor = Theme.colour.navBarTint
         systemShadowColor = appearance.shadowColor
-        
-        // TODO: Review pop gesture behaviour
-        interactivePopGestureRecognizer?.delegate = nil
-        //interactivePopGestureRecognizer?.isEnabled = true
+
+        interactivePopGestureRecognizer?.delegate = self
     }
 }
 
@@ -62,5 +60,16 @@ extension UINavigationController {
 
     var topVc: UIViewController? {
         topViewController
+    }
+}
+
+// MARK: - UIGestureRecognizerDelegate
+
+extension NavigationController: UIGestureRecognizerDelegate {
+
+    func gestureRecognizerShouldBegin(
+        _ gestureRecognizer: UIGestureRecognizer
+    ) -> Bool {
+        viewControllers.count > 1
     }
 }

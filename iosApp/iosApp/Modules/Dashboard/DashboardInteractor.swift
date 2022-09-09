@@ -215,7 +215,7 @@ extension DefaultDashboardInteractor: NetworksListener, WalletListener {
     }
 
     func handle(event_ event: NetworksEvent) {
-        print("=== NetworksEvent ", event)
+        // print("=== NetworksEvent ", event)
         if let _ = event as? NetworksEvent.NetworkDidChange {
             reloadData()
         }
@@ -223,7 +223,7 @@ extension DefaultDashboardInteractor: NetworksListener, WalletListener {
     }
 
     func handle(event__: WalletEvent) {
-        print("=== WalletEvent ", event__)
+        // print("=== WalletEvent ", event__)
         if let event = event__.toInteractorEvent() {
             emit(event)
         }
