@@ -29,4 +29,8 @@ struct ServiceDirectory {
     static func makeVersionNumber() -> String {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     }
+    
+    static func makeBuildNumber() -> String {
+        Bundle.main.infoDictionary?["CFBundleVersion"] as! String
+    }
 }
