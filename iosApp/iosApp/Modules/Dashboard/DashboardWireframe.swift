@@ -130,7 +130,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             mnemonicConfirmationWireframeFactory.makeWireframe(parent).present()
 
         case .receive:
-            guard let vc = self.vc?.navigationController else { return }
+            guard let vc = self.vc else { return }
             let source = TokenPickerWireframeContext.Source.select(
                 onCompletion: { [weak self] selectedToken in
                     guard let self = self else { return }
@@ -155,7 +155,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             ).present()
 
         case let .send(addressTo):
-            guard let vc = self.vc?.navigationController else { return }
+            guard let vc = self.vc else { return }
             guard let addressTo = addressTo else {
                 navigateToTokenPicker()
                 return
@@ -179,7 +179,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             wireframe.present()
 
         case let .nftItem(nftItem):
-            guard let vc = self.vc?.navigationController else { return }
+            guard let vc = self.vc else { return }
             nftDetailWireframeFactory.makeWireframe(
                 vc,
                 context: .init(
@@ -208,7 +208,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             wireframe.present()
             
         case .tokenSwap:
-            guard let vc = self.vc?.navigationController else { return }
+            guard let vc = self.vc else { return }
             let wireframe = tokenSwapWireframeFactory.makeWireframe(
                 presentingIn: vc,
                 context: .init(
@@ -223,11 +223,8 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             deepLinkHandler.handle(deepLink: deepLink)
             
         case .themePicker:
-            guard let vc = self.vc?.navigationController else { return }
-            guard let presentingIn = vc.topViewController else { return }
-            themePickerWireframeFactory.makeWireframe(
-                presentingIn: presentingIn
-            ).present()
+            guard let vc = self.vc else { return }
+            themePickerWireframeFactory.makeWireframe(presentingIn: vc).present()
         }
     }
 }
@@ -253,7 +250,7 @@ private extension DefaultDashboardWireframe {
     }
     
     func navigateToTokenPicker() {
-        guard let vc = self.vc?.navigationController else { return }
+        guard let vc = self.vc else { return }
         let source = TokenPickerWireframeContext.Source.select(
             onCompletion: { [weak self] selectedToken in
                 guard let self = self else { return }
