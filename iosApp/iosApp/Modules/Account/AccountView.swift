@@ -10,14 +10,26 @@ protocol AccountView: AnyObject {
 }
 
 final class AccountViewController: BaseViewController {
-    
-    var presenter: AccountPresenter!
-    
-    private var viewModel: AccountViewModel!
-    
+
     @IBOutlet weak var collectionView: UICollectionView!
+
+    var presenter: AccountPresenter!
+
+    private var viewModel: AccountViewModel!
     private let refreshControl = UIRefreshControl()
-    
+    private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
+    private var interactiveTransitioning: CardFlipInteractiveTransitioning?
+
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        transitioningDelegate = self
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        transitioningDelegate = self
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -39,6 +51,13 @@ extension AccountViewController: AccountView {
         btnLabel?.textColor = viewModel.header.pctUp
         ? Theme.colour.priceUp
         : Theme.colour.priceDown
+
+        let edgePan = UIScreenEdgePanGestureRecognizer(
+            target: self,
+            action: #selector(handleGesture(_:))
+        )
+        edgePan.edges = [UIRectEdge.left]
+        view.addGestureRecognizer(edgePan)
     }
 }
 
@@ -217,6 +236,87 @@ extension AccountViewController: UICollectionViewDelegate {
             webViewController.title = "Manifesto"
             webViewController.webView.loadFileURL(url, allowingReadAccessTo: url)
             present(navVc, animated: true)
+        }
+    }
+}
+
+// MARK: - UIViewControllerTransitioningDelegate
+
+extension AccountViewController: UIViewControllerTransitioningDelegate {
+
+    func animationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController,
+        source: UIViewController
+    ) -> UIViewControllerAnimatedTransitioning? {
+        let presentedVc = (presented as? UINavigationController)?.topVc
+        let targetView = (source as? TargetViewTransitionDatasource)?
+            .targetView() ?? presenting.view
+
+        guard presentedVc?.isKind(of: AccountViewController.self) ?? false,
+            let targetView = targetView else {
+            animatedTransitioning = nil
+            return nil
+        }
+
+        animatedTransitioning = CardFlipAnimatedTransitioning(
+            targetView: targetView,
+            handler: { [weak self] in self?.animatedTransitioning = nil }
+        )
+
+        return animatedTransitioning
+    }
+
+    func animationController(
+        forDismissed dismissed: UIViewController
+    ) -> UIViewControllerAnimatedTransitioning? {
+        let nav = dismissed.presentingViewController as? UINavigationController
+        let topVc = nav?.topVc ?? dismissed.presentingViewController
+
+        guard dismissed == navigationController,
+            let targetView = (topVc as? TargetViewTransitionDatasource)?
+                .targetView() ?? dismissed.presentingViewController?.view else {
+            animatedTransitioning = nil
+            return nil
+        }
+
+        animatedTransitioning = CardFlipAnimatedTransitioning(
+            targetView: targetView,
+            isPresenting: false,
+            handler: { [weak self] in self?.animatedTransitioning = nil }
+        )
+
+        return animatedTransitioning
+    }
+
+    func interactionControllerForDismissal(
+        using animator: UIViewControllerAnimatedTransitioning
+    ) -> UIViewControllerInteractiveTransitioning? {
+        interactiveTransitioning
+    }
+
+    @objc func handleGesture(_ recognizer: UIPanGestureRecognizer) {
+        let location = recognizer.location(in: view.window!)
+        let pct = (location.x * 0.5) / view.bounds.width
+
+        switch recognizer.state {
+        case .began:
+            interactiveTransitioning = CardFlipInteractiveTransitioning(
+                handler: { [weak self] in self?.interactiveTransitioning = nil }
+            )
+            dismiss(animated: true)
+        case .changed:
+            interactiveTransitioning?.update(pct)
+        case .cancelled:
+            interactiveTransitioning?.cancel()
+        case .ended:
+            let completed = recognizer.velocity(in: view.window!).x >= 0
+            interactiveTransitioning?.completionSpeed = completed ? 1.5 : 0.1
+            completed
+                ? interactiveTransitioning?.finish()
+                : interactiveTransitioning?.cancel()
+        default:
+            ()
         }
     }
 }

@@ -50,8 +50,6 @@ final class DefaultDashboardWireframe {
     private let currencyStoreService: CurrencyStoreService
     private let walletService: WalletService
     private let nftsService: NFTsService
-    
-    private weak var navigationController: NavigationController!
 
     init(
         parent: UIViewController,
@@ -95,7 +93,8 @@ final class DefaultDashboardWireframe {
 extension DefaultDashboardWireframe: DashboardWireframe {
 
     func present() {
-        vc = wireUp()
+        let vc = wireUp()
+        self.vc = vc
 
         if let parent = parent as? EdgeCardsController {
             parent.setMaster(vc: vc)
@@ -131,11 +130,12 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             mnemonicConfirmationWireframeFactory.makeWireframe(parent).present()
 
         case .receive:
+            guard let vc = self.vc?.navigationController else { return }
             let source = TokenPickerWireframeContext.Source.select(
                 onCompletion: { [weak self] selectedToken in
                     guard let self = self else { return }
                     self.tokenReceiveWireframeFactory.makeWireframe(
-                        presentingIn: self.navigationController,
+                        presentingIn: vc,
                         context: .init(presentationStyle: .push, web3Token: selectedToken)
                     ).present()
                 }
@@ -150,19 +150,19 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 showAddCustomToken: true
             )
             tokenPickerWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
+                presentingIn: vc,
                 context: context
             ).present()
 
         case let .send(addressTo):
-            
+            guard let vc = self.vc?.navigationController else { return }
             guard let addressTo = addressTo else {
                 navigateToTokenPicker()
                 return
             }
 
             tokenSendWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
+                presentingIn: vc,
                 context: .init(presentationStyle: .push, addressTo: addressTo)
             ).present()
             
@@ -179,8 +179,9 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             wireframe.present()
 
         case let .nftItem(nftItem):
+            guard let vc = self.vc?.navigationController else { return }
             nftDetailWireframeFactory.makeWireframe(
-                navigationController,
+                vc,
                 context: .init(
                     nftIdentifier: nftItem.identifier,
                     nftCollectionIdentifier: nftItem.collectionIdentifier,
@@ -207,8 +208,9 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             wireframe.present()
             
         case .tokenSwap:
+            guard let vc = self.vc?.navigationController else { return }
             let wireframe = tokenSwapWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
+                presentingIn: vc,
                 context: .init(
                     presentationStyle: .push,
                     tokenFrom: nil,
@@ -221,8 +223,8 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             deepLinkHandler.handle(deepLink: deepLink)
             
         case .themePicker:
-            
-            guard let presentingIn = navigationController.topViewController else { return }
+            guard let vc = self.vc?.navigationController else { return }
+            guard let presentingIn = vc.topViewController else { return }
             themePickerWireframeFactory.makeWireframe(
                 presentingIn: presentingIn
             ).present()
@@ -239,7 +241,6 @@ private extension DefaultDashboardWireframe {
             walletService: walletService,
             nftsService: nftsService
         )
-
         let vc: DashboardViewController = UIStoryboard(.dashboard).instantiate()
         let presenter = DefaultDashboardPresenter(
             view: vc,
@@ -248,18 +249,16 @@ private extension DefaultDashboardWireframe {
             onboardingService: onboardingService
         )
         vc.presenter = presenter
-        let navigationController = NavigationController(rootViewController: vc)
-        self.navigationController = navigationController
-        return navigationController
+        return NavigationController(rootViewController: vc)
     }
     
     func navigateToTokenPicker() {
-        
+        guard let vc = self.vc?.navigationController else { return }
         let source = TokenPickerWireframeContext.Source.select(
             onCompletion: { [weak self] selectedToken in
                 guard let self = self else { return }
                 self.tokenSendWireframeFactory.makeWireframe(
-                    presentingIn: self.navigationController,
+                    presentingIn: vc,
                     context: .init(presentationStyle: .push, web3Token: selectedToken)
                 ).present()
             }
@@ -274,7 +273,7 @@ private extension DefaultDashboardWireframe {
             showAddCustomToken: true
         )
         tokenPickerWireframeFactory.makeWireframe(
-            presentingIn: navigationController,
+            presentingIn: vc,
             context: context
         ).present()
     }

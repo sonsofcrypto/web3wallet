@@ -34,7 +34,7 @@ final class DefaultAccountWireframe {
     private let walletService: WalletService
     private let transactionService: EtherscanService
 
-    private weak var navigationController: NavigationController!
+    private weak var vc: UIViewController?
 
     init(
         presentingIn: UIViewController,
@@ -65,35 +65,35 @@ extension DefaultAccountWireframe: AccountWireframe {
 
     func present() {
         let vc = wireUp()
-        let topVc = (presentingIn as? UINavigationController)?.topViewController
-
-        if let transitionDelegate =  topVc as? UIViewControllerTransitioningDelegate {
-            vc.transitioningDelegate = transitionDelegate
-        }
-
+        let presentingTopVc = (presentingIn as? UINavigationController)?.topVc
+        let presentedTopVc = (vc as? UINavigationController)?.topVc
+        let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
+        self.vc = vc
         vc.modalPresentationStyle = .overCurrentContext
-        topVc?.show(vc, sender: self)
+        vc.transitioningDelegate = delegate
+        presentingTopVc?.present(vc, animated: true)
     }
 
     func navigate(to destination: AccountWireframeDestination) {
+        guard let vc = vc else { return }
 
         switch destination {
         case .receive:
             let wireframe = tokenReceiveWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
+                presentingIn: vc,
                 context: .init(presentationStyle: .present, web3Token: web3Token(context))
             )
             wireframe.present()
             
         case .send:
             tokenSendWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
+                presentingIn: vc,
                 context: .init(presentationStyle: .present, web3Token: web3Token(context))
             ).present()
             
         case .swap:
             tokenSwapWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
+                presentingIn: vc,
                 context: .init(
                     presentationStyle: .present,
                     tokenFrom: web3Token(context),
@@ -141,8 +141,6 @@ private extension DefaultAccountWireframe {
         )
 
         vc.presenter = presenter
-        let navigationController = NavigationController(rootViewController: vc)
-        self.navigationController = navigationController
-        return navigationController
+        return NavigationController(rootViewController: vc)
     }
 }

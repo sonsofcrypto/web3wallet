@@ -9,12 +9,10 @@ final class NavigationController: UINavigationController {
     private (set) var systemShadowColor: UIColor?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        
         Theme.statusBarStyle.statusBarStyle(for: traitCollection.userInterfaceStyle)
     }
 
     override func viewDidLoad() {
-        
         super.viewDidLoad()
 
         let appearance = navigationBar.standardAppearance
@@ -57,5 +55,12 @@ extension UINavigationController {
             ? bottomLineColor
             : .clear
         navigationBar.scrollEdgeAppearance = appearance
+    }
+}
+
+extension UINavigationController {
+
+    var topVc: UIViewController? {
+        topViewController
     }
 }

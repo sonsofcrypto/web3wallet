@@ -10,10 +10,18 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
     var isPresenting: Bool
     var scaleAdjustment: CGFloat = 0
 
-    init(targetView: UIView, isPresenting: Bool = true, scaleAdjustment: CGFloat = 0 ) {
+    private var handler: (()->Void)? = nil
+
+    init(
+        targetView: UIView,
+        isPresenting: Bool = true,
+        scaleAdjustment: CGFloat = 0,
+        handler: (()->Void)? = nil
+    ) {
         self.targetView = targetView
         self.isPresenting = isPresenting
         self.scaleAdjustment = scaleAdjustment
+        self.handler = handler
         super.init()
     }
 
@@ -126,7 +134,7 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
                     y: snapScale.height
                 )
             },
-            completion: { success in
+            completion: { [weak self] success in
                 snap?.removeFromSuperview()
                 transformView.removeFromSuperview()
                 fromView?.alpha = 1
@@ -137,6 +145,7 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
                     containerView.addSubview(toView)
                 }
                 context.completeTransition(success)
+                self?.handler?()
             }
         )
     }
@@ -214,16 +223,38 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
                     y: snapScale.height
                 )
             },
-            completion: { success in
+            completion: { [weak self] success in
                 snap?.removeFromSuperview()
                 transformView.removeFromSuperview()
                 toView?.alpha = 1
-                context.completeTransition(success)
+                if let fromView = fromView, context.transitionWasCancelled {
+                    fromView.alpha = 1
+                    containerView.addSubview(fromView)
+                }
+                context.completeTransition(!context.transitionWasCancelled)
+                self?.handler?()
             }
         )
     }
+}
 
-     func animationEnded(transitionCompleted: Bool) {
+class CardFlipInteractiveTransitioning: UIPercentDrivenInteractiveTransition {
 
+    private var handler: (()->Void)? = nil
+
+    init(handler: (()->Void)? = nil) {
+        super.init()
+        self.handler = handler
+        wantsInteractiveStart = false
+    }
+
+    override func cancel() {
+        super.cancel()
+        handler?()
+    }
+
+    override func finish() {
+        super.finish()
+        handler?()
     }
 }

@@ -148,7 +148,7 @@ class DashboardWalletCellBackgroundView: UIView {
         strokeGradient.frame = bounds
         fillGradient.frame = bounds.insetBy(dx: 2, dy: 2)
         noise.frame = bounds
-        
+
         let ratio = highlight.image?.heightWidthwRatio() ?? 0
         var highlightBounds = bounds
         highlightBounds.size.width = bounds.width

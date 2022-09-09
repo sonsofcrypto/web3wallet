@@ -18,7 +18,6 @@ final class DashboardViewController: BaseViewController {
     var viewModel: DashboardViewModel?
 
     private var backgroundView = DashboardBackgroundView()
-    private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
     private var previousYOffset: CGFloat = 0
     private var lastVelocity: CGFloat = 0
 
@@ -285,7 +284,6 @@ private extension DashboardViewController {
             tag: 0
         )
 
-        transitioningDelegate = self
         edgeCardsController?.delegate = self
 
         view.backgroundColor = Theme.colour.gradientBottom
@@ -449,42 +447,12 @@ extension DashboardViewController: EdgeCardsControllerDelegate {
     }
 }
 
-// MARK: - UIViewControllerTransitioningDelegate
+extension DashboardViewController: TargetViewTransitionDatasource {
 
-extension DashboardViewController: UIViewControllerTransitioningDelegate {
-
-    func animationController(
-        forPresented presented: UIViewController,
-        presenting: UIViewController,
-        source: UIViewController
-    ) -> UIViewControllerAnimatedTransitioning? {
-        let presentedVc = (presented as? UINavigationController)?.topViewController
-        animatedTransitioning = nil
-
-        if presentedVc?.isKind(of: AccountViewController.self) ?? false {
-            let idxPath = collectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0)
-            let cell = collectionView.cellForItem(at: idxPath)
-            animatedTransitioning = CardFlipAnimatedTransitioning(
-                targetView: cell ?? view
-            )
+    func targetView() -> UIView {
+        guard let idxPath = collectionView.indexPathsForSelectedItems?.first else {
+            return view
         }
-
-        return animatedTransitioning
-    }
-
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let presentedVc = (dismissed as? UINavigationController)?.topViewController
-        animatedTransitioning = nil
-
-        if presentedVc?.isKind(of: AccountViewController.self) ?? false {
-            let idxPath = collectionView.indexPathsForSelectedItems?.first ?? IndexPath(item: 0, section: 0)
-            let cell = collectionView.cellForItem(at: idxPath)
-            animatedTransitioning = CardFlipAnimatedTransitioning(
-                targetView: cell ?? view,
-                isPresenting: false
-            )
-        }
-
-        return animatedTransitioning
+        return collectionView.cellForItem(at: idxPath) ?? view
     }
 }
