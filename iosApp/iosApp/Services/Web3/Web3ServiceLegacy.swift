@@ -254,7 +254,7 @@ extension Web3Token {
             symbol: symbol.lowercased(),
             decimals: KotlinUInt(value: UInt32(decimals)),
             type: name == "Ethereum" ? .native : .erc20,
-            address: address,
+            address: name == "Ethereum" ? nil : address,
             coinGeckoId: coingGeckoId
         )
     }
