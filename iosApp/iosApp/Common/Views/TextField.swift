@@ -38,7 +38,8 @@ extension TextField {
             frame: .init(
                 origin: .zero,
                 size: .init(
-                    width: SceneDelegateHelper().window?.frame.size.width ?? 0,
+                    // TODO: Smell
+                    width: UIApplication.shared.keyWindow?.frame.size.width ?? 0,
                     height: 40
                 )
             )

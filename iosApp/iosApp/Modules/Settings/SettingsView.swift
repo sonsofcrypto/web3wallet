@@ -117,7 +117,6 @@ extension SettingsViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        
         let item = viewModel.item(at: indexPath)
         presenter.handle(.didSelect(setting: item.setting))
     }

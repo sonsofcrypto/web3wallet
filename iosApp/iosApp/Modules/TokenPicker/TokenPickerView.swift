@@ -15,8 +15,7 @@ final class TokenPickerViewController: BaseViewController {
     var context: TokenPickerWireframeContext!
 
     private var viewModel: TokenPickerViewModel?
-    private let sceneHelper = SceneDelegateHelper()
-    
+
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchContainerBox: UIView!
     @IBOutlet weak var searchTextFieldBox: UIView!
@@ -127,9 +126,10 @@ private extension TokenPickerViewController {
         )
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
+        // TODO: Smell
         bottomKeyboardLayoutConstraint = collectionView.bottomAnchor.constraint(
             equalTo: view.keyboardLayoutGuide.topAnchor,
-            constant: sceneHelper.window?.safeAreaInsets.bottom ?? 0
+            constant: UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
         )
         bottomKeyboardLayoutConstraint.priority = .required
         bottomKeyboardLayoutConstraint.isActive = true
@@ -144,7 +144,8 @@ private extension TokenPickerViewController {
     }
     
     func addCollectionViewBottomInset() {
-        let bottom = sceneHelper.window?.safeAreaInsets.bottom ?? 0
+        // TODO: Smell
+        let bottom = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
         collectionView.contentInset = .init(top: 0, left: 0, bottom: bottom, right: 0)
     }
     

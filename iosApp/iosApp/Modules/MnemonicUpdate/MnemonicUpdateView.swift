@@ -321,11 +321,12 @@ private extension MnemonicUpdateViewController {
         )
         
         ctaButton.style = .primary
-        
-        let helper = SceneDelegateHelper()
-        ctaButtonBottomConstraint.constant = helper.window?.safeAreaInsets.bottom == 0
-        ? -Theme.constant.padding
-        : 0
+
+        // TODO: Smell
+        let window = UIApplication.shared.keyWindow
+        ctaButtonBottomConstraint.constant = window?.safeAreaInsets.bottom == 0
+            ? -Theme.constant.padding
+            : 0
     }
     
     func registerForBackgroundNotifications() {

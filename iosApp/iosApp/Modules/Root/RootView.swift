@@ -4,35 +4,14 @@
 
 import UIKit
 
-protocol RootView: AnyObject {
+protocol RootView: AnyObject { }
 
-}
-
-final class RootViewController: EdgeCardsController {
+final class RootViewController: EdgeCardsController, RootView {
 
     var presenter: RootPresenter!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
         presenter?.present()
-    }
-}
-
-// MARK: - WalletsView
-
-extension RootViewController: RootView {
-
-}
-
-// MARK: - Configure UI
-
-extension RootViewController {
-    
-    func configureUI() {
-//        (view as? GradientView)?.colors = [
-//            Theme.colour.backgroundBaseSecondary,
-//            Theme.colour.backgroundBasePrimary
-//        ]
     }
 }

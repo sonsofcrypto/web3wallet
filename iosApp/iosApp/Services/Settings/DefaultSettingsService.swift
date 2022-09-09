@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import UIKit
 import web3lib
 
 final class DefaultSettingsService {
@@ -271,7 +272,8 @@ private extension DefaultSettingsService {
             deepLinkHandler.handle(deepLink: deepLink)
             
         case .resetKeystore:
-            guard let presentingVC = SceneDelegateHelper().rootVC else { return }
+            // TODO: Smell
+            guard let presentingVC = UIApplication.shared.rootVc else { return }
             let factory: AlertWireframeFactory = ServiceDirectory.assembler.resolve()
             factory.makeWireframe(
                 presentingVC,

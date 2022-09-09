@@ -68,10 +68,10 @@ extension DefaultMailService: MFMailComposeViewControllerDelegate {
 }
 
 private extension DefaultMailService {
-    
+
+    // TODO: Smell
     var presentingIn: UIViewController? {
-        let sceneHelper = SceneDelegateHelper()
-        return sceneHelper.rootVC?.topPresentedViewController
+        return UIApplication.shared.rootVc?.topPresentedViewController
     }
     
     func showAlertNoEmailDetected() {

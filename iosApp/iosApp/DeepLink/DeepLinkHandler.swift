@@ -138,7 +138,7 @@ private extension DefaultDeepLinkHandler {
         completion: @escaping (() -> Void)
     ) {
         
-        guard let rootVC = SceneDelegateHelper().rootVC else {
+        guard let rootVC = UIApplication.shared.rootVc else {
             return completion()
         }
         
@@ -186,8 +186,7 @@ private extension DefaultDeepLinkHandler {
 private extension DefaultDeepLinkHandler {
     
     var tabBarController: TabBarController? {
-        
-        guard let rootVC = SceneDelegateHelper().rootVC as? RootViewController else { return nil }
+        guard let rootVC = UIApplication.shared.rootVc as? RootViewController else { return nil }
         
         return rootVC.children.first(
             where: { $0 is TabBarController }

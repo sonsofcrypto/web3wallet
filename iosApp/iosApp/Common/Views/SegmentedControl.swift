@@ -7,8 +7,9 @@ import UIKit
 final class SegmentedControl: UISegmentedControl {
     
     convenience init() {
-        
-        let windowWidth = SceneDelegateHelper().window?.frame.width ?? 0
+
+        // TODO: Smell
+        let windowWidth = UIApplication.shared.keyWindow?.frame.width ?? 0
         
         let frame: CGRect = .init(
             origin: .zero,

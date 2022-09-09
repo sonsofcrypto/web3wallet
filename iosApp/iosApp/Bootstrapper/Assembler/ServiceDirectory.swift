@@ -22,7 +22,7 @@ struct ServiceDirectory {
     }
     
     static func rebootApp() {
-        guard let window = SceneDelegateHelper().window else { return }
+        guard let window = UIApplication.shared.keyWindow else { return }
         UIBootstrapper(window: window).boot()
     }
     
