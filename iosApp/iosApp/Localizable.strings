@@ -213,6 +213,7 @@
 
 "nft.detail.section.id" = "NFT ID: %@";
 "nft.detail.section.title.description" = "Description";
+"nft.detail.section.title.description.empty" = "Empty description";
 "nft.detail.section.title.properties" = "Properties";
 "nft.detail.section.title.other" = "Other";
 "nft.detail.section.title.other.contractAddress" = "Contract Address";

@@ -280,6 +280,7 @@ private extension OpenSeaNFTsService {
                     isVerifiedAccount: false,
                     authorImage: "",
                     description: asset.collection.description
+                    ?? Localized("nft.detail.section.title.description.empty")
                 )
             )
         }
@@ -331,7 +332,7 @@ private extension OpenSeaNFTsService {
         let slug: String // id
         let name: String?
         let imageUrl: String?
-        let description: String
+        let description: String?
     }
     
     struct Trait: Codable {
