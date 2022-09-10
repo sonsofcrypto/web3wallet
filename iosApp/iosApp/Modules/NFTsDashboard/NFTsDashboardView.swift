@@ -36,15 +36,30 @@ final class NFTsDashboardViewController: BaseViewController {
 extension NFTsDashboardViewController: NFTsDashboardView {
 
     func update(with viewModel: NFTsDashboardViewModel) {
-        
         switch viewModel {
         case .loading:
-            
             guard self.viewModel?.nfts.isEmpty ?? true else { return }
             showLoading()
-        case .error:
-            // TODO: Improve and show error
-            break
+        case let .error(viewModel):
+            let alert = UIAlertController(
+                title: viewModel.title,
+                message: viewModel.message,
+                preferredStyle: .alert)
+            alert.addAction(
+                .init(
+                    title: "Cancel",
+                    style: .cancel,
+                    handler: { [weak self] _ in self?.presenter.handle(.cancelError) }
+                )
+            )
+            alert.addAction(
+                .init(
+                    title: "Send error logs",
+                    style: .default,
+                    handler: { [weak self] _ in self?.presenter.handle(.sendError) }
+                )
+            )
+            present(alert, animated: true)
         case .loaded:
             noContentView?.refreshControl?.endRefreshing()
             mainScrollView?.refreshControl?.endRefreshing()
@@ -81,7 +96,6 @@ extension NFTsDashboardViewController {
     }
     
     @objc func pullDownToRefresh() {
-        
         presenter.present(isPullDownToRefreh: true)
     }
     

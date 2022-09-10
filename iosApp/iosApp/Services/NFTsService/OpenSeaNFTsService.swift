@@ -93,23 +93,18 @@ extension OpenSeaNFTsService: NFTsService {
         }
         
         guard let urlRequest = makeURLRequest(for: .assets(owner: address)) else {
-
             onCompletion(.failure(OpenSeaNFTsServiceError.unableToConstructURL))
             return
         }
         
         URLSession.shared.dataTask(with: urlRequest) { [weak self] data, _, error in
-
             guard let self = self else { return }
-
             guard let data = data else {
-
                 onCompletion(.failure(error ?? OpenSeaNFTsServiceError.failedToDownload))
                 return
             }
 
             do {
-
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let assets = try decoder.decode(AssetList.self, from: data).assets

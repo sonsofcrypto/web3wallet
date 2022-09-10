@@ -16,6 +16,7 @@ final class DefaultNFTsDashboardWireframeFactory {
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let nftsService: NFTsService
     private let networksService: NetworksService
+    private let mailService: MailService
 
     private weak var window: UIWindow?
 
@@ -23,25 +24,27 @@ final class DefaultNFTsDashboardWireframeFactory {
         nftsCollectionWireframeFactory: NFTsCollectionWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         nftsService: NFTsService,
-        networksService: NetworksService
+        networksService: NetworksService,
+        mailService: MailService
     ) {
         self.nftsCollectionWireframeFactory = nftsCollectionWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.nftsService = nftsService
         self.networksService = networksService
+        self.mailService = mailService
     }
 }
 
 extension DefaultNFTsDashboardWireframeFactory: NFTsDashboardWireframeFactory {
 
     func makeWireframe(_ parent: TabBarController) -> NFTsDashboardWireframe {
-        
         DefaultNFTsDashboardWireframe(
             parent: parent,
             nftsCollectionWireframeFactory: nftsCollectionWireframeFactory,
             nftDetailWireframeFactory: nftDetailWireframeFactory,
             nftsService: nftsService,
-            networksService: networksService
+            networksService: networksService,
+            mailService: mailService
         )
     }
 }

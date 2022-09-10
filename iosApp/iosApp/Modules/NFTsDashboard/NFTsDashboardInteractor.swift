@@ -44,24 +44,18 @@ extension DefaultNFTsDashboardInteractor: NFTsDashboardInteractor {
         isPullDownToRefreh: Bool,
         onCompletion: @escaping (Result<[NFTItem], Error>) -> Void
     ) {
-        
         guard !isPullDownToRefreh else {
-            
             service.fetchNFTs(onCompletion: onCompletion)
             return
         }
-        
         guard service.yourNFTs().isEmpty else {
-            
             onCompletion(.success(service.yourNFTs()))
             return
         }
-        
         service.fetchNFTs(onCompletion: onCompletion)
     }
     
     func fetchYourNFTsCollections(onCompletion: (Result<[NFTCollection], Error>) -> Void) {
-        
         service.yourNftCollections(onCompletion: onCompletion)
     }
 }

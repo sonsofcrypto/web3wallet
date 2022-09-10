@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: MIT
 
 enum NFTsDashboardViewModel {
-    
     case loading
     case error(EmbeddedErrorCollectionViewCell.ViewModel)
     case loaded(nfts: [NFT], collections: [Collection])
@@ -12,13 +11,11 @@ enum NFTsDashboardViewModel {
 extension NFTsDashboardViewModel {
     
     struct NFT {
-        
         let identifier: String
         let image: String
     }
     
     struct Collection {
-        
         let identifier: String
         let coverImage: String
         let title: String

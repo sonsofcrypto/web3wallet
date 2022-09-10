@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 //        CurrencyStoreServiceTest().runAll()
 //        WalletServiceTest().runAll()
         UniswapTests().runAll()
+//        EncryptTest().runAll()
         println("=== all tests executed ===")
     }
 }

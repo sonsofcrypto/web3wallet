@@ -6,9 +6,9 @@ import UIKit
 import web3lib
 
 enum NFTsDashboardWireframeDestination {
-
     case viewCollectionNFTs(collectionId: String)
     case viewNFT(nftItem: NFTItem)
+    case sendError(msg: String)
 }
 
 protocol NFTsDashboardWireframe {
@@ -23,6 +23,7 @@ final class DefaultNFTsDashboardWireframe {
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let nftsService: NFTsService
     private let networksService: NetworksService
+    private let mailService: MailService
 
     private weak var navigationController: NavigationController!
     
@@ -31,13 +32,15 @@ final class DefaultNFTsDashboardWireframe {
         nftsCollectionWireframeFactory: NFTsCollectionWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         nftsService: NFTsService,
-        networksService: NetworksService
+        networksService: NetworksService,
+        mailService: MailService
     ) {
         self.parent = parent
         self.nftsCollectionWireframeFactory = nftsCollectionWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.nftsService = nftsService
         self.networksService = networksService
+        self.mailService = mailService
     }
 }
 
@@ -77,7 +80,6 @@ extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
             wireframe.present()
             
         case let .viewCollectionNFTs(collectionId):
-            
             let wireframe = nftsCollectionWireframeFactory.makeWireframe(
                 navigationController,
                 context: .init(
@@ -86,6 +88,14 @@ extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
                 )
             )
             wireframe.present()
+
+        case let .sendError(msg):
+            mailService.sendMail(
+                context: .init(
+                    subject: .app,
+                    body: msg
+                )
+            )
         }
     }
 }
