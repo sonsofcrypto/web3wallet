@@ -19,7 +19,7 @@ protocol FeatureVotingRequestService {
     
     func fetchVotes(
         for feature: Web3FeatureData,
-        sinceId: String?,
+        startTime: String?,
         onCompletion: @escaping (Result<FeatureVoteResult?, Error>) -> Void
     )
 }
@@ -27,7 +27,7 @@ protocol FeatureVotingRequestService {
 struct FeatureVoteResult {
     
     let totalVotes: Int
-    let latestId: String
+    let requestTime: String
     let hasMoreVotes: Bool
 }
 
@@ -35,16 +35,18 @@ final class TwitterFeatureVotingRequestService: FeatureVotingRequestService {
     
     func fetchVotes(
         for feature: Web3FeatureData,
-        sinceId: String?,
+        startTime: String?,
         onCompletion: @escaping (Result<FeatureVoteResult?, Error>) -> Void
     ) {
         
-        let requestDetails: TwitterFeatureVotingRequestService.Details
-        if let sinceId = sinceId {
-            requestDetails = .votesSinceId(hashtag: feature.hashTag, sinceId: sinceId)
-        } else {
-            requestDetails = .votesFrom(hashtag: feature.hashTag, startTime: feature.creationDate)
-        }
+        let requestDetails: TwitterFeatureVotingRequestService.Details = .votesFrom(
+            hashtag: feature.hashTag,
+            startTime: startTime ?? Date().addingTimeInterval(
+                -6*24*60*60
+            ).formatDate(
+                using: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            )
+        )
         
         guard let urlRequest = makeURLRequest(for: requestDetails) else {
 
@@ -65,18 +67,17 @@ final class TwitterFeatureVotingRequestService: FeatureVotingRequestService {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 
-                //print("[Feature][⬇️] Response -> \(String(data: data, encoding: .utf8))")
+                print("[Feature][⬇️] Response -> \(String(data: data, encoding: .utf8))")
                 
                 let data = try decoder.decode(TweetSearchRecentRespoonse.self, from: data)
                 
-                var result: FeatureVoteResult?
-                if let newestId = data.meta.newestId {
-                   result = .init(
-                        totalVotes: data.meta.resultCount,
-                        latestId: newestId,
-                        hasMoreVotes: data.meta.resultCount == self.maxResults
-                   )
-                }
+                let result = FeatureVoteResult(
+                    totalVotes: data.meta.resultCount,
+                    requestTime: Date().formatDate(
+                        using: "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+                    ),
+                    hasMoreVotes: data.meta.resultCount == self.maxResults
+               )
                 
                 DispatchQueue.main.async {
                     onCompletion(.success(result))

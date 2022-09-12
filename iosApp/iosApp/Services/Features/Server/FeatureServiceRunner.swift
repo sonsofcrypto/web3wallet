@@ -62,7 +62,10 @@ private extension FeatureServiceRunner {
         print("[Feature][\(feature.hashTag)][1️⃣][🟠] Cached meta votes: \(meta?.votes ?? 0)")
         print("[Feature][\(feature.hashTag)][2️⃣][↗️] Fetching votes...")
         
-        featureVotingRequestService.fetchVotes(for: feature, sinceId: meta?.latestId) { [weak self] result in
+        featureVotingRequestService.fetchVotes(
+            for: feature,
+            startTime: meta?.latestRequestTime
+        ) { [weak self] result in
             guard let self = self else { return }
             switch result {
                 
@@ -70,7 +73,7 @@ private extension FeatureServiceRunner {
                 
                 print("[Feature][\(feature.hashTag)][3️⃣][✅] 1 - Success with total votes: \(data?.totalVotes ?? 0).")
                 
-                guard let data = data, data.totalVotes > 0 else {
+                guard let data = data else {
                 
                     print("[Feature][\(feature.hashTag)][4️⃣][✅] 2 - No more votes so moving next.")
                     return self.removeFeatureAndGoNext(feature: feature)
@@ -79,7 +82,7 @@ private extension FeatureServiceRunner {
                 let newMeta = FeatureVotingCacheMeta(
                     hashTag: feature.hashTag,
                     votes: (meta?.votes ?? 0) + data.totalVotes,
-                    latestId: data.latestId
+                    latestRequestTime: data.requestTime
                 )
                 print("[Feature][\(feature.hashTag)][4️⃣][✅] 2 - Caching new metadata \(newMeta).")
                 self.featureVotingCacheService.store(metadata: newMeta)
