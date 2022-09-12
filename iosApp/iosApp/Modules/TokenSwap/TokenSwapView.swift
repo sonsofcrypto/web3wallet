@@ -285,7 +285,7 @@ private extension TokenSwapViewController {
         let sectionInset: CGFloat = Theme.constant.padding
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = .init(
-            top: sectionInset * 0.75,
+            top: sectionInset.half,
             leading: sectionInset.half,
             bottom: 0,
             trailing: sectionInset.half

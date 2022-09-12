@@ -8,7 +8,7 @@ import web3lib
 final class UniswapServiceAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .singleton) { _ -> UniswapService in
+        registry.register(scope: .instance) { _ -> UniswapService in
             DefaultUniswapService()
         }
     }

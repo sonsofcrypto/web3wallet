@@ -62,7 +62,7 @@ extension Button {
         enum PrimaryAction {
             
             case `default`
-            case delete
+            case destructive
         }
         
         static var primary: Self {
@@ -128,7 +128,7 @@ private extension Button {
                 switch action {
                 case .`default`:
                     backgroundColor = Theme.colour.buttonBackgroundPrimary
-                case .delete:
+                case .destructive:
                     backgroundColor = Theme.colour.destructive
                 }
             } else {
