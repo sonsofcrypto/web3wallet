@@ -160,6 +160,8 @@ extension DefaultTokenSwapInteractor: TokenSwapInteractor {
         swapService.inputAmount = dataIn.inputAmount
         swapService.inputCurrency = dataIn.tokenFrom.toCurrency()
         swapService.outputCurrency = dataIn.tokenTo.toCurrency()
+        
+        print("[SWAP][QUOTE][REQUEST] - input: \(dataIn.inputAmount.toDecimalString()) | inputCurrency: \(dataIn.tokenFrom.symbol) | outputCurrency: \(dataIn.tokenTo.symbol) ")
     }
     
     func isCurrentQuote(dataIn: SwapDataIn) -> Bool {

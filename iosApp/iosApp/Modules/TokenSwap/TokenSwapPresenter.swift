@@ -612,7 +612,11 @@ private extension Web3NetworkFee {
 extension DefaultTokenSwapPresenter: SwapInteractorLister {
     
     func handle(swapEvent event: UniswapEvent) {
-        guard interactor.isCurrentQuote(dataIn: dataIn) else { return }
+        guard interactor.isCurrentQuote(dataIn: dataIn) else {
+            print("[SWAP][QUOTE] - quote not valid, ignoring event")
+            return
+        }
+        print("[SWAP][QUOTE] - quote valid, refreshing UI")
         invalidQuote = false
         refreshView()
     }
