@@ -304,7 +304,18 @@ private extension OpenSeaNFTsService {
     
     struct AssetList: Codable {
         
+        enum CodingKeys: String, CodingKey {
+            case assets
+        }
+        
         let assets: [Asset]
+        
+        init(from decoder: Decoder) throws {
+            
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            let failableAssets = try container.decode([OptionalDecodable<Asset>].self, forKey: .assets)
+            self.assets = failableAssets.compactMap { $0.item }
+        }
     }
 
     struct Asset: Codable {
@@ -338,7 +349,6 @@ private extension OpenSeaNFTsService {
     struct Trait: Codable {
         
         enum CodingKeys: String, CodingKey {
-            
             case traitType
             case value
         }
@@ -351,13 +361,9 @@ private extension OpenSeaNFTsService {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             
             self.traitType = try container.decode(String.self, forKey: .traitType)
-            
             if let value = try? container.decode(Int.self, forKey: .value) {
-                
                 self.value = "\(value)"
-                
             } else {
-                
                 let value = try container.decode(String.self, forKey: .value)
                 self.value = value
             }
@@ -370,5 +376,13 @@ private extension Array where Element == OpenSeaNFTsService.Asset {
     func excluding(_ nftIds: [String]) -> [OpenSeaNFTsService.Asset] {
         
         filter { asset in !nftIds.contains { asset.id.stringValue == $0 } }
+    }
+}
+
+private struct OptionalDecodable<Item : Decodable> : Decodable {
+    let item: Item?
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        self.item = try? container.decode(Item.self)
     }
 }
