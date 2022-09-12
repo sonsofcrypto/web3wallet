@@ -90,6 +90,7 @@ private extension Button {
             tintColor = Theme.colour.buttonPrimaryText
             layer.cornerRadius = Theme.constant.cornerRadiusSmall
             setTitleColor(Theme.colour.buttonPrimaryText, for: .normal)
+            setTitleColor(Theme.colour.buttonPrimaryText.withAlpha(0.5), for: .disabled)
         case .secondary:
             var configuration = UIButton.Configuration.plain()
             configuration.titleTextAttributesTransformer = .init{ incoming in
@@ -124,15 +125,15 @@ private extension Button {
     func updateBackgroundColor() {
         switch style {
         case let .primary(action):
-            if isEnabled  {
-                switch action {
-                case .`default`:
-                    backgroundColor = Theme.colour.buttonBackgroundPrimary
-                case .destructive:
-                    backgroundColor = Theme.colour.destructive
-                }
-            } else {
-                backgroundColor = Theme.colour.cellBackground
+            switch action {
+            case .`default`:
+                backgroundColor = Theme.colour.buttonBackgroundPrimary.withAlpha(
+                    isEnabled ? 1.0 : 0.5
+                )
+            case .destructive:
+                backgroundColor = Theme.colour.destructive.withAlpha(
+                    isEnabled ? 1.0 : 0.5
+                )
             }
         case .secondary, .secondarySmall, .dashboardAction:
             backgroundColor = .clear
