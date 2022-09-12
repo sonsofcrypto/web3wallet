@@ -12,7 +12,7 @@ struct FeatureVotingCacheMeta: Codable {
     
     let hashTag: String
     let votes: Int
-    let latestId: String
+    let latestRequestTime: String
 }
 
 final class DefaultFeatureVotingCacheService {

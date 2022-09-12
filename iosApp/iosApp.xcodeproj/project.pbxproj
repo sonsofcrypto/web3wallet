@@ -361,7 +361,6 @@
 		1C7FC9B628BCF5C700FC9175 /* EtherscanHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9B528BCF5C700FC9175 /* EtherscanHelper.swift */; };
 		1C7FC9B828BCF95E00FC9175 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9B728BCF95E00FC9175 /* WebViewController.swift */; };
 		1C7FC9BA28BD00C200FC9175 /* AccountAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9B928BD00C200FC9175 /* AccountAddressCell.swift */; };
-		1C7FC9BC28BFA4F000FC9175 /* features-metadata-dict.json in Resources */ = {isa = PBXBuildFile; fileRef = 1C7FC9BB28BFA4EF00FC9175 /* features-metadata-dict.json */; };
 		1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46D92813DE4800F6C40B /* BaseViewController.swift */; };
 		1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1C9B46FA281427B800F6C40B /* under-construction.gif */; };
 		1C9E3195287580B600DD2031 /* TokenSendWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */; };
@@ -514,6 +513,7 @@
 		1CEF3D7028CF29830092BC0E /* NSCollectionLayout+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEF3D4828CF29830092BC0E /* NSCollectionLayout+Extensions.swift */; };
 		1CEF3D7128CF29830092BC0E /* NSLocalizedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEF3D4928CF29830092BC0E /* NSLocalizedString+Extension.swift */; };
 		1CEF3D7228CF29830092BC0E /* Locale+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEF3D4A28CF29830092BC0E /* Locale+Extensions.swift */; };
+		1CEF3D7428CF4B8D0092BC0E /* features-metadata-dict.json in Resources */ = {isa = PBXBuildFile; fileRef = 1CEF3D7328CF4B8D0092BC0E /* features-metadata-dict.json */; };
 		D108AB4328AB9EB0005E0A63 /* cache_markets.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB3D28AB9EB0005E0A63 /* cache_markets.json */; };
 		D108AB4428AB9EB0005E0A63 /* cache_currencies_3.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB3E28AB9EB0005E0A63 /* cache_currencies_3.json */; };
 		D108AB4528AB9EB0005E0A63 /* cache_metadatas.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB3F28AB9EB0005E0A63 /* cache_metadatas.json */; };
@@ -962,7 +962,6 @@
 		1C7FC9B528BCF5C700FC9175 /* EtherscanHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanHelper.swift; sourceTree = "<group>"; };
 		1C7FC9B728BCF95E00FC9175 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		1C7FC9B928BD00C200FC9175 /* AccountAddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAddressCell.swift; sourceTree = "<group>"; };
-		1C7FC9BB28BFA4EF00FC9175 /* features-metadata-dict.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "features-metadata-dict.json"; sourceTree = "<group>"; };
 		1C9B46D92813DE4800F6C40B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1C9B46FA281427B800F6C40B /* under-construction.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "under-construction.gif"; sourceTree = "<group>"; };
 		1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendWireframe.swift; sourceTree = "<group>"; };
@@ -1115,6 +1114,7 @@
 		1CEF3D4828CF29830092BC0E /* NSCollectionLayout+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCollectionLayout+Extensions.swift"; sourceTree = "<group>"; };
 		1CEF3D4928CF29830092BC0E /* NSLocalizedString+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLocalizedString+Extension.swift"; sourceTree = "<group>"; };
 		1CEF3D4A28CF29830092BC0E /* Locale+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Locale+Extensions.swift"; sourceTree = "<group>"; };
+		1CEF3D7328CF4B8D0092BC0E /* features-metadata-dict.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "features-metadata-dict.json"; sourceTree = "<group>"; };
 		D108AB3D28AB9EB0005E0A63 /* cache_markets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_markets.json; sourceTree = "<group>"; };
 		D108AB3E28AB9EB0005E0A63 /* cache_currencies_3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_currencies_3.json; sourceTree = "<group>"; };
 		D108AB3F28AB9EB0005E0A63 /* cache_metadatas.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_metadatas.json; sourceTree = "<group>"; };
@@ -2085,7 +2085,7 @@
 		1C7FC97528ACC9D100FC9175 /* Server */ = {
 			isa = PBXGroup;
 			children = (
-				1C7FC9BB28BFA4EF00FC9175 /* features-metadata-dict.json */,
+				1CEF3D7328CF4B8D0092BC0E /* features-metadata-dict.json */,
 				1C7FC96D28ACAF6B00FC9175 /* FeatureVotingCacheService.swift */,
 				1C7FC97128ACB04500FC9175 /* FeatureVotingCacheServiceAssembler.swift */,
 				1C7FC96928AAA34C00FC9175 /* FeatureVotingRequestService.swift */,
@@ -2816,6 +2816,7 @@
 				1C54DC5E28683DDA00E378F6 /* NaokoAA-Medium-Italic.otf in Resources */,
 				1C67202B2887EB7F00C5F044 /* Confirmation.storyboard in Resources */,
 				1CAC560B286EFFC300CCB2B6 /* SFProDisplay-Semibold.otf in Resources */,
+				1CEF3D7428CF4B8D0092BC0E /* features-metadata-dict.json in Resources */,
 				1CAC560A286EFFC300CCB2B6 /* SFProDisplay-Bold.otf in Resources */,
 				D11A990627B8615B00EDFDD0 /* OFL.txt in Resources */,
 				1C54DC5928683DDA00E378F6 /* NaokoAA-Light.otf in Resources */,
@@ -2858,7 +2859,6 @@
 				1CD843EA287218C800E6D359 /* OCR-A Regular.ttf in Resources */,
 				D1976B14287EFAE10063FC9C /* MnemonicImport.storyboard in Resources */,
 				D11A990927B8615B00EDFDD0 /* GothicA1-SemiBold.ttf in Resources */,
-				1C7FC9BC28BFA4F000FC9175 /* features-metadata-dict.json in Resources */,
 				1C9E31A3287580E500DD2031 /* TokenSend.storyboard in Resources */,
 				D157F7D227B69B6300578FF8 /* Main.storyboard in Resources */,
 				1CAC5608286EFFC300CCB2B6 /* SFProDisplay-RegularItalic.otf in Resources */,
