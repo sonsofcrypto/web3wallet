@@ -12,7 +12,6 @@ protocol TemplateInteractor: AnyObject {
 
 class DefaultTemplateInteractor {
 
-
     private var templateService: TemplateService
 
     init(_ templateService: TemplateService) {

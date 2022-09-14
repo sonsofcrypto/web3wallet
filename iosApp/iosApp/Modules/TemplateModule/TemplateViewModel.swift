@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import UIKit
 
 enum TemplateViewModel {
     case loading

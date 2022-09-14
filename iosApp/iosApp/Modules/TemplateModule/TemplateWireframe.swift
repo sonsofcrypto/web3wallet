@@ -17,12 +17,10 @@ protocol TemplateWireframe {
 // MARK: - DefaultTemplateWireframe
 
 class DefaultTemplateWireframe {
-
     private weak var parent : UIViewController?
     private let templateWireframeFactory: TemplateWireframeFactory
     private let service: TemplateService
 
-    // TODO: TBD
     private weak var vc : UIViewController?
 
     init(
