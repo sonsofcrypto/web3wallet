@@ -23,7 +23,8 @@ protocol AccountWireframe {
 }
 
 final class DefaultAccountWireframe {
-    private weak var presentingIn: UIViewController?
+    
+    private weak var parent: UIViewController?
     private let context: AccountWireframeContext
     private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
     private let tokenSendWireframeFactory: TokenSendWireframeFactory
@@ -33,11 +34,11 @@ final class DefaultAccountWireframe {
     private let currencyStoreService: CurrencyStoreService
     private let walletService: WalletService
     private let transactionService: EtherscanService
-
+    
     private weak var vc: UIViewController?
-
+    
     init(
-        presentingIn: UIViewController,
+        _ parent: UIViewController?,
         context: AccountWireframeContext,
         tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
         tokenSendWireframeFactory: TokenSendWireframeFactory,
@@ -48,7 +49,7 @@ final class DefaultAccountWireframe {
         walletService: WalletService,
         transactionService: EtherscanService
     ) {
-        self.presentingIn = presentingIn
+        self.parent = parent
         self.context = context
         self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
         self.tokenSendWireframeFactory = tokenSendWireframeFactory
@@ -62,10 +63,10 @@ final class DefaultAccountWireframe {
 }
 
 extension DefaultAccountWireframe: AccountWireframe {
-
+    
     func present() {
         let vc = wireUp()
-        let presentingTopVc = (presentingIn as? UINavigationController)?.topVc
+        let presentingTopVc = (parent as? UINavigationController)?.topVc
         let presentedTopVc = (vc as? UINavigationController)?.topVc
         let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
         self.vc = vc
@@ -79,18 +80,15 @@ extension DefaultAccountWireframe: AccountWireframe {
 
         switch destination {
         case .receive:
-            let wireframe = tokenReceiveWireframeFactory.makeWireframe(
+            tokenReceiveWireframeFactory.makeWireframe(
                 presentingIn: vc,
                 context: .init(presentationStyle: .present, web3Token: web3Token(context))
-            )
-            wireframe.present()
-            
+            ).present()
         case .send:
             tokenSendWireframeFactory.makeWireframe(
                 presentingIn: vc,
                 context: .init(presentationStyle: .present, web3Token: web3Token(context))
             ).present()
-            
         case .swap:
             tokenSwapWireframeFactory.makeWireframe(
                 presentingIn: vc,
@@ -100,7 +98,6 @@ extension DefaultAccountWireframe: AccountWireframe {
                     tokenTo: nil
                 )
             ).present()
-            
         case .more:
             deepLinkHandler.handle(deepLink: .degen)
         }
@@ -122,7 +119,6 @@ extension DefaultAccountWireframe: AccountWireframe {
 private extension DefaultAccountWireframe {
 
     func wireUp() -> UIViewController {
-        
         let interactor = DefaultAccountInteractor(
             wallet: context.wallet,
             currency: context.currency,
@@ -131,7 +127,6 @@ private extension DefaultAccountWireframe {
             walletService: walletService,
             transactionService: transactionService
         )
-        
         let vc: AccountViewController = UIStoryboard(.account).instantiate()
         let presenter = DefaultAccountPresenter(
             view: vc,
@@ -139,7 +134,6 @@ private extension DefaultAccountWireframe {
             wireframe: self,
             context: context
         )
-
         vc.presenter = presenter
         return NavigationController(rootViewController: vc)
     }

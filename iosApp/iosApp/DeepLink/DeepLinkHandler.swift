@@ -326,8 +326,8 @@ private extension DefaultDeepLinkHandler {
         guard let wallet = service.wallet(network: token.network.toNetwork()) else { return }
         
         let factory: AccountWireframeFactory = ServiceDirectory.assembler.resolve()
-        factory.makeWireframe(
-            presentingIn: dashboardNavController,
+        factory.make(
+            dashboardNavController,
             context: .init(wallet: wallet, currency: token.toCurrency())
         ).present()
     }

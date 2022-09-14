@@ -114,8 +114,8 @@ extension DefaultDashboardWireframe: DashboardWireframe {
 
         switch destination {
         case let .wallet(wallet, currency):
-            accountWireframeFactory.makeWireframe(
-                presentingIn: vc,
+            accountWireframeFactory.make(
+                vc,
                 context: .init(wallet: wallet, currency: currency)
             ).present()
 

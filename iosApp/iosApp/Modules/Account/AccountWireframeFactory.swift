@@ -7,8 +7,8 @@ import web3lib
 
 protocol AccountWireframeFactory {
 
-    func makeWireframe(
-        presentingIn: UIViewController,
+    func make(
+        _ parent: UIViewController?,
         context: AccountWireframeContext
     ) -> AccountWireframe
 }
@@ -46,12 +46,12 @@ final class DefaultAccountWireframeFactory {
 
 extension DefaultAccountWireframeFactory: AccountWireframeFactory {
 
-    func makeWireframe(
-        presentingIn: UIViewController,
+    func make(
+        _ parent: UIViewController?,
         context: AccountWireframeContext
     ) -> AccountWireframe {
         DefaultAccountWireframe(
-            presentingIn: presentingIn,
+            parent,
             context: context,
             tokenReceiveWireframeFactory: tokenReceiveWireframeFactory,
             tokenSendWireframeFactory: tokenSendWireframeFactory,
