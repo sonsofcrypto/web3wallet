@@ -128,6 +128,7 @@ extension DashboardViewController: DashboardView {
         let _ = (cell as? DashboardNotificationCell)?.update(with: items.notifications(at: idx))
         let _ = (cell as? DashboardWalletCell)?.update(with: items.wallet(at: idx))
         let _ = (cell as? DashboardNFTCell)?.update(with: items.nft(at: idx))
+
     }
 }
 

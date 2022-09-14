@@ -109,7 +109,7 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
                 updateHandler: handler,
                 onKeyStoreItemDeleted: onDeleted
             )
-            updateMnemonic.makeWireframe(vc, context: context).present()
+            updateMnemonicWireframeFactory.make(vc, context: context).present()
         default:
             guard let vc = vc else { return }
             alertWireframeFactory.makeWireframe(
