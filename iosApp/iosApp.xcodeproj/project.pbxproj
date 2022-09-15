@@ -1439,7 +1439,7 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
-		1C54DBE1285E82FC00E378F6 /* TokenAdd */ = {
+		1C54DBE1285E82FC00E378F6 /* TokenAdd ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1C54DBEE285E835400E378F6 /* TokenAdd.storyboard */,
@@ -1451,7 +1451,7 @@
 				1C54DBE4285E832600E378F6 /* TokenAddWireframeFactory.swift */,
 				1C54DBF6285F8F2800E378F6 /* Cells */,
 			);
-			path = TokenAdd;
+			path = "TokenAdd ✅";
 			sourceTree = "<group>";
 		};
 		1C54DBF6285F8F2800E378F6 /* Cells */ = {
@@ -1552,7 +1552,7 @@
 				1C60C23E285724D0003BE25D /* Root */,
 				1C60C1C8285724D0003BE25D /* Settings */,
 				1C7FC98628B60A0B00FC9175 /* ThemePicker */,
-				1C54DBE1285E82FC00E378F6 /* TokenAdd */,
+				1C54DBE1285E82FC00E378F6 /* TokenAdd ✅ */,
 				1C60C1D5285724D0003BE25D /* TokenPicker */,
 				1C60C3612857C5D9003BE25D /* TokenReceive */,
 				1C9E3193287580A700DD2031 /* TokenSend */,
