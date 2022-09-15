@@ -32,8 +32,6 @@ protocol DashboardWireframe {
 final class DefaultDashboardWireframe {
 
     private weak var parent: UIViewController!
-    private weak var vc: UIViewController!
-
     private let accountWireframeFactory: AccountWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
@@ -50,6 +48,8 @@ final class DefaultDashboardWireframe {
     private let currencyStoreService: CurrencyStoreService
     private let walletService: WalletService
     private let nftsService: NFTsService
+
+    private weak var vc: UIViewController!
 
     init(
         parent: UIViewController,
@@ -225,8 +225,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             deepLinkHandler.handle(deepLink: deepLink)
             
         case .themePicker:
-            guard let vc = self.vc else { return }
-            themePickerWireframeFactory.makeWireframe(presentingIn: vc).present()
+            themePickerWireframeFactory.make(vc).present()
         }
     }
 }
