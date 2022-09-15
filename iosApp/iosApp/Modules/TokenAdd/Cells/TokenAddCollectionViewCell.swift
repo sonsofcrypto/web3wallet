@@ -5,9 +5,17 @@
 import UIKit
 
 final class TokenAddCollectionViewCell: UICollectionViewCell {
+    
+    struct Handler {
+        let selectNetworkHandler: () -> Void
+        let addressHandler: TokenEnterAddressView.Handler
+        let addTokenHandler: () -> Void
+        let onTextChanged: (TokenAddViewModel.TextFieldType, String) -> Void
+        let onReturnTapped: (TokenAddViewModel.TextFieldType) -> Void
+    }
 
     @IBOutlet weak var networkDetailsView: TokenAddNetworkView!
-
+    
     @IBOutlet weak var tokenDetailsView: UIView!
     @IBOutlet weak var addressView: TokenEnterAddressView!
     @IBOutlet weak var nameView: TokenAddInputView!
@@ -17,40 +25,27 @@ final class TokenAddCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var widthLayoutConstraint: NSLayoutConstraint!
     
-    struct Handler {
-        
-        let addressHandler: TokenEnterAddressView.Handler
-        let addTokenHandler: () -> Void
-    }
-    
     private var handler: Handler!
 
     override func awakeFromNib() {
-        
         super.awakeFromNib()
         
         networkDetailsView.backgroundColor = Theme.colour.cellBackground
         networkDetailsView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-
         tokenDetailsView.backgroundColor = Theme.colour.cellBackground
         tokenDetailsView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        
         (tokenDetailsView.subviews.first as? UIStackView)?.arrangedSubviews.forEach {
-            
             if $0.tag == 10 { $0.backgroundColor = Theme.colour.separatorTransparent }
         }
-        
         saveButton.style = .primary
         saveButton.addTarget(self, action: #selector(addTokenTapped), for: .touchUpInside)
     }
     
     @discardableResult
     override func resignFirstResponder() -> Bool {
-        
         nameView.resignFirstResponder()
         symbolView.resignFirstResponder()
         decimalView.resignFirstResponder()
-        
         return true
     }
     
@@ -59,31 +54,31 @@ final class TokenAddCollectionViewCell: UICollectionViewCell {
         handler: Handler,
         and width: CGFloat
     ) {
-        
         self.handler = handler
-        
-        networkDetailsView.update(with: viewModel.network)
-
+        networkDetailsView.update(
+            with: viewModel.network,
+            handler: .init(onTapped: handler.selectNetworkHandler)
+        )
         addressView.update(
             with: viewModel.address,
             handler: handler.addressHandler
         )
-        
         nameView.update(
             with: viewModel.name,
+            handler: .init(onTextChanged: handler.onTextChanged, onReturnTapped: handler.onReturnTapped),
             autocapitalizationType: .words
         )
         symbolView.update(
             with: viewModel.symbol,
+            handler: .init(onTextChanged: handler.onTextChanged, onReturnTapped: handler.onReturnTapped),
             autocapitalizationType: .allCharacters
         )
         decimalView.update(
             with: viewModel.decimals,
+            handler: .init(onTextChanged: handler.onTextChanged, onReturnTapped: handler.onReturnTapped),
             keyboardType: .numberPad
         )
-        
         saveButton.setTitle(viewModel.saveButtonTitle, for: .normal)
-        
         widthLayoutConstraint.constant = width - Theme.constant.padding * 2
     }
 }
@@ -91,7 +86,6 @@ final class TokenAddCollectionViewCell: UICollectionViewCell {
 private extension TokenAddCollectionViewCell {
     
     @objc func addTokenTapped() {
-        
         handler.addTokenHandler()
     }
 }

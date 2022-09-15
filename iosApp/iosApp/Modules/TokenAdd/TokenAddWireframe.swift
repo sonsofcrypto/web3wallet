@@ -3,18 +3,22 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
+
+// MARK: TokenAddWireframeContext
 
 struct TokenAddWireframeContext {
-    
-    let presentationStyle: PresentationStyle
-    let network: Web3Network
+    let network: Network
 }
 
+// MARK: TokenAddWireframeDestination
+
 enum TokenAddWireframeDestination {
-    
     case selectNetwork(onCompletion: (Web3Network) -> Void)
-    case qrCodeScan(network: Web3Network, onCompletion: (String) -> Void)
+    case qrCodeScan(network: Network, onCompletion: (String) -> Void)
 }
+
+// MARK: TokenAddWireframe
 
 protocol TokenAddWireframe {
     func present()
@@ -22,85 +26,63 @@ protocol TokenAddWireframe {
     func dismiss()
 }
 
+// MARK: DefaultTokenAddWireframe
+
 final class DefaultTokenAddWireframe {
-    
-    private weak var presentingIn: UIViewController!
+    private weak var parent: UIViewController?
     private let context: TokenAddWireframeContext
     private let networkPickerWireframeFactory: NetworkPickerWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
-    private let web3Service: Web3ServiceLegacy
+    private let currencyStoreService: CurrencyStoreService
     
-    private weak var navigationController: NavigationController!
+    private weak var vc: UIViewController?
     
     init(
-        presentingIn: UIViewController,
+        _ parent: UIViewController?,
         context: TokenAddWireframeContext,
         networkPickerWireframeFactory: NetworkPickerWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
-        web3Service: Web3ServiceLegacy
+        currencyStoreService: CurrencyStoreService
     ) {
-        self.presentingIn = presentingIn
+        self.parent = parent
         self.context = context
         self.networkPickerWireframeFactory = networkPickerWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
-        self.web3Service = web3Service
+        self.currencyStoreService = currencyStoreService
     }
 }
 
 extension DefaultTokenAddWireframe: TokenAddWireframe {
     
     func present() {
-        
         let vc = wireUp()
-        
-        switch context.presentationStyle {
-            
-        case .embed:
-            fatalError("This module should never be embeded")
-            
-        case .present:
-            presentingIn.present(vc, animated: true)
-            
-        case .push:
-            guard let navigationController = presentingIn as? NavigationController else { return }
-            self.navigationController = navigationController
-            navigationController.pushViewController(vc, animated: true)
-        }
+        parent?.show(vc, sender: self)
     }
     
     func navigate(to destination: TokenAddWireframeDestination) {
-        
         switch destination {
-            
         case let .selectNetwork(onCompletion):
-            
-            let wireframe = networkPickerWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
+            networkPickerWireframeFactory.makeWireframe(
+                presentingIn: vc!.navigationController!,
                 context: .init(presentationStyle: .push, onNetworkSelected: onCompletion)
-            )
-            wireframe.present()
-            
+            ).present()
         case let .qrCodeScan(network, onCompletion):
-            
-            let wireframe = qrCodeScanWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
+            qrCodeScanWireframeFactory.makeWireframe(
+                presentingIn: vc!.navigationController!,
                 context: .init(
                     presentationStyle: .push,
-                    type: .network(network),
+                    type: .network(Web3Network.from(network, isOn: false)),
                     onCompletion: onCompletion
                 )
-            )
-            wireframe.present()
+            ).present()
         }
     }
     
     func dismiss() {
-        
-        if navigationController.viewControllers.count == 1 {
-            
-            navigationController.dismiss(animated: true)
+        if let nc = vc?.navigationController as? NavigationController {
+            nc.popViewController(animated: true)
         } else {
-            navigationController.popViewController(animated: true)
+            vc?.dismiss(animated: true)
         }
     }
 }
@@ -108,36 +90,19 @@ extension DefaultTokenAddWireframe: TokenAddWireframe {
 private extension DefaultTokenAddWireframe {
     
     func wireUp() -> UIViewController {
-        
         let interactor = DefaultTokenAddInteractor(
-            web3Service: web3Service
+            currencyStoreService: currencyStoreService
         )
         let vc: TokenAddViewController = UIStoryboard(.tokenAdd).instantiate()
         let presenter = DefaultTokenAddPresenter(
             view: vc,
-            interactor: interactor,
             wireframe: self,
+            interactor: interactor,
             context: context
         )
-        
         vc.presenter = presenter
-        
-        switch context.presentationStyle {
-        case .embed:
-            
-            fatalError("This module should never be embeded")
-        case .present:
-
-            vc.hidesBottomBarWhenPushed = true
-            
-            let navigationController = NavigationController(rootViewController: vc)
-            self.navigationController = navigationController
-            return navigationController
-
-        case .push:
-            
-            vc.hidesBottomBarWhenPushed = true
-            return vc
-        }
+        vc.hidesBottomBarWhenPushed = true
+        self.vc = vc
+        return vc
     }
 }

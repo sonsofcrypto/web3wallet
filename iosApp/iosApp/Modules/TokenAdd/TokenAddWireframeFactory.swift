@@ -3,45 +3,61 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
+
+// MARK: TokenAddWireframeFactory
 
 protocol TokenAddWireframeFactory {
-
-    func makeWireframe(
-        presentingIn: UIViewController,
+    func make(
+        _ parent: UIViewController?,
         context: TokenAddWireframeContext
     ) -> TokenAddWireframe
 }
 
-final class DefaultTokenAddWireframeFactory {
+// MARK: DefaultTokenAddWireframeFactory
 
+final class DefaultTokenAddWireframeFactory {
     private let networkPickerWireframeFactory: NetworkPickerWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
-    private let web3Service: Web3ServiceLegacy
+    private let currencyStoreService: CurrencyStoreService
 
     init(
         networkPickerWireframeFactory: NetworkPickerWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
-        web3Service: Web3ServiceLegacy
+        currencyStoreService: CurrencyStoreService
     ) {
         self.networkPickerWireframeFactory = networkPickerWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
-        self.web3Service = web3Service
+        self.currencyStoreService = currencyStoreService
     }
 }
 
 extension DefaultTokenAddWireframeFactory: TokenAddWireframeFactory {
 
-    func makeWireframe(
-        presentingIn: UIViewController,
+    func make(
+        _ parent: UIViewController?,
         context: TokenAddWireframeContext
     ) -> TokenAddWireframe {
-        
         DefaultTokenAddWireframe(
-            presentingIn: presentingIn,
+            parent,
             context: context,
             networkPickerWireframeFactory: networkPickerWireframeFactory,
             qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
-            web3Service: web3Service
+            currencyStoreService: currencyStoreService
         )
+    }
+}
+
+// MARK: Assembler
+
+final class TokenAddWireframeFactoryAssembler: AssemblerComponent {
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> TokenAddWireframeFactory in
+            DefaultTokenAddWireframeFactory(
+                networkPickerWireframeFactory: resolver.resolve(),
+                qrCodeScanWireframeFactory: resolver.resolve(),
+                currencyStoreService: resolver.resolve()
+            )
+        }
     }
 }

@@ -77,7 +77,6 @@
 		1C54DBDE285DD15400E378F6 /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBDD285DD15400E378F6 /* Account.storyboard */; };
 		1C54DBE3285E831B00E378F6 /* TokenAddWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE2285E831B00E378F6 /* TokenAddWireframe.swift */; };
 		1C54DBE5285E832600E378F6 /* TokenAddWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE4285E832600E378F6 /* TokenAddWireframeFactory.swift */; };
-		1C54DBE7285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE6285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift */; };
 		1C54DBE9285E833200E378F6 /* TokenAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE8285E833200E378F6 /* TokenAddViewModel.swift */; };
 		1C54DBEB285E833600E378F6 /* TokenAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBEA285E833500E378F6 /* TokenAddView.swift */; };
 		1C54DBED285E834200E378F6 /* TokenAddInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBEC285E834200E378F6 /* TokenAddInteractor.swift */; };
@@ -373,6 +372,7 @@
 		1C7F864C28D20E490073FD95 /* NSCollectionLayout+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F862428D20E490073FD95 /* NSCollectionLayout+Extensions.swift */; };
 		1C7F864D28D20E490073FD95 /* NSLocalizedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F862528D20E490073FD95 /* NSLocalizedString+Extension.swift */; };
 		1C7F864E28D20E490073FD95 /* Locale+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F862628D20E490073FD95 /* Locale+Extensions.swift */; };
+		1C7F865028D3016B0073FD95 /* Network+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F864F28D3016B0073FD95 /* Network+Extensions.swift */; };
 		1C7FC96828AAA1F300FC9175 /* Web3Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC96728AAA1F300FC9175 /* Web3Feature.swift */; };
 		1C7FC96A28AAA34C00FC9175 /* FeatureVotingRequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC96928AAA34C00FC9175 /* FeatureVotingRequestService.swift */; };
 		1C7FC96E28ACAF6B00FC9175 /* FeatureVotingCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC96D28ACAF6B00FC9175 /* FeatureVotingCacheService.swift */; };
@@ -681,7 +681,6 @@
 		1C54DBDD285DD15400E378F6 /* Account.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
 		1C54DBE2285E831B00E378F6 /* TokenAddWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddWireframe.swift; sourceTree = "<group>"; };
 		1C54DBE4285E832600E378F6 /* TokenAddWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddWireframeFactory.swift; sourceTree = "<group>"; };
-		1C54DBE6285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C54DBE8285E833200E378F6 /* TokenAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddViewModel.swift; sourceTree = "<group>"; };
 		1C54DBEA285E833500E378F6 /* TokenAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddView.swift; sourceTree = "<group>"; };
 		1C54DBEC285E834200E378F6 /* TokenAddInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddInteractor.swift; sourceTree = "<group>"; };
@@ -976,6 +975,7 @@
 		1C7F862428D20E490073FD95 /* NSCollectionLayout+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCollectionLayout+Extensions.swift"; sourceTree = "<group>"; };
 		1C7F862528D20E490073FD95 /* NSLocalizedString+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLocalizedString+Extension.swift"; sourceTree = "<group>"; };
 		1C7F862628D20E490073FD95 /* Locale+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Locale+Extensions.swift"; sourceTree = "<group>"; };
+		1C7F864F28D3016B0073FD95 /* Network+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Network+Extensions.swift"; sourceTree = "<group>"; };
 		1C7FC96728AAA1F300FC9175 /* Web3Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3Feature.swift; sourceTree = "<group>"; };
 		1C7FC96928AAA34C00FC9175 /* FeatureVotingRequestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureVotingRequestService.swift; sourceTree = "<group>"; };
 		1C7FC96D28ACAF6B00FC9175 /* FeatureVotingCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureVotingCacheService.swift; sourceTree = "<group>"; };
@@ -1449,7 +1449,6 @@
 				1C54DBE8285E833200E378F6 /* TokenAddViewModel.swift */,
 				1C54DBE2285E831B00E378F6 /* TokenAddWireframe.swift */,
 				1C54DBE4285E832600E378F6 /* TokenAddWireframeFactory.swift */,
-				1C54DBE6285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift */,
 				1C54DBF6285F8F2800E378F6 /* Cells */,
 			);
 			path = TokenAdd;
@@ -2090,47 +2089,48 @@
 			isa = PBXGroup;
 			children = (
 				1C7F85FF28D20E490073FD95 /* Array+Extensions.swift */,
-				1C7F860028D20E490073FD95 /* Int+Extensions.swift */,
-				1C7F860128D20E490073FD95 /* CG+Extensions.swift */,
-				1C7F860228D20E490073FD95 /* CAAnimation+Extension.swift */,
-				1C7F860328D20E490073FD95 /* UIFont+Extension.swift */,
-				1C7F860428D20E490073FD95 /* UIImageView+Extensions.swift */,
-				1C7F860528D20E490073FD95 /* UIView+Toast+Extensions.swift */,
-				1C7F860628D20E490073FD95 /* Kotlin+Extensions.swift */,
-				1C7F860728D20E490073FD95 /* UIButton+Extensions.swift */,
-				1C7F860828D20E490073FD95 /* UIView+Extensions.swift */,
 				1C7F860928D20E490073FD95 /* BigInt+Extensions.swift */,
-				1C7F860A28D20E490073FD95 /* String+Extensions.swift */,
-				1C7F860B28D20E490073FD95 /* UIEdgeInsets+Extensions.swift */,
-				1C7F860C28D20E490073FD95 /* UITextView+Extensions.swift */,
-				1C7F860D28D20E490073FD95 /* UITabBarController+Extensions.swift */,
-				1C7F860E28D20E490073FD95 /* UIImage+Extension.swift */,
-				1C7F860F28D20E490073FD95 /* UIColor+Extensions.swift */,
-				1C7F861028D20E490073FD95 /* UIView+LayoutConstraints+Extensions.swift */,
-				1C7F861128D20E490073FD95 /* UIApplication+Extensions.swift */,
-				1C7F861228D20E490073FD95 /* Formatter+Extensions.swift */,
-				1C7F861328D20E490073FD95 /* UIView+Animations+Chat.swift */,
-				1C7F861428D20E490073FD95 /* UICollectionViewCell+Extensions.swift */,
+				1C7F860228D20E490073FD95 /* CAAnimation+Extension.swift */,
+				1C7F862328D20E490073FD95 /* CALayer+Extension.swift */,
+				1C7F860128D20E490073FD95 /* CG+Extensions.swift */,
 				1C7F861528D20E490073FD95 /* Currency+Extensions.swift */,
-				1C7F861628D20E490073FD95 /* UITraitCollection+Extensions.swift */,
-				1C7F861728D20E490073FD95 /* UIStackView+Extensions.swift */,
-				1C7F861828D20E490073FD95 /* UIStoryboard+Extensions.swift */,
-				1C7F861928D20E490073FD95 /* UIBarButtonItem+Extensions.swift */,
-				1C7F861A28D20E490073FD95 /* UITableView+Extensions.swift */,
 				1C7F861B28D20E490073FD95 /* Data+Extension.swift */,
-				1C7F861C28D20E490073FD95 /* StringAttributed+Extensions.swift */,
-				1C7F861D28D20E490073FD95 /* UILabel+Extensions.swift */,
 				1C7F861E28D20E490073FD95 /* Date+Extensions.swift */,
-				1C7F861F28D20E490073FD95 /* Float+Extensions.swift */,
 				1C7F862028D20E490073FD95 /* Double+Extensions.swift */,
 				1C7F862128D20E490073FD95 /* Error+Extensions.swift */,
-				1C7F862228D20E490073FD95 /* UICollectionView+Extensions.swift */,
-				1C7F862328D20E490073FD95 /* CALayer+Extension.swift */,
+				1C7F861F28D20E490073FD95 /* Float+Extensions.swift */,
+				1C7F864F28D3016B0073FD95 /* Network+Extensions.swift */,
+				1C7F861228D20E490073FD95 /* Formatter+Extensions.swift */,
+				1C7F860028D20E490073FD95 /* Int+Extensions.swift */,
+				1C7F860628D20E490073FD95 /* Kotlin+Extensions.swift */,
+				1C7F862628D20E490073FD95 /* Locale+Extensions.swift */,
 				1C7F862428D20E490073FD95 /* NSCollectionLayout+Extensions.swift */,
 				1C7F862528D20E490073FD95 /* NSLocalizedString+Extension.swift */,
-				1C7F862628D20E490073FD95 /* Locale+Extensions.swift */,
 				1A4C391FFCFF40F06CD89323 /* Bundle+Extensions.swift */,
 				1A4C3EF22DC2A63B2B9365C5 /* IndexPath+Extensions.swift */,
+				1C7F860A28D20E490073FD95 /* String+Extensions.swift */,
+				1C7F861C28D20E490073FD95 /* StringAttributed+Extensions.swift */,
+				1C7F861128D20E490073FD95 /* UIApplication+Extensions.swift */,
+				1C7F861928D20E490073FD95 /* UIBarButtonItem+Extensions.swift */,
+				1C7F860728D20E490073FD95 /* UIButton+Extensions.swift */,
+				1C7F862228D20E490073FD95 /* UICollectionView+Extensions.swift */,
+				1C7F861428D20E490073FD95 /* UICollectionViewCell+Extensions.swift */,
+				1C7F860F28D20E490073FD95 /* UIColor+Extensions.swift */,
+				1C7F860B28D20E490073FD95 /* UIEdgeInsets+Extensions.swift */,
+				1C7F860328D20E490073FD95 /* UIFont+Extension.swift */,
+				1C7F860E28D20E490073FD95 /* UIImage+Extension.swift */,
+				1C7F860428D20E490073FD95 /* UIImageView+Extensions.swift */,
+				1C7F861D28D20E490073FD95 /* UILabel+Extensions.swift */,
+				1C7F861728D20E490073FD95 /* UIStackView+Extensions.swift */,
+				1C7F861828D20E490073FD95 /* UIStoryboard+Extensions.swift */,
+				1C7F860D28D20E490073FD95 /* UITabBarController+Extensions.swift */,
+				1C7F861A28D20E490073FD95 /* UITableView+Extensions.swift */,
+				1C7F860C28D20E490073FD95 /* UITextView+Extensions.swift */,
+				1C7F861628D20E490073FD95 /* UITraitCollection+Extensions.swift */,
+				1C7F861328D20E490073FD95 /* UIView+Animations+Chat.swift */,
+				1C7F860828D20E490073FD95 /* UIView+Extensions.swift */,
+				1C7F861028D20E490073FD95 /* UIView+LayoutConstraints+Extensions.swift */,
+				1C7F860528D20E490073FD95 /* UIView+Toast+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3144,7 +3144,6 @@
 				D1A12A65287D333900606FC8 /* AuthenticateViewModel.swift in Sources */,
 				1C7F862828D20E490073FD95 /* Int+Extensions.swift in Sources */,
 				1C60C34B285724D1003BE25D /* CultProposalView.swift in Sources */,
-				1C54DBE7285E832B00E378F6 /* TokenAddWireframeFactoryAssembler.swift in Sources */,
 				1C60C348285724D1003BE25D /* CultProposalPresenter.swift in Sources */,
 				1C7F862C28D20E490073FD95 /* UIImageView+Extensions.swift in Sources */,
 				1C60C2D5285724D0003BE25D /* MnemonicNewViewModel.swift in Sources */,
@@ -3184,6 +3183,7 @@
 				1CB8B0E42891040500024E7C /* TokenEnterAddressView.swift in Sources */,
 				1A4C34ABFF1DD20804DED956 /* AppsService.swift in Sources */,
 				1C60C314285724D1003BE25D /* AccountWireframe.swift in Sources */,
+				1C7F865028D3016B0073FD95 /* Network+Extensions.swift in Sources */,
 				1C60C330285724D1003BE25D /* NFTsCollectionViewModel.swift in Sources */,
 				1CDED5F8289C324C00DF34A7 /* NFTsDashboardView+NoContentView.swift in Sources */,
 				1C60C2AE285724D0003BE25D /* TokenPickerInteractor.swift in Sources */,
@@ -3584,7 +3584,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20;
-				DEVELOPMENT_TEAM = W622KH7Q3T;
+				DEVELOPMENT_TEAM = L4HD966EQA;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3625,7 +3625,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20;
-				DEVELOPMENT_TEAM = W622KH7Q3T;
+				DEVELOPMENT_TEAM = L4HD966EQA;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;

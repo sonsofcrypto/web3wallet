@@ -86,17 +86,12 @@ final class DefaultTokenPickerWireframe {
 extension DefaultTokenPickerWireframe: TokenPickerWireframe {
     
     func present() {
-        
         let vc = wireUp()
-        
         switch context.presentationStyle {
-            
         case .embed:
             fatalError("Not implemented")
-            
         case .present:
             presentingIn.present(vc, animated: true)
-            
         case .push:
             guard let navigationController = presentingIn as? NavigationController else { return }
             self.navigationController = navigationController
@@ -105,29 +100,19 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
     }
     
     func navigate(to destination: TokenPickerWireframeDestination) {
-        
         switch destination {
-                        
         case let .addCustomToken(network):
-            
-            let wireframe = tokenAddWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
-                context: .init(
-                    presentationStyle: .push,
-                    network: network
-                )
-            )
-            wireframe.present()
+            tokenAddWireframeFactory.make(
+                navigationController,
+                context: .init(network: network.toNetwork())
+            ).present()
         }
     }
     
     func dismiss() {
-        
         if navigationController.viewControllers.count > 1 {
-            
             navigationController.popViewController(animated: true)
         } else {
-            
             navigationController.dismiss(animated: true)
         }
     }

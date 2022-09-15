@@ -4,11 +4,14 @@
 
 import UIKit
 
-protocol TokenAddView: AnyObject {
+// MARK: TokenAddView
 
+protocol TokenAddView: AnyObject {
     func update(with viewModel: TokenAddViewModel)
     func dismissKeyboard()
 }
+
+// MARK: TokenAddViewController
 
 final class TokenAddViewController: BaseViewController {
 
@@ -19,11 +22,9 @@ final class TokenAddViewController: BaseViewController {
     private var viewModel: TokenAddViewModel?
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         configureUI()
-        
         presenter?.present()
     }    
 }
@@ -31,16 +32,14 @@ final class TokenAddViewController: BaseViewController {
 extension TokenAddViewController: TokenAddView {
 
     func update(with viewModel: TokenAddViewModel) {
-
         self.viewModel = viewModel
         
         configureNavigationBar()
 
         if let visibleCell = collectionView.visibleCells.first as? TokenAddCollectionViewCell {
-         
             visibleCell.update(
                 with: viewModel,
-                handler: makeTokenAddCollectionViewCellHandler(),
+                handler: tokenAddCollectionViewCellHandler(),
                 and: collectionView.frame.size.width
             )
             collectionView.collectionViewLayout.invalidateLayout()
@@ -50,15 +49,15 @@ extension TokenAddViewController: TokenAddView {
     }
     
     func dismissKeyboard() {
-        
         collectionView.visibleCells.forEach { $0.resignFirstResponder() }
     }
 }
 
+// MARK: Configure
+
 extension TokenAddViewController {
     
    func configureNavigationBar() {
-        
        title = viewModel?.title
 
        navigationItem.leftBarButtonItem = UIBarButtonItem(
@@ -70,7 +69,6 @@ extension TokenAddViewController {
    }
     
     func configureUI() {
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(resignFirstResponder))
         view.addGestureRecognizer(tapGesture)
         
@@ -83,11 +81,11 @@ extension TokenAddViewController {
     }
 
     @objc func navBarLeftActionTapped() {
-        
         presenter.handle(.dismiss)
     }
-    
 }
+
+// MARK: UICollectionViewDataSource
 
 extension TokenAddViewController: UICollectionViewDataSource {
     
@@ -95,7 +93,6 @@ extension TokenAddViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        
         1
     }
     
@@ -103,23 +100,23 @@ extension TokenAddViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        
         guard let viewModel = viewModel else {
             fatalError()
         }
-        
         let cell = collectionView.dequeue(
             TokenAddCollectionViewCell.self,
             for: indexPath
         )
         cell.update(
             with: viewModel,
-            handler: makeTokenAddCollectionViewCellHandler(),
+            handler: tokenAddCollectionViewCellHandler(),
             and: collectionView.frame.size.width
         )
         return cell
     }
 }
+
+// MARK: UICollectionViewDelegateFlowLayout
 
 extension TokenAddViewController: UICollectionViewDelegateFlowLayout {
 
@@ -128,69 +125,57 @@ extension TokenAddViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-                
         .init(width: collectionView.frame.width, height: 56)
     }
 }
 
+// MARK: Handlers
+
 private extension TokenAddViewController {
     
-    func makeTokenAddCollectionViewCellHandler() -> TokenAddCollectionViewCell.Handler {
-        
+    func tokenAddCollectionViewCellHandler() -> TokenAddCollectionViewCell.Handler {
         .init(
-            addressHandler: makeAddressHandler(),
-            addTokenHandler: makeAddTokenHandler()
+            selectNetworkHandler: presenterHandle(.selectNetwork),
+            addressHandler: addressHandler(),
+            addTokenHandler: presenterHandle(.addToken),
+            onTextChanged: onTextChanged(),
+            onReturnTapped: onReturnTapped()
         )
     }
     
-    func makeAddressHandler() -> TokenEnterAddressView.Handler {
-        
+    func addressHandler() -> TokenEnterAddressView.Handler {
         .init(
-            onAddressChanged: makeOnAddressChanged(),
-            onQRCodeScanTapped: makeOnQRCodeScanTapped(),
-            onPasteTapped: makeOnPasteTapped(),
-            onSaveTapped: makeOnSaveTapped()
+            onAddressChanged: onAddressChanged(),
+            onQRCodeScanTapped: presenterHandle(.qrCodeScan),
+            onPasteTapped: presenterHandle(.pasteAddress),
+            onSaveTapped: {}
         )
     }
     
-    func makeOnAddressChanged() -> (String) -> Void {
-        
+    func onAddressChanged() -> (String) -> Void {
         {
             [weak self] value in
-            guard let self = self else { return }
-            self.presenter.handle(.addressChanged(to: value))
+            self?.presenterHandle(.addressChanged(to: value))()
         }
     }
     
-    func makeOnQRCodeScanTapped() -> () -> Void {
-        
+    func presenterHandle(_ event: TokenAddPresenterEvent) -> () -> Void {
         {
-            [weak self] in
-            guard let self = self else { return }
-            self.presenter.handle(.qrCodeScan)
+            [weak self] in self?.presenter.handle(event)
         }
     }
     
-    func makeOnPasteTapped() -> () -> Void {
-        
+    func onTextChanged() -> (TokenAddViewModel.TextFieldType, String) -> Void {
         {
-            [weak self] in
-            guard let self = self else { return }
-            self.presenter.handle(.pasteAddress)
+            [weak self] (type, value) in
+            self?.presenterHandle(.inputChanged(for: type, to: value))()
         }
     }
     
-    func makeOnSaveTapped() -> () -> Void {
-        
-        {}
-    }
-    
-    func makeAddTokenHandler() -> () -> Void {
-        
+    func onReturnTapped() -> (TokenAddViewModel.TextFieldType) -> Void {
         {
-            [weak self] in
-            guard let self = self else { return }
-            self.presenter.handle(.addToken)
+            [weak self] type in
+            self?.presenterHandle(.returnKeyTapped(for: type))()
         }
     }
 }

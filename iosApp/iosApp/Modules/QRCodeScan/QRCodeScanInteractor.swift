@@ -5,8 +5,10 @@
 import Foundation
 
 protocol QRCodeScanInteractor: AnyObject {
-
-    func validateAddress(address: String, for network: Web3Network) -> String?
+    func validateAddress(
+        address: String,
+        for network: Web3Network
+    ) -> String?
 }
 
 final class DefaultQRCodeScanInteractor {

@@ -6,13 +6,17 @@ import UIKit
 
 final class TokenAddNetworkView: UIView {
     
+    struct Handler {
+        let onTapped: () -> Void
+    }
+    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var valueLabel: UILabel!
     
     private var viewModel: TokenAddViewModel.NetworkItem!
+    private var handler: Handler!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
         
         nameLabel.apply(style: .callout)
@@ -26,10 +30,11 @@ final class TokenAddNetworkView: UIView {
     }
     
     func update(
-        with viewModel: TokenAddViewModel.NetworkItem
+        with viewModel: TokenAddViewModel.NetworkItem,
+        handler: Handler
     ) {
-        
         self.viewModel = viewModel
+        self.handler = handler
         
         nameLabel.text = viewModel.item.name
         valueLabel.text = viewModel.item.value
@@ -39,7 +44,6 @@ final class TokenAddNetworkView: UIView {
 private extension TokenAddNetworkView {
     
     @objc func viewTapped() {
-        
-        viewModel.onTapped()
+        handler.onTapped()
     }
 }

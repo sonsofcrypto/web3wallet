@@ -3,30 +3,38 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
+
+// MARK: TokenAddPresenterEvent
 
 enum TokenAddPresenterEvent {
-
+    case selectNetwork
     case addressChanged(to: String)
     case qrCodeScan
     case pasteAddress
+    case inputChanged(for: TokenAddViewModel.TextFieldType, to: String)
+    case returnKeyTapped(for: TokenAddViewModel.TextFieldType)
     case addToken
     case dismiss
 }
 
-protocol TokenAddPresenter {
+// MARK: TokenAddPresenter
 
+protocol TokenAddPresenter {
     func present()
     func handle(_ event: TokenAddPresenterEvent)
 }
 
+// MARK: DefaultTokenAddPresenter
+
 final class DefaultTokenAddPresenter {
 
     private weak var view: TokenAddView?
-    private let interactor: TokenAddInteractor
     private let wireframe: TokenAddWireframe
+    private let interactor: TokenAddInteractor
     private let context: TokenAddWireframeContext
     
-    private var network: Web3Network!
+    private var network: Network!
     private var contractAddress: String?
     private var contractAddressValidationError: String?
     private var name: String?
@@ -40,13 +48,13 @@ final class DefaultTokenAddPresenter {
     
     init(
         view: TokenAddView,
-        interactor: TokenAddInteractor,
         wireframe: TokenAddWireframe,
+        interactor: TokenAddInteractor,
         context: TokenAddWireframeContext
     ) {
         self.view = view
-        self.interactor = interactor
         self.wireframe = wireframe
+        self.interactor = interactor
         self.context = context
         
         self.network = context.network
@@ -56,161 +64,123 @@ final class DefaultTokenAddPresenter {
 extension DefaultTokenAddPresenter: TokenAddPresenter {
 
     func present() {
-        
         refresh()
     }
 
     func handle(_ event: TokenAddPresenterEvent) {
-
         switch event {
-            
+        case .selectNetwork:
+            wireframe.navigate(to: .selectNetwork(onCompletion: onNetworkSelected()))
         case let .addressChanged(address):
-            
-            if
-                let formattedAddress = formattedAddress,
-                address.hasPrefix(formattedAddress),
-                address.count == (formattedAddress.count + 1)
-            {
-                
-                refresh()
-            } else if formattedAddress == address {
-                
-                refresh()
-            } else if
-                let formattedAddress = formattedAddress,
-                formattedAddress.hasPrefix(address),
-                address.count == (formattedAddress.count - 1)
-            {
-                
-                contractAddress?.removeLast()
-                refresh()
-            } else {
-                
-                contractAddress = address
-                refresh()
-            }
-            
+            handleAddressChanged(to: address)
         case .qrCodeScan:
-            
-            view?.dismissKeyboard()
-            
-            wireframe.navigate(
-                to: .qrCodeScan(
-                    network: network,
-                    onCompletion: makeOnQRScanned()
-                )
-            )
-
+            handleQRCodeScan()
         case .pasteAddress:
-            
-            let clipboard = UIPasteboard.general.string ?? ""
-            let isValid = interactor.isValid(address: clipboard, forNetwork: network)
-            guard isValid else { return }
-            contractAddress = clipboard
-            refresh(
-                firstResponder: makeNextFirstResponder()
-            )
-            
+            handlePasteAddress()
+        case let .inputChanged(type, value):
+            inputChanged(for: type, to: value)
+        case let .returnKeyTapped(type):
+            returnKeyTapped(for: type)
         case .addToken:
-            
-            addTokenTapped = true
-            
-            validateFields()
-            
-            if areAllFieldsValid() {
-                
-                interactor.addToken(
-                    .init(
-                        address: contractAddress ?? "",
-                        name: name ?? "",
-                        symbol: symbol ?? "",
-                        decimals: Int(decimals ?? "0") ?? 0
-                    )
-                ) { [weak self] in
-                    
-                    guard let self = self else { return }
-                    self.view?.dismissKeyboard()
-                    self.wireframe.dismiss()
-                }
-            } else {
-                
-                refresh()
-            }
-            
+            handleAddToken()
         case .dismiss:
-            
             wireframe.dismiss()
         }
     }
 }
 
+// MARK: Handlers
+
 private extension DefaultTokenAddPresenter {
     
-    func makeNextFirstResponder() -> TokenAddViewModel.TextFieldType? {
-        
-        validateFields()
-        
-        if contractAddressValidationError != nil {
-            
-            return .contractAddress
-        } else if nameValidationError != nil {
-            
-            return .name
-        } else if symbolValidationError != nil {
-            
-            return .symbol
-        } else if decimalsValidationError != nil {
-            
-            return .decimals
+    func handleAddressChanged(to address: String) {
+        if
+            let formattedAddress = formattedAddress,
+            address.hasPrefix(formattedAddress),
+            address.count == (formattedAddress.count + 1)
+        {
+            refresh()
+        } else if formattedAddress == address {
+            refresh()
+        } else if
+            let formattedAddress = formattedAddress,
+            formattedAddress.hasPrefix(address),
+            address.count == (formattedAddress.count - 1)
+        {
+            contractAddress?.removeLast()
+            refresh()
         } else {
-            
-            view?.dismissKeyboard()
-            return nil
+            contractAddress = address
+            refresh()
         }
     }
     
-    var formattedAddress: String? {
-        
-        guard let address = contractAddress else { return nil }
-        
-        guard interactor.isValid(address: address, forNetwork: network) else { return nil }
-        
-        return interactor.addressFormattedShort(
-            address: address,
-            network: network
+    func handleQRCodeScan() {
+        view?.dismissKeyboard()
+        wireframe.navigate(
+            to: .qrCodeScan(
+                network: network,
+                onCompletion: onQRScanned()
+            )
         )
     }
+    
+    func handlePasteAddress() {
+        let clipboard = UIPasteboard.general.string ?? ""
+        let isValid = network.isValid(address: clipboard)
+        guard isValid else { return }
+        contractAddress = clipboard
+        refresh(
+            firstResponder: nextFirstResponder()
+        )
+    }
+    
+    func handleAddToken() {
+        addTokenTapped = true
+        validateFields()
+        if areAllFieldsValid() {
+            interactor.addToken(
+                .init(
+                    address: contractAddress ?? "",
+                    name: name ?? "",
+                    symbol: symbol ?? "",
+                    decimals: Int(decimals ?? "0") ?? 0
+                ),
+                for: network
+            ) { [weak self] in
+                guard let self = self else { return }
+                self.view?.dismissKeyboard()
+                self.wireframe.dismiss()
+            }
+        } else {
+            refresh()
+        }
+    }
+}
+
+// MARK: ViewModel
+
+private extension DefaultTokenAddPresenter {
     
     func refresh(
         firstResponder: TokenAddViewModel.TextFieldType? = nil
     ) {
-        
         validateFields()
-        
-        let viewModel = makeViewModel(
-            firstResponder: firstResponder
-        )
-        view?.update(with: viewModel)
-        
+        view?.update(with: viewModel(firstResponder: firstResponder))
         // TODO: Fetch other contractAddress details async
         // if contractAddress is a valid one for the selected network
     }
     
-    func makeViewModel(
+    func viewModel(
         firstResponder: TokenAddViewModel.TextFieldType?
     ) -> TokenAddViewModel {
-        
-        let onTextChangedAction = makeOnTextChangedAction()
-        let onReturnTappedAction = makeOnReturnTappedAction()
-        
-        return .init(
+        .init(
             title: Localized("tokenAdd.title"),
             network: .init(
                 item: .init(
                     name: Localized("tokenAdd.network.title"),
                     value: network.name
-                ),
-                onTapped: makeNetworkOnTapped()
+                )
             ),
             address: .init(
                 value: formattedAddress ?? contractAddress,
@@ -225,8 +195,6 @@ private extension DefaultTokenAddPresenter {
                 placeholder: Localized("tokenAdd.name.placeholder"),
                 hint: addTokenTapped ? nameValidationError : nil,
                 tag: TokenAddViewModel.TextFieldType.name.rawValue,
-                onTextChanged: onTextChangedAction,
-                onReturnTapped: onReturnTappedAction,
                 isFirstResponder: firstResponder == .name
             ),
             symbol: .init(
@@ -237,8 +205,6 @@ private extension DefaultTokenAddPresenter {
                 placeholder: Localized("tokenAdd.symbol.placeholder"),
                 hint: addTokenTapped ? symbolValidationError : nil,
                 tag: TokenAddViewModel.TextFieldType.symbol.rawValue,
-                onTextChanged: onTextChangedAction,
-                onReturnTapped: onReturnTappedAction,
                 isFirstResponder: firstResponder == .symbol
             ),
             decimals: .init(
@@ -249,103 +215,68 @@ private extension DefaultTokenAddPresenter {
                 placeholder: Localized("tokenAdd.decimals.placeholder"),
                 hint: addTokenTapped ? decimalsValidationError : nil,
                 tag: TokenAddViewModel.TextFieldType.decimals.rawValue,
-                onTextChanged: onTextChangedAction,
-                onReturnTapped: onReturnTappedAction,
                 isFirstResponder: firstResponder == .decimals
             ),
-            saveButtonTitle: makeSaveButtonTitle()
+            saveButtonTitle: saveButtonTitle()
         )
     }
     
-    func makeSaveButtonTitle() -> String {
-        
+    var formattedAddress: String? {
+        guard let address = contractAddress else { return nil }
+        guard network.isValid(address: address) else { return nil }
+        return network.formatAddressShort(address)
+    }
+    
+    func saveButtonTitle() -> String {
         let validTitle = Localized("tokenAdd.cta.valid")
-        
-        guard addTokenTapped else {
-            
-            return validTitle
-        }
-        
+        guard addTokenTapped else { return validTitle }
         guard contractAddressValidationError == nil else {
-            
             return Localized("tokenAdd.cta.invalid.address")
         }
-        
         guard areAllFieldsValid() else {
-            
             return Localized("tokenAdd.cta.invalid")
         }
-        
         return validTitle
     }
     
     func areAllFieldsValid() -> Bool {
-        
         guard
             contractAddressValidationError == nil,
             nameValidationError == nil,
             symbolValidationError == nil,
             decimalsValidationError == nil
-        else {
-            
-            return false
-        }
-        
+        else { return false }
         return true
     }
     
-    func makeOnTextChangedAction() -> ((TokenAddViewModel.TextFieldType, String) -> Void) {
-        
-        {
-            [weak self] (textFieldType, value) in
-            
-            guard let self = self else { return }
-            
-            switch textFieldType {
-                
-            case .contractAddress:
-                self.contractAddress = value
-
-            case .name:
-                self.name = value
-
-            case .symbol:
-                self.symbol = value
-
-            case .decimals:
-                self.decimals = value
-            }
-            
-            self.refresh()
+    func inputChanged(for type: TokenAddViewModel.TextFieldType, to value: String) {
+        switch type {
+        case .contractAddress:
+            contractAddress = value
+        case .name:
+            name = value
+        case .symbol:
+            symbol = value
+        case .decimals:
+            decimals = value
         }
+        refresh()
     }
     
-    func makeOnReturnTappedAction() -> ((TokenAddViewModel.TextFieldType) -> Void) {
-        
-        {
-            [weak self] textFieldType in
-            
-            guard let self = self else { return }
-            
-            switch textFieldType {
-                
-            case .contractAddress:
-                self.refresh(firstResponder: .name)
-
-            case .name:
-                self.refresh(firstResponder: .symbol)
-
-            case .symbol:
-                self.refresh(firstResponder: .decimals)
-
-            case .decimals:
-                self.refresh(firstResponder: .contractAddress)
-            }
+    func returnKeyTapped(for type: TokenAddViewModel.TextFieldType) {
+        switch type {
+        case .contractAddress:
+            refresh(firstResponder: .name)
+        case .name:
+            refresh(firstResponder: .symbol)
+        case .symbol:
+            refresh(firstResponder: .decimals)
+        case .decimals:
+            refresh(firstResponder: .contractAddress)
         }
     }
 
     func validateFields() {
-        
         validateContractAddress()
         validateName()
         validateSymbol()
@@ -353,91 +284,80 @@ private extension DefaultTokenAddPresenter {
     }
 
     func validateContractAddress() {
-        
-        guard !interactor.isValid(address: contractAddress ?? "", forNetwork: network) else {
-            
+        guard !network.isValid(address: contractAddress ?? "") else {
             contractAddressValidationError = nil
             return
         }
-        
         contractAddressValidationError = Localized(
             "tokenAdd.validation.field.address.\(network.name.lowercased()).invalid"
         )
     }
         
     func validateName() {
-        
         guard name?.isEmpty ?? true else {
-            
             nameValidationError = nil
             return
         }
-        
         nameValidationError = Localized("tokenAdd.validation.field.required")
     }
 
     func validateSymbol() {
-        
         guard symbol?.isEmpty ?? true else {
-            
             symbolValidationError = nil
             return
         }
-        
         symbolValidationError = Localized("tokenAdd.validation.field.required")
-
     }
 
     func validateDecimals() {
-        
         guard !(decimals?.isEmpty ?? true) else {
-         
             decimalsValidationError = Localized("tokenAdd.validation.field.required")
             return
         }
-        
         guard let intValue = try? decimals?.int() else {
-            
             decimalsValidationError = Localized("tokenAdd.validation.field.decimal.int")
             return
         }
-        
         guard 0 <= intValue, intValue <= 32 else {
-            
             decimalsValidationError = Localized("tokenAdd.validation.field.decimal.range")
             return
         }
-        
         decimalsValidationError = nil
     }
     
-    func makeOnQRScanned() -> (String) -> Void {
-        
+    func onQRScanned() -> (String) -> Void {
         {
             [weak self] address in
             guard let self = self else { return }
             self.contractAddress = address
             self.refresh(
-                firstResponder: self.makeNextFirstResponder()
+                firstResponder: self.nextFirstResponder()
             )
         }
     }
-
-    func makeNetworkOnTapped() -> (() -> Void) {
+    
+    func nextFirstResponder() -> TokenAddViewModel.TextFieldType? {
+        validateFields()
         
-        {
-            [weak self] in
-            guard let self = self else { return }
-            self.wireframe.navigate(to: .selectNetwork(onCompletion: self.onNetworkSelected()))
+        if contractAddressValidationError != nil {
+            return .contractAddress
+        } else if nameValidationError != nil {
+            return .name
+        } else if symbolValidationError != nil {
+            return .symbol
+        } else if decimalsValidationError != nil {
+            return .decimals
+        } else {
+            view?.dismissKeyboard()
+            return nil
         }
     }
-    
+
     func onNetworkSelected() -> (Web3Network) -> () {
-        
         {
             [weak self] network in
             guard let self = self else { return }
-            self.network = network
+            self.network = network.toNetwork()
             self.refresh()
         }
     }

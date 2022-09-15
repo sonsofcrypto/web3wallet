@@ -6,6 +6,11 @@ import UIKit
 
 final class TokenAddInputView: UIView {
     
+    struct Handler {
+        let onTextChanged: (TokenAddViewModel.TextFieldType, String) -> Void
+        let onReturnTapped: (TokenAddViewModel.TextFieldType) -> Void
+    }
+    
     private var nameLabel: UILabel!
     private var textField: TextField!
     private var hintLabel: UILabel!
@@ -13,27 +18,26 @@ final class TokenAddInputView: UIView {
     private var pasteAction: UIButton!
     
     private var viewModel: TokenAddViewModel.TextFieldItem!
+    private var handler: Handler!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         configureUI()
     }
     
     func update(
         with viewModel: TokenAddViewModel.TextFieldItem,
+        handler: Handler,
         keyboardType: UIKeyboardType = .default,
         returnType: UIReturnKeyType = .next,
         autocapitalizationType: UITextAutocapitalizationType = .none
     ) {
-        
         self.viewModel = viewModel
+        self.handler = handler
         
         nameLabel.text = viewModel.item.name
         
         if let value = viewModel.item.value {
-            
             textField.text = value
         }
         textField.tag = viewModel.tag
@@ -44,20 +48,16 @@ final class TokenAddInputView: UIView {
         if viewModel.isFirstResponder {
             textField.becomeFirstResponder()
         }
-        
         if let hint = viewModel.hint {
-            
             hintLabel.isHidden = false
             hintLabel.text = hint
         } else {
-            
             hintLabel.isHidden = true
         }
     }
     
     @discardableResult
     override func resignFirstResponder() -> Bool {
-        
         textField.resignFirstResponder()
     }
 }
@@ -65,7 +65,6 @@ final class TokenAddInputView: UIView {
 private extension TokenAddInputView {
     
     func configureUI() {
-        
         backgroundColor = .clear
         
         let inputStack = makeInputStack()
@@ -94,7 +93,6 @@ private extension TokenAddInputView {
     }
     
     func makeInputStack() -> UIStackView {
-                
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = Theme.constant.padding.half.half
@@ -129,7 +127,6 @@ private extension TokenAddInputView {
     }
     
     func makeActionsView() -> UIView {
-        
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 16
@@ -165,14 +162,12 @@ private extension TokenAddInputView {
     }
     
     @objc func pasteActionTapped() {
-        
         guard let textFieldType = TokenAddViewModel.TextFieldType(rawValue: textField.tag) else { return }
         textField.text = UIPasteboard.general.string
-        viewModel.onTextChanged(textFieldType, textField.text ?? "")
+        handler.onTextChanged(textFieldType, textField.text ?? "")
     }
 
     @objc func dismissKeyboard() {
-        
         textField.resignFirstResponder()
     }
 }
@@ -180,15 +175,13 @@ private extension TokenAddInputView {
 extension TokenAddInputView: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        
         guard let textFieldType = TokenAddViewModel.TextFieldType(rawValue: textField.tag) else { return }
-        viewModel.onTextChanged(textFieldType, textField.text ?? "")
+        handler.onTextChanged(textFieldType, textField.text ?? "")
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         guard let textFieldType = TokenAddViewModel.TextFieldType(rawValue: textField.tag) else { return false }
-        viewModel.onReturnTapped(textFieldType)
+        handler.onReturnTapped(textFieldType)
         return true
     }
 }

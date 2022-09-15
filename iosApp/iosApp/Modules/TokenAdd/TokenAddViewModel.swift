@@ -7,7 +7,6 @@ import Foundation
 struct TokenAddViewModel {
     
     enum TextFieldType: Int {
-        
         case contractAddress
         case name
         case symbol
@@ -23,25 +22,19 @@ struct TokenAddViewModel {
     let saveButtonTitle: String
     
     struct Item {
-        
         let name: String
         let value: String?
     }
     
     struct NetworkItem {
-        
         let item: Item
-        let onTapped: () -> Void
     }
     
     struct TextFieldItem {
-        
         let item: Item
         let placeholder: String
         let hint: String?
         let tag: Int
-        let onTextChanged: (TextFieldType, String) -> Void
-        let onReturnTapped: (TextFieldType) -> Void
         let isFirstResponder: Bool
     }
 }
