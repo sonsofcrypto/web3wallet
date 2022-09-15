@@ -1543,8 +1543,8 @@
 				1C60C233285724D0003BE25D /* NFTsDashboard */,
 				1CDED5F9289C4C2F00DF34A7 /* NFTSend */,
 				1C54DC0F2862320200E378F6 /* QRCodeScan */,
-				1C60C23E285724D0003BE25D /* Root */,
-				1C60C1C8285724D0003BE25D /* Settings */,
+				1C60C23E285724D0003BE25D /* Root ✅ */,
+				1C60C1C8285724D0003BE25D /* Settings ✅ */,
 				1C7FC98628B60A0B00FC9175 /* ThemePicker 🟠 */,
 				1C54DBE1285E82FC00E378F6 /* TokenAdd ✅ */,
 				1C60C1D5285724D0003BE25D /* TokenPicker */,
@@ -1557,7 +1557,7 @@
 			path = iosApp/Modules;
 			sourceTree = SOURCE_ROOT;
 		};
-		1C60C1C8285724D0003BE25D /* Settings */ = {
+		1C60C1C8285724D0003BE25D /* Settings ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1CB8B0D3288FBC1500024E7C /* Settings.storyboard */,
@@ -1570,7 +1570,7 @@
 				1C60C1D2285724D0003BE25D /* SettingsWireframeFactory.swift */,
 				1C60C1CA285724D0003BE25D /* Cells */,
 			);
-			path = Settings;
+			path = "Settings ✅";
 			sourceTree = "<group>";
 		};
 		1C60C1CA285724D0003BE25D /* Cells */ = {
@@ -1781,7 +1781,7 @@
 			path = NFTsDashboard;
 			sourceTree = "<group>";
 		};
-		1C60C23E285724D0003BE25D /* Root */ = {
+		1C60C23E285724D0003BE25D /* Root ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C241285724D0003BE25D /* RootPresenter.swift */,
@@ -1789,7 +1789,7 @@
 				1C60C23F285724D0003BE25D /* RootWireframe.swift */,
 				1C60C243285724D0003BE25D /* RootWireframeFactory.swift */,
 			);
-			path = Root;
+			path = "Root ✅";
 			sourceTree = "<group>";
 		};
 		1C60C244285724D0003BE25D /* Account */ = {

@@ -5,6 +5,8 @@
 import UIKit
 import web3lib
 
+// MARK: - RootWireframeDestination
+
 enum RootWireframeDestination {
     case dashboard
     case networks
@@ -13,6 +15,8 @@ enum RootWireframeDestination {
     case overViewNetworks
     case overViewKeyStore
 }
+
+// MARK: - RootWireframe
 
 protocol RootWireframe {
     func present()
@@ -63,7 +67,6 @@ final class DefaultRootWireframe {
 extension DefaultRootWireframe: RootWireframe {
 
     func present() {
-        
         let vc = wireUp()
         self.vc = vc
         

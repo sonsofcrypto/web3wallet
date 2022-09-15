@@ -5,8 +5,10 @@
 import UIKit
 import web3lib
 
+// MARK: - RootWireframeFactory
+
 protocol RootWireframeFactory {
-    func makeWireframe(in window: UIWindow?) -> RootWireframe
+    func make(_ window: UIWindow?) -> RootWireframe
 }
 
 // MARK: - DefaultRootWireframeFactory
@@ -46,7 +48,7 @@ final class DefaultRootWireframeFactory {
 
 extension DefaultRootWireframeFactory: RootWireframeFactory {
 
-    func makeWireframe(in window: UIWindow?) -> RootWireframe {
+    func make(_ window: UIWindow?) -> RootWireframe {
         DefaultRootWireframe(
             window: window,
             keyStoreWireframeFactory: keyStoreWireframeFactory,
