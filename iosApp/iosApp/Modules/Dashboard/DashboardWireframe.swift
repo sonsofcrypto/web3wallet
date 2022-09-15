@@ -170,13 +170,9 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             
         case let .scanQRCode(onCompletion):
             guard let network = networksService.network else { return }
-            let wireframe = qrCodeScanWireframeFactory.makeWireframe(
-                presentingIn: parent,
-                context: .init(
-                    presentationStyle: .present,
-                    type: .network(Web3Network.from(network, isOn: false)),
-                    onCompletion: onCompletion
-                )
+            let wireframe = qrCodeScanWireframeFactory.make(
+                vc,
+                context: .init(type: .network(network), onCompletion: onCompletion)
             )
             wireframe.present()
 

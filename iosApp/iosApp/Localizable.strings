@@ -284,6 +284,7 @@
 "qrCodeScan.title" = "Scan QR code";
 "qrCodeScan.error.notSupported.title" = "Scanning not supported";
 "qrCodeScan.error.notSupported.message" = "Your device does not support QR code scanning. Please use a device with a camera.";
+"qrCodeScan.error.invalid.address" = "is not a valid %@ address.";
 
 "tokenSend.title" = "Send %@";
 "tokenSend.cell.address.textField.placeholder" = "To ETH address";

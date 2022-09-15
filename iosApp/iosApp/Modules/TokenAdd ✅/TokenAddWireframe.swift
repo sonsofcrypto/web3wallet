@@ -67,13 +67,9 @@ extension DefaultTokenAddWireframe: TokenAddWireframe {
                 context: .init(presentationStyle: .push, onNetworkSelected: onCompletion)
             ).present()
         case let .qrCodeScan(network, onCompletion):
-            qrCodeScanWireframeFactory.makeWireframe(
-                presentingIn: vc!.navigationController!,
-                context: .init(
-                    presentationStyle: .push,
-                    type: .network(Web3Network.from(network, isOn: false)),
-                    onCompletion: onCompletion
-                )
+            qrCodeScanWireframeFactory.make(
+                vc?.navigationController,
+                context: .init(type: .network(network), onCompletion: onCompletion)
             ).present()
         }
     }

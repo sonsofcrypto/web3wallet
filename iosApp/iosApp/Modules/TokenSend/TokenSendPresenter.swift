@@ -101,7 +101,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
             let onQRCodeScanned = makeOnQRCodeScanned()
             wireframe.navigate(
                 to: .qrCodeScan(
-                    network: token.network,
+                    network: token.network.toNetwork(),
                     onCompletion: onQRCodeScanned
                 )
             )

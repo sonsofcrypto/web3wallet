@@ -5,10 +5,13 @@
 import UIKit
 import AVFoundation
 
-protocol QRCodeScanView: AnyObject {
+// MARK: QRCodeScanView
 
+protocol QRCodeScanView: AnyObject {
     func update(with viewModel: QRCodeScanViewModel)
 }
+
+// MARK: QRCodeScanViewController
 
 final class QRCodeScanViewController: BaseViewController {
     
@@ -20,38 +23,21 @@ final class QRCodeScanViewController: BaseViewController {
     private var previewLayer: AVCaptureVideoPreviewLayer?
     private var activityIndicatorView: UIView!
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         configureUI()
-        
         presenter?.present()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(animated)
-        
         guard captureSession?.isRunning == false else { return }
-        
-        captureSession?.startRunning()
+        startRunningCaptureSessionInBackground()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        
         super.viewWillDisappear(animated)
-        
         guard captureSession?.isRunning == true else { return }
-
         captureSession?.stopRunning()
     }
 }
@@ -59,13 +45,9 @@ final class QRCodeScanViewController: BaseViewController {
 extension QRCodeScanViewController: QRCodeScanView {
 
     func update(with viewModel: QRCodeScanViewModel) {
-
         self.viewModel = viewModel
-        
         title = viewModel.title.uppercased()
-        
         if let failure = viewModel.failure {
-            
             view.presentToastAlert(
                 with: failure,
                 duration: 3.0,
@@ -78,28 +60,22 @@ extension QRCodeScanViewController: QRCodeScanView {
 private extension QRCodeScanViewController {
     
     func configureUI() {
-           
-        navigationItem.leftBarButtonItem = makeLeftBarButton()
-        
+        navigationItem.leftBarButtonItem = leftBarButtonItem()
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: Localized("paste"),
             style: .plain,
             target: self,
             action: #selector(pasteTapped)
         )
-        
+        view.backgroundColor = Theme.colour.navBarBackground
         configureQRCodeScan()
-        
         addTopView()
         addActivityIndicatorView()
     }
     
-    func makeLeftBarButton() -> UIBarButtonItem {
-        
+    func leftBarButtonItem() -> UIBarButtonItem {
         let showBackButton = (navigationController?.viewControllers.count ?? 0) > 1
-        
         guard showBackButton else {
-            
             return UIBarButtonItem(
                 image: .init(systemName: "xmark"),
                 style: .plain,
@@ -107,7 +83,6 @@ private extension QRCodeScanViewController {
                 action: #selector(closeTapped)
             )
         }
-        
         return UIBarButtonItem(
             image: "chevron.left".assetImage,
             style: .plain,
@@ -117,12 +92,10 @@ private extension QRCodeScanViewController {
     }
     
     @objc func closeTapped() {
-        
         presenter.handle(.dismiss)
     }
     
     @objc func pasteTapped() {
-        
         let picker = UIImagePickerController()
         //picker.allowsEditing = true
         picker.delegate = self
@@ -130,10 +103,8 @@ private extension QRCodeScanViewController {
     }
     
     func configureQRCodeScan() {
-        
         let captureSession = AVCaptureSession()
         self.captureSession = captureSession
-
         guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else {
             qrCodeScanUnsupported()
             return
@@ -145,39 +116,34 @@ private extension QRCodeScanViewController {
             qrCodeScanUnsupported()
             return
         }
-        
         guard captureSession.canAddInput(videoInput) else {
             qrCodeScanUnsupported()
             return
         }
         captureSession.addInput(videoInput)
-
         let metadataOutput = AVCaptureMetadataOutput()
-
         guard captureSession.canAddOutput(metadataOutput) else {
-            
             qrCodeScanUnsupported()
             return
         }
-        
         captureSession.addOutput(metadataOutput)
-        
         metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
         metadataOutput.metadataObjectTypes = [.qr]
-
         let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer.frame = view.layer.bounds
         previewLayer.videoGravity = .resizeAspectFill
-        
         view.layer.addSublayer(previewLayer)
-        
         self.previewLayer = previewLayer
-
-        captureSession.startRunning()
+        startRunningCaptureSessionInBackground()
+    }
+    
+    func startRunningCaptureSessionInBackground() {
+        DispatchQueue.global(qos: .background).async {
+            [weak self] in self?.captureSession?.startRunning()
+        }
     }
     
     func qrCodeScanUnsupported() {
-        
         let alert = UIAlertController(
             title: Localized("qrCodeScan.error.notSupported.title"),
             message: Localized("qrCodeScan.error.notSupported.message"),
@@ -189,23 +155,18 @@ private extension QRCodeScanViewController {
     }
 
     func addTopView() {
-        
         let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.autoresizingMask = [
             .flexibleWidth,
             .flexibleHeight
         ]
-        
         addMask(to: blurEffectView)
-        
         self.view.addSubview(blurEffectView)
-
         blurEffectView.addConstraints(.toEdges)
     }
     
     func addMask(to view: UIView) {
-        
         let maskLayer = CAShapeLayer()
         maskLayer.frame = view.bounds
         let size: CGFloat = self.view.bounds.width * 0.8
@@ -224,13 +185,11 @@ private extension QRCodeScanViewController {
     }
     
     func addActivityIndicatorView() {
-        
         let view = UIView()
         view.backgroundColor = Theme.colour.backgroundBaseSecondary
         view.layer.cornerRadius = 24
         view.layer.borderColor = Theme.colour.fillTertiary.cgColor
         view.layer.borderWidth = 1
-        
         let activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.startAnimating()
         activityIndicator.color = Theme.colour.activityIndicator
@@ -241,9 +200,7 @@ private extension QRCodeScanViewController {
                 .layout(anchor: .centerYAnchor)
             ]
         )
-        
         self.view.addSubview(view)
-        
         view.addConstraints(
             [
                 .layout(anchor: .centerXAnchor),
@@ -252,7 +209,6 @@ private extension QRCodeScanViewController {
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: self.view.bounds.width * 0.25))
             ]
         )
-        
         self.activityIndicatorView = view
         view.isHidden = true
     }
@@ -265,27 +221,19 @@ extension QRCodeScanViewController: AVCaptureMetadataOutputObjectsDelegate {
         didOutput metadataObjects: [AVMetadataObject],
         from connection: AVCaptureConnection
     ) {
-        
         guard let metadataObject = metadataObjects.first else { return }
-
         guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
-        
         guard let qrCode = readableObject.stringValue else { return }
-        
         // NOTE: We ignore if we keep detecting the same code over whist a failure toast is presented
         guard !view.isToastFailurePresented else { return }
-        
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-        
         presenter.handle(.qrCode(qrCode))
     }
 
 }
 
 private extension UIImage {
-    
     var qrCode: String? {
-        
         guard
             let detector = CIDetector(
                 ofType: CIDetectorTypeQRCode,
@@ -296,19 +244,13 @@ private extension UIImage {
             ),
             let ciImage = CIImage(image: self),
             let features = detector.features(in: ciImage) as? [CIQRCodeFeature]
-        else {
-            return nil
-        }
-
+        else { return nil }
+        
         var qrCode = ""
         for feature in features {
-            
-            guard let indeedMessageString = feature.messageString else {
-                continue
-            }
+            guard let indeedMessageString = feature.messageString else { continue }
             qrCode += indeedMessageString
         }
-
         return qrCode.isEmpty ? nil : qrCode
     }
 }
@@ -319,18 +261,12 @@ extension QRCodeScanViewController: UINavigationControllerDelegate, UIImagePicke
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
     ) {
-        
         activityIndicatorView.isHidden = false
-        
         picker.dismiss(animated: true) { [weak self] in
-            
             guard let self = self else { return }
-            
             if let qrCode = (info[.originalImage] as? UIImage)?.qrCode {
-            
                 self.presenter.handle(.qrCode(qrCode))
             } else {
-                
                 self.activityIndicatorView.isHidden = true
             }
         }

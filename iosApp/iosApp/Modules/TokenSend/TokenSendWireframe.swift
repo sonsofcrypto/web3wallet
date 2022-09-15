@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 struct TokenSendWireframeContext {
     let presentationStyle: PresentationStyle
@@ -24,7 +25,7 @@ struct TokenSendWireframeContext {
 enum TokenSendWireframeDestination {
     
     case underConstructionAlert
-    case qrCodeScan(network: Web3Network, onCompletion: (String) -> Void)
+    case qrCodeScan(network: Network, onCompletion: (String) -> Void)
     case selectToken(
         selectedToken: Web3Token,
         onCompletion: (Web3Token) -> Void
@@ -97,13 +98,9 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
             ).present()
             
         case let .qrCodeScan(network, onCompletion):
-            let wireframe = qrCodeScanWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
-                context: .init(
-                    presentationStyle: .push,
-                    type: .network(network),
-                    onCompletion: onCompletion
-                )
+            let wireframe = qrCodeScanWireframeFactory.make(
+                navigationController,
+                context: .init(type: .network(network), onCompletion: onCompletion)
             )
             wireframe.present()
             

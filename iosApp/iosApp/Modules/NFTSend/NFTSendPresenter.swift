@@ -92,7 +92,7 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
             let onQRCodeScanned = makeOnQRCodeScanned()
             wireframe.navigate(
                 to: .qrCodeScan(
-                    network: context.network,
+                    network: context.network.toNetwork(),
                     onCompletion: onQRCodeScanned
                 )
             )

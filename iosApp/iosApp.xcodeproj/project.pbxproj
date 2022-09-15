@@ -99,7 +99,6 @@
 		1C54DC152862351500E378F6 /* QRCodeScanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC142862351500E378F6 /* QRCodeScanViewModel.swift */; };
 		1C54DC172862351D00E378F6 /* QRCodeScanWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC162862351D00E378F6 /* QRCodeScanWireframe.swift */; };
 		1C54DC192862352200E378F6 /* QRCodeScanWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC182862352200E378F6 /* QRCodeScanWireframeFactory.swift */; };
-		1C54DC1B2862352800E378F6 /* QRCodeScanWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC1A2862352800E378F6 /* QRCodeScanWireframeFactoryAssembler.swift */; };
 		1C54DC1D2862354C00E378F6 /* QRCodeScan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */; };
 		1C54DC1F2862373C00E378F6 /* QRCodeScanInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC1E2862373C00E378F6 /* QRCodeScanInteractor.swift */; };
 		1C54DC2A2868193300E378F6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC292868193300E378F6 /* Theme.swift */; };
@@ -700,7 +699,6 @@
 		1C54DC142862351500E378F6 /* QRCodeScanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanViewModel.swift; sourceTree = "<group>"; };
 		1C54DC162862351D00E378F6 /* QRCodeScanWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanWireframe.swift; sourceTree = "<group>"; };
 		1C54DC182862352200E378F6 /* QRCodeScanWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanWireframeFactory.swift; sourceTree = "<group>"; };
-		1C54DC1A2862352800E378F6 /* QRCodeScanWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QRCodeScan.storyboard; sourceTree = "<group>"; };
 		1C54DC1E2862373C00E378F6 /* QRCodeScanInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanInteractor.swift; sourceTree = "<group>"; };
 		1C54DC292868193300E378F6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -1482,7 +1480,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C54DC0F2862320200E378F6 /* QRCodeScan */ = {
+		1C54DC0F2862320200E378F6 /* QRCodeScan ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */,
@@ -1492,9 +1490,8 @@
 				1C54DC142862351500E378F6 /* QRCodeScanViewModel.swift */,
 				1C54DC162862351D00E378F6 /* QRCodeScanWireframe.swift */,
 				1C54DC182862352200E378F6 /* QRCodeScanWireframeFactory.swift */,
-				1C54DC1A2862352800E378F6 /* QRCodeScanWireframeFactoryAssembler.swift */,
 			);
-			path = QRCodeScan;
+			path = "QRCodeScan ✅";
 			sourceTree = "<group>";
 		};
 		1C54DC4228683DA900E378F6 /* Naoko */ = {
@@ -1542,7 +1539,7 @@
 				1C60C268285724D0003BE25D /* NFTsCollection */,
 				1C60C233285724D0003BE25D /* NFTsDashboard */,
 				1CDED5F9289C4C2F00DF34A7 /* NFTSend */,
-				1C54DC0F2862320200E378F6 /* QRCodeScan */,
+				1C54DC0F2862320200E378F6 /* QRCodeScan ✅ */,
 				1C60C23E285724D0003BE25D /* Root ✅ */,
 				1C60C1C8285724D0003BE25D /* Settings ✅ */,
 				1C7FC98628B60A0B00FC9175 /* ThemePicker 🟠 */,
@@ -3198,7 +3195,6 @@
 				1C7F863128D20E490073FD95 /* BigInt+Extensions.swift in Sources */,
 				1C7FC96828AAA1F300FC9175 /* Web3Feature.swift in Sources */,
 				1C54DC032860E5C100E378F6 /* NetworkPickerViewModel.swift in Sources */,
-				1C54DC1B2862352800E378F6 /* QRCodeScanWireframeFactoryAssembler.swift in Sources */,
 				D1ED7261287C1122005805CF /* TokenSendToCollectionViewCell.swift in Sources */,
 				1CDED612289C64FA00DF34A7 /* ConfirmationViewModel+SendNFT.swift in Sources */,
 				1C60C300285724D1003BE25D /* NFTsDashboardWireframe.swift in Sources */,

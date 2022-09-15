@@ -4,7 +4,6 @@
 
 import UIKit
 
-@IBDesignable
 final class ThemeGradientView: GradientView {
 
     override init(frame: CGRect) {
