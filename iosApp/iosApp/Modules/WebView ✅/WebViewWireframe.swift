@@ -6,13 +6,11 @@ import UIKit
 import SafariServices
 
 struct WebViewWireframeContext {
-    
     let url: URL
 }
 
 protocol WebViewWireframe {
-    
-    func present()
+    func show()
 }
 
 final class DefaultWebViewWireframe {
@@ -31,11 +29,9 @@ final class DefaultWebViewWireframe {
 
 extension DefaultWebViewWireframe: WebViewWireframe {
 
-    func present() {
-        
+    func show() {
         let config = SFSafariViewController.Configuration()
         config.entersReaderIfAvailable = true
-
         let vc = SFSafariViewController(url: context.url, configuration: config)
         presentingIn.present(vc, animated: true)
     }

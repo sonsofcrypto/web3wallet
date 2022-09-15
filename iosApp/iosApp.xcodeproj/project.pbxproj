@@ -398,7 +398,6 @@
 		1C7FC9A328BCC5DE00FC9175 /* MailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9A228BCC5DD00FC9175 /* MailService.swift */; };
 		1C7FC9A528BCC5E900FC9175 /* MailServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9A428BCC5E900FC9175 /* MailServiceAssembler.swift */; };
 		1C7FC9A828BCEA3400FC9175 /* WebViewWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9A728BCEA3400FC9175 /* WebViewWireframe.swift */; };
-		1C7FC9AA28BCEA3A00FC9175 /* WebViewWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9A928BCEA3A00FC9175 /* WebViewWireframeFactoryAssembler.swift */; };
 		1C7FC9B228BCEC4800FC9175 /* WebViewWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9B128BCEC4800FC9175 /* WebViewWireframeFactory.swift */; };
 		1C7FC9B628BCF5C700FC9175 /* EtherscanHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9B528BCF5C700FC9175 /* EtherscanHelper.swift */; };
 		1C7FC9B828BCF95E00FC9175 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9B728BCF95E00FC9175 /* WebViewController.swift */; };
@@ -1001,7 +1000,6 @@
 		1C7FC9A228BCC5DD00FC9175 /* MailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailService.swift; sourceTree = "<group>"; };
 		1C7FC9A428BCC5E900FC9175 /* MailServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailServiceAssembler.swift; sourceTree = "<group>"; };
 		1C7FC9A728BCEA3400FC9175 /* WebViewWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewWireframe.swift; sourceTree = "<group>"; };
-		1C7FC9A928BCEA3A00FC9175 /* WebViewWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C7FC9B128BCEC4800FC9175 /* WebViewWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewWireframeFactory.swift; sourceTree = "<group>"; };
 		1C7FC9B528BCF5C700FC9175 /* EtherscanHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanHelper.swift; sourceTree = "<group>"; };
 		1C7FC9B728BCF95E00FC9175 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -1557,7 +1555,7 @@
 				1C60C3612857C5D9003BE25D /* TokenReceive */,
 				1C9E3193287580A700DD2031 /* TokenSend */,
 				1C671FEC287FDF6000C5F044 /* TokenSwap */,
-				1C7FC9A628BCE94B00FC9175 /* WebView */,
+				1C7FC9A628BCE94B00FC9175 /* WebView ✅ */,
 			);
 			name = Modules;
 			path = iosApp/Modules;
@@ -2171,14 +2169,13 @@
 			path = Mail;
 			sourceTree = "<group>";
 		};
-		1C7FC9A628BCE94B00FC9175 /* WebView */ = {
+		1C7FC9A628BCE94B00FC9175 /* WebView ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1C7FC9A728BCEA3400FC9175 /* WebViewWireframe.swift */,
 				1C7FC9B128BCEC4800FC9175 /* WebViewWireframeFactory.swift */,
-				1C7FC9A928BCEA3A00FC9175 /* WebViewWireframeFactoryAssembler.swift */,
 			);
-			path = WebView;
+			path = "WebView ✅";
 			sourceTree = "<group>";
 		};
 		1C9B46F92814279F00F6C40B /* Resources */ = {
@@ -3166,7 +3163,6 @@
 				D1A12A66287D333900606FC8 /* AuthenticateWireframe.swift in Sources */,
 				D1EF5BCF287BEE92004CAD82 /* MnemonicUpdateInteractor.swift in Sources */,
 				1C60C2E7285724D0003BE25D /* DashboardViewModel.swift in Sources */,
-				1C7FC9AA28BCEA3A00FC9175 /* WebViewWireframeFactoryAssembler.swift in Sources */,
 				1C60C36D2857C605003BE25D /* TokenReceiveWireframeFactoryAssembler.swift in Sources */,
 				1C7F863728D20E490073FD95 /* UIColor+Extensions.swift in Sources */,
 				1C7F864528D20E490073FD95 /* UILabel+Extensions.swift in Sources */,

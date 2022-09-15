@@ -15,6 +15,6 @@ struct EtherscanHelper {
         factory.makeWireframe(
             presentingIn,
             context: .init(url: url)
-        ).present()
+        ).show()
     }
 }

@@ -12,8 +12,7 @@ protocol WebViewWireframeFactory {
     ) -> WebViewWireframe
 }
 
-final class DefaultWebViewWireframeFactory {
-}
+final class DefaultWebViewWireframeFactory {}
 
 extension DefaultWebViewWireframeFactory: WebViewWireframeFactory {
 
@@ -21,10 +20,20 @@ extension DefaultWebViewWireframeFactory: WebViewWireframeFactory {
         _ presentingIn: UIViewController,
         context: WebViewWireframeContext
     ) -> WebViewWireframe {
-        
         DefaultWebViewWireframe(
             presentingIn: presentingIn,
             context: context
         )
+    }
+}
+
+// MARK: Assembler
+
+final class WebViewWireframeFactoryAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> WebViewWireframeFactory in
+            DefaultWebViewWireframeFactory()
+        }
     }
 }

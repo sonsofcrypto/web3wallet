@@ -51,6 +51,7 @@ extension DefaultTokenAddWireframeFactory: TokenAddWireframeFactory {
 // MARK: Assembler
 
 final class TokenAddWireframeFactoryAssembler: AssemblerComponent {
+    
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .instance) { resolver -> TokenAddWireframeFactory in
             DefaultTokenAddWireframeFactory(
