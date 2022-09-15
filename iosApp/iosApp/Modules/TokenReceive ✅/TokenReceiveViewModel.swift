@@ -5,9 +5,11 @@
 import Foundation
 
 struct TokenReceiveViewModel {
-    
     let title: String
     let content: Content
+}
+
+extension TokenReceiveViewModel {
     
     enum Content {
         case loading
@@ -19,7 +21,6 @@ struct TokenReceiveViewModel {
 extension TokenReceiveViewModel {
     
     struct Item {
-        
         let name: String
         let symbol: String
         let address: String
@@ -30,7 +31,6 @@ extension TokenReceiveViewModel {
 extension TokenReceiveViewModel {
 
     struct Error {
-        
         let title: String
         let body: String
         let actions: [String]
@@ -38,7 +38,6 @@ extension TokenReceiveViewModel {
 }
 
 extension TokenReceiveViewModel {
-
     var data: TokenReceiveViewModel.Item? {
         switch content {
         case let .loaded(item):

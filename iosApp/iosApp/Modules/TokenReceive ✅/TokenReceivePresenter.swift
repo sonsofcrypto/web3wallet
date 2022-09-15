@@ -5,18 +5,15 @@
 import Foundation
 
 enum TokenReceivePresenterEvent {
-
     case dismiss
 }
 
 protocol TokenReceivePresenter {
-
     func present()
     func handle(_ event: TokenReceivePresenterEvent)
 }
 
 final class DefaultTokenReceivePresenter {
-
     private weak var view: TokenReceiveView?
     private let interactor: TokenReceiveInteractor
     private let wireframe: TokenReceiveWireframe
@@ -40,15 +37,17 @@ final class DefaultTokenReceivePresenter {
 extension DefaultTokenReceivePresenter: TokenReceivePresenter {
 
     func present() {
-        
         view?.update(
             with: .init(
-                title: Localized("tokenReceive.title.receive", arg: context.web3Token.symbol),
+                title: Localized("tokenReceive.title.receive", arg: context.currency.symbol),
                 content: .loaded(
                     .init(
                         name: Localized("tokenReceive.qrcode.name"),
-                        symbol: context.web3Token.symbol,
-                        address: interactor.receivingAddress(for: context.web3Token),
+                        symbol: context.currency.symbol,
+                        address: interactor.receivingAddress(
+                            network: context.network,
+                            currency: context.currency
+                        ),
                         disclaimer: disclaimer
                     )
                 )
@@ -57,21 +56,16 @@ extension DefaultTokenReceivePresenter: TokenReceivePresenter {
     }
 
     func handle(_ event: TokenReceivePresenterEvent) {
-
         switch event {
-            
         case .dismiss:
-            
             wireframe.dismiss()
         }
     }
 }
 
 private extension DefaultTokenReceivePresenter {
-    
     var disclaimer: String {
-        
-        let arg = "\(context.web3Token.network.name.capitalized) (\(context.web3Token.symbol))"
+        let arg = "\(context.network.name.capitalized) (\(context.currency.symbol))"
         return Localized("tokenReceive.disclaimer", arg: arg)
     }
 }

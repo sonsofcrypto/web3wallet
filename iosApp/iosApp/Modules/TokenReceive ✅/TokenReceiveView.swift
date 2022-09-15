@@ -4,10 +4,13 @@
 
 import UIKit
 
-protocol TokenReceiveView: AnyObject {
+// MARK: TokenReceiveView
 
+protocol TokenReceiveView: AnyObject {
     func update(with viewModel: TokenReceiveViewModel)
 }
+
+// MARK: TokenReceiveViewController
 
 final class TokenReceiveViewController: BaseViewController {
 
@@ -27,30 +30,22 @@ final class TokenReceiveViewController: BaseViewController {
     private lazy var filter = CIFilter(name: "CIQRCodeGenerator")
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         presenter?.present()
     }
-
 }
 
 extension TokenReceiveViewController: TokenReceiveView {
 
     func update(with viewModel: TokenReceiveViewModel) {
-
         self.viewModel = viewModel
-        
         configureNavigationBar()
-        
         switch viewModel.content {
-            
         case let .loaded(item):
             nameLabel.text = item.name
             qrCodePngImageView.image = makeQrCodePngImage(for: item.address)
             addressLabel.text = item.address
             disclaimerLabel.text = item.disclaimer
-            
         case .loading, .error:
             break
         }
@@ -60,29 +55,22 @@ extension TokenReceiveViewController: TokenReceiveView {
 private extension TokenReceiveViewController {
     
     func configureNavigationBar() {
-        
         title = viewModel?.title
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: "chevron.left".assetImage,
             style: .plain,
             target: self,
             action: #selector(navBarLeftActionTapped)
         )
-        
         cardView.backgroundColor = Theme.colour.cellBackground
         cardView.layer.cornerRadius = Theme.constant.cornerRadius
         cardView.add(
             .targetAction(.init(target: self, selector: #selector(onCopyAction)))
         )
-        
         nameLabel.apply(style: .body)
-        
         addressLabel.apply(style: .body)
         addressLabel.textAlignment = .center
-
         disclaimerLabel.apply(style: .body)
-        
         copyButton.update(
             with: .init(
                 title: Localized("tokenReceive.action.copy"),
@@ -90,7 +78,6 @@ private extension TokenReceiveViewController {
                 onTap: makeCopyAction()
             )
         )
-
         shareButton.update(
             with: .init(
                 title: Localized("tokenReceive.action.share"),
@@ -98,7 +85,6 @@ private extension TokenReceiveViewController {
                 onTap: makeShareAction()
             )
         )
-        
         let spacingBetweenButtons = Theme.constant.padding * CGFloat(5)
         // TODO: Smell
         let windowWidth = UIApplication.shared.keyWindow?.frame.width ?? 0
@@ -109,7 +95,6 @@ private extension TokenReceiveViewController {
     }
     
     @objc func navBarLeftActionTapped() {
-        
         presenter.handle(.dismiss)
     }
 }
@@ -117,34 +102,25 @@ private extension TokenReceiveViewController {
 private extension TokenReceiveViewController {
     
     func makeCopyAction() -> (() -> Void) {
-        
-        {
-            [weak self] in
-            guard let self = self else { return }
-            self.onCopyAction()
-        }
+        { [weak self] in self?.onCopyAction() }
     }
     
     @objc func onCopyAction() {
-        
         UIPasteboard.general.string = self.viewModel?.data?.address
         view.presentToastAlert(with: Localized("tokenReceive.action.copy.toast"))
     }
 
     func makeShareAction() -> (() -> Void) {
-        
         {
             [weak self] in
             guard let self = self else { return }
-            
             guard
-                let image = self.qrCodePngImageView.image,
+                //let image = self.qrCodePngImageView.image,
                 let data = self.viewModel?.data
             else { return }
-            
             ShareFactoryHelper().share(
                 items: [
-                    image,
+                    //image,
                     Localized("tokenReceive.action.share.address", arg: data.symbol) + " " + data.address,
                     
                 ],
@@ -152,23 +128,16 @@ private extension TokenReceiveViewController {
             )
         }
     }
-}
-
-private extension TokenReceiveViewController {
     
     func makeQrCodePngImage(for address: String) -> UIImage? {
-        
         guard
             let filter = filter,
             let data = address.data(using: .isoLatin1, allowLossyConversion: false)
         else {
             return nil
         }
-        
         filter.setValue(data, forKey: "inputMessage")
-        
         guard let ciImage = filter.outputImage else { return nil }
-        
         return UIImage(ciImage: ciImage, scale: 2.0, orientation: .up)
     }
 }

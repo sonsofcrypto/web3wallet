@@ -286,7 +286,6 @@
 		1C60C3672857C5F0003BE25D /* TokenReceiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3662857C5F0003BE25D /* TokenReceiveView.swift */; };
 		1C60C3692857C5F8003BE25D /* TokenReceiveWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3682857C5F8003BE25D /* TokenReceiveWireframe.swift */; };
 		1C60C36B2857C5FE003BE25D /* TokenReceiveWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C36A2857C5FE003BE25D /* TokenReceiveWireframeFactory.swift */; };
-		1C60C36D2857C605003BE25D /* TokenReceiveWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C36C2857C605003BE25D /* TokenReceiveWireframeFactoryAssembler.swift */; };
 		1C60C36F2857C613003BE25D /* TokenReceiveInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C36E2857C613003BE25D /* TokenReceiveInteractor.swift */; };
 		1C60C3712857CEB5003BE25D /* TokenReceive.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C60C3702857CEB5003BE25D /* TokenReceive.storyboard */; };
 		1C60C3772858634A003BE25D /* DefaultWeb3ServiceLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3762858634A003BE25D /* DefaultWeb3ServiceLegacy.swift */; };
@@ -888,7 +887,6 @@
 		1C60C3662857C5F0003BE25D /* TokenReceiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReceiveView.swift; sourceTree = "<group>"; };
 		1C60C3682857C5F8003BE25D /* TokenReceiveWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReceiveWireframe.swift; sourceTree = "<group>"; };
 		1C60C36A2857C5FE003BE25D /* TokenReceiveWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReceiveWireframeFactory.swift; sourceTree = "<group>"; };
-		1C60C36C2857C605003BE25D /* TokenReceiveWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReceiveWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C60C36E2857C613003BE25D /* TokenReceiveInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReceiveInteractor.swift; sourceTree = "<group>"; };
 		1C60C3702857CEB5003BE25D /* TokenReceive.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TokenReceive.storyboard; sourceTree = "<group>"; };
 		1C60C3762858634A003BE25D /* DefaultWeb3ServiceLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultWeb3ServiceLegacy.swift; sourceTree = "<group>"; };
@@ -1552,7 +1550,7 @@
 				1C7FC98628B60A0B00FC9175 /* ThemePicker */,
 				1C54DBE1285E82FC00E378F6 /* TokenAdd ✅ */,
 				1C60C1D5285724D0003BE25D /* TokenPicker */,
-				1C60C3612857C5D9003BE25D /* TokenReceive */,
+				1C60C3612857C5D9003BE25D /* TokenReceive ✅ */,
 				1C9E3193287580A700DD2031 /* TokenSend */,
 				1C671FEC287FDF6000C5F044 /* TokenSwap */,
 				1C7FC9A628BCE94B00FC9175 /* WebView ✅ */,
@@ -1954,7 +1952,7 @@
 			path = Degen;
 			sourceTree = "<group>";
 		};
-		1C60C3612857C5D9003BE25D /* TokenReceive */ = {
+		1C60C3612857C5D9003BE25D /* TokenReceive ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C3702857CEB5003BE25D /* TokenReceive.storyboard */,
@@ -1964,9 +1962,8 @@
 				1C60C3642857C5EC003BE25D /* TokenReceiveViewModel.swift */,
 				1C60C3682857C5F8003BE25D /* TokenReceiveWireframe.swift */,
 				1C60C36A2857C5FE003BE25D /* TokenReceiveWireframeFactory.swift */,
-				1C60C36C2857C605003BE25D /* TokenReceiveWireframeFactoryAssembler.swift */,
 			);
-			path = TokenReceive;
+			path = "TokenReceive ✅";
 			sourceTree = "<group>";
 		};
 		1C60C37C2859CC19003BE25D /* Helpers */ = {
@@ -3163,7 +3160,6 @@
 				D1A12A66287D333900606FC8 /* AuthenticateWireframe.swift in Sources */,
 				D1EF5BCF287BEE92004CAD82 /* MnemonicUpdateInteractor.swift in Sources */,
 				1C60C2E7285724D0003BE25D /* DashboardViewModel.swift in Sources */,
-				1C60C36D2857C605003BE25D /* TokenReceiveWireframeFactoryAssembler.swift in Sources */,
 				1C7F863728D20E490073FD95 /* UIColor+Extensions.swift in Sources */,
 				1C7F864528D20E490073FD95 /* UILabel+Extensions.swift in Sources */,
 				1C60C2B0285724D0003BE25D /* TokenPickerSectionCell.swift in Sources */,

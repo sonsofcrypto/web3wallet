@@ -322,13 +322,13 @@ private extension DefaultDeepLinkHandler {
         with token: Web3Token
     ) {
         guard let dashboardNavController = dashboardNavController else { return }
-        let service: NetworksService = ServiceDirectory.assembler.resolve()
-        guard let wallet = service.wallet(network: token.network.toNetwork()) else { return }
-        
         let factory: AccountWireframeFactory = ServiceDirectory.assembler.resolve()
         factory.make(
             dashboardNavController,
-            context: .init(wallet: wallet, currency: token.toCurrency())
+            context: .init(
+                network: token.network.toNetwork(),
+                currency: token.toCurrency()
+            )
         ).present()
     }
     

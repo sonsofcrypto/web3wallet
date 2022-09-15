@@ -10,7 +10,7 @@ struct WebViewWireframeContext {
 }
 
 protocol WebViewWireframe {
-    func show()
+    func present()
 }
 
 final class DefaultWebViewWireframe {
@@ -29,7 +29,7 @@ final class DefaultWebViewWireframe {
 
 extension DefaultWebViewWireframe: WebViewWireframe {
 
-    func show() {
+    func present() {
         let config = SFSafariViewController.Configuration()
         config.entersReaderIfAvailable = true
         let vc = SFSafariViewController(url: context.url, configuration: config)

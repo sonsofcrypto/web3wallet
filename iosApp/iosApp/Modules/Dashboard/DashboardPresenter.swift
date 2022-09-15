@@ -84,9 +84,7 @@ extension DefaultDashboardPresenter: DashboardPresenter {
         case let .didSelectWallet(networkIdx, currencyIdx):
             let network = interactor.enabledNetworks()[networkIdx]
             let currency = interactor.currencies(for: network)[currencyIdx]
-            if let wallet = interactor.wallet(for: network) {
-                wireframe.navigate(to: .wallet(wallet: wallet, currency: currency))
-            }
+            wireframe.navigate(to: .wallet(network: network, currency: currency))
 
         case .walletConnectionSettingsAction:
             wireframe.navigate(to: .keyStoreNetworkSettings)

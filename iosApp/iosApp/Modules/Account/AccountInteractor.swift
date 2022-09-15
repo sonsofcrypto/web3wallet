@@ -29,7 +29,6 @@ struct AccountInteractorTransaction {
 }
 
 final class DefaultAccountInteractor {
-    private let wallet: Wallet
     private (set) var network: Network
     private let _currency: Currency
     private let networksService: NetworksService
@@ -40,15 +39,14 @@ final class DefaultAccountInteractor {
     private(set) var loadingTransactions: Bool = false
 
     init(
-        wallet: Wallet,
+        network: Network,
         currency: Currency,
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
         transactionService: EtherscanService
     ) {
-        self.wallet = wallet
-        self.network = wallet.network() ?? Network.ethereum()
+        self.network = network
         self._currency = currency
         self.networksService = networksService
         self.currencyStoreService = currencyStoreService

@@ -6,7 +6,7 @@ import UIKit
 import web3lib
 
 struct AccountWireframeContext {
-    let wallet: Wallet
+    let network: Network
     let currency: Currency
 }
 
@@ -80,9 +80,9 @@ extension DefaultAccountWireframe: AccountWireframe {
 
         switch destination {
         case .receive:
-            tokenReceiveWireframeFactory.makeWireframe(
-                presentingIn: vc,
-                context: .init(presentationStyle: .present, web3Token: web3Token(context))
+            tokenReceiveWireframeFactory.make(
+                vc,
+                context: .init(network: context.network, currency: context.currency)
             ).present()
         case .send:
             tokenSendWireframeFactory.makeWireframe(
@@ -107,7 +107,7 @@ extension DefaultAccountWireframe: AccountWireframe {
         Web3Token.from(
             currency: context.currency,
             network: Web3Network.from(
-                context.wallet.network() ?? Network.ethereum(),
+                context.network,
                 isOn: true
             ),
             inWallet: true,
@@ -120,7 +120,7 @@ private extension DefaultAccountWireframe {
 
     func wireUp() -> UIViewController {
         let interactor = DefaultAccountInteractor(
-            wallet: context.wallet,
+            network: context.network,
             currency: context.currency,
             networksService: networksService,
             currencyStoreService: currencyStoreService,
@@ -135,6 +135,7 @@ private extension DefaultAccountWireframe {
             context: context
         )
         vc.presenter = presenter
+        vc.hidesBottomBarWhenPushed = true
         return NavigationController(rootViewController: vc)
     }
 }

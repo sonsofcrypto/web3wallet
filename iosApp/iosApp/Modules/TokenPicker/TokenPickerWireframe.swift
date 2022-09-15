@@ -105,7 +105,7 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
             tokenAddWireframeFactory.make(
                 navigationController,
                 context: .init(network: network.toNetwork())
-            ).show()
+            ).present()
         }
     }
     
