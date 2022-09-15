@@ -21,7 +21,7 @@ enum TokenAddWireframeDestination {
 // MARK: TokenAddWireframe
 
 protocol TokenAddWireframe {
-    func present()
+    func show()
     func navigate(to destination: TokenAddWireframeDestination)
     func dismiss()
 }
@@ -54,7 +54,7 @@ final class DefaultTokenAddWireframe {
 
 extension DefaultTokenAddWireframe: TokenAddWireframe {
     
-    func present() {
+    func show() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
