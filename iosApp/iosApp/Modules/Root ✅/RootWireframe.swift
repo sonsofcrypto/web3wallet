@@ -69,8 +69,7 @@ extension DefaultRootWireframe: RootWireframe {
     func present() {
         let vc = wireUp()
         self.vc = vc
-        
-        keyStoreWireframeFactory.makeWireframe(vc, window: nil).present()
+        keyStoreWireframeFactory.make(vc).present()
         networksWireframeFactory.makeWireframe(vc).present()
         dashboardWireframeFactory.makeWireframe(tabVc).present()
         degenWireframeFactory.makeWireframe(tabVc).present()

@@ -6,22 +6,23 @@ import UIKit
 
 final class KeyStoreCell: CollectionViewCell {
     
+    struct Handler {
+        let accessoryHandler: (() -> Void)
+    }
+    
     @IBOutlet weak var indexImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var accessoryButton: UIButton!
     @IBOutlet weak var arrowForward: UIImageView!
     
-    private var accessoryHandler: (() -> Void)? = nil
+    private var handler: Handler!
         
     override func awakeFromNib() {
         super.awakeFromNib()
-                
         titleLabel.apply(style: .title3)
-        
         subtitleLabel.apply(style: .footnote)
         subtitleLabel.textColor = Theme.colour.labelSecondary
-
         accessoryButton.addTarget(
             self,
             action: #selector(accessoryAction(_:)),
@@ -42,12 +43,10 @@ extension KeyStoreCell {
     
     func update(
         with viewModel: KeyStoreViewModel.KeyStoreItem?,
-        accessoryHandler: (()->())? = nil,
+        handler: Handler,
         index: Int
     ) -> Self {
-
-        self.accessoryHandler = accessoryHandler
-        
+        self.handler = handler
         let image = "\(index + 1).square.fill".assetImage!
         let config = UIImage.SymbolConfiguration(
             paletteColors: [
@@ -55,7 +54,6 @@ extension KeyStoreCell {
                 Theme.colour.keystoreEnumFill
             ]
         )
-
         indexImage.image = image.applyingSymbolConfiguration(config)
         titleLabel.text = viewModel?.title
         subtitleLabel.text = viewModel?.address
@@ -67,6 +65,6 @@ extension KeyStoreCell {
 private extension KeyStoreCell {
     
     @objc func accessoryAction(_ sender: UIButton) {
-        accessoryHandler?()
+        handler.accessoryHandler()
     }
 }

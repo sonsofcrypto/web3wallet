@@ -20,8 +20,8 @@ protocol KeyStorePresenter: AnyObject {
 
 final class DefaultKeyStorePresenter {
     private weak var view: KeyStoreView?
-    private let interactor: KeyStoreInteractor
     private let wireframe: KeyStoreWireframe
+    private let interactor: KeyStoreInteractor
     private let settingsService: SettingsService
 
     private var targetView: KeyStoreViewModel.TransitionTargetView = .none
@@ -32,13 +32,13 @@ final class DefaultKeyStorePresenter {
 
     init(
         view: KeyStoreView,
-        interactor: KeyStoreInteractor,
         wireframe: KeyStoreWireframe,
+        interactor: KeyStoreInteractor,
         settingsService: SettingsService
     ) {
         self.view = view
-        self.interactor = interactor
         self.wireframe = wireframe
+        self.interactor = interactor
         self.settingsService = settingsService
     }
 
@@ -79,12 +79,9 @@ private extension DefaultKeyStorePresenter {
     }
 
     func handleDidSelectAccessory(at idx: Int) {
-        
         targetView = .keyStoreItemAt(idx: idx)
         view?.updateTargetView(targetView)
-        
         let item = interactor.items[idx]
-        
         wireframe.navigate(
             to: .keyStoreItem(
                 item: item,
@@ -109,7 +106,6 @@ private extension DefaultKeyStorePresenter {
     func handleButtonAction(at idx: Int) {
         targetView = .buttonAt(idx: idx)
         view?.updateTargetView(targetView)
-
         switch buttonsViewModel.buttons[idx].type {
         case .newMnemonic:
             wireframe.navigate(to: .newMnemonic { [weak self] keyStoreItem in
@@ -131,10 +127,7 @@ private extension DefaultKeyStorePresenter {
     }
 
     func handleDidChangeButtonsState(_ sheetMode: ButtonSheetViewModel.SheetMode) {
-        guard buttonsViewModel.sheetMode != sheetMode else {
-            return
-        }
-
+        guard buttonsViewModel.sheetMode != sheetMode else { return }
         buttonsViewModel = .init(
             buttons: sheetMode.isCompact()
                 ? ButtonSheetViewModel.compactButtons()
@@ -149,9 +142,7 @@ private extension DefaultKeyStorePresenter {
         if let idx = interactor.items.firstIndex(of: keyStoreItem) {
             targetView = .keyStoreItemAt(idx: idx)
         }
-
         updateView()
-
         if interactor.items.count == 1 {
             // HACK: This is non ideal, but since we dont have `viewDidAppear`
             // simply animate to dashboard after first wallet was created
@@ -168,18 +159,12 @@ private extension DefaultKeyStorePresenter {
         }
         view?.update(with: viewModel())
     }
-
-    func handleFirstSeedCreation(_ keyStoreItem: KeyStoreItem) {
-
-    }
 }
 
 private extension DefaultKeyStorePresenter {
 
     func viewModel(_ state: KeyStoreViewModel.State = .loaded) -> KeyStoreViewModel {
-        
-        
-        return .init(
+        .init(
             isEmpty: interactor.items.isEmpty,
             state: state,
             items: interactor.items.map {
@@ -189,7 +174,7 @@ private extension DefaultKeyStorePresenter {
                 )
             },
             selectedIdxs: [
-                makeSelectedIdxs()
+                selectedIdxs()
             ].compactMap{ $0 },
             buttons: buttonsViewModel,
             targetView: targetView,
@@ -197,25 +182,15 @@ private extension DefaultKeyStorePresenter {
         )
     }
     
-    func makeSelectedIdxs() -> Int? {
-        
-        if let index = interactor.items.firstIndex(of: interactor.selected) {
-            
-            return index
-        }
-        
+    func selectedIdxs() -> Int? {
+        if let index = interactor.items.firstIndex(of: interactor.selected) { return index }
         // If we have items and the keystore item could not tell us which one is selected
         // we default to 0, this should not happen though!
-        guard interactor.items.count > 0 else {
-            
-            return nil
-        }
-        
+        guard interactor.items.count > 0 else { return nil }
         return 0
     }
 
     func viewModel(from error: Error) -> KeyStoreViewModel {
-        
         viewModel(
             .error(
                 error: KeyStoreViewModel.Error(
@@ -231,13 +206,11 @@ private extension DefaultKeyStorePresenter {
 private extension Array where Element == KeyStoreItem {
     
     func firstIndex(of keyStoreItem: KeyStoreItem?) -> Int? {
-        
         firstIndex(where: { $0.uuid == keyStoreItem?.uuid })
     }
 }
 
 private extension KeyStoreItem {
-    
     var addressFormatted: String? {
         guard let address = addresses[derivationPath] else { return nil }
         return Formatter.address.string(
@@ -245,7 +218,5 @@ private extension KeyStoreItem {
             digits: 10,
             for: .ethereum()
         )
-        
     }
-    
 }

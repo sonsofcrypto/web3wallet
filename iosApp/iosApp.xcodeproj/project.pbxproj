@@ -381,7 +381,6 @@
 		1C7FC97728ACC9F400FC9175 /* Web3FeatureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97628ACC9F400FC9175 /* Web3FeatureData.swift */; };
 		1C7FC97928AD2E7D00FC9175 /* FeatureServiceRunnerAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97828AD2E7D00FC9175 /* FeatureServiceRunnerAssembler.swift */; };
 		1C7FC97B28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97A28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift */; };
-		1C7FC97D28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97C28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift */; };
 		1C7FC98128AFB32600FC9175 /* PasswordValidatorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98028AFB32600FC9175 /* PasswordValidatorHelper.swift */; };
 		1C7FC98328B5272500FC9175 /* ConfirmationCultCastVoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98228B5272500FC9175 /* ConfirmationCultCastVoteView.swift */; };
 		1C7FC98528B5274000FC9175 /* ConfirmationViewModel+CultCastVote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98428B5274000FC9175 /* ConfirmationViewModel+CultCastVote.swift */; };
@@ -980,7 +979,6 @@
 		1C7FC97628ACC9F400FC9175 /* Web3FeatureData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3FeatureData.swift; sourceTree = "<group>"; };
 		1C7FC97828AD2E7D00FC9175 /* FeatureServiceRunnerAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureServiceRunnerAssembler.swift; sourceTree = "<group>"; };
 		1C7FC97A28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateDeleteCell.swift; sourceTree = "<group>"; };
-		1C7FC97C28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStoreWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C7FC98028AFB32600FC9175 /* PasswordValidatorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordValidatorHelper.swift; sourceTree = "<group>"; };
 		1C7FC98228B5272500FC9175 /* ConfirmationCultCastVoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationCultCastVoteView.swift; sourceTree = "<group>"; };
 		1C7FC98428B5274000FC9175 /* ConfirmationViewModel+CultCastVote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmationViewModel+CultCastVote.swift"; sourceTree = "<group>"; };
@@ -1527,7 +1525,7 @@
 				1C60C272285724D0003BE25D /* Degen */,
 				1CDED5D3289700DA00DF34A7 /* Feature */,
 				1C0643D22892FC9B00643C15 /* Features */,
-				1C60C1E1285724D0003BE25D /* KeyStore */,
+				1C60C1E1285724D0003BE25D /* KeyStore ✅ */,
 				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
 				D1976B01287EFAE10063FC9C /* MnemonicImport */,
 				1C60C202285724D0003BE25D /* MnemonicNew */,
@@ -1606,7 +1604,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C60C1E1285724D0003BE25D /* KeyStore */ = {
+		1C60C1E1285724D0003BE25D /* KeyStore ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1CAC55A7286E119500CCB2B6 /* KeyStore.storyboard */,
@@ -1616,11 +1614,10 @@
 				1C60C1E5285724D0003BE25D /* KeyStoreViewModel.swift */,
 				1C60C1EB285724D0003BE25D /* KeyStoreWireframe.swift */,
 				1C60C1E3285724D0003BE25D /* KeyStoreWireframeFactory.swift */,
-				1C7FC97C28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift */,
 				1C60C1E6285724D0003BE25D /* ButtonSheetView */,
 				1C0643CD2892EA1800643C15 /* Cells */,
 			);
-			path = KeyStore;
+			path = "KeyStore ✅";
 			sourceTree = "<group>";
 		};
 		1C60C1E6285724D0003BE25D /* ButtonSheetView */ = {
@@ -3020,7 +3017,6 @@
 				1C67202128870FE100C5F044 /* ConfirmationWireframeFactory.swift in Sources */,
 				1C60C2EF285724D0003BE25D /* NetworksWireframe.swift in Sources */,
 				D1EF5BC7287BEE92004CAD82 /* MnemonicUpdateCell.swift in Sources */,
-				1C7FC97D28AE97DB00FC9175 /* KeyStoreWireframeFactoryAssembler.swift in Sources */,
 				1C60C2EC285724D0003BE25D /* NetworksView.swift in Sources */,
 				1C60C3652857C5EC003BE25D /* TokenReceiveViewModel.swift in Sources */,
 				1C60C303285724D1003BE25D /* NFTsDashboardView+NFTs.swift in Sources */,
