@@ -4,37 +4,49 @@
 
 import UIKit
 
-protocol SettingsWireframeFactory {
+// MARK: SettingsWireframeFactory
 
-    func makeWireframe(
-        _ parent: UIViewController,
+protocol SettingsWireframeFactory {
+    func make(
+        _ parent: UIViewController?,
         context: SettingsWireframeContext
     ) -> SettingsWireframe
 }
 
-final class DefaultSettingsWireframeFactory {
+// MARK: DefaultSettingsWireframeFactory
 
+final class DefaultSettingsWireframeFactory {
     private let settingsService: SettingsService
 
-    init(
-        settingsService: SettingsService
-    ) {
-        
+    init(settingsService: SettingsService) {
         self.settingsService = settingsService
     }
 }
 
 extension DefaultSettingsWireframeFactory: SettingsWireframeFactory {
 
-    func makeWireframe(
-        _ parent: UIViewController,
+    func make(
+        _ parent: UIViewController?,
         context: SettingsWireframeContext
     ) -> SettingsWireframe {
-        
         DefaultSettingsWireframe(
-            parent: parent,
+            parent,
             context: context,
             settingsService: settingsService
         )
     }
 }
+
+// MARK: Assembler
+
+final class SettingsWireframeFactoryAssembler: AssemblerComponent {
+
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> SettingsWireframeFactory in
+            DefaultSettingsWireframeFactory(
+                settingsService: resolver.resolve()
+            )
+        }
+    }
+}
+

@@ -278,13 +278,11 @@ private extension DefaultDeepLinkHandler {
 private extension DefaultDeepLinkHandler {
     
     func openThemeMenu() {
-        
         guard let settingsVC = settingsVC else { return }
         guard settingsVC.title != Localized("settings.theme") else { return }
         let settingsService: SettingsService = ServiceDirectory.assembler.resolve()
-        
         let wireframe: SettingsWireframeFactory = ServiceDirectory.assembler.resolve()
-        wireframe.makeWireframe(
+        wireframe.make(
             settingsVC,
             context: .init(
                 title: Localized("settings.theme"),

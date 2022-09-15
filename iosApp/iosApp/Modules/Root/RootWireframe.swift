@@ -75,7 +75,7 @@ extension DefaultRootWireframe: RootWireframe {
         
         presentAppsTabIfNeeded()
         
-        settingsWireframeFactory.makeWireframe(
+        settingsWireframeFactory.make(
             tabVc,
             context: .default
         ).present()
