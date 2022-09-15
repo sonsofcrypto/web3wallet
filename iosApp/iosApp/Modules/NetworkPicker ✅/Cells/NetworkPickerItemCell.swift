@@ -11,12 +11,9 @@ final class NetworkPickerItemCell: UICollectionViewCell {
     @IBOutlet weak var widthLayoutConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         iconImageView.layer.cornerRadius = iconImageView.frame.size.width * 0.5
         iconImageView.backgroundColor = Theme.colour.labelPrimary
-                        
         nameLabel.apply(style: .body)
         nameLabel.textColor = Theme.colour.labelPrimary
     }
@@ -25,17 +22,13 @@ final class NetworkPickerItemCell: UICollectionViewCell {
         with viewModel: NetworkPickerViewModel.Item,
         and width: CGFloat
     ) {
-
-        if let image = viewModel.image {
-            
+        if let image = viewModel.imageName?.assetImage {
             iconImageView.isHidden = false
             iconImageView.image = image
         } else {
-            
             iconImageView.isHidden = true
         }
         nameLabel.text = viewModel.name
-
         widthLayoutConstraint.constant = width
     }
 }

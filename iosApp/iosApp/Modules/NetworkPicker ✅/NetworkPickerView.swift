@@ -5,14 +5,12 @@
 import UIKit
 
 protocol NetworkPickerView: AnyObject {
-
     func update(with viewModel: NetworkPickerViewModel)
 }
 
 final class NetworkPickerViewController: BaseViewController {
     
     enum CollectionTag: Int {
-        
         case filters = 1
         case items = 2
     }
@@ -28,20 +26,9 @@ final class NetworkPickerViewController: BaseViewController {
     
     private var searchTerm = ""
 
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         configureUI()
-        
         presenter?.present()
     }
 }
@@ -49,7 +36,6 @@ final class NetworkPickerViewController: BaseViewController {
 extension NetworkPickerViewController {
     
     @IBAction func clearSearchInputText() {
-        
         searchTextField.text = ""
         presenter.handle(.search(searchTerm: ""))
     }
@@ -58,13 +44,9 @@ extension NetworkPickerViewController {
 extension NetworkPickerViewController: NetworkPickerView {
 
     func update(with viewModel: NetworkPickerViewModel) {
-
         self.viewModel = viewModel
-        
         title = viewModel.title
-        
         clearSearchButton.isHidden = searchTextField.text?.isEmpty ?? true
-        
         itemsCollectionView.reloadData()
     }
 }
@@ -72,24 +54,10 @@ extension NetworkPickerViewController: NetworkPickerView {
 private extension NetworkPickerViewController {
         
     func configureUI() {
-        
-        (view as? ThemeGradientView)?.colors = [
-            Theme.colour.backgroundBaseSecondary,
-            Theme.colour.backgroundBasePrimary
-        ]
-        
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(
-//            imageName: "nav_bar_back",
-//            target: self,
-//            selector: #selector(navBarLeftActionTapped)
-//        )
-        
         searchTextFieldBox.backgroundColor = Theme.colour.backgroundBasePrimary
         searchTextFieldBox.layer.cornerRadius = 16
-        
         searchTextField.text = nil
         searchTextField.delegate = self
-        
         clearSearchButton.isHidden = true
     }
 }
@@ -100,16 +68,13 @@ extension NetworkPickerViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        
         viewModel?.items.count ?? 0
     }
     
-
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        
         collectionViewCell(at: indexPath, for: collectionView)
     }
 }
@@ -120,12 +85,10 @@ extension NetworkPickerViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-       
         itemSelectedAt(indexPath: indexPath)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         dismissKeyboard()
     }
 }
@@ -137,7 +100,6 @@ extension NetworkPickerViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-                
         .init(width: collectionView.frame.width, height: 56)
     }
 }
@@ -145,7 +107,6 @@ extension NetworkPickerViewController: UICollectionViewDelegateFlowLayout {
 extension NetworkPickerViewController: UITextFieldDelegate {
         
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        
         presenter.handle(.search(searchTerm: textField.text ?? ""))
     }
 }
@@ -153,7 +114,6 @@ extension NetworkPickerViewController: UITextFieldDelegate {
 private extension NetworkPickerViewController {
         
     func itemSelectedAt(indexPath: IndexPath) {
-        
         guard let network = viewModel?.items[indexPath.item] else { return }
         presenter.handle(.selectItem(network))
     }
@@ -162,7 +122,6 @@ private extension NetworkPickerViewController {
         at indexPath: IndexPath,
         for collectionView: UICollectionView
     ) -> UICollectionViewCell {
-        
         itemCollectionViewCell(at: indexPath, for: collectionView)
     }
     
@@ -170,11 +129,9 @@ private extension NetworkPickerViewController {
         at indexPath: IndexPath,
         for collectionView: UICollectionView
     ) -> UICollectionViewCell {
-        
         guard let network = viewModel?.items[indexPath.item] else {
             fatalError()
         }
-        
         let cell = collectionView.dequeue(
             NetworkPickerItemCell.self,
             for: indexPath
@@ -187,7 +144,6 @@ private extension NetworkPickerViewController {
     }
     
     @objc func dismissKeyboard() {
-        
         searchTextField.resignFirstResponder()
     }
 }

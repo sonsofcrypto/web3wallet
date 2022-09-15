@@ -5,13 +5,11 @@
 import Foundation
 
 struct NetworkPickerViewModel {
-    
     let title: String
     let items: [Item]
     
     struct Item {
-        
-        let image: UIImage?
+        let imageName: String?
         let name: String
     }
 }

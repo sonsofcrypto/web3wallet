@@ -5,13 +5,13 @@
 import UIKit
 import AVFoundation
 
-// MARK: QRCodeScanView
+// MARK: - QRCodeScanView
 
 protocol QRCodeScanView: AnyObject {
     func update(with viewModel: QRCodeScanViewModel)
 }
 
-// MARK: QRCodeScanViewController
+// MARK: - QRCodeScanViewController
 
 final class QRCodeScanViewController: BaseViewController {
     

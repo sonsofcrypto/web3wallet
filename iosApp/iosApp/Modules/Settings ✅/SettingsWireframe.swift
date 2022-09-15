@@ -4,21 +4,21 @@
 
 import UIKit
 
-// MARK: SettingsWireframeDestination
+// MARK: - SettingsWireframeDestination
 
 enum SettingsWireframeDestination {
     case dismiss
     case settings(context: SettingsWireframeContext)
 }
 
-// MARK: SettingsWireframe
+// MARK: - SettingsWireframe
 
 protocol SettingsWireframe {
     func present()
     func navigate(to destination: SettingsWireframeDestination)
 }
 
-// MARK: DefaultSettingsWireframe
+// MARK: - DefaultSettingsWireframe
 
 final class DefaultSettingsWireframe {
     private weak var parent: UIViewController?

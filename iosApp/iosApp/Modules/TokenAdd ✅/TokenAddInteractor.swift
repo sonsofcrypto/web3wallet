@@ -5,7 +5,7 @@
 import Foundation
 import web3lib
 
-// MARK: TokenAddInteractorNewToken
+// MARK: - TokenAddInteractorNewToken
 
 struct TokenAddInteractorNewToken {
     let address: String
@@ -14,7 +14,7 @@ struct TokenAddInteractorNewToken {
     let decimals: Int
 }
 
-// MARK: TokenAddInteractor
+// MARK: - TokenAddInteractor
 
 protocol TokenAddInteractor: AnyObject {
     func addToken(
@@ -24,7 +24,7 @@ protocol TokenAddInteractor: AnyObject {
     )
 }
 
-// MARK: DefaultTokenAddInteractor
+// MARK: - DefaultTokenAddInteractor
 
 final class DefaultTokenAddInteractor {
     private let currencyStoreService: CurrencyStoreService

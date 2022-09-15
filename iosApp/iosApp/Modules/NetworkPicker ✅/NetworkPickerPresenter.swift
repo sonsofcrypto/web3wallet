@@ -3,16 +3,15 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 enum NetworkPickerPresenterEvent {
-
     case search(searchTerm: String)
     case selectItem(NetworkPickerViewModel.Item)
     case dismiss
 }
 
 protocol NetworkPickerPresenter {
-
     func present()
     func handle(_ event: NetworkPickerPresenterEvent)
 }
@@ -20,23 +19,23 @@ protocol NetworkPickerPresenter {
 final class DefaultNetworkPickerPresenter {
 
     private weak var view: NetworkPickerView?
-    private let interactor: NetworkPickerInteractor
     private let wireframe: NetworkPickerWireframe
+    private let interactor: NetworkPickerInteractor
     private let context: NetworkPickerWireframeContext
     
     private var searchTerm: String = ""
-    private var networks = [Web3Network]()
+    private var networks = [Network]()
     private var itemsDisplayed = [NetworkPickerViewModel.Item]()
 
     init(
         view: NetworkPickerView,
-        interactor: NetworkPickerInteractor,
         wireframe: NetworkPickerWireframe,
+        interactor: NetworkPickerInteractor,
         context: NetworkPickerWireframeContext
     ) {
         self.view = view
-        self.interactor = interactor
         self.wireframe = wireframe
+        self.interactor = interactor
         self.context = context
     }
 }
@@ -44,27 +43,19 @@ final class DefaultNetworkPickerPresenter {
 extension DefaultNetworkPickerPresenter: NetworkPickerPresenter {
 
     func present() {
-
         refreshNetworks()
         refreshData()
     }
 
     func handle(_ event: NetworkPickerPresenterEvent) {
-
         switch event {
-            
         case let .search(searchTerm):
-            
             self.searchTerm = searchTerm
             refreshData()
-            
         case let .selectItem(network):
-
-            guard let web3Network = networks.findNetwork(matching: network.name) else { return }
-            wireframe.navigate(to: .select(web3Network))
-                        
+            guard let network = networks.findNetwork(matching: network.name) else { return }
+            wireframe.navigate(to: .select(network))
         case .dismiss:
-            
             wireframe.dismiss()
         }
     }
@@ -73,29 +64,24 @@ extension DefaultNetworkPickerPresenter: NetworkPickerPresenter {
 private extension DefaultNetworkPickerPresenter {
     
     func refreshNetworks() {
-        
         networks = interactor.allNetworks
     }
     
     func refreshData() {
-        
         if searchTerm.isEmpty {
             itemsDisplayed = makeEmptySearchItems()
         } else {
             itemsDisplayed = makeSearchItems(for: searchTerm)
         }
-        
         updateView()
     }
     
     func updateView() {
-        
         let viewModel = makeViewModel()
         view?.update(with: viewModel)
     }
     
     func makeViewModel() -> NetworkPickerViewModel {
-        
         .init(
             title: Localized("networkPicker.title"),
             items: itemsDisplayed
@@ -103,12 +89,10 @@ private extension DefaultNetworkPickerPresenter {
     }
     
     func makeEmptySearchItems() -> [NetworkPickerViewModel.Item] {
-        
         makeItems(from: networks)
     }
     
     func makeSearchItems(for searchTerm: String) -> [NetworkPickerViewModel.Item] {
-        
         let networks = networks.filter { $0.name.lowercased().hasPrefix(searchTerm.lowercased()) }
         return makeItems(from: networks).addNoResultsIfNeeded
     }
@@ -117,34 +101,32 @@ private extension DefaultNetworkPickerPresenter {
 private extension DefaultNetworkPickerPresenter {
         
     func makeItems(
-        from networks: [Web3Network]
+        from networks: [Network]
     ) -> [NetworkPickerViewModel.Item] {
-        
         networks.sortByName.compactMap {
             .init(
-                image: interactor.networkIcon(for: $0).pngImage,
+                imageName: $0.iconName,
                 name: $0.name
             )
         }
     }
 }
 
-private extension Array where Element == Web3Network {
+private extension Array where Element == Network {
+    var sortByName: [Network] {
+        sorted { $0.name < $1.name }
+    }
     
-    func findNetwork(matching name: String) -> Web3Network? {
-        
+    func findNetwork(matching name: String) -> Network? {
         filter { $0.name == name }.first
     }
 }
 
 private extension Array where Element == NetworkPickerViewModel.Item {
-    
     var addNoResultsIfNeeded: [NetworkPickerViewModel.Item] {
-        
         guard isEmpty else { return self }
-        
         return [
-            .init(image: nil, name: Localized("networkPicker.noResults"))
+            .init(imageName: nil, name: Localized("networkPicker.noResults"))
         ]
     }
 }

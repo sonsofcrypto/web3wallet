@@ -5,7 +5,7 @@
 import UIKit
 import web3lib
 
-// MARK: QRCodeScanWireframeContext
+// MARK: - QRCodeScanWireframeContext
 
 struct QRCodeScanWireframeContext {
     let type: `Type`
@@ -17,13 +17,13 @@ struct QRCodeScanWireframeContext {
     }
 }
 
-// MARK: QRCodeScanWireframeDestination
+// MARK: - QRCodeScanWireframeDestination
 
 enum QRCodeScanWireframeDestination {
     case qrCode(String)
 }
 
-// MARK: QRCodeScanWireframe
+// MARK: - QRCodeScanWireframe
 
 protocol QRCodeScanWireframe {
     func present()
@@ -31,7 +31,7 @@ protocol QRCodeScanWireframe {
     func dismiss()
 }
 
-// MARK: DefaultQRCodeScanWireframe
+// MARK: - DefaultQRCodeScanWireframe
 
 final class DefaultQRCodeScanWireframe {
     

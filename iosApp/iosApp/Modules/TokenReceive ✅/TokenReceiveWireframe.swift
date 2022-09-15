@@ -5,14 +5,14 @@
 import UIKit
 import web3lib
 
-// MARK: TokenReceiveWireframeContext
+// MARK: - TokenReceiveWireframeContext
 
 struct TokenReceiveWireframeContext {
     let network: Network
     let currency: Currency
 }
 
-// MARK: TokenReceiveWireframeDestination
+// MARK: - TokenReceiveWireframeDestination
 
 enum TokenReceiveWireframeDestination {}
 
@@ -23,7 +23,7 @@ protocol TokenReceiveWireframe {
     func dismiss()
 }
 
-// MARK: DefaultTokenReceiveWireframe
+// MARK: - DefaultTokenReceiveWireframe
 
 final class DefaultTokenReceiveWireframe {
     private weak var parent: UIViewController?

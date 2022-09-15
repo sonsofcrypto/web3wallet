@@ -7,6 +7,11 @@ import web3lib
 
 extension Network {
     
+    var iconName: String {
+        // TODO: Review this logic when supporting other networks
+        "token_eth_icon"
+    }
+    
     // TODO: Check with @Annon validation rules for each network type
     func isValid(address: String) -> Bool {
         address.hasPrefix("0x") && address.count == 42

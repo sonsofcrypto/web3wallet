@@ -34,6 +34,7 @@ extension NetworksViewModel {
 }
 
 extension NetworksViewModel {
+    
     struct Network {
         let chainId: UInt32
         let name: String

@@ -4,14 +4,14 @@
 
 import UIKit
 
-// MARK: TokenAddView
+// MARK: - TokenAddView
 
 protocol TokenAddView: AnyObject {
     func update(with viewModel: TokenAddViewModel)
     func dismissKeyboard()
 }
 
-// MARK: TokenAddViewController
+// MARK: - TokenAddViewController
 
 final class TokenAddViewController: BaseViewController {
 
@@ -53,7 +53,7 @@ extension TokenAddViewController: TokenAddView {
     }
 }
 
-// MARK: Configure
+// MARK: - Configure
 
 extension TokenAddViewController {
     
@@ -85,7 +85,7 @@ extension TokenAddViewController {
     }
 }
 
-// MARK: UICollectionViewDataSource
+// MARK: - UICollectionViewDataSource
 
 extension TokenAddViewController: UICollectionViewDataSource {
     
@@ -116,7 +116,7 @@ extension TokenAddViewController: UICollectionViewDataSource {
     }
 }
 
-// MARK: UICollectionViewDelegateFlowLayout
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension TokenAddViewController: UICollectionViewDelegateFlowLayout {
 
@@ -129,7 +129,7 @@ extension TokenAddViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: Handlers
+// MARK: - Handlers
 
 private extension TokenAddViewController {
     

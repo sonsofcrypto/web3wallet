@@ -5,7 +5,7 @@
 import Foundation
 import web3lib
 
-// MARK: TokenAddPresenterEvent
+// MARK: - TokenAddPresenterEvent
 
 enum TokenAddPresenterEvent {
     case selectNetwork
@@ -18,14 +18,14 @@ enum TokenAddPresenterEvent {
     case dismiss
 }
 
-// MARK: TokenAddPresenter
+// MARK: - TokenAddPresenter
 
 protocol TokenAddPresenter {
     func present()
     func handle(_ event: TokenAddPresenterEvent)
 }
 
-// MARK: DefaultTokenAddPresenter
+// MARK: - DefaultTokenAddPresenter
 
 final class DefaultTokenAddPresenter {
 
@@ -89,7 +89,7 @@ extension DefaultTokenAddPresenter: TokenAddPresenter {
     }
 }
 
-// MARK: Handlers
+// MARK: - Handlers
 
 private extension DefaultTokenAddPresenter {
     
@@ -158,7 +158,7 @@ private extension DefaultTokenAddPresenter {
     }
 }
 
-// MARK: ViewModel
+// MARK: - ViewModel
 
 private extension DefaultTokenAddPresenter {
     
@@ -353,11 +353,11 @@ private extension DefaultTokenAddPresenter {
         }
     }
 
-    func onNetworkSelected() -> (Web3Network) -> () {
+    func onNetworkSelected() -> (Network) -> () {
         {
             [weak self] network in
             guard let self = self else { return }
-            self.network = network.toNetwork()
+            self.network = network
             self.refresh()
         }
     }

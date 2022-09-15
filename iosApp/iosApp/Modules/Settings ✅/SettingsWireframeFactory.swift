@@ -4,7 +4,7 @@
 
 import UIKit
 
-// MARK: SettingsWireframeFactory
+// MARK: - SettingsWireframeFactory
 
 protocol SettingsWireframeFactory {
     func make(
@@ -13,7 +13,7 @@ protocol SettingsWireframeFactory {
     ) -> SettingsWireframe
 }
 
-// MARK: DefaultSettingsWireframeFactory
+// MARK: - DefaultSettingsWireframeFactory
 
 final class DefaultSettingsWireframeFactory {
     private let settingsService: SettingsService
@@ -37,7 +37,7 @@ extension DefaultSettingsWireframeFactory: SettingsWireframeFactory {
     }
 }
 
-// MARK: Assembler
+// MARK: - Assembler
 
 final class SettingsWireframeFactoryAssembler: AssemblerComponent {
 

@@ -5,7 +5,7 @@
 import UIKit
 import web3lib
 
-// MARK: TokenAddWireframeFactory
+// MARK: - TokenAddWireframeFactory
 
 protocol TokenAddWireframeFactory {
     func make(
@@ -14,7 +14,7 @@ protocol TokenAddWireframeFactory {
     ) -> TokenAddWireframe
 }
 
-// MARK: DefaultTokenAddWireframeFactory
+// MARK: - DefaultTokenAddWireframeFactory
 
 final class DefaultTokenAddWireframeFactory {
     private let networkPickerWireframeFactory: NetworkPickerWireframeFactory
@@ -48,7 +48,7 @@ extension DefaultTokenAddWireframeFactory: TokenAddWireframeFactory {
     }
 }
 
-// MARK: Assembler
+// MARK: - Assembler
 
 final class TokenAddWireframeFactoryAssembler: AssemblerComponent {
     

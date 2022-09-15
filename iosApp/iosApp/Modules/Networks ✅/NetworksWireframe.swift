@@ -35,6 +35,7 @@ extension DefaultNetworksWireframe: NetworksWireframe {
 
     func present() {
         let vc = wireUp()
+        parent?.asEdgeCardsController?.setTopCard(vc: vc) ?? parent?.show(vc, sender: self)
         if let parent = self.parent as? EdgeCardsController {
             parent.setTopCard(vc: vc)
         } else {
@@ -45,10 +46,7 @@ extension DefaultNetworksWireframe: NetworksWireframe {
     func navigate(to destination: NetworksWireframeDestination) {
         switch destination {
         case .dashboard:
-            guard let parent = parent as? EdgeCardsController else {
-                return
-            }
-            parent.setDisplayMode(.master, animated: true)
+            parent?.asEdgeCardsController?.setDisplayMode(.master, animated: true)
         case .editNetwork:
             guard let parent = parent else { return }
             alertWireframeFactory.makeWireframe(
@@ -59,15 +57,15 @@ extension DefaultNetworksWireframe: NetworksWireframe {
     }
 }
 
-extension DefaultNetworksWireframe {
+private extension DefaultNetworksWireframe {
 
-    private func wireUp() -> UIViewController {
+    func wireUp() -> UIViewController {
         let interactor = DefaultNetworksInteractor(networksService)
         let vc: NetworksViewController = UIStoryboard(.networks).instantiate()
         let presenter = DefaultNetworksPresenter(
             view: vc,
-            interactor: interactor,
-            wireframe: self
+            wireframe: self,
+            interactor: interactor
         )
         vc.presenter = presenter
         return NavigationController(rootViewController: vc)

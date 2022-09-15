@@ -4,7 +4,7 @@
 
 import Foundation
 
-// MARK: ThemePickerWireframeFactory
+// MARK: - ThemePickerWireframeFactory
 
 protocol ThemePickerWireframeFactory {
     func make(
@@ -12,7 +12,7 @@ protocol ThemePickerWireframeFactory {
     ) -> ThemePickerWireframe
 }
 
-// MARK: DefaultThemePickerWireframeFactory
+// MARK: - DefaultThemePickerWireframeFactory
 
 final class DefaultThemePickerWireframeFactory {}
 
@@ -23,7 +23,7 @@ extension DefaultThemePickerWireframeFactory: ThemePickerWireframeFactory {
     }
 }
 
-// MARK: Assembler
+// MARK: - Assembler
 
 final class ThemePickerWireframeFactoryAssembler: AssemblerComponent {
     

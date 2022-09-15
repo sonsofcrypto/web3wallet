@@ -5,20 +5,20 @@
 import UIKit
 import web3lib
 
-// MARK: TokenAddWireframeContext
+// MARK: - TokenAddWireframeContext
 
 struct TokenAddWireframeContext {
     let network: Network
 }
 
-// MARK: TokenAddWireframeDestination
+// MARK: - TokenAddWireframeDestination
 
 enum TokenAddWireframeDestination {
-    case selectNetwork(onCompletion: (Web3Network) -> Void)
+    case selectNetwork(onCompletion: (Network) -> Void)
     case qrCodeScan(network: Network, onCompletion: (String) -> Void)
 }
 
-// MARK: TokenAddWireframe
+// MARK: - TokenAddWireframe
 
 protocol TokenAddWireframe {
     func present()
@@ -26,7 +26,7 @@ protocol TokenAddWireframe {
     func dismiss()
 }
 
-// MARK: DefaultTokenAddWireframe
+// MARK: - DefaultTokenAddWireframe
 
 final class DefaultTokenAddWireframe {
     private weak var parent: UIViewController?
@@ -62,9 +62,9 @@ extension DefaultTokenAddWireframe: TokenAddWireframe {
     func navigate(to destination: TokenAddWireframeDestination) {
         switch destination {
         case let .selectNetwork(onCompletion):
-            networkPickerWireframeFactory.makeWireframe(
-                presentingIn: vc!.navigationController!,
-                context: .init(presentationStyle: .push, onNetworkSelected: onCompletion)
+            networkPickerWireframeFactory.make(
+                vc?.navigationController,
+                context: .init(onNetworkSelected: onCompletion)
             ).present()
         case let .qrCodeScan(network, onCompletion):
             qrCodeScanWireframeFactory.make(

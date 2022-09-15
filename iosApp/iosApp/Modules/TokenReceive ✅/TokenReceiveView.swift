@@ -4,13 +4,13 @@
 
 import UIKit
 
-// MARK: TokenReceiveView
+// MARK: - TokenReceiveView
 
 protocol TokenReceiveView: AnyObject {
     func update(with viewModel: TokenReceiveViewModel)
 }
 
-// MARK: TokenReceiveViewController
+// MARK: - TokenReceiveViewController
 
 final class TokenReceiveViewController: BaseViewController {
 
