@@ -7,7 +7,7 @@ import UIKit
 protocol TokenPickerWireframeFactory {
 
     func makeWireframe(
-        presentingIn: UIViewController,
+        presentingIn: UIViewController?,
         context: TokenPickerWireframeContext
     ) -> TokenPickerWireframe
 }
@@ -29,12 +29,12 @@ final class DefaultTokenPickerWireframeFactory {
 extension DefaultTokenPickerWireframeFactory: TokenPickerWireframeFactory {
 
     func makeWireframe(
-        presentingIn: UIViewController,
+        presentingIn: UIViewController?,
         context: TokenPickerWireframeContext
     ) -> TokenPickerWireframe {
         
         DefaultTokenPickerWireframe(
-            presentingIn: presentingIn,
+            presentingIn: presentingIn!,
             context: context,
             tokenAddWireframeFactory: tokenAddWireframeFactory,
             web3Service: web3Service

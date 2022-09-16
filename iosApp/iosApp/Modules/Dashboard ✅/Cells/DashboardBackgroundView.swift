@@ -4,8 +4,7 @@
 
 import UIKit
 
-class DashboardBackgroundView: UIScrollView {
-
+final class DashboardBackgroundView: UIScrollView {
     private lazy var gradientView = ThemeGradientView(frame: bounds)
     private lazy var topPalm = UIImageView(named: "dashboard-palm")
     private lazy var btmSun = UIImageView(named: "overscroll_sun")
@@ -37,16 +36,13 @@ class DashboardBackgroundView: UIScrollView {
             x: bounds.maxX - topPalm.bounds.width * 0.45,
             y: topPalm.bounds.height * 0.15
         )
-
         let h = contentSize.height - adjustedContentInset.bottom
         let sunSize = btmSun.image?.size ?? .zero
         let logoSize = btmLogo.image?.size ?? .zero
         let memeSize = btmMeme.image?.size ?? .zero
-
         let btmCenter = CGPoint(x: bounds.midX, y: h - sunSize.height.half)
         let logoCenter = CGPoint(x: bounds.midX, y: h - logoSize.height.half)
         let memeCenter = CGPoint(x: bounds.midX + 9, y: h - sunSize.height * 0.7)
-
         btmSun.frame = CGRect(center: btmCenter, size: sunSize)
         btmLogo.frame = CGRect(center: logoCenter, size: logoSize)
         btmMeme.frame = CGRect(center: memeCenter, size: memeSize)

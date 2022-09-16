@@ -27,9 +27,7 @@ final class AnimatedTextButton: UIButton {
         tint: UIColor
     ) {
         self.init(frame: .init(x: 0, y: 0, width: 100, height: 44))
-        
         self.tint = tint
-        
         setText(text)
         setMode(mode, animated: false)
         addTarget(target, action: action, for: .touchUpInside)
@@ -66,14 +64,10 @@ final class AnimatedTextButton: UIButton {
         case .animating:
             vStack.alpha = 1
             leadingConstraint.constant = Constant.leadingInset
-            guard !isAnimating else {
-                return
-            }
-
+            guard !isAnimating else { return }
             isAnimating = true
             animate()
         }
-
         self.mode = mode
     }
 }
@@ -81,30 +75,22 @@ final class AnimatedTextButton: UIButton {
 private extension AnimatedTextButton {
 
     func configureUI() {
-
         let iconImageView = UIImageView(image: "chevron.left".assetImage)
         let vStack = VStackView([], alignment: .leading, spacing: 2)
         let hStack = HStackView([iconImageView, vStack], alignment: .center, spacing: 1)
-
         iconImageView.setContentHuggingPriority(.required, for: .horizontal)
-
         [self, vStack, hStack].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.clipsToBounds = false
         }
-
         hStack.isUserInteractionEnabled = false
-
         addSubview(hStack)
-
         let leadingConstraint = hStack.leadingAnchor.constraint(
             equalTo: leadingAnchor,
             constant: Constant.leadingInset
         )
-
         self.leadingConstraint = leadingConstraint
         self.iconImageView = imageView
-
         addConstraints([
             hStack.topAnchor.constraint(equalTo: topAnchor),
             hStack.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -113,7 +99,6 @@ private extension AnimatedTextButton {
             widthAnchor.constraint(equalToConstant: 100),
             heightAnchor.constraint(equalToConstant: 44),
         ])
-
         self.hStack = hStack
         self.vStack = vStack
         self.iconImageView = iconImageView
@@ -135,7 +120,7 @@ private extension AnimatedTextButton {
 // MARK: - Mode
 
 extension AnimatedTextButton {
-
+    
     enum Mode {
         case hidden
         case `static`
@@ -146,7 +131,7 @@ extension AnimatedTextButton {
 // MARK: - Animations
 
 extension AnimatedTextButton {
-
+    
     func animate() {
         let views = [iconImageView] + vStack.arrangedSubviews
         for (idx, view) in views.enumerated() {

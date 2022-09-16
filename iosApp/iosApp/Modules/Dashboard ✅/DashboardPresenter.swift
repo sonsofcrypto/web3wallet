@@ -31,8 +31,8 @@ protocol DashboardPresenter: AnyObject {
 
 final class DefaultDashboardPresenter {
     private weak var view: DashboardView?
-    private let interactor: DashboardInteractor
     private let wireframe: DashboardWireframe
+    private let interactor: DashboardInteractor
     private let onboardingService: OnboardingService
     // TODO: @Annon move to web3lib listening for mnemonic updates notifications
     private let web3ServiceLegacy: Web3ServiceLegacy
@@ -42,8 +42,8 @@ final class DefaultDashboardPresenter {
 
     init(
         view: DashboardView,
-        interactor: DashboardInteractor,
         wireframe: DashboardWireframe,
+        interactor: DashboardInteractor,
         onboardingService: OnboardingService,
         web3ServiceLegacy: Web3ServiceLegacy = ServiceDirectory.assembler.resolve()
     ) {
@@ -52,7 +52,6 @@ final class DefaultDashboardPresenter {
         self.wireframe = wireframe
         self.onboardingService = onboardingService
         self.web3ServiceLegacy = web3ServiceLegacy
-
         interactor.addListener(self)
         web3ServiceLegacy.addWalletListener(self)
     }
@@ -70,69 +69,34 @@ extension DefaultDashboardPresenter: DashboardPresenter {
     }
     
     func handle(_ event: DashboardPresenterEvent) {
-        
         switch event {
-            
         case let .didTapCollapse(network):
             expandedNetworks.removeAll { $0 == network }
             view?.update(with: viewModel())
-            
         case let .didTapExpand(network):
             expandedNetworks.append(network)
             view?.update(with: viewModel())
-            
         case let .didSelectWallet(networkIdx, currencyIdx):
             let network = interactor.enabledNetworks()[networkIdx]
             let currency = interactor.currencies(for: network)[currencyIdx]
             wireframe.navigate(to: .wallet(network: network, currency: currency))
-
         case .walletConnectionSettingsAction:
             wireframe.navigate(to: .keyStoreNetworkSettings)
-            
         case .didInteractWithCardSwitcher:
             onboardingService.markDidInteractCardSwitcher()
             view?.update(with: viewModel())
-            
         case .receiveAction:
             wireframe.navigate(to: .receive)
-            
         case .sendAction:
             wireframe.navigate(to: .send(addressTo: nil))
-            
         case .didScanQRCode:
-            wireframe.navigate(to: .scanQRCode(onCompletion: makeOnQRCodeScanned()))
-            
+            wireframe.navigate(to: .scanQRCode(onCompletion: onQRCodeScanned()))
         case let .didTapEditTokens(networkId):
-            guard let network = interactor.enabledNetworks().first(where: {
-                $0.id() == networkId
-            }) else { return }
-
-            let web3Network = Web3Network.from(network, isOn: true)
-
-            wireframe.navigate(
-                to: .editTokens(
-                    network: web3Network,
-                    selectedTokens: interactor.currencies(for: network).map {
-                        Web3Token.from(currency: $0, network: web3Network, inWallet: true, idx: 0)
-                    },
-                    onCompletion: { [weak self] tokens in
-                        self?.selectedTokensHandler(tokens, network: web3Network)
-                    }
-                )
-            )
-            
+            didTapEditToken(networkId)
         case .swapAction:
             wireframe.navigate(to: .tokenSwap)
-            
         case let .didTapNotification(id):
-            guard let notification = notifications.first(where: { $0.id == id }) else { return }
-            guard let deepLink = DeepLink(identifier: notification.deepLink) else { return }
-            if deepLink.identifier == DeepLink.themesList.identifier {
-                wireframe.navigate(to: .themePicker)
-            } else {
-                wireframe.navigate(to: .deepLink(deepLink))
-            }
-            
+            didTapNotification(id)
         case .didTapDismissNotification:
             break
         case .pullDownToRefresh:
@@ -140,8 +104,6 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
                 self?.updateView()
             }
-
-
         default:
             print("Handle \(event)")
         }
@@ -176,6 +138,37 @@ private extension DefaultDashboardPresenter {
 
 private extension DefaultDashboardPresenter {
     
+    func didTapEditToken(_ networkId: String) {
+        guard let network = interactor.enabledNetworks().first(where: {
+            $0.id() == networkId
+        }) else { return }
+        let web3Network = Web3Network.from(network, isOn: true)
+        wireframe.navigate(
+            to: .editTokens(
+                network: web3Network,
+                selectedTokens: interactor.currencies(for: network).map {
+                    Web3Token.from(currency: $0, network: web3Network, inWallet: true, idx: 0)
+                },
+                onCompletion: { [weak self] tokens in
+                    self?.selectedTokensHandler(tokens, network: web3Network)
+                }
+            )
+        )
+    }
+    
+    func didTapNotification(_ id: String) {
+        guard let notification = notifications.first(where: { $0.id == id }) else { return }
+        guard let deepLink = DeepLink(identifier: notification.deepLink) else { return }
+        if deepLink.identifier == DeepLink.themesList.identifier {
+            wireframe.navigate(to: .themePicker)
+        } else {
+            wireframe.navigate(to: .deepLink(deepLink))
+        }
+    }
+}
+
+private extension DefaultDashboardPresenter {
+    
     func viewModel() -> DashboardViewModel {
         var sections = [DashboardViewModel.Section]()
         sections.append(
@@ -204,14 +197,12 @@ private extension DefaultDashboardPresenter {
                 )
             )
         )
-
         sections.append(
             .init(
                 header: .title(Localized("dashboard.section.notifications")),
                 items: notificationViewModel()
             )
         )
-
         for network in interactor.enabledNetworks() {
             sections.append(
                 .init(
@@ -232,9 +223,7 @@ private extension DefaultDashboardPresenter {
                 )
             )
         }
-
         let nfts = interactor.nfts(for: Web3Network.from(Network.ethereum(), isOn: true))
-
         if !nfts.isEmpty {
             sections.append(
                 .init(
@@ -243,7 +232,6 @@ private extension DefaultDashboardPresenter {
                 )
             )
         }
-
         return .init(
             shouldAnimateCardSwitcher: onboardingService.shouldShowOnboardingButton(),
             sections: sections
@@ -251,17 +239,17 @@ private extension DefaultDashboardPresenter {
     }
     
     func notificationViewModel() -> DashboardViewModel.Section.Items {
-        
-        let items: [DashboardViewModel.Notification] = notifications.compactMap {
-            .init(
-                id: $0.id,
-                image: $0.image,
-                title: $0.title,
-                body: $0.body,
-                canDismiss: $0.canDismiss
-            )
-        }
-        return .notifications(items)
+        .notifications(
+            notifications.compactMap {
+                .init(
+                    id: $0.id,
+                    image: $0.image,
+                    title: $0.title,
+                    body: $0.body,
+                    canDismiss: $0.canDismiss
+                )
+            }
+        )
     }
 
     func walletViewModel(_ network: Network, currency: Currency) -> DashboardViewModel.Wallet {
@@ -280,7 +268,6 @@ private extension DefaultDashboardPresenter {
             currency: currency,
             style: .long
         )
-
         return .init(
             name: currency.name,
             ticker: currency.symbol.uppercased(),
@@ -297,10 +284,7 @@ private extension DefaultDashboardPresenter {
     }
 
     func candlesViewModel(candles: [Candle]?) -> CandlesViewModel {
-        guard let candles = candles else {
-            return .loading(40)
-        }
-
+        guard let candles = candles else { return .loading(40) }
         return .loaded(candles.last(n: 40).map { CandlesViewModel.Candle.from($0) })
     }
     
@@ -309,14 +293,7 @@ private extension DefaultDashboardPresenter {
     }
 
     func makeOnNFTSelected(for nftItem: NFTItem) -> () -> Void {
-        
-        {
-            [weak self] in
-            
-            guard let self = self else { return }
-            
-            self.wireframe.navigate(to: .nftItem(nftItem))
-        }
+        { [weak self] in self?.wireframe.navigate(to: .nftItem(nftItem)) }
     }
 
     func selectedTokensHandler(_ tokens: [Web3Token], network: Web3Network) {
@@ -333,22 +310,14 @@ private extension DefaultDashboardPresenter {
     }
 }
 
-
 private extension DefaultDashboardPresenter {
     
-    func makeOnQRCodeScanned() -> (String) -> Void {
-        {
-            [weak self] addressTo in
-            guard let self = self else { return }
-            self.wireframe.navigate(to: .send(addressTo: addressTo))
-        }
+    func onQRCodeScanned() -> (String) -> Void {
+        { [weak self] addressTo in self?.wireframe.navigate(to: .send(addressTo: addressTo)) }
     }
 }
 
 extension DefaultDashboardPresenter: Web3ServiceWalletListener {
     
-    func notificationsChanged() {
-        
-        updateView()
-    }
+    func notificationsChanged() { updateView() }
 }

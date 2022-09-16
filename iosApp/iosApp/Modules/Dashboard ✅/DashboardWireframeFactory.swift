@@ -5,12 +5,15 @@
 import UIKit
 import web3lib
 
+// MARK: - DashboardWireframeFactory
+
 protocol DashboardWireframeFactory: AnyObject {
-    func makeWireframe(_ parent: UIViewController) -> DashboardWireframe
+    func make(_ parent: UIViewController?) -> DashboardWireframe
 }
 
-final class DefaultDashboardWireframeFactory {
+// MARK: - DefaultDashboardWireframeFactory
 
+final class DefaultDashboardWireframeFactory {
     private let accountWireframeFactory: AccountWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
@@ -67,10 +70,9 @@ final class DefaultDashboardWireframeFactory {
 
 extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController) -> DashboardWireframe {
-        
+    func make(_ parent: UIViewController?) -> DashboardWireframe {
         DefaultDashboardWireframe(
-            parent: parent,
+            parent,
             accountWireframeFactory: accountWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
             mnemonicConfirmationWireframeFactory: mnemonicConfirmationWireframeFactory,
@@ -88,5 +90,33 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             walletService: walletService,
             nftsService: nftsService
         )
+    }
+}
+
+// MARK: - Assembler
+
+final class DashboardWireframeFactoryAssembler: AssemblerComponent {
+
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> DashboardWireframeFactory in
+            DefaultDashboardWireframeFactory(
+                accountWireframeFactory: resolver.resolve(),
+                alertWireframeFactory: resolver.resolve(),
+                mnemonicConfirmationWireframeFactory: resolver.resolve(),
+                tokenPickerWireframeFactory: resolver.resolve(),
+                tokenReceiveWireframeFactory: resolver.resolve(),
+                tokenSendWireframeFactory: resolver.resolve(),
+                tokenSwapWireframeFactory: resolver.resolve(),
+                nftDetailWireframeFactory: resolver.resolve(),
+                qrCodeScanWireframeFactory: resolver.resolve(),
+                themePickerWireframeFactory: resolver.resolve(),
+                onboardingService: resolver.resolve(),
+                deepLinkHandler: resolver.resolve(),
+                networksService: resolver.resolve(),
+                currencyStoreService: resolver.resolve(),
+                walletService: resolver.resolve(),
+                nftsService: resolver.resolve()
+            )
+        }
     }
 }

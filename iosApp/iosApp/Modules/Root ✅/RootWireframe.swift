@@ -26,7 +26,6 @@ protocol RootWireframe {
 // MARK: - DefaultRootWireframe
 
 final class DefaultRootWireframe {
-
     private weak var window: UIWindow?
     private weak var vc: UIViewController!
     private weak var tabVc: TabBarController!
@@ -51,7 +50,6 @@ final class DefaultRootWireframe {
         settingsWireframeFactory: SettingsWireframeFactory,
         keyStoreService: KeyStoreService
     ) {
-        
         self.window = window
         self.keyStoreWireframeFactory = keyStoreWireframeFactory
         self.networksWireframeFactory = networksWireframeFactory
@@ -71,23 +69,19 @@ extension DefaultRootWireframe: RootWireframe {
         self.vc = vc
         keyStoreWireframeFactory.make(vc).present()
         networksWireframeFactory.makeWireframe(vc).present()
-        dashboardWireframeFactory.makeWireframe(tabVc).present()
+        dashboardWireframeFactory.make(tabVc).present()
         degenWireframeFactory.make(tabVc).present()
         nftsDashboardWireframeFactory.makeWireframe(tabVc).present()
-        
         presentAppsTabIfNeeded()
-        
         settingsWireframeFactory.make(
             tabVc,
             context: .default
         ).present()
-        
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
     }
 
     func navigate(to destination: RootWireframeDestination, animated: Bool) {
-                
         guard let vc = self.vc as? EdgeCardsController else {
             print("Unable to navigate to \(destination)")
             return
@@ -99,11 +93,8 @@ extension DefaultRootWireframe: RootWireframe {
 private extension DefaultRootWireframe {
     
     func presentAppsTabIfNeeded() {
-        
         guard FeatureFlag.showAppsTab.isEnabled else { return }
-        
         if FeatureFlag.embedChatInTab.isEnabled {
-            
             let chatWireframeFactory: ChatWireframeFactory = ServiceDirectory.assembler.resolve()
             chatWireframeFactory.makeWireframe(
                 presentingIn: tabVc,
@@ -115,13 +106,10 @@ private extension DefaultRootWireframe {
     }
 
     func wireUp() -> UIViewController {
-        
         let vc: RootViewController = UIStoryboard(.main).instantiate()
         let tabVc = TabBarController()
         self.tabVc = tabVc
-        
         vc.setMaster(vc: tabVc)
-
         let presenter = DefaultRootPresenter(
             view: vc,
             wireframe: self,

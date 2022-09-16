@@ -14,8 +14,8 @@ final class DashboardViewController: BaseViewController {
     private let refreshControl = UIRefreshControl()
 
     var presenter: DashboardPresenter!
-    var viewModel: DashboardViewModel?
 
+    var viewModel: DashboardViewModel?
     private var backgroundView = DashboardBackgroundView()
     private var previousYOffset: CGFloat = 0
     private var lastVelocity: CGFloat = 0
@@ -52,18 +52,15 @@ extension DashboardViewController: DashboardView {
             refreshControl.endRefreshing()
             return
         }
-        
         if self.viewModel?.sections.count != viewModel.sections.count {
             self.viewModel = viewModel
             collectionView.reloadData()
             return
         }
-
         var sectionsToReload = [Int]()
         var sectionsToUpdate = [Int]()
         let cv = collectionView!
         let header = UICollectionView.elementKindSectionHeader
-
         for (idx, section) in viewModel.sections.enumerated() {
             let prevSection = self.viewModel?.sections[idx]
             if section.items.count != prevSection?.items.count
@@ -73,11 +70,8 @@ extension DashboardViewController: DashboardView {
                 sectionsToUpdate.append(idx)
             }
         }
-
         self.viewModel = viewModel
-
         cv.performBatchUpdates { cv.reloadSections(IndexSet(sectionsToReload)) }
-
         cv.visibleCells.forEach {
             if let idxPath = cv.indexPath(for: $0),
                sectionsToUpdate.contains(idxPath.section) {
@@ -93,8 +87,7 @@ extension DashboardViewController: DashboardView {
             case let .balance(balance):
                 (view as? DashboardHeaderBalanceView)?.update(with: balance)
             case let .title(title):
-                (view as? DashboardHeaderNameView)?
-                    .update(with: title, and: nil, handler: nil)
+                (view as? DashboardHeaderNameView)?.update(with: title, and: nil, handler: nil)
             case let .network(network):
                 (view as? DashboardHeaderNameView)?.update(
                     with: network.name,
@@ -103,8 +96,7 @@ extension DashboardViewController: DashboardView {
                         self?.presenter.handle(.didTapEditTokens(network: network.id))
                     }
                 )
-            default:
-                ()
+            default: ()
             }
         }
     }
@@ -156,9 +148,7 @@ extension DashboardViewController: UICollectionViewDataSource {
         guard let section = viewModel?.sections[safe: indexPath.section] else {
             fatalError("No viewModel for \(indexPath) \(collectionView)")
         }
-
         let (cv, idxPath) = (collectionView, indexPath)
-
         if !section.items.actions.isEmpty {
             return cv.dequeue(DashboardButtonsCell.self, for: idxPath)
                 .update(with: section.items.actions, presenter: presenter)
@@ -304,25 +294,19 @@ private extension DashboardViewController {
             image: "tab_icon_dashboard".assetImage,
             tag: 0
         )
-
         edgeCardsController?.delegate = self
-
         view.backgroundColor = Theme.colour.gradientBottom
         view.insertSubview(backgroundView, at: 0)
-
         collectionView.layer.sublayerTransform = CATransform3D.m34(-1.0 / 500.0)
         collectionView.contentInset = UIEdgeInsets.with(bottom: 180)
-
         collectionView.register(DashboardHeaderNameView.self, kind: .header)
         collectionView.setCollectionViewLayout(compositionalLayout(), animated: false)
         collectionView.refreshControl = refreshControl
-        
         refreshControl.tintColor = Theme.colour.activityIndicator
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
     }
     
     @objc func didPullToRefresh(_ sender: Any) {
-
         presenter.handle(.pullDownToRefresh)
     }
 
@@ -342,7 +326,6 @@ private extension DashboardViewController {
     func compositionalLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] idx, env in
             guard let section = self?.viewModel?.sections[idx] else { return nil }
-
             switch section.items {
             case .actions:
                 return self?.buttonsCollectionLayoutSection()
@@ -356,7 +339,6 @@ private extension DashboardViewController {
                     : self?.walletsCollectionLayoutSection()
             }
         }
-
         // TODO: Decouple this
         if Theme.type.isThemeIOS {
             layout.register(
@@ -364,7 +346,6 @@ private extension DashboardViewController {
                 forDecorationViewOfKind: "background"
             )
         }
-
         return layout
     }
 
@@ -459,7 +440,6 @@ private extension DashboardViewController {
 // MARK: - EdgeCardsControllerDelegate
 
 extension DashboardViewController: EdgeCardsControllerDelegate {
-
     func edgeCardsController(
         vc: EdgeCardsController,
         didChangeTo mode: EdgeCardsController.DisplayMode

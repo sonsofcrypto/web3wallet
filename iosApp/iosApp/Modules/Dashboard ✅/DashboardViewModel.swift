@@ -48,16 +48,11 @@ extension DashboardViewModel.Section.Items {
     func isSameKind(_ other: DashboardViewModel.Section.Items?) -> Bool {
         guard let other = other else { return false }
         switch (self, other) {
-        case (.actions, .actions):
-            return true
-        case (.notifications, .notifications):
-            return true
-        case (.wallets, .wallets):
-            return true
-        case (.nfts, .nfts):
-            return true
-        default:
-            return false
+        case (.actions, .actions): return true
+        case (.notifications, .notifications): return true
+        case (.wallets, .wallets): return true
+        case (.nfts, .nfts): return true
+        default: return false
         }
     }
 }
@@ -115,44 +110,31 @@ extension DashboardViewModel {
 extension DashboardViewModel.Section {
     var hasSectionHeader: Bool {
         switch header {
-        case .none:
-            return false
-        case .title, .balance, .network:
-            return true
+        case .none: return false
+        case .title, .balance, .network: return true
         }
     }
 
     var isCollapsed: Bool {
         switch header {
-        case let .network(network):
-            return network.isCollapsed
-        default:
-            return false
-        }
+        case let .network(network): return network.isCollapsed
+        default: return false }
     }
     
     var networkId: String {
         switch header {
-        case let .network(network):
-            return network.id
-        default:
-            return ""
-        }
+        case let .network(network): return network.id
+        default: return "" }
     }
 }
 
 extension DashboardViewModel.Section.Items {
-    
     var count: Int {
         switch self {
-        case .actions:
-            return 1
-        case let .notifications(notifications):
-            return notifications.count
-        case let .wallets(wallets):
-            return wallets.count
-        case let .nfts(nfts):
-            return nfts.count
+        case .actions: return 1
+        case let .notifications(notifications): return notifications.count
+        case let .wallets(wallets): return wallets.count
+        case let .nfts(nfts): return nfts.count
         }
     }
 
