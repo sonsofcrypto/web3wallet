@@ -57,8 +57,8 @@ extension DefaultCultProposalsWireframe: CultProposalsWireframe {
     func navigate(to destination: CultProposalsWireframeDestination) {
         switch destination {
         case let .proposal(proposal, proposals):
-            cultProposalWireframeFactory.makeWireframe(
-                parent: vc,
+            cultProposalWireframeFactory.make(
+                vc,
                 context: .init(proposal: proposal, proposals: proposals)
             ).present()
         case let .castVote(proposal, approve):

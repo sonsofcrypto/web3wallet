@@ -148,7 +148,7 @@ private extension CultProposalsViewController {
     }
     
     func setDefaultTitle() {
-        let cultIcon = viewModel.titleIcon.pngImage!.resize(to: .init(width: 32, height: 32))
+        let cultIcon = viewModel.titleIconName.assetImage?.resize(to: .init(width: 32, height: 32))
         let imageView = UIImageView(image: cultIcon)
         let titleLabel = UILabel()
         titleLabel.text = viewModel.title

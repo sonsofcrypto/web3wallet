@@ -253,7 +253,6 @@
 		1C60C334285724D1003BE25D /* NFTsCollectionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C26F285724D0003BE25D /* NFTsCollectionInteractor.swift */; };
 		1C60C335285724D1003BE25D /* NFTsCollectionView+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C270285724D0003BE25D /* NFTsCollectionView+Shared.swift */; };
 		1C60C336285724D1003BE25D /* NFTsCollectionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C271285724D0003BE25D /* NFTsCollectionPresenter.swift */; };
-		1C60C347285724D1003BE25D /* CultProposalWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C287285724D0003BE25D /* CultProposalWireframeFactoryAssembler.swift */; };
 		1C60C348285724D1003BE25D /* CultProposalPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C288285724D0003BE25D /* CultProposalPresenter.swift */; };
 		1C60C349285724D1003BE25D /* CultProposalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C289285724D0003BE25D /* CultProposalViewModel.swift */; };
 		1C60C34A285724D1003BE25D /* CultProposalWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C28A285724D0003BE25D /* CultProposalWireframeFactory.swift */; };
@@ -848,7 +847,6 @@
 		1C60C26F285724D0003BE25D /* NFTsCollectionInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsCollectionInteractor.swift; sourceTree = "<group>"; };
 		1C60C270285724D0003BE25D /* NFTsCollectionView+Shared.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NFTsCollectionView+Shared.swift"; sourceTree = "<group>"; };
 		1C60C271285724D0003BE25D /* NFTsCollectionPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsCollectionPresenter.swift; sourceTree = "<group>"; };
-		1C60C287285724D0003BE25D /* CultProposalWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C60C288285724D0003BE25D /* CultProposalPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalPresenter.swift; sourceTree = "<group>"; };
 		1C60C289285724D0003BE25D /* CultProposalViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalViewModel.swift; sourceTree = "<group>"; };
 		1C60C28A285724D0003BE25D /* CultProposalWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalWireframeFactory.swift; sourceTree = "<group>"; };
@@ -1516,7 +1514,7 @@
 				1C67201928870FA900C5F044 /* Confirmation */,
 				1C60C20D285724D0003BE25D /* Dashboard */,
 				1C60C272285724D0003BE25D /* Degen */,
-				1C60C285285724D0003BE25D /* DegenCult */,
+				1C60C285285724D0003BE25D /*  DegenCult ✅ */,
 				1CDED5D3289700DA00DF34A7 /* Feature ✅ */,
 				1C0643D22892FC9B00643C15 /* Features ✅ */,
 				1C60C1E1285724D0003BE25D /* KeyStore ✅ */,
@@ -1876,16 +1874,16 @@
 			path = Degen;
 			sourceTree = "<group>";
 		};
-		1C60C285285724D0003BE25D /* DegenCult */ = {
+		1C60C285285724D0003BE25D /*  DegenCult ✅ */ = {
 			isa = PBXGroup;
 			children = (
-				1C60C286285724D0003BE25D /* CultProposal */,
+				1C60C286285724D0003BE25D /* CultProposal ✅ */,
 				1C60C28D285724D0003BE25D /* CultProposals ✅ */,
 			);
-			path = DegenCult;
+			path = " DegenCult ✅";
 			sourceTree = "<group>";
 		};
-		1C60C286285724D0003BE25D /* CultProposal */ = {
+		1C60C286285724D0003BE25D /* CultProposal ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1CB8B0B4288C34B900024E7C /* CultProposal.storyboard */,
@@ -1894,10 +1892,9 @@
 				1C60C289285724D0003BE25D /* CultProposalViewModel.swift */,
 				1C60C28C285724D0003BE25D /* CultProposalWireframe.swift */,
 				1C60C28A285724D0003BE25D /* CultProposalWireframeFactory.swift */,
-				1C60C287285724D0003BE25D /* CultProposalWireframeFactoryAssembler.swift */,
 				1CB8B0B6288C350200024E7C /* Cells */,
 			);
-			path = CultProposal;
+			path = "CultProposal ✅";
 			sourceTree = "<group>";
 		};
 		1C60C28D285724D0003BE25D /* CultProposals ✅ */ = {
@@ -3027,7 +3024,6 @@
 				1CDED5D5289700FF00DF34A7 /* FeatureWireframe.swift in Sources */,
 				1C60C2B4285724D0003BE25D /* TokenPickerPresenter.swift in Sources */,
 				1C60C2B9285724D0003BE25D /* KeyStorePresenter.swift in Sources */,
-				1C60C347285724D1003BE25D /* CultProposalWireframeFactoryAssembler.swift in Sources */,
 				1CB8B0BA288DBEE700024E7C /* CultProposalDetailTokenomicsView.swift in Sources */,
 				1C60C2FB285724D0003BE25D /* NFTDetailWireframeFactoryAssembler.swift in Sources */,
 				1C54DBF5285F32DC00E378F6 /* TokenAddInputView.swift in Sources */,

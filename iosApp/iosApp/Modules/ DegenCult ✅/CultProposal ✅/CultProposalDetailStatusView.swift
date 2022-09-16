@@ -6,13 +6,10 @@ import Foundation
 import UIKit
 
 final class CultProposalDetailStatusView: UIView {
-    
     private weak var statusView: CultProposalStatus!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         let statusView = CultProposalStatus()
         statusView.backgroundColor = Theme.colour.separatorTransparent
         statusView.label.apply(style: .headline)
@@ -29,7 +26,6 @@ final class CultProposalDetailStatusView: UIView {
     }
     
     func update(with status: CultProposalViewModel.ProposalDetails.Status) {
-        
         statusView.text = status.title
         statusView.backgroundColor = status.color
     }

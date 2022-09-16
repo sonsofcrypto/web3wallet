@@ -55,9 +55,7 @@ extension CultProposalsViewModel {
 
 extension CultProposalsViewModel {
     var title: String { Localized("cult.proposals.title") }
-    
-    var titleIcon: Data { "degen-cult-icon".assetImage!.pngData()! }
-
+    var titleIconName: String { "degen-cult-icon" }
     var sections: [CultProposalsViewModel.Section] {
         switch self {
         case let .loaded(sections, _):
@@ -66,7 +64,6 @@ extension CultProposalsViewModel {
             return []
         }
     }
-    
     var selectedSectionType: CultProposalsViewModel.Section.`Type` {
         switch self {
         case let .loaded(_, type):

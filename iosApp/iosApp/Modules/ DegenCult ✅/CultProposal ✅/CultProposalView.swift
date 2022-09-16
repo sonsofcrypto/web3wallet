@@ -5,7 +5,6 @@
 import UIKit
 
 protocol CultProposalView: AnyObject {
-
     func update(with viewModel: CultProposalViewModel)
 }
 
@@ -19,11 +18,8 @@ final class CultProposalViewController: BaseViewController {
     private var endDisplayFirstTimeCalled = false
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         configureUI()
-        
         presenter.present()
     }
 }
@@ -31,13 +27,9 @@ final class CultProposalViewController: BaseViewController {
 extension CultProposalViewController: CultProposalView {
 
     func update(with viewModel: CultProposalViewModel) {
-        
         self.viewModel = viewModel
-        
         setTitle(with: viewModel.selectedIndex + 1)
-        
         collectionView.reloadData()
-        
         scrollToSelectedItem()
     }
 }
@@ -48,7 +40,6 @@ extension CultProposalViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        
         viewModel.proposals.count
     }
     
@@ -56,7 +47,6 @@ extension CultProposalViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        
         let viewModel = viewModel.proposals[indexPath.item]
         let cell = collectionView.dequeue(CultProposalDetailViewCell.self, for: indexPath)
         return cell.update(with: viewModel)
@@ -82,7 +72,6 @@ extension CultProposalViewController: UICollectionViewDelegate {
         didEndDisplaying cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath
     ) {
-        
         endDisplayFirstTimeCalled = true
         guard let visibleCell = collectionView.visibleCells.first else {
             scrollToTop()
@@ -90,7 +79,6 @@ extension CultProposalViewController: UICollectionViewDelegate {
         }
         guard let currentIndexPath = collectionView.indexPath(for: visibleCell) else { return }
         setTitle(with: currentIndexPath.item + 1)
-        
         scrollToTop()
     }
 }
@@ -98,7 +86,6 @@ extension CultProposalViewController: UICollectionViewDelegate {
 private extension CultProposalViewController {
     
     func scrollToTop() {
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.collectionView.scrollRectToVisible(
                 .init(origin: .init(x: 0, y: 0), size: self.collectionView.visibleSize),
@@ -108,7 +95,6 @@ private extension CultProposalViewController {
     }
     
     func scrollToSelectedItem() {
-        
         // NOTE: Dispatching async otherwise the scroll does not position the view
         // properly
         DispatchQueue.main.async {
@@ -123,16 +109,13 @@ private extension CultProposalViewController {
     }
     
     func setTitle(with index: Int) {
-        
-        let cultIcon = viewModel.titleIcon.pngImage!.resize(to: .init(width: 32, height: 32))
+        let cultIcon = viewModel.titleIconName.assetImage?.resize(to: .init(width: 32, height: 32))
         let imageView = UIImageView(image: cultIcon)
         let titleLabel = UILabel()
         titleLabel.text = viewModel.title + " \(index) " + Localized("cult.proposal.title.of") + " \(viewModel.proposals.count)"
         titleLabel.apply(style: .navTitle)
-        
         let stackView = HStackView([imageView, titleLabel])
         stackView.spacing = 4
-        
         navigationItem.titleView = stackView
     }
     

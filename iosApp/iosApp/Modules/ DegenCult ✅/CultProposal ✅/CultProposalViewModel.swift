@@ -6,13 +6,11 @@ import Foundation
 import UIKit
 
 struct CultProposalViewModel {
-
     let title: String
     let proposals: [ProposalDetails]
     let selectedIndex: Int
 
     struct ProposalDetails {
-        
         let name: String
         let status: Status
         let guardianInfo: GuardianInfo?
@@ -21,7 +19,6 @@ struct CultProposalViewModel {
         let tokenomics: Tokenomics
         
         struct GuardianInfo {
-            
             let title: String
             let name: String
             let nameValue: String
@@ -32,29 +29,24 @@ struct CultProposalViewModel {
         }
         
         struct Status {
-            
             let title: String
             let color: UIColor // HEX
         }
         
         struct Summary {
-            
             let title: String
             let summary: String
         }
         
         struct DocumentsInfo {
-            
             let title: String
             let documents: [Document]
             
             struct Document {
-                
                 let title: String
                 let items: [Item]
                 
                 enum Item {
-                    
                     case link(displayName: String, url: URL)
                     case note(String)
                 }
@@ -62,7 +54,6 @@ struct CultProposalViewModel {
         }
         
         struct Tokenomics {
-            
             let title: String
             let rewardAllocation: String
             let rewardAllocationValue: String
@@ -72,9 +63,8 @@ struct CultProposalViewModel {
             let projectETHWalletValue: String
         }
     }
-    
-    var titleIcon: Data {
-        
-        "degen-cult-icon".assetImage!.pngData()!
-    }
+}
+
+extension CultProposalViewModel {
+    var titleIconName: String { "degen-cult-icon" }
 }
