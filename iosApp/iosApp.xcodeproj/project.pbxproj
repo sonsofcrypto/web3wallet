@@ -153,7 +153,6 @@
 		1C60C2C6285724D0003BE25D /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1F4285724D0003BE25D /* ChatViewModel.swift */; };
 		1C60C2C7285724D0003BE25D /* ChatInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1F5285724D0003BE25D /* ChatInteractor.swift */; };
 		1C60C2C8285724D0003BE25D /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C60C1F6285724D0003BE25D /* Chat.storyboard */; };
-		1C60C2C9285724D0003BE25D /* ChatWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1F7285724D0003BE25D /* ChatWireframeFactoryAssembler.swift */; };
 		1C60C2CA285724D0003BE25D /* ChatPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1F8285724D0003BE25D /* ChatPresenter.swift */; };
 		1C60C2CB285724D0003BE25D /* ChatWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1F9285724D0003BE25D /* ChatWireframeFactory.swift */; };
 		1C60C2CC285724D0003BE25D /* AlertWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1FB285724D0003BE25D /* AlertWireframe.swift */; };
@@ -745,7 +744,6 @@
 		1C60C1F4285724D0003BE25D /* ChatViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		1C60C1F5285724D0003BE25D /* ChatInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatInteractor.swift; sourceTree = "<group>"; };
 		1C60C1F6285724D0003BE25D /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
-		1C60C1F7285724D0003BE25D /* ChatWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C60C1F8285724D0003BE25D /* ChatPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatPresenter.swift; sourceTree = "<group>"; };
 		1C60C1F9285724D0003BE25D /* ChatWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C1FB285724D0003BE25D /* AlertWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertWireframe.swift; sourceTree = "<group>"; };
@@ -1506,7 +1504,7 @@
 				1C60C1FA285724D0003BE25D /* Alert */,
 				1C60C253285724D0003BE25D /* Apps */,
 				D1A12A58287D333900606FC8 /* Authenticate */,
-				1C60C1EE285724D0003BE25D /* Chat */,
+				1C60C1EE285724D0003BE25D /* Chat ✅ */,
 				1C67201928870FA900C5F044 /* Confirmation */,
 				1C60C20D285724D0003BE25D /* Dashboard ✅ */,
 				1C60C272285724D0003BE25D /* Degen ✅ */,
@@ -1617,7 +1615,7 @@
 			path = ButtonSheetView;
 			sourceTree = "<group>";
 		};
-		1C60C1EE285724D0003BE25D /* Chat */ = {
+		1C60C1EE285724D0003BE25D /* Chat ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C1F6285724D0003BE25D /* Chat.storyboard */,
@@ -1627,10 +1625,9 @@
 				1C60C1F4285724D0003BE25D /* ChatViewModel.swift */,
 				1C60C1EF285724D0003BE25D /* ChatWireframe.swift */,
 				1C60C1F9285724D0003BE25D /* ChatWireframeFactory.swift */,
-				1C60C1F7285724D0003BE25D /* ChatWireframeFactoryAssembler.swift */,
 				1C60C1F1285724D0003BE25D /* Cells */,
 			);
-			path = Chat;
+			path = "Chat ✅";
 			sourceTree = "<group>";
 		};
 		1C60C1F1285724D0003BE25D /* Cells */ = {
@@ -3175,7 +3172,6 @@
 				1CE0064428894F72002D1EB3 /* ConfirmationViewModel+Send.swift in Sources */,
 				1C6720062880059B00C5F044 /* MnemonicNewWireframeFactoryAssembler.swift in Sources */,
 				1C228AC328A0FE41005316A3 /* FeatureShareHelper.swift in Sources */,
-				1C60C2C9285724D0003BE25D /* ChatWireframeFactoryAssembler.swift in Sources */,
 				1C60C2ED285724D0003BE25D /* NetworksInteractor.swift in Sources */,
 				1CB8B0C0288DBEFF00024E7C /* CultProposalDetailSummaryView.swift in Sources */,
 				1CB8B0E62891346B00024E7C /* CultProposalFooterSupplementaryView.swift in Sources */,

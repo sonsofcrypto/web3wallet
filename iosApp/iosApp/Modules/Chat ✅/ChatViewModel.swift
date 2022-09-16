@@ -27,7 +27,6 @@ extension ChatViewModel {
 extension ChatViewModel {
 
     struct Error {
-        
         let title: String
         let body: String
         let actions: [String]
@@ -38,19 +37,15 @@ extension ChatViewModel {
 
     func items() -> [ChatViewModel.Item] {
         switch self {
-        case let .loaded(items, _):
-            return items
-        default:
-            return []
+        case let .loaded(items, _): return items
+        default: return []
         }
     }
 
     func selectedIdx() -> Int? {
         switch self {
-        case let .loaded(_, idx):
-            return idx
-        default:
-            return nil
+        case let .loaded(_, idx): return idx
+        default: return nil
         }
     }
 }

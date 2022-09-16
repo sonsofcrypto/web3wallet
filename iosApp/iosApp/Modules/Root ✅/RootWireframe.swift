@@ -96,9 +96,8 @@ private extension DefaultRootWireframe {
         guard FeatureFlag.showAppsTab.isEnabled else { return }
         if FeatureFlag.embedChatInTab.isEnabled {
             let chatWireframeFactory: ChatWireframeFactory = ServiceDirectory.assembler.resolve()
-            chatWireframeFactory.makeWireframe(
-                presentingIn: tabVc,
-                context: .init(presentationStyle: .embed)
+            chatWireframeFactory.make(
+                tabVc
             ).present()
         } else {
             appsWireframeFactory.makeWireframe(tabVc).present()

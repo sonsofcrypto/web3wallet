@@ -5,15 +5,12 @@
 import UIKit
 
 final class ChatRightCollectionViewCell: UICollectionViewCell {
-    
     @IBOutlet weak var bubbleView: UIView!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var widthLayoutConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-                
         bubbleView.backgroundColor = Theme.colour.backgroundBasePrimary
         bubbleView.layer.cornerRadius = 8
         bubbleView.addConstraints(
@@ -21,7 +18,6 @@ final class ChatRightCollectionViewCell: UICollectionViewCell {
                 .compression(axis: .horizontal, priority: .required)
             ]
         )
-        
         messageLabel.apply(style: .callout)
         messageLabel.textColor = Theme.colour.labelPrimary
         messageLabel.layer.shadowColor = Theme.colour.fillSecondary.cgColor
@@ -34,12 +30,9 @@ final class ChatRightCollectionViewCell: UICollectionViewCell {
         with viewModel: ChatViewModel.Item?,
         and width: CGFloat
     ) {
-
         messageLabel.text = viewModel?.message
         widthLayoutConstraint.constant = width
-        
         if viewModel?.isNewMessage ?? false {
-            
             bubbleView.animateAsIncomeMessage()
         }
     }
