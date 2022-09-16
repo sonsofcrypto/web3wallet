@@ -9,7 +9,7 @@ import web3lib
 
 protocol CultProposalsWireframeFactory {
 
-    func make(_ parent: UIViewController) -> CultProposalsWireframe
+    func make(_ parent: UIViewController?) -> CultProposalsWireframe
 }
 
 // MARK: - DefaultCultProposalsWireframeFactory
@@ -42,7 +42,7 @@ final class DefaultCultProposalsWireframeFactory {
 
 extension DefaultCultProposalsWireframeFactory: CultProposalsWireframeFactory {
 
-    func make(_ parent: UIViewController) -> CultProposalsWireframe {
+    func make(_ parent: UIViewController?) -> CultProposalsWireframe {
         DefaultCultProposalsWireframe(
             parent,
             cultProposalWireframeFactory: cultProposalWireframeFactory,

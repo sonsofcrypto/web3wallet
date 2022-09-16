@@ -8,7 +8,7 @@ import web3lib
 protocol TokenSwapWireframeFactory {
 
     func makeWireframe(
-        presentingIn: UIViewController,
+        presentingIn: UIViewController?,
         context: TokenSwapWireframeContext
     ) -> TokenSwapWireframe
 }
@@ -39,12 +39,12 @@ final class DefaultTokenSwapWireframeFactory {
 extension DefaultTokenSwapWireframeFactory: TokenSwapWireframeFactory {
 
     func makeWireframe(
-        presentingIn: UIViewController,
+        presentingIn: UIViewController?,
         context: TokenSwapWireframeContext
     ) -> TokenSwapWireframe {
         
         DefaultTokenSwapWireframe(
-            presentingIn: presentingIn,
+            presentingIn: presentingIn!,
             context: context,
             tokenPickerWireframeFactory: tokenPickerWireframeFactory,
             confirmationWireframeFactory: confirmationWireframeFactory,

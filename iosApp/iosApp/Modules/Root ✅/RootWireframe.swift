@@ -72,7 +72,7 @@ extension DefaultRootWireframe: RootWireframe {
         keyStoreWireframeFactory.make(vc).present()
         networksWireframeFactory.makeWireframe(vc).present()
         dashboardWireframeFactory.makeWireframe(tabVc).present()
-        degenWireframeFactory.makeWireframe(tabVc).present()
+        degenWireframeFactory.make(tabVc).present()
         nftsDashboardWireframeFactory.makeWireframe(tabVc).present()
         
         presentAppsTabIfNeeded()

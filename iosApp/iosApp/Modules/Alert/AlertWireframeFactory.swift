@@ -7,7 +7,7 @@ import Foundation
 protocol AlertWireframeFactory {
 
     func makeWireframe(
-        _ parent: UIViewController,
+        _ parent: UIViewController?,
         context: AlertContext
     ) -> AlertWireframe
 }
@@ -18,8 +18,8 @@ final class DefaultAlertWireframeFactory {
 
 extension DefaultAlertWireframeFactory: AlertWireframeFactory {
     
-    func makeWireframe(_ parent: UIViewController, context: AlertContext) -> AlertWireframe {
+    func makeWireframe(_ parent: UIViewController?, context: AlertContext) -> AlertWireframe {
         
-        DefaultAlertWireframe(parent: parent, context: context)
+        DefaultAlertWireframe(parent: parent!, context: context)
     }
 }

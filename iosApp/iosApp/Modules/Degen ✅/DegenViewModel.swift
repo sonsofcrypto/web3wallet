@@ -5,27 +5,23 @@
 import Foundation
 
 struct DegenViewModel {
-    
     let sections: [Section]
 }
 
 extension DegenViewModel {
     
     enum Section {
-        
         case header(header: Header)
         case group(items: [Item])
     }
     
     struct Header {
-        
         let title: String
         let isEnabled: Bool
     }
 
     struct Item: Equatable {
-        
-        let icon: Data
+        let iconName: String
         let title: String
         let subtitle: String
         let isEnabled: Bool
@@ -33,9 +29,7 @@ extension DegenViewModel {
 }
 
 extension DAppCategory {
-
     var title: String {
-        
         switch self {
         case .swap:
             return Localized("degen.dappCategory.title.swap")
@@ -57,7 +51,6 @@ extension DAppCategory {
     }
 
     var subTitle: String {
-
         switch self {
         case .swap:
             return Localized("degen.dappCategory.subTitle.swap")
@@ -77,5 +70,4 @@ extension DAppCategory {
             return Localized("degen.dappCategory.subTitle.governance")
         }
     }
-
 }

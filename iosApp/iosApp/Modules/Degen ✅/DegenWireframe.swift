@@ -6,7 +6,6 @@ import UIKit
 import web3lib
 
 enum DegenWireframeDestination {
-    
     case swap
     case cult
     case comingSoon
@@ -18,18 +17,17 @@ protocol DegenWireframe {
 }
 
 final class DefaultDegenWireframe {
-
-    private weak var parent: TabBarController!
+    private weak var parent: UIViewController?
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let cultProposalsWireframeFactory: CultProposalsWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let degenService: DegenService
     private let networksService: NetworksService
 
-    private weak var navigationController: NavigationController!
+    private weak var vc: UIViewController?
 
     init(
-        parent: TabBarController,
+        _ parent: UIViewController,
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         cultProposalsWireframeFactory: CultProposalsWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
@@ -49,18 +47,20 @@ final class DefaultDegenWireframe {
 extension DefaultDegenWireframe: DegenWireframe {
 
     func present() {
-        
         let vc = wireUp()
-        let vcs = (parent.viewControllers ?? []) + [vc]
-        parent.setViewControllers(vcs, animated: false)
+        if let tabVc = parent as? UITabBarController {
+            let vcs = (tabVc.viewControllers ?? []) + [vc]
+            tabVc.setViewControllers(vcs, animated: false)
+        } else {
+            parent?.show(vc, sender: self)
+        }
     }
 
     func navigate(to destination: DegenWireframeDestination) {
-
         switch destination {
         case .swap:
             tokenSwapWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
+                presentingIn: vc,
                 context: .init(
                     presentationStyle: .push,
                     tokenFrom: nil,
@@ -68,15 +68,12 @@ extension DefaultDegenWireframe: DegenWireframe {
                 )
             ).present()
         case .cult:
-            cultProposalsWireframeFactory.make(
-                navigationController
-            ).present()
+            cultProposalsWireframeFactory.make(vc).present()
         case .comingSoon:
-            let wireframe = alertWireframeFactory.makeWireframe(
-                navigationController,
+            alertWireframeFactory.makeWireframe(
+                vc,
                 context: .underConstructionAlert()
-            )
-            wireframe.present()
+            ).present()
         }
     }
 }
@@ -84,7 +81,6 @@ extension DefaultDegenWireframe: DegenWireframe {
 private extension DefaultDegenWireframe {
 
     func wireUp() -> UIViewController {
-        
         let interactor = DefaultDegenInteractor(
             degenService,
             networksService: networksService
@@ -95,18 +91,14 @@ private extension DefaultDegenWireframe {
             interactor: interactor,
             wireframe: self
         )
-
         vc.presenter = presenter
-        
-        let navigationController = NavigationController(rootViewController: vc)
-        self.navigationController = navigationController
-        
-        navigationController.tabBarItem = UITabBarItem(
+        let nc = NavigationController(rootViewController: vc)
+        nc.tabBarItem = UITabBarItem(
             title: Localized("degen"),
             image: "tab_icon_degen".assetImage,
             tag: 1
         )
-        
-        return navigationController
+        self.vc = nc
+        return nc
     }
 }

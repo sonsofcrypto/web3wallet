@@ -5,7 +5,6 @@
 import UIKit
 
 protocol DegenView: AnyObject {
-
     func update(with viewModel: DegenViewModel)
     func popToRootAndRefresh()
 }
@@ -15,7 +14,6 @@ final class DegenViewController: BaseViewController {
     var presenter: DegenPresenter!
 
     @IBOutlet weak var collectionView: CollectionView!
-
     private var backgroundGradientTopConstraint: NSLayoutConstraint?
     private var backgroundGradientHeightConstraint: NSLayoutConstraint?
 
@@ -45,9 +43,7 @@ final class DegenViewController: BaseViewController {
     }
     
     override func viewWillLayoutSubviews() {
-        
         super.viewWillLayoutSubviews()
-        
         updateBackgroundGradientTopConstraint()
         backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
     }
@@ -57,15 +53,12 @@ final class DegenViewController: BaseViewController {
 extension DegenViewController: DegenView {
 
     func update(with viewModel: DegenViewModel) {
-        
         self.viewModel = viewModel
         collectionView?.reloadData()
-        
         updateBackgroundGradient(after: 0.05)
     }
     
     func popToRootAndRefresh() {
-        
         navigationController?.popToRootViewController(animated: false)
         presenter.present()
     }
@@ -74,7 +67,6 @@ extension DegenViewController: DegenView {
 extension DegenViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        
         viewModel?.sections.count ?? 0
     }
     
@@ -82,12 +74,7 @@ extension DegenViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        
-        guard let section = viewModel?.sections[section] else {
-            
-            return 0
-        }
-        
+        guard let section = viewModel?.sections[section] else { return 0 }
         switch section {
         case .header:
             return 1
@@ -100,16 +87,12 @@ extension DegenViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        
         guard let section = viewModel?.sections[indexPath.section] else { fatalError() }
-        
         switch section {
-            
         case let .header(header):
             let cell = collectionView.dequeue(DegenSectionViewCell.self, for: indexPath)
             cell.update(with: header)
             return cell
-            
         case let .group(items):
             let item = items[indexPath.item]
             let cell = collectionView.dequeue(DegenViewCell.self, for: indexPath)
@@ -125,11 +108,8 @@ extension DegenViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-
         guard let section = viewModel?.sections[indexPath.section] else { return }
-        
         guard case let DegenViewModel.Section.group(items) = section else { return }
-        
         if items[indexPath.row].isEnabled {
             presenter.handle(.didSelectCategory(idx: indexPath.item))
         } else {
@@ -138,7 +118,6 @@ extension DegenViewController: UICollectionViewDelegate {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         updateBackgroundGradientTopConstraint()
     }
 }
@@ -146,14 +125,11 @@ extension DegenViewController: UICollectionViewDelegate {
 extension DegenViewController {
     
     func configureUI() {
-        
         collectionView.setCollectionViewLayout(
             makeCompositionalLayout(),
             animated: false
         )
-
         collectionView.overScrollView.image = "overscroll_degen".assetImage
-        
         addCustomBackgroundGradientView()
     }
 
@@ -162,21 +138,15 @@ extension DegenViewController {
     }
     
     func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
-        
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, environment in
-            
             guard let self = self else { return nil }
-            
             guard let viewModel = self.viewModel else { return nil }
-            
             switch viewModel.sections[sectionIndex] {
-                
             case .header:
                 return self.makeCollectionLayoutSection(
                     withBackgroundDecoratorView: false,
                     sectionIndex: sectionIndex
                 )
-
             case .group:
                 return self.makeCollectionLayoutSection(
                     withBackgroundDecoratorView: true,
@@ -195,16 +165,11 @@ extension DegenViewController {
         withBackgroundDecoratorView addBackgroundDecorator: Bool,
         sectionIndex: Int
     ) -> NSCollectionLayoutSection {
-        
-        // Item
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(1)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        //item.contentInsets = .paddingHalf
-        
-        // Group
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(1)
@@ -212,9 +177,6 @@ extension DegenViewController {
         let outerGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize, subitems: [item]
         )
-        //outerGroup.contentInsets = .paddingHalf
-        
-        // Section
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = sectionIndex.isMultiple(of: 2) ?
             .init(
@@ -229,7 +191,6 @@ extension DegenViewController {
                 bottom: sectionIndex == 0 ? 0 : Theme.constant.padding,
                 trailing: Theme.constant.padding
             )
-        
         let headerItemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(1)
@@ -240,16 +201,13 @@ extension DegenViewController {
             alignment: .top
         )
         section.boundarySupplementaryItems = [headerItem]
-        
         if addBackgroundDecorator {
-
             let backgroundItem = NSCollectionLayoutDecorationItem.background(
                 elementKind: "background"
             )
             backgroundItem.contentInsets = .padding
             section.decorationItems = [backgroundItem]
         }
-        
         return section
     }
 }
@@ -257,27 +215,21 @@ extension DegenViewController {
 extension DegenViewController: UIScrollViewDelegate {
 
     func addCustomBackgroundGradientView() {
-
         // 1 - Add gradient
         let backgroundGradient = ThemeGradientView()
         view.insertSubview(backgroundGradient, at: 0)
-        
         backgroundGradient.translatesAutoresizingMaskIntoConstraints = false
-        
         let topConstraint = backgroundGradient.topAnchor.constraint(
             equalTo: collectionView.topAnchor
         )
         self.backgroundGradientTopConstraint = topConstraint
         topConstraint.isActive = true
-
         backgroundGradient.leadingAnchor.constraint(
             equalTo: view.leadingAnchor
         ).isActive = true
-
         backgroundGradient.trailingAnchor.constraint(
             equalTo: view.trailingAnchor
         ).isActive = true
-
         let heightConstraint = backgroundGradient.heightAnchor.constraint(
             equalToConstant: backgroundGradientHeight
         )
@@ -286,18 +238,14 @@ extension DegenViewController: UIScrollViewDelegate {
     }
 
     var backgroundGradientHeight: CGFloat {
-        
         if collectionView.frame.size.height > collectionView.contentSize.height {
-            
             return collectionView.frame.size.height
         } else {
-            
             return collectionView.contentSize.height
         }
     }
     
     func updateBackgroundGradient(after delay: TimeInterval) {
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
             guard let self = self else { return }
             self.updateBackgroundGradient()
@@ -305,25 +253,21 @@ extension DegenViewController: UIScrollViewDelegate {
     }
     
     func updateBackgroundGradient() {
-        
         updateBackgroundGradientTopConstraint()
         backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
     }
     
     func updateBackgroundGradientTopConstraint() {
-        
         // NOTE: Doing this guard since this method can be called before the view has called
         // view did load (because of networksService sending an update) that a network has
         // been selected
         guard let collectionView = collectionView else { return }
-        
         let constant: CGFloat
         if collectionView.contentOffset.y < 0 {
             constant = 0
         } else {
             constant = -collectionView.contentOffset.y
         }
-        
         guard constant > collectionView.frame.size.height - collectionView.contentSize.height else { return }
         backgroundGradientTopConstraint?.constant =  constant
     }

@@ -18,7 +18,7 @@ protocol CultProposalsWireframe {
 }
 
 final class DefaultCultProposalsWireframe {
-    private weak var parent: UIViewController!
+    private weak var parent: UIViewController?
     private let cultProposalWireframeFactory: CultProposalWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
@@ -26,10 +26,10 @@ final class DefaultCultProposalsWireframe {
     private let cultService: CultService
     private let walletService: WalletService
 
-    private weak var vc: UIViewController!
+    private weak var vc: UIViewController?
 
     init(
-        _ parent: UIViewController,
+        _ parent: UIViewController?,
         cultProposalWireframeFactory: CultProposalWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
@@ -51,7 +51,7 @@ extension DefaultCultProposalsWireframe: CultProposalsWireframe {
 
     func present() {
         let vc = wireUp()
-        parent.show(vc, sender: self)
+        parent?.show(vc, sender: self)
     }
 
     func navigate(to destination: CultProposalsWireframeDestination) {
@@ -73,7 +73,7 @@ extension DefaultCultProposalsWireframe: CultProposalsWireframe {
         case let .alert(context):
             alertWireframeFactory.makeWireframe(vc, context: context).present()
         case .getCult:
-            guard let presentingIn = vc.navigationController else { return }
+            guard let presentingIn = vc?.navigationController else { return }
             // TODO: Review this - we only allow CULT on ETH Mainnet atm...
             let ethNetwork = Web3Network.from(Network.Companion().ethereum(), isOn: true)
             let cultToken = Web3Token.from(

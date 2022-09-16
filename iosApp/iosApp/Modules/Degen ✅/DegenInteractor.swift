@@ -10,7 +10,6 @@ protocol DegenInteractorLister: AnyObject {
 }
 
 protocol DegenInteractor: AnyObject {
-
     var categoriesActive: [DAppCategory] { get }
     var categoriesInactive: [DAppCategory] { get }
     func addListener(_ listener: DegenInteractorLister)
@@ -18,9 +17,9 @@ protocol DegenInteractor: AnyObject {
 }
 
 final class DefaultDegenInteractor {
-
     private let degenService: DegenService
     private let networksService: NetworksService
+    
     private var listeners: [WeakContainer] = []
 
     init(
@@ -32,7 +31,6 @@ final class DefaultDegenInteractor {
     }
     
     deinit {
-        
         print("[DEBUG][Interactor] deinit \(String(describing: self))")
     }
 }
@@ -40,18 +38,13 @@ final class DefaultDegenInteractor {
 extension DefaultDegenInteractor: DegenInteractor {
 
     var categoriesActive: [DAppCategory] {
-        
         degenService.categoriesActive
     }
 
     var categoriesInactive: [DAppCategory] {
-        
         degenService.categoriesInactive
     }
-}
-
-extension DefaultDegenInteractor: NetworksListener {
-
+    
     func addListener(_ listener: DegenInteractorLister) {
         listeners = [WeakContainer(listener)]
         networksService.add(listener__: self)
@@ -61,16 +54,22 @@ extension DefaultDegenInteractor: NetworksListener {
         listeners = []
         networksService.remove(listener__: self)
     }
+}
 
-    private func emit(_ event: NetworksEvent) {
-        listeners.forEach { $0.value?.handle(networkEvent: event) }
-    }
+extension DefaultDegenInteractor: NetworksListener {
 
     func handle(event_: NetworksEvent) {
         emit(event_)
     }
+}
 
-    private class WeakContainer {
+private extension DefaultDegenInteractor {
+    
+    func emit(_ event: NetworksEvent) {
+        listeners.forEach { $0.value?.handle(networkEvent: event) }
+    }
+
+    class WeakContainer {
         weak var value: DegenInteractorLister?
 
         init(_ value: DegenInteractorLister) {

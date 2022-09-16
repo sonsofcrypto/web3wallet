@@ -9,9 +9,7 @@ final class DegenSectionViewCell: UICollectionViewCell {
     @IBOutlet weak var label: UILabel!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         label.apply(style: .body, weight: .bold)
     }
 }
@@ -19,7 +17,6 @@ final class DegenSectionViewCell: UICollectionViewCell {
 extension DegenSectionViewCell {
 
     func update(with viewModel: DegenViewModel.Header) {
-        
         label.text = viewModel.title
         label.textColor = viewModel.isEnabled ?
         Theme.colour.labelPrimary :

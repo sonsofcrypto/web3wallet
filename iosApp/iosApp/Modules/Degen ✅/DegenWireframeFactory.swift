@@ -5,13 +5,15 @@
 import UIKit
 import web3lib
 
-protocol DegenWireframeFactory {
+// MARK: - DegenWireframeFactory
 
-    func makeWireframe(_ parent: TabBarController) -> DegenWireframe
+protocol DegenWireframeFactory {
+    func make(_ parent: TabBarController) -> DegenWireframe
 }
 
-final class DefaultDegenWireframeFactory {
+// MARK: - DefaultDegenWireframeFactory
 
+final class DefaultDegenWireframeFactory {
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let cultProposalsWireframeFactory: CultProposalsWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
@@ -35,10 +37,9 @@ final class DefaultDegenWireframeFactory {
 
 extension DefaultDegenWireframeFactory: DegenWireframeFactory {
 
-    func makeWireframe(_ parent: TabBarController) -> DegenWireframe {
-        
+    func make(_ parent: TabBarController) -> DegenWireframe {
         DefaultDegenWireframe(
-            parent: parent,
+            parent,
             tokenSwapWireframeFactory: tokenSwapWireframeFactory,
             cultProposalsWireframeFactory: cultProposalsWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
@@ -47,3 +48,21 @@ extension DefaultDegenWireframeFactory: DegenWireframeFactory {
         )
     }
 }
+
+// MARK: - Assembler
+
+final class DegenWireframeFactoryAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> DegenWireframeFactory in
+            DefaultDegenWireframeFactory(
+                tokenSwapWireframeFactory: resolver.resolve(),
+                cultProposalsWireframeFactory: resolver.resolve(),
+                alertWireframeFactory: resolver.resolve(),
+                degenService: resolver.resolve(),
+                networksService: resolver.resolve()
+            )
+        }
+    }
+}
+

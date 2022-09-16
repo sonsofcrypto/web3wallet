@@ -8,7 +8,7 @@ import web3lib
 protocol ConfirmationWireframeFactory {
 
     func makeWireframe(
-        presentingIn: UIViewController,
+        presentingIn: UIViewController?,
         context: ConfirmationWireframeContext
     ) -> ConfirmationWireframe
 }
@@ -42,11 +42,11 @@ final class DefaultConfirmationWireframeFactory {
 extension DefaultConfirmationWireframeFactory: ConfirmationWireframeFactory {
 
     func makeWireframe(
-        presentingIn: UIViewController,
+        presentingIn: UIViewController?,
         context: ConfirmationWireframeContext
     ) -> ConfirmationWireframe {
         DefaultConfirmationWireframe(
-            presentingIn: presentingIn,
+            presentingIn: presentingIn!,
             context: context,
             walletService: walletService,
             authenticateWireframeFactory: authenticateWireframeFactory,
