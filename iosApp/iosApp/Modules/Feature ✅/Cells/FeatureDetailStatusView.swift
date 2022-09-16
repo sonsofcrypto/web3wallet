@@ -10,9 +10,7 @@ final class FeatureDetailStatusView: UIView {
     private weak var statusView: CultProposalStatus!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         let statusView = CultProposalStatus()
         statusView.backgroundColor = Theme.colour.separatorTransparent
         statusView.label.numberOfLines = 0
@@ -30,7 +28,6 @@ final class FeatureDetailStatusView: UIView {
     }
     
     func update(with status: FeatureViewModel.Details.Status) {
-        
         statusView.text = status.title
         statusView.backgroundColor = status.color
     }

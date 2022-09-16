@@ -12,27 +12,20 @@ final class FeatureDetailSummaryView: UIView {
     @IBOutlet weak var infoLabel: UILabel!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         backgroundColor = Theme.colour.cellBackground
         layer.cornerRadius = Theme.constant.cornerRadius
-                
         titleLabel.apply(style: .headline, weight: .bold)
-        
         separatorView.backgroundColor = Theme.colour.separatorTransparent
         stackView.setCustomSpacing(Theme.constant.padding * 0.75, after: titleLabel)
         stackView.setCustomSpacing(Theme.constant.padding * 0.75, after: separatorView)
-
         infoLabel.apply(style: .body)
     }
 
     func update(
         with summary: FeatureViewModel.Details.Summary
     ) {
-        
         titleLabel.text = summary.title
-        
         infoLabel.text = summary.summary
     }
 }

@@ -466,7 +466,6 @@
 		1CD844002874257500E6D359 /* SwitchTextInputCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD843FF2874257500E6D359 /* SwitchTextInputCollectionViewCell.swift */; };
 		1CDED5D5289700FF00DF34A7 /* FeatureWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5D4289700FF00DF34A7 /* FeatureWireframe.swift */; };
 		1CDED5D72897010600DF34A7 /* FeatureWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5D62897010600DF34A7 /* FeatureWireframeFactory.swift */; };
-		1CDED5D92897010C00DF34A7 /* FeatureWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5D82897010C00DF34A7 /* FeatureWireframeFactoryAssembler.swift */; };
 		1CDED5DB2897011300DF34A7 /* FeaturePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5DA2897011300DF34A7 /* FeaturePresenter.swift */; };
 		1CDED5DD2897011700DF34A7 /* FeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5DC2897011700DF34A7 /* FeatureView.swift */; };
 		1CDED5E12897012400DF34A7 /* FeatureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5E02897012400DF34A7 /* FeatureViewModel.swift */; };
@@ -1063,7 +1062,6 @@
 		1CD843FF2874257500E6D359 /* SwitchTextInputCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTextInputCollectionViewCell.swift; sourceTree = "<group>"; };
 		1CDED5D4289700FF00DF34A7 /* FeatureWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureWireframe.swift; sourceTree = "<group>"; };
 		1CDED5D62897010600DF34A7 /* FeatureWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureWireframeFactory.swift; sourceTree = "<group>"; };
-		1CDED5D82897010C00DF34A7 /* FeatureWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1CDED5DA2897011300DF34A7 /* FeaturePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturePresenter.swift; sourceTree = "<group>"; };
 		1CDED5DC2897011700DF34A7 /* FeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureView.swift; sourceTree = "<group>"; };
 		1CDED5E02897012400DF34A7 /* FeatureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureViewModel.swift; sourceTree = "<group>"; };
@@ -1520,7 +1518,7 @@
 				1C67201928870FA900C5F044 /* Confirmation */,
 				1C60C20D285724D0003BE25D /* Dashboard */,
 				1C60C272285724D0003BE25D /* Degen */,
-				1CDED5D3289700DA00DF34A7 /* Feature */,
+				1CDED5D3289700DA00DF34A7 /* Feature ✅ */,
 				1C0643D22892FC9B00643C15 /* Features ✅ */,
 				1C60C1E1285724D0003BE25D /* KeyStore ✅ */,
 				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
@@ -2299,7 +2297,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1CDED5D3289700DA00DF34A7 /* Feature */ = {
+		1CDED5D3289700DA00DF34A7 /* Feature ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1CDED5E32897016E00DF34A7 /* Feature.storyboard */,
@@ -2308,10 +2306,9 @@
 				1CDED5E02897012400DF34A7 /* FeatureViewModel.swift */,
 				1CDED5D4289700FF00DF34A7 /* FeatureWireframe.swift */,
 				1CDED5D62897010600DF34A7 /* FeatureWireframeFactory.swift */,
-				1CDED5D82897010C00DF34A7 /* FeatureWireframeFactoryAssembler.swift */,
 				1CDED5E22897012F00DF34A7 /* Cells */,
 			);
-			path = Feature;
+			path = "Feature ✅";
 			sourceTree = "<group>";
 		};
 		1CDED5E22897012F00DF34A7 /* Cells */ = {
@@ -3000,7 +2997,6 @@
 				1C60C325285724D1003BE25D /* AppsView.swift in Sources */,
 				1C60C34E285724D1003BE25D /* CultProposalCellPending.swift in Sources */,
 				1C0643DC2892FCC800643C15 /* FeaturesPresenter.swift in Sources */,
-				1CDED5D92897010C00DF34A7 /* FeatureWireframeFactoryAssembler.swift in Sources */,
 				1CDED5F22897ED7800DF34A7 /* SettingsSectionHeaderViewCell.swift in Sources */,
 				1C60C2D9285724D0003BE25D /* MnemonicNewView.swift in Sources */,
 				1C60C32F285724D1003BE25D /* NFTsCollectionView+NFTs.swift in Sources */,

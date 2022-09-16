@@ -54,10 +54,8 @@ extension DefaultFeaturesWireframe: FeaturesWireframe {
         case let .vote(feature):
             FeatureShareHelper().shareVote(feature)
         case let .feature(feature, features):
-            featureWireframeFactory.makeWireframe(
-                parent: vc,
-                context: .init(feature: feature, features: features)
-            ).present()
+            let context = FeatureWireframeContext(feature: feature, features: features)
+            featureWireframeFactory.make(vc, context: context).present()
         case .dismiss:
             vc?.popOrDismiss()
         }

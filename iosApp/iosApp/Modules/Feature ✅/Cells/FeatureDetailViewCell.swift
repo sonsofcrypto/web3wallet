@@ -5,7 +5,6 @@
 import UIKit
 
 final class FeatureDetailViewCell: UICollectionViewCell {
-    
     @IBOutlet weak var imageView: FeatureDetailImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var statusView: FeatureDetailStatusView!
@@ -13,7 +12,6 @@ final class FeatureDetailViewCell: UICollectionViewCell {
     @IBOutlet weak var voteButton: Button!
     
     struct Handler {
-        
         let onVote: (String) -> Void
     }
 
@@ -21,11 +19,8 @@ final class FeatureDetailViewCell: UICollectionViewCell {
     private var handler: Handler!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         titleLabel.apply(style: .title3)
-        
         voteButton.style = .primary
         voteButton.addTarget(self, action: #selector(voteTapped), for: .touchUpInside)
     }
@@ -34,17 +29,13 @@ final class FeatureDetailViewCell: UICollectionViewCell {
         with viewModel: FeatureViewModel.Details,
         handler: Handler
     ) -> Self {
-        
         self.viewModel = viewModel
         self.handler = handler
-        
         imageView.update(with: viewModel.imageUrl)
         titleLabel.text = viewModel.name
         statusView.update(with: viewModel.status)
         summaryView.update(with: viewModel.summary)
-        
         voteButton.setTitle(viewModel.voteButton, for: .normal)
-        
         return self
     }
 }
@@ -52,7 +43,6 @@ final class FeatureDetailViewCell: UICollectionViewCell {
 private extension FeatureDetailViewCell  {
     
     @objc func voteTapped() {
-        
         handler.onVote(viewModel.id)
     }
 }

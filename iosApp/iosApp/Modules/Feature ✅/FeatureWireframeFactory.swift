@@ -4,24 +4,39 @@
 
 import UIKit
 
+// MARK: - FeatureWireframeFactory
+
 protocol FeatureWireframeFactory {
 
-    func makeWireframe(
-        parent: UIViewController?,
+    func make(
+        _ parent: UIViewController?,
         context: FeatureWireframeContext
     ) -> FeatureWireframe
 }
 
+// MARK: - DefaultFeatureWireframeFactory
+
 final class DefaultFeatureWireframeFactory: FeatureWireframeFactory {
 
-    func makeWireframe(
-        parent: UIViewController?,
+    func make(
+        _ parent: UIViewController?,
         context: FeatureWireframeContext
     ) -> FeatureWireframe {
-        
         DefaultFeatureWireframe(
             parent: parent,
             context: context
         )
     }
 }
+
+// MARK: - Assembler
+
+final class FeatureWireframeFactoryAssembler: AssemblerComponent {
+
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> FeatureWireframeFactory in
+            DefaultFeatureWireframeFactory()
+        }
+    }
+}
+

@@ -6,13 +6,11 @@ import Foundation
 import UIKit
 
 struct FeatureViewModel {
-
     let title: String
     let details: [Details]
     let selectedIndex: Int
 
     struct Details {
-        
         let id: String
         let name: String
         let imageUrl: String
@@ -21,13 +19,11 @@ struct FeatureViewModel {
         let voteButton: String
 
         struct Status {
-            
             let title: String
             let color: UIColor // HEX
         }
         
         struct Summary {
-            
             let title: String
             let summary: String
         }
