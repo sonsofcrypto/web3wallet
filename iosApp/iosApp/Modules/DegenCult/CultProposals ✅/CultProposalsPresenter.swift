@@ -5,7 +5,6 @@
 import Foundation
 
 enum CultProposalsPresenterEvent {
-    
     case filterBySection(sectionType: CultProposalsViewModel.Section.`Type`)
     case filterBy(text: String)
     case approveProposal(id: String)
@@ -14,52 +13,44 @@ enum CultProposalsPresenterEvent {
 }
 
 protocol CultProposalsPresenter {
-
     func present()
     func handle(_ event: CultProposalsPresenterEvent)
 }
 
 final class DefaultCultProposalsPresenter {
 
-    private let interactor: CultProposalsInteractor
-    private let wireframe: CultProposalsWireframe
-
     private weak var view: CultProposalsView?
+    private let wireframe: CultProposalsWireframe
+    private let interactor: CultProposalsInteractor
     
     private var pendingProposals = [CultProposal]()
     private var closedProposals = [CultProposal]()
-    
     private var filterSectionType: CultProposalsViewModel.Section.`Type` = .pending
     private var filterText: String = ""
 
     init(
         view: CultProposalsView,
-        interactor: CultProposalsInteractor,
-        wireframe: CultProposalsWireframe
+        wireframe: CultProposalsWireframe,
+        interactor: CultProposalsInteractor
     ) {
         self.view = view
-        self.interactor = interactor
         self.wireframe = wireframe
+        self.interactor = interactor
     }
 }
 
 extension DefaultCultProposalsPresenter: CultProposalsPresenter {
 
     func present() {
-        
         if pendingProposals.isEmpty && closedProposals.isEmpty {
-            
             view?.update(with: .loading)
         }
-        
         interactor.fetchProposals { [weak self] result in
             guard let self = self else { return }
             switch result {
-                
             case let .success(proposals):
                 self.prepareProposals(with: proposals)
                 self.updateView()
-                
             case let .failure(error):
                 self.view?.update(
                     with: .error(
@@ -77,32 +68,17 @@ extension DefaultCultProposalsPresenter: CultProposalsPresenter {
     }
 
     func handle(_ event: CultProposalsPresenterEvent) {
-        
         switch event {
-            
         case let .filterBySection(sectionType):
-            
-            self.filterSectionType = sectionType
+            filterSectionType = sectionType
             updateView()
-            
         case let .filterBy(text):
-            
-            self.filterText = text
+            filterText = text
             updateView()
-
         case let .selectProposal(id):
-            
             guard let proposal = findProposal(with: id) else { return }
-            
             let proposals = filterSectionType == .pending ? pendingProposals : closedProposals
-            
-            wireframe.navigate(
-                to: .proposal(
-                    proposal: proposal,
-                    proposals: proposals
-                )
-            )
-            
+            wireframe.navigate(to: .proposal(proposal: proposal, proposals: proposals))
         case let .approveProposal(id):
             castVote(proposalId: id, approve: true)
         case let .rejectProposal(id):
@@ -116,43 +92,32 @@ private extension DefaultCultProposalsPresenter {
     func prepareProposals(
         with proposals: [CultProposal]
     ) {
-        
         pendingProposals = proposals.filter {
             $0.status == .pending
-        }.sorted {
-            $0.endDate < $1.endDate
-        }
+        }.sorted { $0.endDate < $1.endDate }
         closedProposals = proposals.filter {
             $0.status == .closed
-        }.sorted {
-            $0.endDate > $1.endDate
-        }
+        }.sorted { $0.endDate > $1.endDate }
         updateView()
     }
     
     func updateView() {
-        
-        view?.update(
-            with: viewModel()
-        )
+        view?.update(with: viewModel())
     }
 
     func viewModel() -> CultProposalsViewModel {
-        
         let pendingProposals = pendingProposals.filter {
             [weak self] in
             guard let self = self else { return false }
             guard !self.filterText.isEmpty else { return true }
             return $0.title.contains(self.filterText)
         }.sorted { $0.endDate < $1.endDate }
-        
         let closedProposals = closedProposals.filter {
             [weak self] in
             guard let self = self else { return false }
             guard !self.filterText.isEmpty else { return true }
             return $0.title.contains(self.filterText)
         }.sorted { $0.endDate > $1.endDate }
-        
         let pendingSection: CultProposalsViewModel.Section = .init(
             title: Localized("pending") + " (\(pendingProposals.count))",
             type: .pending,
@@ -171,7 +136,6 @@ private extension DefaultCultProposalsPresenter {
                 text: Localized("cult.proposals.footer.text")
             )
         )
-        
         let section: CultProposalsViewModel.Section
         switch filterSectionType {
         case .pending:
@@ -179,7 +143,6 @@ private extension DefaultCultProposalsPresenter {
         case .closed:
             section = closedSection
         }
-        
         return .loaded(
             sections: [section],
             selectedSectionType: filterSectionType
@@ -187,10 +150,8 @@ private extension DefaultCultProposalsPresenter {
     }
 
     func viewModel(from cultProposal: CultProposal) -> CultProposalsViewModel.Item {
-        
         let total = cultProposal.approved + cultProposal.rejeceted
         let approved = total == 0 ? 0 : cultProposal.approved / total
-
         return .init(
             id: cultProposal.id,
             title: cultProposal.title,
@@ -223,18 +184,15 @@ private extension DefaultCultProposalsPresenter {
     }
     
     func castVote(proposalId id: String, approve: Bool) {
-        
         guard interactor.hasCultBalance else {
-            
-            wireframe.navigate(to: .alert(context: makeNoCultAlertContext()))
+            wireframe.navigate(to: .alert(context: noCultAlertContext()))
             return
         }
         guard let proposal = findProposal(with: id) else { return }
         wireframe.navigate(to: .castVote(proposal: proposal, approve: approve))
     }
     
-    func makeNoCultAlertContext() -> AlertContext {
-        
+    func noCultAlertContext() -> AlertContext {
         .init(
             title: Localized("cult.proposals.alert.noCult.title"),
             media: .image(named: "cult-dao-big-icon", size: .init(length: 100)),
@@ -256,7 +214,6 @@ private extension DefaultCultProposalsPresenter {
     }
     
     @objc func getCultTapped() {
-        
         view?.dismiss(
             animated: true,
             completion: { [weak self] in
@@ -264,7 +221,5 @@ private extension DefaultCultProposalsPresenter {
                 self.wireframe.navigate(to: .getCult)
             }
         )
-        
     }
 }
-

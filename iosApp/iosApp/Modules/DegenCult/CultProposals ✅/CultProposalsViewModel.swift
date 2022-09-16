@@ -14,7 +14,6 @@ enum CultProposalsViewModel {
 extension CultProposalsViewModel {
     
     struct Section {
-        
         let title: String
         let type: `Type`
         let items: [Item]
@@ -26,14 +25,12 @@ extension CultProposalsViewModel {
         }
         
         struct Footer {
-            
             let imageName: String
             let text: String
         }
     }
 
     struct Item {
-        
         let id: String
         let title: String
         let approved: Vote
@@ -43,14 +40,12 @@ extension CultProposalsViewModel {
         let endDate: Date
         
         struct Vote {
-            
             let name: String
             let value: Double
             let total: Double
             let type: `Type`
             
             enum `Type` {
-                
                 case approved
                 case rejected
             }
@@ -59,28 +54,11 @@ extension CultProposalsViewModel {
 }
 
 extension CultProposalsViewModel {
-
-    struct Error {
-        
-        let title: String
-        let body: String
-        let actions: [String]
-    }
-}
-
-extension CultProposalsViewModel {
+    var title: String { Localized("cult.proposals.title") }
     
-    var title: String {
-        Localized("cult.proposals.title")
-    }
-    
-    var titleIcon: Data {
-        
-        "degen-cult-icon".assetImage!.pngData()!
-    }
+    var titleIcon: Data { "degen-cult-icon".assetImage!.pngData()! }
 
     var sections: [CultProposalsViewModel.Section] {
-        
         switch self {
         case let .loaded(sections, _):
             return sections
@@ -90,7 +68,6 @@ extension CultProposalsViewModel {
     }
     
     var selectedSectionType: CultProposalsViewModel.Section.`Type` {
-        
         switch self {
         case let .loaded(_, type):
             return type

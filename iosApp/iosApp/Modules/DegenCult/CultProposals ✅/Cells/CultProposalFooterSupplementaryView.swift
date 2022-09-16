@@ -10,9 +10,7 @@ final class CultProposalFooterSupplementaryView: UICollectionReusableView {
     private weak var label: UILabel!
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
-        
         configureUI()
     }
     
@@ -21,7 +19,6 @@ final class CultProposalFooterSupplementaryView: UICollectionReusableView {
     }
     
     func configureUI() {
-        
         let imageView = UIImageView()
         imageView.addConstraints(
             [
@@ -41,12 +38,10 @@ final class CultProposalFooterSupplementaryView: UICollectionReusableView {
         )
         imageView.contentMode = .scaleAspectFit
         self.imageView = imageView
-        
         let label = UILabel()
         label.apply(style: .title3, weight: .bold)
         label.textAlignment = .center
         self.label = label
-
         let hStack = VStackView([imageView, label])
         addSubview(hStack)
         hStack.addConstraints(
@@ -65,7 +60,6 @@ final class CultProposalFooterSupplementaryView: UICollectionReusableView {
 extension CultProposalFooterSupplementaryView {
 
     func update(with viewModel: CultProposalsViewModel.Section.Footer) {
-        
         imageView.image = viewModel.imageName.assetImage
         label.text = viewModel.text
     }

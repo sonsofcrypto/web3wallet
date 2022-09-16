@@ -10,10 +10,8 @@ final class CultProposalVoteView: UIView {
     private(set) var progress: Float = 0.5 {
         didSet { setNeedsLayout() }
     }
-
     private lazy var textLabel: UILabel = UILabel(with: .callout)
     private lazy var pctLabel: UILabel = UILabel(with: .callout)
-
     private lazy var progressView: UIView = {
         let view = UIView(frame: bounds)
         view.layer.cornerRadius = Theme.constant.cornerRadiusSmall
@@ -28,36 +26,26 @@ final class CultProposalVoteView: UIView {
     }()
 
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         backgroundColor = Theme.colour.fillQuaternary
         layer.cornerRadius = Theme.constant.cornerRadiusSmall
     }
 
     func update(viewModel: CultProposalsViewModel.Item.Vote) {
-        
         textLabel.text = viewModel.name
         pctLabel.text = NumberFormatter.pct.string(from: Float(viewModel.value))
         progress = Float(viewModel.value)
-        
         switch viewModel.type {
-            
         case .approved:
             progressView.backgroundColor = Theme.colour.candleGreen
         case .rejected:
             progressView.backgroundColor = Theme.colour.candleRed
         }
-        
-
     }
 
     override func layoutSubviews() {
-        
         super.layoutSubviews()
-        
         stack.frame = bounds.insetBy(dx: Theme.constant.padding, dy: 0)
-        
         progressView.frame = CGRect(
             origin: .zero,
             size: CGSize(

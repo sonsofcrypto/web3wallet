@@ -334,6 +334,6 @@ private extension DefaultDeepLinkHandler {
     func openCultProposals() {
         guard let degenNavController = degenNavController else { return }
         let factory: CultProposalsWireframeFactory = ServiceDirectory.assembler.resolve()
-        factory.makeWireframe(degenNavController).present()
+        factory.make(degenNavController).present()
     }
 }

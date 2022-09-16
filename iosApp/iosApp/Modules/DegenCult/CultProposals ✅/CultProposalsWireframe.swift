@@ -6,7 +6,6 @@ import UIKit
 import web3lib
 
 enum CultProposalsWireframeDestination {
-    
     case proposal(proposal: CultProposal, proposals: [CultProposal])
     case castVote(proposal: CultProposal, approve: Bool)
     case alert(context: AlertContext)
@@ -19,7 +18,6 @@ protocol CultProposalsWireframe {
 }
 
 final class DefaultCultProposalsWireframe {
-
     private weak var parent: UIViewController!
     private let cultProposalWireframeFactory: CultProposalWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
@@ -31,7 +29,7 @@ final class DefaultCultProposalsWireframe {
     private weak var vc: UIViewController!
 
     init(
-        parent: UIViewController,
+        _ parent: UIViewController,
         cultProposalWireframeFactory: CultProposalWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
@@ -52,23 +50,17 @@ final class DefaultCultProposalsWireframe {
 extension DefaultCultProposalsWireframe: CultProposalsWireframe {
 
     func present() {
-        
         let vc = wireUp()
-        self.vc = vc
         parent.show(vc, sender: self)
     }
 
     func navigate(to destination: CultProposalsWireframeDestination) {
-
         switch destination {
-            
         case let .proposal(proposal, proposals):
-            
             cultProposalWireframeFactory.makeWireframe(
                 parent: vc,
                 context: .init(proposal: proposal, proposals: proposals)
             ).present()
-            
         case let .castVote(proposal, approve):
             confirmationWireframeFactory.makeWireframe(
                 presentingIn: vc,
@@ -78,15 +70,10 @@ extension DefaultCultProposalsWireframe: CultProposalsWireframe {
                     )
                 )
             ).present()
-            
         case let .alert(context):
-            
             alertWireframeFactory.makeWireframe(vc, context: context).present()
-            
         case .getCult:
-            
             guard let presentingIn = vc.navigationController else { return }
-            
             // TODO: Review this - we only allow CULT on ETH Mainnet atm...
             let ethNetwork = Web3Network.from(Network.Companion().ethereum(), isOn: true)
             let cultToken = Web3Token.from(
@@ -107,26 +94,23 @@ extension DefaultCultProposalsWireframe: CultProposalsWireframe {
     }
 }
 
-extension DefaultCultProposalsWireframe {
+private extension DefaultCultProposalsWireframe {
 
-    private func wireUp() -> UIViewController {
-        
+    func wireUp() -> UIViewController {
         let vc: CultProposalsViewController = UIStoryboard(
             .cultProposals
         ).instantiate()
-        
         let interactor = DefaultCultProposalsInteractor(
             cultService,
             walletService: walletService
         )
-        
         let presenter = DefaultCultProposalsPresenter(
             view: vc,
-            interactor: interactor,
-            wireframe: self
+            wireframe: self,
+            interactor: interactor
         )
-
         vc.presenter = presenter
+        self.vc = vc
         return vc
     }
 }

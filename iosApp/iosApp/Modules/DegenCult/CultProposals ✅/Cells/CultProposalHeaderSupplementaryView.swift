@@ -9,9 +9,7 @@ final class CultProposalHeaderSupplementaryView: UICollectionReusableView {
     private weak var label: UILabel!
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
-        
         configureUI()
     }
     
@@ -20,7 +18,6 @@ final class CultProposalHeaderSupplementaryView: UICollectionReusableView {
     }
     
     func configureUI() {
-        
         let label = UILabel()
         label.apply(style: .title3, weight: .bold)
         self.addSubview(label)
@@ -48,7 +45,6 @@ final class CultProposalHeaderSupplementaryView: UICollectionReusableView {
 extension CultProposalHeaderSupplementaryView {
 
     func update(with viewModel: CultProposalsViewModel.Section) {
-        
         label.text = viewModel.title
     }
 }

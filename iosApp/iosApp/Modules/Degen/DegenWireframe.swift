@@ -68,7 +68,7 @@ extension DefaultDegenWireframe: DegenWireframe {
                 )
             ).present()
         case .cult:
-            cultProposalsWireframeFactory.makeWireframe(
+            cultProposalsWireframeFactory.make(
                 navigationController
             ).present()
         case .comingSoon:

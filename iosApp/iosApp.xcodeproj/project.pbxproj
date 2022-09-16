@@ -262,7 +262,6 @@
 		1C60C34D285724D1003BE25D /* CultProposalVoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C28F285724D0003BE25D /* CultProposalVoteView.swift */; };
 		1C60C34E285724D1003BE25D /* CultProposalCellPending.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C290285724D0003BE25D /* CultProposalCellPending.swift */; };
 		1C60C34F285724D1003BE25D /* CultProposalsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C291285724D0003BE25D /* CultProposalsWireframe.swift */; };
-		1C60C350285724D1003BE25D /* CultProposalsWireframeFactoryAssemler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C292285724D0003BE25D /* CultProposalsWireframeFactoryAssemler.swift */; };
 		1C60C351285724D1003BE25D /* CultProposalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C293285724D0003BE25D /* CultProposalsView.swift */; };
 		1C60C352285724D1003BE25D /* CultProposalsWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C294285724D0003BE25D /* CultProposalsWireframeFactory.swift */; };
 		1C60C353285724D1003BE25D /* CultProposalsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C295285724D0003BE25D /* CultProposalsViewModel.swift */; };
@@ -858,7 +857,6 @@
 		1C60C28F285724D0003BE25D /* CultProposalVoteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalVoteView.swift; sourceTree = "<group>"; };
 		1C60C290285724D0003BE25D /* CultProposalCellPending.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalCellPending.swift; sourceTree = "<group>"; };
 		1C60C291285724D0003BE25D /* CultProposalsWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalsWireframe.swift; sourceTree = "<group>"; };
-		1C60C292285724D0003BE25D /* CultProposalsWireframeFactoryAssemler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalsWireframeFactoryAssemler.swift; sourceTree = "<group>"; };
 		1C60C293285724D0003BE25D /* CultProposalsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalsView.swift; sourceTree = "<group>"; };
 		1C60C294285724D0003BE25D /* CultProposalsWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalsWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C295285724D0003BE25D /* CultProposalsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposalsViewModel.swift; sourceTree = "<group>"; };
@@ -1518,6 +1516,7 @@
 				1C67201928870FA900C5F044 /* Confirmation */,
 				1C60C20D285724D0003BE25D /* Dashboard */,
 				1C60C272285724D0003BE25D /* Degen */,
+				1C60C285285724D0003BE25D /* DegenCult */,
 				1CDED5D3289700DA00DF34A7 /* Feature ✅ */,
 				1C0643D22892FC9B00643C15 /* Features ✅ */,
 				1C60C1E1285724D0003BE25D /* KeyStore ✅ */,
@@ -1864,19 +1863,26 @@
 		1C60C272285724D0003BE25D /* Degen */ = {
 			isa = PBXGroup;
 			children = (
-				1C60C285285724D0003BE25D /* Cult */,
-				1C60C298285724D0003BE25D /* Degen */,
+				1CB8B0A5288A824C00024E7C /* Degen.storyboard */,
+				1C60C29D285724D0003BE25D /* DegenInteractor.swift */,
+				1C60C29F285724D0003BE25D /* DegenPresenter.swift */,
+				1C60C29B285724D0003BE25D /* DegenView.swift */,
+				1C60C29E285724D0003BE25D /* DegenViewModel.swift */,
+				1C60C29C285724D0003BE25D /* DegenWireframe.swift */,
+				1C60C2A0285724D0003BE25D /* DegenWireframeFactory.swift */,
+				1C60C2A1285724D0003BE25D /* DegenWireframeFactoryAssembler.swift */,
+				1CB8B0A7288AA3A700024E7C /* Cells */,
 			);
 			path = Degen;
 			sourceTree = "<group>";
 		};
-		1C60C285285724D0003BE25D /* Cult */ = {
+		1C60C285285724D0003BE25D /* DegenCult */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C286285724D0003BE25D /* CultProposal */,
-				1C60C28D285724D0003BE25D /* CultProposals */,
+				1C60C28D285724D0003BE25D /* CultProposals ✅ */,
 			);
-			path = Cult;
+			path = DegenCult;
 			sourceTree = "<group>";
 		};
 		1C60C286285724D0003BE25D /* CultProposal */ = {
@@ -1894,7 +1900,7 @@
 			path = CultProposal;
 			sourceTree = "<group>";
 		};
-		1C60C28D285724D0003BE25D /* CultProposals */ = {
+		1C60C28D285724D0003BE25D /* CultProposals ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1CB8B0AA288B065100024E7C /* CultProposals.storyboard */,
@@ -1904,10 +1910,9 @@
 				1C60C295285724D0003BE25D /* CultProposalsViewModel.swift */,
 				1C60C291285724D0003BE25D /* CultProposalsWireframe.swift */,
 				1C60C294285724D0003BE25D /* CultProposalsWireframeFactory.swift */,
-				1C60C292285724D0003BE25D /* CultProposalsWireframeFactoryAssemler.swift */,
 				1C60C28E285724D0003BE25D /* Cells */,
 			);
-			path = CultProposals;
+			path = "CultProposals ✅";
 			sourceTree = "<group>";
 		};
 		1C60C28E285724D0003BE25D /* Cells */ = {
@@ -1920,22 +1925,6 @@
 				1C60C28F285724D0003BE25D /* CultProposalVoteView.swift */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		1C60C298285724D0003BE25D /* Degen */ = {
-			isa = PBXGroup;
-			children = (
-				1CB8B0A5288A824C00024E7C /* Degen.storyboard */,
-				1C60C29D285724D0003BE25D /* DegenInteractor.swift */,
-				1C60C29F285724D0003BE25D /* DegenPresenter.swift */,
-				1C60C29B285724D0003BE25D /* DegenView.swift */,
-				1C60C29E285724D0003BE25D /* DegenViewModel.swift */,
-				1C60C29C285724D0003BE25D /* DegenWireframe.swift */,
-				1C60C2A0285724D0003BE25D /* DegenWireframeFactory.swift */,
-				1C60C2A1285724D0003BE25D /* DegenWireframeFactoryAssembler.swift */,
-				1CB8B0A7288AA3A700024E7C /* Cells */,
-			);
-			path = Degen;
 			sourceTree = "<group>";
 		};
 		1C60C3612857C5D9003BE25D /* TokenReceive ✅ */ = {
@@ -3179,7 +3168,6 @@
 				1C60C353285724D1003BE25D /* CultProposalsViewModel.swift in Sources */,
 				1C60C2E6285724D0003BE25D /* DashboardWireframeFactory.swift in Sources */,
 				1C7F864A28D20E490073FD95 /* UICollectionView+Extensions.swift in Sources */,
-				1C60C350285724D1003BE25D /* CultProposalsWireframeFactoryAssemler.swift in Sources */,
 				1C7F863128D20E490073FD95 /* BigInt+Extensions.swift in Sources */,
 				1C7FC96828AAA1F300FC9175 /* Web3Feature.swift in Sources */,
 				1C54DC032860E5C100E378F6 /* NetworkPickerViewModel.swift in Sources */,

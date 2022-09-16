@@ -6,7 +6,6 @@ import Foundation
 import web3lib
 
 protocol CultProposalsInteractor: AnyObject {
-
     func fetchProposals(
         onCompletion: @escaping (Result<[CultProposal], Error>) -> Void
     )

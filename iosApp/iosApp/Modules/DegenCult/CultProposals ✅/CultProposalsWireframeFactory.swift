@@ -5,10 +5,14 @@
 import UIKit
 import web3lib
 
+// MARK: - CultProposalsWireframeFactory
+
 protocol CultProposalsWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController) -> CultProposalsWireframe
+    func make(_ parent: UIViewController) -> CultProposalsWireframe
 }
+
+// MARK: - DefaultCultProposalsWireframeFactory
 
 final class DefaultCultProposalsWireframeFactory {
 
@@ -38,10 +42,9 @@ final class DefaultCultProposalsWireframeFactory {
 
 extension DefaultCultProposalsWireframeFactory: CultProposalsWireframeFactory {
 
-    func makeWireframe(_ parent: UIViewController) -> CultProposalsWireframe {
-        
+    func make(_ parent: UIViewController) -> CultProposalsWireframe {
         DefaultCultProposalsWireframe(
-            parent: parent,
+            parent,
             cultProposalWireframeFactory: cultProposalWireframeFactory,
             confirmationWireframeFactory: confirmationWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
@@ -49,5 +52,23 @@ extension DefaultCultProposalsWireframeFactory: CultProposalsWireframeFactory {
             cultService: cultService,
             walletService: walletService
         )
+    }
+}
+
+// MARK: - Assembler
+
+final class CultProposalsWireframeFactoryAssembler: AssemblerComponent {
+
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> CultProposalsWireframeFactory in
+            DefaultCultProposalsWireframeFactory(
+                cultProposalWireframeFactory: resolver.resolve(),
+                confirmationWireframeFactory: resolver.resolve(),
+                alertWireframeFactory: resolver.resolve(),
+                tokenSwapWireframeFactory: resolver.resolve(),
+                cultService: resolver.resolve(),
+                walletService: resolver.resolve()
+            )
+        }
     }
 }
