@@ -14,13 +14,11 @@ enum KeyStorePresenterEvent {
 }
 
 protocol KeyStorePresenter: AnyObject {
-
     func present()
     func handle(_ event: KeyStorePresenterEvent)
 }
 
 final class DefaultKeyStorePresenter {
-
     private weak var view: KeyStoreView?
     private let interactor: KeyStoreInteractor
     private let wireframe: KeyStoreWireframe
@@ -31,7 +29,7 @@ final class DefaultKeyStorePresenter {
         buttons: ButtonSheetViewModel.compactButtons(),
         sheetMode: .compact
     )
-    
+
     init(
         view: KeyStoreView,
         interactor: KeyStoreInteractor,

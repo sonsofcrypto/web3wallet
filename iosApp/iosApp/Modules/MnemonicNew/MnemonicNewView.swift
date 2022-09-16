@@ -11,18 +11,18 @@ protocol MnemonicNewView: AnyObject {
 }
 
 final class MnemonicNewViewController: BaseViewController {
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var ctaButton: Button!
+    @IBOutlet weak var ctaButtonBottomConstraint: NSLayoutConstraint!
 
     var presenter: MnemonicNewPresenter!
 
     private var viewModel: MnemonicNewViewModel?
     private var didAppear: Bool = false
+    private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
+    private var interactiveTransitioning: CardFlipInteractiveTransitioning?
 
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var ctaButton: Button!
-    @IBOutlet weak var ctaButtonBottomConstraint: NSLayoutConstraint!
-    
     deinit {
-        
         NotificationCenter.default.removeObserver(self)
     }
         
@@ -53,17 +53,10 @@ final class MnemonicNewViewController: BaseViewController {
 extension MnemonicNewViewController: MnemonicNewView {
 
     func update(with viewModel: MnemonicNewViewModel) {
-        
         self.viewModel = viewModel
-
-        guard let cv = collectionView else {
-            return
-        }
-
+        guard let cv = collectionView else { return }
         ctaButton.setTitle(viewModel.cta, for: .normal)
-
         let cells = cv.indexPathsForVisibleItems
-        
         didAppear
             ? cv.performBatchUpdates({ cv.reconfigureItems(at: cells) })
             : cv.reloadData()
@@ -75,11 +68,11 @@ extension MnemonicNewViewController: MnemonicNewView {
 extension MnemonicNewViewController: UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return viewModel?.sectionsItems.count ?? 0
+        viewModel?.sectionsItems.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.sectionsItems[safe: section]?.count ?? 0
+        viewModel?.sectionsItems[safe: section]?.count ?? 0
     }
     
 
@@ -87,19 +80,15 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        
         guard let viewModel = viewModel?.item(at: indexPath) else {
             fatalError("Wrong number of items in section \(indexPath)")
         }
         let cell = cell(cv: collectionView, viewModel: viewModel, idxPath: indexPath)
         if indexPath.section == 1 {
-
             (cell as? CollectionViewCell)?.cornerStyle = .middle
-
             if indexPath.item == 0 {
                 (cell as? CollectionViewCell)?.cornerStyle = .top
             }
-
             if indexPath.item == (self.viewModel?.sectionsItems[safe: 1]?.count ?? 0) - 1 {
                 (cell as? CollectionViewCell)?.cornerStyle = .bottom
             }
@@ -114,7 +103,6 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
     ) -> UICollectionViewCell {
 
         switch viewModel {
-
         case let .mnemonic(mnemonic):
             return collectionView.dequeue(MnemonicNewCell.self, for: idxPath)
                 .update(
@@ -147,6 +135,7 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
                     self.iCloudBackupDidChange(value)
                 }
             )
+
         case let .switchWithTextInput(switchWithTextInput):
             return collectionView.dequeue(
                 SwitchTextInputCollectionViewCell.self,
@@ -166,6 +155,7 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
                     self.saltLearnMoreAction()
                 }
             )
+
         case let .segmentWithTextAndSwitchInput(segmentWithTextAndSwitchInput):
             return collectionView.dequeue(
                 SegmentWithTextAndSwitchCell.self,
@@ -193,9 +183,7 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        
         switch kind {
-
         case UICollectionView.elementKindSectionHeader:
             fatalError("Handle header \(kind) \(indexPath)")
 
@@ -203,18 +191,15 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
             guard let viewModel = viewModel?.footer(at: indexPath.section) else {
                 fatalError("Failed to handle \(kind) \(indexPath)")
             }
-
             let footer = collectionView.dequeue(
                 SectionLabelFooter.self,
                 for: indexPath,
                 kind: kind
             )
-
             footer.update(with: viewModel)
             return footer
 
         default:
-            
             fatalError("Failed to handle \(kind) \(indexPath)")
         }
         fatalError("Failed to handle \(kind) \(indexPath)")
@@ -227,13 +212,10 @@ extension MnemonicNewViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         shouldSelectItemAt indexPath: IndexPath
     ) -> Bool {
-        
         guard indexPath == .init(row: 0, section: 0) else { return false }
-        
         let cell = collectionView.cellForItem(at: .init(item: 0, section: 0))
         (cell as? MnemonicNewCell)?.animateCopiedToPasteboard()
         presenter.handle(.didTapMnemonic)
-        
         return false
     }
 
@@ -259,7 +241,6 @@ extension MnemonicNewViewController: UICollectionViewDelegate {
 
     func passTypeDidChange(_ idx: Int) {
         presenter.handle(.passTypeDidChange(idx: idx))
-
     }
 
     func passwordDidChange(_ text: String) {
@@ -333,6 +314,87 @@ extension MnemonicNewViewController: UIScrollViewDelegate {
     
 }
 
+// MARK: - UIViewControllerTransitioningDelegate
+
+extension MnemonicNewViewController: UIViewControllerTransitioningDelegate {
+
+    func animationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController,
+        source: UIViewController
+    ) -> UIViewControllerAnimatedTransitioning? {
+        let presentedVc = (presented as? UINavigationController)?.topVc
+        let targetView = (source as? TargetViewTransitionDatasource)?
+                .targetView() ?? presenting.view
+
+        guard presentedVc?.isKind(of: MnemonicNewViewController.self) ?? false,
+              let targetView = targetView else {
+            animatedTransitioning = nil
+            return nil
+        }
+
+        animatedTransitioning = CardFlipAnimatedTransitioning(
+            targetView: targetView,
+            handler: { [weak self] in self?.animatedTransitioning = nil }
+        )
+
+        return animatedTransitioning
+    }
+
+    func animationController(
+        forDismissed dismissed: UIViewController
+    ) -> UIViewControllerAnimatedTransitioning? {
+        let nav = dismissed.presentingViewController as? UINavigationController
+        let topVc = nav?.topVc ?? dismissed.presentingViewController
+
+        guard dismissed == navigationController,
+              let targetView = (topVc as? TargetViewTransitionDatasource)?
+                      .targetView() ?? dismissed.presentingViewController?.view else {
+            animatedTransitioning = nil
+            return nil
+        }
+
+        animatedTransitioning = CardFlipAnimatedTransitioning(
+            targetView: targetView,
+            isPresenting: false,
+            handler: { [weak self] in self?.animatedTransitioning = nil }
+        )
+
+        return animatedTransitioning
+    }
+
+    func interactionControllerForDismissal(
+        using animator: UIViewControllerAnimatedTransitioning
+    ) -> UIViewControllerInteractiveTransitioning? {
+        interactiveTransitioning
+    }
+
+    @objc func handleGesture(_ recognizer: UIPanGestureRecognizer) {
+        let location = recognizer.location(in: view.window!)
+        let pct = (location.x * 0.5) / view.bounds.width
+
+        switch recognizer.state {
+        case .began:
+            interactiveTransitioning = CardFlipInteractiveTransitioning(
+                handler: { [weak self] in self?.interactiveTransitioning = nil }
+            )
+            dismiss(animated: true)
+        case .changed:
+            interactiveTransitioning?.update(pct)
+        case .cancelled:
+            interactiveTransitioning?.cancel()
+        case .ended:
+            let completed = recognizer.velocity(in: view.window!).x >= 0
+            interactiveTransitioning?.completionSpeed = completed ? 1.5 : 0.1
+            completed
+                ? interactiveTransitioning?.finish()
+                : interactiveTransitioning?.cancel()
+        default:
+            ()
+        }
+    }
+}
+
 // MARK: - Configure UI
 
 private extension MnemonicNewViewController {
@@ -348,7 +410,6 @@ private extension MnemonicNewViewController {
         )
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        //collectionView.allowsSelection = false
         let constraint = collectionView.bottomAnchor.constraint(
             equalTo: view.keyboardLayoutGuide.topAnchor
         )

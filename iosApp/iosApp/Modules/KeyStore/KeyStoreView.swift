@@ -368,72 +368,18 @@ extension KeyStoreViewController {
 
 // MARK: - UIViewControllerTransitioningDelegate
 
-extension KeyStoreViewController: UIViewControllerTransitioningDelegate {
+extension KeyStoreViewController: TargetViewTransitionDatasource {
 
-    func animationController(
-        forPresented presented: UIViewController,
-        presenting: UIViewController,
-        source: UIViewController
-    ) -> UIViewControllerAnimatedTransitioning? {
-
-        guard viewModel?.transitionStyle == .cardFlip else {
-            return nil
-        }
-
-        guard let vc = (presented as? UINavigationController)?.topViewController else {
-            animatedTransitioning = nil
-            return nil
-        }
-
-        animatedTransitioning = nil
-
-        if vc.isKind(of: MnemonicNewViewController.self) ||
-           vc.isKind(of: MnemonicUpdateViewController.self) ||
-           vc.isKind(of: MnemonicImportViewController.self) {
-            animatedTransitioning = CardFlipAnimatedTransitioning(
-                targetView: targetView() ?? view
-            )
-        }
-
-        return animatedTransitioning
-    }
-
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        guard viewModel?.transitionStyle == .cardFlip else {
-            return nil
-        }
-
-        guard let vc = (dismissed as? UINavigationController)?.topViewController else {
-            animatedTransitioning = nil
-            return nil
-        }
-
-        animatedTransitioning = nil
-
-        guard targetView() != nil else { return nil }
-
-        if vc.isKind(of: MnemonicNewViewController.self) ||
-           vc.isKind(of: MnemonicUpdateViewController.self) ||
-           vc.isKind(of: MnemonicImportViewController.self) {
-            animatedTransitioning = CardFlipAnimatedTransitioning(
-                targetView: targetView() ?? view,
-                isPresenting: false,
-                scaleAdjustment: 0.05
-            )
-        }
-        
-        return animatedTransitioning
-    }
-
-    func targetView() -> UIView? {
+    func targetView() -> UIView {
         switch transitionTargetView {
         case let .keyStoreItemAt(idx):
-            return collectionView.cellForItem(at: IndexPath(item: idx, section: 0))
+            let idxPath = IndexPath(item: idx, section: 0)
+            return collectionView.cellForItem(at: idxPath) ?? view
         case let .buttonAt(idx):
-            return buttonsCollectionView.cellForItem(at: IndexPath(item: idx, section: 0))
+            let idxPath = IndexPath(item: idx, section: 0)
+            return buttonsCollectionView.cellForItem(at: idxPath) ?? view
         case .none:
-            return nil
+            return view
         }
     }
-
 }
