@@ -19,6 +19,7 @@ extension AppsViewModel {
 
 extension AppsViewModel {
 
+    // TODO: Use AlertViewModel here and remove this struct (not needed)
     struct Error {
         
         let title: String

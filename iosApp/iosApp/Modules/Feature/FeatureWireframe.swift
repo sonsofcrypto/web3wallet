@@ -5,13 +5,11 @@
 import UIKit
 
 struct FeatureWireframeContext {
-    
     let feature: Web3Feature
     let features: [Web3Feature]
 }
 
 enum FeatureWireframeDestination {
-
     case vote
     case dismiss
 }
@@ -22,12 +20,13 @@ protocol FeatureWireframe {
 }
 
 final class DefaultFeatureWireframe {
-
-    private weak var parent: UIViewController!
+    private weak var parent: UIViewController?
     private let context: FeatureWireframeContext
 
+    private weak var vc: UIViewController?
+    
     init(
-        parent: UIViewController,
+        parent: UIViewController?,
         context: FeatureWireframeContext
     ) {
         self.parent = parent
@@ -38,28 +37,16 @@ final class DefaultFeatureWireframe {
 extension DefaultFeatureWireframe: FeatureWireframe {
 
     func present() {
-        
         let vc = wireUp()
-        parent.show(vc, sender: self)
+        parent?.show(vc, sender: self)
     }
 
     func navigate(to destination: FeatureWireframeDestination) {
-
         switch destination {
-            
         case .vote:
-            
-            FeatureShareHelper().shareVote(on: context.feature, presentingIn: parent)
-            
+            FeatureShareHelper().shareVote(context.feature)
         case .dismiss:
-            
-            if let navigationController = parent as? NavigationController {
-                
-                navigationController.popViewController(animated: true)
-            } else {
-            
-                parent.navigationController?.popViewController(animated: true)
-            }
+            vc?.popOrDismiss()
         }
     }
 }
@@ -67,15 +54,14 @@ extension DefaultFeatureWireframe: FeatureWireframe {
 private extension DefaultFeatureWireframe {
 
     func wireUp() -> UIViewController {
-        
         let vc: FeatureViewController = UIStoryboard(.feature).instantiate()
         let presenter = DefaultFeaturePresenter(
             view: vc,
             wireframe: self,
             context: context
         )
-
         vc.presenter = presenter
+        self.vc = vc
         return vc
     }
 }

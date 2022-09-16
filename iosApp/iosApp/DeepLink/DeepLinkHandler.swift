@@ -185,8 +185,12 @@ private extension DefaultDeepLinkHandler {
 
 private extension DefaultDeepLinkHandler {
     
+    var rootVC: UIViewController? {
+        UIApplication.shared.rootVc as? RootViewController
+    }
+    
     var tabBarController: TabBarController? {
-        guard let rootVC = UIApplication.shared.rootVc as? RootViewController else { return nil }
+        guard let rootVC = rootVC else { return nil }
         
         return rootVC.children.first(
             where: { $0 is TabBarController }
@@ -292,12 +296,9 @@ private extension DefaultDeepLinkHandler {
     }
     
     func openFeaturesList() {
-        guard let dashboardNavController = dashboardNavController else { return }
+        guard let rootVC = rootVC else { return }
         let wireframe: FeaturesWireframeFactory = ServiceDirectory.assembler.resolve()
-        wireframe.makeWireframe(
-            presentingIn: dashboardNavController,
-            context: .init(presentationStyle: .present)
-        ).present()
+        wireframe.make(rootVC).present()
     }
     
     func openMnemonicConfirmation() {

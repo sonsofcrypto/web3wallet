@@ -5,22 +5,20 @@
 import UIKit
 
 final class FeaturesHeaderSupplementaryView: UICollectionReusableView {
-    
     private weak var label: UILabel!
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
-        
         configureUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+}
+
+private extension FeaturesHeaderSupplementaryView {
     func configureUI() {
-        
         let label = UILabel()
         label.apply(style: .body)
         label.numberOfLines = 0
@@ -49,7 +47,6 @@ final class FeaturesHeaderSupplementaryView: UICollectionReusableView {
 extension FeaturesHeaderSupplementaryView {
 
     func update(with viewModel: FeaturesViewModel.Section) {
-        
         label.text = viewModel.description
     }
 }

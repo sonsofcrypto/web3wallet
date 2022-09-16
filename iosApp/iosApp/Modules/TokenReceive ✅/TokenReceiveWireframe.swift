@@ -51,11 +51,7 @@ extension DefaultTokenReceiveWireframe: TokenReceiveWireframe {
     }
     
     func dismiss() {
-        if let nc = vc?.navigationController as? NavigationController {
-            nc.popViewController(animated: true)
-        } else {
-            vc?.dismiss(animated: true)
-        }
+        vc?.popOrDismiss()
     }
 }
 

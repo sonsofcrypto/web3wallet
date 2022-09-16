@@ -5,8 +5,7 @@
 struct FeatureShareHelper {
     
     func shareVote(
-        on web3Feature: Web3Feature,
-        presentingIn: UIViewController
+        _ web3Feature: Web3Feature
     ) {
         let text = String(
             format: Localized("feature.vote.text"),

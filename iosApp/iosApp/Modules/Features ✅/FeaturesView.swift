@@ -5,12 +5,10 @@
 import UIKit
 
 protocol FeaturesView: AnyObject {
-
     func update(with viewModel: FeaturesViewModel)
 }
 
 final class FeaturesViewController: BaseViewController {
-    
     //let searchController = UISearchController()
     @IBOutlet weak var topContainerView: UIView!
     @IBOutlet weak var segmentContainer: UIView!
@@ -24,11 +22,8 @@ final class FeaturesViewController: BaseViewController {
     private var viewModel: FeaturesViewModel!
 
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         configureUI()
-        
         presenter?.present()
     }
 }
@@ -36,23 +31,18 @@ final class FeaturesViewController: BaseViewController {
 extension FeaturesViewController: FeaturesView {
 
     func update(with viewModel: FeaturesViewModel) {
-        
         self.viewModel = viewModel
-        
         title = viewModel.title
-                
         switch viewModel {
-            
         case .loading:
             showLoading()
-            
         case .loaded:
             hideLoading()
             collectionView.reloadData()
             refreshControl.endRefreshing()
-
         case .error:
             hideLoading()
+            // TODO: Handle error
             //showError()
         }
     }
@@ -61,7 +51,6 @@ extension FeaturesViewController: FeaturesView {
 extension FeaturesViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        
         viewModel.sections.count
     }
     
@@ -69,7 +58,6 @@ extension FeaturesViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        
         viewModel.sections[section].items.count
     }
     
@@ -77,7 +65,6 @@ extension FeaturesViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        
         let section = viewModel.sections[indexPath.section]
         let viewModel = section.items[indexPath.item]
         let cell = collectionView.dequeue(FeaturesCell.self, for: indexPath)
@@ -92,23 +79,18 @@ extension FeaturesViewController: UICollectionViewDataSource {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        
         switch kind {
         case "header":
-            
             guard let headerView = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
                 withReuseIdentifier: String(describing: FeaturesHeaderSupplementaryView.self),
                 for: indexPath
             ) as? FeaturesHeaderSupplementaryView else {
-                
                 return FeaturesHeaderSupplementaryView()
             }
-            
             let section = viewModel.sections[indexPath.section]
             headerView.update(with: section)
             return headerView
-            
         default:
             assertionFailure("Unexpected element kind: \(kind).")
             return UICollectionReusableView()
@@ -122,7 +104,6 @@ extension FeaturesViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        
         let section = viewModel.sections[indexPath.section]
         let item = section.items[indexPath.row]
         presenter.handle(.select(id: item.id))
@@ -137,19 +118,16 @@ extension FeaturesViewController: UICollectionViewDelegate {
 private extension FeaturesViewController {
     
     func showLoading() {
-        
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
     }
     
     func hideLoading() {
-        
         activityIndicator.isHidden = true
         activityIndicator.stopAnimating()
     }
     
     func setSegmented() {
-        
         let segmentControl = SegmentedControl()
 //        segmentControl.insertSegment(
 //            withTitle: Localized("features.segmentedControl.all"),
@@ -171,9 +149,7 @@ private extension FeaturesViewController {
             at: 2,
             animated: false
         )
-        
         segmentControl.selectedSegmentIndex = 0
-        
         segmentControl.addTarget(
             self,
             action: #selector(segmentControlChanged(_:)),
@@ -196,80 +172,62 @@ private extension FeaturesViewController {
     }
     
     @objc func segmentControlChanged(_ sender: SegmentedControl) {
-        
         let sectionType: FeaturesViewModel.Section.`Type`
-        
         switch sender.selectedSegmentIndex {
-            
         //case 0: sectionType = .all
         case 0: sectionType = .infrastructure
         case 1: sectionType = .integrations
         default: sectionType = .features
         }
-        
         return presenter.handle(
             .filterBySection(sectionType: sectionType)
         )
     }
     
     func configureUI() {
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: .init(systemName: "xmark"),
             style: .plain,
             target: self,
             action: #selector(dimissTapped)
         )
-        
         topContainerView.backgroundColor = Theme.colour.navBarBackground
-
         setSegmented()
-        
         activityIndicator.color = Theme.colour.activityIndicator
-        
         collectionView.setCollectionViewLayout(
             makeCompositionalLayout(),
             animated: false
         )
         collectionView.dataSource = self
         collectionView.delegate = self
-        
         collectionView.alwaysBounceVertical = true
         collectionView.refreshControl = refreshControl
-        
         collectionView.register(
             FeaturesHeaderSupplementaryView.self,
             forSupplementaryViewOfKind: "header",
             withReuseIdentifier: String(describing: FeaturesHeaderSupplementaryView.self)
         )
-        
         refreshControl.tintColor = Theme.colour.activityIndicator
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
-
 //        navigationItem.searchController = searchController
 //        searchController.searchResultsUpdater = self
     }
     
     @objc func dimissTapped() {
-        
         presenter.handle(.dismiss)
     }
     
     @objc func didPullToRefresh(_ sender: Any) {
-
         presenter.present()
     }
     
     func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
-        
         UICollectionViewCompositionalLayout(
             section: makeCollectionLayoutSection()
         )
     }
   
     func makeCollectionLayoutSection() -> NSCollectionLayoutSection {
-        
-        // Item
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(1)
@@ -277,8 +235,6 @@ private extension FeaturesViewController {
         let item = NSCollectionLayoutItem(
             layoutSize: itemSize
         )
-        
-        // Group
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(
                 view.frame.size.width - Theme.constant.padding * 2
@@ -288,8 +244,6 @@ private extension FeaturesViewController {
         let outerGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize, subitems: [item]
         )
-
-        // Section
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = .init(
             top: Theme.constant.padding,
@@ -298,7 +252,6 @@ private extension FeaturesViewController {
             trailing: Theme.constant.padding
         )
         section.interGroupSpacing = Theme.constant.padding
-        
         let headerItemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(100)
@@ -308,18 +261,7 @@ private extension FeaturesViewController {
             elementKind: "header",
             alignment: .top
         )
-//        let footerItemSize = NSCollectionLayoutSize(
-//            widthDimension: .fractionalWidth(1),
-//            heightDimension: .estimated(100)
-//        )
-//        let footerItem = NSCollectionLayoutBoundarySupplementaryItem(
-//            layoutSize: footerItemSize,
-//            elementKind: "footer",
-//            alignment: .bottom
-//        )
-        
         section.boundarySupplementaryItems = [headerItem]
-        
         return section
     }
 }
@@ -327,19 +269,11 @@ private extension FeaturesViewController {
 private extension FeaturesViewController {
 
     func makeFeaturesCellHandler() -> FeaturesCell.Handler {
-        
-        .init(
-            onVote: makeOnVote()
-        )
+        .init(onVote: makeOnVote())
     }
     
     func makeOnVote() -> (String) -> Void {
-        
-        {
-            [weak self] id in
-            guard let self = self else { return }
-            self.presenter.handle(.vote(id: id))
-        }
+        { [weak self] id in self?.presenter.handle(.vote(id: id)) }
     }
 }
 

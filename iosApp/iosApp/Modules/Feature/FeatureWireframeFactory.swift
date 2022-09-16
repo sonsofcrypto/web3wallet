@@ -7,7 +7,7 @@ import UIKit
 protocol FeatureWireframeFactory {
 
     func makeWireframe(
-        parent: UIViewController,
+        parent: UIViewController?,
         context: FeatureWireframeContext
     ) -> FeatureWireframe
 }
@@ -15,7 +15,7 @@ protocol FeatureWireframeFactory {
 final class DefaultFeatureWireframeFactory: FeatureWireframeFactory {
 
     func makeWireframe(
-        parent: UIViewController,
+        parent: UIViewController?,
         context: FeatureWireframeContext
     ) -> FeatureWireframe {
         

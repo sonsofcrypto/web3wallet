@@ -8,13 +8,13 @@ import UIKit
 enum FeaturesViewModel {
     case loading
     case loaded(sections: [Section], selectedSectionType: Section.`Type`)
+    // TODO: We should use AlertViewModel instead of AppsViewModel.Error...
     case error(error: AppsViewModel.Error)
 }
 
 extension FeaturesViewModel {
     
     struct Section {
-        
         let title: String
         let description: String
         let type: `Type`
@@ -28,7 +28,6 @@ extension FeaturesViewModel {
             case features
             
             var stringValue: String {
-                
                 switch self {
                 case .all:
                     return Localized("features.segmentedControl.all")
@@ -42,7 +41,6 @@ extension FeaturesViewModel {
             }
             
             var descriptionValue: String {
-                
                 switch self {
                 case .all:
                     return Localized("features.section.all.description")
@@ -57,14 +55,12 @@ extension FeaturesViewModel {
         }
         
         struct Footer {
-            
             let imageName: String
             let text: String
         }
     }
 
     struct Item {
-        
         let id: String
         let title: String
         let subtitle: String
@@ -75,7 +71,6 @@ extension FeaturesViewModel {
 extension FeaturesViewModel {
 
     struct Error {
-        
         let title: String
         let body: String
         let actions: [String]
@@ -83,13 +78,11 @@ extension FeaturesViewModel {
 }
 
 extension FeaturesViewModel {
-    
     var title: String {
         Localized("features.title")
     }
     
     var sections: [FeaturesViewModel.Section] {
-        
         switch self {
         case let .loaded(sections, _):
             return sections
@@ -99,7 +92,6 @@ extension FeaturesViewModel {
     }
     
     var selectedSectionType: FeaturesViewModel.Section.`Type` {
-        
         switch self {
         case let .loaded(_, type):
             return type
