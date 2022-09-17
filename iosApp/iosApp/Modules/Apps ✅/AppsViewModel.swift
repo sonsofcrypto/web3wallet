@@ -11,17 +11,14 @@ enum AppsViewModel {
 }
 
 extension AppsViewModel {
-
     struct Item {
         let title: String
     }
 }
 
 extension AppsViewModel {
-
     // TODO: Use AlertViewModel here and remove this struct (not needed)
     struct Error {
-        
         let title: String
         let body: String
         let actions: [String]
@@ -29,22 +26,17 @@ extension AppsViewModel {
 }
 
 extension AppsViewModel {
-
     func items() -> [AppsViewModel.Item] {
         switch self {
-        case let .loaded(items, _):
-            return items
-        default:
-            return []
+        case let .loaded(items, _): return items
+        default: return []
         }
     }
 
     func selectedIdx() -> Int? {
         switch self {
-        case let .loaded(_, idx):
-            return idx
-        default:
-            return nil
+        case let .loaded(_, idx): return idx
+        default: return nil
         }
     }
 }

@@ -5,18 +5,13 @@
 import Foundation
 
 protocol AppsInteractor: AnyObject {
-
     func fetchApps(onCompletion: (Result<[AppItem], Error>) -> Void)
 }
 
 final class DefaultAppsInteractor {
-
     private var appsService: AppsService
 
-    init(
-        appsService: AppsService
-    ) {
-        
+    init(appsService: AppsService) {
         self.appsService = appsService
     }
 }
@@ -24,11 +19,7 @@ final class DefaultAppsInteractor {
 extension DefaultAppsInteractor: AppsInteractor {
 
     func fetchApps(onCompletion: (Result<[AppItem], Error>) -> Void) {
-        
-        let supportedApps: [AppItem] = [
-            .chat
-        ]
-        
+        let supportedApps: [AppItem] = [.chat]
         onCompletion(.success(supportedApps))
     }
 }

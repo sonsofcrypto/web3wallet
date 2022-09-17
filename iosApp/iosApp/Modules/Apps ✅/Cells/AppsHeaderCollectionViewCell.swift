@@ -5,14 +5,11 @@
 import UIKit
 
 final class AppsHeaderCollectionViewCell: UICollectionViewCell {
-    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet private var widthConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         titleLabel.apply(style: .callout)
     }
     
@@ -20,9 +17,7 @@ final class AppsHeaderCollectionViewCell: UICollectionViewCell {
         with viewModel: AppsViewModel.Item?,
         width: CGFloat
     ) {
-        
         titleLabel.text = viewModel?.title
-        
         widthConstraint.constant = width
     }
 }

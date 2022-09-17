@@ -100,7 +100,7 @@ private extension DefaultRootWireframe {
                 tabVc
             ).present()
         } else {
-            appsWireframeFactory.makeWireframe(tabVc).present()
+            appsWireframeFactory.make(tabVc).present()
         }
     }
 

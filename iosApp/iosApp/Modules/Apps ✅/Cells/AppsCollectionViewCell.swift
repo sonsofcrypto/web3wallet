@@ -9,14 +9,11 @@ final class AppsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-
         //layer.applyRectShadow()
         layer.borderColor = Theme.colour.fillTertiary.cgColor
         layer.borderWidth = 1
         layer.cornerRadius = Theme.constant.cornerRadiusSmall
-
         titleLabel.textColor = Theme.colour.labelPrimary
         titleLabel.font = Theme.font.callout
         titleLabel.layer.shadowColor = Theme.colour.fillSecondary.cgColor
@@ -25,8 +22,7 @@ final class AppsCollectionViewCell: UICollectionViewCell {
         titleLabel.layer.shadowOpacity = 1
     }
 
-    func update(with viewModel: AppsViewModel.Item?) {
-        
+    func update(with viewModel: AppsViewModel.Item?) {        
         titleLabel.text = viewModel?.title
     }
 }
