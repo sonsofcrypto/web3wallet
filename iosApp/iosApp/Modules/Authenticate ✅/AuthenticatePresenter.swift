@@ -22,25 +22,24 @@ protocol AuthenticatePresenter {
 }
 
 final class DefaultAuthenticatePresenter {
-
     private weak var view: AuthenticateView?
-    private let context: AuthenticateContext
-    private let interactor: AuthenticateInteractor
     private let wireframe: AuthenticateWireframe
+    private let interactor: AuthenticateInteractor
+    private let context: AuthenticateContext
 
     private var password: String = ""
     private var salt: String = ""
 
     init(
         view: AuthenticateView,
-        context: AuthenticateContext,
+        wireframe: AuthenticateWireframe,
         interactor: AuthenticateInteractor,
-        wireframe: AuthenticateWireframe
+        context: AuthenticateContext
     ) {
         self.view = view
-        self.context = context
-        self.interactor = interactor
         self.wireframe = wireframe
+        self.interactor = interactor
+        self.context = context
     }
 
     func updateView() {
@@ -51,11 +50,8 @@ final class DefaultAuthenticatePresenter {
 extension DefaultAuthenticatePresenter: AuthenticatePresenter {
 
     func present() {
-        
         updateView()
-        
         guard keyStoreItem.passUnlockWithBio else { return }
-        
         interactor.unlockWithBiometrics(
             keyStoreItem,
             title: Localized("authenticate.title.unlock"),
@@ -72,7 +68,6 @@ extension DefaultAuthenticatePresenter: AuthenticatePresenter {
     }
 
     func handle(_ event: AuthenticatePresenterEvent) {
-        
         switch event {
         case let .didChangePassword(text):
             password = text
@@ -101,17 +96,13 @@ extension DefaultAuthenticatePresenter: AuthenticatePresenter {
 private extension DefaultAuthenticatePresenter {
     
     var keyStoreItem: KeyStoreItem {
-        
         guard let keyStoreItem = context.keyStoreItem else {
-            
             fatalError("This should never happen, the wireframe will guard against this")
         }
-        
         return keyStoreItem
     }
     
     func viewModel() -> AuthenticateViewModel {
-
         .init(
             title: Localized("authenticate.title.unlock"),
             password: password,
@@ -125,7 +116,6 @@ private extension DefaultAuthenticatePresenter {
     }
     
     func makePassType() -> AuthenticateViewModel.PassType {
-        
         switch keyStoreItem.passwordType {
         case .pin:
             return .pin

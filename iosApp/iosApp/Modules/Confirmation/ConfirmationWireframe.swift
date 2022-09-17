@@ -70,7 +70,7 @@ extension DefaultConfirmationWireframe: ConfirmationWireframe {
 
         case let .authenticate(context):
             guard let parent = navigationController.topViewController else { return }
-            let wireframe = authenticateWireframeFactory.makeWireframe(
+            let wireframe = authenticateWireframeFactory.make(
                 parent,
                 context: context
             )

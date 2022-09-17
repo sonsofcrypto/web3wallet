@@ -11,15 +11,14 @@ protocol AuthenticateWireframe {
 }
 
 final class DefaultAuthenticateWireframe {
-
     private weak var parent: UIViewController?
     private var context: AuthenticateContext
     private let keyStoreService: KeyStoreService
 
-    private weak var navVc: NavigationController?
+    private weak var vc: UIViewController?
 
     init(
-        parent: UIViewController,
+        _ parent: UIViewController?,
         context: AuthenticateContext,
         keyStoreService: KeyStoreService
     ) {
@@ -32,24 +31,17 @@ final class DefaultAuthenticateWireframe {
 extension DefaultAuthenticateWireframe: AuthenticateWireframe {
 
     func present() {
-        
         let interactor = DefaultAuthenticateInteractor(
             keyStoreService: keyStoreService
         )
-        
         guard let keyStoreItemTarget = keyStoreItemTarget else { return }
-        
         // NOTE: Update keyStoreItem in context to set selected one in case it needs to
         context = .init(
             title: context.title,
             keyStoreItem: keyStoreItemTarget,
             handler: context.handler
         )
-
-        guard
-            !interactor.canUnlockWithBio(keyStoreItemTarget)
-        else {
-            
+        guard !interactor.canUnlockWithBio(keyStoreItemTarget) else {
             // NOTE: Passing this as a local variable otherwise in the closure below having a weak self
             // by the time is called back the wireframe is already deallocated and self? is nil.
             let context = context
@@ -67,32 +59,28 @@ extension DefaultAuthenticateWireframe: AuthenticateWireframe {
     }
 
     func dismiss() {
-        navVc?.dismiss(animated: true)
+        vc?.dismiss(animated: true)
     }
 }
 
 private extension DefaultAuthenticateWireframe {
-    
     var keyStoreItemTarget: KeyStoreItem? {
-        
         context.keyStoreItem ?? keyStoreService.selected
     }
 
     func wireUp(_ interactor: AuthenticateInteractor) -> UIViewController {
-        
         let vc: AuthenticateViewController = UIStoryboard(.authenticate).instantiate()
         let presenter = DefaultAuthenticatePresenter(
             view: vc,
-            context: context,
+            wireframe: self,
             interactor: interactor,
-            wireframe: self
+            context: context
         )
-
         vc.presenter = presenter
-        let navVc = NavigationController(rootViewController: vc)
-        navVc.modalPresentationStyle = .custom
-        navVc.transitioningDelegate = vc
-        self.navVc = navVc
-        return navVc
+        let nc = NavigationController(rootViewController: vc)
+        nc.modalPresentationStyle = .custom
+        nc.transitioningDelegate = vc
+        self.vc = nc
+        return nc
     }
 }

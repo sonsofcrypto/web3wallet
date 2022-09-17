@@ -321,7 +321,6 @@
 		1C67201F28870FDB00C5F044 /* ConfirmationWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67201E28870FDB00C5F044 /* ConfirmationWireframe.swift */; };
 		1C67202128870FE100C5F044 /* ConfirmationWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67202028870FE100C5F044 /* ConfirmationWireframeFactory.swift */; };
 		1C67202528870FF400C5F044 /* ConfirmationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67202428870FF400C5F044 /* ConfirmationPresenter.swift */; };
-		1C6720292887106100C5F044 /* AuthenticateWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6720282887106100C5F044 /* AuthenticateWireframeFactoryAssembler.swift */; };
 		1C67202B2887EB7F00C5F044 /* Confirmation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C67202A2887EB7F00C5F044 /* Confirmation.storyboard */; };
 		1C67202D2887EECC00C5F044 /* ConfirmationWireframeContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67202C2887EECB00C5F044 /* ConfirmationWireframeContext.swift */; };
 		1C7F862728D20E490073FD95 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F85FF28D20E490073FD95 /* Array+Extensions.swift */; };
@@ -912,7 +911,6 @@
 		1C67201E28870FDB00C5F044 /* ConfirmationWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationWireframe.swift; sourceTree = "<group>"; };
 		1C67202028870FE100C5F044 /* ConfirmationWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationWireframeFactory.swift; sourceTree = "<group>"; };
 		1C67202428870FF400C5F044 /* ConfirmationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationPresenter.swift; sourceTree = "<group>"; };
-		1C6720282887106100C5F044 /* AuthenticateWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C67202A2887EB7F00C5F044 /* Confirmation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Confirmation.storyboard; sourceTree = "<group>"; };
 		1C67202C2887EECB00C5F044 /* ConfirmationWireframeContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationWireframeContext.swift; sourceTree = "<group>"; };
 		1C7F85FF28D20E490073FD95 /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
@@ -1503,7 +1501,7 @@
 				1C60C244285724D0003BE25D /* Account */,
 				1C60C1FA285724D0003BE25D /* Alert */,
 				1C60C253285724D0003BE25D /* Apps */,
-				D1A12A58287D333900606FC8 /* Authenticate */,
+				D1A12A58287D333900606FC8 /* Authenticate ✅ */,
 				1C60C1EE285724D0003BE25D /* Chat ✅ */,
 				1C67201928870FA900C5F044 /* Confirmation */,
 				1C60C20D285724D0003BE25D /* Dashboard ✅ */,
@@ -2552,7 +2550,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		D1A12A58287D333900606FC8 /* Authenticate */ = {
+		D1A12A58287D333900606FC8 /* Authenticate ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1A4C39D6ADB830082AC3CEA6 /* Authenticate.storyboard */,
@@ -2563,9 +2561,8 @@
 				D1A12A5E287D333900606FC8 /* AuthenticateViewModel.swift */,
 				D1A12A5F287D333900606FC8 /* AuthenticateWireframe.swift */,
 				D1A12A5D287D333900606FC8 /* AuthenticateWireframeFactory.swift */,
-				1C6720282887106100C5F044 /* AuthenticateWireframeFactoryAssembler.swift */,
 			);
-			path = Authenticate;
+			path = "Authenticate ✅";
 			sourceTree = "<group>";
 		};
 		D1BC5304284B5B8E007E6FF4 /* CultService */ = {
@@ -2920,7 +2917,6 @@
 				1C60C2F5285724D0003BE25D /* NFTDetailView.swift in Sources */,
 				1C671FF8287FDFF100C5F044 /* TokenSwapView.swift in Sources */,
 				1C60C2BB285724D0003BE25D /* ButtonsSheetViewCell.swift in Sources */,
-				1C6720292887106100C5F044 /* AuthenticateWireframeFactoryAssembler.swift in Sources */,
 				1A4C3EB4D429242923984C76 /* Button.swift in Sources */,
 				1C7FC98528B5274000FC9175 /* ConfirmationViewModel+CultCastVote.swift in Sources */,
 				1CDED5F02897EB3700DF34A7 /* SettingsCellBackgroundSupplementaryView.swift in Sources */,

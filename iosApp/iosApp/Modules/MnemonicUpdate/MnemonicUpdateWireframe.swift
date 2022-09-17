@@ -68,7 +68,7 @@ extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
         case .learnMoreSalt:
             UIApplication.shared.open(Constant.saltExplanationURL)
         case let .authenticate(context):
-            authenticateWireframeFactory.makeWireframe(
+            authenticateWireframeFactory.make(
                 vc,
                 context: context
             ).present()
