@@ -1496,7 +1496,7 @@
 		1C60C1C7285724D0003BE25D /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				1C60C244285724D0003BE25D /* Account */,
+				1C60C244285724D0003BE25D /* Account ✅ */,
 				1C60C1FA285724D0003BE25D /* Alert */,
 				1C60C253285724D0003BE25D /* Apps ✅ */,
 				D1A12A58287D333900606FC8 /* Authenticate ✅ */,
@@ -1765,7 +1765,7 @@
 			path = "Root ✅";
 			sourceTree = "<group>";
 		};
-		1C60C244285724D0003BE25D /* Account */ = {
+		1C60C244285724D0003BE25D /* Account ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1C54DBDD285DD15400E378F6 /* Account.storyboard */,
@@ -1777,7 +1777,7 @@
 				1C60C24D285724D0003BE25D /* AccountWireframeFactory.swift */,
 				1C60C245285724D0003BE25D /* Cells */,
 			);
-			path = Account;
+			path = "Account ✅";
 			sourceTree = "<group>";
 		};
 		1C60C245285724D0003BE25D /* Cells */ = {

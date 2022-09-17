@@ -5,16 +5,13 @@
 import UIKit
 
 final class AccountTransactionCell: CollectionViewCell {
-
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var chevronView: UIImageView!
 
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         dateLabel.apply(style: .callout)
         addressLabel.apply(style: .callout)
         addressLabel.textColor = Theme.colour.labelSecondary
@@ -30,7 +27,6 @@ final class AccountTransactionCell: CollectionViewCell {
 extension AccountTransactionCell {
 
     func update(with transaction: AccountViewModel.Transaction) {
-        
         guard let viewModel = transaction.data else { return }
         dateLabel.text = viewModel.date
         amountLabel.text = viewModel.amount

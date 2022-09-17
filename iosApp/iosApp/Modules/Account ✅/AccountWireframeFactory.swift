@@ -5,13 +5,16 @@
 import UIKit
 import web3lib
 
-protocol AccountWireframeFactory {
+// MARK: - AccountWireframeFactory
 
+protocol AccountWireframeFactory {
     func make(
         _ parent: UIViewController?,
         context: AccountWireframeContext
     ) -> AccountWireframe
 }
+
+// MARK: - DefaultAccountWireframeFactory
 
 final class DefaultAccountWireframeFactory {
     private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
@@ -65,6 +68,7 @@ extension DefaultAccountWireframeFactory: AccountWireframeFactory {
     }
 }
 
+// MARK: - Assembler
 
 final class AccountWireframeFactoryAssembler: AssemblerComponent {
 

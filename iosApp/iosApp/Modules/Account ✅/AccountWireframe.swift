@@ -23,7 +23,6 @@ protocol AccountWireframe {
 }
 
 final class DefaultAccountWireframe {
-    
     private weak var parent: UIViewController?
     private let context: AccountWireframeContext
     private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
@@ -76,8 +75,6 @@ extension DefaultAccountWireframe: AccountWireframe {
     }
 
     func navigate(to destination: AccountWireframeDestination) {
-        guard let vc = vc else { return }
-
         switch destination {
         case .receive:
             tokenReceiveWireframeFactory.make(
@@ -86,7 +83,7 @@ extension DefaultAccountWireframe: AccountWireframe {
             ).present()
         case .send:
             tokenSendWireframeFactory.makeWireframe(
-                presentingIn: vc,
+                presentingIn: vc!,
                 context: .init(presentationStyle: .present, web3Token: web3Token(context))
             ).present()
         case .swap:

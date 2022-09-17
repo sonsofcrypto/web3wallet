@@ -5,17 +5,13 @@
 import UIKit
 
 final class AccountAddressCell: CollectionViewCell {
-    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var copyImage: UIImageView!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         titleLabel.apply(style: .callout, weight: .regular)
         layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
-        
         copyImage.tintColor = Theme.colour.labelPrimary
     }
     
