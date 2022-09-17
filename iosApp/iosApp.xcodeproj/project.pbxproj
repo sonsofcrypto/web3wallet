@@ -161,7 +161,6 @@
 		1C60C2CF285724D0003BE25D /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1FE285724D0003BE25D /* AlertView.swift */; };
 		1C60C2D0285724D0003BE25D /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1FF285724D0003BE25D /* AlertPresenter.swift */; };
 		1C60C2D1285724D0003BE25D /* AlertContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C200285724D0003BE25D /* AlertContext.swift */; };
-		1C60C2D2285724D0003BE25D /* AlertWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C201285724D0003BE25D /* AlertWireframeFactoryAssembler.swift */; };
 		1C60C2D4285724D0003BE25D /* MnemonicNewWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C204285724D0003BE25D /* MnemonicNewWireframe.swift */; };
 		1C60C2D5285724D0003BE25D /* MnemonicNewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C205285724D0003BE25D /* MnemonicNewViewModel.swift */; };
 		1C60C2D6285724D0003BE25D /* MnemonicNewWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C206285724D0003BE25D /* MnemonicNewWireframeFactory.swift */; };
@@ -750,7 +749,6 @@
 		1C60C1FE285724D0003BE25D /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		1C60C1FF285724D0003BE25D /* AlertPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
 		1C60C200285724D0003BE25D /* AlertContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertContext.swift; sourceTree = "<group>"; };
-		1C60C201285724D0003BE25D /* AlertWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C60C204285724D0003BE25D /* MnemonicNewWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicNewWireframe.swift; sourceTree = "<group>"; };
 		1C60C205285724D0003BE25D /* MnemonicNewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicNewViewModel.swift; sourceTree = "<group>"; };
 		1C60C206285724D0003BE25D /* MnemonicNewWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicNewWireframeFactory.swift; sourceTree = "<group>"; };
@@ -1497,7 +1495,7 @@
 			isa = PBXGroup;
 			children = (
 				1C60C244285724D0003BE25D /* Account ✅ */,
-				1C60C1FA285724D0003BE25D /* Alert */,
+				1C60C1FA285724D0003BE25D /* Alert ✅ */,
 				1C60C253285724D0003BE25D /* Apps ✅ */,
 				D1A12A58287D333900606FC8 /* Authenticate ✅ */,
 				1C60C1EE285724D0003BE25D /* Chat ✅ */,
@@ -1635,7 +1633,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C60C1FA285724D0003BE25D /* Alert */ = {
+		1C60C1FA285724D0003BE25D /* Alert ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1CE006472889A08A002D1EB3 /* Alert.storyboard */,
@@ -1645,9 +1643,8 @@
 				1C60C1FD285724D0003BE25D /* AlertViewModel.swift */,
 				1C60C1FB285724D0003BE25D /* AlertWireframe.swift */,
 				1C60C1FC285724D0003BE25D /* AlertWireframeFactory.swift */,
-				1C60C201285724D0003BE25D /* AlertWireframeFactoryAssembler.swift */,
 			);
-			path = Alert;
+			path = "Alert ✅";
 			sourceTree = "<group>";
 		};
 		1C60C202285724D0003BE25D /* MnemonicNew */ = {
@@ -3042,7 +3039,6 @@
 				1C7F862928D20E490073FD95 /* CG+Extensions.swift in Sources */,
 				1C60C2E4285724D0003BE25D /* DashboardPresenter.swift in Sources */,
 				1C64870D2832DD970091A12D /* AssemblerBootstrapper.swift in Sources */,
-				1C60C2D2285724D0003BE25D /* AlertWireframeFactoryAssembler.swift in Sources */,
 				1C60C34C285724D1003BE25D /* CultProposalWireframe.swift in Sources */,
 				1CD3FE20284D5840008312DE /* FeatureFlags.swift in Sources */,
 				1C60C2E2285724D0003BE25D /* DashboardInteractor.swift in Sources */,

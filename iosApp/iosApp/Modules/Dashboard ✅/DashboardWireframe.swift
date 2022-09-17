@@ -117,7 +117,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             vc.edgeCardsController?.setDisplayMode(.overview, animated: true)
         case .presentUnderConstructionAlert:
             let context = AlertContext.underConstructionAlert()
-            alertWireframeFactory.makeWireframe(parent, context: context).present()
+            alertWireframeFactory.make(parent, context: context).present()
         case .mnemonicConfirmation:
             mnemonicConfirmationWireframeFactory.makeWireframe(parent).present()
         case .receive:

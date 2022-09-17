@@ -49,7 +49,7 @@ extension DefaultNetworksWireframe: NetworksWireframe {
             parent?.asEdgeCardsController?.setDisplayMode(.master, animated: true)
         case .editNetwork:
             guard let parent = parent else { return }
-            alertWireframeFactory.makeWireframe(
+            alertWireframeFactory.make(
                 parent,
                 context: .underConstructionAlert()
             ).present()

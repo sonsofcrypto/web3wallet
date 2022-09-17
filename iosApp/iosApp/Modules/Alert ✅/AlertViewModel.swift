@@ -3,6 +3,5 @@
 // SPDX-License-Identifier: MIT
 
 struct AlertViewModel {
-    
     let context: AlertContext
 }

@@ -72,13 +72,11 @@ extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
                 vc,
                 context: context
             ).present()
-            
         case let .confirmationAlert(onConfirm):
-            alertWireframeFactory.makeWireframe(
+            alertWireframeFactory.make(
                 vc,
                 context: makeDeleteConfirmationAlertContext(with: onConfirm)
             ).present()
-            
         case .dismiss:
             vc.dismiss(animated: true)
         }

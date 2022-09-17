@@ -275,7 +275,7 @@ private extension DefaultSettingsService {
             // TODO: Smell
             guard let presentingVC = UIApplication.shared.rootVc else { return }
             let factory: AlertWireframeFactory = ServiceDirectory.assembler.resolve()
-            factory.makeWireframe(
+            factory.make(
                 presentingVC,
                 context: makeResetKeystoreAlertContext()
             ).present()

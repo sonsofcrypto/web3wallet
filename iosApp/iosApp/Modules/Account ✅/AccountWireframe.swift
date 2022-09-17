@@ -127,8 +127,8 @@ private extension DefaultAccountWireframe {
         let vc: AccountViewController = UIStoryboard(.account).instantiate()
         let presenter = DefaultAccountPresenter(
             view: vc,
-            interactor: interactor,
             wireframe: self,
+            interactor: interactor,
             context: context
         )
         vc.presenter = presenter

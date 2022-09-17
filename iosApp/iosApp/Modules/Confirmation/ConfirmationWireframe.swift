@@ -77,7 +77,7 @@ extension DefaultConfirmationWireframe: ConfirmationWireframe {
             wireframe.present()
             
         case .underConstruction:
-            alertWireframeFactory.makeWireframe(
+            alertWireframeFactory.make(
                 navigationController,
                 context: .underConstructionAlert()
             ).present()

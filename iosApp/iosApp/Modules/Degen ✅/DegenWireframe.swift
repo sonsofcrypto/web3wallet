@@ -70,7 +70,7 @@ extension DefaultDegenWireframe: DegenWireframe {
         case .cult:
             cultProposalsWireframeFactory.make(vc).present()
         case .comingSoon:
-            alertWireframeFactory.makeWireframe(
+            alertWireframeFactory.make(
                 vc,
                 context: .underConstructionAlert()
             ).present()

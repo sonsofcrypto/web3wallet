@@ -5,25 +5,22 @@
 import UIKit
 
 protocol AlertWireframe {
-    
     func present()
     func navigate(to destination: AlertWireframeDestination)
 }
 
 enum AlertWireframeDestination {
-    
     case dismiss
 }
 
 final class DefaultAlertWireframe {
-
-    private weak var parent: UIViewController!
+    private weak var parent: UIViewController?
     private let context: AlertContext
     
-    private weak var vc: UIViewController!
+    private weak var vc: UIViewController?
 
     init(
-        parent: UIViewController,
+        parent: UIViewController?,
         context: AlertContext
     ) {
         self.parent = parent
@@ -34,21 +31,14 @@ final class DefaultAlertWireframe {
 extension DefaultAlertWireframe: AlertWireframe {
 
     func present() {
-        
         let vc = makeViewController()
-
-        self.vc = vc
-
-        parent.present(vc, animated: true)
+        parent?.present(vc, animated: true)
     }
     
     func navigate(to destination: AlertWireframeDestination) {
-        
         switch destination {
-            
         case .dismiss:
-            
-            vc.navigationController?.dismiss(animated: true) ?? vc.dismiss(animated: true)
+            vc?.navigationController?.dismiss(animated: true) ?? vc?.dismiss(animated: true)
         }
     }
 }
@@ -56,8 +46,7 @@ extension DefaultAlertWireframe: AlertWireframe {
 private extension DefaultAlertWireframe {
 
     func makeViewController() -> UIViewController {
-        
-        let vc: DefaultAlertView = UIStoryboard(.alert).instantiate()
+        let vc: AlertViewController = UIStoryboard(.alert).instantiate()
         let presenter = DefaultAlertPresenter(
             context: context,
             view: vc,
@@ -65,9 +54,10 @@ private extension DefaultAlertWireframe {
         )
         vc.presenter = presenter
         vc.contentHeight = context.contentHeight
-        let navigationController = NavigationController(rootViewController: vc)
-        navigationController.modalPresentationStyle = .custom
-        navigationController.transitioningDelegate = vc
-        return navigationController
+        let nc = NavigationController(rootViewController: vc)
+        nc.modalPresentationStyle = .custom
+        nc.transitioningDelegate = vc
+        self.vc = nc
+        return nc
     }
 }

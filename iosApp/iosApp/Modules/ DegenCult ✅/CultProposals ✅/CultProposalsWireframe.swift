@@ -71,7 +71,7 @@ extension DefaultCultProposalsWireframe: CultProposalsWireframe {
                 )
             ).present()
         case let .alert(context):
-            alertWireframeFactory.makeWireframe(vc, context: context).present()
+            alertWireframeFactory.make(vc, context: context).present()
         case .getCult:
             guard let presentingIn = vc?.navigationController else { return }
             // TODO: Review this - we only allow CULT on ETH Mainnet atm...

@@ -98,7 +98,7 @@ extension DefaultTokenSwapWireframe: TokenSwapWireframe {
             guard let viewController = navigationController.topViewController else {
                 return
             }
-            alertWireframeFactory.makeWireframe(
+            alertWireframeFactory.make(
                 viewController,
                 context: .underConstructionAlert()
             ).present()

@@ -85,7 +85,7 @@ extension DefaultNFTDetailWireframe: NFTDetailWireframe {
         case .underConstruction:
             
             let alert: AlertWireframeFactory = ServiceDirectory.assembler.resolve()
-            alert.makeWireframe(
+            alert.make(
                 navigationController,
                 context: .underConstructionAlert()
             ).present()

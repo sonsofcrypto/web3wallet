@@ -6,33 +6,28 @@ import UIKit
 import WebKit
 
 protocol AlertView: AnyObject {
-    
     func update(with viewModel: AlertViewModel)
 }
 
-final class DefaultAlertView: BaseViewController {
-    
+final class AlertViewController: BaseViewController {
     var presenter: AlertPresenter!
     var contentHeight: CGFloat!
 
     private var viewModel: AlertViewModel!
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         presenter.present()
     }
 }
 
-extension DefaultAlertView: UIViewControllerTransitioningDelegate, ModalDismissDelegate {
+extension AlertViewController: UIViewControllerTransitioningDelegate, ModalDismissDelegate {
 
     func presentationController(
         forPresented presented: UIViewController,
         presenting: UIViewController?,
         source: UIViewController
     ) -> UIPresentationController? {
-        
         AlertSheetPresentationController(
             presentedViewController: presented,
             presenting: presenting,
@@ -41,33 +36,27 @@ extension DefaultAlertView: UIViewControllerTransitioningDelegate, ModalDismissD
     }
 
     func viewControllerDismissActionPressed(_ viewController: UIViewController?) {
-        
         dismissAction()
     }
 }
 
-extension DefaultAlertView: AlertView {
+extension AlertViewController: AlertView {
     
     func update(with viewModel: AlertViewModel) {
-        
         self.viewModel = viewModel
-        
         title = viewModel.context.title
-        
         presentAlert(with: viewModel)
     }
 }
 
-private extension DefaultAlertView {
+private extension AlertViewController {
     
     @objc func dismissAction() {
-        
         presenter.handle(.dismiss)
     }
         
     func presentAlert(with viewModel: AlertViewModel) {
-        
-        let alertView = makeAlertContent(with: viewModel.context)
+        let alertView = alertContent(with: viewModel.context)
         view.addSubview(alertView)
         alertView.addConstraints(
             [
@@ -78,34 +67,36 @@ private extension DefaultAlertView {
         )
     }
     
-    func makeAlertContent(with alertContext: AlertContext) -> UIView {
-        
+    func alertContent(with alertContext: AlertContext) -> UIView {
         var content = [UIView]()
-        
-        content.append(contentsOf: makeAlertMedia(with: alertContext.media))
-        content.append(contentsOf: makeAlertMessage(with: alertContext.message))
-        content.append(contentsOf: makeAlertActions(with: alertContext.actions))
-        
+        content.append(contentsOf: alertMedia(with: alertContext.media))
+        content.append(contentsOf: alertMessage(with: alertContext.message))
+        content.append(contentsOf: alertActions(with: alertContext.actions))
         let stackView = VStackView(content)
         stackView.spacing = Theme.constant.padding
-        
         return stackView
     }
     
-    func makeAlertMessage(with message: String?) -> [UIView] {
-        
+    func alertMedia(with media: AlertContext.Media?) -> [UIView] {
+        guard let media = media else { return [] }
+        switch media {
+        case let .image(named, size):
+            return alertImage(with: named, size: size)
+        case let .gift(named, size):
+            return alertMediaGif(with: named, size: size)
+        }
+    }
+    
+    func alertMessage(with message: String?) -> [UIView] {
         guard let message = message else { return [] }
-        
         let label = UILabel()
         label.apply(style: .body)
         label.text = message
         label.textAlignment = .center
         label.numberOfLines = 0
-        
         let wrappingView = UIView()
         wrappingView.backgroundColor = .clear
         wrappingView.addSubview(label)
-        
         label.addConstraints(
             [
                 .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 16)),
@@ -114,34 +105,20 @@ private extension DefaultAlertView {
                 .layout(anchor: .bottomAnchor)
             ]
         )
-        
         return [wrappingView]
     }
     
-    func makeAlertMedia(with media: AlertContext.Media?) -> [UIView] {
-        guard let media = media else { return [] }
-        switch media {
-        case let .image(named, size):
-            return makeAlertImage(with: named, size: size)
-        case let .gift(named, size):
-            return makeAlertMediaGif(with: named, size: size)
-        }
-    }
-    
-    func makeAlertImage(with name: String, size: CGSize) -> [UIView] {
-        
+    func alertImage(with name: String, size: CGSize) -> [UIView] {
         let imageView = UIImageView()
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
         imageView.image = name.assetImage
         imageView.tintColor = Theme.colour.labelPrimary.withAlpha(0.75)
-
         let wrappingView = UIView()
         wrappingView.backgroundColor = .clear
         wrappingView.clipsToBounds = true
         wrappingView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         wrappingView.addSubview(imageView)
-        
         imageView.addConstraints(
             [
                 .layout(anchor: .topAnchor),
@@ -151,14 +128,11 @@ private extension DefaultAlertView {
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: size.height))
             ]
         )
-        
         return [wrappingView]
     }
     
-    func makeAlertMediaGif(with gifName: String, size: CGSize) -> [UIView] {
-        
+    func alertMediaGif(with gifName: String, size: CGSize) -> [UIView] {
         let url = Bundle.main.url(forResource: gifName, withExtension: "gif")!
-        
         let webView = WKWebView()
         webView.backgroundColor = .clear
         webView.scrollView.isScrollEnabled = false
@@ -168,13 +142,11 @@ private extension DefaultAlertView {
         let request = URLRequest(url: url)
         webView.load(request)
         webView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-
         let wrappingView = UIView()
         wrappingView.backgroundColor = .clear
         wrappingView.clipsToBounds = true
         wrappingView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         wrappingView.addSubview(webView)
-        
         webView.addConstraints(
             [
                 .layout(anchor: .topAnchor),
@@ -184,21 +156,15 @@ private extension DefaultAlertView {
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: size.height))
             ]
         )
-        
         return [wrappingView]
     }
     
-    func makeAlertActions(with actions: [AlertContext.Action]) -> [UIView] {
-        
+    func alertActions(with actions: [AlertContext.Action]) -> [UIView] {
         guard !actions.isEmpty else { return [] }
-        
         var actionViews = [UIView]()
-        
         actions.forEach { item in
-            
             let button = Button()
             switch item.type {
-                
             case .primary:
                 button.style = .primary
             case .secondary:
@@ -208,22 +174,15 @@ private extension DefaultAlertView {
                 button.backgroundColor = Theme.colour.destructive
             }
             button.setTitle(item.title, for: .normal)
-            
             if let action = item.action {
-                
                 button.add(action)
-                
             } else if actions.count == 1 {
-                
                 button.add(.targetAction(.init(target: self, selector: #selector(dismissAction))))
             } else {
-                
                 button.add(.targetAction(.init(target: self, selector: #selector(dismissAction))))
             }
-            
             actionViews.append(button)
         }
-        
         return actionViews
     }    
 }

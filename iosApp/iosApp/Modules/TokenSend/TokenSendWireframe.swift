@@ -92,7 +92,7 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
         switch destination {
         case .underConstructionAlert:
             let factory: AlertWireframeFactory = ServiceDirectory.assembler.resolve()
-            factory.makeWireframe(
+            factory.make(
                 navigationController,
                 context: .underConstructionAlert()
             ).present()
@@ -196,7 +196,7 @@ private extension DefaultTokenSendWireframe {
     }
     
     func presentSendingToSameAddressAlert() {
-        alertWireframeFactory.makeWireframe(
+        alertWireframeFactory.make(
             navigationController,
             context: .init(
                 title: Localized("alert.send.transaction.toYourself.title"),

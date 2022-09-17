@@ -83,7 +83,7 @@ extension DefaultNFTSendWireframe: NFTSendWireframe {
         switch destination {
         case .underConstructionAlert:
             let factory: AlertWireframeFactory = ServiceDirectory.assembler.resolve()
-            factory.makeWireframe(
+            factory.make(
                 navigationController,
                 context: .underConstructionAlert()
             ).present()
@@ -167,7 +167,7 @@ private extension DefaultNFTSendWireframe {
     }
     
     func presentSendingToSameAddressAlert() {
-        alertWireframeFactory.makeWireframe(
+        alertWireframeFactory.make(
             navigationController,
             context: .init(
                 title: Localized("alert.send.transaction.toYourself.title"),

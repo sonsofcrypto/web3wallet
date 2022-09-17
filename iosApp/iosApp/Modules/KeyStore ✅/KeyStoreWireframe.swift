@@ -98,7 +98,7 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
             updateMnemonic.makeWireframe(vc, context: context).present()
         default:
             guard let vc = vc else { return }
-            alertWireframeFactory.makeWireframe(
+            alertWireframeFactory.make(
                 vc,
                 context: .underConstructionAlert()
             ).present()
