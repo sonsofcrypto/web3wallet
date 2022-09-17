@@ -42,6 +42,7 @@ class EdgeCardsController: BaseViewController {
     private var tapRecognizers: [UITapGestureRecognizer] = []
     private var panRecognizer: UIPanGestureRecognizer!
     private var edgeRecognizer: UIScreenEdgePanGestureRecognizer!
+    private var allRecognizers: [UIGestureRecognizer] = []
 
     init(
         master: UIViewController?,
@@ -102,6 +103,17 @@ class EdgeCardsController: BaseViewController {
                 self.delegate?.edgeCardsController(vc: self, didChangeTo: mode)
             }
         )
+    }
+
+    var visibleViewController: UIViewController {
+        switch displayMode {
+        case .bottomCard, .overviewBottomCard:
+            return bottomCard ?? self
+        case .topCard, .overviewTopCard:
+            return topCard ?? self
+        default:
+            return master ?? self
+        }
     }
 
     @objc func edgePanned(_ recognizer: UIScreenEdgePanGestureRecognizer) {
@@ -517,6 +529,7 @@ extension EdgeCardsController: UIGestureRecognizerDelegate {
         )
         panRecognizer.isEnabled = false
         view.addGestureRecognizer(panRecognizer)
+        allRecognizers = [panRecognizer, edgeRecognizer] + tapRecognizers
     }
 
     func setupRecognizers(for mode: DisplayMode) {
@@ -543,11 +556,17 @@ extension EdgeCardsController: UIGestureRecognizerDelegate {
     }
 
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if displayMode == .bottomCard || displayMode == .overviewBottomCard,
+           let navVc = bottomCard as? UINavigationController,
+           let visibleVc = navVc.visibleViewController,
+           visibleVc != navVc.viewControllers[safe: 0] {
+            return !allRecognizers.contains(where: { $0 == gestureRecognizer })
+        }
         guard displayMode == .master,
-              let tabVc = master as? UITabBarController,
-              let navVc = tabVc.selectedViewController as? UINavigationController,
-              let visibleVc = navVc.visibleViewController,
-              visibleVc == navVc.viewControllers[safe: 0]
+          let tabVc = master as? UITabBarController,
+          let navVc = tabVc.selectedViewController as? UINavigationController,
+          let visibleVc = navVc.visibleViewController,
+          visibleVc == navVc.viewControllers[safe: 0]
         else {
             return gestureRecognizer.isKind(of: UITapGestureRecognizer.self)
         }
@@ -597,7 +616,7 @@ extension UIViewController {
     var edgeCardsController: EdgeCardsController? {
         return findParent(self)
     }
-    
+
     private func findParent(_ vc: UIViewController?) -> EdgeCardsController? {
         // Look for `EdgeCardsController` in parents
         if let parent = vc?.parent {

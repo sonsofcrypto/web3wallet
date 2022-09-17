@@ -45,49 +45,41 @@ final class DefaultMnemonicUpdateWireframe {
 extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
 
     func present() {
-        
         let vc = wireUp()
-        let topVc = (parent as? UINavigationController)?.topViewController
-
-        if let transitionDelegate =  topVc as? UIViewControllerTransitioningDelegate {
-            vc.transitioningDelegate = transitionDelegate
-        }
+        let presentingTopVc = (parent as? UINavigationController)?.topVc
+        let presentedTopVc = (vc as? UINavigationController)?.topVc
 
         switch ServiceDirectory.transitionStyle {
         case .cardFlip:
-            vc.modalPresentationStyle = .overCurrentContext
+            let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
+            self.vc = vc
+            vc.modalPresentationStyle = .overFullScreen
+            vc.transitioningDelegate = delegate
         case .sheet:
             vc.modalPresentationStyle = .automatic
         }
 
         self.vc = vc
-        topVc?.show(vc, sender: self)
+        presentingTopVc?.present(vc, animated: true)
     }
 
     func navigate(to destination: MnemonicUpdateWireframeDestination) {
-        
         switch destination {
-            
         case .learnMoreSalt:
-            
             UIApplication.shared.open(Constant.saltExplanationURL)
-            
         case let .authenticate(context):
-            
             authenticateWireframeFactory.makeWireframe(
                 vc,
                 context: context
             ).present()
             
         case let .confirmationAlert(onConfirm):
-            
             alertWireframeFactory.makeWireframe(
                 vc,
                 context: makeDeleteConfirmationAlertContext(with: onConfirm)
             ).present()
             
         case .dismiss:
-            
             vc.dismiss(animated: true)
         }
     }

@@ -11,16 +11,17 @@ protocol MnemonicUpdateView: AnyObject {
 }
 
 final class MnemonicUpdateViewController: BaseViewController {
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var ctaButton: Button!
+    @IBOutlet weak var ctaButtonBottomConstraint: NSLayoutConstraint!
 
     var presenter: MnemonicUpdatePresenter!
 
     private var viewModel: MnemonicUpdateViewModel?
     private var didAppear: Bool = false
+    private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
+    private var interactiveTransitioning: CardFlipInteractiveTransitioning?
 
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var ctaButton: Button!
-    @IBOutlet weak var ctaButtonBottomConstraint: NSLayoutConstraint!
-    
     deinit {
         #if DEBUG
         print("[DEBUG][ViewController] deinit \(String(describing: self))")
@@ -301,6 +302,94 @@ extension MnemonicUpdateViewController: UIScrollViewDelegate {
     }
 }
 
+// MARK: - UIViewControllerTransitioningDelegate
+
+extension MnemonicUpdateViewController: UIViewControllerTransitioningDelegate {
+
+    func animationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController,
+        source: UIViewController
+    ) -> UIViewControllerAnimatedTransitioning? {
+        let presentedVc = (presented as? UINavigationController)?.topVc
+        let sourceNav = (source as? UINavigationController)
+        let targetView = (source as? TargetViewTransitionDatasource)?.targetView()
+            ?? (sourceNav?.topVc as? TargetViewTransitionDatasource)?.targetView()
+            ?? presenting.view
+
+        guard presentedVc == self, let targetView = targetView else {
+            animatedTransitioning = nil
+            return nil
+        }
+
+        animatedTransitioning = CardFlipAnimatedTransitioning(
+            targetView: targetView,
+            handler: { [weak self] in self?.animatedTransitioning = nil }
+        )
+
+        return animatedTransitioning
+    }
+
+    func animationController(
+        forDismissed dismissed: UIViewController
+    ) -> UIViewControllerAnimatedTransitioning? {
+        guard dismissed == self || dismissed == navigationController else {
+            animatedTransitioning = nil
+            return nil
+        }
+
+        let presenting = dismissed.presentingViewController
+
+        guard let visVc = (presenting as? EdgeCardsController)?.visibleViewController,
+              let topVc = (visVc as? UINavigationController)?.topVc,
+              let targetView = (topVc as? TargetViewTransitionDatasource)?.targetView()
+        else {
+            animatedTransitioning = nil
+            return nil
+        }
+
+        animatedTransitioning = CardFlipAnimatedTransitioning(
+            targetView: targetView,
+            isPresenting: false,
+            scaleAdjustment: 0.05,
+            handler: { [weak self] in self?.animatedTransitioning = nil }
+        )
+
+        return animatedTransitioning
+    }
+
+    func interactionControllerForDismissal(
+        using animator: UIViewControllerAnimatedTransitioning
+    ) -> UIViewControllerInteractiveTransitioning? {
+        interactiveTransitioning
+    }
+
+    @objc func handleGesture(_ recognizer: UIPanGestureRecognizer) {
+        let location = recognizer.location(in: view.window!)
+        let pct = (location.x * 0.5) / view.bounds.width
+
+        switch recognizer.state {
+        case .began:
+            interactiveTransitioning = CardFlipInteractiveTransitioning(
+                handler: { [weak self] in self?.interactiveTransitioning = nil }
+            )
+            dismiss(animated: true)
+        case .changed:
+            interactiveTransitioning?.update(pct)
+        case .cancelled:
+            interactiveTransitioning?.cancel()
+        case .ended:
+            let completed = recognizer.velocity(in: view.window!).x >= 0
+            interactiveTransitioning?.completionSpeed = completed ? 1.5 : 0.1
+            completed
+                ? interactiveTransitioning?.finish()
+                : interactiveTransitioning?.cancel()
+        default:
+            ()
+        }
+    }
+}
+
 // MARK: - Configure UI
 
 private extension MnemonicUpdateViewController {
@@ -321,6 +410,13 @@ private extension MnemonicUpdateViewController {
         )
         
         ctaButton.style = .primary
+
+        let edgePan = UIScreenEdgePanGestureRecognizer(
+            target: self,
+            action: #selector(handleGesture(_:))
+        )
+        edgePan.edges = [UIRectEdge.left]
+        view.addGestureRecognizer(edgePan)
 
         // TODO: Smell
         let window = UIApplication.shared.keyWindow

@@ -40,7 +40,6 @@ final class AccountViewController: BaseViewController {
 extension AccountViewController: AccountView {
     
     func update(with viewModel: AccountViewModel) {
-        
         self.viewModel = viewModel
         title = viewModel.currencyName
         collectionView.reloadData()
@@ -49,15 +48,8 @@ extension AccountViewController: AccountView {
         let btnLabel = (navigationItem.rightBarButtonItem?.customView as? UILabel)
         btnLabel?.text = viewModel.header.pct
         btnLabel?.textColor = viewModel.header.pctUp
-        ? Theme.colour.priceUp
-        : Theme.colour.priceDown
-
-        let edgePan = UIScreenEdgePanGestureRecognizer(
-            target: self,
-            action: #selector(handleGesture(_:))
-        )
-        edgePan.edges = [UIRectEdge.left]
-        view.addGestureRecognizer(edgePan)
+            ? Theme.colour.priceUp
+            : Theme.colour.priceDown
     }
 }
 
@@ -368,16 +360,24 @@ private extension AccountViewController {
         collectionView.refreshControl = refreshControl
         
         refreshControl.tintColor = Theme.colour.activityIndicator
-        refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
+        refreshControl.addTarget(
+            self,
+            action: #selector(didPullToRefresh(_:)),
+            for: .valueChanged
+        )
+        let edgePan = UIScreenEdgePanGestureRecognizer(
+            target: self,
+            action: #selector(handleGesture(_:))
+        )
+        edgePan.edges = [UIRectEdge.left]
+        view.addGestureRecognizer(edgePan)
     }
     
     @objc func dismissAction() {
-        
         dismiss(animated: true)
     }
     
     @objc func didPullToRefresh(_ sender: Any) {
-
         presenter.handle(.pullDownToRefresh)
     }
 }

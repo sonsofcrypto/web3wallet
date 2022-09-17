@@ -41,21 +41,22 @@ extension DefaultMnemonicImportWireframe: MnemonicImportWireframe {
 
     func present() {
         let vc = wireUp()
-        let topVc = (parent as? UINavigationController)?.topViewController
-
-        if let transitionDelegate =  topVc as? UIViewControllerTransitioningDelegate {
-            vc.transitioningDelegate = transitionDelegate
-        }
+        let presentingTopVc = (parent as? UINavigationController)?.topVc
+        let presentedTopVc = (vc as? UINavigationController)?.topVc
 
         switch ServiceDirectory.transitionStyle {
         case .cardFlip:
-            vc.modalPresentationStyle = .overCurrentContext
+            let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
+            self.vc = vc
+            vc.modalPresentationStyle = .overFullScreen
+            vc.transitioningDelegate = delegate        case .sheet:
+            vc.modalPresentationStyle = .automatic
         case .sheet:
             vc.modalPresentationStyle = .automatic
         }
 
         self.vc = vc
-        topVc?.show(vc, sender: self)
+        presentingTopVc?.present(vc, animated: true)
     }
 
     func navigate(to destination: MnemonicImportWireframeDestination) {

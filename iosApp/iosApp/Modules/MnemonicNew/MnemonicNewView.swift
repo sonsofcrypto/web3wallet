@@ -324,11 +324,12 @@ extension MnemonicNewViewController: UIViewControllerTransitioningDelegate {
         source: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
         let presentedVc = (presented as? UINavigationController)?.topVc
-        let targetView = (source as? TargetViewTransitionDatasource)?
-                .targetView() ?? presenting.view
+        let sourceNav = (source as? UINavigationController)
+        let targetView = (source as? TargetViewTransitionDatasource)?.targetView()
+            ?? (sourceNav?.topVc as? TargetViewTransitionDatasource)?.targetView()
+            ?? presenting.view
 
-        guard presentedVc?.isKind(of: MnemonicNewViewController.self) ?? false,
-              let targetView = targetView else {
+        guard presentedVc == self, let targetView = targetView else {
             animatedTransitioning = nil
             return nil
         }
@@ -344,12 +345,17 @@ extension MnemonicNewViewController: UIViewControllerTransitioningDelegate {
     func animationController(
         forDismissed dismissed: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
-        let nav = dismissed.presentingViewController as? UINavigationController
-        let topVc = nav?.topVc ?? dismissed.presentingViewController
+        guard dismissed == self || dismissed == navigationController else {
+            animatedTransitioning = nil
+            return nil
+        }
 
-        guard dismissed == navigationController,
-              let targetView = (topVc as? TargetViewTransitionDatasource)?
-                      .targetView() ?? dismissed.presentingViewController?.view else {
+        let presenting = dismissed.presentingViewController
+
+        guard let visVc = (presenting as? EdgeCardsController)?.visibleViewController,
+            let topVc = (visVc as? UINavigationController)?.topVc,
+            let targetView = (topVc as? TargetViewTransitionDatasource)?.targetView()
+        else {
             animatedTransitioning = nil
             return nil
         }
@@ -357,7 +363,8 @@ extension MnemonicNewViewController: UIViewControllerTransitioningDelegate {
         animatedTransitioning = CardFlipAnimatedTransitioning(
             targetView: targetView,
             isPresenting: false,
-            handler: { [weak self] in self?.animatedTransitioning = nil }
+            scaleAdjustment: 0.05,
+        handler: { [weak self] in self?.animatedTransitioning = nil }
         )
 
         return animatedTransitioning
@@ -424,6 +431,13 @@ private extension MnemonicNewViewController {
         )
         
         ctaButton.style = .primary
+
+        let edgePan = UIScreenEdgePanGestureRecognizer(
+            target: self,
+            action: #selector(handleGesture(_:))
+        )
+        edgePan.edges = [UIRectEdge.left]
+        view.addGestureRecognizer(edgePan)
 
         // TODO: Smell
         let window = UIApplication.shared.keyWindow

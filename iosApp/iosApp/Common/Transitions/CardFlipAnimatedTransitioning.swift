@@ -197,8 +197,8 @@ class CardFlipAnimatedTransitioning : NSObject, UIViewControllerAnimatedTransiti
 
         UIView.animateKeyframes(transitionDuration(using: context), animations: {
             UIView.addKeyframe(0, duration: 0.04) { fromView?.alpha = 1 }
-            UIView.addKeyframe(0.04, duration: 0.1) { fromView?.alpha = 0 }
-            UIView.addKeyframe(0.14, duration: 0.86) { fromView?.alpha = 0 }
+            UIView.addKeyframe(0.04, duration: 0.05) { fromView?.alpha = 0 }
+            UIView.addKeyframe(0.09, duration: 0.91) { fromView?.alpha = 0 }
         })
 
         UIView.springAnimate(
