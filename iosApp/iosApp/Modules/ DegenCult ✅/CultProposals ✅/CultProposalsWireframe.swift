@@ -62,8 +62,8 @@ extension DefaultCultProposalsWireframe: CultProposalsWireframe {
                 context: .init(proposal: proposal, proposals: proposals)
             ).present()
         case let .castVote(proposal, approve):
-            confirmationWireframeFactory.makeWireframe(
-                presentingIn: vc,
+            confirmationWireframeFactory.make(
+                vc,
                 context: .init(
                     type: .cultCastVote(
                         .init(cultProposal: proposal, approve: approve)

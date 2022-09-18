@@ -124,14 +124,10 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
             guard dataIn.destination.from != dataIn.destination.to else {
                 return presentSendingToSameAddressAlert()
             }
-            guard let viewController = navigationController.topViewController else {
-                return
-            }
-            let wireframe = confirmationWireframeFactory.makeWireframe(
-                presentingIn: viewController,
+            confirmationWireframeFactory.make(
+                navigationController.topViewController,
                 context: .init(type: .send(dataIn))
-            )
-            wireframe.present()
+            ).present()
         }
     }
     

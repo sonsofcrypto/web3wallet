@@ -108,23 +108,14 @@ extension DefaultTokenSwapWireframe: TokenSwapWireframe {
             
         case let .selectToken(selectedToken, onCompletion):
             presentTokenPicker(selectedToken: selectedToken, onCompletion: onCompletion)
-        
         case let .confirmSwap(dataIn):
-            guard let viewController = navigationController.topViewController else {
-                return
-            }
-            let wireframe = confirmationWireframeFactory.makeWireframe(
-                presentingIn: viewController,
+            confirmationWireframeFactory.make(
+                navigationController.topViewController,
                 context: .init(type: .swap(dataIn))
-            )
-            wireframe.present()
-            
+            ).present()
         case let .confirmApproval(iconName, token, onApproved):
-            guard let viewController = navigationController.topViewController else {
-                return
-            }
-            let wireframe = confirmationWireframeFactory.makeWireframe(
-                presentingIn: viewController,
+            confirmationWireframeFactory.make(
+                navigationController.topViewController,
                 context: .init(
                     type: .approveUniswap(
                         .init(
@@ -134,8 +125,7 @@ extension DefaultTokenSwapWireframe: TokenSwapWireframe {
                         )
                     )
                 )
-            )
-            wireframe.present()
+            ).present()
         }
     }
     

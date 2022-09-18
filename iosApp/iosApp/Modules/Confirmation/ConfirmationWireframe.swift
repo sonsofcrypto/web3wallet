@@ -6,7 +6,6 @@ import UIKit
 import web3lib
 
 enum ConfirmationWireframeDestination {
-    
     case authenticate(AuthenticateContext)
     case underConstruction
     case account
@@ -23,8 +22,7 @@ protocol ConfirmationWireframe {
 }
 
 final class DefaultConfirmationWireframe {
-    
-    private weak var presentingIn: UIViewController!
+    private weak var parent: UIViewController?
     private let context: ConfirmationWireframeContext
     private let walletService: WalletService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
@@ -33,10 +31,10 @@ final class DefaultConfirmationWireframe {
     private let nftsService: NFTsService
     private let mailService: MailService
     
-    private weak var navigationController: UINavigationController!
+    private weak var vc: UIViewController?
     
     init(
-        presentingIn: UIViewController,
+        _ parent: UIViewController?,
         context: ConfirmationWireframeContext,
         walletService: WalletService,
         authenticateWireframeFactory: AuthenticateWireframeFactory,
@@ -45,7 +43,7 @@ final class DefaultConfirmationWireframe {
         nftsService: NFTsService,
         mailService: MailService
     ) {
-        self.presentingIn = presentingIn
+        self.parent = parent
         self.context = context
         self.walletService = walletService
         self.authenticateWireframeFactory = authenticateWireframeFactory
@@ -59,51 +57,43 @@ final class DefaultConfirmationWireframe {
 extension DefaultConfirmationWireframe: ConfirmationWireframe {
     
     func present() {
-        
         let vc = wireUp()
-        presentingIn.present(vc, animated: true)
+        parent?.present(vc, animated: true)
     }
     
     func navigate(to destination: ConfirmationWireframeDestination) {
-        
         switch destination {
-
         case let .authenticate(context):
-            guard let parent = navigationController.topViewController else { return }
-            let wireframe = authenticateWireframeFactory.make(
-                parent,
+            authenticateWireframeFactory.make(
+                vc,
                 context: context
-            )
-            wireframe.present()
-            
+            ).present()
         case .underConstruction:
             alertWireframeFactory.make(
-                navigationController,
+                vc,
                 context: .underConstructionAlert()
             ).present()
-            
         case .account:
             guard let token = context.token else { return }
             let deepLink = DeepLink.account(token: token)
             deepLinkHandler.handle(deepLink: deepLink)
-            
         case .nftsDashboard:
             deepLinkHandler.handle(deepLink: .nftsDashboard)
-
         case .cultProposals:
             deepLinkHandler.handle(deepLink: .cultProposals)
-            
         case let .viewEtherscan(txHash):
-            EtherscanHelper().view(txHash: txHash, presentingIn: navigationController)
-            
+            EtherscanHelper().view(txHash: txHash, parent: vc)
         case let .report(error):
-            let body = Localized("report.txFailed.error.body", arg: error.localizedDescription)
+            let body = Localized(
+                "report.txFailed.error.body",
+                arg: error.localizedDescription
+            )
             mailService.sendMail(context: .init(subject: .beta, body: body))
         }
     }
     
     func dismiss() {
-        navigationController.dismiss(animated: true)
+        vc?.dismiss(animated: true)
     }
 }
 
@@ -122,10 +112,10 @@ private extension DefaultConfirmationWireframe {
             context: context
         )
         vc.presenter = presenter
-        let navigationController = NavigationController(rootViewController: vc)
-        navigationController.modalPresentationStyle = .custom
-        navigationController.transitioningDelegate = vc
-        self.navigationController = navigationController
-        return navigationController
+        let nc = NavigationController(rootViewController: vc)
+        nc.modalPresentationStyle = .custom
+        nc.transitioningDelegate = vc
+        self.vc = nc
+        return nc
     }
 }

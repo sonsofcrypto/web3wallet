@@ -9,7 +9,7 @@ import web3lib
 
 protocol AuthenticateWireframeFactory {
     func make(
-        _ parent: UIViewController,
+        _ parent: UIViewController?,
        context: AuthenticateContext
     ) -> AuthenticateWireframe
 }
@@ -27,7 +27,7 @@ final class DefaultAuthenticateWireframeFactory {
 extension DefaultAuthenticateWireframeFactory: AuthenticateWireframeFactory {
 
     func make(
-        _ parent: UIViewController,
+        _ parent: UIViewController?,
         context: AuthenticateContext
     ) -> AuthenticateWireframe {
         DefaultAuthenticateWireframe(

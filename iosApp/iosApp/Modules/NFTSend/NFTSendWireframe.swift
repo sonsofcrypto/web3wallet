@@ -87,25 +87,19 @@ extension DefaultNFTSendWireframe: NFTSendWireframe {
                 navigationController,
                 context: .underConstructionAlert()
             ).present()
-            
         case let .qrCodeScan(network, onCompletion):
-            let wireframe = qrCodeScanWireframeFactory.make(
+            qrCodeScanWireframeFactory.make(
                 navigationController,
                 context: .init(type: .network(network), onCompletion: onCompletion)
-            )
-            wireframe.present()
+            ).present()
         case let .confirmSendNFT(dataIn):
             guard dataIn.destination.from != dataIn.destination.to else {
                 return presentSendingToSameAddressAlert()
             }
-            guard let viewController = navigationController.topViewController else {
-                return
-            }
-            let wireframe = confirmationWireframeFactory.makeWireframe(
-                presentingIn: viewController,
+            confirmationWireframeFactory.make(
+                navigationController.topViewController,
                 context: .init(type: .sendNFT(dataIn))
-            )
-            wireframe.present()
+            ).present()
         }
     }
     

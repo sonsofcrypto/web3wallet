@@ -7,13 +7,11 @@ import Foundation
 extension ConfirmationViewModel {
     
     struct SendViewModel {
-        
         let token: Token
         let destination: Destination
         let estimatedFee: Fee
         
         struct Token {
-            
             let iconName: String
             let symbol: String
             let value: String
@@ -21,13 +19,11 @@ extension ConfirmationViewModel {
         }
         
         struct Destination {
-            
             let from: String
             let to: String
         }
         
         struct Fee {
-            
             let value: String
             let usdValue: String
         }

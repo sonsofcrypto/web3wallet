@@ -5,17 +5,11 @@
 import UIKit
 
 final class ConfirmationTxInProgressView: UIView {
-    
     private let viewModel: ConfirmationViewModel.TxInProgressViewModel
     
-    init(
-        viewModel: ConfirmationViewModel.TxInProgressViewModel
-    ) {
-        
+    init(viewModel: ConfirmationViewModel.TxInProgressViewModel) {
         self.viewModel = viewModel
-        
         super.init(frame: .zero)
-        
         configureUI()
     }
     
@@ -27,22 +21,18 @@ final class ConfirmationTxInProgressView: UIView {
 private extension ConfirmationTxInProgressView {
     
     func configureUI() {
-        
         let views: [UIView] = [
-            makeAnimationView(),
-            makeLabel(with: .body, and: viewModel.title),
-            makeLabel(with: .footnote, and: viewModel.message)
+            animationView(),
+            label(with: .body, and: viewModel.title),
+            label(with: .footnote, and: viewModel.message)
         ]
-        
         let stackView = VStackView(views)
         stackView.spacing = Theme.constant.padding
         stackView.setCustomSpacing(Theme.constant.padding, after: views[0])
         stackView.setCustomSpacing(Theme.constant.padding, after: views[1])
-
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         wrapperView.tag = 12
-
         wrapperView.addSubview(stackView)
         stackView.addConstraints(
             [
@@ -51,18 +41,14 @@ private extension ConfirmationTxInProgressView {
                 .layout(anchor: .centerYAnchor, constant: .equalTo(constant: Theme.constant.padding * 2))
             ]
         )
-
         addSubview(wrapperView)
-        
         wrapperView.addConstraints(.toEdges)
     }
     
-    func makeAnimationView() -> UIView {
-        
+    func animationView() -> UIView {
         let activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.color = Theme.colour.activityIndicator
         activityIndicator.startAnimating()
-        
         let view = UIView()
         view.backgroundColor = Theme.colour.cellBackground
         view.layer.cornerRadius = Theme.constant.cornerRadiusSmall
@@ -72,7 +58,6 @@ private extension ConfirmationTxInProgressView {
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: 80))
             ]
         )
-
         view.addSubview(activityIndicator)
         activityIndicator.addConstraints(
             [
@@ -80,11 +65,9 @@ private extension ConfirmationTxInProgressView {
                 .layout(anchor: .centerYAnchor)
             ]
         )
-        
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         wrapperView.addSubview(view)
-        
         view.addConstraints(
             [
                 .layout(anchor: .topAnchor),
@@ -92,15 +75,13 @@ private extension ConfirmationTxInProgressView {
                 .layout(anchor: .centerXAnchor)
             ]
         )
-            
         return wrapperView
     }
     
-    func makeLabel(
+    func label(
         with style: UILabel.Style,
         and text: String
     ) -> UIView {
-        
         let label = UILabel()
         label.apply(style: style)
         label.text = text

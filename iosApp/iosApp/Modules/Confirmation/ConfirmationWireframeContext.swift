@@ -6,7 +6,6 @@ import Foundation
 import web3lib
 
 struct ConfirmationWireframeContext {
-    
     let type: `Type`
     
     enum `Type` {
@@ -28,7 +27,6 @@ struct ConfirmationWireframeContext {
     }
     
     var token: Web3Token? {
-        
         switch type {
         case let .send(data):
             return data.token.token

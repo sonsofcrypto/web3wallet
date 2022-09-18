@@ -6,8 +6,8 @@ import UIKit
 
 protocol WebViewWireframeFactory {
 
-    func makeWireframe(
-        _ presentingIn: UIViewController,
+    func make(
+        _ parent: UIViewController?,
         context: WebViewWireframeContext
     ) -> WebViewWireframe
 }
@@ -16,12 +16,12 @@ final class DefaultWebViewWireframeFactory {}
 
 extension DefaultWebViewWireframeFactory: WebViewWireframeFactory {
 
-    func makeWireframe(
-        _ presentingIn: UIViewController,
+    func make(
+        _ parent: UIViewController?,
         context: WebViewWireframeContext
     ) -> WebViewWireframe {
         DefaultWebViewWireframe(
-            presentingIn: presentingIn,
+            parent,
             context: context
         )
     }

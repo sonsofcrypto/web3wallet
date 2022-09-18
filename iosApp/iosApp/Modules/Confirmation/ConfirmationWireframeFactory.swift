@@ -5,16 +5,18 @@
 import UIKit
 import web3lib
 
-protocol ConfirmationWireframeFactory {
+// MARK: - ConfirmationWireframeFactory
 
-    func makeWireframe(
-        presentingIn: UIViewController?,
+protocol ConfirmationWireframeFactory {
+    func make(
+        _ parent: UIViewController?,
         context: ConfirmationWireframeContext
     ) -> ConfirmationWireframe
 }
 
-final class DefaultConfirmationWireframeFactory {
+// MARK: - DefaultConfirmationWireframeFactory
 
+final class DefaultConfirmationWireframeFactory {
     private let walletService: WalletService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
@@ -41,12 +43,12 @@ final class DefaultConfirmationWireframeFactory {
 
 extension DefaultConfirmationWireframeFactory: ConfirmationWireframeFactory {
 
-    func makeWireframe(
-        presentingIn: UIViewController?,
+    func make(
+        _ parent: UIViewController?,
         context: ConfirmationWireframeContext
     ) -> ConfirmationWireframe {
         DefaultConfirmationWireframe(
-            presentingIn: presentingIn!,
+            parent,
             context: context,
             walletService: walletService,
             authenticateWireframeFactory: authenticateWireframeFactory,
@@ -58,3 +60,20 @@ extension DefaultConfirmationWireframeFactory: ConfirmationWireframeFactory {
     }
 }
 
+// MARK: - Assembler
+
+final class ConfirmationWireframeFactoryAssembler: AssemblerComponent {
+
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> ConfirmationWireframeFactory in
+            DefaultConfirmationWireframeFactory(
+                walletService: resolver.resolve(),
+                authenticateWireframeFactory: resolver.resolve(),
+                alertWireframeFactory: resolver.resolve(),
+                deepLinkHandler: resolver.resolve(),
+                nftsService: resolver.resolve(),
+                mailService: resolver.resolve()
+            )
+        }
+    }
+}

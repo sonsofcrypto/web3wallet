@@ -212,7 +212,7 @@ extension AccountViewController: UICollectionViewDelegate {
         }
         if section == .transactions {
             guard let txHash = viewModel.transactions[indexPath.item].data?.txHash else { return }
-            return EtherscanHelper().view(txHash: txHash, presentingIn: self)
+            return EtherscanHelper().view(txHash: txHash, parent: self)
         }
         if section == .marketInfo && indexPath.item == 1 {
             // TODO: Get presenter to present bonus action view

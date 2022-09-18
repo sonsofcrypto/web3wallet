@@ -7,13 +7,11 @@ import Foundation
 extension ConfirmationViewModel {
     
     struct ApproveUniswapViewModel {
-        
         let iconName: String
         let symbol: String
         let fee: Fee
         
         struct Fee {
-            
             let value: String
             let usdValue: String
         }

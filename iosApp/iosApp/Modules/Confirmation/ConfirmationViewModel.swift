@@ -5,12 +5,10 @@
 import Foundation
 
 struct ConfirmationViewModel {
-    
     let title: String
     let content: Content
     
     enum Content {
-        
         case inProgress(TxInProgressViewModel)
         case success(TxSuccessViewModel)
         case failed(TxFailedViewModel)
@@ -25,13 +23,11 @@ struct ConfirmationViewModel {
 extension ConfirmationViewModel {
     
     struct TxInProgressViewModel {
-        
         let title: String
         let message: String
     }
     
     struct TxSuccessViewModel {
-        
         let title: String
         let message: String
         let cta: String
@@ -39,7 +35,6 @@ extension ConfirmationViewModel {
     }
 
     struct TxFailedViewModel {
-        
         let title: String
         let error: String
         let cta: String

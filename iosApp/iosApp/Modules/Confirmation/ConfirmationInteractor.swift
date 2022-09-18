@@ -5,7 +5,6 @@
 import web3lib
 
 protocol ConfirmationInteractor {
-    
     func send(
         tokenFrom: Web3Token,
         toAddress: String,
@@ -15,7 +14,6 @@ protocol ConfirmationInteractor {
         salt: String,
         handler: @escaping (Result<TransactionResponse, Error>) -> Void
     )
-
     func sendNFT(
         from: String,
         to: String,
@@ -25,15 +23,13 @@ protocol ConfirmationInteractor {
         network: Network,
         handler: @escaping (Result<TransactionResponse, Error>) -> Void
     )
-    
-    func castVote(
+     func castVote(
         proposalId: String,
         support: Bool,
         password: String,
         salt: String,
         handler: @escaping (Result<TransactionResponse, Error>) -> Void
     )
-    
     func executeSwap(
         network: Network,
         password: String,
@@ -44,7 +40,6 @@ protocol ConfirmationInteractor {
 }
 
 final class DefaultConfirmationInteractor {
-
     private let walletService: WalletService
     private let nftsService: NFTsService
 
@@ -74,7 +69,6 @@ extension DefaultConfirmationInteractor: ConfirmationInteractor {
                 salt: salt,
                 network: tokenFrom.network.toNetwork()
             )
-
             walletService.transfer(
                 to: toAddress,
                 currency: tokenFrom.toCurrency(),
@@ -92,7 +86,6 @@ extension DefaultConfirmationInteractor: ConfirmationInteractor {
                     handler(.success(response))
                 }
             )
-
         } catch {
             handler(.failure(error))
         }
@@ -152,22 +145,18 @@ extension DefaultConfirmationInteractor: ConfirmationInteractor {
         handler: @escaping (Result<TransactionResponse, Error>) -> Void
     ) {
         do {
-            
             guard let id = try? proposalId.int() else {
                 handler(.failure(ConfirmationInteractorError.failedProposalId))
                 return
             }
-
             let network = Network.ethereum()
             try walletService.unlock(
                 password: password,
                 salt: salt,
                 network: network
             )
-
             let contract = CultGovernor()
             let supportInt = UInt32(support ? 1 : 0)
-
             walletService.contractSend(
                 contractAddress: contract.address.hexString,
                 data: contract.castVote(proposalId: UInt32(id), support: supportInt),

@@ -381,7 +381,6 @@
 		1C7FC99428B68E9800FC9175 /* AccountTransactionEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC99328B68E9800FC9175 /* AccountTransactionEmptyCell.swift */; };
 		1C7FC99628B691CA00FC9175 /* AccountTransactionLoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC99528B691CA00FC9175 /* AccountTransactionLoadingCell.swift */; };
 		1C7FC99828B7612000FC9175 /* FeatureDetailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC99728B7612000FC9175 /* FeatureDetailImageView.swift */; };
-		1C7FC99A28B7C6FF00FC9175 /* ConfirmationWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC99928B7C6FF00FC9175 /* ConfirmationWireframeFactoryAssembler.swift */; };
 		1C7FC99C28B81DFA00FC9175 /* NFTDetailView+Content+Other.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC99B28B81DFA00FC9175 /* NFTDetailView+Content+Other.swift */; };
 		1C7FC9A328BCC5DE00FC9175 /* MailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9A228BCC5DD00FC9175 /* MailService.swift */; };
 		1C7FC9A528BCC5E900FC9175 /* MailServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9A428BCC5E900FC9175 /* MailServiceAssembler.swift */; };
@@ -969,7 +968,6 @@
 		1C7FC99328B68E9800FC9175 /* AccountTransactionEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTransactionEmptyCell.swift; sourceTree = "<group>"; };
 		1C7FC99528B691CA00FC9175 /* AccountTransactionLoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTransactionLoadingCell.swift; sourceTree = "<group>"; };
 		1C7FC99728B7612000FC9175 /* FeatureDetailImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureDetailImageView.swift; sourceTree = "<group>"; };
-		1C7FC99928B7C6FF00FC9175 /* ConfirmationWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C7FC99B28B81DFA00FC9175 /* NFTDetailView+Content+Other.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NFTDetailView+Content+Other.swift"; sourceTree = "<group>"; };
 		1C7FC9A228BCC5DD00FC9175 /* MailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailService.swift; sourceTree = "<group>"; };
 		1C7FC9A428BCC5E900FC9175 /* MailServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailServiceAssembler.swift; sourceTree = "<group>"; };
@@ -2027,7 +2025,6 @@
 				1C67201E28870FDB00C5F044 /* ConfirmationWireframe.swift */,
 				1C67202C2887EECB00C5F044 /* ConfirmationWireframeContext.swift */,
 				1C67202028870FE100C5F044 /* ConfirmationWireframeFactory.swift */,
-				1C7FC99928B7C6FF00FC9175 /* ConfirmationWireframeFactoryAssembler.swift */,
 				1CE00639288884C8002D1EB3 /* Views */,
 			);
 			path = Confirmation;
@@ -3220,7 +3217,6 @@
 				1C671FF6287FDFE100C5F044 /* TokenSwapWireframeFactoryAssembler.swift in Sources */,
 				1C7FC9BA28BD00C200FC9175 /* AccountAddressCell.swift in Sources */,
 				1C60C32C285724D1003BE25D /* MnemonicConfirmationWireframeFactoryAssembler.swift in Sources */,
-				1C7FC99A28B7C6FF00FC9175 /* ConfirmationWireframeFactoryAssembler.swift in Sources */,
 				1C54DC172862351D00E378F6 /* QRCodeScanWireframe.swift in Sources */,
 				1CDED619289D0B5100DF34A7 /* EtherscanServiceAssembler.swift in Sources */,
 				1C54DC0E2860E91D00E378F6 /* NetworkPickerItemCell.swift in Sources */,

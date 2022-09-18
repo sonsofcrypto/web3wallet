@@ -2,8 +2,7 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-final class AssemblerBootstrapper {
-}
+final class AssemblerBootstrapper {}
 
 extension AssemblerBootstrapper: Bootstrapper {
 
@@ -18,7 +17,6 @@ extension AssemblerBootstrapper: Bootstrapper {
 private extension AssemblerBootstrapper {
     
     func makeComponents() -> [AssemblerComponent] {
-
         [
             // Services
             SettingsServiceAssembler(), // needs to be the first one to initialise
