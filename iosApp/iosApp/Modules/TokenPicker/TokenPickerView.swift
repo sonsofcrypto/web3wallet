@@ -48,20 +48,6 @@ final class TokenPickerViewController: BaseViewController {
         
         presenter?.present()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-        super.viewWillAppear(animated)
-        
-        navigationController?.showBottomLine(false)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-    
-        super.viewDidDisappear(animated)
-        
-        navigationController?.showBottomLine(true)
-    }
 }
 
 extension TokenPickerViewController: TokenPickerView {
@@ -111,9 +97,7 @@ private extension TokenPickerViewController {
         searchTextField.addDoneInputAccessoryView(
             with: .targetAction(.init(target: self, selector: #selector(clearSearchAnddismissKeyboard)))
         )
-                
-        dividerLineView.backgroundColor = navigationController?.bottomLineColor
-        
+
         //addCollectionViewBottomInset()
         collectionView.register(
             TokenPickerSectionCell.self,

@@ -5,9 +5,7 @@
 import UIKit
 
 final class NavigationController: UINavigationController {
-    
-    private (set) var systemShadowColor: UIColor?
-    
+        
     override var preferredStatusBarStyle: UIStatusBarStyle {
         Theme.statusBarStyle.statusBarStyle(for: traitCollection.userInterfaceStyle)
     }
@@ -16,7 +14,6 @@ final class NavigationController: UINavigationController {
         super.viewDidLoad()
 
         let appearance = navigationBar.standardAppearance
-
         appearance.backgroundColor = Theme.colour.navBarBackground
         appearance.titleTextAttributes = [
             .foregroundColor: Theme.colour.navBarTitle,
@@ -26,33 +23,12 @@ final class NavigationController: UINavigationController {
             "chevron.left".assetImage,
             transitionMaskImage:  nil
         )
-
         navigationBar.standardAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
         navigationBar.compactAppearance = appearance
         navigationBar.compactScrollEdgeAppearance = appearance
         navigationBar.tintColor = Theme.colour.navBarTint
-        systemShadowColor = appearance.shadowColor
-
         interactivePopGestureRecognizer?.delegate = self
-    }
-}
-
-extension UINavigationController {
-    
-    var bottomLineColor: UIColor? {
-        guard let navigationController = self as? NavigationController else {
-            return nil
-        }
-        return navigationController.systemShadowColor
-    }
-    
-    func showBottomLine(_ showBottomLine: Bool) {
-        let appearance = navigationBar.standardAppearance
-        appearance.shadowColor = showBottomLine
-            ? bottomLineColor
-            : .clear
-        navigationBar.scrollEdgeAppearance = appearance
     }
 }
 

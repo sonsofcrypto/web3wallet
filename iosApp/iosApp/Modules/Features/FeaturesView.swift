@@ -31,13 +31,6 @@ final class FeaturesViewController: BaseViewController {
         
         presenter?.present()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-        super.viewWillAppear(animated)
-        
-        navigationController?.showBottomLine(false)
-    }    
 }
 
 extension FeaturesViewController: FeaturesView {
@@ -229,8 +222,7 @@ private extension FeaturesViewController {
         )
         
         topContainerView.backgroundColor = Theme.colour.navBarBackground
-        dividerLineView.backgroundColor = navigationController?.bottomLineColor
-        
+
         setSegmented()
         
         activityIndicator.color = Theme.colour.activityIndicator
