@@ -84,7 +84,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
                             tokenMaxDecimals: tokenFrom.decimals,
                             currencyTokenPrice: tokenFrom.usdPrice,
                             shouldUpdateTextFields: false,
-                            shouldBecomeFirstResponder: true,
+                            shouldBecomeFirstResponder: false,
                             networkName: tokenFrom.network.name
                         ),
                         tokenTo: .init(

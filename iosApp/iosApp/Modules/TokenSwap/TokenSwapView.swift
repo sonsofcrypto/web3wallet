@@ -23,6 +23,7 @@ final class TokenSwapViewController: BaseViewController {
     @IBOutlet weak var feesPickerView: FeesPickerView!
     
     private var viewModel: TokenSwapViewModel?
+    private var firstAppear: Bool = true
     
     override func viewDidLoad() {
         
@@ -31,6 +32,16 @@ final class TokenSwapViewController: BaseViewController {
         configureUI()
         
         presenter?.present()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if firstAppear {
+            firstAppear = false
+            let cell = collectionView.cellForItem(at: IndexPath.zero)
+            let swapCell = cell as? TokenSwapMarketCollectionViewCell
+            swapCell?.tokenFrom?.sendAmountTextField.becomeFirstResponder()
+        }
     }
 }
 

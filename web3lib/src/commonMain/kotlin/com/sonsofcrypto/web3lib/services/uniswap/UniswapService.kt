@@ -145,6 +145,12 @@ class DefaultUniswapService(): UniswapService {
 
     override var provider: Provider = ProviderVoid(Network.ethereum())
     override var wallet: Wallet? = null
+        set(value) {
+            if (field != value) {
+                field = value
+                currencyChanged(inputCurrency, outputCurrency)
+            }
+        }
 
     private val network = Network.ethereum()
     private var listeners: MutableSet<UniswapListener> = mutableSetOf()
