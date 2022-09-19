@@ -1,9 +1,12 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+import java.util.*
 
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
     id("com.android.library")
+    id("com.codingfeline.buildkonfig")
 }
 
 kotlin {
@@ -107,6 +110,21 @@ kotlin {
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
         }
+    }
+}
+
+
+buildkonfig {
+    packageName = "com.sonsofcrypto.web3lib"
+    defaultConfigs {
+        val properties = Properties().apply {
+            load(rootProject.file("local.properties").reader())
+        }
+        buildConfigField(Type.STRING, "poktPortalId", properties["com.sonsofcrypto.pokt.portalId"] as String)
+        buildConfigField(Type.STRING, "poktSecretKey", properties["com.sonsofcrypto.pokt.secretKey"] as String)
+        buildConfigField(Type.STRING, "poktPublicKey", properties["com.sonsofcrypto.pokt.publicKey"] as String)
+        buildConfigField(Type.STRING, "alchymeKey", properties["com.sonsofcrypto.alchymeKey"] as String)
+        buildConfigField(Type.STRING, "etherscanKey", properties["com.sonsofcrypto.etherscanKey"] as String)
     }
 }
 

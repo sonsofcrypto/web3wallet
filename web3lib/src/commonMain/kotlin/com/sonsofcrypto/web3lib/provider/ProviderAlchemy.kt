@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3lib.provider
 
+import com.sonsofcrypto.web3lib.BuildKonfig
 import com.sonsofcrypto.web3lib.types.Network
 import io.ktor.client.*
 import io.ktor.client.plugins.*
@@ -58,7 +59,7 @@ class ProviderAlchemy: ProviderJsonRpc {
     ) {
         companion object {
             /** Only used for development */
-            fun default(): ApiKeys = ApiKeys("M-_He3B8ZTXiy0USdamHK_dLUopVpzii",)
+            fun default(): ApiKeys = ApiKeys(BuildKonfig.alchymeKey)
         }
     }
 }

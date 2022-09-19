@@ -3,7 +3,6 @@ package com.sonsofcrypto.web3wallet.android
 import com.sonsofcrypto.web3lib.provider.model.DataHexString
 import com.sonsofcrypto.web3lib.provider.model.toByteArrayData
 import com.sonsofcrypto.web3lib.utils.aesCTRXOR
-import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3lib.utils.secureRand
 
 class EncryptTest {
