@@ -9,13 +9,7 @@ class BaseViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         Theme.statusBarStyle.statusBarStyle(for: traitCollection.userInterfaceStyle)
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // TODO: Smell
-        // edgesForExtendedLayout = []
-    }
-    
+
     deinit {
         #if DEBUG
         print("[DEBUG][ViewController] deinit \(String(describing: self))")
