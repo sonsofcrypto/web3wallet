@@ -12,8 +12,7 @@ extension UILabel {
         colour: UIColor = Theme.colour.labelPrimary
     ) {
         self.init()
-        
-        self.apply(
+        apply(
             style: style,
             weight: weight,
             colour: colour

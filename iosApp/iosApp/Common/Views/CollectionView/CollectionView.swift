@@ -29,13 +29,11 @@ class CollectionView: UICollectionView {
 
         overScrollView.center.x = bounds.width / 2
         let top = contentSize.height + overScrollView.bounds.height.half - contentInset.bottom
-        let btm = frame.maxY + overScrollView.bounds.height.half - contentInset.bottom
+        let btm = frame.maxY
+            - adjustedContentInset.top
+            - adjustedContentInset.bottom
+            - overScrollView.bounds.height.half
         overScrollView.center.y = max(top, btm)
-
-        print("=== !!!", top > btm)
-        print("=== bounds", bounds)
-        print("=== frame", frame)
-        print("=== contentInset", contentInset)
     }
 }
 

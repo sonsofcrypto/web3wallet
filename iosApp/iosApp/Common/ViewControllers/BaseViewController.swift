@@ -13,7 +13,7 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // TODO: Smell
-        edgesForExtendedLayout = []
+        // edgesForExtendedLayout = []
     }
     
     deinit {
