@@ -25,12 +25,4 @@ struct ServiceDirectory {
         guard let window = UIApplication.shared.keyWindow else { return }
         UIBootstrapper(window: window).boot()
     }
-    
-    static func makeVersionNumber() -> String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
-    }
-    
-    static func makeBuildNumber() -> String {
-        Bundle.main.infoDictionary?["CFBundleVersion"] as! String
-    }
 }
