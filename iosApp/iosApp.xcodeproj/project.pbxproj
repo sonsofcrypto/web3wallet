@@ -3590,6 +3590,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = web3wallet;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We use the phone's camera to read QR codes";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Authenticate iosApp";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -3631,6 +3632,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = web3wallet;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We use the phone's camera to read QR codes";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Authenticate iosApp";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
