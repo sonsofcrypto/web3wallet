@@ -59,7 +59,7 @@ class ProviderAlchemy: ProviderJsonRpc {
     ) {
         companion object {
             /** Only used for development */
-            fun default(): ApiKeys = ApiKeys(BuildKonfig.alchymeKey)
+            fun default(): ApiKeys = ApiKeys(BuildKonfig.alchemyKey)
         }
     }
 }

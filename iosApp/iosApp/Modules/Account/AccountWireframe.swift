@@ -32,7 +32,7 @@ final class DefaultAccountWireframe {
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
     private let walletService: WalletService
-    private let transactionService: EtherscanService
+    private let transactionService: IosEtherscanService
 
     private weak var vc: UIViewController?
 
@@ -46,7 +46,7 @@ final class DefaultAccountWireframe {
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
-        transactionService: EtherscanService
+        transactionService: IosEtherscanService
     ) {
         self.presentingIn = presentingIn
         self.context = context

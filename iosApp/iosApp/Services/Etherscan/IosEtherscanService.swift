@@ -40,7 +40,7 @@ enum EtherscanServiceError: Error {
     case failedToDownload
 }
 
-protocol EtherscanService {
+protocol IosEtherscanService {
 
     func cachedTransactionHistory(
         for walletAddress: String,
@@ -55,14 +55,13 @@ protocol EtherscanService {
     )
 }
 
-final class DefaultEtherscanService {
+final class DefaultIosEtherscanService {
     
     private let networksService: NetworksService
     private let defaults: UserDefaults
     
     private let LATEST_FILE_NAME = "EtherScanFileNameCached"
-    // TODO: @Anoon to provide API KEY
-    private let API_KEY = ""
+    private let API_KEY = DefaultEtherScanService().apiKey()
     
     init(
         networksService: NetworksService,
@@ -73,7 +72,7 @@ final class DefaultEtherscanService {
     }
 }
 
-extension DefaultEtherscanService: EtherscanService {
+extension DefaultIosEtherscanService: IosEtherscanService {
     
     func cachedTransactionHistory(
         for walletAddress: String,
@@ -153,7 +152,7 @@ extension DefaultEtherscanService: EtherscanService {
     }
 }
 
-private extension DefaultEtherscanService {
+private extension DefaultIosEtherscanService {
     
     func clearCache() {
         guard let transactionFileCached = defaults.string(forKey: LATEST_FILE_NAME) else {
@@ -202,7 +201,7 @@ private extension DefaultEtherscanService {
     }
 }
 
-private extension DefaultEtherscanService {
+private extension DefaultIosEtherscanService {
     
     func host(_ network: Network) -> String {
         switch network.chainId {

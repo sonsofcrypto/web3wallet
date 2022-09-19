@@ -123,7 +123,7 @@ buildkonfig {
         buildConfigField(Type.STRING, "poktPortalId", properties["com.sonsofcrypto.pokt.portalId"] as String)
         buildConfigField(Type.STRING, "poktSecretKey", properties["com.sonsofcrypto.pokt.secretKey"] as String)
         buildConfigField(Type.STRING, "poktPublicKey", properties["com.sonsofcrypto.pokt.publicKey"] as String)
-        buildConfigField(Type.STRING, "alchymeKey", properties["com.sonsofcrypto.alchymeKey"] as String)
+        buildConfigField(Type.STRING, "alchemyKey", properties["com.sonsofcrypto.alchemyKey"] as String)
         buildConfigField(Type.STRING, "etherscanKey", properties["com.sonsofcrypto.etherscanKey"] as String)
     }
 }
