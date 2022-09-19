@@ -38,7 +38,7 @@ class DashboardBackgroundView: UIScrollView {
             y: topPalm.bounds.height * 0.15
         )
 
-        let h = contentSize.height
+        let h = contentSize.height - adjustedContentInset.bottom
         let sunSize = btmSun.image?.size ?? .zero
         let logoSize = btmLogo.image?.size ?? .zero
         let memeSize = btmMeme.image?.size ?? .zero
