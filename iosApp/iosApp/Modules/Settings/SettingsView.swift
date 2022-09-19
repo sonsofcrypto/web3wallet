@@ -233,36 +233,18 @@ private extension SettingsViewController{
 private extension SettingsViewController {
     
     func configureUI() {
-        
         collectionView.setCollectionViewLayout(
             makeCompositionalLayout(),
             animated: false
         )
-        
         collectionView.overScrollView.image = "overscroll_anon".assetImage
-        collectionView.overScrollView.layer.transform = CATransform3DMakeTranslation(
-            0, 50, 0
-        )
-        
-        let version = UILabel(
-            frame: .init(
-                origin: .init(x: 8, y: 30),
-                size: .init(length: 80)
-            )
-        )
-        
-        version.apply(style: .footnote)
+        let version = UILabel(with: .footnote)
+        version.text = Bundle.main.version() + "v #" + Bundle.main.build()
         version.textAlignment = .center
-        version.text =  ServiceDirectory.makeVersionNumber()
-                        + " (" + ServiceDirectory.makeBuildNumber() + ")"
         collectionView.overScrollView.addSubview(version)
-        
-        
-        collectionView.overScrollView.centerXAnchor.constraint(
-            equalTo: version.centerXAnchor
-        ).isActive = true
-        collectionView.overScrollView.centerYAnchor.constraint(
-            equalTo: version.centerYAnchor
-        ).isActive = true
+        version.sizeToFit()
+        version.center = collectionView.overScrollView.bounds.midXY
+        version.center.x -= 1.5
+        version.center.y += 31
     }
 }
