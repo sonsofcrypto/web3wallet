@@ -139,18 +139,13 @@ private extension DefaultDashboardPresenter {
 private extension DefaultDashboardPresenter {
     
     func didTapEditToken(_ networkId: String) {
-        guard let network = interactor.enabledNetworks().first(where: {
-            $0.id() == networkId
-        }) else { return }
-        let web3Network = Web3Network.from(network, isOn: true)
+        guard let network = interactor.selectedNetwork else { return }
         wireframe.navigate(
-            to: .editTokens(
-                network: web3Network,
-                selectedTokens: interactor.currencies(for: network).map {
-                    Web3Token.from(currency: $0, network: web3Network, inWallet: true, idx: 0)
-                },
-                onCompletion: { [weak self] tokens in
-                    self?.selectedTokensHandler(tokens, network: web3Network)
+            to: .editCurrencies(
+                network: network,
+                selectedCurrencies: interactor.currencies(for: network),
+                onCompletion: { [weak self] currencies in
+                    self?.selectedCurrenciesHandler(currencies, network: network)
                 }
             )
         )
@@ -272,7 +267,7 @@ private extension DefaultDashboardPresenter {
             name: currency.name,
             ticker: currency.symbol.uppercased(),
             colors: metadata?.colors ?? ["#FFFFFF", "#000000"],
-            imageName: currency.coinGeckoId ?? "currency_placeholder",
+            imageName: currency.iconName,
             fiatPrice: Formatter.fiat.string(Float(truncating: market?.currentPrice ?? 0)),
             fiatBalance: Formatter.fiat.string(Float(fiatBalance)),
             cryptoBalance: formatted,
@@ -294,13 +289,6 @@ private extension DefaultDashboardPresenter {
 
     func makeOnNFTSelected(for nftItem: NFTItem) -> () -> Void {
         { [weak self] in self?.wireframe.navigate(to: .nftItem(nftItem)) }
-    }
-
-    func selectedTokensHandler(_ tokens: [Web3Token], network: Web3Network) {
-        selectedCurrenciesHandler(
-            tokens.map { $0.toCurrency() },
-            network: network.toNetwork()
-        )
     }
 
     func selectedCurrenciesHandler(_ currencies: [Currency], network: Network) {

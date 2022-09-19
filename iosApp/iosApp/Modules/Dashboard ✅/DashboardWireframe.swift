@@ -14,10 +14,10 @@ enum DashboardWireframeDestination {
     case send(addressTo: String?)
     case scanQRCode(onCompletion: (String) -> Void)
     case nftItem(NFTItem)
-    case editTokens(
-        network: Web3Network,
-        selectedTokens: [Web3Token],
-        onCompletion: ([Web3Token]) -> Void
+    case editCurrencies(
+        network: Network,
+        selectedCurrencies: [Currency],
+        onCompletion: ([Currency]) -> Void
     )
     case tokenSwap
     case deepLink(DeepLink)
@@ -121,12 +121,9 @@ extension DefaultDashboardWireframe: DashboardWireframe {
         case .mnemonicConfirmation:
             mnemonicConfirmationWireframeFactory.makeWireframe(parent).present()
         case .receive:
-            guard let vc = self.vc else { return }
             let source = TokenPickerWireframeContext.Source.select(
-                onCompletion: { [weak self] selectedToken in
+                onCompletion: { [weak self] (network, currency) in
                     guard let self = self else { return }
-                    let network = selectedToken.network.toNetwork()
-                    let currency = selectedToken.toCurrency()
                     self.tokenReceiveWireframeFactory.make(
                         vc,
                         context: .init(network: network, currency: currency)
@@ -134,34 +131,31 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 }
             )
             let context = TokenPickerWireframeContext(
-                presentationStyle: .push,
                 title: .receive,
                 selectedNetwork: nil,
                 networks: .all,
                 source: source,
-                showAddCustomToken: true
+                showAddCustomCurrency: true
             )
-            tokenPickerWireframeFactory.makeWireframe(
-                presentingIn: vc,
+            tokenPickerWireframeFactory.make(
+                vc,
                 context: context
             ).present()
-        case let .send(addressTo):
-            guard let vc = self.vc else { return }
-            guard let addressTo = addressTo else {
+        case let .send(address):
+            guard let network = networksService.network, let address = address else {
                 navigateToTokenPicker()
                 return
             }
-            tokenSendWireframeFactory.makeWireframe(
-                presentingIn: vc,
-                context: .init(presentationStyle: .push, addressTo: addressTo)
+            tokenSendWireframeFactory.make(
+                vc,
+                context: .init(network: network, address: address, currency: nil)
             ).present()
         case let .scanQRCode(onCompletion):
             guard let network = networksService.network else { return }
-            let wireframe = qrCodeScanWireframeFactory.make(
+            qrCodeScanWireframeFactory.make(
                 vc,
                 context: .init(type: .network(network), onCompletion: onCompletion)
-            )
-            wireframe.present()
+            ).present()
         case let .nftItem(nftItem):
             guard let vc = self.vc else { return }
             nftDetailWireframeFactory.makeWireframe(
@@ -172,34 +166,31 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                     presentationStyle: .push
                 )
             ).present()
-        case let .editTokens(network, selectedTokens, onCompletion):
+        case let .editCurrencies(network, selectedCurrencies, onCompletion):
             let source: TokenPickerWireframeContext.Source = .multiSelectEdit(
-                selectedTokens: selectedTokens,
+                selectedCurrencies: selectedCurrencies,
                 onCompletion: onCompletion
             )
-            let wireframe = tokenPickerWireframeFactory.makeWireframe(
-                presentingIn: parent,
+            tokenPickerWireframeFactory.make(
+                vc,
                 context: .init(
-                    presentationStyle: .present,
                     title: .multiSelectEdit,
                     selectedNetwork: nil,
                     networks: .subgroup(networks: [network]),
                     source: source,
-                    showAddCustomToken: true
+                    showAddCustomCurrency: true
                 )
-            )
-            wireframe.present()
+            ).present()
         case .tokenSwap:
-            guard let vc = self.vc else { return }
-            let wireframe = tokenSwapWireframeFactory.makeWireframe(
-                presentingIn: vc,
+            guard let network = networksService.network else { return }
+            tokenSwapWireframeFactory.make(
+                vc,
                 context: .init(
-                    presentationStyle: .push,
-                    tokenFrom: nil,
-                    tokenTo: nil
+                    network: network,
+                    currencyFrom: nil,
+                    currencyTo: nil
                 )
-            )
-            wireframe.present()
+            ).present()
         case let .deepLink(deepLink):
             deepLinkHandler.handle(deepLink: deepLink)
         case .themePicker:
@@ -233,24 +224,23 @@ private extension DefaultDashboardWireframe {
     func navigateToTokenPicker() {
         guard let vc = self.vc else { return }
         let source = TokenPickerWireframeContext.Source.select(
-            onCompletion: { [weak self] selectedToken in
+            onCompletion: { [weak self] (network, currency) in
                 guard let self = self else { return }
-                self.tokenSendWireframeFactory.makeWireframe(
-                    presentingIn: vc,
-                    context: .init(presentationStyle: .push, web3Token: selectedToken)
+                self.tokenSendWireframeFactory.make(
+                    vc,
+                    context: .init(network: network, address: nil, currency: currency)
                 ).present()
             }
         )
         let context = TokenPickerWireframeContext(
-            presentationStyle: .push,
             title: .send,
             selectedNetwork: nil,
             networks: .all,
             source: source,
-            showAddCustomToken: true
+            showAddCustomCurrency: true
         )
-        tokenPickerWireframeFactory.makeWireframe(
-            presentingIn: vc,
+        tokenPickerWireframeFactory.make(
+            vc,
             context: context
         ).present()
     }

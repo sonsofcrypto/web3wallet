@@ -59,13 +59,10 @@ extension DefaultDegenWireframe: DegenWireframe {
     func navigate(to destination: DegenWireframeDestination) {
         switch destination {
         case .swap:
-            tokenSwapWireframeFactory.makeWireframe(
-                presentingIn: vc,
-                context: .init(
-                    presentationStyle: .push,
-                    tokenFrom: nil,
-                    tokenTo: nil
-                )
+            guard let network = networksService.network else { return }
+            tokenSwapWireframeFactory.make(
+                vc,
+                context: .init(network: network, currencyFrom: nil, currencyTo: nil)
             ).present()
         case .cult:
             cultProposalsWireframeFactory.make(vc).present()

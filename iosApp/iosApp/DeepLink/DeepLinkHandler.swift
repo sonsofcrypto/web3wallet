@@ -13,7 +13,7 @@ enum DeepLink {
     case degen
     case cultProposals
     case nftsDashboard
-    case account(token: Web3Token)
+    case account(AccountWireframeContext)
     
     init?(identifier: String) {
         switch identifier {
@@ -48,8 +48,8 @@ enum DeepLink {
             return "cult.proposals"
         case .nftsDashboard:
             return "nfts.dashboard"
-        case let .account(token):
-            return "account.\(token.symbol.lowercased())"
+        case let .account(context):
+            return "account.\(context.currency.symbol.lowercased())"
         }
     }
 }
@@ -98,11 +98,11 @@ extension DefaultDeepLinkHandler: DeepLinkHandler {
                 self.nftsDashboardNavController?.popToRootViewController(
                     animated: true
                 )
-            case let .account(token):
+            case let .account(context):
                 if self.isAccountPresented { return }
                 self.navigate(to: .dashboard)
                 self.dashboardNavController?.popToRootViewController(animated: true)
-                self.openAccount(with: token, after: 0.3)
+                self.openAccount(with: context, after: 0.3)
             }
         }
         dismissAnyModals(completion: completion)
@@ -267,27 +267,21 @@ private extension DefaultDeepLinkHandler {
     }
     
     func openAccount(
-        with token: Web3Token,
+        with context: AccountWireframeContext,
         after delay: TimeInterval
     ) {
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
             guard let self = self else { return }
-            self.openAccount(with: token)
+            self.openAccount(with: context)
         }
     }
     
     func openAccount(
-        with token: Web3Token
+        with context: AccountWireframeContext
     ) {
         guard let dashboardNavController = dashboardNavController else { return }
         let factory: AccountWireframeFactory = ServiceDirectory.assembler.resolve()
-        factory.make(
-            dashboardNavController,
-            context: .init(
-                network: token.network.toNetwork(),
-                currency: token.toCurrency()
-            )
-        ).present()
+        factory.make(dashboardNavController, context: context).present()
     }
     
     func openCultProposals() {

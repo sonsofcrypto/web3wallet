@@ -82,17 +82,21 @@ extension DefaultAccountWireframe: AccountWireframe {
                 context: .init(network: context.network, currency: context.currency)
             ).present()
         case .send:
-            tokenSendWireframeFactory.makeWireframe(
-                presentingIn: vc!,
-                context: .init(presentationStyle: .present, web3Token: web3Token(context))
+            tokenSendWireframeFactory.make(
+                vc,
+                context: .init(
+                    network: context.network,
+                    address: nil,
+                    currency: context.currency
+                )
             ).present()
         case .swap:
-            tokenSwapWireframeFactory.makeWireframe(
-                presentingIn: vc,
+            tokenSwapWireframeFactory.make(
+                vc,
                 context: .init(
-                    presentationStyle: .present,
-                    tokenFrom: web3Token(context),
-                    tokenTo: nil
+                    network: context.network,
+                    currencyFrom: context.currency,
+                    currencyTo: nil
                 )
             ).present()
         case .more:
@@ -131,6 +135,7 @@ private extension DefaultAccountWireframe {
             interactor: interactor,
             context: context
         )
+        vc.edgesForExtendedLayout = []
         vc.presenter = presenter
         vc.hidesBottomBarWhenPushed = true
         return NavigationController(rootViewController: vc)

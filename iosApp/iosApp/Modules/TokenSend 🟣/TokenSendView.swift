@@ -1,0 +1,226 @@
+// Created by web3d4v on 06/07/2022.
+// Copyright (c) 2022 Sons Of Crypto.
+// SPDX-License-Identifier: MIT
+
+import UIKit
+import web3lib
+
+protocol TokenSendView: AnyObject {
+    func update(with viewModel: TokenSendViewModel)
+    func presentFeePicker(with fees: [FeesPickerViewModel])
+    func dismissKeyboard()
+}
+
+final class TokenSendViewController: BaseViewController {
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var feesPickerView: FeesPickerView!
+
+    var presenter: TokenSendPresenter!
+
+    private var viewModel: TokenSendViewModel?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureUI()
+        presenter?.present()
+    }    
+}
+
+extension TokenSendViewController: TokenSendView {
+
+    func update(with viewModel: TokenSendViewModel) {
+        self.viewModel = viewModel
+        title = viewModel.title
+        if collectionView.visibleCells.isEmpty { collectionView.reloadData() }
+        else { updateCells() }
+    }
+    
+    func presentFeePicker(with fees: [FeesPickerViewModel]) {
+        dismissKeyboard()
+        let cell = collectionView.visibleCells.first {
+            $0 is TokenSendCTACollectionViewCell
+        } as! TokenSendCTACollectionViewCell
+        let fromFrame = feesPickerView.convert(
+            cell.networkFeeView.networkFeeButton.bounds,
+            from: cell.networkFeeView.networkFeeButton
+        )
+        feesPickerView.present(
+            with: fees,
+            onFeeSelected: makeOnFeeSelected(),
+            at: .init(x: Theme.constant.padding, y: fromFrame.midY)
+        )
+    }
+    
+    @objc func dismissKeyboard() {
+        collectionView.visibleCells.forEach { $0.resignFirstResponder() }
+    }
+}
+
+extension TokenSendViewController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        viewModel?.items.count ?? 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        1
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let item = viewModel?.items[indexPath.section] else { fatalError() }
+        switch item {
+        case let .address(value):
+            let cell = collectionView.dequeue(TokenSendToCollectionViewCell.self, for: indexPath)
+            cell.update(with: value, handler: makeTokenSendTokenHandler())
+            return cell
+        case let .token(token):
+            let cell = collectionView.dequeue(TokenSendTokenCollectionViewCell.self, for: indexPath)
+            cell.update(with: token, handler: makeTokenSendTokenHandler())
+            return cell
+        case let .send(cta):
+            let cell = collectionView.dequeue(TokenSendCTACollectionViewCell.self, for: indexPath)
+            cell.update(with: cta, handler: makeTokenSendCTAHandler())
+            return cell
+        }
+    }
+}
+
+extension TokenSendViewController: UICollectionViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        dismissKeyboard()
+    }
+}
+
+private extension TokenSendViewController {
+    
+    func configureUI() {
+        if (navigationController?.viewControllers.count ?? 0) > 1 {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                image: "chevron.left".assetImage,
+                style: .plain,
+                target: self,
+                action: #selector(navBarLeftActionTapped)
+            )
+        } else {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                image: .init(systemName: "xmark"),
+                style: .plain,
+                target: self,
+                action: #selector(navBarLeftActionTapped)
+            )
+        }
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        collectionView.addGestureRecognizer(tapGesture)
+        collectionView.setCollectionViewLayout(compositionalLayout(), animated: false)
+        feesPickerView.isHidden = true
+    }
+    
+    func makeOnFeeSelected() -> ((FeesPickerViewModel) -> Void) {
+        { [weak self] item in self?.onTapped(.feeChanged(to: item.id))() }
+    }
+    
+    @objc func navBarLeftActionTapped() {
+        presenter.handle(.dismiss)
+    }
+}
+
+private extension TokenSendViewController {
+    
+    func compositionalLayout() -> UICollectionViewCompositionalLayout {
+        UICollectionViewCompositionalLayout { [weak self] sectionIndex, environment in
+            guard let self = self else { return nil }
+            switch sectionIndex {
+            case 0: return self.collectionLayoutSection(sectionIndex: sectionIndex)
+            case 1: return self.collectionLayoutSection(sectionIndex: sectionIndex)
+            case 2: return self.collectionLayoutSection(sectionIndex: sectionIndex)
+            default: fatalError()
+            }
+        }
+    }
+    
+    func collectionLayoutSection(sectionIndex: Int) -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(100)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(100)
+        )
+        let outerGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize, subitems: [item]
+        )
+        let sectionInset: CGFloat = Theme.constant.padding
+        let section = NSCollectionLayoutSection(group: outerGroup)
+        section.contentInsets = .init(
+            top: sectionIndex == 0 ? sectionInset : 0,
+            leading: sectionInset,
+            bottom: sectionIndex == 1 ? 0 : sectionInset,
+            trailing: sectionInset
+        )
+        return section
+    }
+    
+    func updateCells() {
+        collectionView.visibleCells.forEach {
+            switch $0 {
+            case let addressCell as TokenSendToCollectionViewCell:
+                guard let address = viewModel?.items.address else { return }
+                addressCell.update(with: address, handler: makeTokenSendTokenHandler())
+            case let tokenCell as TokenSendTokenCollectionViewCell:
+                guard let token = viewModel?.items.token else { return }
+                tokenCell.update(with: token, handler: makeTokenSendTokenHandler())
+            case let ctaCell as TokenSendCTACollectionViewCell:
+                guard let cta = viewModel?.items.send else { return }
+                ctaCell.update(with: cta, handler: makeTokenSendCTAHandler())
+            default:
+                fatalError()
+            }
+        }
+    }
+}
+
+private extension TokenSendViewController {
+    
+    func makeTokenSendTokenHandler() -> TokenEnterAddressView.Handler {
+        .init(
+            onAddressChanged: makeOnAddressChanged(),
+            onQRCodeScanTapped: onTapped(.qrCodeScan),
+            onPasteTapped: onTapped(.pasteAddress),
+            onSaveTapped: onTapped(.saveAddress)
+        )
+    }
+
+    func makeOnAddressChanged() -> (String) -> Void {
+        { [weak self] value in self?.onTapped(.addressChanged(to: value))()}
+    }
+    
+    func makeTokenSendTokenHandler() -> TokenSendTokenCollectionViewCell.Handler {
+        .init(
+            onTokenTapped: onTapped(.selectCurrency),
+            onTokenChanged: makeOnTokenChanged()
+        )
+    }
+    
+    func makeOnTokenChanged() -> (BigInt) -> Void {
+        { [weak self] value in self?.onTapped(.currencyChanged(to: value))() }
+    }
+    
+    func makeTokenSendCTAHandler() -> TokenSendCTACollectionViewCell.Handler {
+        .init(
+            onNetworkFeesTapped: onTapped(.feeTapped),
+            onCTATapped: onTapped(.review)
+        )
+    }
+    
+    func onTapped(_ event: TokenSendPresenterEvent) -> () -> Void {
+        { [weak self] in self?.presenter.handle(event) }
+    }
+}

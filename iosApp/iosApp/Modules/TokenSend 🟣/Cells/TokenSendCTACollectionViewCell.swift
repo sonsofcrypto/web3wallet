@@ -1,8 +1,8 @@
-// Created by web3d4v on 04/08/2022.
+// Created by web3d4v on 07/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-final class NFTSendCTACollectionViewCell: UICollectionViewCell {
+final class TokenSendCTACollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var networkFeeView: TokenNetworkFeeView!
     @IBOutlet weak var button: Button!
     
@@ -20,10 +20,10 @@ final class NFTSendCTACollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension NFTSendCTACollectionViewCell {
+extension TokenSendCTACollectionViewCell {
     
     func update(
-        with viewModel: NFTSendViewModel.Send,
+        with viewModel: TokenSendViewModel.Send,
         handler: Handler
     ) {
         self.handler = handler
@@ -31,8 +31,14 @@ extension NFTSendCTACollectionViewCell {
         case .ready:
             button.setTitle(Localized("send"), for: .normal)
             button.isEnabled = true
+        case .enterFunds:
+            button.setTitle(Localized("enterFunds"), for: .normal)
+            button.isEnabled = false
+        case .insufficientFunds:
+            button.setTitle(Localized("insufficientFunds"), for: .normal)
+            button.isEnabled = false
         case .invalidDestination:
-            button.setTitle(Localized("nftSend.missing.address"), for: .normal)
+            button.setTitle(Localized("tokenSend.missing.address"), for: .normal)
             button.isEnabled = false
         }
         networkFeeView.update(
@@ -42,7 +48,7 @@ extension NFTSendCTACollectionViewCell {
     }
 }
 
-private extension NFTSendCTACollectionViewCell {
+private extension TokenSendCTACollectionViewCell {
     
-    @objc func onSendTapped() { handler.onCTATapped()}
+    @objc func onSendTapped() { handler.onCTATapped() }
 }

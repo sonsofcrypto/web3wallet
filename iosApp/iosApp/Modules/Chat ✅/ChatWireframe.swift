@@ -59,6 +59,6 @@ private extension DefaultChatWireframe {
             tag: 3
         )
         self.vc = nc
-        return vc
+        return nc
     }
 }

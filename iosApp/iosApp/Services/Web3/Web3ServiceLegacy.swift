@@ -224,7 +224,7 @@ extension Web3Token {
             symbol: currency.symbol.uppercased(),
             name: currency.name,
             address: currency.address ?? "",
-            decimals: currency.decimals?.uintValue ?? 18,
+            decimals: currency.decimalsUInt,
             type: .normal,
             network: network,
             // TODO: @Annon - Fix me and find a more efficient way...!

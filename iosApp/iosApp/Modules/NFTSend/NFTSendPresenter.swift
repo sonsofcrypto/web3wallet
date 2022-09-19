@@ -161,8 +161,10 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
             wireframe.navigate(
                 to: .confirmSendNFT(
                     dataIn: .init(
+                        network: context.network.toNetwork(),
+                        addressFrom: walletAddress,
+                        addressTo: address,
                         nftItem: context.nftItem,
-                        destination: makeConfirmationSendNFTDestination(from: walletAddress, to: address),
                         estimatedFee: makeConfirmationSendNFTEstimatedFee()
                     )
                 )
@@ -176,7 +178,6 @@ private extension DefaultNFTSendPresenter {
     func makeConfirmationSendNFTEstimatedFee() -> Web3NetworkFee {
         
         switch fee {
-            
         case .low:
             return .low
         case .medium:
@@ -184,17 +185,6 @@ private extension DefaultNFTSendPresenter {
         case .high:
             return .high
         }
-    }
-    
-    func makeConfirmationSendNFTDestination(
-        from walletAddress: String,
-        to address: String
-    ) -> ConfirmationWireframeContext.AddressData {
-        
-        .init(
-            from: walletAddress,
-            to: address
-        )
     }
     
     func updateView(with items: [NFTSendViewModel.Item]) {

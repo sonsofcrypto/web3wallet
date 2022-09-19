@@ -71,7 +71,7 @@ extension DefaultNetworksInteractor: NetworksInteractor {
     }
 
     func imageName(_ network: Network) -> String {
-        network.nativeCurrency.coinGeckoId ?? "currency_placeholder"
+        network.nativeCurrency.iconName
     }
 
     func provider(_ network: Network) -> Provider? {

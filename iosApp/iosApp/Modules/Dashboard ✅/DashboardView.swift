@@ -198,14 +198,12 @@ extension DashboardViewController: UICollectionViewDataSource {
                 for: idxPath,
                 kind: kind
             ).update(with: balance)
-
         case let .title(title):
             return collectionView.dequeue(
                 DashboardHeaderNameView.self,
                 for: idxPath,
                 kind: kind
             ).update(with: title, and: nil, handler: nil)
-
         case let .network(network):
             return collectionView.dequeue(
                 DashboardHeaderNameView.self,

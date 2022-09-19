@@ -5,16 +5,12 @@
 import UIKit
 
 final class NFTSendImageCollectionViewCell: UICollectionViewCell {
-    
     @IBOutlet weak var imageView: UIImageView!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
-        let view = makeNFTImage()
+        let view = nftImage()
         addSubview(view)
-        
         view.addConstraints(
             [
                 .layout(anchor: .topAnchor),
@@ -30,17 +26,14 @@ extension NFTSendImageCollectionViewCell {
     func update(
         with nftItem: NFTItem
     ) {
-        
         imageView.load(url: nftItem.image)
     }
 }
 
 private extension NFTSendImageCollectionViewCell {
     
-    func makeNFTImage() -> UIView {
-                
+    func nftImage() -> UIView {
         var views = [UIView]()
-        
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
@@ -58,7 +51,6 @@ private extension NFTSendImageCollectionViewCell {
                 )
             ]
         )
-        
         let containerView = UIView()
         let vStackView = VStackView(views)
         vStackView.spacing = Theme.constant.padding.half
@@ -74,12 +66,10 @@ private extension NFTSendImageCollectionViewCell {
                 .layout(anchor: .centerXAnchor)
             ]
         )
-        
         vStackView.backgroundColor = Theme.colour.cellBackground
         vStackView.layer.cornerRadius = Theme.constant.cornerRadius
         vStackView.layer.borderWidth = 1
         vStackView.layer.borderColor = Theme.colour.fillTertiary.cgColor
-
         return containerView
     }
 }

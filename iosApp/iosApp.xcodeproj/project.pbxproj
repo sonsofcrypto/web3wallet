@@ -132,7 +132,6 @@
 		1C60C2AF285724D0003BE25D /* TokenPickerTokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1D9285724D0003BE25D /* TokenPickerTokenCell.swift */; };
 		1C60C2B0285724D0003BE25D /* TokenPickerSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DA285724D0003BE25D /* TokenPickerSectionCell.swift */; };
 		1C60C2B1285724D0003BE25D /* TokenPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DB285724D0003BE25D /* TokenPickerViewModel.swift */; };
-		1C60C2B2285724D0003BE25D /* TokenPickerWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DC285724D0003BE25D /* TokenPickerWireframeFactoryAssembler.swift */; };
 		1C60C2B3285724D0003BE25D /* TokenPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DD285724D0003BE25D /* TokenPickerView.swift */; };
 		1C60C2B4285724D0003BE25D /* TokenPickerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DE285724D0003BE25D /* TokenPickerPresenter.swift */; };
 		1C60C2B5285724D0003BE25D /* TokenPickerWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DF285724D0003BE25D /* TokenPickerWireframeFactory.swift */; };
@@ -300,7 +299,6 @@
 		1C671FF0287FDFB900C5F044 /* TokenSwapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C671FEF287FDFB900C5F044 /* TokenSwapViewModel.swift */; };
 		1C671FF2287FDFD500C5F044 /* TokenSwapWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C671FF1287FDFD500C5F044 /* TokenSwapWireframe.swift */; };
 		1C671FF4287FDFDC00C5F044 /* TokenSwapWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C671FF3287FDFDC00C5F044 /* TokenSwapWireframeFactory.swift */; };
-		1C671FF6287FDFE100C5F044 /* TokenSwapWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C671FF5287FDFE100C5F044 /* TokenSwapWireframeFactoryAssembler.swift */; };
 		1C671FF8287FDFF100C5F044 /* TokenSwapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C671FF7287FDFF100C5F044 /* TokenSwapView.swift */; };
 		1C671FFA287FDFFF00C5F044 /* TokenSwapInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C671FF9287FDFFF00C5F044 /* TokenSwapInteractor.swift */; };
 		1C671FFC287FE02200C5F044 /* TokenSwap.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C671FFB287FE02200C5F044 /* TokenSwap.storyboard */; };
@@ -394,7 +392,6 @@
 		1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1C9B46FA281427B800F6C40B /* under-construction.gif */; };
 		1C9E3195287580B600DD2031 /* TokenSendWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */; };
 		1C9E3197287580BF00DD2031 /* TokenSendWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E3196287580BF00DD2031 /* TokenSendWireframeFactory.swift */; };
-		1C9E3199287580C700DD2031 /* TokenSendWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E3198287580C700DD2031 /* TokenSendWireframeFactoryAssembler.swift */; };
 		1C9E319B287580D000DD2031 /* TokenSendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E319A287580D000DD2031 /* TokenSendViewModel.swift */; };
 		1C9E319D287580D400DD2031 /* TokenSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E319C287580D400DD2031 /* TokenSendView.swift */; };
 		1C9E319F287580D900DD2031 /* TokenSendPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E319E287580D900DD2031 /* TokenSendPresenter.swift */; };
@@ -719,7 +716,6 @@
 		1C60C1D9285724D0003BE25D /* TokenPickerTokenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenPickerTokenCell.swift; sourceTree = "<group>"; };
 		1C60C1DA285724D0003BE25D /* TokenPickerSectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenPickerSectionCell.swift; sourceTree = "<group>"; };
 		1C60C1DB285724D0003BE25D /* TokenPickerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenPickerViewModel.swift; sourceTree = "<group>"; };
-		1C60C1DC285724D0003BE25D /* TokenPickerWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenPickerWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C60C1DD285724D0003BE25D /* TokenPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenPickerView.swift; sourceTree = "<group>"; };
 		1C60C1DE285724D0003BE25D /* TokenPickerPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenPickerPresenter.swift; sourceTree = "<group>"; };
 		1C60C1DF285724D0003BE25D /* TokenPickerWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenPickerWireframeFactory.swift; sourceTree = "<group>"; };
@@ -887,7 +883,6 @@
 		1C671FEF287FDFB900C5F044 /* TokenSwapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSwapViewModel.swift; sourceTree = "<group>"; };
 		1C671FF1287FDFD500C5F044 /* TokenSwapWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSwapWireframe.swift; sourceTree = "<group>"; };
 		1C671FF3287FDFDC00C5F044 /* TokenSwapWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSwapWireframeFactory.swift; sourceTree = "<group>"; };
-		1C671FF5287FDFE100C5F044 /* TokenSwapWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSwapWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C671FF7287FDFF100C5F044 /* TokenSwapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSwapView.swift; sourceTree = "<group>"; };
 		1C671FF9287FDFFF00C5F044 /* TokenSwapInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSwapInteractor.swift; sourceTree = "<group>"; };
 		1C671FFB287FE02200C5F044 /* TokenSwap.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TokenSwap.storyboard; sourceTree = "<group>"; };
@@ -981,7 +976,6 @@
 		1C9B46FA281427B800F6C40B /* under-construction.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "under-construction.gif"; sourceTree = "<group>"; };
 		1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendWireframe.swift; sourceTree = "<group>"; };
 		1C9E3196287580BF00DD2031 /* TokenSendWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendWireframeFactory.swift; sourceTree = "<group>"; };
-		1C9E3198287580C700DD2031 /* TokenSendWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1C9E319A287580D000DD2031 /* TokenSendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendViewModel.swift; sourceTree = "<group>"; };
 		1C9E319C287580D400DD2031 /* TokenSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendView.swift; sourceTree = "<group>"; };
 		1C9E319E287580D900DD2031 /* TokenSendPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSendPresenter.swift; sourceTree = "<group>"; };
@@ -1406,7 +1400,7 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
-		1C54DBE1285E82FC00E378F6 /* TokenAdd ✅ */ = {
+		1C54DBE1285E82FC00E378F6 /* TokenAdd 🟣 */ = {
 			isa = PBXGroup;
 			children = (
 				1C54DBEE285E835400E378F6 /* TokenAdd.storyboard */,
@@ -1418,7 +1412,7 @@
 				1C54DBE4285E832600E378F6 /* TokenAddWireframeFactory.swift */,
 				1C54DBF6285F8F2800E378F6 /* Cells */,
 			);
-			path = "TokenAdd ✅";
+			path = "TokenAdd 🟣";
 			sourceTree = "<group>";
 		};
 		1C54DBF6285F8F2800E378F6 /* Cells */ = {
@@ -1497,10 +1491,10 @@
 				1C60C253285724D0003BE25D /* Apps ✅ */,
 				D1A12A58287D333900606FC8 /* Authenticate ✅ */,
 				1C60C1EE285724D0003BE25D /* Chat ✅ */,
-				1C67201928870FA900C5F044 /* Confirmation */,
+				1C67201928870FA900C5F044 /* Confirmation ✅ */,
 				1C60C20D285724D0003BE25D /* Dashboard ✅ */,
 				1C60C272285724D0003BE25D /* Degen ✅ */,
-				1C60C285285724D0003BE25D /*  DegenCult ✅ */,
+				1C60C285285724D0003BE25D /* DegenCult ✅ */,
 				1CDED5D3289700DA00DF34A7 /* Feature ✅ */,
 				1C0643D22892FC9B00643C15 /* Features ✅ */,
 				1C60C1E1285724D0003BE25D /* KeyStore ✅ */,
@@ -1517,12 +1511,12 @@
 				1C54DC0F2862320200E378F6 /* QRCodeScan ✅ */,
 				1C60C23E285724D0003BE25D /* Root ✅ */,
 				1C60C1C8285724D0003BE25D /* Settings ✅ */,
-				1C7FC98628B60A0B00FC9175 /* ThemePicker 🟠 */,
-				1C54DBE1285E82FC00E378F6 /* TokenAdd ✅ */,
-				1C60C1D5285724D0003BE25D /* TokenPicker */,
-				1C60C3612857C5D9003BE25D /* TokenReceive ✅ */,
-				1C9E3193287580A700DD2031 /* TokenSend */,
-				1C671FEC287FDF6000C5F044 /* TokenSwap */,
+				1C7FC98628B60A0B00FC9175 /* ThemePicker ✅ */,
+				1C54DBE1285E82FC00E378F6 /* TokenAdd 🟣 */,
+				1C60C1D5285724D0003BE25D /* TokenPicker 🟣 */,
+				1C60C3612857C5D9003BE25D /* TokenReceive 🟣 */,
+				1C9E3193287580A700DD2031 /* TokenSend 🟣 */,
+				1C671FEC287FDF6000C5F044 /* TokenSwap 🟣 */,
 				1C7FC9A628BCE94B00FC9175 /* WebView ✅ */,
 			);
 			name = Modules;
@@ -1556,7 +1550,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C60C1D5285724D0003BE25D /* TokenPicker */ = {
+		1C60C1D5285724D0003BE25D /* TokenPicker 🟣 */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C1E0285724D0003BE25D /* TokenPicker.storyboard */,
@@ -1566,10 +1560,9 @@
 				1C60C1DB285724D0003BE25D /* TokenPickerViewModel.swift */,
 				1C60C1D6285724D0003BE25D /* TokenPickerWireframe.swift */,
 				1C60C1DF285724D0003BE25D /* TokenPickerWireframeFactory.swift */,
-				1C60C1DC285724D0003BE25D /* TokenPickerWireframeFactoryAssembler.swift */,
 				1C60C1D8285724D0003BE25D /* Cells */,
 			);
-			path = TokenPicker;
+			path = "TokenPicker 🟣";
 			sourceTree = "<group>";
 		};
 		1C60C1D8285724D0003BE25D /* Cells */ = {
@@ -1853,13 +1846,13 @@
 			path = "Degen ✅";
 			sourceTree = "<group>";
 		};
-		1C60C285285724D0003BE25D /*  DegenCult ✅ */ = {
+		1C60C285285724D0003BE25D /* DegenCult ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C286285724D0003BE25D /* CultProposal ✅ */,
 				1C60C28D285724D0003BE25D /* CultProposals ✅ */,
 			);
-			path = " DegenCult ✅";
+			path = "DegenCult ✅";
 			sourceTree = "<group>";
 		};
 		1C60C286285724D0003BE25D /* CultProposal ✅ */ = {
@@ -1903,7 +1896,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C60C3612857C5D9003BE25D /* TokenReceive ✅ */ = {
+		1C60C3612857C5D9003BE25D /* TokenReceive 🟣 */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C3702857CEB5003BE25D /* TokenReceive.storyboard */,
@@ -1914,7 +1907,7 @@
 				1C60C3682857C5F8003BE25D /* TokenReceiveWireframe.swift */,
 				1C60C36A2857C5FE003BE25D /* TokenReceiveWireframeFactory.swift */,
 			);
-			path = "TokenReceive ✅";
+			path = "TokenReceive 🟣";
 			sourceTree = "<group>";
 		};
 		1C60C37C2859CC19003BE25D /* Helpers */ = {
@@ -1973,7 +1966,7 @@
 			path = Internal;
 			sourceTree = "<group>";
 		};
-		1C671FEC287FDF6000C5F044 /* TokenSwap */ = {
+		1C671FEC287FDF6000C5F044 /* TokenSwap 🟣 */ = {
 			isa = PBXGroup;
 			children = (
 				1C671FFB287FE02200C5F044 /* TokenSwap.storyboard */,
@@ -1983,10 +1976,9 @@
 				1C671FEF287FDFB900C5F044 /* TokenSwapViewModel.swift */,
 				1C671FF1287FDFD500C5F044 /* TokenSwapWireframe.swift */,
 				1C671FF3287FDFDC00C5F044 /* TokenSwapWireframeFactory.swift */,
-				1C671FF5287FDFE100C5F044 /* TokenSwapWireframeFactoryAssembler.swift */,
 				1C671FFD287FE0EB00C5F044 /* Cells */,
 			);
-			path = TokenSwap;
+			path = "TokenSwap 🟣";
 			sourceTree = "<group>";
 		};
 		1C671FFD287FE0EB00C5F044 /* Cells */ = {
@@ -2009,7 +2001,7 @@
 			path = FeesPickerView;
 			sourceTree = "<group>";
 		};
-		1C67201928870FA900C5F044 /* Confirmation */ = {
+		1C67201928870FA900C5F044 /* Confirmation ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1C67202A2887EB7F00C5F044 /* Confirmation.storyboard */,
@@ -2027,7 +2019,7 @@
 				1C67202028870FE100C5F044 /* ConfirmationWireframeFactory.swift */,
 				1CE00639288884C8002D1EB3 /* Views */,
 			);
-			path = Confirmation;
+			path = "Confirmation ✅";
 			sourceTree = "<group>";
 		};
 		1C7F85FE28D20E490073FD95 /* Extensions */ = {
@@ -2106,7 +2098,7 @@
 			path = Server;
 			sourceTree = "<group>";
 		};
-		1C7FC98628B60A0B00FC9175 /* ThemePicker 🟠 */ = {
+		1C7FC98628B60A0B00FC9175 /* ThemePicker ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1A4C32EA04CA65C9DFEE9504 /* ThemePickerCell.swift */,
@@ -2114,7 +2106,7 @@
 				1C7FC98728B60A1A00FC9175 /* ThemePickerWireframe.swift */,
 				1C7FC98928B60A2500FC9175 /* ThemePickerWireframeFactory.swift */,
 			);
-			path = "ThemePicker 🟠";
+			path = "ThemePicker ✅";
 			sourceTree = "<group>";
 		};
 		1C7FC9A128BCC5CF00FC9175 /* Mail */ = {
@@ -2150,7 +2142,7 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		1C9E3193287580A700DD2031 /* TokenSend */ = {
+		1C9E3193287580A700DD2031 /* TokenSend 🟣 */ = {
 			isa = PBXGroup;
 			children = (
 				1C9E31A2287580E500DD2031 /* TokenSend.storyboard */,
@@ -2160,10 +2152,9 @@
 				1C9E319A287580D000DD2031 /* TokenSendViewModel.swift */,
 				1C9E3194287580B600DD2031 /* TokenSendWireframe.swift */,
 				1C9E3196287580BF00DD2031 /* TokenSendWireframeFactory.swift */,
-				1C9E3198287580C700DD2031 /* TokenSendWireframeFactoryAssembler.swift */,
 				1C9E31A42875FF3000DD2031 /* Cells */,
 			);
-			path = TokenSend;
+			path = "TokenSend 🟣";
 			sourceTree = "<group>";
 		};
 		1C9E31A42875FF3000DD2031 /* Cells */ = {
@@ -3214,7 +3205,6 @@
 				1C7F863A28D20E490073FD95 /* Formatter+Extensions.swift in Sources */,
 				1C60C334285724D1003BE25D /* NFTsCollectionInteractor.swift in Sources */,
 				1C7F864428D20E490073FD95 /* StringAttributed+Extensions.swift in Sources */,
-				1C671FF6287FDFE100C5F044 /* TokenSwapWireframeFactoryAssembler.swift in Sources */,
 				1C7FC9BA28BD00C200FC9175 /* AccountAddressCell.swift in Sources */,
 				1C60C32C285724D1003BE25D /* MnemonicConfirmationWireframeFactoryAssembler.swift in Sources */,
 				1C54DC172862351D00E378F6 /* QRCodeScanWireframe.swift in Sources */,
@@ -3225,7 +3215,6 @@
 				1C60C317285724D1003BE25D /* AccountInteractor.swift in Sources */,
 				1C60C2B1285724D0003BE25D /* TokenPickerViewModel.swift in Sources */,
 				1A4C3B697503D478741295DB /* TextField.swift in Sources */,
-				1C60C2B2285724D0003BE25D /* TokenPickerWireframeFactoryAssembler.swift in Sources */,
 				1C7FC97B28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift in Sources */,
 				1C9E3195287580B600DD2031 /* TokenSendWireframe.swift in Sources */,
 				D1EF5BC8287BEE92004CAD82 /* MnemonicUpdateContext.swift in Sources */,
@@ -3292,7 +3281,6 @@
 				1C60C324285724D1003BE25D /* AppsHeaderCollectionViewCell.swift in Sources */,
 				1C60C32B285724D1003BE25D /* MnemonicConfirmationWireframe.swift in Sources */,
 				1C67201B28870FCB00C5F044 /* ConfirmationView.swift in Sources */,
-				1C9E3199287580C700DD2031 /* TokenSendWireframeFactoryAssembler.swift in Sources */,
 				1C7F862F28D20E490073FD95 /* UIButton+Extensions.swift in Sources */,
 				1C60C2D0285724D0003BE25D /* AlertPresenter.swift in Sources */,
 				1C7F863628D20E490073FD95 /* UIImage+Extension.swift in Sources */,

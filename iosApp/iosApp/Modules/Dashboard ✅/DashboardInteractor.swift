@@ -21,6 +21,7 @@ protocol DashboardInteractorLister: AnyObject {
 }
 
 protocol DashboardInteractor: AnyObject {
+    var selectedNetwork: Network? { get }
     func enabledNetworks() -> [Network]
     func wallet(for network: Network) -> Wallet?
     func currencies(for network: Network) -> [Currency]
@@ -77,6 +78,8 @@ final class DefaultDashboardInteractor {
 }
 
 extension DefaultDashboardInteractor: DashboardInteractor {
+    
+    var selectedNetwork: Network? { networksService.network }
 
     func enabledNetworks() -> [Network] {
         return networksService.enabledNetworks()

@@ -93,7 +93,7 @@ extension DefaultNFTSendWireframe: NFTSendWireframe {
                 context: .init(type: .network(network), onCompletion: onCompletion)
             ).present()
         case let .confirmSendNFT(dataIn):
-            guard dataIn.destination.from != dataIn.destination.to else {
+            guard dataIn.addressFrom != dataIn.addressTo else {
                 return presentSendingToSameAddressAlert()
             }
             confirmationWireframeFactory.make(

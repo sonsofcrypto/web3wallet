@@ -1,0 +1,53 @@
+// Created by web3d4v on 14/07/2022.
+// Copyright (c) 2022 Sons Of Crypto.
+// SPDX-License-Identifier: MIT
+
+import Foundation
+
+struct TokenSwapViewModel {
+    let title: String
+    let items: [Item]
+}
+
+extension TokenSwapViewModel {
+    
+    enum Item {
+        case swap(Swap)
+        case limit
+    }
+    
+    struct Swap {
+        
+        let currencyFrom: TokenEnterAmountViewModel
+        let currencyTo: TokenEnterAmountViewModel
+        let currencySwapProviderViewModel: TokenSwapProviderViewModel
+        let currencySwapPriceViewModel: TokenSwapPriceViewModel
+        let currencySwapSlippageViewModel: TokenSwapSlippageViewModel
+        let currencyNetworkFeeViewModel: TokenNetworkFeeViewModel
+        let isCalculating: Bool
+        let providerAsset: String
+        let approveState: ApproveState
+        let buttonState: ButtonState
+
+        enum ApproveState {
+            case approve
+            case approving
+            case approved
+        }
+        
+        enum ButtonState {
+            case loading
+            case invalid(text: String)
+            case swap
+            case swapAnyway(text: String)
+        }
+    }
+}
+
+extension Array where Element == TokenSwapViewModel.Item {
+    var swap: TokenSwapViewModel.Swap? {
+        var swap: TokenSwapViewModel.Swap?
+        forEach { if case let TokenSwapViewModel.Item.swap(value) = $0 { swap = value } }
+        return swap
+    }
+}
