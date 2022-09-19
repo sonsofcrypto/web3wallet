@@ -37,6 +37,10 @@ extension DashboardViewModel {
             case nfts([DashboardViewModel.NFT])
         }
     }
+
+    func header(at idx: Int) -> DashboardViewModel.Section.Header? {
+        sections[safe: idx]?.header
+    }
 }
 
 extension DashboardViewModel.Section.Items {
@@ -151,34 +155,24 @@ extension DashboardViewModel.Section.Items {
             return nfts.count
         }
     }
-    
+
     var actions: [DashboardViewModel.Action] {
-        guard case let DashboardViewModel.Section.Items.actions(
-            actions
-        ) = self else { return [] }
+        guard case let .actions(actions) = self else { return [] }
         return actions
     }
     
     func notifications(at index: Int) -> DashboardViewModel.Notification? {
-        guard case let DashboardViewModel.Section.Items.notifications(
-            notifications
-        ) = self else { return nil }
+        guard case let .notifications(notifications) = self else { return nil }
         return notifications[safe: index]
     }
     
     func wallet(at index: Int) -> DashboardViewModel.Wallet? {
-        
-        guard case let DashboardViewModel.Section.Items.wallets(
-            wallets
-        ) = self else { return nil }
+        guard case let .wallets(wallets) = self else { return nil }
         return wallets[safe: index]
     }
 
     func nft(at index: Int) -> DashboardViewModel.NFT? {
-        
-        guard case let DashboardViewModel.Section.Items.nfts(
-            nfts
-        ) = self else { return nil }
+        guard case let .nfts(nfts) = self else { return nil }
         return nfts[safe: index]
     }
 }

@@ -6,7 +6,6 @@ import UIKit
 
 protocol DashboardView: AnyObject {
     func update(with viewModel: DashboardViewModel)
-    func updateWallet(_ viewModel: DashboardViewModel.Wallet?, at idxPath: IndexPath)
 }
 
 final class DashboardViewController: BaseViewController {
@@ -45,7 +44,6 @@ final class DashboardViewController: BaseViewController {
 extension DashboardViewController: DashboardView {
     
     func update(with viewModel: DashboardViewModel) {
-
         // NOTE: When refreshing if we don't call reloadData after ending refreshing causes
         // a weird glitch
         if refreshControl.isRefreshing {
@@ -63,6 +61,8 @@ extension DashboardViewController: DashboardView {
 
         var sectionsToReload = [Int]()
         var sectionsToUpdate = [Int]()
+        let cv = collectionView!
+        let header = UICollectionView.elementKindSectionHeader
 
         for (idx, section) in viewModel.sections.enumerated() {
             let prevSection = self.viewModel?.sections[idx]
@@ -76,15 +76,35 @@ extension DashboardViewController: DashboardView {
 
         self.viewModel = viewModel
 
-        collectionView.performBatchUpdates {
-            collectionView.reloadSections(IndexSet(sectionsToReload))
-        }
+        cv.performBatchUpdates { cv.reloadSections(IndexSet(sectionsToReload)) }
 
-        collectionView.visibleCells.forEach {
-            if let idxPath = collectionView.indexPath(for: $0),
+        cv.visibleCells.forEach {
+            if let idxPath = cv.indexPath(for: $0),
                sectionsToUpdate.contains(idxPath.section) {
                 let items = viewModel.sections[idxPath.section].items
                 update(cell: $0, idx: idxPath.item, items: items)
+            }
+        }
+
+        // TODO: Refactor once viewModel clean up is done
+        cv.indexPathsForVisibleSupplementaryElements(ofKind: header).forEach {
+            let view = cv.supplementaryView(forElementKind: header, at: $0)
+            switch viewModel.header(at: $0.section) {
+            case let .balance(balance):
+                (view as? DashboardHeaderBalanceView)?.update(with: balance)
+            case let .title(title):
+                (view as? DashboardHeaderNameView)?
+                    .update(with: title, and: nil, handler: nil)
+            case let .network(network):
+                (view as? DashboardHeaderNameView)?.update(
+                    with: network.name,
+                    and: network,
+                handler: { [weak self] in
+                        self?.presenter.handle(.didTapEditTokens(network: network.id))
+                    }
+                )
+            default:
+                ()
             }
         }
     }

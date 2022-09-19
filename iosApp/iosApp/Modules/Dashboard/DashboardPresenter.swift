@@ -150,7 +150,6 @@ extension DefaultDashboardPresenter: DashboardPresenter {
     }
     
     func releaseResources() {
-        
         web3ServiceLegacy.removeWalletListener(self)
     }
 }
