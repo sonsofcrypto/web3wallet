@@ -11,9 +11,7 @@ class CollectionView: UICollectionView {
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
 
-        guard let _ = superview else {
-            return
-        }
+        guard let _ = superview else { return }
 
         if overScrollView.superview == nil {
             addSubview(overScrollView)
@@ -21,19 +19,20 @@ class CollectionView: UICollectionView {
 
         overScrollView.contentMode = .scaleAspectFit
         overScrollView.bounds.size = Constant.overScrollViewSize
-        overScrollView.backgroundColor = .yellow
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-
         overScrollView.center.x = bounds.width / 2
-        let top = contentSize.height + overScrollView.bounds.height.half - contentInset.bottom
-        let btm = frame.maxY
-            - adjustedContentInset.top
-            - adjustedContentInset.bottom
-            - overScrollView.bounds.height.half
-        overScrollView.center.y = max(top, btm)
+        overScrollView.center.y = max(
+            contentSize.height
+                - adjustedContentInset.bottom
+                + overScrollView.bounds.height.half,
+            frame.maxY
+                - adjustedContentInset.top
+                - adjustedContentInset.bottom
+                + overScrollView.bounds.height.half
+        )
     }
 }
 

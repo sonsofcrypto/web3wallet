@@ -166,13 +166,11 @@ private extension NFTsDashboardViewController {
         self.noContentView = noContentView
         noContentView.addConstraints(.toEdges)
         noContentView.overScrollView.image = "overscroll_ape".assetImage
-        noContentView.overScrollView.layer.transform = CATransform3DMakeTranslation(0, -20, 0)
 
         let mainScrollView = makeMainScrollView()
         view.addSubview(mainScrollView)
         self.mainScrollView = mainScrollView
         mainScrollView.addConstraints(.toEdges)
         mainScrollView.overScrollView.image = "overscroll_ape".assetImage
-        mainScrollView.overScrollView.layer.transform = CATransform3DMakeTranslation(0, -20, 0)
     }
 }

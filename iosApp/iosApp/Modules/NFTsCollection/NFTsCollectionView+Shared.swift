@@ -6,7 +6,7 @@ extension NFTsCollectionViewController {
     
     func makeMainScrollView() -> UIScrollView {
         
-        let mainScrollView = UIScrollView()
+        let mainScrollView = ScrollView()
         mainScrollView.showsVerticalScrollIndicator = false
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = Theme.colour.activityIndicator
