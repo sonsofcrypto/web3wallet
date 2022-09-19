@@ -75,6 +75,10 @@ private extension NFTsCollectionViewController {
             target: self,
             action: #selector(dismissTapped)
         )
+
+        // TODO: Enable once switcher to collection view
+        // (mainScrollView as? ScrollView)?.overScrollView.image = "overscroll_ape".assetImage
+
     }
     
     @objc func dismissTapped() {

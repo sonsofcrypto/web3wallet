@@ -21,6 +21,7 @@
 		1A4C33A130E35EBC0BC27B07 /* mock-candles.json in Resources */ = {isa = PBXBuildFile; fileRef = 1A4C3EE3468010FE10976BEE /* mock-candles.json */; };
 		1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */; };
 		1A4C34ABFF1DD20804DED956 /* AppsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3228790C1569B37F5179 /* AppsService.swift */; };
+		1A4C366F70AFECEF112F8263 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C391FFCFF40F06CD89323 /* Bundle+Extensions.swift */; };
 		1A4C370634B11B400C5C4356 /* TouchPassThroughCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C308C7EEAF2E80221C519 /* TouchPassThroughCollectionView.swift */; };
 		1A4C37074D8859F0DC14C905 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */; };
 		1A4C3735189D6616D915D851 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C309894247AA73F274756 /* TabBarController.swift */; };
@@ -635,6 +636,7 @@
 		1A4C3766FCB2E384E3CA86A7 /* CurrencyStoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyStoreService.swift; sourceTree = "<group>"; };
 		1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsService.swift; sourceTree = "<group>"; };
 		1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewEffectViewiOS14.swift; sourceTree = "<group>"; };
+		1A4C391FFCFF40F06CD89323 /* Bundle+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
 		1A4C393772D3384C556C29C3 /* TransformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformView.swift; sourceTree = "<group>"; };
 		1A4C397324C6E3E5BE3E43B8 /* NetworksSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksSectionHeaderView.swift; sourceTree = "<group>"; };
 		1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAppCategory.swift; sourceTree = "<group>"; };
@@ -2125,6 +2127,7 @@
 				1C7F862428D20E490073FD95 /* NSCollectionLayout+Extensions.swift */,
 				1C7F862528D20E490073FD95 /* NSLocalizedString+Extension.swift */,
 				1C7F862628D20E490073FD95 /* Locale+Extensions.swift */,
+				1A4C391FFCFF40F06CD89323 /* Bundle+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3397,6 +3400,7 @@
 				1A4C3DDC249CC1648C089877 /* GradientView.swift in Sources */,
 				1C7F864B28D20E490073FD95 /* CALayer+Extension.swift in Sources */,
 				1A4C3F1716E6E050EE9DF4B3 /* TargetViewTransitionDatasource.swift in Sources */,
+				1A4C366F70AFECEF112F8263 /* Bundle+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

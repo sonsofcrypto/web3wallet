@@ -9,49 +9,38 @@ class CollectionView: UICollectionView {
     private(set) var overScrollView: UIImageView = .init()
 
     override func didMoveToSuperview() {
-        
         super.didMoveToSuperview()
 
-        guard superview != nil else { return }
+        guard let _ = superview else { return }
 
         if overScrollView.superview == nil {
             addSubview(overScrollView)
         }
 
         overScrollView.contentMode = .scaleAspectFit
-        overScrollView.addConstraints(
-            [
-                .layout(
-                    anchor: .widthAnchor,
-                    constant: .equalTo(constant: Constant.overScrollViewSize.width)
-                ),
-                .layout(
-                    anchor: .heightAnchor,
-                    constant: .equalTo(constant: Constant.overScrollViewSize.height)
-                )
-            ]
-        )
+        overScrollView.bounds.size = Constant.overScrollViewSize
     }
 
     override func layoutSubviews() {
-        
         super.layoutSubviews()
-
         overScrollView.center.x = bounds.width / 2
         overScrollView.center.y = max(
             contentSize.height
-            + overScrollView.bounds.height.half
-            - contentInset.bottom,
+                - adjustedContentInset.bottom
+                + overScrollView.bounds.height.half,
             frame.maxY
+                - adjustedContentInset.top
+                - adjustedContentInset.bottom
+                + overScrollView.bounds.height.half
         )
-        
     }
 }
 
-private extension CollectionView {
+// MARK: - Constant
+
+extension CollectionView {
 
     enum Constant {
-        
-        static let overScrollViewSize = CGSize(length: 100)
+        static let overScrollViewSize = CGSize(length: 150)
     }
 }

@@ -9,52 +9,38 @@ class ScrollView: UIScrollView {
     private(set) var overScrollView: UIImageView = .init()
 
     override func didMoveToSuperview() {
-        
         super.didMoveToSuperview()
 
-        guard superview != nil else { return }
+        guard let _ = superview else { return }
 
         if overScrollView.superview == nil {
-            insertSubview(overScrollView, at: 0)
+            addSubview(overScrollView)
         }
 
         overScrollView.contentMode = .scaleAspectFit
-        overScrollView.addConstraints(
-            [
-                .layout(
-                    anchor: .widthAnchor,
-                    constant: .equalTo(constant: Constant.overScrollViewSize.width)
-                ),
-                .layout(
-                    anchor: .heightAnchor,
-                    constant: .equalTo(constant: Constant.overScrollViewSize.height)
-                )
-            ]
-        )
+        overScrollView.bounds.size = Constant.overScrollViewSize
     }
 
     override func layoutSubviews() {
-        
         super.layoutSubviews()
-        
         overScrollView.center.x = bounds.width / 2
         overScrollView.center.y = max(
             contentSize.height
-            + overScrollView.bounds.height.half
-            - contentInset.bottom
-            + Theme.constant.padding,
+                - adjustedContentInset.bottom
+                + overScrollView.bounds.height.half,
             frame.maxY
-            + overScrollView.bounds.height.half
-            + Theme.constant.padding
+                - adjustedContentInset.top
+                - adjustedContentInset.bottom
+                + overScrollView.bounds.height.half
         )
-
     }
 }
 
-private extension ScrollView {
+// MARK: - Constant
+
+extension ScrollView {
 
     enum Constant {
-        
-        static let overScrollViewSize = CGSize(length: 100)
+        static let overScrollViewSize = CGSize(length: 150)
     }
 }
