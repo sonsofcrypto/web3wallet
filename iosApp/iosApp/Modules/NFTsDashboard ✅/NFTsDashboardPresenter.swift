@@ -21,8 +21,8 @@ protocol NFTsDashboardPresenter {
 
 final class DefaultNFTsDashboardPresenter {
     private weak var view: NFTsDashboardView!
-    private let interactor: NFTsDashboardInteractor
     private let wireframe: NFTsDashboardWireframe
+    private let interactor: NFTsDashboardInteractor
     private let nftsService: NFTsService
     
     private var latestNFTs: [NFTItem]?
@@ -31,13 +31,13 @@ final class DefaultNFTsDashboardPresenter {
 
     init(
         view: NFTsDashboardView,
-        interactor: NFTsDashboardInteractor,
         wireframe: NFTsDashboardWireframe,
+        interactor: NFTsDashboardInteractor,
         nftsService: NFTsService
     ) {
         self.view = view
-        self.interactor = interactor
         self.wireframe = wireframe
+        self.interactor = interactor
         self.nftsService = nftsService
         
         nftsService.addListener(self)
@@ -53,10 +53,7 @@ final class DefaultNFTsDashboardPresenter {
 extension DefaultNFTsDashboardPresenter: NFTsDashboardPresenter {
 
     func present(isPullDownToRefreh: Bool) {
-        if !isPullDownToRefreh {
-            view.update(with: .loading)
-        }
-        
+        if !isPullDownToRefreh { view.update(with: .loading) }
         interactor.fetchYourNFTs(
             isPullDownToRefreh: isPullDownToRefreh
         ) { [weak self] result in
@@ -68,24 +65,14 @@ extension DefaultNFTsDashboardPresenter: NFTsDashboardPresenter {
         switch event {
         case let .viewCollectionNFTs(collectionId):
             wireframe.navigate(to: .viewCollectionNFTs(collectionId: collectionId))
-
         case let .viewNFT(identifier):
-            guard let latestNFTs = latestNFTs else {
-                return
-            }
-            let nftItem = latestNFTs.filter {
-                        $0.identifier == identifier
-                    }
-                    .first
-            guard let nftItem = nftItem else {
-                return
-            }
+            guard let latestNFTs = latestNFTs else { return }
+            let nftItem = latestNFTs.filter { $0.identifier == identifier }.first
+            guard let nftItem = nftItem else { return }
             wireframe.navigate(to: .viewNFT(nftItem: nftItem))
-
         case .cancelError:
             error = nil
             refreshView()
-
         case .sendError:
             UIPasteboard.general.setItems(
                 [[UTType.utf8PlainText.identifier: errorMessage()]],
@@ -149,14 +136,12 @@ private extension DefaultNFTsDashboardPresenter {
             }
             return
         }
-
         let nfts: [NFTsDashboardViewModel.NFT] = latestNFTs.compactMap {
             NFTsDashboardViewModel.NFT(
                 identifier: $0.identifier,
                 image: $0.image
             )
         }
-        
         let collections: [NFTsDashboardViewModel.Collection] = latestCollections.compactMap {
             NFTsDashboardViewModel.Collection(
                 identifier: $0.identifier,
@@ -165,7 +150,6 @@ private extension DefaultNFTsDashboardPresenter {
                 author: $0.author
             )
         }
-
         view.update(
             with: .loaded(nfts: nfts, collections: collections)
         )

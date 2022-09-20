@@ -5,21 +5,17 @@
 import UIKit
 
 protocol NFTsDashboardView: AnyObject {
-
     func update(with viewModel: NFTsDashboardViewModel)
     func popToRootAndRefresh()
 }
 
 final class NFTsDashboardViewController: BaseViewController {
-
     var presenter: NFTsDashboardPresenter!
-    
     private (set) weak var mainScrollView: ScrollView?
     weak var loadingView: UIActivityIndicatorView?
     weak var noContentView: ScrollView?
     weak var carousel: iCarousel?
     weak var collectionsView: UIView?
-
     private (set) var viewModel: NFTsDashboardViewModel?
     
     override func viewDidLoad() {
@@ -81,14 +77,12 @@ extension NFTsDashboardViewController: NFTsDashboardView {
 extension NFTsDashboardViewController {
     
     var collectionItemSize: CGSize {
-        
         let width: CGFloat
         if let view = navigationController?.view {
             width = view.frame.size.width - Theme.constant.padding * 3
         } else {
             width = 220
         }
-        
         return .init(
             width: width * 0.5,
             height: width * 0.5
@@ -108,7 +102,6 @@ extension NFTsDashboardViewController {
 private extension NFTsDashboardViewController {
     
     func showLoading() {
-        
         loadingView?.isHidden = false
         loadingView?.startAnimating()
         noContentView?.isHidden = true
@@ -116,20 +109,17 @@ private extension NFTsDashboardViewController {
     }
 
     func hideLoading() {
-        
         loadingView?.isHidden = true
         loadingView?.stopAnimating()
     }
 
     func showNoNFTs() {
-        
         hideLoading()
         noContentView?.isHidden = false
         mainScrollView?.isHidden = true
     }
 
     func showNFTs() {
-        
         hideLoading()
         noContentView?.isHidden = true
         mainScrollView?.isHidden = false
@@ -138,13 +128,10 @@ private extension NFTsDashboardViewController {
     }
 
     func configureUI() {
-        
         title = Localized("nfts")
-        
         let gradient = ThemeGradientView()
         view.addSubview(gradient)
         gradient.addConstraints(.toEdges)
-        
         let loadingView = UIActivityIndicatorView(style: .large)
         loadingView.color = Theme.colour.activityIndicator
         view.addSubview(loadingView)
@@ -160,13 +147,11 @@ private extension NFTsDashboardViewController {
                 )
             ]
         )
-
         let noContentView = makeNoContentView()
         view.addSubview(noContentView)
         self.noContentView = noContentView
         noContentView.addConstraints(.toEdges)
         noContentView.overScrollView.image = "overscroll_ape".assetImage
-
         let mainScrollView = makeMainScrollView()
         view.addSubview(mainScrollView)
         self.mainScrollView = mainScrollView

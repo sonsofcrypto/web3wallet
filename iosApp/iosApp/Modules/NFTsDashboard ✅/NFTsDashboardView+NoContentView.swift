@@ -7,7 +7,6 @@ import UIKit
 extension NFTsDashboardViewController {
     
     func makeNoContentView() -> ScrollView {
-        
         let scrollView = ScrollView()
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
@@ -15,7 +14,6 @@ extension NFTsDashboardViewController {
         refreshControl.tintColor = Theme.colour.activityIndicator
         refreshControl.addTarget(self, action: #selector(pullDownToRefresh), for: .valueChanged)
         scrollView.refreshControl = refreshControl
-        
         let imageViewGroup = UIView()
         imageViewGroup.backgroundColor = .clear
         let imageView = UIImageView()
@@ -30,23 +28,19 @@ extension NFTsDashboardViewController {
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: 150))
             ]
         )
-
         let titleLabel = UILabel()
         titleLabel.apply(style: .title3)
         titleLabel.textAlignment = .center
         titleLabel.text = Localized("nfts.dashboard.noContent.title")
-
         let bodyLabel = UILabel()
         bodyLabel.apply(style: .body)
         bodyLabel.numberOfLines = 0
         bodyLabel.textAlignment = .center
         bodyLabel.text = Localized("nfts.dashboard.noContent.body")
-
         let ctaButton = Button()
         ctaButton.style = .primary
         ctaButton.setTitle(Localized("nfts.dashboard.noContent.cta"), for: .normal)
         ctaButton.addTarget(self, action: #selector(refreshNoContent), for: .touchUpInside)
-        
         let stackView = VStackView(
             [
                 imageViewGroup,
@@ -56,11 +50,9 @@ extension NFTsDashboardViewController {
             ]
         )
         stackView.spacing = Theme.constant.padding
-        
         let view = UIView()
         view.backgroundColor = .clear
         view.addSubview(stackView)
-        
         stackView.addConstraints(
             [
                 .layout(anchor: .topAnchor),
@@ -75,7 +67,6 @@ extension NFTsDashboardViewController {
                 )
             ]
         )
-        
         scrollView.addSubview(view)
         view.addConstraints(
             [
@@ -89,7 +80,6 @@ extension NFTsDashboardViewController {
                 .layout(anchor: .widthAnchor)
             ]
         )
-        
         return scrollView
     }
 }

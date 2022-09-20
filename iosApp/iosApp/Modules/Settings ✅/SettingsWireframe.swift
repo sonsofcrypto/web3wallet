@@ -42,13 +42,13 @@ extension DefaultSettingsWireframe: SettingsWireframe {
 
     func present() {
         let vc = wireUp(with: context)
-        guard let tabBarController = parent as? UITabBarController else {
-            parent?.show(vc, sender: self)
-            return
+        let nc = settingsNavigationController(with: vc)
+        if let tabVc = parent as? UITabBarController {
+            let vcs = tabVc.add(viewController: nc)
+            tabVc.setViewControllers(vcs, animated: false)
+        } else {
+            parent?.show(nc, sender: self)
         }
-        let navController = settingsNavigationController(with: vc)
-        let vcs = (tabBarController.viewControllers ?? []) + [navController]
-        tabBarController.setViewControllers(vcs, animated: false)
     }
 
     func navigate(to destination: SettingsWireframeDestination) {

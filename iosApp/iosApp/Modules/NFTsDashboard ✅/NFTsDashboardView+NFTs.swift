@@ -4,10 +4,7 @@
 
 extension NFTsDashboardViewController {
     
-    func refreshNFTs() {
-        
-        carousel?.reloadData()
-    }
+    func refreshNFTs() { carousel?.reloadData() }
 }
 
 extension NFTsDashboardViewController: iCarouselDataSource {
@@ -21,18 +18,13 @@ extension NFTsDashboardViewController: iCarouselDataSource {
         viewForItemAt index: Int,
         reusing view: UIView?
     ) -> UIView {
-        
-        guard let item = viewModel?.nfts[index] else {
-            fatalError()
-        }
-        
+        guard let item = viewModel?.nfts[index] else { fatalError() }
         let imageView = view as? NFTLoadingView ?? NFTLoadingView()
         imageView.configure(with: item)
         let length = min(
             carousel.bounds.width, carousel.bounds.height
         )
         imageView.bounds.size = CGSize(width: length, height: length)
-        
         return imageView
     }
 }
@@ -40,7 +32,6 @@ extension NFTsDashboardViewController: iCarouselDataSource {
 extension NFTsDashboardViewController: iCarouselDelegate {
     
     func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
-        
         guard let item = viewModel?.nfts[index] else { return }
         presenter.handle(.viewNFT(identifier: item.identifier))
     }
@@ -51,9 +42,7 @@ final class NFTLoadingView: UIView {
     private weak var imageView: UIImageView!
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
-        
         commonInit()
     }
     
@@ -62,7 +51,6 @@ final class NFTLoadingView: UIView {
     }
     
     func configure(with item: NFTsDashboardViewModel.NFT) {
-        
         imageView.load(url: item.image)
     }
 }
@@ -70,11 +58,9 @@ final class NFTLoadingView: UIView {
 private extension NFTLoadingView {
     
     func commonInit() {
-        
         backgroundColor = Theme.colour.backgroundBaseSecondary
         layer.cornerRadius = Theme.constant.cornerRadius
         clipsToBounds = true
-        
         let imageView = UIImageView()
         addSubview(imageView)
         self.imageView = imageView

@@ -7,7 +7,7 @@ import UIKit
 protocol NFTsCollectionWireframeFactory {
 
     func makeWireframe(
-        _ parent: UIViewController,
+        _ parent: UIViewController?,
         context: NFTsCollectionWireframeContext
     ) -> NFTsCollectionWireframe
 }
@@ -31,12 +31,12 @@ final class DefaultNFTsCollectionWireframeFactory {
 extension DefaultNFTsCollectionWireframeFactory: NFTsCollectionWireframeFactory {
 
     func makeWireframe(
-        _ parent: UIViewController,
+        _ parent: UIViewController?,
         context: NFTsCollectionWireframeContext
     ) -> NFTsCollectionWireframe {
         
         DefaultNFTsCollectionWireframe(
-            parent: parent,
+            parent: parent!,
             context: context,
             nftDetailWireframeFactory: nftDetailWireframeFactory,
             nftsService: nftsService

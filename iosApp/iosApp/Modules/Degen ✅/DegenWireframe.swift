@@ -49,7 +49,7 @@ extension DefaultDegenWireframe: DegenWireframe {
     func present() {
         let vc = wireUp()
         if let tabVc = parent as? UITabBarController {
-            let vcs = (tabVc.viewControllers ?? []) + [vc]
+            let vcs = tabVc.add(viewController: vc)
             tabVc.setViewControllers(vcs, animated: false)
         } else {
             parent?.show(vc, sender: self)

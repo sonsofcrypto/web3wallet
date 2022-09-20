@@ -17,18 +17,17 @@ protocol NFTsDashboardWireframe {
 }
 
 final class DefaultNFTsDashboardWireframe {
-
-    private weak var parent: TabBarController!
+    private weak var parent: UIViewController?
     private let nftsCollectionWireframeFactory: NFTsCollectionWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let nftsService: NFTsService
     private let networksService: NetworksService
     private let mailService: MailService
 
-    private weak var navigationController: NavigationController!
+    private weak var vc: UIViewController?
     
     init(
-        parent: TabBarController,
+        _ parent: UIViewController?,
         nftsCollectionWireframeFactory: NFTsCollectionWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         nftsService: NFTsService,
@@ -47,48 +46,34 @@ final class DefaultNFTsDashboardWireframe {
 extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
 
     func present() {
-        
-        let viewController = makeViewController()
-        
-        let navigationController = NavigationController(rootViewController: viewController)
-        self.navigationController = navigationController
-        
-        navigationController.tabBarItem = UITabBarItem(
-            title: Localized("nfts"),
-            image: "tab_icon_nfts".assetImage,
-            tag: 2
-        )
-
-        let vcs = (parent.viewControllers ?? []) + [navigationController]
-        parent.setViewControllers(vcs, animated: false)
+        let vc = wireUp()
+        if let tabVc = parent as? UITabBarController {
+            let vcs = tabVc.add(viewController: vc)
+            tabVc.setViewControllers(vcs, animated: false)
+        } else {
+            parent?.show(vc, sender: self)
+        }
     }
 
     func navigate(to destination: NFTsDashboardWireframeDestination) {
-        
         switch destination {
-            
         case let .viewNFT(nftItem):
-            
-            let wireframe = nftDetailWireframeFactory.makeWireframe(
-                navigationController,
+            nftDetailWireframeFactory.makeWireframe(
+                vc,
                 context: .init(
                     nftIdentifier: nftItem.identifier,
                     nftCollectionIdentifier: nftItem.collectionIdentifier,
                     presentationStyle: .push
                 )
-            )
-            wireframe.present()
-            
+            ).present()
         case let .viewCollectionNFTs(collectionId):
-            let wireframe = nftsCollectionWireframeFactory.makeWireframe(
-                navigationController,
+            nftsCollectionWireframeFactory.makeWireframe(
+                vc,
                 context: .init(
                     nftCollectionIdentifier: collectionId,
                     presentationStyle: .push
                 )
-            )
-            wireframe.present()
-
+            ).present()
         case let .sendError(msg):
             mailService.sendMail(
                 context: .init(
@@ -102,9 +87,8 @@ extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
 
 private extension DefaultNFTsDashboardWireframe {
 
-    func makeViewController() -> UIViewController {
-        
-        let view: NFTsDashboardViewController = UIStoryboard(
+    func wireUp() -> UIViewController {
+        let vc: NFTsDashboardViewController = UIStoryboard(
             .nftsDashboard
         ).instantiate()
         let interactor = DefaultNFTsDashboardInteractor(
@@ -112,12 +96,19 @@ private extension DefaultNFTsDashboardWireframe {
             service: nftsService
         )
         let presenter = DefaultNFTsDashboardPresenter(
-            view: view,
-            interactor: interactor,
+            view: vc,
             wireframe: self,
+            interactor: interactor,
             nftsService: nftsService
         )
-        view.presenter = presenter
-        return view
+        vc.presenter = presenter
+        let nc = NavigationController(rootViewController: vc)
+        self.vc = nc
+        nc.tabBarItem = UITabBarItem(
+            title: Localized("nfts"),
+            image: "tab_icon_nfts".assetImage,
+            tag: 2
+        )
+        return nc
     }
 }

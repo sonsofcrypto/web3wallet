@@ -8,7 +8,7 @@ import web3lib
 protocol NFTDetailWireframeFactory {
 
     func makeWireframe(
-        _ parent: UIViewController,
+        _ parent: UIViewController?,
         context: NFTDetailWireframeContext
     ) -> NFTDetailWireframe
 }
@@ -35,12 +35,12 @@ final class DefaultNFTDetailWireframeFactory {
 extension DefaultNFTDetailWireframeFactory: NFTDetailWireframeFactory {
 
     func makeWireframe(
-        _ parent: UIViewController,
+        _ parent: UIViewController?,
         context: NFTDetailWireframeContext
     ) -> NFTDetailWireframe {
         
         DefaultNFTDetailWireframe(
-            parent: parent,
+            parent: parent!,
             context: context,
             nftSendWireframeFactory: nftSendWireframeFactory,
             nftsService: nftsService,

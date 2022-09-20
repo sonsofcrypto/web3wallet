@@ -26,22 +26,16 @@ extension NFTsDashboardViewModel {
 extension NFTsDashboardViewModel {
     
     var nfts: [NFT] {
-        
         switch self {
-        case .loading, .error:
-            return []
-        case let .loaded(nfts, _):
-            return nfts
+        case .loading, .error: return []
+        case let .loaded(nfts, _): return nfts
         }
     }
 
     var collections: [Collection] {
-        
         switch self {
-        case .loading, .error:
-            return []
-        case let .loaded(_, collections):
-            return collections
+        case .loading, .error: return []
+        case let .loaded(_, collections): return collections
         }
     }
 }
