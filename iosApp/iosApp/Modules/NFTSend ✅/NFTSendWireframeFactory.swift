@@ -5,52 +5,66 @@
 import UIKit
 import web3lib
 
-protocol NFTSendWireframeFactory {
+// MARK: - NFTSendWireframeFactory
 
-    func makeWireframe(
-        presentingIn: UIViewController,
+protocol NFTSendWireframeFactory {
+    func make(
+        _ parent: UIViewController?,
         context: NFTSendWireframeContext
     ) -> NFTSendWireframe
 }
 
-final class DefaultNFTSendWireframeFactory {
+// MARK: - DefaultNFTSendWireframeFactory
 
+final class DefaultNFTSendWireframeFactory {
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
-    private let web3Service: Web3ServiceLegacy
     private let networksService: NetworksService
 
     init(
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        web3Service: Web3ServiceLegacy,
         networksService: NetworksService
     ) {
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.confirmationWireframeFactory = confirmationWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
-        self.web3Service = web3Service
         self.networksService = networksService
     }
 }
 
 extension DefaultNFTSendWireframeFactory: NFTSendWireframeFactory {
 
-    func makeWireframe(
-        presentingIn: UIViewController,
+    func make(
+        _ parent: UIViewController?,
         context: NFTSendWireframeContext
     ) -> NFTSendWireframe {
-        
         DefaultNFTSendWireframe(
-            presentingIn: presentingIn,
+            parent,
             context: context,
             qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
             confirmationWireframeFactory: confirmationWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
-            web3Service: web3Service,
             networksService: networksService
         )
     }
 }
+
+// MARK: - Assember
+
+final class NFTSendWireframeFactoryAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> NFTSendWireframeFactory in
+            DefaultNFTSendWireframeFactory(
+                qrCodeScanWireframeFactory: resolver.resolve(),
+                confirmationWireframeFactory: resolver.resolve(),
+                alertWireframeFactory: resolver.resolve(),
+                networksService: resolver.resolve()
+            )
+        }
+    }
+}
+

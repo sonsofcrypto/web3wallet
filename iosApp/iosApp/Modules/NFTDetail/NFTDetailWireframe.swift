@@ -32,7 +32,6 @@ final class DefaultNFTDetailWireframe {
     private let nftsService: NFTsService
     private let networksService: NetworksService
 
-
     private weak var navigationController: NavigationController!
     
     init(
@@ -92,18 +91,10 @@ extension DefaultNFTDetailWireframe: NFTDetailWireframe {
             
         case let .send(nftItem):
             guard let network = networksService.network else { return }
-            
-            let web3Network = Web3Network.from(network, isOn: false)
-                
-            nftSendWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
-                context: .init(
-                    presentationStyle: .push,
-                    nftItem: nftItem,
-                    network: web3Network
-                )
+            nftSendWireframeFactory.make(
+                navigationController,
+                context: .init(network: network, nftItem: nftItem)
             ).present()
-            
         case .dismiss:
             
             switch context.presentationStyle {

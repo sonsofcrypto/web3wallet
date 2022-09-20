@@ -470,7 +470,6 @@
 		1CDED5FB289C4C4100DF34A7 /* NFTSendPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5FA289C4C4100DF34A7 /* NFTSendPresenter.swift */; };
 		1CDED5FD289C4C4800DF34A7 /* NFTSendWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5FC289C4C4800DF34A7 /* NFTSendWireframe.swift */; };
 		1CDED5FF289C4C4E00DF34A7 /* NFTSendWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5FE289C4C4E00DF34A7 /* NFTSendWireframeFactory.swift */; };
-		1CDED601289C4C5200DF34A7 /* NFTSendWireframeFactoryAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED600289C4C5200DF34A7 /* NFTSendWireframeFactoryAssembler.swift */; };
 		1CDED603289C4C5C00DF34A7 /* NFTSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED602289C4C5C00DF34A7 /* NFTSendView.swift */; };
 		1CDED605289C4C6100DF34A7 /* NFTSendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED604289C4C6100DF34A7 /* NFTSendViewModel.swift */; };
 		1CDED607289C4C7200DF34A7 /* NFTSendInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED606289C4C7200DF34A7 /* NFTSendInteractor.swift */; };
@@ -1054,7 +1053,6 @@
 		1CDED5FA289C4C4100DF34A7 /* NFTSendPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendPresenter.swift; sourceTree = "<group>"; };
 		1CDED5FC289C4C4800DF34A7 /* NFTSendWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendWireframe.swift; sourceTree = "<group>"; };
 		1CDED5FE289C4C4E00DF34A7 /* NFTSendWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendWireframeFactory.swift; sourceTree = "<group>"; };
-		1CDED600289C4C5200DF34A7 /* NFTSendWireframeFactoryAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendWireframeFactoryAssembler.swift; sourceTree = "<group>"; };
 		1CDED602289C4C5C00DF34A7 /* NFTSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendView.swift; sourceTree = "<group>"; };
 		1CDED604289C4C6100DF34A7 /* NFTSendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendViewModel.swift; sourceTree = "<group>"; };
 		1CDED606289C4C7200DF34A7 /* NFTSendInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendInteractor.swift; sourceTree = "<group>"; };
@@ -1507,7 +1505,7 @@
 				1C60C225285724D0003BE25D /* NFTDetail */,
 				1C60C268285724D0003BE25D /* NFTsCollection */,
 				1C60C233285724D0003BE25D /* NFTsDashboard */,
-				1CDED5F9289C4C2F00DF34A7 /* NFTSend */,
+				1CDED5F9289C4C2F00DF34A7 /* NFTSend ✅ */,
 				1C54DC0F2862320200E378F6 /* QRCodeScan ✅ */,
 				1C60C23E285724D0003BE25D /* Root ✅ */,
 				1C60C1C8285724D0003BE25D /* Settings ✅ */,
@@ -2287,7 +2285,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1CDED5F9289C4C2F00DF34A7 /* NFTSend */ = {
+		1CDED5F9289C4C2F00DF34A7 /* NFTSend ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1CDED608289C4C8200DF34A7 /* NFTSend.storyboard */,
@@ -2297,10 +2295,9 @@
 				1CDED604289C4C6100DF34A7 /* NFTSendViewModel.swift */,
 				1CDED5FC289C4C4800DF34A7 /* NFTSendWireframe.swift */,
 				1CDED5FE289C4C4E00DF34A7 /* NFTSendWireframeFactory.swift */,
-				1CDED600289C4C5200DF34A7 /* NFTSendWireframeFactoryAssembler.swift */,
 				1CDED60A289C4DA500DF34A7 /* Cells */,
 			);
-			path = NFTSend;
+			path = "NFTSend ✅";
 			sourceTree = "<group>";
 		};
 		1CDED60A289C4DA500DF34A7 /* Cells */ = {
@@ -3122,7 +3119,6 @@
 				1C60C2D4285724D0003BE25D /* MnemonicNewWireframe.swift in Sources */,
 				1C7FC9A828BCEA3400FC9175 /* WebViewWireframe.swift in Sources */,
 				1C60C2A8285724D0003BE25D /* SettingsViewModel.swift in Sources */,
-				1CDED601289C4C5200DF34A7 /* NFTSendWireframeFactoryAssembler.swift in Sources */,
 				1C54DC072860E5CB00E378F6 /* NetworkPickerWireframeFactory.swift in Sources */,
 				1C60C35A285724D1003BE25D /* DegenInteractor.swift in Sources */,
 				1C60C2EE285724D0003BE25D /* NetworksWireframeFactory.swift in Sources */,

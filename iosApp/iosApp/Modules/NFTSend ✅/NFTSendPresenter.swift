@@ -5,7 +5,6 @@
 import Foundation
 
 enum NFTSendPresenterEvent {
-
     case dismiss
     case addressChanged(to: String)
     case pasteAddress
@@ -17,44 +16,38 @@ enum NFTSendPresenterEvent {
 }
 
 protocol NFTSendPresenter: AnyObject {
-
     func present()
     func handle(_ event: NFTSendPresenterEvent)
 }
 
 final class DefaultNFTSendPresenter {
-
     private weak var view: NFTSendView?
-    private let interactor: NFTSendInteractor
     private let wireframe: NFTSendWireframe
+    private let interactor: NFTSendInteractor
     private let context: NFTSendWireframeContext
     
     private var sendTapped = false
     private var address: String?
     private var fee: Web3NetworkFee = .low
-    
     private var items = [NFTSendViewModel.Item]()
     private var fees = [Web3NetworkFee]()
 
     init(
         view: NFTSendView,
-        interactor: NFTSendInteractor,
         wireframe: NFTSendWireframe,
+        interactor: NFTSendInteractor,
         context: NFTSendWireframeContext
     ) {
         self.view = view
-        self.interactor = interactor
         self.wireframe = wireframe
+        self.interactor = interactor
         self.context = context
-        
-        
     }
 }
 
 extension DefaultNFTSendPresenter: NFTSendPresenter {
 
     func present() {
-        
         updateView(
             with: [
                 .nft(context.nftItem),
@@ -68,8 +61,8 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
                 .send(
                     .init(
                         tokenNetworkFeeViewModel: .init(
-                            estimatedFee: makeEstimatedFee(),
-                            feeType: makeFeeType()
+                            estimatedFee: estimatedFee(),
+                            feeType: feeType()
                         ),
                         buttonState: .ready
                     )
@@ -79,93 +72,54 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
     }
 
     func handle(_ event: NFTSendPresenterEvent) {
-
         switch event {
-            
         case .dismiss:
-            
             wireframe.dismiss()
-
         case .qrCodeScan:
-            
             view?.dismissKeyboard()
-            let onQRCodeScanned = makeOnQRCodeScanned()
             wireframe.navigate(
-                to: .qrCodeScan(
-                    network: context.network.toNetwork(),
-                    onCompletion: onQRCodeScanned
-                )
+                to: .qrCodeScan(network: context.network, onCompletion: onQRCodeScanned())
             )
-            
         case .saveAddress:
-            
             wireframe.navigate(to: .underConstructionAlert)
-            
         case let .addressChanged(address):
-            
             if
                 let currentAddress = self.address,
                 let formattedAddress = formattedAddress,
                 formattedAddress.hasPrefix(address),
                 formattedAddress.count == (address.count + 1)
             {
-                
                 updateAddress(with: String(currentAddress.prefix(currentAddress.count - 1)))
             } else {
-                let isValid = interactor.isAddressValid(address: address, network: context.network)
-                updateView(
-                    address: address,
-                    shouldTokenBecomeFirstResponder: isValid
-                )
+                updateView(address: address)
             }
-            
         case .pasteAddress:
-            
             let clipboard = UIPasteboard.general.string ?? ""
-            let isValid = interactor.isAddressValid(address: clipboard, network: context.network)
+            let isValid = context.network.isValid(address: clipboard)
             guard isValid else { return }
-            updateView(
-                address: clipboard,
-                shouldTokenBecomeFirstResponder: isValid
-            )
-            
+            updateView(address: clipboard)
         case let .feeChanged(identifier):
-            
             guard let fee = fees.first(where: { $0.rawValue == identifier }) else { return }
             self.fee = fee
             updateCTA()
-            
         case .feeTapped:
-            
-            view?.presentFeePicker(
-                with: makeFees()
-            )
-            
+            view?.presentFeePicker(with: _fees())
         case .review:
-            
             sendTapped = true
-            
-            let isValidAddress = interactor.isAddressValid(
-                address: address ?? "",
-                network: context.network
-            )
+            let isValidAddress = context.network.isValid(address: address ?? "")
             guard let address = address, isValidAddress  else {
-                updateView(
-                    shouldAddressBecomeFirstResponder: true
-                )
+                updateView(shouldAddressBecomeFirstResponder: true)
                 return
             }
-            
             guard let walletAddress = interactor.walletAddress else { return }
-                                    
             wireframe.navigate(
                 to: .confirmSendNFT(
                     dataIn: .init(
-                        network: context.network.toNetwork(),
+                        network: context.network,
                         addressFrom: walletAddress,
                         addressTo: address,
                         nftItem: context.nftItem,
-                        estimatedFee: makeConfirmationSendNFTEstimatedFee()
+                        estimatedFee: confirmationSendNFTEstimatedFee()
                     )
                 )
             )
@@ -175,20 +129,15 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
 
 private extension DefaultNFTSendPresenter {
     
-    func makeConfirmationSendNFTEstimatedFee() -> Web3NetworkFee {
-        
+    func confirmationSendNFTEstimatedFee() -> Web3NetworkFee {
         switch fee {
-        case .low:
-            return .low
-        case .medium:
-            return .medium
-        case .high:
-            return .high
+        case .low: return .low
+        case .medium: return .medium
+        case .high: return .high
         }
     }
     
     func updateView(with items: [NFTSendViewModel.Item]) {
-        
         view?.update(
             with: .init(
                 title: Localized("nftSend.title"),
@@ -197,28 +146,19 @@ private extension DefaultNFTSendPresenter {
         )
     }
     
-    func makeOnQRCodeScanned() -> (String) -> Void {
-        
-        { [weak self] address in
-            
-            guard let self = self else { return }
-            self.updateAddress(with: address)
-        }
+    func onQRCodeScanned() -> (String) -> Void {
+        { [weak self] address in self?.updateAddress(with: address) }
     }
     
     func updateView(
         address: String? = nil,
         shouldAddressBecomeFirstResponder: Bool = false,
-        amount: Double? = nil,
-        shouldTokenUpdateTextFields: Bool = false,
-        shouldTokenBecomeFirstResponder: Bool = false
+        amount: Double? = nil
     ) {
-        
         updateAddress(
             with: address ?? self.address ?? "",
             becomeFirstResponder: shouldAddressBecomeFirstResponder
         )
-        
         updateCTA()
     }
     
@@ -226,17 +166,10 @@ private extension DefaultNFTSendPresenter {
         with address: String,
         becomeFirstResponder: Bool = false
     ) {
-        
         if !address.contains("...") {
-            
             self.address = address
         }
-        
-        let isValid = interactor.isAddressValid(
-            address: self.address ?? "",
-            network: context.network
-        )
-                
+        let isValid = context.network.isValid(address: self.address ?? "")
         updateView(
             with: [
                 .address(
@@ -251,40 +184,24 @@ private extension DefaultNFTSendPresenter {
     }
     
     var formattedAddress: String? {
-        
         guard let address = address else { return nil }
-        
-        guard interactor.isAddressValid(address: address, network: context.network) else { return nil }
-        
-        return interactor.addressFormattedShort(
-            address: address,
-            network: context.network
-        )
+        guard context.network.isValid(address: address) else { return nil }
+        return Formatter.address.string(address, for: context.network)
     }
 
     func updateCTA() {
-        
-        let isValidAddress = interactor.isAddressValid(
-            address: address ?? "",
-            network: context.network
-        )
-        
+        let isValidAddress = context.network.isValid(address: address ?? "")
         let buttonState: NFTSendViewModel.Send.State
-        if !sendTapped {
-            buttonState = .ready
-        } else if !isValidAddress {
-            buttonState = .invalidDestination
-        } else {
-            buttonState = .ready
-        }
-        
+        if !sendTapped { buttonState = .ready }
+        else if !isValidAddress { buttonState = .invalidDestination }
+        else { buttonState = .ready }
         updateView(
             with: [
                 .send(
                     .init(
                         tokenNetworkFeeViewModel: .init(
-                            estimatedFee: makeEstimatedFee(),
-                            feeType: makeFeeType()
+                            estimatedFee: estimatedFee(),
+                            feeType: feeType()
                         ),
                         buttonState: buttonState
                     )
@@ -293,11 +210,9 @@ private extension DefaultNFTSendPresenter {
         )
     }
     
-    func makeEstimatedFee() -> String {
-        
+    func estimatedFee() -> String {
         let amountInUSD = interactor.networkFeeInUSD(network: context.network, fee: fee)
         let timeInSeconds = interactor.networkFeeInSeconds(network: context.network, fee: fee)
-        
         let min: Double = Double(timeInSeconds) / Double(60)
         if min > 1 {
             return "\(amountInUSD.formatStringCurrency()) ~ \(min.toString(decimals: 0)) \(Localized("min"))"
@@ -306,8 +221,7 @@ private extension DefaultNFTSendPresenter {
         }
     }
     
-    func makeFees() -> [FeesPickerViewModel] {
-        
+    func _fees() -> [FeesPickerViewModel] {
         let fees = interactor.networkFees(network: context.network)
         self.fees = fees
         return fees.compactMap { [weak self] in
@@ -323,33 +237,21 @@ private extension DefaultNFTSendPresenter {
         }
     }
     
-    func makeFeeType() -> TokenNetworkFeeViewModel.FeeType {
-        
+    func feeType() -> TokenNetworkFeeViewModel.FeeType {
         switch fee {
-            
-        case .low:
-            return .low
-            
-        case .medium:
-            return .medium
-            
-        case .high:
-            return .high
+        case .low: return .low
+        case .medium: return .medium
+        case .high: return .high
         }
     }
 }
 
 private extension Web3NetworkFee {
-    
     var name: String {
-        
         switch self {
-        case .low:
-            return Localized("low")
-        case .medium:
-            return Localized("medium")
-        case .high:
-            return Localized("high")
+        case .low: return Localized("low")
+        case .medium: return Localized("medium")
+        case .high: return Localized("high")
         }
     }
 }
