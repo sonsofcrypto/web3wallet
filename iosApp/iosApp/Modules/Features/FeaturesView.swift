@@ -14,7 +14,6 @@ final class FeaturesViewController: BaseViewController {
     //let searchController = UISearchController()
     @IBOutlet weak var topContainerView: UIView!
     @IBOutlet weak var segmentContainer: UIView!
-    @IBOutlet weak var dividerLineView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var collectionView: UICollectionView!
     private let refreshControl = UIRefreshControl()
