@@ -6,8 +6,8 @@ import UIKit
 
 struct FeatureWireframeContext {
     
-    let feature: Web3Feature
-    let features: [Web3Feature]
+    let feature: ImprovementProposal
+    let features: [ImprovementProposal]
 }
 
 enum FeatureWireframeDestination {

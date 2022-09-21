@@ -7,15 +7,15 @@ import Foundation
 protocol FeaturesInteractor: AnyObject {
 
     func fetchAllFeatures(
-        onCompletion: @escaping (Result<[Web3Feature], Error>) -> Void
+        onCompletion: @escaping (Result<[ImprovementProposal], Error>) -> Void
     )
 }
 
 final class DefaultFeaturesInteractor {
 
-    private let featureService: FeaturesService
+    private let featureService: ImprovementProposalsService
 
-    init(featureService: FeaturesService) {
+    init(featureService: ImprovementProposalsService) {
         
         self.featureService = featureService
     }
@@ -24,9 +24,9 @@ final class DefaultFeaturesInteractor {
 extension DefaultFeaturesInteractor: FeaturesInteractor {
 
     func fetchAllFeatures(
-        onCompletion: @escaping (Result<[Web3Feature], Error>) -> Void
+        onCompletion: @escaping (Result<[ImprovementProposal], Error>) -> Void
     ) {
         
-        featureService.fetchAllFeatures(onCompletion: onCompletion)
+        featureService.fetchProposals(handler: onCompletion)
     }
 }

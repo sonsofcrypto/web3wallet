@@ -26,7 +26,7 @@ final class DefaultFeaturesPresenter {
 
     private weak var view: FeaturesView?
     
-    private var allFeatures = [Web3Feature]()
+    private var allFeatures = [ImprovementProposal]()
     
     private var filterSectionType: FeaturesViewModel.Section.`Type` = .infrastructure
     private var filterText: String = ""
@@ -144,7 +144,7 @@ private extension DefaultFeaturesPresenter {
         )
     }
 
-    func viewModel(from feature: Web3Feature) -> FeaturesViewModel.Item {
+    func viewModel(from feature: ImprovementProposal) -> FeaturesViewModel.Item {
         
         .init(
             id: feature.id,
@@ -157,12 +157,12 @@ private extension DefaultFeaturesPresenter {
 
 private extension DefaultFeaturesPresenter {
     
-    func makeSubtitle(for feature: Web3Feature) -> String {
+    func makeSubtitle(for feature: ImprovementProposal) -> String {
         
         feature.hashTag + "  |  " + Localized("features.cell.votes", arg: feature.votes.stringValue)
     }
     
-    var currentList: [Web3Feature] {
+    var currentList: [ImprovementProposal] {
         
         switch filterSectionType {
         case .all: return allFeatures.sortedList
@@ -173,34 +173,34 @@ private extension DefaultFeaturesPresenter {
     }
 }
 
-extension Array where Element == Web3Feature {
+extension Array where Element == ImprovementProposal {
     
-    var sortedList: [Web3Feature] {
+    var sortedList: [ImprovementProposal] {
         
         sorted { $0.votes > $1.votes }
     }
     
-    var integrations: [Web3Feature] {
+    var integrations: [ImprovementProposal] {
         
         filter { $0.category == .integration }
     }
     
-    var infrastructure: [Web3Feature] {
+    var infrastructure: [ImprovementProposal] {
         
         filter { $0.category == .infrastructure }
     }
 
-    var features: [Web3Feature] {
+    var features: [ImprovementProposal] {
         
         filter { $0.category == .feature }
     }
 
-    func find(id: String) -> Web3Feature? {
+    func find(id: String) -> ImprovementProposal? {
         
         filter { $0.id == id }.first
     }
     
-    func filterTitle(by text: String) -> [Web3Feature] {
+    func filterTitle(by text: String) -> [ImprovementProposal] {
         
         filter { $0.title.contains(text) }
     }

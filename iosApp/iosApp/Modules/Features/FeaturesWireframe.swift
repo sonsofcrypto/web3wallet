@@ -11,8 +11,8 @@ struct FeaturesWireframeContext {
 
 enum FeaturesWireframeDestination {
     
-    case vote(feature: Web3Feature)
-    case feature(feature: Web3Feature, features: [Web3Feature])
+    case vote(feature: ImprovementProposal)
+    case feature(feature: ImprovementProposal, features: [ImprovementProposal])
     case dismiss
 }
 
@@ -27,7 +27,7 @@ final class DefaultFeaturesWireframe {
     private let context: FeaturesWireframeContext
     private let featureWireframeFactory: FeatureWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
-    private let featuresService: FeaturesService
+    private let featuresService: ImprovementProposalsService
 
     private weak var navigationController: NavigationController!
 
@@ -36,7 +36,7 @@ final class DefaultFeaturesWireframe {
         context: FeaturesWireframeContext,
         featureWireframeFactory: FeatureWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        featuresService: FeaturesService
+        featuresService: ImprovementProposalsService
     ) {
         self.presentingIn = presentingIn
         self.context = context

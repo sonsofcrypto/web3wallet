@@ -23,7 +23,7 @@ final class DefaultFeaturePresenter {
     private let wireframe: FeatureWireframe
     private let context: FeatureWireframeContext
     
-    private var selected: Web3Feature!
+    private var selected: ImprovementProposal!
 
     init(
         view: FeatureView,

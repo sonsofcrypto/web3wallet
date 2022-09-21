@@ -5,7 +5,7 @@
 struct FeatureShareHelper {
     
     func shareVote(
-        on web3Feature: Web3Feature,
+        on web3Feature: ImprovementProposal,
         presentingIn: UIViewController
     ) {
         let text = String(

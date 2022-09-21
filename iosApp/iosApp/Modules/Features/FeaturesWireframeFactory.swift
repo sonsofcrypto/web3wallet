@@ -16,12 +16,12 @@ final class DefaultFeaturesWireframeFactory {
 
     private let featureWireframeFactory: FeatureWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
-    private let featuresService: FeaturesService
+    private let featuresService: ImprovementProposalsService
 
     init(
         featureWireframeFactory: FeatureWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        featuresService: FeaturesService
+        featuresService: ImprovementProposalsService
     ) {
         self.featureWireframeFactory = featureWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory

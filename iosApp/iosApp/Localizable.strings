@@ -417,6 +417,7 @@
 "features.segmentedControl.infrastructure" = "Infrastructure";
 "features.segmentedControl.integrations" = "Integrations";
 "features.segmentedControl.features" = "Features";
+"features.segmentedControl.features" = "Unknown";
 "features.cell.votes" = "Votes: %@";
 "features.cell.button.vote" = "Vote";
 

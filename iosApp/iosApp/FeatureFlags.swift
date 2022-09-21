@@ -4,7 +4,6 @@
 
 enum FeatureFlag {
     
-    case runVotingCount
     case showSaltMnemonic
     
     case showAppsTab
@@ -14,8 +13,6 @@ enum FeatureFlag {
         
         switch self {
         case .showSaltMnemonic:
-            return false
-        case .runVotingCount:
             return false
         case .showAppsTab:
             return false

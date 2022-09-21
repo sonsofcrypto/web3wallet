@@ -38,10 +38,7 @@ private extension AssemblerBootstrapper {
             CurrencyStoreServiceAssembler(),
             WalletServiceAssembler(),
             Web3ServiceLegacyAssembler(),
-            FeaturesServiceAssembler(),
-            FeatureVotingCacheServiceAssembler(),
-            FeatureVotingRequestServiceAssembler(),
-            FeatureServiceRunnerAssembler(),
+            ImprovementProposalsServiceAssembler(),
             IosEtherscanServiceAssembler(),
             // DeepLink
             DeepLinkHandlerAssembler(),
