@@ -477,8 +477,8 @@
 		1CDED610289C521000DF34A7 /* NFTSendImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED60F289C521000DF34A7 /* NFTSendImageCollectionViewCell.swift */; };
 		1CDED612289C64FA00DF34A7 /* ConfirmationViewModel+SendNFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED611289C64F900DF34A7 /* ConfirmationViewModel+SendNFT.swift */; };
 		1CDED614289C65B800DF34A7 /* ConfirmationSendNFTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED613289C65B800DF34A7 /* ConfirmationSendNFTView.swift */; };
-		1CDED617289CF4BE00DF34A7 /* EtherscanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED616289CF4BE00DF34A7 /* EtherscanService.swift */; };
-		1CDED619289D0B5100DF34A7 /* EtherscanServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED618289D0B5000DF34A7 /* EtherscanServiceAssembler.swift */; };
+		1CDED617289CF4BE00DF34A7 /* IosEtherscanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED616289CF4BE00DF34A7 /* IosEtherscanService.swift */; };
+		1CDED619289D0B5100DF34A7 /* IosEtherscanServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED618289D0B5000DF34A7 /* IosEtherscanServiceAssembler.swift */; };
 		1CE0063B288884D2002D1EB3 /* ConfirmationSwapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0063A288884D2002D1EB3 /* ConfirmationSwapView.swift */; };
 		1CE0063D288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0063C288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift */; };
 		1CE0064028894F41002D1EB3 /* ConfirmationSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0063F28894F41002D1EB3 /* ConfirmationSendView.swift */; };
@@ -1058,8 +1058,8 @@
 		1CDED60F289C521000DF34A7 /* NFTSendImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		1CDED611289C64F900DF34A7 /* ConfirmationViewModel+SendNFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmationViewModel+SendNFT.swift"; sourceTree = "<group>"; };
 		1CDED613289C65B800DF34A7 /* ConfirmationSendNFTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationSendNFTView.swift; sourceTree = "<group>"; };
-		1CDED616289CF4BE00DF34A7 /* EtherscanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanService.swift; sourceTree = "<group>"; };
-		1CDED618289D0B5000DF34A7 /* EtherscanServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanServiceAssembler.swift; sourceTree = "<group>"; };
+		1CDED616289CF4BE00DF34A7 /* IosEtherscanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosEtherscanService.swift; sourceTree = "<group>"; };
+		1CDED618289D0B5000DF34A7 /* IosEtherscanServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosEtherscanServiceAssembler.swift; sourceTree = "<group>"; };
 		1CE0063A288884D2002D1EB3 /* ConfirmationSwapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationSwapView.swift; sourceTree = "<group>"; };
 		1CE0063C288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationSheetPresentationController.swift; sourceTree = "<group>"; };
 		1CE0063F28894F41002D1EB3 /* ConfirmationSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationSendView.swift; sourceTree = "<group>"; };
@@ -2307,8 +2307,8 @@
 		1CDED615289CF4AD00DF34A7 /* Etherscan */ = {
 			isa = PBXGroup;
 			children = (
-				1CDED616289CF4BE00DF34A7 /* EtherscanService.swift */,
-				1CDED618289D0B5000DF34A7 /* EtherscanServiceAssembler.swift */,
+				1CDED616289CF4BE00DF34A7 /* IosEtherscanService.swift */,
+				1CDED618289D0B5000DF34A7 /* IosEtherscanServiceAssembler.swift */,
 			);
 			path = Etherscan;
 			sourceTree = "<group>";
@@ -3197,7 +3197,7 @@
 				1C7FC9BA28BD00C200FC9175 /* AccountAddressCell.swift in Sources */,
 				1C60C32C285724D1003BE25D /* MnemonicConfirmationWireframeFactoryAssembler.swift in Sources */,
 				1C54DC172862351D00E378F6 /* QRCodeScanWireframe.swift in Sources */,
-				1CDED619289D0B5100DF34A7 /* EtherscanServiceAssembler.swift in Sources */,
+				1CDED619289D0B5100DF34A7 /* IosEtherscanServiceAssembler.swift in Sources */,
 				1C54DC0E2860E91D00E378F6 /* NetworkPickerItemCell.swift in Sources */,
 				1C60C312285724D1003BE25D /* AccountHeaderCell.swift in Sources */,
 				D1976B11287EFAE10063FC9C /* MnemonicImportView.swift in Sources */,
@@ -3251,7 +3251,7 @@
 				1C9E319F287580D900DD2031 /* TokenSendPresenter.swift in Sources */,
 				1CDED614289C65B800DF34A7 /* ConfirmationSendNFTView.swift in Sources */,
 				1C60C306285724D1003BE25D /* NFTsDashboardPresenter.swift in Sources */,
-				1CDED617289CF4BE00DF34A7 /* EtherscanService.swift in Sources */,
+				1CDED617289CF4BE00DF34A7 /* IosEtherscanService.swift in Sources */,
 				D1BC5303284B5B89007E6FF4 /* CultService.swift in Sources */,
 				1C60C2CB285724D0003BE25D /* ChatWireframeFactory.swift in Sources */,
 				1C9E319B287580D000DD2031 /* TokenSendViewModel.swift in Sources */,
@@ -3495,13 +3495,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
-				DEVELOPMENT_TEAM = L4HD966EQA;
+				CURRENT_PROJECT_VERSION = 21;
+				DEVELOPMENT_TEAM = W622KH7Q3T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = web3wallet;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We use the phone's camera to read QR codes";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Authenticate iosApp";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -3536,13 +3537,14 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
-				DEVELOPMENT_TEAM = L4HD966EQA;
+				CURRENT_PROJECT_VERSION = 21;
+				DEVELOPMENT_TEAM = W622KH7Q3T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = web3wallet;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We use the phone's camera to read QR codes";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Authenticate iosApp";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

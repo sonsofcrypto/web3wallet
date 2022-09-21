@@ -29,6 +29,10 @@ final class DashboardViewController: BaseViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         backgroundView.layoutForCollectionView(collectionView)
+//        // TODO: Remove work around for layout issue
+//        DispatchQueue.main.async {
+//            self.backgroundView.layoutForCollectionView(self.collectionView)
+//        }
     }
 
     override func viewWillLayoutSubviews() {
@@ -272,6 +276,7 @@ extension DashboardViewController: UIScrollViewDelegate {
 }
 
 // MARK: - Config
+
 
 private extension DashboardViewController {
 

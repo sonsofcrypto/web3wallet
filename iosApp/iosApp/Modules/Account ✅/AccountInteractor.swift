@@ -34,7 +34,7 @@ final class DefaultAccountInteractor {
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
     private let walletService: WalletService
-    private let transactionService: EtherscanService
+    private let transactionService: IosEtherscanService
 
     private(set) var loadingTransactions: Bool = false
 
@@ -44,7 +44,7 @@ final class DefaultAccountInteractor {
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
-        transactionService: EtherscanService
+        transactionService: IosEtherscanService
     ) {
         self.network = network
         self._currency = currency

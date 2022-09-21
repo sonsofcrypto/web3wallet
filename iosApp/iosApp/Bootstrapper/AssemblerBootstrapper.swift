@@ -40,7 +40,7 @@ private extension AssemblerBootstrapper {
             FeatureVotingCacheServiceAssembler(),
             FeatureVotingRequestServiceAssembler(),
             FeatureServiceRunnerAssembler(),
-            EtherscanServiceAssembler(),
+            IosEtherscanServiceAssembler(),
             // DeepLink
             DeepLinkHandlerAssembler(),
             // Modules

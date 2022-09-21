@@ -24,7 +24,7 @@ final class DefaultAccountWireframeFactory {
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
     private let walletService: WalletService
-    private let transactionService: EtherscanService
+    private let transactionService: IosEtherscanService
 
     init(
         tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
@@ -34,7 +34,7 @@ final class DefaultAccountWireframeFactory {
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
-        transactionService: EtherscanService
+        transactionService: IosEtherscanService
     ) {
         self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
         self.tokenSendWireframeFactory = tokenSendWireframeFactory

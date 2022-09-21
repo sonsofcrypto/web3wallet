@@ -19,8 +19,8 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Clock
-import kotlin.time.Duration.Companion.seconds
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 /** Note that fee is in hundredths of basis points (e.g. the fee for a pool at
  *  the 0.3% tier is 3000; the fee for a pool at the 0.01% tier is 100).*/
@@ -216,7 +216,6 @@ class DefaultUniswapService(): UniswapService {
             value = if (inputCurrency.type == Currency.Type.NATIVE) inputAmount
                 else BigInt.zero()
         )
-        println("=== REQUEST $request")
         return withBgCxt { wallet!!.sendTransaction(request) }
     }
 

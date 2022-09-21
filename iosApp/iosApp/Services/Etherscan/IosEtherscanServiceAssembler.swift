@@ -2,13 +2,13 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-final class EtherscanServiceAssembler: AssemblerComponent {
+final class IosEtherscanServiceAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
         
-        registry.register(scope: .singleton) { resolver -> EtherscanService in
+        registry.register(scope: .singleton) { resolver -> IosEtherscanService in
             
-            DefaultEtherscanService(
+            DefaultIosEtherscanService(
                 networksService: resolver.resolve()
             )
         }
