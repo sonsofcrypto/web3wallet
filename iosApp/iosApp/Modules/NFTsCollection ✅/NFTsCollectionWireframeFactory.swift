@@ -4,20 +4,20 @@
 
 import UIKit
 
-protocol NFTsCollectionWireframeFactory {
+// MARK: - NFTsCollectionWireframeFactory
 
-    func makeWireframe(
+protocol NFTsCollectionWireframeFactory {
+    func make(
         _ parent: UIViewController?,
         context: NFTsCollectionWireframeContext
     ) -> NFTsCollectionWireframe
 }
 
-final class DefaultNFTsCollectionWireframeFactory {
+// MARK: - DefaultNFTsCollectionWireframeFactory
 
+final class DefaultNFTsCollectionWireframeFactory {
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let nftsService: NFTsService
-
-    private weak var window: UIWindow?
 
     init(
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
@@ -30,16 +30,29 @@ final class DefaultNFTsCollectionWireframeFactory {
 
 extension DefaultNFTsCollectionWireframeFactory: NFTsCollectionWireframeFactory {
 
-    func makeWireframe(
+    func make(
         _ parent: UIViewController?,
         context: NFTsCollectionWireframeContext
     ) -> NFTsCollectionWireframe {
-        
         DefaultNFTsCollectionWireframe(
-            parent: parent!,
+            parent,
             context: context,
             nftDetailWireframeFactory: nftDetailWireframeFactory,
             nftsService: nftsService
         )
+    }
+}
+
+// MARK: - Assembler
+
+final class NFTsCollectionWireframeFactoryAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> NFTsCollectionWireframeFactory in
+            DefaultNFTsCollectionWireframeFactory(
+                nftDetailWireframeFactory: resolver.resolve(),
+                nftsService: resolver.resolve()
+            )
+        }
     }
 }

@@ -5,15 +5,13 @@
 import UIKit
 
 struct NFTsCollectionWireframeContext {
-    
     let nftCollectionIdentifier: String
     let presentationStyle: PresentationStyle
 }
 
 enum NFTsCollectionWireframeDestination {
-
-    case dismiss
     case nftDetail(identifier: String)
+    case dismiss
 }
 
 protocol NFTsCollectionWireframe {
@@ -22,13 +20,12 @@ protocol NFTsCollectionWireframe {
 }
 
 final class DefaultNFTsCollectionWireframe {
-
-    private weak var parent: UIViewController!
+    private weak var parent: UIViewController?
     private let context: NFTsCollectionWireframeContext
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let nftsService: NFTsService
 
-    private weak var navigationController: NavigationController!
+    private weak var vc: UIViewController?
     
     init(
         parent: UIViewController,
@@ -46,70 +43,31 @@ final class DefaultNFTsCollectionWireframe {
 extension DefaultNFTsCollectionWireframe: NFTsCollectionWireframe {
 
     func present() {
-        
-        let vc = makeViewController()
-        
-        switch context.presentationStyle {
-            
-        case .embed:
-            fatalError()
-            
-        case .present:
-            
-            let navigationController = NavigationController(rootViewController: vc)
-            self.navigationController = navigationController
-            parent.present(navigationController, animated: true)
-            
-        case .push:
-            
-            guard let navigationController = parent as? NavigationController else {
-                
-                return
-            }
-            self.navigationController = navigationController
-            navigationController.pushViewController(vc, animated: true)
-        }
+        let vc = wireUp()
+        parent?.show(vc, sender: self)
     }
 
     func navigate(to destination: NFTsCollectionWireframeDestination) {
-        
         switch destination {
-            
-        case .dismiss:
-            
-            switch context.presentationStyle {
-                
-            case .embed:
-                fatalError()
-                
-            case .present:
-                parent.presentedViewController?.dismiss(animated: true)
-                
-            case .push:
-                navigationController.popViewController(animated: true)
-            }
-            
-            
         case let .nftDetail(identifier):
-            
-            let wireframe = nftDetailWireframeFactory.makeWireframe(
-                navigationController,
+            nftDetailWireframeFactory.makeWireframe(
+                vc,
                 context: .init(
                     nftIdentifier: identifier,
                     nftCollectionIdentifier: context.nftCollectionIdentifier,
                     presentationStyle: .push
                 )
-            )
-            wireframe.present()
+            ).present()
+        case .dismiss:
+            vc?.popOrDismiss()
         }
     }
 }
 
 private extension DefaultNFTsCollectionWireframe {
 
-    func makeViewController() -> UIViewController {
-        
-        let view: NFTsCollectionViewController = UIStoryboard(
+    func wireUp() -> UIViewController {
+        let vc: NFTsCollectionViewController = UIStoryboard(
             .nftsCollection
         ).instantiate()
         let interactor = DefaultNFTsCollectionInteractor(
@@ -117,11 +75,15 @@ private extension DefaultNFTsCollectionWireframe {
         )
         let presenter = DefaultNFTsCollectionPresenter(
             context: context,
-            view: view,
+            view: vc,
             interactor: interactor,
             wireframe: self
         )
-        view.presenter = presenter
-        return view
+        vc.presenter = presenter
+        self.vc = vc
+        guard parent?.asNavigationController == nil else { return vc }
+        let nc = NavigationController(rootViewController: vc)
+        self.vc = nc
+        return nc
     }
 }

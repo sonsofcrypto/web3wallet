@@ -5,7 +5,6 @@
 import Foundation
 
 protocol NFTsCollectionInteractor: AnyObject {
-
     func fetchCollection(
         with identifier: String,
         onCompletion: (Result<NFTCollection, Error>) -> Void
@@ -17,11 +16,9 @@ protocol NFTsCollectionInteractor: AnyObject {
 }
 
 final class DefaultNFTsCollectionInteractor {
-
     private var service: NFTsService
 
     init(service: NFTsService) {
-        
         self.service = service
     }
 }
@@ -32,7 +29,6 @@ extension DefaultNFTsCollectionInteractor: NFTsCollectionInteractor {
         with identifier: String,
         onCompletion: (Result<NFTCollection, Error>) -> Void
     ) {
-        
         service.collection(with: identifier, onCompletion: onCompletion)
     }
     
@@ -40,7 +36,6 @@ extension DefaultNFTsCollectionInteractor: NFTsCollectionInteractor {
         forCollection identifier: String,
         onCompletion: (Result<[NFTItem], Error>) -> Void
     ) {
-        
         service.yourNFTs(forCollection: identifier, onCompletion: onCompletion)
     }
 }
