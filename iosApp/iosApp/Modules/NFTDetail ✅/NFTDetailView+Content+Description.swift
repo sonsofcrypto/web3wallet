@@ -5,17 +5,13 @@
 extension NFTDetailViewController {
     
     func makeDescription(with item: NFTCollection) -> UIView {
-        
         let view = UIView()
         view.backgroundColor = .clear
-            
         let content = makeDescriptionContent(with: item.description)
         view.addSubview(content)
         content.addConstraints(.toEdges(padding: Theme.constant.padding))
-        
         view.layer.cornerRadius = Theme.constant.cornerRadius
         view.backgroundColor = Theme.colour.cellBackground
-
         return view
     }
 }
@@ -23,27 +19,19 @@ extension NFTDetailViewController {
 private extension NFTDetailViewController {
     
     func makeDescriptionContent(with description: String) -> UIView {
-        
         let vStack = VStackView()
-        
         let sectionTitle = UILabel()
         sectionTitle.apply(style: .headline, weight: .bold)
         sectionTitle.text = Localized("nft.detail.section.title.description")
         sectionTitle.numberOfLines = 0
         vStack.addArrangedSubview(sectionTitle)
-        
-        vStack.addArrangedSubview(
-            .dividerLine()
-        )
-        
+        vStack.addArrangedSubview(.dividerLine())
         let sectionContent = UILabel()
         sectionContent.apply(style: .body)
         sectionContent.text = description
         sectionContent.numberOfLines = 0
         vStack.addArrangedSubview(sectionContent)
-        
         vStack.spacing = Theme.constant.padding * 0.5
-                
         return vStack
     }
 }

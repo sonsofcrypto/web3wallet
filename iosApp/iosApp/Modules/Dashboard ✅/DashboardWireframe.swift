@@ -158,12 +158,11 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             ).present()
         case let .nftItem(nftItem):
             guard let vc = self.vc else { return }
-            nftDetailWireframeFactory.makeWireframe(
+            nftDetailWireframeFactory.make(
                 vc,
                 context: .init(
                     nftIdentifier: nftItem.identifier,
-                    nftCollectionIdentifier: nftItem.collectionIdentifier,
-                    presentationStyle: .push
+                    nftCollectionIdentifier: nftItem.collectionIdentifier
                 )
             ).present()
         case let .editCurrencies(network, selectedCurrencies, onCompletion):

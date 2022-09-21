@@ -28,7 +28,7 @@ final class DefaultNFTsCollectionWireframe {
     private weak var vc: UIViewController?
     
     init(
-        parent: UIViewController,
+        _ parent: UIViewController?,
         context: NFTsCollectionWireframeContext,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         nftsService: NFTsService
@@ -50,12 +50,11 @@ extension DefaultNFTsCollectionWireframe: NFTsCollectionWireframe {
     func navigate(to destination: NFTsCollectionWireframeDestination) {
         switch destination {
         case let .nftDetail(identifier):
-            nftDetailWireframeFactory.makeWireframe(
+            nftDetailWireframeFactory.make(
                 vc,
                 context: .init(
                     nftIdentifier: identifier,
-                    nftCollectionIdentifier: context.nftCollectionIdentifier,
-                    presentationStyle: .push
+                    nftCollectionIdentifier: context.nftCollectionIdentifier
                 )
             ).present()
         case .dismiss:
@@ -74,10 +73,10 @@ private extension DefaultNFTsCollectionWireframe {
             service: nftsService
         )
         let presenter = DefaultNFTsCollectionPresenter(
-            context: context,
             view: vc,
+            wireframe: self,
             interactor: interactor,
-            wireframe: self
+            context: context
         )
         vc.presenter = presenter
         self.vc = vc

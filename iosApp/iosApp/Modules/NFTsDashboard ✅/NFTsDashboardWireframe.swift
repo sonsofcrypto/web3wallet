@@ -58,16 +58,15 @@ extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
     func navigate(to destination: NFTsDashboardWireframeDestination) {
         switch destination {
         case let .viewNFT(nftItem):
-            nftDetailWireframeFactory.makeWireframe(
+            nftDetailWireframeFactory.make(
                 vc,
                 context: .init(
                     nftIdentifier: nftItem.identifier,
-                    nftCollectionIdentifier: nftItem.collectionIdentifier,
-                    presentationStyle: .push
+                    nftCollectionIdentifier: nftItem.collectionIdentifier
                 )
             ).present()
         case let .viewCollectionNFTs(collectionId):
-            nftsCollectionWireframeFactory.makeWireframe(
+            nftsCollectionWireframeFactory.make(
                 vc,
                 context: .init(
                     nftCollectionIdentifier: collectionId,

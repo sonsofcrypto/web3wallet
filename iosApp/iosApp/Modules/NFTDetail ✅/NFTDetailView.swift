@@ -5,7 +5,6 @@
 import UIKit
 
 protocol NFTDetailView: AnyObject {
-
     func update(with viewModel: NFTDetailViewModel)
 }
 
@@ -19,11 +18,8 @@ final class NFTDetailViewController: BaseViewController {
     private (set) var viewModel: NFTDetailViewModel?
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         configureUI()
-
         refresh()
     }
 }
@@ -31,28 +27,18 @@ final class NFTDetailViewController: BaseViewController {
 extension NFTDetailViewController: NFTDetailView {
     
     @objc func refresh() {
-        
         presenter.present()
     }
 
     func update(with viewModel: NFTDetailViewModel) {
-
         self.viewModel = viewModel
-        
         self.mainScrollView.refreshControl?.endRefreshing()
-        
         switch viewModel {
-            
-        case .loading:
-            break
-            
+        case .loading: break
         case let .loaded(nftItem, nftCollection):
-
             title = nftItem.name
             refreshNFT(with: nftItem, and: nftCollection)
-            
-        case .error:
-            break
+        case .error: break
         }
     }
 }
@@ -60,14 +46,11 @@ extension NFTDetailViewController: NFTDetailView {
 private extension NFTDetailViewController {
     
     func configureUI() {
-        
         title = Localized("nfts")
-                
         let mainScrollView = makeMainScrollView()
         view.addSubview(mainScrollView)
         self.mainScrollView = mainScrollView
         mainScrollView.addConstraints(.toEdges)
-        
         let showBack = (navigationController?.viewControllers.count ?? 0) > 1
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: showBack ? "chevron.left".assetImage : "xmark".assetImage,
@@ -80,8 +63,6 @@ private extension NFTDetailViewController {
     }
     
     @objc func dismissTapped() {
-        
         presenter.handle(.dismiss)
     }
-
 }

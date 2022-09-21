@@ -6,14 +6,11 @@ import UIKit
 import web3lib
 
 struct NFTDetailWireframeContext {
-    
     let nftIdentifier: String
     let nftCollectionIdentifier: String
-    let presentationStyle: PresentationStyle
 }
 
 enum NFTDetailWireframeDestination {
-    
     case underConstruction
     case send(NFTItem)
     case dismiss
@@ -25,25 +22,27 @@ protocol NFTDetailWireframe {
 }
 
 final class DefaultNFTDetailWireframe {
-    
-    private weak var parent: UIViewController!
+    private weak var parent: UIViewController?
     private let context: NFTDetailWireframeContext
     private let nftSendWireframeFactory: NFTSendWireframeFactory
+    private let alertWireframeFactory: AlertWireframeFactory
     private let nftsService: NFTsService
     private let networksService: NetworksService
 
-    private weak var navigationController: NavigationController!
+    private weak var vc: UIViewController?
     
     init(
-        parent: UIViewController,
+        _ parent: UIViewController?,
         context: NFTDetailWireframeContext,
         nftSendWireframeFactory: NFTSendWireframeFactory,
+        alertWireframeFactory: AlertWireframeFactory,
         nftsService: NFTsService,
         networksService: NetworksService
     ) {
         self.parent = parent
         self.context = context
         self.nftSendWireframeFactory = nftSendWireframeFactory
+        self.alertWireframeFactory = alertWireframeFactory
         self.nftsService = nftsService
         self.networksService = networksService
     }
@@ -52,83 +51,46 @@ final class DefaultNFTDetailWireframe {
 extension DefaultNFTDetailWireframe: NFTDetailWireframe {
     
     func present() {
-        
-        let vc = makeViewController()
-        
-        switch context.presentationStyle {
-            
-        case .embed:
-            fatalError()
-            
-        case .present:
-            
-            let navigationController = NavigationController(rootViewController: vc)
-            self.navigationController = navigationController
-            parent.present(navigationController, animated: true)
-
-        case .push:
-            
-            guard let navigationController = parent as? NavigationController else {
-                
-                return
-            }
-            self.navigationController = navigationController
-            navigationController.pushViewController(vc, animated: true)
-        }
+        let vc = wireUp()
+        parent?.show(vc, sender: self)
     }
     
     func navigate(to destination: NFTDetailWireframeDestination) {
-        
         switch destination {
-            
         case .underConstruction:
-            
-            let alert: AlertWireframeFactory = ServiceDirectory.assembler.resolve()
-            alert.make(
-                navigationController,
+            alertWireframeFactory.make(
+                vc,
                 context: .underConstructionAlert()
             ).present()
-            
         case let .send(nftItem):
             guard let network = networksService.network else { return }
             nftSendWireframeFactory.make(
-                navigationController,
+                vc,
                 context: .init(network: network, nftItem: nftItem)
             ).present()
         case .dismiss:
-            
-            switch context.presentationStyle {
-                
-            case .embed:
-                fatalError()
-                
-            case .present:
-                parent.presentedViewController?.dismiss(animated: true)
-                
-            case .push:
-                navigationController.popViewController(animated: true)
-            }
+            vc?.popOrDismiss()
         }
     }
 }
 
 private extension DefaultNFTDetailWireframe {
     
-    func makeViewController() -> UIViewController {
-        
-        let view: NFTDetailViewController = UIStoryboard(
+    func wireUp() -> UIViewController {
+        let vc: NFTDetailViewController = UIStoryboard(
             .nftDetail
         ).instantiate()
         let interactor = DefaultNFTDetailInteractor(
             service: nftsService
         )
         let presenter = DefaultNFTDetailPresenter(
-            context: context,
-            view: view,
+            view: vc,
+            wireframe: self,
             interactor: interactor,
-            wireframe: self
+            context: context
         )
-        view.presenter = presenter
-        return view
+        vc.presenter = presenter
+        self.vc = vc
+        return vc
     }
 }
