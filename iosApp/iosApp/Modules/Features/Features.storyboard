@@ -46,7 +46,7 @@
                                 <rect key="frame" x="188.5" y="66" width="37" height="37"/>
                             </activityIndicatorView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="YS8-R3-Uul">
-                                <rect key="frame" x="0.0" y="104" width="414" height="758"/>
+                                <rect key="frame" x="0.0" y="104" width="414" height="792"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="19" minimumInteritemSpacing="19" id="DW3-6L-nxo">
                                     <size key="itemSize" width="343" height="173"/>
@@ -156,7 +156,7 @@
                         <constraints>
                             <constraint firstItem="YS8-R3-Uul" firstAttribute="leading" secondItem="LI9-Q1-H5U" secondAttribute="leading" id="2wR-aJ-e40"/>
                             <constraint firstItem="YS8-R3-Uul" firstAttribute="top" secondItem="gT4-LR-dDm" secondAttribute="bottom" id="2z6-qI-DaS"/>
-                            <constraint firstItem="LI9-Q1-H5U" firstAttribute="bottom" secondItem="YS8-R3-Uul" secondAttribute="bottom" id="Hc0-Ft-wyv"/>
+                            <constraint firstAttribute="bottom" secondItem="YS8-R3-Uul" secondAttribute="bottom" id="Hc0-Ft-wyv"/>
                             <constraint firstItem="HJC-2Y-FV6" firstAttribute="top" secondItem="wfx-It-eJq" secondAttribute="top" constant="66" id="MZU-pw-sgA"/>
                             <constraint firstItem="HJC-2Y-FV6" firstAttribute="centerX" secondItem="wfx-It-eJq" secondAttribute="centerX" id="UkH-VU-oaO"/>
                             <constraint firstItem="gT4-LR-dDm" firstAttribute="top" secondItem="LI9-Q1-H5U" secondAttribute="top" id="gr3-qE-dRL"/>

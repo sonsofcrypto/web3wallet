@@ -58,11 +58,11 @@ extension DefaultFeaturesService: FeaturesService {
                 
                 do {
                     let result = try JSONDecoder().decode([Web3Feature].self, from: data)
+                        .sorted(by: { $0.id < $1.id })
                     self.storeResults(result)
                     onCompletion(.success(result))
                     
                 } catch let error {
-                    
                     self.returnCachedListOrError(error: error, onCompletion: onCompletion)
                 }
             }

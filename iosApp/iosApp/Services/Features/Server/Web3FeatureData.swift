@@ -43,7 +43,7 @@ extension Web3FeatureData {
                 title: "ENS integration",
                 body: "Introduction\nThe Ethereum Name Service (ENS) is a distributed, open, and extensible naming system based on the Ethereum blockchain.\nENS’s job is to map human-readable names like ‘alice.eth’ to machine-readable identifiers such as Ethereum addresses, other cryptocurrency addresses, content hashes, and metadata. ENS also supports ‘reverse resolution’, making it possible to associate metadata such as canonical names or interface descriptions with Ethereum addresses.\nENS has similar goals to DNS, the Internet’s Domain Name Service, but has significantly different architecture due to the capabilities and constraints provided by the Ethereum blockchain. Like DNS, ENS operates on a system of dot-separated hierarchical names called domains, with the owner of a domain having full control over subdomains.\nTop-level domains, like ‘.eth’ and ‘.test’, are owned by smart contracts called registrars, which specify rules governing the allocation of their subdomains. Anyone may, by following the rules imposed by these registrar contracts, obtain ownership of a domain for their own use. ENS also supports importing in DNS names already owned by the user for use on ENS.\nBecause of the hierarchal nature of ENS, anyone who owns a domain at any level may configure subdomains - for themselves or others - as desired. For instance, if Alice owns 'alice.eth', she can create 'pay.alice.eth' and configure it as she wishes.\nENS is deployed on the Ethereum main network and on several test networks. If you use a library such as the  Javascript library, or an end-user application, it will automatically detect the network you are interacting with and use the ENS deployment on that network.\nYou can try ENS out for yourself now by using the , or by using any of the many ENS enabled applications on .",
                 imageUrl: "https://raw.githubusercontent.com/sonsofcrypto/web3wallet-improvement-proposals/master/images/2001.png",
-                category: .integrations,
+                category: .integration,
                 creationDate: "2022-08-28T00:00:00.000Z"
             ),
             .init(
@@ -51,7 +51,7 @@ extension Web3FeatureData {
                 title: "Polygon support",
                 body: "Polygon is a scaling solution for public blockchains. Polygon PoS supports all the existing Ethereum tooling along with faster and cheaper transactions. Think of a Sidechain as a clone of a 'parent' blockchain, supporting transfer of assets to and from the main chain. It is simply an alternate to parent chain that creates a new blockchain with its own mechanism of creating blocks (consensus mechanism). Connecting a sidechain to a parent chain involves setting up a method of moving assets between the chains.",
                 imageUrl: "https://raw.githubusercontent.com/sonsofcrypto/web3wallet-improvement-proposals/master/images/2002.png",
-                category: .integrations,
+                category: .integration,
                 creationDate: "2022-08-28T00:00:00.000Z"
             ),
             .init(
@@ -59,7 +59,7 @@ extension Web3FeatureData {
                 title: "Group wallets",
                 body: "Add ability to group wallets on wallet screen",
                 imageUrl: "https://raw.githubusercontent.com/sonsofcrypto/web3wallet-improvement-proposals/master/images/3001.png",
-                category: .features,
+                category: .feature,
                 creationDate: "2022-08-28T00:00:00.000Z"
             ),
             .init(
@@ -67,7 +67,7 @@ extension Web3FeatureData {
                 title: "NFT multi send",
                 body: "Add support for sending multiple NFTs in one transaction",
                 imageUrl: "https://raw.githubusercontent.com/sonsofcrypto/web3wallet-improvement-proposals/master/images/3002.png",
-                category: .features,
+                category: .feature,
                 creationDate: "2022-08-28T00:00:00.000Z"
             )
         ]

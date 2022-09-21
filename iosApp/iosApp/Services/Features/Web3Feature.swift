@@ -35,8 +35,8 @@ struct Web3Feature: Codable, Equatable {
     enum Category: String, Equatable {
         
         case infrastructure
-        case integrations
-        case features
+        case integration
+        case feature
     }
     
     init(
@@ -82,10 +82,10 @@ struct Web3Feature: Codable, Equatable {
         switch category {
         case Category.infrastructure.rawValue:
             self.category = .infrastructure
-        case Category.integrations.rawValue:
-            self.category = .integrations
-        case Category.features.rawValue:
-            self.category = .features
+        case Category.integration.rawValue:
+            self.category = .integration
+        case Category.feature.rawValue:
+            self.category = .feature
         default:
             throw Web3FeatureError.categoryNotDefined
         }
@@ -110,10 +110,10 @@ extension Web3Feature.Category {
             
         case .infrastructure:
             return Localized("features.segmentedControl.infrastructure")
-        case .integrations:
+        case .integration:
             return Localized("features.segmentedControl.integrations")
-        case .features:
-            return Localized("features.segmentedControl.infrastructure")
+        case .feature:
+            return Localized("features.segmentedControl.features")
         }
     }
 }

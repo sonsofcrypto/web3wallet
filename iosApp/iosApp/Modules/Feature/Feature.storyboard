@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -18,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="UuX-7M-T04">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="CEf-7w-d51">
                                     <size key="itemSize" width="128" height="128"/>
@@ -38,43 +39,43 @@
                                                     <rect key="frame" x="16" y="16" width="382" height="480"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mMZ-JH-vcS">
-                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="12"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="9"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kpJ-ro-D5D" customClass="FeatureDetailStatusView" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="28" width="382" height="273"/>
+                                                            <rect key="frame" x="0.0" y="25" width="382" height="273"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MqW-dJ-n1E" customClass="FeatureDetailImageView" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="317" width="382" height="10"/>
+                                                            <rect key="frame" x="0.0" y="314" width="382" height="10"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" priority="1" constant="10" id="hWy-QC-Oww"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KSs-0T-SXN" customClass="FeatureDetailSummaryView" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="343" width="382" height="90"/>
+                                                            <rect key="frame" x="0.0" y="340" width="382" height="89.5"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ChK-QA-bxP">
-                                                                    <rect key="frame" x="16" y="16" width="350" height="58"/>
+                                                                    <rect key="frame" x="16" y="16" width="350" height="57.5"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ftS-wy-RVi">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="350" height="20.5"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="350" height="20"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BEr-Rb-zxU">
-                                                                            <rect key="frame" x="0.0" y="28.5" width="350" height="1"/>
+                                                                            <rect key="frame" x="0.0" y="28" width="350" height="1"/>
                                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="1" id="2K4-Fw-19c"/>
                                                                             </constraints>
                                                                         </view>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DhR-rn-Rfi">
-                                                                            <rect key="frame" x="0.0" y="37.5" width="350" height="20.5"/>
+                                                                            <rect key="frame" x="0.0" y="37" width="350" height="20.5"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -97,7 +98,7 @@
                                                             </connections>
                                                         </view>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x14-lX-W1D" customClass="Button" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="449" width="382" height="31"/>
+                                                            <rect key="frame" x="0.0" y="445.5" width="382" height="34.5"/>
                                                             <state key="normal" title="Button"/>
                                                             <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                                         </button>
@@ -126,8 +127,8 @@
                         <viewLayoutGuide key="safeArea" id="8x9-xI-x1o"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="UuX-7M-T04" firstAttribute="top" secondItem="8x9-xI-x1o" secondAttribute="top" id="Ffo-ak-TPJ"/>
-                            <constraint firstItem="8x9-xI-x1o" firstAttribute="bottom" secondItem="UuX-7M-T04" secondAttribute="bottom" id="LsQ-ie-Sls"/>
+                            <constraint firstItem="UuX-7M-T04" firstAttribute="top" secondItem="HYC-2u-9bp" secondAttribute="top" id="Ffo-ak-TPJ"/>
+                            <constraint firstAttribute="bottom" secondItem="UuX-7M-T04" secondAttribute="bottom" id="LsQ-ie-Sls"/>
                             <constraint firstItem="UuX-7M-T04" firstAttribute="leading" secondItem="8x9-xI-x1o" secondAttribute="leading" id="gJk-K0-nqj"/>
                             <constraint firstItem="8x9-xI-x1o" firstAttribute="trailing" secondItem="UuX-7M-T04" secondAttribute="trailing" id="kDU-O6-oOL"/>
                         </constraints>
@@ -139,7 +140,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Urq-x5-j8k" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1079" y="3658"/>
+            <point key="canvasLocation" x="158" y="3513"/>
         </scene>
     </scenes>
     <resources>

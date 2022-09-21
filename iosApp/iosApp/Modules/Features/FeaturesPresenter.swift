@@ -57,6 +57,7 @@ extension DefaultFeaturesPresenter: FeaturesPresenter {
                 
             case let .success(allFeatures):
                 self.allFeatures = allFeatures
+                print("=== [RRR]", allFeatures.count)
                 self.updateView()
                 
             case let .failure(error):
@@ -181,7 +182,7 @@ extension Array where Element == Web3Feature {
     
     var integrations: [Web3Feature] {
         
-        filter { $0.category == .integrations }
+        filter { $0.category == .integration }
     }
     
     var infrastructure: [Web3Feature] {
@@ -191,7 +192,7 @@ extension Array where Element == Web3Feature {
 
     var features: [Web3Feature] {
         
-        filter { $0.category == .features }
+        filter { $0.category == .feature }
     }
 
     func find(id: String) -> Web3Feature? {
