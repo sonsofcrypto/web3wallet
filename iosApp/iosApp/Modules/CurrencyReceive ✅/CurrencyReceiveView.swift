@@ -4,17 +4,17 @@
 
 import UIKit
 
-// MARK: - TokenReceiveView
+// MARK: - CurrencyReceiveView
 
-protocol TokenReceiveView: AnyObject {
-    func update(with viewModel: TokenReceiveViewModel)
+protocol CurrencyReceiveView: AnyObject {
+    func update(with viewModel: CurrencyReceiveViewModel)
 }
 
-// MARK: - TokenReceiveViewController
+// MARK: - CurrencyReceiveViewController
 
-final class TokenReceiveViewController: BaseViewController {
+final class CurrencyReceiveViewController: BaseViewController {
 
-    var presenter: TokenReceivePresenter!
+    var presenter: CurrencyReceivePresenter!
 
     @IBOutlet weak var cardView: UIView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -26,7 +26,7 @@ final class TokenReceiveViewController: BaseViewController {
     @IBOutlet weak var copyButton: CustomVerticalButton!
     @IBOutlet weak var shareButton: CustomVerticalButton!
 
-    private var viewModel: TokenReceiveViewModel?
+    private var viewModel: CurrencyReceiveViewModel?
     private lazy var filter = CIFilter(name: "CIQRCodeGenerator")
     
     override func viewDidLoad() {
@@ -35,9 +35,9 @@ final class TokenReceiveViewController: BaseViewController {
     }
 }
 
-extension TokenReceiveViewController: TokenReceiveView {
+extension CurrencyReceiveViewController: CurrencyReceiveView {
 
-    func update(with viewModel: TokenReceiveViewModel) {
+    func update(with viewModel: CurrencyReceiveViewModel) {
         self.viewModel = viewModel
         configureNavigationBar()
         switch viewModel.content {
@@ -52,7 +52,7 @@ extension TokenReceiveViewController: TokenReceiveView {
     }
 }
 
-private extension TokenReceiveViewController {
+private extension CurrencyReceiveViewController {
     
     func configureNavigationBar() {
         title = viewModel?.title
@@ -73,14 +73,14 @@ private extension TokenReceiveViewController {
         disclaimerLabel.apply(style: .body)
         copyButton.update(
             with: .init(
-                title: Localized("tokenReceive.action.copy"),
+                title: Localized("currencyReceive.action.copy"),
                 imageName: "square.on.square",
                 onTap: makeCopyAction()
             )
         )
         shareButton.update(
             with: .init(
-                title: Localized("tokenReceive.action.share"),
+                title: Localized("currencyReceive.action.share"),
                 imageName: "square.and.arrow.up",
                 onTap: makeShareAction()
             )
@@ -99,7 +99,7 @@ private extension TokenReceiveViewController {
     }
 }
 
-private extension TokenReceiveViewController {
+private extension CurrencyReceiveViewController {
     
     func makeCopyAction() -> (() -> Void) {
         { [weak self] in self?.onCopyAction() }
@@ -107,7 +107,7 @@ private extension TokenReceiveViewController {
     
     @objc func onCopyAction() {
         UIPasteboard.general.string = self.viewModel?.data?.address
-        view.presentToastAlert(with: Localized("tokenReceive.action.copy.toast"))
+        view.presentToastAlert(with: Localized("currencyReceive.action.copy.toast"))
     }
 
     func makeShareAction() -> (() -> Void) {
@@ -121,7 +121,7 @@ private extension TokenReceiveViewController {
             ShareFactoryHelper().share(
                 items: [
                     //image,
-                    Localized("tokenReceive.action.share.address", arg: data.symbol) + " " + data.address,
+                    Localized("currencyReceive.action.share.address", arg: data.symbol) + " " + data.address,
                     
                 ],
                 presentingIn: self

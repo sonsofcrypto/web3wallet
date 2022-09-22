@@ -4,12 +4,12 @@
 
 import Foundation
 
-struct TokenReceiveViewModel {
+struct CurrencyReceiveViewModel {
     let title: String
     let content: Content
 }
 
-extension TokenReceiveViewModel {
+extension CurrencyReceiveViewModel {
     
     enum Content {
         case loading
@@ -18,7 +18,7 @@ extension TokenReceiveViewModel {
     }
 }
 
-extension TokenReceiveViewModel {
+extension CurrencyReceiveViewModel {
     
     struct Item {
         let name: String
@@ -28,7 +28,7 @@ extension TokenReceiveViewModel {
     }
 }
 
-extension TokenReceiveViewModel {
+extension CurrencyReceiveViewModel {
 
     struct Error {
         let title: String
@@ -37,13 +37,11 @@ extension TokenReceiveViewModel {
     }
 }
 
-extension TokenReceiveViewModel {
-    var data: TokenReceiveViewModel.Item? {
+extension CurrencyReceiveViewModel {
+    var data: CurrencyReceiveViewModel.Item? {
         switch content {
-        case let .loaded(item):
-            return item
-        default:
-            return nil
+        case let .loaded(item): return item
+        default: return nil
         }
     }
 }

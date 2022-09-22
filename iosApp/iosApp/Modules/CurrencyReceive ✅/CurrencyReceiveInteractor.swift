@@ -5,11 +5,11 @@
 import Foundation
 import web3lib
 
-protocol TokenReceiveInteractor: AnyObject {
+protocol CurrencyReceiveInteractor: AnyObject {
     func receivingAddress(network: Network, currency: Currency) -> String
 }
 
-final class DefaultTokenReceiveInteractor {
+final class DefaultCurrencyReceiveInteractor {
     private let networksService: NetworksService
     
     init(networksService: NetworksService) {
@@ -17,7 +17,7 @@ final class DefaultTokenReceiveInteractor {
     }
 }
 
-extension DefaultTokenReceiveInteractor: TokenReceiveInteractor {
+extension DefaultCurrencyReceiveInteractor: CurrencyReceiveInteractor {
 
     func receivingAddress(network: Network, currency: Currency) -> String {
         // TODO: Review this in the future when currencies may have its own receiving address

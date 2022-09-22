@@ -17,7 +17,7 @@ protocol AccountWireframeFactory {
 // MARK: - DefaultAccountWireframeFactory
 
 final class DefaultAccountWireframeFactory {
-    private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
+    private let tokenReceiveWireframeFactory: CurrencyReceiveWireframeFactory
     private let tokenSendWireframeFactory: TokenSendWireframeFactory
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
@@ -27,7 +27,7 @@ final class DefaultAccountWireframeFactory {
     private let transactionService: IosEtherscanService
 
     init(
-        tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
+        tokenReceiveWireframeFactory: CurrencyReceiveWireframeFactory,
         tokenSendWireframeFactory: TokenSendWireframeFactory,
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         deepLinkHandler: DeepLinkHandler,

@@ -35,8 +35,8 @@ final class DefaultDashboardWireframe {
     private let accountWireframeFactory: AccountWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
-    private let tokenPickerWireframeFactory: CurrencyPickerWireframeFactory
-    private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
+    private let currencyPickerWireframeFactory: CurrencyPickerWireframeFactory
+    private let currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory
     private let tokenSendWireframeFactory: TokenSendWireframeFactory
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
@@ -56,8 +56,8 @@ final class DefaultDashboardWireframe {
         accountWireframeFactory: AccountWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
-        tokenPickerWireframeFactory: CurrencyPickerWireframeFactory,
-        tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
+        currencyPickerWireframeFactory: CurrencyPickerWireframeFactory,
+        currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory,
         tokenSendWireframeFactory: TokenSendWireframeFactory,
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
@@ -74,8 +74,8 @@ final class DefaultDashboardWireframe {
         self.accountWireframeFactory = accountWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
-        self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
-        self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
+        self.currencyPickerWireframeFactory = currencyPickerWireframeFactory
+        self.currencyReceiveWireframeFactory = currencyReceiveWireframeFactory
         self.tokenSendWireframeFactory = tokenSendWireframeFactory
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
@@ -124,7 +124,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             let source = CurrencyPickerWireframeContext.Source.select(
                 onCompletion: { [weak self] (network, currency) in
                     guard let self = self else { return }
-                    self.tokenReceiveWireframeFactory.make(
+                    self.currencyReceiveWireframeFactory.make(
                         vc,
                         context: .init(network: network, currency: currency)
                     ).present()
@@ -137,7 +137,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 source: source,
                 showAddCustomCurrency: true
             )
-            tokenPickerWireframeFactory.make(
+            currencyPickerWireframeFactory.make(
                 vc,
                 context: context
             ).present()
@@ -170,7 +170,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 selectedCurrencies: selectedCurrencies,
                 onCompletion: onCompletion
             )
-            tokenPickerWireframeFactory.make(
+            currencyPickerWireframeFactory.make(
                 vc,
                 context: .init(
                     title: .multiSelectEdit,
@@ -238,7 +238,7 @@ private extension DefaultDashboardWireframe {
             source: source,
             showAddCustomCurrency: true
         )
-        tokenPickerWireframeFactory.make(
+        currencyPickerWireframeFactory.make(
             vc,
             context: context
         ).present()

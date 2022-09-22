@@ -268,13 +268,13 @@
 		1C60C35C285724D1003BE25D /* DegenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C29F285724D0003BE25D /* DegenPresenter.swift */; };
 		1C60C35D285724D1003BE25D /* DegenWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C2A0285724D0003BE25D /* DegenWireframeFactory.swift */; };
 		1C60C36028572555003BE25D /* AppsServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C35F28572555003BE25D /* AppsServiceAssembler.swift */; };
-		1C60C3632857C5E5003BE25D /* TokenReceivePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3622857C5E5003BE25D /* TokenReceivePresenter.swift */; };
-		1C60C3652857C5EC003BE25D /* TokenReceiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3642857C5EC003BE25D /* TokenReceiveViewModel.swift */; };
-		1C60C3672857C5F0003BE25D /* TokenReceiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3662857C5F0003BE25D /* TokenReceiveView.swift */; };
-		1C60C3692857C5F8003BE25D /* TokenReceiveWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3682857C5F8003BE25D /* TokenReceiveWireframe.swift */; };
-		1C60C36B2857C5FE003BE25D /* TokenReceiveWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C36A2857C5FE003BE25D /* TokenReceiveWireframeFactory.swift */; };
-		1C60C36F2857C613003BE25D /* TokenReceiveInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C36E2857C613003BE25D /* TokenReceiveInteractor.swift */; };
-		1C60C3712857CEB5003BE25D /* TokenReceive.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C60C3702857CEB5003BE25D /* TokenReceive.storyboard */; };
+		1C60C3632857C5E5003BE25D /* CurrencyReceivePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3622857C5E5003BE25D /* CurrencyReceivePresenter.swift */; };
+		1C60C3652857C5EC003BE25D /* CurrencyReceiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3642857C5EC003BE25D /* CurrencyReceiveViewModel.swift */; };
+		1C60C3672857C5F0003BE25D /* CurrencyReceiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3662857C5F0003BE25D /* CurrencyReceiveView.swift */; };
+		1C60C3692857C5F8003BE25D /* CurrencyReceiveWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3682857C5F8003BE25D /* CurrencyReceiveWireframe.swift */; };
+		1C60C36B2857C5FE003BE25D /* CurrencyReceiveWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C36A2857C5FE003BE25D /* CurrencyReceiveWireframeFactory.swift */; };
+		1C60C36F2857C613003BE25D /* CurrencyReceiveInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C36E2857C613003BE25D /* CurrencyReceiveInteractor.swift */; };
+		1C60C3712857CEB5003BE25D /* CurrencyReceive.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C60C3702857CEB5003BE25D /* CurrencyReceive.storyboard */; };
 		1C60C3772858634A003BE25D /* DefaultWeb3ServiceLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3762858634A003BE25D /* DefaultWeb3ServiceLegacy.swift */; };
 		1C60C37E2859CC2A003BE25D /* ShareFactoryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C37D2859CC2A003BE25D /* ShareFactoryHelper.swift */; };
 		1C60C384285A649B003BE25D /* Web3ServiceLocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C383285A649B003BE25D /* Web3ServiceLocalStorage.swift */; };
@@ -847,13 +847,13 @@
 		1C60C29F285724D0003BE25D /* DegenPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenPresenter.swift; sourceTree = "<group>"; };
 		1C60C2A0285724D0003BE25D /* DegenWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C35F28572555003BE25D /* AppsServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsServiceAssembler.swift; sourceTree = "<group>"; };
-		1C60C3622857C5E5003BE25D /* TokenReceivePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReceivePresenter.swift; sourceTree = "<group>"; };
-		1C60C3642857C5EC003BE25D /* TokenReceiveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReceiveViewModel.swift; sourceTree = "<group>"; };
-		1C60C3662857C5F0003BE25D /* TokenReceiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReceiveView.swift; sourceTree = "<group>"; };
-		1C60C3682857C5F8003BE25D /* TokenReceiveWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReceiveWireframe.swift; sourceTree = "<group>"; };
-		1C60C36A2857C5FE003BE25D /* TokenReceiveWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReceiveWireframeFactory.swift; sourceTree = "<group>"; };
-		1C60C36E2857C613003BE25D /* TokenReceiveInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenReceiveInteractor.swift; sourceTree = "<group>"; };
-		1C60C3702857CEB5003BE25D /* TokenReceive.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TokenReceive.storyboard; sourceTree = "<group>"; };
+		1C60C3622857C5E5003BE25D /* CurrencyReceivePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyReceivePresenter.swift; sourceTree = "<group>"; };
+		1C60C3642857C5EC003BE25D /* CurrencyReceiveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyReceiveViewModel.swift; sourceTree = "<group>"; };
+		1C60C3662857C5F0003BE25D /* CurrencyReceiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyReceiveView.swift; sourceTree = "<group>"; };
+		1C60C3682857C5F8003BE25D /* CurrencyReceiveWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyReceiveWireframe.swift; sourceTree = "<group>"; };
+		1C60C36A2857C5FE003BE25D /* CurrencyReceiveWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyReceiveWireframeFactory.swift; sourceTree = "<group>"; };
+		1C60C36E2857C613003BE25D /* CurrencyReceiveInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyReceiveInteractor.swift; sourceTree = "<group>"; };
+		1C60C3702857CEB5003BE25D /* CurrencyReceive.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CurrencyReceive.storyboard; sourceTree = "<group>"; };
 		1C60C3762858634A003BE25D /* DefaultWeb3ServiceLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultWeb3ServiceLegacy.swift; sourceTree = "<group>"; };
 		1C60C37D2859CC2A003BE25D /* ShareFactoryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareFactoryHelper.swift; sourceTree = "<group>"; };
 		1C60C383285A649B003BE25D /* Web3ServiceLocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3ServiceLocalStorage.swift; sourceTree = "<group>"; };
@@ -1503,7 +1503,7 @@
 				1C7FC98628B60A0B00FC9175 /* ThemePicker ✅ */,
 				1C54DBE1285E82FC00E378F6 /* CurrencyAdd ✅ */,
 				1C60C1D5285724D0003BE25D /* CurrencyPicker ✅ */,
-				1C60C3612857C5D9003BE25D /* TokenReceive 🟣 */,
+				1C60C3612857C5D9003BE25D /* CurrencyReceive ✅ */,
 				1C9E3193287580A700DD2031 /* TokenSend 🟣 */,
 				1C671FEC287FDF6000C5F044 /* TokenSwap 🟣 */,
 				1C7FC9A628BCE94B00FC9175 /* WebView ✅ */,
@@ -1882,18 +1882,18 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C60C3612857C5D9003BE25D /* TokenReceive 🟣 */ = {
+		1C60C3612857C5D9003BE25D /* CurrencyReceive ✅ */ = {
 			isa = PBXGroup;
 			children = (
-				1C60C3702857CEB5003BE25D /* TokenReceive.storyboard */,
-				1C60C36E2857C613003BE25D /* TokenReceiveInteractor.swift */,
-				1C60C3622857C5E5003BE25D /* TokenReceivePresenter.swift */,
-				1C60C3662857C5F0003BE25D /* TokenReceiveView.swift */,
-				1C60C3642857C5EC003BE25D /* TokenReceiveViewModel.swift */,
-				1C60C3682857C5F8003BE25D /* TokenReceiveWireframe.swift */,
-				1C60C36A2857C5FE003BE25D /* TokenReceiveWireframeFactory.swift */,
+				1C60C3702857CEB5003BE25D /* CurrencyReceive.storyboard */,
+				1C60C36E2857C613003BE25D /* CurrencyReceiveInteractor.swift */,
+				1C60C3622857C5E5003BE25D /* CurrencyReceivePresenter.swift */,
+				1C60C3662857C5F0003BE25D /* CurrencyReceiveView.swift */,
+				1C60C3642857C5EC003BE25D /* CurrencyReceiveViewModel.swift */,
+				1C60C3682857C5F8003BE25D /* CurrencyReceiveWireframe.swift */,
+				1C60C36A2857C5FE003BE25D /* CurrencyReceiveWireframeFactory.swift */,
 			);
-			path = "TokenReceive 🟣";
+			path = "CurrencyReceive ✅";
 			sourceTree = "<group>";
 		};
 		1C60C37C2859CC19003BE25D /* Helpers */ = {
@@ -2795,7 +2795,7 @@
 				1C9E31A3287580E500DD2031 /* TokenSend.storyboard in Resources */,
 				D157F7D227B69B6300578FF8 /* Main.storyboard in Resources */,
 				1CAC5608286EFFC300CCB2B6 /* SFProDisplay-RegularItalic.otf in Resources */,
-				1C60C3712857CEB5003BE25D /* TokenReceive.storyboard in Resources */,
+				1C60C3712857CEB5003BE25D /* CurrencyReceive.storyboard in Resources */,
 				1C60C322285724D1003BE25D /* Apps.storyboard in Resources */,
 				D11A990127B8615B00EDFDD0 /* GothicA1-Regular.ttf in Resources */,
 				1CAC5606286EFFC300CCB2B6 /* SFProText-SemiboldItalic.otf in Resources */,
@@ -2957,7 +2957,7 @@
 				1C60C2EF285724D0003BE25D /* NetworksWireframe.swift in Sources */,
 				D1EF5BC7287BEE92004CAD82 /* MnemonicUpdateCell.swift in Sources */,
 				1C60C2EC285724D0003BE25D /* NetworksView.swift in Sources */,
-				1C60C3652857C5EC003BE25D /* TokenReceiveViewModel.swift in Sources */,
+				1C60C3652857C5EC003BE25D /* CurrencyReceiveViewModel.swift in Sources */,
 				1C60C303285724D1003BE25D /* NFTsDashboardView+NFTs.swift in Sources */,
 				1C60C355285724D1003BE25D /* CultProposalsPresenter.swift in Sources */,
 				1C67201D28870FD200C5F044 /* ConfirmationViewModel.swift in Sources */,
@@ -2986,7 +2986,7 @@
 				1CB8B0BA288DBEE700024E7C /* CultProposalDetailTokenomicsView.swift in Sources */,
 				1C54DBF5285F32DC00E378F6 /* CurrencyAddInputView.swift in Sources */,
 				1C54DC682869BE6500E378F6 /* DashboardButtonsCell.swift in Sources */,
-				1C60C3632857C5E5003BE25D /* TokenReceivePresenter.swift in Sources */,
+				1C60C3632857C5E5003BE25D /* CurrencyReceivePresenter.swift in Sources */,
 				1CE0064228894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift in Sources */,
 				D1ABCE57289D548C00312539 /* LineView.swift in Sources */,
 				1C60C313285724D1003BE25D /* AccountSectionHeader.swift in Sources */,
@@ -3000,7 +3000,7 @@
 				1C60C2B3285724D0003BE25D /* CurrencyPickerView.swift in Sources */,
 				1C60C31E285724D1003BE25D /* AppsViewModel.swift in Sources */,
 				1C60C2D7285724D0003BE25D /* MnemonicNewPresenter.swift in Sources */,
-				1C60C36B2857C5FE003BE25D /* TokenReceiveWireframeFactory.swift in Sources */,
+				1C60C36B2857C5FE003BE25D /* CurrencyReceiveWireframeFactory.swift in Sources */,
 				1C6487382832E6BE0091A12D /* DefaultOnboardingService.swift in Sources */,
 				1CD843F52874215F00E6D359 /* SettingCell.swift in Sources */,
 				1C60C318285724D1003BE25D /* AccountPresenter.swift in Sources */,
@@ -3044,7 +3044,7 @@
 				D116CF3227C31ECC005542AA /* iCarousel.m in Sources */,
 				1CD843FE2874245400E6D359 /* SwitchCollectionViewCell.swift in Sources */,
 				1C7FC97028ACAFBA00FC9175 /* FeatureVotingRequestServiceAssembler.swift in Sources */,
-				1C60C3672857C5F0003BE25D /* TokenReceiveView.swift in Sources */,
+				1C60C3672857C5F0003BE25D /* CurrencyReceiveView.swift in Sources */,
 				1C67200A2880193000C5F044 /* TokenEnterAmountView.swift in Sources */,
 				1C2B06582891D9B0002A8FBF /* FeaturesServiceAssembler.swift in Sources */,
 				1CDED60C289C4DB800DF34A7 /* NFTSendCTACollectionViewCell.swift in Sources */,
@@ -3233,7 +3233,7 @@
 				1CD843F72874215F00E6D359 /* SegmentWithTextAndSwitchCell.swift in Sources */,
 				1C60C386285AFB20003BE25D /* Web3ServiceLocalStorageAssembler.swift in Sources */,
 				1C60C301285724D1003BE25D /* NFTsDashboardView.swift in Sources */,
-				1C60C36F2857C613003BE25D /* TokenReceiveInteractor.swift in Sources */,
+				1C60C36F2857C613003BE25D /* CurrencyReceiveInteractor.swift in Sources */,
 				1C60C359285724D1003BE25D /* DegenWireframe.swift in Sources */,
 				1C60C315285724D1003BE25D /* AccountWireframeFactory.swift in Sources */,
 				1C60C328285724D1003BE25D /* MnemonicConfirmationView.swift in Sources */,
@@ -3256,7 +3256,7 @@
 				1C60C331285724D1003BE25D /* NFTsCollectionWireframe.swift in Sources */,
 				1C7F863828D20E490073FD95 /* UIView+LayoutConstraints+Extensions.swift in Sources */,
 				1CD3FE8928559EF2008312DE /* Web3ServiceLegacy.swift in Sources */,
-				1C60C3692857C5F8003BE25D /* TokenReceiveWireframe.swift in Sources */,
+				1C60C3692857C5F8003BE25D /* CurrencyReceiveWireframe.swift in Sources */,
 				1C54DBE3285E831B00E378F6 /* CurrencyAddWireframe.swift in Sources */,
 				1C60C324285724D1003BE25D /* AppsHeaderCollectionViewCell.swift in Sources */,
 				1C60C32B285724D1003BE25D /* MnemonicConfirmationWireframe.swift in Sources */,

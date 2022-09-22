@@ -25,7 +25,7 @@ protocol AccountWireframe {
 final class DefaultAccountWireframe {
     private weak var parent: UIViewController?
     private let context: AccountWireframeContext
-    private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
+    private let tokenReceiveWireframeFactory: CurrencyReceiveWireframeFactory
     private let tokenSendWireframeFactory: TokenSendWireframeFactory
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
@@ -39,7 +39,7 @@ final class DefaultAccountWireframe {
     init(
         _ parent: UIViewController?,
         context: AccountWireframeContext,
-        tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
+        tokenReceiveWireframeFactory: CurrencyReceiveWireframeFactory,
         tokenSendWireframeFactory: TokenSendWireframeFactory,
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         deepLinkHandler: DeepLinkHandler,

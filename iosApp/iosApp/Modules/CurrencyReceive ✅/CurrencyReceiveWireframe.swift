@@ -5,36 +5,36 @@
 import UIKit
 import web3lib
 
-// MARK: - TokenReceiveWireframeContext
+// MARK: - CurrencyReceiveWireframeContext
 
-struct TokenReceiveWireframeContext {
+struct CurrencyReceiveWireframeContext {
     let network: Network
     let currency: Currency
 }
 
-// MARK: - TokenReceiveWireframeDestination
+// MARK: - CurrencyReceiveWireframeDestination
 
-enum TokenReceiveWireframeDestination {}
+enum CurrencyReceiveWireframeDestination {}
 
-// MARK: TokenReceiveWireframe
+// MARK: CurrencyReceiveWireframe
 
-protocol TokenReceiveWireframe {
+protocol CurrencyReceiveWireframe {
     func present()
     func dismiss()
 }
 
-// MARK: - DefaultTokenReceiveWireframe
+// MARK: - DefaultCurrencyReceiveWireframe
 
-final class DefaultTokenReceiveWireframe {
+final class DefaultCurrencyReceiveWireframe {
     private weak var parent: UIViewController?
-    private let context: TokenReceiveWireframeContext
+    private let context: CurrencyReceiveWireframeContext
     private let networksService: NetworksService
     
     private weak var vc: UIViewController?
     
     init(
         _ parent: UIViewController?,
-        context: TokenReceiveWireframeContext,
+        context: CurrencyReceiveWireframeContext,
         networksService: NetworksService
     ) {
         self.parent = parent
@@ -43,7 +43,7 @@ final class DefaultTokenReceiveWireframe {
     }
 }
 
-extension DefaultTokenReceiveWireframe: TokenReceiveWireframe {
+extension DefaultCurrencyReceiveWireframe: CurrencyReceiveWireframe {
     
     func present() {
         let vc = wireUp()
@@ -55,14 +55,14 @@ extension DefaultTokenReceiveWireframe: TokenReceiveWireframe {
     }
 }
 
-private extension DefaultTokenReceiveWireframe {
+private extension DefaultCurrencyReceiveWireframe {
     
     func wireUp() -> UIViewController {
-        let interactor = DefaultTokenReceiveInteractor(
+        let interactor = DefaultCurrencyReceiveInteractor(
             networksService: networksService
         )
-        let vc: TokenReceiveViewController = UIStoryboard(.tokenReceive).instantiate()
-        let presenter = DefaultTokenReceivePresenter(
+        let vc: CurrencyReceiveViewController = UIStoryboard(.currencyReceive).instantiate()
+        let presenter = DefaultCurrencyReceivePresenter(
             view: vc,
             interactor: interactor,
             wireframe: self,

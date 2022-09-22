@@ -175,10 +175,10 @@ private extension DefaultCurrencyAddPresenter {
         firstResponder: CurrencyAddViewModel.TextFieldType?
     ) -> CurrencyAddViewModel {
         .init(
-            title: Localized("tokenAdd.title"),
+            title: Localized("currencyAdd.title"),
             network: .init(
                 item: .init(
-                    name: Localized("tokenAdd.network.title"),
+                    name: Localized("currencyAdd.network.title"),
                     value: network.name
                 )
             ),
@@ -189,36 +189,36 @@ private extension DefaultCurrencyAddPresenter {
             ),
             name: .init(
                 item: .init(
-                    name: Localized("tokenAdd.name.title"),
+                    name: Localized("currencyAdd.name.title"),
                     value: name
                 ),
-                placeholder: Localized("tokenAdd.name.placeholder"),
+                placeholder: Localized("currencyAdd.name.placeholder"),
                 hint: addTokenTapped ? nameValidationError : nil,
                 tag: CurrencyAddViewModel.TextFieldType.name.rawValue,
                 isFirstResponder: firstResponder == .name
             ),
             symbol: .init(
                 item: .init(
-                    name: Localized("tokenAdd.symbol.title"),
+                    name: Localized("currencyAdd.symbol.title"),
                     value: symbol
                 ),
-                placeholder: Localized("tokenAdd.symbol.placeholder"),
+                placeholder: Localized("currencyAdd.symbol.placeholder"),
                 hint: addTokenTapped ? symbolValidationError : nil,
                 tag: CurrencyAddViewModel.TextFieldType.symbol.rawValue,
                 isFirstResponder: firstResponder == .symbol
             ),
             decimals: .init(
                 item: .init(
-                    name: Localized("tokenAdd.decimals.title"),
+                    name: Localized("currencyAdd.decimals.title"),
                     value: decimals
                 ),
-                placeholder: Localized("tokenAdd.decimals.placeholder"),
+                placeholder: Localized("currencyAdd.decimals.placeholder"),
                 hint: addTokenTapped ? decimalsValidationError : nil,
                 tag: CurrencyAddViewModel.TextFieldType.decimals.rawValue,
                 isFirstResponder: firstResponder == .decimals
             ),
             saveButtonTitle: saveButtonTitle(),
-            saveButtonEnabled: saveButtonTitle() == Localized("tokenAdd.cta.valid")
+            saveButtonEnabled: saveButtonTitle() == Localized("currencyAdd.cta.valid")
         )
     }
     
@@ -229,13 +229,13 @@ private extension DefaultCurrencyAddPresenter {
     }
     
     func saveButtonTitle() -> String {
-        let validTitle = Localized("tokenAdd.cta.valid")
+        let validTitle = Localized("currencyAdd.cta.valid")
         guard addTokenTapped else { return validTitle }
         guard contractAddressValidationError == nil else {
-            return Localized("tokenAdd.cta.invalid.address")
+            return Localized("currencyAdd.cta.invalid.address")
         }
         guard areAllFieldsValid() else {
-            return Localized("tokenAdd.cta.invalid")
+            return Localized("currencyAdd.cta.invalid")
         }
         return validTitle
     }
@@ -290,7 +290,7 @@ private extension DefaultCurrencyAddPresenter {
             return
         }
         contractAddressValidationError = Localized(
-            "tokenAdd.validation.field.address.\(network.name.lowercased()).invalid"
+            "currencyAdd.validation.field.address.\(network.name.lowercased()).invalid"
         )
     }
         
@@ -299,7 +299,7 @@ private extension DefaultCurrencyAddPresenter {
             nameValidationError = nil
             return
         }
-        nameValidationError = Localized("tokenAdd.validation.field.required")
+        nameValidationError = Localized("currencyAdd.validation.field.required")
     }
 
     func validateSymbol() {
@@ -307,20 +307,20 @@ private extension DefaultCurrencyAddPresenter {
             symbolValidationError = nil
             return
         }
-        symbolValidationError = Localized("tokenAdd.validation.field.required")
+        symbolValidationError = Localized("currencyAdd.validation.field.required")
     }
 
     func validateDecimals() {
         guard !(decimals?.isEmpty ?? true) else {
-            decimalsValidationError = Localized("tokenAdd.validation.field.required")
+            decimalsValidationError = Localized("currencyAdd.validation.field.required")
             return
         }
         guard let intValue = try? decimals?.int() else {
-            decimalsValidationError = Localized("tokenAdd.validation.field.decimal.int")
+            decimalsValidationError = Localized("currencyAdd.validation.field.decimal.int")
             return
         }
         guard 0 <= intValue, intValue <= 32 else {
-            decimalsValidationError = Localized("tokenAdd.validation.field.decimal.range")
+            decimalsValidationError = Localized("currencyAdd.validation.field.decimal.range")
             return
         }
         decimalsValidationError = nil
