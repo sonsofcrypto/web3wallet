@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class TokenAddNetworkView: UIView {
+final class CurrencyAddNetworkView: UIView {
     
     struct Handler {
         let onTapped: () -> Void
@@ -13,7 +13,7 @@ final class TokenAddNetworkView: UIView {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var valueLabel: UILabel!
     
-    private var viewModel: TokenAddViewModel.NetworkItem!
+    private var viewModel: CurrencyAddViewModel.NetworkItem!
     private var handler: Handler!
     
     override func awakeFromNib() {
@@ -27,7 +27,7 @@ final class TokenAddNetworkView: UIView {
     }
     
     func update(
-        with viewModel: TokenAddViewModel.NetworkItem,
+        with viewModel: CurrencyAddViewModel.NetworkItem,
         handler: Handler
     ) {
         self.viewModel = viewModel
@@ -37,7 +37,7 @@ final class TokenAddNetworkView: UIView {
     }
 }
 
-private extension TokenAddNetworkView {
+private extension CurrencyAddNetworkView {
     
     @objc func viewTapped() {
         handler.onTapped()

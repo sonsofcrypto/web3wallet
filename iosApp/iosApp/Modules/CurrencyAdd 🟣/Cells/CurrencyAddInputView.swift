@@ -4,11 +4,11 @@
 
 import UIKit
 
-final class TokenAddInputView: UIView {
+final class CurrencyAddInputView: UIView {
     
     struct Handler {
-        let onTextChanged: (TokenAddViewModel.TextFieldType, String) -> Void
-        let onReturnTapped: (TokenAddViewModel.TextFieldType) -> Void
+        let onTextChanged: (CurrencyAddViewModel.TextFieldType, String) -> Void
+        let onReturnTapped: (CurrencyAddViewModel.TextFieldType) -> Void
     }
     
     private var nameLabel: UILabel!
@@ -17,7 +17,7 @@ final class TokenAddInputView: UIView {
     private var actionsView: UIView!
     private var pasteAction: UIButton!
     
-    private var viewModel: TokenAddViewModel.TextFieldItem!
+    private var viewModel: CurrencyAddViewModel.TextFieldItem!
     private var handler: Handler!
     
     override func awakeFromNib() {
@@ -26,7 +26,7 @@ final class TokenAddInputView: UIView {
     }
     
     func update(
-        with viewModel: TokenAddViewModel.TextFieldItem,
+        with viewModel: CurrencyAddViewModel.TextFieldItem,
         handler: Handler,
         keyboardType: UIKeyboardType = .default,
         returnType: UIReturnKeyType = .next,
@@ -54,7 +54,7 @@ final class TokenAddInputView: UIView {
     }
 }
 
-private extension TokenAddInputView {
+private extension CurrencyAddInputView {
     
     func configureUI() {
         backgroundColor = .clear
@@ -139,7 +139,7 @@ private extension TokenAddInputView {
     }
     
     @objc func pasteActionTapped() {
-        guard let textFieldType = TokenAddViewModel.TextFieldType(rawValue: textField.tag) else { return }
+        guard let textFieldType = CurrencyAddViewModel.TextFieldType(rawValue: textField.tag) else { return }
         textField.text = UIPasteboard.general.string
         handler.onTextChanged(textFieldType, textField.text ?? "")
     }
@@ -149,15 +149,15 @@ private extension TokenAddInputView {
     }
 }
 
-extension TokenAddInputView: UITextFieldDelegate {
+extension CurrencyAddInputView: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        guard let textFieldType = TokenAddViewModel.TextFieldType(rawValue: textField.tag) else { return }
+        guard let textFieldType = CurrencyAddViewModel.TextFieldType(rawValue: textField.tag) else { return }
         handler.onTextChanged(textFieldType, textField.text ?? "")
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let textFieldType = TokenAddViewModel.TextFieldType(rawValue: textField.tag) else { return false }
+        guard let textFieldType = CurrencyAddViewModel.TextFieldType(rawValue: textField.tag) else { return false }
         handler.onReturnTapped(textFieldType)
         return true
     }

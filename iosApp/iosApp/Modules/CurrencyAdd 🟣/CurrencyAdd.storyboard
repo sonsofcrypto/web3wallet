@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -10,16 +11,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Token Add View Controller-->
+        <!--Currency Add View Controller-->
         <scene sceneID="Ohv-U7-Vy4">
             <objects>
-                <viewController storyboardIdentifier="TokenAddViewController" id="gWu-KS-ixk" customClass="TokenAddViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CurrencyAddViewController" id="gWu-KS-ixk" customClass="CurrencyAddViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zcF-0J-4PJ" customClass="ThemeGradientView" customModule="iosApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="PHY-xX-4Uc">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="814"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kzD-vs-kj1">
                                     <size key="itemSize" width="128" height="128"/>
@@ -28,17 +29,17 @@
                                     <inset key="sectionInset" minX="0.0" minY="16" maxX="0.0" maxY="16"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TokenAddCollectionViewCell" id="O3H-ZS-yap" customClass="TokenAddCollectionViewCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="16" width="414" height="731"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CurrencyAddCollectionViewCell" id="O3H-ZS-yap" customClass="CurrencyAddCollectionViewCell" customModule="iosApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="16" width="414" height="734.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TTd-81-Tql">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="731"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="734.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="CdQ-um-Qmu">
-                                                    <rect key="frame" x="16" y="0.0" width="382" height="731"/>
+                                                    <rect key="frame" x="16" y="0.0" width="382" height="734.5"/>
                                                     <subviews>
-                                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I5B-4g-MN0" customClass="TokenAddNetworkView" customModule="iosApp" customModuleProvider="target">
+                                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I5B-4g-MN0" customClass="CurrencyAddNetworkView" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="-32" width="382" height="32"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="UUd-vO-vdF">
@@ -177,7 +178,7 @@
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="wSD-NM-Jdo">
                                                                     <rect key="frame" x="8" y="16" width="366" height="590"/>
                                                                     <subviews>
-                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dtQ-1d-StX" customClass="TokenAddInputView" customModule="iosApp" customModuleProvider="target">
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dtQ-1d-StX" customClass="CurrencyAddInputView" customModule="iosApp" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="0.0" width="366" height="456"/>
                                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         </view>
@@ -188,7 +189,7 @@
                                                                                 <constraint firstAttribute="height" constant="1" id="Jnc-pB-BeD"/>
                                                                             </constraints>
                                                                         </view>
-                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mwJ-wc-SKv" customClass="TokenAddInputView" customModule="iosApp" customModuleProvider="target">
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mwJ-wc-SKv" customClass="CurrencyAddInputView" customModule="iosApp" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="473" width="366" height="50"/>
                                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         </view>
@@ -199,7 +200,7 @@
                                                                                 <constraint firstAttribute="height" constant="1" id="HUR-xi-wav"/>
                                                                             </constraints>
                                                                         </view>
-                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ef-Lh-7fl" customClass="TokenAddInputView" customModule="iosApp" customModuleProvider="target">
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ef-Lh-7fl" customClass="CurrencyAddInputView" customModule="iosApp" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="540" width="366" height="50"/>
                                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         </view>
@@ -215,7 +216,7 @@
                                                             </constraints>
                                                         </view>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QHj-QN-S7Q" customClass="Button" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="700" width="382" height="31"/>
+                                                            <rect key="frame" x="0.0" y="700" width="382" height="34.5"/>
                                                             <state key="normal" title="Button"/>
                                                             <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                                         </button>
@@ -236,11 +237,11 @@
                                         <connections>
                                             <outlet property="addressView" destination="7G8-WG-hOg" id="koU-yO-Pkv"/>
                                             <outlet property="decimalView" destination="1ef-Lh-7fl" id="dVd-Cu-I86"/>
+                                            <outlet property="detailsView" destination="fo3-Rt-kEn" id="QOe-FH-YD6"/>
                                             <outlet property="nameView" destination="dtQ-1d-StX" id="Zfq-lr-7E0"/>
                                             <outlet property="networkDetailsView" destination="I5B-4g-MN0" id="qKB-Py-N2r"/>
                                             <outlet property="saveButton" destination="QHj-QN-S7Q" id="cpC-iu-t42"/>
                                             <outlet property="symbolView" destination="mwJ-wc-SKv" id="HLV-XO-H1y"/>
-                                            <outlet property="tokenDetailsView" destination="fo3-Rt-kEn" id="rwj-Q9-94I"/>
                                             <outlet property="widthLayoutConstraint" destination="rJx-Op-MCe" id="Ypa-1Z-Fjn"/>
                                         </connections>
                                     </collectionViewCell>
@@ -272,7 +273,7 @@
     </scenes>
     <resources>
         <image name="arrow_cell_forward" width="9" height="15"/>
-        <image name="person.fill.badge.plus" catalog="system" width="128" height="124"/>
+        <image name="person.fill.badge.plus" catalog="system" width="128" height="125"/>
         <namedColor name="tintPrimary">
             <color red="0.90600001811981201" green="0.21600000560283661" blue="0.58399999141693115" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

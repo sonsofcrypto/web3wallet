@@ -5,32 +5,32 @@
 import UIKit
 import web3lib
 
-// MARK: - TokenAddWireframeContext
+// MARK: - CurrencyAddWireframeContext
 
-struct TokenAddWireframeContext {
+struct CurrencyAddWireframeContext {
     let network: Network
 }
 
-// MARK: - TokenAddWireframeDestination
+// MARK: - CurrencyAddWireframeDestination
 
-enum TokenAddWireframeDestination {
+enum CurrencyAddWireframeDestination {
     case selectNetwork(onCompletion: (Network) -> Void)
     case qrCodeScan(network: Network, onCompletion: (String) -> Void)
 }
 
-// MARK: - TokenAddWireframe
+// MARK: - CurrencyAddWireframe
 
-protocol TokenAddWireframe {
+protocol CurrencyAddWireframe {
     func present()
-    func navigate(to destination: TokenAddWireframeDestination)
+    func navigate(to destination: CurrencyAddWireframeDestination)
     func dismiss()
 }
 
 // MARK: - DefaultTokenAddWireframe
 
-final class DefaultTokenAddWireframe {
+final class DefaultCurrencyAddWireframe {
     private weak var parent: UIViewController?
-    private let context: TokenAddWireframeContext
+    private let context: CurrencyAddWireframeContext
     private let networkPickerWireframeFactory: NetworkPickerWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let currencyStoreService: CurrencyStoreService
@@ -39,7 +39,7 @@ final class DefaultTokenAddWireframe {
     
     init(
         _ parent: UIViewController?,
-        context: TokenAddWireframeContext,
+        context: CurrencyAddWireframeContext,
         networkPickerWireframeFactory: NetworkPickerWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         currencyStoreService: CurrencyStoreService
@@ -52,14 +52,14 @@ final class DefaultTokenAddWireframe {
     }
 }
 
-extension DefaultTokenAddWireframe: TokenAddWireframe {
+extension DefaultCurrencyAddWireframe: CurrencyAddWireframe {
     
     func present() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
     
-    func navigate(to destination: TokenAddWireframeDestination) {
+    func navigate(to destination: CurrencyAddWireframeDestination) {
         switch destination {
         case let .selectNetwork(onCompletion):
             networkPickerWireframeFactory.make(
@@ -79,14 +79,14 @@ extension DefaultTokenAddWireframe: TokenAddWireframe {
     }
 }
 
-private extension DefaultTokenAddWireframe {
+private extension DefaultCurrencyAddWireframe {
     
     func wireUp() -> UIViewController {
         let interactor = DefaultTokenAddInteractor(
             currencyStoreService: currencyStoreService
         )
-        let vc: TokenAddViewController = UIStoryboard(.tokenAdd).instantiate()
-        let presenter = DefaultTokenAddPresenter(
+        let vc: CurrencyAddViewController = UIStoryboard(.currencyAdd).instantiate()
+        let presenter = DefaultCurrencyAddPresenter(
             view: vc,
             wireframe: self,
             interactor: interactor,

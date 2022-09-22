@@ -5,18 +5,18 @@
 import UIKit
 import web3lib
 
-// MARK: - TokenAddWireframeFactory
+// MARK: - CurrencyAddWireframeFactory
 
-protocol TokenAddWireframeFactory {
+protocol CurrencyAddWireframeFactory {
     func make(
         _ parent: UIViewController?,
-        context: TokenAddWireframeContext
-    ) -> TokenAddWireframe
+        context: CurrencyAddWireframeContext
+    ) -> CurrencyAddWireframe
 }
 
-// MARK: - DefaultTokenAddWireframeFactory
+// MARK: - DefaultCurrencyAddWireframeFactory
 
-final class DefaultTokenAddWireframeFactory {
+final class DefaultCurrencyAddWireframeFactory {
     private let networkPickerWireframeFactory: NetworkPickerWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let currencyStoreService: CurrencyStoreService
@@ -32,13 +32,13 @@ final class DefaultTokenAddWireframeFactory {
     }
 }
 
-extension DefaultTokenAddWireframeFactory: TokenAddWireframeFactory {
+extension DefaultCurrencyAddWireframeFactory: CurrencyAddWireframeFactory {
 
     func make(
         _ parent: UIViewController?,
-        context: TokenAddWireframeContext
-    ) -> TokenAddWireframe {
-        DefaultTokenAddWireframe(
+        context: CurrencyAddWireframeContext
+    ) -> CurrencyAddWireframe {
+        DefaultCurrencyAddWireframe(
             parent,
             context: context,
             networkPickerWireframeFactory: networkPickerWireframeFactory,
@@ -50,11 +50,11 @@ extension DefaultTokenAddWireframeFactory: TokenAddWireframeFactory {
 
 // MARK: - Assembler
 
-final class TokenAddWireframeFactoryAssembler: AssemblerComponent {
+final class CurrencyAddWireframeFactoryAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .instance) { resolver -> TokenAddWireframeFactory in
-            DefaultTokenAddWireframeFactory(
+        registry.register(scope: .instance) { resolver -> CurrencyAddWireframeFactory in
+            DefaultCurrencyAddWireframeFactory(
                 networkPickerWireframeFactory: resolver.resolve(),
                 qrCodeScanWireframeFactory: resolver.resolve(),
                 currencyStoreService: resolver.resolve()

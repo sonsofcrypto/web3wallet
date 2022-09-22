@@ -74,16 +74,16 @@
 		1C47C0E5287BFC06008E0146 /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C47C0E4287BFC06008E0146 /* SeparatorView.swift */; };
 		1C54DBDC285DD10000E378F6 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */; };
 		1C54DBDE285DD15400E378F6 /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBDD285DD15400E378F6 /* Account.storyboard */; };
-		1C54DBE3285E831B00E378F6 /* TokenAddWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE2285E831B00E378F6 /* TokenAddWireframe.swift */; };
-		1C54DBE5285E832600E378F6 /* TokenAddWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE4285E832600E378F6 /* TokenAddWireframeFactory.swift */; };
-		1C54DBE9285E833200E378F6 /* TokenAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE8285E833200E378F6 /* TokenAddViewModel.swift */; };
-		1C54DBEB285E833600E378F6 /* TokenAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBEA285E833500E378F6 /* TokenAddView.swift */; };
-		1C54DBED285E834200E378F6 /* TokenAddInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBEC285E834200E378F6 /* TokenAddInteractor.swift */; };
-		1C54DBEF285E835400E378F6 /* TokenAdd.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBEE285E835400E378F6 /* TokenAdd.storyboard */; };
-		1C54DBF3285E83A300E378F6 /* TokenAddPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF2285E83A300E378F6 /* TokenAddPresenter.swift */; };
-		1C54DBF5285F32DC00E378F6 /* TokenAddInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF4285F32DC00E378F6 /* TokenAddInputView.swift */; };
-		1C54DBF8285F8F3700E378F6 /* TokenAddCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF7285F8F3700E378F6 /* TokenAddCollectionViewCell.swift */; };
-		1C54DBFA285F9EBF00E378F6 /* TokenAddNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF9285F9EBF00E378F6 /* TokenAddNetworkView.swift */; };
+		1C54DBE3285E831B00E378F6 /* CurrencyAddWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE2285E831B00E378F6 /* CurrencyAddWireframe.swift */; };
+		1C54DBE5285E832600E378F6 /* CurrencyAddWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE4285E832600E378F6 /* CurrencyAddWireframeFactory.swift */; };
+		1C54DBE9285E833200E378F6 /* CurrencyAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE8285E833200E378F6 /* CurrencyAddViewModel.swift */; };
+		1C54DBEB285E833600E378F6 /* CurrencyAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBEA285E833500E378F6 /* CurrencyAddView.swift */; };
+		1C54DBED285E834200E378F6 /* CurrencyAddInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBEC285E834200E378F6 /* CurrencyAddInteractor.swift */; };
+		1C54DBEF285E835400E378F6 /* CurrencyAdd.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBEE285E835400E378F6 /* CurrencyAdd.storyboard */; };
+		1C54DBF3285E83A300E378F6 /* CurrencyAddPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF2285E83A300E378F6 /* CurrencyAddPresenter.swift */; };
+		1C54DBF5285F32DC00E378F6 /* CurrencyAddInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF4285F32DC00E378F6 /* CurrencyAddInputView.swift */; };
+		1C54DBF8285F8F3700E378F6 /* CurrencyAddCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF7285F8F3700E378F6 /* CurrencyAddCollectionViewCell.swift */; };
+		1C54DBFA285F9EBF00E378F6 /* CurrencyAddNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF9285F9EBF00E378F6 /* CurrencyAddNetworkView.swift */; };
 		1C54DBFD2860E5AB00E378F6 /* NetworkPickerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBFC2860E5AB00E378F6 /* NetworkPickerInteractor.swift */; };
 		1C54DBFF2860E5B000E378F6 /* NetworkPickerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBFE2860E5B000E378F6 /* NetworkPickerPresenter.swift */; };
 		1C54DC012860E5BC00E378F6 /* NetworkPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC002860E5BC00E378F6 /* NetworkPickerView.swift */; };
@@ -654,16 +654,16 @@
 		1C47C0E4287BFC06008E0146 /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
 		1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
 		1C54DBDD285DD15400E378F6 /* Account.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
-		1C54DBE2285E831B00E378F6 /* TokenAddWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddWireframe.swift; sourceTree = "<group>"; };
-		1C54DBE4285E832600E378F6 /* TokenAddWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddWireframeFactory.swift; sourceTree = "<group>"; };
-		1C54DBE8285E833200E378F6 /* TokenAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddViewModel.swift; sourceTree = "<group>"; };
-		1C54DBEA285E833500E378F6 /* TokenAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddView.swift; sourceTree = "<group>"; };
-		1C54DBEC285E834200E378F6 /* TokenAddInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddInteractor.swift; sourceTree = "<group>"; };
-		1C54DBEE285E835400E378F6 /* TokenAdd.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TokenAdd.storyboard; sourceTree = "<group>"; };
-		1C54DBF2285E83A300E378F6 /* TokenAddPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddPresenter.swift; sourceTree = "<group>"; };
-		1C54DBF4285F32DC00E378F6 /* TokenAddInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddInputView.swift; sourceTree = "<group>"; };
-		1C54DBF7285F8F3700E378F6 /* TokenAddCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddCollectionViewCell.swift; sourceTree = "<group>"; };
-		1C54DBF9285F9EBF00E378F6 /* TokenAddNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenAddNetworkView.swift; sourceTree = "<group>"; };
+		1C54DBE2285E831B00E378F6 /* CurrencyAddWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddWireframe.swift; sourceTree = "<group>"; };
+		1C54DBE4285E832600E378F6 /* CurrencyAddWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddWireframeFactory.swift; sourceTree = "<group>"; };
+		1C54DBE8285E833200E378F6 /* CurrencyAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddViewModel.swift; sourceTree = "<group>"; };
+		1C54DBEA285E833500E378F6 /* CurrencyAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddView.swift; sourceTree = "<group>"; };
+		1C54DBEC285E834200E378F6 /* CurrencyAddInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddInteractor.swift; sourceTree = "<group>"; };
+		1C54DBEE285E835400E378F6 /* CurrencyAdd.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CurrencyAdd.storyboard; sourceTree = "<group>"; };
+		1C54DBF2285E83A300E378F6 /* CurrencyAddPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddPresenter.swift; sourceTree = "<group>"; };
+		1C54DBF4285F32DC00E378F6 /* CurrencyAddInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddInputView.swift; sourceTree = "<group>"; };
+		1C54DBF7285F8F3700E378F6 /* CurrencyAddCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddCollectionViewCell.swift; sourceTree = "<group>"; };
+		1C54DBF9285F9EBF00E378F6 /* CurrencyAddNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddNetworkView.swift; sourceTree = "<group>"; };
 		1C54DBFC2860E5AB00E378F6 /* NetworkPickerInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPickerInteractor.swift; sourceTree = "<group>"; };
 		1C54DBFE2860E5B000E378F6 /* NetworkPickerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPickerPresenter.swift; sourceTree = "<group>"; };
 		1C54DC002860E5BC00E378F6 /* NetworkPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPickerView.swift; sourceTree = "<group>"; };
@@ -1389,27 +1389,27 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
-		1C54DBE1285E82FC00E378F6 /* TokenAdd 🟣 */ = {
+		1C54DBE1285E82FC00E378F6 /* CurrencyAdd 🟣 */ = {
 			isa = PBXGroup;
 			children = (
-				1C54DBEE285E835400E378F6 /* TokenAdd.storyboard */,
-				1C54DBEC285E834200E378F6 /* TokenAddInteractor.swift */,
-				1C54DBF2285E83A300E378F6 /* TokenAddPresenter.swift */,
-				1C54DBEA285E833500E378F6 /* TokenAddView.swift */,
-				1C54DBE8285E833200E378F6 /* TokenAddViewModel.swift */,
-				1C54DBE2285E831B00E378F6 /* TokenAddWireframe.swift */,
-				1C54DBE4285E832600E378F6 /* TokenAddWireframeFactory.swift */,
+				1C54DBEE285E835400E378F6 /* CurrencyAdd.storyboard */,
+				1C54DBEC285E834200E378F6 /* CurrencyAddInteractor.swift */,
+				1C54DBF2285E83A300E378F6 /* CurrencyAddPresenter.swift */,
+				1C54DBEA285E833500E378F6 /* CurrencyAddView.swift */,
+				1C54DBE8285E833200E378F6 /* CurrencyAddViewModel.swift */,
+				1C54DBE2285E831B00E378F6 /* CurrencyAddWireframe.swift */,
+				1C54DBE4285E832600E378F6 /* CurrencyAddWireframeFactory.swift */,
 				1C54DBF6285F8F2800E378F6 /* Cells */,
 			);
-			path = "TokenAdd 🟣";
+			path = "CurrencyAdd 🟣";
 			sourceTree = "<group>";
 		};
 		1C54DBF6285F8F2800E378F6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				1C54DBF7285F8F3700E378F6 /* TokenAddCollectionViewCell.swift */,
-				1C54DBF4285F32DC00E378F6 /* TokenAddInputView.swift */,
-				1C54DBF9285F9EBF00E378F6 /* TokenAddNetworkView.swift */,
+				1C54DBF7285F8F3700E378F6 /* CurrencyAddCollectionViewCell.swift */,
+				1C54DBF4285F32DC00E378F6 /* CurrencyAddInputView.swift */,
+				1C54DBF9285F9EBF00E378F6 /* CurrencyAddNetworkView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1501,7 +1501,7 @@
 				1C60C23E285724D0003BE25D /* Root ✅ */,
 				1C60C1C8285724D0003BE25D /* Settings ✅ */,
 				1C7FC98628B60A0B00FC9175 /* ThemePicker ✅ */,
-				1C54DBE1285E82FC00E378F6 /* TokenAdd 🟣 */,
+				1C54DBE1285E82FC00E378F6 /* CurrencyAdd 🟣 */,
 				1C60C1D5285724D0003BE25D /* TokenPicker 🟣 */,
 				1C60C3612857C5D9003BE25D /* TokenReceive 🟣 */,
 				1C9E3193287580A700DD2031 /* TokenSend 🟣 */,
@@ -2754,7 +2754,7 @@
 				1C54DC5928683DDA00E378F6 /* NaokoAA-Light.otf in Resources */,
 				1CB8B0E828916AA900024E7C /* Assets-ThemeIOS.xcassets in Resources */,
 				1CAC55A8286E119500CCB2B6 /* KeyStore.storyboard in Resources */,
-				1C54DBEF285E835400E378F6 /* TokenAdd.storyboard in Resources */,
+				1C54DBEF285E835400E378F6 /* CurrencyAdd.storyboard in Resources */,
 				1C54DC5428683DDA00E378F6 /* NaokoAA-Bold-Italic.otf in Resources */,
 				1CB8B0DA28904A8A00024E7C /* NFTsDashboard.storyboard in Resources */,
 				D11A990427B8615B00EDFDD0 /* GothicA1-Bold.ttf in Resources */,
@@ -2856,7 +2856,7 @@
 			files = (
 				1C60C2C4285724D0003BE25D /* ChatRightCollectionViewCell.swift in Sources */,
 				D1976B13287EFAE10063FC9C /* MnemonicImportInteractor.swift in Sources */,
-				1C54DBFA285F9EBF00E378F6 /* TokenAddNetworkView.swift in Sources */,
+				1C54DBFA285F9EBF00E378F6 /* CurrencyAddNetworkView.swift in Sources */,
 				1C54DC192862352200E378F6 /* QRCodeScanWireframeFactory.swift in Sources */,
 				1C60C37E2859CC2A003BE25D /* ShareFactoryHelper.swift in Sources */,
 				1C7FC97428ACC9C300FC9175 /* FeatureServiceRunner.swift in Sources */,
@@ -2879,7 +2879,7 @@
 				1CDED607289C4C7200DF34A7 /* NFTSendInteractor.swift in Sources */,
 				1C54DC132862351100E378F6 /* QRCodeScanView.swift in Sources */,
 				1C0643DA2892FCC300643C15 /* FeaturesView.swift in Sources */,
-				1C54DBED285E834200E378F6 /* TokenAddInteractor.swift in Sources */,
+				1C54DBED285E834200E378F6 /* CurrencyAddInteractor.swift in Sources */,
 				1C7FC9B828BCF95E00FC9175 /* WebViewController.swift in Sources */,
 				1C60C2BD285724D0003BE25D /* ButtonsSheetViewModel.swift in Sources */,
 				1C7F864628D20E490073FD95 /* Date+Extensions.swift in Sources */,
@@ -2984,7 +2984,7 @@
 				1C60C2B4285724D0003BE25D /* TokenPickerPresenter.swift in Sources */,
 				1C60C2B9285724D0003BE25D /* KeyStorePresenter.swift in Sources */,
 				1CB8B0BA288DBEE700024E7C /* CultProposalDetailTokenomicsView.swift in Sources */,
-				1C54DBF5285F32DC00E378F6 /* TokenAddInputView.swift in Sources */,
+				1C54DBF5285F32DC00E378F6 /* CurrencyAddInputView.swift in Sources */,
 				1C54DC682869BE6500E378F6 /* DashboardButtonsCell.swift in Sources */,
 				1C60C3632857C5E5003BE25D /* TokenReceivePresenter.swift in Sources */,
 				1CE0064228894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift in Sources */,
@@ -3034,7 +3034,7 @@
 				1C7FC9B628BCF5C700FC9175 /* EtherscanHelper.swift in Sources */,
 				1C7F864128D20E490073FD95 /* UIBarButtonItem+Extensions.swift in Sources */,
 				1C6487362832E6650091A12D /* NFTsServiceAssembler.swift in Sources */,
-				1C54DBF3285E83A300E378F6 /* TokenAddPresenter.swift in Sources */,
+				1C54DBF3285E83A300E378F6 /* CurrencyAddPresenter.swift in Sources */,
 				1C60C2F3285724D0003BE25D /* NFTDetailWireframe.swift in Sources */,
 				1C228ACF28A3C774005316A3 /* ConfirmationTxFailedView.swift in Sources */,
 				1C7FC99C28B81DFA00FC9175 /* NFTDetailView+Content+Other.swift in Sources */,
@@ -3067,9 +3067,9 @@
 				1C7F862C28D20E490073FD95 /* UIImageView+Extensions.swift in Sources */,
 				1C60C2D5285724D0003BE25D /* MnemonicNewViewModel.swift in Sources */,
 				D1A12A61287D333900606FC8 /* AuthenticateInteractor.swift in Sources */,
-				1C54DBF8285F8F3700E378F6 /* TokenAddCollectionViewCell.swift in Sources */,
+				1C54DBF8285F8F3700E378F6 /* CurrencyAddCollectionViewCell.swift in Sources */,
 				1C60C309285724D1003BE25D /* RootWireframe.swift in Sources */,
-				1C54DBE5285E832600E378F6 /* TokenAddWireframeFactory.swift in Sources */,
+				1C54DBE5285E832600E378F6 /* CurrencyAddWireframeFactory.swift in Sources */,
 				1C7F864C28D20E490073FD95 /* NSCollectionLayout+Extensions.swift in Sources */,
 				D1976B12287EFAE10063FC9C /* MnemonicImportWireframeFactory.swift in Sources */,
 				1C60C2F8285724D0003BE25D /* NFTDetailViewModel.swift in Sources */,
@@ -3155,7 +3155,7 @@
 				1CB8B0B8288C351A00024E7C /* CultProposalDetailViewCell.swift in Sources */,
 				1C60C2C0285724D0003BE25D /* KeyStoreCell.swift in Sources */,
 				1C7F863328D20E490073FD95 /* UIEdgeInsets+Extensions.swift in Sources */,
-				1C54DBE9285E833200E378F6 /* TokenAddViewModel.swift in Sources */,
+				1C54DBE9285E833200E378F6 /* CurrencyAddViewModel.swift in Sources */,
 				1C54DC662869A48A00E378F6 /* DashboardHeaderBalanceView.swift in Sources */,
 				1C60C2A7285724D0003BE25D /* SettingsInteractor.swift in Sources */,
 				1C0643E32892FD2D00643C15 /* FeaturesCell.swift in Sources */,
@@ -3181,7 +3181,7 @@
 				1CB8B0D6289005E000024E7C /* OpenSeaNFTsService.swift in Sources */,
 				1C67201F28870FDB00C5F044 /* ConfirmationWireframe.swift in Sources */,
 				1CDED5FF289C4C4E00DF34A7 /* NFTSendWireframeFactory.swift in Sources */,
-				1C54DBEB285E833600E378F6 /* TokenAddView.swift in Sources */,
+				1C54DBEB285E833600E378F6 /* CurrencyAddView.swift in Sources */,
 				1C7F864228D20E490073FD95 /* UITableView+Extensions.swift in Sources */,
 				1C7F863A28D20E490073FD95 /* Formatter+Extensions.swift in Sources */,
 				1C60C334285724D1003BE25D /* NFTsCollectionInteractor.swift in Sources */,
@@ -3257,7 +3257,7 @@
 				1C7F863828D20E490073FD95 /* UIView+LayoutConstraints+Extensions.swift in Sources */,
 				1CD3FE8928559EF2008312DE /* Web3ServiceLegacy.swift in Sources */,
 				1C60C3692857C5F8003BE25D /* TokenReceiveWireframe.swift in Sources */,
-				1C54DBE3285E831B00E378F6 /* TokenAddWireframe.swift in Sources */,
+				1C54DBE3285E831B00E378F6 /* CurrencyAddWireframe.swift in Sources */,
 				1C60C324285724D1003BE25D /* AppsHeaderCollectionViewCell.swift in Sources */,
 				1C60C32B285724D1003BE25D /* MnemonicConfirmationWireframe.swift in Sources */,
 				1C67201B28870FCB00C5F044 /* ConfirmationView.swift in Sources */,

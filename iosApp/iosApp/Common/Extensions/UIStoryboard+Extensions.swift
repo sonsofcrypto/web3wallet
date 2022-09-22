@@ -42,7 +42,7 @@ extension UIStoryboard {
         case chat = "Chat"
         case tokenPicker = "TokenPicker"
         case tokenReceive = "TokenReceive"
-        case tokenAdd = "TokenAdd"
+        case currencyAdd = "CurrencyAdd"
         case tokenSend = "TokenSend"
         case tokenSwap = "TokenSwap"
         case networkPicker = "NetworkPicker"

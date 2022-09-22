@@ -17,13 +17,13 @@ protocol TokenPickerWireframeFactory {
 // MARK: - DefaultTokenPickerWireframeFactory
 
 final class DefaultTokenPickerWireframeFactory {
-    private let tokenAddWireframeFactory: TokenAddWireframeFactory
+    private let tokenAddWireframeFactory: CurrencyAddWireframeFactory
     private let walletService: WalletService
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
     
     init(
-        tokenAddWireframeFactory: TokenAddWireframeFactory,
+        tokenAddWireframeFactory: CurrencyAddWireframeFactory,
         walletService: WalletService,
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService

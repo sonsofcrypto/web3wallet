@@ -4,23 +4,23 @@
 
 import UIKit
 
-final class TokenAddCollectionViewCell: UICollectionViewCell {
+final class CurrencyAddCollectionViewCell: UICollectionViewCell {
     
     struct Handler {
         let selectNetworkHandler: () -> Void
         let addressHandler: TokenEnterAddressView.Handler
         let addTokenHandler: () -> Void
-        let onTextChanged: (TokenAddViewModel.TextFieldType, String) -> Void
-        let onReturnTapped: (TokenAddViewModel.TextFieldType) -> Void
+        let onTextChanged: (CurrencyAddViewModel.TextFieldType, String) -> Void
+        let onReturnTapped: (CurrencyAddViewModel.TextFieldType) -> Void
     }
 
-    @IBOutlet weak var networkDetailsView: TokenAddNetworkView!
+    @IBOutlet weak var networkDetailsView: CurrencyAddNetworkView!
     
-    @IBOutlet weak var tokenDetailsView: UIView!
+    @IBOutlet weak var detailsView: UIView!
     @IBOutlet weak var addressView: TokenEnterAddressView!
-    @IBOutlet weak var nameView: TokenAddInputView!
-    @IBOutlet weak var symbolView: TokenAddInputView!
-    @IBOutlet weak var decimalView: TokenAddInputView!
+    @IBOutlet weak var nameView: CurrencyAddInputView!
+    @IBOutlet weak var symbolView: CurrencyAddInputView!
+    @IBOutlet weak var decimalView: CurrencyAddInputView!
     @IBOutlet weak var saveButton: Button!
     
     @IBOutlet weak var widthLayoutConstraint: NSLayoutConstraint!
@@ -32,9 +32,9 @@ final class TokenAddCollectionViewCell: UICollectionViewCell {
         
         networkDetailsView.backgroundColor = Theme.colour.cellBackground
         networkDetailsView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        tokenDetailsView.backgroundColor = Theme.colour.cellBackground
-        tokenDetailsView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        (tokenDetailsView.subviews.first as? UIStackView)?.arrangedSubviews.forEach {
+        detailsView.backgroundColor = Theme.colour.cellBackground
+        detailsView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
+        (detailsView.subviews.first as? UIStackView)?.arrangedSubviews.forEach {
             if $0.tag == 10 { $0.backgroundColor = Theme.colour.separatorTransparent }
         }
         saveButton.style = .primary
@@ -50,7 +50,7 @@ final class TokenAddCollectionViewCell: UICollectionViewCell {
     }
     
     func update(
-        with viewModel: TokenAddViewModel,
+        with viewModel: CurrencyAddViewModel,
         handler: Handler,
         and width: CGFloat
     ) {
@@ -84,7 +84,7 @@ final class TokenAddCollectionViewCell: UICollectionViewCell {
     }
 }
 
-private extension TokenAddCollectionViewCell {
+private extension CurrencyAddCollectionViewCell {
     
     @objc func addTokenTapped() {
         handler.addTokenHandler()

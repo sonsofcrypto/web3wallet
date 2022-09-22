@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct TokenAddViewModel {
+struct CurrencyAddViewModel {
     
     enum TextFieldType: Int {
         case contractAddress

@@ -4,22 +4,22 @@
 
 import UIKit
 
-// MARK: - TokenAddView
+// MARK: - CurrencyAddView
 
-protocol TokenAddView: AnyObject {
-    func update(with viewModel: TokenAddViewModel)
+protocol CurrencyAddView: AnyObject {
+    func update(with viewModel: CurrencyAddViewModel)
     func dismissKeyboard()
 }
 
-// MARK: - TokenAddViewController
+// MARK: - CurrencyAddViewController
 
-final class TokenAddViewController: BaseViewController {
+final class CurrencyAddViewController: BaseViewController {
 
-    var presenter: TokenAddPresenter!
+    var presenter: CurrencyAddPresenter!
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    private var viewModel: TokenAddViewModel?
+    private var viewModel: CurrencyAddViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,14 +29,14 @@ final class TokenAddViewController: BaseViewController {
     }    
 }
 
-extension TokenAddViewController: TokenAddView {
+extension CurrencyAddViewController: CurrencyAddView {
 
-    func update(with viewModel: TokenAddViewModel) {
+    func update(with viewModel: CurrencyAddViewModel) {
         self.viewModel = viewModel
         
         configureNavigationBar()
 
-        if let visibleCell = collectionView.visibleCells.first as? TokenAddCollectionViewCell {
+        if let visibleCell = collectionView.visibleCells.first as? CurrencyAddCollectionViewCell {
             visibleCell.update(
                 with: viewModel,
                 handler: tokenAddCollectionViewCellHandler(),
@@ -55,7 +55,7 @@ extension TokenAddViewController: TokenAddView {
 
 // MARK: - Configure
 
-extension TokenAddViewController {
+extension CurrencyAddViewController {
     
    func configureNavigationBar() {
        title = viewModel?.title
@@ -87,7 +87,7 @@ extension TokenAddViewController {
 
 // MARK: - UICollectionViewDataSource
 
-extension TokenAddViewController: UICollectionViewDataSource {
+extension CurrencyAddViewController: UICollectionViewDataSource {
     
     func collectionView(
         _ collectionView: UICollectionView,
@@ -104,7 +104,7 @@ extension TokenAddViewController: UICollectionViewDataSource {
             fatalError()
         }
         let cell = collectionView.dequeue(
-            TokenAddCollectionViewCell.self,
+            CurrencyAddCollectionViewCell.self,
             for: indexPath
         )
         cell.update(
@@ -118,7 +118,7 @@ extension TokenAddViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension TokenAddViewController: UICollectionViewDelegateFlowLayout {
+extension CurrencyAddViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -131,13 +131,13 @@ extension TokenAddViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - Handlers
 
-private extension TokenAddViewController {
+private extension CurrencyAddViewController {
     
-    func tokenAddCollectionViewCellHandler() -> TokenAddCollectionViewCell.Handler {
+    func tokenAddCollectionViewCellHandler() -> CurrencyAddCollectionViewCell.Handler {
         .init(
             selectNetworkHandler: presenterHandle(.selectNetwork),
             addressHandler: addressHandler(),
-            addTokenHandler: presenterHandle(.addToken),
+            addTokenHandler: presenterHandle(.addCurrency),
             onTextChanged: onTextChanged(),
             onReturnTapped: onReturnTapped()
         )
@@ -159,20 +159,20 @@ private extension TokenAddViewController {
         }
     }
     
-    func presenterHandle(_ event: TokenAddPresenterEvent) -> () -> Void {
+    func presenterHandle(_ event: CurrencyAddPresenterEvent) -> () -> Void {
         {
             [weak self] in self?.presenter.handle(event)
         }
     }
     
-    func onTextChanged() -> (TokenAddViewModel.TextFieldType, String) -> Void {
+    func onTextChanged() -> (CurrencyAddViewModel.TextFieldType, String) -> Void {
         {
             [weak self] (type, value) in
             self?.presenterHandle(.inputChanged(for: type, to: value))()
         }
     }
     
-    func onReturnTapped() -> (TokenAddViewModel.TextFieldType) -> Void {
+    func onReturnTapped() -> (CurrencyAddViewModel.TextFieldType) -> Void {
         {
             [weak self] type in
             self?.presenterHandle(.returnKeyTapped(for: type))()

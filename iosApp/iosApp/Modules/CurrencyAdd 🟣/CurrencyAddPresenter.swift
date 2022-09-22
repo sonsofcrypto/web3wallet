@@ -5,34 +5,34 @@
 import Foundation
 import web3lib
 
-// MARK: - TokenAddPresenterEvent
+// MARK: - CurrencyAddPresenterEvent
 
-enum TokenAddPresenterEvent {
+enum CurrencyAddPresenterEvent {
     case selectNetwork
     case addressChanged(to: String)
     case qrCodeScan
     case pasteAddress
-    case inputChanged(for: TokenAddViewModel.TextFieldType, to: String)
-    case returnKeyTapped(for: TokenAddViewModel.TextFieldType)
-    case addToken
+    case inputChanged(for: CurrencyAddViewModel.TextFieldType, to: String)
+    case returnKeyTapped(for: CurrencyAddViewModel.TextFieldType)
+    case addCurrency
     case dismiss
 }
 
-// MARK: - TokenAddPresenter
+// MARK: - CurrencyAddPresenter
 
-protocol TokenAddPresenter {
+protocol CurrencyAddPresenter {
     func present()
-    func handle(_ event: TokenAddPresenterEvent)
+    func handle(_ event: CurrencyAddPresenterEvent)
 }
 
-// MARK: - DefaultTokenAddPresenter
+// MARK: - DefaultCurrencyAddPresenter
 
-final class DefaultTokenAddPresenter {
+final class DefaultCurrencyAddPresenter {
 
-    private weak var view: TokenAddView?
-    private let wireframe: TokenAddWireframe
-    private let interactor: TokenAddInteractor
-    private let context: TokenAddWireframeContext
+    private weak var view: CurrencyAddView?
+    private let wireframe: CurrencyAddWireframe
+    private let interactor: CurrencyAddInteractor
+    private let context: CurrencyAddWireframeContext
     
     private var network: Network!
     private var contractAddress: String?
@@ -47,10 +47,10 @@ final class DefaultTokenAddPresenter {
     private var addTokenTapped = false
     
     init(
-        view: TokenAddView,
-        wireframe: TokenAddWireframe,
-        interactor: TokenAddInteractor,
-        context: TokenAddWireframeContext
+        view: CurrencyAddView,
+        wireframe: CurrencyAddWireframe,
+        interactor: CurrencyAddInteractor,
+        context: CurrencyAddWireframeContext
     ) {
         self.view = view
         self.wireframe = wireframe
@@ -61,13 +61,13 @@ final class DefaultTokenAddPresenter {
     }
 }
 
-extension DefaultTokenAddPresenter: TokenAddPresenter {
+extension DefaultCurrencyAddPresenter: CurrencyAddPresenter {
 
     func present() {
         refresh()
     }
 
-    func handle(_ event: TokenAddPresenterEvent) {
+    func handle(_ event: CurrencyAddPresenterEvent) {
         switch event {
         case .selectNetwork:
             wireframe.navigate(to: .selectNetwork(onCompletion: onNetworkSelected()))
@@ -81,7 +81,7 @@ extension DefaultTokenAddPresenter: TokenAddPresenter {
             inputChanged(for: type, to: value)
         case let .returnKeyTapped(type):
             returnKeyTapped(for: type)
-        case .addToken:
+        case .addCurrency:
             handleAddToken()
         case .dismiss:
             wireframe.dismiss()
@@ -91,7 +91,7 @@ extension DefaultTokenAddPresenter: TokenAddPresenter {
 
 // MARK: - Handlers
 
-private extension DefaultTokenAddPresenter {
+private extension DefaultCurrencyAddPresenter {
     
     func handleAddressChanged(to address: String) {
         if
@@ -139,7 +139,7 @@ private extension DefaultTokenAddPresenter {
         addTokenTapped = true
         validateFields()
         if areAllFieldsValid() {
-            interactor.addToken(
+            interactor.addCurrency(
                 .init(
                     address: contractAddress ?? "",
                     name: name ?? "",
@@ -160,10 +160,10 @@ private extension DefaultTokenAddPresenter {
 
 // MARK: - ViewModel
 
-private extension DefaultTokenAddPresenter {
+private extension DefaultCurrencyAddPresenter {
     
     func refresh(
-        firstResponder: TokenAddViewModel.TextFieldType? = nil
+        firstResponder: CurrencyAddViewModel.TextFieldType? = nil
     ) {
         validateFields()
         view?.update(with: viewModel(firstResponder: firstResponder))
@@ -172,8 +172,8 @@ private extension DefaultTokenAddPresenter {
     }
     
     func viewModel(
-        firstResponder: TokenAddViewModel.TextFieldType?
-    ) -> TokenAddViewModel {
+        firstResponder: CurrencyAddViewModel.TextFieldType?
+    ) -> CurrencyAddViewModel {
         .init(
             title: Localized("tokenAdd.title"),
             network: .init(
@@ -194,7 +194,7 @@ private extension DefaultTokenAddPresenter {
                 ),
                 placeholder: Localized("tokenAdd.name.placeholder"),
                 hint: addTokenTapped ? nameValidationError : nil,
-                tag: TokenAddViewModel.TextFieldType.name.rawValue,
+                tag: CurrencyAddViewModel.TextFieldType.name.rawValue,
                 isFirstResponder: firstResponder == .name
             ),
             symbol: .init(
@@ -204,7 +204,7 @@ private extension DefaultTokenAddPresenter {
                 ),
                 placeholder: Localized("tokenAdd.symbol.placeholder"),
                 hint: addTokenTapped ? symbolValidationError : nil,
-                tag: TokenAddViewModel.TextFieldType.symbol.rawValue,
+                tag: CurrencyAddViewModel.TextFieldType.symbol.rawValue,
                 isFirstResponder: firstResponder == .symbol
             ),
             decimals: .init(
@@ -214,7 +214,7 @@ private extension DefaultTokenAddPresenter {
                 ),
                 placeholder: Localized("tokenAdd.decimals.placeholder"),
                 hint: addTokenTapped ? decimalsValidationError : nil,
-                tag: TokenAddViewModel.TextFieldType.decimals.rawValue,
+                tag: CurrencyAddViewModel.TextFieldType.decimals.rawValue,
                 isFirstResponder: firstResponder == .decimals
             ),
             saveButtonTitle: saveButtonTitle(),
@@ -250,7 +250,7 @@ private extension DefaultTokenAddPresenter {
         return true
     }
     
-    func inputChanged(for type: TokenAddViewModel.TextFieldType, to value: String) {
+    func inputChanged(for type: CurrencyAddViewModel.TextFieldType, to value: String) {
         switch type {
         case .contractAddress:
             contractAddress = value
@@ -264,7 +264,7 @@ private extension DefaultTokenAddPresenter {
         refresh()
     }
     
-    func returnKeyTapped(for type: TokenAddViewModel.TextFieldType) {
+    func returnKeyTapped(for type: CurrencyAddViewModel.TextFieldType) {
         switch type {
         case .contractAddress:
             refresh(firstResponder: .name)
@@ -337,7 +337,7 @@ private extension DefaultTokenAddPresenter {
         }
     }
     
-    func nextFirstResponder() -> TokenAddViewModel.TextFieldType? {
+    func nextFirstResponder() -> CurrencyAddViewModel.TextFieldType? {
         validateFields()
         
         if contractAddressValidationError != nil {

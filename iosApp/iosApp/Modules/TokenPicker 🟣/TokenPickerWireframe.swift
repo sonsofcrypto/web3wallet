@@ -57,7 +57,7 @@ final class DefaultTokenPickerWireframe {
     
     private weak var parent: UIViewController?
     private let context: TokenPickerWireframeContext
-    private let tokenAddWireframeFactory: TokenAddWireframeFactory
+    private let tokenAddWireframeFactory: CurrencyAddWireframeFactory
     private let walletService: WalletService
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
@@ -67,7 +67,7 @@ final class DefaultTokenPickerWireframe {
     init(
         _ parent: UIViewController?,
         context: TokenPickerWireframeContext,
-        tokenAddWireframeFactory: TokenAddWireframeFactory,
+        tokenAddWireframeFactory: CurrencyAddWireframeFactory,
         walletService: WalletService,
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService

@@ -5,20 +5,20 @@
 import Foundation
 import web3lib
 
-// MARK: - TokenAddInteractorNewToken
+// MARK: - CurrencyAddInteractorNewToken
 
-struct TokenAddInteractorNewToken {
+struct CurrencyAddInteractorNewCurrency {
     let address: String
     let name: String
     let symbol: String
     let decimals: Int
 }
 
-// MARK: - TokenAddInteractor
+// MARK: - CurrencyAddInteractor
 
-protocol TokenAddInteractor: AnyObject {
-    func addToken(
-        _ newToken: TokenAddInteractorNewToken,
+protocol CurrencyAddInteractor: AnyObject {
+    func addCurrency(
+        _ currency: CurrencyAddInteractorNewCurrency,
         for network: Network,
         onCompletion: @escaping () -> Void
     )
@@ -34,19 +34,19 @@ final class DefaultTokenAddInteractor {
     }
 }
 
-extension DefaultTokenAddInteractor: TokenAddInteractor {
+extension DefaultTokenAddInteractor: CurrencyAddInteractor {
     
-    func addToken(
-        _ newToken: TokenAddInteractorNewToken,
+    func addCurrency(
+        _ currency: CurrencyAddInteractorNewCurrency,
         for network: Network,
         onCompletion: @escaping () -> Void
     ) {
         let currency = Currency(
-            name: newToken.name,
-            symbol: newToken.symbol.lowercased(),
-            decimals: KotlinUInt(value: UInt32(newToken.decimals)),
+            name: currency.name,
+            symbol: currency.symbol.lowercased(),
+            decimals: KotlinUInt(value: UInt32(currency.decimals)),
             type: .erc20,
-            address: newToken.address,
+            address: currency.address,
             coinGeckoId: nil
         )
         currencyStoreService.add(currency: currency, network: network)
