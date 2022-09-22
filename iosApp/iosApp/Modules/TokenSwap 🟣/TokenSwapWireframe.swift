@@ -31,7 +31,7 @@ protocol TokenSwapWireframe {
 final class DefaultTokenSwapWireframe {
     private weak var parent: UIViewController?
     private let context: TokenSwapWireframeContext
-    private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
+    private let currencyPickerWireframeFactory: CurrencyPickerWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let walletService: WalletService
@@ -43,7 +43,7 @@ final class DefaultTokenSwapWireframe {
     init(
         _ parent: UIViewController?,
         context: TokenSwapWireframeContext,
-        tokenPickerWireframeFactory: TokenPickerWireframeFactory,
+        currencyPickerWireframeFactory: CurrencyPickerWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         walletService: WalletService,
@@ -52,7 +52,7 @@ final class DefaultTokenSwapWireframe {
     ) {
         self.parent = parent
         self.context = context
-        self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
+        self.currencyPickerWireframeFactory = currencyPickerWireframeFactory
         self.confirmationWireframeFactory = confirmationWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.walletService = walletService
@@ -134,7 +134,7 @@ private extension DefaultTokenSwapWireframe {
         network: Network,
         onCompletion: @escaping (Currency) -> Void
     ) {
-        tokenPickerWireframeFactory.make(
+        currencyPickerWireframeFactory.make(
             vc,
             context: .init(
                 title: .select,

@@ -4,14 +4,14 @@
 
 import Foundation
 
-struct TokenPickerViewModel {
+struct CurrencyPickerViewModel {
     let title: String
     let allowMultiSelection: Bool
     let showAddCustomCurrency: Bool
     let content: Content
 }
 
-extension TokenPickerViewModel {
+extension CurrencyPickerViewModel {
     
     enum Content {
         case loading
@@ -47,7 +47,7 @@ extension TokenPickerViewModel {
         let imageName: String
         let symbol: String
         let name: String
-        let type: TokenType
+        let type: CurrencyType
         let position: Position
         
         enum Position {
@@ -58,7 +58,7 @@ extension TokenPickerViewModel {
         }
     }
     
-    struct TokenType {
+    struct CurrencyType {
         let isSelected: Bool?
         let balance: Balance?
         
@@ -69,7 +69,7 @@ extension TokenPickerViewModel {
     }
 }
 
-extension TokenPickerViewModel {
+extension CurrencyPickerViewModel {
 
     struct Error {
         let title: String
@@ -78,9 +78,9 @@ extension TokenPickerViewModel {
     }
 }
 
-extension TokenPickerViewModel {
+extension CurrencyPickerViewModel {
 
-    var sections: [TokenPickerViewModel.Section] {
+    var sections: [CurrencyPickerViewModel.Section] {
         switch content {
         case let .loaded(sections):
             return sections

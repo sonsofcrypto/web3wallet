@@ -4,13 +4,13 @@
 
 import UIKit
 
-protocol TokenPickerView: AnyObject {
-    func update(with viewModel: TokenPickerViewModel)
+protocol CurrencyPickerView: AnyObject {
+    func update(with viewModel: CurrencyPickerViewModel)
 }
 
-final class TokenPickerViewController: BaseViewController {
-    var presenter: TokenPickerPresenter!
-    var context: TokenPickerWireframeContext!
+final class CurrencyPickerViewController: BaseViewController {
+    var presenter: CurrencyPickerPresenter!
+    var context: CurrencyPickerWireframeContext!
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchContainerBox: UIView!
@@ -19,7 +19,7 @@ final class TokenPickerViewController: BaseViewController {
     @IBOutlet weak var searchTextField: TextField!
     @IBOutlet weak var dividerLineView: UIView!
     
-    private var viewModel: TokenPickerViewModel?
+    private var viewModel: CurrencyPickerViewModel?
     private var searchTerm = ""
     private var bottomKeyboardLayoutConstraint: NSLayoutConstraint!
     
@@ -34,9 +34,9 @@ final class TokenPickerViewController: BaseViewController {
     }
 }
 
-extension TokenPickerViewController: TokenPickerView {
+extension CurrencyPickerViewController: CurrencyPickerView {
 
-    func update(with viewModel: TokenPickerViewModel) {
+    func update(with viewModel: CurrencyPickerViewModel) {
         self.viewModel = viewModel
         title = viewModel.title
         collectionView.reloadData()
@@ -44,7 +44,7 @@ extension TokenPickerViewController: TokenPickerView {
     }
 }
 
-private extension TokenPickerViewController {
+private extension CurrencyPickerViewController {
     
     func configureUI() {
         NotificationCenter.default.addObserver(
@@ -72,9 +72,9 @@ private extension TokenPickerViewController {
             with: .targetAction(.init(target: self, selector: #selector(clearSearchAnddismissKeyboard)))
         )
         collectionView.register(
-            TokenPickerSectionCell.self,
+            CurrencyPickerSectionCell.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: "\(TokenPickerSectionCell.self)"
+            withReuseIdentifier: "\(CurrencyPickerSectionCell.self)"
         )
         collectionView.setCollectionViewLayout(
             compositionalLayout(),
@@ -163,7 +163,7 @@ private extension TokenPickerViewController {
     }
 }
 
-extension TokenPickerViewController: UICollectionViewDataSource {
+extension CurrencyPickerViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         viewModel?.sections.count ?? 0
@@ -194,7 +194,7 @@ extension TokenPickerViewController: UICollectionViewDataSource {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             let supplementary = collectionView.dequeue(
-                TokenPickerSectionCell.self,
+                CurrencyPickerSectionCell.self,
                 for: indexPath,
                 kind: kind
             )
@@ -206,7 +206,7 @@ extension TokenPickerViewController: UICollectionViewDataSource {
     }
 }
 
-extension TokenPickerViewController: UICollectionViewDelegate {
+extension CurrencyPickerViewController: UICollectionViewDelegate {
     
     func collectionView(
         _ collectionView: UICollectionView,
@@ -224,14 +224,14 @@ extension TokenPickerViewController: UICollectionViewDelegate {
     }
 }
 
-extension TokenPickerViewController: UITextFieldDelegate {
+extension CurrencyPickerViewController: UITextFieldDelegate {
         
     func textFieldDidChangeSelection(_ textField: UITextField) {
         presenter.handle(.search(searchTerm: textField.text ?? ""))
     }
 }
 
-private extension TokenPickerViewController {
+private extension CurrencyPickerViewController {
         
     func collectionViewCell(
         at indexPath: IndexPath,
@@ -243,14 +243,14 @@ private extension TokenPickerViewController {
         switch section.items[indexPath.item] {
         case let .network(network):
             let cell = collectionView.dequeue(
-                TokenPickerNetworkCell.self,
+                CurrencyPickerNetworkCell.self,
                 for: indexPath
             )
             cell.update(with: network)
             return cell
         case let .currency(currency):
             let cell = collectionView.dequeue(
-                TokenPickerTokenCell.self,
+                CurrencyPickerTokenCell.self,
                 for: indexPath
             )
             cell.update(with: currency)
@@ -268,7 +268,7 @@ private extension TokenPickerViewController {
     }
 }
 
-private extension TokenPickerViewController {
+private extension CurrencyPickerViewController {
     
     func compositionalLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] (idx, _) in

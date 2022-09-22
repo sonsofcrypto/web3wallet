@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -10,16 +11,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Token Picker View Controller-->
+        <!--Currency Picker View Controller-->
         <scene sceneID="pVQ-Nm-bbF">
             <objects>
-                <viewController storyboardIdentifier="TokenPickerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y2U-n2-HqG" customClass="TokenPickerViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CurrencyPickerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y2U-n2-HqG" customClass="CurrencyPickerViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="esC-9x-ufv" customClass="ThemeGradientView" customModule="iosApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="unt-fL-27U">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44.5"/>
+                                <rect key="frame" x="0.0" y="48" width="414" height="44.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="g3Z-sD-R3q">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
@@ -85,7 +86,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="md3-vt-1dq">
-                                <rect key="frame" x="0.0" y="88.5" width="414" height="807.5"/>
+                                <rect key="frame" x="0.0" y="92.5" width="414" height="803.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Rdh-1Y-e7S">
                                     <size key="itemSize" width="414" height="128"/>
@@ -94,7 +95,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="8" maxX="0.0" maxY="16"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TokenPickerNetworkCell" id="NY7-Hg-YaP" customClass="TokenPickerNetworkCell" customModule="iosApp" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CurrencyPickerNetworkCell" id="NY7-Hg-YaP" customClass="CurrencyPickerNetworkCell" customModule="iosApp" customModuleProvider="target">
                                         <rect key="frame" x="151.5" y="8" width="111.5" height="82"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Y0p-oB-Rsl">
@@ -145,23 +146,23 @@
                                             <outlet property="nameLabel" destination="5SO-rv-yof" id="usC-SJ-I8P"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TokenPickerTokenCell" id="f4v-eZ-APx" customClass="TokenPickerTokenCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="100" width="460" height="82"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CurrencyPickerTokenCell" id="f4v-eZ-APx" customClass="CurrencyPickerTokenCell" customModule="iosApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="100" width="460.5" height="82"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="zkn-tL-bqY">
-                                            <rect key="frame" x="0.0" y="0.0" width="460" height="82"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="460.5" height="82"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" placeholderIntrinsicWidth="460" placeholderIntrinsicHeight="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="DN1-TC-OCv" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="460" height="0.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="460.5" height="0.5"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 </view>
                                                 <view contentMode="scaleToFill" placeholderIntrinsicWidth="460" placeholderIntrinsicHeight="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="nCy-9g-L6Z" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="81.5" width="460" height="0.5"/>
+                                                    <rect key="frame" x="0.0" y="81.5" width="460.5" height="0.5"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 </view>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="6sH-32-iZ0">
-                                                    <rect key="frame" x="16" y="16" width="428" height="50"/>
+                                                    <rect key="frame" x="16" y="16" width="428.5" height="50"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eGO-N5-NaX">
                                                             <rect key="frame" x="0.0" y="0.0" width="24" height="50"/>
@@ -219,18 +220,18 @@
                                                             </subviews>
                                                         </stackView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G6o-Vx-QsF">
-                                                            <rect key="frame" x="193" y="0.0" width="235" height="50"/>
+                                                            <rect key="frame" x="193" y="0.0" width="235.5" height="50"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="avD-FR-gPb">
-                                                                    <rect key="frame" x="193.5" y="2.5" width="41.5" height="45"/>
+                                                                    <rect key="frame" x="194" y="2.5" width="41.5" height="45"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yiF-y2-Dyt">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yiF-y2-Dyt">
                                                                             <rect key="frame" x="0.0" y="0.0" width="41.5" height="20.5"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y5j-mO-lCt">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y5j-mO-lCt">
                                                                             <rect key="frame" x="0.0" y="24.5" width="41.5" height="20.5"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
@@ -311,7 +312,7 @@
     </scenes>
     <resources>
         <image name="confirm_icon" width="980" height="982"/>
-        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
+        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <namedColor name="appRed">
             <color red="0.90600001811981201" green="0.21600000560283661" blue="0.58399999141693115" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

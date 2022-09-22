@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class TokenPickerSectionCell: UICollectionReusableView {
+final class CurrencyPickerSectionCell: UICollectionReusableView {
     private var leadingConstraint: NSLayoutConstraint!
     private var trailingConstraint: NSLayoutConstraint!
     
@@ -27,9 +27,9 @@ final class TokenPickerSectionCell: UICollectionReusableView {
     }()
 }
 
-extension TokenPickerSectionCell {
+extension CurrencyPickerSectionCell {
 
-    func update(with viewModel: TokenPickerViewModel.Section) {
+    func update(with viewModel: CurrencyPickerViewModel.Section) {
         label.text = viewModel.name
         switch viewModel.type {
         case .networks:

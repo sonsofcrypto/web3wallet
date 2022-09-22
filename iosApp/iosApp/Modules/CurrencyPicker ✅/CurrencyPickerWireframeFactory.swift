@@ -5,46 +5,46 @@
 import UIKit
 import web3lib
 
-// MARK: - TokenPickerWireframeFactory
+// MARK: - CurrencyPickerWireframeFactory
 
-protocol TokenPickerWireframeFactory {
+protocol CurrencyPickerWireframeFactory {
     func make(
         _ parent: UIViewController?,
-        context: TokenPickerWireframeContext
-    ) -> TokenPickerWireframe
+        context: CurrencyPickerWireframeContext
+    ) -> CurrencyPickerWireframe
 }
 
-// MARK: - DefaultTokenPickerWireframeFactory
+// MARK: - DefaultCurrencyPickerWireframeFactory
 
-final class DefaultTokenPickerWireframeFactory {
-    private let tokenAddWireframeFactory: CurrencyAddWireframeFactory
+final class DefaultCurrencyPickerWireframeFactory {
+    private let currencyAddWireframeFactory: CurrencyAddWireframeFactory
     private let walletService: WalletService
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
     
     init(
-        tokenAddWireframeFactory: CurrencyAddWireframeFactory,
+        currencyAddWireframeFactory: CurrencyAddWireframeFactory,
         walletService: WalletService,
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService
     ) {
-        self.tokenAddWireframeFactory = tokenAddWireframeFactory
+        self.currencyAddWireframeFactory = currencyAddWireframeFactory
         self.walletService = walletService
         self.networksService = networksService
         self.currencyStoreService = currencyStoreService
     }
 }
 
-extension DefaultTokenPickerWireframeFactory: TokenPickerWireframeFactory {
+extension DefaultCurrencyPickerWireframeFactory: CurrencyPickerWireframeFactory {
 
     func make(
         _ parent: UIViewController?,
-        context: TokenPickerWireframeContext
-    ) -> TokenPickerWireframe {
-        DefaultTokenPickerWireframe(
+        context: CurrencyPickerWireframeContext
+    ) -> CurrencyPickerWireframe {
+        DefaultCurrencyPickerWireframe(
             parent,
             context: context,
-            tokenAddWireframeFactory: tokenAddWireframeFactory,
+            currencyAddWireframeFactory: currencyAddWireframeFactory,
             walletService: walletService,
             networksService: networksService,
             currencyStoreService: currencyStoreService
@@ -54,12 +54,12 @@ extension DefaultTokenPickerWireframeFactory: TokenPickerWireframeFactory {
 
 // MARK: - Assembler
 
-final class TokenPickerWireframeFactoryAssembler: AssemblerComponent {
+final class CurrencyPickerWireframeFactoryAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .instance) { resolver -> TokenPickerWireframeFactory in
-            DefaultTokenPickerWireframeFactory(
-                tokenAddWireframeFactory: resolver.resolve(),
+        registry.register(scope: .instance) { resolver -> CurrencyPickerWireframeFactory in
+            DefaultCurrencyPickerWireframeFactory(
+                currencyAddWireframeFactory: resolver.resolve(),
                 walletService: resolver.resolve(),
                 networksService: resolver.resolve(),
                 currencyStoreService: resolver.resolve()

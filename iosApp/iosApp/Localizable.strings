@@ -238,16 +238,16 @@
 "chat.me.message2" = "Perfect, I will check this out";
 "chat.me.message3" = "Also, please tell SonsOfCrypto team that they rock! 🔥";
 
-"tokenPicker.title.receive" = "Select a currency";
-"tokenPicker.title.send" = "Select a currency";
-"tokenPicker.title.multiSelectEdit" = "Select currencies";
-"tokenPicker.title.select" = "Select a currency";
-"tokenPicker.networks.title" = "Available networks";
-"tokenPicker.myTokens.title" = "My currencies";
-"tokenPicker.other.title" = "All currencies";
-"tokenPicker.featured.title" = "Featured";
-"tokenPicker.popular.title" = "Popular";
-"tokenPicker.noResults" = "No results";
+"currencyPicker.title.receive" = "Select a currency";
+"currencyPicker.title.send" = "Select a currency";
+"currencyPicker.title.multiSelectEdit" = "Select currencies";
+"currencyPicker.title.select" = "Select a currency";
+"currencyPicker.networks.title" = "Available networks";
+"currencyPicker.myTokens.title" = "My currencies";
+"currencyPicker.other.title" = "All currencies";
+"currencyPicker.featured.title" = "Featured";
+"currencyPicker.popular.title" = "Popular";
+"currencyPicker.noResults" = "No results";
 
 "tokenReceive.title.receive" = "Receive %@";
 "tokenReceive.qrcode.name" = "web3wallet";

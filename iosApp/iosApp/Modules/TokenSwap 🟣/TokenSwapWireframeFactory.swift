@@ -13,7 +13,7 @@ protocol TokenSwapWireframeFactory {
 }
 
 final class DefaultTokenSwapWireframeFactory {
-    private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
+    private let currencyPickerWireframeFactory: CurrencyPickerWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let walletService: WalletService
@@ -21,14 +21,14 @@ final class DefaultTokenSwapWireframeFactory {
     private let swapService: UniswapService
 
     init(
-        tokenPickerWireframeFactory: TokenPickerWireframeFactory,
+        currencyPickerWireframeFactory: CurrencyPickerWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         walletService: WalletService,
         networksService: NetworksService,
         swapService: UniswapService
     ) {
-        self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
+        self.currencyPickerWireframeFactory = currencyPickerWireframeFactory
         self.confirmationWireframeFactory = confirmationWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.walletService = walletService
@@ -47,7 +47,7 @@ extension DefaultTokenSwapWireframeFactory: TokenSwapWireframeFactory {
         DefaultTokenSwapWireframe(
             parent,
             context: context,
-            tokenPickerWireframeFactory: tokenPickerWireframeFactory,
+            currencyPickerWireframeFactory: currencyPickerWireframeFactory,
             confirmationWireframeFactory: confirmationWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
             walletService: walletService,
@@ -64,7 +64,7 @@ final class TokenSwapWireframeFactoryAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .instance) { resolver -> TokenSwapWireframeFactory in
             DefaultTokenSwapWireframeFactory(
-                tokenPickerWireframeFactory: resolver.resolve(),
+                currencyPickerWireframeFactory: resolver.resolve(),
                 confirmationWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
                 walletService: resolver.resolve(),

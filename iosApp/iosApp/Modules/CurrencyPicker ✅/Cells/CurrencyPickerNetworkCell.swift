@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class TokenPickerNetworkCell: CollectionViewCell {
+final class CurrencyPickerNetworkCell: CollectionViewCell {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     
@@ -18,7 +18,7 @@ final class TokenPickerNetworkCell: CollectionViewCell {
         nameLabel.font = Theme.font.body
     }
     
-    func update(with viewModel: TokenPickerViewModel.Network) {
+    func update(with viewModel: CurrencyPickerViewModel.Network) {
         iconImageView.image = viewModel.iconName.assetImage
         nameLabel.text = viewModel.name
         layer.borderWidth = viewModel.isSelected ? 1.0 : 0.0

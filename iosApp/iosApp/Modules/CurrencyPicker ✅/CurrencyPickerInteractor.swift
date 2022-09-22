@@ -5,7 +5,7 @@
 import Foundation
 import web3lib
 
-protocol TokenPickerInteractor: AnyObject {
+protocol CurrencyPickerInteractor: AnyObject {
     var selectedNetwork: Network? { get }
     var supportedNetworks: [Network] { get }
     func myCurrencies(for network: Network) -> [Currency]
@@ -13,7 +13,7 @@ protocol TokenPickerInteractor: AnyObject {
     func balance(for currency: Currency, network: Network) -> BigInt
 }
 
-final class DefaultTokenPickerInteractor {
+final class DefaultCurrencyPickerInteractor {
     private let walletService: WalletService
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
@@ -29,7 +29,7 @@ final class DefaultTokenPickerInteractor {
     }
 }
 
-extension DefaultTokenPickerInteractor: TokenPickerInteractor {
+extension DefaultCurrencyPickerInteractor: CurrencyPickerInteractor {
     var selectedNetwork: Network? { networksService.network }
     
     var supportedNetworks: [Network] { networksService.enabledNetworks() }

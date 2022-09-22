@@ -40,7 +40,7 @@ extension UIStoryboard {
         case mnemonicConfirmation = "MnemonicConfirmation"
         case apps = "Apps"
         case chat = "Chat"
-        case tokenPicker = "TokenPicker"
+        case currencyPicker = "CurrencyPicker"
         case tokenReceive = "TokenReceive"
         case currencyAdd = "CurrencyAdd"
         case tokenSend = "TokenSend"

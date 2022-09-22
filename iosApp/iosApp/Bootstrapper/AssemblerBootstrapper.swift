@@ -65,7 +65,7 @@ private extension AssemblerBootstrapper {
             ChatWireframeFactoryAssembler(),
             CultProposalsWireframeFactoryAssembler(),
             CultProposalWireframeFactoryAssembler(),
-            TokenPickerWireframeFactoryAssembler(),
+            CurrencyPickerWireframeFactoryAssembler(),
             TokenReceiveWireframeFactoryAssembler(),
             CurrencyAddWireframeFactoryAssembler(),
             TokenSendWireframeFactoryAssembler(),

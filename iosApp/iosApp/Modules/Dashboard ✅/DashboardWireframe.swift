@@ -35,7 +35,7 @@ final class DefaultDashboardWireframe {
     private let accountWireframeFactory: AccountWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
-    private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
+    private let tokenPickerWireframeFactory: CurrencyPickerWireframeFactory
     private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
     private let tokenSendWireframeFactory: TokenSendWireframeFactory
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
@@ -56,7 +56,7 @@ final class DefaultDashboardWireframe {
         accountWireframeFactory: AccountWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
-        tokenPickerWireframeFactory: TokenPickerWireframeFactory,
+        tokenPickerWireframeFactory: CurrencyPickerWireframeFactory,
         tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
         tokenSendWireframeFactory: TokenSendWireframeFactory,
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
@@ -121,7 +121,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
         case .mnemonicConfirmation:
             mnemonicConfirmationWireframeFactory.makeWireframe(parent).present()
         case .receive:
-            let source = TokenPickerWireframeContext.Source.select(
+            let source = CurrencyPickerWireframeContext.Source.select(
                 onCompletion: { [weak self] (network, currency) in
                     guard let self = self else { return }
                     self.tokenReceiveWireframeFactory.make(
@@ -130,7 +130,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                     ).present()
                 }
             )
-            let context = TokenPickerWireframeContext(
+            let context = CurrencyPickerWireframeContext(
                 title: .receive,
                 selectedNetwork: nil,
                 networks: .all,
@@ -166,7 +166,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 )
             ).present()
         case let .editCurrencies(network, selectedCurrencies, onCompletion):
-            let source: TokenPickerWireframeContext.Source = .multiSelectEdit(
+            let source: CurrencyPickerWireframeContext.Source = .multiSelectEdit(
                 selectedCurrencies: selectedCurrencies,
                 onCompletion: onCompletion
             )
@@ -222,7 +222,7 @@ private extension DefaultDashboardWireframe {
     
     func navigateToTokenPicker() {
         guard let vc = self.vc else { return }
-        let source = TokenPickerWireframeContext.Source.select(
+        let source = CurrencyPickerWireframeContext.Source.select(
             onCompletion: { [weak self] (network, currency) in
                 guard let self = self else { return }
                 self.tokenSendWireframeFactory.make(
@@ -231,7 +231,7 @@ private extension DefaultDashboardWireframe {
                 ).present()
             }
         )
-        let context = TokenPickerWireframeContext(
+        let context = CurrencyPickerWireframeContext(
             title: .send,
             selectedNetwork: nil,
             networks: .all,

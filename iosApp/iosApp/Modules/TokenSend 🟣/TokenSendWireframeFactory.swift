@@ -14,7 +14,7 @@ protocol TokenSendWireframeFactory {
 
 final class DefaultTokenSendWireframeFactory {
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
-    private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
+    private let currencyPickerWireframeFactory: CurrencyPickerWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let walletService: WalletService
@@ -22,14 +22,14 @@ final class DefaultTokenSendWireframeFactory {
 
     init(
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
-        tokenPickerWireframeFactory: TokenPickerWireframeFactory,
+        currencyPickerWireframeFactory: CurrencyPickerWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         walletService: WalletService,
         networksService: NetworksService
     ) {
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
-        self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
+        self.currencyPickerWireframeFactory = currencyPickerWireframeFactory
         self.confirmationWireframeFactory = confirmationWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.walletService = walletService
@@ -47,7 +47,7 @@ extension DefaultTokenSendWireframeFactory: TokenSendWireframeFactory {
             parent,
             context: context,
             qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
-            tokenPickerWireframeFactory: tokenPickerWireframeFactory,
+            currencyPickerWireframeFactory: currencyPickerWireframeFactory,
             confirmationWireframeFactory: confirmationWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
             walletService: walletService,
@@ -64,7 +64,7 @@ final class TokenSendWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> TokenSendWireframeFactory in
             DefaultTokenSendWireframeFactory(
                 qrCodeScanWireframeFactory: resolver.resolve(),
-                tokenPickerWireframeFactory: resolver.resolve(),
+                currencyPickerWireframeFactory: resolver.resolve(),
                 confirmationWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
                 walletService: resolver.resolve(),

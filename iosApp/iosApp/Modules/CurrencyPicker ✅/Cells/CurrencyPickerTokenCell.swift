@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class TokenPickerTokenCell: UICollectionViewCell {
+final class CurrencyPickerTokenCell: UICollectionViewCell {
     @IBOutlet weak var separatorTopView: UIView!
     @IBOutlet weak var separatorTopViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var separatorTopViewTrailingConstraint: NSLayoutConstraint!
@@ -36,7 +36,7 @@ final class TokenPickerTokenCell: UICollectionViewCell {
         usdPriceLabel.textAlignment = .right
     }
 
-    func update(with viewModel: TokenPickerViewModel.Currency) {
+    func update(with viewModel: CurrencyPickerViewModel.Currency) {
         iconImageView.image = viewModel.imageName.assetImage
         symbolLabel.text = viewModel.symbol.uppercased()
         nameLabel.text = viewModel.name

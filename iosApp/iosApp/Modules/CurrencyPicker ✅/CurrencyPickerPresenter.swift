@@ -5,25 +5,25 @@
 import Foundation
 import web3lib
 
-enum TokenPickerPresenterEvent {
+enum CurrencyPickerPresenterEvent {
     case search(searchTerm: String)
-    case selectNetwork(TokenPickerViewModel.Network)
-    case selectCurrency(TokenPickerViewModel.Currency)
+    case selectNetwork(CurrencyPickerViewModel.Network)
+    case selectCurrency(CurrencyPickerViewModel.Currency)
     case addCustomCurrency
     case done
     case dismiss
 }
 
-protocol TokenPickerPresenter {
+protocol CurrencyPickerPresenter {
     func present()
-    func handle(_ event: TokenPickerPresenterEvent)
+    func handle(_ event: CurrencyPickerPresenterEvent)
 }
 
-final class DefaultTokenPickerPresenter {
-    private weak var view: TokenPickerView?
-    private let wireframe: TokenPickerWireframe
-    private let interactor: TokenPickerInteractor
-    private let context: TokenPickerWireframeContext
+final class DefaultCurrencyPickerPresenter {
+    private weak var view: CurrencyPickerView?
+    private let wireframe: CurrencyPickerWireframe
+    private let interactor: CurrencyPickerInteractor
+    private let context: CurrencyPickerWireframeContext
     
     private var searchTerm: String = ""
     private var selectedNetwork: Network!
@@ -34,10 +34,10 @@ final class DefaultTokenPickerPresenter {
     private var currenciesFiltered = [Currency]()
 
     init(
-        view: TokenPickerView,
-        wireframe: TokenPickerWireframe,
-        interactor: TokenPickerInteractor,
-        context: TokenPickerWireframeContext
+        view: CurrencyPickerView,
+        wireframe: CurrencyPickerWireframe,
+        interactor: CurrencyPickerInteractor,
+        context: CurrencyPickerWireframeContext
     ) {
         self.view = view
         self.wireframe = wireframe
@@ -46,16 +46,16 @@ final class DefaultTokenPickerPresenter {
     }
 }
 
-extension DefaultTokenPickerPresenter: TokenPickerPresenter {
+extension DefaultCurrencyPickerPresenter: CurrencyPickerPresenter {
 
     func present() {
         loadSelectedNetworksIfNeeded()
-        loadSelectedTokensIfNeeded()
+        loadSelectedCurrenciesIfNeeded()
         refreshCurrencies()
         refreshData()
     }
 
-    func handle(_ event: TokenPickerPresenterEvent) {
+    func handle(_ event: CurrencyPickerPresenterEvent) {
         switch event {
         case let .search(searchTerm):
             self.searchTerm = searchTerm
@@ -85,11 +85,11 @@ extension DefaultTokenPickerPresenter: TokenPickerPresenter {
     }
 }
 
-private extension DefaultTokenPickerPresenter {
+private extension DefaultCurrencyPickerPresenter {
     
     func onMultiSelectCurrenciesChanged() {
         guard
-            case let TokenPickerWireframeContext.Source.multiSelectEdit(_, onCompletion) = context.source
+            case let CurrencyPickerWireframeContext.Source.multiSelectEdit(_, onCompletion) = context.source
         else { return }
         onCompletion(selectedCurrencies)
     }
@@ -110,7 +110,7 @@ private extension DefaultTokenPickerPresenter {
         }
     }
     
-    func loadSelectedTokensIfNeeded() {
+    func loadSelectedCurrenciesIfNeeded() {
         switch context.source {
         case let .multiSelectEdit(selectedCurrencies, _):
             self.selectedCurrencies = selectedCurrencies
@@ -119,7 +119,7 @@ private extension DefaultTokenPickerPresenter {
         }
     }
     
-    func handleCurrencyTappedOnMultiSelect(currency: TokenPickerViewModel.Currency) {
+    func handleCurrencyTappedOnMultiSelect(currency: CurrencyPickerViewModel.Currency) {
         if let currency = selectedCurrenciesFiltered.findCurrency(matching: currency.id) {
             selectedCurrencies = selectedCurrencies.removingCurrency(id: currency.id())
         } else if let currency = currenciesFiltered.findCurrency(matching: currency.id) {
@@ -129,11 +129,11 @@ private extension DefaultTokenPickerPresenter {
         refreshData()
     }
     
-    func findSelectedNetwork(from network: TokenPickerViewModel.Network) -> Network? {
+    func findSelectedNetwork(from network: CurrencyPickerViewModel.Network) -> Network? {
         networks.first { $0.id() == network.networkId }
     }
     
-    func findSelectedCurrency(from currency: TokenPickerViewModel.Currency) -> Currency? {
+    func findSelectedCurrency(from currency: CurrencyPickerViewModel.Currency) -> Currency? {
         if let currency = selectedCurrenciesFiltered.findCurrency(matching: currency.id) {
             return currency
         } else if let currency = currenciesFiltered.findCurrency(matching: currency.id) {
@@ -161,26 +161,26 @@ private extension DefaultTokenPickerPresenter {
         updateView(with: sectionsToDisplay())
     }
     
-    func updateView(with sectionsDisplayed: [TokenPickerViewModel.Section]) {
+    func updateView(with sectionsDisplayed: [CurrencyPickerViewModel.Section]) {
         let viewModel = viewModel(with: sectionsDisplayed)
         view?.update(with: viewModel)
     }
     
-    func viewModel(with sectionsDisplayed: [TokenPickerViewModel.Section]) -> TokenPickerViewModel {
+    func viewModel(with sectionsDisplayed: [CurrencyPickerViewModel.Section]) -> CurrencyPickerViewModel {
         .init(
-            title: Localized("tokenPicker.title.\(context.title.rawValue)"),
+            title: Localized("currencyPicker.title.\(context.title.rawValue)"),
             allowMultiSelection: context.source.isMultiSelect,
             showAddCustomCurrency: context.showAddCustomCurrency,
             content: .loaded(sections: sectionsDisplayed)
         )
     }
     
-    func sectionsToDisplay() -> [TokenPickerViewModel.Section] {
-        var sections = [TokenPickerViewModel.Section]()
+    func sectionsToDisplay() -> [CurrencyPickerViewModel.Section] {
+        var sections = [CurrencyPickerViewModel.Section]()
         if networks.count > 1 {
             sections.append(
                 .init(
-                    name: Localized("tokenPicker.networks.title"),
+                    name: Localized("currencyPicker.networks.title"),
                     type: .networks,
                     items: viewModelNetworks()
                 )
@@ -189,7 +189,7 @@ private extension DefaultTokenPickerPresenter {
         if !selectedCurrenciesFiltered.isEmpty {
             sections.append(
                 .init(
-                    name: Localized("tokenPicker.myTokens.title"),
+                    name: Localized("currencyPicker.myTokens.title"),
                     type: .tokens,
                     items: myViewModelCurrencies(from: selectedCurrenciesFiltered)
                 )
@@ -198,7 +198,7 @@ private extension DefaultTokenPickerPresenter {
         if !currenciesFiltered.isEmpty {
             sections.append(
                 .init(
-                    name: Localized("tokenPicker.other.title"),
+                    name: Localized("currencyPicker.other.title"),
                     type: .tokens,
                     items: otherViewModelCurrencies(from: currenciesFiltered)
                 )
@@ -208,9 +208,9 @@ private extension DefaultTokenPickerPresenter {
     }
 }
 
-private extension DefaultTokenPickerPresenter {
+private extension DefaultCurrencyPickerPresenter {
     
-    func viewModelNetworks() -> [TokenPickerViewModel.Item] {
+    func viewModelNetworks() -> [CurrencyPickerViewModel.Item] {
         networks.compactMap {
             .network(
                 .init(
@@ -223,11 +223,11 @@ private extension DefaultTokenPickerPresenter {
         }
     }
     
-    func myViewModelCurrencies(from currencies: [Currency]) -> [TokenPickerViewModel.Item] {
+    func myViewModelCurrencies(from currencies: [Currency]) -> [CurrencyPickerViewModel.Item] {
         currencies.compactMap { currency in
             let currencyBalance = interactor.balance(for: currency, network: selectedNetwork)
             let fiatBalancce = currency.fiatValue(for: currencyBalance)
-            let type: TokenPickerViewModel.TokenType
+            let type: CurrencyPickerViewModel.CurrencyType
             switch context.source {
             case .multiSelectEdit:
                 let isSelected = selectedCurrenciesFiltered.contains(
@@ -259,7 +259,7 @@ private extension DefaultTokenPickerPresenter {
                     )
                 )
             }
-            let position: TokenPickerViewModel.Currency.Position
+            let position: CurrencyPickerViewModel.Currency.Position
             if currencies.first == currency && currencies.last == currency {
                 position = .onlyOne
             } else if currencies.first == currency {
@@ -282,9 +282,9 @@ private extension DefaultTokenPickerPresenter {
         }
     }
     
-    func otherViewModelCurrencies(from currencies: [Currency]) -> [TokenPickerViewModel.Item] {
+    func otherViewModelCurrencies(from currencies: [Currency]) -> [CurrencyPickerViewModel.Item] {
         currencies.compactMap { currency in
-            let type: TokenPickerViewModel.TokenType
+            let type: CurrencyPickerViewModel.CurrencyType
             switch context.source {
             case .select:
                 type = .init(
@@ -300,7 +300,7 @@ private extension DefaultTokenPickerPresenter {
                     balance: nil
                 )
             }
-            let position: TokenPickerViewModel.Currency.Position
+            let position: CurrencyPickerViewModel.Currency.Position
             if currencies.first == currency && currencies.last == currency {
                 position = .onlyOne
             } else if currencies.first == currency {
@@ -370,13 +370,13 @@ private extension Array where Element == Currency {
     }
 }
 
-private extension Array where Element == TokenPickerViewModel.Section {
+private extension Array where Element == CurrencyPickerViewModel.Section {
     
-    var addNoResultsIfNeeded: [TokenPickerViewModel.Section] {
+    var addNoResultsIfNeeded: [CurrencyPickerViewModel.Section] {
         guard isEmpty else { return self }
         return [
             .init(
-                name: Localized("tokenPicker.noResults"),
+                name: Localized("currencyPicker.noResults"),
                 type: .tokens,
                 items: []
             )

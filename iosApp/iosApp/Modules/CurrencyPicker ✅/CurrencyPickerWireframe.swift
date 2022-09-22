@@ -5,14 +5,14 @@
 import UIKit
 import web3lib
 
-struct TokenPickerWireframeContext {    
+struct CurrencyPickerWireframeContext {    
     let title: TitleKey
     let selectedNetwork: Network?
     let networks: Networks
     let source: Source
     let showAddCustomCurrency: Bool
     
-    // This will be used to construct the view title as: "tokenPicker.title.<titleKey.rawValue>"
+    // This will be used to construct the view title as: "currencyPicker.title.<titleKey.rawValue>"
     enum TitleKey: String {
         case multiSelectEdit = "multiSelectEdit"
         case receive = "receive"
@@ -43,21 +43,21 @@ struct TokenPickerWireframeContext {
     }
 }
 
-enum TokenPickerWireframeDestination {
+enum CurrencyPickerWireframeDestination {
     case addCustomCurrency(network: Network)
 }
 
-protocol TokenPickerWireframe {
+protocol CurrencyPickerWireframe {
     func present()
-    func navigate(to destination: TokenPickerWireframeDestination)
+    func navigate(to destination: CurrencyPickerWireframeDestination)
     func dismiss()
 }
 
-final class DefaultTokenPickerWireframe {
+final class DefaultCurrencyPickerWireframe {
     
     private weak var parent: UIViewController?
-    private let context: TokenPickerWireframeContext
-    private let tokenAddWireframeFactory: CurrencyAddWireframeFactory
+    private let context: CurrencyPickerWireframeContext
+    private let currencyAddWireframeFactory: CurrencyAddWireframeFactory
     private let walletService: WalletService
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
@@ -66,32 +66,32 @@ final class DefaultTokenPickerWireframe {
     
     init(
         _ parent: UIViewController?,
-        context: TokenPickerWireframeContext,
-        tokenAddWireframeFactory: CurrencyAddWireframeFactory,
+        context: CurrencyPickerWireframeContext,
+        currencyAddWireframeFactory: CurrencyAddWireframeFactory,
         walletService: WalletService,
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService
     ) {
         self.parent = parent
         self.context = context
-        self.tokenAddWireframeFactory = tokenAddWireframeFactory
+        self.currencyAddWireframeFactory = currencyAddWireframeFactory
         self.walletService = walletService
         self.networksService = networksService
         self.currencyStoreService = currencyStoreService
     }
 }
 
-extension DefaultTokenPickerWireframe: TokenPickerWireframe {
+extension DefaultCurrencyPickerWireframe: CurrencyPickerWireframe {
     
     func present() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
     
-    func navigate(to destination: TokenPickerWireframeDestination) {
+    func navigate(to destination: CurrencyPickerWireframeDestination) {
         switch destination {
         case let .addCustomCurrency(network):
-            tokenAddWireframeFactory.make(
+            currencyAddWireframeFactory.make(
                 vc,
                 context: .init(network: network)
             ).present()
@@ -101,16 +101,16 @@ extension DefaultTokenPickerWireframe: TokenPickerWireframe {
     func dismiss() { vc?.popOrDismiss() }
 }
 
-private extension DefaultTokenPickerWireframe {
+private extension DefaultCurrencyPickerWireframe {
     
     func wireUp() -> UIViewController {
-        let interactor = DefaultTokenPickerInteractor(
+        let interactor = DefaultCurrencyPickerInteractor(
             walletService: walletService,
             networksService: networksService,
             currencyStoreService: currencyStoreService
         )
-        let vc: TokenPickerViewController = UIStoryboard(.tokenPicker).instantiate()
-        let presenter = DefaultTokenPickerPresenter(
+        let vc: CurrencyPickerViewController = UIStoryboard(.currencyPicker).instantiate()
+        let presenter = DefaultCurrencyPickerPresenter(
             view: vc,
             wireframe: self,
             interactor: interactor,

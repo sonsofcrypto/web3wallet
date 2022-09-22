@@ -28,7 +28,7 @@ final class DefaultTokenSendWireframe {
     private weak var parent: UIViewController?
     private let context: TokenSendWireframeContext
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
-    private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
+    private let currencyPickerWireframeFactory: CurrencyPickerWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let walletService: WalletService
@@ -40,7 +40,7 @@ final class DefaultTokenSendWireframe {
         _ parent: UIViewController?,
         context: TokenSendWireframeContext,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
-        tokenPickerWireframeFactory: TokenPickerWireframeFactory,
+        currencyPickerWireframeFactory: CurrencyPickerWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         walletService: WalletService,
@@ -49,7 +49,7 @@ final class DefaultTokenSendWireframe {
         self.parent = parent
         self.context = context
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
-        self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
+        self.currencyPickerWireframeFactory = currencyPickerWireframeFactory
         self.confirmationWireframeFactory = confirmationWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.walletService = walletService
@@ -78,7 +78,7 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
                 context: .init(type: .network(network), onCompletion: onCompletion)
             ).present()
         case let .selectCurrency(onCompletion):
-            tokenPickerWireframeFactory.make(
+            currencyPickerWireframeFactory.make(
                 vc,
                 context: .init(
                     title: .select,
