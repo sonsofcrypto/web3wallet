@@ -114,16 +114,13 @@ extension DefaultFeaturesWireframe {
         
         switch context.presentationStyle {
         case .embed:
-            
             fatalError("Not implemented")
         case .present:
-                        
             let navigationController = NavigationController(rootViewController: vc)
             self.navigationController = navigationController
             return navigationController
             
         case .push:
-            
             vc.hidesBottomBarWhenPushed = true
             return vc
         }

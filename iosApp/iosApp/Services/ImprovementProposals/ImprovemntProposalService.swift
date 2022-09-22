@@ -14,7 +14,7 @@ protocol ImprovementProposalsService {
     func fetchProposals(handler: @escaping ProposalsHandler)
 }
 
-final class DefaultFeaturesService {
+final class DefaultImprovementProposalsService {
     let defaults: UserDefaults
     
     init(defaults: UserDefaults) {
@@ -22,7 +22,7 @@ final class DefaultFeaturesService {
     }
 }
 
-extension DefaultFeaturesService: ImprovementProposalsService {
+extension DefaultImprovementProposalsService: ImprovementProposalsService {
     
     func fetchProposals(handler: @escaping ProposalsHandler) {
         URLSession.shared.dataTask(with: url()) { (data, response, error) in
@@ -46,7 +46,7 @@ extension DefaultFeaturesService: ImprovementProposalsService {
     }
 }
 
-private extension DefaultFeaturesService {
+private extension DefaultImprovementProposalsService {
     
     func url() -> URL! {
         var urlComponents = URLComponents()

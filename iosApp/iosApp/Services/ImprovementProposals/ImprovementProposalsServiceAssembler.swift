@@ -8,7 +8,7 @@ final class ImprovementProposalsServiceAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .instance) { resolver -> ImprovementProposalsService in
-            DefaultFeaturesService(defaults: .standard)
+            DefaultImprovementProposalsService(defaults: .standard)
         }
     }
 }

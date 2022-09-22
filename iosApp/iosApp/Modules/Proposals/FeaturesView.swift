@@ -10,7 +10,6 @@ protocol FeaturesView: AnyObject {
 }
 
 final class FeaturesViewController: BaseViewController {
-    
     //let searchController = UISearchController()
     @IBOutlet weak var topContainerView: UIView!
     @IBOutlet weak var segmentContainer: UIView!
@@ -23,11 +22,8 @@ final class FeaturesViewController: BaseViewController {
     private var viewModel: FeaturesViewModel!
 
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         configureUI()
-        
         presenter?.present()
     }
 }
@@ -35,21 +31,16 @@ final class FeaturesViewController: BaseViewController {
 extension FeaturesViewController: FeaturesView {
 
     func update(with viewModel: FeaturesViewModel) {
-        
         self.viewModel = viewModel
-        
         title = viewModel.title
-                
+
         switch viewModel {
-            
         case .loading:
             showLoading()
-            
         case .loaded:
             hideLoading()
             collectionView.reloadData()
             refreshControl.endRefreshing()
-
         case .error:
             hideLoading()
             //showError()
@@ -60,7 +51,6 @@ extension FeaturesViewController: FeaturesView {
 extension FeaturesViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        
         viewModel.sections.count
     }
     
@@ -68,7 +58,6 @@ extension FeaturesViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        
         viewModel.sections[section].items.count
     }
     
@@ -76,13 +65,13 @@ extension FeaturesViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        
         let section = viewModel.sections[indexPath.section]
         let viewModel = section.items[indexPath.item]
         let cell = collectionView.dequeue(FeaturesCell.self, for: indexPath)
+        let idx = indexPath.item
         return cell.update(
             with: viewModel,
-            handler: makeFeaturesCellHandler()
+            handler: { [weak self] in self?.presenter.handle(.vote(idx: idx)) }
         )
     }
     
@@ -91,10 +80,8 @@ extension FeaturesViewController: UICollectionViewDataSource {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        
         switch kind {
         case "header":
-            
             guard let headerView = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
                 withReuseIdentifier: String(describing: FeaturesHeaderSupplementaryView.self),
@@ -121,12 +108,9 @@ extension FeaturesViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        
-        let section = viewModel.sections[indexPath.section]
-        let item = section.items[indexPath.row]
-        presenter.handle(.select(id: item.id))
+        presenter.handle(.select(idx: indexPath.item))
     }
-    
+
 //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //
 //        searchController.searchBar.resignFirstResponder()
@@ -136,25 +120,17 @@ extension FeaturesViewController: UICollectionViewDelegate {
 private extension FeaturesViewController {
     
     func showLoading() {
-        
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
     }
     
     func hideLoading() {
-        
         activityIndicator.isHidden = true
         activityIndicator.stopAnimating()
     }
     
     func setSegmented() {
-        
         let segmentControl = SegmentedControl()
-//        segmentControl.insertSegment(
-//            withTitle: Localized("features.segmentedControl.all"),
-//            at: 0,
-//            animated: false
-//        )
         segmentControl.insertSegment(
             withTitle: Localized("features.segmentedControl.infrastructure"),
             at: 0,
@@ -195,20 +171,7 @@ private extension FeaturesViewController {
     }
     
     @objc func segmentControlChanged(_ sender: SegmentedControl) {
-        
-        let sectionType: FeaturesViewModel.Section.`Type`
-        
-        switch sender.selectedSegmentIndex {
-            
-        //case 0: sectionType = .all
-        case 0: sectionType = .infrastructure
-        case 1: sectionType = .integrations
-        default: sectionType = .features
-        }
-        
-        return presenter.handle(
-            .filterBySection(sectionType: sectionType)
-        )
+        presenter.handle(.didSelectCategory(idx: sender.selectedSegmentIndex))
     }
     
     func configureUI() {
@@ -320,25 +283,6 @@ private extension FeaturesViewController {
         section.boundarySupplementaryItems = [headerItem]
         
         return section
-    }
-}
-
-private extension FeaturesViewController {
-
-    func makeFeaturesCellHandler() -> FeaturesCell.Handler {
-        
-        .init(
-            onVote: makeOnVote()
-        )
-    }
-    
-    func makeOnVote() -> (String) -> Void {
-        
-        {
-            [weak self] id in
-            guard let self = self else { return }
-            self.presenter.handle(.vote(id: id))
-        }
     }
 }
 

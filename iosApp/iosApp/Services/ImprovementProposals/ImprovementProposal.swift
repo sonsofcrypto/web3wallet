@@ -33,11 +33,11 @@ struct ImprovementProposal: Codable, Equatable {
     let creationDate: String // "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     let votes: Int
 
-    enum Category: String, Equatable {
-        case unknown
+    enum Category: String, Equatable, CaseIterable {
         case infrastructure
         case integration
         case feature
+        case unknown
     }
 
     init(from decoder: Decoder) throws {

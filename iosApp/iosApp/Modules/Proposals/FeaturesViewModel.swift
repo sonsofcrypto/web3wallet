@@ -14,7 +14,6 @@ enum FeaturesViewModel {
 extension FeaturesViewModel {
     
     struct Section {
-        
         let title: String
         let description: String
         let type: `Type`
@@ -28,7 +27,6 @@ extension FeaturesViewModel {
             case features
             
             var stringValue: String {
-                
                 switch self {
                 case .all:
                     return Localized("features.segmentedControl.all")
@@ -42,7 +40,6 @@ extension FeaturesViewModel {
             }
             
             var descriptionValue: String {
-                
                 switch self {
                 case .all:
                     return Localized("features.section.all.description")
@@ -57,14 +54,12 @@ extension FeaturesViewModel {
         }
         
         struct Footer {
-            
             let imageName: String
             let text: String
         }
     }
 
     struct Item {
-        
         let id: String
         let title: String
         let subtitle: String
@@ -75,7 +70,6 @@ extension FeaturesViewModel {
 extension FeaturesViewModel {
 
     struct Error {
-        
         let title: String
         let body: String
         let actions: [String]
@@ -99,12 +93,25 @@ extension FeaturesViewModel {
     }
     
     var selectedSectionType: FeaturesViewModel.Section.`Type` {
-        
         switch self {
         case let .loaded(_, type):
             return type
         default:
             return .all
+        }
+    }
+}
+
+extension FeaturesViewModel.Section.`Type` {
+
+    static func from(
+        _ category: ImprovementProposal.Category
+    ) -> FeaturesViewModel.Section.`Type` {
+        switch category {
+        case .infrastructure: return .infrastructure
+        case .integration: return .integrations
+        case .feature: return .features
+        default: return .all
         }
     }
 }

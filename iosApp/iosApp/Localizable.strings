@@ -417,7 +417,7 @@
 "features.segmentedControl.infrastructure" = "Infrastructure";
 "features.segmentedControl.integrations" = "Integrations";
 "features.segmentedControl.features" = "Features";
-"features.segmentedControl.features" = "Unknown";
+"features.segmentedControl.unknown" = "Unknown";
 "features.cell.votes" = "Votes: %@";
 "features.cell.button.vote" = "Vote";
 
@@ -426,7 +426,6 @@
 "feature.title.of" = "of";
 "feature.button.vote" = "Vote";
 "feature.hashTag" = "WIP_%@";
-"feature.vote.text" = "#WIP_%@ web3wallet improvement proposal\n\n%@\n\n#byDegensForDegens @sonsofcryptolab\n";
 
 "mnemonic.error.invalid" = "Invalid mnemonic, the words entered are invalid.";
 "mnemonic.error.invalid.wordCount" = "Typically 12 (or 15, 18, 21, 24) words separated by spaces.";

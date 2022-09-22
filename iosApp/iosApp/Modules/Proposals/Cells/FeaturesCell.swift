@@ -11,18 +11,11 @@ final class FeaturesCell: CollectionViewCell {
     @IBOutlet weak var voteButton: Button!
     @IBOutlet weak var chevronImageView: UIImageView!
 
-    private var viewModel: FeaturesViewModel.Item!
-    private var handler: Handler!
-    
-    struct Handler {
-        
-        let onVote: (String) -> Void
-    }
+    private var voteHandler: (()->Void)?
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
+
         titleLabel.apply(style: .body, weight: .bold)
         
         subtitleLabel.apply(style: .subheadline)
@@ -39,23 +32,17 @@ final class FeaturesCell: CollectionViewCell {
     }
     
     override func setSelected(_ selected: Bool) {
-        
         // do nothing
     }
     
     func update(
         with viewModel: FeaturesViewModel.Item,
-        handler: Handler
+        handler: (()->Void)?
     ) -> Self {
-        
-        self.viewModel = viewModel
-        self.handler = handler
-        
+        self.voteHandler = handler
         titleLabel.text = viewModel.title
         subtitleLabel.text = viewModel.subtitle
-
         voteButton.setTitle(viewModel.buttonTitle, for: .normal)
-        
         return self
     }
 }
@@ -63,7 +50,6 @@ final class FeaturesCell: CollectionViewCell {
 private extension FeaturesCell  {
     
     @objc func voteTapped() {
-        
-        handler.onVote(viewModel.id)
+        self.voteHandler?()
     }
 }

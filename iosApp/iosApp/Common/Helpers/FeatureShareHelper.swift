@@ -8,24 +8,14 @@ struct FeatureShareHelper {
         on web3Feature: ImprovementProposal,
         presentingIn: UIViewController
     ) {
-        let text = String(
-            format: Localized("feature.vote.text"),
-            web3Feature.id,
-            web3Feature.title
-        )
-
-        let imgUrlStr = "https://sonsofcrypto.com/web3wallet-improvement-proposals/\(web3Feature.id).html"
-
-        let textEncoded = text.addingPercentEncoding(
+        let textEncoded = web3Feature.tweet.addingPercentEncoding(
             withAllowedCharacters: .urlHostAllowed
         ) ?? ""
 
-        let urlEncoded = imgUrlStr.addingPercentEncoding(
+        let urlEncoded = web3Feature.pageUrl.addingPercentEncoding(
             withAllowedCharacters: .urlHostAllowed
         ) ?? ""
-
         guard let url = "https://www.twitter.com/intent/tweet?text=\(textEncoded)&url=\(urlEncoded)".url else { return }
-        
         UIApplication.shared.open(url)
     }
 }

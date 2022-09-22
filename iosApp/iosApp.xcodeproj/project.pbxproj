@@ -1387,7 +1387,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C0643D22892FC9B00643C15 /* Features */ = {
+		1C0643D22892FC9B00643C15 /* Proposals */ = {
 			isa = PBXGroup;
 			children = (
 				1C0643E42892FD5200643C15 /* Features.storyboard */,
@@ -1400,7 +1400,7 @@
 				1C0643D72892FCBA00643C15 /* FeaturesWireframeFactoryAssembler.swift */,
 				1C0643E12892FCDC00643C15 /* Cells */,
 			);
-			path = Features;
+			path = Proposals;
 			sourceTree = "<group>";
 		};
 		1C0643E12892FCDC00643C15 /* Cells */ = {
@@ -1519,8 +1519,8 @@
 				1C67201928870FA900C5F044 /* Confirmation */,
 				1C60C20D285724D0003BE25D /* Dashboard */,
 				1C60C272285724D0003BE25D /* Degen */,
-				1CDED5D3289700DA00DF34A7 /* Feature */,
-				1C0643D22892FC9B00643C15 /* Features */,
+				1CDED5D3289700DA00DF34A7 /* Proposal */,
+				1C0643D22892FC9B00643C15 /* Proposals */,
 				1C60C1E1285724D0003BE25D /* KeyStore */,
 				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
 				D1976B01287EFAE10063FC9C /* MnemonicImport */,
@@ -2285,7 +2285,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1CDED5D3289700DA00DF34A7 /* Feature */ = {
+		1CDED5D3289700DA00DF34A7 /* Proposal */ = {
 			isa = PBXGroup;
 			children = (
 				1CDED5E32897016E00DF34A7 /* Feature.storyboard */,
@@ -2297,7 +2297,7 @@
 				1CDED5D82897010C00DF34A7 /* FeatureWireframeFactoryAssembler.swift */,
 				1CDED5E22897012F00DF34A7 /* Cells */,
 			);
-			path = Feature;
+			path = Proposal;
 			sourceTree = "<group>";
 		};
 		1CDED5E22897012F00DF34A7 /* Cells */ = {
@@ -3543,7 +3543,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = W622KH7Q3T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -3585,7 +3585,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = W622KH7Q3T;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";

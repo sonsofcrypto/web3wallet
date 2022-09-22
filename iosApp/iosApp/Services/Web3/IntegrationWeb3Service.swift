@@ -94,7 +94,6 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
             )
         }
 
-        print("=== currencies", tokens.count)
         return tokens
     }
 
