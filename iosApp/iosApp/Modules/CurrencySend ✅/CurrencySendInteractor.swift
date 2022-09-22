@@ -5,7 +5,7 @@
 import Foundation
 import web3lib
 
-protocol TokenSendInteractor: AnyObject {
+protocol CurrencySendInteractor: AnyObject {
     var walletAddress: String? { get }
     func defaultCurrency(network: Network) -> Currency
     func balance(currency: Currency, network: Network) -> BigInt
@@ -15,7 +15,7 @@ protocol TokenSendInteractor: AnyObject {
     func networkFeeInNetworkToken(network: Network, fee: Web3NetworkFee) -> String
 }
 
-final class DefaultTokenSendInteractor {
+final class DefaultCurrencySendInteractor {
     private let walletService: WalletService
     private let networksService: NetworksService
     
@@ -28,7 +28,7 @@ final class DefaultTokenSendInteractor {
     }
 }
 
-extension DefaultTokenSendInteractor: TokenSendInteractor {
+extension DefaultCurrencySendInteractor: CurrencySendInteractor {
     
     var walletAddress: String? {
         try? networksService.wallet()?.address().toHexStringAddress().hexString

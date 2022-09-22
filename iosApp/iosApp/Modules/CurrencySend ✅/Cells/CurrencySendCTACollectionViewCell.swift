@@ -2,7 +2,7 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-final class TokenSendCTACollectionViewCell: UICollectionViewCell {
+final class CurrencySendCTACollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var networkFeeView: TokenNetworkFeeView!
     @IBOutlet weak var button: Button!
     
@@ -20,10 +20,10 @@ final class TokenSendCTACollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension TokenSendCTACollectionViewCell {
+extension CurrencySendCTACollectionViewCell {
     
     func update(
-        with viewModel: TokenSendViewModel.Send,
+        with viewModel: CurrencySendViewModel.Send,
         handler: Handler
     ) {
         self.handler = handler
@@ -48,7 +48,7 @@ extension TokenSendCTACollectionViewCell {
     }
 }
 
-private extension TokenSendCTACollectionViewCell {
+private extension CurrencySendCTACollectionViewCell {
     
     @objc func onSendTapped() { handler.onCTATapped() }
 }

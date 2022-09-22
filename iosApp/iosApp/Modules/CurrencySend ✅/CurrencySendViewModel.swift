@@ -4,12 +4,12 @@
 
 import Foundation
 
-struct TokenSendViewModel {
+struct CurrencySendViewModel {
     let title: String
     let items: [Item]
 }
 
-extension TokenSendViewModel {
+extension CurrencySendViewModel {
     
     struct Fee {
         let id: String
@@ -36,11 +36,11 @@ extension TokenSendViewModel {
     }
 }
 
-extension Array where Element == TokenSendViewModel.Item {
+extension Array where Element == CurrencySendViewModel.Item {
     var address: TokenEnterAddressViewModel? {
         var address: TokenEnterAddressViewModel?
         forEach {
-            if case let TokenSendViewModel.Item.address(value) = $0 {
+            if case let CurrencySendViewModel.Item.address(value) = $0 {
                 address = value
             }
         }
@@ -50,17 +50,17 @@ extension Array where Element == TokenSendViewModel.Item {
     var token: TokenEnterAmountViewModel? {
         var token: TokenEnterAmountViewModel?
         forEach {
-            if case let TokenSendViewModel.Item.token(value) = $0 {
+            if case let CurrencySendViewModel.Item.token(value) = $0 {
                 token = value
             }
         }
         return token
     }
     
-    var send: TokenSendViewModel.Send? {
-        var send: TokenSendViewModel.Send?
+    var send: CurrencySendViewModel.Send? {
+        var send: CurrencySendViewModel.Send?
         forEach {
-            if case let TokenSendViewModel.Item.send(value) = $0 {
+            if case let CurrencySendViewModel.Item.send(value) = $0 {
                 send = value
             }
         }

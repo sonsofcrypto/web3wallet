@@ -5,7 +5,7 @@
 import Foundation
 import web3lib
 
-enum TokenSendPresenterEvent {
+enum CurrencySendPresenterEvent {
     case dismiss
     case addressChanged(to: String)
     case pasteAddress
@@ -18,16 +18,16 @@ enum TokenSendPresenterEvent {
     case review
 }
 
-protocol TokenSendPresenter: AnyObject {
+protocol CurrencySendPresenter: AnyObject {
     func present()
-    func handle(_ event: TokenSendPresenterEvent)
+    func handle(_ event: CurrencySendPresenterEvent)
 }
 
-final class DefaultTokenSendPresenter {
-    private weak var view: TokenSendView?
-    private let wireframe: TokenSendWireframe
-    private let interactor: TokenSendInteractor
-    private let context: TokenSendWireframeContext
+final class DefaultCurrencySendPresenter {
+    private weak var view: CurrencySendView?
+    private let wireframe: CurrencySendWireframe
+    private let interactor: CurrencySendInteractor
+    private let context: CurrencySendWireframeContext
     
     private var sendTapped = false
     private var address: String?
@@ -35,14 +35,14 @@ final class DefaultTokenSendPresenter {
     private var amount: BigInt?
     private var fee: Web3NetworkFee = .low
     
-    private var items = [TokenSendViewModel.Item]()
+    private var items = [CurrencySendViewModel.Item]()
     private var fees = [Web3NetworkFee]()
 
     init(
-        view: TokenSendView,
-        wireframe: TokenSendWireframe,
-        interactor: TokenSendInteractor,
-        context: TokenSendWireframeContext
+        view: CurrencySendView,
+        wireframe: CurrencySendWireframe,
+        interactor: CurrencySendInteractor,
+        context: CurrencySendWireframeContext
     ) {
         self.view = view
         self.interactor = interactor
@@ -52,7 +52,7 @@ final class DefaultTokenSendPresenter {
     }
 }
 
-extension DefaultTokenSendPresenter: TokenSendPresenter {
+extension DefaultCurrencySendPresenter: CurrencySendPresenter {
 
     func present() {
         updateView(
@@ -90,7 +90,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
         )
     }
 
-    func handle(_ event: TokenSendPresenterEvent) {
+    func handle(_ event: CurrencySendPresenterEvent) {
         switch event {
         case .dismiss:
             wireframe.dismiss()
@@ -160,7 +160,7 @@ extension DefaultTokenSendPresenter: TokenSendPresenter {
     }
 }
 
-private extension DefaultTokenSendPresenter {
+private extension DefaultCurrencySendPresenter {
     
     var currencyBalance: BigInt {
         interactor.balance(currency: currency, network: context.network)
@@ -196,7 +196,7 @@ private extension DefaultTokenSendPresenter {
         }
     }
     
-    func updateView(with items: [TokenSendViewModel.Item]) {
+    func updateView(with items: [CurrencySendViewModel.Item]) {
         view?.update(
             with: .init(
                 title: Localized("tokenSend.title", arg: currency.symbol.uppercased()),
@@ -280,7 +280,7 @@ private extension DefaultTokenSendPresenter {
     
     func updateCTA() {
         let isValidAddress = context.network.isValid(address: address ?? "")
-        let buttonState: TokenSendViewModel.Send.State
+        let buttonState: CurrencySendViewModel.Send.State
         if !sendTapped {
             buttonState = .ready
         } else if !isValidAddress {

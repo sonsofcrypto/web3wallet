@@ -2,7 +2,7 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-final class TokenSendToCollectionViewCell: UICollectionViewCell {
+final class CurrencySendToCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var tokenEnterAddressView: TokenEnterAddressView!
     
@@ -11,7 +11,7 @@ final class TokenSendToCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension TokenSendToCollectionViewCell {
+extension CurrencySendToCollectionViewCell {
     
     func update(
         with viewModel: TokenEnterAddressViewModel,

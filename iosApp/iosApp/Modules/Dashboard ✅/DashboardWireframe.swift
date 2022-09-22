@@ -37,7 +37,7 @@ final class DefaultDashboardWireframe {
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
     private let currencyPickerWireframeFactory: CurrencyPickerWireframeFactory
     private let currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory
-    private let tokenSendWireframeFactory: TokenSendWireframeFactory
+    private let currencySendWireframeFactory: CurrencyCurrencyWireframeFactory
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
@@ -58,7 +58,7 @@ final class DefaultDashboardWireframe {
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
         currencyPickerWireframeFactory: CurrencyPickerWireframeFactory,
         currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory,
-        tokenSendWireframeFactory: TokenSendWireframeFactory,
+        currencySendWireframeFactory: CurrencyCurrencyWireframeFactory,
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
@@ -76,7 +76,7 @@ final class DefaultDashboardWireframe {
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
         self.currencyPickerWireframeFactory = currencyPickerWireframeFactory
         self.currencyReceiveWireframeFactory = currencyReceiveWireframeFactory
-        self.tokenSendWireframeFactory = tokenSendWireframeFactory
+        self.currencySendWireframeFactory = currencySendWireframeFactory
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
@@ -146,7 +146,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 navigateToTokenPicker()
                 return
             }
-            tokenSendWireframeFactory.make(
+            currencySendWireframeFactory.make(
                 vc,
                 context: .init(network: network, address: address, currency: nil)
             ).present()
@@ -225,7 +225,7 @@ private extension DefaultDashboardWireframe {
         let source = CurrencyPickerWireframeContext.Source.select(
             onCompletion: { [weak self] (network, currency) in
                 guard let self = self else { return }
-                self.tokenSendWireframeFactory.make(
+                self.currencySendWireframeFactory.make(
                     vc,
                     context: .init(network: network, address: nil, currency: currency)
                 ).present()

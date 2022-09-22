@@ -5,28 +5,28 @@
 import UIKit
 import web3lib
 
-struct TokenSendWireframeContext {
+struct CurrencySendWireframeContext {
     let network: Network
     let address: String?
     let currency: Currency?
 }
 
-enum TokenSendWireframeDestination {
+enum CurrencySendWireframeDestination {
     case underConstructionAlert
     case qrCodeScan(network: Network, onCompletion: (String) -> Void)
     case selectCurrency(onCompletion: (Currency) -> Void)
     case confirmSend(context: ConfirmationWireframeContext.SendContext)
 }
 
-protocol TokenSendWireframe {
+protocol CurrencySendWireframe {
     func present()
-    func navigate(to destination: TokenSendWireframeDestination)
+    func navigate(to destination: CurrencySendWireframeDestination)
     func dismiss()
 }
 
-final class DefaultTokenSendWireframe {
+final class DefaultCurrencySendWireframe {
     private weak var parent: UIViewController?
-    private let context: TokenSendWireframeContext
+    private let context: CurrencySendWireframeContext
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let currencyPickerWireframeFactory: CurrencyPickerWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
@@ -38,7 +38,7 @@ final class DefaultTokenSendWireframe {
     
     init(
         _ parent: UIViewController?,
-        context: TokenSendWireframeContext,
+        context: CurrencySendWireframeContext,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         currencyPickerWireframeFactory: CurrencyPickerWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
@@ -57,14 +57,14 @@ final class DefaultTokenSendWireframe {
     }
 }
 
-extension DefaultTokenSendWireframe: TokenSendWireframe {
+extension DefaultCurrencySendWireframe: CurrencySendWireframe {
     
     func present() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
     
-    func navigate(to destination: TokenSendWireframeDestination) {
+    func navigate(to destination: CurrencySendWireframeDestination) {
         switch destination {
         case .underConstructionAlert:
             let factory: AlertWireframeFactory = ServiceDirectory.assembler.resolve()
@@ -102,7 +102,7 @@ extension DefaultTokenSendWireframe: TokenSendWireframe {
     func dismiss() { vc?.popOrDismiss() }
 }
 
-private extension DefaultTokenSendWireframe {
+private extension DefaultCurrencySendWireframe {
     
     func onCompletionDismissWrapped(
         with onCompletion: @escaping (Currency) -> Void
@@ -116,12 +116,12 @@ private extension DefaultTokenSendWireframe {
     }
     
     func wireUp() -> UIViewController {
-        let interactor = DefaultTokenSendInteractor(
+        let interactor = DefaultCurrencySendInteractor(
             walletService: walletService,
             networksService: networksService
         )
-        let vc: TokenSendViewController = UIStoryboard(.tokenSend).instantiate()
-        let presenter = DefaultTokenSendPresenter(
+        let vc: CurrencySendViewController = UIStoryboard(.currencySend).instantiate()
+        let presenter = DefaultCurrencySendPresenter(
             view: vc,
             wireframe: self,
             interactor: interactor,

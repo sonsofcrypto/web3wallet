@@ -26,7 +26,7 @@ final class DefaultAccountWireframe {
     private weak var parent: UIViewController?
     private let context: AccountWireframeContext
     private let tokenReceiveWireframeFactory: CurrencyReceiveWireframeFactory
-    private let tokenSendWireframeFactory: TokenSendWireframeFactory
+    private let currencySendWireframeFactory: CurrencyCurrencyWireframeFactory
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
@@ -40,7 +40,7 @@ final class DefaultAccountWireframe {
         _ parent: UIViewController?,
         context: AccountWireframeContext,
         tokenReceiveWireframeFactory: CurrencyReceiveWireframeFactory,
-        tokenSendWireframeFactory: TokenSendWireframeFactory,
+        currencySendWireframeFactory: CurrencyCurrencyWireframeFactory,
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
@@ -51,7 +51,7 @@ final class DefaultAccountWireframe {
         self.parent = parent
         self.context = context
         self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
-        self.tokenSendWireframeFactory = tokenSendWireframeFactory
+        self.currencySendWireframeFactory = currencySendWireframeFactory
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
@@ -82,7 +82,7 @@ extension DefaultAccountWireframe: AccountWireframe {
                 context: .init(network: context.network, currency: context.currency)
             ).present()
         case .send:
-            tokenSendWireframeFactory.make(
+            currencySendWireframeFactory.make(
                 vc,
                 context: .init(
                     network: context.network,

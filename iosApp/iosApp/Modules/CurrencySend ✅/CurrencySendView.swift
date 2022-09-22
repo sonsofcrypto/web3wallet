@@ -5,19 +5,19 @@
 import UIKit
 import web3lib
 
-protocol TokenSendView: AnyObject {
-    func update(with viewModel: TokenSendViewModel)
+protocol CurrencySendView: AnyObject {
+    func update(with viewModel: CurrencySendViewModel)
     func presentFeePicker(with fees: [FeesPickerViewModel])
     func dismissKeyboard()
 }
 
-final class TokenSendViewController: BaseViewController {
+final class CurrencySendViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var feesPickerView: FeesPickerView!
 
-    var presenter: TokenSendPresenter!
+    var presenter: CurrencySendPresenter!
 
-    private var viewModel: TokenSendViewModel?
+    private var viewModel: CurrencySendViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +26,9 @@ final class TokenSendViewController: BaseViewController {
     }    
 }
 
-extension TokenSendViewController: TokenSendView {
+extension CurrencySendViewController: CurrencySendView {
 
-    func update(with viewModel: TokenSendViewModel) {
+    func update(with viewModel: CurrencySendViewModel) {
         self.viewModel = viewModel
         title = viewModel.title
         if collectionView.visibleCells.isEmpty { collectionView.reloadData() }
@@ -38,8 +38,8 @@ extension TokenSendViewController: TokenSendView {
     func presentFeePicker(with fees: [FeesPickerViewModel]) {
         dismissKeyboard()
         let cell = collectionView.visibleCells.first {
-            $0 is TokenSendCTACollectionViewCell
-        } as! TokenSendCTACollectionViewCell
+            $0 is CurrencySendCTACollectionViewCell
+        } as! CurrencySendCTACollectionViewCell
         let fromFrame = feesPickerView.convert(
             cell.networkFeeView.networkFeeButton.bounds,
             from: cell.networkFeeView.networkFeeButton
@@ -56,7 +56,7 @@ extension TokenSendViewController: TokenSendView {
     }
 }
 
-extension TokenSendViewController: UICollectionViewDataSource {
+extension CurrencySendViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         viewModel?.items.count ?? 0
@@ -73,29 +73,29 @@ extension TokenSendViewController: UICollectionViewDataSource {
         guard let item = viewModel?.items[indexPath.section] else { fatalError() }
         switch item {
         case let .address(value):
-            let cell = collectionView.dequeue(TokenSendToCollectionViewCell.self, for: indexPath)
+            let cell = collectionView.dequeue(CurrencySendToCollectionViewCell.self, for: indexPath)
             cell.update(with: value, handler: makeTokenSendTokenHandler())
             return cell
         case let .token(token):
-            let cell = collectionView.dequeue(TokenSendTokenCollectionViewCell.self, for: indexPath)
+            let cell = collectionView.dequeue(CurrencySendTokenCollectionViewCell.self, for: indexPath)
             cell.update(with: token, handler: makeTokenSendTokenHandler())
             return cell
         case let .send(cta):
-            let cell = collectionView.dequeue(TokenSendCTACollectionViewCell.self, for: indexPath)
+            let cell = collectionView.dequeue(CurrencySendCTACollectionViewCell.self, for: indexPath)
             cell.update(with: cta, handler: makeTokenSendCTAHandler())
             return cell
         }
     }
 }
 
-extension TokenSendViewController: UICollectionViewDelegate {
+extension CurrencySendViewController: UICollectionViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         dismissKeyboard()
     }
 }
 
-private extension TokenSendViewController {
+private extension CurrencySendViewController {
     
     func configureUI() {
         if (navigationController?.viewControllers.count ?? 0) > 1 {
@@ -130,7 +130,7 @@ private extension TokenSendViewController {
     }
 }
 
-private extension TokenSendViewController {
+private extension CurrencySendViewController {
     
     func compositionalLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { [weak self] sectionIndex, environment in
@@ -171,13 +171,13 @@ private extension TokenSendViewController {
     func updateCells() {
         collectionView.visibleCells.forEach {
             switch $0 {
-            case let addressCell as TokenSendToCollectionViewCell:
+            case let addressCell as CurrencySendToCollectionViewCell:
                 guard let address = viewModel?.items.address else { return }
                 addressCell.update(with: address, handler: makeTokenSendTokenHandler())
-            case let tokenCell as TokenSendTokenCollectionViewCell:
+            case let tokenCell as CurrencySendTokenCollectionViewCell:
                 guard let token = viewModel?.items.token else { return }
                 tokenCell.update(with: token, handler: makeTokenSendTokenHandler())
-            case let ctaCell as TokenSendCTACollectionViewCell:
+            case let ctaCell as CurrencySendCTACollectionViewCell:
                 guard let cta = viewModel?.items.send else { return }
                 ctaCell.update(with: cta, handler: makeTokenSendCTAHandler())
             default:
@@ -187,7 +187,7 @@ private extension TokenSendViewController {
     }
 }
 
-private extension TokenSendViewController {
+private extension CurrencySendViewController {
     
     func makeTokenSendTokenHandler() -> TokenEnterAddressView.Handler {
         .init(
@@ -202,7 +202,7 @@ private extension TokenSendViewController {
         { [weak self] value in self?.onTapped(.addressChanged(to: value))()}
     }
     
-    func makeTokenSendTokenHandler() -> TokenSendTokenCollectionViewCell.Handler {
+    func makeTokenSendTokenHandler() -> CurrencySendTokenCollectionViewCell.Handler {
         .init(
             onTokenTapped: onTapped(.selectCurrency),
             onTokenChanged: makeOnTokenChanged()
@@ -213,14 +213,14 @@ private extension TokenSendViewController {
         { [weak self] value in self?.onTapped(.currencyChanged(to: value))() }
     }
     
-    func makeTokenSendCTAHandler() -> TokenSendCTACollectionViewCell.Handler {
+    func makeTokenSendCTAHandler() -> CurrencySendCTACollectionViewCell.Handler {
         .init(
             onNetworkFeesTapped: onTapped(.feeTapped),
             onCTATapped: onTapped(.review)
         )
     }
     
-    func onTapped(_ event: TokenSendPresenterEvent) -> () -> Void {
+    func onTapped(_ event: CurrencySendPresenterEvent) -> () -> Void {
         { [weak self] in self?.presenter.handle(event) }
     }
 }

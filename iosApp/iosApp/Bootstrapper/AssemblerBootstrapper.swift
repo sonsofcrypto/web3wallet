@@ -68,7 +68,7 @@ private extension AssemblerBootstrapper {
             CurrencyPickerWireframeFactoryAssembler(),
             CurrencyReceiveWireframeFactoryAssembler(),
             CurrencyAddWireframeFactoryAssembler(),
-            TokenSendWireframeFactoryAssembler(),
+            CurrencySendWireframeFactoryAssembler(),
             TokenSwapWireframeFactoryAssembler(),
             NetworkPickerWireframeFactoryAssembler(),
             QRCodeScanWireframeFactoryAssembler(),

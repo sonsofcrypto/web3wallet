@@ -19,7 +19,7 @@ final class DefaultDashboardWireframeFactory {
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
     private let currencyPickerWireframeFactory: CurrencyPickerWireframeFactory
     private let currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory
-    private let tokenSendWireframeFactory: TokenSendWireframeFactory
+    private let currencySendWireframeFactory: CurrencyCurrencyWireframeFactory
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
@@ -37,7 +37,7 @@ final class DefaultDashboardWireframeFactory {
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
         currencyPickerWireframeFactory: CurrencyPickerWireframeFactory,
         currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory,
-        tokenSendWireframeFactory: TokenSendWireframeFactory,
+        currencySendWireframeFactory: CurrencyCurrencyWireframeFactory,
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
@@ -54,7 +54,7 @@ final class DefaultDashboardWireframeFactory {
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
         self.currencyPickerWireframeFactory = currencyPickerWireframeFactory
         self.currencyReceiveWireframeFactory = currencyReceiveWireframeFactory
-        self.tokenSendWireframeFactory = tokenSendWireframeFactory
+        self.currencySendWireframeFactory = currencySendWireframeFactory
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
@@ -78,7 +78,7 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             mnemonicConfirmationWireframeFactory: mnemonicConfirmationWireframeFactory,
             currencyPickerWireframeFactory: currencyPickerWireframeFactory,
             currencyReceiveWireframeFactory: currencyReceiveWireframeFactory,
-            tokenSendWireframeFactory: tokenSendWireframeFactory,
+            currencySendWireframeFactory: currencySendWireframeFactory,
             tokenSwapWireframeFactory: tokenSwapWireframeFactory,
             nftDetailWireframeFactory: nftDetailWireframeFactory,
             qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
@@ -105,7 +105,7 @@ final class DashboardWireframeFactoryAssembler: AssemblerComponent {
                 mnemonicConfirmationWireframeFactory: resolver.resolve(),
                 currencyPickerWireframeFactory: resolver.resolve(),
                 currencyReceiveWireframeFactory: resolver.resolve(),
-                tokenSendWireframeFactory: resolver.resolve(),
+                currencySendWireframeFactory: resolver.resolve(),
                 tokenSwapWireframeFactory: resolver.resolve(),
                 nftDetailWireframeFactory: resolver.resolve(),
                 qrCodeScanWireframeFactory: resolver.resolve(),

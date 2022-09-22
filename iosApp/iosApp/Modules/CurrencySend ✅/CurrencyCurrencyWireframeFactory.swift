@@ -5,14 +5,14 @@
 import UIKit
 import web3lib
 
-protocol TokenSendWireframeFactory {
+protocol CurrencyCurrencyWireframeFactory {
     func make(
         _ parent: UIViewController?,
-        context: TokenSendWireframeContext
-    ) -> TokenSendWireframe
+        context: CurrencySendWireframeContext
+    ) -> CurrencySendWireframe
 }
 
-final class DefaultTokenSendWireframeFactory {
+final class DefaultCurrencySendWireframeFactory {
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let currencyPickerWireframeFactory: CurrencyPickerWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
@@ -37,13 +37,13 @@ final class DefaultTokenSendWireframeFactory {
     }
 }
 
-extension DefaultTokenSendWireframeFactory: TokenSendWireframeFactory {
+extension DefaultCurrencySendWireframeFactory: CurrencyCurrencyWireframeFactory {
 
     func make(
         _ parent: UIViewController?,
-        context: TokenSendWireframeContext
-    ) -> TokenSendWireframe {
-        DefaultTokenSendWireframe(
+        context: CurrencySendWireframeContext
+    ) -> CurrencySendWireframe {
+        DefaultCurrencySendWireframe(
             parent,
             context: context,
             qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
@@ -58,11 +58,11 @@ extension DefaultTokenSendWireframeFactory: TokenSendWireframeFactory {
 
 // MARK: - Assembler
 
-final class TokenSendWireframeFactoryAssembler: AssemblerComponent {
+final class CurrencySendWireframeFactoryAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .instance) { resolver -> TokenSendWireframeFactory in
-            DefaultTokenSendWireframeFactory(
+        registry.register(scope: .instance) { resolver -> CurrencyCurrencyWireframeFactory in
+            DefaultCurrencySendWireframeFactory(
                 qrCodeScanWireframeFactory: resolver.resolve(),
                 currencyPickerWireframeFactory: resolver.resolve(),
                 confirmationWireframeFactory: resolver.resolve(),

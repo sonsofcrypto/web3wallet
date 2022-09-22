@@ -4,7 +4,7 @@
 
 import web3lib
 
-final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
+final class CurrencySendTokenCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var tokenView: TokenEnterAmountView!
     
     struct Handler {
@@ -17,7 +17,7 @@ final class TokenSendTokenCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension TokenSendTokenCollectionViewCell {
+extension CurrencySendTokenCollectionViewCell {
     
     func update(
         with viewModel: TokenEnterAmountViewModel,

@@ -18,7 +18,7 @@ protocol AccountWireframeFactory {
 
 final class DefaultAccountWireframeFactory {
     private let tokenReceiveWireframeFactory: CurrencyReceiveWireframeFactory
-    private let tokenSendWireframeFactory: TokenSendWireframeFactory
+    private let currencySendWireframeFactory: CurrencyCurrencyWireframeFactory
     private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
@@ -28,7 +28,7 @@ final class DefaultAccountWireframeFactory {
 
     init(
         tokenReceiveWireframeFactory: CurrencyReceiveWireframeFactory,
-        tokenSendWireframeFactory: TokenSendWireframeFactory,
+        currencySendWireframeFactory: CurrencyCurrencyWireframeFactory,
         tokenSwapWireframeFactory: TokenSwapWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
@@ -37,7 +37,7 @@ final class DefaultAccountWireframeFactory {
         transactionService: IosEtherscanService
     ) {
         self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
-        self.tokenSendWireframeFactory = tokenSendWireframeFactory
+        self.currencySendWireframeFactory = currencySendWireframeFactory
         self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
@@ -57,7 +57,7 @@ extension DefaultAccountWireframeFactory: AccountWireframeFactory {
             parent,
             context: context,
             tokenReceiveWireframeFactory: tokenReceiveWireframeFactory,
-            tokenSendWireframeFactory: tokenSendWireframeFactory,
+            currencySendWireframeFactory: currencySendWireframeFactory,
             tokenSwapWireframeFactory: tokenSwapWireframeFactory,
             deepLinkHandler: deepLinkHandler,
             networksService: networksService,
@@ -76,7 +76,7 @@ final class AccountWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> AccountWireframeFactory in
             DefaultAccountWireframeFactory(
                 tokenReceiveWireframeFactory: resolver.resolve(),
-                tokenSendWireframeFactory: resolver.resolve(),
+                currencySendWireframeFactory: resolver.resolve(),
                 tokenSwapWireframeFactory: resolver.resolve(),
                 deepLinkHandler: resolver.resolve(),
                 networksService: resolver.resolve(),
