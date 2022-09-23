@@ -55,7 +55,7 @@ class CurrencyFormatter {
 class FiatFormatter {
 
     var placeholder: String = "-"
-
+    
     let fiat: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.currencyCode = "usd"
@@ -63,9 +63,21 @@ class FiatFormatter {
         formatter.locale = .english
         return formatter
     }()
+    
+    let fiatSmall: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.currencyCode = "usd"
+        formatter.numberStyle = .currency
+        formatter.maximumSignificantDigits = 4
+        formatter.locale = .english
+        return formatter
+    }()
 
     func string(_ amount: Float?) -> String {
         guard let amount = amount else { return placeholder }
+        if (amount < 0.01) {
+            return fiatSmall.string(from: amount).cleanUSCurency
+        }
         return fiat.string(from: amount).cleanUSCurency
     }
 
