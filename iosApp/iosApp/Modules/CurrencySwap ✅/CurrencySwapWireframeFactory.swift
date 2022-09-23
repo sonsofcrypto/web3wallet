@@ -5,14 +5,14 @@
 import UIKit
 import web3lib
 
-protocol TokenSwapWireframeFactory {
+protocol CurrencySwapWireframeFactory {
     func make(
         _ parent: UIViewController?,
-        context: TokenSwapWireframeContext
-    ) -> TokenSwapWireframe
+        context: CurrencySwapWireframeContext
+    ) -> CurrencySwapWireframe
 }
 
-final class DefaultTokenSwapWireframeFactory {
+final class DefaultCurrencySwapWireframeFactory {
     private let currencyPickerWireframeFactory: CurrencyPickerWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
@@ -37,14 +37,14 @@ final class DefaultTokenSwapWireframeFactory {
     }
 }
 
-extension DefaultTokenSwapWireframeFactory: TokenSwapWireframeFactory {
+extension DefaultCurrencySwapWireframeFactory: CurrencySwapWireframeFactory {
 
     func make(
         _ parent: UIViewController?,
-        context: TokenSwapWireframeContext
-    ) -> TokenSwapWireframe {
+        context: CurrencySwapWireframeContext
+    ) -> CurrencySwapWireframe {
         
-        DefaultTokenSwapWireframe(
+        DefaultCurrencySwapWireframe(
             parent,
             context: context,
             currencyPickerWireframeFactory: currencyPickerWireframeFactory,
@@ -59,11 +59,11 @@ extension DefaultTokenSwapWireframeFactory: TokenSwapWireframeFactory {
 
 // MARK: - Assembler
 
-final class TokenSwapWireframeFactoryAssembler: AssemblerComponent {
+final class CurrencySwapWireframeFactoryAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .instance) { resolver -> TokenSwapWireframeFactory in
-            DefaultTokenSwapWireframeFactory(
+        registry.register(scope: .instance) { resolver -> CurrencySwapWireframeFactory in
+            DefaultCurrencySwapWireframeFactory(
                 currencyPickerWireframeFactory: resolver.resolve(),
                 confirmationWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),

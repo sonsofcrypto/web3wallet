@@ -18,7 +18,7 @@ protocol DegenWireframe {
 
 final class DefaultDegenWireframe {
     private weak var parent: UIViewController?
-    private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
+    private let currencySwapWireframeFactory: CurrencySwapWireframeFactory
     private let cultProposalsWireframeFactory: CultProposalsWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let degenService: DegenService
@@ -28,7 +28,7 @@ final class DefaultDegenWireframe {
 
     init(
         _ parent: UIViewController,
-        tokenSwapWireframeFactory: TokenSwapWireframeFactory,
+        currencySwapWireframeFactory: CurrencySwapWireframeFactory,
         cultProposalsWireframeFactory: CultProposalsWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         degenService: DegenService,
@@ -36,7 +36,7 @@ final class DefaultDegenWireframe {
     ) {
         
         self.parent = parent
-        self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
+        self.currencySwapWireframeFactory = currencySwapWireframeFactory
         self.cultProposalsWireframeFactory = cultProposalsWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.degenService = degenService
@@ -60,7 +60,7 @@ extension DefaultDegenWireframe: DegenWireframe {
         switch destination {
         case .swap:
             guard let network = networksService.network else { return }
-            tokenSwapWireframeFactory.make(
+            currencySwapWireframeFactory.make(
                 vc,
                 context: .init(network: network, currencyFrom: nil, currencyTo: nil)
             ).present()

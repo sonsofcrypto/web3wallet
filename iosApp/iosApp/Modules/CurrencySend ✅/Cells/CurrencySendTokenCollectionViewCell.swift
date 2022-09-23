@@ -5,7 +5,7 @@
 import web3lib
 
 final class CurrencySendTokenCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var tokenView: TokenEnterAmountView!
+    @IBOutlet weak var currencyView: CurrencyEnterAmountView!
     
     struct Handler {
         let onTokenTapped: (() -> Void)?
@@ -13,17 +13,17 @@ final class CurrencySendTokenCollectionViewCell: UICollectionViewCell {
     }
         
     override func resignFirstResponder() -> Bool {
-        tokenView.resignFirstResponder()
+        currencyView.resignFirstResponder()
     }
 }
 
 extension CurrencySendTokenCollectionViewCell {
     
     func update(
-        with viewModel: TokenEnterAmountViewModel,
+        with viewModel: CurrencyEnterAmountViewModel,
         handler: Handler
     ) {
-        tokenView.update(
+        currencyView.update(
             with: viewModel,
             onTokenTapped: handler.onTokenTapped,
             onTokenChanged: handler.onTokenChanged

@@ -2,7 +2,7 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-struct TokenNetworkFeeViewModel {
+struct NetworkFeePickerViewModel {
     
     let estimatedFee: String
     let feeType: FeeType
@@ -15,8 +15,7 @@ struct TokenNetworkFeeViewModel {
     }
 }
 
-// TODO: Rename to NetworkFeePickerView
-final class TokenNetworkFeeView: UIView {
+final class NetworkFeePickerView: UIView {
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var networkTokenIcon: UIImageView!
@@ -41,10 +40,10 @@ final class TokenNetworkFeeView: UIView {
     }
 }
 
-extension TokenNetworkFeeView {
+extension NetworkFeePickerView {
     
     func update(
-        with viewModel: TokenNetworkFeeViewModel,
+        with viewModel: NetworkFeePickerViewModel,
         handler: @escaping () -> Void
     ) {
         
@@ -66,7 +65,7 @@ extension TokenNetworkFeeView {
     }
 }
 
-private extension TokenNetworkFeeView {
+private extension NetworkFeePickerView {
     
     @objc func changeNetworkFee() {
         

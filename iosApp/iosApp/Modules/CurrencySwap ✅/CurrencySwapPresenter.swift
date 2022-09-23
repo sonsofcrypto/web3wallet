@@ -5,7 +5,7 @@
 import Foundation
 import web3lib
 
-enum TokenSwapPresenterEvent {
+enum CurrencySwapPresenterEvent {
     case limitSwapTapped
     case dismiss
     case currencyFromTapped
@@ -21,18 +21,18 @@ enum TokenSwapPresenterEvent {
     case review
 }
 
-protocol TokenSwapPresenter: AnyObject {
+protocol CurrencySwapPresenter: AnyObject {
     func present()
-    func handle(_ event: TokenSwapPresenterEvent)
+    func handle(_ event: CurrencySwapPresenterEvent)
 }
 
-final class DefaultTokenSwapPresenter {
-    private weak var view: TokenSwapView?
-    private let wireframe: TokenSwapWireframe
-    private let interactor: TokenSwapInteractor
-    private let context: TokenSwapWireframeContext
+final class DefaultCurrencySwapPresenter {
+    private weak var view: CurrencySwapView?
+    private let wireframe: CurrencySwapWireframe
+    private let interactor: CurrencySwapInteractor
+    private let context: CurrencySwapWireframeContext
     
-    private var items = [TokenSwapViewModel.Item]()
+    private var items = [CurrencySwapViewModel.Item]()
     private var fees = [Web3NetworkFee]()
     private var currencyFrom: Currency!
     private var amountFrom: BigInt?
@@ -43,10 +43,10 @@ final class DefaultTokenSwapPresenter {
     private let priceImpactWarningThreashold = 0.1
     
     init(
-        view: TokenSwapView,
-        interactor: TokenSwapInteractor,
-        wireframe: TokenSwapWireframe,
-        context: TokenSwapWireframeContext
+        view: CurrencySwapView,
+        interactor: CurrencySwapInteractor,
+        wireframe: CurrencySwapWireframe,
+        context: CurrencySwapWireframeContext
     ) {
         self.view = view
         self.interactor = interactor
@@ -62,7 +62,7 @@ final class DefaultTokenSwapPresenter {
     }
 }
 
-extension DefaultTokenSwapPresenter: TokenSwapPresenter {
+extension DefaultCurrencySwapPresenter: CurrencySwapPresenter {
 
     func present() {
         updateView(
@@ -110,7 +110,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
         )
     }
 
-    func handle(_ event: TokenSwapPresenterEvent) {
+    func handle(_ event: CurrencySwapPresenterEvent) {
         switch event {
         case .limitSwapTapped:
             wireframe.navigate(to: .underConstructionAlert)
@@ -206,7 +206,7 @@ extension DefaultTokenSwapPresenter: TokenSwapPresenter {
     }
 }
 
-private extension DefaultTokenSwapPresenter {
+private extension DefaultCurrencySwapPresenter {
     
     var currencyFromBalance: BigInt {
         interactor.balance(currency: currencyFrom, network: context.network)
@@ -221,7 +221,7 @@ private extension DefaultTokenSwapPresenter {
         currencyTo = context.currencyTo ?? interactor.defaultCurrencyTo(for: context.network)
     }
     
-    func updateView(with items: [TokenSwapViewModel.Item]) {
+    func updateView(with items: [CurrencySwapViewModel.Item]) {
         
         view?.update(
             with: .init(
@@ -299,7 +299,7 @@ private extension DefaultTokenSwapPresenter {
         interactor.outputAmountState == .loading && amountFrom != nil && amountFrom != .zero
     }
     
-    func makeApproveState() -> TokenSwapViewModel.Swap.ApproveState {
+    func makeApproveState() -> CurrencySwapViewModel.Swap.ApproveState {
         guard amounFromtGreaterThanZero && !insufficientFunds else {
             // NOTE: This simply hides the Approve button since we won't be able to swap
             // anyway
@@ -325,7 +325,7 @@ private extension DefaultTokenSwapPresenter {
         }
     }
     
-    func makeButtonState() -> TokenSwapViewModel.Swap.ButtonState {
+    func makeButtonState() -> CurrencySwapViewModel.Swap.ButtonState {
         guard amounFromtGreaterThanZero else {
             return .invalid(text: Localized("tokenSwap.cell.button.state.enterAmount"))
         }
@@ -385,7 +385,7 @@ private extension DefaultTokenSwapPresenter {
         }
     }
     
-    func feeType() -> TokenNetworkFeeViewModel.FeeType {
+    func feeType() -> NetworkFeePickerViewModel.FeeType {
         switch fee {
         case .low: return .low
         case .medium: return .medium
@@ -393,18 +393,18 @@ private extension DefaultTokenSwapPresenter {
         }
     }
     
-    func currencySwapProviderViewModel() -> TokenSwapProviderViewModel {
+    func currencySwapProviderViewModel() -> CurrencySwapProviderViewModel {
         .init(
             iconName: selectedProviderIconName(),
             name: selectedProviderName
         )
     }
     
-    func currencySwapSlippageViewModel() -> TokenSwapSlippageViewModel {
+    func currencySwapSlippageViewModel() -> CurrencySwapSlippageViewModel {
         .init(value: selectedSlippage)
     }
     
-    func currencyPriceViewModel() -> TokenSwapPriceViewModel {
+    func currencyPriceViewModel() -> CurrencySwapPriceViewModel {
         
         guard currencyFrom.fiatPrice != 0, currencyTo.fiatPrice != 0 else {
             return .init(value: "1 \(currencyFrom.symbol) ≈ ? \(currencyTo.symbol)")
@@ -510,7 +510,7 @@ private extension Web3NetworkFee {
     }
 }
 
-extension DefaultTokenSwapPresenter: SwapInteractorLister {
+extension DefaultCurrencySwapPresenter: CurrencyInteractorLister {
     
     func handle(swapEvent event: UniswapEvent) {
         guard interactor.isCurrentQuote(data: data) else {

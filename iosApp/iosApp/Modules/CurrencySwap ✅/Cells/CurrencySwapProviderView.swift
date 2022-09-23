@@ -2,13 +2,13 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-struct TokenSwapProviderViewModel {
+struct CurrencySwapProviderViewModel {
     
     let iconName: String
     let name: String
 }
 
-final class TokenSwapProviderView: UIView {
+final class CurrencySwapProviderView: UIView {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var button: Button!
     
@@ -31,10 +31,10 @@ final class TokenSwapProviderView: UIView {
     }
 }
 
-extension TokenSwapProviderView {
+extension CurrencySwapProviderView {
     
     func update(
-        with viewModel: TokenSwapProviderViewModel,
+        with viewModel: CurrencySwapProviderViewModel,
         handler: Handler
     ) {
         self.handler = handler
@@ -47,7 +47,7 @@ extension TokenSwapProviderView {
     }
 }
 
-private extension TokenSwapProviderView {
+private extension CurrencySwapProviderView {
     
     @objc func changeProvider() { handler.onProviderTapped() }
 }

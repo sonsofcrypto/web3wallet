@@ -336,7 +336,7 @@ private extension DefaultCurrencySendPresenter {
         }
     }
     
-    func feeType() -> TokenNetworkFeeViewModel.FeeType {
+    func feeType() -> NetworkFeePickerViewModel.FeeType {
         switch fee {
         case .low:
             return .low

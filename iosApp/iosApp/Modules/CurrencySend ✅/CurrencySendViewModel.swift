@@ -19,12 +19,12 @@ extension CurrencySendViewModel {
     
     enum Item {
         case address(TokenEnterAddressViewModel)
-        case token(TokenEnterAmountViewModel)
+        case token(CurrencyEnterAmountViewModel)
         case send(Send)
     }
 
     struct Send {
-        let tokenNetworkFeeViewModel: TokenNetworkFeeViewModel
+        let tokenNetworkFeeViewModel: NetworkFeePickerViewModel
         let buttonState: State
         
         enum State {
@@ -47,8 +47,8 @@ extension Array where Element == CurrencySendViewModel.Item {
         return address
     }
     
-    var token: TokenEnterAmountViewModel? {
-        var token: TokenEnterAmountViewModel?
+    var token: CurrencyEnterAmountViewModel? {
+        var token: CurrencyEnterAmountViewModel?
         forEach {
             if case let CurrencySendViewModel.Item.token(value) = $0 {
                 token = value

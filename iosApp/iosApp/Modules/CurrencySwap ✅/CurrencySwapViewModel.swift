@@ -4,12 +4,12 @@
 
 import Foundation
 
-struct TokenSwapViewModel {
+struct CurrencySwapViewModel {
     let title: String
     let items: [Item]
 }
 
-extension TokenSwapViewModel {
+extension CurrencySwapViewModel {
     
     enum Item {
         case swap(Swap)
@@ -18,12 +18,12 @@ extension TokenSwapViewModel {
     
     struct Swap {
         
-        let currencyFrom: TokenEnterAmountViewModel
-        let currencyTo: TokenEnterAmountViewModel
-        let currencySwapProviderViewModel: TokenSwapProviderViewModel
-        let currencySwapPriceViewModel: TokenSwapPriceViewModel
-        let currencySwapSlippageViewModel: TokenSwapSlippageViewModel
-        let currencyNetworkFeeViewModel: TokenNetworkFeeViewModel
+        let currencyFrom: CurrencyEnterAmountViewModel
+        let currencyTo: CurrencyEnterAmountViewModel
+        let currencySwapProviderViewModel: CurrencySwapProviderViewModel
+        let currencySwapPriceViewModel: CurrencySwapPriceViewModel
+        let currencySwapSlippageViewModel: CurrencySwapSlippageViewModel
+        let currencyNetworkFeeViewModel: NetworkFeePickerViewModel
         let isCalculating: Bool
         let providerAsset: String
         let approveState: ApproveState
@@ -44,10 +44,10 @@ extension TokenSwapViewModel {
     }
 }
 
-extension Array where Element == TokenSwapViewModel.Item {
-    var swap: TokenSwapViewModel.Swap? {
-        var swap: TokenSwapViewModel.Swap?
-        forEach { if case let TokenSwapViewModel.Item.swap(value) = $0 { swap = value } }
+extension Array where Element == CurrencySwapViewModel.Item {
+    var swap: CurrencySwapViewModel.Swap? {
+        var swap: CurrencySwapViewModel.Swap?
+        forEach { if case let CurrencySwapViewModel.Item.swap(value) = $0 { swap = value } }
         return swap
     }
 }

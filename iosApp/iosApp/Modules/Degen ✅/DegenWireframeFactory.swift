@@ -14,20 +14,20 @@ protocol DegenWireframeFactory {
 // MARK: - DefaultDegenWireframeFactory
 
 final class DefaultDegenWireframeFactory {
-    private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
+    private let currencySwapWireframeFactory: CurrencySwapWireframeFactory
     private let cultProposalsWireframeFactory: CultProposalsWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let degenService: DegenService
     private let networksService: NetworksService
 
     init(
-        tokenSwapWireframeFactory: TokenSwapWireframeFactory,
+        currencySwapWireframeFactory: CurrencySwapWireframeFactory,
         cultProposalsWireframeFactory: CultProposalsWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         degenService: DegenService,
         networksService: NetworksService
     ) {
-        self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
+        self.currencySwapWireframeFactory = currencySwapWireframeFactory
         self.cultProposalsWireframeFactory = cultProposalsWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.degenService = degenService
@@ -40,7 +40,7 @@ extension DefaultDegenWireframeFactory: DegenWireframeFactory {
     func make(_ parent: TabBarController) -> DegenWireframe {
         DefaultDegenWireframe(
             parent,
-            tokenSwapWireframeFactory: tokenSwapWireframeFactory,
+            currencySwapWireframeFactory: currencySwapWireframeFactory,
             cultProposalsWireframeFactory: cultProposalsWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
             degenService: degenService,
@@ -56,7 +56,7 @@ final class DegenWireframeFactoryAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .instance) { resolver -> DegenWireframeFactory in
             DefaultDegenWireframeFactory(
-                tokenSwapWireframeFactory: resolver.resolve(),
+                currencySwapWireframeFactory: resolver.resolve(),
                 cultProposalsWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
                 degenService: resolver.resolve(),

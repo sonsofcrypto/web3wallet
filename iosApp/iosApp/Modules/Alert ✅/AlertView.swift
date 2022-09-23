@@ -17,6 +17,7 @@ final class AlertViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        edgesForExtendedLayout = []
         presenter.present()
     }
 }

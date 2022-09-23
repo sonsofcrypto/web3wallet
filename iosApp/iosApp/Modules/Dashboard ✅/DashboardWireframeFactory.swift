@@ -20,7 +20,7 @@ final class DefaultDashboardWireframeFactory {
     private let currencyPickerWireframeFactory: CurrencyPickerWireframeFactory
     private let currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory
     private let currencySendWireframeFactory: CurrencyCurrencyWireframeFactory
-    private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
+    private let currencySwapWireframeFactory: CurrencySwapWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let themePickerWireframeFactory: ThemePickerWireframeFactory
@@ -38,7 +38,7 @@ final class DefaultDashboardWireframeFactory {
         currencyPickerWireframeFactory: CurrencyPickerWireframeFactory,
         currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory,
         currencySendWireframeFactory: CurrencyCurrencyWireframeFactory,
-        tokenSwapWireframeFactory: TokenSwapWireframeFactory,
+        currencySwapWireframeFactory: CurrencySwapWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         themePickerWireframeFactory: ThemePickerWireframeFactory,
@@ -55,7 +55,7 @@ final class DefaultDashboardWireframeFactory {
         self.currencyPickerWireframeFactory = currencyPickerWireframeFactory
         self.currencyReceiveWireframeFactory = currencyReceiveWireframeFactory
         self.currencySendWireframeFactory = currencySendWireframeFactory
-        self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
+        self.currencySwapWireframeFactory = currencySwapWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.themePickerWireframeFactory = themePickerWireframeFactory
@@ -79,7 +79,7 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             currencyPickerWireframeFactory: currencyPickerWireframeFactory,
             currencyReceiveWireframeFactory: currencyReceiveWireframeFactory,
             currencySendWireframeFactory: currencySendWireframeFactory,
-            tokenSwapWireframeFactory: tokenSwapWireframeFactory,
+            currencySwapWireframeFactory: currencySwapWireframeFactory,
             nftDetailWireframeFactory: nftDetailWireframeFactory,
             qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
             themePickerWireframeFactory: themePickerWireframeFactory,
@@ -106,7 +106,7 @@ final class DashboardWireframeFactoryAssembler: AssemblerComponent {
                 currencyPickerWireframeFactory: resolver.resolve(),
                 currencyReceiveWireframeFactory: resolver.resolve(),
                 currencySendWireframeFactory: resolver.resolve(),
-                tokenSwapWireframeFactory: resolver.resolve(),
+                currencySwapWireframeFactory: resolver.resolve(),
                 nftDetailWireframeFactory: resolver.resolve(),
                 qrCodeScanWireframeFactory: resolver.resolve(),
                 themePickerWireframeFactory: resolver.resolve(),

@@ -17,9 +17,9 @@ protocol AccountWireframeFactory {
 // MARK: - DefaultAccountWireframeFactory
 
 final class DefaultAccountWireframeFactory {
-    private let tokenReceiveWireframeFactory: CurrencyReceiveWireframeFactory
+    private let currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory
     private let currencySendWireframeFactory: CurrencyCurrencyWireframeFactory
-    private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
+    private let currencySwapWireframeFactory: CurrencySwapWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
@@ -27,18 +27,18 @@ final class DefaultAccountWireframeFactory {
     private let transactionService: IosEtherscanService
 
     init(
-        tokenReceiveWireframeFactory: CurrencyReceiveWireframeFactory,
+        currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory,
         currencySendWireframeFactory: CurrencyCurrencyWireframeFactory,
-        tokenSwapWireframeFactory: TokenSwapWireframeFactory,
+        currencySwapWireframeFactory: CurrencySwapWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
         transactionService: IosEtherscanService
     ) {
-        self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
+        self.currencyReceiveWireframeFactory = currencyReceiveWireframeFactory
         self.currencySendWireframeFactory = currencySendWireframeFactory
-        self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
+        self.currencySwapWireframeFactory = currencySwapWireframeFactory
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
         self.currencyStoreService = currencyStoreService
@@ -56,9 +56,9 @@ extension DefaultAccountWireframeFactory: AccountWireframeFactory {
         DefaultAccountWireframe(
             parent,
             context: context,
-            tokenReceiveWireframeFactory: tokenReceiveWireframeFactory,
+            currencyReceiveWireframeFactory: currencyReceiveWireframeFactory,
             currencySendWireframeFactory: currencySendWireframeFactory,
-            tokenSwapWireframeFactory: tokenSwapWireframeFactory,
+            currencySwapWireframeFactory: currencySwapWireframeFactory,
             deepLinkHandler: deepLinkHandler,
             networksService: networksService,
             currencyStoreService: currencyStoreService,
@@ -75,9 +75,9 @@ final class AccountWireframeFactoryAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .instance) { resolver -> AccountWireframeFactory in
             DefaultAccountWireframeFactory(
-                tokenReceiveWireframeFactory: resolver.resolve(),
+                currencyReceiveWireframeFactory: resolver.resolve(),
                 currencySendWireframeFactory: resolver.resolve(),
-                tokenSwapWireframeFactory: resolver.resolve(),
+                currencySwapWireframeFactory: resolver.resolve(),
                 deepLinkHandler: resolver.resolve(),
                 networksService: resolver.resolve(),
                 currencyStoreService: resolver.resolve(),

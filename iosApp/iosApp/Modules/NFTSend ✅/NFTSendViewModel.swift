@@ -24,7 +24,7 @@ extension NFTSendViewModel {
     }
     
     struct Send {
-        let tokenNetworkFeeViewModel: TokenNetworkFeeViewModel
+        let tokenNetworkFeeViewModel: NetworkFeePickerViewModel
         let buttonState: State
         
         enum State {

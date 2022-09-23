@@ -19,7 +19,7 @@ final class DefaultCultProposalsWireframeFactory {
     private let cultProposalWireframeFactory: CultProposalWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
-    private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
+    private let currencySwapWireframeFactory: CurrencySwapWireframeFactory
     private let cultService: CultService
     private let walletService: WalletService
 
@@ -27,14 +27,14 @@ final class DefaultCultProposalsWireframeFactory {
         cultProposalWireframeFactory: CultProposalWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        tokenSwapWireframeFactory: TokenSwapWireframeFactory,
+        currencySwapWireframeFactory: CurrencySwapWireframeFactory,
         cultService: CultService,
         walletService: WalletService
     ) {
         self.cultProposalWireframeFactory = cultProposalWireframeFactory
         self.confirmationWireframeFactory = confirmationWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
-        self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
+        self.currencySwapWireframeFactory = currencySwapWireframeFactory
         self.cultService = cultService
         self.walletService = walletService
     }
@@ -48,7 +48,7 @@ extension DefaultCultProposalsWireframeFactory: CultProposalsWireframeFactory {
             cultProposalWireframeFactory: cultProposalWireframeFactory,
             confirmationWireframeFactory: confirmationWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
-            tokenSwapWireframeFactory: tokenSwapWireframeFactory,
+            currencySwapWireframeFactory: currencySwapWireframeFactory,
             cultService: cultService,
             walletService: walletService
         )
@@ -65,7 +65,7 @@ final class CultProposalsWireframeFactoryAssembler: AssemblerComponent {
                 cultProposalWireframeFactory: resolver.resolve(),
                 confirmationWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
-                tokenSwapWireframeFactory: resolver.resolve(),
+                currencySwapWireframeFactory: resolver.resolve(),
                 cultService: resolver.resolve(),
                 walletService: resolver.resolve()
             )

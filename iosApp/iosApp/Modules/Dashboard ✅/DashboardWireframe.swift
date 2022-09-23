@@ -38,7 +38,7 @@ final class DefaultDashboardWireframe {
     private let currencyPickerWireframeFactory: CurrencyPickerWireframeFactory
     private let currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory
     private let currencySendWireframeFactory: CurrencyCurrencyWireframeFactory
-    private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
+    private let currencySwapWireframeFactory: CurrencySwapWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let themePickerWireframeFactory: ThemePickerWireframeFactory
@@ -59,7 +59,7 @@ final class DefaultDashboardWireframe {
         currencyPickerWireframeFactory: CurrencyPickerWireframeFactory,
         currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory,
         currencySendWireframeFactory: CurrencyCurrencyWireframeFactory,
-        tokenSwapWireframeFactory: TokenSwapWireframeFactory,
+        currencySwapWireframeFactory: CurrencySwapWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         themePickerWireframeFactory: ThemePickerWireframeFactory,
@@ -77,7 +77,7 @@ final class DefaultDashboardWireframe {
         self.currencyPickerWireframeFactory = currencyPickerWireframeFactory
         self.currencyReceiveWireframeFactory = currencyReceiveWireframeFactory
         self.currencySendWireframeFactory = currencySendWireframeFactory
-        self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
+        self.currencySwapWireframeFactory = currencySwapWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.themePickerWireframeFactory = themePickerWireframeFactory
@@ -182,7 +182,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             ).present()
         case .tokenSwap:
             guard let network = networksService.network else { return }
-            tokenSwapWireframeFactory.make(
+            currencySwapWireframeFactory.make(
                 vc,
                 context: .init(
                     network: network,

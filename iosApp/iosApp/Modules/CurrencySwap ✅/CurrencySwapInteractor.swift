@@ -11,31 +11,31 @@ struct SwapData {
     let inputAmount: BigInt
 }
 
-protocol SwapInteractorLister: AnyObject {
+protocol CurrencyInteractorLister: AnyObject {
     func handle(swapEvent event: UniswapEvent)
 }
 
-enum TokenSwapInteractorOutputAmountState {
+enum CurrencySwapInteractorOutputAmountState {
     case loading
     case ready
 }
 
-enum TokenSwapInteractorApprovalState {
+enum CurrencySwapInteractorApprovalState {
     case approve
     case approving
     case approved
 }
 
-enum TokenSwapInteractorSwapState {
+enum CurrencySwapInteractorSwapState {
     case notAvailable
     case swap
 }
 
-protocol TokenSwapInteractor: AnyObject {
+protocol CurrencySwapInteractor: AnyObject {
     var outputAmount: BigInt { get }
-    var outputAmountState: TokenSwapInteractorOutputAmountState { get }
-    var approvingState: TokenSwapInteractorApprovalState { get }
-    var swapState: TokenSwapInteractorSwapState { get }
+    var outputAmountState: CurrencySwapInteractorOutputAmountState { get }
+    var approvingState: CurrencySwapInteractorApprovalState { get }
+    var swapState: CurrencySwapInteractorSwapState { get }
     var swapService: UniswapService { get }
     func defaultCurrencyFrom(for network: Network) -> Currency
     func defaultCurrencyTo(for network: Network) -> Currency
@@ -45,8 +45,8 @@ protocol TokenSwapInteractor: AnyObject {
     func networkFeeInNetworkToken(network: Network, fee: Web3NetworkFee) -> String
     func getQuote(data: SwapData)
     func isCurrentQuote(data: SwapData) -> Bool
-    func addListener(_ listener: SwapInteractorLister)
-    func removeListener(_ listener: SwapInteractorLister)
+    func addListener(_ listener: CurrencyInteractorLister)
+    func removeListener(_ listener: CurrencyInteractorLister)
     func approveSwap(
         network: Network,
         currency: Currency,
@@ -56,7 +56,7 @@ protocol TokenSwapInteractor: AnyObject {
     func balance(currency: Currency, network: Network) -> BigInt
 }
 
-final class DefaultTokenSwapInteractor {
+final class DefaultCurrencySwapInteractor {
     private let network: Network
     private let walletService: WalletService
     private let networksService: NetworksService
@@ -82,11 +82,11 @@ final class DefaultTokenSwapInteractor {
     }
 }
 
-extension DefaultTokenSwapInteractor: TokenSwapInteractor {
+extension DefaultCurrencySwapInteractor: CurrencySwapInteractor {
 
     var outputAmount: BigInt { swapService.outputAmount }
     
-    var outputAmountState: TokenSwapInteractorOutputAmountState {
+    var outputAmountState: CurrencySwapInteractorOutputAmountState {
         switch swapService.outputState {
         case is OutputState.Loading: return .loading
         default: break
@@ -98,7 +98,7 @@ extension DefaultTokenSwapInteractor: TokenSwapInteractor {
         return .ready
     }
     
-    var approvingState: TokenSwapInteractorApprovalState {
+    var approvingState: CurrencySwapInteractorApprovalState {
         switch swapService.approvalState {
         case is ApprovalState.NeedsApproval: return .approve
         case is ApprovalState.Approving: return .approving
@@ -106,7 +106,7 @@ extension DefaultTokenSwapInteractor: TokenSwapInteractor {
         }
     }
     
-    var swapState: TokenSwapInteractorSwapState {
+    var swapState: CurrencySwapInteractorSwapState {
         // 1 - Check pool state
         switch swapService.poolsState {
         case is PoolsState.NoPoolsFound: return .notAvailable
@@ -183,7 +183,7 @@ extension DefaultTokenSwapInteractor: TokenSwapInteractor {
     }
 }
 
-private extension DefaultTokenSwapInteractor {
+private extension DefaultCurrencySwapInteractor {
     
     func configureUniswapService() {
         guard let wallet = networksService.wallet(network: network) else {
@@ -195,14 +195,14 @@ private extension DefaultTokenSwapInteractor {
     }
 }
 
-extension DefaultTokenSwapInteractor: UniswapListener {
+extension DefaultCurrencySwapInteractor: UniswapListener {
     
-    func addListener(_ listener: SwapInteractorLister) {
+    func addListener(_ listener: CurrencyInteractorLister) {
         self.listener = WeakContainer(listener)
         swapService.add(listener___: self)
     }
     
-    func removeListener(_ listener: SwapInteractorLister) {
+    func removeListener(_ listener: CurrencyInteractorLister) {
         self.listener = nil
         swapService.remove(listener___: self)
     }
@@ -217,9 +217,9 @@ extension DefaultTokenSwapInteractor: UniswapListener {
     }
 
     private class WeakContainer {
-        weak var value: SwapInteractorLister?
+        weak var value: CurrencyInteractorLister?
 
-        init(_ value: SwapInteractorLister) {
+        init(_ value: CurrencyInteractorLister) {
             self.value = value
         }
     }

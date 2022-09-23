@@ -44,7 +44,7 @@ extension UIStoryboard {
         case currencyReceive = "CurrencyReceive"
         case currencyAdd = "CurrencyAdd"
         case currencySend = "CurrencySend"
-        case tokenSwap = "TokenSwap"
+        case currencySwap = "CurrencySwap"
         case networkPicker = "NetworkPicker"
         case qrCodeScan = "QRCodeScan"
         case authenticate = "Authenticate"

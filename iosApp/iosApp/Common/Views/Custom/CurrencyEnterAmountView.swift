@@ -6,7 +6,7 @@ import Foundation
 import UIKit
 import web3lib
 
-struct TokenEnterAmountViewModel {
+struct CurrencyEnterAmountViewModel {
     
     let tokenAmount: BigInt?
     let tokenSymbolIconName: String
@@ -45,7 +45,7 @@ struct TokenEnterAmountViewModel {
     }
 }
 
-final class TokenEnterAmountView: UIView {
+final class CurrencyEnterAmountView: UIView {
     
     @IBOutlet weak var sendCurrencySymbol: UILabel!
     @IBOutlet weak var sendAmountTextField: TextField!
@@ -64,7 +64,7 @@ final class TokenEnterAmountView: UIView {
         case fiat
     }
     
-    private var viewModel: TokenEnterAmountViewModel!
+    private var viewModel: CurrencyEnterAmountViewModel!
     private var onTokenTapped: (() -> Void)?
     private var onTokenChanged: ((BigInt) -> Void)?
     private var mode: Mode = .token
@@ -128,10 +128,10 @@ final class TokenEnterAmountView: UIView {
     }
 }
 
-extension TokenEnterAmountView {
+extension CurrencyEnterAmountView {
     
     func update(
-        with viewModel: TokenEnterAmountViewModel,
+        with viewModel: CurrencyEnterAmountViewModel,
         onTokenTapped: (() -> Void)? = nil,
         onTokenChanged: ((BigInt) -> Void)? = nil
     ) {
@@ -156,7 +156,7 @@ extension TokenEnterAmountView {
     }
 }
 
-extension TokenEnterAmountView: UITextFieldDelegate {
+extension CurrencyEnterAmountView: UITextFieldDelegate {
     
     func textField(
         _ textField: UITextField,
@@ -229,7 +229,7 @@ extension TokenEnterAmountView: UITextFieldDelegate {
     }
 }
 
-private extension TokenEnterAmountView {
+private extension CurrencyEnterAmountView {
     
     func applyTextValidation(to textField: UITextField) {
         
@@ -281,7 +281,7 @@ private extension TokenEnterAmountView {
     }
 }
 
-private extension TokenEnterAmountView {
+private extension CurrencyEnterAmountView {
     
     @objc func tokenMaxAmountTapped() {
         
@@ -459,7 +459,7 @@ private extension TokenEnterAmountView {
     }
 }
 
-private extension TokenEnterAmountView {
+private extension CurrencyEnterAmountView {
     
     func makeCurrencyFiatPrice(
         with amount: BigInt

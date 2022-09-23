@@ -2,11 +2,11 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-struct TokenSwapPriceViewModel {
+struct CurrencySwapPriceViewModel {
     let value: String
 }
 
-final class TokenSwapPriceView: UIView {
+final class CurrencySwapPriceView: UIView {
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var valueLabel: UILabel!
@@ -19,9 +19,9 @@ final class TokenSwapPriceView: UIView {
     }
 }
 
-extension TokenSwapPriceView {
+extension CurrencySwapPriceView {
     
-    func update(with viewModel: TokenSwapPriceViewModel) {
+    func update(with viewModel: CurrencySwapPriceViewModel) {
         valueLabel.text = viewModel.value
     }
 }

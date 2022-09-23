@@ -4,16 +4,16 @@
 
 import web3lib
 
-final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
+final class CurrencySwapMarketCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var tokenFrom: TokenEnterAmountView!
+    @IBOutlet weak var currencyFrom: CurrencyEnterAmountView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var tokenTo: TokenEnterAmountView!
-    @IBOutlet weak var tokenSwapProviderView: TokenSwapProviderView!
-    @IBOutlet weak var tokenSwapPriceView: TokenSwapPriceView!
-    @IBOutlet weak var tokenSwapSlippageView: TokenSwapSlippageView!
-    @IBOutlet weak var networkFeeView: TokenNetworkFeeView!
+    @IBOutlet weak var currencyTo: CurrencyEnterAmountView!
+    @IBOutlet weak var currencySwapProviderView: CurrencySwapProviderView!
+    @IBOutlet weak var currencySwapPriceView: CurrencySwapPriceView!
+    @IBOutlet weak var currencySwapSlippageView: CurrencySwapSlippageView!
+    @IBOutlet weak var networkFeeView: NetworkFeePickerView!
     @IBOutlet weak var approveButton: Button!
     @IBOutlet weak var button: Button!
 
@@ -44,7 +44,7 @@ final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
         imageView.superview?.superview?.isUserInteractionEnabled = true
         loadingIndicator.isHidden = true
         loadingIndicator.color = Theme.colour.activityIndicator
-        tokenTo.maxButton.isHidden = true
+        currencyTo.maxButton.isHidden = true
         approveButton.style = .primary
         approveButton.addTarget(self, action: #selector(approveButtonTapped), for: .touchUpInside)
         var approveConfiguration = approveButton.configuration ?? .plain()
@@ -53,15 +53,15 @@ final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
         approveButton.updateConfiguration()
         button.style = .primary
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        stackView.setCustomSpacing(Theme.constant.padding, after: tokenTo)
-        stackView.setCustomSpacing(Theme.constant.padding.half.half, after: tokenSwapProviderView)
-        stackView.setCustomSpacing(Theme.constant.padding.half.half, after: tokenSwapPriceView)
-        stackView.setCustomSpacing(Theme.constant.padding.half, after: tokenSwapSlippageView)
+        stackView.setCustomSpacing(Theme.constant.padding, after: currencyTo)
+        stackView.setCustomSpacing(Theme.constant.padding.half.half, after: currencySwapProviderView)
+        stackView.setCustomSpacing(Theme.constant.padding.half.half, after: currencySwapPriceView)
+        stackView.setCustomSpacing(Theme.constant.padding.half, after: currencySwapSlippageView)
         stackView.setCustomSpacing(Theme.constant.padding, after: networkFeeView)
     }
     
     override func resignFirstResponder() -> Bool {
-        tokenFrom.resignFirstResponder() || tokenTo.resignFirstResponder()
+        currencyFrom.resignFirstResponder() || currencyTo.resignFirstResponder()
     }
     
     func showLoading() {
@@ -72,11 +72,11 @@ final class TokenSwapMarketCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension TokenSwapMarketCollectionViewCell {
+extension CurrencySwapMarketCollectionViewCell {
     
-    func update(with viewModel: TokenSwapViewModel.Swap, handler: Handler) {
+    func update(with viewModel: CurrencySwapViewModel.Swap, handler: Handler) {
         self.handler = handler
-        tokenFrom.update(
+        currencyFrom.update(
             with: viewModel.currencyFrom,
             onTokenTapped: handler.onCurrencyFromTapped,
             onTokenChanged: {
@@ -86,7 +86,7 @@ extension TokenSwapMarketCollectionViewCell {
                 handler.onCurrencyFromAmountChanged?(amount)
             }
         )
-        tokenTo.update(
+        currencyTo.update(
             with: viewModel.currencyTo,
             onTokenTapped: handler.onCurrencyToTapped,
             onTokenChanged: {
@@ -96,14 +96,14 @@ extension TokenSwapMarketCollectionViewCell {
                 handler.onCurrencyToAmountChanged?(amount)
             }
         )
-        tokenSwapProviderView.update(
+        currencySwapProviderView.update(
             with: viewModel.currencySwapProviderViewModel,
             handler: .init(onProviderTapped: handler.onProviderTapped)
         )
-        tokenSwapPriceView.update(
+        currencySwapPriceView.update(
             with: viewModel.currencySwapPriceViewModel
         )
-        tokenSwapSlippageView.update(
+        currencySwapSlippageView.update(
             with: viewModel.currencySwapSlippageViewModel,
             handler: .init(onSlippageTapped: handler.onSlippageTapped)
         )
@@ -162,7 +162,7 @@ extension TokenSwapMarketCollectionViewCell {
     }
 }
 
-private extension TokenSwapMarketCollectionViewCell {
+private extension CurrencySwapMarketCollectionViewCell {
     
     func hideLoading() {
         loadingIndicator.stopAnimating()

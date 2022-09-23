@@ -5,13 +5,13 @@
 import UIKit
 import web3lib
 
-struct TokenSwapWireframeContext {
+struct CurrencySwapWireframeContext {
     let network: Network
     let currencyFrom: Currency?
     let currencyTo: Currency?
 }
 
-enum TokenSwapWireframeDestination {
+enum CurrencySwapWireframeDestination {
     case underConstructionAlert
     case selectCurrencyFrom(onCompletion: (Currency) -> Void)
     case selectCurrencyTo(onCompletion: (Currency) -> Void)
@@ -22,15 +22,15 @@ enum TokenSwapWireframeDestination {
     )
 }
 
-protocol TokenSwapWireframe {
+protocol CurrencySwapWireframe {
     func present()
-    func navigate(to destination: TokenSwapWireframeDestination)
+    func navigate(to destination: CurrencySwapWireframeDestination)
     func dismiss()
 }
 
-final class DefaultTokenSwapWireframe {
+final class DefaultCurrencySwapWireframe {
     private weak var parent: UIViewController?
-    private let context: TokenSwapWireframeContext
+    private let context: CurrencySwapWireframeContext
     private let currencyPickerWireframeFactory: CurrencyPickerWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
@@ -42,7 +42,7 @@ final class DefaultTokenSwapWireframe {
     
     init(
         _ parent: UIViewController?,
-        context: TokenSwapWireframeContext,
+        context: CurrencySwapWireframeContext,
         currencyPickerWireframeFactory: CurrencyPickerWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
@@ -61,14 +61,14 @@ final class DefaultTokenSwapWireframe {
     }
 }
 
-extension DefaultTokenSwapWireframe: TokenSwapWireframe {
+extension DefaultCurrencySwapWireframe: CurrencySwapWireframe {
     
     func present() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
     
-    func navigate(to destination: TokenSwapWireframeDestination) {
+    func navigate(to destination: CurrencySwapWireframeDestination) {
         switch destination {
         case .underConstructionAlert:
             alertWireframeFactory.make(
@@ -102,10 +102,10 @@ extension DefaultTokenSwapWireframe: TokenSwapWireframe {
     func dismiss() { vc?.popOrDismiss() }
 }
 
-private extension DefaultTokenSwapWireframe {
+private extension DefaultCurrencySwapWireframe {
     
     func wireUp() -> UIViewController {
-        let interactor = DefaultTokenSwapInteractor(
+        let interactor = DefaultCurrencySwapInteractor(
             // NOTE: Passing network here is an edge case because is needed to configure swapService.
             // we can't do it here (wireframe) because this will live in a platform specific module and
             // DefaultCurrencySwapInteractor will be shared
@@ -114,8 +114,8 @@ private extension DefaultTokenSwapWireframe {
             networksService: networksService,
             swapService: swapService
         )
-        let vc: TokenSwapViewController = UIStoryboard(.tokenSwap).instantiate()
-        let presenter = DefaultTokenSwapPresenter(
+        let vc: CurrencySwapViewController = UIStoryboard(.currencySwap).instantiate()
+        let presenter = DefaultCurrencySwapPresenter(
             view: vc,
             interactor: interactor,
             wireframe: self,

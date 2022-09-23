@@ -25,9 +25,9 @@ protocol AccountWireframe {
 final class DefaultAccountWireframe {
     private weak var parent: UIViewController?
     private let context: AccountWireframeContext
-    private let tokenReceiveWireframeFactory: CurrencyReceiveWireframeFactory
+    private let currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory
     private let currencySendWireframeFactory: CurrencyCurrencyWireframeFactory
-    private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
+    private let currencySwapWireframeFactory: CurrencySwapWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
@@ -39,9 +39,9 @@ final class DefaultAccountWireframe {
     init(
         _ parent: UIViewController?,
         context: AccountWireframeContext,
-        tokenReceiveWireframeFactory: CurrencyReceiveWireframeFactory,
+        currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory,
         currencySendWireframeFactory: CurrencyCurrencyWireframeFactory,
-        tokenSwapWireframeFactory: TokenSwapWireframeFactory,
+        currencySwapWireframeFactory: CurrencySwapWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
@@ -50,9 +50,9 @@ final class DefaultAccountWireframe {
     ) {
         self.parent = parent
         self.context = context
-        self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
+        self.currencyReceiveWireframeFactory = currencyReceiveWireframeFactory
         self.currencySendWireframeFactory = currencySendWireframeFactory
-        self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
+        self.currencySwapWireframeFactory = currencySwapWireframeFactory
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
         self.currencyStoreService = currencyStoreService
@@ -77,7 +77,7 @@ extension DefaultAccountWireframe: AccountWireframe {
     func navigate(to destination: AccountWireframeDestination) {
         switch destination {
         case .receive:
-            tokenReceiveWireframeFactory.make(
+            currencyReceiveWireframeFactory.make(
                 vc,
                 context: .init(network: context.network, currency: context.currency)
             ).present()
@@ -91,7 +91,7 @@ extension DefaultAccountWireframe: AccountWireframe {
                 )
             ).present()
         case .swap:
-            tokenSwapWireframeFactory.make(
+            currencySwapWireframeFactory.make(
                 vc,
                 context: .init(
                     network: context.network,

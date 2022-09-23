@@ -2,11 +2,11 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-struct TokenSwapSlippageViewModel {
+struct CurrencySwapSlippageViewModel {
     let value: String
 }
 
-final class TokenSwapSlippageView: UIView {
+final class CurrencySwapSlippageView: UIView {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var button: Button!
     
@@ -29,15 +29,15 @@ final class TokenSwapSlippageView: UIView {
     }
 }
 
-extension TokenSwapSlippageView {
+extension CurrencySwapSlippageView {
     
-    func update(with viewModel: TokenSwapSlippageViewModel, handler: Handler) {
+    func update(with viewModel: CurrencySwapSlippageViewModel, handler: Handler) {
         self.handler = handler
         button.setTitle(viewModel.value, for: .normal)
     }
 }
 
-private extension TokenSwapSlippageView {
+private extension CurrencySwapSlippageView {
     
     @objc func changeSlippage() {
         handler.onSlippageTapped()
