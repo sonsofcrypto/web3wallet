@@ -5,26 +5,17 @@
 struct FeatureShareHelper {
     
     func shareVote(
-        _ web3Feature: Web3Feature
+        on proposal: ImprovementProposal,
+        presentingIn: UIViewController
     ) {
-        let text = String(
-            format: Localized("feature.vote.text"),
-            web3Feature.id,
-            web3Feature.title
-        )
-
-        let imgUrlStr = "https://sonsofcrypto.com/web3wallet-improvement-proposals/\(web3Feature.id).html"
-
-        let textEncoded = text.addingPercentEncoding(
+        let textEncoded = proposal.tweet.addingPercentEncoding(
             withAllowedCharacters: .urlHostAllowed
         ) ?? ""
 
-        let urlEncoded = imgUrlStr.addingPercentEncoding(
+        let urlEncoded = proposal.pageUrl.addingPercentEncoding(
             withAllowedCharacters: .urlHostAllowed
         ) ?? ""
-
         guard let url = "https://www.twitter.com/intent/tweet?text=\(textEncoded)&url=\(urlEncoded)".url else { return }
-        
         UIApplication.shared.open(url)
     }
 }

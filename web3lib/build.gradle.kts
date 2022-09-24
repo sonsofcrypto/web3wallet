@@ -135,6 +135,7 @@ android {
         minSdk = 29
         targetSdk = 32
     }
+    namespace = "com.sonsofcrypto.web3lib"
 }
 
 dependencies {

@@ -19,6 +19,7 @@ android {
             isMinifyEnabled = false
         }
     }
+    namespace = "com.sonsofcrypto.web3wallet.android"
 }
 
 dependencies {

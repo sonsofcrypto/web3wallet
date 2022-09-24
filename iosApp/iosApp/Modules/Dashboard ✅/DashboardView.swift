@@ -318,11 +318,6 @@ private extension DashboardViewController {
     }
 
     @objc func navBarRightActionTapped() {
-        guard !FeatureFlag.runVotingCount.isEnabled else {
-            let runner: FeatureServiceRunner = ServiceDirectory.assembler.resolve()
-            runner.run()
-            return
-        }
         presenter.handle(.didScanQRCode)
     }
 
