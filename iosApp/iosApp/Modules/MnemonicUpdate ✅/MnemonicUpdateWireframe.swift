@@ -87,10 +87,10 @@ private extension DefaultMnemonicUpdateWireframe {
         )
         let vc: MnemonicUpdateViewController = UIStoryboard(.mnemonicUpdate).instantiate()
         let presenter = DefaultMnemonicUpdatePresenter(
-            context: context,
             view: vc,
+            wireframe: self,
             interactor: interactor,
-            wireframe: self
+            context: context
         )
         vc.presenter = presenter
         let nc = NavigationController(rootViewController: vc)

@@ -29,16 +29,12 @@ protocol MnemonicNewInteractor: AnyObject {
     var mnemonic: [String] { get }
     /// Locale of mnemonic
     var locale: String { get }
-
     /// generates new wallet mnemonic
     func generateNewMnemonic()
-
     /// generate password
     func generatePassword() -> String
-
     /// See if passwords meets minimum specs
     func isValidPassword(password: String) -> Bool
-
     /// Creates new `KeyStoreItem` and saves it to `KeyStore`
     func createKeyStoreItem(_ password: String, salt: String) throws -> KeyStoreItem
 }
@@ -46,7 +42,6 @@ protocol MnemonicNewInteractor: AnyObject {
 // MARK: - DefaultMnemonicNewInteractor
 
 final class DefaultMnemonicNewInteractor {
-
     var entropySize: Bip39.EntropySize = .es128
     var name: String = ""
     var passUnlockWithBio: Bool = true
@@ -54,13 +49,12 @@ final class DefaultMnemonicNewInteractor {
     var saltMnemonic: Bool = false
     var passwordType: KeyStoreItem.PasswordType = .bio
     var derivationPath: String = Network.ethereum().defaultDerivationPath()
-
+    
     private(set) var mnemonic = [String]()
     private(set) var locale = "en"
-
     private var bip39: Bip39!
     private var keyStoreService: KeyStoreService
-
+    
     init(_ keyStoreService: KeyStoreService) {
         self.keyStoreService = keyStoreService
     }
@@ -153,14 +147,10 @@ private extension DefaultMnemonicNewInteractor {
     }
 
     func walletName() -> String {
-        guard name.isEmpty else {
-            return name
-        }
-
+        guard name.isEmpty else { return name }
         guard !keyStoreService.items().isEmpty else {
             return Localized("newMnemonic.defaultWalletName")
         }
-
         return String(
             format: Localized("newMnemonic.defaultNthWalletName"),
             keyStoreService.items().count
@@ -181,7 +171,6 @@ private extension DefaultMnemonicNewInteractor {
 // MARK: - Constant
 
 private extension DefaultMnemonicNewInteractor {
-
     enum Constant {
         static let maxNameLength: Int = 24
     }

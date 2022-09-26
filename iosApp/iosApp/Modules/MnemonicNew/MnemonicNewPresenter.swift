@@ -21,30 +21,25 @@ enum MnemonicNewPresenterEvent {
 }
 
 protocol MnemonicNewPresenter {
-
     func present()
     func handle(_ event: MnemonicNewPresenterEvent)
 }
 
-// MARK: - DefaultMnemonicPresenter
-
 final class DefaultMnemonicNewPresenter {
-
-    private let context: MnemonicNewContext
-    private let interactor: MnemonicNewInteractor
+    private weak var view: MnemonicNewView?
     private let wireframe: MnemonicNewWireframe
+    private let interactor: MnemonicNewInteractor
+    private let context: MnemonicNewContext
 
     private var password: String = ""
     private var salt: String = ""
     private var ctaTapped = false
 
-    private weak var view: MnemonicNewView?
-
     init(
-        context: MnemonicNewContext,
         view: MnemonicNewView,
+        wireframe: MnemonicNewWireframe,
         interactor: MnemonicNewInteractor,
-        wireframe: MnemonicNewWireframe
+        context: MnemonicNewContext
     ) {
         self.context = context
         self.view = view
@@ -52,8 +47,6 @@ final class DefaultMnemonicNewPresenter {
         self.wireframe = wireframe
     }
 }
-
-// MARK: MnemonicPresenter
 
 extension DefaultMnemonicNewPresenter: MnemonicNewPresenter {
 
@@ -122,32 +115,20 @@ extension DefaultMnemonicNewPresenter: MnemonicNewPresenter {
 
 private extension DefaultMnemonicNewPresenter {
     
-    func updateView() {
-        
-        view?.update(with: viewModel())
-    }
+    func updateView() { view?.update(with: viewModel()) }
     
-    var isValidForm: Bool {
-        
-        passwordErrorMessage == nil
-    }
+    var isValidForm: Bool { passwordErrorMessage == nil }
     
     var passwordErrorMessage: String? {
-        
         guard ctaTapped else { return nil }
-        
         switch interactor.passwordType {
-            
         case .pin:
             let validator = PasswordValidatorHelper()
             return validator.validate(password, type: .pin)
-
         case .pass:
             let validator = PasswordValidatorHelper()
             return validator.validate(password, type: .pass)
-            
-        default:
-            return nil
+        default: return nil
         }
     }
 
@@ -259,10 +240,7 @@ private extension DefaultMnemonicNewPresenter {
     }
 }
 
-// MARK: - Utilities
-
 private extension DefaultMnemonicNewPresenter {
-    
     func selectedPasswordTypeIdx() -> Int {
         let values = KeyStoreItem.PasswordType.values()
         for idx in 0..<values.size {
@@ -283,10 +261,7 @@ private extension DefaultMnemonicNewPresenter {
     }
 }
 
-// MARK: - Constant
-
 private extension DefaultMnemonicNewPresenter {
-
     enum Constant {
         static let mnemonicHighlightWords: [String] = [
             Localized("newMnemonic.footerHighlightWord0"),

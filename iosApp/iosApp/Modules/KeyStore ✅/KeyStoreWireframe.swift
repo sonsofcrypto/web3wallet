@@ -85,7 +85,7 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
             edgeVc?.setDisplayMode(.masterOnboardAnim, animated: true)
         case let .newMnemonic(handler):
             let context = MnemonicNewContext(createHandler: handler)
-            newMnemonic.makeWireframe(vc, context: context).present()
+            newMnemonic.make(vc, context: context).present()
         case let .importMnemonic(handler):
             let context = MnemonicImportContext(createHandler: handler)
             importMnemonic.makeWireframe(vc, context: context).present()
@@ -95,7 +95,7 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
                 updateHandler: handler,
                 onKeyStoreItemDeleted: onDeleted
             )
-            updateMnemonic.makeWireframe(vc, context: context).present()
+            updateMnemonic.make(vc, context: context).present()
         default:
             guard let vc = vc else { return }
             alertWireframeFactory.make(
