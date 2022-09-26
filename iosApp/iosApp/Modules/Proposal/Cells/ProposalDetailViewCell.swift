@@ -4,18 +4,18 @@
 
 import UIKit
 
-final class FeatureDetailViewCell: UICollectionViewCell {
-    @IBOutlet weak var imageView: FeatureDetailImageView!
+final class ProposalDetailViewCell: UICollectionViewCell {
+    @IBOutlet weak var imageView: ProposalDetailImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var statusView: FeatureDetailStatusView!
-    @IBOutlet weak var summaryView: FeatureDetailSummaryView!
+    @IBOutlet weak var statusView: ProposalDetailStatusView!
+    @IBOutlet weak var summaryView: ProposalDetailSummaryView!
     @IBOutlet weak var voteButton: Button!
     
     struct Handler {
         let onVote: (String) -> Void
     }
 
-    private var viewModel: FeatureViewModel.Details!
+    private var viewModel: ProposalViewModel.Details!
     private var handler: Handler!
     
     override func awakeFromNib() {
@@ -26,7 +26,7 @@ final class FeatureDetailViewCell: UICollectionViewCell {
     }
     
     func update(
-        with viewModel: FeatureViewModel.Details,
+        with viewModel: ProposalViewModel.Details,
         handler: Handler
     ) -> Self {
         self.viewModel = viewModel
@@ -40,7 +40,7 @@ final class FeatureDetailViewCell: UICollectionViewCell {
     }
 }
 
-private extension FeatureDetailViewCell  {
+private extension ProposalDetailViewCell  {
     
     @objc func voteTapped() { handler.onVote(viewModel.id) }
 }

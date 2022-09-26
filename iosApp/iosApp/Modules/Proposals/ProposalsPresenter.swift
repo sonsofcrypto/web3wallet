@@ -113,14 +113,14 @@ private extension DefaultProposalsPresenter {
             id: feature.id,
             title: feature.title,
             subtitle: proposalSubtitle(for: feature),
-            buttonTitle: Localized("features.cell.button.vote")
+            buttonTitle: Localized("proposals.cell.button.vote")
         )
     }
 
     func proposalSubtitle(for feature: ImprovementProposal) -> String {
         feature.hashTag
             + "  |  "
-            + Localized("features.cell.votes", arg: feature.votes.stringValue)
+            + Localized("proposals.cell.votes", arg: feature.votes.stringValue)
     }
 }
 

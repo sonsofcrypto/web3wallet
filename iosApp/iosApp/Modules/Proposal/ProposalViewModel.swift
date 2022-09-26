@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-struct FeatureViewModel {
+struct ProposalViewModel {
     let title: String
     let details: [Details]
     let selectedIndex: Int

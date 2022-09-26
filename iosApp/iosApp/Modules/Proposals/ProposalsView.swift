@@ -131,17 +131,17 @@ private extension ProposalsViewController {
     func setSegmented() {
         let segmentControl = SegmentedControl()
         segmentControl.insertSegment(
-            withTitle: Localized("features.segmentedControl.infrastructure"),
+            withTitle: Localized("proposals.segmentedControl.infrastructure"),
             at: 0,
             animated: false
         )
         segmentControl.insertSegment(
-            withTitle: Localized("features.segmentedControl.integrations"),
+            withTitle: Localized("proposals.segmentedControl.integrations"),
             at: 1,
             animated: false
         )
         segmentControl.insertSegment(
-            withTitle: Localized("features.segmentedControl.features"),
+            withTitle: Localized("proposals.segmentedControl.features"),
             at: 2,
             animated: false
         )

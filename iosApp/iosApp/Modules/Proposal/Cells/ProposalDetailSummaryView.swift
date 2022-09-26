@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class FeatureDetailSummaryView: UIView {
+final class ProposalDetailSummaryView: UIView {
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var separatorView: UIView!
@@ -21,7 +21,7 @@ final class FeatureDetailSummaryView: UIView {
         infoLabel.apply(style: .body)
     }
 
-    func update(with summary: FeatureViewModel.Details.Summary) {
+    func update(with summary: ProposalViewModel.Details.Summary) {
         titleLabel.text = summary.title
         infoLabel.text = summary.summary
     }

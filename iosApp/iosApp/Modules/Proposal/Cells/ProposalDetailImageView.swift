@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-final class FeatureDetailImageView: UIView {
+final class ProposalDetailImageView: UIView {
     private weak var imageView: UIImageView!
     
     override func awakeFromNib() {

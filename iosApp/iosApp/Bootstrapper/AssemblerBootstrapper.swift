@@ -71,7 +71,7 @@ private extension AssemblerBootstrapper {
             QRCodeScanWireframeFactoryAssembler(),
             ConfirmationWireframeFactoryAssembler(),
             ProposalsWireframeFactoryAssembler(),
-            FeatureWireframeFactoryAssembler(),
+            ProposalWireframeFactoryAssembler(),
             ThemePickerWireframeFactoryAssembler(),
             MailServiceAssembler(),
             WebViewWireframeFactoryAssembler(),

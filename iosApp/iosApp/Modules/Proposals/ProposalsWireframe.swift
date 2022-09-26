@@ -18,7 +18,7 @@ protocol ProposalsWireframe {
 final class DefaultProposalsWireframe {
 
     private weak var parent: UIViewController?
-    private let featureWireframeFactory: FeatureWireframeFactory
+    private let featureWireframeFactory: ProposalWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let improvementProposalsService: ImprovementProposalsService
 
@@ -26,7 +26,7 @@ final class DefaultProposalsWireframe {
 
     init(
         _ parent: UIViewController?,
-        featureWireframeFactory: FeatureWireframeFactory,
+        featureWireframeFactory: ProposalWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         improvementProposalsService: ImprovementProposalsService
     ) {
@@ -51,7 +51,7 @@ extension DefaultProposalsWireframe: ProposalsWireframe {
         case let .proposal(proposal, proposals):
             featureWireframeFactory.make(
                 vc,
-                context: .init(feature: proposal, features: proposals)
+                context: .init(proposal: proposal, proposals: proposals)
             ).present()
         case .dismiss:
             vc?.popOrDismiss()

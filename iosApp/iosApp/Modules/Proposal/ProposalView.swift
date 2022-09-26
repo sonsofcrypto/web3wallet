@@ -4,16 +4,16 @@
 
 import UIKit
 
-protocol FeatureView: AnyObject {
-    func update(with viewModel: FeatureViewModel)
+protocol ProposalView: AnyObject {
+    func update(with viewModel: ProposalViewModel)
 }
 
-final class FeatureViewController: BaseViewController {
-    var presenter: FeaturePresenter!
+final class ProposalViewController: BaseViewController {
+    var presenter: ProposalPresenter!
     
     @IBOutlet weak var collectionView: UICollectionView!
 
-    private var viewModel: FeatureViewModel!
+    private var viewModel: ProposalViewModel!
     private var endDisplayFirstTimeCalled = false
     
     override func viewDidLoad() {
@@ -23,9 +23,9 @@ final class FeatureViewController: BaseViewController {
     }
 }
 
-extension FeatureViewController: FeatureView {
+extension ProposalViewController: ProposalView {
 
-    func update(with viewModel: FeatureViewModel) {
+    func update(with viewModel: ProposalViewModel) {
         self.viewModel = viewModel
         setTitle(with: viewModel.selectedIndex + 1)
         collectionView.reloadData()
@@ -33,7 +33,7 @@ extension FeatureViewController: FeatureView {
     }
 }
 
-extension FeatureViewController: UICollectionViewDataSource {
+extension ProposalViewController: UICollectionViewDataSource {
     
     func collectionView(
         _ collectionView: UICollectionView,
@@ -47,12 +47,12 @@ extension FeatureViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         let viewModel = viewModel.details[indexPath.item]
-        let cell = collectionView.dequeue(FeatureDetailViewCell.self, for: indexPath)
-        return cell.update(with: viewModel, handler: featureDetailViewHandler())
+        let cell = collectionView.dequeue(ProposalDetailViewCell.self, for: indexPath)
+        return cell.update(with: viewModel, handler: proposalDetailViewHandler())
     }
 }
 
-extension FeatureViewController: UICollectionViewDelegate {
+extension ProposalViewController: UICollectionViewDelegate {
     
     func collectionView(
         _ collectionView: UICollectionView,
@@ -82,7 +82,7 @@ extension FeatureViewController: UICollectionViewDelegate {
     }
 }
 
-private extension FeatureViewController {
+private extension ProposalViewController {
     
     func scrollToTop() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -108,7 +108,7 @@ private extension FeatureViewController {
     }
     
     func setTitle(with index: Int) {
-        title = viewModel.title + " \(index) " + Localized("feature.title.of") + " \(viewModel.details.count)"
+        title = viewModel.title + " \(index) " + Localized("proposal.title.of") + " \(viewModel.details.count)"
     }
     
     func configureUI() {
@@ -118,10 +118,7 @@ private extension FeatureViewController {
             target: self,
             action: #selector(dismissTapped)
         )
-        collectionView.setCollectionViewLayout(
-            makeCompositionalLayout(),
-            animated: false
-        )
+        collectionView.setCollectionViewLayout(compositionalLayout(), animated: false)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.clipsToBounds = false
@@ -131,7 +128,7 @@ private extension FeatureViewController {
         presenter.handle(.dismiss)
     }
     
-    func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
+    func compositionalLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout(section: collectionLayoutSection())
     }
   
@@ -157,9 +154,9 @@ private extension FeatureViewController {
     }
 }
 
-private extension FeatureViewController {
+private extension ProposalViewController {
 
-    func featureDetailViewHandler() -> FeatureDetailViewCell.Handler {
+    func proposalDetailViewHandler() -> ProposalDetailViewCell.Handler {
         .init(onVote: onVote())
     }
     

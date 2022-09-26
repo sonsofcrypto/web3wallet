@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 
-final class FeatureDetailStatusView: UIView {
+final class ProposalDetailStatusView: UIView {
     private weak var statusView: CultProposalStatus!
     
     override func awakeFromNib() {
@@ -26,7 +26,7 @@ final class FeatureDetailStatusView: UIView {
         )
     }
     
-    func update(with status: FeatureViewModel.Details.Status) {
+    func update(with status: ProposalViewModel.Details.Status) {
         statusView.text = status.title
         statusView.backgroundColor = status.color
     }

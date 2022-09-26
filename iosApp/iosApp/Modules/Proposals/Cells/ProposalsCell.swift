@@ -17,7 +17,7 @@ final class ProposalsCell: CollectionViewCell {
         super.awakeFromNib()
         titleLabel.apply(style: .body, weight: .bold)
         subtitleLabel.apply(style: .subheadline)
-        subtitleLabel.textColor = Theme.colour.labelSecondary
+        subtitleLabel.textColor = Theme.colour.labelPrimary
         chevronImageView.tintColor = Theme.colour.labelPrimary
         voteButton.style = .dashboardAction(leftImage: nil)
         voteButton.addTarget(self, action: #selector(voteTapped), for: .touchUpInside)

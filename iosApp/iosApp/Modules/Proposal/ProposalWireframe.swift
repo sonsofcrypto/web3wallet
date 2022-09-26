@@ -4,58 +4,58 @@
 
 import UIKit
 
-struct FeatureWireframeContext {    
-    let feature: ImprovementProposal
-    let features: [ImprovementProposal]
+struct ProposalWireframeContext {    
+    let proposal: ImprovementProposal
+    let proposals: [ImprovementProposal]
 }
 
-enum FeatureWireframeDestination {
+enum ProposalWireframeDestination {
     case vote
     case dismiss
 }
 
-protocol FeatureWireframe {
+protocol ProposalWireframe {
     func present()
-    func navigate(to destination: FeatureWireframeDestination)
+    func navigate(to destination: ProposalWireframeDestination)
 }
 
-final class DefaultFeatureWireframe {
+final class DefaultProposalWireframe {
     private weak var parent: UIViewController?
-    private let context: FeatureWireframeContext
+    private let context: ProposalWireframeContext
     
     private weak var vc: UIViewController?
 
     init(
         _ parent: UIViewController?,
-        context: FeatureWireframeContext
+        context: ProposalWireframeContext
     ) {
         self.parent = parent
         self.context = context
     }
 }
 
-extension DefaultFeatureWireframe: FeatureWireframe {
+extension DefaultProposalWireframe: ProposalWireframe {
 
     func present() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
 
-    func navigate(to destination: FeatureWireframeDestination) {
+    func navigate(to destination: ProposalWireframeDestination) {
         switch destination {
         case .vote:
-            FeatureShareHelper().shareVote(on: context.feature)
+            FeatureShareHelper().shareVote(on: context.proposal)
         case .dismiss:
             vc?.popOrDismiss()
         }
     }
 }
 
-private extension DefaultFeatureWireframe {
+private extension DefaultProposalWireframe {
 
     func wireUp() -> UIViewController {
-        let vc: FeatureViewController = UIStoryboard(.feature).instantiate()
-        let presenter = DefaultFeaturePresenter(
+        let vc: ProposalViewController = UIStoryboard(.proposal).instantiate()
+        let presenter = DefaultProposalPresenter(
             view: vc,
             wireframe: self,
             context: context

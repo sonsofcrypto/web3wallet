@@ -9,12 +9,12 @@ protocol ProposalsWireframeFactory {
 }
 
 final class DefaultProposalsWireframeFactory {
-    private let featureWireframeFactory: FeatureWireframeFactory
+    private let featureWireframeFactory: ProposalWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let improvementProposalsService: ImprovementProposalsService
 
     init(
-        featureWireframeFactory: FeatureWireframeFactory,
+        featureWireframeFactory: ProposalWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         improvementProposalsService: ImprovementProposalsService
     ) {

@@ -409,24 +409,24 @@
 "cult.proposal.parsing.rewardDistribution.per" = "per";
 "cult.proposal.parsing.cultRewardAllocation" = "%@% of Total Supply";
 
-"features.title" = "Improvement proposals";
-"features.section.all.description" = "All proposals";
-"features.section.infrastructure.description" = "Support for standards and protocols";
-"features.section.integrations.description" = "Direct smart contracts / defi / web3 products integrations and support for L1 & L2 chains";
-"features.section.features.description" = "Various app usability improvements and features";
-"features.segmentedControl.all" = "All";
-"features.segmentedControl.infrastructure" = "Infrastructure";
-"features.segmentedControl.integrations" = "Integrations";
-"features.segmentedControl.features" = "Features";
-"features.segmentedControl.unknown" = "Unknown";
-"features.cell.votes" = "Votes: %@";
-"features.cell.button.vote" = "Vote";
+"proposals.title" = "Improvement proposals";
+"proposals.section.all.description" = "All proposals";
+"proposals.section.infrastructure.description" = "Support for standards and protocols";
+"proposals.section.integrations.description" = "Direct smart contracts / defi / web3 products integrations and support for L1 & L2 chains";
+"proposals.section.features.description" = "Various app usability improvements and features";
+"proposals.segmentedControl.all" = "All";
+"proposals.segmentedControl.infrastructure" = "Infrastructure";
+"proposals.segmentedControl.integrations" = "Integrations";
+"proposals.segmentedControl.features" = "Features";
+"proposals.segmentedControl.unknown" = "Unknown";
+"proposals.cell.votes" = "Votes: %@";
+"proposals.cell.button.vote" = "Vote";
 
-"feature.title" = "Feature";
-"feature.summary.header" = "Details";
-"feature.title.of" = "of";
-"feature.button.vote" = "Vote";
-"feature.hashTag" = "WIP_%@";
+"proposal.title" = "Feature";
+"proposal.summary.header" = "Details";
+"proposal.title.of" = "of";
+"proposal.button.vote" = "Vote";
+"proposal.hashTag" = "WIP_%@";
 
 "mnemonic.error.invalid" = "Invalid mnemonic, the words entered are invalid.";
 "mnemonic.error.invalid.wordCount" = "Typically 12 (or 15, 18, 21, 24) words separated by spaces.";

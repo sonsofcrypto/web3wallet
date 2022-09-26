@@ -29,26 +29,26 @@ extension ProposalsViewModel {
             var stringValue: String {
                 switch self {
                 case .all:
-                    return Localized("features.segmentedControl.all")
+                    return Localized("proposals.segmentedControl.all")
                 case .infrastructure:
-                    return Localized("features.segmentedControl.infrastructure")
+                    return Localized("proposals.segmentedControl.infrastructure")
                 case .integrations:
-                    return Localized("features.segmentedControl.integrations")
+                    return Localized("proposals.segmentedControl.integrations")
                 case .features:
-                    return Localized("features.segmentedControl.features")
+                    return Localized("proposals.segmentedControl.features")
                 }
             }
             
             var descriptionValue: String {
                 switch self {
                 case .all:
-                    return Localized("features.section.all.description")
+                    return Localized("proposals.section.all.description")
                 case .infrastructure:
-                    return Localized("features.section.infrastructure.description")
+                    return Localized("proposals.section.infrastructure.description")
                 case .integrations:
-                    return Localized("features.section.integrations.description")
+                    return Localized("proposals.section.integrations.description")
                 case .features:
-                    return Localized("features.section.features.description")
+                    return Localized("proposals.section.features.description")
                 }
             }
         }
@@ -79,7 +79,7 @@ extension ProposalsViewModel {
 extension ProposalsViewModel {
     
     var title: String {
-        Localized("features.title")
+        Localized("proposals.title")
     }
     
     var sections: [ProposalsViewModel.Section] {
