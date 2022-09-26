@@ -95,6 +95,7 @@ private extension ConfirmationViewController {
             target: self,
             action: #selector(dismissAction)
         )
+        edgesForExtendedLayout = []
     }
 
     @objc func dismissAction() {
