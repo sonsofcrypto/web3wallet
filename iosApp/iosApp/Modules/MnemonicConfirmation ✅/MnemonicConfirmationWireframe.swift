@@ -25,7 +25,7 @@ final class DefaultMnemonicConfirmationWireframe {
     private weak var vc: UIViewController?
 
     init(
-        _ parent: UIViewController,
+        _ parent: UIViewController?,
         service: MnemonicConfirmationService
     ) {
         self.parent = parent

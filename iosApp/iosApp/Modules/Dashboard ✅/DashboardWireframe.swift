@@ -119,7 +119,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             let context = AlertContext.underConstructionAlert()
             alertWireframeFactory.make(parent, context: context).present()
         case .mnemonicConfirmation:
-            mnemonicConfirmationWireframeFactory.makeWireframe(parent).present()
+            mnemonicConfirmationWireframeFactory.make(parent).present()
         case .receive:
             let source = CurrencyPickerWireframeContext.Source.select(
                 onCompletion: { [weak self] (network, currency) in

@@ -6,9 +6,7 @@ import Foundation
 import web3lib
 
 protocol MnemonicConfirmationWireframeFactory {
-    func make(
-        _ parent: UIViewController?
-    ) -> MnemonicConfirmationWireframe
+    func make(_ parent: UIViewController?) -> MnemonicConfirmationWireframe
 }
 
 final class DefaultMnemonicConfirmationWireframeFactory {
@@ -30,10 +28,7 @@ extension DefaultMnemonicConfirmationWireframeFactory: MnemonicConfirmationWiref
             keyStoreService: keyStoreService,
             web3Service: web3Service
         )
-        return DefaultMnemonicConfirmationWireframe(
-            parent,
-            service: service
-        )
+        return DefaultMnemonicConfirmationWireframe(parent, service: service)
     }
 }
 

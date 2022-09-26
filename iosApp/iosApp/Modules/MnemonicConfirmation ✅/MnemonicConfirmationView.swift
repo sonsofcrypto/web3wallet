@@ -230,7 +230,8 @@ private extension MnemonicConfirmationViewController {
         guard let index = sender.view?.tag else { return }
         guard viewModel.potentialWords.count > index else { return }
         let word = viewModel.potentialWords[index]
-        textView.text = newMnemonic(appendingWord: word)
+        let newMnemonic = self.newMnemonic(appendingWord: word)
+        textView.text = newMnemonic
         presenter.handle(
             .mnemonicChanged(
                 to: newMnemonic,

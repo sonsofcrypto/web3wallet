@@ -17,37 +17,24 @@ enum DeepLink {
     
     init?(identifier: String) {
         switch identifier {
-        case DeepLink.mnemonicConfirmation.identifier:
-            self = .mnemonicConfirmation
-        case DeepLink.themesList.identifier:
-            self = .themesList
-        case DeepLink.featuresList.identifier:
-            self = .featuresList
-        case DeepLink.degen.identifier:
-            self = .degen
-        case DeepLink.cultProposals.identifier:
-            self = .cultProposals
-        case DeepLink.nftsDashboard.identifier:
-            self = .nftsDashboard
-        default:
-            return nil
+        case DeepLink.mnemonicConfirmation.identifier: self = .mnemonicConfirmation
+        case DeepLink.themesList.identifier: self = .themesList
+        case DeepLink.featuresList.identifier: self = .featuresList
+        case DeepLink.degen.identifier: self = .degen
+        case DeepLink.cultProposals.identifier: self = .cultProposals
+        case DeepLink.nftsDashboard.identifier: self = .nftsDashboard
+        default: return nil
         }
     }
     
     var identifier: String {
         switch self {
-        case .mnemonicConfirmation:
-            return "modal.mnemonic.confirmation"
-        case .themesList:
-            return "settings.themes"
-        case .featuresList:
-            return "modal.features"
-        case .degen:
-            return "degen"
-        case .cultProposals:
-            return "cult.proposals"
-        case .nftsDashboard:
-            return "nfts.dashboard"
+        case .mnemonicConfirmation: return "modal.mnemonic.confirmation"
+        case .themesList: return "settings.themes"
+        case .featuresList: return "modal.features"
+        case .degen: return "degen"
+        case .cultProposals: return "cult.proposals"
+        case .nftsDashboard: return "nfts.dashboard"
         case let .account(context):
             return "account.\(context.currency.symbol.lowercased())"
         }
@@ -95,9 +82,7 @@ extension DefaultDeepLinkHandler: DeepLinkHandler {
                 }
             case .nftsDashboard:
                 self.navigate(to: .nfts)
-                self.nftsDashboardNavController?.popToRootViewController(
-                    animated: true
-                )
+                self.nftsDashboardNavController?.popToRootViewController(animated: true)
             case let .account(context):
                 if self.isAccountPresented { return }
                 self.navigate(to: .dashboard)
@@ -117,12 +102,8 @@ private extension DefaultDeepLinkHandler {
         return navController.topViewController is AccountViewController
     }
     
-    func dismissAnyModals(
-        completion: @escaping (() -> Void)
-    ) {
-        guard let rootVC = UIApplication.shared.rootVc else {
-            return completion()
-        }
+    func dismissAnyModals(completion: @escaping (() -> Void)) {
+        guard let rootVC = self.rootVC else { return completion() }
         dismissPresentedVCs(
             for: rootVC.presentedViewController,
             completion: completion,
@@ -138,21 +119,16 @@ private extension DefaultDeepLinkHandler {
         if let presentedVC = viewController?.presentedViewController {
             return dismissPresentedVCs(for: presentedVC, completion: completion)
         }
-        guard let viewController = viewController else {
-            return completion()
-        }
+        guard let viewController = viewController else { return completion() }
         viewController.dismiss(animated: animated, completion: completion)
     }
     
     func navigate(to destination: DestinationTab) {
         guard let tabBarVC = tabBarController else { return }
         switch destination {
-        case .dashboard:
-            tabBarVC.selectedIndex = 0
-        case .degen:
-            tabBarVC.selectedIndex = 1
-        case .nfts:
-            tabBarVC.selectedIndex = 2
+        case .dashboard: tabBarVC.selectedIndex = 0
+        case .degen: tabBarVC.selectedIndex = 1
+        case .nfts: tabBarVC.selectedIndex = 2
         case .settings:
             tabBarVC.selectedIndex = FeatureFlag.showAppsTab.isEnabled ? 4 : 3
         }
@@ -201,7 +177,7 @@ private extension DefaultDeepLinkHandler {
                 }
                 return true
             }
-        ) as? NavigationController else { return nil}
+        ) as? NavigationController else { return nil }
         return navigationController
     }
     
@@ -231,9 +207,7 @@ private extension DefaultDeepLinkHandler {
                 }
                 return true
             }
-        ) as? NavigationController else {
-            return nil
-        }
+        ) as? NavigationController else { return nil }
         return navigationController.topViewController as? SettingsViewController
     }
 }
@@ -263,7 +237,7 @@ private extension DefaultDeepLinkHandler {
     func openMnemonicConfirmation() {
         guard let dashboardNavController = dashboardNavController else { return }
         let wireframe: MnemonicConfirmationWireframeFactory = ServiceDirectory.assembler.resolve()
-        wireframe.makeWireframe(dashboardNavController).present()
+        wireframe.make(dashboardNavController).present()
     }
     
     func openAccount(
@@ -276,9 +250,7 @@ private extension DefaultDeepLinkHandler {
         }
     }
     
-    func openAccount(
-        with context: AccountWireframeContext
-    ) {
+    func openAccount(with context: AccountWireframeContext) {
         guard let dashboardNavController = dashboardNavController else { return }
         let factory: AccountWireframeFactory = ServiceDirectory.assembler.resolve()
         factory.make(dashboardNavController, context: context).present()
