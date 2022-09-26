@@ -41,10 +41,7 @@ final class DefaultFeaturesPresenter {
 extension DefaultFeaturesPresenter: FeaturesPresenter {
 
     func present() {
-        if proposals.isEmpty {
-            view?.update(with: .loading)
-        }
-        
+        if proposals.isEmpty { view?.update(with: .loading) }
         interactor.fetchAllFeatures { [weak self] result in
             switch result {
             case let .success(proposals):

@@ -6,19 +6,16 @@ import Foundation
 import UIKit
 
 enum FeaturePresenterEvent {
-
     case dismiss
     case vote(id: String)
 }
 
 protocol FeaturePresenter {
-
     func present()
     func handle(_ event: FeaturePresenterEvent)
 }
 
 final class DefaultFeaturePresenter {
-
     private weak var view: FeatureView?
     private let wireframe: FeatureWireframe
     private let context: FeatureWireframeContext
@@ -33,7 +30,6 @@ final class DefaultFeaturePresenter {
         self.view = view
         self.wireframe = wireframe
         self.context = context
-        
         loadSelectedProposal()
     }
 }
@@ -41,21 +37,13 @@ final class DefaultFeaturePresenter {
 extension DefaultFeaturePresenter: FeaturePresenter {
 
     func present() {
-        
         view?.update(with: viewModel())
     }
 
     func handle(_ event: FeaturePresenterEvent) {
-
         switch event {
-            
-        case .dismiss:
-            
-            wireframe.navigate(to: .dismiss)
-            
-        case .vote:
-            
-            wireframe.navigate(to: .vote)
+        case .dismiss: wireframe.navigate(to: .dismiss)
+        case .vote: wireframe.navigate(to: .vote)
         }
     }
 }
@@ -63,27 +51,20 @@ extension DefaultFeaturePresenter: FeaturePresenter {
 private extension DefaultFeaturePresenter {
     
     func loadSelectedProposal() {
-        
         selected = context.feature
     }
 
     func viewModel() -> FeatureViewModel {
-        
-        let selectedIndex = context.features.firstIndex {
-            $0.id == selected.id
-        } ?? 0
-        
+        let selectedIndex = context.features.firstIndex { $0.id == selected.id } ?? 0
         return .init(
             title: Localized("feature.title"),
-            details: makeDetails(),
+            details: details(),
             selectedIndex: selectedIndex
         )
     }
     
-    func makeDetails() -> [FeatureViewModel.Details] {
-        
+    func details() -> [FeatureViewModel.Details] {
         context.features.compactMap {
-            
             .init(
                 id: $0.id,
                 name: $0.title,

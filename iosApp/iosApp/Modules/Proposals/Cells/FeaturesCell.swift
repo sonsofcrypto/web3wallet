@@ -15,25 +15,17 @@ final class FeaturesCell: CollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
         titleLabel.apply(style: .body, weight: .bold)
-        
         subtitleLabel.apply(style: .subheadline)
         subtitleLabel.textColor = Theme.colour.labelSecondary
-
         chevronImageView.tintColor = Theme.colour.labelPrimary
-        
         voteButton.style = .dashboardAction(leftImage: nil)
         voteButton.addTarget(self, action: #selector(voteTapped), for: .touchUpInside)
-        
         clipsToBounds = false
-        
         bottomSeparatorView.isHidden = true
     }
     
-    override func setSelected(_ selected: Bool) {
-        // do nothing
-    }
+    override func setSelected(_ selected: Bool) { }
     
     func update(
         with viewModel: FeaturesViewModel.Item,
@@ -49,7 +41,5 @@ final class FeaturesCell: CollectionViewCell {
 
 private extension FeaturesCell  {
     
-    @objc func voteTapped() {
-        self.voteHandler?()
-    }
+    @objc func voteTapped() { self.voteHandler?() }
 }

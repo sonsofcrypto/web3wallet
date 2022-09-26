@@ -1,10 +1,10 @@
-// Created by web3d3v on 24/07/2022.
+// Created by web3d4v on 31/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import UIKit
 
-final class CultProposalDetailSummaryView: UIView {
+final class FeatureDetailSummaryView: UIView {
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var separatorView: UIView!
@@ -21,7 +21,7 @@ final class CultProposalDetailSummaryView: UIView {
         infoLabel.apply(style: .body)
     }
 
-    func update(with summary: CultProposalViewModel.ProposalDetails.Summary) {
+    func update(with summary: FeatureViewModel.Details.Summary) {
         titleLabel.text = summary.title
         infoLabel.text = summary.summary
     }

@@ -4,8 +4,7 @@
 
 import UIKit
 
-final class CultProposalHeaderSupplementaryView: UICollectionReusableView {
-    
+final class FeaturesHeaderSupplementaryView: UICollectionReusableView {
     private weak var label: UILabel!
     
     override init(frame: CGRect) {
@@ -19,7 +18,8 @@ final class CultProposalHeaderSupplementaryView: UICollectionReusableView {
     
     func configureUI() {
         let label = UILabel()
-        label.apply(style: .title3, weight: .bold)
+        label.apply(style: .body)
+        label.numberOfLines = 0
         self.addSubview(label)
         self.label = label
         label.addConstraints(
@@ -42,9 +42,9 @@ final class CultProposalHeaderSupplementaryView: UICollectionReusableView {
     }
 }
 
-extension CultProposalHeaderSupplementaryView {
+extension FeaturesHeaderSupplementaryView {
 
-    func update(with viewModel: CultProposalsViewModel.Section) {
-        label.text = viewModel.title
+    func update(with viewModel: FeaturesViewModel.Section) {
+        label.text = viewModel.description
     }
 }

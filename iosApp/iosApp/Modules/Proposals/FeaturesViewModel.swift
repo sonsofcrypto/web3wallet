@@ -85,19 +85,15 @@ extension FeaturesViewModel {
     var sections: [FeaturesViewModel.Section] {
         
         switch self {
-        case let .loaded(sections, _):
-            return sections
-        default:
-            return []
+        case let .loaded(sections, _): return sections
+        default: return []
         }
     }
     
     var selectedSectionType: FeaturesViewModel.Section.`Type` {
         switch self {
-        case let .loaded(_, type):
-            return type
-        default:
-            return .all
+        case let .loaded(_, type): return type
+        default: return .all
         }
     }
 }

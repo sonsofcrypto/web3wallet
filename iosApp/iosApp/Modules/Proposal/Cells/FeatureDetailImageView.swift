@@ -6,15 +6,11 @@ import Foundation
 import UIKit
 
 final class FeatureDetailImageView: UIView {
-    
     private weak var imageView: UIImageView!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         removeAllSubview()
-        
         let imageView = UIImageView()
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
@@ -22,9 +18,7 @@ final class FeatureDetailImageView: UIView {
         imageView.layer.cornerRadius = Theme.constant.cornerRadius
         imageView.clipsToBounds = true
         self.imageView = imageView
-        
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate(
             [
                 leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
@@ -37,14 +31,11 @@ final class FeatureDetailImageView: UIView {
     }
     
     func update(with imageUrl: String) {
-        
         guard let url = imageUrl.url else {
             isHidden = true
             return
         }
-        
         isHidden = false
-        
         imageView.load(url: url)
     }
 }

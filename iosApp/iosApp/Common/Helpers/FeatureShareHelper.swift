@@ -4,10 +4,7 @@
 
 struct FeatureShareHelper {
     
-    func shareVote(
-        on proposal: ImprovementProposal,
-        presentingIn: UIViewController
-    ) {
+    func shareVote(on proposal: ImprovementProposal) {
         let textEncoded = proposal.tweet.addingPercentEncoding(
             withAllowedCharacters: .urlHostAllowed
         ) ?? ""

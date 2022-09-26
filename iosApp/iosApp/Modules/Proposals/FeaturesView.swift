@@ -1,31 +1,24 @@
-// Created by web3d3v on 11/02/2022.
+// Created by web3d3v on 30/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import UIKit
 
-protocol CultProposalsView: AnyObject {
-    func update(with viewModel: CultProposalsViewModel)
-    func dismiss(animated flag: Bool, completion: (() -> Void)?)
+protocol FeaturesView: AnyObject {
+    func update(with viewModel: FeaturesViewModel)
 }
 
-<<<<<<<< HEAD:iosApp/iosApp/Modules/DegenCult ✅/CultProposals ✅/CultProposalsView.swift
-final class CultProposalsViewController: BaseViewController {
-    
-    //let searchController = UISearchController()
-========
 final class FeaturesViewController: BaseViewController {
     //let searchController = UISearchController()
     @IBOutlet weak var topContainerView: UIView!
     @IBOutlet weak var segmentContainer: UIView!
->>>>>>>> develop:iosApp/iosApp/Modules/Proposals/FeaturesView.swift
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var collectionView: UICollectionView!
     private let refreshControl = UIRefreshControl()
 
-    var presenter: CultProposalsPresenter!
+    var presenter: FeaturesPresenter!
 
-    private var viewModel: CultProposalsViewModel!
+    private var viewModel: FeaturesViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,18 +27,12 @@ final class FeaturesViewController: BaseViewController {
     }
 }
 
-extension CultProposalsViewController: CultProposalsView {
+extension FeaturesViewController: FeaturesView {
 
-<<<<<<<< HEAD:iosApp/iosApp/Modules/DegenCult ✅/CultProposals ✅/CultProposalsView.swift
-    func update(with viewModel: CultProposalsViewModel) {
-        self.viewModel = viewModel
-        setTitle()
-========
     func update(with viewModel: FeaturesViewModel) {
         self.viewModel = viewModel
         title = viewModel.title
 
->>>>>>>> develop:iosApp/iosApp/Modules/Proposals/FeaturesView.swift
         switch viewModel {
         case .loading:
             showLoading()
@@ -60,7 +47,7 @@ extension CultProposalsViewController: CultProposalsView {
     }
 }
 
-extension CultProposalsViewController: UICollectionViewDataSource {
+extension FeaturesViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         viewModel.sections.count
@@ -79,23 +66,12 @@ extension CultProposalsViewController: UICollectionViewDataSource {
     ) -> UICollectionViewCell {
         let section = viewModel.sections[indexPath.section]
         let viewModel = section.items[indexPath.item]
-<<<<<<<< HEAD:iosApp/iosApp/Modules/DegenCult ✅/CultProposals ✅/CultProposalsView.swift
-        switch section.type {
-        case .pending:
-            let cell = collectionView.dequeue(CultProposalCellPending.self, for: indexPath)
-            return cell.update(with: viewModel, handler: makeCultProposalCellPendingHandler())
-        case .closed:
-            let cell = collectionView.dequeue(CultProposalCellClosed.self, for: indexPath)
-            return cell.update(with: viewModel)
-        }
-========
         let cell = collectionView.dequeue(FeaturesCell.self, for: indexPath)
         let idx = indexPath.item
         return cell.update(
             with: viewModel,
             handler: { [weak self] in self?.presenter.handle(.vote(idx: idx)) }
         )
->>>>>>>> develop:iosApp/iosApp/Modules/Proposals/FeaturesView.swift
     }
     
     func collectionView(
@@ -107,25 +83,17 @@ extension CultProposalsViewController: UICollectionViewDataSource {
         case "header":
             guard let headerView = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
-                withReuseIdentifier: String(describing: CultProposalHeaderSupplementaryView.self),
+                withReuseIdentifier: String(describing: FeaturesHeaderSupplementaryView.self),
                 for: indexPath
-            ) as? CultProposalHeaderSupplementaryView else {
-                return CultProposalHeaderSupplementaryView()
+            ) as? FeaturesHeaderSupplementaryView else {
+                
+                return FeaturesHeaderSupplementaryView()
             }
+            
             let section = viewModel.sections[indexPath.section]
             headerView.update(with: section)
             return headerView
-        case "footer":
-            guard let footerView = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: String(describing: CultProposalFooterSupplementaryView.self),
-                for: indexPath
-            ) as? CultProposalFooterSupplementaryView else {
-                return CultProposalFooterSupplementaryView()
-            }
-            let section = viewModel.sections[indexPath.section]
-            footerView.update(with: section.footer)
-            return footerView
+            
         default:
             assertionFailure("Unexpected element kind: \(kind).")
             return UICollectionReusableView()
@@ -133,27 +101,22 @@ extension CultProposalsViewController: UICollectionViewDataSource {
     }
 }
 
-extension CultProposalsViewController: UICollectionViewDelegate {
+extension FeaturesViewController: UICollectionViewDelegate {
 
     func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-<<<<<<<< HEAD:iosApp/iosApp/Modules/DegenCult ✅/CultProposals ✅/CultProposalsView.swift
-        let section = viewModel.sections[indexPath.section]
-        let item = section.items[indexPath.row]
-        presenter.handle(.selectProposal(id: item.id))
-========
         presenter.handle(.select(idx: indexPath.item))
->>>>>>>> develop:iosApp/iosApp/Modules/Proposals/FeaturesView.swift
     }
 
 //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//
 //        searchController.searchBar.resignFirstResponder()
 //    }
 }
 
-private extension CultProposalsViewController {
+private extension FeaturesViewController {
     
     func showLoading() {
         activityIndicator.isHidden = false
@@ -165,105 +128,93 @@ private extension CultProposalsViewController {
         activityIndicator.stopAnimating()
     }
     
-<<<<<<<< HEAD:iosApp/iosApp/Modules/DegenCult ✅/CultProposals ✅/CultProposalsView.swift
-    func setTitle() {
-        switch viewModel {
-        case .loading, .error, .none:
-            setDefaultTitle()
-        case .loaded:
-            setSegmentedTitle()
-        }
-    }
-    
-    func setDefaultTitle() {
-        let cultIcon = viewModel.titleIconName.assetImage?.resize(to: .init(width: 32, height: 32))
-        let imageView = UIImageView(image: cultIcon)
-        let titleLabel = UILabel()
-        titleLabel.text = viewModel.title
-        titleLabel.apply(style: .navTitle)
-        let stackView = HStackView([imageView, titleLabel])
-        stackView.spacing = 4
-        navigationItem.titleView = stackView
-    }
-    
-    func setSegmentedTitle() {
-========
     func setSegmented() {
->>>>>>>> develop:iosApp/iosApp/Modules/Proposals/FeaturesView.swift
         let segmentControl = SegmentedControl()
         segmentControl.insertSegment(
-            withTitle: Localized("cult.proposals.segmentedControl.pending"),
+            withTitle: Localized("features.segmentedControl.infrastructure"),
             at: 0,
             animated: false
         )
         segmentControl.insertSegment(
-            withTitle: Localized("cult.proposals.segmentedControl.closed"),
+            withTitle: Localized("features.segmentedControl.integrations"),
             at: 1,
             animated: false
         )
-        switch viewModel.selectedSectionType {
-        case .pending:
-            segmentControl.selectedSegmentIndex = 0
-        case .closed:
-            segmentControl.selectedSegmentIndex = 1
-        }
+        segmentControl.insertSegment(
+            withTitle: Localized("features.segmentedControl.features"),
+            at: 2,
+            animated: false
+        )
+        
+        segmentControl.selectedSegmentIndex = 0
+        
         segmentControl.addTarget(
             self,
             action: #selector(segmentControlChanged(_:)),
             for: .valueChanged
         )
-        navigationItem.titleView = segmentControl
+        segmentContainer.addSubview(segmentControl)
+        segmentControl.addConstraints(
+            [
+                .layout(anchor: .centerYAnchor),
+                .layout(
+                    anchor: .leadingAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding)
+                ),
+                .layout(
+                    anchor: .trailingAnchor,
+                    constant: .equalTo(constant: Theme.constant.padding)
+                )
+            ]
+        )
     }
     
     @objc func segmentControlChanged(_ sender: SegmentedControl) {
-<<<<<<<< HEAD:iosApp/iosApp/Modules/DegenCult ✅/CultProposals ✅/CultProposalsView.swift
-        presenter.handle(
-            .filterBySection(
-                sectionType: sender.selectedSegmentIndex == 0 ? .pending : .closed
-            )
-        )
-========
         presenter.handle(.didSelectCategory(idx: sender.selectedSegmentIndex))
->>>>>>>> develop:iosApp/iosApp/Modules/Proposals/FeaturesView.swift
     }
     
     func configureUI() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: .init(systemName: "xmark"),
+            style: .plain,
+            target: self,
+            action: #selector(dimissTapped)
+        )
+        topContainerView.backgroundColor = Theme.colour.navBarBackground
+        setSegmented()
         activityIndicator.color = Theme.colour.activityIndicator
         collectionView.setCollectionViewLayout(
-            makeCompositionalLayout(),
+            compositionalLayout(),
             animated: false
-        )
-        collectionView.register(
-            CultProposalHeaderSupplementaryView.self,
-            forSupplementaryViewOfKind: "header",
-            withReuseIdentifier: String(describing: CultProposalHeaderSupplementaryView.self)
-        )
-        collectionView.register(
-            CultProposalFooterSupplementaryView.self,
-            forSupplementaryViewOfKind: "footer",
-            withReuseIdentifier: String(describing: CultProposalFooterSupplementaryView.self)
         )
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.alwaysBounceVertical = true
         collectionView.refreshControl = refreshControl
+        collectionView.register(
+            FeaturesHeaderSupplementaryView.self,
+            forSupplementaryViewOfKind: "header",
+            withReuseIdentifier: String(describing: FeaturesHeaderSupplementaryView.self)
+        )
         refreshControl.tintColor = Theme.colour.activityIndicator
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
 //        navigationItem.searchController = searchController
 //        searchController.searchResultsUpdater = self
     }
     
+    @objc func dimissTapped() {
+        presenter.handle(.dismiss)
+    }
+    
     @objc func didPullToRefresh(_ sender: Any) {
         presenter.present()
     }
     
-    func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
-        UICollectionViewCompositionalLayout(
-            section: makeCollectionLayoutSection()
-        )
+    func compositionalLayout() -> UICollectionViewCompositionalLayout {
+        UICollectionViewCompositionalLayout(section: collectionLayoutSection())
     }
   
-    func makeCollectionLayoutSection() -> NSCollectionLayoutSection {
+    func collectionLayoutSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(1)
@@ -281,8 +232,13 @@ private extension CultProposalsViewController {
             layoutSize: groupSize, subitems: [item]
         )
         let section = NSCollectionLayoutSection(group: outerGroup)
-        section.contentInsets = .padding
-        section.interGroupSpacing = Theme.constant.padding * 1.5
+        section.contentInsets = .init(
+            top: Theme.constant.padding,
+            leading: Theme.constant.padding,
+            bottom: Theme.constant.padding,
+            trailing: Theme.constant.padding
+        )
+        section.interGroupSpacing = Theme.constant.padding
         let headerItemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(100)
@@ -292,49 +248,26 @@ private extension CultProposalsViewController {
             elementKind: "header",
             alignment: .top
         )
-        let footerItemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(100)
-        )
-        let footerItem = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: footerItemSize,
-            elementKind: "footer",
-            alignment: .bottom
-        )
-        section.boundarySupplementaryItems = [headerItem, footerItem]
+//        let footerItemSize = NSCollectionLayoutSize(
+//            widthDimension: .fractionalWidth(1),
+//            heightDimension: .estimated(100)
+//        )
+//        let footerItem = NSCollectionLayoutBoundarySupplementaryItem(
+//            layoutSize: footerItemSize,
+//            elementKind: "footer",
+//            alignment: .bottom
+//        )
+        section.boundarySupplementaryItems = [headerItem]
         return section
     }
 }
 
-<<<<<<<< HEAD:iosApp/iosApp/Modules/DegenCult ✅/CultProposals ✅/CultProposalsView.swift
-private extension CultProposalsViewController {
-
-    func makeCultProposalCellPendingHandler() -> CultProposalCellPending.Handler {
-        .init(
-            approveProposal: makeApproveProposal(),
-            rejectProposal: makeRejectProposal()
-        )
-    }
-    
-    func makeApproveProposal() -> (String) -> Void {
-        { [weak self] id in self?.presenter.handle(.approveProposal(id: id)) }
-    }
-    
-    func makeRejectProposal() -> (String) -> Void {
-        { [weak self] id in self?.presenter.handle(.rejectProposal(id: id)) }
-    }
-}
-
-//extension CultProposalsViewController: UISearchResultsUpdating {
-//    
-========
 //extension FeaturesViewController: UISearchResultsUpdating {
 //
->>>>>>>> develop:iosApp/iosApp/Modules/Proposals/FeaturesView.swift
 //    func updateSearchResults(for searchController: UISearchController) {
-//        
+//
 //        guard let text = searchController.searchBar.text else { return }
-//        
+//
 //        presenter.handle(.filterBy(text: text))
 //    }
 //}

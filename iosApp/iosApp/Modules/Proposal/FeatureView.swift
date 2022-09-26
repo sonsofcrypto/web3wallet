@@ -1,20 +1,19 @@
-// Created by web3d3v on 11/02/2022.
+// Created by web3d4v on 31/07/2022.
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
 import UIKit
 
-protocol CultProposalView: AnyObject {
-    func update(with viewModel: CultProposalViewModel)
+protocol FeatureView: AnyObject {
+    func update(with viewModel: FeatureViewModel)
 }
 
-final class CultProposalViewController: BaseViewController {
-
-    var presenter: CultProposalPresenter!
+final class FeatureViewController: BaseViewController {
+    var presenter: FeaturePresenter!
     
     @IBOutlet weak var collectionView: UICollectionView!
 
-    private var viewModel: CultProposalViewModel!
+    private var viewModel: FeatureViewModel!
     private var endDisplayFirstTimeCalled = false
     
     override func viewDidLoad() {
@@ -24,9 +23,9 @@ final class CultProposalViewController: BaseViewController {
     }
 }
 
-extension CultProposalViewController: CultProposalView {
+extension FeatureViewController: FeatureView {
 
-    func update(with viewModel: CultProposalViewModel) {
+    func update(with viewModel: FeatureViewModel) {
         self.viewModel = viewModel
         setTitle(with: viewModel.selectedIndex + 1)
         collectionView.reloadData()
@@ -34,26 +33,26 @@ extension CultProposalViewController: CultProposalView {
     }
 }
 
-extension CultProposalViewController: UICollectionViewDataSource {
+extension FeatureViewController: UICollectionViewDataSource {
     
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        viewModel.proposals.count
+        viewModel.details.count
     }
     
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let viewModel = viewModel.proposals[indexPath.item]
-        let cell = collectionView.dequeue(CultProposalDetailViewCell.self, for: indexPath)
-        return cell.update(with: viewModel)
+        let viewModel = viewModel.details[indexPath.item]
+        let cell = collectionView.dequeue(FeatureDetailViewCell.self, for: indexPath)
+        return cell.update(with: viewModel, handler: featureDetailViewHandler())
     }
 }
 
-extension CultProposalViewController: UICollectionViewDelegate {
+extension FeatureViewController: UICollectionViewDelegate {
     
     func collectionView(
         _ collectionView: UICollectionView,
@@ -83,7 +82,7 @@ extension CultProposalViewController: UICollectionViewDelegate {
     }
 }
 
-private extension CultProposalViewController {
+private extension FeatureViewController {
     
     func scrollToTop() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -109,49 +108,34 @@ private extension CultProposalViewController {
     }
     
     func setTitle(with index: Int) {
-        let cultIcon = viewModel.titleIconName.assetImage?.resize(to: .init(width: 32, height: 32))
-        let imageView = UIImageView(image: cultIcon)
-        let titleLabel = UILabel()
-        titleLabel.text = viewModel.title + " \(index) " + Localized("cult.proposal.title.of") + " \(viewModel.proposals.count)"
-        titleLabel.apply(style: .navTitle)
-        let stackView = HStackView([imageView, titleLabel])
-        stackView.spacing = 4
-        navigationItem.titleView = stackView
+        title = viewModel.title + " \(index) " + Localized("feature.title.of") + " \(viewModel.details.count)"
     }
     
     func configureUI() {
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: "chevron.left".assetImage,
             style: .plain,
             target: self,
             action: #selector(dismissTapped)
         )
-        
         collectionView.setCollectionViewLayout(
             makeCompositionalLayout(),
             animated: false
         )
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.clipsToBounds = false
     }
     
     @objc func dismissTapped() {
-        
         presenter.handle(.dismiss)
     }
     
     func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
-        
-        UICollectionViewCompositionalLayout(
-            section: makeCollectionLayoutSection()
-        )
+        UICollectionViewCompositionalLayout(section: collectionLayoutSection())
     }
   
-    func makeCollectionLayoutSection(
-    ) -> NSCollectionLayoutSection {
-        
-        // Item
+    func collectionLayoutSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(1)
@@ -159,8 +143,6 @@ private extension CultProposalViewController {
         let item = NSCollectionLayoutItem(
             layoutSize: itemSize
         )
-        
-        // Group
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(100)
@@ -168,12 +150,20 @@ private extension CultProposalViewController {
         let outerGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize, subitems: [item]
         )
-
-        // Section
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.orthogonalScrollingBehavior = .groupPagingCentered
         //section.interGroupSpacing = Theme.constant.padding * 0.25
-        
         return section
+    }
+}
+
+private extension FeatureViewController {
+
+    func featureDetailViewHandler() -> FeatureDetailViewCell.Handler {
+        .init(onVote: onVote())
+    }
+    
+    func onVote() -> (String) -> Void {
+        { [weak self] id in self?.presenter.handle(.vote(id: id)) }
     }
 }
