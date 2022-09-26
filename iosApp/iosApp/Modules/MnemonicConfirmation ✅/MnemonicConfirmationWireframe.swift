@@ -5,29 +5,27 @@
 import UIKit
 
 protocol MnemonicConfirmationWireframe {
-    
     func present()
     func navigate(to destination: MnemonicConfirmationWireframeDestination)
 }
 
 enum MnemonicConfirmationWireframeContext {
-    
     case `import`
     case recover
 }
 
 enum MnemonicConfirmationWireframeDestination {
-    
     case dismiss
 }
 
 final class DefaultMnemonicConfirmationWireframe {
-
-    private weak var parent: UIViewController!
+    private weak var parent: UIViewController?
     private let service: MnemonicConfirmationService
+    
+    private weak var vc: UIViewController?
 
     init(
-        parent: UIViewController,
+        _ parent: UIViewController,
         service: MnemonicConfirmationService
     ) {
         self.parent = parent
@@ -38,27 +36,20 @@ final class DefaultMnemonicConfirmationWireframe {
 extension DefaultMnemonicConfirmationWireframe: MnemonicConfirmationWireframe {
 
     func present() {
-        
-        let vc = makeViewController()
-        let navVc = NavigationController(rootViewController: vc)
-        parent.present(navVc, animated: true)
+        let vc = wireUp()
+        parent?.present(vc, animated: true)
     }
     
     func navigate(to destination: MnemonicConfirmationWireframeDestination) {
-        
         switch destination {
-            
-        case .dismiss:
-            
-            parent.presentedViewController?.dismiss(animated: true)
+        case .dismiss: vc?.popOrDismiss()
         }
     }
 }
 
 private extension DefaultMnemonicConfirmationWireframe {
 
-    func makeViewController() -> UIViewController {
-        
+    func wireUp() -> UIViewController {
         let vc: MnemonicConfirmationViewController = UIStoryboard(.mnemonicConfirmation).instantiate()
         let presenter = DefaultMnemonicConfirmationPresenter(
             view: vc,
@@ -66,6 +57,8 @@ private extension DefaultMnemonicConfirmationWireframe {
             service: service
         )
         vc.presenter = presenter
-        return vc
+        let nc = NavigationController(rootViewController: vc)
+        self.vc = nc
+        return nc
     }
 }

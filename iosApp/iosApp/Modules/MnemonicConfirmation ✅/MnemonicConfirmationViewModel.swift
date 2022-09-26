@@ -3,7 +3,6 @@
 // SPDX-License-Identifier: MIT
 
 struct MnemonicConfirmationViewModel {
-    
     let potentialWords: [String]
     let wordsInfo: [WordInfo]
     let isValid: Bool?
@@ -11,7 +10,6 @@ struct MnemonicConfirmationViewModel {
     let showSalt: Bool
     
     struct WordInfo {
-        
         let word: String
         let isInvalid: Bool
     }
