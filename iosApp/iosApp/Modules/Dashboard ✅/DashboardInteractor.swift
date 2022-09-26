@@ -31,7 +31,7 @@ protocol DashboardInteractor: AnyObject {
     func candles(for currency: Currency) -> [Candle]?
     func cryptoBalance(for network: Network, currency: Currency) -> BigInt
     func fiatBalance(for network: Network, currency: Currency) -> Double
-    func nfts(for network: Web3Network) -> [NFTItem]
+    func nfts(for network: Network) -> [NFTItem]
     func notifications() -> [Web3Notification]
     func totalFiatBalance() -> Double
     func reloadBalances()
@@ -44,7 +44,6 @@ final class DefaultDashboardInteractor {
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
     private let walletService: WalletService
-    private let web3ServiceLegacy: Web3ServiceLegacy
     private let nftsService: NFTsService
     private var listeners: [WeakContainer] = []
 
@@ -54,7 +53,6 @@ final class DefaultDashboardInteractor {
         walletService: WalletService,
         nftsService: NFTsService
     ) {
-        self.web3ServiceLegacy = ServiceDirectory.assembler.resolve()
         self.networksService = networksService
         self.currencyStoreService = currencyStoreService
         self.walletService = walletService
@@ -121,12 +119,14 @@ extension DefaultDashboardInteractor: DashboardInteractor {
         )
     }
 
-    func nfts(for network: Web3Network) -> [NFTItem] {
+    func nfts(for network: Network) -> [NFTItem] {
         nftsService.yourNFTs(forNetwork: network)
     }
 
     func notifications() -> [Web3Notification] {
-        web3ServiceLegacy.dashboardNotifications
+        // TODO: Review this
+        let web3ServiceLegacy: Web3ServiceLegacy = ServiceDirectory.assembler.resolve()
+        return web3ServiceLegacy.dashboardNotifications
     }
 
     func totalFiatBalance() -> Double {

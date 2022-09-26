@@ -103,18 +103,6 @@ extension DefaultAccountWireframe: AccountWireframe {
             deepLinkHandler.handle(deepLink: .degen)
         }
     }
-
-    func web3Token(_ context: AccountWireframeContext) -> Web3Token {
-        Web3Token.from(
-            currency: context.currency,
-            network: Web3Network.from(
-                context.network,
-                isOn: true
-            ),
-            inWallet: true,
-            idx: 0
-        )
-    }
 }
 
 private extension DefaultAccountWireframe {

@@ -218,7 +218,7 @@ private extension DefaultDashboardPresenter {
                 )
             )
         }
-        let nfts = interactor.nfts(for: Web3Network.from(Network.ethereum(), isOn: true))
+        let nfts = interactor.nfts(for: Network.ethereum())
         if !nfts.isEmpty {
             sections.append(
                 .init(
