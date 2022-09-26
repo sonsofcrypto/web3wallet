@@ -18,14 +18,13 @@ protocol MnemonicUpdateWireframe {
 }
 
 final class DefaultMnemonicUpdateWireframe {
-
-    private weak var parent: UIViewController!
+    private weak var parent: UIViewController?
     private let context: MnemonicUpdateContext
     private let keyStoreService: KeyStoreService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
 
-    private weak var vc: UIViewController!
+    private weak var vc: UIViewController?
 
     init(
         parent: UIViewController?,
@@ -47,10 +46,9 @@ extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
     func present() {
         let vc = wireUp()
         let presentingTopVc = (parent as? UINavigationController)?.topVc
-        let presentedTopVc = (vc as? UINavigationController)?.topVc
-
         switch ServiceDirectory.transitionStyle {
         case .cardFlip:
+            let presentedTopVc = (vc as? UINavigationController)?.topVc
             let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
             self.vc = vc
             vc.modalPresentationStyle = .overFullScreen
@@ -58,8 +56,6 @@ extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
         case .sheet:
             vc.modalPresentationStyle = .automatic
         }
-
-        self.vc = vc
         presentingTopVc?.present(vc, animated: true)
     }
 
@@ -75,10 +71,10 @@ extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
         case let .confirmationAlert(onConfirm):
             alertWireframeFactory.make(
                 vc,
-                context: makeDeleteConfirmationAlertContext(with: onConfirm)
+                context: deleteConfirmationAlertContext(with: onConfirm)
             ).present()
         case .dismiss:
-            vc.dismiss(animated: true)
+            vc?.popOrDismiss()
         }
     }
 }
@@ -86,7 +82,6 @@ extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
 private extension DefaultMnemonicUpdateWireframe {
 
     func wireUp() -> UIViewController {
-        
         let interactor = DefaultMnemonicUpdateInteractor(
             keyStoreService
         )
@@ -97,13 +92,13 @@ private extension DefaultMnemonicUpdateWireframe {
             interactor: interactor,
             wireframe: self
         )
-
         vc.presenter = presenter
-        return NavigationController(rootViewController: vc)
+        let nc = NavigationController(rootViewController: vc)
+        self.vc = nc
+        return nc
     }
     
-    func makeDeleteConfirmationAlertContext(with onConfirm: TargetActionViewModel) -> AlertContext {
-        
+    func deleteConfirmationAlertContext(with onConfirm: TargetActionViewModel) -> AlertContext {
         .init(
             title: Localized("alert.deleteWallet.title"),
             media: nil,
@@ -128,7 +123,6 @@ private extension DefaultMnemonicUpdateWireframe {
 extension DefaultMnemonicUpdateWireframe {
 
     enum Constant {
-
         static let saltExplanationURL = URL(
             string: "https://www.youtube.com/watch?v=XqB5xA62gLw"
         )!

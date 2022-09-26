@@ -6,8 +6,7 @@ import UIKit
 import web3lib
 
 protocol MnemonicUpdateWireframeFactory {
-
-    func makeWireframe(
+    func make(
         _ parent: UIViewController?,
         context: MnemonicUpdateContext
     ) -> MnemonicUpdateWireframe
@@ -16,7 +15,6 @@ protocol MnemonicUpdateWireframeFactory {
 // MARK: - DefaultMnemonicWireframeFactory
 
 final class DefaultMnemonicUpdateWireframeFactory {
-
     private let keyStoreService: KeyStoreService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
@@ -36,7 +34,7 @@ final class DefaultMnemonicUpdateWireframeFactory {
 
 extension DefaultMnemonicUpdateWireframeFactory: MnemonicUpdateWireframeFactory {
 
-    func makeWireframe(
+    func make(
         _ parent: UIViewController?,
         context: MnemonicUpdateContext
     ) -> MnemonicUpdateWireframe {
@@ -47,5 +45,20 @@ extension DefaultMnemonicUpdateWireframeFactory: MnemonicUpdateWireframeFactory 
             authenticateWireframeFactory: authenticateWireframeFactory,
             alertWireframeFactory: alertWireframeFactory
         )
+    }
+}
+
+// MARK: - Assembler
+
+final class MnemonicUpdateWireframeFactoryAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> MnemonicUpdateWireframeFactory in
+            DefaultMnemonicUpdateWireframeFactory(
+                keyStoreService: resolver.resolve(),
+                authenticateWireframeFactory: resolver.resolve(),
+                alertWireframeFactory: resolver.resolve()
+            )
+        }
     }
 }

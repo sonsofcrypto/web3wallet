@@ -5,7 +5,6 @@
 import UIKit
 
 protocol MnemonicUpdateView: AnyObject {
-
     func update(with viewModel: MnemonicUpdateViewModel)
     func dismiss(animated flag: Bool, completion: (() -> Void)?)
 }
@@ -57,24 +56,16 @@ final class MnemonicUpdateViewController: BaseViewController {
 extension MnemonicUpdateViewController: MnemonicUpdateView {
 
     func update(with viewModel: MnemonicUpdateViewModel) {
-        
         let needsReload = self.needsReload(self.viewModel, viewModel: viewModel)
         self.viewModel = viewModel
-
-        guard let cv = collectionView else {
-            return
-        }
-
+        guard let cv = collectionView else { return }
         ctaButton.setTitle(viewModel.cta, for: .normal)
-
         let cells = cv.indexPathsForVisibleItems
         let idxs = IndexSet(0..<viewModel.sectionsItems.count)
-
         if needsReload && didAppear {
             cv.performBatchUpdates { cv.reloadSections(idxs) }
             return
         }
-        
         didAppear
             ? cv.performBatchUpdates { cv.reconfigureItems(at: cells) }
             : cv.reloadData()
@@ -123,13 +114,10 @@ extension MnemonicUpdateViewController: UICollectionViewDataSource {
         viewModel: MnemonicUpdateViewModel.Item,
         idxPath: IndexPath
     ) -> UICollectionViewCell {
-
         switch viewModel {
-
         case let .mnemonic(mnemonic):
             return collectionView.dequeue(MnemonicUpdateCell.self, for: idxPath)
                 .update(with: mnemonic)
-
         case let .name(name):
             return collectionView.dequeue(
                 TextInputCollectionViewCell.self,
@@ -141,7 +129,6 @@ extension MnemonicUpdateViewController: UICollectionViewDataSource {
                     self.nameDidChange(value)
                 }
             )
-
         case let .switch(title, onOff):
             return collectionView.dequeue(
                 SwitchCollectionViewCell.self,
@@ -174,7 +161,6 @@ extension MnemonicUpdateViewController: UICollectionViewDataSource {
                 textChangeHandler: { text in () },
                 switchHandler: { onOff in () }
             )
-            
         case let .delete(title):
             return collectionView.dequeue(
                 MnemonicUpdateDeleteCell.self,
@@ -191,28 +177,21 @@ extension MnemonicUpdateViewController: UICollectionViewDataSource {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        
         switch kind {
-
         case UICollectionView.elementKindSectionHeader:
             fatalError("Handle header \(kind) \(indexPath)")
-
         case UICollectionView.elementKindSectionFooter:
             guard let viewModel = viewModel?.footer(at: indexPath.section) else {
                 fatalError("Failed to handle \(kind) \(indexPath)")
             }
-
             let footer = collectionView.dequeue(
                 SectionLabelFooter.self,
                 for: indexPath,
                 kind: kind
             )
-
             footer.update(with: viewModel)
             return footer
-
         default:
-            
             fatalError("Failed to handle \(kind) \(indexPath)")
         }
         fatalError("Failed to handle \(kind) \(indexPath)")
@@ -225,13 +204,10 @@ extension MnemonicUpdateViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         shouldSelectItemAt indexPath: IndexPath
     ) -> Bool {
-        
         guard indexPath == .init(row: 0, section: 0) else { return false }
-        
         let cell = collectionView.cellForItem(at: .init(item: 0, section: 0))
         (cell as? MnemonicUpdateCell)?.animateCopiedToPasteboard()
         presenter.handle(.didTapMnemonic)
-        
         return false
     }
 
@@ -251,13 +227,10 @@ extension MnemonicUpdateViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        
         let width = view.bounds.width - Theme.constant.padding * 2
-
         guard let viewModel = viewModel?.item(at: indexPath) else {
             return CGSize(width: width, height: Theme.constant.cellHeight)
         }
-
         switch viewModel {
         case .mnemonic:
             return CGSize(width: width, height: Constant.mnemonicCellHeight)
@@ -277,7 +250,6 @@ extension MnemonicUpdateViewController: UICollectionViewDelegateFlowLayout {
         guard viewModel?.header(at: section) != nil else {
             return .zero
         }
-
         return .zero
     }
 
@@ -285,7 +257,6 @@ extension MnemonicUpdateViewController: UICollectionViewDelegateFlowLayout {
         guard let footer = viewModel?.footer(at: section) else {
             return .zero
         }
-
         switch footer {
         case .attrStr:
             return .init(width: view.bounds.width, height: Constant.footerHeight)
@@ -316,17 +287,14 @@ extension MnemonicUpdateViewController: UIViewControllerTransitioningDelegate {
         let targetView = (source as? TargetViewTransitionDatasource)?.targetView()
             ?? (sourceNav?.topVc as? TargetViewTransitionDatasource)?.targetView()
             ?? presenting.view
-
         guard presentedVc == self, let targetView = targetView else {
             animatedTransitioning = nil
             return nil
         }
-
         animatedTransitioning = CardFlipAnimatedTransitioning(
             targetView: targetView,
             handler: { [weak self] in self?.animatedTransitioning = nil }
         )
-
         return animatedTransitioning
     }
 
@@ -337,9 +305,7 @@ extension MnemonicUpdateViewController: UIViewControllerTransitioningDelegate {
             animatedTransitioning = nil
             return nil
         }
-
         let presenting = dismissed.presentingViewController
-
         guard let visVc = (presenting as? EdgeCardsController)?.visibleViewController,
               let topVc = (visVc as? UINavigationController)?.topVc,
               let targetView = (topVc as? TargetViewTransitionDatasource)?.targetView()
@@ -347,14 +313,12 @@ extension MnemonicUpdateViewController: UIViewControllerTransitioningDelegate {
             animatedTransitioning = nil
             return nil
         }
-
         animatedTransitioning = CardFlipAnimatedTransitioning(
             targetView: targetView,
             isPresenting: false,
             scaleAdjustment: 0.05,
             handler: { [weak self] in self?.animatedTransitioning = nil }
         )
-
         return animatedTransitioning
     }
 
@@ -396,28 +360,23 @@ private extension MnemonicUpdateViewController {
     
     func configureUI() {
         title = Localized("newMnemonic.title.update")
-
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: "chevron.left".assetImage,
             style: .plain,
             target: self,
             action: #selector(dismissAction(_:))
         )
-        
         collectionView.register(
             MnemonicUpdateDeleteCell.self,
             forCellWithReuseIdentifier: MnemonicUpdateDeleteCell.className
         )
-        
         ctaButton.style = .primary
-
         let edgePan = UIScreenEdgePanGestureRecognizer(
             target: self,
             action: #selector(handleGesture(_:))
         )
         edgePan.edges = [UIRectEdge.left]
         view.addGestureRecognizer(edgePan)
-
         // TODO: Smell
         let window = UIApplication.shared.keyWindow
         ctaButtonBottomConstraint.constant = window?.safeAreaInsets.bottom == 0
@@ -443,24 +402,17 @@ private extension MnemonicUpdateViewController {
     }
     
     func makeMnemonicUpdateDeleteCellHandler() -> MnemonicUpdateDeleteCell.Handler {
-        
-        .init(onDelete: makeMnemonicUpdateDeleteCellOnDelete())
+        .init(onDelete: mnemonicUpdateDeleteCellOnDelete())
     }
     
-    func makeMnemonicUpdateDeleteCellOnDelete() -> () -> Void {
-        
-        {
-            [weak self] in
-            guard let self = self else { return }
-            self.presenter.handle(.deleteWallet)
-        }
+    func mnemonicUpdateDeleteCellOnDelete() -> () -> Void {
+        { [weak self] in self?.presenter.handle(.deleteWallet) }
     }
 }
 
 // MARK: - Constants
 
 private extension MnemonicUpdateViewController {
-
     enum Constant {
         static let mnemonicCellHeight: CGFloat = 110
         static let cellHeight: CGFloat = 46

@@ -6,7 +6,6 @@ import Foundation
 import web3lib
 
 struct MnemonicUpdateContext {
-
     typealias KeyStoreItemHandler = ((KeyStoreItem) -> Void)
 
     let keyStoreItem: KeyStoreItem

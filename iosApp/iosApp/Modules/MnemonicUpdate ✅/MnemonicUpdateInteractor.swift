@@ -17,16 +17,12 @@ protocol MnemonicUpdateInteractor: AnyObject {
     var mnemonic: [String] { get set }
     /// Store mnemonic on icloud
     var iCloudSecretStorage: Bool { get set }
-
     /// Sets up interactor for `KeyStoreItem`
     func setup(for keyStoreItem: KeyStoreItem, password: String, salt: String) throws
-
     /// Updates `KeyStoreItem` settings
     func update(for keyStoreItem: KeyStoreItem) throws -> KeyStoreItem
-
     /// Is custom derivation path valid
     func isDerivationPathValid(path: String) -> Bool
-
     /// Deletes `KeyStoreItem` as well as associated `SecretStorage`
     func delete(_ keyStoreItem: KeyStoreItem)
 }
@@ -34,7 +30,6 @@ protocol MnemonicUpdateInteractor: AnyObject {
 // MARK: - DefaultMnemonicUpdateInteractor
 
 final class DefaultMnemonicUpdateInteractor {
-
     var name: String = ""
     var mnemonic: [String] = []
     var iCloudSecretStorage: Bool = true
@@ -60,32 +55,27 @@ extension DefaultMnemonicUpdateInteractor: MnemonicUpdateInteractor {
         self.salt = salt
         name = keyStoreItem.name
         iCloudSecretStorage = keyStoreItem.iCloudSecretStorage
-
         guard let decryptResult = try? keyStoreService.secretStorage(
             item: keyStoreItem,
             password: password
         )?.decrypt(password: password) else {
             throw MnemonicUpdateInteractorError.failedToUnlockItem
         }
-
         guard let mnemonic = decryptResult.mnemonic else {
             throw MnemonicUpdateInteractorError.failedToUnlockItem
         }
-
         self.mnemonic = mnemonic.split(separator: " ").map { String($0) }
         self.derivationPath = decryptResult.mnemonicPath
             ?? Network.ethereum().defaultDerivationPath()
     }
 
     func update(for item: KeyStoreItem) throws -> KeyStoreItem {
-        
         guard let secretStorage = keyStoreService.secretStorage(
             item: item,
             password: password
         ) else {
             throw MnemonicUpdateInteractorError.failedToUnlockItem
         }
-
         let keyStoreItem = KeyStoreItem(
             uuid: item.uuid,
             name: name,
@@ -98,13 +88,11 @@ extension DefaultMnemonicUpdateInteractor: MnemonicUpdateInteractor {
             derivationPath: derivationPath,
             addresses: item.addresses
         )
-
         keyStoreService.add(
             item: keyStoreItem,
             password: password,
             secretStorage: secretStorage
         )
-
         return keyStoreItem
     }
 
@@ -114,16 +102,11 @@ extension DefaultMnemonicUpdateInteractor: MnemonicUpdateInteractor {
     }
 
     func delete(_ keyStoreItem: KeyStoreItem) {
-        
         if keyStoreItem.uuid == keyStoreService.selected?.uuid {
-        
             keyStoreService.remove(item: keyStoreItem)
             keyStoreService.selected = keyStoreService.items().first
         } else {
-            
             keyStoreService.remove(item: keyStoreItem)
         }
-        
     }
 }
-

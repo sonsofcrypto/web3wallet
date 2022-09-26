@@ -9,23 +9,18 @@ final class MnemonicUpdateDeleteCell: UICollectionViewCell {
     @IBOutlet weak var button: Button!
 
     struct Handler {
-        
         let onDelete: () -> Void
     }
     
     private var handler: Handler!
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
-        
         configureUI()
     }
     
     required init?(coder: NSCoder) {
-        
         super.init(coder: coder)
-        
         configureUI()
     }
 }
@@ -36,11 +31,8 @@ extension MnemonicUpdateDeleteCell {
         with title: String,
         handler: Handler
     ) -> Self {
-        
         self.handler = handler
-        
         button.setTitle(title, for: .normal)
-        
         return self
     }
 }
@@ -48,13 +40,11 @@ extension MnemonicUpdateDeleteCell {
 private extension MnemonicUpdateDeleteCell {
     
     func configureUI() {
-        
         let button = Button(type: .custom)
         button.style = .primary(action: .destructive)
         button.addTarget(self, action: #selector(onDeleteTapped), for: .touchUpInside)
         self.button = button
         addSubview(button)
-        
         button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate(
             [
@@ -65,8 +55,5 @@ private extension MnemonicUpdateDeleteCell {
         )
     }
     
-    @objc func onDeleteTapped() {
-        
-        handler.onDelete()
-    }
+    @objc func onDeleteTapped() { handler.onDelete() }
 }

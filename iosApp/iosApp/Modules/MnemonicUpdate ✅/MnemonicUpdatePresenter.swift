@@ -20,32 +20,30 @@ enum MnemonicUpdatePresenterEvent {
 }
 
 protocol MnemonicUpdatePresenter {
-
     func present()
     func handle(_ event: MnemonicUpdatePresenterEvent)
 }
 
 final class DefaultMnemonicUpdatePresenter {
-
-    private let context: MnemonicUpdateContext
     private weak var view: MnemonicUpdateView?
-    private let interactor: MnemonicUpdateInteractor
     private let wireframe: MnemonicUpdateWireframe
+    private let interactor: MnemonicUpdateInteractor
+    private let context: MnemonicUpdateContext
 
     private var password: String = ""
     private var salt: String = ""
     private var customDerivation: Bool = false
 
     init(
-        context: MnemonicUpdateContext,
         view: MnemonicUpdateView,
+        wireframe: MnemonicUpdateWireframe,
         interactor: MnemonicUpdateInteractor,
-        wireframe: MnemonicUpdateWireframe
+        context: MnemonicUpdateContext
     ) {
-        self.context = context
         self.view = view
-        self.interactor = interactor
         self.wireframe = wireframe
+        self.interactor = interactor
+        self.context = context
     }
 
     private func updateView() {
@@ -56,9 +54,7 @@ final class DefaultMnemonicUpdatePresenter {
 extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
 
     func present() {
-        
         updateView()
-
         wireframe.navigate(
             to: .authenticate(
                 context: .init(
@@ -122,7 +118,6 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
 private extension DefaultMnemonicUpdatePresenter {
     
     @objc func onDeleteConfirmed() {
-        
         interactor.delete(context.keyStoreItem)
         context.onKeyStoreItemDeleted?()
         // NOTE: The following call dismisses the alert
@@ -168,11 +163,7 @@ private extension DefaultMnemonicUpdatePresenter {
                 optionsSectionItems(),
                 deleteItems()
             ],
-            headers: [
-                .none,
-                .none,
-                .none
-            ],
+            headers: [.none, .none, .none],
             footers: [
                 .attrStr(
                     text: Localized("newMnemonic.footer"),
