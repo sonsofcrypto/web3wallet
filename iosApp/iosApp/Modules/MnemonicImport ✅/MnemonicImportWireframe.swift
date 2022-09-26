@@ -5,25 +5,25 @@
 import UIKit
 import web3lib
 
-enum MnemonicNewWireframeDestination {
+enum MnemonicImportWireframeDestination {
     case learnMoreSalt
 }
 
-protocol MnemonicNewWireframe {
+protocol MnemonicImportWireframe {
     func present()
-    func navigate(to destination: MnemonicNewWireframeDestination)
+    func navigate(to destination: MnemonicImportWireframeDestination)
 }
 
-final class DefaultMnemonicNewWireframe {
-    private weak var parent: UIViewController!
-    private let context: MnemonicNewContext
+final class DefaultMnemonicImportWireframe {
+    private weak var parent: UIViewController?
+    private let context: MnemonicImportContext
     private let keyStoreService: KeyStoreService
 
-    private weak var vc: UIViewController!
+    private weak var vc: UIViewController?
 
     init(
-        parent: UIViewController?,
-        context: MnemonicNewContext,
+        _ parent: UIViewController?,
+        context: MnemonicImportContext,
         keyStoreService: KeyStoreService
     ) {
         self.parent = parent
@@ -32,9 +32,7 @@ final class DefaultMnemonicNewWireframe {
     }
 }
 
-// MARK: - MnemonicWireframe
-
-extension DefaultMnemonicNewWireframe: MnemonicNewWireframe {
+extension DefaultMnemonicImportWireframe: MnemonicImportWireframe {
 
     func present() {
         let vc = wireUp()
@@ -49,11 +47,11 @@ extension DefaultMnemonicNewWireframe: MnemonicNewWireframe {
         case .sheet:
             vc.modalPresentationStyle = .automatic
         }
-
+        self.vc = vc
         presentingTopVc?.present(vc, animated: true)
     }
 
-    func navigate(to destination: MnemonicNewWireframeDestination) {
+    func navigate(to destination: MnemonicImportWireframeDestination) {
         switch destination {
         case .learnMoreSalt:
             UIApplication.shared.open(Constant.saltExplanationURL)
@@ -61,17 +59,18 @@ extension DefaultMnemonicNewWireframe: MnemonicNewWireframe {
     }
 }
 
-private extension DefaultMnemonicNewWireframe {
+private extension DefaultMnemonicImportWireframe {
 
     func wireUp() -> UIViewController {
-        let interactor = DefaultMnemonicNewInteractor(keyStoreService)
-        let vc: MnemonicNewViewController = UIStoryboard(.mnemonicNew).instantiate()
-        let presenter = DefaultMnemonicNewPresenter(
+        let interactor = DefaultMnemonicImportInteractor(keyStoreService)
+        let vc: MnemonicImportViewController = UIStoryboard(.mnemonicImport).instantiate()
+        let presenter = DefaultMnemonicImportPresenter(
             view: vc,
             wireframe: self,
             interactor: interactor,
             context: context
         )
+
         vc.presenter = presenter
         let nc = NavigationController(rootViewController: vc)
         self.vc = nc
@@ -79,9 +78,7 @@ private extension DefaultMnemonicNewWireframe {
     }
 }
 
-// MARK: - Constant
-
-extension DefaultMnemonicNewWireframe {
+extension DefaultMnemonicImportWireframe {
     enum Constant {
         static let saltExplanationURL = URL(
             string: "https://www.youtube.com/watch?v=XqB5xA62gLw"

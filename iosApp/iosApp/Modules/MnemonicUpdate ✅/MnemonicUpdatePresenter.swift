@@ -166,13 +166,13 @@ private extension DefaultMnemonicUpdatePresenter {
             headers: [.none, .none, .none],
             footers: [
                 .attrStr(
-                    text: Localized("newMnemonic.footer"),
+                    text: Localized("mnemonicNew.footer"),
                     highlightWords: Constant.mnemonicHighlightWords
                 ),
                 .none,
                 .none
             ],
-            cta: Localized("newMnemonic.cta.update")
+            cta: Localized("mnemonicNew.cta.update")
         )
     }
 
@@ -191,13 +191,13 @@ private extension DefaultMnemonicUpdatePresenter {
         [
             MnemonicUpdateViewModel.Item.name(
                 name: .init(
-                    title: Localized("newMnemonic.name.title"),
+                    title: Localized("mnemonicNew.name.title"),
                     value: interactor.name,
-                    placeholder: Localized("newMnemonic.name.placeholder")
+                    placeholder: Localized("mnemonicNew.name.placeholder")
                 )
             ),
             MnemonicUpdateViewModel.Item.switch(
-                title: Localized("newMnemonic.iCould.title"),
+                title: Localized("mnemonicNew.iCould.title"),
                 onOff: interactor.iCloudSecretStorage
             )
         ]
@@ -206,7 +206,7 @@ private extension DefaultMnemonicUpdatePresenter {
     func deleteItems() -> [MnemonicUpdateViewModel.Item] {
         [
             MnemonicUpdateViewModel.Item.delete(
-                title: Localized("newMnemonic.cta.delete")
+                title: Localized("mnemonicNew.cta.delete")
             )
         ]
     }
@@ -218,8 +218,8 @@ private extension DefaultMnemonicUpdatePresenter {
 
     enum Constant {
         static let mnemonicHighlightWords: [String] = [
-            Localized("newMnemonic.footerHighlightWord0"),
-            Localized("newMnemonic.footerHighlightWord1"),
+            Localized("mnemonicNew.footerHighlightWord0"),
+            Localized("mnemonicNew.footerHighlightWord1"),
         ]
     }
 }

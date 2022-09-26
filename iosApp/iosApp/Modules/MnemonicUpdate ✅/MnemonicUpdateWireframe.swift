@@ -27,7 +27,7 @@ final class DefaultMnemonicUpdateWireframe {
     private weak var vc: UIViewController?
 
     init(
-        parent: UIViewController?,
+        _ parent: UIViewController?,
         context: MnemonicUpdateContext,
         keyStoreService: KeyStoreService,
         authenticateWireframeFactory: AuthenticateWireframeFactory,

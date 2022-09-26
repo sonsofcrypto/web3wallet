@@ -8,7 +8,6 @@ import web3lib
 // MARK: - MnemonicNewWireframeFactory
 
 protocol MnemonicNewWireframeFactory {
-
     func make(
         _ parent: UIViewController?,
         context: MnemonicNewContext
@@ -31,9 +30,8 @@ extension DefaultMnemonicNewWireframeFactory: MnemonicNewWireframeFactory {
         _ parent: UIViewController?,
         context: MnemonicNewContext
     ) -> MnemonicNewWireframe {
-        
         DefaultMnemonicNewWireframe(
-            parent: parent,
+            parent,
             context: context,
             keyStoreService: keyStoreService
         )

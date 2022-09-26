@@ -105,11 +105,11 @@ private extension DefaultOnboardingService {
 
     func walletName() -> String {
         guard !keyStoreService.items().isEmpty else {
-            return Localized("newMnemonic.defaultWalletName")
+            return Localized("mnemonicNew.defaultWalletName")
         }
 
         return String(
-            format: Localized("newMnemonic.defaultNthWalletName"),
+            format: Localized("mnemonicNew.defaultNthWalletName"),
             keyStoreService.items().count
         )
     }

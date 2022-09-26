@@ -39,7 +39,7 @@ extension DefaultMnemonicUpdateWireframeFactory: MnemonicUpdateWireframeFactory 
         context: MnemonicUpdateContext
     ) -> MnemonicUpdateWireframe {
         DefaultMnemonicUpdateWireframe(
-            parent: parent,
+            parent,
             context: context,
             keyStoreService: keyStoreService,
             authenticateWireframeFactory: authenticateWireframeFactory,

@@ -1498,8 +1498,8 @@
 				1C60C285285724D0003BE25D /* DegenCult ✅ */,
 				1C60C1E1285724D0003BE25D /* KeyStore ✅ */,
 				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
-				D1976B01287EFAE10063FC9C /* MnemonicImport */,
-				1C60C202285724D0003BE25D /* MnemonicNew */,
+				D1976B01287EFAE10063FC9C /* MnemonicImport ✅ */,
+				1C60C202285724D0003BE25D /* MnemonicNew ✅ */,
 				D1EF5BBC287BEE92004CAD82 /* MnemonicUpdate ✅ */,
 				1C54DBFB2860E59600E378F6 /* NetworkPicker ✅ */,
 				1C60C21C285724D0003BE25D /* Networks ✅ */,
@@ -1634,7 +1634,7 @@
 			path = "Alert ✅";
 			sourceTree = "<group>";
 		};
-		1C60C202285724D0003BE25D /* MnemonicNew */ = {
+		1C60C202285724D0003BE25D /* MnemonicNew ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1CD843FB287423EB00E6D359 /* MnemonicNew.storyboard */,
@@ -1647,7 +1647,7 @@
 				1C60C206285724D0003BE25D /* MnemonicNewWireframeFactory.swift */,
 				1CD843F02874215E00E6D359 /* Cells */,
 			);
-			path = MnemonicNew;
+			path = "MnemonicNew ✅";
 			sourceTree = "<group>";
 		};
 		1C60C20D285724D0003BE25D /* Dashboard ✅ */ = {
@@ -2465,7 +2465,7 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		D1976B01287EFAE10063FC9C /* MnemonicImport */ = {
+		D1976B01287EFAE10063FC9C /* MnemonicImport ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				D1976B0B287EFAE10063FC9C /* MnemonicImport.storyboard */,
@@ -2479,7 +2479,7 @@
 				1CB8B0DF28907C3A00024E7C /* MnemonicImportWireframeFactoryAssembler.swift */,
 				D1976B02287EFAE10063FC9C /* Cells */,
 			);
-			path = MnemonicImport;
+			path = "MnemonicImport ✅";
 			sourceTree = "<group>";
 		};
 		D1976B02287EFAE10063FC9C /* Cells */ = {

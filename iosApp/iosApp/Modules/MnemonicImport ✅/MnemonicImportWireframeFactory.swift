@@ -7,35 +7,40 @@ import web3lib
 
 protocol MnemonicImportWireframeFactory {
 
-    func makeWireframe(
+    func make(
         _ parent: UIViewController?,
         context: MnemonicImportContext
     ) -> MnemonicImportWireframe
 }
 
 final class DefaultMnemonicImportWireframeFactory {
-
     private let keyStoreService: KeyStoreService
 
-    init(
-        keyStoreService: KeyStoreService
-    ) {
+    init(keyStoreService: KeyStoreService) {
         self.keyStoreService = keyStoreService
     }
 }
 
 extension DefaultMnemonicImportWireframeFactory: MnemonicImportWireframeFactory {
-
-    func makeWireframe(
+    func make(
         _ parent: UIViewController?,
         context: MnemonicImportContext
     ) -> MnemonicImportWireframe {
-        
         DefaultMnemonicImportWireframe(
-            parent: parent,
+            parent,
             context: context,
             keyStoreService: keyStoreService
         )
     }
 }
 
+final class MnemonicImportWireframeFactoryAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> MnemonicImportWireframeFactory in
+            DefaultMnemonicImportWireframeFactory(
+                keyStoreService: resolver.resolve()
+            )
+        }
+    }
+}

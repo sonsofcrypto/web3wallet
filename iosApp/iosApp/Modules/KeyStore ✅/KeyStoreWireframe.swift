@@ -88,7 +88,7 @@ extension DefaultKeyStoreWireframe: KeyStoreWireframe {
             newMnemonic.make(vc, context: context).present()
         case let .importMnemonic(handler):
             let context = MnemonicImportContext(createHandler: handler)
-            importMnemonic.makeWireframe(vc, context: context).present()
+            importMnemonic.make(vc, context: context).present()
         case let .keyStoreItem(keyStoreItem, handler, onDeleted):
             let context = MnemonicUpdateContext(
                 keyStoreItem: keyStoreItem,

@@ -5,28 +5,25 @@
 import UIKit
 import web3lib
 
-enum MnemonicImportWireframeDestination {
+enum MnemonicNewWireframeDestination {
     case learnMoreSalt
 }
 
-protocol MnemonicImportWireframe {
+protocol MnemonicNewWireframe {
     func present()
-    func navigate(to destination: MnemonicImportWireframeDestination)
+    func navigate(to destination: MnemonicNewWireframeDestination)
 }
 
-// MARK: - class DefaultMnemonicWireframe {
-
-final class DefaultMnemonicImportWireframe {
-
+final class DefaultMnemonicNewWireframe {
     private weak var parent: UIViewController!
-    private let context: MnemonicImportContext
+    private let context: MnemonicNewContext
     private let keyStoreService: KeyStoreService
 
     private weak var vc: UIViewController!
 
     init(
-        parent: UIViewController?,
-        context: MnemonicImportContext,
+        _ parent: UIViewController?,
+        context: MnemonicNewContext,
         keyStoreService: KeyStoreService
     ) {
         self.parent = parent
@@ -37,29 +34,25 @@ final class DefaultMnemonicImportWireframe {
 
 // MARK: - MnemonicWireframe
 
-extension DefaultMnemonicImportWireframe: MnemonicImportWireframe {
+extension DefaultMnemonicNewWireframe: MnemonicNewWireframe {
 
     func present() {
         let vc = wireUp()
         let presentingTopVc = (parent as? UINavigationController)?.topVc
-        let presentedTopVc = (vc as? UINavigationController)?.topVc
-
         switch ServiceDirectory.transitionStyle {
         case .cardFlip:
+            let presentedTopVc = (vc as? UINavigationController)?.topVc
             let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
             self.vc = vc
             vc.modalPresentationStyle = .overFullScreen
-            vc.transitioningDelegate = delegate        case .sheet:
-            vc.modalPresentationStyle = .automatic
+            vc.transitioningDelegate = delegate
         case .sheet:
             vc.modalPresentationStyle = .automatic
         }
-
-        self.vc = vc
         presentingTopVc?.present(vc, animated: true)
     }
 
-    func navigate(to destination: MnemonicImportWireframeDestination) {
+    func navigate(to destination: MnemonicNewWireframeDestination) {
         switch destination {
         case .learnMoreSalt:
             UIApplication.shared.open(Constant.saltExplanationURL)
@@ -67,30 +60,28 @@ extension DefaultMnemonicImportWireframe: MnemonicImportWireframe {
     }
 }
 
-extension DefaultMnemonicImportWireframe {
+private extension DefaultMnemonicNewWireframe {
 
-    private func wireUp() -> UIViewController {
-        
-        let interactor = DefaultMnemonicImportInteractor(keyStoreService)
-        let vc: MnemonicImportViewController = UIStoryboard(.mnemonicImport).instantiate()
-        let presenter = DefaultMnemonicImportPresenter(
-            context: context,
+    func wireUp() -> UIViewController {
+        let interactor = DefaultMnemonicNewInteractor(keyStoreService)
+        let vc: MnemonicNewViewController = UIStoryboard(.mnemonicNew).instantiate()
+        let presenter = DefaultMnemonicNewPresenter(
             view: vc,
+            wireframe: self,
             interactor: interactor,
-            wireframe: self
+            context: context
         )
-
         vc.presenter = presenter
-        return NavigationController(rootViewController: vc)
+        let nc = NavigationController(rootViewController: vc)
+        self.vc = nc
+        return nc
     }
 }
 
 // MARK: - Constant
 
-extension DefaultMnemonicImportWireframe {
-
+extension DefaultMnemonicNewWireframe {
     enum Constant {
-
         static let saltExplanationURL = URL(
             string: "https://www.youtube.com/watch?v=XqB5xA62gLw"
         )!

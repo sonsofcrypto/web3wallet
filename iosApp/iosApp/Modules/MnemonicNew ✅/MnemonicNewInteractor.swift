@@ -33,8 +33,6 @@ protocol MnemonicNewInteractor: AnyObject {
     func generateNewMnemonic()
     /// generate password
     func generatePassword() -> String
-    /// See if passwords meets minimum specs
-    func isValidPassword(password: String) -> Bool
     /// Creates new `KeyStoreItem` and saves it to `KeyStore`
     func createKeyStoreItem(_ password: String, salt: String) throws -> KeyStoreItem
 }
@@ -116,11 +114,6 @@ extension DefaultMnemonicNewInteractor: MnemonicNewInteractor {
         )
         return keyStoreItem
     }
-
-    func isValidPassword(password: String) -> Bool {
-        // TODO(Sancho): Validate pass (Pin at least 6 digits, pass at least 8 alpha numeric)
-        return true
-    }
 }
 
 private extension DefaultMnemonicNewInteractor {
@@ -149,10 +142,10 @@ private extension DefaultMnemonicNewInteractor {
     func walletName() -> String {
         guard name.isEmpty else { return name }
         guard !keyStoreService.items().isEmpty else {
-            return Localized("newMnemonic.defaultWalletName")
+            return Localized("mnemonicNew.defaultWalletName")
         }
         return String(
-            format: Localized("newMnemonic.defaultNthWalletName"),
+            format: Localized("mnemonicNew.defaultNthWalletName"),
             keyStoreService.items().count
         )
     }
