@@ -4,7 +4,7 @@
 
 import Foundation
 
-enum FeaturesPresenterEvent {
+enum ProposalsPresenterEvent {
     case didSelectCategory(idx: Int)
     case filterBy(text: String)
     case vote(idx: Int)
@@ -12,25 +12,25 @@ enum FeaturesPresenterEvent {
     case dismiss
 }
 
-protocol FeaturesPresenter {
+protocol ProposalsPresenter {
 
     func present()
-    func handle(_ event: FeaturesPresenterEvent)
+    func handle(_ event: ProposalsPresenterEvent)
 }
 
-final class DefaultFeaturesPresenter {
-    private weak var view: FeaturesView?
-    private let interactor: FeaturesInteractor
-    private let wireframe: FeaturesWireframe
+final class DefaultProposalsPresenter {
+    private weak var view: ProposalsView?
+    private let interactor: ProposalsInteractor
+    private let wireframe: ProposalsWireframe
 
     private var proposals = [ImprovementProposal]()
     private var category: ImprovementProposal.Category = .infrastructure
     private var filterText: String = ""
 
     init(
-        view: FeaturesView,
-        interactor: FeaturesInteractor,
-        wireframe: FeaturesWireframe
+        view: ProposalsView,
+        interactor: ProposalsInteractor,
+        wireframe: ProposalsWireframe
     ) {
         self.view = view
         self.interactor = interactor
@@ -38,7 +38,7 @@ final class DefaultFeaturesPresenter {
     }
 }
 
-extension DefaultFeaturesPresenter: FeaturesPresenter {
+extension DefaultProposalsPresenter: ProposalsPresenter {
 
     func present() {
         if proposals.isEmpty { view?.update(with: .loading) }
@@ -64,7 +64,7 @@ extension DefaultFeaturesPresenter: FeaturesPresenter {
         }
     }
 
-    func handle(_ event: FeaturesPresenterEvent) {
+    func handle(_ event: ProposalsPresenterEvent) {
         switch event {
         case let .didSelectCategory(idx):
             category = ImprovementProposal.Category.allCases[idx]
@@ -75,26 +75,26 @@ extension DefaultFeaturesPresenter: FeaturesPresenter {
         case let .select(idx):
             let proposals = currentProposals()
             wireframe.navigate(
-                to: .feature(feature: proposals[idx], features: proposals)
+                to: .proposal(proposal: proposals[idx], proposals: proposals)
             )
         case let .vote(idx):
-            wireframe.navigate(to: .vote(feature: currentProposals()[idx]))
+            wireframe.navigate(to: .vote(proposal: currentProposals()[idx]))
         case .dismiss:
             wireframe.navigate(to: .dismiss)
         }
     }
 }
 
-private extension DefaultFeaturesPresenter {
+private extension DefaultProposalsPresenter {
     
     func updateView() {
         view?.update(with: viewModel())
     }
 
-    func viewModel() -> FeaturesViewModel {
+    func viewModel() -> ProposalsViewModel {
         let proposals = currentProposals()
-        let sectionType: FeaturesViewModel.Section.`Type` = .from(category)
-        let section: FeaturesViewModel.Section = .init(
+        let sectionType: ProposalsViewModel.Section.`Type` = .from(category)
+        let section: ProposalsViewModel.Section = .init(
             title: sectionType.stringValue + " (\(proposals))",
             description: sectionType.descriptionValue,
             type: sectionType,
@@ -108,7 +108,7 @@ private extension DefaultFeaturesPresenter {
         )
     }
 
-    func proposalViewModel(from feature: ImprovementProposal) -> FeaturesViewModel.Item {
+    func proposalViewModel(from feature: ImprovementProposal) -> ProposalsViewModel.Item {
         .init(
             id: feature.id,
             title: feature.title,
@@ -124,7 +124,7 @@ private extension DefaultFeaturesPresenter {
     }
 }
 
-private extension DefaultFeaturesPresenter {
+private extension DefaultProposalsPresenter {
 
     func currentProposals() -> [ImprovementProposal] {
         proposals.filter { $0.category == category }

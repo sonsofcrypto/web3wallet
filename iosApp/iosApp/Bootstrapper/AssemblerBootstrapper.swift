@@ -70,7 +70,7 @@ private extension AssemblerBootstrapper {
             NetworkPickerWireframeFactoryAssembler(),
             QRCodeScanWireframeFactoryAssembler(),
             ConfirmationWireframeFactoryAssembler(),
-            FeaturesWireframeFactoryAssembler(),
+            ProposalsWireframeFactoryAssembler(),
             FeatureWireframeFactoryAssembler(),
             ThemePickerWireframeFactoryAssembler(),
             MailServiceAssembler(),

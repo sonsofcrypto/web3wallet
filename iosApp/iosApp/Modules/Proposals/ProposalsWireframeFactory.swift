@@ -4,46 +4,46 @@
 
 import UIKit
 
-protocol FeaturesWireframeFactory {
-    func make(_ parent: UIViewController?) -> FeaturesWireframe
+protocol ProposalsWireframeFactory {
+    func make(_ parent: UIViewController?) -> ProposalsWireframe
 }
 
-final class DefaultFeaturesWireframeFactory {
+final class DefaultProposalsWireframeFactory {
     private let featureWireframeFactory: FeatureWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
-    private let featuresService: ImprovementProposalsService
+    private let improvementProposalsService: ImprovementProposalsService
 
     init(
         featureWireframeFactory: FeatureWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        featuresService: ImprovementProposalsService
+        improvementProposalsService: ImprovementProposalsService
     ) {
         self.featureWireframeFactory = featureWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
-        self.featuresService = featuresService
+        self.improvementProposalsService = improvementProposalsService
     }
 }
 
-extension DefaultFeaturesWireframeFactory: FeaturesWireframeFactory {
+extension DefaultProposalsWireframeFactory: ProposalsWireframeFactory {
 
-    func make(_ parent: UIViewController?) -> FeaturesWireframe {
-        DefaultFeaturesWireframe(
+    func make(_ parent: UIViewController?) -> ProposalsWireframe {
+        DefaultProposalsWireframe(
             parent,
             featureWireframeFactory: featureWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
-            featuresService: featuresService
+            improvementProposalsService: improvementProposalsService
         )
     }
 }
 
-final class FeaturesWireframeFactoryAssembler: AssemblerComponent {
+final class ProposalsWireframeFactoryAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
-        registry.register(scope: .instance) { resolver -> FeaturesWireframeFactory in
-            DefaultFeaturesWireframeFactory(
+        registry.register(scope: .instance) { resolver -> ProposalsWireframeFactory in
+            DefaultProposalsWireframeFactory(
                 featureWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
-                featuresService: resolver.resolve()
+                improvementProposalsService: resolver.resolve()
             )
         }
     }

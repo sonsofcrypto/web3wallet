@@ -5,13 +5,13 @@
 import Foundation
 import UIKit
 
-enum FeaturesViewModel {
+enum ProposalsViewModel {
     case loading
     case loaded(sections: [Section], selectedSectionType: Section.`Type`)
     case error(error: AppsViewModel.Error)
 }
 
-extension FeaturesViewModel {
+extension ProposalsViewModel {
     
     struct Section {
         let title: String
@@ -67,7 +67,7 @@ extension FeaturesViewModel {
     }
 }
 
-extension FeaturesViewModel {
+extension ProposalsViewModel {
 
     struct Error {
         let title: String
@@ -76,13 +76,13 @@ extension FeaturesViewModel {
     }
 }
 
-extension FeaturesViewModel {
+extension ProposalsViewModel {
     
     var title: String {
         Localized("features.title")
     }
     
-    var sections: [FeaturesViewModel.Section] {
+    var sections: [ProposalsViewModel.Section] {
         
         switch self {
         case let .loaded(sections, _): return sections
@@ -90,7 +90,7 @@ extension FeaturesViewModel {
         }
     }
     
-    var selectedSectionType: FeaturesViewModel.Section.`Type` {
+    var selectedSectionType: ProposalsViewModel.Section.`Type` {
         switch self {
         case let .loaded(_, type): return type
         default: return .all
@@ -98,11 +98,11 @@ extension FeaturesViewModel {
     }
 }
 
-extension FeaturesViewModel.Section.`Type` {
+extension ProposalsViewModel.Section.`Type` {
 
     static func from(
         _ category: ImprovementProposal.Category
-    ) -> FeaturesViewModel.Section.`Type` {
+    ) -> ProposalsViewModel.Section.`Type` {
         switch category {
         case .infrastructure: return .infrastructure
         case .integration: return .integrations

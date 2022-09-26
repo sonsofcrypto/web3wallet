@@ -4,11 +4,11 @@
 
 import UIKit
 
-protocol FeaturesView: AnyObject {
-    func update(with viewModel: FeaturesViewModel)
+protocol ProposalsView: AnyObject {
+    func update(with viewModel: ProposalsViewModel)
 }
 
-final class FeaturesViewController: BaseViewController {
+final class ProposalsViewController: BaseViewController {
     //let searchController = UISearchController()
     @IBOutlet weak var topContainerView: UIView!
     @IBOutlet weak var segmentContainer: UIView!
@@ -16,9 +16,9 @@ final class FeaturesViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     private let refreshControl = UIRefreshControl()
 
-    var presenter: FeaturesPresenter!
+    var presenter: ProposalsPresenter!
 
-    private var viewModel: FeaturesViewModel!
+    private var viewModel: ProposalsViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,9 +27,9 @@ final class FeaturesViewController: BaseViewController {
     }
 }
 
-extension FeaturesViewController: FeaturesView {
+extension ProposalsViewController: ProposalsView {
 
-    func update(with viewModel: FeaturesViewModel) {
+    func update(with viewModel: ProposalsViewModel) {
         self.viewModel = viewModel
         title = viewModel.title
 
@@ -47,7 +47,7 @@ extension FeaturesViewController: FeaturesView {
     }
 }
 
-extension FeaturesViewController: UICollectionViewDataSource {
+extension ProposalsViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         viewModel.sections.count
@@ -66,7 +66,7 @@ extension FeaturesViewController: UICollectionViewDataSource {
     ) -> UICollectionViewCell {
         let section = viewModel.sections[indexPath.section]
         let viewModel = section.items[indexPath.item]
-        let cell = collectionView.dequeue(FeaturesCell.self, for: indexPath)
+        let cell = collectionView.dequeue(ProposalsCell.self, for: indexPath)
         let idx = indexPath.item
         return cell.update(
             with: viewModel,
@@ -83,11 +83,11 @@ extension FeaturesViewController: UICollectionViewDataSource {
         case "header":
             guard let headerView = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
-                withReuseIdentifier: String(describing: FeaturesHeaderSupplementaryView.self),
+                withReuseIdentifier: String(describing: ProposalsHeaderSupplementaryView.self),
                 for: indexPath
-            ) as? FeaturesHeaderSupplementaryView else {
+            ) as? ProposalsHeaderSupplementaryView else {
                 
-                return FeaturesHeaderSupplementaryView()
+                return ProposalsHeaderSupplementaryView()
             }
             
             let section = viewModel.sections[indexPath.section]
@@ -101,7 +101,7 @@ extension FeaturesViewController: UICollectionViewDataSource {
     }
 }
 
-extension FeaturesViewController: UICollectionViewDelegate {
+extension ProposalsViewController: UICollectionViewDelegate {
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -116,7 +116,7 @@ extension FeaturesViewController: UICollectionViewDelegate {
 //    }
 }
 
-private extension FeaturesViewController {
+private extension ProposalsViewController {
     
     func showLoading() {
         activityIndicator.isHidden = false
@@ -174,6 +174,7 @@ private extension FeaturesViewController {
     }
     
     func configureUI() {
+        edgesForExtendedLayout = []
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: .init(systemName: "xmark"),
             style: .plain,
@@ -192,9 +193,9 @@ private extension FeaturesViewController {
         collectionView.alwaysBounceVertical = true
         collectionView.refreshControl = refreshControl
         collectionView.register(
-            FeaturesHeaderSupplementaryView.self,
+            ProposalsHeaderSupplementaryView.self,
             forSupplementaryViewOfKind: "header",
-            withReuseIdentifier: String(describing: FeaturesHeaderSupplementaryView.self)
+            withReuseIdentifier: String(describing: ProposalsHeaderSupplementaryView.self)
         )
         refreshControl.tintColor = Theme.colour.activityIndicator
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)

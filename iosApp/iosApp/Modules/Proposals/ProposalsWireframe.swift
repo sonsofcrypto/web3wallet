@@ -4,23 +4,23 @@
 
 import UIKit
 
-enum FeaturesWireframeDestination {
-    case vote(feature: ImprovementProposal)
-    case feature(feature: ImprovementProposal, features: [ImprovementProposal])
+enum ProposalsWireframeDestination {
+    case vote(proposal: ImprovementProposal)
+    case proposal(proposal: ImprovementProposal, proposals: [ImprovementProposal])
     case dismiss
 }
 
-protocol FeaturesWireframe {
+protocol ProposalsWireframe {
     func present()
-    func navigate(to destination: FeaturesWireframeDestination)
+    func navigate(to destination: ProposalsWireframeDestination)
 }
 
-final class DefaultFeaturesWireframe {
+final class DefaultProposalsWireframe {
 
     private weak var parent: UIViewController?
     private let featureWireframeFactory: FeatureWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
-    private let featuresService: ImprovementProposalsService
+    private let improvementProposalsService: ImprovementProposalsService
 
     private weak var vc: UIViewController?
 
@@ -28,30 +28,30 @@ final class DefaultFeaturesWireframe {
         _ parent: UIViewController?,
         featureWireframeFactory: FeatureWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        featuresService: ImprovementProposalsService
+        improvementProposalsService: ImprovementProposalsService
     ) {
         self.parent = parent
         self.featureWireframeFactory = featureWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
-        self.featuresService = featuresService
+        self.improvementProposalsService = improvementProposalsService
     }
 }
 
-extension DefaultFeaturesWireframe: FeaturesWireframe {
+extension DefaultProposalsWireframe: ProposalsWireframe {
 
     func present() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
 
-    func navigate(to destination: FeaturesWireframeDestination) {
+    func navigate(to destination: ProposalsWireframeDestination) {
         switch destination {
-        case let .vote(feature):
-            FeatureShareHelper().shareVote(on: feature)
-        case let .feature(feature, features):
+        case let .vote(proposal):
+            FeatureShareHelper().shareVote(on: proposal)
+        case let .proposal(proposal, proposals):
             featureWireframeFactory.make(
                 vc,
-                context: .init(feature: feature, features: features)
+                context: .init(feature: proposal, features: proposals)
             ).present()
         case .dismiss:
             vc?.popOrDismiss()
@@ -59,14 +59,14 @@ extension DefaultFeaturesWireframe: FeaturesWireframe {
     }
 }
 
-extension DefaultFeaturesWireframe {
+extension DefaultProposalsWireframe {
     
     func wireUp() -> UIViewController {
-        let interactor = DefaultFeaturesInteractor(
-            featureService: featuresService
+        let interactor = DefaultProposalsInteractor(
+            improvementProposalsService: improvementProposalsService
         )
-        let vc: FeaturesViewController = UIStoryboard(.features).instantiate()
-        let presenter = DefaultFeaturesPresenter(
+        let vc: ProposalsViewController = UIStoryboard(.proposals).instantiate()
+        let presenter = DefaultProposalsPresenter(
             view: vc,
             interactor: interactor,
             wireframe: self

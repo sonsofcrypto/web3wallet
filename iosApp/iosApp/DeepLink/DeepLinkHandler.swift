@@ -256,7 +256,7 @@ private extension DefaultDeepLinkHandler {
     
     func openFeaturesList() {
         guard let rootVC = rootVC else { return }
-        let wireframe: FeaturesWireframeFactory = ServiceDirectory.assembler.resolve()
+        let wireframe: ProposalsWireframeFactory = ServiceDirectory.assembler.resolve()
         wireframe.make(rootVC).present()
     }
     

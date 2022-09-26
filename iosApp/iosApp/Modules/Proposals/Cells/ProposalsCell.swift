@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class FeaturesCell: CollectionViewCell {
+final class ProposalsCell: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
@@ -28,7 +28,7 @@ final class FeaturesCell: CollectionViewCell {
     override func setSelected(_ selected: Bool) { }
     
     func update(
-        with viewModel: FeaturesViewModel.Item,
+        with viewModel: ProposalsViewModel.Item,
         handler: (()->Void)?
     ) -> Self {
         self.voteHandler = handler
@@ -39,7 +39,7 @@ final class FeaturesCell: CollectionViewCell {
     }
 }
 
-private extension FeaturesCell  {
+private extension ProposalsCell  {
     
     @objc func voteTapped() { self.voteHandler?() }
 }

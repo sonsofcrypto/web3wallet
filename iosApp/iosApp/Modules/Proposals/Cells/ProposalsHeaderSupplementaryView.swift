@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class FeaturesHeaderSupplementaryView: UICollectionReusableView {
+final class ProposalsHeaderSupplementaryView: UICollectionReusableView {
     private weak var label: UILabel!
     
     override init(frame: CGRect) {
@@ -42,9 +42,9 @@ final class FeaturesHeaderSupplementaryView: UICollectionReusableView {
     }
 }
 
-extension FeaturesHeaderSupplementaryView {
+extension ProposalsHeaderSupplementaryView {
 
-    func update(with viewModel: FeaturesViewModel.Section) {
+    func update(with viewModel: ProposalsViewModel.Section) {
         label.text = viewModel.description
     }
 }
