@@ -333,7 +333,7 @@ private extension DefaultCurrencySwapPresenter {
             return .invalid(
                 text: Localized(
                     "tokenSwap.cell.button.state.insufficientBalance",
-                    arg: currencyFrom.symbol
+                    arg: currencyFrom.symbol.uppercased()
                 )
             )
         }
@@ -405,15 +405,16 @@ private extension DefaultCurrencySwapPresenter {
     }
     
     func currencyPriceViewModel() -> CurrencySwapPriceViewModel {
-        
+        let fromSymbol = currencyFrom.symbol.uppercased()
+        let toSymbol = currencyTo.symbol.uppercased()
         guard currencyFrom.fiatPrice != 0, currencyTo.fiatPrice != 0 else {
-            return .init(value: "1 \(currencyFrom.symbol) ≈ ? \(currencyTo.symbol)")
+            return .init(value: "1 \(fromSymbol) ≈ ? \(toSymbol)")
         }
         guard let fromAmount = try? BigInt.Companion().from(
             string: "1".appending(decimals: currencyFrom.decimalsUInt),
             base: 10
         ) else {
-            return .init(value: "1 \(currencyFrom.symbol) ≈ ? \(currencyTo.symbol)")
+            return .init(value: "1 \(fromSymbol) ≈ ? \(toSymbol)")
         }
         let currencyFromAmountBigDec = fromAmount.toBigDec(decimals: currencyFrom.decimalsUInt)
         let currencyFromFiatBigDec = currencyFrom.fiatPrice.bigDec
@@ -450,7 +451,7 @@ private extension DefaultCurrencySwapPresenter {
                 decimals: currencyTo.decimalsUInt
             )
         }
-        return .init(value: "1 \(currencyFrom.symbol) ≈ \(value) \(currencyTo.symbol)")
+        return .init(value: "1 \(fromSymbol) ≈ \(value) \(toSymbol)")
     }
     
     func selectedProviderIconName() -> String { "\(selectedProviderName)-provider" }
