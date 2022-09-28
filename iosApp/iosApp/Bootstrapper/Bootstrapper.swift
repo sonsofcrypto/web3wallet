@@ -36,7 +36,7 @@ final class UIBootstrapper {
 extension UIBootstrapper: Bootstrapper {
 
     func boot() {
-        let rootWireframeFactory: RootWireframeFactory = ServiceDirectory.assembler.resolve()
+        let rootWireframeFactory: RootWireframeFactory = AppAssembler.resolve()
         rootWireframeFactory.make(window).present()
     }
 }

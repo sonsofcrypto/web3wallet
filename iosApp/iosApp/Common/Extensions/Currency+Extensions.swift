@@ -16,7 +16,7 @@ extension Currency {
     }
     
     var fiatPrice: Double {
-        let currencyStoreService: CurrencyStoreService = ServiceDirectory.assembler.resolve()
+        let currencyStoreService: CurrencyStoreService = AppAssembler.resolve()
         return currencyStoreService.marketData(currency: self)?.currentPrice?.doubleValue ?? 0
     }
     

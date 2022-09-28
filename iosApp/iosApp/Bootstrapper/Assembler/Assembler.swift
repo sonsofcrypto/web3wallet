@@ -7,6 +7,8 @@ public enum AssemblerRegistryScope {
     case instance
 }
 
+var AppAssembler: Assembler { AppDelegate.assembler }
+
 protocol Assembler: AssemblerResolver {
     func configure(components: [AssemblerComponent])
 }
@@ -26,7 +28,6 @@ protocol AssemblerComponent: AnyObject {
 }
 
 final class DefaultAssembler: Assembler {
-    
     private let container: Container
     
     init() { container = Container() }
@@ -67,9 +68,7 @@ extension Container: AssemblerRegistry {
 
 extension Container: AssemblerResolver {
     
-    func resolve<T>() -> T {
-        resolve(byName: "")
-    }
+    func resolve<T>() -> T { resolve(byName: "") }
     
     func resolve<T>(byName name: String) -> T {
         let key = self.key(for: T.self, andName: name)
@@ -86,8 +85,7 @@ extension Container: AssemblerResolver {
                 return instance
             }
             return instance
-        case .instance:
-            return factory(self) as! T
+        case .instance: return factory(self) as! T
         }
     }
 }

@@ -18,15 +18,18 @@ final class DefaultMnemonicUpdateWireframeFactory {
     private let keyStoreService: KeyStoreService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
+    private let settingsService: SettingsService
     
     init(
         keyStoreService: KeyStoreService,
         authenticateWireframeFactory: AuthenticateWireframeFactory,
-        alertWireframeFactory: AlertWireframeFactory
+        alertWireframeFactory: AlertWireframeFactory,
+        settingsService: SettingsService
     ) {
         self.keyStoreService = keyStoreService
         self.authenticateWireframeFactory = authenticateWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
+        self.settingsService = settingsService
     }
 }
 
@@ -43,7 +46,8 @@ extension DefaultMnemonicUpdateWireframeFactory: MnemonicUpdateWireframeFactory 
             context: context,
             keyStoreService: keyStoreService,
             authenticateWireframeFactory: authenticateWireframeFactory,
-            alertWireframeFactory: alertWireframeFactory
+            alertWireframeFactory: alertWireframeFactory,
+            settingsService: settingsService
         )
     }
 }
@@ -57,7 +61,8 @@ final class MnemonicUpdateWireframeFactoryAssembler: AssemblerComponent {
             DefaultMnemonicUpdateWireframeFactory(
                 keyStoreService: resolver.resolve(),
                 authenticateWireframeFactory: resolver.resolve(),
-                alertWireframeFactory: resolver.resolve()
+                alertWireframeFactory: resolver.resolve(),
+                settingsService: resolver.resolve()
             )
         }
     }

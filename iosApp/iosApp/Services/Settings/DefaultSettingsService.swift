@@ -15,15 +15,11 @@ final class DefaultSettingsService {
         defaults: UserDefaults,
         keyStoreService: KeyStoreService
     ) {
-        
         self.defaults = defaults
         self.keyStoreService = keyStoreService
     }
     
-    func isInitialized(
-        item: Setting.ItemIdentifier
-    ) -> Bool {
-        
+    func isInitialized(item: Setting.ItemIdentifier) -> Bool {
         defaults.string(forKey: item.rawValue) != nil
     }
     
@@ -32,30 +28,19 @@ final class DefaultSettingsService {
         action: Setting.ActionIdentifier,
         fireAction: Bool
     ) {
-        
         if let item = item {
-            
             defaults.set(action.rawValue, forKey: item.rawValue)
             defaults.synchronize()
         }
-        
-        if fireAction {
-            
-            fire(action: action)
-        }
+        if fireAction { fire(action: action) }
     }
 }
 
 extension DefaultSettingsService: SettingsService {
     
-    func settings(
-        for setting: Setting.ItemIdentifier
-    ) -> [SettingsWireframeContext.Group] {
-        
+    func settings(for setting: Setting.ItemIdentifier) -> [SettingsWireframeContext.Group] {
         switch setting {
-            
         case .theme:
-            
             return [
                 .init(
                     title: nil,
@@ -96,11 +81,8 @@ extension DefaultSettingsService: SettingsService {
                     footer: nil
                 )
             ]
-            
         case .improvement: return []
-            
         case .debug:
-            
             return [
                 .init(
                     title: nil,
@@ -108,6 +90,10 @@ extension DefaultSettingsService: SettingsService {
                         .init(
                             title: Localized("settings.debug.apis"),
                             type: .item(.debugAPIs)
+                        ),
+                        .init(
+                            title: Localized("settings.debug.transitions"),
+                            type: .item(.debugTransitions)
                         ),
                         .init(
                             title: Localized("settings.debug.resetKeyStore"),
@@ -123,7 +109,6 @@ extension DefaultSettingsService: SettingsService {
             ]
 
         case .debugAPIs:
-            
             return [
                 .init(
                     title: nil,
@@ -136,9 +121,32 @@ extension DefaultSettingsService: SettingsService {
                     footer: nil
                 )
             ]
-            
+        case .debugTransitions:
+            return [
+                .init(
+                    title: nil,
+                    items: [
+                        .init(
+                            title: Localized("settings.debug.transitions.cardFlip"),
+                            type: .action(
+                                item: .debugTransitions,
+                                action: .debugTransitionsCardFlip,
+                                showTickOnSelected: true
+                            )
+                        ),
+                        .init(
+                            title: Localized("settings.debug.transitions.sheet"),
+                            type: .action(
+                                item: .debugTransitions,
+                                action: .debugTransitionsSheet,
+                                showTickOnSelected: true
+                            )
+                        )
+                    ],
+                    footer: nil
+                )
+            ]
         case .debugAPIsNFTs:
-            
             return [
                 .init(
                     title: nil,
@@ -155,9 +163,7 @@ extension DefaultSettingsService: SettingsService {
                     footer: nil
                 )
             ]
-            
         case .about:
-            
             return [
                 .init(
                     title: Localized("settings.about.socials"),
@@ -239,7 +245,6 @@ extension DefaultSettingsService: SettingsService {
         item: Setting.ItemIdentifier?,
         action: Setting.ActionIdentifier
     ) {
-        
         didSelect(item: item, action: action, fireAction: true)
     }
     
@@ -247,82 +252,47 @@ extension DefaultSettingsService: SettingsService {
         item: Setting.ItemIdentifier,
         action: Setting.ActionIdentifier
     ) -> Bool {
-        
         defaults.string(forKey: item.rawValue) == action.rawValue
     }
 }
 
 private extension DefaultSettingsService {
     
-    func fire(
-        action: Setting.ActionIdentifier
-    ) {
-        
+    func fire(action: Setting.ActionIdentifier) {
         switch action {
-            
-        case .debugAPIsNFTsOpenSea:
-            ServiceDirectory.rebootApp()
-            
-        case .themeIOSLight, .themeIOSDark, .themeMiamiLight, .themeMiamiDark:
-            Theme = appTheme
-            
+        case .debugAPIsNFTsOpenSea: AppDelegate.rebootApp()
+        case .debugTransitionsCardFlip, .debugTransitionsSheet: break
+        case .themeIOSLight, .themeIOSDark, .themeMiamiLight, .themeMiamiDark: Theme = appTheme
         case .improvementProposals:
             guard let deepLink = DeepLink(identifier: DeepLink.featuresList.identifier) else { return }
-            let deepLinkHandler: DeepLinkHandler = ServiceDirectory.assembler.resolve()
+            let deepLinkHandler: DeepLinkHandler = AppAssembler.resolve()
             deepLinkHandler.handle(deepLink: deepLink)
-            
         case .resetKeystore:
             // TODO: Smell
-            guard let presentingVC = UIApplication.shared.rootVc else { return }
-            let factory: AlertWireframeFactory = ServiceDirectory.assembler.resolve()
-            factory.make(
-                presentingVC,
-                context: makeResetKeystoreAlertContext()
-            ).present()
-            
+            guard let vc = UIApplication.shared.rootVc else { return }
+            let factory: AlertWireframeFactory = AppAssembler.resolve()
+            factory.make(vc, context: resetKeystoreAlertContext()).present()
         case .aboutWebsite:
-            UIApplication.shared.open(
-                "https://www.sonsofcrypto.com".url!
-            )
-            
+            UIApplication.shared.open("https://www.sonsofcrypto.com".url!)
         case .aboutGitHub:
-            UIApplication.shared.open(
-                "https://github.com/sonsofcrypto".url!
-            )
-
+            UIApplication.shared.open("https://github.com/sonsofcrypto".url!)
         case .aboutMedium:
-            UIApplication.shared.open(
-                "https://medium.com/@sonsofcrypto".url!
-            )
-            
+            UIApplication.shared.open("https://medium.com/@sonsofcrypto".url!)
         case .aboutTwitter:
-            UIApplication.shared.open(
-                "https://twitter.com/sonsofcryptolab".url!
-            )
-
+            UIApplication.shared.open("https://twitter.com/sonsofcryptolab".url!)
         case .aboutDiscord:
-            UIApplication.shared.open(
-                "https://discord.gg/DW8kUu6Q6E".url!
-            )
-
+            UIApplication.shared.open("https://discord.gg/DW8kUu6Q6E".url!)
         case .aboutTelegram:
-            UIApplication.shared.open(
-                "https://t.me/+osHUInXKmwMyZjQ0".url!
-            )
-            
+            UIApplication.shared.open("https://t.me/+osHUInXKmwMyZjQ0".url!)
         case .aboutMail:
-            UIApplication.shared.open(
-                "mailto:sonsofcrypto@protonmail.com".url!
-            )
-            
+            UIApplication.shared.open("mailto:sonsofcrypto@protonmail.com".url!)
         case .feedbackReport:
-            let mailService: MailService = ServiceDirectory.assembler.resolve()
+            let mailService: MailService = AppAssembler.resolve()
             mailService.sendMail(context: .init(subject: .beta))
         }
     }
     
-    func makeResetKeystoreAlertContext() -> AlertContext {
-        
+    func resetKeystoreAlertContext() -> AlertContext {
         .init(
             title: Localized("alert.resetKeystore.title"),
             media: nil,
@@ -344,10 +314,7 @@ private extension DefaultSettingsService {
     }
     
     @objc func resetKeystore() {
-        
-        keyStoreService.items().forEach {
-            keyStoreService.remove(item: $0)
-        }
-        ServiceDirectory.rebootApp()
+        keyStoreService.items().forEach { keyStoreService.remove(item: $0) }
+        AppDelegate.rebootApp()
     }
 }

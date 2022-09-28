@@ -5,7 +5,7 @@
 import UIKit
 
 var Theme: Themable = appTheme {
-    didSet { ServiceDirectory.rebootApp() }
+    didSet { AppDelegate.rebootApp() }
 }
 
 enum ThemeStyle: String {
@@ -14,7 +14,7 @@ enum ThemeStyle: String {
 }
 
 var appTheme: Themable {
-    let service: SettingsService = ServiceDirectory.assembler.resolve()
+    let service: SettingsService = AppAssembler.resolve()
     if service.isSelected(item: .theme, action: .themeMiamiLight) {
         return ThemeMiami(style: .light)
     } else if service.isSelected(item: .theme, action: .themeMiamiDark) {
@@ -39,7 +39,7 @@ extension Themable {
     
     var isThemeIOSDarkSelected: Bool {
         
-        let service: SettingsService = ServiceDirectory.assembler.resolve()
+        let service: SettingsService = AppAssembler.resolve()
         return service.isSelected(item: .theme, action: .themeIOSDark)
     }
 }
@@ -57,30 +57,19 @@ struct ThemeStatusBarStyle {
 extension ThemeStatusBarStyle {
     
     func statusBarStyle(for interfaceStyle: UIUserInterfaceStyle) -> UIStatusBarStyle {
-        
         switch interfaceStyle {
-            
-        case .unspecified:
-            return .default
-            
+        case .unspecified: return .default
         case .light:
             switch lightMode {
-            case .light:
-                return .lightContent
-            case .dark:
-                return .darkContent
+            case .light: return .lightContent
+            case .dark: return .darkContent
             }
-
         case .dark:
             switch darkMode {
-            case .light:
-                return .lightContent
-            case .dark:
-                return .darkContent
+            case .light: return .lightContent
+            case .dark: return .darkContent
             }
-
-        @unknown default:
-            return .default
+        @unknown default: return .default
         }
     }
 }

@@ -76,7 +76,7 @@ private extension DefaultMailService {
     
     func showAlertNoEmailDetected() {
         guard let presentingIn = presentingIn else { return }
-        let wireframe: AlertWireframeFactory = ServiceDirectory.assembler.resolve()
+        let wireframe: AlertWireframeFactory = AppAssembler.resolve()
         wireframe.make(
             presentingIn,
             context: .init(

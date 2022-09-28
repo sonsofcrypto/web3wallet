@@ -36,8 +36,6 @@ final class MnemonicNewViewController: BaseViewController {
         didAppear = true
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle { .darkContent }
-    
     @IBAction func ctaAction(_ sender: Any) {
         presenter.handle(.didSelectCta)
     }

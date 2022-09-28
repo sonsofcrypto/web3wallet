@@ -177,8 +177,7 @@ private extension DefaultKeyStorePresenter {
                 selectedIdxs()
             ].compactMap{ $0 },
             buttons: buttonsViewModel,
-            targetView: targetView,
-            transitionStyle: ServiceDirectory.transitionStyle
+            targetView: targetView
         )
     }
     

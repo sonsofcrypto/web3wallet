@@ -10,7 +10,7 @@ extension AssemblerBootstrapper: Bootstrapper {
         let assembler = DefaultAssembler()
         let components = makeComponents()
         assembler.configure(components: components)
-        ServiceDirectory.assembler = assembler
+        AppDelegate.assembler = assembler
     }
 }
 
@@ -28,7 +28,6 @@ private extension AssemblerBootstrapper {
             KeyStoreServiceAssembler(),
             KeyChainServiceAssembler(),
             NFTsServiceAssembler(),
-            OnboardingServiceAssembler(),
             ReachabilityServiceAssembler(),
             ChatServiceAssembler(),
             CultServiceAssembler(),

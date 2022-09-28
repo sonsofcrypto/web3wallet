@@ -35,8 +35,6 @@ final class MnemonicImportViewController: BaseViewController {
         (cell as? MnemonicImportCell)?.textView.becomeFirstResponder()
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle { .darkContent }
-    
     @IBAction func ctaAction(_ sender: Any) {
         presenter.handle(.didSelectCta)
     }

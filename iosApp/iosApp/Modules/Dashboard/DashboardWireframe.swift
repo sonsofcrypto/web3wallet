@@ -42,7 +42,6 @@ final class DefaultDashboardWireframe {
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let themePickerWireframeFactory: ThemePickerWireframeFactory
-    private let onboardingService: OnboardingService
     private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
@@ -63,7 +62,6 @@ final class DefaultDashboardWireframe {
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         themePickerWireframeFactory: ThemePickerWireframeFactory,
-        onboardingService: OnboardingService,
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
@@ -81,7 +79,6 @@ final class DefaultDashboardWireframe {
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.themePickerWireframeFactory = themePickerWireframeFactory
-        self.onboardingService = onboardingService
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
         self.currencyStoreService = currencyStoreService
@@ -211,8 +208,7 @@ private extension DefaultDashboardWireframe {
         let presenter = DefaultDashboardPresenter(
             view: vc,
             wireframe: self,
-            interactor: interactor,
-            onboardingService: onboardingService
+            interactor: interactor
         )
         vc.presenter = presenter
         let nc = NavigationController(rootViewController: vc)
