@@ -27,6 +27,7 @@ enum CurrencySwapInteractorApprovalState {
 }
 
 enum CurrencySwapInteractorSwapState {
+    case noPools
     case notAvailable
     case swap
 }
@@ -107,9 +108,9 @@ extension DefaultCurrencySwapInteractor: CurrencySwapInteractor {
     }
     
     var swapState: CurrencySwapInteractorSwapState {
-        // 1 - Check pool state
-        switch swapService.poolsState {
-        case is PoolsState.NoPoolsFound: return .notAvailable
+        guard !(swapService.poolsState is PoolsState.NoPoolsFound) else { return .noPools }
+        switch swapService.outputState {
+        case is OutputState.Unavailable: return .notAvailable
         default: return .swap
         }
     }
