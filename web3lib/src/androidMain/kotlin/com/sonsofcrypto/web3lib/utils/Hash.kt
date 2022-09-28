@@ -9,7 +9,7 @@ actual fun sha256(data: ByteArray): ByteArray {
 }
 
 actual fun sha512(data: ByteArray): ByteArray {
-    return CoreCrypto.hash(data, CoreCrypto.HashFnSha256)
+    return CoreCrypto.hash(data, CoreCrypto.HashFnSha512)
 }
 
 actual fun keccak256(data: ByteArray): ByteArray {
