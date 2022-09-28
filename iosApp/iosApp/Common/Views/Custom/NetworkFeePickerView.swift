@@ -3,12 +3,10 @@
 // SPDX-License-Identifier: MIT
 
 struct NetworkFeePickerViewModel {
-    
     let estimatedFee: String
     let feeType: FeeType
     
     enum FeeType {
-        
         case low
         case medium
         case high
@@ -16,7 +14,6 @@ struct NetworkFeePickerViewModel {
 }
 
 final class NetworkFeePickerView: UIView {
-    
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var networkTokenIcon: UIImageView!
     @IBOutlet weak var networkEstimateFeeLabel: UILabel!
@@ -25,9 +22,7 @@ final class NetworkFeePickerView: UIView {
     private var handler: (() -> Void)!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         nameLabel.apply(style: .footnote)
         nameLabel.text = Localized("tokenSwap.cell.estimatedFee")
         networkTokenIcon.image = "send-ethereum-token".assetImage
@@ -46,29 +41,20 @@ extension NetworkFeePickerView {
         with viewModel: NetworkFeePickerViewModel,
         handler: @escaping () -> Void
     ) {
-        
         self.handler = handler
-
         // TODO: @Annon - to reenable when working
         //networkEstimateFeeLabel.text = viewModel.estimatedFee
         networkTokenIcon.isHidden = true
         networkEstimateFeeLabel.text = "🤷🏻‍♂️"
-        
         switch viewModel.feeType {
-        case .low:
-            networkFeeButton.setTitle(Localized("low"), for: .normal)
-        case .medium:
-            networkFeeButton.setTitle(Localized("medium"), for: .normal)
-        case .high:
-            networkFeeButton.setTitle(Localized("high"), for: .normal)
+        case .low: networkFeeButton.setTitle(Localized("low"), for: .normal)
+        case .medium: networkFeeButton.setTitle(Localized("medium"), for: .normal)
+        case .high: networkFeeButton.setTitle(Localized("high"), for: .normal)
         }
     }
 }
 
 private extension NetworkFeePickerView {
     
-    @objc func changeNetworkFee() {
-        
-        handler()
-    }
+    @objc func changeNetworkFee() { handler() }
 }
