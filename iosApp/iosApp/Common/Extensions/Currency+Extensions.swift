@@ -6,13 +6,10 @@ import web3lib
 
 extension Currency {
     
-    var iconName: String {
-        coinGeckoId ?? "currency_placeholder"
-    }
+    var iconName: String { coinGeckoId ?? "currency_placeholder" }
     
     func fiatValue(for amount: BigInt) -> Double {
-        guard let decimals = decimals?.uintValue else { return .zero }
-        let bigDecBalance = amount.toBigDec(decimals: decimals)
+        let bigDecBalance = amount.toBigDec(decimals: UInt(decimals()))
         let bigDecFiatPrice = BigDec.Companion().from(double: fiatPrice)
         let result = bigDecBalance.mul(value: bigDecFiatPrice)
         return result.toDouble()
@@ -23,8 +20,7 @@ extension Currency {
         return currencyStoreService.marketData(currency: self)?.currentPrice?.doubleValue ?? 0
     }
     
-    // TODO: Review with Annon, why not to make decimals non-optional and default to 18?
-    var decimalsUInt: UInt { decimals?.uintValue ?? 18 }
+    var decimalsUInt: UInt { UInt(decimals()) }
 }
 
 extension Array where Element == Currency {

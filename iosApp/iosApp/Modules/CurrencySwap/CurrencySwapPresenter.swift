@@ -96,13 +96,13 @@ extension DefaultCurrencySwapPresenter: CurrencySwapPresenter {
                         currencySwapPriceViewModel: currencyPriceViewModel(),
                         currencySwapSlippageViewModel: currencySwapSlippageViewModel(),
                         currencyNetworkFeeViewModel: .init(
-                            estimatedFee: makeEstimatedFee(),
+                            estimatedFee: estimatedFee(),
                             feeType: feeType()
                         ),
                         isCalculating: isCalculating,
                         providerAsset: selectedProviderIconName(),
-                        approveState: makeApproveState(),
-                        buttonState: makeButtonState()
+                        approveState: approveState(),
+                        buttonState: buttonState()
                     )
                 )//,
                 //.limit
@@ -207,7 +207,6 @@ extension DefaultCurrencySwapPresenter: CurrencySwapPresenter {
 }
 
 private extension DefaultCurrencySwapPresenter {
-    
     var currencyFromBalance: BigInt {
         interactor.balance(currency: currencyFrom, network: context.network)
     }
@@ -222,7 +221,6 @@ private extension DefaultCurrencySwapPresenter {
     }
     
     func updateView(with items: [CurrencySwapViewModel.Item]) {
-        
         view?.update(
             with: .init(
                 title: Localized("tokenSwap.title"),
@@ -242,7 +240,6 @@ private extension DefaultCurrencySwapPresenter {
             outputCurrency: currencyTo,
             inputAmount: amountFrom ?? .zero
         )
-
     }
     
     func refreshView(
@@ -281,13 +278,13 @@ private extension DefaultCurrencySwapPresenter {
                         currencySwapPriceViewModel: currencyPriceViewModel(),
                         currencySwapSlippageViewModel: currencySwapSlippageViewModel(),
                         currencyNetworkFeeViewModel: .init(
-                            estimatedFee: makeEstimatedFee(),
+                            estimatedFee: estimatedFee(),
                             feeType: feeType()
                         ),
                         isCalculating: isCalculating,
                         providerAsset: selectedProviderIconName(),
-                        approveState: makeApproveState(),
-                        buttonState: makeButtonState()
+                        approveState: approveState(),
+                        buttonState: buttonState()
                     )
                 )//,
 //                .limit
@@ -299,7 +296,7 @@ private extension DefaultCurrencySwapPresenter {
         interactor.outputAmountState == .loading && amountFrom != nil && amountFrom != .zero
     }
     
-    func makeApproveState() -> CurrencySwapViewModel.Swap.ApproveState {
+    func approveState() -> CurrencySwapViewModel.Swap.ApproveState {
         guard amounFromtGreaterThanZero && !insufficientFunds else {
             // NOTE: This simply hides the Approve button since we won't be able to swap
             // anyway
@@ -316,16 +313,13 @@ private extension DefaultCurrencySwapPresenter {
             return .approved
         }
         switch interactor.approvingState {
-        case .approve:
-            return .approve
-        case .approving:
-            return .approving
-        case .approved:
-            return .approved
+        case .approve: return .approve
+        case .approving: return .approving
+        case .approved: return .approved
         }
     }
     
-    func makeButtonState() -> CurrencySwapViewModel.Swap.ButtonState {
+    func buttonState() -> CurrencySwapViewModel.Swap.ButtonState {
         guard amounFromtGreaterThanZero else {
             return .invalid(text: Localized("tokenSwap.cell.button.state.enterAmount"))
         }
@@ -339,7 +333,7 @@ private extension DefaultCurrencySwapPresenter {
         }
         if isCalculating { return .loading }
         switch interactor.swapState {
-        case .notAvailable:
+        case .noPools, .notAvailable:
             return .invalid(text: Localized("tokenSwap.cell.button.state.noPoolsFound"))
         case .swap:
             return priceImpact >= priceImpactWarningThreashold ? .swapAnyway(
@@ -356,11 +350,9 @@ private extension DefaultCurrencySwapPresenter {
         (amountFrom ?? .zero) > currencyFromBalance || currencyFromBalance == .zero
     }
     
-    func makeEstimatedFee() -> String {
-        
+    func estimatedFee() -> String {
         let amountInUSD = interactor.networkFeeInUSD(network: context.network, fee: fee)
         let timeInSeconds = interactor.networkFeeInSeconds(network: context.network, fee: fee)
-        
         let min: Double = Double(timeInSeconds) / Double(60)
         if min > 1 {
             return "\(amountInUSD.formatStringCurrency()) ~ \(min.toString(decimals: 0)) \(Localized("min"))"
@@ -518,7 +510,7 @@ extension DefaultCurrencySwapPresenter: CurrencyInteractorLister {
             print("[SWAP][QUOTE] - quote not valid, ignoring event")
             return
         }
-        print("[SWAP][QUOTE] - quote valid, refreshing UI")
+        print("[SWAP][QUOTE] - quote valid, refreshing UI - outputAmount: \(interactor.outputAmount.toDecimalString())")
         invalidQuote = false
         refreshView()
     }

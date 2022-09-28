@@ -55,7 +55,6 @@ final class CurrencyEnterAmountView: UIView {
     @IBOutlet weak var tokenIconImageView: UIImageView!
     @IBOutlet weak var tokenLabel: UILabel!
     @IBOutlet weak var tokenDropdownImageView: UIImageView!
-    @IBOutlet weak var networkLabel: UILabel!
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var maxButton: Button!
     
@@ -111,8 +110,6 @@ final class CurrencyEnterAmountView: UIView {
         tokenLabel.apply(style: .body)
         tokenDropdownImageView.image = "chevron.down".assetImage
         tokenDropdownImageView.tintColor = Theme.colour.labelPrimary
-        networkLabel.apply(style: .caption2)
-        networkLabel.isHidden = true
 
         balanceLabel.font = Theme.font.footnote
         balanceLabel.textColor = Theme.colour.labelPrimary
@@ -148,7 +145,6 @@ extension CurrencyEnterAmountView {
                 
         tokenIconImageView.image = viewModel.tokenSymbolIconName.assetImage
         tokenLabel.text = viewModel.tokenSymbol
-        networkLabel.text = viewModel.networkName
         
         if viewModel.shouldBecomeFirstResponder {
             sendAmountTextField.becomeFirstResponder()
