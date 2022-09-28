@@ -20,6 +20,11 @@ class QuantityDataHexStringTest {
         val actual = QuantityHexString(BigInt.Companion.from(10000000000))
         assertEquals("0x2540be400", actual)
     }
+    @Test
+    fun testQuantitiesZero() {
+        val actual = QuantityHexString(0)
+        assertEquals("0x0", actual)
+    }
 
 
     @Test
@@ -30,11 +35,11 @@ class QuantityDataHexStringTest {
     @Test
     fun testDataHexStringZero() {
         val actual = DataHexString(ByteArray(1))
-        assertEquals("0x00", actual) // Is this correct?
+        assertEquals("0x00", actual)
     }
     @Test
     fun testDataHexStringNil() {
         val actual = DataHexString(ByteArray(0))
-        assertEquals("0x", actual) // Is this correct?
+        assertEquals("0x", actual)
     }
 }
