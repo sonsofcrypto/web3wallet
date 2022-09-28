@@ -23,6 +23,7 @@ final class DefaultMnemonicUpdateWireframe {
     private let keyStoreService: KeyStoreService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
+    private let settingsService: SettingsService
 
     private weak var vc: UIViewController?
 
@@ -31,13 +32,15 @@ final class DefaultMnemonicUpdateWireframe {
         context: MnemonicUpdateContext,
         keyStoreService: KeyStoreService,
         authenticateWireframeFactory: AuthenticateWireframeFactory,
-        alertWireframeFactory: AlertWireframeFactory
+        alertWireframeFactory: AlertWireframeFactory,
+        settingsService: SettingsService
     ) {
         self.parent = parent
         self.context = context
         self.keyStoreService = keyStoreService
         self.authenticateWireframeFactory = authenticateWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
+        self.settingsService = settingsService
     }
 }
 
@@ -46,14 +49,13 @@ extension DefaultMnemonicUpdateWireframe: MnemonicUpdateWireframe {
     func present() {
         let vc = wireUp()
         let presentingTopVc = (parent as? UINavigationController)?.topVc
-        switch ServiceDirectory.transitionStyle {
-        case .cardFlip:
+        if settingsService.isSelected(item: .debugTransitions, action: .debugTransitionsCardFlip) {
             let presentedTopVc = (vc as? UINavigationController)?.topVc
             let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
             self.vc = vc
             vc.modalPresentationStyle = .overFullScreen
             vc.transitioningDelegate = delegate
-        case .sheet:
+        } else if settingsService.isSelected(item: .debugTransitions, action: .debugTransitionsSheet) {
             vc.modalPresentationStyle = .automatic
         }
         presentingTopVc?.present(vc, animated: true)

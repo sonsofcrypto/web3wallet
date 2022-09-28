@@ -6,7 +6,7 @@ struct EtherscanHelper {
     
     func view(txHash: String, parent: UIViewController?) {
         guard let url = "https://etherscan.io/tx/\(txHash)".url else { return }
-        let factory: WebViewWireframeFactory = ServiceDirectory.assembler.resolve()
+        let factory: WebViewWireframeFactory = AppAssembler.resolve()
         factory.make(parent, context: .init(url: url)).present()
     }
 }

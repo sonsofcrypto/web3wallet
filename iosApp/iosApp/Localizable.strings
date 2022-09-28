@@ -162,6 +162,9 @@
 "settings.debug.apis" = "APIs";
 "settings.debug.apis.nfts" = "NFTs";
 "settings.debug.apis.nfts.openSea" = "OpenSea";
+"settings.debug.transitions" = "Transitions";
+"settings.debug.transitions.cardFlip" = "Card Flip";
+"settings.debug.transitions.sheet" = "Sheet";
 "settings.debug.resetKeyStore" = "Reset keystore";
 
 "settings.root.about" = "About";

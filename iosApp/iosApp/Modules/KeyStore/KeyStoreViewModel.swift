@@ -11,7 +11,6 @@ struct KeyStoreViewModel {
     let selectedIdxs: [Int]
     let buttons: ButtonSheetViewModel
     let targetView: TransitionTargetView
-    let transitionStyle: ServiceDirectory.TransitionStyle
 }
 
 extension KeyStoreViewModel {

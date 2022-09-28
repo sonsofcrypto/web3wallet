@@ -33,7 +33,7 @@ final class ThemePickerViewController: UIViewController, ThemePickerView {
     }
 
     private func selectedThemeIndex() -> Int {
-        let settingsService: SettingsService = ServiceDirectory.assembler.resolve()
+        let settingsService: SettingsService = AppAssembler.resolve()
         if settingsService.isSelected(item: .theme, action: .themeMiamiLight) {
             return 0
         }
@@ -94,7 +94,7 @@ extension ThemePickerViewController: UICollectionViewDelegate {
                 completion: { [weak self] _ in
                     // TODO: Think on how to move to presenter/wireframe
                     self?.dismiss(animated: false) {
-                        let settingsService: SettingsService = ServiceDirectory.assembler.resolve()
+                        let settingsService: SettingsService = AppAssembler.resolve()
                         switch indexPath.item {
                         case 0:
                             settingsService.didSelect(item: .theme, action: .themeMiamiLight)

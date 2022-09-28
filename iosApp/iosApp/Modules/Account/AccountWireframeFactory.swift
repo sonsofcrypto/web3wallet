@@ -25,6 +25,7 @@ final class DefaultAccountWireframeFactory {
     private let currencyStoreService: CurrencyStoreService
     private let walletService: WalletService
     private let transactionService: IosEtherscanService
+    private let settingsService: SettingsService
 
     init(
         currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory,
@@ -34,7 +35,8 @@ final class DefaultAccountWireframeFactory {
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
-        transactionService: IosEtherscanService
+        transactionService: IosEtherscanService,
+        settingsService: SettingsService
     ) {
         self.currencyReceiveWireframeFactory = currencyReceiveWireframeFactory
         self.currencySendWireframeFactory = currencySendWireframeFactory
@@ -44,6 +46,7 @@ final class DefaultAccountWireframeFactory {
         self.currencyStoreService = currencyStoreService
         self.walletService = walletService
         self.transactionService = transactionService
+        self.settingsService = settingsService
     }
 }
 
@@ -63,7 +66,8 @@ extension DefaultAccountWireframeFactory: AccountWireframeFactory {
             networksService: networksService,
             currencyStoreService: currencyStoreService,
             walletService: walletService,
-            transactionService: transactionService
+            transactionService: transactionService,
+            settingsService: settingsService
         )
     }
 }
@@ -82,7 +86,8 @@ final class AccountWireframeFactoryAssembler: AssemblerComponent {
                 networksService: resolver.resolve(),
                 currencyStoreService: resolver.resolve(),
                 walletService: resolver.resolve(),
-                transactionService: resolver.resolve()
+                transactionService: resolver.resolve(),
+                settingsService: resolver.resolve()
             )
         }
     }

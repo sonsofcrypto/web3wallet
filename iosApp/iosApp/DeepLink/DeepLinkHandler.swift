@@ -217,8 +217,8 @@ private extension DefaultDeepLinkHandler {
     func openThemeMenu() {
         guard let settingsVC = settingsVC else { return }
         guard settingsVC.title != Localized("settings.theme") else { return }
-        let settingsService: SettingsService = ServiceDirectory.assembler.resolve()
-        let wireframe: SettingsWireframeFactory = ServiceDirectory.assembler.resolve()
+        let settingsService: SettingsService = AppAssembler.resolve()
+        let wireframe: SettingsWireframeFactory = AppAssembler.resolve()
         wireframe.make(
             settingsVC,
             context: .init(
@@ -230,13 +230,13 @@ private extension DefaultDeepLinkHandler {
     
     func openFeaturesList() {
         guard let rootVC = rootVC else { return }
-        let wireframe: ProposalsWireframeFactory = ServiceDirectory.assembler.resolve()
+        let wireframe: ProposalsWireframeFactory = AppAssembler.resolve()
         wireframe.make(rootVC).present()
     }
     
     func openMnemonicConfirmation() {
         guard let dashboardNavController = dashboardNavController else { return }
-        let wireframe: MnemonicConfirmationWireframeFactory = ServiceDirectory.assembler.resolve()
+        let wireframe: MnemonicConfirmationWireframeFactory = AppAssembler.resolve()
         wireframe.make(dashboardNavController).present()
     }
     
@@ -252,13 +252,13 @@ private extension DefaultDeepLinkHandler {
     
     func openAccount(with context: AccountWireframeContext) {
         guard let dashboardNavController = dashboardNavController else { return }
-        let factory: AccountWireframeFactory = ServiceDirectory.assembler.resolve()
+        let factory: AccountWireframeFactory = AppAssembler.resolve()
         factory.make(dashboardNavController, context: context).present()
     }
     
     func openCultProposals() {
         guard let degenNavController = degenNavController else { return }
-        let factory: CultProposalsWireframeFactory = ServiceDirectory.assembler.resolve()
+        let factory: CultProposalsWireframeFactory = AppAssembler.resolve()
         factory.make(degenNavController).present()
     }
 }

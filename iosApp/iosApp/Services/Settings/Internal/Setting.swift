@@ -36,6 +36,7 @@ extension Setting {
         case debug = "debug"
         case debugAPIs = "debug.apis"
         case debugAPIsNFTs = "debug.apis.nfts"
+        case debugTransitions = "debug.transitions"
 
         case about = "about"
         
@@ -51,7 +52,10 @@ extension Setting {
 
         case improvementProposals = "improvement.proposals"
         
-        case debugAPIsNFTsOpenSea = "providers.nfts.opensea"
+        case debugAPIsNFTsOpenSea = "debug.apis.providers.nfts.opensea"
+        
+        case debugTransitionsCardFlip = "debug.transitions.cardFlip"
+        case debugTransitionsSheet = "debug.transitions.sheet"
 
         case resetKeystore = "reset.keystore"
         
