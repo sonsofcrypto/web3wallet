@@ -10,12 +10,9 @@ enum FeatureFlag {
     
     var isEnabled: Bool {
         switch self {
-        case .showSaltMnemonic:
-            return false
-        case .showAppsTab:
-            return false
-        case .embedChatInTab:
-            return false
+        case .showSaltMnemonic: return false
+        case .showAppsTab: return false
+        case .embedChatInTab: return false
         }
     }
 }

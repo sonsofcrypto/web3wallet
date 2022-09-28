@@ -125,7 +125,7 @@ extension DefaultDashboardInteractor: DashboardInteractor {
 
     func notifications() -> [Web3Notification] {
         // TODO: Review this
-        let web3ServiceLegacy: Web3ServiceLegacy = ServiceDirectory.assembler.resolve()
+        let web3ServiceLegacy: Web3ServiceLegacy = AppAssembler.resolve()
         return web3ServiceLegacy.dashboardNotifications
     }
 

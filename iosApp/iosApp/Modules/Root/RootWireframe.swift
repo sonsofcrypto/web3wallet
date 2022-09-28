@@ -92,7 +92,7 @@ private extension DefaultRootWireframe {
     func presentAppsTabIfNeeded() {
         guard FeatureFlag.showAppsTab.isEnabled else { return }
         if FeatureFlag.embedChatInTab.isEnabled {
-            let chatWireframeFactory: ChatWireframeFactory = ServiceDirectory.assembler.resolve()
+            let chatWireframeFactory: ChatWireframeFactory = AppAssembler.resolve()
             chatWireframeFactory.make(
                 tabVc
             ).present()

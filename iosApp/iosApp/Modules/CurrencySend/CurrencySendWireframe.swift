@@ -67,7 +67,7 @@ extension DefaultCurrencySendWireframe: CurrencySendWireframe {
     func navigate(to destination: CurrencySendWireframeDestination) {
         switch destination {
         case .underConstructionAlert:
-            let factory: AlertWireframeFactory = ServiceDirectory.assembler.resolve()
+            let factory: AlertWireframeFactory = AppAssembler.resolve()
             factory.make(
                 vc,
                 context: .underConstructionAlert()

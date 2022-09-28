@@ -33,6 +33,7 @@ final class DefaultAccountWireframe {
     private let currencyStoreService: CurrencyStoreService
     private let walletService: WalletService
     private let transactionService: IosEtherscanService
+    private let settingsService: SettingsService
 
     private weak var vc: UIViewController?
     
@@ -46,7 +47,8 @@ final class DefaultAccountWireframe {
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
-        transactionService: IosEtherscanService
+        transactionService: IosEtherscanService,
+        settingsService: SettingsService
     ) {
         self.parent = parent
         self.context = context
@@ -58,6 +60,7 @@ final class DefaultAccountWireframe {
         self.currencyStoreService = currencyStoreService
         self.walletService = walletService
         self.transactionService = transactionService
+        self.settingsService = settingsService
     }
 }
 
@@ -65,13 +68,18 @@ extension DefaultAccountWireframe: AccountWireframe {
     
     func present() {
         let vc = wireUp()
-        let presentingTopVc = (parent as? UINavigationController)?.topVc
-        let presentedTopVc = (vc as? UINavigationController)?.topVc
-        let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
         self.vc = vc
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.transitioningDelegate = delegate
-        presentingTopVc?.present(vc, animated: true)
+        if settingsService.isSelected(item: .debugTransitions, action: .debugTransitionsCardFlip) {
+            let presentingTopVc = (parent as? UINavigationController)?.topVc
+            let presentedTopVc = (vc as? UINavigationController)?.topVc
+            let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
+            vc.modalPresentationStyle = .overCurrentContext
+            vc.transitioningDelegate = delegate
+            presentingTopVc?.present(vc, animated: true)
+        } else if settingsService.isSelected(item: .debugTransitions, action: .debugTransitionsSheet) {
+            vc.modalPresentationStyle = .automatic
+            parent?.show(vc, sender: self)
+        }
     }
 
     func navigate(to destination: AccountWireframeDestination) {

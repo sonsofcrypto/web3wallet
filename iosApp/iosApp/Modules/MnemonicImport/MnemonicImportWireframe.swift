@@ -18,17 +18,20 @@ final class DefaultMnemonicImportWireframe {
     private weak var parent: UIViewController?
     private let context: MnemonicImportContext
     private let keyStoreService: KeyStoreService
+    private let settingsService: SettingsService
 
     private weak var vc: UIViewController?
 
     init(
         _ parent: UIViewController?,
         context: MnemonicImportContext,
-        keyStoreService: KeyStoreService
+        keyStoreService: KeyStoreService,
+        settingsService: SettingsService
     ) {
         self.parent = parent
         self.context = context
         self.keyStoreService = keyStoreService
+        self.settingsService = settingsService
     }
 }
 
@@ -37,14 +40,13 @@ extension DefaultMnemonicImportWireframe: MnemonicImportWireframe {
     func present() {
         let vc = wireUp()
         let presentingTopVc = (parent as? UINavigationController)?.topVc
-        switch ServiceDirectory.transitionStyle {
-        case .cardFlip:
+        if settingsService.isSelected(item: .debugTransitions, action: .debugTransitionsCardFlip) {
             let presentedTopVc = (vc as? UINavigationController)?.topVc
             let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
             self.vc = vc
             vc.modalPresentationStyle = .overFullScreen
             vc.transitioningDelegate = delegate
-        case .sheet:
+        } else if settingsService.isSelected(item: .debugTransitions, action: .debugTransitionsSheet) {
             vc.modalPresentationStyle = .automatic
         }
         self.vc = vc

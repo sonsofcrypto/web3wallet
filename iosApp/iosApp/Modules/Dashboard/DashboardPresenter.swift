@@ -33,7 +33,6 @@ final class DefaultDashboardPresenter {
     private weak var view: DashboardView?
     private let wireframe: DashboardWireframe
     private let interactor: DashboardInteractor
-    private let onboardingService: OnboardingService
     // TODO: @Annon move to web3lib listening for mnemonic updates notifications
     private let web3ServiceLegacy: Web3ServiceLegacy
 
@@ -44,13 +43,11 @@ final class DefaultDashboardPresenter {
         view: DashboardView,
         wireframe: DashboardWireframe,
         interactor: DashboardInteractor,
-        onboardingService: OnboardingService,
-        web3ServiceLegacy: Web3ServiceLegacy = ServiceDirectory.assembler.resolve()
+        web3ServiceLegacy: Web3ServiceLegacy = AppAssembler.resolve()
     ) {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
-        self.onboardingService = onboardingService
         self.web3ServiceLegacy = web3ServiceLegacy
         interactor.addListener(self)
         web3ServiceLegacy.addWalletListener(self)
@@ -83,7 +80,6 @@ extension DefaultDashboardPresenter: DashboardPresenter {
         case .walletConnectionSettingsAction:
             wireframe.navigate(to: .keyStoreNetworkSettings)
         case .didInteractWithCardSwitcher:
-            onboardingService.markDidInteractCardSwitcher()
             view?.update(with: viewModel())
         case .receiveAction:
             wireframe.navigate(to: .receive)
@@ -228,7 +224,7 @@ private extension DefaultDashboardPresenter {
             )
         }
         return .init(
-            shouldAnimateCardSwitcher: onboardingService.shouldShowOnboardingButton(),
+            shouldAnimateCardSwitcher: false,
             sections: sections
         )
     }

@@ -211,13 +211,13 @@ enum Web3NetworkFee: String {
 //    }
 //
 //    private static func cryptoBalance(for currency: Currency) -> BigInt {
-//        let walletService: WalletService = ServiceDirectory.assembler.resolve()
+//        let walletService: WalletService = AppAssembler.resolve()
 //        guard let network = walletService.selectedNetwork() else { return .zero }
 //        return walletService.balance(network: network, currency: currency)
 //    }
 //
 //    private static func fiatPrice(for currency: Currency) -> Double {
-//        let currencyStoreService: CurrencyStoreService = ServiceDirectory.assembler.resolve()
+//        let currencyStoreService: CurrencyStoreService = AppAssembler.resolve()
 //        return currencyStoreService.marketData(currency: currency)?.currentPrice?.doubleValue ?? 0
 //    }
 //
