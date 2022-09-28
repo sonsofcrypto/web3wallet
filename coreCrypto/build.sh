@@ -1,7 +1,11 @@
 #!/bin/zsh
 
-gomobile bind -v -target=android -o ./../web3lib/src/androidMain/libs/CoreCrypto.aar ./
+#Android
+rm CoreCrypto.aar
+rm CoreCrypto-sources.jar
+gomobile bind -v -target=android -o CoreCrypto.aar ./
 
+#iOS
 if [[ "$OSTYPE" == "darwin"* ]]; then
   gomobile bind -v -target=ios -o ./CoreCrypto.xcframework ./
 

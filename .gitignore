@@ -200,6 +200,8 @@ web3lib_crypto/src/jsMain/libs/
 iosApp/Frameworks/
 
 coreCrypto/CoreCrypto.xcframework
+coreCrypto/CoreCrypto.aar
+coreCrypto/CoreCrypto-sources.jar
 
 web3lib/src/androidMain/libs
 web3lib/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
