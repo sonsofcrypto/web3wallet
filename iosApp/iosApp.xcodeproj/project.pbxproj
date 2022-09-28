@@ -1337,7 +1337,7 @@
 			path = ImprovementProposals;
 			sourceTree = "<group>";
 		};
-		1C54DBE1285E82FC00E378F6 /* CurrencyAdd ✅ */ = {
+		1C54DBE1285E82FC00E378F6 /* CurrencyAdd */ = {
 			isa = PBXGroup;
 			children = (
 				1C54DBEE285E835400E378F6 /* CurrencyAdd.storyboard */,
@@ -1349,7 +1349,7 @@
 				1C54DBE4285E832600E378F6 /* CurrencyAddWireframeFactory.swift */,
 				1C54DBF6285F8F2800E378F6 /* Cells */,
 			);
-			path = "CurrencyAdd ✅";
+			path = CurrencyAdd;
 			sourceTree = "<group>";
 		};
 		1C54DBF6285F8F2800E378F6 /* Cells */ = {
@@ -1362,7 +1362,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C54DBFB2860E59600E378F6 /* NetworkPicker ✅ */ = {
+		1C54DBFB2860E59600E378F6 /* NetworkPicker */ = {
 			isa = PBXGroup;
 			children = (
 				1C54DC0A2860E63600E378F6 /* NetworkPicker.storyboard */,
@@ -1374,7 +1374,7 @@
 				1C54DC062860E5CB00E378F6 /* NetworkPickerWireframeFactory.swift */,
 				1C54DC0C2860E90800E378F6 /* Cells */,
 			);
-			path = "NetworkPicker ✅";
+			path = NetworkPicker;
 			sourceTree = "<group>";
 		};
 		1C54DC0C2860E90800E378F6 /* Cells */ = {
@@ -1385,7 +1385,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C54DC0F2862320200E378F6 /* QRCodeScan ✅ */ = {
+		1C54DC0F2862320200E378F6 /* QRCodeScan */ = {
 			isa = PBXGroup;
 			children = (
 				1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */,
@@ -1396,7 +1396,7 @@
 				1C54DC162862351D00E378F6 /* QRCodeScanWireframe.swift */,
 				1C54DC182862352200E378F6 /* QRCodeScanWireframeFactory.swift */,
 			);
-			path = "QRCodeScan ✅";
+			path = QRCodeScan;
 			sourceTree = "<group>";
 		};
 		1C54DC4228683DA900E378F6 /* Naoko */ = {
@@ -1420,7 +1420,7 @@
 			path = Naoko;
 			sourceTree = "<group>";
 		};
-		1C5D24AC28E19F62007DA557 /* Proposal ✅ */ = {
+		1C5D24AC28E19F62007DA557 /* Proposal */ = {
 			isa = PBXGroup;
 			children = (
 				1C5D24B528E19F62007DA557 /* Proposal.storyboard */,
@@ -1431,7 +1431,7 @@
 				1C5D24B828E19F62007DA557 /* ProposalWireframeFactory.swift */,
 				1C5D24AD28E19F62007DA557 /* Cells */,
 			);
-			path = "Proposal ✅";
+			path = Proposal;
 			sourceTree = "<group>";
 		};
 		1C5D24AD28E19F62007DA557 /* Cells */ = {
@@ -1445,7 +1445,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C5D24B928E19F62007DA557 /* Proposals ✅ */ = {
+		1C5D24B928E19F62007DA557 /* Proposals */ = {
 			isa = PBXGroup;
 			children = (
 				1C5D24BE28E19F62007DA557 /* Proposals.storyboard */,
@@ -1457,7 +1457,7 @@
 				1C5D24C428E19F62007DA557 /* ProposalsWireframeFactory.swift */,
 				1C5D24BA28E19F62007DA557 /* Cells */,
 			);
-			path = "Proposals ✅";
+			path = Proposals;
 			sourceTree = "<group>";
 		};
 		1C5D24BA28E19F62007DA557 /* Cells */ = {
@@ -1472,44 +1472,44 @@
 		1C60C1C7285724D0003BE25D /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				1C60C244285724D0003BE25D /* Account ✅ */,
-				1C60C1FA285724D0003BE25D /* Alert ✅ */,
-				1C60C253285724D0003BE25D /* Apps ✅ */,
-				D1A12A58287D333900606FC8 /* Authenticate ✅ */,
-				1C60C1EE285724D0003BE25D /* Chat ✅ */,
-				1C67201928870FA900C5F044 /* Confirmation ✅ */,
-				1C54DBE1285E82FC00E378F6 /* CurrencyAdd ✅ */,
-				1C60C1D5285724D0003BE25D /* CurrencyPicker ✅ */,
-				1C60C3612857C5D9003BE25D /* CurrencyReceive ✅ */,
-				1C9E3193287580A700DD2031 /* CurrencySend ✅ */,
-				1C671FEC287FDF6000C5F044 /* CurrencySwap ✅ */,
-				1C60C20D285724D0003BE25D /* Dashboard ✅ */,
-				1C60C272285724D0003BE25D /* Degen ✅ */,
-				1C60C285285724D0003BE25D /* DegenCult ✅ */,
-				1C60C1E1285724D0003BE25D /* KeyStore ✅ */,
-				1C60C25F285724D0003BE25D /* MnemonicConfirmation ✅ */,
-				D1976B01287EFAE10063FC9C /* MnemonicImport ✅ */,
-				1C60C202285724D0003BE25D /* MnemonicNew ✅ */,
-				D1EF5BBC287BEE92004CAD82 /* MnemonicUpdate ✅ */,
-				1C54DBFB2860E59600E378F6 /* NetworkPicker ✅ */,
-				1C60C21C285724D0003BE25D /* Networks ✅ */,
-				1C60C225285724D0003BE25D /* NFTDetail ✅ */,
-				1C60C268285724D0003BE25D /* NFTsCollection ✅ */,
-				1C60C233285724D0003BE25D /* NFTsDashboard ✅ */,
-				1CDED5F9289C4C2F00DF34A7 /* NFTSend ✅ */,
-				1C5D24AC28E19F62007DA557 /* Proposal ✅ */,
-				1C5D24B928E19F62007DA557 /* Proposals ✅ */,
-				1C54DC0F2862320200E378F6 /* QRCodeScan ✅ */,
-				1C60C23E285724D0003BE25D /* Root ✅ */,
-				1C60C1C8285724D0003BE25D /* Settings ✅ */,
-				1C7FC98628B60A0B00FC9175 /* ThemePicker ✅ */,
-				1C7FC9A628BCE94B00FC9175 /* WebView ✅ */,
+				1C60C244285724D0003BE25D /* Account */,
+				1C60C1FA285724D0003BE25D /* Alert */,
+				1C60C253285724D0003BE25D /* Apps */,
+				D1A12A58287D333900606FC8 /* Authenticate */,
+				1C60C1EE285724D0003BE25D /* Chat */,
+				1C67201928870FA900C5F044 /* Confirmation */,
+				1C54DBE1285E82FC00E378F6 /* CurrencyAdd */,
+				1C60C1D5285724D0003BE25D /* CurrencyPicker */,
+				1C60C3612857C5D9003BE25D /* CurrencyReceive */,
+				1C9E3193287580A700DD2031 /* CurrencySend */,
+				1C671FEC287FDF6000C5F044 /* CurrencySwap */,
+				1C60C20D285724D0003BE25D /* Dashboard */,
+				1C60C272285724D0003BE25D /* Degen */,
+				1C60C285285724D0003BE25D /* DegenCult */,
+				1C60C1E1285724D0003BE25D /* KeyStore */,
+				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
+				D1976B01287EFAE10063FC9C /* MnemonicImport */,
+				1C60C202285724D0003BE25D /* MnemonicNew */,
+				D1EF5BBC287BEE92004CAD82 /* MnemonicUpdate */,
+				1C54DBFB2860E59600E378F6 /* NetworkPicker */,
+				1C60C21C285724D0003BE25D /* Networks */,
+				1C60C225285724D0003BE25D /* NFTDetail */,
+				1C60C268285724D0003BE25D /* NFTsCollection */,
+				1C60C233285724D0003BE25D /* NFTsDashboard */,
+				1CDED5F9289C4C2F00DF34A7 /* NFTSend */,
+				1C5D24AC28E19F62007DA557 /* Proposal */,
+				1C5D24B928E19F62007DA557 /* Proposals */,
+				1C54DC0F2862320200E378F6 /* QRCodeScan */,
+				1C60C23E285724D0003BE25D /* Root */,
+				1C60C1C8285724D0003BE25D /* Settings */,
+				1C7FC98628B60A0B00FC9175 /* ThemePicker */,
+				1C7FC9A628BCE94B00FC9175 /* WebView */,
 			);
 			name = Modules;
 			path = iosApp/Modules;
 			sourceTree = SOURCE_ROOT;
 		};
-		1C60C1C8285724D0003BE25D /* Settings ✅ */ = {
+		1C60C1C8285724D0003BE25D /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				1CB8B0D3288FBC1500024E7C /* Settings.storyboard */,
@@ -1522,7 +1522,7 @@
 				1C60C1D2285724D0003BE25D /* SettingsWireframeFactory.swift */,
 				1C60C1CA285724D0003BE25D /* Cells */,
 			);
-			path = "Settings ✅";
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		1C60C1CA285724D0003BE25D /* Cells */ = {
@@ -1536,7 +1536,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C60C1D5285724D0003BE25D /* CurrencyPicker ✅ */ = {
+		1C60C1D5285724D0003BE25D /* CurrencyPicker */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C1E0285724D0003BE25D /* CurrencyPicker.storyboard */,
@@ -1548,7 +1548,7 @@
 				1C60C1DF285724D0003BE25D /* CurrencyPickerWireframeFactory.swift */,
 				1C60C1D8285724D0003BE25D /* Cells */,
 			);
-			path = "CurrencyPicker ✅";
+			path = CurrencyPicker;
 			sourceTree = "<group>";
 		};
 		1C60C1D8285724D0003BE25D /* Cells */ = {
@@ -1561,7 +1561,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C60C1E1285724D0003BE25D /* KeyStore ✅ */ = {
+		1C60C1E1285724D0003BE25D /* KeyStore */ = {
 			isa = PBXGroup;
 			children = (
 				1CAC55A7286E119500CCB2B6 /* KeyStore.storyboard */,
@@ -1574,7 +1574,7 @@
 				1C60C1E6285724D0003BE25D /* ButtonSheetView */,
 				1C0643CD2892EA1800643C15 /* Cells */,
 			);
-			path = "KeyStore ✅";
+			path = KeyStore;
 			sourceTree = "<group>";
 		};
 		1C60C1E6285724D0003BE25D /* ButtonSheetView */ = {
@@ -1586,7 +1586,7 @@
 			path = ButtonSheetView;
 			sourceTree = "<group>";
 		};
-		1C60C1EE285724D0003BE25D /* Chat ✅ */ = {
+		1C60C1EE285724D0003BE25D /* Chat */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C1F6285724D0003BE25D /* Chat.storyboard */,
@@ -1598,7 +1598,7 @@
 				1C60C1F9285724D0003BE25D /* ChatWireframeFactory.swift */,
 				1C60C1F1285724D0003BE25D /* Cells */,
 			);
-			path = "Chat ✅";
+			path = Chat;
 			sourceTree = "<group>";
 		};
 		1C60C1F1285724D0003BE25D /* Cells */ = {
@@ -1610,7 +1610,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C60C1FA285724D0003BE25D /* Alert ✅ */ = {
+		1C60C1FA285724D0003BE25D /* Alert */ = {
 			isa = PBXGroup;
 			children = (
 				1CE006472889A08A002D1EB3 /* Alert.storyboard */,
@@ -1621,10 +1621,10 @@
 				1C60C1FB285724D0003BE25D /* AlertWireframe.swift */,
 				1C60C1FC285724D0003BE25D /* AlertWireframeFactory.swift */,
 			);
-			path = "Alert ✅";
+			path = Alert;
 			sourceTree = "<group>";
 		};
-		1C60C202285724D0003BE25D /* MnemonicNew ✅ */ = {
+		1C60C202285724D0003BE25D /* MnemonicNew */ = {
 			isa = PBXGroup;
 			children = (
 				1CD843FB287423EB00E6D359 /* MnemonicNew.storyboard */,
@@ -1637,10 +1637,10 @@
 				1C60C206285724D0003BE25D /* MnemonicNewWireframeFactory.swift */,
 				1CD843F02874215E00E6D359 /* Cells */,
 			);
-			path = "MnemonicNew ✅";
+			path = MnemonicNew;
 			sourceTree = "<group>";
 		};
-		1C60C20D285724D0003BE25D /* Dashboard ✅ */ = {
+		1C60C20D285724D0003BE25D /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
 				1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */,
@@ -1653,7 +1653,7 @@
 				1C60C20F285724D0003BE25D /* Cells */,
 				1A4C3BE75AF0C650D5E6D82E /* Views */,
 			);
-			path = "Dashboard ✅";
+			path = Dashboard;
 			sourceTree = "<group>";
 		};
 		1C60C20F285724D0003BE25D /* Cells */ = {
@@ -1671,7 +1671,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C60C21C285724D0003BE25D /* Networks ✅ */ = {
+		1C60C21C285724D0003BE25D /* Networks */ = {
 			isa = PBXGroup;
 			children = (
 				1CAC55A3286DF26100CCB2B6 /* Networks.storyboard */,
@@ -1683,10 +1683,10 @@
 				1C60C221285724D0003BE25D /* NetworksWireframeFactory.swift */,
 				1C0643D02892F0E800643C15 /* Cells */,
 			);
-			path = "Networks ✅";
+			path = Networks;
 			sourceTree = "<group>";
 		};
-		1C60C225285724D0003BE25D /* NFTDetail ✅ */ = {
+		1C60C225285724D0003BE25D /* NFTDetail */ = {
 			isa = PBXGroup;
 			children = (
 				1CB8B0DD2890557400024E7C /* NFTDetail.storyboard */,
@@ -1704,10 +1704,10 @@
 				1C60C227285724D0003BE25D /* NFTDetailWireframe.swift */,
 				1C60C22A285724D0003BE25D /* NFTDetailWireframeFactory.swift */,
 			);
-			path = "NFTDetail ✅";
+			path = NFTDetail;
 			sourceTree = "<group>";
 		};
-		1C60C233285724D0003BE25D /* NFTsDashboard ✅ */ = {
+		1C60C233285724D0003BE25D /* NFTsDashboard */ = {
 			isa = PBXGroup;
 			children = (
 				1CB8B0D928904A8A00024E7C /* NFTsDashboard.storyboard */,
@@ -1722,10 +1722,10 @@
 				1C60C235285724D0003BE25D /* NFTsDashboardWireframe.swift */,
 				1C60C23D285724D0003BE25D /* NFTsDashboardWireframeFactory.swift */,
 			);
-			path = "NFTsDashboard ✅";
+			path = NFTsDashboard;
 			sourceTree = "<group>";
 		};
-		1C60C23E285724D0003BE25D /* Root ✅ */ = {
+		1C60C23E285724D0003BE25D /* Root */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C241285724D0003BE25D /* RootPresenter.swift */,
@@ -1733,10 +1733,10 @@
 				1C60C23F285724D0003BE25D /* RootWireframe.swift */,
 				1C60C243285724D0003BE25D /* RootWireframeFactory.swift */,
 			);
-			path = "Root ✅";
+			path = Root;
 			sourceTree = "<group>";
 		};
-		1C60C244285724D0003BE25D /* Account ✅ */ = {
+		1C60C244285724D0003BE25D /* Account */ = {
 			isa = PBXGroup;
 			children = (
 				1C54DBDD285DD15400E378F6 /* Account.storyboard */,
@@ -1748,7 +1748,7 @@
 				1C60C24D285724D0003BE25D /* AccountWireframeFactory.swift */,
 				1C60C245285724D0003BE25D /* Cells */,
 			);
-			path = "Account ✅";
+			path = Account;
 			sourceTree = "<group>";
 		};
 		1C60C245285724D0003BE25D /* Cells */ = {
@@ -1767,7 +1767,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C60C253285724D0003BE25D /* Apps ✅ */ = {
+		1C60C253285724D0003BE25D /* Apps */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C25B285724D0003BE25D /* Apps.storyboard */,
@@ -1779,10 +1779,10 @@
 				1C60C25C285724D0003BE25D /* AppsWireframeFactory.swift */,
 				1C7F865528D5A66E0073FD95 /* Cells */,
 			);
-			path = "Apps ✅";
+			path = Apps;
 			sourceTree = "<group>";
 		};
-		1C60C25F285724D0003BE25D /* MnemonicConfirmation ✅ */ = {
+		1C60C25F285724D0003BE25D /* MnemonicConfirmation */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C261285724D0003BE25D /* MnemonicConfirmation.storyboard */,
@@ -1793,10 +1793,10 @@
 				1C60C265285724D0003BE25D /* MnemonicConfirmationWireframe.swift */,
 				1C60C264285724D0003BE25D /* MnemonicConfirmationWireframeFactory.swift */,
 			);
-			path = "MnemonicConfirmation ✅";
+			path = MnemonicConfirmation;
 			sourceTree = "<group>";
 		};
-		1C60C268285724D0003BE25D /* NFTsCollection ✅ */ = {
+		1C60C268285724D0003BE25D /* NFTsCollection */ = {
 			isa = PBXGroup;
 			children = (
 				1CB8B0DB28904F6C00024E7C /* NFTsCollection.storyboard */,
@@ -1809,10 +1809,10 @@
 				1C60C26C285724D0003BE25D /* NFTsCollectionWireframe.swift */,
 				1C60C26E285724D0003BE25D /* NFTsCollectionWireframeFactory.swift */,
 			);
-			path = "NFTsCollection ✅";
+			path = NFTsCollection;
 			sourceTree = "<group>";
 		};
-		1C60C272285724D0003BE25D /* Degen ✅ */ = {
+		1C60C272285724D0003BE25D /* Degen */ = {
 			isa = PBXGroup;
 			children = (
 				1CB8B0A5288A824C00024E7C /* Degen.storyboard */,
@@ -1824,16 +1824,16 @@
 				1C60C2A0285724D0003BE25D /* DegenWireframeFactory.swift */,
 				1CB8B0A7288AA3A700024E7C /* Cells */,
 			);
-			path = "Degen ✅";
+			path = Degen;
 			sourceTree = "<group>";
 		};
-		1C60C285285724D0003BE25D /* DegenCult ✅ */ = {
+		1C60C285285724D0003BE25D /* DegenCult */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C286285724D0003BE25D /* CultProposal ✅ */,
 				1C60C28D285724D0003BE25D /* CultProposals ✅ */,
 			);
-			path = "DegenCult ✅";
+			path = DegenCult;
 			sourceTree = "<group>";
 		};
 		1C60C286285724D0003BE25D /* CultProposal ✅ */ = {
@@ -1877,7 +1877,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C60C3612857C5D9003BE25D /* CurrencyReceive ✅ */ = {
+		1C60C3612857C5D9003BE25D /* CurrencyReceive */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C3702857CEB5003BE25D /* CurrencyReceive.storyboard */,
@@ -1888,7 +1888,7 @@
 				1C60C3682857C5F8003BE25D /* CurrencyReceiveWireframe.swift */,
 				1C60C36A2857C5FE003BE25D /* CurrencyReceiveWireframeFactory.swift */,
 			);
-			path = "CurrencyReceive ✅";
+			path = CurrencyReceive;
 			sourceTree = "<group>";
 		};
 		1C60C37C2859CC19003BE25D /* Helpers */ = {
@@ -1947,7 +1947,7 @@
 			path = Internal;
 			sourceTree = "<group>";
 		};
-		1C671FEC287FDF6000C5F044 /* CurrencySwap ✅ */ = {
+		1C671FEC287FDF6000C5F044 /* CurrencySwap */ = {
 			isa = PBXGroup;
 			children = (
 				1C671FFB287FE02200C5F044 /* CurrencySwap.storyboard */,
@@ -1959,7 +1959,7 @@
 				1C671FF3287FDFDC00C5F044 /* CurrencySwapWireframeFactory.swift */,
 				1C671FFD287FE0EB00C5F044 /* Cells */,
 			);
-			path = "CurrencySwap ✅";
+			path = CurrencySwap;
 			sourceTree = "<group>";
 		};
 		1C671FFD287FE0EB00C5F044 /* Cells */ = {
@@ -1982,7 +1982,7 @@
 			path = FeesPickerView;
 			sourceTree = "<group>";
 		};
-		1C67201928870FA900C5F044 /* Confirmation ✅ */ = {
+		1C67201928870FA900C5F044 /* Confirmation */ = {
 			isa = PBXGroup;
 			children = (
 				1C67202A2887EB7F00C5F044 /* Confirmation.storyboard */,
@@ -2000,7 +2000,7 @@
 				1C67202028870FE100C5F044 /* ConfirmationWireframeFactory.swift */,
 				1CE00639288884C8002D1EB3 /* Views */,
 			);
-			path = "Confirmation ✅";
+			path = Confirmation;
 			sourceTree = "<group>";
 		};
 		1C7F85FE28D20E490073FD95 /* Extensions */ = {
@@ -2064,7 +2064,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C7FC98628B60A0B00FC9175 /* ThemePicker ✅ */ = {
+		1C7FC98628B60A0B00FC9175 /* ThemePicker */ = {
 			isa = PBXGroup;
 			children = (
 				1A4C32EA04CA65C9DFEE9504 /* ThemePickerCell.swift */,
@@ -2072,7 +2072,7 @@
 				1C7FC98728B60A1A00FC9175 /* ThemePickerWireframe.swift */,
 				1C7FC98928B60A2500FC9175 /* ThemePickerWireframeFactory.swift */,
 			);
-			path = "ThemePicker ✅";
+			path = ThemePicker;
 			sourceTree = "<group>";
 		};
 		1C7FC9A128BCC5CF00FC9175 /* Mail */ = {
@@ -2084,13 +2084,13 @@
 			path = Mail;
 			sourceTree = "<group>";
 		};
-		1C7FC9A628BCE94B00FC9175 /* WebView ✅ */ = {
+		1C7FC9A628BCE94B00FC9175 /* WebView */ = {
 			isa = PBXGroup;
 			children = (
 				1C7FC9A728BCEA3400FC9175 /* WebViewWireframe.swift */,
 				1C7FC9B128BCEC4800FC9175 /* WebViewWireframeFactory.swift */,
 			);
-			path = "WebView ✅";
+			path = WebView;
 			sourceTree = "<group>";
 		};
 		1C9B46F92814279F00F6C40B /* Resources */ = {
@@ -2108,7 +2108,7 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		1C9E3193287580A700DD2031 /* CurrencySend ✅ */ = {
+		1C9E3193287580A700DD2031 /* CurrencySend */ = {
 			isa = PBXGroup;
 			children = (
 				1C9E31A2287580E500DD2031 /* CurrencySend.storyboard */,
@@ -2120,7 +2120,7 @@
 				1C9E3196287580BF00DD2031 /* CurrencyCurrencyWireframeFactory.swift */,
 				1C9E31A42875FF3000DD2031 /* Cells */,
 			);
-			path = "CurrencySend ✅";
+			path = CurrencySend;
 			sourceTree = "<group>";
 		};
 		1C9E31A42875FF3000DD2031 /* Cells */ = {
@@ -2225,7 +2225,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1CDED5F9289C4C2F00DF34A7 /* NFTSend ✅ */ = {
+		1CDED5F9289C4C2F00DF34A7 /* NFTSend */ = {
 			isa = PBXGroup;
 			children = (
 				1CDED608289C4C8200DF34A7 /* NFTSend.storyboard */,
@@ -2237,7 +2237,7 @@
 				1CDED5FE289C4C4E00DF34A7 /* NFTSendWireframeFactory.swift */,
 				1CDED60A289C4DA500DF34A7 /* Cells */,
 			);
-			path = "NFTSend ✅";
+			path = NFTSend;
 			sourceTree = "<group>";
 		};
 		1CDED60A289C4DA500DF34A7 /* Cells */ = {
@@ -2451,7 +2451,7 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		D1976B01287EFAE10063FC9C /* MnemonicImport ✅ */ = {
+		D1976B01287EFAE10063FC9C /* MnemonicImport */ = {
 			isa = PBXGroup;
 			children = (
 				D1976B0B287EFAE10063FC9C /* MnemonicImport.storyboard */,
@@ -2464,7 +2464,7 @@
 				D1976B09287EFAE10063FC9C /* MnemonicImportWireframeFactory.swift */,
 				D1976B02287EFAE10063FC9C /* Cells */,
 			);
-			path = "MnemonicImport ✅";
+			path = MnemonicImport;
 			sourceTree = "<group>";
 		};
 		D1976B02287EFAE10063FC9C /* Cells */ = {
@@ -2475,7 +2475,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		D1A12A58287D333900606FC8 /* Authenticate ✅ */ = {
+		D1A12A58287D333900606FC8 /* Authenticate */ = {
 			isa = PBXGroup;
 			children = (
 				1A4C39D6ADB830082AC3CEA6 /* Authenticate.storyboard */,
@@ -2487,7 +2487,7 @@
 				D1A12A5F287D333900606FC8 /* AuthenticateWireframe.swift */,
 				D1A12A5D287D333900606FC8 /* AuthenticateWireframeFactory.swift */,
 			);
-			path = "Authenticate ✅";
+			path = Authenticate;
 			sourceTree = "<group>";
 		};
 		D1BC5304284B5B8E007E6FF4 /* CultService */ = {
@@ -2525,7 +2525,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		D1EF5BBC287BEE92004CAD82 /* MnemonicUpdate ✅ */ = {
+		D1EF5BBC287BEE92004CAD82 /* MnemonicUpdate */ = {
 			isa = PBXGroup;
 			children = (
 				D1EF5BC2287BEE92004CAD82 /* MnemonicUpdate.storyboard */,
@@ -2538,7 +2538,7 @@
 				D1EF5BC5287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift */,
 				D1EF5BBD287BEE92004CAD82 /* Cells */,
 			);
-			path = "MnemonicUpdate ✅";
+			path = MnemonicUpdate;
 			sourceTree = "<group>";
 		};
 		D1EF5BBD287BEE92004CAD82 /* Cells */ = {
