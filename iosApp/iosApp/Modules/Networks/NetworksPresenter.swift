@@ -18,20 +18,18 @@ protocol NetworksPresenter: AnyObject {
 
 final class DefaultNetworksPresenter {
 
+    private weak var view: NetworksView?
     private let interactor: NetworksInteractor
     private let wireframe: NetworksWireframe
-
-    private weak var view: NetworksView?
-
+    
     init(
         view: NetworksView,
-        interactor: NetworksInteractor,
-        wireframe: NetworksWireframe
+        wireframe: NetworksWireframe,
+        interactor: NetworksInteractor
     ) {
         self.view = view
-        self.interactor = interactor
         self.wireframe = wireframe
-
+        self.interactor = interactor
         interactor.addListener(self)
     }
     
@@ -49,16 +47,13 @@ extension DefaultNetworksPresenter: NetworksPresenter {
     func handle(_ event: NetworksPresenterEvent) {
         switch event {
         case let .didTapSettings(chainId):
-            guard let network = network(chainId) else {
-                return
-            }
+            guard let network = network(chainId) else { return }
             wireframe.navigate(to: .editNetwork(network))
         case let .didSwitchNetwork(chainId, isOn):
             if let network = network(chainId) {
                 interactor.set(network, enabled: isOn)
             }
         case let .didSelectNetwork(chainId):
-            
             guard let network = network(chainId) else { return }
             if !interactor.isEnabled(network) {
                 interactor.set(network, enabled: true)

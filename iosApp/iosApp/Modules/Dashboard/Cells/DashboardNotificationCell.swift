@@ -19,15 +19,12 @@ final class DashboardNotificationCell: CollectionViewCell {
         super.awakeFromNib()
         layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
         clipsToBounds = true
-        
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = Theme.colour.navBarTint
         imageView.layer.cornerRadius = 14
-        
         titleLabel.apply(style: .footnote)
         bodyLabel.apply(style: .caption1)
         bodyLabel.textColor = Theme.colour.labelSecondary
-        
         closeButton.setImage(
             "xmark.circle".assetImage,
             for: .normal
@@ -36,9 +33,7 @@ final class DashboardNotificationCell: CollectionViewCell {
         closeButton.addTarget(self, action: #selector(dismissTapped), for: .touchUpInside)
     }
     
-    override func setSelected(_ selected: Bool) {
-        // do nothing
-    }
+    override func setSelected(_ selected: Bool) {}
 
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -46,11 +41,6 @@ final class DashboardNotificationCell: CollectionViewCell {
         layer.removeAllAnimations()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-//        backgroundColor = .red
-    }
-
     @objc func dismissTapped() {
         handler?(viewModel.id)
     }
@@ -62,20 +52,13 @@ extension DashboardNotificationCell {
         with viewModel: DashboardViewModel.Notification?,
         handler: ((String) -> Void)? = nil
     ) -> Self {
-
-        guard let viewModel = viewModel else {
-            return self
-        }
-
+        guard let viewModel = viewModel else { return self }
         self.viewModel = viewModel
         self.handler = handler
-        
         imageView.image = viewModel.image.pngImage
         titleLabel.text = viewModel.title
         bodyLabel.text = viewModel.body
-        
         closeView.isHidden = !viewModel.canDismiss
-
         return self
     }
 }

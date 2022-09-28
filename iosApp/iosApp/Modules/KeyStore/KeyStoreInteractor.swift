@@ -6,14 +6,12 @@ import Foundation
 import web3lib
 
 protocol KeyStoreInteractor: AnyObject {
-    
-    var selected: KeyStoreItem? {set get}
+    var selected: KeyStoreItem? { set get}
     var items: [KeyStoreItem] { get }
     func add(item: KeyStoreItem, password: String, secretStorage: SecretStorage)
 }
 
 final class DefaultKeyStoreInteractor {
-
     private var keyStoreService: KeyStoreService
     private var networksService: NetworksService
 
@@ -46,11 +44,7 @@ private extension DefaultKeyStoreInteractor {
 
     func setSelected(_ keyStoreItem: KeyStoreItem?) {
         keyStoreService.selected = keyStoreItem
-
-        guard let keyStoreItem = keyStoreItem else {
-            return
-        }
-
+        guard let keyStoreItem = keyStoreItem else { return }
         networksService.keyStoreItem = keyStoreItem
     }
 }

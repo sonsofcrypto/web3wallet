@@ -5,20 +5,20 @@
 import UIKit
 import web3lib
 
-protocol NFTsDashboardWireframeFactory {
+// MARK: - NFTsDashboardWireframeFactory
 
-    func makeWireframe(_ parent: TabBarController) -> NFTsDashboardWireframe
+protocol NFTsDashboardWireframeFactory {
+    func make(_ parent: UIViewController?) -> NFTsDashboardWireframe
 }
 
-final class DefaultNFTsDashboardWireframeFactory {
+// MARK: - DefaultNFTsDashboardWireframeFactory
 
+final class DefaultNFTsDashboardWireframeFactory {
     private let nftsCollectionWireframeFactory: NFTsCollectionWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let nftsService: NFTsService
     private let networksService: NetworksService
     private let mailService: MailService
-
-    private weak var window: UIWindow?
 
     init(
         nftsCollectionWireframeFactory: NFTsCollectionWireframeFactory,
@@ -37,14 +37,31 @@ final class DefaultNFTsDashboardWireframeFactory {
 
 extension DefaultNFTsDashboardWireframeFactory: NFTsDashboardWireframeFactory {
 
-    func makeWireframe(_ parent: TabBarController) -> NFTsDashboardWireframe {
+    func make(_ parent: UIViewController?) -> NFTsDashboardWireframe {
         DefaultNFTsDashboardWireframe(
-            parent: parent,
+            parent,
             nftsCollectionWireframeFactory: nftsCollectionWireframeFactory,
             nftDetailWireframeFactory: nftDetailWireframeFactory,
             nftsService: nftsService,
             networksService: networksService,
             mailService: mailService
         )
+    }
+}
+
+// MARK: - Assembler
+
+final class NFTsDashboardWireframeFactoryAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> NFTsDashboardWireframeFactory in
+            DefaultNFTsDashboardWireframeFactory(
+                nftsCollectionWireframeFactory: resolver.resolve(),
+                nftDetailWireframeFactory: resolver.resolve(),
+                nftsService: resolver.resolve(),
+                networksService: resolver.resolve(),
+                mailService: resolver.resolve()
+            )
+        }
     }
 }

@@ -5,13 +5,19 @@
 import UIKit
 
 protocol KeyStoreView: AnyObject {
-
     func update(with viewModel: KeyStoreViewModel)
     func updateTargetView(_ targetView: KeyStoreViewModel.TransitionTargetView)
 }
 
 final class KeyStoreViewController: BaseViewController {
 
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var logoContainer: UIView!
+    @IBOutlet weak var logoView: UIImageView!
+    @IBOutlet weak var buttonsCollectionView: UICollectionView!
+    @IBOutlet weak var buttonBackgroundView: UIVisualEffectView!
+    @IBOutlet weak var buttonHandleView: UIView!
+    
     var presenter: KeyStorePresenter!
 
     private var viewModel: KeyStoreViewModel?
@@ -22,13 +28,6 @@ final class KeyStoreViewController: BaseViewController {
     private var firstAppear: Bool = true
     private var viewDidAppear: Bool = false
 
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var logoContainer: UIView!
-    @IBOutlet weak var logoView: UIImageView!
-    @IBOutlet weak var buttonsCollectionView: UICollectionView!
-    @IBOutlet weak var buttonBackgroundView: UIVisualEffectView!
-    @IBOutlet weak var buttonHandleView: UIView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
@@ -36,10 +35,6 @@ final class KeyStoreViewController: BaseViewController {
         configureUI()
         presenter?.present()
         prevViewSize = view.bounds.size
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
 
     override func viewWillLayoutSubviews() {
@@ -82,7 +77,6 @@ final class KeyStoreViewController: BaseViewController {
 }
 
 // MARK: - KeyStoreView
-
 extension KeyStoreViewController: KeyStoreView {
 
     func update(with viewModel: KeyStoreViewModel) {
@@ -107,7 +101,6 @@ extension KeyStoreViewController: KeyStoreView {
 }
 
 // MARK: - UICollectionViewDataSource
-
 extension KeyStoreViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -135,9 +128,9 @@ extension KeyStoreViewController: UICollectionViewDataSource {
         default:
             return collectionView.dequeue(KeyStoreCell.self, for: indexPath).update(
                 with: viewModel?.items[indexPath.item],
-                accessoryHandler: { [weak self] in
+                handler: .init(accessoryHandler: { [weak self] in
                     self?.presenter.handle(.didSelectAccessory(idx: indexPath.item))
-                },
+                }),
                 index: indexPath.item
             )
         }
@@ -185,24 +178,18 @@ extension KeyStoreViewController: UICollectionViewDelegateFlowLayout {
 }
 
 // MARK: - Configure UI
-
 extension KeyStoreViewController {
     
     func configureUI() {
-        
         title = Localized("wallets")
-        
         collectionView.showsVerticalScrollIndicator = false
-        
         configureInsets()
-        
         buttonBackgroundView.layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
         buttonBackgroundView.layer.maskedCorners = [
             .layerMaxXMinYCorner,
             .layerMinXMinYCorner
         ]
         buttonBackgroundView.contentView.backgroundColor = Theme.colour.gradientTop.withAlpha(0.4)
-        
         buttonHandleView.backgroundColor = Theme.colour.backgroundBasePrimary
         buttonHandleView.layer.cornerRadius = buttonHandleView.frame.size.height.half
     }
@@ -213,15 +200,12 @@ extension KeyStoreViewController {
             UIView.springAnimate(0.7, delay: 0.3, damping: 0.01, velocity: 0.8, animations: {
                 self.logoView.alpha = 0
             })
-
             UIView.animate(withDuration: 0.6, delay: 0.3) {
                 self.logoContainer.alpha = 0
             }
             return
         }
-
         logoContainer.isHidden = !viewModel.isEmpty
-
         guard viewDidAppear else { return }
         // NOTE: Here is safe to set alpha to 1 since isHidden above would take care if showing
         // or not the logo
@@ -230,16 +214,12 @@ extension KeyStoreViewController {
     }
 
     func selectedIdxPaths() -> [IndexPath] {
-        guard let viewModel = viewModel, !viewModel.items.isEmpty else {
-            return []
-        }
-
+        guard let viewModel = viewModel, !viewModel.items.isEmpty else { return [] }
         return viewModel.selectedIdxs.map { IndexPath(item: $0, section: 0) }
     }
 }
 
 // MARK: - ButtonsSheet handling
-
 extension KeyStoreViewController {
 
     func setButtonsSheetMode(
@@ -247,11 +227,7 @@ extension KeyStoreViewController {
         animated: Bool = true
     ) {
         buttonsCollectionView.reloadData()
-
-        guard let mode = mode, let cv = buttonsCollectionView, !cv.isDragging else {
-            return
-        }
-
+        guard let mode = mode, let cv = buttonsCollectionView, !cv.isDragging else { return }
         switch mode {
         case .hidden:
             buttonsCollectionView.setContentOffset(
@@ -289,7 +265,6 @@ extension KeyStoreViewController {
             buttonBackgroundView.frame = .zero
             return
         }
-
         let top = topCell.convert(topCell.bounds.minXminY, to: view)
         buttonBackgroundView.frame = CGRect(
             x: 0,
@@ -297,7 +272,6 @@ extension KeyStoreViewController {
             width: view.bounds.width,
             height: view.bounds.height - top.y + Theme.constant.padding * 2
         )
-
         if let cv = buttonsCollectionView {
             let contentHeight = collectionView.contentSize.height
             var alpha = (cv.contentInset.top + cv.contentOffset.y) / 100
@@ -309,18 +283,10 @@ extension KeyStoreViewController {
     }
 
     func updateSheetModeIfNeeded(_ scrollView: UIScrollView) {
-        guard scrollView == buttonsCollectionView else {
-            return
-        }
-
+        guard scrollView == buttonsCollectionView else { return }
         layoutButtonsBackground()
-
-        guard scrollView.isDragging else {
-            return
-        }
-
+        guard scrollView.isDragging else { return }
         let cellCount = buttonsCollectionView.visibleCells.count
-
         presenter.handle(
             .didChangeButtonsSheetMode(
                 sheetMode: cellCount > 4 ? .expanded : .compact
@@ -330,7 +296,6 @@ extension KeyStoreViewController {
 }
 
 // MARK: - Into animations
-
 extension KeyStoreViewController {
 
     func animateIntro() {
@@ -339,27 +304,20 @@ extension KeyStoreViewController {
             logoContainer.alpha = 1
             return
         }
-        
         (logoContainer.alpha, logoView.alpha) = (0, 0)
         animateButtonsIntro()
-
         UIView.springAnimate(0.7, damping: 0.01, velocity: 0.8, animations: {
             self.logoView.alpha = 1
         })
-
         UIView.animate(withDuration: 1) {
             self.logoContainer.alpha = 1
         }
     }
 
     func animateButtonsIntro() {
-        guard firstAppear && viewModel?.isEmpty ?? true else {
-            return
-        }
-
+        guard firstAppear && viewModel?.isEmpty ?? true else { return }
         firstAppear = false
         setButtonsSheetMode(.hidden, animated: false)
-
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             self?.setButtonsSheetMode(.compact, animated: true)
         }
@@ -367,7 +325,6 @@ extension KeyStoreViewController {
 }
 
 // MARK: - UIViewControllerTransitioningDelegate
-
 extension KeyStoreViewController: TargetViewTransitionDatasource {
 
     func targetView() -> UIView {

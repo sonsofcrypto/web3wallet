@@ -5,7 +5,6 @@
 import UIKit
 
 protocol MnemonicImportView: AnyObject {
-
     func update(with viewModel: MnemonicImportViewModel)
     func dismiss(animated flag: Bool, completion: (() -> Void)?)
 }
@@ -47,31 +46,21 @@ final class MnemonicImportViewController: BaseViewController {
     }
 }
 
-// MARK: - Mnemonic
-
 extension MnemonicImportViewController: MnemonicImportView {
 
     func update(with viewModel: MnemonicImportViewModel) {
         let equalSectionCnt = viewModel.sectionsItems.count == self.viewModel?.sectionsItems.count
         let needsReload = self.needsReload(self.viewModel, viewModel: viewModel)
         self.viewModel = viewModel
-
-        guard let cv = collectionView else {
-            return
-        }
-
+        guard let cv = collectionView else { return }
         ctaButton.setTitle(viewModel.cta, for: .normal)
-
         let cells = cv.indexPathsForVisibleItems
         let idxs = IndexSet(0..<viewModel.sectionsItems.count)
-
         if needsReload && didAppear && equalSectionCnt {
             cv.performBatchUpdates({ cv.reloadSections(idxs) })
             return
         }
-        
         updateFootersIfNeeded(viewModel)
-
         didAppear && equalSectionCnt
             ? cv.performBatchUpdates({ cv.reconfigureItems(at: cells) })
             : cv.reloadData()
@@ -81,9 +70,7 @@ extension MnemonicImportViewController: MnemonicImportView {
         guard let _ = viewModel.footers[safe: 0], let cv = collectionView else {
             return
         }
-
         let kind = UICollectionView.elementKindSectionFooter
-
         cv.indexPathsForVisibleSupplementaryElements(ofKind: kind).forEach {
             if let sectionFooter = viewModel.footers[safe: $0.section] {
                 let footerView = cv.supplementaryView(forElementKind: kind, at: $0)
@@ -92,8 +79,6 @@ extension MnemonicImportViewController: MnemonicImportView {
         }
     }
 }
-
-// MARK: - UICollectionViewDataSource
 
 extension MnemonicImportViewController: UICollectionViewDataSource {
 
@@ -109,19 +94,15 @@ extension MnemonicImportViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        
         guard let viewModel = viewModel?.item(at: indexPath) else {
             fatalError("Wrong number of items in section \(indexPath)")
         }
         let cell = cell(cv: collectionView, viewModel: viewModel, idxPath: indexPath)
         if indexPath.section == 1 {
-
             (cell as? CollectionViewCell)?.cornerStyle = .middle
-
             if indexPath.item == 0 {
                 (cell as? CollectionViewCell)?.cornerStyle = .top
             }
-
             if indexPath.item == (self.viewModel?.sectionsItems[safe: 1]?.count ?? 0) - 1 {
                 (cell as? CollectionViewCell)?.cornerStyle = .bottom
             }
@@ -134,16 +115,13 @@ extension MnemonicImportViewController: UICollectionViewDataSource {
         viewModel: MnemonicImportViewModel.Item,
         idxPath: IndexPath
     ) -> UICollectionViewCell {
-
         switch viewModel {
-
         case let .mnemonic(mnemonic):
             return collectionView.dequeue(MnemonicImportCell.self, for: idxPath)
                 .update(
                     with: mnemonic,
                     handler: mnemonicMnemonicHandler()
                 )
-
         case let .name(name):
             return collectionView.dequeue(
                 TextInputCollectionViewCell.self,
@@ -155,7 +133,6 @@ extension MnemonicImportViewController: UICollectionViewDataSource {
                     self.nameDidChange(value)
                 }
             )
-
         case let .switch(title, onOff):
             return collectionView.dequeue(
                 SwitchCollectionViewCell.self,
@@ -223,17 +200,13 @@ extension MnemonicImportViewController: UICollectionViewDataSource {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        
         switch kind {
-
         case UICollectionView.elementKindSectionHeader:
             fatalError("Handle header \(kind) \(indexPath)")
-
         case UICollectionView.elementKindSectionFooter:
             guard let viewModel = viewModel?.footer(at: indexPath.section) else {
                 fatalError("Failed to handle \(kind) \(indexPath)")
             }
-
             let footer = collectionView.dequeue(
                 SectionLabelFooter.self,
                 for: indexPath,
@@ -241,7 +214,6 @@ extension MnemonicImportViewController: UICollectionViewDataSource {
             )
             footer.update(with: viewModel)
             return footer
-
         default:
             
             fatalError("Failed to handle \(kind) \(indexPath)")
@@ -260,10 +232,10 @@ extension MnemonicImportViewController: UICollectionViewDelegate {
     }
 
     func mnemonicMnemonicHandler() -> MnemonicImportCell.Handler {
-        .init(onMnemonicChanged: makeOnMnemonicChanged())
+        .init(onMnemonicChanged: onMnemonicChanged())
     }
     
-    func makeOnMnemonicChanged() -> MnemonicImportCell.OnMnemonicChanged {
+    func onMnemonicChanged() -> MnemonicImportCell.OnMnemonicChanged {
         {
             [weak self] info in
             guard let self = self else { return }
@@ -316,13 +288,10 @@ extension MnemonicImportViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        
         let width = view.bounds.width - Theme.constant.padding * 2
-
         guard let viewModel = viewModel?.item(at: indexPath) else {
             return CGSize(width: width, height: Theme.constant.cellHeight)
         }
-
         switch viewModel {
         case .mnemonic:
             return CGSize(width: width, height: Constant.mnemonicCellHeight)
@@ -349,7 +318,6 @@ extension MnemonicImportViewController: UICollectionViewDelegateFlowLayout {
         guard viewModel?.header(at: section) != nil else {
             return .zero
         }
-
         return .zero
     }
 
@@ -361,19 +329,15 @@ extension MnemonicImportViewController: UICollectionViewDelegateFlowLayout {
         guard let footer = viewModel?.footer(at: section) else {
             return .zero
         }
-
         switch footer {
         case .attrStr:
             return .init(width: view.bounds.width, height: Constant.footerHeight)
-        default:
-            return .zero
+        default: return .zero
         }
     }
 }
 
 extension MnemonicImportViewController: UIScrollViewDelegate { }
-
-// MARK: - UIViewControllerTransitioningDelegate
 
 extension MnemonicImportViewController: UIViewControllerTransitioningDelegate {
 
@@ -387,17 +351,14 @@ extension MnemonicImportViewController: UIViewControllerTransitioningDelegate {
         let targetView = (source as? TargetViewTransitionDatasource)?.targetView()
             ?? (sourceNav?.topVc as? TargetViewTransitionDatasource)?.targetView()
             ?? presenting.view
-
         guard presentedVc == self, let targetView = targetView else {
             animatedTransitioning = nil
             return nil
         }
-
         animatedTransitioning = CardFlipAnimatedTransitioning(
             targetView: targetView,
             handler: { [weak self] in self?.animatedTransitioning = nil }
         )
-
         return animatedTransitioning
     }
 
@@ -408,9 +369,7 @@ extension MnemonicImportViewController: UIViewControllerTransitioningDelegate {
             animatedTransitioning = nil
             return nil
         }
-
         let presenting = dismissed.presentingViewController
-
         guard let visVc = (presenting as? EdgeCardsController)?.visibleViewController,
               let topVc = (visVc as? UINavigationController)?.topVc,
               let targetView = (topVc as? TargetViewTransitionDatasource)?.targetView()
@@ -418,14 +377,12 @@ extension MnemonicImportViewController: UIViewControllerTransitioningDelegate {
             animatedTransitioning = nil
             return nil
         }
-
         animatedTransitioning = CardFlipAnimatedTransitioning(
             targetView: targetView,
             isPresenting: false,
             scaleAdjustment: 0.05,
             handler: { [weak self] in self?.animatedTransitioning = nil }
         )
-
         return animatedTransitioning
     }
 
@@ -438,7 +395,6 @@ extension MnemonicImportViewController: UIViewControllerTransitioningDelegate {
     @objc func handleGesture(_ recognizer: UIPanGestureRecognizer) {
         let location = recognizer.location(in: view.window!)
         let pct = (location.x * 0.5) / view.bounds.width
-
         switch recognizer.state {
         case .began:
             interactiveTransitioning = CardFlipInteractiveTransitioning(
@@ -461,42 +417,34 @@ extension MnemonicImportViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
-// MARK: - Configure UI
-
 private extension MnemonicImportViewController {
     
     func configureUI() {
-        title = Localized("newMnemonic.title.import")
-
+        title = Localized("mnemonicNew.title.import")
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: "chevron.left".assetImage,
             style: .plain,
             target: self,
             action: #selector(dismissAction(_:))
         )
-        
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         let constraint = collectionView.bottomAnchor.constraint(
             equalTo: view.keyboardLayoutGuide.topAnchor
         )
         constraint.priority = .required
         constraint.isActive = true
-        
         NotificationCenter.default.addObserver(
             self, selector: #selector(showKeyboard),
             name: UIApplication.keyboardWillShowNotification,
             object: nil
         )
-        
         ctaButton.style = .primary
-
         let edgePan = UIScreenEdgePanGestureRecognizer(
             target: self,
             action: #selector(handleGesture(_:))
         )
         edgePan.edges = [UIRectEdge.left]
         view.addGestureRecognizer(edgePan)
-
         // TODO: Smell
         let window = UIApplication.shared.keyWindow
         ctaButtonBottomConstraint.constant = window?.safeAreaInsets.bottom == 0
@@ -505,20 +453,16 @@ private extension MnemonicImportViewController {
     }
     
     @objc func showKeyboard(notification: Notification) {
-        
         guard
             let firstResponder = collectionView.firstResponder,
             let keyboardFrame = notification.userInfo?[
                 UIResponder.keyboardFrameEndUserInfoKey
             ] as? NSValue
         else { return }
-        
         let frame = view.convert(firstResponder.bounds, from: firstResponder)
         let y = frame.maxY + Theme.constant.padding * 2
         let keyboardY = keyboardFrame.cgRectValue.origin.y - 40
-         
         guard y > keyboardY else { return }
-        
         if
             let collectionView = collectionView,
             let indexPath = self.collectionView.indexPath(
@@ -538,16 +482,12 @@ private extension MnemonicImportViewController {
               (preViewModel?.sectionsItems.count ?? 0) > 1 else {
             return false
         }
-
         return (preViewModel?.sectionsItems[safe: 1]?.count ?? 0) !=
             (viewModel.sectionsItems[safe: 1]?.count ?? 0)
     }
 }
 
-// MARK: - Constants
-
 private extension MnemonicImportViewController {
-
     enum Constant {
         static let mnemonicCellHeight: CGFloat = 110
         static let cellHeight: CGFloat = 46

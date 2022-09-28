@@ -4,36 +4,39 @@
 
 import UIKit
 
-protocol QRCodeScanWireframeFactory {
+// MARK: QRCodeScanWireframeFactory
 
-    func makeWireframe(
-        presentingIn: UIViewController,
+protocol QRCodeScanWireframeFactory {
+    func make(
+        _ parent: UIViewController?,
         context: QRCodeScanWireframeContext
     ) -> QRCodeScanWireframe
 }
 
-final class DefaultQRCodeScanWireframeFactory {
+// MARK: DefaultQRCodeScanWireframeFactory
 
-    private let web3Service: Web3ServiceLegacy
-
-    init(
-        web3Service: Web3ServiceLegacy
-    ) {
-        self.web3Service = web3Service
-    }
-}
+final class DefaultQRCodeScanWireframeFactory {}
 
 extension DefaultQRCodeScanWireframeFactory: QRCodeScanWireframeFactory {
 
-    func makeWireframe(
-        presentingIn: UIViewController,
+    func make(
+        _ parent: UIViewController?,
         context: QRCodeScanWireframeContext
     ) -> QRCodeScanWireframe {
-        
         DefaultQRCodeScanWireframe(
-            presentingIn: presentingIn,
-            context: context,
-            web3Service: web3Service
+            parent,
+            context: context
         )
+    }
+}
+
+// MARK: Assembler
+
+final class QRCodeScanWireframeFactoryAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> QRCodeScanWireframeFactory in
+            DefaultQRCodeScanWireframeFactory()
+        }
     }
 }

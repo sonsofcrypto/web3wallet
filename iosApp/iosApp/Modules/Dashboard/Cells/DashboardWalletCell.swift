@@ -42,18 +42,13 @@ final class DashboardWalletCell: CollectionViewCell {
         layer.removeAllAnimations()
     }
 
-    override func setSelected(_ selected: Bool) {
-        // do nothing
-    }
+    override func setSelected(_ selected: Bool) {}
 }
 
 extension DashboardWalletCell {
 
     func update(with viewModel: DashboardViewModel.Wallet?) -> Self {
-        guard let viewModel = viewModel else {
-            return self
-        }
-        
+        guard let viewModel = viewModel else { return self }
         imageView.image = UIImage(named: viewModel.imageName)
         currencyLabel.text = viewModel.ticker
         fiatPriceLabel.text = viewModel.fiatPrice
@@ -64,7 +59,6 @@ extension DashboardWalletCell {
         pctChangeLabel.layer.shadowColor = pctChangeLabel.textColor.cgColor
         charView.update(viewModel.candles)
         cryptoBalanceLabel.text = viewModel.cryptoBalance
-
         let colors = viewModel.colors
         let top = UIColor(hexString: colors.first ?? "#FFFFFF")!
         let btm = UIColor(hexString: colors.last ?? colors.first ?? "#000000")!
@@ -148,13 +142,11 @@ class DashboardWalletCellBackgroundView: UIView {
         strokeGradient.frame = bounds
         fillGradient.frame = bounds.insetBy(dx: 2, dy: 2)
         noise.frame = bounds
-
         let ratio = highlight.image?.heightWidthwRatio() ?? 0
         var highlightBounds = bounds
         highlightBounds.size.width = bounds.width
         highlightBounds.size.height = bounds.width * ratio
         highlight.frame = highlightBounds
-
         highlightBounds.origin.y = bounds.height - highlightBounds.height
         highlightBtm.frame = highlightBounds
     }

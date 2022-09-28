@@ -70,20 +70,20 @@ struct ImprovementProposal: Codable, Equatable {
 }
 
 extension ImprovementProposal {
-    var hashTag: String { Localized("feature.hashTag", arg: id) }
+    var hashTag: String { Localized("proposal.hashTag", arg: id) }
 }
 
 extension ImprovementProposal.Category {
     var stringValue: String {
         switch self {
         case .infrastructure:
-            return Localized("features.segmentedControl.infrastructure")
+            return Localized("proposals.segmentedControl.infrastructure")
         case .integration:
-            return Localized("features.segmentedControl.integrations")
+            return Localized("proposals.segmentedControl.integrations")
         case .feature:
-            return Localized("features.segmentedControl.features")
+            return Localized("proposals.segmentedControl.features")
         case .unknown:
-            return Localized("features.segmentedControl.unknown")
+            return Localized("proposals.segmentedControl.unknown")
         }
     }
 }

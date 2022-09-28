@@ -62,7 +62,6 @@ extension NetworksViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeue(NetworksCell.self, for: indexPath)
         update(cell: cell, with: networkViewModel(indexPath))
         return cell
@@ -94,11 +93,9 @@ extension NetworksViewController: UICollectionViewDelegate {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-
         guard let viewModel = viewModel else {
             fatalError("We should always have networks")
         }
-        
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             let supplementary = collectionView.dequeue(
@@ -119,9 +116,7 @@ extension NetworksViewController: UICollectionViewDelegate {
 private extension NetworksViewController {
     
     func configureUI() {
-        
         title = Localized("networks")
-        
         collectionView.setCollectionViewLayout(
             makeCompositionalLayout(),
             animated: false
@@ -161,7 +156,6 @@ private extension NetworksViewController {
         )
         section.boundarySupplementaryItems = [headerItem]
         section.interGroupSpacing = Theme.constant.padding
-        
         return UICollectionViewCompositionalLayout(section: section)
     }
 
@@ -178,7 +172,6 @@ private extension NetworksViewController {
 private extension NetworksViewController {
     
     func makeNetworkCellHandler() -> NetworksCell.Handler {
-        
         .init(
             onOffHandler: { [weak self] (id, on) in
                 self?.handleNetworkToggle(id, on)

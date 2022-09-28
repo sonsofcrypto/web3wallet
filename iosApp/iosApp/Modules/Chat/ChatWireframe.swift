@@ -4,33 +4,21 @@
 
 import UIKit
 
-struct ChatWireframeContext {
-    
-    let presentationStyle: PresentationStyle
-}
-
-enum ChatWireframeDestination {
-    
-}
-
 protocol ChatWireframe {
     func present()
-    func navigate(to destination: ChatWireframeDestination)
 }
 
 final class DefaultChatWireframe {
-    
-    private weak var presentingIn: UIViewController!
-    private let context: ChatWireframeContext
+    private weak var parent: UIViewController?
     private let chatService: ChatService
     
+    private weak var vc: UIViewController?
+    
     init(
-        presentingIn: UIViewController,
-        context: ChatWireframeContext,
+        _ parent: UIViewController?,
         chatService: ChatService
     ) {
-        self.presentingIn = presentingIn
-        self.context = context
+        self.parent = parent
         self.chatService = chatService
     }
 }
@@ -38,62 +26,39 @@ final class DefaultChatWireframe {
 extension DefaultChatWireframe: ChatWireframe {
     
     func present() {
-        
         let vc = wireUp()
-        
-        switch context.presentationStyle {
-            
-        case .embed:
-            guard let tabBarController = presentingIn as? TabBarController else {
-                return
-            }
-            let vcs = tabBarController.add(viewController: vc)
-            tabBarController.setViewControllers(vcs, animated: false)
-            
-        case .present:
-            presentingIn.present(vc, animated: true)
-            
-        case .push:
-            guard let presentingIn = presentingIn as? NavigationController else { return }
-            presentingIn.pushViewController(vc, animated: true)
+        if let tabVc = parent as? UITabBarController {
+            let vcs = tabVc.add(viewController: vc)
+            tabVc.setViewControllers(vcs, animated: false)
+        } else {
+            parent?.show(vc, sender: self)
         }
-    }
-    
-    func navigate(to destination: ChatWireframeDestination) {
-        
-        
     }
 }
 
 private extension DefaultChatWireframe {
     
     func wireUp() -> UIViewController {
-        
         let interactor = DefaultChatInteractor(
             chatService: chatService
         )
         let vc: ChatViewController = UIStoryboard(.chat).instantiate()
         let presenter = DefaultChatPresenter(
             view: vc,
-            interactor: interactor,
-            wireframe: self
+            wireframe: self,
+            interactor: interactor
         )
-        
         vc.presenter = presenter
-        
-        switch context.presentationStyle {
-        case .embed:
-            
-            let navigationController = NavigationController(rootViewController: vc)
-            navigationController.tabBarItem = UITabBarItem(
-                title: Localized("apps"),
-                image: "tab_icon_apps".assetImage,
-                tag: 3
-            )
-            return navigationController
-        case .present, .push:
-            vc.hidesBottomBarWhenPushed = true
-            return vc
-        }
+        vc.hidesBottomBarWhenPushed = true
+        self.vc = vc
+        guard parent?.asNavigationController == nil else { return vc }
+        let nc = NavigationController(rootViewController: vc)
+        nc.tabBarItem = UITabBarItem(
+            title: Localized("apps"),
+            image: "tab_icon_apps".assetImage,
+            tag: 3
+        )
+        self.vc = nc
+        return nc
     }
 }

@@ -3,13 +3,13 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 protocol NFTsServiceListener: AnyObject {
     func nftsChanged()
 }
 
 protocol NFTsService: AnyObject {
-
     func nft(
         with identifier: String,
         onCompletion: (Result<NFTItem, Error>) -> Void
@@ -28,19 +28,14 @@ protocol NFTsService: AnyObject {
     func yourNftCollections(
         onCompletion: (Result<[NFTCollection], Error>) -> Void
     )
-    func yourNFTs(
-        forNetwork network: Web3Network
-    ) -> [NFTItem]
-    
+    func yourNFTs(forNetwork network: Network) -> [NFTItem]
     func yourNFTs() -> [NFTItem]
     func nftSent(identifier: String)
-    
     func addListener(_ listener: NFTsServiceListener)
     func removeListener(_ listener: NFTsServiceListener)
 }
 
 struct NFTItem {
-    
     let identifier: String
     let collectionIdentifier: String
     let name: String
@@ -52,7 +47,6 @@ struct NFTItem {
     let tokenId: String
     
     struct Property {
-        
         let name: String
         let value: String
         let info: String
@@ -60,24 +54,17 @@ struct NFTItem {
 }
 
 struct NFTCollection {
-    
     let identifier: String
-    
     /** URL pointing to the cover image for this collection **/
     let coverImage: String
-
     /** Title for the collection **/
     let title: String
-
     /** Author of the collection **/
     let author: String
-
     /** Flag determinig if the account is verified or not **/
     let isVerifiedAccount: Bool
-
     /** URL pointing to the author image of the collection **/
     let authorImage: String
-    
     /** Descriptoin of the collection **/
     let description: String
 }

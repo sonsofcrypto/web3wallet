@@ -6,25 +6,22 @@ import UIKit
 import SafariServices
 
 struct WebViewWireframeContext {
-    
     let url: URL
 }
 
 protocol WebViewWireframe {
-    
     func present()
 }
 
 final class DefaultWebViewWireframe {
-
-    private weak var presentingIn: UIViewController!
+    private weak var parent: UIViewController?
     private let context: WebViewWireframeContext
 
     init(
-        presentingIn: UIViewController,
+        _ parent: UIViewController?,
         context: WebViewWireframeContext
     ) {
-        self.presentingIn = presentingIn
+        self.parent = parent
         self.context = context
     }
 }
@@ -32,11 +29,9 @@ final class DefaultWebViewWireframe {
 extension DefaultWebViewWireframe: WebViewWireframe {
 
     func present() {
-        
         let config = SFSafariViewController.Configuration()
         config.entersReaderIfAvailable = true
-
         let vc = SFSafariViewController(url: context.url, configuration: config)
-        presentingIn.present(vc, animated: true)
+        parent?.present(vc, animated: true)
     }
 }

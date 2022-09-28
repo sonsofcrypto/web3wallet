@@ -9,18 +9,14 @@ final class DashboardNFTCell: CollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
         clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
     }
 
     override func prepareForReuse() {
-        
         super.prepareForReuse()
-        
         layer.transform = CATransform3DIdentity
         layer.removeAllAnimations()
     }

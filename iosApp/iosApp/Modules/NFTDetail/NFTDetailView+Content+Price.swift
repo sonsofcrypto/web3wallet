@@ -5,22 +5,17 @@
 extension NFTDetailViewController {
     
     func makeEthPrice(with item: NFTItem) -> UIView {
-        
         let view = UIView()
         view.backgroundColor = .clear
-            
         let content = makeEthPriceContent(with: item)
         view.addSubview(content)
         content.addConstraints(.toEdges)
-        
         return view
     }
         
     func makeEthPriceContent(with item: NFTItem) -> UIView {
-        
         let hStackView = HStackView()
         hStackView.spacing = Theme.constant.padding * 0.5
-        
         let iconImage = UIImageView(image: "ethereum-icon".assetImage)
         iconImage.tintColor = Theme.colour.labelPrimary
         iconImage.addConstraints(
@@ -30,13 +25,11 @@ extension NFTDetailViewController {
             ]
         )
         hStackView.addArrangedSubview(iconImage)
-        
 //        let ethPrice = UILabel(with: .headline)
 //        ethPrice.textAlignment = .center
 //        ethPrice.text = "\(item.ethPrice)"
 //        
 //        hStackView.addArrangedSubview(ethPrice)
-        
         let groupView = UIView()
         groupView.addSubview(hStackView)
         hStackView.addConstraints(
@@ -45,7 +38,6 @@ extension NFTDetailViewController {
                 .layout(anchor: .centerYAnchor)
             ]
         )
-        
         groupView.addConstraints(
             [
                 .layout(
@@ -56,7 +48,6 @@ extension NFTDetailViewController {
                 )
             ]
         )
-        
         return groupView
     }
 }

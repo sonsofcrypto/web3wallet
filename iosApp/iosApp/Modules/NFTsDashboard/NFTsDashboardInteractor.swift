@@ -10,7 +10,6 @@ protocol NFTsDashboardInteractorLister: AnyObject {
 }
 
 protocol NFTsDashboardInteractor: AnyObject {
-
     func fetchYourNFTs(
         isPullDownToRefreh: Bool,
         onCompletion: @escaping (Result<[NFTItem], Error>) -> Void
@@ -23,7 +22,6 @@ protocol NFTsDashboardInteractor: AnyObject {
 }
 
 final class DefaultNFTsDashboardInteractor {
-
     private let networksService: NetworksService
     private let service: NFTsService
     

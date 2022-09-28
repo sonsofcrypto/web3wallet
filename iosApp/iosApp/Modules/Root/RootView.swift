@@ -7,7 +7,6 @@ import UIKit
 protocol RootView: AnyObject { }
 
 final class RootViewController: EdgeCardsController, RootView {
-
     var presenter: RootPresenter!
 
     override func viewDidLoad() {

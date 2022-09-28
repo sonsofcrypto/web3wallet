@@ -4,22 +4,14 @@
 
 import Foundation
 
-protocol ChatInteractor: AnyObject {
-
-}
+protocol ChatInteractor: AnyObject {}
 
 final class DefaultChatInteractor {
-
     private var chatService: ChatService
 
-    init(
-        chatService: ChatService
-    ) {
-        
+    init(chatService: ChatService) {
         self.chatService = chatService
     }
 }
 
-extension DefaultChatInteractor: ChatInteractor {
-
-}
+extension DefaultChatInteractor: ChatInteractor {}

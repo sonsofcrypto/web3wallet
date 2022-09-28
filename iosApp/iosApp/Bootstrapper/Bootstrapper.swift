@@ -2,6 +2,8 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
+// MARK: - Bootstrapper
+
 protocol Bootstrapper: AnyObject {
     func boot()
 }
@@ -35,6 +37,6 @@ extension UIBootstrapper: Bootstrapper {
 
     func boot() {
         let rootWireframeFactory: RootWireframeFactory = ServiceDirectory.assembler.resolve()
-        rootWireframeFactory.makeWireframe(in: window).present()
+        rootWireframeFactory.make(window).present()
     }
 }

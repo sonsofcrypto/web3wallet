@@ -5,44 +5,33 @@
 import UIKit
 
 protocol ThemePickerWireframe {
-    
     func present()
     func navigate(to destination: ThemePickerWireframeDestination)
 }
 
 enum ThemePickerWireframeDestination {
- 
     case dismiss
 }
 
 final class DefaultThemePickerWireframe {
-
-    private weak var presentingIn: UIViewController!
+    private weak var parent: UIViewController?
     
-    private weak var vc: UIViewController!
+    private weak var vc: UIViewController?
 
-    init(
-        presentingIn: UIViewController
-    ) {
-        self.presentingIn = presentingIn
+    init(_ parent: UIViewController?) {
+        self.parent = parent
     }
 }
 
 extension DefaultThemePickerWireframe: ThemePickerWireframe {
 
     func present() {
-        
         let vc = makeViewController()
-
-        self.vc = vc
-
-        presentingIn.present(vc, animated: false)
+        parent?.present(vc, animated: false)
     }
     
     func navigate(to destination: ThemePickerWireframeDestination) {
-        
         switch destination {
-            
         case .dismiss:
             break
         }
@@ -52,9 +41,9 @@ extension DefaultThemePickerWireframe: ThemePickerWireframe {
 private extension DefaultThemePickerWireframe {
 
     func makeViewController() -> UIViewController {
-        
         let vc: ThemePickerViewController = UIStoryboard(.dashboard).instantiate()
         vc.modalPresentationStyle = .custom
+        self.vc = vc
         return vc
     }
 }

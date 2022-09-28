@@ -4,13 +4,15 @@
 
 import UIKit
 
-protocol AppsWireframeFactory {
+// MARK: - AppsWireframeFactory
 
-    func makeWireframe(_ presentingIn: UITabBarController) -> AppsWireframe
+protocol AppsWireframeFactory {
+    func make(_ parent: UIViewController?) -> AppsWireframe
 }
 
-final class DefaultAppsWireframeFactory {
+// MARK: - DefaultAppsWireframeFactory
 
+final class DefaultAppsWireframeFactory {
     private let chatWireframeFactory: ChatWireframeFactory
     private let appsService: AppsService
 
@@ -25,12 +27,26 @@ final class DefaultAppsWireframeFactory {
 
 extension DefaultAppsWireframeFactory: AppsWireframeFactory {
 
-    func makeWireframe(_ presentingIn: UITabBarController) -> AppsWireframe {
-        
+    func make(_ parent: UIViewController?) -> AppsWireframe {
         DefaultAppsWireframe(
-            presentingIn: presentingIn,
+            parent,
             chatWireframeFactory: chatWireframeFactory,
             appsService: appsService
         )
     }
 }
+
+// MARK: - Assembler
+
+final class AppsWireframeFactoryAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> AppsWireframeFactory in
+            DefaultAppsWireframeFactory(
+                chatWireframeFactory: resolver.resolve(),
+                appsService: resolver.resolve()
+            )
+        }
+    }
+}
+

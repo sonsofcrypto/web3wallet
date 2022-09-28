@@ -21,6 +21,7 @@ final class DashboardHeaderBalanceView: UICollectionReusableView {
 
 extension DashboardHeaderBalanceView {
 
+    @discardableResult
     func update(with balance: String) -> Self {
         label.text = balance
         return self

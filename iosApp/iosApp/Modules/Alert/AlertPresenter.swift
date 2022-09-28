@@ -6,18 +6,15 @@ import Foundation
 import UniformTypeIdentifiers
 
 enum AlertPresenterEvent {
-    
     case dismiss
 }
 
 protocol AlertPresenter: AnyObject {
-
     func present()
     func handle(_ event: AlertPresenterEvent)
 }
 
 final class DefaultAlertPresenter {
-
     private let context: AlertContext
     private weak var view: AlertView!
     private let wireframe: AlertWireframe
@@ -36,17 +33,13 @@ final class DefaultAlertPresenter {
 extension DefaultAlertPresenter: AlertPresenter {
 
     func present() {
-        
         let viewModel = AlertViewModel(context: context)
         view.update(with: viewModel)
     }
 
     func handle(_ event: AlertPresenterEvent) {
-        
         switch event {
-            
         case .dismiss:
-            
             wireframe.navigate(to: .dismiss)
         }
     }

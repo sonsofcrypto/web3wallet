@@ -7,7 +7,6 @@ import Foundation
 extension ConfirmationViewModel {
     
     struct CultCastVoteViewModel {
-        
         let action: String
         let name: String                
     }

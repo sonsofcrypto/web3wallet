@@ -6,7 +6,7 @@ import UIKit
 import web3lib
 
 struct AccountWireframeContext {
-    let wallet: Wallet
+    let network: Network
     let currency: Currency
 }
 
@@ -23,11 +23,11 @@ protocol AccountWireframe {
 }
 
 final class DefaultAccountWireframe {
-    private weak var presentingIn: UIViewController?
+    private weak var parent: UIViewController?
     private let context: AccountWireframeContext
-    private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
-    private let tokenSendWireframeFactory: TokenSendWireframeFactory
-    private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
+    private let currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory
+    private let currencySendWireframeFactory: CurrencyCurrencyWireframeFactory
+    private let currencySwapWireframeFactory: CurrencySwapWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
@@ -35,24 +35,24 @@ final class DefaultAccountWireframe {
     private let transactionService: IosEtherscanService
 
     private weak var vc: UIViewController?
-
+    
     init(
-        presentingIn: UIViewController,
+        _ parent: UIViewController?,
         context: AccountWireframeContext,
-        tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
-        tokenSendWireframeFactory: TokenSendWireframeFactory,
-        tokenSwapWireframeFactory: TokenSwapWireframeFactory,
+        currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory,
+        currencySendWireframeFactory: CurrencyCurrencyWireframeFactory,
+        currencySwapWireframeFactory: CurrencySwapWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
         transactionService: IosEtherscanService
     ) {
-        self.presentingIn = presentingIn
+        self.parent = parent
         self.context = context
-        self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
-        self.tokenSendWireframeFactory = tokenSendWireframeFactory
-        self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
+        self.currencyReceiveWireframeFactory = currencyReceiveWireframeFactory
+        self.currencySendWireframeFactory = currencySendWireframeFactory
+        self.currencySwapWireframeFactory = currencySwapWireframeFactory
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
         self.currencyStoreService = currencyStoreService
@@ -62,10 +62,10 @@ final class DefaultAccountWireframe {
 }
 
 extension DefaultAccountWireframe: AccountWireframe {
-
+    
     func present() {
         let vc = wireUp()
-        let presentingTopVc = (presentingIn as? UINavigationController)?.topVc
+        let presentingTopVc = (parent as? UINavigationController)?.topVc
         let presentedTopVc = (vc as? UINavigationController)?.topVc
         let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
         self.vc = vc
@@ -75,72 +75,57 @@ extension DefaultAccountWireframe: AccountWireframe {
     }
 
     func navigate(to destination: AccountWireframeDestination) {
-        guard let vc = vc else { return }
-
         switch destination {
         case .receive:
-            let wireframe = tokenReceiveWireframeFactory.makeWireframe(
-                presentingIn: vc,
-                context: .init(presentationStyle: .present, web3Token: web3Token(context))
-            )
-            wireframe.present()
-            
-        case .send:
-            tokenSendWireframeFactory.makeWireframe(
-                presentingIn: vc,
-                context: .init(presentationStyle: .present, web3Token: web3Token(context))
+            currencyReceiveWireframeFactory.make(
+                vc,
+                context: .init(network: context.network, currency: context.currency)
             ).present()
-            
-        case .swap:
-            tokenSwapWireframeFactory.makeWireframe(
-                presentingIn: vc,
+        case .send:
+            currencySendWireframeFactory.make(
+                vc,
                 context: .init(
-                    presentationStyle: .present,
-                    tokenFrom: web3Token(context),
-                    tokenTo: nil
+                    network: context.network,
+                    address: nil,
+                    currency: context.currency
                 )
             ).present()
-            
+        case .swap:
+            currencySwapWireframeFactory.make(
+                vc,
+                context: .init(
+                    network: context.network,
+                    currencyFrom: context.currency,
+                    currencyTo: nil
+                )
+            ).present()
         case .more:
             deepLinkHandler.handle(deepLink: .degen)
         }
-    }
-
-    func web3Token(_ context: AccountWireframeContext) -> Web3Token {
-        Web3Token.from(
-            currency: context.currency,
-            network: Web3Network.from(
-                context.wallet.network() ?? Network.ethereum(),
-                isOn: true
-            ),
-            inWallet: true,
-            idx: 0
-        )
     }
 }
 
 private extension DefaultAccountWireframe {
 
     func wireUp() -> UIViewController {
-        
         let interactor = DefaultAccountInteractor(
-            wallet: context.wallet,
+            network: context.network,
             currency: context.currency,
             networksService: networksService,
             currencyStoreService: currencyStoreService,
             walletService: walletService,
             transactionService: transactionService
         )
-        
         let vc: AccountViewController = UIStoryboard(.account).instantiate()
         let presenter = DefaultAccountPresenter(
             view: vc,
-            interactor: interactor,
             wireframe: self,
+            interactor: interactor,
             context: context
         )
-
+        vc.edgesForExtendedLayout = []
         vc.presenter = presenter
+        vc.hidesBottomBarWhenPushed = true
         return NavigationController(rootViewController: vc)
     }
 }

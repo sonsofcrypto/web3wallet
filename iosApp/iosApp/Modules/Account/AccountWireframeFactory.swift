@@ -5,18 +5,21 @@
 import UIKit
 import web3lib
 
-protocol AccountWireframeFactory {
+// MARK: - AccountWireframeFactory
 
-    func makeWireframe(
-        presentingIn: UIViewController,
+protocol AccountWireframeFactory {
+    func make(
+        _ parent: UIViewController?,
         context: AccountWireframeContext
     ) -> AccountWireframe
 }
 
+// MARK: - DefaultAccountWireframeFactory
+
 final class DefaultAccountWireframeFactory {
-    private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
-    private let tokenSendWireframeFactory: TokenSendWireframeFactory
-    private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
+    private let currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory
+    private let currencySendWireframeFactory: CurrencyCurrencyWireframeFactory
+    private let currencySwapWireframeFactory: CurrencySwapWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
@@ -24,18 +27,18 @@ final class DefaultAccountWireframeFactory {
     private let transactionService: IosEtherscanService
 
     init(
-        tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
-        tokenSendWireframeFactory: TokenSendWireframeFactory,
-        tokenSwapWireframeFactory: TokenSwapWireframeFactory,
+        currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory,
+        currencySendWireframeFactory: CurrencyCurrencyWireframeFactory,
+        currencySwapWireframeFactory: CurrencySwapWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
         transactionService: IosEtherscanService
     ) {
-        self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
-        self.tokenSendWireframeFactory = tokenSendWireframeFactory
-        self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
+        self.currencyReceiveWireframeFactory = currencyReceiveWireframeFactory
+        self.currencySendWireframeFactory = currencySendWireframeFactory
+        self.currencySwapWireframeFactory = currencySwapWireframeFactory
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
         self.currencyStoreService = currencyStoreService
@@ -46,16 +49,16 @@ final class DefaultAccountWireframeFactory {
 
 extension DefaultAccountWireframeFactory: AccountWireframeFactory {
 
-    func makeWireframe(
-        presentingIn: UIViewController,
+    func make(
+        _ parent: UIViewController?,
         context: AccountWireframeContext
     ) -> AccountWireframe {
         DefaultAccountWireframe(
-            presentingIn: presentingIn,
+            parent,
             context: context,
-            tokenReceiveWireframeFactory: tokenReceiveWireframeFactory,
-            tokenSendWireframeFactory: tokenSendWireframeFactory,
-            tokenSwapWireframeFactory: tokenSwapWireframeFactory,
+            currencyReceiveWireframeFactory: currencyReceiveWireframeFactory,
+            currencySendWireframeFactory: currencySendWireframeFactory,
+            currencySwapWireframeFactory: currencySwapWireframeFactory,
             deepLinkHandler: deepLinkHandler,
             networksService: networksService,
             currencyStoreService: currencyStoreService,
@@ -65,15 +68,16 @@ extension DefaultAccountWireframeFactory: AccountWireframeFactory {
     }
 }
 
+// MARK: - Assembler
 
 final class AccountWireframeFactoryAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .instance) { resolver -> AccountWireframeFactory in
             DefaultAccountWireframeFactory(
-                tokenReceiveWireframeFactory: resolver.resolve(),
-                tokenSendWireframeFactory: resolver.resolve(),
-                tokenSwapWireframeFactory: resolver.resolve(),
+                currencyReceiveWireframeFactory: resolver.resolve(),
+                currencySendWireframeFactory: resolver.resolve(),
+                currencySwapWireframeFactory: resolver.resolve(),
                 deepLinkHandler: resolver.resolve(),
                 networksService: resolver.resolve(),
                 currencyStoreService: resolver.resolve(),

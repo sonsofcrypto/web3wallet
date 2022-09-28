@@ -5,7 +5,6 @@
 import Foundation
 
 struct AccountViewModel {
-
     let currencyName: String
     let header: AccountViewModel.Header
     let address: AddressViewModel
@@ -18,7 +17,6 @@ struct AccountViewModel {
 extension AccountViewModel {
 
     struct Header {
-        
         let balance: String
         let fiatBalance: String
         let pct: String
@@ -59,7 +57,6 @@ extension AccountViewModel {
 extension AccountViewModel {
 
     enum Transaction {
-     
         case empty(text: String)
         case loading(text: String)
         case data(Data)

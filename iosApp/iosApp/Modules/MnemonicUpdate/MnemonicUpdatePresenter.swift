@@ -20,32 +20,30 @@ enum MnemonicUpdatePresenterEvent {
 }
 
 protocol MnemonicUpdatePresenter {
-
     func present()
     func handle(_ event: MnemonicUpdatePresenterEvent)
 }
 
 final class DefaultMnemonicUpdatePresenter {
-
-    private let context: MnemonicUpdateContext
     private weak var view: MnemonicUpdateView?
-    private let interactor: MnemonicUpdateInteractor
     private let wireframe: MnemonicUpdateWireframe
+    private let interactor: MnemonicUpdateInteractor
+    private let context: MnemonicUpdateContext
 
     private var password: String = ""
     private var salt: String = ""
     private var customDerivation: Bool = false
 
     init(
-        context: MnemonicUpdateContext,
         view: MnemonicUpdateView,
+        wireframe: MnemonicUpdateWireframe,
         interactor: MnemonicUpdateInteractor,
-        wireframe: MnemonicUpdateWireframe
+        context: MnemonicUpdateContext
     ) {
-        self.context = context
         self.view = view
-        self.interactor = interactor
         self.wireframe = wireframe
+        self.interactor = interactor
+        self.context = context
     }
 
     private func updateView() {
@@ -56,9 +54,7 @@ final class DefaultMnemonicUpdatePresenter {
 extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
 
     func present() {
-        
         updateView()
-
         wireframe.navigate(
             to: .authenticate(
                 context: .init(
@@ -122,7 +118,6 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
 private extension DefaultMnemonicUpdatePresenter {
     
     @objc func onDeleteConfirmed() {
-        
         interactor.delete(context.keyStoreItem)
         context.onKeyStoreItemDeleted?()
         // NOTE: The following call dismisses the alert
@@ -168,20 +163,16 @@ private extension DefaultMnemonicUpdatePresenter {
                 optionsSectionItems(),
                 deleteItems()
             ],
-            headers: [
-                .none,
-                .none,
-                .none
-            ],
+            headers: [.none, .none, .none],
             footers: [
                 .attrStr(
-                    text: Localized("newMnemonic.footer"),
+                    text: Localized("mnemonicNew.footer"),
                     highlightWords: Constant.mnemonicHighlightWords
                 ),
                 .none,
                 .none
             ],
-            cta: Localized("newMnemonic.cta.update")
+            cta: Localized("mnemonicNew.cta.update")
         )
     }
 
@@ -200,13 +191,13 @@ private extension DefaultMnemonicUpdatePresenter {
         [
             MnemonicUpdateViewModel.Item.name(
                 name: .init(
-                    title: Localized("newMnemonic.name.title"),
+                    title: Localized("mnemonicNew.name.title"),
                     value: interactor.name,
-                    placeholder: Localized("newMnemonic.name.placeholder")
+                    placeholder: Localized("mnemonicNew.name.placeholder")
                 )
             ),
             MnemonicUpdateViewModel.Item.switch(
-                title: Localized("newMnemonic.iCould.title"),
+                title: Localized("mnemonicNew.iCould.title"),
                 onOff: interactor.iCloudSecretStorage
             )
         ]
@@ -215,7 +206,7 @@ private extension DefaultMnemonicUpdatePresenter {
     func deleteItems() -> [MnemonicUpdateViewModel.Item] {
         [
             MnemonicUpdateViewModel.Item.delete(
-                title: Localized("newMnemonic.cta.delete")
+                title: Localized("mnemonicNew.cta.delete")
             )
         ]
     }
@@ -227,8 +218,8 @@ private extension DefaultMnemonicUpdatePresenter {
 
     enum Constant {
         static let mnemonicHighlightWords: [String] = [
-            Localized("newMnemonic.footerHighlightWord0"),
-            Localized("newMnemonic.footerHighlightWord1"),
+            Localized("mnemonicNew.footerHighlightWord0"),
+            Localized("mnemonicNew.footerHighlightWord1"),
         ]
     }
 }

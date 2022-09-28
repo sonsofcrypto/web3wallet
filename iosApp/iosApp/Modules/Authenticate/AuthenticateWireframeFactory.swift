@@ -5,16 +5,18 @@
 import UIKit
 import web3lib
 
-protocol AuthenticateWireframeFactory {
+// MARK: - AuthenticateWireframeFactory
 
-    func makeWireframe(
-        _ parent: UIViewController,
+protocol AuthenticateWireframeFactory {
+    func make(
+        _ parent: UIViewController?,
        context: AuthenticateContext
     ) -> AuthenticateWireframe
 }
 
-final class DefaultAuthenticateWireframeFactory {
+// MARK: - DefaultAuthenticateWireframeFactory
 
+final class DefaultAuthenticateWireframeFactory {
     private let keyStoreService: KeyStoreService
 
     init(keyStoreService: KeyStoreService) {
@@ -24,15 +26,27 @@ final class DefaultAuthenticateWireframeFactory {
 
 extension DefaultAuthenticateWireframeFactory: AuthenticateWireframeFactory {
 
-    func makeWireframe(
-        _ parent: UIViewController,
+    func make(
+        _ parent: UIViewController?,
         context: AuthenticateContext
     ) -> AuthenticateWireframe {
-        
         DefaultAuthenticateWireframe(
-            parent: parent,
+            parent,
             context: context,
             keyStoreService: keyStoreService
         )
+    }
+}
+
+// MARK: - Assembler
+
+final class AuthenticateWireframeFactoryAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> AuthenticateWireframeFactory in
+            DefaultAuthenticateWireframeFactory(
+                keyStoreService: resolver.resolve()
+            )
+        }
     }
 }

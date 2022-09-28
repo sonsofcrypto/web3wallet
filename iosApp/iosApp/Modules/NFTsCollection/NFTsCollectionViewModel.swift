@@ -5,7 +5,6 @@
 import Foundation
 
 enum NFTsCollectionViewModel {
-    
     case loading
     case loaded(collection: NFTCollection, nfts: [NFTItem])
     case error(error: NFTsCollectionViewModel.Error)
@@ -14,22 +13,16 @@ enum NFTsCollectionViewModel {
 extension NFTsCollectionViewModel {
     
     var collection: NFTCollection? {
-        
         switch self {
-        case let .loaded(collection, _):
-            return collection
-        case .loading, .error:
-            return nil
+        case let .loaded(collection, _): return collection
+        case .loading, .error: return nil
         }
     }
     
     var nfts: [NFTItem] {
-        
         switch self {
-        case let .loaded(_, nfts):
-            return nfts
-        case .loading, .error:
-            return []
+        case let .loaded(_, nfts): return nfts
+        case .loading, .error: return []
         }
     }
 }
@@ -37,7 +30,6 @@ extension NFTsCollectionViewModel {
 extension NFTsCollectionViewModel {
 
     struct Error {
-        
         let title: String
         let body: String
         let actions: [String]

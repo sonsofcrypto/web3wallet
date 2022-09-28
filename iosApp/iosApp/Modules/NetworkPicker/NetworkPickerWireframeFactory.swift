@@ -4,36 +4,40 @@
 
 import UIKit
 
+// MARK: - NetworkPickerWireframeFactory
+
 protocol NetworkPickerWireframeFactory {
 
-    func makeWireframe(
-        presentingIn: UIViewController,
+    func make(
+        _ parent: UIViewController?,
         context: NetworkPickerWireframeContext
     ) -> NetworkPickerWireframe
 }
 
-final class DefaultNetworkPickerWireframeFactory {
+// MARK: - DefaultNetworkPickerWireframeFactory
 
-    private let web3Service: Web3ServiceLegacy
-
-    init(
-        web3Service: Web3ServiceLegacy
-    ) {
-        self.web3Service = web3Service
-    }
-}
+final class DefaultNetworkPickerWireframeFactory {}
 
 extension DefaultNetworkPickerWireframeFactory: NetworkPickerWireframeFactory {
 
-    func makeWireframe(
-        presentingIn: UIViewController,
+    func make(
+        _ parent: UIViewController?,
         context: NetworkPickerWireframeContext
     ) -> NetworkPickerWireframe {
-        
         DefaultNetworkPickerWireframe(
-            presentingIn: presentingIn,
-            context: context,
-            web3Service: web3Service
+            parent,
+            context: context
         )
+    }
+}
+
+// MARK: - Assembler
+
+final class NetworkPickerWireframeFactoryAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> NetworkPickerWireframeFactory in
+            DefaultNetworkPickerWireframeFactory()
+        }
     }
 }

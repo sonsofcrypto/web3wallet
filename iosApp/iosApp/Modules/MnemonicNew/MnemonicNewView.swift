@@ -5,7 +5,6 @@
 import UIKit
 
 protocol MnemonicNewView: AnyObject {
-
     func update(with viewModel: MnemonicNewViewModel)
     func dismiss(animated flag: Bool, completion: (() -> Void)?)
 }
@@ -122,7 +121,6 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
                     self.nameDidChange(value)
                 }
             )
-
         case let .switch(title, onOff):
             return collectionView.dequeue(
                 SwitchCollectionViewCell.self,
@@ -135,7 +133,6 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
                     self.iCloudBackupDidChange(value)
                 }
             )
-
         case let .switchWithTextInput(switchWithTextInput):
             return collectionView.dequeue(
                 SwitchTextInputCollectionViewCell.self,
@@ -155,7 +152,6 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
                     self.saltLearnMoreAction()
                 }
             )
-
         case let .segmentWithTextAndSwitchInput(segmentWithTextAndSwitchInput):
             return collectionView.dequeue(
                 SegmentWithTextAndSwitchCell.self,
@@ -186,7 +182,6 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             fatalError("Handle header \(kind) \(indexPath)")
-
         case UICollectionView.elementKindSectionFooter:
             guard let viewModel = viewModel?.footer(at: indexPath.section) else {
                 fatalError("Failed to handle \(kind) \(indexPath)")
@@ -198,7 +193,6 @@ extension MnemonicNewViewController: UICollectionViewDataSource {
             )
             footer.update(with: viewModel)
             return footer
-
         default:
             fatalError("Failed to handle \(kind) \(indexPath)")
         }
@@ -261,11 +255,9 @@ extension MnemonicNewViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGSize {
         
         let width = view.bounds.width - Theme.constant.padding * 2
-
         guard let viewModel = viewModel?.item(at: indexPath) else {
             return CGSize(width: width, height: Theme.constant.cellHeight)
         }
-
         switch viewModel {
         case .mnemonic:
             return CGSize(width: width, height: Constant.mnemonicCellHeight)
@@ -289,23 +281,16 @@ extension MnemonicNewViewController: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        guard viewModel?.header(at: section) != nil else {
-            return .zero
-        }
-
+        guard viewModel?.header(at: section) != nil else { return .zero }
         return .zero
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        guard let footer = viewModel?.footer(at: section) else {
-            return .zero
-        }
-
+        guard let footer = viewModel?.footer(at: section) else { return .zero }
         switch footer {
         case .attrStr:
             return .init(width: view.bounds.width, height: Constant.footerHeight)
-        default:
-            return .zero
+        default: return .zero
         }
     }
 }
@@ -328,17 +313,14 @@ extension MnemonicNewViewController: UIViewControllerTransitioningDelegate {
         let targetView = (source as? TargetViewTransitionDatasource)?.targetView()
             ?? (sourceNav?.topVc as? TargetViewTransitionDatasource)?.targetView()
             ?? presenting.view
-
         guard presentedVc == self, let targetView = targetView else {
             animatedTransitioning = nil
             return nil
         }
-
         animatedTransitioning = CardFlipAnimatedTransitioning(
             targetView: targetView,
             handler: { [weak self] in self?.animatedTransitioning = nil }
         )
-
         return animatedTransitioning
     }
 
@@ -349,9 +331,7 @@ extension MnemonicNewViewController: UIViewControllerTransitioningDelegate {
             animatedTransitioning = nil
             return nil
         }
-
         let presenting = dismissed.presentingViewController
-
         guard let visVc = (presenting as? EdgeCardsController)?.visibleViewController,
             let topVc = (visVc as? UINavigationController)?.topVc,
             let targetView = (topVc as? TargetViewTransitionDatasource)?.targetView()
@@ -359,14 +339,12 @@ extension MnemonicNewViewController: UIViewControllerTransitioningDelegate {
             animatedTransitioning = nil
             return nil
         }
-
         animatedTransitioning = CardFlipAnimatedTransitioning(
             targetView: targetView,
             isPresenting: false,
             scaleAdjustment: 0.05,
         handler: { [weak self] in self?.animatedTransitioning = nil }
         )
-
         return animatedTransitioning
     }
 
@@ -379,7 +357,6 @@ extension MnemonicNewViewController: UIViewControllerTransitioningDelegate {
     @objc func handleGesture(_ recognizer: UIPanGestureRecognizer) {
         let location = recognizer.location(in: view.window!)
         let pct = (location.x * 0.5) / view.bounds.width
-
         switch recognizer.state {
         case .began:
             interactiveTransitioning = CardFlipInteractiveTransitioning(
@@ -407,38 +384,32 @@ extension MnemonicNewViewController: UIViewControllerTransitioningDelegate {
 private extension MnemonicNewViewController {
     
     func configureUI() {
-        title = Localized("newMnemonic.title")
-
+        title = Localized("mnemonicNew.title")
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: "chevron.left".assetImage,
             style: .plain,
             target: self,
             action: #selector(dismissAction(_:))
         )
-        
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         let constraint = collectionView.bottomAnchor.constraint(
             equalTo: view.keyboardLayoutGuide.topAnchor
         )
         constraint.priority = .required
         constraint.isActive = true
-        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(showKeyboard),
             name: UIApplication.keyboardWillShowNotification,
             object: nil
         )
-        
         ctaButton.style = .primary
-
         let edgePan = UIScreenEdgePanGestureRecognizer(
             target: self,
             action: #selector(handleGesture(_:))
         )
         edgePan.edges = [UIRectEdge.left]
         view.addGestureRecognizer(edgePan)
-
         // TODO: Smell
         let window = UIApplication.shared.keyWindow
         ctaButtonBottomConstraint.constant = window?.safeAreaInsets.bottom == 0
@@ -447,20 +418,16 @@ private extension MnemonicNewViewController {
     }
     
     @objc func showKeyboard(notification: Notification) {
-        
         guard
             let firstResponder = collectionView.firstResponder,
             let keyboardFrame = notification.userInfo?[
                 UIResponder.keyboardFrameEndUserInfoKey
             ] as? NSValue
         else { return }
-        
         let frame = view.convert(firstResponder.bounds, from: firstResponder)
         let y = frame.maxY + Theme.constant.padding * 2
         let keyboardY = keyboardFrame.cgRectValue.origin.y - 40
-         
         guard y > keyboardY else { return }
-        
         if
             let collectionView = collectionView,
             let indexPath = self.collectionView.indexPath(

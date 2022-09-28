@@ -73,24 +73,19 @@ extension Container: AssemblerResolver {
     
     func resolve<T>(byName name: String) -> T {
         let key = self.key(for: T.self, andName: name)
-
         guard let (scope, factory) = factories[key] else {
             let type = "\(T.self) \(name.isEmpty ? "" : " and name \(name)")"
             fatalError("Factory not registered for type: \(type)")
         }
-        
         switch scope {
         case .singleton:
             let singletonOrNil = sharedInstances[key]
-
             guard let singleton = singletonOrNil, let instance = singleton as? T else {
                 let instance = factory(self) as! T
                 sharedInstances[key] = instance
                 return instance
             }
-            
             return instance
-
         case .instance:
             return factory(self) as! T
         }

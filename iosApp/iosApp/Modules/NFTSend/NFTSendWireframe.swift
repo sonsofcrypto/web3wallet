@@ -6,16 +6,13 @@ import UIKit
 import web3lib
 
 struct NFTSendWireframeContext {
-    
-    let presentationStyle: PresentationStyle
+    let network: Network
     let nftItem: NFTItem
-    let network: Web3Network
 }
 
 enum NFTSendWireframeDestination {
-    
     case underConstructionAlert
-    case qrCodeScan(network: Web3Network, onCompletion: (String) -> Void)
+    case qrCodeScan(network: Network, onCompletion: (String) -> Void)
     case confirmSendNFT(
         dataIn: ConfirmationWireframeContext.SendNFTContext
     )
@@ -28,32 +25,28 @@ protocol NFTSendWireframe {
 }
 
 final class DefaultNFTSendWireframe {
-    
-    private weak var presentingIn: UIViewController!
+    private weak var parent: UIViewController?
     private let context: NFTSendWireframeContext
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
-    private let web3Service: Web3ServiceLegacy
     private let networksService: NetworksService
     
-    private weak var navigationController: NavigationController!
+    private weak var vc: UIViewController?
     
     init(
-        presentingIn: UIViewController,
+        _ parent: UIViewController?,
         context: NFTSendWireframeContext,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        web3Service: Web3ServiceLegacy,
         networksService: NetworksService
     ) {
-        self.presentingIn = presentingIn
+        self.parent = parent
         self.context = context
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.confirmationWireframeFactory = confirmationWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
-        self.web3Service = web3Service
         self.networksService = networksService
     }
 }
@@ -61,118 +54,61 @@ final class DefaultNFTSendWireframe {
 extension DefaultNFTSendWireframe: NFTSendWireframe {
     
     func present() {
-        
         let vc = wireUp()
-        
-        switch context.presentationStyle {
-            
-        case .embed:
-            fatalError("This module should not be presented embedded")
-            
-        case .present:
-            presentingIn.present(vc, animated: true)
-            
-        case .push:
-            guard let presentingIn = presentingIn as? NavigationController else { return }
-            presentingIn.pushViewController(vc, animated: true)
-        }
+        parent?.show(vc, sender: self)
     }
     
     func navigate(to destination: NFTSendWireframeDestination) {
-        
         switch destination {
         case .underConstructionAlert:
-            let factory: AlertWireframeFactory = ServiceDirectory.assembler.resolve()
-            factory.makeWireframe(
-                navigationController,
+            alertWireframeFactory.make(
+                vc,
                 context: .underConstructionAlert()
             ).present()
-            
         case let .qrCodeScan(network, onCompletion):
-            let wireframe = qrCodeScanWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
-                context: .init(
-                    presentationStyle: .push,
-                    type: .network(network),
-                    onCompletion: onCompletion
-                )
-            )
-            wireframe.present()
+            qrCodeScanWireframeFactory.make(
+                vc,
+                context: .init(type: .network(network), onCompletion: onCompletion)
+            ).present()
         case let .confirmSendNFT(dataIn):
-            guard dataIn.destination.from != dataIn.destination.to else {
+            guard dataIn.addressFrom != dataIn.addressTo else {
                 return presentSendingToSameAddressAlert()
             }
-            guard let viewController = navigationController.topViewController else {
-                return
-            }
-            let wireframe = confirmationWireframeFactory.makeWireframe(
-                presentingIn: viewController,
+            confirmationWireframeFactory.make(
+                vc,
                 context: .init(type: .sendNFT(dataIn))
-            )
-            wireframe.present()
+            ).present()
         }
     }
     
-    func dismiss() {
-        
-        if navigationController.viewControllers.count == 1 {
-            
-            navigationController.dismiss(animated: true)
-        } else {
-            navigationController.popViewController(animated: true)
-        }
-    }
+    func dismiss() { vc?.popOrDismiss() }
 }
 
 private extension DefaultNFTSendWireframe {
     
     func wireUp() -> UIViewController {
-        
         let interactor = DefaultNFTSendInteractor(
-            web3Service: web3Service,
             networksService: networksService
         )
         let vc: NFTSendViewController = UIStoryboard(.nftSend).instantiate()
         let presenter = DefaultNFTSendPresenter(
             view: vc,
-            interactor: interactor,
             wireframe: self,
+            interactor: interactor,
             context: context
         )
         vc.hidesBottomBarWhenPushed = true
         vc.presenter = presenter
-        
-        switch context.presentationStyle {
-        case .embed:
-            
-            fatalError("This module should not be presented embedded")
-        case .present:
-
-            vc.hidesBottomBarWhenPushed = true
-            
-            let navigationController = NavigationController(rootViewController: vc)
-            self.navigationController = navigationController
-            return navigationController
-
-        case .push:
-            
-            vc.hidesBottomBarWhenPushed = true
-            
-            if let navigationController = presentingIn as? NavigationController {
-                
-                self.navigationController = navigationController
-                return vc
-            }
-            
-            let navigationController = NavigationController(rootViewController: vc)
-            self.navigationController = navigationController
-            return navigationController
-        }
+        self.vc = vc
+        guard parent?.asNavigationController == nil else { return vc }
+        let nc = NavigationController(rootViewController: vc)
+        self.vc = nc
+        return nc
     }
     
     func presentSendingToSameAddressAlert() {
-        alertWireframeFactory.makeWireframe(
-            navigationController,
+        alertWireframeFactory.make(
+            vc,
             context: .init(
                 title: Localized("alert.send.transaction.toYourself.title"),
                 media: .image(named: "hand.raised", size: .init(length: 40)),

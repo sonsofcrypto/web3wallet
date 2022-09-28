@@ -4,21 +4,32 @@
 
 import Foundation
 
-protocol ThemePickerWireframeFactory {
+// MARK: - ThemePickerWireframeFactory
 
-    func makeWireframe(
-        presentingIn: UIViewController
+protocol ThemePickerWireframeFactory {
+    func make(
+        _ parent: UIViewController?
     ) -> ThemePickerWireframe
 }
 
-final class DefaultThemePickerWireframeFactory {
-    
-}
+// MARK: - DefaultThemePickerWireframeFactory
+
+final class DefaultThemePickerWireframeFactory {}
 
 extension DefaultThemePickerWireframeFactory: ThemePickerWireframeFactory {
     
-    func makeWireframe(presentingIn: UIViewController) -> ThemePickerWireframe {
-        
-        DefaultThemePickerWireframe(presentingIn: presentingIn)
+    func make(_ parent: UIViewController?) -> ThemePickerWireframe {
+        DefaultThemePickerWireframe(parent)
+    }
+}
+
+// MARK: - Assembler
+
+final class ThemePickerWireframeFactoryAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { _ -> ThemePickerWireframeFactory in
+            DefaultThemePickerWireframeFactory()
+        }
     }
 }

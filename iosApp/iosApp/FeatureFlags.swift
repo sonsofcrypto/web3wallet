@@ -3,14 +3,12 @@
 // SPDX-License-Identifier: MIT
 
 enum FeatureFlag {
-    
+
     case showSaltMnemonic
-    
     case showAppsTab
     case embedChatInTab
     
     var isEnabled: Bool {
-        
         switch self {
         case .showSaltMnemonic:
             return false

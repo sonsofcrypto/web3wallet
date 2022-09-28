@@ -4,36 +4,41 @@
 
 import UIKit
 
-protocol ChatWireframeFactory {
+// MARK: - ChatWireframeFactory
 
-    func makeWireframe(
-        presentingIn: UIViewController,
-        context: ChatWireframeContext
-    ) -> ChatWireframe
+protocol ChatWireframeFactory {
+    func make(_ parent: UIViewController?) -> ChatWireframe
 }
 
-final class DefaultChatWireframeFactory {
+// MARK: - DefaultChatWireframeFactory
 
+final class DefaultChatWireframeFactory {
     private let chatService: ChatService
 
-    init(
-        chatService: ChatService
-    ) {
+    init(chatService: ChatService) {
         self.chatService = chatService
     }
 }
 
 extension DefaultChatWireframeFactory: ChatWireframeFactory {
 
-    func makeWireframe(
-        presentingIn: UIViewController,
-        context: ChatWireframeContext
-    ) -> ChatWireframe {
-        
+    func make(_ parent: UIViewController?) -> ChatWireframe {
         DefaultChatWireframe(
-            presentingIn: presentingIn,
-            context: context,
+            parent,
             chatService: chatService
         )
+    }
+}
+
+// MARK: - Assembler
+
+final class ChatWireframeFactoryAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> ChatWireframeFactory in
+            DefaultChatWireframeFactory(
+                chatService: resolver.resolve()
+            )
+        }
     }
 }

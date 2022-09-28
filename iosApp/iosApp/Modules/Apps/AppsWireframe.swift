@@ -5,7 +5,6 @@
 import UIKit
 
 enum AppsWireframeDestination {
-    
     case chat
 }
 
@@ -15,19 +14,18 @@ protocol AppsWireframe {
 }
 
 final class DefaultAppsWireframe {
-    
-    private weak var presentingIn: UITabBarController!
+    private weak var parent: UIViewController?
     private let chatWireframeFactory: ChatWireframeFactory
     private let appsService: AppsService
     
-    private weak var navigationController: NavigationController!
+    private weak var vc: UIViewController!
     
     init(
-        presentingIn: UITabBarController,
+        _ parent: UIViewController?,
         chatWireframeFactory: ChatWireframeFactory,
         appsService: AppsService
     ) {
-        self.presentingIn = presentingIn
+        self.parent = parent
         self.chatWireframeFactory = chatWireframeFactory
         self.appsService = appsService
     }
@@ -36,21 +34,19 @@ final class DefaultAppsWireframe {
 extension DefaultAppsWireframe: AppsWireframe {
     
     func present() {
-        
         let vc = wireUp()
-        let vcs = presentingIn.add(viewController: vc)
-        presentingIn.setViewControllers(vcs, animated: false)
+        if let tabVc = parent as? UITabBarController {
+            let vcs = tabVc.add(viewController: vc)
+            tabVc.setViewControllers(vcs, animated: false)
+        } else {
+            parent?.show(vc, sender: self)
+        }
     }
     
     func navigate(to destination: AppsWireframeDestination) {
-        
         switch destination {
         case .chat:
-            let wireframe = chatWireframeFactory.makeWireframe(
-                presentingIn: navigationController,
-                context: .init(presentationStyle: .push)
-            )
-            wireframe.present()
+            chatWireframeFactory.make(vc).present()
         }
     }
 }
@@ -58,28 +54,24 @@ extension DefaultAppsWireframe: AppsWireframe {
 private extension DefaultAppsWireframe {
     
     func wireUp() -> UIViewController {
-        
         let interactor = DefaultAppsInteractor(
             appsService: appsService
         )
         let vc: AppsViewController = UIStoryboard(.apps).instantiate()
         let presenter = DefaultAppsPresenter(
             view: vc,
-            interactor: interactor,
-            wireframe: self
+            wireframe: self,
+            interactor: interactor
         )
-        
         vc.presenter = presenter
         
-        let navigationController = NavigationController(rootViewController: vc)
-        self.navigationController = navigationController
-        
-        navigationController.tabBarItem = UITabBarItem(
+        let nc = NavigationController(rootViewController: vc)
+        self.vc = nc
+        nc.tabBarItem = UITabBarItem(
             title: Localized("apps"),
             image: "tab_icon_apps".assetImage,
             tag: 3
         )
-
-        return navigationController
+        return nc
     }
 }

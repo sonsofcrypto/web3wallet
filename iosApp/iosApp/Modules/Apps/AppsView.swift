@@ -5,36 +5,19 @@
 import UIKit
 
 protocol AppsView: AnyObject {
-
     func update(with viewModel: AppsViewModel)
 }
 
 final class AppsViewController: BaseViewController {
+    @IBOutlet weak var collectionView: UICollectionView!
 
     var presenter: AppsPresenter!
 
     private var viewModel: AppsViewModel?
-    
-    @IBOutlet weak var collectionView: UICollectionView!
-
-    override init(
-        nibName nibNameOrNil: String?,
-        bundle nibBundleOrNil: Bundle?
-    ) {
-        
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
 
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         configureUI()
-        
         presenter?.present()
     }
 }
@@ -42,9 +25,7 @@ final class AppsViewController: BaseViewController {
 extension AppsViewController: AppsView {
 
     func update(with viewModel: AppsViewModel) {
-
         self.viewModel = viewModel
-        
         collectionView.reloadData()
         
 //        if let idx = viewModel.selectedIdx(), !viewModel.items().isEmpty {
@@ -65,7 +46,6 @@ extension AppsViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        
         viewModel?.items().count ?? 0
     }
     
@@ -74,9 +54,7 @@ extension AppsViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        
         let viewModel = viewModel?.items()[indexPath.item]
-        
         if indexPath.row == 0 {
             let cell = collectionView.dequeue(
                 AppsHeaderCollectionViewCell.self,
@@ -117,7 +95,6 @@ extension AppsViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        
         .init(
             width: collectionView.frame.width,
             height: Theme.constant.cellHeight
@@ -128,7 +105,6 @@ extension AppsViewController: UICollectionViewDelegateFlowLayout {
 private extension AppsViewController {
     
     func configureUI() {
-        
         title = Localized("apps")
     }
 }

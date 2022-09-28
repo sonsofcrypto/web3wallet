@@ -12,38 +12,26 @@ extension NFTsCollectionViewController {
     )
     
     func makeNFTsContent() -> UIStackView {
-        
         let nfts = viewModel?.nfts ?? []
-        
         guard !nfts.isEmpty else {
-
-            // NOTE: No content will be handled in the future, for now the data is mocked
+        // NOTE: No content will be handled in the future, for now the data is mocked
             // and will always return a few collections
             return HStackView([])
         }
-
         var rows: [UIView] = []
-                
         var index = 0
         while true {
-            
             var item1: NFTCollectionItem?
             var item2: NFTCollectionItem?
-
             if index < nfts.count {
-                
                 item1 = (index: index, nft: nfts[index])
                 index += 1
             }
-            
             if index < nfts.count {
-                
                 item2 = (index: index, nft: nfts[index])
                 index += 1
             }
-            
             guard let item1 = item1 else { break }
-
             rows.append(
                 makeNFTsCollectionRow(
                     with: item1,
@@ -51,14 +39,11 @@ extension NFTsCollectionViewController {
                 )
             )
         }
-        
         return VStackView(rows, spacing: Theme.constant.padding)
     }
     
     func refreshNFTs() {
-        
         scrollableContentView.removeAllSubview()
-        
         let content = makeNFTsContent()
         scrollableContentView.addSubview(content)
         content.addConstraints(
@@ -75,12 +60,9 @@ extension NFTsCollectionViewController {
 private extension NFTsCollectionViewController {
     
     var nftItemSize: CGFloat {
-        
         guard let viewWidth = navigationController?.view.frame.size.width else {
-            
             return 200
         }
-        
         return (viewWidth - Theme.constant.padding * 3) * 0.5
     }
     
@@ -88,9 +70,7 @@ private extension NFTsCollectionViewController {
         with item1: NFTCollectionItem,
         and item2: NFTCollectionItem?
     ) -> UIView {
-        
         var views = [UIView]()
-        
         views.append(makeNFTContent(with: item1))
         if let item2 = item2 {
             views.append(makeNFTContent(with: item2))
@@ -103,13 +83,10 @@ private extension NFTsCollectionViewController {
     func makeNFTContent(
         with item: NFTCollectionItem
     ) -> UIView {
-        
         let view = UIView()
-        
         let stackView = makeVerticalStack(with: item.nft)
         view.addSubview(stackView)
         stackView.addConstraints(.toEdges)
-        
         view.addConstraints(
             [
                 .layout(
@@ -122,12 +99,10 @@ private extension NFTsCollectionViewController {
                 )
             ]
         )
-
         view.layer.cornerRadius = Theme.constant.cornerRadius
         view.layer.borderWidth = 1
         view.layer.borderColor = Theme.colour.fillTertiary.cgColor
         view.clipsToBounds = true
-        
         view.tag = item.index
         view.add(
             .targetAction(
@@ -138,7 +113,6 @@ private extension NFTsCollectionViewController {
     }
     
     @objc func nftItemSelected(_ tapGesture: UITapGestureRecognizer) {
-        
         guard let tag = tapGesture.view?.tag else { return }
         guard let viewModel = viewModel else { return }
         guard viewModel.nfts.count > tag else { return }
@@ -149,15 +123,12 @@ private extension NFTsCollectionViewController {
     func makeVerticalStack(
         with item: NFTItem
     ) -> UIView {
-        
         let view = VStackView()
-        
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         imageView.load(url: item.image)
         view.addArrangedSubview(imageView)
-                
         return view
     }
 }

@@ -9,16 +9,13 @@ final class AccountTransactionEmptyCell: CollectionViewCell {
     @IBOutlet weak var label: UILabel!
 
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         label.apply(style: .callout)
         label.textColor = Theme.colour.labelSecondary
         layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
     }
     
     func update(with transaction: AccountViewModel.Transaction) {
-        
         guard let text = transaction.empty else { return }
         label.text = text
     }

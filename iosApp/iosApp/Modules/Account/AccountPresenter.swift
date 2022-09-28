@@ -26,13 +26,13 @@ final class DefaultAccountPresenter {
 
     init(
         view: AccountView,
-        interactor: AccountInteractor,
         wireframe: AccountWireframe,
+        interactor: AccountInteractor,
         context: AccountWireframeContext
     ) {
         self.view = view
-        self.interactor = interactor
         self.wireframe = wireframe
+        self.interactor = interactor
         self.context = context
     }
 }
@@ -46,16 +46,12 @@ extension DefaultAccountPresenter: AccountPresenter {
 
     func handle(_ event: AccountPresenterEvent) {
         switch event {
-        case .receive:
-            wireframe.navigate(to: .receive)
-        case .send:
-            wireframe.navigate(to: .send)
-        case .swap:
-            wireframe.navigate(to: .swap)
-        case .more:
-            wireframe.navigate(to: .more)
+        case .receive: wireframe.navigate(to: .receive)
+        case .send: wireframe.navigate(to: .send)
+        case .swap: wireframe.navigate(to: .swap)
+        case .more: wireframe.navigate(to: .more)
         case .pullDownToRefresh:
-            interactor.fetchTransactions{ [weak self] _ in  self?.updateView() }
+            interactor.fetchTransactions{ [weak self] _ in self?.updateView() }
         }
     }
 }
@@ -70,7 +66,6 @@ private extension DefaultAccountPresenter {
         let currency = interactor.currency()
         let market = interactor.market()
         let pct = market?.priceChangePercentage24h
-        
         return .init(
             currencyName: currency.name,
             header: .init(
@@ -104,23 +99,18 @@ private extension DefaultAccountPresenter {
     }
     
     func makeTransactions() -> [AccountViewModel.Transaction] {
-        
         var transactions = interactor.transactions().map {
             transactionViewModel($0)
         }
-        
         if transactions.isEmpty && !interactor.loadingTransactions {
-            
             return [.empty(text: Localized("account.marketInfo.transactions.empty"))]
         }
-        
         if interactor.loadingTransactions {
             transactions.insert(
                 .loading(text: Localized("account.marketInfo.transactions.loading")),
                 at: 0
             )
         }
-        
         return transactions
     }
 
@@ -156,7 +146,5 @@ private extension DefaultAccountPresenter {
 
 extension DefaultAccountPresenter: Web3ServiceWalletListener {
     
-    func notificationsChanged() {
-        updateView()
-    }
+    func notificationsChanged() { updateView() }
 }

@@ -6,26 +6,18 @@ import Foundation
 import UniformTypeIdentifiers
 
 enum MnemonicConfirmationPresenterEvent {
-    
     case dismiss
-    case mnemonicChanged(
-        to: String,
-        selectedLocation: Int
-    )
-    case saltChanged(
-        to: String
-    )
+    case mnemonicChanged(to: String, selectedLocation: Int)
+    case saltChanged(to: String)
     case confirm
 }
 
 protocol MnemonicConfirmationPresenter: AnyObject {
-
     func present()
     func handle(_ event: MnemonicConfirmationPresenterEvent)
 }
 
 final class DefaultMnemonicConfirmationPresenter {
-
     private let view: MnemonicConfirmationView
     private let wireframe: MnemonicConfirmationWireframe
     private let service: MnemonicConfirmationService
@@ -48,41 +40,30 @@ final class DefaultMnemonicConfirmationPresenter {
 
 extension DefaultMnemonicConfirmationPresenter: MnemonicConfirmationPresenter {
 
-    func present() {
-        refresh()
-    }
+    func present() { refresh() }
 
     func handle(_ event: MnemonicConfirmationPresenterEvent) {
         switch event {
-        case .dismiss:
-            wireframe.navigate(to: .dismiss)
-            
+        case .dismiss: wireframe.navigate(to: .dismiss)
         case let .mnemonicChanged(mnemonicIn, selectedLocationIn):
             let tuple = clearBlanksFromFrontOf(mnemonicIn, with: selectedLocationIn)
-            
             self.mnemonic = tuple.mnemonic
             self.selectedLocation = tuple.selectedLocation
             refresh(updateMnemonic: mnemonicIn != mnemonic)
-
         case let .saltChanged(salt):
-            
             self.salt = salt
             refresh(updateMnemonic: false)
-            
         case .confirm:
             guard ctaTapped else {
                 ctaTapped = true
                 refresh()
                 return
             }
-
             ctaTapped = true
-
             guard service.isMnemonicValid(mnemonic, salt: nil) else {
                 refresh()
                 return
             }
-
             service.markDashboardNotificationAsComplete()
             wireframe.navigate(to: .dismiss)
         }
@@ -95,29 +76,22 @@ private extension DefaultMnemonicConfirmationPresenter {
         _ mnemonic: String,
         with selectedLocation: Int
     ) -> (mnemonic: String, selectedLocation: Int) {
-        
         let initialCount = mnemonic.count
-        
         var mnemonic = mnemonic
         if let c = (mnemonic.first { !($0 == " " || $0 == "\t" || $0 == "\n") }) {
             if let nonWhiteSpaceIndex = mnemonic.firstIndex(of: c) {
                 mnemonic.replaceSubrange(mnemonic.startIndex ..< nonWhiteSpaceIndex, with: "")
             }
         }
-        
         let finalCount = mnemonic.count
         return (mnemonic, selectedLocation - (initialCount - finalCount))
     }
     
     func refresh(updateMnemonic: Bool = false) {
-        let viewModel = makeViewModel(updateMnemonic: updateMnemonic)
-        view.update(with: viewModel)
+        view.update(with: viewModel(updateMnemonic: updateMnemonic))
     }
     
-    func makeViewModel(
-        updateMnemonic: Bool
-    ) -> MnemonicConfirmationViewModel {
-        
+    func viewModel(updateMnemonic: Bool) -> MnemonicConfirmationViewModel {
         let prefixForPotentialwords = findPrefixForPotentialWords(
             for: mnemonic,
             selectedLocation: selectedLocation
@@ -135,7 +109,6 @@ private extension DefaultMnemonicConfirmationPresenter {
             mnemonic.trimmingCharacters(in: .whitespaces),
             salt: salt
         )
-        
         return .init(
             potentialWords: potentialWords,
             wordsInfo: wordsInfo,
@@ -149,7 +122,6 @@ private extension DefaultMnemonicConfirmationPresenter {
         for mnemonic: String,
         selectedLocation: Int
     ) -> String {
-        
         var prefix = ""
         for var i in 0..<mnemonic.count {
             let character = mnemonic[
@@ -158,16 +130,10 @@ private extension DefaultMnemonicConfirmationPresenter {
             if i == selectedLocation {
                 return prefix
             }
-            
             prefix.append(character)
-            
-            if character == " " {
-                prefix = ""
-            }
-            
+            if character == " " { prefix = "" }
             i += 1
         }
-
         return prefix
     }
     
@@ -176,12 +142,9 @@ private extension DefaultMnemonicConfirmationPresenter {
         with prefixForPotentialwords: String,
         at selectedLocation: Int
     ) -> [MnemonicConfirmationViewModel.WordInfo] {
-        
         var updatedWords = [MnemonicConfirmationViewModel.WordInfo]()
-        
         var location = 0
         var wordUpdated = false
-        
         for (index, wordInfo) in wordsInfo.enumerated() {
             location += wordInfo.word.count
             if selectedLocation <= location, !wordUpdated {
@@ -189,7 +152,6 @@ private extension DefaultMnemonicConfirmationPresenter {
                     let isInvalid = index > 11
                         ? wordInfo.isInvalid
                         : !service.isValidPrefix(wordInfo.word)
-                    
                     updatedWords.append(
                         .init(
                             word: wordInfo.word,
@@ -201,10 +163,8 @@ private extension DefaultMnemonicConfirmationPresenter {
             } else {
                 updatedWords.append(wordInfo)
             }
-            
             location += 1
         }
-        
         return updatedWords
     }
 }

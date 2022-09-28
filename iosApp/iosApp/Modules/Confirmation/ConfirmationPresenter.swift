@@ -6,7 +6,6 @@ import Foundation
 import web3lib
 
 enum ConfirmationPresenterEvent {
-
     case confirm
     case txSuccessCTATapped
     case txSuccessCTASecondaryTapped
@@ -16,14 +15,12 @@ enum ConfirmationPresenterEvent {
 }
 
 protocol ConfirmationPresenter {
-
     var contextType: ConfirmationWireframeContext.`Type` { get }
     func present()
     func handle(_ event: ConfirmationPresenterEvent)
 }
 
 final class DefaultConfirmationPresenter {
-
     private weak var view: ConfirmationView?
     private let wireframe: ConfirmationWireframe
     private let interactor: ConfirmationInteractor
@@ -46,28 +43,21 @@ final class DefaultConfirmationPresenter {
 }
 
 extension DefaultConfirmationPresenter: ConfirmationPresenter {
-    
     var contextType: ConfirmationWireframeContext.`Type` {
-        
         context.type
     }
 
     func present() {
-        
-        let viewModel = makeViewModel()
-        view?.update(with: viewModel)
+        view?.update(with: viewModel())
     }
 
     func handle(_ event: ConfirmationPresenterEvent) {
-
         switch event {
-            
         case .confirm:
             switch context.type {
             case .send, .sendNFT, .cultCastVote, .approveUniswap, .swap:
-                wireframe.navigate(to: .authenticate(makeAuthenticateContext()))
+                wireframe.navigate(to: .authenticate(authenticateContext()))
             }
-            
         case .txSuccessCTATapped:
             switch context.type {
             case .send:
@@ -81,18 +71,14 @@ extension DefaultConfirmationPresenter: ConfirmationPresenter {
             case .swap, .approveUniswap:
                 wireframe.dismiss()
             }
-            
         case .txSuccessCTASecondaryTapped:
             guard let txHash = txHash else { return }
             wireframe.navigate(to: .viewEtherscan(txHash: txHash))
-
         case .txFailedCTATapped:
             wireframe.dismiss()
-        
         case .txFailedCTASecondaryTapped:
             guard let error = error else { return }
             wireframe.navigate(to: .report(error: error))
-
         case .dismiss:
             wireframe.dismiss()
         }
@@ -101,73 +87,61 @@ extension DefaultConfirmationPresenter: ConfirmationPresenter {
 
 private extension DefaultConfirmationPresenter {
     
-    func makeViewModel() -> ConfirmationViewModel {
-        
+    func viewModel() -> ConfirmationViewModel {
         let content: ConfirmationViewModel.Content
-        
         switch context.type {
         case let .swap(swapData):
-            content = makeViewModelContent(forSwap: swapData)
+            content = contentViewModel(forSwap: swapData)
         case let .send(sendData):
-            content = makeViewModelContent(forSend: sendData)
+            content = contentViewModel(forSend: sendData)
         case let .sendNFT(sendNFTData):
-            content = makeViewModelContent(forSendNFT: sendNFTData)
+            content = contentViewModel(forSendNFT: sendNFTData)
         case let .cultCastVote(cultCastVoteData):
-            content = makeViewModelContent(forCultCastVote: cultCastVoteData)
+            content = contentViewModel(forCultCastVote: cultCastVoteData)
         case let .approveUniswap(approveUniswapData):
-            content = makeViewModelContent(forApproveUniswap: approveUniswapData)
+            content = contentViewModel(forApproveUniswap: approveUniswapData)
         }
-        
-        return .init(title: makeTitle(), content: content)
+        return .init(title: titleViewModel(), content: content)
     }
     
-    func makeTitle() -> String {
-        
+    func titleViewModel() -> String {
         Localized("confirmation.\(context.type.localizedTag).title")
     }
     
-    func makeViewModelContent(
+    func contentViewModel(
         forSwap data: ConfirmationWireframeContext.SwapContext
     ) -> ConfirmationViewModel.Content {
-        
-        let usdTokenFromValue = (
-            data.tokenFrom.value.toBigDec(
-                decimals: data.tokenFrom.token.decimals
+        let fiatFromValue = (
+            data.amountFrom.toBigDec(
+                decimals: data.currencyFrom.decimalsUInt
             ).mul(
-                value: data.tokenFrom.token.usdPrice.bigDec
-            ).mul(
-                value: Double(100).bigDec // this is because we want 2 decimals on currency
-            )
+                value: data.currencyFrom.fiatPrice.bigDec
+            ).mul(value: Double(100).bigDec) // this is because we want 2 decimals on currency
         ).toBigInt().formatStringCurrency()
-        let tokenFrom = ConfirmationViewModel.SwapViewModel.Token(
-            iconName: data.tokenFrom.iconName,
-            symbol: data.tokenFrom.token.symbol,
-            value: data.tokenFrom.currencyFormatted + " \(data.tokenFrom.token.symbol)",
-            usdValue: usdTokenFromValue
+        let currencyFrom = ConfirmationViewModel.SwapViewModel.Currency(
+            iconName: data.currencyFrom.iconName,
+            symbol: data.currencyFrom.symbol,
+            value: currencyFormatted(data.currencyFrom, value: data.amountFrom),
+            usdValue: fiatFromValue
         )
-
-        let usdTokenToValue = (
-            data.tokenTo.value.toBigDec(
-                decimals: data.tokenTo.token.decimals
+        let fiatToValue = (
+            data.amountTo.toBigDec(
+                decimals: data.currencyTo.decimalsUInt
             ).mul(
-                value: data.tokenTo.token.usdPrice.bigDec
-            ).mul(
-                value: Double(100).bigDec // this is because we want 2 decimals on currency
-            )
+                value: data.currencyTo.fiatPrice.bigDec
+            ).mul(value: Double(100).bigDec) // this is because we want 2 decimals on currency
         ).toBigInt().formatStringCurrency()
-        let tokenTo = ConfirmationViewModel.SwapViewModel.Token(
-            iconName: data.tokenTo.iconName,
-            symbol: data.tokenTo.token.symbol,
-            value: data.tokenTo.currencyFormatted + " \(data.tokenTo.token.symbol)",
-            usdValue: usdTokenToValue
+        let currencyTo = ConfirmationViewModel.SwapViewModel.Currency(
+            iconName: data.currencyTo.iconName,
+            symbol: data.currencyTo.symbol,
+            value: currencyFormatted(data.currencyTo, value: data.amountTo),
+            usdValue: fiatToValue
         )
-        
         let provider = ConfirmationViewModel.SwapViewModel.Provider(
             iconName: data.provider.iconName,
             name: data.provider.name,
             slippage: data.provider.slippage
         )
-        
         // TODO: @Annon to show price here
         let feeValueInToken = "value token"
         let feeValueInUSD = "🤷🏻‍♂️"
@@ -175,40 +149,36 @@ private extension DefaultConfirmationPresenter {
             value: feeValueInToken,
             usdValue: feeValueInUSD
         )
-
         return .swap(
             .init(
-                tokenFrom: tokenFrom,
-                tokenTo: tokenTo,
+                currencyFrom: currencyFrom,
+                currencyTo: currencyTo,
                 provider: provider,
                 estimatedFee: estimatedFee
             )
         )
     }
     
-    func makeViewModelContent(
+    func contentViewModel(
         forSend data: ConfirmationWireframeContext.SendContext
     ) -> ConfirmationViewModel.Content {
-        
-        let usdToken = data.token.token.usdPrice(for: data.token.value).formatStringCurrency()
-        let token = ConfirmationViewModel.SendViewModel.Token(
-            iconName: data.token.iconName,
-            symbol: data.token.token.symbol,
-            value: data.token.currencyFormatted + " \(data.token.token.symbol)",
-            usdValue: usdToken
+        let fiatValue = (
+            data.amount.toBigDec(
+                decimals: data.currency.decimalsUInt
+            ).mul(
+                value: data.currency.fiatPrice.bigDec
+            ).mul(value: Double(100).bigDec) // this is because we want 2 decimals on currency
+        ).toBigInt().formatStringCurrency()
+        let currency = ConfirmationViewModel.SendViewModel.Currency(
+            iconName: data.currency.iconName,
+            symbol: data.currency.symbol,
+            value: currencyFormatted(data.currency, value: data.amount),
+            usdValue: fiatValue
         )
-        
         let destination = ConfirmationViewModel.SendViewModel.Destination(
-            from: Formatter.address.string(
-                data.destination.from,
-                for: data.token.token.network.toNetwork()
-            ),
-            to: Formatter.address.string(
-                data.destination.to,
-                for: data.token.token.network.toNetwork()
-            )
+            from: Formatter.address.string(data.addressFrom, for: data.network),
+            to: Formatter.address.string(data.addressTo, for: data.network)
         )
-
         // TODO: @Annon to show price here
         let feeValueInToken = "value token"
         let feeValueInUSD = "🤷🏻‍♂️"
@@ -216,33 +186,24 @@ private extension DefaultConfirmationPresenter {
             value: feeValueInToken,
             usdValue: feeValueInUSD
         )
-
         return .send(
             .init(
-                token: token,
+                currency: currency,
                 destination: destination,
                 estimatedFee: estimatedFee
             )
         )
     }
     
-    func makeViewModelContent(
+    func contentViewModel(
         forSendNFT data: ConfirmationWireframeContext.SendNFTContext
     ) -> ConfirmationViewModel.Content {
-        
         // TODO: Fix when supporting sending NFTs on different networks...
         let network = Network.Companion().ethereum()
         let destination = ConfirmationViewModel.SendNFTViewModel.Destination(
-            from: Formatter.address.string(
-                data.destination.from,
-                for:network
-            ),
-            to: Formatter.address.string(
-                data.destination.to,
-                for: network
-            )
+            from: Formatter.address.string(data.addressFrom, for: network),
+            to: Formatter.address.string(data.addressTo, for: network)
         )
-
         // TODO: @Annon to show price here
         let feeValueInToken = "value token"
         let feeValueInUSD = "🤷🏻‍♂️"
@@ -250,7 +211,6 @@ private extension DefaultConfirmationPresenter {
             value: feeValueInToken,
             usdValue: feeValueInUSD
         )
-
         return .sendNFT(
             .init(
                 nftItem: data.nftItem,
@@ -260,10 +220,9 @@ private extension DefaultConfirmationPresenter {
         )
     }
     
-    func makeViewModelContent(
+    func contentViewModel(
         forCultCastVote data: ConfirmationWireframeContext.CultCastVoteContext
     ) -> ConfirmationViewModel.Content {
-        
         .cultCastVote(
             .init(
                 action: data.approve ? Localized("approve") : Localized("reject"),
@@ -272,10 +231,9 @@ private extension DefaultConfirmationPresenter {
         )
     }
     
-    func makeViewModelContent(
+    func contentViewModel(
         forApproveUniswap data: ConfirmationWireframeContext.ApproveUniswapContext
     ) -> ConfirmationViewModel.Content {
-        
         // TODO: @Annon to show price here
         let feeValueInToken = "value token"
         let feeValueInUSD = "🤷🏻‍♂️"
@@ -283,11 +241,10 @@ private extension DefaultConfirmationPresenter {
             value: feeValueInToken,
             usdValue: feeValueInUSD
         )
-        
         return .approveUniswap(
             .init(
-                iconName: data.iconName,
-                symbol: data.token.symbol,
+                iconName: data.currency.iconName,
+                symbol: data.currency.symbol,
                 fee: estimatedFee
             )
         )
@@ -297,9 +254,8 @@ private extension DefaultConfirmationPresenter {
 private extension DefaultConfirmationPresenter {
     
     func showTransactionInProgress() {
-        
         let viewModel = ConfirmationViewModel(
-            title: makeTitle(),
+            title: titleViewModel(),
             content: .inProgress(
                 .init(
                     title: Localized("confirmation.tx.inProgress.\(context.type.localizedTag).title"),
@@ -316,7 +272,7 @@ private extension DefaultConfirmationPresenter {
     func showTransactionSuccess(_ response: TransactionResponse) {
         self.txHash = response.hash
         let viewModel = ConfirmationViewModel(
-            title: makeTitle(),
+            title: titleViewModel(),
             content: .success(
                 .init(
                     title: Localized("confirmation.tx.success.\(context.type.localizedTag).title"),
@@ -335,7 +291,7 @@ private extension DefaultConfirmationPresenter {
     func showTransactionFailed(_ error: Error) {
         self.error = error
         let viewModel = ConfirmationViewModel(
-            title: makeTitle(),
+            title: titleViewModel(),
             content: .failed(
                 .init(
                     title: Localized("confirmation.tx.failed.\(context.type.localizedTag).title"),
@@ -351,20 +307,17 @@ private extension DefaultConfirmationPresenter {
 
 private extension DefaultConfirmationPresenter {
     
-    func makeAuthenticateContext() -> AuthenticateContext {
-
+    func authenticateContext() -> AuthenticateContext {
         .init(
             title: Localized("authenticate.title.\(context.type.localizedTag)"),
             keyStoreItem: nil,
-            handler: makeOnAuthenticatedHandler()
+            handler: onAuthenticatedHandler()
         )
     }
     
-    func makeOnAuthenticatedHandler() -> (Result<(String, String), Error>) -> Void {
-        
+    func onAuthenticatedHandler() -> (Result<(String, String), Error>) -> Void {
         {
             [weak self] result in
-            
             guard let self = self else { return }
             switch result {
             case let .success((password, salt)):
@@ -393,10 +346,9 @@ private extension DefaultConfirmationPresenter {
         case let .approveUniswap(context):
             context.onApproved((password: password, salt: salt))
             wireframe.dismiss()
-            
         case let .swap(context):
             interactor.executeSwap(
-                network: context.tokenFrom.token.network.toNetwork(),
+                network: context.network,
                 password: password,
                 salt: salt,
                 swapService: context.swapService,
@@ -411,12 +363,12 @@ private extension DefaultConfirmationPresenter {
                     }
                 }
             )
-
         case let .send(data):
             interactor.send(
-                tokenFrom: data.token.token,
-                toAddress: data.destination.to,
-                amount: data.token.value,
+                addressTo: data.addressTo,
+                network: data.network,
+                currency: data.currency,
+                amount: data.amount,
                 fee: data.estimatedFee,
                 password: password,
                 salt: salt,
@@ -429,15 +381,14 @@ private extension DefaultConfirmationPresenter {
                     }
                 }
             )
-            
         case let .sendNFT(data):
             interactor.sendNFT(
-                from: data.destination.from,
-                to: data.destination.to,
+                addressFrom: data.addressFrom,
+                addressTo: data.addressTo,
+                network: data.network,
                 nft: data.nftItem,
                 password: password,
                 salt: salt,
-                network: Network.Companion().ethereum(),
                 handler: { [weak self] result in
                     switch result {
                     case let .success(response):
@@ -447,7 +398,6 @@ private extension DefaultConfirmationPresenter {
                     }
                 }
             )
-            
         case let .cultCastVote(data):
             interactor.castVote(
                 proposalId: data.cultProposal.id,
@@ -467,30 +417,29 @@ private extension DefaultConfirmationPresenter {
     }
 }
 
-private extension ConfirmationWireframeContext.CurrencyData {
+private extension ConfirmationPresenter {
     
-    var currencyFormatted: String {
-        
+    func currencyFormatted(_ currency: Currency, value: BigInt) -> String {
         var currencyFormatted = value.formatString(
             type: .long(minDecimals: 10),
-            decimals: token.decimals
+            decimals: currency.decimalsUInt
         )
         if currencyFormatted.nonDecimals.count > 10 {
             currencyFormatted = value.formatString(
                 type: .long(minDecimals: 4),
-                decimals: token.decimals
+                decimals: currency.decimalsUInt
             )
         } else if currencyFormatted.nonDecimals.count > 6 {
             currencyFormatted = value.formatString(
                 type: .long(minDecimals: 5),
-                decimals: token.decimals
+                decimals: currency.decimalsUInt
             )
         } else if currencyFormatted.nonDecimals.count > 3 {
             currencyFormatted = value.formatString(
                 type: .long(minDecimals: 7),
-                decimals: token.decimals
+                decimals: currency.decimalsUInt
             )
         }
-        return currencyFormatted
+        return currencyFormatted + " \(currency.symbol)"
     }
 }

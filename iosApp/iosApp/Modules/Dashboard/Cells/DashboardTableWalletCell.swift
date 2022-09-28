@@ -25,9 +25,7 @@ final class DashboardTableWalletCell: CollectionViewCell {
         chevronView.tintColor = Theme.colour.labelSecondary
     }
     
-    override func setSelected(_ selected: Bool) {
-        // do nothing
-    }
+    override func setSelected(_ selected: Bool) {}
 }
 
 // MARK: - ViewModel

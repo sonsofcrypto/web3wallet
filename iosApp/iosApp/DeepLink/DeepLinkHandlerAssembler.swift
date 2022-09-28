@@ -7,9 +7,7 @@ import Foundation
 final class DeepLinkHandlerAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
-        
         registry.register(scope: .singleton) { _ -> DeepLinkHandler in
-            
             DefaultDeepLinkHandler()
         }
     }

@@ -5,7 +5,6 @@
 import UIKit
 
 final class ConfirmationCultCastVoteView: UIView {
-    
     private let viewModel: ConfirmationViewModel.CultCastVoteViewModel
     private let onConfirmHandler: () -> Void
     
@@ -13,12 +12,9 @@ final class ConfirmationCultCastVoteView: UIView {
         viewModel: ConfirmationViewModel.CultCastVoteViewModel,
         onConfirmHandler: @escaping () -> Void
     ) {
-        
         self.viewModel = viewModel
         self.onConfirmHandler = onConfirmHandler
-        
         super.init(frame: .zero)
-        
         configureUI()
     }
     
@@ -30,27 +26,22 @@ final class ConfirmationCultCastVoteView: UIView {
 private extension ConfirmationCultCastVoteView {
     
     func configureUI() {
-        
         let emptyView = UIView()
         emptyView.backgroundColor = .clear
         let views: [UIView] = [
-            makeCultLogo(),
-            makeAction(),
-            makeTitle(),
+            cultLogo(),
+            action(),
+            title(),
             emptyView,
-            makeConfirmButton()
+            confirmButton()
         ]
-        
         let stackView = VStackView(views)
         stackView.spacing = Theme.constant.padding
-
         addSubview(stackView)
-                
         stackView.addConstraints(.toEdges)
     }
     
-    func makeAction() -> UIView {
-        
+    func action() -> UIView {
         let label = UILabel()
         label.apply(style: .title3)
         label.text = viewModel.action
@@ -58,8 +49,7 @@ private extension ConfirmationCultCastVoteView {
         return label
     }
 
-    func makeTitle() -> UIView {
-        
+    func title() -> UIView {
         let label = UILabel()
         label.apply(style: .body)
         label.text = viewModel.name
@@ -68,16 +58,13 @@ private extension ConfirmationCultCastVoteView {
         return label
     }
     
-    func makeCultLogo() -> UIView {
-        
+    func cultLogo() -> UIView {
         let image = UIImageView()
         image.image = "cult-dao-big-icon".assetImage
         image.contentMode = .scaleAspectFit
-
         let view = UIView()
         view.backgroundColor = .clear
         view.addSubview(image)
-        
         image.addConstraints(
             [
                 .layout(anchor: .widthAnchor, constant: .equalTo(constant: 100)),
@@ -87,12 +74,10 @@ private extension ConfirmationCultCastVoteView {
                 .layout(anchor: .centerXAnchor),
             ]
         )
-        
         return view
     }
     
-    func makeConfirmButton() -> UIButton {
-        
+    func confirmButton() -> UIButton {
         let button = Button()
         button.style = .primary
         button.setTitle(Localized("confirmation.cultCastVote.confirm"), for: .normal)
@@ -101,7 +86,6 @@ private extension ConfirmationCultCastVoteView {
     }
     
     @objc func confirmTapped() {
-        
         onConfirmHandler()
     }
 }

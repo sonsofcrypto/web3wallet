@@ -3,16 +3,16 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3lib
 
 struct NetworkPickerWireframeContext {
     
-    let presentationStyle: PresentationStyle
-    let onNetworkSelected: (Web3Network) -> Void
+    let onNetworkSelected: (Network) -> Void
 }
 
 enum NetworkPickerWireframeDestination {
     
-    case select(Web3Network)
+    case select(Network)
 }
 
 protocol NetworkPickerWireframe {
@@ -23,67 +23,37 @@ protocol NetworkPickerWireframe {
 
 final class DefaultNetworkPickerWireframe {
     
-    private weak var presentingIn: UIViewController!
+    private weak var parent: UIViewController?
     private let context: NetworkPickerWireframeContext
-    private let web3Service: Web3ServiceLegacy
+    
+    private weak var vc: UIViewController?
     
     init(
-        presentingIn: UIViewController,
-        context: NetworkPickerWireframeContext,
-        web3Service: Web3ServiceLegacy
+        _ parent: UIViewController?,
+        context: NetworkPickerWireframeContext
     ) {
-        self.presentingIn = presentingIn
+        self.parent = parent
         self.context = context
-        self.web3Service = web3Service
     }
 }
 
 extension DefaultNetworkPickerWireframe: NetworkPickerWireframe {
     
     func present() {
-        
         let vc = wireUp()
-        
-        switch context.presentationStyle {
-            
-        case .embed:
-            fatalError("This module can't be embedded in a tab bar")
-            
-        case .present:
-            presentingIn.present(vc, animated: true)
-            
-        case .push:
-            guard let presentingIn = presentingIn as? NavigationController else { return }
-            presentingIn.pushViewController(vc, animated: true)
-        }
+        parent?.show(vc, sender: self)
     }
     
     func navigate(to destination: NetworkPickerWireframeDestination) {
-        
         switch destination {
         case let .select(network):
-        
             context.onNetworkSelected(network)
             dismiss()
         }
     }
     
     func dismiss() {
-        
-        switch context.presentationStyle {
-            
-        case .embed:
-            fatalError("This module can't be embedded in a tab bar")
-        
-        case .present:
-            
-            presentingIn.presentedViewController?.dismiss(animated: true)
-
-        case .push:
-            
-            guard let navigationController = presentingIn as? NavigationController else { return }
-            navigationController.popViewController(animated: true)
-        }
+        vc?.popOrDismiss()
     }
 }
 
@@ -91,31 +61,17 @@ private extension DefaultNetworkPickerWireframe {
     
     func wireUp() -> UIViewController {
         
-        let interactor = DefaultNetworkPickerInteractor(
-            web3Service: web3Service
-        )
+        let interactor = DefaultNetworkPickerInteractor()
         let vc: NetworkPickerViewController = UIStoryboard(.networkPicker).instantiate()
         let presenter = DefaultNetworkPickerPresenter(
             view: vc,
-            interactor: interactor,
             wireframe: self,
+            interactor: interactor,
             context: context
         )
         
         vc.presenter = presenter
-        
-        switch context.presentationStyle {
-        case .embed:
-            
-            fatalError("This module can't be embedded in a tab bar")
-        case .present, .push:
-            
-            vc.hidesBottomBarWhenPushed = true
-            
-            guard !(presentingIn is NavigationController) else { return vc }
-            
-            let navigationController = NavigationController(rootViewController: vc)
-            return navigationController
-        }
+        self.vc = vc
+        return vc
     }
 }

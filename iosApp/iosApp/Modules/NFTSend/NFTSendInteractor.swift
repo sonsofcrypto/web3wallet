@@ -6,34 +6,17 @@ import Foundation
 import web3lib
 
 protocol NFTSendInteractor: AnyObject {
-
-    var defaultToken: Web3Token { get }
     var walletAddress: String? { get }
-    func isAddressValid(
-        address: String,
-        network: Web3Network
-    ) -> Bool
-    
-    func addressFormattedShort(
-        address: String,
-        network: Web3Network
-    ) -> String
-    
-    func tokenIconName(for token: Web3Token) -> String
-    func networkFees(network: Web3Network) -> [Web3NetworkFee]
-    func networkFeeInUSD(network: Web3Network, fee: Web3NetworkFee) -> BigInt
-    func networkFeeInSeconds(network: Web3Network, fee: Web3NetworkFee) -> Int
-    func networkFeeInNetworkToken(network: Web3Network, fee: Web3NetworkFee) -> String
+    func networkFees(network: Network) -> [Web3NetworkFee]
+    func networkFeeInUSD(network: Network, fee: Web3NetworkFee) -> BigInt
+    func networkFeeInSeconds(network: Network, fee: Web3NetworkFee) -> Int
+    func networkFeeInNetworkToken(network: Network, fee: Web3NetworkFee) -> String
 }
 
 final class DefaultNFTSendInteractor {
-
-    private let web3Service: Web3ServiceLegacy
     private let networksService: NetworksService
-
-
-    init(web3Service: Web3ServiceLegacy, networksService: NetworksService) {
-        self.web3Service = web3Service
+    
+    init(networksService: NetworksService) {
         self.networksService = networksService
     }
 }
@@ -41,54 +24,25 @@ final class DefaultNFTSendInteractor {
 extension DefaultNFTSendInteractor: NFTSendInteractor {
     
     var walletAddress: String? {
-        return try? networksService.wallet()?.address()
-            .toHexStringAddress()
-            .hexString
+        try? networksService.wallet()?.address().toHexStringAddress().hexString
     }
     
-    var defaultToken: Web3Token {
-        
-        web3Service.myTokens.first ?? web3Service.allTokens.first!
-    }
-
-    func isAddressValid(
-        address: String,
-        network: Web3Network
-    ) -> Bool {
-        
-        web3Service.isValid(address: address, forNetwork: network)
-    }
-    
-    func addressFormattedShort(
-        address: String,
-        network: Web3Network
-    ) -> String {
-        
-        web3Service.addressFormattedShort(address: address, network: network)
-    }
-    
-    func tokenIconName(for token: Web3Token) -> String {
-        
-        web3Service.tokenIconName(for: token)
-    }
-    
-    func networkFees(network: Web3Network) -> [Web3NetworkFee] {
-        
+    func networkFees(network: Network) -> [Web3NetworkFee] {
         [.low, .medium, .high]
     }
 
-    func networkFeeInUSD(network: Web3Network, fee: Web3NetworkFee) -> BigInt {
-        
-        web3Service.networkFeeInUSD(network: network, fee: fee)
+    func networkFeeInUSD(network: Network, fee: Web3NetworkFee) -> BigInt {
+        // TODO: Connect Fee
+        .zero
     }
     
-    func networkFeeInSeconds(network: Web3Network, fee: Web3NetworkFee) -> Int {
-    
-        web3Service.networkFeeInSeconds(network: network, fee: fee)
+    func networkFeeInSeconds(network: Network, fee: Web3NetworkFee) -> Int {
+        // TODO: Connect Fee
+        1
     }
 
-    func networkFeeInNetworkToken(network: Web3Network, fee: Web3NetworkFee) -> String {
-        
-        web3Service.networkFeeInNetworkToken(network: network, fee: fee)
+    func networkFeeInNetworkToken(network: Network, fee: Web3NetworkFee) -> String {
+        // TODO: Connect Fee
+        "🤷🏻‍♂️"
     }
 }

@@ -14,10 +14,7 @@ protocol MnemonicNewWireframe {
     func navigate(to destination: MnemonicNewWireframeDestination)
 }
 
-// MARK: - class DefaultMnemonicWireframe {
-
 final class DefaultMnemonicNewWireframe {
-
     private weak var parent: UIViewController!
     private let context: MnemonicNewContext
     private let keyStoreService: KeyStoreService
@@ -25,7 +22,7 @@ final class DefaultMnemonicNewWireframe {
     private weak var vc: UIViewController!
 
     init(
-        parent: UIViewController?,
+        _ parent: UIViewController?,
         context: MnemonicNewContext,
         keyStoreService: KeyStoreService
     ) {
@@ -42,10 +39,9 @@ extension DefaultMnemonicNewWireframe: MnemonicNewWireframe {
     func present() {
         let vc = wireUp()
         let presentingTopVc = (parent as? UINavigationController)?.topVc
-        let presentedTopVc = (vc as? UINavigationController)?.topVc
-
         switch ServiceDirectory.transitionStyle {
         case .cardFlip:
+            let presentedTopVc = (vc as? UINavigationController)?.topVc
             let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
             self.vc = vc
             vc.modalPresentationStyle = .overFullScreen
@@ -53,8 +49,6 @@ extension DefaultMnemonicNewWireframe: MnemonicNewWireframe {
         case .sheet:
             vc.modalPresentationStyle = .automatic
         }
-
-        self.vc = vc
         presentingTopVc?.present(vc, animated: true)
     }
 
@@ -66,30 +60,28 @@ extension DefaultMnemonicNewWireframe: MnemonicNewWireframe {
     }
 }
 
-extension DefaultMnemonicNewWireframe {
+private extension DefaultMnemonicNewWireframe {
 
-    private func wireUp() -> UIViewController {
-        
+    func wireUp() -> UIViewController {
         let interactor = DefaultMnemonicNewInteractor(keyStoreService)
         let vc: MnemonicNewViewController = UIStoryboard(.mnemonicNew).instantiate()
         let presenter = DefaultMnemonicNewPresenter(
-            context: context,
             view: vc,
+            wireframe: self,
             interactor: interactor,
-            wireframe: self
+            context: context
         )
-
         vc.presenter = presenter
-        return NavigationController(rootViewController: vc)
+        let nc = NavigationController(rootViewController: vc)
+        self.vc = nc
+        return nc
     }
 }
 
 // MARK: - Constant
 
 extension DefaultMnemonicNewWireframe {
-
     enum Constant {
-
         static let saltExplanationURL = URL(
             string: "https://www.youtube.com/watch?v=XqB5xA62gLw"
         )!

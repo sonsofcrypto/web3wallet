@@ -6,22 +6,16 @@ import Foundation
 import web3lib
 
 protocol MnemonicConfirmationWireframeFactory {
-
-    func makeWireframe(
-        _ parent: UIViewController
-    ) -> MnemonicConfirmationWireframe
+    func make(_ parent: UIViewController?) -> MnemonicConfirmationWireframe
 }
 
 final class DefaultMnemonicConfirmationWireframeFactory {
-    
     private let keyStoreService: KeyStoreService
     private let web3Service: Web3ServiceLegacy
-    
     init(
         keyStoreService: KeyStoreService,
         web3Service: Web3ServiceLegacy
     ) {
-        
         self.keyStoreService = keyStoreService
         self.web3Service = web3Service
     }
@@ -29,16 +23,23 @@ final class DefaultMnemonicConfirmationWireframeFactory {
 
 extension DefaultMnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory {
     
-    func makeWireframe(_ parent: UIViewController) -> MnemonicConfirmationWireframe {
-        
+    func make(_ parent: UIViewController?) -> MnemonicConfirmationWireframe {
         let service = DefaultMnemonicConfirmationService(
             keyStoreService: keyStoreService,
             web3Service: web3Service
         )
-        
-        return DefaultMnemonicConfirmationWireframe(
-            parent: parent,
-            service: service
-        )
+        return DefaultMnemonicConfirmationWireframe(parent, service: service)
+    }
+}
+
+final class MnemonicConfirmationWireframeFactoryAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> MnemonicConfirmationWireframeFactory in
+            DefaultMnemonicConfirmationWireframeFactory(
+                keyStoreService: resolver.resolve(),
+                web3Service: resolver.resolve()
+            )
+        }
     }
 }

@@ -5,9 +5,7 @@
 extension NFTDetailViewController {
     
     func refreshNFT(with item: NFTItem, and collection: NFTCollection) {
-        
         scrollableContentView.removeAllSubview()
-        
         let content = makeNFTContent(with: item, and: collection)
         scrollableContentView.addSubview(content)
         content.addConstraints(
@@ -36,25 +34,19 @@ private extension NFTDetailViewController {
         with item: NFTItem,
         and collection: NFTCollection
     ) -> UIView {
-        
         var content: [UIView] = [
             makeNFTImage(with: item),
             makeDescription(with: collection)
         ]
-        
         content.append(contentsOf: makeProperties(with: item))
         content.append(contentsOf: makeOther(with: item))
-        
         content.append(makeSendButton())
-        
         let vStackView = VStackView(content)
         vStackView.spacing = Theme.constant.padding
-        
         return vStackView
     }
     
     func makeSendButton() -> Button {
-        
         let button = Button()
         button.style = .primary
         button.setTitle(Localized("nft.detail.button.send"), for: .normal)
@@ -63,7 +55,6 @@ private extension NFTDetailViewController {
     }
     
     @objc func sendNFT() {
-        
         presenter.handle(.send)
     }
 }

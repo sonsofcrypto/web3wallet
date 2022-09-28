@@ -29,7 +29,6 @@ struct AccountInteractorTransaction {
 }
 
 final class DefaultAccountInteractor {
-    private let wallet: Wallet
     private (set) var network: Network
     private let _currency: Currency
     private let networksService: NetworksService
@@ -40,15 +39,14 @@ final class DefaultAccountInteractor {
     private(set) var loadingTransactions: Bool = false
 
     init(
-        wallet: Wallet,
+        network: Network,
         currency: Currency,
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
         transactionService: IosEtherscanService
     ) {
-        self.wallet = wallet
-        self.network = wallet.network() ?? Network.ethereum()
+        self.network = network
         self._currency = currency
         self.networksService = networksService
         self.currencyStoreService = currencyStoreService
@@ -64,9 +62,7 @@ extension DefaultAccountInteractor: AccountInteractor {
         walletService.address(network: network) ?? ""
     }
 
-    func currency() -> Currency {
-        self._currency
-    }
+    func currency() -> Currency { self._currency }
 
     func metadata() -> CurrencyMetadata? {
         currencyStoreService.metadata(currency: _currency)
@@ -114,9 +110,7 @@ extension DefaultAccountInteractor: AccountInteractor {
 
     func fetchTransactions(_ handler: @escaping ([AccountInteractorTransaction]) -> ()) {
         guard let address = walletService.address(network: network) else { return }
-
         loadingTransactions = true
-
         guard currency().type != .erc20 else {
             return walletService.fetchTransferLogs(
                 currency: currency(),
@@ -131,13 +125,10 @@ extension DefaultAccountInteractor: AccountInteractor {
                 }
             )
         }
-
         transactionService.fetchTransactionHistory(for: address, network: network) { result in
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return}
-
                 self.loadingTransactions = false
-
                 switch result {
                 case let .success(transactions):
                     handler(self.toTransactions(from: transactions))
@@ -168,7 +159,7 @@ extension DefaultAccountInteractor: AccountInteractor {
                     isReceive: isReceive,
                     txHash: $0.hash
                 )
-        }
+            }
     }
 
     func toTransactions(
@@ -176,9 +167,8 @@ extension DefaultAccountInteractor: AccountInteractor {
     ) -> [AccountInteractorTransaction] {
         transactions.map {
             guard let topic1 = ($0.topics?[1] as? Topic.TopicValue)?.value,
-                  let topic2 = ($0.topics?[2] as? Topic.TopicValue)?.value else {
-                return nil
-            }
+                  let topic2 = ($0.topics?[2] as? Topic.TopicValue)?.value
+            else { return nil }
             let from: Address.HexString = abiDecodeAddress(topic1)
             let to: Address.HexString = abiDecodeAddress(topic2)
             let amount: BigInt = abiDecodeBigInt($0.data)

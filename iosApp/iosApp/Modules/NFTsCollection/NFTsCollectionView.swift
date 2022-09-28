@@ -5,54 +5,37 @@
 import UIKit
 
 protocol NFTsCollectionView: AnyObject {
-
     func update(with viewModel: NFTsCollectionViewModel)
 }
 
 final class NFTsCollectionViewController: BaseViewController {
-
-    var presenter: NFTsCollectionPresenter!
-    
     private (set) weak var mainScrollView: UIScrollView!
     weak var scrollableContentView: UIView!
 
+    var presenter: NFTsCollectionPresenter!
+    
     private (set) var viewModel: NFTsCollectionViewModel?
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         configureUI()
-
         refresh()
     }
 }
 
 extension NFTsCollectionViewController: NFTsCollectionView {
     
-    @objc func refresh() {
-        
-        presenter.present()
-    }
+    @objc func refresh() { presenter.present() }
 
     func update(with viewModel: NFTsCollectionViewModel) {
-
         self.viewModel = viewModel
-        
         self.mainScrollView.refreshControl?.endRefreshing()
-        
         switch viewModel {
-            
-        case .loading:
-            break
-            
+        case .loading: break
         case let .loaded(collection, _):
-
             title = collection.title
             refreshNFTs()
-            
-        case .error:
-            break
+        case .error: break
         }
     }
 }
@@ -60,14 +43,11 @@ extension NFTsCollectionViewController: NFTsCollectionView {
 private extension NFTsCollectionViewController {
     
     func configureUI() {
-        
         title = Localized("nfts")
-        
         let mainScrollView = makeMainScrollView()
         view.addSubview(mainScrollView)
         self.mainScrollView = mainScrollView
         mainScrollView.addConstraints(.toEdges)
-        
         let showBack = (navigationController?.viewControllers.count ?? 0) > 1
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: showBack ? "chevron.left".assetImage : "xmark".assetImage,
@@ -75,15 +55,11 @@ private extension NFTsCollectionViewController {
             target: self,
             action: #selector(dismissTapped)
         )
-
         // TODO: Enable once switcher to collection view
         // (mainScrollView as? ScrollView)?.overScrollView.image = "overscroll_ape".assetImage
-
     }
     
     @objc func dismissTapped() {
-        
         presenter.handle(.dismiss)
     }
-
 }

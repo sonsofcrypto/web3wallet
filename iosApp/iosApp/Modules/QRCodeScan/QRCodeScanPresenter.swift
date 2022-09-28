@@ -3,15 +3,14 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 enum QRCodeScanPresenterEvent {
-
     case qrCode(String)
     case dismiss
 }
 
 protocol QRCodeScanPresenter {
-
     func present()
     func handle(_ event: QRCodeScanPresenterEvent)
 }
@@ -19,21 +18,21 @@ protocol QRCodeScanPresenter {
 final class DefaultQRCodeScanPresenter {
 
     private weak var view: QRCodeScanView?
-    private let interactor: QRCodeScanInteractor
     private let wireframe: QRCodeScanWireframe
+    private let interactor: QRCodeScanInteractor
     private let context: QRCodeScanWireframeContext
     
     private var qrCodeDetected = false
     
     init(
         view: QRCodeScanView,
-        interactor: QRCodeScanInteractor,
         wireframe: QRCodeScanWireframe,
+        interactor: QRCodeScanInteractor,
         context: QRCodeScanWireframeContext
     ) {
         self.view = view
-        self.interactor = interactor
         self.wireframe = wireframe
+        self.interactor = interactor
         self.context = context
     }
 }
@@ -41,45 +40,14 @@ final class DefaultQRCodeScanPresenter {
 extension DefaultQRCodeScanPresenter: QRCodeScanPresenter {
 
     func present() {
-
         updateView(with: nil)
     }
 
     func handle(_ event: QRCodeScanPresenterEvent) {
-
         switch event {
-            
         case let .qrCode(qrCode):
-            
-            switch context.type {
-                
-            case .`default`:
-                // NOTE: This guard is to prevent calling multiple times wireframe.navigate(to: .qrCode())
-                // since the view keeps firing multiple times the same code being scanned
-                guard !qrCodeDetected else { return }
-                qrCodeDetected = true
-                wireframe.navigate(to: .qrCode(qrCode))
-                
-            case let .network(network):
-                
-                guard let address = interactor.validateAddress(
-                    address: qrCode,
-                    for: network
-                ) else {
-                    
-                    let failureMessage = makeFailureMessage(for: qrCode, and: network)
-                    updateView(with: failureMessage)
-                    return
-                }
-                // NOTE: This guard is to prevent calling multiple times wireframe.navigate(to: .qrCode())
-                // since the view keeps firing multiple times the same code being scanned
-                guard !qrCodeDetected else { return }
-                qrCodeDetected = true
-                wireframe.navigate(to: .qrCode(address))
-            }
-            
+            handleQRCode(qrCode)
         case .dismiss:
-            
             wireframe.dismiss()
         }
     }
@@ -87,20 +55,39 @@ extension DefaultQRCodeScanPresenter: QRCodeScanPresenter {
 
 private extension DefaultQRCodeScanPresenter {
     
+    func handleQRCode(_ qrCode: String) {
+        switch context.type {
+        case .`default`:
+            // NOTE: This guard is to prevent calling multiple times wireframe.navigate(to: .qrCode())
+            // since the view keeps firing multiple times the same code being scanned
+            guard !qrCodeDetected else { return }
+            qrCodeDetected = true
+            wireframe.navigate(to: .qrCode(qrCode))
+        case let .network(network):
+            guard let address = interactor.validateAddress(
+                address: qrCode,
+                for: network
+            ) else {
+                let errorMessage = Localized("qrCodeScan.error.invalid.address", arg: network.name)
+                updateView(with: "\(qrCode)\n\(errorMessage)")
+                return
+            }
+            // NOTE: This guard is to prevent calling multiple times wireframe.navigate(to: .qrCode())
+            // since the view keeps firing multiple times the same code being scanned
+            guard !qrCodeDetected else { return }
+            qrCodeDetected = true
+            wireframe.navigate(to: .qrCode(address))
+        }
+    }
+}
+
+private extension DefaultQRCodeScanPresenter {
+    
     func updateView(with failure: String?) {
-        
         let viewModel = QRCodeScanViewModel(
             title: Localized("qrCodeScan.title"),
             failure: failure
         )
         view?.update(with: viewModel)
-    }
-    
-    func makeFailureMessage(
-        for qrCode: String,
-        and network: Web3Network
-    ) -> String {
-        
-        "\(qrCode)\nis not a valid \(network.name) address"
     }
 }

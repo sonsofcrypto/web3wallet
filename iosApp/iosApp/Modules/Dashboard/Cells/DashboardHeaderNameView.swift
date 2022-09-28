@@ -41,22 +41,18 @@ private extension DashboardHeaderNameView {
     func configureUI() {
         label.font = Theme.font.networkTitle
         label.textColor = Theme.colour.labelPrimary
-        
         fuelCostLabel.font = Theme.font.dashboardSectionFuel
         fuelCostLabel.textColor = Theme.colour.labelPrimary
         fuelCostImageView.contentMode = .bottom
-
         // TODO: This should be button of certain type
         rightAction.font = Theme.font.body
         rightAction.textColor = Theme.colour.labelPrimary
         rightAction.isHidden = true
         rightAction.add(.targetAction(.init(target: self, selector: #selector(moreTapped))))
-
         let offset = Theme.type.isThemeIOS ? 0 : -Theme.constant.padding.half + 1
         stack.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stack)
         stack.contraintToSuperView(bottom: offset)
-
         addSubview(lineView)
 //        lineView.isHidden = Theme.type.isThemeIOS
     }
@@ -70,6 +66,7 @@ private extension DashboardHeaderNameView {
 
 extension DashboardHeaderNameView {
 
+    @discardableResult
     func update(
         with title: String,
         and network: DashboardViewModel.Section.Header.Network?,

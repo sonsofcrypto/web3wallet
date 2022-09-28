@@ -6,10 +6,9 @@ import Foundation
 import web3lib
 
 struct MnemonicNewContext {
-
     typealias KeyStoreItemHandler = ((KeyStoreItem) -> Void)
 
-    var didCreteKeyStoreItemHandler: KeyStoreItemHandler?
+    let didCreteKeyStoreItemHandler: KeyStoreItemHandler?
 
     init(createHandler: KeyStoreItemHandler? = nil) {
         self.didCreteKeyStoreItemHandler = createHandler

@@ -6,12 +6,10 @@ import Foundation
 import web3lib
 
 protocol RootPresenter {
-
     func present()
 }
 
 final class DefaultRootPresenter {
-
     private weak var view: RootView?
     private let wireframe: RootWireframe
     private let keyStoreService: KeyStoreService
@@ -30,7 +28,6 @@ final class DefaultRootPresenter {
 extension DefaultRootPresenter: RootPresenter {
 
     func present() {
-
         wireframe.navigate(
             to: keyStoreService.items().isEmpty ? .keyStore : .dashboard,
             animated: false

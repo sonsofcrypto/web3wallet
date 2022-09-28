@@ -5,7 +5,6 @@
 import UIKit
 
 protocol SettingsView: AnyObject {
-
     func update(with viewModel: SettingsViewModel)
 }
 
@@ -18,19 +17,15 @@ final class SettingsViewController: BaseViewController {
     private var viewModel: SettingsViewModel!
 
     override func viewDidLoad() {
-
         super.viewDidLoad()
-        
         configureUI()
-        
         presenter.present()
     }
 }
 
 extension SettingsViewController {
-    
+
     @objc func dismissAction() {
-        
         presenter.handle(.dismiss)
     }
 }
@@ -38,13 +33,9 @@ extension SettingsViewController {
 extension SettingsViewController: SettingsView {
 
     func update(with viewModel: SettingsViewModel) {
-        
         self.viewModel = viewModel
-        
         title = viewModel.title
-        
         if (navigationController?.viewControllers.count ?? 0) > 1 {
-            
             navigationItem.leftBarButtonItem = UIBarButtonItem(
                 image: "chevron.left".assetImage,
                 style: .plain,
@@ -52,7 +43,6 @@ extension SettingsViewController: SettingsView {
                 action: #selector(dismissAction)
             )
         }
-        
         collectionView.reloadData()
     }
 }
@@ -60,7 +50,6 @@ extension SettingsViewController: SettingsView {
 extension SettingsViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        
         viewModel?.sections.count ?? 0
     }
     
@@ -68,12 +57,9 @@ extension SettingsViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        
         guard let section = viewModel?.sections[section] else {
-            
             return 0
         }
-        
         switch section {
         case .header:
             return 1
@@ -88,21 +74,16 @@ extension SettingsViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        
         guard let section = viewModel?.sections[indexPath.section] else { fatalError() }
-        
         switch section {
-            
         case let .header(header):
             let cell = collectionView.dequeue(SettingsSectionHeaderViewCell.self, for: indexPath)
             cell.update(with: header)
             return cell
-            
         case let .group(items):
             let item = items[indexPath.item]
             let cell = collectionView.dequeue(SettingsCell.self, for: indexPath)
             return cell.update(with: item, showSeparator: items.last != item)
-            
         case let .footer(footer):
             let cell = collectionView.dequeue(SettingsSectionFooterViewCell.self, for: indexPath)
             cell.update(with: footer)
@@ -125,29 +106,22 @@ extension SettingsViewController: UICollectionViewDelegate {
 private extension SettingsViewController{
 
     func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
-        
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, environment in
-            
             guard let self = self else { return nil }
-            
             guard let viewModel = self.viewModel else { return nil }
-            
             switch viewModel.sections[sectionIndex] {
-                
             case .header:
                 return self.makeCollectionLayoutSection(
                     withBackgroundDecoratorView: false,
                     isHeader: true,
                     sectionIndex: sectionIndex
                 )
-
             case .group:
                 return self.makeCollectionLayoutSection(
                     withBackgroundDecoratorView: true,
                     isHeader: false,
                     sectionIndex: sectionIndex
                 )
-                
             case .footer:
                 return self.makeCollectionLayoutSection(
                     withBackgroundDecoratorView: false,
@@ -168,16 +142,11 @@ private extension SettingsViewController{
         isHeader: Bool,
         sectionIndex: Int
     ) -> NSCollectionLayoutSection {
-        
-        // Item
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(1)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        //item.contentInsets = .paddingHalf
-        
-        // Group
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(1)
@@ -185,9 +154,6 @@ private extension SettingsViewController{
         let outerGroup = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize, subitems: [item]
         )
-        //outerGroup.contentInsets = .paddingHalf
-        
-        // Section
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.contentInsets = isHeader ?
             .init(
@@ -196,7 +162,6 @@ private extension SettingsViewController{
                 bottom: 0,
                 trailing: Theme.constant.padding
             ) : .padding
-        
         let headerItemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
             heightDimension: .estimated(1)
@@ -216,7 +181,6 @@ private extension SettingsViewController{
             alignment: .bottom
         )
         section.boundarySupplementaryItems = [headerItem, footerItem]
-        
         if addBackgroundDecorator {
 
             let backgroundItem = NSCollectionLayoutDecorationItem.background(
@@ -225,7 +189,6 @@ private extension SettingsViewController{
             backgroundItem.contentInsets = .padding
             section.decorationItems = [backgroundItem]
         }
-        
         return section
     }
 }

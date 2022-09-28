@@ -4,22 +4,35 @@
 
 import Foundation
 
+// MARK: - AlertWireframeFactory
+
 protocol AlertWireframeFactory {
 
-    func makeWireframe(
-        _ parent: UIViewController,
+    func make(
+        _ parent: UIViewController?,
         context: AlertContext
     ) -> AlertWireframe
 }
 
-final class DefaultAlertWireframeFactory {
-    
-}
+// MARK: - DefaultAlertWireframeFactory
+
+final class DefaultAlertWireframeFactory {}
 
 extension DefaultAlertWireframeFactory: AlertWireframeFactory {
     
-    func makeWireframe(_ parent: UIViewController, context: AlertContext) -> AlertWireframe {
-        
+    func make(_ parent: UIViewController?, context: AlertContext) -> AlertWireframe {
         DefaultAlertWireframe(parent: parent, context: context)
     }
 }
+
+// MARK: - Assembler
+
+final class AlertWireframeFactoryAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { _ -> AlertWireframeFactory in
+            DefaultAlertWireframeFactory()
+        }
+    }
+}
+

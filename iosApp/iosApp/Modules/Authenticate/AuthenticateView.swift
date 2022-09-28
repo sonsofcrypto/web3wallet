@@ -5,25 +5,21 @@
 import UIKit
 
 protocol AuthenticateView: AnyObject {
-
     func update(with viewModel: AuthenticateViewModel)
     func animateError()
 }
 
 final class AuthenticateViewController: UIViewController, ModalDismissProtocol {
-
     @IBOutlet weak var passwordTextField: TextField!
     @IBOutlet weak var saltTextField: TextField!
     @IBOutlet weak var catButton: UIButton!
 
-    weak var modalDismissDelegate: ModalDismissDelegate?
-
     var presenter: AuthenticatePresenter!
 
+    weak var modalDismissDelegate: ModalDismissDelegate?
     private var viewModel: AuthenticateViewModel?
 
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         configureUI()
         presenter?.present()
@@ -44,22 +40,15 @@ extension AuthenticateViewController {
 extension AuthenticateViewController: AuthenticateView {
 
     func update(with viewModel: AuthenticateViewModel) {
-        
         self.viewModel = viewModel
-        
         title = viewModel.title
-        
         passwordTextField.text = viewModel.password
         passwordTextField.placeholderAttrText = viewModel.passwordPlaceholder
-        
         saltTextField.text = viewModel.salt
         saltTextField.placeholderAttrText = viewModel.saltPlaceholder
-        
         catButton.setTitle(viewModel.title, for: .normal)
-        
         passwordTextField.superview?.isHidden = !viewModel.needsPassword
         saltTextField.superview?.isHidden = !viewModel.needsSalt
-        
         switch viewModel.passType {
         case .pin:
             passwordTextField.keyboardType = .numberPad
@@ -67,7 +56,6 @@ extension AuthenticateViewController: AuthenticateView {
             passwordTextField.keyboardType = .`default`
             passwordTextField.returnKeyType = .done
         }
-        
         passwordTextField.becomeFirstResponder()
     }
 
@@ -79,7 +67,6 @@ extension AuthenticateViewController: AuthenticateView {
 private extension AuthenticateViewController {
     
     func configureUI() {
-        
         title = Localized("authenticate")
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             with: "chevron.left".assetImage,
@@ -102,7 +89,6 @@ extension AuthenticateViewController: UIViewControllerTransitioningDelegate, Mod
         presenting: UIViewController?,
         source: UIViewController
     ) -> UIPresentationController? {
-        
         PreferredSizePresentationController(
             presentedViewController: presented,
             presenting: presenting
@@ -126,7 +112,6 @@ extension AuthenticateViewController: UITextFieldDelegate {
     }
     
     func updatePresenter(_ textField: UITextField) {
-        
         if textField == passwordTextField {
             presenter.handle(.didChangePassword(text: textField.text ?? ""))
         }

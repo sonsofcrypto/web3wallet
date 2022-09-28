@@ -3,8 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 final class NFTSendCTACollectionViewCell: UICollectionViewCell {
-    
-    @IBOutlet weak var networkFeeView: TokenNetworkFeeView!
+    @IBOutlet weak var networkFeeView: NetworkFeePickerView!
     @IBOutlet weak var button: Button!
     
     struct Handler {
@@ -15,9 +14,7 @@ final class NFTSendCTACollectionViewCell: UICollectionViewCell {
     private var handler: Handler!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-                
         button.style = .primary
         button.addTarget(self, action: #selector(onSendTapped), for: .touchUpInside)
     }
@@ -29,16 +26,15 @@ extension NFTSendCTACollectionViewCell {
         with viewModel: NFTSendViewModel.Send,
         handler: Handler
     ) {
-        
         self.handler = handler
-        
         switch viewModel.buttonState {
         case .ready:
             button.setTitle(Localized("send"), for: .normal)
+            button.isEnabled = true
         case .invalidDestination:
             button.setTitle(Localized("nftSend.missing.address"), for: .normal)
+            button.isEnabled = false
         }
-        
         networkFeeView.update(
             with: viewModel.tokenNetworkFeeViewModel,
             handler: handler.onNetworkFeesTapped
@@ -48,8 +44,5 @@ extension NFTSendCTACollectionViewCell {
 
 private extension NFTSendCTACollectionViewCell {
     
-    @objc func onSendTapped() {
-        
-        handler.onCTATapped()
-    }
+    @objc func onSendTapped() { handler.onCTATapped()}
 }

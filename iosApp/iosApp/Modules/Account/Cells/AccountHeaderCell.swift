@@ -5,7 +5,6 @@
 import UIKit
 
 final class AccountHeaderCell: UICollectionViewCell {
-    
     @IBOutlet weak var containerStack: UIStackView!
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var balanceFiatLabel: UILabel!
@@ -26,9 +25,7 @@ final class AccountHeaderCell: UICollectionViewCell {
     private var handler: Handler!
     
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         balanceLabel.apply(style: .largeTitle)
         balanceFiatLabel.apply(style: .subheadline)
         containerStack.setCustomSpacing(0, after: balanceLabel)
@@ -43,21 +40,13 @@ final class AccountHeaderCell: UICollectionViewCell {
 
 extension AccountHeaderCell {
     
-    @IBAction func receiveAction() {
-        handler.onReceiveTapped()
-    }
+    @IBAction func receiveAction() { handler.onReceiveTapped() }
 
-    @IBAction func sendAction() {
-        handler.onSendTapped()
-    }
+    @IBAction func sendAction() { handler.onSendTapped() }
 
-    @IBAction func tradeAction() {
-        handler.onSwapTapped()
-    }
+    @IBAction func tradeAction() { handler.onSwapTapped() }
 
-    @IBAction func moreAction() {
-        handler.onMoreTapped()
-    }
+    @IBAction func moreAction() { handler.onMoreTapped() }
 }
 
 extension AccountHeaderCell {
@@ -68,12 +57,9 @@ extension AccountHeaderCell {
     ) {
         self.viewModel = viewModel
         self.handler = handler
-
         balanceLabel.text = viewModel.balance
         balanceFiatLabel.text = viewModel.fiatBalance
-
         let buttons = [receiveButton, sendButton, tradeButton, moreButton]
-
         for (idx, btn) in buttons.enumerated() {
             let btnViewModel = viewModel.buttons[idx]
             btn?.setTitle(btnViewModel.title, for: .normal)

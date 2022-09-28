@@ -4,7 +4,7 @@
 
 import UIKit
 
-class ThemePickerCell: UICollectionViewCell {
+final class ThemePickerCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
 
     override func layoutSubviews() {
@@ -13,7 +13,8 @@ class ThemePickerCell: UICollectionViewCell {
         imageView.layer.maskedCorners = .all
         imageView.bounds.size = CGSize(
             width: bounds.width * 0.8,
-            height: bounds.height * 0.8)
+            height: bounds.height * 0.8
+        )
         imageView.center = bounds.midXY
     }
 }

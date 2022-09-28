@@ -44,7 +44,6 @@ extension AccountViewController: AccountView {
         title = viewModel.currencyName
         collectionView.reloadData()
         refreshControl.endRefreshing()
-        
         let btnLabel = (navigationItem.rightBarButtonItem?.customView as? UILabel)
         btnLabel?.text = viewModel.header.pct
         btnLabel?.textColor = viewModel.header.pctUp
@@ -153,9 +152,7 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
         guard let section = Section(rawValue: indexPath.section) else {
             return .zero
         }
-        
         let width = view.bounds.width - Theme.constant.padding * 2
-        
         switch section {
         case .header:
             return CGSize(width: width, height: Constant.headerHeight)
@@ -209,17 +206,14 @@ extension AccountViewController: UICollectionViewDelegate {
         guard let section = Section(rawValue: indexPath.section) else {
             return
         }
-        
         if section == .address {
             UIPasteboard.general.string = viewModel.address.address
             return view.presentToastAlert(with: Localized("account.action.copy.toast"))
         }
-        
         if section == .transactions {
             guard let txHash = viewModel.transactions[indexPath.item].data?.txHash else { return }
-            return EtherscanHelper().view(txHash: txHash, presentingIn: self)
+            return EtherscanHelper().view(txHash: txHash, parent: self)
         }
-        
         if section == .marketInfo && indexPath.item == 1 {
             // TODO: Get presenter to present bonus action view
             let webViewController = WebViewController()
@@ -244,18 +238,15 @@ extension AccountViewController: UIViewControllerTransitioningDelegate {
         let presentedVc = (presented as? UINavigationController)?.topVc
         let targetView = (source as? TargetViewTransitionDatasource)?
             .targetView() ?? presenting.view
-
         guard presentedVc?.isKind(of: AccountViewController.self) ?? false,
             let targetView = targetView else {
             animatedTransitioning = nil
             return nil
         }
-
         animatedTransitioning = CardFlipAnimatedTransitioning(
             targetView: targetView,
             handler: { [weak self] in self?.animatedTransitioning = nil }
         )
-
         return animatedTransitioning
     }
 
@@ -264,20 +255,17 @@ extension AccountViewController: UIViewControllerTransitioningDelegate {
     ) -> UIViewControllerAnimatedTransitioning? {
         let nav = dismissed.presentingViewController as? UINavigationController
         let topVc = nav?.topVc ?? dismissed.presentingViewController
-
         guard dismissed == navigationController,
             let targetView = (topVc as? TargetViewTransitionDatasource)?
                 .targetView() ?? dismissed.presentingViewController?.view else {
             animatedTransitioning = nil
             return nil
         }
-
         animatedTransitioning = CardFlipAnimatedTransitioning(
             targetView: targetView,
             isPresenting: false,
             handler: { [weak self] in self?.animatedTransitioning = nil }
         )
-
         return animatedTransitioning
     }
 
@@ -290,7 +278,6 @@ extension AccountViewController: UIViewControllerTransitioningDelegate {
     @objc func handleGesture(_ recognizer: UIPanGestureRecognizer) {
         let location = recognizer.location(in: view.window!)
         let pct = (location.x * 0.5) / view.bounds.width
-
         switch recognizer.state {
         case .began:
             interactiveTransitioning = CardFlipInteractiveTransitioning(
@@ -307,8 +294,7 @@ extension AccountViewController: UIViewControllerTransitioningDelegate {
             completed
                 ? interactiveTransitioning?.finish()
                 : interactiveTransitioning?.cancel()
-        default:
-            ()
+        default: ()
         }
     }
 }
@@ -323,7 +309,6 @@ extension AccountViewController {
         case transactions
         
         func cellCount(_ viewModel: AccountViewModel) -> Int {
-            
             switch self {
             case .marketInfo:
                 return viewModel.bonusAction != nil ? 2 : 1
@@ -343,9 +328,7 @@ extension AccountViewController {
 private extension AccountViewController {
     
     func configureUI() {
-        
         title = Localized("wallets")
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem.glowLabel()
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: "chevron.left".assetImage,
@@ -353,12 +336,10 @@ private extension AccountViewController {
             target: self,
             action: #selector(dismissAction)
         )
-        
         var insets = collectionView.contentInset
         insets.bottom += Theme.constant.padding
         collectionView.contentInset = insets
         collectionView.refreshControl = refreshControl
-        
         refreshControl.tintColor = Theme.colour.activityIndicator
         refreshControl.addTarget(
             self,
@@ -385,37 +366,16 @@ private extension AccountViewController {
 private extension AccountViewController {
     
     func makeHeaderHandler() -> AccountHeaderCell.Handler {
-        
         .init(
-            onReceiveTapped: makeOnReceiveTapped(),
-            onSendTapped: makeOnSendTapped(),
-            onSwapTapped: makeOnSwapTapped(),
-            onMoreTapped: makeOnMoreTapped()
+            onReceiveTapped: onPresenterActionEventTapped(.receive),
+            onSendTapped: onPresenterActionEventTapped(.send),
+            onSwapTapped: onPresenterActionEventTapped(.swap),
+            onMoreTapped: onPresenterActionEventTapped(.more)
         )
     }
     
-    func makeOnReceiveTapped() -> () -> Void {
-        {
-            [weak self] in self?.presenter.handle(.receive)
-        }
-    }
-    
-    func makeOnSendTapped() -> () -> Void {
-        {
-            [weak self] in self?.presenter.handle(.send)
-        }
-    }
-    
-    func makeOnSwapTapped() -> () -> Void {
-        {
-            [weak self] in self?.presenter.handle(.swap)
-        }
-    }
-    
-    func makeOnMoreTapped() -> () -> Void {
-        {
-            [weak self] in self?.presenter.handle(.more)
-        }
+    func onPresenterActionEventTapped(_ event: AccountPresenterEvent) -> () -> Void {
+        { [weak self] in self?.presenter.handle(event) }
     }
 }
 

@@ -66,7 +66,7 @@ extension OpenSeaNFTsService: NFTsService {
         onCompletion(.success(collections))
     }
     
-    func yourNFTs(forNetwork network: Web3Network) -> [NFTItem] {
+    func yourNFTs(forNetwork network: Network) -> [NFTItem] {
         // TODO: @Annon discuss how we will implement when we support more than 1 network
         nfts
     }

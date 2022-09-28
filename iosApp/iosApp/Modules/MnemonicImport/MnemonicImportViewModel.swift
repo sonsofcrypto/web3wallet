@@ -11,8 +11,6 @@ struct MnemonicImportViewModel {
     var cta: String
 }
 
-// MARK: - Access utilities
-
 extension MnemonicImportViewModel {
 
     func item(at idxPath: IndexPath) -> MnemonicImportViewModel.Item? {
@@ -39,10 +37,8 @@ extension MnemonicImportViewModel {
         
         var segmentWithTextAndSwitchInput: SegmentWithTextAndSwitchCellViewModel? {
             switch self {
-            case let .segmentWithTextAndSwitchInput(viewModel):
-                return viewModel
-            default:
-                return nil
+            case let .segmentWithTextAndSwitchInput(viewModel): return viewModel
+            default: return nil
             }
         }
     }
@@ -61,13 +57,11 @@ extension MnemonicImportViewModel {
 extension MnemonicImportViewModel {
 
     struct Mnemonic {
-        
         let potentialWords: [String]
         let wordsInfo: [WordInfo]
         let mnemonicToUpdate: String?
 
         struct WordInfo {
-            
             let word: String
             let isInvalid: Bool
         }

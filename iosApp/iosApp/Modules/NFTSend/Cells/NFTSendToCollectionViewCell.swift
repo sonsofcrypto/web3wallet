@@ -3,11 +3,9 @@
 // SPDX-License-Identifier: MIT
 
 final class NFTSendToCollectionViewCell: UICollectionViewCell {
-    
     @IBOutlet weak var tokenEnterAddressView: TokenEnterAddressView!
     
     override func resignFirstResponder() -> Bool {
-        
         tokenEnterAddressView.resignFirstResponder()
     }
 }
@@ -18,7 +16,6 @@ extension NFTSendToCollectionViewCell {
         with viewModel: TokenEnterAddressViewModel,
         handler: TokenEnterAddressView.Handler
     ) {
-        
         tokenEnterAddressView.update(with: viewModel, handler: handler)
     }
 }

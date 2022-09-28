@@ -5,7 +5,6 @@
 import UIKit
 
 final class ConfirmationSendNFTView: UIView {
-    
     private let viewModel: ConfirmationViewModel.SendNFTViewModel
     private let onConfirmHandler: () -> Void
     
@@ -13,12 +12,9 @@ final class ConfirmationSendNFTView: UIView {
         viewModel: ConfirmationViewModel.SendNFTViewModel,
         onConfirmHandler: @escaping () -> Void
     ) {
-        
         self.viewModel = viewModel
         self.onConfirmHandler = onConfirmHandler
-        
         super.init(frame: .zero)
-        
         configureUI()
     }
     
@@ -28,51 +24,30 @@ final class ConfirmationSendNFTView: UIView {
 }
 
 private extension ConfirmationSendNFTView {
-    
     func configureUI() {
-        
-//        let providerLogo = UIImageView(
-//            image: .init(named: "\(viewModel.provider.name)-logo-overlay")
-//        )
-//        addSubview(providerLogo)
-//        providerLogo.addConstraints(
-//            [
-//                .layout(anchor: .centerXAnchor),
-//                .layout(anchor: .topAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-//                .layout(anchor: .widthAnchor, constant: .equalTo(constant: 168)),
-//                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 194))
-//            ]
-//        )
-        
         let views: [UIView] = [
-            makeImageView(with: viewModel.nftItem),
-            makeDestinationGroup(),
-            makeEstimatedFeesGroup(),
-            makeConfirmButton()
+            imageView(with: viewModel.nftItem),
+            destinationGroup(),
+            estimatedFeesGroup(),
+            confirmButton()
         ]
-        
         let stackView = VStackView(views)
         stackView.spacing = Theme.constant.padding.half
         stackView.setCustomSpacing(Theme.constant.padding, after: views[0])
         stackView.setCustomSpacing(Theme.constant.padding, after: views[1])
         stackView.setCustomSpacing(Theme.constant.padding, after: views[2])
-
         addSubview(stackView)
-                
         stackView.addConstraints(.toEdges)
     }
     
-    func makeImageView(with nftItem: NFTItem) -> UIView {
-        
+    func imageView(with nftItem: NFTItem) -> UIView {
         let image = UIImageView()
         image.load(url: nftItem.image)
         image.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         image.clipsToBounds = true
-
         let view = UIView()
         view.backgroundColor = .clear
         view.addSubview(image)
-        
         image.addConstraints(
             [
                 .layout(anchor: .widthAnchor, constant: .equalTo(constant: 100)),
@@ -82,48 +57,39 @@ private extension ConfirmationSendNFTView {
                 .layout(anchor: .centerXAnchor),
             ]
         )
-        
         return view
     }
     
-    func makeDestinationGroup() -> UIView {
-        
+    func destinationGroup() -> UIView {
         let views = [
-            makeRow(
+            row(
                 with: Localized("confirmation.from"),
                 value: viewModel.destination.from
             ),
-            makeDividerLine(),
-            makeRow(
+            dividerLine(),
+            row(
                 with: Localized("confirmation.to"),
                 value: viewModel.destination.to
             )
         ]
-        
         let stack = VStackView(views)
         stack.spacing = Theme.constant.padding * 0.5
-        
         let view = UIView()
         view.layer.cornerRadius = Theme.constant.cornerRadius
         view.backgroundColor = Theme.colour.cellBackground
         view.addSubview(stack)
-        
         stack.addConstraints(
             .toEdges(padding: Theme.constant.padding)
         )
-        
         return view
     }
     
-    func makeDividerLine() -> UIView {
-        
+    func dividerLine() -> UIView {
         let divider = UIView()
         divider.backgroundColor = Theme.colour.separatorTransparent
-        
         let view = UIView()
         view.backgroundColor = .clear
         view.addSubview(divider)
-        
         divider.addConstraints(
             [
                 .layout(anchor: .leadingAnchor),
@@ -134,62 +100,50 @@ private extension ConfirmationSendNFTView {
                 
             ]
         )
-        
         return view
     }
     
-    func makeEstimatedFeesGroup() -> UIView {
-        
+    func estimatedFeesGroup() -> UIView {
         let views = [
-            makeRow(
+            row(
                 with: Localized("confirmation.estimatedFee"),
                 value: viewModel.estimatedFee.usdValue
             )
         ]
-        
         let stack = VStackView(views)
         stack.spacing = Theme.constant.padding * 0.5
-        
         let view = UIView()
         view.layer.cornerRadius = Theme.constant.cornerRadius
         view.backgroundColor = Theme.colour.cellBackground
         view.addSubview(stack)
-        
         stack.addConstraints(
             .toEdges(padding: Theme.constant.padding)
         )
-        
         return view
     }
     
-    func makeRow(with name: String, value: String) -> UIView {
-        
+    func row(with name: String, value: String) -> UIView {
         let titleLabel = UILabel()
         titleLabel.apply(style: .body)
         titleLabel.text = name
-        
         let valueLabel = UILabel()
         valueLabel.apply(style: .body)
         valueLabel.textAlignment = .right
         valueLabel.text = value
-
         let horizontalStack = HStackView(
             [
                 titleLabel, valueLabel
             ]
         )
-        
         titleLabel.addConstraints(
             [
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
             ]
         )
-        
         return horizontalStack
     }
     
-    func makeConfirmButton() -> UIButton {
-        
+    func confirmButton() -> UIButton {
         let button = Button()
         button.style = .primary
         button.setTitle(Localized("confirmation.sendNFT.confirm"), for: .normal)
@@ -198,7 +152,6 @@ private extension ConfirmationSendNFTView {
     }
     
     @objc func confirmTapped() {
-        
         onConfirmHandler()
     }
 }

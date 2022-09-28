@@ -5,7 +5,6 @@
 import Foundation
 
 struct SettingsViewModel {
-    
     let title: String
     let sections: [SettingsViewModel.Section]
 }
@@ -13,30 +12,25 @@ struct SettingsViewModel {
 extension SettingsViewModel {
 
     enum Section {
-        
         case header(header: Header)
         case group(items: [Item])
         case footer(footer: Footer)
         
         struct Header {
-            
             let title: String
         }
         
         struct Footer {
-            
             let body: String
             let textAlignment: TextAlignment
             
             enum TextAlignment {
-                
                 case leading
                 case center
             }
         }
         
         var items: [Item] {
-            
             switch self {
             case .header, .footer:
                 return []
@@ -47,7 +41,6 @@ extension SettingsViewModel {
     }
         
     struct Item: Equatable {
-        
         let title: String
         let setting: Setting
         let isSelected: Bool?
@@ -57,7 +50,6 @@ extension SettingsViewModel {
 extension SettingsViewModel {
 
     func item(at idxPath: IndexPath) -> SettingsViewModel.Item {
-        
         sections[idxPath.section].items[idxPath.item]
     }
 }

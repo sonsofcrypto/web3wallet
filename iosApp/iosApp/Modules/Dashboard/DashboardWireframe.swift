@@ -6,7 +6,7 @@ import UIKit
 import web3lib
 
 enum DashboardWireframeDestination {
-    case wallet(wallet: Wallet, currency: Currency)
+    case wallet(network: Network, currency: Currency)
     case keyStoreNetworkSettings
     case presentUnderConstructionAlert
     case mnemonicConfirmation
@@ -14,10 +14,10 @@ enum DashboardWireframeDestination {
     case send(addressTo: String?)
     case scanQRCode(onCompletion: (String) -> Void)
     case nftItem(NFTItem)
-    case editTokens(
-        network: Web3Network,
-        selectedTokens: [Web3Token],
-        onCompletion: ([Web3Token]) -> Void
+    case editCurrencies(
+        network: Network,
+        selectedCurrencies: [Currency],
+        onCompletion: ([Currency]) -> Void
     )
     case tokenSwap
     case deepLink(DeepLink)
@@ -31,16 +31,14 @@ protocol DashboardWireframe {
 
 final class DefaultDashboardWireframe {
 
-    private weak var parent: UIViewController!
-    private weak var vc: UIViewController!
-
+    private weak var parent: UIViewController?
     private let accountWireframeFactory: AccountWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory
-    private let tokenPickerWireframeFactory: TokenPickerWireframeFactory
-    private let tokenReceiveWireframeFactory: TokenReceiveWireframeFactory
-    private let tokenSendWireframeFactory: TokenSendWireframeFactory
-    private let tokenSwapWireframeFactory: TokenSwapWireframeFactory
+    private let currencyPickerWireframeFactory: CurrencyPickerWireframeFactory
+    private let currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory
+    private let currencySendWireframeFactory: CurrencyCurrencyWireframeFactory
+    private let currencySwapWireframeFactory: CurrencySwapWireframeFactory
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let themePickerWireframeFactory: ThemePickerWireframeFactory
@@ -51,15 +49,17 @@ final class DefaultDashboardWireframe {
     private let walletService: WalletService
     private let nftsService: NFTsService
 
+    private weak var vc: UIViewController?
+
     init(
-        parent: UIViewController,
+        _ parent: UIViewController?,
         accountWireframeFactory: AccountWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         mnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory,
-        tokenPickerWireframeFactory: TokenPickerWireframeFactory,
-        tokenReceiveWireframeFactory: TokenReceiveWireframeFactory,
-        tokenSendWireframeFactory: TokenSendWireframeFactory,
-        tokenSwapWireframeFactory: TokenSwapWireframeFactory,
+        currencyPickerWireframeFactory: CurrencyPickerWireframeFactory,
+        currencyReceiveWireframeFactory: CurrencyReceiveWireframeFactory,
+        currencySendWireframeFactory: CurrencyCurrencyWireframeFactory,
+        currencySwapWireframeFactory: CurrencySwapWireframeFactory,
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         themePickerWireframeFactory: ThemePickerWireframeFactory,
@@ -74,10 +74,10 @@ final class DefaultDashboardWireframe {
         self.accountWireframeFactory = accountWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.mnemonicConfirmationWireframeFactory = mnemonicConfirmationWireframeFactory
-        self.tokenPickerWireframeFactory = tokenPickerWireframeFactory
-        self.tokenReceiveWireframeFactory = tokenReceiveWireframeFactory
-        self.tokenSendWireframeFactory = tokenSendWireframeFactory
-        self.tokenSwapWireframeFactory = tokenSwapWireframeFactory
+        self.currencyPickerWireframeFactory = currencyPickerWireframeFactory
+        self.currencyReceiveWireframeFactory = currencyReceiveWireframeFactory
+        self.currencySendWireframeFactory = currencySendWireframeFactory
+        self.currencySwapWireframeFactory = currencySwapWireframeFactory
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.themePickerWireframeFactory = themePickerWireframeFactory
@@ -94,15 +94,11 @@ extension DefaultDashboardWireframe: DashboardWireframe {
 
     func present() {
         let vc = wireUp()
-        self.vc = vc
-
-        if let parent = parent as? EdgeCardsController {
-            parent.setMaster(vc: vc)
-        } else if let tabVc = parent as? UITabBarController {
-            let vcs: [UIViewController] = [vc] + (tabVc.viewControllers ?? [])
+        if let tabVc = parent as? UITabBarController {
+            let vcs = tabVc.add(viewController: vc)
             tabVc.setViewControllers(vcs, animated: false)
         } else {
-            parent.show(vc, sender: self)
+            parent?.show(vc, sender: self)
         }
     }
 
@@ -111,120 +107,93 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             print("DefaultDashboardWireframe has no view")
             return
         }
-
         switch destination {
-        case let .wallet(wallet, currency):
-            accountWireframeFactory.makeWireframe(
-                presentingIn: vc,
-                context: .init(wallet: wallet, currency: currency)
+        case let .wallet(network, currency):
+            accountWireframeFactory.make(
+                vc,
+                context: .init(network: network, currency: currency)
             ).present()
-
         case .keyStoreNetworkSettings:
             vc.edgeCardsController?.setDisplayMode(.overview, animated: true)
-
         case .presentUnderConstructionAlert:
             let context = AlertContext.underConstructionAlert()
-            alertWireframeFactory.makeWireframe(parent, context: context).present()
-
+            alertWireframeFactory.make(parent, context: context).present()
         case .mnemonicConfirmation:
-            mnemonicConfirmationWireframeFactory.makeWireframe(parent).present()
-
+            mnemonicConfirmationWireframeFactory.make(parent).present()
         case .receive:
-            guard let vc = self.vc else { return }
-            let source = TokenPickerWireframeContext.Source.select(
-                onCompletion: { [weak self] selectedToken in
+            let source = CurrencyPickerWireframeContext.Source.select(
+                onCompletion: { [weak self] (network, currency) in
                     guard let self = self else { return }
-                    self.tokenReceiveWireframeFactory.makeWireframe(
-                        presentingIn: vc,
-                        context: .init(presentationStyle: .push, web3Token: selectedToken)
+                    self.currencyReceiveWireframeFactory.make(
+                        self.vc?.presentedViewController ?? self.vc,
+                        context: .init(network: network, currency: currency)
                     ).present()
                 }
             )
-            
-            let context = TokenPickerWireframeContext(
-                presentationStyle: .push,
+            let context = CurrencyPickerWireframeContext(
                 title: .receive,
                 selectedNetwork: nil,
                 networks: .all,
                 source: source,
-                showAddCustomToken: true
+                showAddCustomCurrency: true
             )
-            tokenPickerWireframeFactory.makeWireframe(
-                presentingIn: vc,
+            currencyPickerWireframeFactory.make(
+                vc,
                 context: context
             ).present()
-
-        case let .send(addressTo):
-            guard let vc = self.vc else { return }
-            guard let addressTo = addressTo else {
+        case let .send(address):
+            guard let network = networksService.network, let address = address else {
                 navigateToTokenPicker()
                 return
             }
-
-            tokenSendWireframeFactory.makeWireframe(
-                presentingIn: vc,
-                context: .init(presentationStyle: .push, addressTo: addressTo)
+            currencySendWireframeFactory.make(
+                vc,
+                context: .init(network: network, address: address, currency: nil)
             ).present()
-            
         case let .scanQRCode(onCompletion):
             guard let network = networksService.network else { return }
-            let wireframe = qrCodeScanWireframeFactory.makeWireframe(
-                presentingIn: parent,
-                context: .init(
-                    presentationStyle: .present,
-                    type: .network(Web3Network.from(network, isOn: false)),
-                    onCompletion: onCompletion
-                )
-            )
-            wireframe.present()
-
+            qrCodeScanWireframeFactory.make(
+                vc,
+                context: .init(type: .network(network), onCompletion: onCompletion)
+            ).present()
         case let .nftItem(nftItem):
             guard let vc = self.vc else { return }
-            nftDetailWireframeFactory.makeWireframe(
+            nftDetailWireframeFactory.make(
                 vc,
                 context: .init(
                     nftIdentifier: nftItem.identifier,
-                    nftCollectionIdentifier: nftItem.collectionIdentifier,
-                    presentationStyle: .push
+                    nftCollectionIdentifier: nftItem.collectionIdentifier
                 )
             ).present()
-            
-        case let .editTokens(network, selectedTokens, onCompletion):
-            let source: TokenPickerWireframeContext.Source = .multiSelectEdit(
-                selectedTokens: selectedTokens,
+        case let .editCurrencies(network, selectedCurrencies, onCompletion):
+            let source: CurrencyPickerWireframeContext.Source = .multiSelectEdit(
+                selectedCurrencies: selectedCurrencies,
                 onCompletion: onCompletion
             )
-            let wireframe = tokenPickerWireframeFactory.makeWireframe(
-                presentingIn: parent,
+            currencyPickerWireframeFactory.make(
+                vc,
                 context: .init(
-                    presentationStyle: .present,
                     title: .multiSelectEdit,
                     selectedNetwork: nil,
                     networks: .subgroup(networks: [network]),
                     source: source,
-                    showAddCustomToken: true
+                    showAddCustomCurrency: true
                 )
-            )
-            wireframe.present()
-            
+            ).present()
         case .tokenSwap:
-            guard let vc = self.vc else { return }
-            let wireframe = tokenSwapWireframeFactory.makeWireframe(
-                presentingIn: vc,
+            guard let network = networksService.network else { return }
+            currencySwapWireframeFactory.make(
+                vc,
                 context: .init(
-                    presentationStyle: .push,
-                    tokenFrom: nil,
-                    tokenTo: nil
+                    network: network,
+                    currencyFrom: nil,
+                    currencyTo: nil
                 )
-            )
-            wireframe.present()
-            
+            ).present()
         case let .deepLink(deepLink):
             deepLinkHandler.handle(deepLink: deepLink)
-            
         case .themePicker:
-            guard let vc = self.vc else { return }
-            themePickerWireframeFactory.makeWireframe(presentingIn: vc).present()
+            themePickerWireframeFactory.make(vc).present()
         }
     }
 }
@@ -241,36 +210,36 @@ private extension DefaultDashboardWireframe {
         let vc: DashboardViewController = UIStoryboard(.dashboard).instantiate()
         let presenter = DefaultDashboardPresenter(
             view: vc,
-            interactor: interactor,
             wireframe: self,
+            interactor: interactor,
             onboardingService: onboardingService
         )
         vc.presenter = presenter
-        return NavigationController(rootViewController: vc)
+        let nc = NavigationController(rootViewController: vc)
+        self.vc = nc
+        return nc
     }
     
     func navigateToTokenPicker() {
         guard let vc = self.vc else { return }
-        let source = TokenPickerWireframeContext.Source.select(
-            onCompletion: { [weak self] selectedToken in
+        let source = CurrencyPickerWireframeContext.Source.select(
+            onCompletion: { [weak self] (network, currency) in
                 guard let self = self else { return }
-                self.tokenSendWireframeFactory.makeWireframe(
-                    presentingIn: vc,
-                    context: .init(presentationStyle: .push, web3Token: selectedToken)
+                self.currencySendWireframeFactory.make(
+                    vc.presentedViewController ?? vc,
+                    context: .init(network: network, address: nil, currency: currency)
                 ).present()
             }
         )
-        
-        let context = TokenPickerWireframeContext(
-            presentationStyle: .push,
+        let context = CurrencyPickerWireframeContext(
             title: .send,
             selectedNetwork: nil,
             networks: .all,
             source: source,
-            showAddCustomToken: true
+            showAddCustomCurrency: true
         )
-        tokenPickerWireframeFactory.makeWireframe(
-            presentingIn: vc,
+        currencyPickerWireframeFactory.make(
+            vc,
             context: context
         ).present()
     }

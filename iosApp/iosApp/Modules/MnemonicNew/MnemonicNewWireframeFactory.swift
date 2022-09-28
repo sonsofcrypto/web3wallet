@@ -5,36 +5,48 @@
 import UIKit
 import web3lib
 
-protocol MnemonicNewWireframeFactory {
+// MARK: - MnemonicNewWireframeFactory
 
-    func makeWireframe(
+protocol MnemonicNewWireframeFactory {
+    func make(
         _ parent: UIViewController?,
         context: MnemonicNewContext
     ) -> MnemonicNewWireframe
 }
 
-final class DefaultMnemonicNewWireframeFactory {
+// MARK: - DefaultMnemonicNewWireframeFactory
 
+final class DefaultMnemonicNewWireframeFactory {
     private let keyStoreService: KeyStoreService
     
-    init(
-        keyStoreService: KeyStoreService
-    ) {
+    init(keyStoreService: KeyStoreService) {
         self.keyStoreService = keyStoreService
     }
 }
 
 extension DefaultMnemonicNewWireframeFactory: MnemonicNewWireframeFactory {
 
-    func makeWireframe(
+    func make(
         _ parent: UIViewController?,
         context: MnemonicNewContext
     ) -> MnemonicNewWireframe {
-        
         DefaultMnemonicNewWireframe(
-            parent: parent,
+            parent,
             context: context,
             keyStoreService: keyStoreService
         )
+    }
+}
+
+// MARK: - Assembler
+
+final class MnemonicNewWireframeFactoryAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> MnemonicNewWireframeFactory in
+            DefaultMnemonicNewWireframeFactory(
+                keyStoreService: resolver.resolve()
+            )
+        }
     }
 }

@@ -5,7 +5,6 @@
 extension NFTsDashboardViewController {
     
     func makeMainScrollView() -> ScrollView {
-        
         let mainScrollView = ScrollView()
         mainScrollView.showsVerticalScrollIndicator = false
         mainScrollView.showsHorizontalScrollIndicator = false
@@ -13,7 +12,6 @@ extension NFTsDashboardViewController {
         refreshControl.tintColor = Theme.colour.activityIndicator
         refreshControl.addTarget(self, action: #selector(pullDownToRefresh), for: .valueChanged)
         mainScrollView.refreshControl = refreshControl
-        
         let carousel = iCarousel(frame: .zero)
         carousel.type = .coverFlow
         carousel.dataSource = self
@@ -32,7 +30,6 @@ extension NFTsDashboardViewController {
                 .layout(anchor: .centerXAnchor)
             ]
         )
-        
         let collectionsView = UIView()
         mainScrollView.addSubview(collectionsView)
         self.collectionsView = collectionsView
@@ -49,7 +46,6 @@ extension NFTsDashboardViewController {
                 .layout(anchor: .widthAnchor)
             ]
         )
-        
         return mainScrollView
     }
 }
@@ -57,19 +53,14 @@ extension NFTsDashboardViewController {
 extension NFTsDashboardViewController {
     
     var nftsCollectionHeight: CGFloat {
-        
         guard let viewWidth = navigationController?.view.frame.size.width else {
-            
             return 200
         }
-        
         return viewWidth * 0.6
     }
     
     var carouselWidth: CGFloat {
-     
         let width = navigationController?.view.frame.width ?? 0
-        
         return width - Theme.constant.padding * 2
     }
 }

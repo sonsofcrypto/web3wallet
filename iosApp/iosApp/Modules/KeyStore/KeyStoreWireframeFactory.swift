@@ -6,10 +6,8 @@ import UIKit
 import web3lib
 
 protocol KeyStoreWireframeFactory {
-
-    func makeWireframe(
-        _ parent: UIViewController?,
-        window: UIWindow?
+    func make(
+        _ parent: UIViewController?
     ) -> KeyStoreWireframe
 }
 
@@ -48,13 +46,11 @@ final class DefaultKeyStoreWireframeFactory {
 
 extension DefaultKeyStoreWireframeFactory: KeyStoreWireframeFactory {
 
-    func makeWireframe(
-        _ parent: UIViewController?,
-        window: UIWindow?
+    func make(
+        _ parent: UIViewController?
     ) -> KeyStoreWireframe {
         DefaultKeyStoreWireframe(
-            parent: parent,
-            window: window,
+            parent,
             keyStoreService: keyStoreService,
             networksService: networksService,
             newMnemonic: newMnemonic,
@@ -63,5 +59,24 @@ extension DefaultKeyStoreWireframeFactory: KeyStoreWireframeFactory {
             settingsService: settingsService,
             alertWireframeFactory: alertWireframeFactory
         )
+    }
+}
+
+// MARK: - Assembler
+
+final class KeyStoreWireframeFactoryAssembler: AssemblerComponent {
+
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> KeyStoreWireframeFactory in
+            DefaultKeyStoreWireframeFactory(
+                keyStoreService: resolver.resolve(),
+                settingsService: resolver.resolve(),
+                networksService: resolver.resolve(),
+                newMnemonic: resolver.resolve(),
+                updateMnemonic: resolver.resolve(),
+                importMnemonic: resolver.resolve(),
+                alertWireframeFactory: resolver.resolve()
+            )
+        }
     }
 }

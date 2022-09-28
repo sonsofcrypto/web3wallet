@@ -6,7 +6,6 @@ import Foundation
 import web3lib
 
 struct ConfirmationWireframeContext {
-    
     let type: `Type`
     
     enum `Type` {
@@ -27,15 +26,13 @@ struct ConfirmationWireframeContext {
         }
     }
     
-    var token: Web3Token? {
-        
+    var accountWireframeContext: AccountWireframeContext? {
         switch type {
         case let .send(data):
-            return data.token.token
+            return .init(network: data.network, currency: data.currency)
         case let .swap(data):
-            return data.tokenFrom.token
+            return .init(network: data.network, currency: data.currencyFrom)
         case .sendNFT, .cultCastVote, .approveUniswap:
-            // TODO: Annon to confirm where to push (main network token)? Eg: ETH
             return nil
         }
     }
@@ -43,25 +40,29 @@ struct ConfirmationWireframeContext {
 
 extension ConfirmationWireframeContext {
     
-    struct CurrencyData {
-        let iconName: String
-        let token: Web3Token
-        let value: BigInt
+    struct SendContext {
+        let network: Network
+        let currency: Currency
+        let amount: BigInt
+        let addressFrom: String
+        let addressTo: String
+        let estimatedFee: Web3NetworkFee
     }
-    
-    struct AddressData {
-        let from: String
-        let to: String
-    }
-}
-
-extension ConfirmationWireframeContext {
     
     struct SwapContext {
-        let tokenFrom: CurrencyData
-        let tokenTo: CurrencyData
+        let network: Network
         let provider: Provider
+        let amountFrom: BigInt
+        let amountTo: BigInt
+        let currencyFrom: Currency
+        let currencyTo: Currency
         let estimatedFee: Web3NetworkFee
+        // NOTE: We inject here the service since this is not singleton and the instance in
+        // CurrencySwap module will have all the correct info to execute the swap. In case
+        // of an immediate error (which can happen straight away or in the future), we want
+        // to display it in the confirmation screen, otherwise if its a future error, we will
+        // display in the swap (as a toast), but if its a success, the Approving button in
+        // this instance will just disapear (same as happens on Uniswap)
         let swapService: UniswapService
         
         struct Provider {
@@ -71,15 +72,11 @@ extension ConfirmationWireframeContext {
         }
     }
     
-    struct SendContext {
-        let token: CurrencyData
-        let destination: AddressData
-        let estimatedFee: Web3NetworkFee
-    }
-    
     struct SendNFTContext {
+        let network: Network
+        let addressFrom: String
+        let addressTo: String
         let nftItem: NFTItem
-        let destination: AddressData
         let estimatedFee: Web3NetworkFee
     }
     
@@ -89,8 +86,7 @@ extension ConfirmationWireframeContext {
     }
     
     struct ApproveUniswapContext {
-        let iconName: String
-        let token: Web3Token
+        let currency: Currency
         let onApproved: (((password: String, salt: String)) -> Void)
     }
 }

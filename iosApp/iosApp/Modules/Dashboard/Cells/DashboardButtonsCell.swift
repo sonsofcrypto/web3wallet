@@ -5,7 +5,6 @@
 import UIKit
 
 final class DashboardButtonsCell: UICollectionViewCell {
-
     @IBOutlet weak var receiveButton: Button!
     @IBOutlet weak var sendButton: Button!
     @IBOutlet weak var tradeButton: Button!

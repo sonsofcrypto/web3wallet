@@ -6,7 +6,6 @@ import UIKit
 import SwiftUI
 
 final class ConfirmationApproveUniswapView: UIView {
-    
     private let viewModel: ConfirmationViewModel.ApproveUniswapViewModel
     private let onConfirmHandler: () -> Void
     
@@ -14,12 +13,9 @@ final class ConfirmationApproveUniswapView: UIView {
         viewModel: ConfirmationViewModel.ApproveUniswapViewModel,
         onConfirmHandler: @escaping () -> Void
     ) {
-        
         self.viewModel = viewModel
         self.onConfirmHandler = onConfirmHandler
-        
         super.init(frame: .zero)
-        
         configureUI()
     }
     
@@ -31,57 +27,36 @@ final class ConfirmationApproveUniswapView: UIView {
 private extension ConfirmationApproveUniswapView {
     
     func configureUI() {
-        
         let views: [UIView] = [
-            makeTokenView(with: viewModel.iconName),
-            makeInfoGroup(),
-            makeEstimatedFeesGroup(),
-            makeConfirmButton()
+            tokenView(with: viewModel.iconName),
+            infoGroup(),
+            estimatedFeesGroup(),
+            confirmButton()
         ]
-        
         let stackView = VStackView(views)
         stackView.spacing = Theme.constant.padding.half
         stackView.setCustomSpacing(Theme.constant.padding, after: views[0])
         stackView.setCustomSpacing(Theme.constant.padding, after: views[1])
         stackView.setCustomSpacing(Theme.constant.padding, after: views[2])
-
         addSubview(stackView)
-                
         stackView.addConstraints(.toEdges)
     }
     
-    func makeInfoGroup() -> UIView {
-        
+    func infoGroup() -> UIView {
         let verticalStack = VStackView(
-            [
-                makeTitle(),
-                makeBody()
-            ]
+            [title(), body()]
         )
         verticalStack.spacing = Theme.constant.padding
-        
-//        let view = UIView()
-//        view.layer.cornerRadius = Theme.constant.cornerRadius
-//        view.backgroundColor = Theme.colour.cellBackground
-//        view.addSubview(verticalStack)
-//
-//        verticalStack.addConstraints(
-//            .toEdges(padding: Theme.constant.padding)
-//        )
-        
         return verticalStack
     }
     
-    func makeTokenView(with iconName: String) -> UIView {
-        
+    func tokenView(with iconName: String) -> UIView {
         let image = UIImageView(image: iconName.assetImage)
         image.layer.cornerRadius = 20
         image.clipsToBounds = true
-        
         let view = UIView()
         view.backgroundColor = .clear
         view.addSubview(image)
-        
         image.addConstraints(
             [
                 .layout(anchor: .widthAnchor, constant: .equalTo(constant: 40)),
@@ -91,11 +66,10 @@ private extension ConfirmationApproveUniswapView {
                 .layout(anchor: .bottomAnchor)
             ]
         )
-        
         return view
     }
     
-    func makeTitle() -> UILabel {
+    func title() -> UILabel {
         let label = UILabel()
         label.apply(style: .title3)
         label.numberOfLines = 0
@@ -104,7 +78,7 @@ private extension ConfirmationApproveUniswapView {
         return label
     }
 
-    func makeBody() -> UILabel {
+    func body() -> UILabel {
         let label = UILabel()
         label.apply(style: .subheadline)
         label.numberOfLines = 0
@@ -113,58 +87,47 @@ private extension ConfirmationApproveUniswapView {
         return label
     }
     
-    func makeEstimatedFeesGroup() -> UIView {
-        
+    func estimatedFeesGroup() -> UIView {
         let views = [
-            makeRow(
+            row(
                 with: Localized("confirmation.estimatedFee"),
                 value: viewModel.fee.usdValue
             )
         ]
-        
         let stack = VStackView(views)
         stack.spacing = Theme.constant.padding * 0.5
-        
         let view = UIView()
         view.layer.cornerRadius = Theme.constant.cornerRadius
         view.backgroundColor = Theme.colour.cellBackground
         view.addSubview(stack)
-        
         stack.addConstraints(
             .toEdges(padding: Theme.constant.padding)
         )
-        
         return view
     }
     
-    func makeRow(with name: String, value: String) -> UIView {
-        
+    func row(with name: String, value: String) -> UIView {
         let titleLabel = UILabel()
         titleLabel.apply(style: .body)
         titleLabel.text = name
-        
         let valueLabel = UILabel()
         valueLabel.apply(style: .body)
         valueLabel.textAlignment = .right
         valueLabel.text = value
-
         let horizontalStack = HStackView(
             [
                 titleLabel, valueLabel
             ]
         )
-        
         titleLabel.addConstraints(
             [
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
             ]
         )
-        
         return horizontalStack
     }
     
-    func makeConfirmButton() -> UIButton {
-        
+    func confirmButton() -> UIButton {
         let button = Button()
         button.style = .primary
         button.setTitle(Localized("confirmation.approveUniswap.confirm"), for: .normal)
@@ -173,7 +136,6 @@ private extension ConfirmationApproveUniswapView {
     }
     
     @objc func confirmTapped() {
-        
         onConfirmHandler()
     }
 }

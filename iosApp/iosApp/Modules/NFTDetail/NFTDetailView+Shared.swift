@@ -5,14 +5,12 @@
 extension NFTDetailViewController {
     
     func makeMainScrollView() -> UIScrollView {
-        
         let mainScrollView = ScrollView()
         mainScrollView.showsVerticalScrollIndicator = false
         let refreshControl = UIRefreshControl()
         refreshControl.tintColor = Theme.colour.activityIndicator
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         mainScrollView.refreshControl = refreshControl
-        
         let scrollableContentView = UIView()
         mainScrollView.addSubview(scrollableContentView)
         self.scrollableContentView = scrollableContentView
@@ -29,7 +27,6 @@ extension NFTDetailViewController {
                 .layout(anchor: .widthAnchor)
             ]
         )
-        
         return mainScrollView
     }
 }

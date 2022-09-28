@@ -7,19 +7,16 @@ import Foundation
 extension ConfirmationViewModel {
     
     struct SendNFTViewModel {
-        
         let nftItem: NFTItem
         let destination: Destination
         let estimatedFee: Fee
                 
         struct Destination {
-            
             let from: String
             let to: String
         }
         
         struct Fee {
-            
             let value: String
             let usdValue: String
         }

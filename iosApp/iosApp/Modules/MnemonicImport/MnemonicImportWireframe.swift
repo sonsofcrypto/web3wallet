@@ -14,18 +14,15 @@ protocol MnemonicImportWireframe {
     func navigate(to destination: MnemonicImportWireframeDestination)
 }
 
-// MARK: - class DefaultMnemonicWireframe {
-
 final class DefaultMnemonicImportWireframe {
-
-    private weak var parent: UIViewController!
+    private weak var parent: UIViewController?
     private let context: MnemonicImportContext
     private let keyStoreService: KeyStoreService
 
-    private weak var vc: UIViewController!
+    private weak var vc: UIViewController?
 
     init(
-        parent: UIViewController?,
+        _ parent: UIViewController?,
         context: MnemonicImportContext,
         keyStoreService: KeyStoreService
     ) {
@@ -35,26 +32,21 @@ final class DefaultMnemonicImportWireframe {
     }
 }
 
-// MARK: - MnemonicWireframe
-
 extension DefaultMnemonicImportWireframe: MnemonicImportWireframe {
 
     func present() {
         let vc = wireUp()
         let presentingTopVc = (parent as? UINavigationController)?.topVc
-        let presentedTopVc = (vc as? UINavigationController)?.topVc
-
         switch ServiceDirectory.transitionStyle {
         case .cardFlip:
+            let presentedTopVc = (vc as? UINavigationController)?.topVc
             let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
             self.vc = vc
             vc.modalPresentationStyle = .overFullScreen
-            vc.transitioningDelegate = delegate        case .sheet:
-            vc.modalPresentationStyle = .automatic
+            vc.transitioningDelegate = delegate
         case .sheet:
             vc.modalPresentationStyle = .automatic
         }
-
         self.vc = vc
         presentingTopVc?.present(vc, animated: true)
     }
@@ -67,30 +59,27 @@ extension DefaultMnemonicImportWireframe: MnemonicImportWireframe {
     }
 }
 
-extension DefaultMnemonicImportWireframe {
+private extension DefaultMnemonicImportWireframe {
 
-    private func wireUp() -> UIViewController {
-        
+    func wireUp() -> UIViewController {
         let interactor = DefaultMnemonicImportInteractor(keyStoreService)
         let vc: MnemonicImportViewController = UIStoryboard(.mnemonicImport).instantiate()
         let presenter = DefaultMnemonicImportPresenter(
-            context: context,
             view: vc,
+            wireframe: self,
             interactor: interactor,
-            wireframe: self
+            context: context
         )
 
         vc.presenter = presenter
-        return NavigationController(rootViewController: vc)
+        let nc = NavigationController(rootViewController: vc)
+        self.vc = nc
+        return nc
     }
 }
 
-// MARK: - Constant
-
 extension DefaultMnemonicImportWireframe {
-
     enum Constant {
-
         static let saltExplanationURL = URL(
             string: "https://www.youtube.com/watch?v=XqB5xA62gLw"
         )!

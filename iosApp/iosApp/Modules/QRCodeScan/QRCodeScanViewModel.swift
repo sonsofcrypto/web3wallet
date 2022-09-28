@@ -5,7 +5,6 @@
 import Foundation
 
 struct QRCodeScanViewModel {
-    
     let title: String
     let failure: String?
 }

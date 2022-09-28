@@ -5,7 +5,6 @@
 import UIKit
 
 final class MnemonicUpdateCell: UICollectionViewCell {
-
     typealias TextChangeHandler = (String) -> Void
 
     @IBOutlet weak var textView: UITextView!
@@ -32,30 +31,24 @@ final class MnemonicUpdateCell: UICollectionViewCell {
     }
 
     func configure() {
-        
         scheduleAutohideMnemonic()
-        
         layer.cornerRadius = Theme.constant.cornerRadius
         backgroundColor = Theme.colour.labelQuaternary
-
         var attrs: [NSAttributedString.Key: Any] = [
             .font: Theme.font.body,
             .foregroundColor: Theme.colour.labelPrimary
         ]
         attrs[.font] = Theme.font.body
-
         textView.typingAttributes = attrs
         textView.backgroundColor = .clear
         textView.isEditable = false
         textView.isUserInteractionEnabled = false
-
         overlay.isHidden = false
         overlay.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         overlay.clipsToBounds = true
-        overlayLabel.text = Localized("newMnemonic.tapToReveal")
+        overlayLabel.text = Localized("mnemonicNew.tapToReveal")
         overlayLabel.font = Theme.font.body
         overlayLabel.textColor = Theme.colour.labelPrimary
-        
         countdownView.layer.cornerRadius = 10
         countdownView.backgroundColor = Theme.colour.navBarTint
         countdownLabel.apply(style: .caption1)
@@ -79,7 +72,6 @@ extension MnemonicUpdateCell {
 extension MnemonicUpdateCell {
 
     func animateCopiedToPasteboard() {
-
         if overlay.alpha == 1 {
             UIView.animate(
                 withDuration: 0.2,
@@ -88,10 +80,8 @@ extension MnemonicUpdateCell {
             )
             return
         }
-
         overlay.alpha = 0
-        overlayLabel.text = Localized("newMnemonic.pasteboard")
-
+        overlayLabel.text = Localized("mnemonicNew.pasteboard")
         UIView.animate(
             withDuration: 0.2,
             animations: { [weak self] in self?.overlay.alpha = 1 },
@@ -118,7 +108,6 @@ private extension MnemonicUpdateCell {
     }
     
     func scheduleAutohideMnemonic() {
-        
         hideMnemonicTimer?.invalidate()
         hideMnemonicTimer = Timer.scheduledTimer(
             timeInterval: 1,
@@ -130,7 +119,6 @@ private extension MnemonicUpdateCell {
     }
     
     @objc func autoHideTimerFired() {
-        
         guard hideMnemonicAfterSecondsCount > 0 else {
             refreshCountdownLabel()
             return
@@ -150,7 +138,6 @@ private extension MnemonicUpdateCell {
     }
     
     func refreshCountdownLabel() {
-        
         guard hideMnemonicAfterSecondsCount > 0 else {
             countdownView.isHidden = true
             return
@@ -160,11 +147,10 @@ private extension MnemonicUpdateCell {
     }
     
     @objc func autoHideMnemonic() {
-        
         UIView.animate(
             withDuration: 0.2,
             animations: { [weak self] in
-                self?.overlayLabel.text = Localized("newMnemonic.tapToReveal")
+                self?.overlayLabel.text = Localized("mnemonicNew.tapToReveal")
                 self?.overlay.alpha = 1
             },
             completion: nil

@@ -27,23 +27,14 @@ protocol MnemonicImportInteractor: AnyObject {
     var derivationPath: String { get set}
     /// Locale of mnemonic
     var locale: String { get }
-
     /// Suggestions for word, if empty word is not valid bip39 word
     func suggestions(for word: String) -> [String]
-
     /// Returns nil if mnemonic is valid
     func mnemonicError(words: [String], salt: String) -> Error?
-
-    /// See if passwords meets minimum specs
-    func isValidPassword(password: String) -> Bool
-
     /// generate password
     func generatePassword() -> String
-
     /// Creates new `KeyStoreItem` and saves it to `KeyStore`
     func createKeyStoreItem(_ password: String, salt: String) throws -> KeyStoreItem
-    
-    
     func potentialMnemonicWords(for prefix: String?) -> [String]
     func findInvalidWords(in mnemonic: String?) -> [
         MnemonicImportViewModel.Mnemonic.WordInfo
@@ -51,10 +42,7 @@ protocol MnemonicImportInteractor: AnyObject {
     func isValidPrefix(_ prefix: String) -> Bool
 }
 
-// MARK: - DefaultMnemonicImportInteractor
-
 final class DefaultMnemonicImportInteractor {
-
     var mnemonic = [String]()
     var name: String = ""
     var passUnlockWithBio: Bool = true
@@ -67,9 +55,7 @@ final class DefaultMnemonicImportInteractor {
 
     private lazy  var validator: Trie = {
         let trie = Trie()
-        WordList.english.words().forEach {
-            trie.insert(word: $0)
-        }
+        WordList.english.words().forEach { trie.insert(word: $0) }
         return trie
     }()
 
@@ -81,8 +67,6 @@ final class DefaultMnemonicImportInteractor {
     }
 }
 
-// MARK: - DefaultTemplateInteractor
-
 extension DefaultMnemonicImportInteractor: MnemonicImportInteractor {
 
     func suggestions(for word: String) -> [String] {
@@ -93,14 +77,11 @@ extension DefaultMnemonicImportInteractor: MnemonicImportInteractor {
         guard Bip39.companion.isValidWordsCount(count: words.count.int32) else {
             return MnemonicImportInteractorError.invalidWordCount
         }
-
         do {
             let bip39 = try Bip39(mnemonic: mnemonic, salt: salt, worldList: .english)
             let _ = try Bip44(seed: try bip39.seed(), version: .mainnetprv)
             return nil
-        } catch {
-            return error
-        }
+        } catch { return error }
     }
 
     func createKeyStoreItem(_ password: String, salt: String) throws -> KeyStoreItem {
@@ -139,11 +120,6 @@ extension DefaultMnemonicImportInteractor: MnemonicImportInteractor {
         return keyStoreItem
     }
 
-    func isValidPassword(password: String) -> Bool {
-        // TODO(Enric): Validate pass (Pin at least 6 digits, pass at least 8 alpha numeric)
-        return true
-    }
-
     func generatePassword() -> String {
         let password = try! CipherKt.secureRand(size: 32)
         return String(data: password.toDataFull(), encoding: .ascii)
@@ -151,53 +127,36 @@ extension DefaultMnemonicImportInteractor: MnemonicImportInteractor {
     }
     
     func potentialMnemonicWords(for prefix: String?) -> [String] {
-        guard let prefix = prefix, !prefix.isEmpty else {
-            return []
-        }
-
+        guard let prefix = prefix, !prefix.isEmpty else { return [] }
         return validator.wordsStartingWith(prefix: prefix)
     }
     
     func findInvalidWords(in mnemonic: String?) -> [MnemonicImportViewModel.Mnemonic.WordInfo] {
-        
         guard let mnemonic = mnemonic else { return [] }
-        
         var wordsInfo = [MnemonicImportViewModel.Mnemonic.WordInfo]()
-
         var words = mnemonic.split(separator: " ")
-        
         var lastWord: String?
         if let last = words.last, let lastCharacter = mnemonic.last, lastCharacter != " " {
-            
             lastWord = String(last)
             words = words.dropLast()
         }
-        
         // Validates that all words other than the last one (if we are still typing)
         // are valid
         words.forEach {
-            
             let word = String($0)
-            
             let isWordValid = validator.wordsStartingWith(prefix: word).count > 0
-            
             wordsInfo.append(.init(word: word, isInvalid: !isWordValid))
         }
-        
         // In case we have not yet typed the entire last word, we check that the start of it
         // matches with a valid word
         if let lastWord = lastWord {
-            
             let isValidPrefix = isValidPrefix(lastWord)
-            
             wordsInfo.append(.init(word: lastWord, isInvalid: !isValidPrefix))
         }
-        
         return wordsInfo
     }
     
     func isValidPrefix(_ prefix: String) -> Bool {
-        
         !validator.wordsStartingWith(prefix: prefix).isEmpty
     }    
 }
@@ -209,16 +168,12 @@ private extension DefaultMnemonicImportInteractor {
     }
 
     func walletName() -> String {
-        guard name.isEmpty else {
-            return name
-        }
-
+        guard name.isEmpty else { return name }
         guard !keyStoreService.items().isEmpty else {
-            return Localized("newMnemonic.defaultWalletName")
+            return Localized("mnemonicNew.defaultWalletName")
         }
-
         return String(
-            format: Localized("newMnemonic.defaultNthWalletName"),
+            format: Localized("mnemonicNew.defaultNthWalletName"),
             keyStoreService.items().count
         )
     }
@@ -237,7 +192,6 @@ private extension DefaultMnemonicImportInteractor {
 // MARK: - Constant
 
 private extension DefaultMnemonicImportInteractor {
-
     enum Constant {
         static let maxNameLength: Int = 24
     }

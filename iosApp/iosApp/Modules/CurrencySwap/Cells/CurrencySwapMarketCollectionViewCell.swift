@@ -1,0 +1,187 @@
+// Created by web3d4v on 14/07/2022.
+// Copyright (c) 2022 Sons Of Crypto.
+// SPDX-License-Identifier: MIT
+
+import web3lib
+
+final class CurrencySwapMarketCollectionViewCell: UICollectionViewCell {
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var currencyFrom: CurrencyEnterAmountView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var currencyTo: CurrencyEnterAmountView!
+    @IBOutlet weak var currencySwapProviderView: CurrencySwapProviderView!
+    @IBOutlet weak var currencySwapPriceView: CurrencySwapPriceView!
+    @IBOutlet weak var currencySwapSlippageView: CurrencySwapSlippageView!
+    @IBOutlet weak var networkFeeView: NetworkFeePickerView!
+    @IBOutlet weak var approveButton: Button!
+    @IBOutlet weak var button: Button!
+
+    private var handler: Handler!
+    
+    struct Handler {
+        let onCurrencyFromTapped: (() -> Void)
+        let onCurrencyFromAmountChanged: ((BigInt) -> Void)?
+        let onCurrencyToTapped: (() -> Void)
+        let onCurrencyToAmountChanged: ((BigInt) -> Void)?
+        let onSwapFlip: (() -> Void)
+        let onProviderTapped: () -> Void
+        let onSlippageTapped: () -> Void
+        let onNetworkFeesTapped: () -> Void
+        let onApproveCTATapped: () -> Void
+        let onCTATapped: () -> Void
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        imageView.superview?.layer.cornerRadius = Theme.constant.cornerRadius.half.half
+        imageView.superview?.backgroundColor = Theme.colour.cellBackground
+        imageView.tintColor = Theme.colour.labelSecondary
+        imageView.image = "arrow.up.arrow.down".assetImage
+        imageView.isHidden = false
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(flip))
+        imageView.superview?.superview?.addGestureRecognizer(tapGesture)
+        imageView.superview?.superview?.isUserInteractionEnabled = true
+        loadingIndicator.isHidden = true
+        loadingIndicator.color = Theme.colour.activityIndicator
+        currencyTo.maxButton.isHidden = true
+        approveButton.style = .primary
+        approveButton.addTarget(self, action: #selector(approveButtonTapped), for: .touchUpInside)
+        var approveConfiguration = approveButton.configuration ?? .plain()
+        approveConfiguration.imagePlacement = .trailing
+        approveButton.configuration = approveConfiguration
+        approveButton.updateConfiguration()
+        button.style = .primary
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        stackView.setCustomSpacing(Theme.constant.padding, after: currencyTo)
+        stackView.setCustomSpacing(Theme.constant.padding.half.half, after: currencySwapProviderView)
+        stackView.setCustomSpacing(Theme.constant.padding.half.half, after: currencySwapPriceView)
+        stackView.setCustomSpacing(Theme.constant.padding.half, after: currencySwapSlippageView)
+        stackView.setCustomSpacing(Theme.constant.padding, after: networkFeeView)
+    }
+    
+    override func resignFirstResponder() -> Bool {
+        currencyFrom.resignFirstResponder() || currencyTo.resignFirstResponder()
+    }
+    
+    func showLoading() {
+        loadingIndicator.isHidden = false
+        loadingIndicator.startAnimating()
+        imageView.isHidden = true
+        setButtonLoading(to: true)
+    }
+}
+
+extension CurrencySwapMarketCollectionViewCell {
+    
+    func update(with viewModel: CurrencySwapViewModel.Swap, handler: Handler) {
+        self.handler = handler
+        currencyFrom.update(
+            with: viewModel.currencyFrom,
+            onTokenTapped: handler.onCurrencyFromTapped,
+            onTokenChanged: {
+                [weak self] amount in
+                guard let self = self else { return }
+                self.showLoading()
+                handler.onCurrencyFromAmountChanged?(amount)
+            }
+        )
+        currencyTo.update(
+            with: viewModel.currencyTo,
+            onTokenTapped: handler.onCurrencyToTapped,
+            onTokenChanged: {
+                [weak self] amount in
+                guard let self = self else { return }
+                self.showLoading()
+                handler.onCurrencyToAmountChanged?(amount)
+            }
+        )
+        currencySwapProviderView.update(
+            with: viewModel.currencySwapProviderViewModel,
+            handler: .init(onProviderTapped: handler.onProviderTapped)
+        )
+        currencySwapPriceView.update(
+            with: viewModel.currencySwapPriceViewModel
+        )
+        currencySwapSlippageView.update(
+            with: viewModel.currencySwapSlippageViewModel,
+            handler: .init(onSlippageTapped: handler.onSlippageTapped)
+        )
+        networkFeeView.update(
+            with: viewModel.currencyNetworkFeeViewModel,
+            handler: handler.onNetworkFeesTapped
+        )
+        if viewModel.isCalculating { showLoading() }
+        else { hideLoading() }
+        button.setImage(
+            viewModel.providerAsset.assetImage?.resize(
+                to: .init(width: 24, height: 24)
+            ),
+            for: .normal
+        )
+        switch viewModel.approveState {
+        case .approve:
+            approveButton.isHidden = false
+            approveButton.hideLoading()
+            approveButton.setTitle(Localized("tokenSwap.cell.button.state.approve"), for: .normal)
+            approveButton.isEnabled = true
+        case .approving:
+            approveButton.isHidden = false
+            approveButton.showLoading()
+            approveButton.setTitle(Localized("tokenSwap.cell.button.state.approving"), for: .normal)
+            approveButton.isEnabled = true
+        case .approved:
+            approveButton.isHidden = true
+        }
+        switch viewModel.buttonState {
+        case .loading:
+            button.hideLoading()
+            button.style = .primary
+            button.setTitle(Localized("tokenSwap.cell.button.state.swap"), for: .normal)
+            button.isEnabled = false
+        case let .invalid(text):
+            button.hideLoading()
+            button.style = .primary
+            button.setTitle(text, for: .normal)
+            button.isEnabled = false
+        case let .swapAnyway(text: text):
+            button.hideLoading()
+            button.setTitle(text, for: .normal)
+            button.style = .primary(action: .destructive)
+            button.isEnabled = viewModel.approveState == .approved
+        case .swap:
+            button.hideLoading()
+            button.setTitle(Localized("tokenSwap.cell.button.state.swap"), for: .normal)
+            button.style = .primary
+            button.isEnabled = viewModel.approveState == .approved
+        }
+        var configuration = button.configuration ?? .plain()
+        configuration.imagePlacement = .trailing
+        button.configuration = configuration
+        button.updateConfiguration()
+    }
+}
+
+private extension CurrencySwapMarketCollectionViewCell {
+    
+    func hideLoading() {
+        loadingIndicator.stopAnimating()
+        loadingIndicator.isHidden = true
+        imageView.isHidden = false
+        setButtonLoading(to: false)
+    }
+    
+    @objc func flip() { handler.onSwapFlip() }
+    
+    @objc func approveButtonTapped() { handler.onApproveCTATapped() }
+    
+    @objc func buttonTapped() { handler.onCTATapped() }
+    
+    func setButtonLoading(to loading: Bool) {
+        var configuration = button.configuration ?? .plain()
+        configuration.imagePlacement = .trailing
+        configuration.showsActivityIndicator = loading
+        button.configuration = configuration
+        button.updateConfiguration()
+    }
+}

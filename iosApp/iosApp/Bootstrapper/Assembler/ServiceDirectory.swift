@@ -9,7 +9,6 @@ struct ServiceDirectory {
     // TODO: Review
     static var transitionStyle: TransitionStyle = .cardFlip
     enum TransitionStyle {
-        
         case cardFlip
         case sheet
     }

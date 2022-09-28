@@ -5,16 +5,14 @@
 import Foundation
 
 extension ConfirmationViewModel {
-    
+
     struct SwapViewModel {
-        
-        let tokenFrom: Token
-        let tokenTo: Token
+        let currencyFrom: Currency
+        let currencyTo: Currency
         let provider: Provider
         let estimatedFee: Fee
         
-        struct Token {
-            
+        struct Currency {
             let iconName: String
             let symbol: String
             let value: String
@@ -22,14 +20,12 @@ extension ConfirmationViewModel {
         }
         
         struct Provider {
-            
             let iconName: String
             let name: String
             let slippage: String
         }
         
         struct Fee {
-            
             let value: String
             let usdValue: String
         }

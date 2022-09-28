@@ -5,9 +5,7 @@
 import Foundation
 import UIKit
 
-protocol ThemePickerView: AnyObject {
-
-}
+protocol ThemePickerView: AnyObject {}
 
 final class ThemePickerViewController: UIViewController, ThemePickerView {
     
@@ -15,20 +13,13 @@ final class ThemePickerViewController: UIViewController, ThemePickerView {
 
     private var firstAppear: Bool = true
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
         collectionView.scrollToItem(
             at: IndexPath(item: selectedThemeIndex(), section: 0),
             at: .centeredHorizontally,
             animated: false
         )
-
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             UIView.springAnimate {
                 self.collectionView.visibleCells.forEach {
@@ -36,7 +27,6 @@ final class ThemePickerViewController: UIViewController, ThemePickerView {
                 }
             }
         }
-
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
             self.firstAppear = false
         }
@@ -62,16 +52,12 @@ final class ThemePickerViewController: UIViewController, ThemePickerView {
 
 extension ThemePickerViewController: UICollectionViewDataSource {
 
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
-    }
+    func numberOfSections(in collectionView: UICollectionView) -> Int { 1 }
 
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
-    ) -> Int {
-        return 4
-    }
+    ) -> Int { 4 }
 
     func collectionView(
         _ collectionView: UICollectionView,
@@ -92,19 +78,14 @@ extension ThemePickerViewController: UICollectionViewDelegateFlowLayout {
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
-        return view.bounds.size
-    }
+    ) -> CGSize { view.bounds.size }
 }
 
 extension ThemePickerViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            
             UIView.springAnimate(
                 animations: { [weak self] in
                     guard let cell = self?.collectionView.cellForItem(at: indexPath) else { return }

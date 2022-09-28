@@ -6,16 +6,13 @@ import Foundation
 import web3lib
 
 protocol SettingsInteractor: AnyObject {
-
     func settings(
         for setting: Setting.ItemIdentifier
     ) -> [SettingsWireframeContext.Group]
-    
     func didSelect(
         item: Setting.ItemIdentifier?,
         action: Setting.ActionIdentifier
     )
-    
     func isSelected(
         item: Setting.ItemIdentifier,
         action: Setting.ActionIdentifier
@@ -23,13 +20,9 @@ protocol SettingsInteractor: AnyObject {
 }
 
 final class DefaultSettingsInteractor {
-
     private let settingsService: SettingsService
 
-    init(
-        _ settingsService: SettingsService
-    ) {
-        
+    init(_ settingsService: SettingsService) {
         self.settingsService = settingsService
     }
 }
@@ -39,7 +32,6 @@ extension DefaultSettingsInteractor: SettingsInteractor {
     func settings(
         for setting: Setting.ItemIdentifier
     ) -> [SettingsWireframeContext.Group] {
-        
         settingsService.settings(for: setting)
     }
     
@@ -47,7 +39,6 @@ extension DefaultSettingsInteractor: SettingsInteractor {
         item: Setting.ItemIdentifier?,
         action: Setting.ActionIdentifier
     ) {
-        
         settingsService.didSelect(item: item, action: action)
     }
     
@@ -55,7 +46,6 @@ extension DefaultSettingsInteractor: SettingsInteractor {
         item: Setting.ItemIdentifier,
         action: Setting.ActionIdentifier
     ) -> Bool {
-        
         settingsService.isSelected(item: item, action: action)
     }
 }

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -14,11 +13,11 @@
             <objects>
                 <viewController storyboardIdentifier="NFTSendViewController" id="VSz-Bo-FCC" customClass="NFTSendViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JGr-ZJ-egI" customClass="ThemeGradientView" customModule="iosApp" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="sPJ-ub-9Nr">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9l8-eW-zhT">
                                     <size key="itemSize" width="413" height="85"/>
@@ -28,7 +27,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="NFTSendToCollectionViewCell" id="Thd-hH-cu1" customClass="NFTSendToCollectionViewCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.5" y="0.0" width="413" height="46"/>
+                                        <rect key="frame" x="93.666666666666671" y="0.0" width="413" height="46"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="1NT-Dr-yTp">
                                             <rect key="frame" x="0.0" y="0.0" width="413" height="46"/>
@@ -77,7 +76,7 @@
                                                                             <rect key="frame" x="0.0" y="12" width="22" height="22"/>
                                                                             <subviews>
                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.fill.badge.plus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Bnh-iS-M3F">
-                                                                                    <rect key="frame" x="-2" y="1.5" width="24" height="22"/>
+                                                                                    <rect key="frame" x="-2.3333333333333339" y="2" width="24.333333333333336" height="21.666666666666668"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="height" constant="22" id="QZF-9c-3t2"/>
                                                                                         <constraint firstAttribute="width" constant="22" id="d9y-8i-VKp"/>
@@ -129,14 +128,14 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="NFTSendImageCollectionViewCell" id="GUV-Ib-7ee" userLabel="TokenSendCTACollectionViewCell" customClass="NFTSendImageCollectionViewCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.5" y="56" width="413" height="124"/>
+                                        <rect key="frame" x="93.666666666666671" y="56" width="413" height="124"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="zc3-Zq-rNg">
                                             <rect key="frame" x="0.0" y="0.0" width="413" height="124"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="N35-ql-NQa">
-                                                    <rect key="frame" x="131.5" y="0.0" width="150" height="124"/>
+                                                    <rect key="frame" x="131.66666666666666" y="0.0" width="149.99999999999997" height="124"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="Fd9-jz-jQa"/>
                                                         <constraint firstAttribute="height" constant="150" id="IRI-hH-RmU"/>
@@ -152,7 +151,7 @@
                                         <size key="customSize" width="413" height="124"/>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="NFTSendCTACollectionViewCell" id="5zI-kQ-8Ld" userLabel="TokenSendCTACollectionViewCell" customClass="NFTSendCTACollectionViewCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.5" y="190" width="413" height="124"/>
+                                        <rect key="frame" x="93.666666666666671" y="190" width="413" height="124"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="f7W-q8-HUM">
                                             <rect key="frame" x="0.0" y="0.0" width="413" height="124"/>
@@ -161,32 +160,32 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="YiV-Pt-GFu">
                                                     <rect key="frame" x="0.0" y="42" width="413" height="82"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ptd-NA-j8a" customClass="TokenNetworkFeeView" customModule="iosApp" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ptd-NA-j8a" customClass="NetworkFeePickerView" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="413" height="24"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="VMO-CK-cA4">
                                                                     <rect key="frame" x="12" y="0.0" width="389" height="24"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="asB-cb-AfK">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="240.5" height="24"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="232.66666666666666" height="24"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yX7-NM-VhP">
-                                                                            <rect key="frame" x="248.5" y="0.0" width="16" height="24"/>
+                                                                            <rect key="frame" x="240.66666666666666" y="0.0" width="15.999999999999972" height="24"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="16" id="yCz-BY-UXG"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4M-Vq-udt">
-                                                                            <rect key="frame" x="272.5" y="0.0" width="41.5" height="24"/>
+                                                                            <rect key="frame" x="264.66666666666669" y="0.0" width="41.333333333333314" height="24"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HOH-JW-gb6" customClass="Button" customModule="iosApp" customModuleProvider="target">
-                                                                            <rect key="frame" x="322" y="0.0" width="67" height="24"/>
+                                                                            <rect key="frame" x="314" y="0.0" width="75" height="24"/>
                                                                             <state key="normal" title="Button"/>
                                                                             <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                                                         </button>
@@ -231,10 +230,10 @@
                                 </cells>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P1U-ea-ms3" customClass="FeesPickerView" customModule="iosApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V0P-9L-rc2">
-                                        <rect key="frame" x="158" y="0.0" width="240" height="132"/>
+                                        <rect key="frame" x="344" y="0.0" width="240" height="132"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="DbW-mw-6WG">
                                                 <rect key="frame" x="16" y="0.0" width="208" height="132"/>
@@ -243,13 +242,13 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="208" height="44"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RpQ-eC-4Df">
-                                                                <rect key="frame" x="0.0" y="0.0" width="166.5" height="44"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="166.66666666666666" height="44"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pit-LU-O9x">
-                                                                <rect key="frame" x="166.5" y="0.0" width="41.5" height="44"/>
+                                                                <rect key="frame" x="166.66666666666663" y="0.0" width="41.333333333333343" height="44"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -260,13 +259,13 @@
                                                         <rect key="frame" x="0.0" y="44" width="208" height="44"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rZo-M3-vhC">
-                                                                <rect key="frame" x="0.0" y="0.0" width="41.5" height="44"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="41.333333333333336" height="44"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ff-yf-vHx">
-                                                                <rect key="frame" x="41.5" y="0.0" width="166.5" height="44"/>
+                                                                <rect key="frame" x="41.333333333333314" y="0.0" width="166.66666666666666" height="44"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -277,13 +276,13 @@
                                                         <rect key="frame" x="0.0" y="88" width="208" height="44"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t13-dT-kjx">
-                                                                <rect key="frame" x="0.0" y="0.0" width="41.5" height="44"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="41.333333333333336" height="44"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZNG-Da-bOY">
-                                                                <rect key="frame" x="41.5" y="0.0" width="166.5" height="44"/>
+                                                                <rect key="frame" x="41.333333333333314" y="0.0" width="166.66666666666666" height="44"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -293,11 +292,11 @@
                                                 </subviews>
                                             </stackView>
                                             <view tag="100" contentMode="scaleToFill" placeholderIntrinsicWidth="224" placeholderIntrinsicHeight="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="8so-fc-8mJ" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
-                                                <rect key="frame" x="16" y="44" width="224" height="0.5"/>
+                                                <rect key="frame" x="16" y="44" width="224" height="0.6666666666666643"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             </view>
                                             <view tag="100" contentMode="scaleToFill" placeholderIntrinsicWidth="224" placeholderIntrinsicHeight="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Sij-7k-5ua" customClass="SeparatorView" customModule="iosApp" customModuleProvider="target">
-                                                <rect key="frame" x="16" y="87.5" width="224" height="0.5"/>
+                                                <rect key="frame" x="16" y="87.666666666666671" width="224" height="0.3333333333333286"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             </view>
                                         </subviews>
@@ -355,7 +354,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="person.fill.badge.plus" catalog="system" width="128" height="124"/>
+        <image name="person.fill.badge.plus" catalog="system" width="128" height="125"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

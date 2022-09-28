@@ -5,12 +5,10 @@
 import UIKit
 
 final class ConfirmationTxSuccessView: UIView {
-    
     private let viewModel: ConfirmationViewModel.TxSuccessViewModel
     private let handler: Handler
     
     struct Handler {
-        
         let onCTATapped: () -> Void
         let onCTASecondaryTapped: () -> Void
     }
@@ -19,12 +17,9 @@ final class ConfirmationTxSuccessView: UIView {
         viewModel: ConfirmationViewModel.TxSuccessViewModel,
         handler: Handler
     ) {
-        
         self.viewModel = viewModel
         self.handler = handler
-        
         super.init(frame: .zero)
-        
         configureUI()
     }
     
@@ -36,41 +31,33 @@ final class ConfirmationTxSuccessView: UIView {
 private extension ConfirmationTxSuccessView {
     
     func configureUI() {
-        
         let views: [UIView] = [
-            makeSuccessView(),
-            makeViewEtherScanButton(),
-            makeCTAButton()
+            successView(),
+            viewEtherScanButton(),
+            ctaButton()
         ]
-        
         let stackView = VStackView(views)
         stackView.spacing = Theme.constant.padding
-
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         wrapperView.tag = 12
-
         wrapperView.addSubview(stackView)
         stackView.addConstraints(.toEdges)
         addSubview(wrapperView)
         wrapperView.addConstraints(.toEdges)
     }
     
-    func makeSuccessView() -> UIView {
-        
+    func successView() -> UIView {
         let views: [UIView] = [
-            makeOnSuccessView(),
-            makeLabel(with: .body, and: viewModel.title),
-            makeLabel(with: .footnote, and: viewModel.message),
+            onSuccessView(),
+            label(with: .body, and: viewModel.title),
+            label(with: .footnote, and: viewModel.message),
         ]
-        
         let stackView = VStackView(views)
         stackView.spacing = Theme.constant.padding
-        
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         wrapperView.tag = 12
-
         wrapperView.addSubview(stackView)
         stackView.addConstraints(
             [
@@ -82,8 +69,7 @@ private extension ConfirmationTxSuccessView {
         return wrapperView
     }
     
-    func makeOnSuccessView() -> UIView {
-        
+    func onSuccessView() -> UIView {
         let image = UIImage(systemName: "checkmark.circle.fill")
         let config = UIImage.SymbolConfiguration(
             paletteColors: [
@@ -99,11 +85,9 @@ private extension ConfirmationTxSuccessView {
                 .layout(anchor: .heightAnchor, constant: .equalTo(constant: 60))
             ]
         )
-
         let wrapperView = UIView()
         wrapperView.backgroundColor = .clear
         wrapperView.addSubview(imageView)
-        
         imageView.addConstraints(
             [
                 .layout(anchor: .topAnchor),
@@ -111,15 +95,13 @@ private extension ConfirmationTxSuccessView {
                 .layout(anchor: .centerXAnchor)
             ]
         )
-            
         return wrapperView
     }
     
-    func makeLabel(
+    func label(
         with style: UILabel.Style,
         and text: String
     ) -> UIView {
-        
         let label = UILabel()
         label.apply(style: style)
         label.text = text
@@ -128,8 +110,7 @@ private extension ConfirmationTxSuccessView {
         return label
     }
     
-    func makeCTAButton() -> Button {
-        
+    func ctaButton() -> Button {
         let button = Button()
         button.style = .primary
         button.setTitle(viewModel.cta, for: .normal)
@@ -137,8 +118,7 @@ private extension ConfirmationTxSuccessView {
         return button
     }
     
-    func makeViewEtherScanButton() -> Button {
-        
+    func viewEtherScanButton() -> Button {
         let button = Button()
         button.style = .secondary
         button.setTitle(viewModel.ctaSecondary, for: .normal)
@@ -147,12 +127,10 @@ private extension ConfirmationTxSuccessView {
     }
     
     @objc func onCTATapped() {
-        
         handler.onCTATapped()
     }
     
     @objc func onCTASecondaryTapped() {
-        
         handler.onCTASecondaryTapped()
     }
 }

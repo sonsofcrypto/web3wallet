@@ -3,35 +3,18 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3lib
 
 protocol NetworkPickerInteractor: AnyObject {
 
-    var allNetworks: [ Web3Network ] { get }
-    func networkIcon(for network: Web3Network) -> Data
+    var allNetworks: [ Network ] { get }
 }
 
-final class DefaultNetworkPickerInteractor {
-
-    private let web3Service: Web3ServiceLegacy
-    
-    init(
-        web3Service: Web3ServiceLegacy
-    ) {
-        
-        self.web3Service = web3Service
-    }
-}
+final class DefaultNetworkPickerInteractor {}
 
 extension DefaultNetworkPickerInteractor: NetworkPickerInteractor {
     
-    var allNetworks: [Web3Network] {
-        
-        web3Service.allTokens.networks
+    var allNetworks: [Network] {
+        NetworksServiceCompanion().supportedNetworks()
     }
-    
-    func networkIcon(for network: Web3Network) -> Data {
-        
-        web3Service.networkIcon(for: network)
-    }
-
 }

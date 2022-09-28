@@ -21,6 +21,7 @@ protocol DashboardInteractorLister: AnyObject {
 }
 
 protocol DashboardInteractor: AnyObject {
+    var selectedNetwork: Network? { get }
     func enabledNetworks() -> [Network]
     func wallet(for network: Network) -> Wallet?
     func currencies(for network: Network) -> [Currency]
@@ -30,12 +31,11 @@ protocol DashboardInteractor: AnyObject {
     func candles(for currency: Currency) -> [Candle]?
     func cryptoBalance(for network: Network, currency: Currency) -> BigInt
     func fiatBalance(for network: Network, currency: Currency) -> Double
-    func totalFiatBalance() -> Double
-    func nfts(for network: Web3Network) -> [NFTItem]
+    func nfts(for network: Network) -> [NFTItem]
     func notifications() -> [Web3Notification]
-
-    func reloadData()
+    func totalFiatBalance() -> Double
     func reloadBalances()
+    func reloadData()
     func addListener(_ listener: DashboardInteractorLister)
     func removeListener(_ listener: DashboardInteractorLister)
 }
@@ -44,7 +44,6 @@ final class DefaultDashboardInteractor {
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
     private let walletService: WalletService
-    private let web3ServiceLegacy: Web3ServiceLegacy
     private let nftsService: NFTsService
     private var listeners: [WeakContainer] = []
 
@@ -54,12 +53,10 @@ final class DefaultDashboardInteractor {
         walletService: WalletService,
         nftsService: NFTsService
     ) {
-        self.web3ServiceLegacy = ServiceDirectory.assembler.resolve()
         self.networksService = networksService
         self.currencyStoreService = currencyStoreService
         self.walletService = walletService
         self.nftsService = nftsService
-
         NotificationCenter.default.addObserver(
             self, selector: #selector(didEnterBackground),
             name: UIApplication.didEnterBackgroundNotification,
@@ -73,13 +70,14 @@ final class DefaultDashboardInteractor {
     }
     
     deinit {
-        
         print("[DEBUG][Interactor] deinit \(String(describing: self))")
         NotificationCenter.default.removeObserver(self)
     }
 }
 
 extension DefaultDashboardInteractor: DashboardInteractor {
+    
+    var selectedNetwork: Network? { networksService.network }
 
     func enabledNetworks() -> [Network] {
         return networksService.enabledNetworks()
@@ -121,18 +119,14 @@ extension DefaultDashboardInteractor: DashboardInteractor {
         )
     }
 
-    func fiatPrice(for wallet: Wallet?, currency: Currency) -> Double {
-        currencyStoreService.marketData(currency: currency)?
-            .currentPrice?
-            .doubleValue ?? 0
-    }
-
-    func nfts(for network: Web3Network) -> [NFTItem] {
+    func nfts(for network: Network) -> [NFTItem] {
         nftsService.yourNFTs(forNetwork: network)
     }
 
     func notifications() -> [Web3Notification] {
-        web3ServiceLegacy.dashboardNotifications
+        // TODO: Review this
+        let web3ServiceLegacy: Web3ServiceLegacy = ServiceDirectory.assembler.resolve()
+        return web3ServiceLegacy.dashboardNotifications
     }
 
     func totalFiatBalance() -> Double {
@@ -157,7 +151,6 @@ extension DefaultDashboardInteractor: DashboardInteractor {
         if allCurrencies.isEmpty {
             return
         }
-
         currencyStoreService.fetchMarketData(
             currencies: allCurrencies,
             completionHandler: { [weak self] (market, _) in
@@ -166,7 +159,6 @@ extension DefaultDashboardInteractor: DashboardInteractor {
                 }
             }
         )
-
         reloadCandles()
         nftsService.fetchNFTs { [weak self] _ in
             DispatchQueue.main.async { self?.emit(.didUpdateNFTs) }
@@ -192,12 +184,7 @@ extension DefaultDashboardInteractor: DashboardInteractor {
     @objc func willEnterForeground() {
         walletService.startPolling()
     }
-}
-
-// MARK: - Listeners
-
-extension DefaultDashboardInteractor: NetworksListener, WalletListener {
-
+    
     func addListener(_ listener: DashboardInteractorLister) {
         listeners = [WeakContainer(listener)]
         networksService.add(listener__: self)
@@ -209,6 +196,11 @@ extension DefaultDashboardInteractor: NetworksListener, WalletListener {
         networksService.remove(listener__: self)
         walletService.remove(listener_: self)
     }
+}
+
+// MARK: - Listeners
+
+extension DefaultDashboardInteractor: NetworksListener, WalletListener {
 
     private func emit(_ event: DashboardInteractorEvent) {
         listeners.forEach { $0.value?.handle(event) }

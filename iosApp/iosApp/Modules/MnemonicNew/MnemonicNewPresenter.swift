@@ -21,30 +21,25 @@ enum MnemonicNewPresenterEvent {
 }
 
 protocol MnemonicNewPresenter {
-
     func present()
     func handle(_ event: MnemonicNewPresenterEvent)
 }
 
-// MARK: - DefaultMnemonicPresenter
-
 final class DefaultMnemonicNewPresenter {
-
-    private let context: MnemonicNewContext
-    private let interactor: MnemonicNewInteractor
+    private weak var view: MnemonicNewView?
     private let wireframe: MnemonicNewWireframe
+    private let interactor: MnemonicNewInteractor
+    private let context: MnemonicNewContext
 
     private var password: String = ""
     private var salt: String = ""
     private var ctaTapped = false
 
-    private weak var view: MnemonicNewView?
-
     init(
-        context: MnemonicNewContext,
         view: MnemonicNewView,
+        wireframe: MnemonicNewWireframe,
         interactor: MnemonicNewInteractor,
-        wireframe: MnemonicNewWireframe
+        context: MnemonicNewContext
     ) {
         self.context = context
         self.view = view
@@ -52,8 +47,6 @@ final class DefaultMnemonicNewPresenter {
         self.wireframe = wireframe
     }
 }
-
-// MARK: MnemonicPresenter
 
 extension DefaultMnemonicNewPresenter: MnemonicNewPresenter {
 
@@ -122,32 +115,20 @@ extension DefaultMnemonicNewPresenter: MnemonicNewPresenter {
 
 private extension DefaultMnemonicNewPresenter {
     
-    func updateView() {
-        
-        view?.update(with: viewModel())
-    }
+    func updateView() { view?.update(with: viewModel()) }
     
-    var isValidForm: Bool {
-        
-        passwordErrorMessage == nil
-    }
+    var isValidForm: Bool { passwordErrorMessage == nil }
     
     var passwordErrorMessage: String? {
-        
         guard ctaTapped else { return nil }
-        
         switch interactor.passwordType {
-            
         case .pin:
             let validator = PasswordValidatorHelper()
             return validator.validate(password, type: .pin)
-
         case .pass:
             let validator = PasswordValidatorHelper()
             return validator.validate(password, type: .pass)
-            
-        default:
-            return nil
+        default: return nil
         }
     }
 
@@ -160,12 +141,12 @@ private extension DefaultMnemonicNewPresenter {
             headers: [.none, .none],
             footers: [
                 .attrStr(
-                    text: Localized("newMnemonic.footer"),
+                    text: Localized("mnemonicNew.footer"),
                     highlightWords: Constant.mnemonicHighlightWords
                 ),
                 .none
             ],
-            cta: Localized("newMnemonic.cta.new")
+            cta: Localized("mnemonicNew.cta.new")
         )
     }
 
@@ -185,30 +166,30 @@ private extension DefaultMnemonicNewPresenter {
             return [
                 MnemonicNewViewModel.Item.name(
                     name: .init(
-                        title: Localized("newMnemonic.name.title"),
+                        title: Localized("mnemonicNew.name.title"),
                         value: interactor.name,
-                        placeholder: Localized("newMnemonic.name.placeholder")
+                        placeholder: Localized("mnemonicNew.name.placeholder")
                     )
                 ),
                 MnemonicNewViewModel.Item.switch(
-                    title: Localized("newMnemonic.iCould.title"),
+                    title: Localized("mnemonicNew.iCould.title"),
                     onOff: interactor.iCloudSecretStorage
                 ),
                 MnemonicNewViewModel.Item.switchWithTextInput(
                     switchWithTextInput: .init(
-                        title: Localized("newMnemonic.salt.title"),
+                        title: Localized("mnemonicNew.salt.title"),
                         onOff: interactor.saltMnemonic,
                         text: salt,
-                        placeholder: Localized("newMnemonic.salt.placeholder"),
-                        description: Localized("newMnemonic.salt.description"),
+                        placeholder: Localized("mnemonicNew.salt.placeholder"),
+                        description: Localized("mnemonicNew.salt.description"),
                         descriptionHighlightedWords: [
-                            Localized("newMnemonic.salt.descriptionHighlight")
+                            Localized("mnemonicNew.salt.descriptionHighlight")
                         ]
                     )
                 ),
                 MnemonicNewViewModel.Item.segmentWithTextAndSwitchInput(
                     viewModel: .init(
-                        title: Localized("newMnemonic.passType.title"),
+                        title: Localized("mnemonicNew.passType.title"),
                         segmentOptions: passwordTypes().map { "\($0)".lowercased() },
                         selectedSegment: selectedPasswordTypeIdx(),
                         password: password,
@@ -216,10 +197,10 @@ private extension DefaultMnemonicNewPresenter {
                         ? .numberPad
                         : .default,
                         placeholder: interactor.passwordType == .pin
-                        ? Localized("newMnemonic.pinType.placeholder")
-                        : Localized("newMnemonic.passType.placeholder"),
+                        ? Localized("mnemonicNew.pinType.placeholder")
+                        : Localized("mnemonicNew.passType.placeholder"),
                         errorMessage: passwordErrorMessage,
-                        onOffTitle: Localized("newMnemonic.passType.allowFaceId"),
+                        onOffTitle: Localized("mnemonicNew.passType.allowFaceId"),
                         onOff: interactor.passUnlockWithBio
                     )
                 )
@@ -228,18 +209,18 @@ private extension DefaultMnemonicNewPresenter {
             return [
                 MnemonicNewViewModel.Item.name(
                     name: .init(
-                        title: Localized("newMnemonic.name.title"),
+                        title: Localized("mnemonicNew.name.title"),
                         value: interactor.name,
-                        placeholder: Localized("newMnemonic.name.placeholder")
+                        placeholder: Localized("mnemonicNew.name.placeholder")
                     )
                 ),
                 MnemonicNewViewModel.Item.switch(
-                    title: Localized("newMnemonic.iCould.title"),
+                    title: Localized("mnemonicNew.iCould.title"),
                     onOff: interactor.iCloudSecretStorage
                 ),
                 MnemonicNewViewModel.Item.segmentWithTextAndSwitchInput(
                     viewModel: .init(
-                        title: Localized("newMnemonic.passType.title"),
+                        title: Localized("mnemonicNew.passType.title"),
                         segmentOptions: passwordTypes().map { "\($0)".lowercased() },
                         selectedSegment: selectedPasswordTypeIdx(),
                         password: password,
@@ -247,10 +228,10 @@ private extension DefaultMnemonicNewPresenter {
                         ? .numberPad
                         : .default,
                         placeholder: interactor.passwordType == .pin
-                        ? Localized("newMnemonic.pinType.placeholder")
-                        : Localized("newMnemonic.passType.placeholder"),
+                        ? Localized("mnemonicNew.pinType.placeholder")
+                        : Localized("mnemonicNew.passType.placeholder"),
                         errorMessage: passwordErrorMessage,
-                        onOffTitle: Localized("newMnemonic.passType.allowFaceId"),
+                        onOffTitle: Localized("mnemonicNew.passType.allowFaceId"),
                         onOff: interactor.passUnlockWithBio
                     )
                 )
@@ -259,10 +240,7 @@ private extension DefaultMnemonicNewPresenter {
     }
 }
 
-// MARK: - Utilities
-
 private extension DefaultMnemonicNewPresenter {
-    
     func selectedPasswordTypeIdx() -> Int {
         let values = KeyStoreItem.PasswordType.values()
         for idx in 0..<values.size {
@@ -283,14 +261,11 @@ private extension DefaultMnemonicNewPresenter {
     }
 }
 
-// MARK: - Constant
-
 private extension DefaultMnemonicNewPresenter {
-
     enum Constant {
         static let mnemonicHighlightWords: [String] = [
-            Localized("newMnemonic.footerHighlightWord0"),
-            Localized("newMnemonic.footerHighlightWord1"),
+            Localized("mnemonicNew.footerHighlightWord0"),
+            Localized("mnemonicNew.footerHighlightWord1"),
         ]
     }
 }

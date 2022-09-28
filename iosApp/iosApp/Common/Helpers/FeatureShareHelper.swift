@@ -4,15 +4,12 @@
 
 struct FeatureShareHelper {
     
-    func shareVote(
-        on web3Feature: ImprovementProposal,
-        presentingIn: UIViewController
-    ) {
-        let textEncoded = web3Feature.tweet.addingPercentEncoding(
+    func shareVote(on proposal: ImprovementProposal) {
+        let textEncoded = proposal.tweet.addingPercentEncoding(
             withAllowedCharacters: .urlHostAllowed
         ) ?? ""
 
-        let urlEncoded = web3Feature.pageUrl.addingPercentEncoding(
+        let urlEncoded = proposal.pageUrl.addingPercentEncoding(
             withAllowedCharacters: .urlHostAllowed
         ) ?? ""
         guard let url = "https://www.twitter.com/intent/tweet?text=\(textEncoded)&url=\(urlEncoded)".url else { return }

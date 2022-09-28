@@ -6,25 +6,34 @@ import UIKit
 
 protocol WebViewWireframeFactory {
 
-    func makeWireframe(
-        _ presentingIn: UIViewController,
+    func make(
+        _ parent: UIViewController?,
         context: WebViewWireframeContext
     ) -> WebViewWireframe
 }
 
-final class DefaultWebViewWireframeFactory {
-}
+final class DefaultWebViewWireframeFactory {}
 
 extension DefaultWebViewWireframeFactory: WebViewWireframeFactory {
 
-    func makeWireframe(
-        _ presentingIn: UIViewController,
+    func make(
+        _ parent: UIViewController?,
         context: WebViewWireframeContext
     ) -> WebViewWireframe {
-        
         DefaultWebViewWireframe(
-            presentingIn: presentingIn,
+            parent,
             context: context
         )
+    }
+}
+
+// MARK: Assembler
+
+final class WebViewWireframeFactoryAssembler: AssemblerComponent {
+    
+    func register(to registry: AssemblerRegistry) {
+        registry.register(scope: .instance) { resolver -> WebViewWireframeFactory in
+            DefaultWebViewWireframeFactory()
+        }
     }
 }

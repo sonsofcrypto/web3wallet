@@ -11,9 +11,7 @@ final class ButtonsSheetViewCell: UICollectionViewCell {
     private var viewModel: ButtonSheetViewModel.Button?
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-
         super.traitCollectionDidChange(previousTraitCollection)
-
         updateButtonStyle()
     }
 }
@@ -21,13 +19,9 @@ final class ButtonsSheetViewCell: UICollectionViewCell {
 extension ButtonsSheetViewCell {
     
     func update(with viewModel: ButtonSheetViewModel.Button?) -> ButtonsSheetViewCell {
-        
         self.viewModel = viewModel
-        
         titleLabel.text = viewModel?.title ?? ""
-        
         updateButtonStyle()
-        
         return self
     }
 }
@@ -35,7 +29,6 @@ extension ButtonsSheetViewCell {
 private extension ButtonsSheetViewCell {
     
     func updateButtonStyle() {
-        
         switch viewModel?.type {
         case .newMnemonic:
             applyPrimary()
@@ -45,7 +38,6 @@ private extension ButtonsSheetViewCell {
     }
     
     func applyPrimary() {
-        
         titleLabel.font = Theme.font.title3
         titleLabel.textColor = Theme.colour.buttonPrimaryText
         backgroundColor = Theme.colour.buttonBackgroundPrimary
@@ -54,7 +46,6 @@ private extension ButtonsSheetViewCell {
     }
     
     func applySecondary() {
-        
         titleLabel.font = Theme.font.title3
         titleLabel.textColor = Theme.colour.buttonSecondaryText
         backgroundColor = .clear

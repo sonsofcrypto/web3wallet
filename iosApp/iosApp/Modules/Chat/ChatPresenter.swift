@@ -5,49 +5,43 @@
 import Foundation
 
 enum ChatPresenterEvent {
-
     case send(message: String)
     case receive(message: String)
 }
 
 protocol ChatPresenter {
-
     func present()
     func handle(_ event: ChatPresenterEvent)
 }
 
 final class DefaultChatPresenter {
-
     private weak var view: ChatView?
-    private let interactor: ChatInteractor
     private let wireframe: ChatWireframe
-    
+    private let interactor: ChatInteractor
+
     private var step = 1
     private var items = [ChatViewModel.Item]()
 
     init(
         view: ChatView,
-        interactor: ChatInteractor,
-        wireframe: ChatWireframe
+        wireframe: ChatWireframe,
+        interactor: ChatInteractor
     ) {
         self.view = view
-        self.interactor = interactor
         self.wireframe = wireframe
+        self.interactor = interactor
     }
 }
 
 extension DefaultChatPresenter: ChatPresenter {
 
     func present() {
-        
         prepareFirstItem()
         updateView()
     }
 
     func handle(_ event: ChatPresenterEvent) {
-
         switch event {
-            
         case let .send(message):
             markMessagesAsNotNew()
             items.append(
@@ -59,7 +53,6 @@ extension DefaultChatPresenter: ChatPresenter {
             )
             updateView()
             scheduleReceiveNextMessage()
-            
         case let .receive(message):
             markMessagesAsNotNew()
             items.append(
@@ -87,18 +80,15 @@ private extension DefaultChatPresenter {
     }
     
     func updateView() {
-        
         let viewModel = makeViewModel()
         view?.update(with: viewModel)
     }
     
     func makeViewModel() -> ChatViewModel {
-        
         .loaded(items: items, selectedIdx: items.count - 1)
     }
 
     func prepareFirstItem() {
-        
         items.append(
             .init(
                 owner: .other,
@@ -109,17 +99,13 @@ private extension DefaultChatPresenter {
     }
     
     func scheduleReceiveNextMessage() {
-        
         switch items.last?.message {
-            
         case Localized("chat.me.message1"):
             let message1 = Localized("chat.friend.message2")
             receiveMessage(message1, after: 1.5)
             let message2 = Localized("chat.friend.message3")
             receiveMessage(message2, after: 3.0)
-            
         case Localized("chat.me.message3"):
-            
             let message1 = Localized("chat.friend.message4")
             receiveMessage(message1, after: 1.5)
             let message2 = Localized("chat.friend.message5")
@@ -128,16 +114,13 @@ private extension DefaultChatPresenter {
             receiveMessage(message3, after: 4.0)
             let message4 = Localized("chat.friend.message7")
             receiveMessage(message4, after: 6.0)
-
         default:
             break
         }
     }
     
     func receiveMessage(_ string: String, after delay: TimeInterval) {
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
-            
             guard let self = self else { return }
             self.handle(.receive(message: string))
         }
