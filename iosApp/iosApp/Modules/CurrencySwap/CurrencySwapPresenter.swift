@@ -333,7 +333,7 @@ private extension DefaultCurrencySwapPresenter {
         }
         if isCalculating { return .loading }
         switch interactor.swapState {
-        case .notAvailable:
+        case .noPools, .notAvailable:
             return .invalid(text: Localized("tokenSwap.cell.button.state.noPoolsFound"))
         case .swap:
             return priceImpact >= priceImpactWarningThreashold ? .swapAnyway(
@@ -510,7 +510,7 @@ extension DefaultCurrencySwapPresenter: CurrencyInteractorLister {
             print("[SWAP][QUOTE] - quote not valid, ignoring event")
             return
         }
-        print("[SWAP][QUOTE] - quote valid, refreshing UI")
+        print("[SWAP][QUOTE] - quote valid, refreshing UI - outputAmount: \(interactor.outputAmount.toDecimalString())")
         invalidQuote = false
         refreshView()
     }
