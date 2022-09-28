@@ -125,7 +125,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 onCompletion: { [weak self] (network, currency) in
                     guard let self = self else { return }
                     self.currencyReceiveWireframeFactory.make(
-                        vc,
+                        self.vc?.presentedViewController ?? self.vc,
                         context: .init(network: network, currency: currency)
                     ).present()
                 }

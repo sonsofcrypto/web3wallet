@@ -74,15 +74,15 @@ extension CurrencySendViewController: UICollectionViewDataSource {
         switch item {
         case let .address(value):
             let cell = collectionView.dequeue(CurrencySendToCollectionViewCell.self, for: indexPath)
-            cell.update(with: value, handler: makeTokenSendTokenHandler())
+            cell.update(with: value, handler: tokenSendTokenHandler())
             return cell
         case let .token(token):
             let cell = collectionView.dequeue(CurrencySendTokenCollectionViewCell.self, for: indexPath)
-            cell.update(with: token, handler: makeTokenSendTokenHandler())
+            cell.update(with: token, handler: tokenSendTokenHandler())
             return cell
         case let .send(cta):
             let cell = collectionView.dequeue(CurrencySendCTACollectionViewCell.self, for: indexPath)
-            cell.update(with: cta, handler: makeTokenSendCTAHandler())
+            cell.update(with: cta, handler: tokenSendCTAHandler())
             return cell
         }
     }
@@ -173,13 +173,13 @@ private extension CurrencySendViewController {
             switch $0 {
             case let addressCell as CurrencySendToCollectionViewCell:
                 guard let address = viewModel?.items.address else { return }
-                addressCell.update(with: address, handler: makeTokenSendTokenHandler())
+                addressCell.update(with: address, handler: tokenSendTokenHandler())
             case let tokenCell as CurrencySendTokenCollectionViewCell:
                 guard let token = viewModel?.items.token else { return }
-                tokenCell.update(with: token, handler: makeTokenSendTokenHandler())
+                tokenCell.update(with: token, handler: tokenSendTokenHandler())
             case let ctaCell as CurrencySendCTACollectionViewCell:
                 guard let cta = viewModel?.items.send else { return }
-                ctaCell.update(with: cta, handler: makeTokenSendCTAHandler())
+                ctaCell.update(with: cta, handler: tokenSendCTAHandler())
             default:
                 fatalError()
             }
@@ -189,31 +189,31 @@ private extension CurrencySendViewController {
 
 private extension CurrencySendViewController {
     
-    func makeTokenSendTokenHandler() -> TokenEnterAddressView.Handler {
+    func tokenSendTokenHandler() -> TokenEnterAddressView.Handler {
         .init(
-            onAddressChanged: makeOnAddressChanged(),
+            onAddressChanged: onAddressChanged(),
             onQRCodeScanTapped: onTapped(.qrCodeScan),
             onPasteTapped: onTapped(.pasteAddress),
             onSaveTapped: onTapped(.saveAddress)
         )
     }
 
-    func makeOnAddressChanged() -> (String) -> Void {
+    func onAddressChanged() -> (String) -> Void {
         { [weak self] value in self?.onTapped(.addressChanged(to: value))()}
     }
     
-    func makeTokenSendTokenHandler() -> CurrencySendTokenCollectionViewCell.Handler {
+    func tokenSendTokenHandler() -> CurrencySendTokenCollectionViewCell.Handler {
         .init(
             onTokenTapped: onTapped(.selectCurrency),
-            onTokenChanged: makeOnTokenChanged()
+            onTokenChanged: onTokenChanged()
         )
     }
     
-    func makeOnTokenChanged() -> (BigInt) -> Void {
+    func onTokenChanged() -> (BigInt) -> Void {
         { [weak self] value in self?.onTapped(.currencyChanged(to: value))() }
     }
     
-    func makeTokenSendCTAHandler() -> CurrencySendCTACollectionViewCell.Handler {
+    func tokenSendCTAHandler() -> CurrencySendCTACollectionViewCell.Handler {
         .init(
             onNetworkFeesTapped: onTapped(.feeTapped),
             onCTATapped: onTapped(.review)

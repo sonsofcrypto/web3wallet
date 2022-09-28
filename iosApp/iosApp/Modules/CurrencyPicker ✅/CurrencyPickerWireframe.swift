@@ -85,7 +85,7 @@ extension DefaultCurrencyPickerWireframe: CurrencyPickerWireframe {
     
     func present() {
         let vc = wireUp()
-        parent?.show(vc, sender: self)
+        parent?.present(vc, animated: true)
     }
     
     func navigate(to destination: CurrencyPickerWireframeDestination) {
@@ -119,8 +119,6 @@ private extension DefaultCurrencyPickerWireframe {
         vc.hidesBottomBarWhenPushed = true
         vc.presenter = presenter
         vc.context = context
-        self.vc = vc
-        guard parent?.asNavigationController == nil else { return vc }
         let nc = NavigationController(rootViewController: vc)
         self.vc = nc
         return nc
