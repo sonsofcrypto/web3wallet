@@ -15,15 +15,11 @@ final class DefaultSettingsService {
         defaults: UserDefaults,
         keyStoreService: KeyStoreService
     ) {
-        
         self.defaults = defaults
         self.keyStoreService = keyStoreService
     }
     
-    func isInitialized(
-        item: Setting.ItemIdentifier
-    ) -> Bool {
-        
+    func isInitialized(item: Setting.ItemIdentifier) -> Bool {
         defaults.string(forKey: item.rawValue) != nil
     }
     
@@ -32,25 +28,17 @@ final class DefaultSettingsService {
         action: Setting.ActionIdentifier,
         fireAction: Bool
     ) {
-        
         if let item = item {
-            
             defaults.set(action.rawValue, forKey: item.rawValue)
             defaults.synchronize()
         }
-        
-        if fireAction {
-            
-            fire(action: action)
-        }
+        if fireAction { fire(action: action) }
     }
 }
 
 extension DefaultSettingsService: SettingsService {
     
-    func settings(
-        for setting: Setting.ItemIdentifier
-    ) -> [SettingsWireframeContext.Group] {
+    func settings(for setting: Setting.ItemIdentifier) -> [SettingsWireframeContext.Group] {
         switch setting {
         case .theme:
             return [
@@ -271,15 +259,10 @@ extension DefaultSettingsService: SettingsService {
 private extension DefaultSettingsService {
     
     func fire(action: Setting.ActionIdentifier) {
-        
         switch action {
-            
-        case .debugAPIsNFTsOpenSea:
-            AppDelegate.rebootApp()
-        case .debugTransitionsCardFlip, .debugTransitionsSheet:
-            break
-        case .themeIOSLight, .themeIOSDark, .themeMiamiLight, .themeMiamiDark:
-            Theme = appTheme
+        case .debugAPIsNFTsOpenSea: AppDelegate.rebootApp()
+        case .debugTransitionsCardFlip, .debugTransitionsSheet: break
+        case .themeIOSLight, .themeIOSDark, .themeMiamiLight, .themeMiamiDark: Theme = appTheme
         case .improvementProposals:
             guard let deepLink = DeepLink(identifier: DeepLink.featuresList.identifier) else { return }
             let deepLinkHandler: DeepLinkHandler = AppAssembler.resolve()
