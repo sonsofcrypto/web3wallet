@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
-import web3lib
+import web3walletcore
 
 class Formatter {
     static let currency = CurrencyFormatter()
@@ -19,7 +19,7 @@ class CurrencyFormatter {
 
     var placeholder: String = "-"
 
-    let formatter = web3lib.CurrencyFormatter()
+    let formatter = web3walletcore.CurrencyFormatter()
 
     enum Style {
         case short

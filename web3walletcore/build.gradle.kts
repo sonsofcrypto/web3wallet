@@ -8,15 +8,47 @@ plugins {
 
 kotlin {
     android()
-    
+
     val xcf = XCFramework()
+    val frameworkPath = project.file("src/iosMain/libs/CoreCrypto").absolutePath
     listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
+        iosX64() {
+            compilations.getByName("main") {
+                val CoreCrypto by cinterops.creating {
+                    defFile("$frameworkPath/ios-arm64_x86_64-simulator/CoreCrypto.def")
+                    compilerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+                }
+            }
+            binaries.all {
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+            }
+        },
+        iosArm64() {
+            compilations.getByName("main") {
+                val CoreCrypto by cinterops.creating {
+                    defFile("$frameworkPath/ios-arm64/CoreCrypto.def")
+                    compilerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64/")
+                }
+            }
+            binaries.all {
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64/")
+            }
+        },
+        iosSimulatorArm64() {
+            compilations.getByName("main") {
+                val CoreCrypto by cinterops.creating {
+                    defFile("$frameworkPath/ios-arm64_x86_64-simulator/CoreCrypto.def")
+                    compilerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+                }
+            }
+            binaries.all {
+                linkerOpts("-framework", "CoreCrypto", "-F$frameworkPath/ios-arm64_x86_64-simulator/")
+            }
+        },
     ).forEach {
         it.binaries.framework {
             baseName = "web3walletcore"
+            export(project(":web3lib"))
             xcf.add(this)
         }
     }
@@ -24,6 +56,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                api(project(":web3lib"))
                 implementation(project(":web3lib"))
             }
         }
@@ -56,12 +89,13 @@ kotlin {
 }
 
 android {
-    namespace = "com.sonsofcrypto.web3walletcore"
     compileSdk = 32
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 29
         targetSdk = 32
     }
+    namespace = "com.sonsofcrypto.web3walletcore"
 }
 dependencies {
     implementation(project(mapOf("path" to ":web3lib")))

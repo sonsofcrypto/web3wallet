@@ -38,4 +38,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   cp -r ./CoreCrypto.xcframework/ios-arm64_x86_64-simulator/CoreCrypto.framework \
     ./../web3lib/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
 
+  rm -rf ./../web3walletcore/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
+  rm -rf ./../web3walletcore/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
+
+  cp -r ./CoreCrypto.xcframework/ios-arm64/CoreCrypto.framework \
+    ./../web3walletcore/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework
+
+  cp -r ./CoreCrypto.xcframework/ios-arm64_x86_64-simulator/CoreCrypto.framework \
+    ./../web3walletcore/src/iosMain/libs/CoreCrypto/ios-arm64_x86_64-simulator/CoreCrypto.framework
 fi

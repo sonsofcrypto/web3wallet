@@ -4,7 +4,7 @@
 
 import Foundation
 import UIKit
-import web3lib
+import web3walletcore
 
 struct CurrencyEnterAmountViewModel {
     
