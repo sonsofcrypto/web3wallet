@@ -1,6 +1,8 @@
 package com.sonsofcrypto.web3lib.provider.model
 
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
+import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
