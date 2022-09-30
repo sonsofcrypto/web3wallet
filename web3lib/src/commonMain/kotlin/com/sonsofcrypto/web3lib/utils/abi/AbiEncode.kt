@@ -1,5 +1,8 @@
 package com.sonsofcrypto.web3lib.utils.abi
 
+import com.sonsofcrypto.web3lib.types.Address
+import com.sonsofcrypto.web3lib.types.toHexString
+import com.sonsofcrypto.web3lib.types.toHexStringAddress
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
@@ -25,6 +28,10 @@ class AbiEncode {
 
         fun encode(input: BigInt): ByteArray {
             return ByteArray(32-input.toByteArray().size) + input.toByteArray()
+        }
+
+        fun encode(input: Address): ByteArray {
+            return input.toHexString().hexStringToByteArray()
         }
 
         fun encodeCallSignature(input: String) : ByteArray {

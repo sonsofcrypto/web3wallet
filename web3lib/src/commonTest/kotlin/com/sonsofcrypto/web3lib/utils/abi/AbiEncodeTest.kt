@@ -1,6 +1,8 @@
 package com.sonsofcrypto.web3lib.utils.abi
 
 import com.sonsofcrypto.web3lib.types.Address
+import com.sonsofcrypto.web3lib.types.AddressHexString
+import com.sonsofcrypto.web3lib.utils.BigDec
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.setReturnValue
@@ -47,6 +49,12 @@ class AbiEncodeTest {
     }
 
     @Test
+    fun testEncodeAddress () {
+        val actual = AbiEncode.encode(Address.HexString("2d77b594b9bbaed03221f7c63af8c4307432daf1"))
+        assertEquals("2d77b594b9bbaed03221f7c63af8c4307432daf1", actual.toHexString())
+    }
+
+    @Test
     fun testEncodeCallSignature() {
         // Mock return value of crypto functions
         setReturnValue("70a08231b98ef4ca268c9cc3f6b4590e4bfec28280db06bb5d45e689f2a360be")
@@ -77,4 +85,21 @@ class AbiEncodeTest {
             actual
         )
     }
+
+    @Test
+    fun testEncodeCultDaoDeposit() {
+        // Mock return value of crypto functions
+        setReturnValue("e2bbb158ea830e9efa91fa2a38c9708f9f6109a6c571d6a762b53a83776a3d67")
+        val a = AbiEncode.encodeCallSignature("deposit(uint256,uint256)").toHexString()
+        val b = AbiEncode.encode(0).toHexString()
+        val c = AbiEncode.encode(BigInt.from("87348030907832289007691499")).toHexString()
+
+        val actual = "0x$a$b$c"
+
+        assertEquals(
+            "0xe2bbb15800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004840aa3e5e8b722426e6eb",
+            actual
+        )
+    }
+
 }
