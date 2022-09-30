@@ -61,4 +61,20 @@ class AbiEncodeTest {
         val actual = AbiEncode.encodeCallSignature("baz(uint32,bool)")
         assertEquals("cdcd77c0", actual.toHexString())
     }
+
+    @Test
+    fun testEncodeFullCommand() {
+        // Mock return value of crypto functions
+        setReturnValue("cdcd77c0992ec5bbfc459984220f8c45084cc24d9b6efed1fae540db8de801d2")
+        val a = AbiEncode.encodeCallSignature("baz(uint32,bool)").toHexString()
+        val b = AbiEncode.encode(69).toHexString()
+        val c = AbiEncode.encode(true).toHexString()
+
+        val actual = "0x$a$b$c"
+
+        assertEquals(
+            "0xcdcd77c000000000000000000000000000000000000000000000000000000000000000450000000000000000000000000000000000000000000000000000000000000001",
+            actual
+        )
+    }
 }
