@@ -28,7 +28,7 @@ extension CultProposalViewController: CultProposalView {
 
     func update(with viewModel: CultProposalViewModel) {
         self.viewModel = viewModel
-        setTitle(with: viewModel.selectedIndex + 1)
+        setTitleAsync(with: viewModel.selectedIndex + 1)
         collectionView.reloadData()
         scrollToSelectedItem()
     }
@@ -108,6 +108,13 @@ private extension CultProposalViewController {
         }
     }
     
+    // NOTE: Annoyingly we need to do this since on iOS16 there is a glitch when setting a titleView directly on
+    // viewDidLoad...hopefully we can remove this when fixed
+    func setTitleAsync(with index: Int) {
+        title = ""
+        DispatchQueue.main.async { [weak self] in self?.setTitle(with: index) }
+    }
+        
     func setTitle(with index: Int) {
         let cultIcon = viewModel.titleIconName.assetImage?.resize(to: .init(width: 32, height: 32))
         let imageView = UIImageView(image: cultIcon)

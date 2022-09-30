@@ -5,17 +5,14 @@
 import Foundation
 
 struct CultProposalServiceJSON: Codable {
-    
     enum CodingKeys: String, CodingKey {
-        
-        case proposals = "PROPOSALS"
+        case proposals = "data"
     }
     
     let proposals: [CultProposalJSON]
 }
 
 struct CultProposalJSON: Codable {
-    
     let id: String
     let proposer: String
     let eta: String
@@ -31,13 +28,12 @@ struct CultProposalJSON: Codable {
     let stateName: String
     
     struct Description: Codable {
-        
         let projectName: String
         let shortDescription: String
         let file: String
         let socialChannel: String
         let links: String
-        let range: Double
+        let range: String
         let rate: String
         let time: String
         //let checkbox1: Bool
@@ -46,5 +42,29 @@ struct CultProposalJSON: Codable {
         let guardianProposal: String?
         let guardianDiscord: String?
         let guardianAddress: String?
+        
+        init(from decoder: Decoder) throws {
+            let container: KeyedDecodingContainer<CultProposalJSON.Description.CodingKeys> = try decoder.container(keyedBy: CultProposalJSON.Description.CodingKeys.self)
+            self.projectName = try container.decode(String.self, forKey: CultProposalJSON.Description.CodingKeys.projectName)
+            self.shortDescription = try container.decode(String.self, forKey: CultProposalJSON.Description.CodingKeys.shortDescription)
+            self.file = try container.decode(String.self, forKey: CultProposalJSON.Description.CodingKeys.file)
+            self.socialChannel = try container.decode(String.self, forKey: CultProposalJSON.Description.CodingKeys.socialChannel)
+            self.links = try container.decode(String.self, forKey: CultProposalJSON.Description.CodingKeys.links)
+            if let range = try? container.decode(Int.self, forKey: CultProposalJSON.Description.CodingKeys.range) {
+                self.range = "\(range)"
+            } else if let range = try? container.decode(Double.self, forKey: CultProposalJSON.Description.CodingKeys.range) {
+                self.range = range.toString(decimals: 2).replacingOccurrences(of: ".00", with: "")
+            } else if let range = try? container.decode(String.self, forKey: CultProposalJSON.Description.CodingKeys.range) {
+                self.range = "\(range)"
+            } else {
+                self.range = ""
+            }
+            self.rate = try container.decode(String.self, forKey: CultProposalJSON.Description.CodingKeys.rate)
+            self.time = try container.decode(String.self, forKey: CultProposalJSON.Description.CodingKeys.time)
+            self.wallet = try container.decode(String.self, forKey: CultProposalJSON.Description.CodingKeys.wallet)
+            self.guardianProposal = try container.decodeIfPresent(String.self, forKey: CultProposalJSON.Description.CodingKeys.guardianProposal)
+            self.guardianDiscord = try container.decodeIfPresent(String.self, forKey: CultProposalJSON.Description.CodingKeys.guardianDiscord)
+            self.guardianAddress = try container.decodeIfPresent(String.self, forKey: CultProposalJSON.Description.CodingKeys.guardianAddress)
+        }
     }
 }

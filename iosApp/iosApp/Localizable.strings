@@ -386,8 +386,6 @@
 "cult.proposals.pending.processing" = "Processing";
 "cult.proposals.closed.totalVotes" = "Total Votes: %@";
 "cult.proposals.result" = "Result: %@";
-"cult.proposals.result.executed" = "Executed";
-"cult.proposals.result.defeated" = "Defeated";
 "cult.proposals.result.liteWhitepaper" = "Lite/Whitepaper";
 "cult.proposals.result.socialDocs" = "Social Docs";
 "cult.proposals.result.audits" = "Audits";
