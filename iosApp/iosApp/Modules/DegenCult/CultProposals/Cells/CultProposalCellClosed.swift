@@ -73,10 +73,7 @@ final class CultProposalCellClosed: CollectionViewCell {
             approvedVoteView.alpha = 1.0
             rejectedVoteView.alpha = 1.0
         }
-        let result = viewModel.approved.total > viewModel.rejected.total ?
-        Localized("cult.proposals.result.executed").uppercased() :
-        Localized("cult.proposals.result.defeated").uppercased()
-        self.result1Label.text = result
+        self.result1Label.text = viewModel.stateName.uppercased()
         let totalVotes = viewModel.approved.total + viewModel.rejected.total
         result2Label.text = Localized(
             "cult.proposals.closed.totalVotes",

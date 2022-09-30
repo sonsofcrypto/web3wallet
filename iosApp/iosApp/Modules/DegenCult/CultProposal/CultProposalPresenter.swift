@@ -69,19 +69,17 @@ private extension DefaultCultProposalPresenter {
             .init(
                 name: $0.title,
                 status: .init(
-                    title: makeStatus(from: $0),
-                    color: makeStatusColor(from: $0)
+                    title: $0.stateName.uppercased(),
+                    color: statusColor(from: $0)
                 ),
-                guardianInfo: makeGuardianInfo(from: $0),
+                guardianInfo: guardianInfo(from: $0),
                 summary: .init(
                     title: Localized("cult.proposal.summary.header"),
                     summary: $0.projectSummary
                 ),
                 documentsInfo: .init(
                     title: Localized("cult.proposal.docs.header"),
-                    documents: makeDocuments(
-                        from: $0.projectDocuments
-                    )
+                    documents: documents(from: $0.projectDocuments)
                 ),
                 tokenomics: .init(
                     title: Localized("cult.proposal.tokenomics.header"),
@@ -96,27 +94,14 @@ private extension DefaultCultProposalPresenter {
         }
     }
     
-    func makeStatus(
-        from proposal: CultProposal
-    ) -> String {
-        switch proposal.status {
-        case .pending: return Localized("pending")
-        case .closed: return Localized("closed")
-        }
-    }
-    
-    func makeStatusColor(
-        from proposal: CultProposal
-    ) -> UIColor {
+    func statusColor(from proposal: CultProposal) -> UIColor {
         switch proposal.status {
         case .pending: return Theme.colour.navBarTint
         case .closed: return Theme.colour.separator
         }
     }
     
-    func makeGuardianInfo(
-        from proposal: CultProposal
-    ) -> CultProposalViewModel.ProposalDetails.GuardianInfo? {
+    func guardianInfo(from proposal: CultProposal) -> CultProposalViewModel.ProposalDetails.GuardianInfo? {
         guard let guardianInfo = proposal.guardianInfo else { return nil }
         return .init(
             title: Localized("cult.proposal.guardian.header"),
@@ -129,20 +114,18 @@ private extension DefaultCultProposalPresenter {
         )
     }
     
-    func makeDocuments(
+    func documents(
         from projectDocuments: [CultProposal.ProjectDocuments]
     ) -> [CultProposalViewModel.ProposalDetails.DocumentsInfo.Document] {
         projectDocuments.compactMap {
             .init(
                 title: $0.name,
-                items: $0.documents.compactMap {
-                    makeDocumentItem(from: $0)
-                }
+                items: $0.documents.compactMap {documentItem(from: $0)}
             )
         }
     }
     
-    func makeDocumentItem(
+    func documentItem(
         from document: CultProposal.ProjectDocuments.Document
     ) -> CultProposalViewModel.ProposalDetails.DocumentsInfo.Document.Item {
         switch document {

@@ -11,15 +11,15 @@ enum CultServiceError: Error {
     case noResponse
 }
 
-protocol CultService {
+typealias CultProposalsResponse = (pending: [CultProposal], closed: [CultProposal])
 
+protocol CultService {
     func fetchProposals(
-        handler: @escaping (Result<[CultProposal], Error>) -> Void
+        handler: @escaping (Result<CultProposalsResponse, Error>) -> Void
     )
 }
 
 final class DefaultCultService {
-    
     let walletService: WalletService
     
     init(walletService: WalletService) {
@@ -29,104 +29,94 @@ final class DefaultCultService {
 
 extension DefaultCultService: CultService {
 
-    func fetchProposals(
-        handler: @escaping (Result<[CultProposal], Error>) -> Void
+    func fetchProposals(handler: @escaping (Result<CultProposalsResponse, Error>) -> Void) {
+        fetchPending(handler: handler)
+    }
+}
+
+private extension DefaultCultService {
+    
+    func fetchPending(handler: @escaping (Result<CultProposalsResponse, Error>) -> Void) {
+        fetchProposals(type: "pending") { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(pending):
+                self.fetchClosed(pending: pending, handler: handler)
+            case .failure:
+                self.fetchClosed(pending: [], handler: handler)
+            }
+        }
+    }
+    
+    func fetchClosed(
+        pending: [CultProposal],
+        handler: @escaping (Result<CultProposalsResponse, Error>) -> Void
     ) {
-        
-        guard let url = URL(string: "https://api.cultdao.io/static/proposals.json") else {
-            
+        fetchProposals(type: "closed") { result in
+            var closed = [CultProposal]()
+            switch result {
+            case let .success(proposals): closed = proposals
+            case .failure: break
+            }
+            handler(.success((pending: pending, closed: closed)))
+        }
+    }
+    
+    func fetchProposals(type: String, handler: @escaping (Result<[CultProposal], Error>) -> Void) {
+        guard let url = URL(string: "https://api.cultdao.io/proposals/\(type)") else {
             handler(.failure(CultServiceError.unableToFetch))
             return
         }
-        
         URLSession.shared.dataTask(with: url) { (data, response, error) in
-            
             DispatchQueue.main.async {
-                
-                if let error = error {
-                    
-                    handler(.failure(error))
-                    return
-                }
-                
-                guard let data = data else {
-                    
-                    handler(.failure(CultServiceError.unableToFetch))
-                    return
-                }
-                
+                if let error = error { return handler(.failure(error)) }
+                guard let data = data else { return handler(.failure(CultServiceError.unableToFetch)) }
                 do {
-                    
                     let result = try JSONDecoder().decode(CultProposalServiceJSON.self, from: data)
-                    handler(.success(self.makeCultProposals(from: result.proposals)))
-                    
+                    handler(.success(self.cultProposals(from: result.proposals)))
                 } catch let error {
-                    
                     handler(.failure(error))
                 }
             }
         }.resume()
     }
-   
-}
-
-private extension DefaultCultService {
     
-    func makeCultProposals(from proposals: [CultProposalJSON]) -> [CultProposal] {
-        
-        proposals.compactMap { makeCultProposal(from: $0) }
+    func cultProposals(from proposals: [CultProposalJSON]) -> [CultProposal] {
+        proposals.compactMap { cultProposal(from: $0) }
     }
     
-    func makeCultProposal(from proposal: CultProposalJSON) -> CultProposal? {
-        
-        guard let status = makeStatus(from: proposal) else { return nil }
-        
+    func cultProposal(from proposal: CultProposalJSON) -> CultProposal? {
+        guard let status = status(from: proposal) else { return nil }
         return .init(
             id: proposal.id,
             title: "#" + proposal.id + " " + proposal.description.projectName,
-            approved: makeApprovedVotes(from: proposal),
-            rejeceted: makeRejectedVotes(from: proposal),
-            endDate: makeEndDate(from: proposal),
-            guardianInfo: makeGuardianInfo(from: proposal.description),
+            approved: approvedVotes(from: proposal),
+            rejeceted: rejectedVotes(from: proposal),
+            endDate: endDate(from: proposal),
+            guardianInfo: guardianInfo(from: proposal.description),
             projectSummary: proposal.description.shortDescription,
-            projectDocuments: makeProjectDocuments(from: proposal),
-            cultReward: makeCultReward(from: proposal.description),
-            rewardDistributions: makeRewardDistribution(from: proposal.description),
+            projectDocuments: projectDocuments(from: proposal),
+            cultReward: cultReward(from: proposal.description),
+            rewardDistributions: rewardDistribution(from: proposal.description),
             wallet: proposal.description.wallet,
-            status: status
+            status: status,
+            stateName: proposal.stateName
         )
     }
     
-    func makeStatus(
-        from proposal: CultProposalJSON
-    ) -> CultProposal.Status? {
-
+    func status(from proposal: CultProposalJSON) -> CultProposal.Status? {
         let currentBlock = walletService.blockNumber(network: Network.ethereum())
-
         guard proposal.startBlock < currentBlock.toDecimalString() else { return nil }
-        
-        if proposal.endBlock > currentBlock.toDecimalString() {
-            
-            return .pending
-        } else {
-            
-            return .closed
-        }
+        if proposal.endBlock > currentBlock.toDecimalString() { return .pending
+        } else { return .closed }
     }
     
-    func makeGuardianInfo(
-        from project: CultProposalJSON.Description
-    ) -> CultProposal.GuardianInfo? {
-    
+    func guardianInfo(from project: CultProposalJSON.Description) -> CultProposal.GuardianInfo? {
         guard
             let proposal = project.guardianProposal,
             let discord = project.guardianDiscord,
             let address = project.guardianAddress
-        else {
-            
-            return nil
-        }
-        
+        else { return nil }
         return .init(
             proposal: proposal,
             discord: discord,
@@ -134,14 +124,9 @@ private extension DefaultCultService {
         )
     }
     
-    func makeProjectDocuments(
-        from proposal: CultProposalJSON
-    ) -> [CultProposal.ProjectDocuments] {
-     
+    func projectDocuments(from proposal: CultProposalJSON) -> [CultProposal.ProjectDocuments] {
         var documents = [CultProposal.ProjectDocuments]()
-        
         if let fileURL = proposal.description.file.url {
-        
             documents.append(
                 .init(
                     name: Localized("cult.proposals.result.liteWhitepaper"),
@@ -154,14 +139,11 @@ private extension DefaultCultService {
                 )
             )
         }
-        
         let socialDocs = proposal.description.socialChannel.replacingOccurrences(
             of: "\n", with: " "
         )
         let socialDocsUrls = socialDocs.split(separator: " ").compactMap { String($0).url }
-        
         if !socialDocsUrls.isEmpty {
-            
             documents.append(
                 .init(
                     name: Localized("cult.proposals.result.socialDocs"),
@@ -171,9 +153,7 @@ private extension DefaultCultService {
                 )
             )
         }
-
         if let linkURL = proposal.description.links.url {
-            
             documents.append(
                 .init(
                     name: Localized("cult.proposals.result.audits"),
@@ -183,7 +163,6 @@ private extension DefaultCultService {
                 )
             )
         } else if !proposal.description.links.isEmpty {
-            
             documents.append(
                 .init(
                     name: Localized("cult.proposals.result.audits"),
@@ -193,50 +172,31 @@ private extension DefaultCultService {
                 )
             )
         }
-        
         return documents
     }
     
-    func makeApprovedVotes(
-        from proposal: CultProposalJSON
-    ) -> Double {
-        
+    func approvedVotes(from proposal: CultProposalJSON) -> Double {
         (Double(proposal.forVotes) ?? 0) * 0.000000000000000001
     }
 
-    func makeRejectedVotes(
-        from proposal: CultProposalJSON
-    ) -> Double {
-        
+    func rejectedVotes(from proposal: CultProposalJSON) -> Double {
         (Double(proposal.againstVotes) ?? 0) * 0.000000000000000001
     }
 
-    func makeEndDate(
-        from proposal: CultProposalJSON
-    ) -> Date {
-        
+    func endDate(from proposal: CultProposalJSON) -> Date {
         let genesisEpocOffset = 1460999972
-        
         let epocEndBlock = (Int(proposal.endBlock) ?? 0) * 13
         return Date(timeIntervalSince1970: TimeInterval(genesisEpocOffset + epocEndBlock))
     }
     
-    func makeCultReward(
-        from description: CultProposalJSON.Description
-    ) -> String {
-        
-        return Localized(
+    func cultReward(from description: CultProposalJSON.Description) -> String {
+        Localized(
             "cult.proposal.parsing.cultRewardAllocation",
-            arg: description.range.toString(
-                decimals: 2
-            ).replacingOccurrences(of: ".00", with: "")
+            arg: description.range
         )
     }
     
-    func makeRewardDistribution(
-        from description: CultProposalJSON.Description
-    ) -> String {
-        
+    func rewardDistribution(from description: CultProposalJSON.Description) -> String {
         let perString = Localized("cult.proposal.parsing.rewardDistribution.per")
         let rate = description.rate.replacingOccurrences(of: "%", with: "")
         return rate + "% " + perString + " " + description.time
