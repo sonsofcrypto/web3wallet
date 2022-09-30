@@ -18,7 +18,6 @@ protocol CultProposalsPresenter {
 }
 
 final class DefaultCultProposalsPresenter {
-
     private weak var view: CultProposalsView?
     private let wireframe: CultProposalsWireframe
     private let interactor: CultProposalsInteractor
@@ -89,15 +88,9 @@ extension DefaultCultProposalsPresenter: CultProposalsPresenter {
 
 private extension DefaultCultProposalsPresenter {
     
-    func prepareProposals(
-        with proposals: [CultProposal]
-    ) {
-        pendingProposals = proposals.filter {
-            $0.status == .pending
-        }.sorted { $0.endDate < $1.endDate }
-        closedProposals = proposals.filter {
-            $0.status == .closed
-        }.sorted { $0.endDate > $1.endDate }
+    func prepareProposals(with proposals: CultProposalsResponse) {
+        pendingProposals = proposals.pending.sorted { $0.endDate > $1.endDate }
+        closedProposals = proposals.closed.sorted { $0.endDate > $1.endDate }
         updateView()
     }
     
@@ -111,7 +104,7 @@ private extension DefaultCultProposalsPresenter {
             guard let self = self else { return false }
             guard !self.filterText.isEmpty else { return true }
             return $0.title.contains(self.filterText)
-        }.sorted { $0.endDate < $1.endDate }
+        }.sorted { $0.endDate > $1.endDate }
         let closedProposals = closedProposals.filter {
             [weak self] in
             guard let self = self else { return false }
@@ -169,7 +162,8 @@ private extension DefaultCultProposalsPresenter {
             ),
             approveButtonTitle: Localized("approve"),
             rejectButtonTitle: Localized("reject"),
-            endDate: cultProposal.endDate
+            endDate: cultProposal.endDate,
+            stateName: cultProposal.stateName
         )
     }
     

@@ -6,9 +6,7 @@ import Foundation
 import web3lib
 
 protocol CultProposalsInteractor: AnyObject {
-    func fetchProposals(
-        onCompletion: @escaping (Result<[CultProposal], Error>) -> Void
-    )
+    func fetchProposals(onCompletion: @escaping (Result<CultProposalsResponse, Error>) -> Void)
     var hasCultBalance: Bool { get }
 }
 
@@ -28,9 +26,7 @@ final class DefaultCultProposalsInteractor {
 
 extension DefaultCultProposalsInteractor: CultProposalsInteractor {
 
-    func fetchProposals(
-        onCompletion: @escaping (Result<[CultProposal], Error>) -> Void
-    ) {
+    func fetchProposals(onCompletion: @escaping (Result<CultProposalsResponse, Error>) -> Void) {
         cultService.fetchProposals(handler: onCompletion)
     }
     

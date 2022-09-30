@@ -29,7 +29,7 @@ extension CultProposalsViewController: CultProposalsView {
 
     func update(with viewModel: CultProposalsViewModel) {
         self.viewModel = viewModel
-        setTitle()
+        setTitleAsync()
         switch viewModel {
         case .loading:
             showLoading()
@@ -135,6 +135,13 @@ private extension CultProposalsViewController {
     func hideLoading() {
         activityIndicator.isHidden = true
         activityIndicator.stopAnimating()
+    }
+    
+    // NOTE: Annoyingly we need to do this since on iOS16 there is a glitch when setting a titleView directly on
+    // viewDidLoad...hopefully we can remove this when fixed
+    func setTitleAsync() {
+        title = ""
+        DispatchQueue.main.async { [weak self] in self?.setTitle() }
     }
     
     func setTitle() {
