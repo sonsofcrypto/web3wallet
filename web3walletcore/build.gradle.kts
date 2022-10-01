@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
-import org.jetbrains.kotlin.resolve.calls.checkers.shouldWarnAboutDeprecatedModFromBuiltIns
 
 plugins {
     kotlin("multiplatform")
@@ -57,7 +56,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(project(":web3lib"))
-                implementation(project(":web3lib"))
             }
         }
         val commonTest by getting {
@@ -89,14 +87,14 @@ kotlin {
 }
 
 android {
+    namespace = "com.sonsofcrypto.web3walletcore"
     compileSdk = 32
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = 29
+        minSdk = 21
         targetSdk = 32
     }
-    namespace = "com.sonsofcrypto.web3walletcore"
 }
-dependencies {
-    implementation(project(mapOf("path" to ":web3lib")))
-}
+
+//dependencies {
+//    implementation(project(mapOf("path" to ":web3lib")))
+//}
