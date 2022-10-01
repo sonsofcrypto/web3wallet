@@ -1,0 +1,14 @@
+package com.sonsofcrypto.web3lib
+
+import org.junit.Assert.assertTrue
+import org.junit.Test
+
+class AndroidGreetingTest {
+
+    @Test
+    fun testExample() {
+//        val bip39 = Bip39.from(Bip39.EntropySize.ES128)
+//        println(bip39.worldList)
+        assertTrue("Check Android is mentioned", "Android".contains("Android"))
+    }
+}

@@ -27,6 +27,8 @@ class WalletCoreTests {
                 keyStoreService
             )
             println("=== IT LIVES $presenter")
+            val debug = System.getProperty("java.library.path")
+            println("=== debug $debug")
         }
 
 }

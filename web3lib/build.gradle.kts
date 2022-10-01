@@ -76,6 +76,7 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation(files("$rootDir/coreCrypto/CoreCrypto.aar"))
             }
         }
         val androidMain by getting {
@@ -101,12 +102,8 @@ kotlin {
                 implementation("io.ktor:ktor-client-darwin:${rootProject.ext["ktor_version"]}")
             }
         }
-        val iosX64Test by getting {
-
-        }
-        val iosArm64Test by getting {
-
-        }
+        val iosX64Test by getting
+        val iosArm64Test by getting
         val iosSimulatorArm64Test by getting
         val iosTest by creating {
             dependsOn(commonTest)
