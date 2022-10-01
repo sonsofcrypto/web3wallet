@@ -55,7 +55,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(project(":web3lib"))
+                implementation(project(":web3lib"))
             }
         }
         val commonTest by getting {
@@ -96,5 +96,5 @@ android {
 }
 
 //dependencies {
-//    implementation(project(mapOf("path" to ":web3lib")))
+//    implementation(project(":web3lib"))
 //}

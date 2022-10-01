@@ -80,12 +80,15 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                // implementation(files("./src/androidMain/libs/CoreCrypto.aar"))
-                api(project(":coreCrypto"))
+                implementation(files("$rootDir/coreCrypto/CoreCrypto.aar"))
                 implementation("io.ktor:ktor-client-okhttp:${rootProject.ext["ktor_version"]}")
             }
         }
-        val androidTest by getting
+        val androidTest by getting {
+            dependencies {
+                implementation(files("$rootDir/coreCrypto/CoreCrypto.aar"))
+            }
+        }
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
@@ -143,4 +146,5 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${rootProject.ext["serialization_version"]}")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${rootProject.ext["serialization_version"]}")
     implementation("com.russhwolf:multiplatform-settings:${rootProject.ext["settings_version"]}")
+    implementation(files("$rootDir/coreCrypto/CoreCrypto.aar"))
 }
