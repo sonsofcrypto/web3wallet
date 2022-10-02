@@ -1,6 +1,7 @@
 package com.sonsofcrypto.web3walletcore.root
 
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
+import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 
 interface RootPresenter {
     fun present()

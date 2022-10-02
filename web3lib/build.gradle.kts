@@ -76,18 +76,21 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                implementation(files("$rootDir/coreCrypto/CoreCrypto.aar"))
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation(files("$rootDir/coreCrypto/CoreCrypto.aar"))
+//                api(project(":corecrypto"))
+                implementation(files("$rootDir/corecrypto/corecrypto-sources.jar"))
+                implementation(files("$rootDir/corecrypto/corecrypto.aar"))
                 implementation("io.ktor:ktor-client-okhttp:${rootProject.ext["ktor_version"]}")
             }
         }
         val androidTest by getting {
             dependencies {
-                implementation(files("$rootDir/coreCrypto/CoreCrypto.aar"))
+//                implementation(project(":corecrypto"))
+                implementation(files("$rootDir/corecrypto/corecrypto-sources.jar"))
+                implementation(files("$rootDir/corecrypto/corecrypto.aar"))
             }
         }
         val iosX64Main by getting
@@ -137,11 +140,15 @@ android {
         targetSdk = 32
     }
     namespace = "com.sonsofcrypto.web3lib"
+
+
 }
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${rootProject.ext["serialization_version"]}")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${rootProject.ext["serialization_version"]}")
     implementation("com.russhwolf:multiplatform-settings:${rootProject.ext["settings_version"]}")
-    implementation(files("$rootDir/coreCrypto/CoreCrypto.aar"))
+//    implementation(project(":corecrypto"))
+    implementation(files("$rootDir/corecrypto/corecrypto-sources.jar"))
+    implementation(files("$rootDir/corecrypto/corecrypto.aar"))
 }

@@ -1,9 +1,9 @@
 #!/bin/zsh
 
 #Android
-rm CoreCrypto.aar
-rm CoreCrypto-sources.jar
-gomobile bind -v -target=android -o CoreCrypto.aar ./
+rm corecrypto.aar
+rm corecrypto-sources.jar
+gomobile bind -v -target=android -o corecrypto.aar ./
 
 #iOS
 if [[ "$OSTYPE" == "darwin"* ]]; then

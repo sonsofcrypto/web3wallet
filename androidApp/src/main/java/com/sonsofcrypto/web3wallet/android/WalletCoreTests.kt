@@ -2,6 +2,8 @@ package com.sonsofcrypto.web3wallet.android
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService
+import com.sonsofcrypto.web3lib.utils.bip39.Bip39
+import com.sonsofcrypto.web3walletcore.*
 import com.sonsofcrypto.web3walletcore.root.*
 
 class WalletCoreTests {
@@ -29,6 +31,8 @@ class WalletCoreTests {
             println("=== IT LIVES $presenter")
             val debug = System.getProperty("java.library.path")
             println("=== debug $debug")
+            val bip39 = Bip39.from(Bip39.EntropySize.ES128)
+            println(bip39.mnemonic)
         }
 
 }
