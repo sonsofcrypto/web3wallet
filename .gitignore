@@ -201,9 +201,9 @@ iosApp/Frameworks/
 
 coreCrypto/CoreCrypto.xcframework
 coreCrypto/CoreCrypto.aar
-coreCrypto/corecrypto.aar
 coreCrypto/CoreCrypto-sources.jar
-coreCrypto/corecrypto-sources.jar
+corecrypto/corecrypto.aar
+corecrypto/corecrypto-sources.jar
 
 web3lib/src/androidMain/libs
 web3lib/src/iosMain/libs/CoreCrypto/ios-arm64/CoreCrypto.framework

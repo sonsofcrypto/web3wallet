@@ -10,7 +10,6 @@ class AndroidGreetingTest {
     fun testExample() {
         val bip39 = Bip39.from(Bip39.EntropySize.ES128)
         println(bip39.worldList)
-        println("=== WTF")
         assertTrue("Check Android is mentioned", "Android".contains("Android"))
     }
 }
