@@ -35,4 +35,7 @@ class CallStack {
         }
         return "0x$_signature$addedArgs"
     }
+    fun toAbiEncodedString(): String {
+        return this.toString()
+    }
 }
