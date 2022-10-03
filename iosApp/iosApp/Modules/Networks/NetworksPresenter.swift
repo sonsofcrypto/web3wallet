@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
-import web3lib
+import web3walletcore
 
 enum NetworksPresenterEvent {
     case didTapSettings(chainId: UInt32)

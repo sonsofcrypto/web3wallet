@@ -53,7 +53,7 @@ extension UIStoryboard {
         case nftsCollection = "NFTsCollection"
         case nftDetail = "NFTDetail"
         case nftSend = "NFTSend"
-        case proposals = "Proposals"
-        case proposal = "Proposal"
+        case improvementProposals = "ImprovementProposals"
+        case improvementProposal = "ImprovementProposal"
     }
 }

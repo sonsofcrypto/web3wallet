@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-import web3lib
+import web3walletcore
 
 enum CandlesViewModel {
 
@@ -37,7 +37,7 @@ extension CandlesViewModel {
 
 extension CandlesViewModel.Candle {
 
-    static func from(_ candle: web3lib.Candle) -> CandlesViewModel.Candle {
+    static func from(_ candle: web3walletcore.Candle) -> CandlesViewModel.Candle {
         CandlesViewModel.Candle(
             open: candle.open,
             high: candle.high,
@@ -50,7 +50,7 @@ extension CandlesViewModel.Candle {
         )
     }
 
-    static func from(_ candles: [web3lib.Candle]?) -> [CandlesViewModel.Candle] {
+    static func from(_ candles: [web3walletcore.Candle]?) -> [CandlesViewModel.Candle] {
         (candles ?? []).map { CandlesViewModel.Candle.from($0) }
     }
 }

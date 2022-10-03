@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
-import web3lib
+import web3walletcore
 
 final class IntegrationWeb3Service {
     private let networksService: NetworksService

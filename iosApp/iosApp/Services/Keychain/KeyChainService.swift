@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Security
-import web3lib
+import web3walletcore
 import LocalAuthentication
 
 // MARK: - web3lib.KeyChainService

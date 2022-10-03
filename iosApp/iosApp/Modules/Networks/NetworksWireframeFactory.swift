@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-import web3lib
+import web3walletcore
 
 protocol NetworksWireframeFactory {
     func makeWireframe(_ parent: UIViewController) -> NetworksWireframe

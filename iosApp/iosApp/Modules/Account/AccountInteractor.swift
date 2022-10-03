@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
-import web3lib
+import web3walletcore
 
 protocol AccountInteractor: AnyObject {
     func address() -> String
@@ -84,7 +84,7 @@ extension DefaultAccountInteractor: AccountInteractor {
         let price = currencyStoreService.marketData(currency: _currency)?
             .currentPrice?
             .doubleValue ?? 0
-        return web3lib.CurrencyFormatter.Companion().crypto(
+        return web3walletcore.CurrencyFormatter.Companion().crypto(
             amount: cryptoBalance(),
             decimals: _currency.decimals(),
             mul: price
