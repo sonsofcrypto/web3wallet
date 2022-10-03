@@ -2,6 +2,7 @@ package com.sonsofcrypto.web3wallet.android
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService
+import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import com.sonsofcrypto.web3walletcore.*
 import com.sonsofcrypto.web3walletcore.root.*
@@ -25,6 +26,7 @@ class WalletCoreTests {
             println(com.sonsofcrypto.web3walletcore.Greeting().greeting())
 
             val presenter = DefaultRootPresenter(
+                WeakRef(MockRootView()),
                 MockRootWireframe(),
                 keyStoreService
             )
@@ -46,4 +48,8 @@ class MockRootWireframe: RootWireframe {
     override fun navigate(destination: RootWireframeDestination) {
          println("navigate $destination")
     }
+}
+
+class MockRootView: RootView {
+
 }
