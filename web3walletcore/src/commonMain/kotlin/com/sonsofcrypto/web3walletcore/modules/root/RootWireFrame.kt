@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3walletcore.root
+package com.sonsofcrypto.web3walletcore.modules.root
 
 enum class RootWireframeDestination {
     DASHBOARD,
