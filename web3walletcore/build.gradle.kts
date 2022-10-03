@@ -56,12 +56,12 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":web3lib"))
+                api(project(":web3lib"))
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation(kotlin("test"))
+                api(kotlin("test"))
             }
         }
         val androidMain by getting
