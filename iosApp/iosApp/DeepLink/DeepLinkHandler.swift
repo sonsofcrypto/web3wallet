@@ -230,7 +230,7 @@ private extension DefaultDeepLinkHandler {
     
     func openFeaturesList() {
         guard let rootVC = rootVC else { return }
-        let wireframe: ProposalsWireframeFactory = AppAssembler.resolve()
+        let wireframe: ImprovementProposalsWireframeFactory = AppAssembler.resolve()
         wireframe.make(rootVC).present()
     }
     
