@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
-import web3lib
+import web3walletcore
 
 enum DashboardInteractorEvent {
     case didSelectKeyStoreItem
@@ -112,7 +112,7 @@ extension DefaultDashboardInteractor: DashboardInteractor {
     }
 
     func fiatBalance(for network: Network, currency: Currency) -> Double {
-        web3lib.CurrencyFormatter.Companion().crypto(
+        web3walletcore.CurrencyFormatter.Companion().crypto(
             amount: cryptoBalance(for: network, currency: currency),
             decimals: currency.decimals(),
             mul: marketdata(for: currency)?.currentPrice?.doubleValue ?? 0.0

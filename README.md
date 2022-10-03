@@ -23,3 +23,5 @@ $ gomobile init
 
 NOTE: If you are seeing `no exported names in the package`, either moving 
 repo to `$GOPATH/src`, or following steps [here](https://github.com/golang/go/issues/37961#issuecomment-673854585) should fix it.
+
+./gradlew :web3walletcore:assembleXCFramework

@@ -2,7 +2,7 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-import web3lib
+import web3walletcore
 
 final class CurrencySwapMarketCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var stackView: UIStackView!

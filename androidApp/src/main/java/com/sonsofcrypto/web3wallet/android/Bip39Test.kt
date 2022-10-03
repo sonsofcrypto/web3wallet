@@ -35,7 +35,7 @@ class Bip39Test {
         val invalid =  listOf("faith","rabbit","damp","raccoon","erode","raccoon","race","raccoon","early","raccoon","early","yellow")
         val bip39 = Bip39(invalid, "", WordList.ENGLISH)
         val seed = bip39.seed()
-        val entropy = bip39.entropy()
+        bip39.entropy()
 
         val men = Bip39.from(bip39.entropy(), "", WordList.ENGLISH)
         println("=== $seed")
