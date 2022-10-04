@@ -43,8 +43,8 @@ class AbiDecodeTest {
     fun testDecodeWholeResponse() {
         var dataString = "0xcdcd77c000000000000000000000000000000000000000000000000000000000000000450000000000000000000000000000000000000000000000000000000000000001"
         dataString = dataString.removePrefix("0x")
-        val signature = dataString.substring(0,8)
-        val responses = dataString.substring(8,dataString.length).chunked(64)
+        val signature = dataString.substring(0,8) // Signature
+        val responses = dataString.substring(8,dataString.length).chunked(64) // Args (Int,Bool)
 
         assertEquals("cdcd77c0", signature)
         assertEquals(BigInt.from(69).toString(), AbiDecode.decodeInt(responses[0]).toString())
