@@ -57,6 +57,16 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(project(":web3lib"))
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${rootProject.ext["serialization_version"]}")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${rootProject.ext["serialization_version"]}")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.ext["coroutines_version"]}") {
+                    version { strictly("${rootProject.ext["coroutines_version"]}") }
+                }
+                implementation("io.ktor:ktor-client-core:${rootProject.ext["ktor_version"]}")
+                implementation("io.ktor:ktor-client-logging:${rootProject.ext["ktor_version"]}")
+                implementation("io.ktor:ktor-client-content-negotiation:${rootProject.ext["ktor_version"]}")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:${rootProject.ext["ktor_version"]}")
+                implementation("io.ktor:ktor-client-auth:${rootProject.ext["ktor_version"]}")
             }
         }
         val commonTest by getting {
@@ -98,4 +108,6 @@ android {
 
 dependencies {
     implementation(project(":web3lib"))
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${rootProject.ext["serialization_version"]}")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${rootProject.ext["serialization_version"]}")
 }
