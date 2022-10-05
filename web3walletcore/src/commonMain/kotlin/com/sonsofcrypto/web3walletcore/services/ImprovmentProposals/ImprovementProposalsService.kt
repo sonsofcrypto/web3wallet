@@ -36,6 +36,7 @@ class DefaultImprovementProposalsService(
     override suspend fun fetch(): List<ImprovementProposal> {
         try {
             val body = client.get(url()).bodyAsText()
+            println("$body")
             val proposals = jsonDecode<List<ImprovementProposal>>(body) ?: emptyList()
             store(proposals)
             return proposals

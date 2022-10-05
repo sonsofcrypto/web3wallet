@@ -10,7 +10,7 @@ data class ImprovementProposal(
     val body: String,
     val category: Category,
     @SerialName("at_account")
-    val atAccount: String,
+    val atAccount: String?,
     val tweet: String,
     @SerialName("image_url")
     val imageUrl: String,
@@ -21,9 +21,9 @@ data class ImprovementProposal(
 
     @Serializable
     enum class Category(val string: String) {
-        INFRASTRUCTURE("infrastructure"),
-        INTEGRATION("integration"),
-        FEATURE("feature"),
-        UNKNOWN("unknown"),
+        @SerialName("infrastructure") INFRASTRUCTURE("infrastructure"),
+        @SerialName("integration") INTEGRATION("integration"),
+        @SerialName("feature") FEATURE("feature"),
+        @SerialName("unknown") UNKNOWN("unknown"),
      }
 }
