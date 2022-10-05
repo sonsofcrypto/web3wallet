@@ -4,6 +4,7 @@
 
 import Foundation
 import UIKit
+import web3walletcore
 
 enum ImprovementProposalPresenterEvent {
     case dismiss
@@ -70,7 +71,9 @@ private extension DefaultImprovementProposalPresenter {
                 name: $0.title,
                 imageUrl: $0.imageUrl,
                 status: .init(
-                    title: $0.category.stringValue + " | " + $0.hashTag,
+                    title: $0.category.string
+                        + " | "
+                        + Localized("proposal.hashTag", arg: $0.id),
                     color: Theme.colour.navBarTint
                 ),
                 summary: .init(

@@ -27,7 +27,7 @@ class DefaultImprovementProposalsService(
 
     private val client: HttpClient by lazy {
         HttpClient() {
-            Logging { level = LogLevel.ALL; logger = Logger.SIMPLE }
+            Logging { level = LogLevel.NONE; logger = Logger.SIMPLE }
             install(ContentNegotiation) { json(stdJson, contentType()) }
         }
     }
@@ -36,7 +36,6 @@ class DefaultImprovementProposalsService(
     override suspend fun fetch(): List<ImprovementProposal> {
         try {
             val body = client.get(url()).bodyAsText()
-            println("$body")
             val proposals = jsonDecode<List<ImprovementProposal>>(body) ?: emptyList()
             store(proposals)
             return proposals

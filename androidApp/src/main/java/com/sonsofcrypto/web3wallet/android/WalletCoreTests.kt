@@ -5,7 +5,6 @@ import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
-import com.sonsofcrypto.web3walletcore.modules.improvementProposals.DefaultImprovementProposals
 import com.sonsofcrypto.web3walletcore.modules.root.DefaultRootPresenter
 import com.sonsofcrypto.web3walletcore.modules.root.RootView
 import com.sonsofcrypto.web3walletcore.modules.root.RootWireframe

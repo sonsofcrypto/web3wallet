@@ -3,13 +3,9 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-protocol ImprovementProposalsView: AnyObject {
-    func update(with viewModel: ImprovementProposalsViewModel)
-}
+import web3walletcore
 
 final class ImprovementProposalsViewController: BaseViewController {
-    //let searchController = UISearchController()
     @IBOutlet weak var topContainerView: UIView!
     @IBOutlet weak var segmentContainer: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -18,7 +14,7 @@ final class ImprovementProposalsViewController: BaseViewController {
 
     var presenter: ImprovementProposalsPresenter!
 
-    private var viewModel: ImprovementProposalsViewModel!
+    private var viewModel: ImprovementProposalsViewModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,20 +25,19 @@ final class ImprovementProposalsViewController: BaseViewController {
 
 extension ImprovementProposalsViewController: ImprovementProposalsView {
 
-    func update(with viewModel: ImprovementProposalsViewModel) {
+    func update(viewModel: ImprovementProposalsViewModel) {
         self.viewModel = viewModel
-        title = viewModel.title
-
-        switch viewModel {
-        case .loading:
-            showLoading()
-        case .loaded:
-            hideLoading()
-            collectionView.reloadData()
+        collectionView.reloadData()
+        if let loading = viewModel as? ImprovementProposalsViewModel.Loading {
+            refreshControl.beginRefreshing()
+        }
+        if let error = viewModel as? ImprovementProposalsViewModel.Error {
             refreshControl.endRefreshing()
-        case .error:
-            hideLoading()
-            //showError()
+            // TODO(PROPOSALS) Show alert
+        }
+        if let loaded = viewModel as? ImprovementProposalsViewModel.Loaded {
+            refreshControl.endRefreshing()
+            collectionView.reloadData()
         }
     }
 }
@@ -50,27 +45,24 @@ extension ImprovementProposalsViewController: ImprovementProposalsView {
 extension ImprovementProposalsViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        viewModel.sections.count
+        1
     }
     
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        viewModel.sections[section].items.count
+        viewModel?.selectedCategory()?.items.count ?? 0
     }
     
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let section = viewModel.sections[indexPath.section]
-        let viewModel = section.items[indexPath.item]
-        let cell = collectionView.dequeue(ImprovementProposalsCell.self, for: indexPath)
-        let idx = indexPath.item
-        return cell.update(
-            with: viewModel,
-            handler: { [weak self] in self?.presenter.handle(.vote(idx: idx)) }
+        collectionView.dequeue(ImprovementProposalsCell.self, for: indexPath)
+            .update(
+                with: viewModel?.selectedCategory()?.items[indexPath.item],
+                handler: { [weak self] in self?.voteAction(idx: indexPath.item) }
         )
     }
     
@@ -86,14 +78,10 @@ extension ImprovementProposalsViewController: UICollectionViewDataSource {
                 withReuseIdentifier: String(describing: ImprovementProposalsHeaderSupplementaryView.self),
                 for: indexPath
             ) as? ImprovementProposalsHeaderSupplementaryView else {
-                
                 return ImprovementProposalsHeaderSupplementaryView()
             }
-            
-            let section = viewModel.sections[indexPath.section]
-            headerView.update(with: section)
+             headerView.update(with: viewModel?.selectedCategory())
             return headerView
-            
         default:
             assertionFailure("Unexpected element kind: \(kind).")
             return UICollectionReusableView()
@@ -107,13 +95,12 @@ extension ImprovementProposalsViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        presenter.handle(.select(idx: indexPath.item))
+        presenter.handle(event____: .Proposal(idx: Int32(indexPath.item)))
     }
 
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//
-//        searchController.searchBar.resignFirstResponder()
-//    }
+    func voteAction(idx: Int) {
+        presenter.handle(event____: .Vote(idx: Int32(idx)))
+    }
 }
 
 private extension ImprovementProposalsViewController {
@@ -131,17 +118,17 @@ private extension ImprovementProposalsViewController {
     func setSegmented() {
         let segmentControl = SegmentedControl()
         segmentControl.insertSegment(
-            withTitle: Localized("proposals.segmentedControl.infrastructure"),
+            withTitle: Localized("proposals.infrastructure.title"),
             at: 0,
             animated: false
         )
         segmentControl.insertSegment(
-            withTitle: Localized("proposals.segmentedControl.integrations"),
+            withTitle: Localized("proposals.infrastructure.title"),
             at: 1,
             animated: false
         )
         segmentControl.insertSegment(
-            withTitle: Localized("proposals.segmentedControl.features"),
+            withTitle: Localized("proposals.infrastructure.title"),
             at: 2,
             animated: false
         )
@@ -170,7 +157,9 @@ private extension ImprovementProposalsViewController {
     }
     
     @objc func segmentControlChanged(_ sender: SegmentedControl) {
-        presenter.handle(.didSelectCategory(idx: sender.selectedSegmentIndex))
+        presenter.handle(
+            event____: .Category(idx: Int32(sender.selectedSegmentIndex))
+        )
     }
     
     func configureUI() {
@@ -179,7 +168,7 @@ private extension ImprovementProposalsViewController {
             image: .init(systemName: "xmark"),
             style: .plain,
             target: self,
-            action: #selector(dimissTapped)
+            action: #selector(dismissAction)
         )
         topContainerView.backgroundColor = Theme.colour.navBarBackground
         setSegmented()
@@ -203,8 +192,8 @@ private extension ImprovementProposalsViewController {
 //        searchController.searchResultsUpdater = self
     }
     
-    @objc func dimissTapped() {
-        presenter.handle(.dismiss)
+    @objc func dismissAction() {
+        presenter.handle(event____: .Dismiss())
     }
     
     @objc func didPullToRefresh(_ sender: Any) {

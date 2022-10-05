@@ -16,7 +16,7 @@ sealed class ImprovementProposalsWireframeDestination {
     object Dismiss: ImprovementProposalsWireframeDestination()
 }
 
-interface ImprovementProposalWireframe {
+interface ImprovementProposalsWireframe {
     fun present()
     fun navigate(destination: ImprovementProposalsWireframeDestination)
 }

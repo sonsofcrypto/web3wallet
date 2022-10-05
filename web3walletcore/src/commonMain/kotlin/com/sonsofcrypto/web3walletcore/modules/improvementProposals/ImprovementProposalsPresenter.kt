@@ -32,7 +32,7 @@ interface ImprovementProposalsPresenter {
 class DefaultImprovementProposalsPresenter(
     private val view: WeakRef<ImprovementProposalsView>,
     private val interactor: ImprovementProposalsInteractor,
-    private val wireframe: ImprovementProposalWireframe
+    private val wireframe: ImprovementProposalsWireframe
 ) : ImprovementProposalsPresenter {
     private var proposals: List<ImprovementProposal> = emptyList()
     private var error: Throwable? = null
@@ -42,7 +42,6 @@ class DefaultImprovementProposalsPresenter(
     override fun present() {
         updateView()
         val errHandler = CoroutineExceptionHandler { _, err ->
-            println(err)
             error = err
             updateView()
         }
@@ -73,7 +72,9 @@ class DefaultImprovementProposalsPresenter(
         }
     }
 
-    private fun updateView() = view.get()?.update(viewModel())
+    private fun updateView() {
+        view.get()?.update(viewModel())
+    }
 
     private fun viewModel(): ImprovementProposalsViewModel {
         if (error != null)
@@ -82,7 +83,7 @@ class DefaultImprovementProposalsPresenter(
             return Loading
         return Loaded(
             ImprovementProposal.Category.values().map { category ->
-                Section(
+                Category(
                     ImprovementProposalsViewModel.title(category),
                     ImprovementProposalsViewModel.description(category),
                     proposals.filter { it.category == category }

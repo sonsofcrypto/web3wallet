@@ -8,7 +8,7 @@ interface ImprovementProposalsInteractor {
     suspend fun fetchProposals(): List<ImprovementProposal>
 }
 
-class DefaultImprovementProposals(
+class DefaultImprovementProposalsInteractor(
     private val improvementProposalsService: ImprovementProposalsService
 ): ImprovementProposalsInteractor {
 

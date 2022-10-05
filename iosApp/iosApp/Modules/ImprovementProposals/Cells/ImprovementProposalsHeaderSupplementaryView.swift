@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class ImprovementProposalsHeaderSupplementaryView: UICollectionReusableView {
     private weak var label: UILabel!
@@ -44,7 +45,7 @@ final class ImprovementProposalsHeaderSupplementaryView: UICollectionReusableVie
 
 extension ImprovementProposalsHeaderSupplementaryView {
 
-    func update(with viewModel: ImprovementProposalsViewModel.Section) {
-        label.text = viewModel.description
+    func update(with viewModel: ImprovementProposalsViewModel.Category?) {
+        label.text = viewModel?.description
     }
 }

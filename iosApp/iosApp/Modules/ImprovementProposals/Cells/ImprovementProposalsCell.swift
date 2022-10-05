@@ -3,9 +3,9 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class ImprovementProposalsCell: CollectionViewCell {
-    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var voteButton: Button!
@@ -21,6 +21,7 @@ final class ImprovementProposalsCell: CollectionViewCell {
         chevronImageView.tintColor = Theme.colour.labelPrimary
         voteButton.style = .dashboardAction(leftImage: nil)
         voteButton.addTarget(self, action: #selector(voteTapped), for: .touchUpInside)
+        voteButton.setTitle(Localized("proposals.button.title"), for: .normal)
         clipsToBounds = false
         bottomSeparatorView.isHidden = true
     }
@@ -28,18 +29,17 @@ final class ImprovementProposalsCell: CollectionViewCell {
     override func setSelected(_ selected: Bool) { }
     
     func update(
-        with viewModel: ImprovementProposalsViewModel.Item,
+        with viewModel: ImprovementProposalsViewModel.Item?,
         handler: (()->Void)?
     ) -> Self {
-        self.voteHandler = handler
-        titleLabel.text = viewModel.title
-        subtitleLabel.text = viewModel.subtitle
-        voteButton.setTitle(viewModel.buttonTitle, for: .normal)
+        voteHandler = handler
+        titleLabel.text = viewModel?.title
+        subtitleLabel.text = viewModel?.subtitle
         return self
     }
 }
 
 private extension ImprovementProposalsCell  {
     
-    @objc func voteTapped() { self.voteHandler?() }
+    @objc func voteTapped() { voteHandler?() }
 }

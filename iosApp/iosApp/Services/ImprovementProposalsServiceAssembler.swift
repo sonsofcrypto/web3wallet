@@ -3,12 +3,15 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3walletcore
 
 final class ImprovementProposalsServiceAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .instance) { resolver -> ImprovementProposalsService in
-            DefaultImprovementProposalsService(defaults: .standard)
+            DefaultImprovementProposalsService(
+                store: KeyValueStore.companion.default()
+            )
         }
     }
 }

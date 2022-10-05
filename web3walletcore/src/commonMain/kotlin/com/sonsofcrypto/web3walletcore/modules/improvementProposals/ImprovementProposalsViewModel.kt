@@ -10,7 +10,7 @@ sealed class ImprovementProposalsViewModel {
     object Loading: ImprovementProposalsViewModel()
     /** Successfully fetched proposals */
     data class Loaded(
-        val sections: List<Section>,
+        val categories: List<Category>,
         val selectedIdx: Int
     ): ImprovementProposalsViewModel()
     /** Error occurred */
@@ -18,7 +18,7 @@ sealed class ImprovementProposalsViewModel {
         val error: CommonErrorViewModel
     ): ImprovementProposalsViewModel()
 
-    data class Section(
+    data class Category(
         val title: String,
         val description: String,
         val items: List<Item>
@@ -29,6 +29,11 @@ sealed class ImprovementProposalsViewModel {
         val title: String,
         val subtitle: String,
     )
+
+    fun selectedCategory(): Category? = when (this) {
+        is Loaded -> if(categories.isNotEmpty()) categories[selectedIdx] else null
+        else -> null
+    }
 
     companion object
 }
