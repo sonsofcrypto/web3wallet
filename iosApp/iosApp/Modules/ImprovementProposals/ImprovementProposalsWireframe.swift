@@ -35,10 +35,10 @@ extension DefaultImprovementProposalsWireframe: ImprovementProposalsWireframe {
         if let vote = destination as? ImprovementProposalsWireframeDestination.Vote {
             FeatureShareHelper().shareVote(on: vote.proposal)
         }
-        if let proposal = destination as? ImprovementProposalsWireframeDestination.Vote {
+        if let dest = destination as? ImprovementProposalsWireframeDestination.Proposal {
             improvementProposalWireframeFactory.make(
                 vc,
-                context: .init(proposal: proposal.proposal, proposals: proposal.proposals)
+                context: .init(proposal: dest.proposal, proposals: dest.categoryProposals)
             ).present()
         }
         if let _ =  destination as? ImprovementProposalsWireframeDestination.Vote {
