@@ -4,12 +4,10 @@ import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
-import com.sonsofcrypto.web3walletcore.*
 import com.sonsofcrypto.web3walletcore.modules.root.DefaultRootPresenter
 import com.sonsofcrypto.web3walletcore.modules.root.RootView
 import com.sonsofcrypto.web3walletcore.modules.root.RootWireframe
 import com.sonsofcrypto.web3walletcore.modules.root.RootWireframeDestination
-import com.sonsofcrypto.web3walletcore.root.*
 
 class WalletCoreTests {
 

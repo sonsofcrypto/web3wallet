@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3walletcore.services.ImprovmentProposals
 
 import kotlinx.serialization.SerialName
-import kotlinx.serialization.*
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class ImprovementProposal(
@@ -18,11 +18,12 @@ data class ImprovementProposal(
     val pageUrl: String,
     val votes: Int,
 ) {
+
     @Serializable
     enum class Category(val string: String) {
         INFRASTRUCTURE("infrastructure"),
         INTEGRATION("integration"),
         FEATURE("feature"),
         UNKNOWN("unknown"),
-    }
+     }
 }

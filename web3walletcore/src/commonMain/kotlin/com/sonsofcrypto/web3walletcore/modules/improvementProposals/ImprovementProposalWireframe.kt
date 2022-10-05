@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.improvementProposals
 
-import com.sonsofcrypto.web3lib.utils.WeakRef
+import com.sonsofcrypto.web3walletcore.services.ImprovmentProposals.ImprovementProposal
 
 sealed class ImprovementProposalsWireframeDestination {
     /** Votes on proposal */
