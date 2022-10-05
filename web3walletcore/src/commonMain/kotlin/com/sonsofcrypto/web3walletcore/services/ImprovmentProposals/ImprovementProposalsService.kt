@@ -17,6 +17,8 @@ interface ImprovementProposalsService {
     /** Fetched proposals for github */
     @Throws(Throwable::class)
     suspend fun fetch(): List<ImprovementProposal>
+    /** Cached improvement proposals */
+    fun cached(): List<ImprovementProposal>
 }
 
 class DefaultImprovementProposalsService(
@@ -43,12 +45,12 @@ class DefaultImprovementProposalsService(
         }
     }
 
-    private fun store(proposals: List<ImprovementProposal>) {
-        store.set(cacheKey, jsonEncode(proposals))
+    override fun cached(): List<ImprovementProposal> {
+        return jsonDecode(store.get<String>(cacheKey) ?: "[]") ?: emptyList()
     }
 
-    private fun cached(): List<ImprovementProposal> {
-        return jsonDecode(store.get<String>(cacheKey) ?: "[]") ?: emptyList()
+    private fun store(proposals: List<ImprovementProposal>) {
+        store.set(cacheKey, jsonEncode(proposals))
     }
 
     private fun url(): String {

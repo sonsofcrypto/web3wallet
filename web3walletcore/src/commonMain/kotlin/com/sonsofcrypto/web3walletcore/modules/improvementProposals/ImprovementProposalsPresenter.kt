@@ -14,9 +14,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 sealed class ImprovementProposalsPresenterEvent {
+    /** Selected category changed */
     data class Category(val idx: Int): ImprovementProposalsPresenterEvent()
+    /** Vote on proposal at index */
     data class Vote(val idx: Int): ImprovementProposalsPresenterEvent()
+    /** Show details of proposal */
     data class Proposal(val idx: Int): ImprovementProposalsPresenterEvent()
+    /** Dismiss proposals module */
     object Dismiss: ImprovementProposalsPresenterEvent()
 }
 
@@ -38,8 +42,9 @@ class DefaultImprovementProposalsPresenter(
     override fun present() {
         updateView()
         val errHandler = CoroutineExceptionHandler { _, err ->
-            error = err
             println(err)
+            error = err
+            updateView()
         }
         scope.launch(errHandler) {
             val result = interactor.fetchProposals()
