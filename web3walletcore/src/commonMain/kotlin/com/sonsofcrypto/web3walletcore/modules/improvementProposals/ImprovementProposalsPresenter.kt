@@ -5,7 +5,7 @@ import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.withUICxt
 import com.sonsofcrypto.web3walletcore.common.viewModels.CommonErrorViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.with
-import com.sonsofcrypto.web3walletcore.extensions.LocalizedFmt
+import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsViewModel.*
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsWireframeDestination.*
 import com.sonsofcrypto.web3walletcore.services.ImprovmentProposals.ImprovementProposal
@@ -104,7 +104,7 @@ class DefaultImprovementProposalsPresenter(
     }
 
     private fun proposalSubtitle(proposal: ImprovementProposal): String {
-        return LocalizedFmt("proposal.hashTag", proposal.id) + "  |  " +
-            LocalizedFmt("proposals.votes", proposal.votes)
+        return Localized("proposal.hashTag", proposal.id) + "  |  " +
+            Localized("proposals.votes", proposal.votes)
     }
 }

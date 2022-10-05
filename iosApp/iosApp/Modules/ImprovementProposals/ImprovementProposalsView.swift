@@ -27,7 +27,7 @@ extension ImprovementProposalsViewController: ImprovementProposalsView {
 
     func update(viewModel: ImprovementProposalsViewModel) {
         self.viewModel = viewModel
-        collectionView.reloadData()
+        print("== ", viewModel)
         if let loading = viewModel as? ImprovementProposalsViewModel.Loading {
             refreshControl.beginRefreshing()
         }
@@ -123,12 +123,12 @@ private extension ImprovementProposalsViewController {
             animated: false
         )
         segmentControl.insertSegment(
-            withTitle: Localized("proposals.infrastructure.title"),
+            withTitle: Localized("proposals.integrations.title"),
             at: 1,
             animated: false
         )
         segmentControl.insertSegment(
-            withTitle: Localized("proposals.infrastructure.title"),
+            withTitle: Localized("proposals.features.title"),
             at: 2,
             animated: false
         )

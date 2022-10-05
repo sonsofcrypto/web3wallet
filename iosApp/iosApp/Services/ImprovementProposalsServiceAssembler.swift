@@ -10,7 +10,7 @@ final class ImprovementProposalsServiceAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .instance) { resolver -> ImprovementProposalsService in
             DefaultImprovementProposalsService(
-                store: KeyValueStore.companion.default()
+                store: KeyValueStore(name: "\(ImprovementProposalsService.self)")
             )
         }
     }

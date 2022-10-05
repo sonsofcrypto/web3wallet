@@ -46,6 +46,6 @@ final class ImprovementProposalsHeaderSupplementaryView: UICollectionReusableVie
 extension ImprovementProposalsHeaderSupplementaryView {
 
     func update(with viewModel: ImprovementProposalsViewModel.Category?) {
-        label.text = viewModel?.description
+        label.text = viewModel?.description_
     }
 }

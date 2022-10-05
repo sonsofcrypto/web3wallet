@@ -32,18 +32,18 @@ extension DefaultImprovementProposalsWireframe: ImprovementProposalsWireframe {
     }
 
     func navigate(destination: ImprovementProposalsWireframeDestination) {
-//         TODO(PROPOSALS)
-//        switch destination {
-//        case let .vote(proposal):
-//            FeatureShareHelper().shareVote(on: proposal)
-//        case let .proposal(proposal, proposals):
-//            improvementWireframeFactory.make(
-//                vc,
-//                context: .init(proposal: proposal, proposals: proposals)
-//            ).present()
-//        case .dismiss:
-//            vc?.popOrDismiss()
-//        }
+        if let vote = destination as? ImprovementProposalsWireframeDestination.Vote {
+            FeatureShareHelper().shareVote(on: vote.proposal)
+        }
+        if let proposal = destination as? ImprovementProposalsWireframeDestination.Vote {
+            improvementProposalWireframeFactory.make(
+                vc,
+                context: .init(proposal: proposal.proposal, proposals: proposal.proposals)
+            ).present()
+        }
+        if let _ =  destination as? ImprovementProposalsWireframeDestination.Vote {
+            vc?.dismiss(animated: true)
+        }
     }
 }
 

@@ -4,6 +4,6 @@ actual fun Localized(string: String): String {
     TODO("Implement")
 }
 
-actual fun LocalizedFmt(fmt: String, vararg params: Any): String {
+actual fun Localized(fmt: String, vararg args: Any?): String {
     TODO("Implement")
 }
