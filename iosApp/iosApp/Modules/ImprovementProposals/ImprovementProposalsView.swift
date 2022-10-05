@@ -27,13 +27,17 @@ extension ImprovementProposalsViewController: ImprovementProposalsView {
 
     func update(viewModel: ImprovementProposalsViewModel) {
         self.viewModel = viewModel
-        print("== ", viewModel)
+        print("=== ", viewModel)
         if let loading = viewModel as? ImprovementProposalsViewModel.Loading {
             refreshControl.beginRefreshing()
         }
         if let error = viewModel as? ImprovementProposalsViewModel.Error {
             refreshControl.endRefreshing()
-            // TODO(PROPOSALS) Show alert
+            let alert = UIAlertController(
+                error.error,
+                handlers: [{ [weak self] action in self?.handle(action) }]
+            )
+            present(alert, animated: true)
         }
         if let loaded = viewModel as? ImprovementProposalsViewModel.Loaded {
             refreshControl.endRefreshing()
@@ -100,6 +104,10 @@ extension ImprovementProposalsViewController: UICollectionViewDelegate {
 
     func voteAction(idx: Int) {
         presenter.handle(event____: .Vote(idx: Int32(idx)))
+    }
+
+    func handle(_ alertAction: UIAlertAction) {
+        presenter.handle(event____: .AlertAction(idx: 0))
     }
 }
 

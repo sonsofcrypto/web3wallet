@@ -20,6 +20,8 @@ sealed class ImprovementProposalsPresenterEvent {
     data class Vote(val idx: Int): ImprovementProposalsPresenterEvent()
     /** Show details of proposal */
     data class Proposal(val idx: Int): ImprovementProposalsPresenterEvent()
+    /** Did select alert action */
+    data class AlertAction(val idx: Int): ImprovementProposalsPresenterEvent()
     /** Dismiss proposals module */
     object Dismiss: ImprovementProposalsPresenterEvent()
 }
@@ -66,6 +68,10 @@ class DefaultImprovementProposalsPresenter(
             is ImprovementProposalsPresenterEvent.Proposal -> wireframe.navigate(
                 Proposal(proposalAt(event.idx), proposals(selectedCategoryIdx))
             )
+            is ImprovementProposalsPresenterEvent.AlertAction -> {
+                error = null
+                updateView()
+            }
             is ImprovementProposalsPresenterEvent.Dismiss -> wireframe.navigate(
                 Dismiss
             )

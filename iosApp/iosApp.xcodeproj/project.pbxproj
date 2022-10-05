@@ -22,6 +22,7 @@
 		1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */; };
 		1A4C34ABFF1DD20804DED956 /* AppsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3228790C1569B37F5179 /* AppsService.swift */; };
 		1A4C366F70AFECEF112F8263 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C391FFCFF40F06CD89323 /* Bundle+Extensions.swift */; };
+		1A4C367B553E9CBB9544CB67 /* UIAlertController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C35D1142A0506B5B87BE5 /* UIAlertController+Extensions.swift */; };
 		1A4C36905015E11DA8282EC7 /* ImprovementProposalsServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3A7F5A951E4100DFC01B /* ImprovementProposalsServiceAssembler.swift */; };
 		1A4C370634B11B400C5C4356 /* TouchPassThroughCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C308C7EEAF2E80221C519 /* TouchPassThroughCollectionView.swift */; };
 		1A4C37074D8859F0DC14C905 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */; };
@@ -579,6 +580,7 @@
 		1A4C351B672C360A32A15547 /* WalletServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletServiceAssembler.swift; sourceTree = "<group>"; };
 		1A4C3553B19E38E28C955332 /* KeyStoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreService.swift; sourceTree = "<group>"; };
 		1A4C359691FCF66942DF6CEF /* CandlesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CandlesView.swift; sourceTree = "<group>"; };
+		1A4C35D1142A0506B5B87BE5 /* UIAlertController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extensions.swift"; sourceTree = "<group>"; };
 		1A4C3635DC5425C3CA3A2D25 /* CultServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultServiceAssembler.swift; sourceTree = "<group>"; };
 		1A4C3644A9D218CC991B2A56 /* VisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		1A4C364B37689A3126C4113D /* Assembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assembler.swift; sourceTree = "<group>"; };
@@ -2005,6 +2007,7 @@
 				1C7F861028D20E490073FD95 /* UIView+LayoutConstraints+Extensions.swift */,
 				1C7F860528D20E490073FD95 /* UIView+Toast+Extensions.swift */,
 				1C5D24DE28E1A3DD007DA557 /* UIViewController+Extensions.swift */,
+				1A4C35D1142A0506B5B87BE5 /* UIAlertController+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3191,6 +3194,7 @@
 				1A4C31C7DCD235DD4D29DCA6 /* IndexPath+Extensions.swift in Sources */,
 				1C5D24C728E19F62007DA557 /* ImprovementProposalDetailSummaryView.swift in Sources */,
 				1A4C36905015E11DA8282EC7 /* ImprovementProposalsServiceAssembler.swift in Sources */,
+				1A4C367B553E9CBB9544CB67 /* UIAlertController+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
