@@ -41,8 +41,8 @@ extension DefaultImprovementProposalsWireframe: ImprovementProposalsWireframe {
                 context: .init(proposal: dest.proposal, proposals: dest.categoryProposals)
             ).present()
         }
-        if let _ =  destination as? ImprovementProposalsWireframeDestination.Vote {
-            vc?.dismiss(animated: true)
+        if let _ =  destination as? ImprovementProposalsWireframeDestination.Dismiss {
+            parent?.dismiss(animated: true)
         }
     }
 }

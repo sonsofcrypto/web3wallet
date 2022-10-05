@@ -5,7 +5,9 @@
 import UIKit
 
 final class NavigationController: UINavigationController {
-        
+
+//    convenience init(rootVc: UIViewContro)
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         Theme.statusBarStyle.statusBarStyle(for: traitCollection.userInterfaceStyle)
     }

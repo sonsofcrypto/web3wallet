@@ -6,15 +6,12 @@ import UIKit
 import web3walletcore
 
 final class ImprovementProposalsViewController: BaseViewController {
-    @IBOutlet weak var topContainerView: UIView!
-    @IBOutlet weak var segmentContainer: UIView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var collectionView: UICollectionView!
-    private let refreshControl = UIRefreshControl()
 
     var presenter: ImprovementProposalsPresenter!
 
     private var viewModel: ImprovementProposalsViewModel?
+    private let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +24,6 @@ extension ImprovementProposalsViewController: ImprovementProposalsView {
 
     func update(viewModel: ImprovementProposalsViewModel) {
         self.viewModel = viewModel
-        print("=== ", viewModel)
         if let loading = viewModel as? ImprovementProposalsViewModel.Loading {
             refreshControl.beginRefreshing()
         }
@@ -40,8 +36,10 @@ extension ImprovementProposalsViewController: ImprovementProposalsView {
             present(alert, animated: true)
         }
         if let loaded = viewModel as? ImprovementProposalsViewModel.Loaded {
-            refreshControl.endRefreshing()
-            collectionView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.refreshControl.endRefreshing()
+                self.collectionView.reloadData()
+            }
         }
     }
 }
@@ -112,17 +110,7 @@ extension ImprovementProposalsViewController: UICollectionViewDelegate {
 }
 
 private extension ImprovementProposalsViewController {
-    
-    func showLoading() {
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
-    }
-    
-    func hideLoading() {
-        activityIndicator.isHidden = true
-        activityIndicator.stopAnimating()
-    }
-    
+
     func setSegmented() {
         let segmentControl = SegmentedControl()
         segmentControl.insertSegment(
@@ -148,20 +136,20 @@ private extension ImprovementProposalsViewController {
             action: #selector(segmentControlChanged(_:)),
             for: .valueChanged
         )
-        segmentContainer.addSubview(segmentControl)
-        segmentControl.addConstraints(
-            [
-                .layout(anchor: .centerYAnchor),
-                .layout(
-                    anchor: .leadingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
-                ),
-                .layout(
-                    anchor: .trailingAnchor,
-                    constant: .equalTo(constant: Theme.constant.padding)
-                )
-            ]
-        )
+//        segmentContainer.addSubview(segmentControl)
+//        segmentControl.addConstraints(
+//            [
+//                .layout(anchor: .centerYAnchor),
+//                .layout(
+//                    anchor: .leadingAnchor,
+//                    constant: .equalTo(constant: Theme.constant.padding)
+//                ),
+//                .layout(
+//                    anchor: .trailingAnchor,
+//                    constant: .equalTo(constant: Theme.constant.padding)
+//                )
+//            ]
+//        )
     }
     
     @objc func segmentControlChanged(_ sender: SegmentedControl) {
@@ -178,9 +166,7 @@ private extension ImprovementProposalsViewController {
             target: self,
             action: #selector(dismissAction)
         )
-        topContainerView.backgroundColor = Theme.colour.navBarBackground
         setSegmented()
-        activityIndicator.color = Theme.colour.activityIndicator
         collectionView.setCollectionViewLayout(
             compositionalLayout(),
             animated: false
@@ -198,6 +184,7 @@ private extension ImprovementProposalsViewController {
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
 //        navigationItem.searchController = searchController
 //        searchController.searchResultsUpdater = self
+        collectionView.backgroundView = ThemeGradientView()
     }
     
     @objc func dismissAction() {
@@ -260,12 +247,3 @@ private extension ImprovementProposalsViewController {
     }
 }
 
-//extension FeaturesViewController: UISearchResultsUpdating {
-//
-//    func updateSearchResults(for searchController: UISearchController) {
-//
-//        guard let text = searchController.searchBar.text else { return }
-//
-//        presenter.handle(.filterBy(text: text))
-//    }
-//}
