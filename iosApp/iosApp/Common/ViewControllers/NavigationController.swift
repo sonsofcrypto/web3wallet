@@ -4,6 +4,10 @@
 
 import UIKit
 
+final class NavigationItem: UINavigationItem {
+    @IBOutlet var contentView: UIView?
+}
+
 final class NavigationController: UINavigationController {
 
     weak var contentView: UIView? {
@@ -16,7 +20,6 @@ final class NavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         let appearance = navigationBar.standardAppearance
         appearance.backgroundColor = Theme.colour.navBarBackground
         appearance.titleTextAttributes = [
@@ -43,6 +46,29 @@ final class NavigationController: UINavigationController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         layoutBar()
+    }
+
+    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        super.pushViewController(viewController, animated: animated)
+        contentView = contentView(for: viewController)
+    }
+
+    override func popViewController(animated: Bool) -> UIViewController? {
+        let vc = super.popViewController(animated: animated)
+        contentView = contentView(for: topVc)
+        return vc
+    }
+
+    override func popToViewController(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
+        let vcs = super.popToViewController(viewController, animated: animated)
+        contentView = contentView(for: viewController)
+        return vcs
+    }
+
+    override func popToRootViewController(animated: Bool) -> [UIViewController]? {
+        let vcs = super.popToRootViewController(animated: animated)
+        contentView = contentView(for: viewControllers[safe: 0])
+        return vcs
     }
 }
 
@@ -71,11 +97,19 @@ private extension NavigationController {
         prevView?.removeFromSuperview()
         view.setNeedsLayout()
         if let contentView = contentView {
-            contentView.alpha = 0
             view.addSubview(contentView)
-            UIView.animate(withDuration: 0.2) {
+            contentView.alpha = 0
+            navigationBar.setNeedsLayout()
+//            navigationBar.constraints.forEach { print($0) }
+//            let heightConstraint = navigationBar.constraints.filter { $0.firstAttribute == .height }
+//                .first
+//            heightConstraint?.constant = 104
+//            print("=== constraint", heightConstraint)
+//            print("=== prior", navigationBar.frame)
+            UIView.animate(withDuration: 0.2, delay: 0.05) {
                 self.view.layoutIfNeeded()
                 contentView.alpha = 1
+//                print("=== after", self.navigationBar.frame)
             }
         }
     }
@@ -89,7 +123,7 @@ private extension NavigationController {
         var barFrame = navigationBar.frame
         barFrame.size.height += contentView.intrinsicContentSize.height
         barFrame.size.height += Theme.constant.padding
-        navigationBar.frame = barFrame
+//        navigationBar.frame = barFrame
 
         var contentFrame = barFrame.insetBy(dx: Theme.constant.padding, dy: 0)
         contentFrame.size.height = contentView.bounds.height
@@ -100,5 +134,9 @@ private extension NavigationController {
         topVc?.additionalSafeAreaInsets = UIEdgeInsets.with(
             top: barFrame.maxY - contentFrame.minY
         )
+    }
+
+    func contentView(for viewController: UIViewController?) -> UIView? {
+        (viewController?.navigationItem as? NavigationItem)?.contentView
     }
 }

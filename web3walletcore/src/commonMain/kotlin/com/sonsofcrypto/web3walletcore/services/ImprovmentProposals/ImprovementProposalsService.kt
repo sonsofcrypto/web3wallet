@@ -37,6 +37,7 @@ class DefaultImprovementProposalsService(
         try {
             val body = client.get(url()).bodyAsText()
             val proposals = jsonDecode<List<ImprovementProposal>>(body) ?: emptyList()
+            proposals.sortedBy { it.id }
             store(proposals)
             return proposals
         } catch (err: Throwable) {

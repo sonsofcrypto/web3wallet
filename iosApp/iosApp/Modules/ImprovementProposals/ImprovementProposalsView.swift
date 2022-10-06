@@ -7,7 +7,6 @@ import web3walletcore
 
 final class ImprovementProposalsViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet var segmentCtl: SegmentedControl!
 
     var presenter: ImprovementProposalsPresenter!
 
@@ -17,16 +16,6 @@ final class ImprovementProposalsViewController: BaseViewController {
         super.viewDidLoad()
         configureUI()
         presenter?.present()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        (navigationController as? NavigationController)?.contentView = segmentCtl
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        (navigationController as? NavigationController)?.contentView = nil
     }
 }
 

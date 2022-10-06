@@ -104,7 +104,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuC-fe-ehh">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Section title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuC-fe-ehh">
                                     <rect key="frame" x="8" y="8" width="398" height="34"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
@@ -129,16 +129,18 @@
                             <outlet property="prefetchDataSource" destination="4hk-9p-GXg" id="HZG-bV-dtR"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="W3W improvement proposals" id="oW5-1I-9mL">
+                    <navigationItem key="navigationItem" title="W3W improvement proposals" id="oW5-1I-9mL" customClass="NavigationItem" customModule="iosApp" customModuleProvider="target">
                         <barButtonItem key="rightBarButtonItem" image="xmark" catalog="system" landscapeImage="xmark" style="plain" id="apG-h3-OzR">
                             <connections>
                                 <action selector="dismissAction" destination="4hk-9p-GXg" id="eci-o4-zZD"/>
                             </connections>
                         </barButtonItem>
+                        <connections>
+                            <outlet property="contentView" destination="Cwf-z5-jDy" id="lNU-x7-RN7"/>
+                        </connections>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="GVO-CN-a39" id="YzA-fE-OmG"/>
-                        <outlet property="segmentCtl" destination="Cwf-z5-jDy" id="RHR-cM-gMy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWA-NB-KYJ" sceneMemberID="firstResponder"/>
@@ -160,7 +162,6 @@
     </scenes>
     <resources>
         <image name="arrow_cell_forward" width="9" height="15"/>
-        <image name="xmark" width="32" height="32"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
