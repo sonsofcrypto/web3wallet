@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3walletcore.services.ImprovmentProposals
+package com.sonsofcrypto.web3walletcore.services.improvementProposals
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

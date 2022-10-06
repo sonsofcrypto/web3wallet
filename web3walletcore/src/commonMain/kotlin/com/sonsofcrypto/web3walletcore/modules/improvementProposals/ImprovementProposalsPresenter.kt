@@ -2,13 +2,14 @@ package com.sonsofcrypto.web3walletcore.modules.improvementProposals
 
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
+import com.sonsofcrypto.web3lib.utils.withBgCxt
 import com.sonsofcrypto.web3lib.utils.withUICxt
 import com.sonsofcrypto.web3walletcore.common.viewModels.CommonErrorViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.with
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsViewModel.*
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsWireframeDestination.*
-import com.sonsofcrypto.web3walletcore.services.ImprovmentProposals.ImprovementProposal
+import com.sonsofcrypto.web3walletcore.services.improvementProposals.ImprovementProposal
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -33,8 +34,8 @@ interface ImprovementProposalsPresenter {
 
 class DefaultImprovementProposalsPresenter(
     private val view: WeakRef<ImprovementProposalsView>,
+    private val wireframe: ImprovementProposalsWireframe,
     private val interactor: ImprovementProposalsInteractor,
-    private val wireframe: ImprovementProposalsWireframe
 ) : ImprovementProposalsPresenter {
     private var proposals: List<ImprovementProposal> = emptyList()
     private var error: Throwable? = null
@@ -90,8 +91,8 @@ class DefaultImprovementProposalsPresenter(
         return Loaded(
             ImprovementProposal.Category.values().map { category ->
                 Category(
-                    ImprovementProposalsViewModel.title(category),
-                    ImprovementProposalsViewModel.description(category),
+                    category.title(),
+                    category.description(),
                     proposals.filter { it.category == category }
                         .map { Item(it.id, it.title, proposalSubtitle(it)) }
                 )

@@ -99,7 +99,6 @@ private extension NavigationController {
         if let contentView = contentView {
             view.addSubview(contentView)
             contentView.alpha = 0
-            navigationBar.setNeedsLayout()
 //            navigationBar.constraints.forEach { print($0) }
 //            let heightConstraint = navigationBar.constraints.filter { $0.firstAttribute == .height }
 //                .first
@@ -123,7 +122,7 @@ private extension NavigationController {
         var barFrame = navigationBar.frame
         barFrame.size.height += contentView.intrinsicContentSize.height
         barFrame.size.height += Theme.constant.padding
-//        navigationBar.frame = barFrame
+        navigationBar.frame = barFrame
 
         var contentFrame = barFrame.insetBy(dx: Theme.constant.padding, dy: 0)
         contentFrame.size.height = contentView.bounds.height

@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3walletcore.services.ImprovmentProposals
+package com.sonsofcrypto.web3walletcore.services.improvementProposals
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
@@ -22,7 +22,7 @@ interface ImprovementProposalsService {
 }
 
 class DefaultImprovementProposalsService(
-    val store: KeyValueStore
+    private val store: KeyValueStore
 ): ImprovementProposalsService {
 
     private val client: HttpClient by lazy {

@@ -14,7 +14,6 @@ final class DefaultImprovementProposalsWireframe {
     init(
         _ parent: UIViewController?,
         improvementProposalWireframeFactory: ImprovementProposalWireframeFactory,
-        alertWireframeFactory: AlertWireframeFactory,
         improvementProposalsService: ImprovementProposalsService
     ) {
         self.parent = parent
@@ -48,7 +47,7 @@ extension DefaultImprovementProposalsWireframe: ImprovementProposalsWireframe {
 }
 
 extension DefaultImprovementProposalsWireframe {
-    
+
     func wireUp() -> UIViewController {
         let interactor = DefaultImprovementProposalsInteractor(
             improvementProposalsService: improvementProposalsService

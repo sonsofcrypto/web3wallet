@@ -2,8 +2,8 @@ package com.sonsofcrypto.web3walletcore.modules.improvementProposals
 
 import com.sonsofcrypto.web3walletcore.common.viewModels.CommonErrorViewModel
 import com.sonsofcrypto.web3walletcore.extensions.Localized
-import com.sonsofcrypto.web3walletcore.services.ImprovmentProposals.ImprovementProposal
-import com.sonsofcrypto.web3walletcore.services.ImprovmentProposals.ImprovementProposal.Category.*
+import com.sonsofcrypto.web3walletcore.services.improvementProposals.ImprovementProposal
+import com.sonsofcrypto.web3walletcore.services.improvementProposals.ImprovementProposal.Category.*
 
 sealed class ImprovementProposalsViewModel {
     /** Loading proposals */
@@ -38,18 +38,14 @@ sealed class ImprovementProposalsViewModel {
     companion object
 }
 
-fun ImprovementProposalsViewModel.Companion.title(
-    category: ImprovementProposal.Category
-): String = when (category) {
+fun ImprovementProposal.Category.title(): String = when (this) {
     INTEGRATION -> Localized("proposals.infrastructure.title")
     INFRASTRUCTURE -> Localized("proposals.integration.title")
     FEATURE -> Localized("proposals.feature.title")
     UNKNOWN -> Localized("proposals.unknown.title")
 } + " " + Localized("proposals")
 
-fun ImprovementProposalsViewModel.Companion.description(
-    category: ImprovementProposal.Category
-): String = when (category) {
+fun ImprovementProposal.Category.description(): String = when (this) {
     INTEGRATION -> Localized("proposals.infrastructure.description")
     INFRASTRUCTURE -> Localized("proposals.integration.description")
     FEATURE -> Localized("proposals.feature.description")

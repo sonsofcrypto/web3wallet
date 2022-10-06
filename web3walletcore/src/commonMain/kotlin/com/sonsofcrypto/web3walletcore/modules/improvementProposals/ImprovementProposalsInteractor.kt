@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3walletcore.modules.improvementProposals
 
-import com.sonsofcrypto.web3walletcore.services.ImprovmentProposals.ImprovementProposal
-import com.sonsofcrypto.web3walletcore.services.ImprovmentProposals.ImprovementProposalsService
+import com.sonsofcrypto.web3walletcore.services.improvementProposals.ImprovementProposal
+import com.sonsofcrypto.web3walletcore.services.improvementProposals.ImprovementProposalsService
 
 interface ImprovementProposalsInteractor {
     @Throws(Throwable::class)
