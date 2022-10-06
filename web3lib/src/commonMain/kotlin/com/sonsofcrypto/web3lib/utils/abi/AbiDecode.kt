@@ -1,6 +1,8 @@
 package com.sonsofcrypto.web3lib.utils.abi
 
+import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import io.ktor.utils.io.core.*
 
@@ -11,16 +13,15 @@ class AbiDecode {
         }
 
         fun decodeInt(input: String): BigInt {
-            return BigInt.from(input.replace("^[0]*".toRegex(), "").toInt(16))
+            return decodeByteArray(input.hexStringToByteArray())
         }
 
-
-        fun decodeLong(input: String): BigInt {
-            return BigInt.from(input.replace("^[0]*".toRegex(), "").toLong(16))
+        fun decodeByteArray(input: ByteArray): BigInt {
+            return BigInt.from(input)
         }
 
-        fun decodeUInt16(input: String): BigInt {
-            return BigInt.from(input.replace("^[0]*".toRegex(), "").toUInt(16))
+        fun decodeAddress(input: String): Address {
+            return Address.HexString(input.replace("^[0]*".toRegex(), ""))
         }
     /*
         fun decodeCallSignature(input: String) : ByteArray {
