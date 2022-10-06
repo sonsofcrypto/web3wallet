@@ -138,9 +138,22 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="GVO-CN-a39" id="YzA-fE-OmG"/>
+                        <outlet property="segmentCtl" destination="Cwf-z5-jDy" id="RHR-cM-gMy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWA-NB-KYJ" sceneMemberID="firstResponder"/>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="Cwf-z5-jDy" customClass="SegmentedControl" customModule="iosApp" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="33"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <segments>
+                        <segment title="Infrastructure"/>
+                        <segment title="Integrations"/>
+                        <segment title="Features"/>
+                    </segments>
+                    <connections>
+                        <action selector="segmentCtlAction:" destination="4hk-9p-GXg" eventType="valueChanged" id="8AZ-0C-6gy"/>
+                    </connections>
+                </segmentedControl>
             </objects>
             <point key="canvasLocation" x="1063.768115942029" y="2987.2767857142858"/>
         </scene>

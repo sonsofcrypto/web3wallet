@@ -6,7 +6,9 @@ import UIKit
 
 final class NavigationController: UINavigationController {
 
-//    convenience init(rootVc: UIViewContro)
+    weak var contentView: UIView? {
+        didSet { didSetContentView(contentView, prevView: oldValue) }
+    }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         Theme.statusBarStyle.statusBarStyle(for: traitCollection.userInterfaceStyle)
@@ -32,6 +34,16 @@ final class NavigationController: UINavigationController {
         navigationBar.tintColor = Theme.colour.navBarTint
         interactivePopGestureRecognizer?.delegate = self
     }
+
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        layoutBar()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        layoutBar()
+    }
 }
 
 extension UINavigationController {
@@ -49,5 +61,44 @@ extension NavigationController: UIGestureRecognizerDelegate {
         _ gestureRecognizer: UIGestureRecognizer
     ) -> Bool {
         viewControllers.count > 1
+    }
+}
+
+private extension NavigationController {
+
+    func didSetContentView(_ contentView: UIView?, prevView: UIView?) {
+        guard contentView != prevView else { return }
+        prevView?.removeFromSuperview()
+        view.setNeedsLayout()
+        if let contentView = contentView {
+            contentView.alpha = 0
+            view.addSubview(contentView)
+            UIView.animate(withDuration: 0.2) {
+                self.view.layoutIfNeeded()
+                contentView.alpha = 1
+            }
+        }
+    }
+
+    func layoutBar() {
+        guard let contentView = contentView else {
+            topVc?.additionalSafeAreaInsets = UIEdgeInsets.zero
+            return
+        }
+
+        var barFrame = navigationBar.frame
+        barFrame.size.height += contentView.intrinsicContentSize.height
+        barFrame.size.height += Theme.constant.padding
+        navigationBar.frame = barFrame
+
+        var contentFrame = barFrame.insetBy(dx: Theme.constant.padding, dy: 0)
+        contentFrame.size.height = contentView.bounds.height
+        contentFrame.origin.y = barFrame.maxY - Theme.constant.padding
+        contentFrame.origin.y -= contentView.bounds.height
+        contentView.frame = contentFrame
+
+        topVc?.additionalSafeAreaInsets = UIEdgeInsets.with(
+            top: barFrame.maxY - contentFrame.minY
+        )
     }
 }
