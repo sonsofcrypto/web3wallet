@@ -19,7 +19,6 @@ private extension SectionHeaderView {
 
     func configure() {
         label.apply(style: .body)
-        backgroundColor = UIColor.red
     }
 }
 

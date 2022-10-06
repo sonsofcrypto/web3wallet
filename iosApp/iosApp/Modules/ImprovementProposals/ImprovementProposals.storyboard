@@ -9,10 +9,26 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="uBq-JB-hF1">
+            <objects>
+                <navigationController id="WaB-ch-uED" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Vk4-Ku-iaO">
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="4hk-9p-GXg" kind="relationship" relationship="rootViewController" id="JA0-B6-Lik"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iHU-eZ-xEE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="277" y="2987"/>
+        </scene>
         <!--ProposalsViewController-->
         <scene sceneID="Phh-yi-ZV8">
             <objects>
-                <viewController storyboardIdentifier="ImprovementProposalsViewController" title="iosApp" id="4hk-9p-GXg" userLabel="ProposalsViewController" customClass="ImprovementProposalsViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImprovementProposalsViewController" title="w3w improvement proposals" id="4hk-9p-GXg" userLabel="ProposalsViewController" customClass="ImprovementProposalsViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="GVO-CN-a39">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -107,7 +123,19 @@
                                 <outletCollection property="edgeConstraints" destination="l20-dq-INt" collectionClass="NSMutableArray" id="NOU-4d-brI"/>
                             </connections>
                         </collectionReusableView>
+                        <connections>
+                            <outlet property="dataSource" destination="4hk-9p-GXg" id="f9c-WS-JV0"/>
+                            <outlet property="delegate" destination="4hk-9p-GXg" id="aWf-61-UEl"/>
+                            <outlet property="prefetchDataSource" destination="4hk-9p-GXg" id="HZG-bV-dtR"/>
+                        </connections>
                     </collectionView>
+                    <navigationItem key="navigationItem" title="W3W improvement proposals" id="oW5-1I-9mL">
+                        <barButtonItem key="rightBarButtonItem" image="xmark" catalog="system" landscapeImage="xmark" style="plain" id="apG-h3-OzR">
+                            <connections>
+                                <action selector="dismissAction" destination="4hk-9p-GXg" id="eci-o4-zZD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="GVO-CN-a39" id="YzA-fE-OmG"/>
                     </connections>
@@ -119,6 +147,8 @@
     </scenes>
     <resources>
         <image name="arrow_cell_forward" width="9" height="15"/>
+        <image name="xmark" width="32" height="32"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -107,7 +107,7 @@ extension ImprovementProposalsViewController: UICollectionViewDelegate {
         presenter.present()
     }
 
-    @objc func dismissAction() {
+    @IBAction func dismissAction() {
         presenter.handle(event____: .Dismiss())
     }
 
@@ -162,11 +162,6 @@ private extension ImprovementProposalsViewController {
 
     
     func configureUI() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            with: .init(systemName: "xmark"),
-            target: self,
-            action: #selector(dismissAction)
-        )
         setSegmented()
         collectionView.setCollectionViewLayout(layout(), animated: false)
         collectionView.backgroundView = ThemeGradientView()
