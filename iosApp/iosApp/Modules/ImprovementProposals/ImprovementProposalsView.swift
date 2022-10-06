@@ -11,7 +11,6 @@ final class ImprovementProposalsViewController: BaseViewController {
     var presenter: ImprovementProposalsPresenter!
 
     private var viewModel: ImprovementProposalsViewModel?
-    private let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,10 +24,10 @@ extension ImprovementProposalsViewController: ImprovementProposalsView {
     func update(viewModel: ImprovementProposalsViewModel) {
         self.viewModel = viewModel
         if let loading = viewModel as? ImprovementProposalsViewModel.Loading {
-            refreshControl.beginRefreshing()
+            collectionView.refreshControl?.beginRefreshing()
         }
         if let error = viewModel as? ImprovementProposalsViewModel.Error {
-            refreshControl.endRefreshing()
+            collectionView.refreshControl?.endRefreshing()
             let alert = UIAlertController(
                 error.error,
                 handlers: [{ [weak self] action in self?.handle(action) }]
@@ -36,7 +35,7 @@ extension ImprovementProposalsViewController: ImprovementProposalsView {
             present(alert, animated: true)
         }
         if let loaded = viewModel as? ImprovementProposalsViewModel.Loaded {
-            refreshControl.endRefreshing()
+            collectionView.refreshControl?.endRefreshing()
             collectionView.reloadData()
         }
     }
@@ -143,30 +142,18 @@ private extension ImprovementProposalsViewController {
             action: #selector(segmentControlChanged(_:)),
             for: .valueChanged
         )
-//        segmentContainer.addSubview(segmentControl)
-//        segmentControl.addConstraints(
-//            [
-//                .layout(anchor: .centerYAnchor),
-//                .layout(
-//                    anchor: .leadingAnchor,
-//                    constant: .equalTo(constant: Theme.constant.padding)
-//                ),
-//                .layout(
-//                    anchor: .trailingAnchor,
-//                    constant: .equalTo(constant: Theme.constant.padding)
-//                )
-//            ]
-//        )
     }
-    
 
-    
     func configureUI() {
         setSegmented()
         collectionView.setCollectionViewLayout(layout(), animated: false)
         collectionView.backgroundView = ThemeGradientView()
-        collectionView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshAction(_:)), for: .valueChanged)
+        collectionView.refreshControl = UIRefreshControl()
+        collectionView.refreshControl?.addTarget(
+            self,
+            action: #selector(refreshAction(_:)),
+            for: .valueChanged
+        )
     }
     
 
@@ -208,17 +195,7 @@ private extension ImprovementProposalsViewController {
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
-//        let footerItemSize = NSCollectionLayoutSize(
-//            widthDimension: .fractionalWidth(1),
-//            heightDimension: .estimated(100)
-//        )
-//        let footerItem = NSCollectionLayoutBoundarySupplementaryItem(
-//            layoutSize: footerItemSize,
-//            elementKind: "footer",
-//            alignment: .bottom
-//        )
         section.boundarySupplementaryItems = [headerItem]
         return section
     }
 }
-

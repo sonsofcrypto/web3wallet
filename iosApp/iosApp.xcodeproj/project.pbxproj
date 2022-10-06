@@ -127,7 +127,6 @@
 		1C5D24CD28E19F62007DA557 /* ImprovementProposalWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24B628E19F62007DA557 /* ImprovementProposalWireframe.swift */; };
 		1C5D24CE28E19F62007DA557 /* ImprovementProposalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24B728E19F62007DA557 /* ImprovementProposalViewModel.swift */; };
 		1C5D24CF28E19F62007DA557 /* ImprovementProposalWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24B828E19F62007DA557 /* ImprovementProposalWireframeFactory.swift */; };
-		1C5D24D028E19F62007DA557 /* ImprovementProposalsHeaderSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24BB28E19F62007DA557 /* ImprovementProposalsHeaderSupplementaryView.swift */; };
 		1C5D24D128E19F62007DA557 /* ImprovementProposalsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24BC28E19F62007DA557 /* ImprovementProposalsCell.swift */; };
 		1C5D24D328E19F62007DA557 /* ImprovementProposals.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C5D24BE28E19F62007DA557 /* ImprovementProposals.storyboard */; };
 		1C5D24D428E19F62007DA557 /* ImprovementProposalsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24BF28E19F62007DA557 /* ImprovementProposalsWireframe.swift */; };
@@ -683,7 +682,6 @@
 		1C5D24B628E19F62007DA557 /* ImprovementProposalWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalWireframe.swift; sourceTree = "<group>"; };
 		1C5D24B728E19F62007DA557 /* ImprovementProposalViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalViewModel.swift; sourceTree = "<group>"; };
 		1C5D24B828E19F62007DA557 /* ImprovementProposalWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalWireframeFactory.swift; sourceTree = "<group>"; };
-		1C5D24BB28E19F62007DA557 /* ImprovementProposalsHeaderSupplementaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalsHeaderSupplementaryView.swift; sourceTree = "<group>"; };
 		1C5D24BC28E19F62007DA557 /* ImprovementProposalsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalsCell.swift; sourceTree = "<group>"; };
 		1C5D24BE28E19F62007DA557 /* ImprovementProposals.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ImprovementProposals.storyboard; sourceTree = "<group>"; };
 		1C5D24BF28E19F62007DA557 /* ImprovementProposalsWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalsWireframe.swift; sourceTree = "<group>"; };
@@ -1438,7 +1436,6 @@
 			isa = PBXGroup;
 			children = (
 				1C5D24BC28E19F62007DA557 /* ImprovementProposalsCell.swift */,
-				1C5D24BB28E19F62007DA557 /* ImprovementProposalsHeaderSupplementaryView.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2917,7 +2914,6 @@
 				1C54DC2A2868193300E378F6 /* Theme.swift in Sources */,
 				D1ED725F287C1122005805CF /* CurrencySendTokenCollectionViewCell.swift in Sources */,
 				1C60C36028572555003BE25D /* AppsServiceAssembler.swift in Sources */,
-				1C5D24D028E19F62007DA557 /* ImprovementProposalsHeaderSupplementaryView.swift in Sources */,
 				1C228ACD28A3C1AA005316A3 /* ConfirmationTxSuccessView.swift in Sources */,
 				1C60C304285724D1003BE25D /* NFTsDashboardView+NFTsCollection.swift in Sources */,
 				1C60C34A285724D1003BE25D /* CultProposalWireframeFactory.swift in Sources */,
