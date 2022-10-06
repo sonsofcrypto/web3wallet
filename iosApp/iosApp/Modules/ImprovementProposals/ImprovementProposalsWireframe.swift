@@ -55,8 +55,8 @@ extension DefaultImprovementProposalsWireframe {
         let vc: ImprovementProposalsViewController = UIStoryboard(.improvementProposals).instantiate()
         let presenter = DefaultImprovementProposalsPresenter(
             view: WeakRef(referred: vc),
-            interactor: interactor,
-            wireframe: self
+            wireframe: self,
+            interactor: interactor
         )
         vc.presenter = presenter
         return NavigationController(rootViewController: vc)
