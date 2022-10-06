@@ -42,8 +42,8 @@ fun ImprovementProposalsViewModel.Companion.title(
     category: ImprovementProposal.Category
 ): String = when (category) {
     INTEGRATION -> Localized("proposals.infrastructure.title")
-    INFRASTRUCTURE -> Localized("proposals.integrations.title")
-    FEATURE -> Localized("proposals.features.title")
+    INFRASTRUCTURE -> Localized("proposals.integration.title")
+    FEATURE -> Localized("proposals.feature.title")
     UNKNOWN -> Localized("proposals.unknown.title")
 } + " " + Localized("proposals")
 
@@ -51,7 +51,7 @@ fun ImprovementProposalsViewModel.Companion.description(
     category: ImprovementProposal.Category
 ): String = when (category) {
     INTEGRATION -> Localized("proposals.infrastructure.description")
-    INFRASTRUCTURE -> Localized("proposals.integrations.description")
-    FEATURE -> Localized("proposals.features.description")
+    INFRASTRUCTURE -> Localized("proposals.integration.description")
+    FEATURE -> Localized("proposals.feature.description")
     UNKNOWN -> ""
 }

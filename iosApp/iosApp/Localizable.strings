@@ -411,12 +411,12 @@
 "cult.proposal.parsing.cultRewardAllocation" = "%@% of Total Supply";
 
 "proposals.infrastructure.title" = "Infrastructure";
-"proposals.integrations.title" = "Integrations";
-"proposals.features.title" = "Features";
+"proposals.integration.title" = "Integrations";
+"proposals.feature.title" = "Features";
 "proposals.unknown" = "Unknown";
 "proposals.infrastructure.description" = "Support for standards and protocols";
-"proposals.integrations.description" = "Direct smart contracts / defi / web3 products integrations and support for L1 & L2 chains";
-"proposals.features.description" = "Various app usability improvements and features";
+"proposals.integration.description" = "Direct smart contracts / defi / web3 products integrations and support for L1 & L2 chains";
+"proposals.feature.description" = "Various app usability improvements and features";
 
 "proposals" = "proposals";
 "proposals.votes" = "Votes: %@";

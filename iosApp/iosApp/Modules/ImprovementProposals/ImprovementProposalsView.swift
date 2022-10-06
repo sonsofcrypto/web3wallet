@@ -96,7 +96,7 @@ extension ImprovementProposalsViewController: UICollectionViewDelegate {
         presenter.handle(event____: .Vote(idx: Int32(idx)))
     }
 
-    @objc func segmentControlChanged(_ sender: SegmentedControl) {
+    @objc func segmentCtlAction(_ sender: SegmentedControl) {
         presenter.handle(
             event____: .Category(idx: Int32(sender.selectedSegmentIndex))
         )
@@ -117,85 +117,48 @@ extension ImprovementProposalsViewController: UICollectionViewDelegate {
 
 private extension ImprovementProposalsViewController {
 
-    func setSegmented() {
-        let segmentControl = SegmentedControl()
-        segmentControl.insertSegment(
-            withTitle: Localized("proposals.infrastructure.title"),
-            at: 0,
-            animated: false
-        )
-        segmentControl.insertSegment(
-            withTitle: Localized("proposals.integrations.title"),
-            at: 1,
-            animated: false
-        )
-        segmentControl.insertSegment(
-            withTitle: Localized("proposals.features.title"),
-            at: 2,
-            animated: false
-        )
-        
-        segmentControl.selectedSegmentIndex = 0
-        
-        segmentControl.addTarget(
-            self,
-            action: #selector(segmentControlChanged(_:)),
-            for: .valueChanged
-        )
-    }
-
     func configureUI() {
         setSegmented()
         collectionView.setCollectionViewLayout(layout(), animated: false)
         collectionView.backgroundView = ThemeGradientView()
         collectionView.refreshControl = UIRefreshControl()
-        collectionView.refreshControl?.addTarget(
+        collectionView.refreshControl?.addValueChangedTarget(
             self,
-            action: #selector(refreshAction(_:)),
-            for: .valueChanged
+            action: #selector(refreshAction(_:))
         )
     }
-    
 
     func layout() -> UICollectionViewCompositionalLayout {
-        UICollectionViewCompositionalLayout(section: collectionLayoutSection())
-    }
-  
-    func collectionLayoutSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(1)
+        let item = NSCollectionLayoutItem(.fractional(1, estimatedH: 1))
+        let groupSize = NSCollectionLayoutSize.absolute(
+            view.frame.size.width - Theme.constant.padding * 2,
+            estimatedH: 100
         )
-        let item = NSCollectionLayoutItem(
-            layoutSize: itemSize
-        )
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(
-                view.frame.size.width - Theme.constant.padding * 2
-            ),
-            heightDimension: .estimated(100)
-        )
-        let outerGroup = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize, subitems: [item]
-        )
-        let section = NSCollectionLayoutSection(group: outerGroup)
-        section.contentInsets = .init(
-            top: Theme.constant.padding,
-            leading: Theme.constant.padding,
-            bottom: Theme.constant.padding,
-            trailing: Theme.constant.padding
-        )
+        let group = NSCollectionLayoutGroup.horizontal(groupSize, items: [item])
+        let section = NSCollectionLayoutSection(group: group, insets: .padding)
         section.interGroupSpacing = Theme.constant.padding
-        let headerItemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(100)
-        )
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerItemSize,
+            layoutSize: .fractional(1, estimatedH: 100),
             elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
         section.boundarySupplementaryItems = [headerItem]
-        return section
+        return UICollectionViewCompositionalLayout(section: section)
+    }
+
+    func setSegmented() {
+        let segmentCtl = SegmentedControl()
+        let cats: [ImprovementProposal.Category] = [
+            .infrastructure, .integration, .infrastructure
+        ]
+        cats.enumerated().forEach {
+            let title = Localized("proposals.\($0.1.string).title")
+            segmentCtl.insertSegment(withTitle: title, at: $0.0, animated: false)
+        }
+        segmentCtl.addValueChangedTarget(
+            self,
+            action: #selector(segmentCtlAction(_:))
+        )
+        // Add to nav bar
     }
 }
