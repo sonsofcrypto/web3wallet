@@ -36,10 +36,8 @@ extension ImprovementProposalsViewController: ImprovementProposalsView {
             present(alert, animated: true)
         }
         if let loaded = viewModel as? ImprovementProposalsViewModel.Loaded {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                self.refreshControl.endRefreshing()
-                self.collectionView.reloadData()
-            }
+            refreshControl.endRefreshing()
+            collectionView.reloadData()
         }
     }
 }
@@ -74,19 +72,14 @@ extension ImprovementProposalsViewController: UICollectionViewDataSource {
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
         switch kind {
-        case "header":
-            guard let headerView = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: String(describing: ImprovementProposalsHeaderSupplementaryView.self),
-                for: indexPath
-            ) as? ImprovementProposalsHeaderSupplementaryView else {
-                return ImprovementProposalsHeaderSupplementaryView()
-            }
-             headerView.update(with: viewModel?.selectedCategory())
-            return headerView
+        case UICollectionView.elementKindSectionHeader:
+            return collectionView.dequeue(
+                SectionHeaderView.self,
+                for: indexPath,
+                kind: .header
+            ).update(with: viewModel?.selectedCategory())
         default:
-            assertionFailure("Unexpected element kind: \(kind).")
-            return UICollectionReusableView()
+            fatalError("Unexpected element kind: \(kind).")
         }
     }
 }
@@ -102,6 +95,20 @@ extension ImprovementProposalsViewController: UICollectionViewDelegate {
 
     func voteAction(idx: Int) {
         presenter.handle(event____: .Vote(idx: Int32(idx)))
+    }
+
+    @objc func segmentControlChanged(_ sender: SegmentedControl) {
+        presenter.handle(
+            event____: .Category(idx: Int32(sender.selectedSegmentIndex))
+        )
+    }
+
+    @objc func refreshAction(_ sender: Any) {
+        presenter.present()
+    }
+
+    @objc func dismissAction() {
+        presenter.handle(event____: .Dismiss())
     }
 
     func handle(_ alertAction: UIAlertAction) {
@@ -152,50 +159,23 @@ private extension ImprovementProposalsViewController {
 //        )
     }
     
-    @objc func segmentControlChanged(_ sender: SegmentedControl) {
-        presenter.handle(
-            event____: .Category(idx: Int32(sender.selectedSegmentIndex))
-        )
-    }
+
     
     func configureUI() {
-        edgesForExtendedLayout = []
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: .init(systemName: "xmark"),
-            style: .plain,
+            with: .init(systemName: "xmark"),
             target: self,
             action: #selector(dismissAction)
         )
         setSegmented()
-        collectionView.setCollectionViewLayout(
-            compositionalLayout(),
-            animated: false
-        )
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.alwaysBounceVertical = true
-        collectionView.refreshControl = refreshControl
-        collectionView.register(
-            ImprovementProposalsHeaderSupplementaryView.self,
-            forSupplementaryViewOfKind: "header",
-            withReuseIdentifier: String(describing: ImprovementProposalsHeaderSupplementaryView.self)
-        )
-        refreshControl.tintColor = Theme.colour.activityIndicator
-        refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
-//        navigationItem.searchController = searchController
-//        searchController.searchResultsUpdater = self
+        collectionView.setCollectionViewLayout(layout(), animated: false)
         collectionView.backgroundView = ThemeGradientView()
+        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshAction(_:)), for: .valueChanged)
     }
     
-    @objc func dismissAction() {
-        presenter.handle(event____: .Dismiss())
-    }
-    
-    @objc func didPullToRefresh(_ sender: Any) {
-        presenter.present()
-    }
-    
-    func compositionalLayout() -> UICollectionViewCompositionalLayout {
+
+    func layout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout(section: collectionLayoutSection())
     }
   
@@ -230,7 +210,7 @@ private extension ImprovementProposalsViewController {
         )
         let headerItem = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerItemSize,
-            elementKind: "header",
+            elementKind: UICollectionView.elementKindSectionHeader,
             alignment: .top
         )
 //        let footerItemSize = NSCollectionLayoutSize(

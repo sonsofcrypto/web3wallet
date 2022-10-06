@@ -3,9 +3,9 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class SectionLabelFooter: UICollectionReusableView {
-
     @IBOutlet weak var label: UILabel!
 }
 
@@ -41,8 +41,8 @@ extension SectionLabelFooter {
 
 private extension SectionLabelFooter {
 
+    // TODO: We should probably have style for this
     func updateFooter(text: String, highlightWords: [String]) {
-        
         let attrs = sectionFooter()
         let hlAttrs: [NSAttributedString.Key : Any] = [
             .font: Theme.font.subheadlineBold,
@@ -59,11 +59,10 @@ private extension SectionLabelFooter {
         label.attributedText = attrStr
     }
 
+    // TODO: We should probably have style for this
     func sectionFooter() -> [NSAttributedString.Key: Any] {
-        
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 6
-        
         return [
             .font: Theme.font.subheadline,
             .foregroundColor: Theme.colour.labelSecondary,
