@@ -128,7 +128,7 @@ private extension ImprovementProposalsViewController {
     }
 
     func layout() -> UICollectionViewCompositionalLayout {
-        let item = NSCollectionLayoutItem(.fractional(1, estimatedH: 1))
+        let item = NSCollectionLayoutItem(.fractional(1, estimatedH: 50))
         let groupSize = NSCollectionLayoutSize.absolute(
             view.frame.size.width - Theme.constant.padding * 2,
             estimatedH: 100

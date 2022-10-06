@@ -55,19 +55,21 @@ final class NavigationController: UINavigationController {
 
     override func popViewController(animated: Bool) -> UIViewController? {
         let vc = super.popViewController(animated: animated)
-        contentView = contentView(for: topVc)
+        contentView = contentView(for: viewControllers.last)
         return vc
     }
 
     override func popToViewController(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? {
+        if let idx = viewControllers.firstIndex(of: viewController), idx > 0 {
+            contentView = contentView(for: viewControllers[idx - 1])
+        }
         let vcs = super.popToViewController(viewController, animated: animated)
-        contentView = contentView(for: viewController)
         return vcs
     }
 
     override func popToRootViewController(animated: Bool) -> [UIViewController]? {
-        let vcs = super.popToRootViewController(animated: animated)
         contentView = contentView(for: viewControllers[safe: 0])
+        let vcs = super.popToRootViewController(animated: animated)
         return vcs
     }
 }
@@ -97,18 +99,12 @@ private extension NavigationController {
         prevView?.removeFromSuperview()
         view.setNeedsLayout()
         if let contentView = contentView {
+            navigationBar.setNeedsLayout()
             view.addSubview(contentView)
             contentView.alpha = 0
-//            navigationBar.constraints.forEach { print($0) }
-//            let heightConstraint = navigationBar.constraints.filter { $0.firstAttribute == .height }
-//                .first
-//            heightConstraint?.constant = 104
-//            print("=== constraint", heightConstraint)
-//            print("=== prior", navigationBar.frame)
-            UIView.animate(withDuration: 0.2, delay: 0.05) {
+            UIView.animate(withDuration: 0.15) {
                 self.view.layoutIfNeeded()
                 contentView.alpha = 1
-//                print("=== after", self.navigationBar.frame)
             }
         }
     }
