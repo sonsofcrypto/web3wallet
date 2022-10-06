@@ -6,7 +6,6 @@ import kotlin.test.assertTrue
 
 class CommonGreetingTest {
 
-    @Test
     fun testExample() {
         val bip39 = Bip39.from(Bip39.EntropySize.ES128)
         println("${bip39.mnemonic}")

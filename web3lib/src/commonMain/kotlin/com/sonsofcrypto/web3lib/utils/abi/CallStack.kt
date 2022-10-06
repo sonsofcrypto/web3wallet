@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3lib.utils.abi
 
+import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 
@@ -24,6 +25,11 @@ class CallStack {
         return this
     }
     fun addVariable(index: Int, value: Boolean) : CallStack {
+        _args[index].value = AbiEncode.encode(value)
+        return this
+    }
+
+    fun addVariable(index: Int, value: Address.HexString) : CallStack {
         _args[index].value = AbiEncode.encode(value)
         return this
     }

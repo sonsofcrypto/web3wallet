@@ -28,18 +28,6 @@ class AbiDecodeTest {
     }
 
     @Test
-    fun testDecodeLong() {
-        val actual = AbiDecode.decodeLong("00000000000000000000000000000000000000000000000007ffffffffffffff")
-        assertEquals(BigInt.from(576460752303423487).toString(), actual.toString())
-    }
-
-    @Test
-    fun testDecodeUInt16() {
-        val actual = AbiDecode.decodeUInt16("00000000000000000000000000000000000000000000000000000000000003321")
-        assertEquals(BigInt.from(13089u).toString(), actual.toString())
-    }
-
-    @Test
     fun testDecodeWholeResponse() {
         var dataString = "0xcdcd77c000000000000000000000000000000000000000000000000000000000000000450000000000000000000000000000000000000000000000000000000000000001"
         dataString = dataString.removePrefix("0x")

@@ -2,10 +2,12 @@ package com.sonsofcrypto.web3lib.utils.abi
 
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.setReturnValue
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class AbiEncodeTest {
     @Test
@@ -45,9 +47,164 @@ class AbiEncodeTest {
     }
 
     @Test
+    fun testEncodeString() {
+        val actual = AbiEncode.encode("Hello, world!")
+        assertEquals("000000000000000000000000000000000000000000000000000000000000000d48656c6c6f2c20776f726c642100000000000000000000000000000000000000", actual.toHexString())
+    }
+
+    @Test
     fun testEncodeAddress () {
         val actual = AbiEncode.encode(Address.HexString("2d77b594b9bbaed03221f7c63af8c4307432daf1"))
-        assertEquals("2d77b594b9bbaed03221f7c63af8c4307432daf1", actual.toHexString())
+        assertEquals("0000000000000000000000002d77b594b9bbaed03221f7c63af8c4307432daf1", actual.toHexString())
+    }
+
+    @Test
+    fun testEncodeDynamicArrayOfStrings () {
+        val actual = AbiEncode.encode(arrayOf(
+            AbiEncode.encode("one"),
+            AbiEncode.encode("two"),
+            AbiEncode.encode("three")
+        ))
+        val expected =  "0000000000000000000000000000000000000000000000000000000000000060" +
+                        "00000000000000000000000000000000000000000000000000000000000000a0" +
+                        "00000000000000000000000000000000000000000000000000000000000000e0" +
+                        "0000000000000000000000000000000000000000000000000000000000000003" +
+                        "6f6e650000000000000000000000000000000000000000000000000000000000" +
+                        "0000000000000000000000000000000000000000000000000000000000000003" +
+                        "74776f0000000000000000000000000000000000000000000000000000000000" +
+                        "0000000000000000000000000000000000000000000000000000000000000005" +
+                        "7468726565000000000000000000000000000000000000000000000000000000"
+
+        assertTrue(expected.hexStringToByteArray().contentEquals(actual))
+    }
+    @Test
+    fun testEncodeDynamicArrayOfInts () {
+        val actual = AbiEncode.encode(arrayOf(
+            AbiEncode.encode(1),
+            AbiEncode.encode(2),
+            AbiEncode.encode(3)
+        ))
+        val expected =  "0000000000000000000000000000000000000000000000000000000000000060" +
+                        "0000000000000000000000000000000000000000000000000000000000000080" +
+                        "00000000000000000000000000000000000000000000000000000000000000a0" +
+                        "0000000000000000000000000000000000000000000000000000000000000001" +
+                        "0000000000000000000000000000000000000000000000000000000000000002" +
+                        "0000000000000000000000000000000000000000000000000000000000000003"
+
+        assertTrue(expected.hexStringToByteArray().contentEquals(actual))
+    }
+
+    @Test
+    fun testEncodeDynamicArrayOfIntsAndStrings () {
+        val actual = AbiEncode.encode(arrayOf(
+            AbiEncode.encode(1),
+            AbiEncode.encode("two"),
+            AbiEncode.encode(3),
+            AbiEncode.encode("four"),
+        ))
+
+        val expected =  "0000000000000000000000000000000000000000000000000000000000000080" +
+                        "00000000000000000000000000000000000000000000000000000000000000a0" +
+                        "00000000000000000000000000000000000000000000000000000000000000e0" +
+                        "0000000000000000000000000000000000000000000000000000000000000100" +
+                        "0000000000000000000000000000000000000000000000000000000000000001" +
+                        "0000000000000000000000000000000000000000000000000000000000000003" +
+                        "74776f0000000000000000000000000000000000000000000000000000000000" +
+                        "0000000000000000000000000000000000000000000000000000000000000003" +
+                        "0000000000000000000000000000000000000000000000000000000000000004" +
+                        "666f757200000000000000000000000000000000000000000000000000000000"
+        assertTrue(expected.hexStringToByteArray().contentEquals(actual))
+    }
+
+    @Test
+    fun testEncodeStaticArrayOfInts () {
+        val actual = AbiEncode.encode(arrayOf(
+            BigInt.from(1),
+            BigInt.from(2)
+        ))
+
+        val expected =  "0000000000000000000000000000000000000000000000000000000000000002" +
+                        "0000000000000000000000000000000000000000000000000000000000000001" +
+                        "0000000000000000000000000000000000000000000000000000000000000002"
+
+        assertTrue(expected.hexStringToByteArray().contentEquals(actual))
+    }
+
+    @Test
+    fun testEncodeStaticArrayOfArrays () {
+        val array1 = AbiEncode.encode(arrayOf(
+            BigInt.from(1),
+            BigInt.from(2)
+        ))
+        val array2 = AbiEncode.encode(arrayOf(
+            BigInt.from(3)
+        ))
+
+        val actual = AbiEncode.encode(arrayOf(
+            array1,
+            array2
+        ))
+
+        val expected =  "0000000000000000000000000000000000000000000000000000000000000040" +
+                        "00000000000000000000000000000000000000000000000000000000000000a0" +
+                        "0000000000000000000000000000000000000000000000000000000000000002" +
+                        "0000000000000000000000000000000000000000000000000000000000000001" +
+                        "0000000000000000000000000000000000000000000000000000000000000002" +
+                        "0000000000000000000000000000000000000000000000000000000000000001" +
+                        "0000000000000000000000000000000000000000000000000000000000000003"
+
+        assertTrue(expected.hexStringToByteArray().contentEquals(actual))
+    }
+
+    @Test
+    fun testEncodeStaticAndDynamicArrayOfArrays () {
+        val staticArray1 = AbiEncode.encode(arrayOf(
+            BigInt.from(1),
+            BigInt.from(2)
+        ))
+
+        val staticArray2 = AbiEncode.encode(arrayOf(
+            BigInt.from(3)
+        ))
+
+        val staticArray = AbiEncode.encode(arrayOf(
+            staticArray1,
+            staticArray2
+        ), true)
+
+        val dynamicArray = AbiEncode.encode(arrayOf(
+            AbiEncode.encode("one"),
+            AbiEncode.encode("two"),
+            AbiEncode.encode("three")
+        ), true)
+
+        val actual = AbiEncode.encode(arrayOf(
+            staticArray,
+            dynamicArray
+        ))
+
+        val expected =  "0000000000000000000000000000000000000000000000000000000000000040" +
+                        "0000000000000000000000000000000000000000000000000000000000000140" +
+                        "0000000000000000000000000000000000000000000000000000000000000002" +
+                        "0000000000000000000000000000000000000000000000000000000000000040" +
+                        "00000000000000000000000000000000000000000000000000000000000000a0" +
+                        "0000000000000000000000000000000000000000000000000000000000000002" +
+                        "0000000000000000000000000000000000000000000000000000000000000001" +
+                        "0000000000000000000000000000000000000000000000000000000000000002" +
+                        "0000000000000000000000000000000000000000000000000000000000000001" +
+                        "0000000000000000000000000000000000000000000000000000000000000003" +
+                        "0000000000000000000000000000000000000000000000000000000000000003" +
+                        "0000000000000000000000000000000000000000000000000000000000000060" +
+                        "00000000000000000000000000000000000000000000000000000000000000a0" +
+                        "00000000000000000000000000000000000000000000000000000000000000e0" +
+                        "0000000000000000000000000000000000000000000000000000000000000003" +
+                        "6f6e650000000000000000000000000000000000000000000000000000000000" +
+                        "0000000000000000000000000000000000000000000000000000000000000003" +
+                        "74776f0000000000000000000000000000000000000000000000000000000000" +
+                        "0000000000000000000000000000000000000000000000000000000000000005" +
+                        "7468726565000000000000000000000000000000000000000000000000000000"
+
+        assertTrue(expected.hexStringToByteArray().contentEquals(actual))
     }
 
     @Test
@@ -97,5 +254,4 @@ class AbiEncodeTest {
             actual
         )
     }
-
 }

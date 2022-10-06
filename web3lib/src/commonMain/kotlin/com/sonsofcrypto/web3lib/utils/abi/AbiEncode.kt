@@ -2,7 +2,6 @@ package com.sonsofcrypto.web3lib.utils.abi
 
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.toHexString
-import com.sonsofcrypto.web3lib.types.toHexStringAddress
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
@@ -30,8 +29,39 @@ class AbiEncode {
             return ByteArray(32-input.toByteArray().size) + input.toByteArray()
         }
 
+        fun encode(input: String): ByteArray {
+            return this.encode(input.toByteArray().size) + input.toByteArray() + ByteArray(32-input.toByteArray().size)
+        }
+
         fun encode(input: Address): ByteArray {
-            return input.toHexString().hexStringToByteArray()
+            return ByteArray((64-input.toHexString().toByteArray().size)/2) +input.toHexString().hexStringToByteArray()
+        }
+
+        fun encode (input: Array<ByteArray>, includeCount: Boolean = false): ByteArray {
+            val start = ArrayList<Int>()
+            var output = ""
+            for ((i, entry) in input.withIndex()) {
+                start.add(i, output.length/2) // Set all start points to be prepended in the end
+                output += entry.toHexString()
+            }
+            var arrayReference = "" // References to where in the following sequecnces that there's array entries.
+            for (startIndex in start) {
+                arrayReference += (encode(32*start.size+startIndex).toHexString())
+            }
+            output = arrayReference + output // Connect the references to array entries
+
+            if (includeCount) {
+                output = encode(input.size).toHexString() + output
+            }
+            return output.hexStringToByteArray()
+        }
+
+        fun encode (input: Array<BigInt>): ByteArray {
+            var output = encode(input.size).toHexString()
+            for (entry in input) {
+                output += encode(entry).toHexString()
+            }
+            return output.hexStringToByteArray()
         }
 
         fun encodeCallSignature(input: String) : ByteArray {
