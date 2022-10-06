@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 struct ImprovementProposalWireframeContext {
     let proposal: ImprovementProposal

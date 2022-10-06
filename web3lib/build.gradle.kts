@@ -148,7 +148,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${rootProject.ext["serialization_version"]}")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${rootProject.ext["serialization_version"]}")
     implementation("com.russhwolf:multiplatform-settings:${rootProject.ext["settings_version"]}")
-//    implementation(project(":corecrypto"))
     implementation(files("$rootDir/corecrypto/corecrypto-sources.jar"))
     implementation(files("$rootDir/corecrypto/corecrypto.aar"))
 }

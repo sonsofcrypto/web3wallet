@@ -410,18 +410,17 @@
 "cult.proposal.parsing.rewardDistribution.per" = "per";
 "cult.proposal.parsing.cultRewardAllocation" = "%@% of Total Supply";
 
-"proposals.title" = "Improvement proposals";
-"proposals.section.all.description" = "All proposals";
-"proposals.section.infrastructure.description" = "Support for standards and protocols";
-"proposals.section.integrations.description" = "Direct smart contracts / defi / web3 products integrations and support for L1 & L2 chains";
-"proposals.section.features.description" = "Various app usability improvements and features";
-"proposals.segmentedControl.all" = "All";
-"proposals.segmentedControl.infrastructure" = "Infrastructure";
-"proposals.segmentedControl.integrations" = "Integrations";
-"proposals.segmentedControl.features" = "Features";
-"proposals.segmentedControl.unknown" = "Unknown";
-"proposals.cell.votes" = "Votes: %@";
-"proposals.cell.button.vote" = "Vote";
+"proposals.infrastructure.title" = "Infrastructure";
+"proposals.integration.title" = "Integrations";
+"proposals.feature.title" = "Features";
+"proposals.unknown" = "Unknown";
+"proposals.infrastructure.description" = "Support for standards and protocols";
+"proposals.integration.description" = "Direct smart contracts / defi / web3 products integrations and support for L1 & L2 chains";
+"proposals.feature.description" = "Various app usability improvements and features";
+
+"proposals" = "proposals";
+"proposals.votes" = "Votes: %@";
+"proposals.button.title" = "Vote";
 
 "proposal.title" = "Feature";
 "proposal.summary.header" = "Details";

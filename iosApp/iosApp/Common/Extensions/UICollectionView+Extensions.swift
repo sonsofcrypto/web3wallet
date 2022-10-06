@@ -31,6 +31,14 @@ extension UICollectionView {
         return supplementary
     }
 
+    func dequeue<T: UICollectionReusableView>(
+        _ `type`: T.Type,
+        for idxPath: IndexPath,
+        kind: SupplementaryKind
+    ) -> T {
+        dequeue(type, for: idxPath, kind: kind.string())
+    }
+
     func register<T: UICollectionReusableView>(
         _ type: T.Type,
         kind: SupplementaryKind
