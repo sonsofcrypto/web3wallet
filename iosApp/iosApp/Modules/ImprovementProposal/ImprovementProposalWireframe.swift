@@ -5,30 +5,15 @@
 import UIKit
 import web3walletcore
 
-struct ImprovementProposalWireframeContext {
-    let proposal: ImprovementProposal
-    let proposals: [ImprovementProposal]
-}
-
-enum ImprovementProposalWireframeDestination {
-    case vote
-    case dismiss
-}
-
-protocol ImprovementProposalWireframe {
-    func present()
-    func navigate(to destination: ImprovementProposalWireframeDestination)
-}
-
 final class DefaultImprovementProposalWireframe {
     private weak var parent: UIViewController?
-    private let context: ImprovementProposalWireframeContext
+    private let context: ImprovementProposalContext
     
     private weak var vc: UIViewController?
 
     init(
         _ parent: UIViewController?,
-        context: ImprovementProposalWireframeContext
+        context: ImprovementProposalContext
     ) {
         self.parent = parent
         self.context = context
@@ -42,13 +27,14 @@ extension DefaultImprovementProposalWireframe: ImprovementProposalWireframe {
         parent?.show(vc, sender: self)
     }
 
-    func navigate(to destination: ImprovementProposalWireframeDestination) {
-        switch destination {
-        case .vote:
-            FeatureShareHelper().shareVote(on: context.proposal)
-        case .dismiss:
-            vc?.popOrDismiss()
+    func navigate(destination_: ImprovementProposalWireframeDestination) {
+        if let vote = destination_ as? ImprovementProposalsWireframeDestination.Vote {
+            FeatureShareHelper().shareVote(on: vote.proposal)
         }
+    }
+    
+    func dismiss() {
+        vc?.popOrDismiss()
     }
 }
 
@@ -57,7 +43,7 @@ private extension DefaultImprovementProposalWireframe {
     func wireUp() -> UIViewController {
         let vc: ImprovementProposalViewController = UIStoryboard(.improvementProposal).instantiate()
         let presenter = DefaultImprovementProposalPresenter(
-            view: vc,
+            view: WeakRef(referred: vc),
             wireframe: self,
             context: context
         )

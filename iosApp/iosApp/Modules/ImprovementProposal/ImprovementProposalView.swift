@@ -3,10 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-protocol ImprovementProposalView: AnyObject {
-    func update(with viewModel: ImprovementProposalViewModel)
-}
+import web3walletcore
 
 final class ImprovementProposalViewController: BaseViewController {
     var presenter: ImprovementProposalPresenter!
@@ -25,9 +22,9 @@ final class ImprovementProposalViewController: BaseViewController {
 
 extension ImprovementProposalViewController: ImprovementProposalView {
 
-    func update(with viewModel: ImprovementProposalViewModel) {
+    func update(viewModel_ viewModel: ImprovementProposalViewModel) {
         self.viewModel = viewModel
-        setTitle(with: viewModel.selectedIndex + 1)
+        setTitle(with: Int(viewModel.selectedIndex) + 1)
         collectionView.reloadData()
         scrollToSelectedItem()
     }
@@ -100,7 +97,7 @@ private extension ImprovementProposalViewController {
             [weak self] in
             guard let self = self else { return }
             self.collectionView.scrollToItem(
-                at: .init(item: self.viewModel.selectedIndex, section: 0),
+                at: .init(item: Int(self.viewModel.selectedIndex), section: 0),
                 at: .centeredHorizontally,
                 animated: false
             )
@@ -125,7 +122,7 @@ private extension ImprovementProposalViewController {
     }
     
     @objc func dismissTapped() {
-        presenter.handle(.dismiss)
+        presenter.handle(event_____: .Dismiss())
     }
     
     func compositionalLayout() -> UICollectionViewCompositionalLayout {
@@ -161,6 +158,6 @@ private extension ImprovementProposalViewController {
     }
     
     func onVote() -> (String) -> Void {
-        { [weak self] id in self?.presenter.handle(.vote(id: id)) }
+        { [weak self] id in self?.presenter.handle(event_____: .Vote(id: id)) }
     }
 }

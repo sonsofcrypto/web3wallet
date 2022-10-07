@@ -122,11 +122,9 @@
 		1C5D24C628E19F62007DA557 /* ImprovementProposalDetailStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24AF28E19F62007DA557 /* ImprovementProposalDetailStatusView.swift */; };
 		1C5D24C728E19F62007DA557 /* ImprovementProposalDetailSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24B028E19F62007DA557 /* ImprovementProposalDetailSummaryView.swift */; };
 		1C5D24C828E19F62007DA557 /* ImprovementProposalDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24B128E19F62007DA557 /* ImprovementProposalDetailViewCell.swift */; };
-		1C5D24C928E19F62007DA557 /* ImprovementProposalPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24B228E19F62007DA557 /* ImprovementProposalPresenter.swift */; };
 		1C5D24CA28E19F62007DA557 /* ImprovementProposalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24B328E19F62007DA557 /* ImprovementProposalView.swift */; };
 		1C5D24CC28E19F62007DA557 /* ImprovementProposal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C5D24B528E19F62007DA557 /* ImprovementProposal.storyboard */; };
 		1C5D24CD28E19F62007DA557 /* ImprovementProposalWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24B628E19F62007DA557 /* ImprovementProposalWireframe.swift */; };
-		1C5D24CE28E19F62007DA557 /* ImprovementProposalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24B728E19F62007DA557 /* ImprovementProposalViewModel.swift */; };
 		1C5D24CF28E19F62007DA557 /* ImprovementProposalWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24B828E19F62007DA557 /* ImprovementProposalWireframeFactory.swift */; };
 		1C5D24D128E19F62007DA557 /* ImprovementProposalsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24BC28E19F62007DA557 /* ImprovementProposalsCell.swift */; };
 		1C5D24D328E19F62007DA557 /* ImprovementProposals.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C5D24BE28E19F62007DA557 /* ImprovementProposals.storyboard */; };
@@ -678,11 +676,9 @@
 		1C5D24AF28E19F62007DA557 /* ImprovementProposalDetailStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalDetailStatusView.swift; sourceTree = "<group>"; };
 		1C5D24B028E19F62007DA557 /* ImprovementProposalDetailSummaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalDetailSummaryView.swift; sourceTree = "<group>"; };
 		1C5D24B128E19F62007DA557 /* ImprovementProposalDetailViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalDetailViewCell.swift; sourceTree = "<group>"; };
-		1C5D24B228E19F62007DA557 /* ImprovementProposalPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalPresenter.swift; sourceTree = "<group>"; };
 		1C5D24B328E19F62007DA557 /* ImprovementProposalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalView.swift; sourceTree = "<group>"; };
 		1C5D24B528E19F62007DA557 /* ImprovementProposal.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ImprovementProposal.storyboard; sourceTree = "<group>"; };
 		1C5D24B628E19F62007DA557 /* ImprovementProposalWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalWireframe.swift; sourceTree = "<group>"; };
-		1C5D24B728E19F62007DA557 /* ImprovementProposalViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalViewModel.swift; sourceTree = "<group>"; };
 		1C5D24B828E19F62007DA557 /* ImprovementProposalWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalWireframeFactory.swift; sourceTree = "<group>"; };
 		1C5D24BC28E19F62007DA557 /* ImprovementProposalsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalsCell.swift; sourceTree = "<group>"; };
 		1C5D24BE28E19F62007DA557 /* ImprovementProposals.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ImprovementProposals.storyboard; sourceTree = "<group>"; };
@@ -1401,9 +1397,7 @@
 			isa = PBXGroup;
 			children = (
 				1C5D24B528E19F62007DA557 /* ImprovementProposal.storyboard */,
-				1C5D24B228E19F62007DA557 /* ImprovementProposalPresenter.swift */,
 				1C5D24B328E19F62007DA557 /* ImprovementProposalView.swift */,
-				1C5D24B728E19F62007DA557 /* ImprovementProposalViewModel.swift */,
 				1C5D24B628E19F62007DA557 /* ImprovementProposalWireframe.swift */,
 				1C5D24B828E19F62007DA557 /* ImprovementProposalWireframeFactory.swift */,
 				1C5D24AD28E19F62007DA557 /* Cells */,
@@ -2827,7 +2821,6 @@
 				1C60C2DD285724D0003BE25D /* DashboardView.swift in Sources */,
 				1C60C2FF285724D1003BE25D /* NFTsDashboardView+MainScrollView.swift in Sources */,
 				1C672001287FE11700C5F044 /* CurrencySwapMarketCollectionViewCell.swift in Sources */,
-				1C5D24CE28E19F62007DA557 /* ImprovementProposalViewModel.swift in Sources */,
 				1C7F863028D20E490073FD95 /* UIView+Extensions.swift in Sources */,
 				1C671FFA287FDFFF00C5F044 /* CurrencySwapInteractor.swift in Sources */,
 				1C60C2CA285724D0003BE25D /* ChatPresenter.swift in Sources */,
@@ -2869,7 +2862,6 @@
 				1C6487162832DEFE0091A12D /* Reachability.swift in Sources */,
 				1C60C2FE285724D0003BE25D /* NFTDetailView+Content+Properties.swift in Sources */,
 				1C7F864728D20E490073FD95 /* Float+Extensions.swift in Sources */,
-				1C5D24C928E19F62007DA557 /* ImprovementProposalPresenter.swift in Sources */,
 				D1976B0E287EFAE10063FC9C /* MnemonicImportWireframe.swift in Sources */,
 				1C60C2EB285724D0003BE25D /* NetworksViewModel.swift in Sources */,
 				1C60C2BF285724D0003BE25D /* KeyStoreWireframe.swift in Sources */,

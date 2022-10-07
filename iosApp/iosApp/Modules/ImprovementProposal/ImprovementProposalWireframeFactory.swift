@@ -2,12 +2,13 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
+import web3walletcore
 import UIKit
 
 protocol ImprovementProposalWireframeFactory {
     func make(
         _ parent: UIViewController?,
-        context: ImprovementProposalWireframeContext
+        context: ImprovementProposalContext
     ) -> ImprovementProposalWireframe
 }
 
@@ -15,7 +16,7 @@ final class DefaultImprovementProposalWireframeFactory: ImprovementProposalWiref
     
     func make(
         _ parent: UIViewController?,
-        context: ImprovementProposalWireframeContext
+        context: ImprovementProposalContext
     ) -> ImprovementProposalWireframe {
         DefaultImprovementProposalWireframe(parent, context: context)
     }
