@@ -39,7 +39,7 @@ extension DefaultCurrencyReceivePresenter: CurrencyReceivePresenter {
     func present() {
         view?.update(
             with: .init(
-                title: Localized("currencyReceive.title.receive", arg: context.currency.symbol.uppercased()),
+                title: Localized("currencyReceive.title.receive", context.currency.symbol.uppercased()),
                 content: .loaded(
                     .init(
                         name: Localized("currencyReceive.qrcode.name"),
@@ -66,6 +66,6 @@ extension DefaultCurrencyReceivePresenter: CurrencyReceivePresenter {
 private extension DefaultCurrencyReceivePresenter {
     var disclaimer: String {
         let arg = "\(context.network.name.capitalized) (\(context.currency.symbol.uppercased()))"
-        return Localized("currencyReceive.disclaimer", arg: arg)
+        return Localized("currencyReceive.disclaimer", arg)
     }
 }

@@ -19,9 +19,9 @@ struct MailContext {
             let versionFormatted = "\(version) (\(build))"
             switch self {
             case .app:
-                return Localized("settings.root.feedback.subject", arg: versionFormatted)
+                return Localized("settings.root.feedback.subject", versionFormatted)
             case .beta:
-                return Localized("settings.root.feedback.subject.beta", arg: versionFormatted)
+                return Localized("settings.root.feedback.subject.beta", versionFormatted)
             }
         }
     }

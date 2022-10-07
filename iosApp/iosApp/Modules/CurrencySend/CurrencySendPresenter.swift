@@ -199,7 +199,7 @@ private extension DefaultCurrencySendPresenter {
     func updateView(with items: [CurrencySendViewModel.Item]) {
         view?.update(
             with: .init(
-                title: Localized("tokenSend.title", arg: currency.symbol.uppercased()),
+                title: Localized("tokenSend.title", currency.symbol.uppercased()),
                 items: items
             )
         )

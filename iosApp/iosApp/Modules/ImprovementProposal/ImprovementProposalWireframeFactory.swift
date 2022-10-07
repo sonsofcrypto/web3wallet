@@ -8,7 +8,7 @@ import UIKit
 protocol ImprovementProposalWireframeFactory {
     func make(
         _ parent: UIViewController?,
-        context: ImprovementProposalContext
+        context: ImprovementProposalWireframeContext
     ) -> ImprovementProposalWireframe
 }
 
@@ -16,7 +16,7 @@ final class DefaultImprovementProposalWireframeFactory: ImprovementProposalWiref
     
     func make(
         _ parent: UIViewController?,
-        context: ImprovementProposalContext
+        context: ImprovementProposalWireframeContext
     ) -> ImprovementProposalWireframe {
         DefaultImprovementProposalWireframe(parent, context: context)
     }

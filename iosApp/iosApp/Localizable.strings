@@ -417,14 +417,12 @@
 "proposals.infrastructure.description" = "Support for standards and protocols";
 "proposals.integration.description" = "Direct smart contracts / defi / web3 products integrations and support for L1 & L2 chains";
 "proposals.feature.description" = "Various app usability improvements and features";
-
 "proposals" = "proposals";
 "proposals.votes" = "Votes: %@";
 "proposals.button.title" = "Vote";
 
-"proposal.title" = "Feature";
+"proposal.title" = "Proposal %@ of %@";
 "proposal.summary.header" = "Details";
-"proposal.title.of" = "of";
 "proposal.button.vote" = "Vote";
 "proposal.hashTag" = "WIP_%@";
 

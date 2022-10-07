@@ -9,8 +9,8 @@ sealed class ImprovementProposalsWireframeDestination {
     ): ImprovementProposalsWireframeDestination()
     /** Navigate to proposal detail */
     data class Proposal(
-        val proposal: ImprovementProposal,
-        val categoryProposals: List<ImprovementProposal>
+        val proposals: List<ImprovementProposal>,
+        val selectedIdx: Int
     ): ImprovementProposalsWireframeDestination()
     /** Dismiss proposals wireframe */
     object Dismiss: ImprovementProposalsWireframeDestination()

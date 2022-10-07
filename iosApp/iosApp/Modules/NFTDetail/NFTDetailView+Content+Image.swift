@@ -29,7 +29,7 @@ extension NFTDetailViewController {
         let idLabel = UILabel()
         idLabel.apply(style: .body)
         idLabel.textAlignment = .center
-        idLabel.text = Localized("nft.detail.section.id", arg: item.identifier)
+        idLabel.text = Localized("nft.detail.section.id", item.identifier)
         views.append(idLabel)
         views.append(.vSpace(height: Theme.constant.padding.half * 0.75))
         let containerView = UIView()

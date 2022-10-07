@@ -121,7 +121,7 @@ private extension CurrencyReceiveViewController {
             ShareFactoryHelper().share(
                 items: [
                     //image,
-                    Localized("currencyReceive.action.share.address", arg: data.symbol) + " " + data.address,
+                    Localized("currencyReceive.action.share.address", data.symbol) + " " + data.address,
                     
                 ],
                 presentingIn: self

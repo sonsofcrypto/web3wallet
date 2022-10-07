@@ -74,7 +74,7 @@ private extension ConfirmationApproveUniswapView {
         label.apply(style: .title3)
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.text = Localized("confirmation.approveUniswap.permission.title", arg: viewModel.symbol)
+        label.text = Localized("confirmation.approveUniswap.permission.title", viewModel.symbol)
         return label
     }
 
@@ -83,7 +83,7 @@ private extension ConfirmationApproveUniswapView {
         label.apply(style: .subheadline)
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.text = Localized("confirmation.approveUniswap.permission.message", arg: viewModel.symbol)
+        label.text = Localized("confirmation.approveUniswap.permission.message", viewModel.symbol)
         return label
     }
     

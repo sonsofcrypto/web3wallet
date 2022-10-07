@@ -1,21 +1,14 @@
 package com.sonsofcrypto.web3walletcore.modules.improvementProposal
 
 class ImprovementProposalViewModel(
-    val title: String,
-    val details: List<Details>,
-    val selectedIndex: Int,
+    val proposals: List<Proposal>,
+    val selectedIdx: Int,
 ) {
-    data class Details(
+    data class Proposal(
         val id: String,
         val name: String,
         val imageUrl: String,
         val status: String,
-        val summary: Summary,
-        val voteButton: String,
-    )
-
-    data class Summary(
-        val title: String,
-        val summary: String,
+        val body: String,
     )
 }

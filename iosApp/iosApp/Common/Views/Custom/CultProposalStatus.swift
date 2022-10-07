@@ -5,30 +5,23 @@
 import UIKit
 
 final class CultProposalStatus: UIView {
-    
     private (set) weak var label: UILabel!
     
     var text: String = "" {
-        
-        didSet {
-            
-            label.text = text
-        }
+        didSet { label.text = text }
     }
     
     override init(frame: CGRect) {
-        
         super.init(frame: frame)
-        
         configureUI()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        configureUI()
     }
     
     func configureUI() {
-        
         layer.cornerRadius = Theme.constant.cornerRadiusSmall
         layer.borderWidth = 0.5
         layer.borderColor = Theme.colour.fillQuaternary.cgColor
@@ -36,6 +29,7 @@ final class CultProposalStatus: UIView {
         let label = UILabel()
         label.apply(style: .footnote, weight: .bold)
         label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(label)
         self.label = label
         label.addConstraints(

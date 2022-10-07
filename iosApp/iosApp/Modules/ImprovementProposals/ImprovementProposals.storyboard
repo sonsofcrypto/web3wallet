@@ -29,7 +29,7 @@
         <scene sceneID="Phh-yi-ZV8">
             <objects>
                 <viewController storyboardIdentifier="ImprovementProposalsViewController" title="w3w improvement proposals" id="4hk-9p-GXg" userLabel="ProposalsViewController" customClass="ImprovementProposalsViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="GVO-CN-a39">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="GVO-CN-a39" customClass="CollectionViewNew" customModule="iosApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

@@ -6,17 +6,23 @@ import UIKit
 import web3walletcore
 
 final class ImprovementProposalViewController: BaseViewController {
-    var presenter: ImprovementProposalPresenter!
-    
     @IBOutlet weak var collectionView: UICollectionView!
 
-    private var viewModel: ImprovementProposalViewModel!
-    private var endDisplayFirstTimeCalled = false
+    var presenter: ImprovementProposalPresenter!
+
+    private var viewModel: ImprovementProposalViewModel?
+    private var titleUpdateEnabled = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         presenter.present()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        titleUpdateEnabled = true
+        updateTitle()
     }
 }
 
@@ -24,140 +30,108 @@ extension ImprovementProposalViewController: ImprovementProposalView {
 
     func update(viewModel_ viewModel: ImprovementProposalViewModel) {
         self.viewModel = viewModel
-        setTitle(with: Int(viewModel.selectedIndex) + 1)
+        updateTitle()
         collectionView.reloadData()
         scrollToSelectedItem()
     }
 }
 
 extension ImprovementProposalViewController: UICollectionViewDataSource {
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        viewModel.details.count
+        viewModel?.proposals.count ?? 0
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let viewModel = viewModel.details[indexPath.item]
-        let cell = collectionView.dequeue(ImprovementProposalDetailViewCell.self, for: indexPath)
-        return cell.update(with: viewModel, handler: proposalDetailViewHandler())
+        collectionView.dequeue(
+            ImprovementProposalCell.self,
+            for: indexPath
+        ).update(
+            with: viewModel?.proposals[indexPath.item],
+            handler: { [weak self] in self?.voteAction(indexPath) }
+        )
     }
 }
 
 extension ImprovementProposalViewController: UICollectionViewDelegate {
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         willDisplay cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath
     ) {
-        // NOTE: Adding a flag here since will display gets called a few times before scrolling
-        // to the selected item without an animation and this causes the navigation bar title
-        // to change
-        guard endDisplayFirstTimeCalled else { return }
-        setTitle(with: indexPath.item + 1)
+        guard titleUpdateEnabled else { return }
+        updateTitle()
     }
-    
+
     func collectionView(
         _ collectionView: UICollectionView,
         didEndDisplaying cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath
     ) {
-        endDisplayFirstTimeCalled = true
-        guard let visibleCell = collectionView.visibleCells.first else {
-            scrollToTop()
-            return
-        }
-        guard let currentIndexPath = collectionView.indexPath(for: visibleCell) else { return }
-        setTitle(with: currentIndexPath.item + 1)
+        titleUpdateEnabled = true
+        updateTitle()
         scrollToTop()
     }
 }
 
 private extension ImprovementProposalViewController {
-    
+
     func scrollToTop() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.collectionView.scrollRectToVisible(
-                .init(origin: .init(x: 0, y: 0), size: self.collectionView.visibleSize),
+            self.collectionView.setContentOffset(
+                self.collectionView.contentOffset.pointWithY(
+                    -self.view.safeAreaInsets.top
+                ),
                 animated: true
             )
         }
     }
-    
+
     func scrollToSelectedItem() {
-        // NOTE: Dispatching async otherwise the scroll does not position the view
-        // properly
+        // NOTE: Dispatching async so that scrollView has time to reload
         DispatchQueue.main.async {
-            [weak self] in
-            guard let self = self else { return }
             self.collectionView.scrollToItem(
-                at: .init(item: Int(self.viewModel.selectedIndex), section: 0),
-                at: .centeredHorizontally,
+                at: .init(item: Int(self.viewModel?.selectedIdx ?? 0), section: 0),
+                at: [.top, .centeredHorizontally],
                 animated: false
             )
         }
     }
-    
-    func setTitle(with index: Int) {
-        title = viewModel.title + " \(index) " + Localized("proposal.title.of") + " \(viewModel.details.count)"
+
+    func updateTitle() {
+        let idx = collectionView.indexPathsForVisibleItems.first?.item ?? 0
+        let count = viewModel?.proposals.count ?? 0
+        title = Localized("proposal.title", idx, count - 1)
+    }
+
+    func voteAction(_ idxPath: IndexPath) {
+        presenter.handle(event_____: .Vote(idx: Int32(idxPath.item)))
     }
     
-    func configureUI() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: "chevron.left".assetImage,
-            style: .plain,
-            target: self,
-            action: #selector(dismissTapped)
-        )
-        collectionView.setCollectionViewLayout(compositionalLayout(), animated: false)
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.clipsToBounds = false
-    }
-    
-    @objc func dismissTapped() {
+    @objc func dismissAction() {
         presenter.handle(event_____: .Dismiss())
     }
-    
-    func compositionalLayout() -> UICollectionViewCompositionalLayout {
-        UICollectionViewCompositionalLayout(section: collectionLayoutSection())
+
+    func configureUI() {
+        collectionView.setCollectionViewLayout(layout(), animated: false)
     }
-  
-    func collectionLayoutSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(1)
-        )
+
+    func layout() -> UICollectionViewCompositionalLayout {
         let item = NSCollectionLayoutItem(
-            layoutSize: itemSize
-        )
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(100)
+            layoutSize: .fractional(estimatedH: 100)
         )
         let outerGroup = NSCollectionLayoutGroup.horizontal(
-            layoutSize: groupSize, subitems: [item]
+            layoutSize: .fractional(estimatedH: 100), subitems: [item]
         )
         let section = NSCollectionLayoutSection(group: outerGroup)
         section.orthogonalScrollingBehavior = .groupPagingCentered
-        //section.interGroupSpacing = Theme.constant.padding * 0.25
-        return section
-    }
-}
-
-private extension ImprovementProposalViewController {
-
-    func proposalDetailViewHandler() -> ImprovementProposalDetailViewCell.Handler {
-        .init(onVote: onVote())
-    }
-    
-    func onVote() -> (String) -> Void {
-        { [weak self] id in self?.presenter.handle(event_____: .Vote(id: id)) }
+        return UICollectionViewCompositionalLayout(section: section)
     }
 }

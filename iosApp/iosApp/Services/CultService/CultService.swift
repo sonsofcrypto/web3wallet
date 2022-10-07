@@ -192,7 +192,7 @@ private extension DefaultCultService {
     func cultReward(from description: CultProposalJSON.Description) -> String {
         Localized(
             "cult.proposal.parsing.cultRewardAllocation",
-            arg: description.range
+            description.range
         )
     }
     

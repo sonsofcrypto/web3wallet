@@ -118,8 +118,8 @@ extension ImprovementProposalsViewController: UICollectionViewDelegate {
 private extension ImprovementProposalsViewController {
 
     func configureUI() {
+        navigationItem.backButtonTitle = ""
         collectionView.setCollectionViewLayout(layout(), animated: false)
-        collectionView.backgroundView = ThemeGradientView()
         collectionView.refreshControl = UIRefreshControl()
         collectionView.refreshControl?.addValueChangedTarget(
             self,

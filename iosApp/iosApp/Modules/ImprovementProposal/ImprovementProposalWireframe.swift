@@ -7,13 +7,13 @@ import web3walletcore
 
 final class DefaultImprovementProposalWireframe {
     private weak var parent: UIViewController?
-    private let context: ImprovementProposalContext
+    private let context: ImprovementProposalWireframeContext
     
     private weak var vc: UIViewController?
 
     init(
         _ parent: UIViewController?,
-        context: ImprovementProposalContext
+        context: ImprovementProposalWireframeContext
     ) {
         self.parent = parent
         self.context = context
@@ -31,10 +31,9 @@ extension DefaultImprovementProposalWireframe: ImprovementProposalWireframe {
         if let vote = destination_ as? ImprovementProposalsWireframeDestination.Vote {
             FeatureShareHelper().shareVote(on: vote.proposal)
         }
-    }
-    
-    func dismiss() {
-        vc?.popOrDismiss()
+        if let _ = destination_ as? ImprovementProposalsWireframeDestination.Dismiss {
+            vc?.popOrDismiss()
+        }
     }
 }
 
@@ -45,7 +44,8 @@ private extension DefaultImprovementProposalWireframe {
         let presenter = DefaultImprovementProposalPresenter(
             view: WeakRef(referred: vc),
             wireframe: self,
-            context: context
+            proposals: context.proposals,
+            selectedIdx: context.selectedIdx
         )
 
         vc.presenter = presenter

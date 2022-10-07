@@ -77,7 +77,7 @@ final class CultProposalCellClosed: CollectionViewCell {
         let totalVotes = viewModel.approved.total + viewModel.rejected.total
         result2Label.text = Localized(
             "cult.proposals.closed.totalVotes",
-            arg: totalVotes.format(maximumFractionDigits: 3) ?? "-"
+            totalVotes.format(maximumFractionDigits: 3) ?? "-"
         )
         updateDate()
         return self
@@ -95,9 +95,9 @@ private extension CultProposalCellClosed  {
         let days = comps.day ?? 0
         var dateString = ""
         if days > 1 {
-            dateString += Localized("time.ago.days", arg: days.stringValue)
+            dateString += Localized("time.ago.days", days.stringValue)
         } else {
-            dateString += Localized("time.ago.day", arg: "1")
+            dateString += Localized("time.ago.day", "1")
         }
         statusView.text = dateString
     }
