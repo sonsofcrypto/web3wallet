@@ -2,8 +2,6 @@ package com.sonsofcrypto.web3lib.utils.abi
 
 import com.sonsofcrypto.web3lib.utils.BigInt
 import kotlin.test.Test
-import com.sonsofcrypto.web3lib.abi.AbiDecode
-import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import kotlin.test.assertEquals
 
 class AbiDecodeTest {
@@ -25,6 +23,11 @@ class AbiDecodeTest {
     fun testDecodeInt() {
         val actual = AbiDecode.decodeInt("0000000000000000000000000000000000000000000000000000000000000045")
         assertEquals(BigInt.from(69).toString(), actual.toString())
+    }
+
+    fun testDecodeAddress() {
+        val actual = AbiDecode.decodeAddress("c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
+        assertEquals("000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", actual.toString())
     }
 
     @Test
