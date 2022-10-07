@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib.utils.abi
+package com.sonsofcrypto.web3lib.abi
 
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt

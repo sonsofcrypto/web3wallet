@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3lib.utils.abi
 
+import com.sonsofcrypto.web3lib.abi.AbiEncode
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray

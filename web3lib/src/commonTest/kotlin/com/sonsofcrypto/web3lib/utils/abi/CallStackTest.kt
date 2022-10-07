@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3lib.utils.abi
 
+import com.sonsofcrypto.web3lib.abi.CallStack
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.setReturnValue
 import kotlin.test.Test

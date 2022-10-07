@@ -2,7 +2,7 @@ package com.sonsofcrypto.web3lib.utils.abi
 
 import com.sonsofcrypto.web3lib.utils.BigInt
 import kotlin.test.Test
-import com.sonsofcrypto.web3lib.utils.abi.AbiDecode
+import com.sonsofcrypto.web3lib.abi.AbiDecode
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import kotlin.test.assertEquals
 

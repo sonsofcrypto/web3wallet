@@ -1,8 +1,8 @@
-package com.sonsofcrypto.web3lib.utils.abi.integrations
+package com.sonsofcrypto.web3lib.abi.integrations
 
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
-import com.sonsofcrypto.web3lib.utils.abi.CallStack
+import com.sonsofcrypto.web3lib.abi.CallStack
 
 class CultDao {
     companion object {

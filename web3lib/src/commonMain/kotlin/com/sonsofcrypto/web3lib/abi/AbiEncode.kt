@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib.utils.abi
+package com.sonsofcrypto.web3lib.abi
 
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.types.toHexString
@@ -30,7 +30,7 @@ class AbiEncode {
         }
 
         fun encode(input: String): ByteArray {
-            return this.encode(input.toByteArray().size) + input.toByteArray() + ByteArray(32-input.toByteArray().size)
+            return encode(input.toByteArray().size) + input.toByteArray() + ByteArray(32-input.toByteArray().size)
         }
 
         fun encode(input: Address): ByteArray {
