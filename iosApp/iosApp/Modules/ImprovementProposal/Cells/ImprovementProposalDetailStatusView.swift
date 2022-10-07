@@ -26,8 +26,8 @@ final class ImprovementProposalDetailStatusView: UIView {
         )
     }
     
-    func update(with status: ImprovementProposalViewModel.Details.Status) {
-        statusView.text = status.title
-        statusView.backgroundColor = status.color
+    func update(with status: String) {
+        statusView.text = status
+        statusView.backgroundColor = Theme.colour.navBarTint
     }
 }

@@ -2,6 +2,7 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
+import web3walletcore
 import UIKit
 
 final class ImprovementProposalDetailViewCell: UICollectionViewCell {

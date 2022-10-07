@@ -53,7 +53,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="aCv-dw-Kw9">
                                                     <rect key="frame" x="0.0" y="22" width="200" height="47"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="1" verticalCompressionResistancePriority="1000" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6i-HE-uQr">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="1" verticalCompressionResistancePriority="1000" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6i-HE-uQr">
                                                             <rect key="frame" x="0.0" y="0.0" width="200" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -145,7 +145,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWA-NB-KYJ" sceneMemberID="firstResponder"/>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="Cwf-z5-jDy" customClass="SegmentedControl" customModule="iosApp" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="33"/>
+                    <rect key="frame" x="0.0" y="-1" width="375" height="33"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <segments>
                         <segment title="Infrastructure"/>
