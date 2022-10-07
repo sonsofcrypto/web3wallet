@@ -43,16 +43,6 @@ struct CurrencyPickerWireframeContext {
     }
 }
 
-enum CurrencyPickerWireframeDestination {
-    case addCustomCurrency(network: Network)
-}
-
-protocol CurrencyPickerWireframe {
-    func present()
-    func navigate(to destination: CurrencyPickerWireframeDestination)
-    func dismiss()
-}
-
 final class DefaultCurrencyPickerWireframe {
     
     private weak var parent: UIViewController?

@@ -250,7 +250,7 @@
 "currencyPicker.title.multiSelectEdit" = "Select currencies";
 "currencyPicker.title.select" = "Select a currency";
 "currencyPicker.networks.title" = "Available networks";
-"currencyPicker.myTokens.title" = "My currencies";
+"currencyPicker.currencies.title" = "My currencies";
 "currencyPicker.other.title" = "All currencies";
 "currencyPicker.featured.title" = "Featured";
 "currencyPicker.popular.title" = "Popular";

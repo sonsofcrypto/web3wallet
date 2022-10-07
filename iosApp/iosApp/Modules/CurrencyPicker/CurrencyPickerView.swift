@@ -2,11 +2,8 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
+import web3walletcore
 import UIKit
-
-protocol CurrencyPickerView: AnyObject {
-    func update(with viewModel: CurrencyPickerViewModel)
-}
 
 final class CurrencyPickerViewController: BaseViewController {
     var presenter: CurrencyPickerPresenter!
