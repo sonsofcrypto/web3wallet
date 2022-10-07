@@ -37,7 +37,10 @@ extension DefaultImprovementProposalsWireframe: ImprovementProposalsWireframe {
         if let dest = destination as? ImprovementProposalsWireframeDestination.Proposal {
             improvementProposalWireframeFactory.make(
                 vc,
-                context: .init(proposal: dest.proposal, proposals: dest.categoryProposals)
+                context: .init(
+                    proposals: dest.proposals,
+                    selectedIdx: dest.selectedIdx
+                )
             ).present()
         }
         if let _ =  destination as? ImprovementProposalsWireframeDestination.Dismiss {

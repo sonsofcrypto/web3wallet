@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class SeparatorView: UIView {
+class SeparatorView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -15,13 +15,18 @@ final class SeparatorView: UIView {
         super.init(coder: coder)
         configureUI()
     }
-}
 
-private extension SeparatorView {
-    
     func configureUI() {
         backgroundColor = Theme.colour.separator
         translatesAutoresizingMaskIntoConstraints = false
         addConstraints([heightAnchor.constraint(equalToConstant: 0.33)])
+    }
+}
+
+class TransparentSeparatorView: SeparatorView {
+
+    override func configureUI() {
+        super.configureUI()
+        backgroundColor = Theme.colour.separatorTransparent
     }
 }

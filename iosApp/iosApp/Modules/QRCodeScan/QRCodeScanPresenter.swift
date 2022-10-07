@@ -68,7 +68,7 @@ private extension DefaultQRCodeScanPresenter {
                 address: qrCode,
                 for: network
             ) else {
-                let errorMessage = Localized("qrCodeScan.error.invalid.address", arg: network.name)
+                let errorMessage = Localized("qrCodeScan.error.invalid.address", network.name)
                 updateView(with: "\(qrCode)\n\(errorMessage)")
                 return
             }

@@ -86,7 +86,7 @@ extension DefaultConfirmationWireframe: ConfirmationWireframe {
         case let .report(error):
             let body = Localized(
                 "report.txFailed.error.body",
-                arg: error.localizedDescription
+                error.localizedDescription
             )
             mailService.sendMail(context: .init(subject: .beta, body: body))
         }

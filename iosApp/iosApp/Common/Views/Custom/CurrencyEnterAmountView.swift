@@ -425,13 +425,13 @@ private extension CurrencyEnterAmountView {
             )
             balanceLabel.text = Localized(
                 "tokenEnter.balance",
-                arg: arg
+                arg
             )
         case .fiat:
             let maxBalanceAmountFiat = makeCurrencyFiatPrice(with: viewModel.tokenMaxAmount)
             balanceLabel.text = Localized(
                 "tokenEnter.balance",
-                arg: maxBalanceAmountFiat.formatStringCurrency(type: .max)
+                maxBalanceAmountFiat.formatStringCurrency(type: .max)
             )
         }
     }

@@ -28,8 +28,9 @@ final class NavigationController: UINavigationController {
         ]
         appearance.setBackIndicatorImage(
             "chevron.left".assetImage,
-            transitionMaskImage:  nil
+            transitionMaskImage: "chevron.left".assetImage
         )
+
         navigationBar.standardAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
         navigationBar.compactAppearance = appearance

@@ -327,7 +327,7 @@ private extension DefaultCurrencySwapPresenter {
             return .invalid(
                 text: Localized(
                     "tokenSwap.cell.button.state.insufficientBalance",
-                    arg: currencyFrom.symbol.uppercased()
+                    currencyFrom.symbol.uppercased()
                 )
             )
         }
@@ -337,7 +337,7 @@ private extension DefaultCurrencySwapPresenter {
             return .invalid(text: Localized("tokenSwap.cell.button.state.noPoolsFound"))
         case .swap:
             return priceImpact >= priceImpactWarningThreashold ? .swapAnyway(
-                text: Localized("tokenSwap.cell.button.state.swapAnyway", arg: (priceImpact * 100).toString())
+                text: Localized("tokenSwap.cell.button.state.swapAnyway", (priceImpact * 100).toString())
             ) : .swap
         }
     }

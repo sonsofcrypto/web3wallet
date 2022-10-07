@@ -155,7 +155,7 @@ private extension NFTsDashboardViewController {
         authorLabel.numberOfLines = 1
         authorLabel.attributedText = Localized(
             "nfts.dashboard.collection.popular.author",
-            arg: collection.author
+            collection.author
         ).attributtedString(
             with: font,
             and: Theme.colour.labelPrimary,

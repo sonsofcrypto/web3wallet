@@ -61,3 +61,12 @@ extension CGFloat {
         self * 0.5
     }
 }
+
+extension CGPoint {
+
+    func pointWithY(_ y: CGFloat) -> CGPoint {
+        var point = self
+        point.y = y
+        return point
+    }
+}

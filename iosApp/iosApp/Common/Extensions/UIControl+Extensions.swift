@@ -9,4 +9,8 @@ extension UIControl {
     func addValueChangedTarget(_ target: Any?, action: Selector) {
         addTarget(target, action: action, for: .valueChanged)
     }
+
+    func addTouchUpInsideTarget(_ target: Any?, action: Selector) {
+        addTarget(target, action: action, for: .touchUpInside)
+    }
 }

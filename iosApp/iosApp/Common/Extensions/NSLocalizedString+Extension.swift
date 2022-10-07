@@ -8,6 +8,12 @@ func Localized(_ key: String) -> String {
     NSLocalizedString(key, comment: "")
 }
 
-func Localized(_ key: String, arg: String) -> String {
-    NSLocalizedString(key, comment: "").replacingOccurrences(of: "%@", with: arg)
+func Localized(_ key: String, _ args: CVarArg...) -> String {
+    var format = NSLocalizedString(key, comment: "")
+    args.forEach {
+        if let range = format.range(of: "%@") {
+            format = format.replacingCharacters(in: range, with: "\($0)")
+        }
+    }
+    return format
 }

@@ -110,28 +110,28 @@ private extension CultProposalCellPending  {
         let seconds = comps.second ?? 0
         var dateString = ""
         if days > 0 {
-            dateString += Localized("time.until.day.shortest", arg: days.stringValue)
+            dateString += Localized("time.until.day.shortest", days.stringValue)
         }
         if hours > 0 || !dateString.isEmpty {
             let hoursFormatted = String(
                 format: "%02d", hours
             )
             dateString += dateString.isEmpty ? "" : " "
-            dateString += Localized("time.until.hour.shortest", arg: hoursFormatted)
+            dateString += Localized("time.until.hour.shortest", hoursFormatted)
         }
         if minutes > 0 || !dateString.isEmpty {
             let minutesFormatted = String(
                 format: "%02d", minutes
             )
             dateString += dateString.isEmpty ? "" : " "
-            dateString += Localized("time.until.min.shortest", arg: minutesFormatted)
+            dateString += Localized("time.until.min.shortest", minutesFormatted)
         }
         if seconds > 0 || !dateString.isEmpty {
             let secondsFormatted = String(
                 format: "%02d", seconds
             )
             dateString += dateString.isEmpty ? "" : " "
-            dateString += Localized("time.until.sec.shortest", arg: secondsFormatted)
+            dateString += Localized("time.until.sec.shortest", secondsFormatted)
         }
         if dateString.isEmpty {
             dateString = Localized("cult.proposals.pending.processing")

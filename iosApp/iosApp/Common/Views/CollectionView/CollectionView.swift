@@ -44,3 +44,11 @@ extension CollectionView {
         static let overScrollViewSize = CGSize(length: 150)
     }
 }
+
+class CollectionViewNew: CollectionView {
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        backgroundView = ThemeGradientView()
+    }
+}
