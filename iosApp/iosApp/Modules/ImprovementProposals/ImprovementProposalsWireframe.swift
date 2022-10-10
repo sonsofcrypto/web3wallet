@@ -37,10 +37,7 @@ extension DefaultImprovementProposalsWireframe: ImprovementProposalsWireframe {
         if let dest = destination as? ImprovementProposalsWireframeDestination.Proposal {
             improvementProposalWireframeFactory.make(
                 vc,
-                context: .init(
-                    proposals: dest.proposals,
-                    selectedIdx: dest.selectedIdx
-                )
+                context: .init(proposal: dest.proposal)
             ).present()
         }
         if let _ =  destination as? ImprovementProposalsWireframeDestination.Dismiss {
@@ -55,7 +52,8 @@ extension DefaultImprovementProposalsWireframe {
         let interactor = DefaultImprovementProposalsInteractor(
             improvementProposalsService: improvementProposalsService
         )
-        let vc: ImprovementProposalsViewController = UIStoryboard(.improvementProposals).instantiate()
+        let storyboard = UIStoryboard(.improvementProposals)
+        let vc: ImprovementProposalsViewController = storyboard.instantiate()
         let presenter = DefaultImprovementProposalsPresenter(
             view: WeakRef(referred: vc),
             wireframe: self,

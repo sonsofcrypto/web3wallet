@@ -7,7 +7,7 @@ import com.sonsofcrypto.web3walletcore.modules.improvementProposal.ImprovementPr
 import com.sonsofcrypto.web3walletcore.services.improvementProposals.ImprovementProposal
 
 sealed class ImprovementProposalPresenterEvent {
-    data class Vote(val idx: Int): ImprovementProposalPresenterEvent()
+    object Vote: ImprovementProposalPresenterEvent()
     object Dismiss: ImprovementProposalPresenterEvent()
 }
 
@@ -19,8 +19,7 @@ interface ImprovementProposalPresenter {
 class DefaultImprovementProposalPresenter(
     private val view: WeakRef<ImprovementProposalView>,
     private val wireframe: ImprovementProposalWireframe,
-    private val proposals: List<ImprovementProposal>,
-    private var selectedIdx: Int,
+    private val proposal: ImprovementProposal,
 ): ImprovementProposalPresenter {
 
     override fun present() {
@@ -30,7 +29,7 @@ class DefaultImprovementProposalPresenter(
     override fun handle(event: ImprovementProposalPresenterEvent) =
         when (event) {
             is ImprovementProposalPresenterEvent.Vote -> wireframe.navigate(
-                Vote(proposals[event.idx])
+                Vote(proposal)
             )
             is ImprovementProposalPresenterEvent.Dismiss -> wireframe.navigate(
                 Dismiss
@@ -40,16 +39,11 @@ class DefaultImprovementProposalPresenter(
     private fun updateView() = view.get()?.update(viewModel())
 
     private fun viewModel(): ImprovementProposalViewModel =
-        ImprovementProposalViewModel(proposals(), selectedIdx)
-
-    private fun proposals(): List<ImprovementProposalViewModel.Proposal> =
-        proposals.map {
-            ImprovementProposalViewModel.Proposal(
-                it.id,
-                it.title,
-                it.imageUrl,
-                it.category.string + " | " + Localized("proposal.hashTag", it.id),
-                it.body,
-            )
-        }
+        ImprovementProposalViewModel(
+            proposal.id,
+            proposal.title,
+            proposal.imageUrl,
+            proposal.category.string + " | " + Localized("proposal.hashTag", proposal.id),
+            proposal.body,
+        )
 }

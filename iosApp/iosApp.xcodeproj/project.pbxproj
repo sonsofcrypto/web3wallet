@@ -118,7 +118,6 @@
 		1C54DC6A2869D60D00E378F6 /* ThemeMiami.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC692869D60D00E378F6 /* ThemeMiami.swift */; };
 		1C54DC74286A1D4C00E378F6 /* Assets-ThemeMiami.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC73286A1D4B00E378F6 /* Assets-ThemeMiami.xcassets */; };
 		1C5B603B284675B800ECBD79 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5B603A284675B800ECBD79 /* Kingfisher */; };
-		1C5D24C828E19F62007DA557 /* ImprovementProposalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24B128E19F62007DA557 /* ImprovementProposalCell.swift */; };
 		1C5D24CA28E19F62007DA557 /* ImprovementProposalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24B328E19F62007DA557 /* ImprovementProposalView.swift */; };
 		1C5D24CC28E19F62007DA557 /* ImprovementProposal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C5D24B528E19F62007DA557 /* ImprovementProposal.storyboard */; };
 		1C5D24CD28E19F62007DA557 /* ImprovementProposalWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5D24B628E19F62007DA557 /* ImprovementProposalWireframe.swift */; };
@@ -669,7 +668,6 @@
 		1C54DC672869BE6500E378F6 /* DashboardButtonsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardButtonsCell.swift; sourceTree = "<group>"; };
 		1C54DC692869D60D00E378F6 /* ThemeMiami.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeMiami.swift; sourceTree = "<group>"; };
 		1C54DC73286A1D4B00E378F6 /* Assets-ThemeMiami.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets-ThemeMiami.xcassets"; sourceTree = "<group>"; };
-		1C5D24B128E19F62007DA557 /* ImprovementProposalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalCell.swift; sourceTree = "<group>"; };
 		1C5D24B328E19F62007DA557 /* ImprovementProposalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalView.swift; sourceTree = "<group>"; };
 		1C5D24B528E19F62007DA557 /* ImprovementProposal.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ImprovementProposal.storyboard; sourceTree = "<group>"; };
 		1C5D24B628E19F62007DA557 /* ImprovementProposalWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalWireframe.swift; sourceTree = "<group>"; };
@@ -1394,17 +1392,8 @@
 				1C5D24B328E19F62007DA557 /* ImprovementProposalView.swift */,
 				1C5D24B628E19F62007DA557 /* ImprovementProposalWireframe.swift */,
 				1C5D24B828E19F62007DA557 /* ImprovementProposalWireframeFactory.swift */,
-				1C5D24AD28E19F62007DA557 /* Cells */,
 			);
 			path = ImprovementProposal;
-			sourceTree = "<group>";
-		};
-		1C5D24AD28E19F62007DA557 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				1C5D24B128E19F62007DA557 /* ImprovementProposalCell.swift */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		1C5D24B928E19F62007DA557 /* ImprovementProposals */ = {
@@ -3011,7 +3000,6 @@
 				1CE0063B288884D2002D1EB3 /* ConfirmationSwapView.swift in Sources */,
 				1C54DC6A2869D60D00E378F6 /* ThemeMiami.swift in Sources */,
 				1CE0064428894F72002D1EB3 /* ConfirmationViewModel+Send.swift in Sources */,
-				1C5D24C828E19F62007DA557 /* ImprovementProposalCell.swift in Sources */,
 				1C228AC328A0FE41005316A3 /* FeatureShareHelper.swift in Sources */,
 				1C60C2ED285724D0003BE25D /* NetworksInteractor.swift in Sources */,
 				1CB8B0C0288DBEFF00024E7C /* CultProposalDetailSummaryView.swift in Sources */,
