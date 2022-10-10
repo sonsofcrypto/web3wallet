@@ -1,4 +1,5 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 import java.util.*
 
@@ -76,6 +77,7 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation(kotlin("test-annotations-common"))
             }
         }
         val androidMain by getting {
@@ -114,6 +116,14 @@ kotlin {
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
         }
+    }
+
+
+    val testBinary = kotlin.targets.getByName<KotlinNativeTarget>("iosSimulatorArm64").binaries.getTest("DEBUG")
+    val runIosTests by project.tasks.creating(IosSimulatorTestsTask::class) {
+        dependsOn(testBinary.linkTask)
+        testExecutable.set(testBinary.outputFile)
+        simulatorId.set("AD8AF14F-7B56-4331-BAEA-5BFE1DC70C93")
     }
 }
 
