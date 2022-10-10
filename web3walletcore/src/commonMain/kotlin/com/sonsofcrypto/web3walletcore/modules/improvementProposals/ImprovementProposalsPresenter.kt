@@ -67,7 +67,7 @@ class DefaultImprovementProposalsPresenter(
                 Vote(proposalAt(event.idx))
             )
             is ImprovementProposalsPresenterEvent.Proposal -> wireframe.navigate(
-                Proposal(proposals(selectedCategoryIdx), event.idx)
+                Proposal(proposals(selectedCategoryIdx)[event.idx])
             )
             is ImprovementProposalsPresenterEvent.AlertAction -> {
                 error = null

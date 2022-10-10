@@ -6,131 +6,73 @@ import UIKit
 import web3walletcore
 
 final class ImprovementProposalViewController: BaseViewController {
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var statusView: CultProposalStatus!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var subtitleLabel: UILabel!
+    @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet weak var voteButton: Button!
 
     var presenter: ImprovementProposalPresenter!
 
     private var viewModel: ImprovementProposalViewModel?
-    private var titleUpdateEnabled = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         presenter.present()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        titleUpdateEnabled = true
-        updateTitle()
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        var size = scrollView.contentSize
+//        size.width = min(view.bounds.width, scrollView.contentSize.width)
+//        size.height = max(view.bounds.height, scrollView.contentSize.height)
+//        scrollView.contentSize = size
+//    }
+//
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        var size = scrollView.contentSize
+//        size.width = min(view.bounds.width, scrollView.contentSize.width)
+//        size.height = max(view.bounds.height, scrollView.contentSize.height)
+//        scrollView.contentSize = size
+//    }
 }
 
 extension ImprovementProposalViewController: ImprovementProposalView {
-
+    
     func update(viewModel_ viewModel: ImprovementProposalViewModel) {
         self.viewModel = viewModel
-        updateTitle()
-        collectionView.reloadData()
-        scrollToSelectedItem()
+        imageView.load(url: viewModel.imageUrl ?? "")
+        title = viewModel.name
+        statusView.label.text = viewModel.status
+        infoLabel.text = viewModel.body
     }
-}
-
-extension ImprovementProposalViewController: UICollectionViewDataSource {
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        numberOfItemsInSection section: Int
-    ) -> Int {
-        viewModel?.proposals.count ?? 0
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        collectionView.dequeue(
-            ImprovementProposalCell.self,
-            for: indexPath
-        ).update(
-            with: viewModel?.proposals[indexPath.item],
-            handler: { [weak self] in self?.voteAction(indexPath) }
-        )
-    }
-}
-
-extension ImprovementProposalViewController: UICollectionViewDelegate {
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        willDisplay cell: UICollectionViewCell,
-        forItemAt indexPath: IndexPath
-    ) {
-        guard titleUpdateEnabled else { return }
-        updateTitle()
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        didEndDisplaying cell: UICollectionViewCell,
-        forItemAt indexPath: IndexPath
-    ) {
-        titleUpdateEnabled = true
-        updateTitle()
-        scrollToTop()
-    }
-}
-
-private extension ImprovementProposalViewController {
-
-    func scrollToTop() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.collectionView.setContentOffset(
-                self.collectionView.contentOffset.pointWithY(
-                    -self.view.safeAreaInsets.top
-                ),
-                animated: true
-            )
-        }
-    }
-
-    func scrollToSelectedItem() {
-        // NOTE: Dispatching async so that scrollView has time to reload
-        DispatchQueue.main.async {
-            self.collectionView.scrollToItem(
-                at: .init(item: Int(self.viewModel?.selectedIdx ?? 0), section: 0),
-                at: [.top, .centeredHorizontally],
-                animated: false
-            )
-        }
-    }
-
-    func updateTitle() {
-        let idx = collectionView.indexPathsForVisibleItems.first?.item ?? 0
-        let count = viewModel?.proposals.count ?? 0
-        title = Localized("proposal.title", idx, count - 1)
-    }
-
-    func voteAction(_ idxPath: IndexPath) {
-        presenter.handle(event_____: .Vote(idx: Int32(idxPath.item)))
+    
+    @IBAction func voteAction(_ idxPath: IndexPath) {
+        presenter.handle(event_____: .Vote())
     }
     
     @objc func dismissAction() {
         presenter.handle(event_____: .Dismiss())
     }
+}
 
+private extension ImprovementProposalViewController {
+    
     func configureUI() {
-        collectionView.setCollectionViewLayout(layout(), animated: false)
-    }
-
-    func layout() -> UICollectionViewCompositionalLayout {
-        let item = NSCollectionLayoutItem(
-            layoutSize: .fractional(estimatedH: 100)
-        )
-        let outerGroup = NSCollectionLayoutGroup.horizontal(
-            layoutSize: .fractional(estimatedH: 100), subitems: [item]
-        )
-        let section = NSCollectionLayoutSection(group: outerGroup)
-        section.orthogonalScrollingBehavior = .groupPagingCentered
-        return UICollectionViewCompositionalLayout(section: section)
+        voteButton.style = .primary
+        voteButton.setTitle(Localized("proposal.button.vote"), for: .normal)
+        stackView.spacing = Theme.constant.padding.half
+        stackView.superview?.backgroundColor = Theme.colour.cellBackground
+        stackView.superview?.layer.cornerRadius = Theme.constant.cornerRadius
+        imageView.layer.cornerRadius = Theme.constant.cornerRadius
+        subtitleLabel.apply(style: .headline, weight: .bold)
+        subtitleLabel.text = Localized("proposal.summary.header")
+        infoLabel.apply(style: .body)
+        statusView.label.apply(style: .headline)
+        statusView.backgroundColor = Theme.colour.navBarTint
     }
 }

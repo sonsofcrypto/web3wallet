@@ -3,10 +3,8 @@ package com.sonsofcrypto.web3walletcore.modules.improvementProposal
 import com.sonsofcrypto.web3walletcore.services.improvementProposals.ImprovementProposal
 
 data class ImprovementProposalWireframeContext(
-    /** All the proposal from given category */
-    val proposals: List<ImprovementProposal>,
-    /** Idx of selected proposal from array above */
-    val selectedIdx: Int
+    /** Proposal to display details of */
+    val proposal: ImprovementProposal,
 )
 
 sealed class ImprovementProposalWireframeDestination {

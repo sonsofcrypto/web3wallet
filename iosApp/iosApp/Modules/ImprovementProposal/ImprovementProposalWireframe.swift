@@ -44,8 +44,7 @@ private extension DefaultImprovementProposalWireframe {
         let presenter = DefaultImprovementProposalPresenter(
             view: WeakRef(referred: vc),
             wireframe: self,
-            proposals: context.proposals,
-            selectedIdx: context.selectedIdx
+            proposal: context.proposal
         )
 
         vc.presenter = presenter

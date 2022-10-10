@@ -24,7 +24,8 @@ $ gomobile init
 - build for TypeScript, coming soon™
 
 NOTE: If you are seeing `no exported names in the package`, either moving
-repo to `$GOPATH/src`, or following steps [here](https://github.com/golang/go/issues/37961#issuecomment-673854585) should fix it.
+repo to `$GOPATH/src`, or following steps [here](https://github.com/golang/go/issues/37961#issuecomment-673854585) 
+should fix it.
 
 # web3lib
 Aims to be alternative / equivalent of [ethers](https://docs.ethers.io/v5/) / 
@@ -41,20 +42,21 @@ supported platform provides native UI.
 Compile using Android Studio
 
 ## iosApp
-Build web3walletcore library ```./gradlew 
-:web3walletcore:assembleXCFramework``` and run normally from Xcode. 
-Alternatively add iosApp configuration in Android Studio and run from there
+Build web3walletcore library ```./gradlew :web3walletcore:assembleXCFramework```
+and run normally from Xcode. Alternatively add iosApp configuration in Android 
+Studio and run from there
 
 ### Run iOS tests
 
-In `./web3lib/build.gradle.kts` find `runIosTests` task set `simulatorId.set
-("...")` then run `./gradlew runIosTests --info`
+In `./web3lib/build.gradle.kts` find `runIosTests` task set 
+`simulatorId.set("...")` then run `./gradlew runIosTests --info`
 
 For faster per module execution run manually. First build test binary:
 ```
 ./gradlew :web3lib:cleanIosSimulatorArm64Test :web3lib:iosSimulatorArm64Test --info
 ```
-Get simulator UUID by running `xcrun simctl list`. Boot simulator `xcrun simctl boot ${UUID}`. Run tests:
+Get simulator UUID by running `xcrun simctl list`. Boot simulator 
+`xcrun simctl boot ${UUID}`. Run tests:
 ```
 xcrun simctl spawn ${UUID} web3lib/build/bin/iosSimulatorArm64/debugTest/test.kexe
 ```
