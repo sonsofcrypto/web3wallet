@@ -10,7 +10,7 @@ kotlin {
     android()
 
     val xcf = XCFramework()
-    val frameworkPath = project.file("src/iosMain/libs/CoreCrypto").absolutePath
+    val frameworkPath = project.file("$rootDir/coreCrypto/build/ios").absolutePath
     listOf(
         iosX64() {
             compilations.getByName("main") {

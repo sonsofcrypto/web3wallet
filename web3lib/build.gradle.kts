@@ -13,7 +13,7 @@ plugins {
 kotlin {
     android()
     val xcf = XCFramework()
-    val frameworkPath = project.file("src/iosMain/libs/CoreCrypto").absolutePath
+    val frameworkPath = project.file("$rootDir/coreCrypto/build/ios").absolutePath
     listOf(
         iosX64() {
             compilations.getByName("main") {
@@ -82,17 +82,15 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-//                api(project(":corecrypto"))
-                implementation(files("$rootDir/corecrypto/corecrypto-sources.jar"))
-                implementation(files("$rootDir/corecrypto/corecrypto.aar"))
+                implementation(files("$rootDir/build/android/coreCrypto-sources.jar"))
+                implementation(files("$rootDir/build/android/coreCrypto.aar"))
                 implementation("io.ktor:ktor-client-okhttp:${rootProject.ext["ktor_version"]}")
             }
         }
         val androidTest by getting {
             dependencies {
-//                implementation(project(":corecrypto"))
-                implementation(files("$rootDir/corecrypto/corecrypto-sources.jar"))
-                implementation(files("$rootDir/corecrypto/corecrypto.aar"))
+                implementation(files("$rootDir/build/android/coreCrypto-sources.jar"))
+                implementation(files("$rootDir/build/android/coreCrypto.aar"))
             }
         }
         val iosX64Main by getting
@@ -158,6 +156,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${rootProject.ext["serialization_version"]}")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${rootProject.ext["serialization_version"]}")
     implementation("com.russhwolf:multiplatform-settings:${rootProject.ext["settings_version"]}")
-    implementation(files("$rootDir/corecrypto/corecrypto-sources.jar"))
-    implementation(files("$rootDir/corecrypto/corecrypto.aar"))
+    implementation(files("$rootDir/build/android/coreCrypto-sources.jar"))
+    implementation(files("$rootDir/build/android/coreCrypto.aar"))
 }
