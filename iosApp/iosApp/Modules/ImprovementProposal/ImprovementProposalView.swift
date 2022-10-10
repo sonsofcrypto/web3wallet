@@ -12,7 +12,6 @@ final class ImprovementProposalViewController: BaseViewController {
 
     private var viewModel: ImprovementProposalViewModel?
     private var titleUpdateEnabled = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()

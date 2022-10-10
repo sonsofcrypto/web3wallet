@@ -10,7 +10,7 @@ kotlin {
     android()
 
     val xcf = XCFramework()
-    val frameworkPath = project.file("src/iosMain/libs/CoreCrypto").absolutePath
+    val frameworkPath = project.file("$rootDir/coreCrypto/build/ios").absolutePath
     listOf(
         iosX64() {
             compilations.getByName("main") {
@@ -71,7 +71,8 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
-                api(kotlin("test"))
+                implementation(kotlin("test"))
+                implementation(kotlin("test-annotations-common"))
             }
         }
         val androidMain by getting

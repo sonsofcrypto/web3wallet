@@ -1,4 +1,5 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 import java.util.*
 
@@ -12,7 +13,7 @@ plugins {
 kotlin {
     android()
     val xcf = XCFramework()
-    val frameworkPath = project.file("src/iosMain/libs/CoreCrypto").absolutePath
+    val frameworkPath = project.file("$rootDir/coreCrypto/build/ios").absolutePath
     listOf(
         iosX64() {
             compilations.getByName("main") {
@@ -76,21 +77,20 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation(kotlin("test-annotations-common"))
             }
         }
         val androidMain by getting {
             dependencies {
-//                api(project(":corecrypto"))
-                implementation(files("$rootDir/corecrypto/corecrypto-sources.jar"))
-                implementation(files("$rootDir/corecrypto/corecrypto.aar"))
+                implementation(files("$rootDir/coreCrypto/build/android/coreCrypto-sources.jar"))
+                implementation(files("$rootDir/coreCrypto/build/android/coreCrypto.aar"))
                 implementation("io.ktor:ktor-client-okhttp:${rootProject.ext["ktor_version"]}")
             }
         }
         val androidTest by getting {
             dependencies {
-//                implementation(project(":corecrypto"))
-                implementation(files("$rootDir/corecrypto/corecrypto-sources.jar"))
-                implementation(files("$rootDir/corecrypto/corecrypto.aar"))
+                implementation(files("$rootDir/coreCrypto/build/android/coreCrypto-sources.jar"))
+                implementation(files("$rootDir/coreCrypto/build/android/coreCrypto.aar"))
             }
         }
         val iosX64Main by getting
@@ -114,6 +114,14 @@ kotlin {
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
         }
+    }
+
+
+    val testBinary = kotlin.targets.getByName<KotlinNativeTarget>("iosSimulatorArm64").binaries.getTest("DEBUG")
+    val runIosTests by project.tasks.creating(IosSimulatorTestsTask::class) {
+        dependsOn(testBinary.linkTask)
+        testExecutable.set(testBinary.outputFile)
+        simulatorId.set("AD8AF14F-7B56-4331-BAEA-5BFE1DC70C93")
     }
 }
 
@@ -148,6 +156,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${rootProject.ext["serialization_version"]}")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${rootProject.ext["serialization_version"]}")
     implementation("com.russhwolf:multiplatform-settings:${rootProject.ext["settings_version"]}")
-    implementation(files("$rootDir/corecrypto/corecrypto-sources.jar"))
-    implementation(files("$rootDir/corecrypto/corecrypto.aar"))
+    implementation(files("$rootDir/coreCrypto/build/android/coreCrypto-sources.jar"))
+    implementation(files("$rootDir/coreCrypto/build/android/coreCrypto.aar"))
 }
