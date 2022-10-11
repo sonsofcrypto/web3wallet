@@ -28,10 +28,10 @@ extension DefaultImprovementProposalWireframe: ImprovementProposalWireframe {
     }
 
     func navigate(destination_: ImprovementProposalWireframeDestination) {
-        if let vote = destination_ as? ImprovementProposalsWireframeDestination.Vote {
+        if let vote = destination_ as? ImprovementProposalWireframeDestination.Vote {
             FeatureShareHelper().shareVote(on: vote.proposal)
         }
-        if let _ = destination_ as? ImprovementProposalsWireframeDestination.Dismiss {
+        if let _ = destination_ as? ImprovementProposalWireframeDestination.Dismiss {
             vc?.popOrDismiss()
         }
     }

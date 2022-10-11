@@ -86,7 +86,7 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                                 <connections>
-                                                    <action selector="voteAction:" destination="iEa-BI-lXR" eventType="touchUpInside" id="O93-WS-0ya"/>
+                                                    <action selector="voteAction:" destination="iEa-BI-lXR" eventType="touchUpInside" id="wVi-PC-ZhV"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -120,7 +120,7 @@
                         <outlet property="stackView" destination="bnw-MZ-rjO" id="6tR-Xq-cdZ"/>
                         <outlet property="statusView" destination="grL-aw-A0d" id="9iA-B7-gPu"/>
                         <outlet property="subtitleLabel" destination="VzA-SY-Qlu" id="oGi-sl-n95"/>
-                        <outlet property="voteButton" destination="sHX-bA-WkN" id="hpc-eC-gmE"/>
+                        <outlet property="voteButton" destination="sHX-bA-WkN" id="Eoo-sa-qKK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Urq-x5-j8k" sceneMemberID="firstResponder"/>

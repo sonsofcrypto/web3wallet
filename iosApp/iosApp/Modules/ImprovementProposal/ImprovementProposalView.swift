@@ -23,35 +23,19 @@ final class ImprovementProposalViewController: BaseViewController {
         configureUI()
         presenter.present()
     }
-
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        var size = scrollView.contentSize
-//        size.width = min(view.bounds.width, scrollView.contentSize.width)
-//        size.height = max(view.bounds.height, scrollView.contentSize.height)
-//        scrollView.contentSize = size
-//    }
-//
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        var size = scrollView.contentSize
-//        size.width = min(view.bounds.width, scrollView.contentSize.width)
-//        size.height = max(view.bounds.height, scrollView.contentSize.height)
-//        scrollView.contentSize = size
-//    }
 }
 
 extension ImprovementProposalViewController: ImprovementProposalView {
     
     func update(viewModel_ viewModel: ImprovementProposalViewModel) {
         self.viewModel = viewModel
-        imageView.load(url: viewModel.imageUrl ?? "")
+        imageView.load(url: viewModel.imageUrl)
         title = viewModel.name
         statusView.label.text = viewModel.status
         infoLabel.text = viewModel.body
     }
     
-    @IBAction func voteAction(_ idxPath: IndexPath) {
+    @IBAction func voteAction(_ sender: UIButton?) {
         presenter.handle(event_____: .Vote())
     }
     
