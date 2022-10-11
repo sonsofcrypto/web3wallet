@@ -45,10 +45,10 @@
                                                 </constraints>
                                             </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zrz-DZ-jAV" userLabel="BackgoundView">
-                                                <rect key="frame" x="0.0" y="283" width="382" height="89.5"/>
+                                                <rect key="frame" x="0.0" y="283" width="382" height="364"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="350" placeholderIntrinsicHeight="57.5" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bnw-MZ-rjO">
-                                                        <rect key="frame" x="16" y="16" width="350" height="57.5"/>
+                                                        <rect key="frame" x="16" y="16" width="350" height="332"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="350" placeholderIntrinsicHeight="20.5" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VzA-SY-Qlu">
                                                                 <rect key="frame" x="0.0" y="0.0" width="350" height="20.5"/>
@@ -60,12 +60,15 @@
                                                                 <rect key="frame" x="0.0" y="28.5" width="350" height="0.0"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             </view>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="751" placeholderIntrinsicWidth="350" placeholderIntrinsicHeight="20.5" text="Proposal description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HNi-eO-Vii">
-                                                                <rect key="frame" x="0.0" y="36.5" width="350" height="21"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
+                                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" bouncesZoom="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="wBD-vE-bTd">
+                                                                <rect key="frame" x="0.0" y="36.5" width="350" height="295.5"/>
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                                <color key="textColor" systemColor="labelColor"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                                            </textView>
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
@@ -78,7 +81,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" verticalHuggingPriority="1" verticalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="gcF-GJ-UfE">
-                                                <rect key="frame" x="0.0" y="388.5" width="382" height="358.5"/>
+                                                <rect key="frame" x="0.0" y="663" width="382" height="84"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sHX-bA-WkN" customClass="Button" customModule="iosApp" customModuleProvider="target">
@@ -114,8 +117,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="IPz-qb-nKj"/>
                     <connections>
+                        <outlet property="bodyTextView" destination="wBD-vE-bTd" id="r2v-2e-tm4"/>
                         <outlet property="imageView" destination="L2x-AI-5z5" id="Msa-fL-TzQ"/>
-                        <outlet property="infoLabel" destination="HNi-eO-Vii" id="DNp-dL-A5A"/>
                         <outlet property="scrollView" destination="bf7-Gp-lDD" id="cFR-HX-eX6"/>
                         <outlet property="stackView" destination="bnw-MZ-rjO" id="6tR-Xq-cdZ"/>
                         <outlet property="statusView" destination="grL-aw-A0d" id="9iA-B7-gPu"/>
@@ -129,6 +132,9 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

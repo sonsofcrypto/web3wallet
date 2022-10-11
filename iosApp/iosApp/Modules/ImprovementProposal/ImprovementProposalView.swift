@@ -11,7 +11,7 @@ final class ImprovementProposalViewController: BaseViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet weak var bodyTextView: UITextView!
     @IBOutlet weak var voteButton: Button!
 
     var presenter: ImprovementProposalPresenter!
@@ -32,7 +32,12 @@ extension ImprovementProposalViewController: ImprovementProposalView {
         imageView.load(url: viewModel.imageUrl)
         title = viewModel.name
         statusView.label.text = viewModel.status
-        infoLabel.text = viewModel.body
+
+        if var attrBody = try? AttributedString(markdown: viewModel.body) {
+            attrBody.font = Theme.font.body
+            attrBody.foregroundColor = Theme.colour.labelPrimary
+            bodyTextView.attributedText = NSAttributedString(attrBody)
+        }
     }
     
     @IBAction func voteAction(_ sender: UIButton?) {
@@ -55,7 +60,9 @@ private extension ImprovementProposalViewController {
         imageView.layer.cornerRadius = Theme.constant.cornerRadius
         subtitleLabel.apply(style: .headline, weight: .bold)
         subtitleLabel.text = Localized("proposal.summary.header")
-        infoLabel.apply(style: .body)
+        bodyTextView.font = Theme.font.body
+        bodyTextView.textColor = Theme.colour.labelPrimary
+        bodyTextView.textContainerInset = .init(top: 0, left: -4, bottom: 0, right: -4)
         statusView.label.apply(style: .headline)
         statusView.backgroundColor = Theme.colour.navBarTint
     }
