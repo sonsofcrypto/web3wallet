@@ -22,11 +22,10 @@ final class DashboardBackgroundView: BackgroundView {
 
     override func configureUI() {
         super.configureUI()
-        [topPalm, btmSun, btmLogo, btmMeme].forEach {
-            addSubview($0)
+        [btmMeme, btmLogo, btmSun, topPalm].forEach {
+            insertSubview($0, aboveSubview: gradientView)
             $0.isHidden = Theme.type.isThemeIOS
         }
-        isUserInteractionEnabled = false
     }
 
     func layoutForCollectionView(_ cv: UICollectionView) {

@@ -33,6 +33,12 @@ class CollectionView: UICollectionView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+
+        (backgroundView as? BackgroundView)?.topInset = adjustedContentInset.top
+        (backgroundView as? DashboardBackgroundView)?.layoutForCollectionView(self)
+
+        guard overScrollView.superview != nil else {return}
+
         overScrollView.center.x = bounds.width / 2
         overScrollView.center.y = max(
             contentSize.height
@@ -43,9 +49,6 @@ class CollectionView: UICollectionView {
                 - adjustedContentInset.bottom
                 + overScrollView.bounds.height.half
         )
-        (backgroundView as? BackgroundView)?.topInset = adjustedContentInset.top
-        (backgroundView as? DashboardBackgroundView)?.layoutForCollectionView(self)
-
     }
 
     func configureUI() {

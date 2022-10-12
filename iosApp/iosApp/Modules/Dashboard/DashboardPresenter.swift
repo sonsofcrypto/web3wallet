@@ -36,6 +36,7 @@ final class DefaultDashboardPresenter {
     // TODO: @Annon move to web3lib listening for mnemonic updates notifications
     private let web3ServiceLegacy: Web3ServiceLegacy
 
+    var updateTimer: Timer?
     var expandedNetworks = [String]()
     var notifications = [Web3Notification]()
 
@@ -128,7 +129,15 @@ private extension DefaultDashboardPresenter {
     
     func updateView() {
         notifications = interactor.notifications()
-        view?.update(with: viewModel())
+        updateTimer?.invalidate()
+        updateTimer = Timer.scheduledTimer(
+            withTimeInterval: 0.5,
+            repeats: false,
+            block: { [weak self] _ in
+                guard let `self` = self  else { return }
+                self.view?.update(with: self.viewModel())
+            }
+        )
     }
 }
 

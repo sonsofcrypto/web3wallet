@@ -252,6 +252,7 @@ extension DashboardViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         lastVelocity = scrollView.contentOffset.y - previousYOffset
         previousYOffset = scrollView.contentOffset.y
+        (view as? DashboardBackgroundView)?.layoutForCollectionView(collectionView)
     }
 }
 
@@ -278,14 +279,15 @@ private extension DashboardViewController {
             tag: 0
         )
         edgeCardsController?.delegate = self
-        collectionView.layer.sublayerTransform = CATransform3D.m34(-1.0 / 500.0)
         collectionView.contentInset = UIEdgeInsets.with(bottom: 180)
         collectionView.register(DashboardHeaderNameView.self, kind: .header)
         collectionView.setCollectionViewLayout(compositionalLayout(), animated: false)
         collectionView.refreshControl = refreshControl
+        collectionView.backgroundView = nil
+        collectionView.layer.sublayerTransform = CATransform3D.m34(-1.0 / 500.0)
         refreshControl.tintColor = Theme.colour.activityIndicator
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
-        collectionView.backgroundView = DashboardBackgroundView()
+
     }
     
     @objc func didPullToRefresh(_ sender: Any) {

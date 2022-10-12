@@ -22,8 +22,8 @@ class BackgroundView: UIView {
     }
 
     func configureUI() {
-        addSubview(insetView)
-        addSubview(gradientView)
+        insertSubview(insetView, at: 0)
+        insertSubview(gradientView, at: 0)
         insetView.backgroundColor = gradientView.colors.first
     }
 

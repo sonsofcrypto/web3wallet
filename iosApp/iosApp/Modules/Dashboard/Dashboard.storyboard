@@ -14,7 +14,7 @@
         <scene sceneID="fla-7C-pKJ">
             <objects>
                 <viewController restorationIdentifier="DashboardViewController" storyboardIdentifier="DashboardViewController" id="EhY-FW-vL9" userLabel="DashboardViewController" customClass="DashboardViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="1Ea-Xb-sRG">
+                    <view key="view" contentMode="scaleToFill" id="1Ea-Xb-sRG" customClass="DashboardBackgroundView" customModule="iosApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
