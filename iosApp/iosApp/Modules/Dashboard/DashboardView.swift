@@ -10,7 +10,6 @@ protocol DashboardView: AnyObject {
 
 final class DashboardViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
-    private let refreshControl = UIRefreshControl()
 
     var presenter: DashboardPresenter!
 
@@ -24,6 +23,11 @@ final class DashboardViewController: BaseViewController {
         presenter.present()
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        (view as? DashboardBackgroundView)?.layoutForCollectionView(collectionView)
+    }
+
     deinit {
         presenter.releaseResources()
     }
@@ -32,8 +36,8 @@ final class DashboardViewController: BaseViewController {
 extension DashboardViewController: DashboardView {
     
     func update(with viewModel: DashboardViewModel) {
-        if refreshControl.isRefreshing {
-            refreshControl.endRefreshing()
+        if collectionView.refreshControl?.isRefreshing ?? false {
+            collectionView.refreshControl?.endRefreshing()
         }
         if self.viewModel?.sections.count != viewModel.sections.count {
             self.viewModel = viewModel
@@ -282,12 +286,11 @@ private extension DashboardViewController {
         collectionView.contentInset = UIEdgeInsets.with(bottom: 180)
         collectionView.register(DashboardHeaderNameView.self, kind: .header)
         collectionView.setCollectionViewLayout(compositionalLayout(), animated: false)
-        collectionView.refreshControl = refreshControl
+        collectionView.refreshControl = UIRefreshControl()
         collectionView.backgroundView = nil
         collectionView.layer.sublayerTransform = CATransform3D.m34(-1.0 / 500.0)
-        refreshControl.tintColor = Theme.colour.activityIndicator
-        refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
-
+        collectionView.refreshControl?.tintColor = Theme.colour.activityIndicator
+        collectionView.refreshControl?.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
     }
     
     @objc func didPullToRefresh(_ sender: Any) {
