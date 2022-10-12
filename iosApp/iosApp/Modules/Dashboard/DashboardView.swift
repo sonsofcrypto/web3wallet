@@ -9,14 +9,12 @@ protocol DashboardView: AnyObject {
 }
 
 final class DashboardViewController: BaseViewController {
-    
     @IBOutlet weak var collectionView: UICollectionView!
     private let refreshControl = UIRefreshControl()
 
     var presenter: DashboardPresenter!
 
     var viewModel: DashboardViewModel?
-    private var backgroundView = DashboardBackgroundView()
     private var previousYOffset: CGFloat = 0
     private var lastVelocity: CGFloat = 0
 
@@ -26,20 +24,6 @@ final class DashboardViewController: BaseViewController {
         presenter.present()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        backgroundView.layoutForCollectionView(collectionView)
-//        // TODO: Remove work around for layout issue
-//        DispatchQueue.main.async {
-//            self.backgroundView.layoutForCollectionView(self.collectionView)
-//        }
-    }
-
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        backgroundView.frame = view.bounds
-    }
-    
     deinit {
         presenter.releaseResources()
     }
@@ -48,13 +32,8 @@ final class DashboardViewController: BaseViewController {
 extension DashboardViewController: DashboardView {
     
     func update(with viewModel: DashboardViewModel) {
-        // NOTE: When refreshing if we don't call reloadData after ending refreshing causes
-        // a weird glitch
         if refreshControl.isRefreshing {
-            self.viewModel = viewModel
-            collectionView.reloadData()
             refreshControl.endRefreshing()
-            return
         }
         if self.viewModel?.sections.count != viewModel.sections.count {
             self.viewModel = viewModel
@@ -75,7 +54,9 @@ extension DashboardViewController: DashboardView {
             }
         }
         self.viewModel = viewModel
-        cv.performBatchUpdates { cv.reloadSections(IndexSet(sectionsToReload)) }
+        if !sectionsToReload.isEmpty {
+            cv.performBatchUpdates { cv.reloadSections(IndexSet(sectionsToReload)) }
+        }
         cv.visibleCells.forEach {
             if let idxPath = cv.indexPath(for: $0),
                sectionsToUpdate.contains(idxPath.section) {
@@ -271,7 +252,6 @@ extension DashboardViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         lastVelocity = scrollView.contentOffset.y - previousYOffset
         previousYOffset = scrollView.contentOffset.y
-        backgroundView.layoutForCollectionView(collectionView)
     }
 }
 
@@ -298,8 +278,6 @@ private extension DashboardViewController {
             tag: 0
         )
         edgeCardsController?.delegate = self
-        view.backgroundColor = Theme.colour.gradientBottom
-        view.insertSubview(backgroundView, at: 0)
         collectionView.layer.sublayerTransform = CATransform3D.m34(-1.0 / 500.0)
         collectionView.contentInset = UIEdgeInsets.with(bottom: 180)
         collectionView.register(DashboardHeaderNameView.self, kind: .header)
@@ -307,6 +285,7 @@ private extension DashboardViewController {
         collectionView.refreshControl = refreshControl
         refreshControl.tintColor = Theme.colour.activityIndicator
         refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
+        collectionView.backgroundView = DashboardBackgroundView()
     }
     
     @objc func didPullToRefresh(_ sender: Any) {

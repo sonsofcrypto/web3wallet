@@ -10,13 +10,14 @@
 		1A4C301215B54ADC9D95912A /* ThemePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D0633392F79141C7CA0 /* ThemePickerView.swift */; };
 		1A4C303A23D7DA2A37B292C1 /* CardFlipAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E976CBAB0A97E8AF408 /* CardFlipAnimatedTransitioning.swift */; };
 		1A4C308B6FA11A032039F086 /* CandlesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C359691FCF66942DF6CEF /* CandlesView.swift */; };
+		1A4C3090DC31EABF15853AB1 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C377EA04FF6D39349042B /* BackgroundView.swift */; };
 		1A4C30A82084CC53F90A400F /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C34F9AC49460783D833C5 /* Formatter.swift */; };
 		1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C300D073ABE25FC79D4A9 /* CollectionViewCell.swift */; };
+		1A4C3192ECD284C083DC6E68 /* DashboardBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3CB439BEEC245A94242B /* DashboardBackgroundView.swift */; };
 		1A4C31C7DCD235DD4D29DCA6 /* IndexPath+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3EF22DC2A63B2B9365C5 /* IndexPath+Extensions.swift */; };
 		1A4C31D59C7D2B84D247FDDD /* TransformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C393772D3384C556C29C3 /* TransformView.swift */; };
 		1A4C31E84A86A69FFC7C3E0F /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3D40E32D58F958911B60 /* Setting.swift */; };
 		1A4C323E05E2334BE9914A25 /* SegmentWithTextAndSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C34C77DDD6672DC05AC12 /* SegmentWithTextAndSwitchCell.swift */; };
-		1A4C32DA0E37E956EC20B67D /* DashboardBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3168F56D4A3B2F4D6805 /* DashboardBackgroundView.swift */; };
 		1A4C3341E51D9D180FAC1962 /* NetworksSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C397324C6E3E5BE3E43B8 /* NetworksSectionHeaderView.swift */; };
 		1A4C3372720FE019C48469C0 /* SwitchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3F08B8F8C3BDB9C6E48A /* SwitchCollectionViewCell.swift */; };
 		1A4C338732FF1DCDFBE81D8C /* AnimatedTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3DA3993DB4402FA7010C /* AnimatedTextButton.swift */; };
@@ -562,7 +563,6 @@
 		1A4C308C7EEAF2E80221C519 /* TouchPassThroughCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchPassThroughCollectionView.swift; sourceTree = "<group>"; };
 		1A4C309894247AA73F274756 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		1A4C30AB4E75C273679BD013 /* SectionLabelFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionLabelFooter.swift; sourceTree = "<group>"; };
-		1A4C3168F56D4A3B2F4D6805 /* DashboardBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardBackgroundView.swift; sourceTree = "<group>"; };
 		1A4C3178DA54CD0800157DD5 /* EdgeCardsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EdgeCardsController.swift; sourceTree = "<group>"; };
 		1A4C31ABF9D50601A55F94D0 /* SwitchTextInputCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchTextInputCollectionViewCell.swift; sourceTree = "<group>"; };
 		1A4C3228790C1569B37F5179 /* AppsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsService.swift; sourceTree = "<group>"; };
@@ -587,6 +587,7 @@
 		1A4C36ECC90C8D924B7C413B /* CultProposal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CultProposal.swift; sourceTree = "<group>"; };
 		1A4C375870963EEF9ECBE64B /* DApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DApp.swift; sourceTree = "<group>"; };
 		1A4C3766FCB2E384E3CA86A7 /* CurrencyStoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyStoreService.swift; sourceTree = "<group>"; };
+		1A4C377EA04FF6D39349042B /* BackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		1A4C381E5BD7D51D99E29B27 /* NFTsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsService.swift; sourceTree = "<group>"; };
 		1A4C38CF747765ADAC893B99 /* UIViewEffectViewiOS14.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewEffectViewiOS14.swift; sourceTree = "<group>"; };
 		1A4C391FFCFF40F06CD89323 /* Bundle+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
@@ -602,6 +603,7 @@
 		1A4C3B4D97107E875FCF5F38 /* AuthenticateContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateContext.swift; sourceTree = "<group>"; };
 		1A4C3B7861E8944B80AFD1C6 /* SectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		1A4C3CB439BEEC245A94242B /* DashboardBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardBackgroundView.swift; sourceTree = "<group>"; };
 		1A4C3D0633392F79141C7CA0 /* ThemePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemePickerView.swift; sourceTree = "<group>"; };
 		1A4C3D40E32D58F958911B60 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		1A4C3DA3993DB4402FA7010C /* AnimatedTextButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedTextButton.swift; sourceTree = "<group>"; };
@@ -1259,6 +1261,7 @@
 			children = (
 				1A4C3A57271F5E51E72C6685 /* AnimatedTextBarButton.swift */,
 				1A4C3DA3993DB4402FA7010C /* AnimatedTextButton.swift */,
+				1A4C3CB439BEEC245A94242B /* DashboardBackgroundView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1612,7 +1615,6 @@
 				1C60C210285724D0003BE25D /* DashboardNFTCell.swift */,
 				1C60C212285724D0003BE25D /* DashboardWalletCell.swift */,
 				1CB8B0C7288F30DA00024E7C /* DashboardNotificationCell.swift */,
-				1A4C3168F56D4A3B2F4D6805 /* DashboardBackgroundView.swift */,
 				1A4C3ECB03083B9516E13031 /* DashboardTableWalletCell.swift */,
 			);
 			path = Cells;
@@ -2492,6 +2494,7 @@
 				1A4C300D073ABE25FC79D4A9 /* CollectionViewCell.swift */,
 				1A4C308C7EEAF2E80221C519 /* TouchPassThroughCollectionView.swift */,
 				1A4C362D6827F3D0CD4E3578 /* Cells */,
+				1A4C377EA04FF6D39349042B /* BackgroundView.swift */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
@@ -3145,7 +3148,6 @@
 				1C5D24CD28E19F62007DA557 /* ImprovementProposalWireframe.swift in Sources */,
 				1C7FC99628B691CA00FC9175 /* AccountTransactionLoadingCell.swift in Sources */,
 				1A4C30A82084CC53F90A400F /* Formatter.swift in Sources */,
-				1A4C32DA0E37E956EC20B67D /* DashboardBackgroundView.swift in Sources */,
 				1A4C3D1FEE4DD4904DEBCFAB /* DashboardTableWalletCell.swift in Sources */,
 				1A4C3B16402D45829327EFE6 /* AnimatedTextBarButton.swift in Sources */,
 				1A4C338732FF1DCDFBE81D8C /* AnimatedTextButton.swift in Sources */,
@@ -3167,6 +3169,8 @@
 				1A4C3D4F7A0F0032C75606BE /* TextInputCollectionViewCell.swift in Sources */,
 				1A4C344238357B1B1AFEA845 /* SectionHeaderView.swift in Sources */,
 				1A4C3EFB16DB99838BABBB8C /* UIControl+Extensions.swift in Sources */,
+				1A4C3090DC31EABF15853AB1 /* BackgroundView.swift in Sources */,
+				1A4C3192ECD284C083DC6E68 /* DashboardBackgroundView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,6 +6,16 @@ import UIKit
 
 class CollectionView: UICollectionView {
 
+    override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(frame: frame, collectionViewLayout: layout)
+        configureUI()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configureUI()
+    }
+
     private(set) var overScrollView: UIImageView = .init()
 
     override func didMoveToSuperview() {
@@ -33,22 +43,19 @@ class CollectionView: UICollectionView {
                 - adjustedContentInset.bottom
                 + overScrollView.bounds.height.half
         )
+        (backgroundView as? BackgroundView)?.topInset = adjustedContentInset.top
+        (backgroundView as? DashboardBackgroundView)?.layoutForCollectionView(self)
+
+    }
+
+    func configureUI() {
+        backgroundView = BackgroundView()
     }
 }
-
-// MARK: - Constant
 
 extension CollectionView {
 
     enum Constant {
         static let overScrollViewSize = CGSize(length: 150)
-    }
-}
-
-class CollectionViewNew: CollectionView {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        backgroundView = ThemeGradientView()
     }
 }
