@@ -202,6 +202,6 @@ iosApp/Frameworks/
 coreCrypto/build/ios/ios-arm64/CoreCrypto.xcframework
 coreCrypto/build/ios/ios-arm64_x86_64-simulator/CoreCrypto.xcframework
 coreCrypto/build/android/coreCrypto.aar
-corecrypto/build/android/coreCrypto-sources.jar
+coreCrypto/build/android/coreCrypto-sources.jar
 
 .run/
