@@ -10,7 +10,6 @@ protocol AccountView: AnyObject {
 }
 
 final class AccountViewController: BaseViewController {
-
     @IBOutlet weak var collectionView: UICollectionView!
 
     var presenter: AccountPresenter!
@@ -19,6 +18,8 @@ final class AccountViewController: BaseViewController {
     private let refreshControl = UIRefreshControl()
     private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
     private var interactiveTransitioning: CardFlipInteractiveTransitioning?
+
+    private weak var targetView: UIView?
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -236,7 +237,8 @@ extension AccountViewController: UIViewControllerTransitioningDelegate {
         source: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
         let presentedVc = (presented as? UINavigationController)?.topVc
-        let targetView = (source as? TargetViewTransitionDatasource)?
+        let sourceVc = (source as? UINavigationController)?.topVc
+        targetView = (sourceVc as? TargetViewTransitionDatasource)?
             .targetView() ?? presenting.view
         guard presentedVc?.isKind(of: AccountViewController.self) ?? false,
             let targetView = targetView else {
@@ -253,11 +255,10 @@ extension AccountViewController: UIViewControllerTransitioningDelegate {
     func animationController(
         forDismissed dismissed: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
-        let nav = dismissed.presentingViewController as? UINavigationController
-        let topVc = nav?.topVc ?? dismissed.presentingViewController
+        let root = (presentingViewController as? RootViewController)
+        let nav = root?.visibleViewController as? UINavigationController
         guard dismissed == navigationController,
-            let targetView = (topVc as? TargetViewTransitionDatasource)?
-                .targetView() ?? dismissed.presentingViewController?.view else {
+            let targetView = self.targetView else {
             animatedTransitioning = nil
             return nil
         }

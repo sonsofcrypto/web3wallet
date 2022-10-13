@@ -73,9 +73,9 @@ extension DefaultAccountWireframe: AccountWireframe {
             let presentingTopVc = (parent as? UINavigationController)?.topVc
             let presentedTopVc = (vc as? UINavigationController)?.topVc
             let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
-            vc.modalPresentationStyle = .overCurrentContext
+            vc.modalPresentationStyle = .custom
             vc.transitioningDelegate = delegate
-            presentingTopVc?.present(vc, animated: true)
+            parent?.present(vc, animated: true)
         } else if settingsService.isSelected(item: .debugTransitions, action: .debugTransitionsSheet) {
             vc.modalPresentationStyle = .automatic
             parent?.show(vc, sender: self)
@@ -133,7 +133,6 @@ private extension DefaultAccountWireframe {
         )
         vc.edgesForExtendedLayout = []
         vc.presenter = presenter
-        vc.hidesBottomBarWhenPushed = true
         return NavigationController(rootViewController: vc)
     }
 }
