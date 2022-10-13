@@ -97,10 +97,7 @@ extension DefaultDashboardPresenter: DashboardPresenter {
         case .didTapDismissNotification:
             break
         case .pullDownToRefresh:
-            // Currencies balance & reload market data
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                self?.updateView()
-            }
+            interactor.reloadData()
         default:
             print("Handle \(event)")
         }
@@ -118,7 +115,7 @@ extension DefaultDashboardPresenter: DashboardInteractorLister {
         case .didUpdateBalance, .didUpdateMarketdata, .didUpdateNFTs,
              .didUpdateCandles, .didSelectKeyStoreItem, .didSelectNetwork,
              .didChangeNetworks:
-            updateView()
+            setNeedsUpdateView()
         default:
             ()
         }
@@ -129,14 +126,15 @@ private extension DefaultDashboardPresenter {
     
     func updateView() {
         notifications = interactor.notifications()
+        view?.update(with: viewModel())
+    }
+
+    func setNeedsUpdateView() {
         updateTimer?.invalidate()
         updateTimer = Timer.scheduledTimer(
             withTimeInterval: 0.5,
             repeats: false,
-            block: { [weak self] _ in
-                guard let `self` = self  else { return }
-                self.view?.update(with: self.viewModel())
-            }
+            block: { [weak self] _ in self?.updateView() }
         )
     }
 }
