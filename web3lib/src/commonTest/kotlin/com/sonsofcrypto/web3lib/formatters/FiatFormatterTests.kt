@@ -1,0 +1,106 @@
+package com.sonsofcrypto.web3lib.formatters
+
+import com.sonsofcrypto.web3lib.formatters.Formatters.Output.Down
+import com.sonsofcrypto.web3lib.formatters.Formatters.Output.Normal
+import com.sonsofcrypto.web3lib.formatters.Formatters.Style
+import com.sonsofcrypto.web3lib.formatters.Formatters.Style.Custom
+import com.sonsofcrypto.web3lib.formatters.Formatters.Style.Max
+import com.sonsofcrypto.web3lib.utils.BigDec
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
+class FiatFormatterTests {
+
+    private fun output(a: String?, s: Style, c: String): List<Formatters.Output> {
+        return if (a == null) {
+            Formatters.fiat.format(null, s, c)
+        } else {
+            Formatters.fiat.format(BigDec.from(a), s, c)
+        }
+    }
+
+    @Test
+    fun testFiatMaxUSD1() {
+        val output = output("2100.0000000000000043", Max, "usd")
+        assertEquals(listOf(Normal("$2100.0000000000000043")), output)
+    }
+    @Test
+    fun testFiatMaxUSD2() {
+        val output = output("0.00003200000000043", Max, "usd")
+        assertEquals(listOf(Normal("$0.00003200000000043")), output)
+    }
+    @Test
+    fun testFiatMaxUSD3() {
+        val output = output("0.93", Max, "usd")
+        assertEquals(listOf(Normal("$0.93")), output)
+    }
+    @Test
+    fun testFiatMaxUSD4() {
+        val output = output("1213.93", Max, "usd")
+        assertEquals(listOf(Normal("$1213.93")), output)
+    }
+
+    @Test
+    fun testFiatCustomUSD1() {
+        val actual = output("2100.0000000000000043", Custom(20u), "usd")
+        val expected: List<Formatters.Output> = listOf(
+            Normal("$2.10"),
+            Down("16"),
+            Normal("43K")
+        )
+        assertEquals(expected, actual)
+    }
+    @Test
+    fun testFiatCustomUSD2() {
+        val actual = output("0.00000608", Custom(10u), "usd")
+        val expected: List<Formatters.Output> = listOf(
+            Normal("$0.0"),
+            Down("5"),
+            Normal("608")
+        )
+        assertEquals(expected, actual)
+    }
+    @Test
+    fun testFiatCustomUSD31() {
+        val output = output("1013.33", Custom(5u), "usd")
+        assertEquals(listOf(Normal("$1K")), output)
+    }
+    @Test
+    fun testFiatCustomUSD32() {
+        val output = output("1013.33", Custom(6u), "usd")
+        assertEquals(listOf(Normal("$1.01K")), output)
+    }
+    @Test
+    fun testFiatCustomUSD33() {
+        val output = output("1213.33", Custom(5u), "usd")
+        assertEquals(listOf(Normal("$1.2K")), output)
+    }
+    @Test
+    fun testFiatCustomUSD4() {
+        val output = output("1213.33", Custom(6u), "usd")
+        assertEquals(listOf(Normal("$1.21K")), output)
+    }
+    @Test
+    fun testFiatCustomUSD5() {
+        val output = output("1213.33", Custom(7u), "usd")
+        assertEquals(listOf(Normal("$1.213K")), output)
+    }
+    @Test
+    fun testFiatCustomUSD6() {
+        val output = output("1213.33", Custom(8u), "usd")
+        assertEquals(listOf(Normal("$1.2133K")), output)
+    }
+    @Test
+    fun testFiatCustomUSD7() {
+        val actual = output("2100000323.0000000000000043", Custom(20u), "usd")
+        val expected: List<Formatters.Output> = listOf(
+            Normal("$2.10"),
+            Down("5"),
+            Normal("3230"),
+            Down("14"),
+            Normal("43B")
+        )
+        assertEquals(expected, actual)
+    }
+
+}

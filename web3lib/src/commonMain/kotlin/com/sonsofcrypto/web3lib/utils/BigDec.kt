@@ -4,7 +4,7 @@ import com.ionspin.kotlin.bignum.decimal.BigDecimal
 import com.ionspin.kotlin.bignum.decimal.DecimalMode
 import com.ionspin.kotlin.bignum.decimal.RoundingMode
 
-private val decimalMode = DecimalMode(36, RoundingMode.ROUND_HALF_AWAY_FROM_ZERO, 36)
+private val decimalMode = DecimalMode(108, RoundingMode.ROUND_HALF_AWAY_FROM_ZERO, 108)
 
 class BigDec {
 
@@ -23,6 +23,7 @@ class BigDec {
     fun div(value: BigDec): BigDec = BigDec(
         storage.divide(value.storage, decimalMode = decimalMode)
     )
+    fun pow(value: Long): BigDec = BigDec(storage.pow(value))
 
     fun toBigInt(): BigInt = BigInt(storage.toBigInteger())
     fun toHexString(): String = storage.toString(16)
@@ -32,7 +33,7 @@ class BigDec {
     fun compare(other: BigDec): Int = storage.compare(other.storage)
     fun isZero(): Boolean =  storage.isZero()
 
-    override fun toString(): String = storage.toString(10)
+    override fun toString(): String = storage.toStringExpanded()
 
     override fun equals(other: Any?): Boolean  {
         return storage == (other as? BigDec)?.storage
