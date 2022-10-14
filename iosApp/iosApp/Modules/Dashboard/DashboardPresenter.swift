@@ -292,7 +292,9 @@ private extension DefaultDashboardPresenter {
                 style: Formatters.StyleCustom(maxLength: 10),
                 currencyCode: "usd"
             ),
-            pctChange: Formatter.pct.string(market?.priceChangePercentage24h, div: true),
+            pctChange: Formatters.Companion.shared.pct.format(
+                amount: market?.priceChangePercentage24h, div: true
+            ),
             priceUp: market?.priceChangePercentage24h?.doubleValue ?? 0 >= 0,
             candles: candlesViewModel(candles: interactor.candles(for: currency))
         )

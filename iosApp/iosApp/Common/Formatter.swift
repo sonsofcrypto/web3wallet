@@ -6,40 +6,7 @@ import Foundation
 import web3walletcore
 
 class Formatter {
-    static let pct = PctFormatter()
     static let date = DateTimeFormatter()
-}
-
-// MARK: - Percentage
-
-class PctFormatter {
-
-    var placeholder: String = "-"
-
-    let formatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.positivePrefix = "+"
-        formatter.negativePrefix = "-"
-        formatter.numberStyle = .percent
-        formatter.maximumFractionDigits = 2
-        formatter.locale = .english
-        return formatter
-    }()
-
-    func string(_ from: Float?, div: Bool = false) -> String {
-        guard let from = from else { return placeholder }
-        return formatter.string(from: div ? from / 100 : from)
-    }
-
-    func string(_ from: Double?, div: Bool = false) -> String {
-        guard let from = from else { return placeholder }
-        return string(Float(from), div: div)
-    }
-
-    func string(_ from: KotlinDouble?, div: Bool = false) -> String {
-        guard let from = from?.floatValue else { return placeholder }
-        return string(from, div: div)
-    }
 }
 
 // MARK: - DateFormatter

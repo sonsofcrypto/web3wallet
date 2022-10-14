@@ -79,7 +79,7 @@ private extension DefaultAccountPresenter {
                     style: Formatters.StyleCustom(maxLength: 20),
                     currencyCode: "usd"
                 ),
-                pct: Formatter.pct.string(pct, div: true),
+                pct: Formatters.Companion.shared.pct.format(amount: pct, div: true),
                 pctUp: market?.priceChangePercentage24h?.doubleValue ?? 0 >= 0,
                 buttons: headerButtonViewModels()
             ),

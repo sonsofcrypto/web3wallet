@@ -7,9 +7,10 @@ class PctFormatter {
     private val formatter = NumberFormatter()
 
     fun format(amount: Double?, div: Boolean = false): String {
+        val amount = amount ?: return placeholder
         val style = Percentage(
             "en", 2u, "+", "-"
         )
-        return formatter.format(amount, style) ?: placeholder
+        return formatter.format(if (div) amount / 100 else amount, style) ?: placeholder
     }
 }
