@@ -1,5 +1,8 @@
 package com.sonsofcrypto.web3lib.formatters
 
+import com.sonsofcrypto.web3lib.utils.BigDec
+import com.sonsofcrypto.web3lib.utils.BigInt
+
 class Formatters {
 
     companion object {
@@ -8,6 +11,12 @@ class Formatters {
         val pct = PctFormatter()
     //        val date: DateTimeFormatter()
         val networkAddress = NetworkAddressFormatter()
+
+        fun crypto(amount: BigInt, decimals: UInt, mul: Double): Double {
+            return BigDec.from(amount)
+                .div(BigDec.from(BigInt.from(10).pow(decimals.toLong())))
+                .mul(BigDec.from(mul))
+                .toDouble()
     }
 
     sealed class Style {
