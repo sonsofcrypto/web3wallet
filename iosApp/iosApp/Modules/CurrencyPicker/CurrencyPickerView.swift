@@ -32,6 +32,11 @@ final class CurrencyPickerViewController: BaseViewController {
         configureUI()
         presenter?.present()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        presenter.handle(.viewWillDismiss)
+    }
 }
 
 extension CurrencyPickerViewController: CurrencyPickerView {
