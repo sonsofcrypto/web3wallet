@@ -176,8 +176,12 @@ private extension DefaultConfirmationPresenter {
             usdValue: fiatValue
         )
         let destination = ConfirmationViewModel.SendViewModel.Destination(
-            from: Formatter.address.string(data.addressFrom, for: data.network),
-            to: Formatter.address.string(data.addressTo, for: data.network)
+            from: Formatters.Companion.shared.networkAddress.format(
+                address: data.addressFrom, digits: 8, network: data.network
+            ),
+            to: Formatters.Companion.shared.networkAddress.format(
+                address: data.addressTo, digits: 8, network: data.network
+            )
         )
         // TODO: @Annon to show price here
         let feeValueInToken = "value token"
@@ -201,8 +205,12 @@ private extension DefaultConfirmationPresenter {
         // TODO: Fix when supporting sending NFTs on different networks...
         let network = Network.Companion().ethereum()
         let destination = ConfirmationViewModel.SendNFTViewModel.Destination(
-            from: Formatter.address.string(data.addressFrom, for: network),
-            to: Formatter.address.string(data.addressTo, for: network)
+            from: Formatters.Companion.shared.networkAddress.format(
+                address: data.addressFrom, digits: 8, network: network
+            ),
+            to: Formatters.Companion.shared.networkAddress.format(
+                address: data.addressTo, digits: 8, network: network
+            )
         )
         // TODO: @Annon to show price here
         let feeValueInToken = "value token"

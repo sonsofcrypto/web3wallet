@@ -168,7 +168,9 @@ private extension DefaultCurrencySendPresenter {
     
     func isAddress(address: String, equalTo addressTo: String?) -> Bool {
         guard let addressTo = addressTo else { return false }
-        let addressToCompare = Formatter.address.string(addressTo, for: context.network)
+        let addressToCompare = Formatters.Companion.shared.networkAddress.format(
+            address: addressTo, digits: 8, network: context.network
+        )
         return address == addressToCompare
     }
     
@@ -250,7 +252,9 @@ private extension DefaultCurrencySendPresenter {
     var formattedAddress: String? {
         guard let address = address else { return nil }
         guard context.network.isValid(address: address) else { return nil }
-        return Formatter.address.string(address, for: context.network)
+        return Formatters.Companion.shared.networkAddress.format(
+            address: address, digits: 8, network: context.network
+        )
     }
 
     func updateToken(

@@ -34,7 +34,11 @@ private extension NFTDetailViewController {
         let items: [(name: String, value: String)] = [
             (
                 name: Localized("nft.detail.section.title.other.contractAddress"),
-                value: Formatter.address.string(item.address, for: network)
+                value: Formatters.Companion.shared.networkAddress.format(
+                    address: item.address,
+                    digits: 8,
+                    network: network
+                )
             ),
             (
                 name: Localized("nft.detail.section.title.other.schemaName"),

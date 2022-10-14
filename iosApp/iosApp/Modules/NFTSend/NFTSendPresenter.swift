@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3walletcore
 
 enum NFTSendPresenterEvent {
     case dismiss
@@ -186,7 +187,11 @@ private extension DefaultNFTSendPresenter {
     var formattedAddress: String? {
         guard let address = address else { return nil }
         guard context.network.isValid(address: address) else { return nil }
-        return Formatter.address.string(address, for: context.network)
+        return Formatters.Companion.shared.networkAddress.format(
+            address: address,
+            digits: 8,
+            network: context.network
+        )
     }
 
     func updateCTA() {

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class AccountAddressCell: CollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
@@ -18,7 +19,7 @@ final class AccountAddressCell: CollectionViewCell {
     override func setSelected(_ selected: Bool) {}
 
     func update(with viewModel: AccountViewModel.AddressViewModel) {
-        titleLabel.text = Formatter.address.string(viewModel.address, digits: 12, for: .ethereum())
+        titleLabel.text = viewModel.address
         copyImage.image = viewModel.copyIcon.assetImage
     }
 }
