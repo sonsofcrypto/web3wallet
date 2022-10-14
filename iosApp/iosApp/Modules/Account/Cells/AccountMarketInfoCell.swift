@@ -21,9 +21,6 @@ final class AccountMarketInfoCell: CollectionViewCell {
         marketCapTitleLabel.text = Localized("account.marketInfo.marketCap")
         priceTitleLabel.text = Localized("account.marketInfo.price")
         volumeTitleLabel.text = Localized("account.marketInfo.volume")
-        [marketCapValueLabel, priceValueLabel, volumeValueLabel].forEach {
-            $0?.apply(style: .subheadline)
-        }
         layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
     }
     
@@ -35,8 +32,17 @@ final class AccountMarketInfoCell: CollectionViewCell {
 extension AccountMarketInfoCell {
 
     func update(with viewModel: AccountViewModel.MarketInfo?) {
-        marketCapValueLabel.text = viewModel?.marketCap
-        priceValueLabel.text = viewModel?.price
-        volumeValueLabel.text = viewModel?.volume
+        marketCapValueLabel.attributedText = viewModel?.marketCap.attributtedString(
+            font: Theme.font.subheadline,
+            fontSmall: Theme.font.caption2
+        )
+        priceValueLabel.attributedText = viewModel?.price.attributtedString(
+            font: Theme.font.subheadline,
+            fontSmall: Theme.font.caption2
+        )
+        volumeValueLabel.attributedText = viewModel?.volume.attributtedString(
+            font: Theme.font.subheadline,
+            fontSmall: Theme.font.caption2
+        )
     }
 }

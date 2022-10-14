@@ -19,7 +19,7 @@ extension AccountViewModel {
 
     struct Header {
         let balance: [Formatters.Output]
-        let fiatBalance: String
+        let fiatBalance: [Formatters.Output]
         let pct: String
         let pctUp: Bool
         let buttons: [Button]
@@ -42,9 +42,9 @@ extension AccountViewModel {
 extension AccountViewModel {
 
     struct MarketInfo {
-        let marketCap: String
-        let price: String
-        let volume: String
+        let marketCap: [Formatters.Output]
+        let price: [Formatters.Output]
+        let volume: [Formatters.Output]
     }
 }
 

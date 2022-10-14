@@ -8,13 +8,11 @@ import Foundation
 
 extension String {
     
-    var themeImage: String {
-        Theme.name + "-" + self
-    }
+    var clearCommas: String { replacingOccurrences(of: ",", with: "") }
     
-    var url: URL? {
-        URL(string: self)
-    }
+    var themeImage: String { Theme.name + "-" + self }
+    
+    var url: URL? { URL(string: self) }
 
     func int() throws  -> Int {
         guard let num = Int(self) else {

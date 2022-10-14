@@ -136,7 +136,7 @@ extension DefaultDashboardInteractor: DashboardInteractor {
                 total += fiatBalance(for: network, currency: currency)
             }
         }
-        return total
+        return (try? total.format(maximumFractionDigits: 2)?.clearCommas.double()) ?? 0.0
     }
 
     func reloadBalances() {

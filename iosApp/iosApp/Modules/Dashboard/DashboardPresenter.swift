@@ -173,7 +173,11 @@ private extension DefaultDashboardPresenter {
         sections.append(
             .init(
                 header: .balance(
-                    Formatter.fiat.string(interactor.totalFiatBalance())
+                    Formatters.Companion.shared.fiat.format(
+                        amount: interactor.totalFiatBalance().bigDec,
+                        style: Formatters.StyleCustom(maxLength: 15),
+                        currencyCode: "usd"
+                    )
                 ),
                 items: .actions(
                     [
@@ -277,9 +281,17 @@ private extension DefaultDashboardPresenter {
                 style: Formatters.StyleCustom(maxLength: 10),
                 currencyCode: "usd"
             ),
-            fiatBalance: Formatter.fiat.string(Float(fiatBalance)),
+            fiatBalance: Formatters.Companion.shared.fiat.format(
+                amount: fiatBalance.bigDec,
+                style: Formatters.StyleCustom(maxLength: 10),
+                currencyCode: "usd"
+            ),
             cryptoBalance: formatted,
-            tokenPrice: Formatter.fiat.string(market?.currentPrice),
+            tokenPrice: Formatters.Companion.shared.fiat.format(
+                amount: market?.currentPrice?.doubleValue.bigDec,
+                style: Formatters.StyleCustom(maxLength: 10),
+                currencyCode: "usd"
+            ),
             pctChange: Formatter.pct.string(market?.priceChangePercentage24h, div: true),
             priceUp: market?.priceChangePercentage24h?.doubleValue ?? 0 >= 0,
             candles: candlesViewModel(candles: interactor.candles(for: currency))

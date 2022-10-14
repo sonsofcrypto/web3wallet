@@ -241,7 +241,11 @@ private extension DefaultCurrencyPickerPresenter {
                             currency: currency,
                             style: Formatters.StyleCustom(maxLength: 15)
                         ),
-                        usdTotal: Formatter.fiat.string(fiatBalancce)
+                        usdTotal: Formatters.Companion.shared.fiat.format(
+                            amount: fiatBalancce.bigDec,
+                            style: Formatters.StyleCustom(maxLength: 10),
+                            currencyCode: "usd"
+                        )
                     )
                 )
             case .select:
@@ -253,7 +257,11 @@ private extension DefaultCurrencyPickerPresenter {
                             currency: currency,
                             style: Formatters.StyleCustom(maxLength: 15)
                         ),
-                        usdTotal: Formatter.fiat.string(fiatBalancce)
+                        usdTotal: Formatters.Companion.shared.fiat.format(
+                            amount: fiatBalancce.bigDec,
+                            style: Formatters.StyleCustom(maxLength: 10),
+                            currencyCode: "usd"
+                        )
                     )
                 )
             }

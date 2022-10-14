@@ -17,7 +17,7 @@ extension DashboardViewModel {
         let items: Items
         
         enum Header {
-            case balance(String)
+            case balance([Formatters.Output])
             case network(Network)
             case title(String)
             case none
@@ -92,9 +92,9 @@ extension DashboardViewModel {
         let colors: [String]
         let imageName: String
         let fiatPrice: [Formatters.Output]
-        let fiatBalance: String
+        let fiatBalance: [Formatters.Output]
         let cryptoBalance: [Formatters.Output]
-        let tokenPrice: String
+        let tokenPrice: [Formatters.Output]
         let pctChange: String
         let priceUp: Bool
         let candles: CandlesViewModel

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class DashboardHeaderBalanceView: UICollectionReusableView {
     @IBOutlet weak var label: UILabel!
@@ -11,7 +12,6 @@ final class DashboardHeaderBalanceView: UICollectionReusableView {
         
     override func awakeFromNib() {
         super.awakeFromNib()
-        label.apply(style: .largeTitle, weight: .bold)
         labelHConstraints.forEach { $0.constant = Theme.constant.padding }
         labelVConstraints.forEach { $0.constant = Theme.constant.padding * 1.25 }
     }
@@ -22,8 +22,11 @@ final class DashboardHeaderBalanceView: UICollectionReusableView {
 extension DashboardHeaderBalanceView {
 
     @discardableResult
-    func update(with balance: String) -> Self {
-        label.text = balance
+    func update(with balance: [Formatters.Output]) -> Self {
+        label.attributedText = balance.attributtedString(
+            font: Theme.font.largeTitleBold,
+            fontSmall: Theme.font.title3Bold
+        )
         return self
     }
 }

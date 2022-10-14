@@ -65,7 +65,7 @@ extension CurrencyPickerViewModel {
         
         struct Balance {
             let tokens: [Formatters.Output]
-            let usdTotal: String
+            let usdTotal: [Formatters.Output]
         }
     }
 }

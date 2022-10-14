@@ -19,7 +19,6 @@ final class DashboardTableWalletCell: CollectionViewCell {
         currencyImageView.layer.cornerRadius = currencyImageView.bounds.width.half
         currencyNameLabel.apply(style: .body)
         pctChangeLabel.apply(style: .callout, colour: Theme.colour.candleRed)
-        fiatBalanceLabel.apply(style: .callout, colour: Theme.colour.labelSecondary)
         chevronView.tintColor = Theme.colour.labelSecondary
     }
     
@@ -51,7 +50,11 @@ extension DashboardTableWalletCell {
             font: Theme.font.body,
             fontSmall: Theme.font.footnote
         )
-        fiatBalanceLabel.text = viewModel.fiatBalance
+        fiatBalanceLabel.attributedText = viewModel.fiatBalance.attributtedString(
+            font: Theme.font.callout,
+            fontSmall: Theme.font.caption2,
+            foregroundColor: Theme.colour.labelSecondary
+        )
         bottomSeparatorView.isHidden = !showBottomSeparator
         return self
     }

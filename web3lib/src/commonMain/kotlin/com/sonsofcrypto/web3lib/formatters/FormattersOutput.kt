@@ -59,8 +59,9 @@ class FormattersOutput {
     private fun String.divide(digits: Int): String {
         if (digits == 0) return this
         return if (decimalNumberPart.isEmpty()) {
-            val decimalNumberPart = dropLast(digits)
-            "$this.$decimalNumberPart"
+            val wholeNumberPart = dropLast(digits)
+            val decimalNumberPart = drop(length - digits)
+            "$wholeNumberPart.$decimalNumberPart"
         } else {
             val wholeNumberPart = wholeNumberPart
             val decimalNumberPart = decimalNumberPart

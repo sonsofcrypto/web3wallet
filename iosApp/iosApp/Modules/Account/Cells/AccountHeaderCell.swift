@@ -27,7 +27,6 @@ final class AccountHeaderCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         balanceLabel.apply(style: .largeTitle)
-        balanceFiatLabel.apply(style: .subheadline)
         containerStack.setCustomSpacing(0, after: balanceLabel)
         containerStack.setCustomSpacing(
             0,
@@ -61,7 +60,10 @@ extension AccountHeaderCell {
             font: Theme.font.largeTitle,
             fontSmall: Theme.font.footnote
         )
-        balanceFiatLabel.text = viewModel.fiatBalance
+        balanceFiatLabel.attributedText = viewModel.fiatBalance.attributtedString(
+            font: Theme.font.subheadline,
+            fontSmall: Theme.font.caption2
+        )
         let buttons = [receiveButton, sendButton, tradeButton, moreButton]
         for (idx, btn) in buttons.enumerated() {
             let btnViewModel = viewModel.buttons[idx]

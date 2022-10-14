@@ -74,7 +74,11 @@ private extension DefaultAccountPresenter {
                     currency: currency,
                     style: Formatters.StyleCustom(maxLength: 15)
                 ),
-                fiatBalance: Formatter.fiat.string(interactor.fiatBalance()),
+                fiatBalance: Formatters.Companion.shared.fiat.format(
+                    amount: interactor.fiatBalance().bigDec,
+                    style: Formatters.StyleCustom(maxLength: 20),
+                    currencyCode: "usd"
+                ),
                 pct: Formatter.pct.string(pct, div: true),
                 pctUp: market?.priceChangePercentage24h?.doubleValue ?? 0 >= 0,
                 buttons: headerButtonViewModels()
@@ -87,9 +91,21 @@ private extension DefaultAccountPresenter {
                 CandlesViewModel.Candle.from(interactor.candles()?.last(n: 90))
             ),
             marketInfo: .init(
-                marketCap: Formatter.fiat.string(market?.marketCap),
-                price: Formatter.fiat.string(market?.currentPrice),
-                volume: Formatter.fiat.string(market?.totalVolume)
+                marketCap: Formatters.Companion.shared.fiat.format(
+                    amount: market?.marketCap?.doubleValue.bigDec,
+                    style: Formatters.StyleCustom(maxLength: 12),
+                    currencyCode: "usd"
+                ),
+                price: Formatters.Companion.shared.fiat.format(
+                    amount: market?.currentPrice?.doubleValue.bigDec,
+                    style: Formatters.StyleCustom(maxLength: 8),
+                    currencyCode: "usd"
+                ),
+                volume: Formatters.Companion.shared.fiat.format(
+                    amount: market?.totalVolume?.doubleValue.bigDec,
+                    style: Formatters.StyleCustom(maxLength: 12),
+                    currencyCode: "usd"
+                )
             ),
             bonusAction: currency.symbol == "cult"
                 ? AccountViewModel.BonusAction(title: "Read the manifesto")

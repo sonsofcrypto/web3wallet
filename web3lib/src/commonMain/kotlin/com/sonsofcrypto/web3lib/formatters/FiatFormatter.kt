@@ -19,10 +19,15 @@ class FiatFormatter {
         val fiatCurrency = fiatCurrency(currencyCode)
         val output: List<Formatters.Output> = when (style) {
             is Formatters.Style.Custom -> {
-                formattersOutput.convert(
-                    amount.toString(),
-                    style.maxLength - (fiatCurrency.symbol.length).toUInt()
-                )
+                val maxLength = style.maxLength - (fiatCurrency.symbol.length).toUInt()
+                if (amount.toString().length.toUInt() <= maxLength) {
+                    listOf(Normal(amount.toString()))
+                } else {
+                    formattersOutput.convert(
+                        amount.toString(),
+                        style.maxLength - (fiatCurrency.symbol.length).toUInt()
+                    )
+                }
             }
             is Formatters.Style.Max -> { listOf(Normal(amount.toString())) }
         }

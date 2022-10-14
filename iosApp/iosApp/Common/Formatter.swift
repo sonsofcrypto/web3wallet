@@ -6,52 +6,9 @@ import Foundation
 import web3walletcore
 
 class Formatter {
-    static let fiat = FiatFormatter()
     static let pct = PctFormatter()
     static let date = DateTimeFormatter()
     static let address = NetworkAddressFormatter()
-}
-
-// MARK: - Fiat
-
-class FiatFormatter {
-
-    var placeholder: String = "-"
-
-    let fiat: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.currencyCode = "usd"
-        formatter.numberStyle = .currency
-        formatter.locale = .english
-        return formatter
-    }()
-
-    func string(_ amount: Float?) -> String {
-        guard let amount = amount else { return placeholder }
-        return fiat.string(from: amount).cleanUSCurency
-    }
-
-    func string(_ amount: Double?) -> String {
-        guard let amount = amount else { return placeholder }
-        return string(Float(amount))
-    }
-
-    func string(_ amount: KotlinDouble?) -> String {
-        guard let amount = amount?.floatValue else { return placeholder }
-        return string(amount)
-    }
-    
-    func string(_ amount: BigInt?) -> String {
-        guard let amount = amount else { return placeholder }
-        return amount.formatStringCurrency(type: .long, decimals: 2)
-    }
-}
-
-private extension String {
-    // TODO: Review this to work for other currencies
-    var cleanUSCurency: String {
-        replacingOccurrences(of: "US", with: "")
-    }
 }
 
 // MARK: - Percentage
