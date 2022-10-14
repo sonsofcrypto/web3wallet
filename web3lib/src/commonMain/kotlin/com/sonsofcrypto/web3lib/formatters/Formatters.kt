@@ -17,6 +17,7 @@ class Formatters {
                 .div(BigDec.from(BigInt.from(10).pow(decimals.toLong())))
                 .mul(BigDec.from(mul))
                 .toDouble()
+        }
     }
 
     sealed class Style {
