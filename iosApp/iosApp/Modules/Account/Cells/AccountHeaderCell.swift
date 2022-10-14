@@ -57,7 +57,10 @@ extension AccountHeaderCell {
     ) {
         self.viewModel = viewModel
         self.handler = handler
-        balanceLabel.text = viewModel.balance
+        balanceLabel.attributedText = viewModel.balance.attributtedString(
+            font: Theme.font.largeTitle,
+            fontSmall: Theme.font.footnote
+        )
         balanceFiatLabel.text = viewModel.fiatBalance
         let buttons = [receiveButton, sendButton, tradeButton, moreButton]
         for (idx, btn) in buttons.enumerated() {

@@ -69,10 +69,10 @@ private extension DefaultAccountPresenter {
         return .init(
             currencyName: currency.name,
             header: .init(
-                balance: Formatter.currency.string(
-                    interactor.cryptoBalance(),
+                balance: Formatters.Companion.shared.currency.format(
+                    amount: interactor.cryptoBalance(),
                     currency: currency,
-                    style: .long(minDecimals: 8)
+                    style: Formatters.StyleCustom(maxLength: 15)
                 ),
                 fiatBalance: Formatter.fiat.string(interactor.fiatBalance()),
                 pct: Formatter.pct.string(pct, div: true),

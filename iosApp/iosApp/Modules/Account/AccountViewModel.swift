@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3walletcore
 
 struct AccountViewModel {
     let currencyName: String
@@ -17,7 +18,7 @@ struct AccountViewModel {
 extension AccountViewModel {
 
     struct Header {
-        let balance: String
+        let balance: [Formatters.Output]
         let fiatBalance: String
         let pct: String
         let pctUp: Bool
