@@ -145,6 +145,7 @@ extension DefaultCurrencySwapPresenter: CurrencySwapPresenter {
         case .feeTapped:
             view?.presentFeePicker(with: _fees())
         case .approve:
+            guard approveState() == .approve else { return }
             wireframe.navigate(
                 to: .confirmApproval(
                     currency: currencyTo,
