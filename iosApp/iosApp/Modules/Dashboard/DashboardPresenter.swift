@@ -142,7 +142,8 @@ private extension DefaultDashboardPresenter {
 private extension DefaultDashboardPresenter {
     
     func didTapEditToken(_ networkId: String) {
-        guard let network = interactor.selectedNetwork else { return }
+        let network = interactor.enabledNetworks().first { networkId == $0.id() }
+        guard let network = network else { return }
         wireframe.navigate(
             to: .editCurrencies(
                 network: network,
