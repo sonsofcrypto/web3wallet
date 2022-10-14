@@ -6,48 +6,10 @@ import Foundation
 import web3walletcore
 
 class Formatter {
-    static let currency = CurrencyFormatter()
     static let fiat = FiatFormatter()
     static let pct = PctFormatter()
     static let date = DateTimeFormatter()
     static let address = NetworkAddressFormatter()
-}
-
-// MARK: - Currency
-
-class CurrencyFormatter {
-
-    var placeholder: String = "-"
-
-    let formatter = web3walletcore.CurrencyFormatter()
-
-    enum Style {
-        case short
-        case long(minDecimals: Int)
-        case max
-        
-        static var long: Self {
-            .long(minDecimals: 4)
-        }
-    }
-
-    func string(
-        _ amount: BigInt?,
-        currency: Currency,
-        style: Style = .max
-    ) -> String {
-        guard let amount = amount else { return placeholder }
-        let amountFormatted: String
-        switch style {
-        case .short:
-            amountFormatted =  amount.formatString(type: .short, decimals: currency.decimals?.uintValue ?? 18)
-        case let .long(minDecimals):
-            amountFormatted =  amount.formatString(type: .long(minDecimals: minDecimals), decimals: currency.decimals?.uintValue ?? 18)
-        case .max:
-            amountFormatted = amount.formatString(type: .max, decimals: currency.decimals?.uintValue ?? 18)
-        }
-        return amountFormatted + " " + currency.symbol.uppercased()
-    }
 }
 
 // MARK: - Fiat

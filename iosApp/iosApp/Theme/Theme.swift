@@ -117,9 +117,11 @@ struct ThemeFont {
     let networkTitle: UIFont
     let dashboardSectionFuel: UIFont
     let dashboardTVBalance: UIFont
+    let dashboardTVBalanceSmall: UIFont
     let dashboardTVSymbol: UIFont
     let dashboardTVPct: UIFont
     let dashboardTVTokenBalance: UIFont
+    let dashboardTVTokenBalanceSmall: UIFont
 }
 
 struct ThemeColour {

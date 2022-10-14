@@ -236,10 +236,10 @@ private extension DefaultCurrencyPickerPresenter {
                 type = .init(
                     isSelected: isSelected,
                     balance: .init(
-                        tokens: Formatter.currency.string(
-                            currencyBalance,
+                        tokens: Formatters.Companion.shared.currency.format(
+                            amount: currencyBalance,
                             currency: currency,
-                            style: .long
+                            style: Formatters.StyleCustom(maxLength: 15)
                         ),
                         usdTotal: Formatter.fiat.string(fiatBalancce)
                     )
@@ -248,10 +248,10 @@ private extension DefaultCurrencyPickerPresenter {
                 type = .init(
                     isSelected: nil,
                     balance: .init(
-                        tokens: Formatter.currency.string(
-                            currencyBalance,
+                        tokens: Formatters.Companion.shared.currency.format(
+                            amount: currencyBalance,
                             currency: currency,
-                            style: .long
+                            style: Formatters.StyleCustom(maxLength: 15)
                         ),
                         usdTotal: Formatter.fiat.string(fiatBalancce)
                     )

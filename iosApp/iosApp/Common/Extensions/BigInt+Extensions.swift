@@ -92,6 +92,7 @@ extension BigInt {
     }
 }
 
+// TODO: Remove when no longer used
 extension BigInt {
     
     enum FormatType {

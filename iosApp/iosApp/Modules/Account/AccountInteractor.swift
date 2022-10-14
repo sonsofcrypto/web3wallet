@@ -23,7 +23,7 @@ struct AccountInteractorTransaction {
     let date: Date?
     let blockNumber: String
     let address: String
-    let amount: String
+    let amount: [Formatters.Output]
     let isReceive: Bool
     let txHash: String
 }
@@ -151,10 +151,10 @@ extension DefaultAccountInteractor: AccountInteractor {
                     date: Date(timeIntervalSince1970: (try? $0.timeStamp.double()) ?? 0),
                     blockNumber: $0.blockNumber,
                     address: isReceive ? $0.from : $0.to,
-                    amount: Formatter.currency.string(
-                        BigInt.fromString($0.value, decimals: 0),
+                    amount: Formatters.Companion.shared.currency.format(
+                        amount: BigInt.fromString($0.value, decimals: 0),
                         currency: currency(),
-                        style: .long(minDecimals: 8)
+                        style: Formatters.StyleCustom(maxLength: 20)
                     ),
                     isReceive: isReceive,
                     txHash: $0.hash
@@ -165,26 +165,32 @@ extension DefaultAccountInteractor: AccountInteractor {
     func toTransactions(
         from transactions: [Log]
     ) -> [AccountInteractorTransaction] {
-        transactions.map {
-            guard let topic1 = ($0.topics?[1] as? Topic.TopicValue)?.value,
-                  let topic2 = ($0.topics?[2] as? Topic.TopicValue)?.value
-            else { return nil }
-            let from: Address.HexString = abiDecodeAddress(topic1)
-            let to: Address.HexString = abiDecodeAddress(topic2)
-            let amount: BigInt = abiDecodeBigInt($0.data)
-            let isReceive = to.hexString == self.address()
-            return .init(
-                date: nil,
-                blockNumber: $0.blockNumber.toDecimalString(),
-                address: isReceive ? from.hexString : to.hexString,
-                amount: Formatter.currency.string(
-                    amount,
-                    currency: currency(),
-                    style: .long(minDecimals: 8)
-                ),
-                isReceive: isReceive,
-                txHash: $0.transactionHash
-            )
-        }.compactMap { $0 }
+        var output = [AccountInteractorTransaction]()
+        transactions.forEach {
+            if
+                let topic1 = ($0.topics?[1] as? Topic.TopicValue)?.value,
+                let topic2 = ($0.topics?[2] as? Topic.TopicValue)?.value
+            {
+                let from: Address.HexString = abiDecodeAddress(topic1)
+                let to: Address.HexString = abiDecodeAddress(topic2)
+                let amount: BigInt = abiDecodeBigInt($0.data)
+                let isReceive = to.hexString == self.address()
+                output.append(
+                    .init(
+                        date: nil,
+                        blockNumber: $0.blockNumber.toDecimalString(),
+                        address: isReceive ? from.hexString : to.hexString,
+                        amount: Formatters.Companion.shared.currency.format(
+                            amount: amount,
+                            currency: currency(),
+                            style: Formatters.StyleCustom(maxLength: 20)
+                        ),
+                        isReceive: isReceive,
+                        txHash: $0.transactionHash
+                    )
+                )
+            }
+        }
+        return output
     }
 }

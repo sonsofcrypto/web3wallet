@@ -17,14 +17,13 @@ extension Array where Element == Formatters.Output {
             .foregroundColor: foregroundColor
         ]
         let atrStr = NSMutableAttributedString(string: string, attributes: attributes)
-        var location = -1
+        var location = 0
         let offset = font.capHeight - fontSmall.capHeight
         forEach {
             if let output = $0 as? Formatters.OutputNormal {
                 location += output.value.count
             }
             if let output = $0 as? Formatters.OutputUp {
-                location += output.value.count
                 atrStr.addAttributes(
                     [
                         .font: fontSmall,
@@ -32,9 +31,9 @@ extension Array where Element == Formatters.Output {
                     ],
                     range: NSRange(location: location, length: output.value.count)
                 )
+                location += output.value.count
             }
             if let output = $0 as? Formatters.OutputDown {
-                location += output.value.count
                 atrStr.addAttributes(
                     [
                         .font: fontSmall,
@@ -42,6 +41,7 @@ extension Array where Element == Formatters.Output {
                     ],
                     range: NSRange(location: location, length: output.value.count)
                 )
+                location += output.value.count
             }
         }
         return atrStr

@@ -262,17 +262,21 @@ private extension DefaultDashboardPresenter {
             for: network,
             currency: currency
         )
-        let formatted = Formatter.currency.string(
-            cryptoBalance,
+        let formatted = Formatters.Companion.shared.currency.format(
+            amount: cryptoBalance,
             currency: currency,
-            style: .long
+            style: Formatters.StyleCustom(maxLength: 15)
         )
         return .init(
             name: currency.name,
             ticker: currency.symbol.uppercased(),
             colors: metadata?.colors ?? ["#FFFFFF", "#000000"],
             imageName: currency.iconName,
-            fiatPrice: Formatter.fiat.string(Float(truncating: market?.currentPrice ?? 0)),
+            fiatPrice: Formatters.Companion.shared.fiat.format(
+                amount: BigDec.Companion().from(double: market?.currentPrice?.doubleValue ?? 0.0),
+                style: Formatters.StyleCustom(maxLength: 10),
+                currencyCode: "usd"
+            ),
             fiatBalance: Formatter.fiat.string(Float(fiatBalance)),
             cryptoBalance: formatted,
             tokenPrice: Formatter.fiat.string(market?.currentPrice),

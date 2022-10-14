@@ -52,7 +52,10 @@ final class CurrencyPickerTokenCell: UICollectionViewCell {
         if let balance = viewModel.type.balance {
             symbolLabel.isHidden = true
             tokenPriceView.isHidden = false
-            tokenLabel.text = balance.tokens
+            tokenLabel.attributedText = balance.tokens.attributtedString(
+                font: Theme.font.body,
+                fontSmall: Theme.font.caption2
+            )
             usdPriceLabel.text = balance.usdTotal
         } else {
             symbolLabel.isHidden = false

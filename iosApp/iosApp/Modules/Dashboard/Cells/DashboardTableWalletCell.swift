@@ -18,9 +18,7 @@ final class DashboardTableWalletCell: CollectionViewCell {
         super.awakeFromNib()
         currencyImageView.layer.cornerRadius = currencyImageView.bounds.width.half
         currencyNameLabel.apply(style: .body)
-        fiatPriceLabel.apply(style: .callout, colour: Theme.colour.labelSecondary)
         pctChangeLabel.apply(style: .callout, colour: Theme.colour.candleRed)
-        cryptoBalanceLabel.apply(style: .body)
         fiatBalanceLabel.apply(style: .callout, colour: Theme.colour.labelSecondary)
         chevronView.tintColor = Theme.colour.labelSecondary
     }
@@ -37,7 +35,11 @@ extension DashboardTableWalletCell {
         showBottomSeparator: Bool = true
     ) -> Self {
         currencyImageView.image = viewModel.imageName.assetImage
-        fiatPriceLabel.text = viewModel.fiatPrice
+        fiatPriceLabel.attributedText = viewModel.fiatPrice.attributtedString(
+            font: Theme.font.callout,
+            fontSmall: Theme.font.caption2,
+            foregroundColor: Theme.colour.labelSecondary
+        )
         currencyNameLabel.text = viewModel.name
         pctChangeLabel.text = viewModel.pctChange
         if viewModel.priceUp {
@@ -45,7 +47,10 @@ extension DashboardTableWalletCell {
         } else {
             pctChangeLabel.apply(style: .callout, colour: Theme.colour.candleRed)
         }
-        cryptoBalanceLabel.text = viewModel.cryptoBalance
+        cryptoBalanceLabel.attributedText = viewModel.cryptoBalance.attributtedString(
+            font: Theme.font.body,
+            fontSmall: Theme.font.footnote
+        )
         fiatBalanceLabel.text = viewModel.fiatBalance
         bottomSeparatorView.isHidden = !showBottomSeparator
         return self

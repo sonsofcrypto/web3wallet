@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3walletcore
 
 struct DashboardViewModel {
     let shouldAnimateCardSwitcher: Bool
@@ -90,9 +91,9 @@ extension DashboardViewModel {
         let ticker: String
         let colors: [String]
         let imageName: String
-        let fiatPrice: String
+        let fiatPrice: [Formatters.Output]
         let fiatBalance: String
-        let cryptoBalance: String
+        let cryptoBalance: [Formatters.Output]
         let tokenPrice: String
         let pctChange: String
         let priceUp: Bool

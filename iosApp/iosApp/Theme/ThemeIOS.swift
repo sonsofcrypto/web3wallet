@@ -240,9 +240,11 @@ struct ThemeIOS: Themable {
             networkTitle: .systemFont(ofSize: 15, weight: .regular),
             dashboardSectionFuel: .init(name: "NaokoAA-RegularItalic", size: 11)!,
             dashboardTVBalance: .init(name: "OCR-A", size: 16)!,
+            dashboardTVBalanceSmall: .init(name: "OCR-A", size: 11)!,
             dashboardTVSymbol: .init(name: "NaokoAA-Semilight", size: 13)!,
             dashboardTVPct: .init(name: "OCR-A", size: 10)!,
-            dashboardTVTokenBalance: .init(name: "OCR-A", size: 13)!
+            dashboardTVTokenBalance: .init(name: "OCR-A", size: 13)!,
+            dashboardTVTokenBalanceSmall: .init(name: "OCR-A", size: 8)!
         )
     }
     

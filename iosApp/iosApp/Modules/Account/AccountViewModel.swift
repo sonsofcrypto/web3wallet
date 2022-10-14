@@ -65,7 +65,7 @@ extension AccountViewModel {
         struct Data {
             let date: String
             let address: String
-            let amount: String
+            let amount: [Formatters.Output]
             let isReceive: Bool
             let txHash: String
         }
