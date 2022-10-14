@@ -61,29 +61,3 @@ extension Array where Element == Formatters.Output {
         }
     }
 }
-
-private extension DashboardWalletCell {
-    
-    func applyFiatPrice() {
-        let font = Theme.font.dashboardTVBalance
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: font,
-            .foregroundColor: Theme.colour.labelPrimary
-        ]
-        let atrStr = NSMutableAttributedString(string: "572x10-8", attributes: attributes)
-        atrStr.addAttributes(
-            [.font: Theme.font.callout],
-            range: NSRange(location: 3, length: 1)
-        )
-        let fontSmall = Theme.font.caption2
-        let offset = font.capHeight - fontSmall.capHeight
-        atrStr.addAttributes(
-            [
-                .font: fontSmall,
-                .baselineOffset: offset
-            ],
-            range: NSRange(location: 6, length: 2)
-        )
-        fiatPriceLabel.attributedText = atrStr
-    }
-}
