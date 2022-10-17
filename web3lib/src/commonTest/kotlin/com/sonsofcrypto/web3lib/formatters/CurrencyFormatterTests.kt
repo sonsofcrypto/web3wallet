@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3lib.formatters
 
+import com.sonsofcrypto.web3lib.formatters.Formatters.Output
 import com.sonsofcrypto.web3lib.formatters.Formatters.Output.*
 import com.sonsofcrypto.web3lib.formatters.Formatters.Style
 import com.sonsofcrypto.web3lib.types.Currency
@@ -83,7 +84,7 @@ class CurrencyFormatterTests {
         val output = maxOutput(null, Currency.usdt())
         assertEquals(listOf(Normal("-")), output)
     }
-    private fun maxOutput(a: String?, c: Currency): List<Formatters.Output> {
+    private fun maxOutput(a: String?, c: Currency): List<Output> {
         return if (a == null) {
             Formatters.currency.format(null, c, Style.Max)
         } else {
@@ -94,7 +95,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum1() {
         val actual = customOutput("1000000000000000000043", Currency.ethereum(), 8u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("1K ETH")
         )
         assertEquals(expected, actual)
@@ -102,7 +103,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum2() {
         val actual = customOutput("1000000000000000000043", Currency.ethereum(), 10u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("1K ETH")
         )
         assertEquals(expected, actual)
@@ -110,7 +111,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum3() {
         val actual = customOutput("1000000000000000000043", Currency.ethereum(), 11u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("1.0"),
             Down("19"),
             Normal("4K ETH")
@@ -120,7 +121,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum4() {
         val actual = customOutput("1000000000000000000043", Currency.ethereum(), 12u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("1.0"),
             Down("19"),
             Normal("43K ETH")
@@ -130,7 +131,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum5() {
         val actual = customOutput("1000000000000000000043", Currency.ethereum(), 15u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("1.0"),
             Down("19"),
             Normal("43K ETH")
@@ -140,7 +141,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum6() {
         val actual = customOutput("100000005500000000043", Currency.ethereum(), 19u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("100.0"),
             Down("5"),
             Normal("550"),
@@ -152,7 +153,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum7() {
         val actual = customOutput("54000045550000000043", Currency.ethereum(), 20u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("54.0"),
             Down("4"),
             Normal("45"),
@@ -166,7 +167,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum8() {
         val actual = customOutput("54000045550000000043", Currency.ethereum(), 10u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("54.0"),
             Down("4"),
             Normal("4 ETH"),
@@ -176,7 +177,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum9() {
         val actual = customOutput("45550000000043", Currency.ethereum(), 20u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("0.0"),
             Down("4"),
             Normal("45"),
@@ -190,7 +191,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum10() {
         val actual = customOutput("45550000000043", Currency.ethereum(), 10u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("0.0"),
             Down("4"),
             Normal("45 ETH"),
@@ -200,7 +201,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum11() {
         val actual = customOutput("25330020000045550000000043", Currency.ethereum(), 25u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("25.330020"),
             Down("5"),
             Normal("45"),
@@ -214,7 +215,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum12() {
         val actual = customOutput("25330020000045550000000043", Currency.ethereum(), 10u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("25.33M ETH"),
         )
         assertEquals(expected, actual)
@@ -222,7 +223,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum13() {
         val actual = customOutput("100025330020000045550000000043", Currency.ethereum(), 5u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("100B ETH"),
         )
         assertEquals(expected, actual)
@@ -230,7 +231,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum14() {
         val actual = customOutput("100025330020000045550000000043", Currency.ethereum(), 10u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("100B ETH"),
         )
         assertEquals(expected, actual)
@@ -238,7 +239,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum15() {
         val actual = customOutput("100025330020000045550000000043", Currency.ethereum(), 15u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("100.02533B ETH"),
         )
         assertEquals(expected, actual)
@@ -246,7 +247,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum16() {
         val actual = customOutput("138824535230200025330020004555000043", Currency.ethereum(), 5u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("1x10"),
             Up("35"),
             Normal(" ETH"),
@@ -257,7 +258,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum17() {
         val actual = customOutput("138824535230200025330020004555000043", Currency.ethereum(), 12u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("1.3x10"),
             Up("35"),
             Normal(" ETH"),
@@ -268,7 +269,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum18() {
         val actual = customOutput("138824535230200025330020004555000043", Currency.ethereum(), 12u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("1.3x10"),
             Up("35"),
             Normal(" ETH"),
@@ -279,7 +280,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum19() {
         val actual = customOutput("138824535230200025330020004555000043", Currency.ethereum(), 20u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("1.388245352x10"),
             Up("35"),
             Normal(" ETH"),
@@ -290,7 +291,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomEthereum20() {
         val actual = customOutput("5500000000008883443", Currency.ethereum(), 15u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("5.50"),
             Down("10"),
             Normal("8"),
@@ -303,7 +304,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomTether1() {
         val actual = customOutput("20000045550000000043", Currency.usdt(), 20u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("20.0"),
             Down("4"),
             Normal("45"),
@@ -317,7 +318,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomTether2() {
         val actual = customOutput("20000045550000000043", Currency.usdt(), 15u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("20.0"),
             Down("4"),
             Normal("45"),
@@ -329,7 +330,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomTether3() {
         val actual = customOutput("2000432552340045550000000043", Currency.usdt(), 40u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("2.0"),
             Down("3"),
             Normal("432552340045"),
@@ -345,7 +346,7 @@ class CurrencyFormatterTests {
     @Test
     fun testCustomTether4() {
         val actual = customOutput("5500000000008883443", Currency.usdt(), 15u)
-        val expected: List<Formatters.Output> = listOf(
+        val expected: List<Output> = listOf(
             Normal("5.50"),
             Down("10"),
             Normal("8"),
@@ -355,7 +356,18 @@ class CurrencyFormatterTests {
             )
         assertEquals(expected, actual)
     }
-    private fun customOutput(a: String, c: Currency, m: UInt): List<Formatters.Output> {
+    @Test
+    fun testCustomCult1() {
+        val actual = customOutput("2014901495666086752165611", Currency.cult(), 20u)
+        val expected: List<Output> = listOf(
+            Normal("2.0149014956"),
+            Down("3"),
+            Normal("M CULT"),
+        )
+        assertEquals(expected, actual)
+    }
+
+    private fun customOutput(a: String, c: Currency, m: UInt): List<Output> {
         val amount = BigInt.Companion.from(a)
         return Formatters.currency.format(amount, c, Style.Custom(m))
     }
