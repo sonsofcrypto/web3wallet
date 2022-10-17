@@ -15,7 +15,6 @@ final class AccountTransactionCell: CollectionViewCell {
         dateLabel.apply(style: .callout)
         addressLabel.apply(style: .callout)
         addressLabel.textColor = Theme.colour.labelSecondary
-        amountLabel.apply(style: .subheadline)
         chevronView.tintColor = Theme.colour.labelSecondary
         chevronView.image = .init(systemName: "chevron.right")
         layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
@@ -29,7 +28,11 @@ extension AccountTransactionCell {
     func update(with transaction: AccountViewModel.Transaction) {
         guard let viewModel = transaction.data else { return }
         dateLabel.text = viewModel.date
-        amountLabel.text = viewModel.amount
+        amountLabel.attributedText = .init(
+            viewModel.amount,
+            font: Theme.font.subheadline,
+            fontSmall: Theme.font.footnote
+        )
         addressLabel.text = viewModel.address
         amountLabel.textColor = viewModel.isReceive
             ? Theme.colour.priceUp

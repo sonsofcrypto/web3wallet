@@ -1,33 +1,50 @@
 package com.sonsofcrypto.web3lib.formatters
 
+import com.sonsofcrypto.web3lib.formatters.Formatters.Output
+import com.sonsofcrypto.web3lib.formatters.Formatters.Output.Normal
+import com.sonsofcrypto.web3lib.formatters.Formatters.Style
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.utils.BigDec
 import com.sonsofcrypto.web3lib.utils.BigInt
 
 class CurrencyFormatter {
+    private val placeholder = "-"
+    private val formattersOutput = FormattersOutput()
 
-    fun format(bigInt: BigInt?, currency: Currency): String {
-        if (bigInt == null) {
-            return "0"
+    fun format(amount: BigInt?, currency: Currency, style: Style = Style.Max): List<Output> {
+        val amount = amount ?: return listOf(Normal(placeholder))
+        val input = currencyAmountToString(amount, currency)
+        val output: List<Output> = when (style) {
+            is Style.Custom -> {
+                formattersOutput.convert(
+                    input,
+                    style.maxLength - (1 + currency.symbol.length).toUInt()
+                )
+            }
+            is Style.Max -> { listOf(Normal(input)) }
         }
-        val divisor = BigInt.from(10).pow(currency.decimals().toLong())
-        val dec = BigDec.from(bigInt).div(BigDec.from(divisor))
-        return dec.toDouble().toString()
+        return output.addCurrencySymbol(currency)
     }
 
-    fun bigInt(string: String, currency: Currency): BigInt {
-        return BigDec.from(string, 10)
-            .mul(BigDec.from(currency.decimals()))
-            .toBigInt()
+    private fun currencyAmountToString(amount: BigInt, currency: Currency): String {
+        val decimals = BigDec.from(10).pow(currency.decimals().toLong())
+        return BigDec.from(amount).div(decimals).toString()
     }
 
-    companion object {
-
-        fun crypto(amount: BigInt, decimals: UInt, mul: Double): Double {
-            return BigDec.from(amount)
-                .div(BigDec.from(BigInt.from(10).pow(decimals.toLong())))
-                .mul(BigDec.from(mul))
-                .toDouble()
+    private fun List<Output>.addCurrencySymbol(currency: Currency): List<Output> {
+        if (isEmpty()) this
+        return when (val last = last()) {
+            is Normal -> {
+                var newList = toMutableList()
+                newList.removeLast()
+                newList.add(Normal("${last.value} ${currency.symbol.uppercase()}"))
+                return newList
+            }
+            else -> {
+                var newList = toMutableList()
+                newList.add(Normal(" ${currency.symbol.uppercase()}"))
+                return newList
+            }
         }
     }
 }

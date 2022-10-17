@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3walletcore
 
 struct CurrencyPickerViewModel {
     let title: String
@@ -63,8 +64,8 @@ extension CurrencyPickerViewModel {
         let balance: Balance?
         
         struct Balance {
-            let tokens: String
-            let usdTotal: String
+            let tokens: [Formatters.Output]
+            let usdTotal: [Formatters.Output]
         }
     }
 }

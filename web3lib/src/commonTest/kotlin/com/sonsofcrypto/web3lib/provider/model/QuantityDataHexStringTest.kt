@@ -28,7 +28,6 @@ class QuantityDataHexStringTest {
         assertEquals("0x0", actual)
     }
 
-
     @Test
     fun testDataHexString() {
         val actual = DataHexString(ByteArray(10))

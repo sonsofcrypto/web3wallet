@@ -31,6 +31,7 @@ final class CurrencyReceiveViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
         presenter?.present()
     }
 }
@@ -92,6 +93,10 @@ private extension CurrencyReceiveViewController {
         buttonsStackViewHeightConstraint.constant = CGFloat(height)
         copyButton.widthConstraint?.constant = CGFloat(height)
         shareButton.widthConstraint?.constant = CGFloat(height)
+    }
+    
+    func configureUI() {
+        qrCodePngImageView.layer.magnificationFilter = .nearest
     }
     
     @objc func navBarLeftActionTapped() {

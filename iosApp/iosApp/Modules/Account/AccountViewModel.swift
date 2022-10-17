@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3walletcore
 
 struct AccountViewModel {
     let currencyName: String
@@ -17,8 +18,8 @@ struct AccountViewModel {
 extension AccountViewModel {
 
     struct Header {
-        let balance: String
-        let fiatBalance: String
+        let balance: [Formatters.Output]
+        let fiatBalance: [Formatters.Output]
         let pct: String
         let pctUp: Bool
         let buttons: [Button]
@@ -41,9 +42,9 @@ extension AccountViewModel {
 extension AccountViewModel {
 
     struct MarketInfo {
-        let marketCap: String
-        let price: String
-        let volume: String
+        let marketCap: [Formatters.Output]
+        let price: [Formatters.Output]
+        let volume: [Formatters.Output]
     }
 }
 
@@ -64,7 +65,7 @@ extension AccountViewModel {
         struct Data {
             let date: String
             let address: String
-            let amount: String
+            let amount: [Formatters.Output]
             let isReceive: Bool
             let txHash: String
         }

@@ -112,7 +112,7 @@ extension DefaultDashboardInteractor: DashboardInteractor {
     }
 
     func fiatBalance(for network: Network, currency: Currency) -> Double {
-        web3walletcore.CurrencyFormatter.Companion().crypto(
+        web3walletcore.Formatters.Companion.shared.crypto(
             amount: cryptoBalance(for: network, currency: currency),
             decimals: currency.decimals(),
             mul: marketdata(for: currency)?.currentPrice?.doubleValue ?? 0.0
@@ -136,7 +136,7 @@ extension DefaultDashboardInteractor: DashboardInteractor {
                 total += fiatBalance(for: network, currency: currency)
             }
         }
-        return total
+        return (try? total.format(maximumFractionDigits: 2)?.clearCommas.double()) ?? 0.0
     }
 
     func reloadBalances() {

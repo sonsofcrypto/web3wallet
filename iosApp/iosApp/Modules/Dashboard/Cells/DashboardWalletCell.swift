@@ -22,16 +22,12 @@ final class DashboardWalletCell: CollectionViewCell {
         backgroundView = DashboardWalletCellBackgroundView()
         imageView.layer.cornerRadius = imageView.frame.size.width * 0.5
         imageView.backgroundColor = UIColor(hexString: "3461BE")!
-        fiatPriceLabel.font = Theme.font.dashboardTVBalance
-        fiatPriceLabel.textColor = Theme.colour.labelPrimary
         currencyLabel.font = Theme.font.dashboardTVSymbol
         currencyLabel.textColor = Theme.colour.labelPrimary
         pctChangeLabel.font = Theme.font.dashboardTVPct
         pctChangeLabel.textColor = Theme.colour.priceUp
         fiatBalanceLabel.font = Theme.font.dashboardTVTokenBalance
         fiatBalanceLabel.textColor = Theme.colour.dashboardTVCryptoBallance
-        cryptoBalanceLabel.font = Theme.font.dashboardTVTokenBalance
-        cryptoBalanceLabel.textColor = Theme.colour.dashboardTVCryptoBallance
         fiatBalanceLabel.isHidden = true
 //        contentStack.setCustomSpacing(0, after: fiatBalanceLabel)
     }
@@ -51,14 +47,23 @@ extension DashboardWalletCell {
         guard let viewModel = viewModel else { return self }
         imageView.image = UIImage(named: viewModel.imageName)
         currencyLabel.text = viewModel.ticker
-        fiatPriceLabel.text = viewModel.fiatPrice
+        fiatPriceLabel.attributedText = .init(
+            viewModel.fiatPrice,
+            font: Theme.font.dashboardTVBalance,
+            fontSmall: Theme.font.dashboardTVBalanceSmall
+        )
         pctChangeLabel.text = viewModel.pctChange
         pctChangeLabel.textColor = viewModel.priceUp
             ? Theme.colour.priceUp
             : Theme.colour.priceDown
         pctChangeLabel.layer.shadowColor = pctChangeLabel.textColor.cgColor
         charView.update(viewModel.candles)
-        cryptoBalanceLabel.text = viewModel.cryptoBalance
+        cryptoBalanceLabel.attributedText = .init(
+            viewModel.cryptoBalance,
+            font: Theme.font.dashboardTVTokenBalance,
+            fontSmall: Theme.font.dashboardTVTokenBalanceSmall,
+            foregroundColor: Theme.colour.dashboardTVCryptoBallance
+        )
         let colors = viewModel.colors
         let top = UIColor(hexString: colors.first ?? "#FFFFFF")!
         let btm = UIColor(hexString: colors.last ?? colors.first ?? "#000000")!

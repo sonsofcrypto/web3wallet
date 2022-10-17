@@ -23,6 +23,7 @@ class BigDec {
     fun div(value: BigDec): BigDec = BigDec(
         storage.divide(value.storage, decimalMode = decimalMode)
     )
+    fun pow(value: Long): BigDec = BigDec(storage.pow(value))
 
     fun toBigInt(): BigInt = BigInt(storage.toBigInteger())
     fun toHexString(): String = storage.toString(16)
@@ -32,7 +33,7 @@ class BigDec {
     fun compare(other: BigDec): Int = storage.compare(other.storage)
     fun isZero(): Boolean =  storage.isZero()
 
-    override fun toString(): String = storage.toString(10)
+    override fun toString(): String = storage.toStringExpanded()
 
     override fun equals(other: Any?): Boolean  {
         return storage == (other as? BigDec)?.storage

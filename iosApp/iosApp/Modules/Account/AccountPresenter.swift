@@ -69,27 +69,45 @@ private extension DefaultAccountPresenter {
         return .init(
             currencyName: currency.name,
             header: .init(
-                balance: Formatter.currency.string(
-                    interactor.cryptoBalance(),
+                balance: Formatters.Companion.shared.currency.format(
+                    amount: interactor.cryptoBalance(),
                     currency: currency,
-                    style: .long(minDecimals: 8)
+                    style: Formatters.StyleCustom(maxLength: 15)
                 ),
-                fiatBalance: Formatter.fiat.string(interactor.fiatBalance()),
-                pct: Formatter.pct.string(pct, div: true),
+                fiatBalance: Formatters.Companion.shared.fiat.format(
+                    amount: interactor.fiatBalance().bigDec,
+                    style: Formatters.StyleCustom(maxLength: 20),
+                    currencyCode: "usd"
+                ),
+                pct: Formatters.Companion.shared.pct.format(amount: pct, div: true),
                 pctUp: market?.priceChangePercentage24h?.doubleValue ?? 0 >= 0,
                 buttons: headerButtonViewModels()
             ),
             address: .init(
-                address: interactor.address(),
+                address: Formatters.Companion.shared.networkAddress.format(
+                    address: interactor.address(), digits: 12, network: interactor.network
+                ),
                 copyIcon: "square.on.square"
             ),
             candles: .loaded(
                 CandlesViewModel.Candle.from(interactor.candles()?.last(n: 90))
             ),
             marketInfo: .init(
-                marketCap: Formatter.fiat.string(market?.marketCap),
-                price: Formatter.fiat.string(market?.currentPrice),
-                volume: Formatter.fiat.string(market?.totalVolume)
+                marketCap: Formatters.Companion.shared.fiat.format(
+                    amount: market?.marketCap?.doubleValue.bigDec,
+                    style: Formatters.StyleCustom(maxLength: 8),
+                    currencyCode: "usd"
+                ),
+                price: Formatters.Companion.shared.fiat.format(
+                    amount: market?.currentPrice?.doubleValue.bigDec,
+                    style: Formatters.StyleCustom(maxLength: 8),
+                    currencyCode: "usd"
+                ),
+                volume: Formatters.Companion.shared.fiat.format(
+                    amount: market?.totalVolume?.doubleValue.bigDec,
+                    style: Formatters.StyleCustom(maxLength: 8),
+                    currencyCode: "usd"
+                )
             ),
             bonusAction: currency.symbol == "cult"
                 ? AccountViewModel.BonusAction(title: "Read the manifesto")
@@ -131,10 +149,8 @@ private extension DefaultAccountPresenter {
                 date: transaction.date == nil
                     ? transaction.blockNumber
                     : Formatter.date.string(transaction.date),
-                address: Formatter.address.string(
-                    transaction.address,
-                    digits: 14,
-                    for: interactor.network
+                address: Formatters.Companion.shared.networkAddress.format(
+                    address: transaction.address, digits: 14, network: interactor.network
                 ),
                 amount: transaction.amount,
                 isReceive: transaction.isReceive,

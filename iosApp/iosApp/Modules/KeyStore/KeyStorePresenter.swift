@@ -212,10 +212,9 @@ private extension Array where Element == KeyStoreItem {
 private extension KeyStoreItem {
     var addressFormatted: String? {
         guard let address = addresses[derivationPath] else { return nil }
-        return Formatter.address.string(
-            address,
-            digits: 10,
-            for: .ethereum()
+        // TODO: Review here when supporting other networks
+        return Formatters.Companion.shared.networkAddress.format(
+            address: address, digits: 10, network: .ethereum()
         )
     }
 }

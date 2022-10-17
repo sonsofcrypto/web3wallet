@@ -377,6 +377,7 @@
 		1C7FC9B628BCF5C700FC9175 /* EtherscanHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9B528BCF5C700FC9175 /* EtherscanHelper.swift */; };
 		1C7FC9B828BCF95E00FC9175 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9B728BCF95E00FC9175 /* WebViewController.swift */; };
 		1C7FC9BA28BD00C200FC9175 /* AccountAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9B928BD00C200FC9175 /* AccountAddressCell.swift */; };
+		1C876AF728FD483B003D272A /* NSAttributtedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C876AF628FD483B003D272A /* NSAttributtedString+Extensions.swift */; };
 		1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46D92813DE4800F6C40B /* BaseViewController.swift */; };
 		1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1C9B46FA281427B800F6C40B /* under-construction.gif */; };
 		1C9E3195287580B600DD2031 /* CurrencySendWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E3194287580B600DD2031 /* CurrencySendWireframe.swift */; };
@@ -928,6 +929,7 @@
 		1C7FC9B528BCF5C700FC9175 /* EtherscanHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanHelper.swift; sourceTree = "<group>"; };
 		1C7FC9B728BCF95E00FC9175 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		1C7FC9B928BD00C200FC9175 /* AccountAddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAddressCell.swift; sourceTree = "<group>"; };
+		1C876AF628FD483B003D272A /* NSAttributtedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributtedString+Extensions.swift"; sourceTree = "<group>"; };
 		1C9B46D92813DE4800F6C40B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1C9B46FA281427B800F6C40B /* under-construction.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "under-construction.gif"; sourceTree = "<group>"; };
 		1C9E3194287580B600DD2031 /* CurrencySendWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySendWireframe.swift; sourceTree = "<group>"; };
@@ -1973,16 +1975,19 @@
 				1C7F860628D20E490073FD95 /* Kotlin+Extensions.swift */,
 				1C7F862628D20E490073FD95 /* Locale+Extensions.swift */,
 				1C5D24DC28E1A3C7007DA557 /* Network+Extensions.swift */,
+				1C876AF628FD483B003D272A /* NSAttributtedString+Extensions.swift */,
 				1C7F862428D20E490073FD95 /* NSCollectionLayout+Extensions.swift */,
 				1C7F862528D20E490073FD95 /* NSLocalizedString+Extension.swift */,
 				1C7F860A28D20E490073FD95 /* String+Extensions.swift */,
 				1C7F861C28D20E490073FD95 /* StringAttributed+Extensions.swift */,
+				1A4C35D1142A0506B5B87BE5 /* UIAlertController+Extensions.swift */,
 				1C7F861128D20E490073FD95 /* UIApplication+Extensions.swift */,
 				1C7F861928D20E490073FD95 /* UIBarButtonItem+Extensions.swift */,
 				1C7F860728D20E490073FD95 /* UIButton+Extensions.swift */,
 				1C7F862228D20E490073FD95 /* UICollectionView+Extensions.swift */,
 				1C7F861428D20E490073FD95 /* UICollectionViewCell+Extensions.swift */,
 				1C7F860F28D20E490073FD95 /* UIColor+Extensions.swift */,
+				1A4C3630699CD8D40BB195C2 /* UIControl+Extensions.swift */,
 				1C7F860B28D20E490073FD95 /* UIEdgeInsets+Extensions.swift */,
 				1C7F860328D20E490073FD95 /* UIFont+Extension.swift */,
 				1C7F860E28D20E490073FD95 /* UIImage+Extension.swift */,
@@ -1999,8 +2004,6 @@
 				1C7F861028D20E490073FD95 /* UIView+LayoutConstraints+Extensions.swift */,
 				1C7F860528D20E490073FD95 /* UIView+Toast+Extensions.swift */,
 				1C5D24DE28E1A3DD007DA557 /* UIViewController+Extensions.swift */,
-				1A4C35D1142A0506B5B87BE5 /* UIAlertController+Extensions.swift */,
-				1A4C3630699CD8D40BB195C2 /* UIControl+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3106,6 +3109,7 @@
 				1C54DC012860E5BC00E378F6 /* NetworkPickerView.swift in Sources */,
 				1C54DBFF2860E5B000E378F6 /* NetworkPickerPresenter.swift in Sources */,
 				1C60C2E0285724D0003BE25D /* DashboardWalletCell.swift in Sources */,
+				1C876AF728FD483B003D272A /* NSAttributtedString+Extensions.swift in Sources */,
 				1C60C331285724D1003BE25D /* NFTsCollectionWireframe.swift in Sources */,
 				1C7F863828D20E490073FD95 /* UIView+LayoutConstraints+Extensions.swift in Sources */,
 				1CD3FE8928559EF2008312DE /* Web3ServiceLegacy.swift in Sources */,
@@ -3350,7 +3354,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 25;
-				DEVELOPMENT_TEAM = W622KH7Q3T;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3392,7 +3396,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 25;
-				DEVELOPMENT_TEAM = W622KH7Q3T;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;

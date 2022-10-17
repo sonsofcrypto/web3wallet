@@ -31,8 +31,6 @@ final class CurrencyPickerTokenCell: UICollectionViewCell {
         tokenLabel.font = Theme.font.body
         tokenLabel.textColor = Theme.colour.labelPrimary
         tokenLabel.textAlignment = .right
-        usdPriceLabel.font = Theme.font.callout
-        usdPriceLabel.textColor = Theme.colour.labelSecondary
         usdPriceLabel.textAlignment = .right
     }
 
@@ -52,8 +50,17 @@ final class CurrencyPickerTokenCell: UICollectionViewCell {
         if let balance = viewModel.type.balance {
             symbolLabel.isHidden = true
             tokenPriceView.isHidden = false
-            tokenLabel.text = balance.tokens
-            usdPriceLabel.text = balance.usdTotal
+            tokenLabel.attributedText = .init(
+                balance.tokens,
+                font: Theme.font.body,
+                fontSmall: Theme.font.caption2
+            )
+            usdPriceLabel.attributedText = .init(
+                balance.usdTotal,
+                font: Theme.font.callout,
+                fontSmall: Theme.font.caption2,
+                foregroundColor: Theme.colour.labelSecondary
+            )
         } else {
             symbolLabel.isHidden = false
             tokenPriceView.isHidden = true

@@ -142,7 +142,8 @@ private extension DefaultDashboardPresenter {
 private extension DefaultDashboardPresenter {
     
     func didTapEditToken(_ networkId: String) {
-        guard let network = interactor.selectedNetwork else { return }
+        let network = interactor.enabledNetworks().first { networkId == $0.id() }
+        guard let network = network else { return }
         wireframe.navigate(
             to: .editCurrencies(
                 network: network,
@@ -172,7 +173,11 @@ private extension DefaultDashboardPresenter {
         sections.append(
             .init(
                 header: .balance(
-                    Formatter.fiat.string(interactor.totalFiatBalance())
+                    Formatters.Companion.shared.fiat.format(
+                        amount: interactor.totalFiatBalance().bigDec,
+                        style: Formatters.StyleCustom(maxLength: 15),
+                        currencyCode: "usd"
+                    )
                 ),
                 items: .actions(
                     [
@@ -261,21 +266,35 @@ private extension DefaultDashboardPresenter {
             for: network,
             currency: currency
         )
-        let formatted = Formatter.currency.string(
-            cryptoBalance,
+        let formatted = Formatters.Companion.shared.currency.format(
+            amount: cryptoBalance,
             currency: currency,
-            style: .long
+            style: Formatters.StyleCustom(maxLength: 15)
         )
         return .init(
             name: currency.name,
             ticker: currency.symbol.uppercased(),
             colors: metadata?.colors ?? ["#FFFFFF", "#000000"],
             imageName: currency.iconName,
-            fiatPrice: Formatter.fiat.string(Float(truncating: market?.currentPrice ?? 0)),
-            fiatBalance: Formatter.fiat.string(Float(fiatBalance)),
+            fiatPrice: Formatters.Companion.shared.fiat.format(
+                amount: BigDec.Companion().from(double: market?.currentPrice?.doubleValue ?? 0.0),
+                style: Formatters.StyleCustom(maxLength: 10),
+                currencyCode: "usd"
+            ),
+            fiatBalance: Formatters.Companion.shared.fiat.format(
+                amount: fiatBalance.bigDec,
+                style: Formatters.StyleCustom(maxLength: 10),
+                currencyCode: "usd"
+            ),
             cryptoBalance: formatted,
-            tokenPrice: Formatter.fiat.string(market?.currentPrice),
-            pctChange: Formatter.pct.string(market?.priceChangePercentage24h, div: true),
+            tokenPrice: Formatters.Companion.shared.fiat.format(
+                amount: market?.currentPrice?.doubleValue.bigDec,
+                style: Formatters.StyleCustom(maxLength: 10),
+                currencyCode: "usd"
+            ),
+            pctChange: Formatters.Companion.shared.pct.format(
+                amount: market?.priceChangePercentage24h, div: true
+            ),
             priceUp: market?.priceChangePercentage24h?.doubleValue ?? 0 >= 0,
             candles: candlesViewModel(candles: interactor.candles(for: currency))
         )

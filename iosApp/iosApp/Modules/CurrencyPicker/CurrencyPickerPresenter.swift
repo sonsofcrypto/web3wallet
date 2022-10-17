@@ -10,6 +10,7 @@ enum CurrencyPickerPresenterEvent {
     case selectNetwork(CurrencyPickerViewModel.Network)
     case selectCurrency(CurrencyPickerViewModel.Currency)
     case addCustomCurrency
+    case viewWillDismiss
     case done
     case dismiss
 }
@@ -77,6 +78,11 @@ extension DefaultCurrencyPickerPresenter: CurrencyPickerPresenter {
         case .addCustomCurrency:
             guard let network = networks.first else { return }
             wireframe.navigate(to: .addCustomCurrency(network: network))
+        case .viewWillDismiss:
+            guard
+                case let CurrencyPickerWireframeContext.Source.multiSelectEdit(_, onCompletion) = context.source
+            else { return }
+            onCompletion(selectedCurrencies)
         case .done:
             wireframe.dismiss()
         case .dismiss:
@@ -86,13 +92,6 @@ extension DefaultCurrencyPickerPresenter: CurrencyPickerPresenter {
 }
 
 private extension DefaultCurrencyPickerPresenter {
-    
-    func onMultiSelectCurrenciesChanged() {
-        guard
-            case let CurrencyPickerWireframeContext.Source.multiSelectEdit(_, onCompletion) = context.source
-        else { return }
-        onCompletion(selectedCurrencies)
-    }
     
     func loadSelectedNetworksIfNeeded() {
         networks = loadNetworks()
@@ -125,7 +124,6 @@ private extension DefaultCurrencyPickerPresenter {
         } else if let currency = currenciesFiltered.findCurrency(matching: currency.id) {
             selectedCurrencies = selectedCurrencies.addingCurrency(currency)
         }
-        onMultiSelectCurrenciesChanged()
         refreshData()
     }
     
@@ -238,24 +236,32 @@ private extension DefaultCurrencyPickerPresenter {
                 type = .init(
                     isSelected: isSelected,
                     balance: .init(
-                        tokens: Formatter.currency.string(
-                            currencyBalance,
+                        tokens: Formatters.Companion.shared.currency.format(
+                            amount: currencyBalance,
                             currency: currency,
-                            style: .long
+                            style: Formatters.StyleCustom(maxLength: 15)
                         ),
-                        usdTotal: Formatter.fiat.string(fiatBalancce)
+                        usdTotal: Formatters.Companion.shared.fiat.format(
+                            amount: fiatBalancce.bigDec,
+                            style: Formatters.StyleCustom(maxLength: 10),
+                            currencyCode: "usd"
+                        )
                     )
                 )
             case .select:
                 type = .init(
                     isSelected: nil,
                     balance: .init(
-                        tokens: Formatter.currency.string(
-                            currencyBalance,
+                        tokens: Formatters.Companion.shared.currency.format(
+                            amount: currencyBalance,
                             currency: currency,
-                            style: .long
+                            style: Formatters.StyleCustom(maxLength: 15)
                         ),
-                        usdTotal: Formatter.fiat.string(fiatBalancce)
+                        usdTotal: Formatters.Companion.shared.fiat.format(
+                            amount: fiatBalancce.bigDec,
+                            style: Formatters.StyleCustom(maxLength: 10),
+                            currencyCode: "usd"
+                        )
                     )
                 )
             }
