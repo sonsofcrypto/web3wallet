@@ -95,7 +95,7 @@ private extension DefaultAccountPresenter {
             marketInfo: .init(
                 marketCap: Formatters.Companion.shared.fiat.format(
                     amount: market?.marketCap?.doubleValue.bigDec,
-                    style: Formatters.StyleCustom(maxLength: 12),
+                    style: Formatters.StyleCustom(maxLength: 8),
                     currencyCode: "usd"
                 ),
                 price: Formatters.Companion.shared.fiat.format(
@@ -105,7 +105,7 @@ private extension DefaultAccountPresenter {
                 ),
                 volume: Formatters.Companion.shared.fiat.format(
                     amount: market?.totalVolume?.doubleValue.bigDec,
-                    style: Formatters.StyleCustom(maxLength: 12),
+                    style: Formatters.StyleCustom(maxLength: 8),
                     currencyCode: "usd"
                 )
             ),

@@ -116,8 +116,11 @@ class FormattersOutput {
                     is Normal -> {
                         val prevLength = length - it.length
                         val available = maxLength - prevLength
+                        if (
+                            output.isEmpty() && available < it.value.wholeNumberPart.length.toUInt()
+                        ) { break }
                         val n = it.value.dropLast((it.length - available).toInt())
-                        if (n.isNotEmpty()) output.add(Normal(n))
+                        if (n.isNotEmpty()) output.add(Normal(n.clearZeros))
                     }
                     is Down -> {}
                     is Up -> {}
@@ -166,15 +169,7 @@ class FormattersOutput {
             return when (val item = first()) {
                 is Normal -> {
                     if (!(item.value.contains('.'))) return this
-                    var value = item.value
-                    while (value.last() == '0') {
-                        value = value.dropLast(1)
-                        if (value.last() == '.') {
-                            value = value.dropLast(1)
-                            break
-                        }
-                    }
-                    listOf(Normal(value))
+                    listOf(Normal(item.value.clearZeros))
                 }
                 is Up -> { this }
                 is Down -> { this }
@@ -230,5 +225,19 @@ class FormattersOutput {
         is Up -> { value.length.toUInt() }
         is Normal -> { value.length.toUInt() }
         is Down -> { value.length.toUInt() }
+    }
+
+    private val String.clearZeros: String get() {
+        var value = this
+        while (value.last() == '0') {
+            value = value.dropLast(1)
+            if (value.last() == '.') {
+                break
+            }
+        }
+        if (value.last() == '.') {
+            value = value.dropLast(1)
+        }
+        return value
     }
 }

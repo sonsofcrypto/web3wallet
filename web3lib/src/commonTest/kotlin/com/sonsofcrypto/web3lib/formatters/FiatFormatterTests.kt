@@ -166,4 +166,52 @@ class FiatFormatterTests {
         )
         assertEquals(expected, actual)
     }
+    @Test
+    fun testFiatCustomUSD16() {
+        val actual = output("16949329792", Custom(5u), "usd")
+        val expected: List<Formatters.Output> = listOf(
+            Normal("$16B"),
+        )
+        assertEquals(expected, actual)
+    }
+    @Test
+    fun testFiatCustomUSD17() {
+        val actual = output("16949329792", Custom(4u), "usd")
+        val expected: List<Formatters.Output> = listOf(
+            Normal("$16B"),
+        )
+        assertEquals(expected, actual)
+    }
+    @Test
+    fun testFiatCustomUSD18() {
+        val actual = output("16949329792", Custom(3u), "usd")
+        val expected: List<Formatters.Output> = listOf(
+            Normal("$16B"),
+        )
+        assertEquals(expected, actual)
+    }
+    @Test
+    fun testFiatCustomUSD19() {
+        val actual = output("16949329792", Custom(2u), "usd")
+        val expected: List<Formatters.Output> = listOf(
+            Normal("$16B"),
+        )
+        assertEquals(expected, actual)
+    }
+    @Test
+    fun testFiatCustomUSD20() {
+        val actual = output("16949329792", Custom(1u), "usd")
+        val expected: List<Formatters.Output> = listOf(
+            Normal("$16B"),
+        )
+        assertEquals(expected, actual)
+    }
+    @Test
+    fun testFiatCustomUSD21() {
+        val actual = output("16949329792", Custom(0u), "usd")
+        val expected: List<Formatters.Output> = listOf(
+            Normal("$16B"),
+        )
+        assertEquals(expected, actual)
+    }
 }

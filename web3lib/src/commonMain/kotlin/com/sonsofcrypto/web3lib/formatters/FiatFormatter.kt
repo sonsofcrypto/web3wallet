@@ -2,6 +2,8 @@ package com.sonsofcrypto.web3lib.formatters
 
 import com.sonsofcrypto.web3lib.formatters.Formatters.Output.Normal
 import com.sonsofcrypto.web3lib.utils.BigDec
+import kotlin.math.max
+import kotlin.math.min
 
 class FiatFormatter {
     private val placeholder = "-"
@@ -15,23 +17,21 @@ class FiatFormatter {
         style: Formatters.Style = Formatters.Style.Max,
         currencyCode: String = "usd"
     ): List<Formatters.Output> {
-        val amount = amount ?: return listOf(Normal(placeholder))
-        val fiatCurrency = fiatCurrency(currencyCode)
+        val amount = amount?.toString() ?: return listOf(Normal(placeholder))
+        val fiat = fiatCurrency(currencyCode)
         val output: List<Formatters.Output> = when (style) {
             is Formatters.Style.Custom -> {
-                val maxLength = style.maxLength - (fiatCurrency.symbol.length).toUInt()
-                if (amount.toString().length.toUInt() <= maxLength) {
-                    listOf(Normal(amount.toString()))
-                } else {
-                    formattersOutput.convert(
-                        amount.toString(),
-                        style.maxLength - (fiatCurrency.symbol.length).toUInt()
-                    )
+                val maxLength =
+                    if (style.maxLength == 0u) 1u
+                    else max(1u, style.maxLength - (fiat.symbol.length).toUInt())
+                if (amount.length.toUInt() <= maxLength) { listOf(Normal(amount)) }
+                else {
+                    formattersOutput.convert(amount, maxLength)
                 }
             }
-            is Formatters.Style.Max -> { listOf(Normal(amount.toString())) }
+            is Formatters.Style.Max -> { listOf(Normal(amount)) }
         }
-        return output.addFiatSymbol(fiatCurrency)
+        return output.addFiatSymbol(fiat)
     }
 
     private fun fiatCurrency(currencyCode: String): FiatCurrency =
