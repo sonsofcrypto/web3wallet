@@ -84,11 +84,13 @@ extension DefaultAccountInteractor: AccountInteractor {
         let price = currencyStoreService.marketData(currency: _currency)?
             .currentPrice?
             .doubleValue ?? 0
-        return web3walletcore.Formatters.Companion.shared.crypto(
+        let double = try? web3walletcore.Formatters.Companion.shared.crypto(
             amount: cryptoBalance(),
             decimals: _currency.decimals(),
             mul: price
-        )
+        ).format(maximumFractionDigits: 2)?.clearCommas.double()
+        return double ?? 0
+
     }
 
     func transactions() -> [AccountInteractorTransaction] {

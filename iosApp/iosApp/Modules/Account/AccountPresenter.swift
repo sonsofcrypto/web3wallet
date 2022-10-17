@@ -85,7 +85,7 @@ private extension DefaultAccountPresenter {
             ),
             address: .init(
                 address: Formatters.Companion.shared.networkAddress.format(
-                    address: interactor.address(), digits: 8, network: interactor.network
+                    address: interactor.address(), digits: 12, network: interactor.network
                 ),
                 copyIcon: "square.on.square"
             ),
