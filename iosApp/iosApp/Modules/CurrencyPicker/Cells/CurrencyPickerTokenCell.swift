@@ -50,11 +50,13 @@ final class CurrencyPickerTokenCell: UICollectionViewCell {
         if let balance = viewModel.type.balance {
             symbolLabel.isHidden = true
             tokenPriceView.isHidden = false
-            tokenLabel.attributedText = balance.tokens.attributtedString(
+            tokenLabel.attributedText = .init(
+                balance.tokens,
                 font: Theme.font.body,
                 fontSmall: Theme.font.caption2
             )
-            usdPriceLabel.attributedText = balance.usdTotal.attributtedString(
+            usdPriceLabel.attributedText = .init(
+                balance.usdTotal,
                 font: Theme.font.callout,
                 fontSmall: Theme.font.caption2,
                 foregroundColor: Theme.colour.labelSecondary

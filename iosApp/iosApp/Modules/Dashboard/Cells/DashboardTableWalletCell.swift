@@ -34,7 +34,8 @@ extension DashboardTableWalletCell {
         showBottomSeparator: Bool = true
     ) -> Self {
         currencyImageView.image = viewModel.imageName.assetImage
-        fiatPriceLabel.attributedText = viewModel.fiatPrice.attributtedString(
+        fiatPriceLabel.attributedText = .init(
+            viewModel.fiatPrice,
             font: Theme.font.callout,
             fontSmall: Theme.font.caption2,
             foregroundColor: Theme.colour.labelSecondary
@@ -46,11 +47,13 @@ extension DashboardTableWalletCell {
         } else {
             pctChangeLabel.apply(style: .callout, colour: Theme.colour.candleRed)
         }
-        cryptoBalanceLabel.attributedText = viewModel.cryptoBalance.attributtedString(
+        cryptoBalanceLabel.attributedText = .init(
+            viewModel.cryptoBalance,
             font: Theme.font.body,
             fontSmall: Theme.font.footnote
         )
-        fiatBalanceLabel.attributedText = viewModel.fiatBalance.attributtedString(
+        fiatBalanceLabel.attributedText = .init(
+            viewModel.fiatBalance,
             font: Theme.font.callout,
             fontSmall: Theme.font.caption2,
             foregroundColor: Theme.colour.labelSecondary

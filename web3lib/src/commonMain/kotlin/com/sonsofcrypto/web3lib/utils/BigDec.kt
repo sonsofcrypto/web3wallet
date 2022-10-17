@@ -4,7 +4,7 @@ import com.ionspin.kotlin.bignum.decimal.BigDecimal
 import com.ionspin.kotlin.bignum.decimal.DecimalMode
 import com.ionspin.kotlin.bignum.decimal.RoundingMode
 
-private val decimalMode = DecimalMode(108, RoundingMode.ROUND_HALF_AWAY_FROM_ZERO, 108)
+private val decimalMode = DecimalMode(36, RoundingMode.ROUND_HALF_AWAY_FROM_ZERO, 36)
 
 class BigDec {
 

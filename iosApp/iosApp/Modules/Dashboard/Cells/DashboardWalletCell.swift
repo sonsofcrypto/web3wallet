@@ -47,7 +47,8 @@ extension DashboardWalletCell {
         guard let viewModel = viewModel else { return self }
         imageView.image = UIImage(named: viewModel.imageName)
         currencyLabel.text = viewModel.ticker
-        fiatPriceLabel.attributedText = viewModel.fiatPrice.attributtedString(
+        fiatPriceLabel.attributedText = .init(
+            viewModel.fiatPrice,
             font: Theme.font.dashboardTVBalance,
             fontSmall: Theme.font.dashboardTVBalanceSmall
         )
@@ -57,7 +58,8 @@ extension DashboardWalletCell {
             : Theme.colour.priceDown
         pctChangeLabel.layer.shadowColor = pctChangeLabel.textColor.cgColor
         charView.update(viewModel.candles)
-        cryptoBalanceLabel.attributedText = viewModel.cryptoBalance.attributtedString(
+        cryptoBalanceLabel.attributedText = .init(
+            viewModel.cryptoBalance,
             font: Theme.font.dashboardTVTokenBalance,
             fontSmall: Theme.font.dashboardTVTokenBalanceSmall,
             foregroundColor: Theme.colour.dashboardTVCryptoBallance

@@ -28,7 +28,8 @@ extension AccountTransactionCell {
     func update(with transaction: AccountViewModel.Transaction) {
         guard let viewModel = transaction.data else { return }
         dateLabel.text = viewModel.date
-        amountLabel.attributedText = viewModel.amount.attributtedString(
+        amountLabel.attributedText = .init(
+            viewModel.amount,
             font: Theme.font.subheadline,
             fontSmall: Theme.font.footnote
         )

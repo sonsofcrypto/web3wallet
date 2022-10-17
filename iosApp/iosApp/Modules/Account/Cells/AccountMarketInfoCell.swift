@@ -32,15 +32,18 @@ final class AccountMarketInfoCell: CollectionViewCell {
 extension AccountMarketInfoCell {
 
     func update(with viewModel: AccountViewModel.MarketInfo?) {
-        marketCapValueLabel.attributedText = viewModel?.marketCap.attributtedString(
+        marketCapValueLabel.attributedText = .init(
+            viewModel?.marketCap ?? [],
             font: Theme.font.subheadline,
             fontSmall: Theme.font.caption2
         )
-        priceValueLabel.attributedText = viewModel?.price.attributtedString(
+        priceValueLabel.attributedText = .init(
+            viewModel?.price ?? [],
             font: Theme.font.subheadline,
             fontSmall: Theme.font.caption2
         )
-        volumeValueLabel.attributedText = viewModel?.volume.attributtedString(
+        volumeValueLabel.attributedText = .init(
+            viewModel?.volume ?? [],
             font: Theme.font.subheadline,
             fontSmall: Theme.font.caption2
         )

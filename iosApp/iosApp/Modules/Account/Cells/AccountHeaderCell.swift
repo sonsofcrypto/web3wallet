@@ -56,11 +56,13 @@ extension AccountHeaderCell {
     ) {
         self.viewModel = viewModel
         self.handler = handler
-        balanceLabel.attributedText = viewModel.balance.attributtedString(
+        balanceLabel.attributedText = .init(
+            viewModel.balance,
             font: Theme.font.largeTitle,
             fontSmall: Theme.font.footnote
         )
-        balanceFiatLabel.attributedText = viewModel.fiatBalance.attributtedString(
+        balanceFiatLabel.attributedText = .init(
+            viewModel.fiatBalance,
             font: Theme.font.subheadline,
             fontSmall: Theme.font.caption2
         )

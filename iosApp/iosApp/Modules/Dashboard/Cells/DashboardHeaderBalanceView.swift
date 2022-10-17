@@ -23,7 +23,8 @@ extension DashboardHeaderBalanceView {
 
     @discardableResult
     func update(with balance: [Formatters.Output]) -> Self {
-        label.attributedText = balance.attributtedString(
+        label.attributedText = .init(
+            balance,
             font: Theme.font.largeTitleBold,
             fontSmall: Theme.font.title3Bold
         )
