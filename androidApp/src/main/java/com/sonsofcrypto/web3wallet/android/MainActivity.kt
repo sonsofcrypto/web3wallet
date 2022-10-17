@@ -20,29 +20,10 @@ class MainActivity : AppCompatActivity() {
     init {
         Timer().scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                geth?.getPeersInfo()?.let {
-                    if (it.size() != 0L) {
-                        for (i in 0..it.size()) {
-                            kotlin.io.println(it.get(i))
-                        }
-                    }
-
-                }
-                geth?.getNodeInfo()?.let {
-                    println("id ${it.id}")
-                    println("name ${it.name}")
-                    println("enode ${it.enode}")
-                    println("ip ${it.ip}")
-                    println("discoveryPort ${it.discoveryPort}")
-                    println("listenerPort ${it.listenerPort}")
-                    println("listenerAddress ${it.listenerAddress}")
-                    println("protocols ${it.protocols}")
-                }
-                println(geth?.getPeersInfo())
-                println(geth?.getNodeInfo())
-                println("===")
+                println("${geth?.getPeersInfo()}")
+                println("${geth?.getNodeInfo()}")
             }
-        }, 0, 1000)
+        }, 0, 10000)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         tv.text = secureRand(128).toString()
 
         val gethPath = applicationContext.getDir("geth", Context.MODE_PRIVATE).path
-        geth = Node(gethPath, NodeConfig())
+        geth = CoreCrypto.newGethNode(gethPath, NodeConfig())
         geth?.start()
     }
 
