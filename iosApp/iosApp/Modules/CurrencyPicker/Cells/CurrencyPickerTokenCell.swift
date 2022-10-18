@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class CurrencyPickerTokenCell: UICollectionViewCell {
     @IBOutlet weak var separatorTopView: UIView!
@@ -38,7 +39,16 @@ final class CurrencyPickerTokenCell: UICollectionViewCell {
         iconImageView.image = viewModel.imageName.assetImage
         symbolLabel.text = viewModel.symbol.uppercased()
         nameLabel.text = viewModel.name
-        if let isSelected = viewModel.type.isSelected {
+        updateIsSelected(with: viewModel.isSelected?.boolValue)
+        updateTokens(with: viewModel)
+        updateSeparator(with: viewModel.position)
+    }
+}
+
+private extension CurrencyPickerTokenCell {
+    
+    func updateIsSelected(with isSelected: Bool?) {
+        if let isSelected = isSelected {
             multiSelectView.isHidden = false
             multiSelectTick.tintColor = Theme.colour.labelSecondary
             multiSelectTick.image = isSelected
@@ -47,16 +57,19 @@ final class CurrencyPickerTokenCell: UICollectionViewCell {
         } else {
             multiSelectView.isHidden = true
         }
-        if let balance = viewModel.type.balance {
+    }
+    
+    func updateTokens(with viewModel: CurrencyPickerViewModel.Currency) {
+        if let tokens = viewModel.tokens, let fiat = viewModel.fiat {
             symbolLabel.isHidden = true
             tokenPriceView.isHidden = false
             tokenLabel.attributedText = .init(
-                balance.tokens,
+                tokens,
                 font: Theme.font.body,
                 fontSmall: Theme.font.caption2
             )
             usdPriceLabel.attributedText = .init(
-                balance.usdTotal,
+                fiat,
                 font: Theme.font.callout,
                 fontSmall: Theme.font.caption2,
                 foregroundColor: Theme.colour.labelSecondary
@@ -65,8 +78,11 @@ final class CurrencyPickerTokenCell: UICollectionViewCell {
             symbolLabel.isHidden = false
             tokenPriceView.isHidden = true
         }
-        switch viewModel.position {
-        case .onlyOne:
+    }
+    
+    func updateSeparator(with position: CurrencyPickerViewModel.Position) {
+        switch position {
+        case .single:
             separatorTopView.isHidden = false
             separatorTopViewLeadingConstraint.constant = 0
             separatorTopViewTrailingConstraint.constant = 0
@@ -86,6 +102,8 @@ final class CurrencyPickerTokenCell: UICollectionViewCell {
             separatorTopViewLeadingConstraint.constant = Theme.constant.padding
             separatorTopViewTrailingConstraint.constant = 0
             separatorBottomView.isHidden = false
+        default:
+            break
         }
     }
 }

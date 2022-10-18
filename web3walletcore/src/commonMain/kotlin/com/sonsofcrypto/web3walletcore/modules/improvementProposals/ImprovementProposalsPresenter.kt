@@ -3,7 +3,7 @@ package com.sonsofcrypto.web3walletcore.modules.improvementProposals
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.withUICxt
-import com.sonsofcrypto.web3walletcore.common.viewModels.CommonErrorViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.ErrorViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.with
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.improvementProposals.ImprovementProposalsViewModel.*
@@ -84,7 +84,7 @@ class DefaultImprovementProposalsPresenter(
 
     private fun viewModel(): ImprovementProposalsViewModel {
         if (error != null)
-            return Error(CommonErrorViewModel.with(error!!))
+            return Error(ErrorViewModel.with(error!!))
         if (proposals.isEmpty())
             return Loading
         return Loaded(

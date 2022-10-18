@@ -145,12 +145,9 @@
 		1C60C2AA285724D0003BE25D /* SettingsWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1D2285724D0003BE25D /* SettingsWireframeFactory.swift */; };
 		1C60C2AC285724D0003BE25D /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1D4285724D0003BE25D /* SettingsPresenter.swift */; };
 		1C60C2AD285724D0003BE25D /* CurrencyPickerWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1D6285724D0003BE25D /* CurrencyPickerWireframe.swift */; };
-		1C60C2AE285724D0003BE25D /* CurrencyPickerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1D7285724D0003BE25D /* CurrencyPickerInteractor.swift */; };
 		1C60C2AF285724D0003BE25D /* CurrencyPickerTokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1D9285724D0003BE25D /* CurrencyPickerTokenCell.swift */; };
 		1C60C2B0285724D0003BE25D /* CurrencyPickerSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DA285724D0003BE25D /* CurrencyPickerSectionCell.swift */; };
-		1C60C2B1285724D0003BE25D /* CurrencyPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DB285724D0003BE25D /* CurrencyPickerViewModel.swift */; };
 		1C60C2B3285724D0003BE25D /* CurrencyPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DD285724D0003BE25D /* CurrencyPickerView.swift */; };
-		1C60C2B4285724D0003BE25D /* CurrencyPickerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DE285724D0003BE25D /* CurrencyPickerPresenter.swift */; };
 		1C60C2B5285724D0003BE25D /* CurrencyPickerWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DF285724D0003BE25D /* CurrencyPickerWireframeFactory.swift */; };
 		1C60C2B6285724D0003BE25D /* CurrencyPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C60C1E0285724D0003BE25D /* CurrencyPicker.storyboard */; };
 		1C60C2B7285724D0003BE25D /* KeyStoreInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1E2285724D0003BE25D /* KeyStoreInteractor.swift */; };
@@ -703,12 +700,9 @@
 		1C60C1D2285724D0003BE25D /* SettingsWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C1D4285724D0003BE25D /* SettingsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
 		1C60C1D6285724D0003BE25D /* CurrencyPickerWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerWireframe.swift; sourceTree = "<group>"; };
-		1C60C1D7285724D0003BE25D /* CurrencyPickerInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerInteractor.swift; sourceTree = "<group>"; };
 		1C60C1D9285724D0003BE25D /* CurrencyPickerTokenCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerTokenCell.swift; sourceTree = "<group>"; };
 		1C60C1DA285724D0003BE25D /* CurrencyPickerSectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerSectionCell.swift; sourceTree = "<group>"; };
-		1C60C1DB285724D0003BE25D /* CurrencyPickerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerViewModel.swift; sourceTree = "<group>"; };
 		1C60C1DD285724D0003BE25D /* CurrencyPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerView.swift; sourceTree = "<group>"; };
-		1C60C1DE285724D0003BE25D /* CurrencyPickerPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerPresenter.swift; sourceTree = "<group>"; };
 		1C60C1DF285724D0003BE25D /* CurrencyPickerWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C1E0285724D0003BE25D /* CurrencyPicker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CurrencyPicker.storyboard; sourceTree = "<group>"; };
 		1C60C1E2285724D0003BE25D /* KeyStoreInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreInteractor.swift; sourceTree = "<group>"; };
@@ -1510,10 +1504,7 @@
 			isa = PBXGroup;
 			children = (
 				1C60C1E0285724D0003BE25D /* CurrencyPicker.storyboard */,
-				1C60C1D7285724D0003BE25D /* CurrencyPickerInteractor.swift */,
-				1C60C1DE285724D0003BE25D /* CurrencyPickerPresenter.swift */,
 				1C60C1DD285724D0003BE25D /* CurrencyPickerView.swift */,
-				1C60C1DB285724D0003BE25D /* CurrencyPickerViewModel.swift */,
 				1C60C1D6285724D0003BE25D /* CurrencyPickerWireframe.swift */,
 				1C60C1DF285724D0003BE25D /* CurrencyPickerWireframeFactory.swift */,
 				1C60C1D8285724D0003BE25D /* Cells */,
@@ -2880,7 +2871,6 @@
 				1C9E3197287580BF00DD2031 /* CurrencyCurrencyWireframeFactory.swift in Sources */,
 				D1EF5BCD287BEE92004CAD82 /* MnemonicUpdateView.swift in Sources */,
 				1C671FF4287FDFDC00C5F044 /* CurrencySwapWireframeFactory.swift in Sources */,
-				1C60C2B4285724D0003BE25D /* CurrencyPickerPresenter.swift in Sources */,
 				1C60C2B9285724D0003BE25D /* KeyStorePresenter.swift in Sources */,
 				1CB8B0BA288DBEE700024E7C /* CultProposalDetailTokenomicsView.swift in Sources */,
 				1C54DBF5285F32DC00E378F6 /* CurrencyAddInputView.swift in Sources */,
@@ -2992,7 +2982,6 @@
 				1C60C314285724D1003BE25D /* AccountWireframe.swift in Sources */,
 				1C60C330285724D1003BE25D /* NFTsCollectionViewModel.swift in Sources */,
 				1CDED5F8289C324C00DF34A7 /* NFTsDashboardView+NoContentView.swift in Sources */,
-				1C60C2AE285724D0003BE25D /* CurrencyPickerInteractor.swift in Sources */,
 				1C60C2D4285724D0003BE25D /* MnemonicNewWireframe.swift in Sources */,
 				1C7FC9A828BCEA3400FC9175 /* WebViewWireframe.swift in Sources */,
 				1C60C2A8285724D0003BE25D /* SettingsViewModel.swift in Sources */,
@@ -3076,7 +3065,6 @@
 				1C60C312285724D1003BE25D /* AccountHeaderCell.swift in Sources */,
 				D1976B11287EFAE10063FC9C /* MnemonicImportView.swift in Sources */,
 				1C60C317285724D1003BE25D /* AccountInteractor.swift in Sources */,
-				1C60C2B1285724D0003BE25D /* CurrencyPickerViewModel.swift in Sources */,
 				1A4C3B697503D478741295DB /* TextField.swift in Sources */,
 				1C7FC97B28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift in Sources */,
 				1C9E3195287580B600DD2031 /* CurrencySendWireframe.swift in Sources */,

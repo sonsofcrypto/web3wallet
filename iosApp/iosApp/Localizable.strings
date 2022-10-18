@@ -245,13 +245,17 @@
 "chat.me.message2" = "Perfect, I will check this out";
 "chat.me.message3" = "Also, please tell SonsOfCrypto team that they rock! 🔥";
 
+"currencyPicker.title.currency" = "Select a currency";
+"currencyPicker.title.currencies" = "Select currencies";
+
+
 "currencyPicker.title.receive" = "Select a currency";
 "currencyPicker.title.send" = "Select a currency";
 "currencyPicker.title.multiSelectEdit" = "Select currencies";
 "currencyPicker.title.select" = "Select a currency";
 "currencyPicker.networks.title" = "Available networks";
-"currencyPicker.currencies.title" = "My currencies";
-"currencyPicker.other.title" = "All currencies";
+"currencyPicker.currencies.favourite.title" = "Favourite currencies";
+"currencyPicker.currencies.title" = "All currencies";
 "currencyPicker.featured.title" = "Featured";
 "currencyPicker.popular.title" = "Popular";
 "currencyPicker.noResults" = "No results";

@@ -5,44 +5,6 @@
 import UIKit
 import web3walletcore
 
-struct CurrencyPickerWireframeContext {    
-    let title: TitleKey
-    let selectedNetwork: Network?
-    let networks: Networks
-    let source: Source
-    let showAddCustomCurrency: Bool
-    
-    // This will be used to construct the view title as: "currencyPicker.title.<titleKey.rawValue>"
-    enum TitleKey: String {
-        case multiSelectEdit = "multiSelectEdit"
-        case receive = "receive"
-        case send = "send"
-        case select = "select"
-    }
-    
-    enum Networks {
-        case all
-        case subgroup(networks: [Network])
-    }
-    
-    enum Source {
-        case multiSelectEdit(
-            selectedCurrencies: [Currency],
-            onCompletion: ([Currency]) -> Void
-        )
-        case select(
-            onCompletion: (Network, Currency) -> Void
-        )
-        
-        var isMultiSelect: Bool {
-            switch self {
-            case .multiSelectEdit: return true
-            case .select: return false
-            }
-        }
-    }
-}
-
 final class DefaultCurrencyPickerWireframe {
     
     private weak var parent: UIViewController?
@@ -78,17 +40,17 @@ extension DefaultCurrencyPickerWireframe: CurrencyPickerWireframe {
         parent?.present(vc, animated: true)
     }
     
-    func navigate(to destination: CurrencyPickerWireframeDestination) {
-        switch destination {
-        case let .addCustomCurrency(network):
+    func navigate(destination___ destination: CurrencyPickerWireframeDestination) {
+        if let target = destination as? CurrencyPickerWireframeDestination.AddCustomCurrency {
             currencyAddWireframeFactory.make(
                 vc,
-                context: .init(network: network)
+                context: .init(network: target.network)
             ).present()
         }
+        if (destination as? CurrencyPickerWireframeDestination.Dismiss) != nil {
+            vc?.popOrDismiss()
+        }
     }
-    
-    func dismiss() { vc?.popOrDismiss() }
 }
 
 private extension DefaultCurrencyPickerWireframe {
@@ -96,17 +58,15 @@ private extension DefaultCurrencyPickerWireframe {
     func wireUp() -> UIViewController {
         let interactor = DefaultCurrencyPickerInteractor(
             walletService: walletService,
-            networksService: networksService,
             currencyStoreService: currencyStoreService
         )
         let vc: CurrencyPickerViewController = UIStoryboard(.currencyPicker).instantiate()
         let presenter = DefaultCurrencyPickerPresenter(
-            view: vc,
+            view: WeakRef(referred: vc),
             wireframe: self,
             interactor: interactor,
             context: context
         )
-        vc.hidesBottomBarWhenPushed = true
         vc.presenter = presenter
         vc.context = context
         let nc = NavigationController(rootViewController: vc)

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class CurrencyPickerSectionCell: UICollectionReusableView {
     private var leadingConstraint: NSLayoutConstraint!
@@ -29,13 +30,12 @@ final class CurrencyPickerSectionCell: UICollectionReusableView {
 
 extension CurrencyPickerSectionCell {
 
-    func update(with viewModel: CurrencyPickerViewModel.Section) {
-        label.text = viewModel.name
-        switch viewModel.type {
-        case .networks:
+    func update(with section: CurrencyPickerViewModel.Section) {
+        label.text = section.name
+        if (section as? CurrencyPickerViewModel.SectionNetworks) != nil {
             leadingConstraint.constant = 0
             trailingConstraint.constant = 0
-        case .tokens:
+        } else {
             leadingConstraint.constant = Theme.constant.padding
             trailingConstraint.constant = Theme.constant.padding
         }
