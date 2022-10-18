@@ -72,9 +72,7 @@ class DefaultImprovementProposalsPresenter(
                 error = null
                 updateView()
             }
-            is ImprovementProposalsPresenterEvent.Dismiss -> wireframe.navigate(
-                Dismiss
-            )
+            is ImprovementProposalsPresenterEvent.Dismiss -> wireframe.navigate(Dismiss)
         }
     }
 

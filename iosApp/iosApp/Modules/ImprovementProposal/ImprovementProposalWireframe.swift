@@ -31,7 +31,7 @@ extension DefaultImprovementProposalWireframe: ImprovementProposalWireframe {
         if let vote = destination_ as? ImprovementProposalWireframeDestination.Vote {
             FeatureShareHelper().shareVote(on: vote.proposal)
         }
-        if let _ = destination_ as? ImprovementProposalWireframeDestination.Dismiss {
+        if (destination_ as? ImprovementProposalWireframeDestination.Dismiss) != nil {
             vc?.popOrDismiss()
         }
     }

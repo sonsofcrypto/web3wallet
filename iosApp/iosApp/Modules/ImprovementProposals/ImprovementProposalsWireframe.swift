@@ -40,9 +40,10 @@ extension DefaultImprovementProposalsWireframe: ImprovementProposalsWireframe {
                 context: .init(proposal: dest.proposal)
             ).present()
         }
+        if (destination as? ImprovementProposalsWireframeDestination.Dismiss) != nil {
+            parent?.popOrDismiss()
+        }
     }
-    
-    func dismiss() { parent?.popOrDismiss() }
 }
 
 extension DefaultImprovementProposalsWireframe {
