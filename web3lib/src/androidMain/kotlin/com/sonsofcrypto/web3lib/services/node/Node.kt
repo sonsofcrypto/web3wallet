@@ -1,5 +1,7 @@
 package com.sonsofcrypto.web3lib.services.node
 
+import android.content.Context.MODE_PRIVATE
+import com.sonsofcrypto.web3lib.keyValueStore.application
 import coreCrypto.CoreCrypto.newGethNode
 
 actual class NodeConfig(
@@ -21,7 +23,7 @@ actual class Node {
     /** Defaults mainnet config and platform appropriate dataFolder if null  */
     @Throws(Throwable::class)
     actual constructor(config: NodeConfig?, dataFolder: String?) {
-        val path = ""
+        val path = dataFolder ?: defaultPath()
         val cnf = config?.coreConfig ?: coreCrypto.NodeConfig()
         coreNode = newGethNode(path, cnf)
     }
@@ -39,4 +41,7 @@ actual class Node {
 
     /** Returns an array of metadata objects describing connected peers. */
     actual fun getPeersInfo(): PeerInfos = PeerInfos(coreNode.peersInfo)
+
+    private fun defaultPath(): String =
+        application.getDir("geth", MODE_PRIVATE).path
 }

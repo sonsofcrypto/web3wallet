@@ -9,6 +9,7 @@ import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
 import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
+import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
 import com.sonsofcrypto.web3lib.services.wallet.DefaultWalletService
 import com.sonsofcrypto.web3lib.signer.contracts.CultGovernor
 import com.sonsofcrypto.web3lib.signer.contracts.ERC721
@@ -53,6 +54,7 @@ class WalletServiceTest {
         val networksService = DefaultNetworksService(
             KeyValueStore("web3serviceTest"),
             keyStoreService,
+            DefaultNodeService()
         )
         var walletService = DefaultWalletService(
             networksService,
@@ -124,6 +126,7 @@ class WalletServiceTest {
         val networksService = DefaultNetworksService(
             KeyValueStore("web3serviceTest"),
             keyStoreService,
+            DefaultNodeService()
         )
         networksService.setNetwork(Network.ropsten(), enabled = true)
         networksService.network = Network.ropsten()
@@ -196,6 +199,7 @@ class WalletServiceTest {
         val networksService = DefaultNetworksService(
             KeyValueStore("web3serviceTest"),
             keyStoreService,
+            DefaultNodeService(),
         )
         networksService.setNetwork(Network.ropsten(), enabled = true)
         networksService.network = Network.ropsten()
@@ -273,6 +277,7 @@ class WalletServiceTest {
         val networksService = DefaultNetworksService(
             KeyValueStore("web3serviceTest"),
             keyStoreService,
+            DefaultNodeService(),
         )
         networksService.setNetwork(Network.ethereum(), enabled = true)
         networksService.network = Network.ethereum()
@@ -345,6 +350,7 @@ class WalletServiceTest {
         val networksService = DefaultNetworksService(
             KeyValueStore("web3serviceTest"),
             keyStoreService,
+            DefaultNodeService(),
         )
         networksService.setNetwork(Network.ethereum(), enabled = true)
         networksService.network = Network.ethereum()

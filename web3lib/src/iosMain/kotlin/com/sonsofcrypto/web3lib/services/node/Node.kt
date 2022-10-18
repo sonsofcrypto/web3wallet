@@ -1,10 +1,9 @@
 package com.sonsofcrypto.web3lib.services.node
 
-import CoreCrypto.CoreCryptoNode
-import CoreCrypto.CoreCryptoNodeConfig
-import CoreCrypto.CoreCryptoNodeInfo
-import CoreCrypto.CoreCryptoPeerInfos
-import CoreCrypto.CoreCryptoNewGethNodeFataln
+import CoreCrypto.*
+import platform.Foundation.NSDocumentDirectory
+import platform.Foundation.NSSearchPathForDirectoriesInDomains
+import platform.Foundation.NSUserDomainMask
 
 actual class NodeConfig(
     val coreConfig: CoreCryptoNodeConfig = CoreCryptoNodeConfig()
@@ -25,7 +24,7 @@ actual class Node {
     /** Defaults mainnet config and platform appropriate dataFolder if null  */
     @Throws(Throwable::class)
     actual constructor(config: NodeConfig?, dataFolder: String?) {
-        val path = ""
+        val path = dataFolder ?: defaultPath()
         val cnf = config?.coreConfig ?: CoreCryptoNodeConfig()
         coreNode = CoreCryptoNewGethNodeFataln(path, cnf)
             ?: throw Error.InstantiateNode
@@ -52,6 +51,12 @@ actual class Node {
     actual fun getPeersInfo(): PeerInfos = PeerInfos(
         coreNode.getPeersInfo() ?: throw Error.PeersInfo
     )
+
+    private fun defaultPath(): String = (NSSearchPathForDirectoriesInDomains(
+        NSDocumentDirectory,
+        NSUserDomainMask,
+        true
+    ).first() as String)!!
 
     /** Exceptions */
     sealed class Error(

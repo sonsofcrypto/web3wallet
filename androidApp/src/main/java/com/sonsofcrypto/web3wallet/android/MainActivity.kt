@@ -1,19 +1,16 @@
 package com.sonsofcrypto.web3wallet.android
 
-import android.content.Context
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.sonsofcrypto.web3lib.types.Bip44
-import com.sonsofcrypto.web3lib.types.ExtKey
+import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
+import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.BundledAssetProviderApplication
-import com.sonsofcrypto.web3lib.utils.bip39.Bip39
-import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.secureRand
-import coreCrypto.*
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    val nodeService = DefaultNodeService()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,9 +21,7 @@ class MainActivity : AppCompatActivity() {
         val tv: TextView = findViewById(R.id.text_view)
         tv.text = secureRand(128).toString()
 
-//        val gethPath = applicationContext.getDir("geth", Context.MODE_PRIVATE).path
-//        geth = CoreCrypto.newGethNode(gethPath, NodeConfig())
-//        geth?.start()
+        nodeService.startNode(Network.ethereum())
     }
 
     override fun onResume() {
@@ -46,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 //        WalletServiceTest().runAll()
 //        UniswapTests().runAll()
 //        EncryptTest().runAll()
-        WalletCoreTests().runAll()
+//        WalletCoreTests().runAll()
         println("=== all tests executed ===")
     }
 }

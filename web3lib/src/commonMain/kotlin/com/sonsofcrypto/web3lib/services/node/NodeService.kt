@@ -1,6 +1,14 @@
 package com.sonsofcrypto.web3lib.services.node
 
 import com.sonsofcrypto.web3lib.types.Network
+import com.sonsofcrypto.web3lib.utils.bgDispatcher
+import com.sonsofcrypto.web3lib.utils.timerFlow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlin.time.Duration.Companion.seconds
 
 /** Manages lifecycle for of geth LES nodes for networks */
 interface NodeService {
@@ -16,11 +24,27 @@ interface NodeService {
     fun supportedNetworks(): List<Network>
 }
 
-class DefaultInterfaceService: NodeService {
+class DefaultNodeService: NodeService {
 
     private var nodes: MutableMap<UInt, Node> = mutableMapOf()
+    private var timer: Job? = null
+    private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
+
+    init {
+        timer = timerFlow(10.seconds)
+            .onEach { poll() }
+            .launchIn(scope)
+    }
+
+    private fun poll() {
+        nodes.values.forEach {
+            println(it.getNodeInfo())
+            println(it.getPeersInfo())
+        }
+    }
 
     override fun startNode(network: Network): Node {
+        println("=== NODE starting")
         nodes[network.chainId]?.let {
             return it
         }
@@ -31,6 +55,7 @@ class DefaultInterfaceService: NodeService {
     }
 
     override fun stopNode(network: Network) {
+        println("=== NODE stopping")
         nodes[network.chainId]?.close()
         nodes.remove(network.chainId)
     }

@@ -5,6 +5,7 @@ import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.services.keyStore.DefaultKeyStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.networks.DefaultNetworksService
+import com.sonsofcrypto.web3lib.services.node.DefaultNodeService
 import com.sonsofcrypto.web3lib.types.Network
 
 class NetworkServiceTests {
@@ -27,6 +28,7 @@ class NetworkServiceTests {
         val networksService = DefaultNetworksService(
             KeyValueStore("web3serviceTest"),
             keyStoreService,
+            DefaultNodeService(),
         )
         networksService.keyStoreItem = mockKeyStoreItem
 
