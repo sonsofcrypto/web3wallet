@@ -41,7 +41,7 @@ extension DefaultImprovementProposalsWireframe: ImprovementProposalsWireframe {
             ).present()
         }
         if (destination as? ImprovementProposalsWireframeDestination.Dismiss) != nil {
-            parent?.popOrDismiss()
+            vc?.popOrDismiss()
         }
     }
 }
