@@ -15,17 +15,6 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var geth: Node? = null
-
-    init {
-        Timer().scheduleAtFixedRate(object : TimerTask() {
-            override fun run() {
-                println("${geth?.getPeersInfo()}")
-                println("${geth?.getNodeInfo()}")
-            }
-        }, 0, 10000)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         BundledAssetProviderApplication.setInstance(application)
@@ -35,9 +24,9 @@ class MainActivity : AppCompatActivity() {
         val tv: TextView = findViewById(R.id.text_view)
         tv.text = secureRand(128).toString()
 
-        val gethPath = applicationContext.getDir("geth", Context.MODE_PRIVATE).path
-        geth = CoreCrypto.newGethNode(gethPath, NodeConfig())
-        geth?.start()
+//        val gethPath = applicationContext.getDir("geth", Context.MODE_PRIVATE).path
+//        geth = CoreCrypto.newGethNode(gethPath, NodeConfig())
+//        geth?.start()
     }
 
     override fun onResume() {

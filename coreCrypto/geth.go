@@ -9,8 +9,110 @@ import (
 	"log"
 )
 
+// Enodes represents a slice of accounts.
+type Enodes struct{ enodes *geth.Enodes }
+
+// Enode represents a host on the network.
+type Enode struct{ enode *geth.Enode }
+
+// NodeConfig represents the collection of configuration values to fine tune the
+// Geth node embedded into a mobile process. The available values are a subset
+// of the entire API provided by go-ethereum to reduce the maintenance surface
+// and dev complexity.
 type NodeConfig struct {
 	config *geth.NodeConfig
+}
+
+// BootstrapNodes used to establish connectivity with the rest of the network.
+func (nc *NodeConfig) BootstrapNodes() *Enodes {
+	return &Enodes{nc.config.BootstrapNodes}
+}
+
+// MaxPeers is the maximum number of peers that can be connected. If this is
+// set to zero, then only the configured static and trusted peers can connect.
+func (nc *NodeConfig) MaxPeers() int {
+	return nc.config.MaxPeers
+}
+
+// SetMaxPeers is the maximum number of peers that can be connected. If this is
+// set to zero, then only the configured static and trusted peers can connect.
+func (nc *NodeConfig) SetMaxPeers(maxPeers int) {
+	nc.config.MaxPeers = maxPeers
+}
+
+// EthereumEnabled specifies whether the node should run the Ethereum protocol.
+func (nc *NodeConfig) EthereumEnabled() bool {
+	return nc.config.EthereumEnabled
+}
+
+// SetEthereumEnabled specifies whether the node should run the Ethereum protocol.
+func (nc *NodeConfig) SetEthereumEnabled(ethereumEnabled bool) {
+	nc.config.EthereumEnabled = ethereumEnabled
+}
+
+// EthereumNetworkID is the network identifier used by the Ethereum protocol to
+// decide if remote peers should be accepted or not.
+func (nc *NodeConfig) EthereumNetworkID() int64 {
+	return nc.config.EthereumNetworkID
+}
+
+// SetEthereumNetworkID is the network identifier used by the Ethereum protocol to
+// decide if remote peers should be accepted or not.
+func (nc *NodeConfig) SetEthereumNetworkID(networkID int64) {
+	nc.config.EthereumNetworkID = networkID
+}
+
+// EthereumGenesis is the genesis JSON to use to seed the blockchain with. An
+// empty genesis state is equivalent to using the mainnet's state.
+func (nc *NodeConfig) EthereumGenesis() string {
+	return nc.config.EthereumGenesis
+}
+
+// SetEthereumGenesis is the genesis JSON to use to seed the blockchain with. An
+// empty genesis state is equivalent to using the mainnet's state.
+func (nc *NodeConfig) SetEthereumGenesis(genesis string) {
+	nc.config.EthereumGenesis = genesis
+}
+
+// EthereumDatabaseCache is the system memory in MB to allocate for database
+// caching. A minimum of 16MB is always reserved.
+func (nc *NodeConfig) EthereumDatabaseCache() int {
+	return nc.config.EthereumDatabaseCache
+}
+
+// SetEthereumDatabaseCache is the system memory in MB to allocate for database
+// caching. A minimum of 16MB is always reserved.
+func (nc *NodeConfig) SetEthereumDatabaseCache(databaseCache int) {
+	nc.config.EthereumDatabaseCache = databaseCache
+}
+
+// EthereumNetStats is a netstats connection string to use to report various
+// chain, transaction and node stats to a monitoring server. It has the form
+// "nodename:secret@host:port"
+func (nc *NodeConfig) EthereumNetStats() string {
+	return nc.config.EthereumNetStats
+}
+
+// SetEthereumNetStats is a netstats connection string to use to report various
+// chain, transaction and node stats to a monitoring server. It has the form
+// "nodename:secret@host:port"
+func (nc *NodeConfig) SetEthereumNetStats(netStats string) {
+	nc.config.EthereumNetStats = netStats
+}
+
+// PprofAddress listening address of pprof server.
+func (nc *NodeConfig) PprofAddress() string {
+	return nc.config.PprofAddress
+}
+
+// SetPprofAddress listening address of pprof server.
+func (nc *NodeConfig) SetPprofAddress(pprofAddress string) {
+	nc.config.PprofAddress = pprofAddress
+}
+
+// AddBootstrapNode adds a bootstrap node to the node config.
+func (nc *NodeConfig) AddBootstrapNode(node *Enode) {
+	nc.config.AddBootstrapNode(node.enode)
 }
 
 // NewNodeConfig creates a new node option set, initialized to the default values.
