@@ -2,7 +2,6 @@ package com.sonsofcrypto.web3walletcore.modules.improvementProposals
 
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
-import com.sonsofcrypto.web3lib.utils.withBgCxt
 import com.sonsofcrypto.web3lib.utils.withUICxt
 import com.sonsofcrypto.web3walletcore.common.viewModels.CommonErrorViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.with

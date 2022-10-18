@@ -1,7 +1,7 @@
 package com.sonsofcrypto.web3walletcore.extensions
 
-import platform.Foundation.NSString
 import platform.Foundation.NSBundle
+import platform.Foundation.NSString
 import platform.Foundation.stringWithFormat
 
 actual fun Localized(string: String): String {
