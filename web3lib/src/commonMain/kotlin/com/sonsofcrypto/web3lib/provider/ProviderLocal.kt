@@ -40,7 +40,7 @@ class ProviderLocal: ProviderJsonRpc {
 
     @Throws(Throwable::class)
     override fun url(): String = when (network.chainId) {
-        1u -> "https://127.0.0.1:36309"
+        1u -> "https://127.0.0.1:62302"
         else -> throw  Error.UnsupportedNetwork(network)
     }
 }

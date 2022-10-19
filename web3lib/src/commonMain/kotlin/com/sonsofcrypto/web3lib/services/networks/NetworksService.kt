@@ -129,6 +129,9 @@ class DefaultNetworksService(
     override fun setProvider(provider: Provider?, network: Network) {
         provider?.let { store[providerKey(network)] = ProviderInfo.from(it) }
         if (provider != null) {
+            (providers[network] as? ProviderLocal)?.let {
+                nodeService.stopNode(network)
+            }
             providers[network] = provider
             (provider as? ProviderLocal)?.let { nodeService.startNode(network) }
         } else {

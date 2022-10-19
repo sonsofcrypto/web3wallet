@@ -25,23 +25,22 @@ interface NodeService {
 }
 
 class DefaultNodeService: NodeService {
-
     private var nodes: MutableMap<UInt, Node> = mutableMapOf()
-    private var timer: Job? = null
-    private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
-
-    init {
-        timer = timerFlow(10.seconds)
-            .onEach { poll() }
-            .launchIn(scope)
-    }
-
-    private fun poll() {
-        nodes.values.forEach {
-            println(it.getNodeInfo())
-            println(it.getPeersInfo())
-        }
-    }
+//    private var timer: Job? = null
+//    private val scope = CoroutineScope(SupervisorJob() + bgDispatcher)
+//
+//    init {
+//        timer = timerFlow(10.seconds)
+//            .onEach { poll() }
+//            .launchIn(scope)
+//    }
+//
+//    private fun poll() {
+//        nodes.values.forEach {
+//            println(it.getNodeInfo())
+//            println(it.getPeersInfo())
+//        }
+//    }
 
     override fun startNode(network: Network): Node {
         println("=== NODE starting")

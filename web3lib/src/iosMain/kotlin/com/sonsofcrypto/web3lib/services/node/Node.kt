@@ -14,11 +14,11 @@ actual class NodeConfig(
 )
 
 actual class NodeInfo(private val coreInfo: CoreCryptoNodeInfo) {
-    override fun toString(): String = coreInfo.toString()
+    override fun toString(): String = coreInfo.string()
 }
 
 actual class PeerInfos(private val coreInfos: CoreCryptoPeerInfos) {
-    override fun toString(): String = coreInfos.toString()
+    override fun toString(): String = coreInfos.string()
 }
 
 actual class Node {

@@ -54,10 +54,13 @@ extension DefaultNetworksWireframe: NetworksWireframe {
         case .dashboard:
             parent?.asEdgeCardsController?.setDisplayMode(.master, animated: true)
         case let .editNetwork(network):
-            networkSettingsWireframeFactory.make(
-                vc?.asNavVc?.topVc ?? vc,
-                network: network
-            ).present()
+           alertWireframeFactory.make(
+               parent,
+               context: .underConstructionAlert()
+//             networkSettingsWireframeFactory.make(
+//                 vc?.asNavVc?.topVc ?? vc,
+//                 network: network
+//             ).present()
         }
     }
 }

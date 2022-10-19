@@ -69,6 +69,8 @@
 "networks.provider.alchyme" = "Alchyme";
 "networks.provider.local" = "Local Geth Node";
 "networks.provider.custom" = "Custom gateway";
+"networks.settings.title" = "Network Settings";
+
 
 "dashboard.tab.title" = "Wallet";
 "dashboard.button.receive" = "Receive";

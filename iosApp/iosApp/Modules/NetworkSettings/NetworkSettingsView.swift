@@ -69,7 +69,8 @@ extension NetworkSettingsViewController: UICollectionViewDelegate {
 private extension ImprovementProposalsViewController {
 
     func configureUI() {
-        // navigationItem.backButtonTitle = ""
+        navigationItem.backButtonTitle = ""
+        title = Localized("networks.settings.title")
         collectionView.setCollectionViewLayout(layout(), animated: false)
     }
 

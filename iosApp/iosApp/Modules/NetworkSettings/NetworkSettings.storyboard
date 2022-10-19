@@ -15,7 +15,7 @@
                 <viewController storyboardIdentifier="NetworkSettingsViewController" title="Network Settings" id="4hk-9p-GXg" customClass="NetworkSettingsViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="GVO-CN-a39" customClass="CollectionView" customModule="iosApp" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="16" minimumInteritemSpacing="16" id="hnN-1k-6Gs">
                             <size key="itemSize" width="343" height="64"/>

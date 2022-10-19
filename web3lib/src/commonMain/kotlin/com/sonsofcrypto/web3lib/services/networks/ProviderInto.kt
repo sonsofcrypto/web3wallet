@@ -23,7 +23,7 @@ data class ProviderInfo(
     fun toProvider(network: Network): Provider = when (this.type) {
         Type.POCKET -> ProviderPocket(network)
         Type.ALCHEMY -> ProviderAlchemy(network)
-        Type.LOCAL -> ProviderAlchemy(network)
+        Type.LOCAL -> ProviderLocal(network)
         else -> TODO("Implement custom provider")
     }
 
