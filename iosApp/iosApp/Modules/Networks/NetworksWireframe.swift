@@ -57,6 +57,7 @@ extension DefaultNetworksWireframe: NetworksWireframe {
            alertWireframeFactory.make(
                parent,
                context: .underConstructionAlert()
+            )
 //             networkSettingsWireframeFactory.make(
 //                 vc?.asNavVc?.topVc ?? vc,
 //                 network: network
