@@ -8,9 +8,9 @@ import Foundation
 
 extension Int {
 
-    var int32: Int32 {
-        Int32(self)
-    }
+    var int32: Int32 { Int32(self) }
+    var uint32: UInt32 { UInt32(self) }
+
     
     var stringValue: String {
         "\(self)"

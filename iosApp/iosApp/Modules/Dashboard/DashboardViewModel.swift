@@ -91,10 +91,9 @@ extension DashboardViewModel {
         let ticker: String
         let colors: [String]
         let imageName: String
-        let fiatPrice: [Formatters.Output]
-        let fiatBalance: [Formatters.Output]
-        let cryptoBalance: [Formatters.Output]
-        let tokenPrice: [Formatters.Output]
+        let fiatPrice: FiatFormatterViewModel
+        let fiatBalance: FiatFormatterViewModel
+        let cryptoBalance: CurrencyFormatterViewModel
         let pctChange: String
         let priceUp: Bool
         let candles: CandlesViewModel

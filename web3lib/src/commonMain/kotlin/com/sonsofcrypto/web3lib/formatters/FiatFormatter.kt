@@ -19,7 +19,7 @@ class FiatFormatter {
     ): List<Formatters.Output> {
         val amount = amount?.toString() ?: return listOf(Normal(placeholder))
         val fiat = fiatCurrency(currencyCode)
-        val output: List<Formatters.Output> = when (style) {
+        var output: List<Formatters.Output> = when (style) {
             is Formatters.Style.Custom -> {
                 val maxLength =
                     if (style.maxLength == 0u) 1u
@@ -30,6 +30,18 @@ class FiatFormatter {
                 }
             }
             is Formatters.Style.Max -> { listOf(Normal(amount)) }
+        }
+        if (output.count() == 1) {
+            when (val elem = output.first()) {
+                is Formatters.Output.Normal -> {
+                    val parts = elem.value.split(".")
+                    if (parts.count() == 2 && parts[1].length == 1) {
+                        output = listOf(Normal(parts[0] + "." + parts[1] + "0"))
+                    }
+                }
+                is Formatters.Output.Up -> { }
+                is Formatters.Output.Down -> { }
+            }
         }
         return output.addFiatSymbol(fiat)
     }
