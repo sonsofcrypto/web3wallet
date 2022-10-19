@@ -32,7 +32,8 @@ extension DefaultImprovementProposalsWireframe: ImprovementProposalsWireframe {
 
     func navigate(destination: ImprovementProposalsWireframeDestination) {
         if let vote = destination as? ImprovementProposalsWireframeDestination.Vote {
-            FeatureShareHelper().shareVote(on: vote.proposal)
+            guard let url = voteUrl(vote.proposal) else { return }
+            UIApplication.shared.open(url)
         }
         if let dest = destination as? ImprovementProposalsWireframeDestination.Proposal {
             improvementProposalWireframeFactory.make(
@@ -61,5 +62,16 @@ extension DefaultImprovementProposalsWireframe {
         )
         vc.presenter = presenter
         return NavigationController(rootViewController: vc)
+    }
+
+    func voteUrl(_ proposal: ImprovementProposal) -> URL? {
+        let body = proposal.tweet.addingPercentEncoding(
+            withAllowedCharacters: .urlHostAllowed
+        ) ?? ""
+        let url = proposal.pageUrl.addingPercentEncoding(
+            withAllowedCharacters: .urlHostAllowed
+        ) ?? ""
+        let str = "https://www.twitter.com/intent/tweet?text=\(body)&url=\(url)"
+        return URL(string: str)
     }
 }

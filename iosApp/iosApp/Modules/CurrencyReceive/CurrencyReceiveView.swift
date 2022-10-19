@@ -106,21 +106,16 @@ private extension CurrencyReceiveViewController {
     }
 
     func shareAction() -> (() -> Void) {
-        {
-            [weak self] in
-            guard let self = self else { return }
-            guard
-                //let image = self.qrCodePngImageView.image,
-                let vm = self.viewModel
-            else { return }
-            ShareFactoryHelper().share(
-                items: [
-                    //image,
-                    Localized("currencyReceive.action.share.address", vm.symbol) + " " + vm.address,
-                    
+        { [weak self] in
+            guard let data = self?.viewModel?.data else { return }
+            let avc = UIActivityViewController(
+                activityItems: [
+                    Localized("currencyReceive.action.share.address", data.symbol)
+                        + " " + data.address
                 ],
-                presentingIn: self
+                applicationActivities: nil
             )
+            self?.present(avc, animated: true)
         }
     }
     
