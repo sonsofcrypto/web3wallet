@@ -28,12 +28,8 @@ class DefaultImprovementProposalPresenter(
 
     override fun handle(event: ImprovementProposalPresenterEvent) =
         when (event) {
-            is ImprovementProposalPresenterEvent.Vote -> wireframe.navigate(
-                Vote(proposal)
-            )
-            is ImprovementProposalPresenterEvent.Dismiss -> wireframe.navigate(
-                Dismiss
-            )
+            is ImprovementProposalPresenterEvent.Vote -> wireframe.navigate(Vote(proposal))
+            is ImprovementProposalPresenterEvent.Dismiss -> wireframe.navigate(Dismiss)
         }
 
     private fun updateView() = view.get()?.update(viewModel())

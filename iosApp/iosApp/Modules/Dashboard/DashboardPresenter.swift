@@ -258,40 +258,17 @@ private extension DefaultDashboardPresenter {
     func walletViewModel(_ network: Network, currency: Currency) -> DashboardViewModel.Wallet {
         let market = interactor.marketdata(for: currency)
         let metadata = interactor.metadata(for: currency)
-        let cryptoBalance = interactor.cryptoBalance(
-            for: network,
-            currency: currency
-        )
-        let fiatBalance = interactor.fiatBalance(
-            for: network,
-            currency: currency
-        )
-        let formatted = Formatters.Companion.shared.currency.format(
-            amount: cryptoBalance,
-            currency: currency,
-            style: Formatters.StyleCustom(maxLength: 15)
-        )
+        let fiatPrice = market?.currentPrice?.doubleValue ?? 0.0
+        let fiatBalance = interactor.fiatBalance(for: network, currency: currency)
+        let cryptoBalance = interactor.cryptoBalance(for: network, currency: currency)
         return .init(
             name: currency.name,
             ticker: currency.symbol.uppercased(),
             colors: metadata?.colors ?? ["#FFFFFF", "#000000"],
             imageName: currency.iconName,
-            fiatPrice: Formatters.Companion.shared.fiat.format(
-                amount: BigDec.Companion().from(double: market?.currentPrice?.doubleValue ?? 0.0),
-                style: Formatters.StyleCustom(maxLength: 10),
-                currencyCode: "usd"
-            ),
-            fiatBalance: Formatters.Companion.shared.fiat.format(
-                amount: fiatBalance.bigDec,
-                style: Formatters.StyleCustom(maxLength: 10),
-                currencyCode: "usd"
-            ),
-            cryptoBalance: formatted,
-            tokenPrice: Formatters.Companion.shared.fiat.format(
-                amount: market?.currentPrice?.doubleValue.bigDec,
-                style: Formatters.StyleCustom(maxLength: 10),
-                currencyCode: "usd"
-            ),
+            fiatPrice: FiatFormatterViewModel(amount: fiatPrice.bigDec, currencyCode: "usd"),
+            fiatBalance: FiatFormatterViewModel(amount: fiatBalance.bigDec(decimals: 2), currencyCode: "usd"),
+            cryptoBalance: CurrencyFormatterViewModel(amount: cryptoBalance, currency: currency),
             pctChange: Formatters.Companion.shared.pct.format(
                 amount: market?.priceChangePercentage24h, div: true
             ),

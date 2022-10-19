@@ -3,10 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-protocol CurrencyPickerView: AnyObject {
-    func update(with viewModel: CurrencyPickerViewModel)
-}
+import web3walletcore
 
 final class CurrencyPickerViewController: BaseViewController {
     var presenter: CurrencyPickerPresenter!
@@ -23,9 +20,7 @@ final class CurrencyPickerViewController: BaseViewController {
     private var searchTerm = ""
     private var bottomKeyboardLayoutConstraint: NSLayoutConstraint!
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
+    deinit { NotificationCenter.default.removeObserver(self) }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,13 +30,13 @@ final class CurrencyPickerViewController: BaseViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        presenter.handle(.viewWillDismiss)
+        presenter.handle(event______: .WillDismiss())
     }
 }
 
 extension CurrencyPickerViewController: CurrencyPickerView {
 
-    func update(with viewModel: CurrencyPickerViewModel) {
+    func update(viewModel__ viewModel: CurrencyPickerViewModel) {
         self.viewModel = viewModel
         title = viewModel.title
         collectionView.reloadData()
@@ -95,13 +90,9 @@ private extension CurrencyPickerViewController {
         bottomKeyboardLayoutConstraint.isActive = true
     }
     
-    @objc func showKeyboard() {
-        addCollectionViewBottomInset()
-    }
+    @objc func showKeyboard() { addCollectionViewBottomInset() }
     
-    @objc func hideKeyboard() {
-        collectionView.contentInset = .zero
-    }
+    @objc func hideKeyboard() { collectionView.contentInset = .zero }
     
     func addCollectionViewBottomInset() {
         // TODO: Smell
@@ -111,7 +102,7 @@ private extension CurrencyPickerViewController {
     
     func updateNavigationBarIcons() {
         guard let viewModel = viewModel else { return }
-        if viewModel.allowMultiSelection {
+        if viewModel.allowMultipleSelection {
             if viewModel.showAddCustomCurrency {
                 navigationItem.leftBarButtonItem = UIBarButtonItem(
                     image: "plus".assetImage,
@@ -152,19 +143,15 @@ private extension CurrencyPickerViewController {
             }
         }
         collectionView.allowsSelection = true
-        collectionView.allowsMultipleSelection = viewModel.allowMultiSelection
+        collectionView.allowsMultipleSelection = viewModel.allowMultipleSelection
     }
 
-    @objc func addCustomCurrency() {
-        presenter.handle(.addCustomCurrency)
-    }
+    @objc func addCustomCurrency() { presenter.handle(event______: .AddCustomCurrency()) }
 
-    @objc func doneTapped() {
-        presenter.handle(.done)
-    }
+    @objc func doneTapped() { presenter.handle(event______: .Dismiss()) }
 
     @objc func navBarLeftActionTapped() {
-        presenter.handle(.dismiss)
+        presenter.handle(event______: .Dismiss())
     }
 }
 
@@ -178,7 +165,10 @@ extension CurrencyPickerViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        viewModel?.sections[section].items.count ?? 0
+        let section = viewModel?.sections[section]
+        return section?.networks?.count
+        ?? section?.favouriteCurrencies?.count
+        ?? section?.currencies?.count ?? 0
     }
 
     func collectionView(
@@ -199,9 +189,7 @@ extension CurrencyPickerViewController: UICollectionViewDataSource {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             let supplementary = collectionView.dequeue(
-                CurrencyPickerSectionCell.self,
-                for: indexPath,
-                kind: kind
+                CurrencyPickerSectionCell.self, for: indexPath, kind: kind
             )
             supplementary.update(with: section)
             return supplementary
@@ -220,11 +208,12 @@ extension CurrencyPickerViewController: UICollectionViewDelegate {
         guard let section = viewModel?.sections[indexPath.section] else {
             fatalError()
         }
-        switch section.items[indexPath.item] {
-        case let .network(network):
-            presenter.handle(.selectNetwork(network))
-        case let .currency(currency):
-            presenter.handle(.selectCurrency(currency))
+        if section.networks != nil {
+            presenter.handle(event______: .SelectNetwork(idx: indexPath.item.int32))
+        } else if section.favouriteCurrencies != nil {
+            presenter.handle(event______: .SelectFavouriteCurrency(idx: indexPath.item.int32))
+        } else if section.currencies != nil {
+            presenter.handle(event______: .SelectCurrency(idx: indexPath.item.int32))
         }
     }
 }
@@ -232,7 +221,7 @@ extension CurrencyPickerViewController: UICollectionViewDelegate {
 extension CurrencyPickerViewController: UITextFieldDelegate {
         
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        presenter.handle(.search(searchTerm: textField.text ?? ""))
+        presenter.handle(event______: .Search(searchTerm: textField.text ?? ""))
     }
 }
 
@@ -245,22 +234,22 @@ private extension CurrencyPickerViewController {
         guard let section = viewModel?.sections[indexPath.section] else {
             fatalError()
         }
-        switch section.items[indexPath.item] {
-        case let .network(network):
-            let cell = collectionView.dequeue(
-                CurrencyPickerNetworkCell.self,
-                for: indexPath
-            )
-            cell.update(with: network)
-            return cell
-        case let .currency(currency):
-            let cell = collectionView.dequeue(
-                CurrencyPickerTokenCell.self,
-                for: indexPath
-            )
-            cell.update(with: currency)
+        if let networks = section.networks {
+            let cell = collectionView.dequeue(CurrencyPickerNetworkCell.self, for: indexPath)
+            cell.update(with: networks[indexPath.item])
             return cell
         }
+        if let favouriteCurrencies = section.favouriteCurrencies {
+            let cell = collectionView.dequeue(CurrencyPickerTokenCell.self, for: indexPath)
+            cell.update(with: favouriteCurrencies[indexPath.item])
+            return cell
+        }
+        if let currencies = section.currencies {
+            let cell = collectionView.dequeue(CurrencyPickerTokenCell.self, for: indexPath)
+            cell.update(with: currencies[indexPath.item])
+            return cell
+        }
+        fatalError("Section not handled.")
     }
     
     @objc func clearSearchAnddismissKeyboard() {
@@ -279,12 +268,10 @@ private extension CurrencyPickerViewController {
         let layout = UICollectionViewCompositionalLayout { [weak self] (idx, _) in
             guard let self = self else { return nil }
             guard let section = self.viewModel?.sections[idx] else { return nil }
-            switch section.type {
-            case .networks:
-                return self.networkItemsCollectionLayoutSection()
-            case .tokens:
-                return self.currencyItemsCollectionLayoutSection()
-            }
+            if section.networks != nil { return self.networkItemsCollectionLayoutSection() }
+            else if section.favouriteCurrencies != nil { return self.currencyItemsCollectionLayoutSection() }
+            else if section.currencies != nil { return self.currencyItemsCollectionLayoutSection() }
+            else { return nil }
         }
         return layout
     }
@@ -349,5 +336,17 @@ private extension CurrencyPickerViewController {
         )
         section.boundarySupplementaryItems = [headerItem]
         return section
+    }
+}
+
+private extension CurrencyPickerViewModel.Section {
+    var networks: [CurrencyPickerViewModel.Network]? {
+        (self as? CurrencyPickerViewModel.SectionNetworks)?.items
+    }
+    var favouriteCurrencies: [CurrencyPickerViewModel.Currency]? {
+        (self as? CurrencyPickerViewModel.SectionFavouriteCurrencies)?.items
+    }
+    var currencies: [CurrencyPickerViewModel.Currency]? {
+        (self as? CurrencyPickerViewModel.SectionCurrencies)?.items
     }
 }

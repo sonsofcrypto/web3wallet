@@ -7,13 +7,15 @@ import web3walletcore
 extension Double {
     
     var bigDec: BigDec {
-        
         BigDec.Companion().from(double: self)
     }
     
     func toString(decimals: Int = 2) -> String {
-        
         String(format: "%.\(decimals)f", self)
+    }
+    
+    func bigDec(decimals: Int = 2) -> BigDec {
+        BigDec.Companion().from(string: String(format: "%.\(decimals)f", self), base: 10.int32)
     }
     
     func format(

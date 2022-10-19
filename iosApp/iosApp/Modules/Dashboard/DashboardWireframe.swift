@@ -118,29 +118,33 @@ extension DefaultDashboardWireframe: DashboardWireframe {
         case .mnemonicConfirmation:
             mnemonicConfirmationWireframeFactory.make(parent).present()
         case .receive:
-            let source = CurrencyPickerWireframeContext.Source.select(
-                onCompletion: { [weak self] (network, currency) in
-                    guard let self = self else { return }
-                    self.currencyReceiveWireframeFactory.make(
-                        self.vc?.presentedViewController ?? self.vc,
-                        context: .init(network: network, currency: currency)
-                    ).present()
-                }
-            )
-            let context = CurrencyPickerWireframeContext(
-                title: .receive,
-                selectedNetwork: nil,
-                networks: .all,
-                source: source,
-                showAddCustomCurrency: true
-            )
+            let onCompletion: (([CurrencyPickerWireframeContext.Result]) -> Void) = {
+                [weak self] result in
+                guard let self = self else { return }
+                guard
+                    let network = result.first?.network,
+                    let currency = result.first?.selectedCurrencies.first
+                else { return }
+                self.currencyReceiveWireframeFactory.make(
+                    self.vc?.presentedViewController ?? self.vc,
+                    context: .init(network: network, currency: currency)
+                ).present()
+            }
             currencyPickerWireframeFactory.make(
                 vc,
-                context: context
+                context: .init(
+                    isMultiSelect: false,
+                    showAddCustomCurrency: false,
+                    networksData: networksService.enabledNetworks().compactMap{
+                        .init(network: $0, favouriteCurrencies: nil, currencies: nil)
+                    },
+                    selectedNetwork: nil,
+                    handler: onCompletion
+                )
             ).present()
         case let .send(address):
             guard let network = networksService.network, let address = address else {
-                navigateToTokenPicker()
+                navigateToCurrencyPickerAndSend()
                 return
             }
             currencySendWireframeFactory.make(
@@ -163,18 +167,18 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 )
             ).present()
         case let .editCurrencies(network, selectedCurrencies, onCompletion):
-            let source: CurrencyPickerWireframeContext.Source = .multiSelectEdit(
-                selectedCurrencies: selectedCurrencies,
-                onCompletion: onCompletion
-            )
+            let onCompletion: (([CurrencyPickerWireframeContext.Result]) -> Void) = { result in
+                guard let currencies = result.first?.selectedCurrencies else { return }
+                onCompletion(currencies)
+            }
             currencyPickerWireframeFactory.make(
                 vc,
                 context: .init(
-                    title: .multiSelectEdit,
+                    isMultiSelect: true,
+                    showAddCustomCurrency: true,
+                    networksData: [.init(network: network, favouriteCurrencies: selectedCurrencies, currencies: nil)],
                     selectedNetwork: nil,
-                    networks: .subgroup(networks: [network]),
-                    source: source,
-                    showAddCustomCurrency: true
+                    handler: onCompletion
                 )
             ).present()
         case .tokenSwap:
@@ -216,27 +220,30 @@ private extension DefaultDashboardWireframe {
         return nc
     }
     
-    func navigateToTokenPicker() {
+    func navigateToCurrencyPickerAndSend() {
         guard let vc = self.vc else { return }
-        let source = CurrencyPickerWireframeContext.Source.select(
-            onCompletion: { [weak self] (network, currency) in
-                guard let self = self else { return }
-                self.currencySendWireframeFactory.make(
-                    vc.presentedViewController ?? vc,
-                    context: .init(network: network, address: nil, currency: currency)
-                ).present()
-            }
-        )
-        let context = CurrencyPickerWireframeContext(
-            title: .send,
-            selectedNetwork: nil,
-            networks: .all,
-            source: source,
-            showAddCustomCurrency: true
-        )
+        let onCompletion: (([CurrencyPickerWireframeContext.Result]) -> Void) = { [weak self] result in
+            guard
+                let self = self,
+                let network = result.first?.network,
+                let currency = result.first?.selectedCurrencies.first
+            else { return }
+            self.currencySendWireframeFactory.make(
+                vc.presentedViewController ?? vc,
+                context: .init(network: network, address: nil, currency: currency)
+            ).present()
+        }
         currencyPickerWireframeFactory.make(
             vc,
-            context: context
+            context: .init(
+                isMultiSelect: false,
+                showAddCustomCurrency: false,
+                networksData: networksService.enabledNetworks().compactMap{
+                    .init(network: $0, favouriteCurrencies: nil, currencies: nil)
+                },
+                selectedNetwork: nil,
+                handler: onCompletion
+            )
         ).present()
     }
 }

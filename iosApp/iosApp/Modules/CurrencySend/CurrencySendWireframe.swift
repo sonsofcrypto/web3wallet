@@ -81,11 +81,11 @@ extension DefaultCurrencySendWireframe: CurrencySendWireframe {
             currencyPickerWireframeFactory.make(
                 vc,
                 context: .init(
-                    title: .select,
-                    selectedNetwork: context.network,
-                    networks: .all,
-                    source: .select(onCompletion: onCompletionDismissWrapped(with: onCompletion)),
-                    showAddCustomCurrency: false
+                    isMultiSelect: false,
+                    showAddCustomCurrency: false,
+                    networksData: [.init(network: context.network, favouriteCurrencies: nil, currencies: nil)],
+                    selectedNetwork: nil,
+                    handler: onCompletionDismissWrapped(with: onCompletion)
                 )
             ).present()
         case let .confirmSend(dataIn):
@@ -103,17 +103,6 @@ extension DefaultCurrencySendWireframe: CurrencySendWireframe {
 }
 
 private extension DefaultCurrencySendWireframe {
-    
-    func onCompletionDismissWrapped(
-        with onCompletion: @escaping (Currency) -> Void
-    ) -> (Network, Currency) -> Void {
-        {
-            [weak self] (_, currency) in
-            guard let self = self else { return }
-            onCompletion(currency)
-            self.vc?.presentedViewController?.dismiss(animated: true)
-        }
-    }
     
     func wireUp() -> UIViewController {
         let interactor = DefaultCurrencySendInteractor(
@@ -149,5 +138,18 @@ private extension DefaultCurrencySendWireframe {
                 contentHeight: 230
             )
         ).present()
+    }
+    
+    func onCompletionDismissWrapped(
+        with onCompletion: @escaping (Currency) -> Void
+    ) -> (([CurrencyPickerWireframeContext.Result]) -> Void) {
+        {
+            [weak self] result in
+            guard let self = self else { return }
+            if let currency = result.first?.selectedCurrencies.first {
+                onCompletion(currency)
+            }
+            self.vc?.presentedViewController?.dismiss(animated: true)
+        }
     }
 }

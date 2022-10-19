@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class DashboardTableWalletCell: CollectionViewCell {
     
@@ -35,7 +36,7 @@ extension DashboardTableWalletCell {
     ) -> Self {
         currencyImageView.image = viewModel.imageName.assetImage
         fiatPriceLabel.attributedText = .init(
-            viewModel.fiatPrice,
+            viewModel.fiatPrice.toOutput(style: Formatters.StyleCustom(maxLength: 9.uint32)),
             font: Theme.font.callout,
             fontSmall: Theme.font.caption2,
             foregroundColor: Theme.colour.labelSecondary
@@ -48,12 +49,12 @@ extension DashboardTableWalletCell {
             pctChangeLabel.apply(style: .callout, colour: Theme.colour.candleRed)
         }
         cryptoBalanceLabel.attributedText = .init(
-            viewModel.cryptoBalance,
+            viewModel.cryptoBalance.toOutput(style: Formatters.StyleCustom(maxLength: 10.uint32)),
             font: Theme.font.body,
             fontSmall: Theme.font.footnote
         )
         fiatBalanceLabel.attributedText = .init(
-            viewModel.fiatBalance,
+            viewModel.fiatBalance.toOutput(style: Formatters.StyleCustom(maxLength: 10.uint32)),
             font: Theme.font.callout,
             fontSmall: Theme.font.caption2,
             foregroundColor: Theme.colour.labelSecondary

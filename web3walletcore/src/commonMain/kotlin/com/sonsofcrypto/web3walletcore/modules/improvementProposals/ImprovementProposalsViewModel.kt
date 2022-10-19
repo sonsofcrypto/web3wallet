@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.improvementProposals
 
-import com.sonsofcrypto.web3walletcore.common.viewModels.CommonErrorViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.ErrorViewModel
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.services.improvementProposals.ImprovementProposal
 import com.sonsofcrypto.web3walletcore.services.improvementProposals.ImprovementProposal.Category.*
@@ -15,7 +15,7 @@ sealed class ImprovementProposalsViewModel {
     ): ImprovementProposalsViewModel()
     /** Error occurred */
     data class Error(
-        val error: CommonErrorViewModel
+        val error: ErrorViewModel
     ): ImprovementProposalsViewModel()
 
     data class Category(

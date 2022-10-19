@@ -137,24 +137,24 @@ private extension DefaultCurrencySwapWireframe {
         currencyPickerWireframeFactory.make(
             vc,
             context: .init(
-                title: .select,
-                selectedNetwork: network,
-                networks: .all,
-                source: .select(
-                    onCompletion: onCompletionDismissWrapped(with: onCompletion)
-                ),
-                showAddCustomCurrency: false
+                isMultiSelect: false,
+                showAddCustomCurrency: false,
+                networksData: [.init(network: network, favouriteCurrencies: nil, currencies: nil)],
+                selectedNetwork: nil,
+                handler: onCompletionDismissWrapped(with: onCompletion)
             )
         ).present()
     }
     
     func onCompletionDismissWrapped(
         with onCompletion: @escaping (Currency) -> Void
-    ) -> (Network, Currency) -> Void {
+    ) -> (([CurrencyPickerWireframeContext.Result]) -> Void) {
         {
-            [weak self] ( _, currency) in
+            [weak self] result in
             guard let self = self else { return }
-            onCompletion(currency)
+            if let currency = result.first?.selectedCurrencies.first {
+                onCompletion(currency)
+            }
             self.vc?.presentedViewController?.dismiss(animated: true)
         }
     }

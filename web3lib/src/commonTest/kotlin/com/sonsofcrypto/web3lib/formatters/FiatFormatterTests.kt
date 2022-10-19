@@ -214,4 +214,12 @@ class FiatFormatterTests {
         )
         assertEquals(expected, actual)
     }
+    @Test
+    fun testFiatCustomUSD22() {
+        val actual = output("1303.60", Custom(10u), "usd")
+        val expected: List<Formatters.Output> = listOf(
+            Normal("$1303.60"),
+        )
+        assertEquals(expected, actual)
+    }
 }

@@ -228,6 +228,7 @@ class FormattersOutput {
     }
 
     private val String.clearZeros: String get() {
+        if (last() == '.') return dropLast(1)
         if (decimalNumberPart.isEmpty()) return this
         var value = this
         while (value.last() == '0') {
