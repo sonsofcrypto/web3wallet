@@ -29,7 +29,7 @@ final class NetworksCell: CollectionViewCell {
         titleLabel.font = Theme.font.body
         titleLabel.textColor = Theme.colour.labelPrimary
         
-        settingsButton.tintColor = Theme.colour.labelSecondary
+        settingsButton.tintColor = Theme.colour.labelPrimary
         settingsButton.addTarget(
             self,
             action: #selector(settingsAction),

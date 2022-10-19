@@ -38,3 +38,9 @@ extension Int {
     }
 }
 
+extension Int32 {
+
+    var int: Int {
+        Int(self)
+    }
+}

@@ -65,8 +65,10 @@
 "networks.cell.connection" = "Connection:";
 "networks.cell.status" = "Status:";
 "networks.cell.explorer" = "Explorer:";
-"networks.provider.pokt.network" = "Pokt.network";
+"networks.provider.pokt" = "Pokt.network";
 "networks.provider.alchyme" = "Alchyme";
+"networks.provider.local" = "Local Geth Node";
+"networks.provider.custom" = "Custom gateway";
 
 "dashboard.tab.title" = "Wallet";
 "dashboard.button.receive" = "Receive";

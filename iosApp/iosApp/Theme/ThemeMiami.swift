@@ -8,9 +8,7 @@ struct ThemeMiami: Themable {
     
     let style: ThemeStyle
     
-    init(
-        style: ThemeStyle
-    ) {
+    init(style: ThemeStyle) {
         self.style = style
     }
     
@@ -149,7 +147,6 @@ struct ThemeMiami: Themable {
     }
     
     var constant: ThemeConstant {
-        
         .init(
             cornerRadius: 16,
             cornerRadiusSmall: 8,

@@ -36,6 +36,7 @@ extension UIStoryboard {
         case mnemonicImport = "MnemonicImport"
         case dashboard = "Dashboard"
         case networks = "Networks"
+        case networkSettings = "NetworkSettings"
         case account = "Account"
         case mnemonicConfirmation = "MnemonicConfirmation"
         case apps = "Apps"

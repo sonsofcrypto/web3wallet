@@ -51,7 +51,7 @@ private extension DefaultChatWireframe {
         vc.presenter = presenter
         vc.hidesBottomBarWhenPushed = true
         self.vc = vc
-        guard parent?.asNavigationController == nil else { return vc }
+        guard parent?.asNavVc == nil else { return vc }
         let nc = NavigationController(rootViewController: vc)
         nc.tabBarItem = UITabBarItem(
             title: Localized("apps"),
