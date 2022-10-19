@@ -11,7 +11,8 @@ final class NetworksServiceAssembler: AssemblerComponent {
         registry.register(scope: .singleton) { resolver -> NetworksService in
             DefaultNetworksService(
                 store: KeyValueStore(name: "\(DefaultNetworksService.self)"),
-                keyStoreService: resolver.resolve()
+                keyStoreService: resolver.resolve(),
+                nodeService: DefaultNodeService()
             )
         }
     }

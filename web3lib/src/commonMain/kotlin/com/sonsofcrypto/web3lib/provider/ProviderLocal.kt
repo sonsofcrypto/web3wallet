@@ -1,6 +1,5 @@
 package com.sonsofcrypto.web3lib.provider
 
-import com.sonsofcrypto.web3lib.BuildKonfig
 import com.sonsofcrypto.web3lib.types.Network
 import io.ktor.client.*
 import io.ktor.client.plugins.*
@@ -12,13 +11,10 @@ import io.ktor.utils.io.charsets.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
-class ProviderAlchemy: ProviderJsonRpc {
-
-    private val apiKeys: ApiKeys
+class ProviderLocal: ProviderJsonRpc {
 
     constructor(
         network: Network,
-        apiKeys: ApiKeys = ApiKeys.default(),
         dispatcher: CoroutineDispatcher = Dispatchers.Default,
         nameService: NameServiceProvider? = null
     ) : super(
@@ -38,28 +34,13 @@ class ProviderAlchemy: ProviderJsonRpc {
         },
         dispatcher = dispatcher,
         nameService = nameService,
-    ) {
-        this.apiKeys = apiKeys
-    }
+    )
 
     /** Utilities */
 
     @Throws(Throwable::class)
     override fun url(): String = when (network.chainId) {
-        1u -> "https://eth-mainnet.g.alchemy.com/v2/${apiKeys.key}"
-        3u -> "https://eth-ropsten.g.alchemy.com/v2/${apiKeys.key}"
-        4u -> "https://eth-rinkeby.g.alchemy.com/v2/${apiKeys.key}"
-        5u -> "https://eth-goerli.g.alchemy.com/v2/${apiKeys.key}"
+        1u -> "https://127.0.0.1:62302"
         else -> throw  Error.UnsupportedNetwork(network)
-    }
-
-    /** Pocket network api keys */
-    data class ApiKeys(
-        val key: String,
-    ) {
-        companion object {
-            /** Only used for development */
-            fun default(): ApiKeys = ApiKeys(BuildKonfig.alchemyKey)
-        }
     }
 }

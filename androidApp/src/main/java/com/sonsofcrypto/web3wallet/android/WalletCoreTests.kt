@@ -29,8 +29,6 @@ class WalletCoreTests {
             KeyStoreTest.MockKeyChainService()
         )
 
-        println(com.sonsofcrypto.web3walletcore.Greeting().greeting())
-
         val presenter = DefaultRootPresenter(
             WeakRef(MockRootView()),
             MockRootWireframe(),

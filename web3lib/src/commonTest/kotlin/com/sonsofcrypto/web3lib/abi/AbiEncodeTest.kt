@@ -4,8 +4,8 @@ import com.sonsofcrypto.web3lib.abi.AbiEncode
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
-import com.sonsofcrypto.web3lib.utils.setReturnValue
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
+import com.sonsofcrypto.web3lib.utils.setReturnValue
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue

@@ -18,16 +18,21 @@ protocol NetworksWireframe {
 final class DefaultNetworksWireframe {
     private weak var parent: UIViewController?
     private let alertWireframeFactory: AlertWireframeFactory
+    private let networkSettingsWireframeFactory: NetworkSettingsWireframeFactory
     private let networksService: NetworksService
+
+    private weak var vc: UIViewController?
 
     init(
         parent: UIViewController?,
         networksService: NetworksService,
-        alertWireframeFactory: AlertWireframeFactory
+        alertWireframeFactory: AlertWireframeFactory,
+        networkSettingsWireframeFactory: NetworkSettingsWireframeFactory
     ) {
         self.parent = parent
         self.networksService = networksService
         self.alertWireframeFactory = alertWireframeFactory
+        self.networkSettingsWireframeFactory = networkSettingsWireframeFactory
     }
 }
 
@@ -35,6 +40,7 @@ extension DefaultNetworksWireframe: NetworksWireframe {
 
     func present() {
         let vc = wireUp()
+        self.vc = vc
         parent?.asEdgeCardsController?.setTopCard(vc: vc) ?? parent?.show(vc, sender: self)
         if let parent = self.parent as? EdgeCardsController {
             parent.setTopCard(vc: vc)
@@ -47,12 +53,14 @@ extension DefaultNetworksWireframe: NetworksWireframe {
         switch destination {
         case .dashboard:
             parent?.asEdgeCardsController?.setDisplayMode(.master, animated: true)
-        case .editNetwork:
-            guard let parent = parent else { return }
-            alertWireframeFactory.make(
-                parent,
-                context: .underConstructionAlert()
-            ).present()
+        case let .editNetwork(network):
+           alertWireframeFactory.make(
+               parent,
+               context: .underConstructionAlert()
+//             networkSettingsWireframeFactory.make(
+//                 vc?.asNavVc?.topVc ?? vc,
+//                 network: network
+//             ).present()
         }
     }
 }

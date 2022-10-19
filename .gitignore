@@ -204,4 +204,6 @@ coreCrypto/build/ios/ios-arm64_x86_64-simulator/CoreCrypto.xcframework
 coreCrypto/build/android/coreCrypto.aar
 coreCrypto/build/android/coreCrypto-sources.jar
 
-.run/
+geth/geth.aar
+geth/geth-sources.jar
+geth/Geth.xcframework

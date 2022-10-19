@@ -1,8 +1,6 @@
 package com.sonsofcrypto.web3lib.utils
 
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
-import com.sonsofcrypto.web3lib.utils.extensions.toHexString
-import io.ktor.utils.io.core.*
 
 //import coreCrypto.CoreCrypto
 

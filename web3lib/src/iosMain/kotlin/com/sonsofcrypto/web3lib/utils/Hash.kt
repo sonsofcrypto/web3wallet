@@ -1,6 +1,14 @@
 package com.sonsofcrypto.web3lib.utils
 
-import CoreCrypto.*
+import CoreCrypto.CoreCryptoHash
+import CoreCrypto.CoreCryptoKeccak256
+import CoreCrypto.CoreCryptoKeccak512
+import CoreCrypto.CoreCryptoHmacSha512
+import CoreCrypto.CoreCryptoHashFnSha256
+import CoreCrypto.CoreCryptoHashFnSha512
+import CoreCrypto.CoreCryptoHashFnKeccak256
+import CoreCrypto.CoreCryptoHashFnKeccak512
+import CoreCrypto.CoreCryptoHashFnRipemd160
 
 /** Hash functions*/
 

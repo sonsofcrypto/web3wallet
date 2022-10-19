@@ -25,6 +25,8 @@ android {
 dependencies {
     implementation(project(":web3lib"))
     implementation(project(":web3walletcore"))
+    implementation(files("$rootDir/coreCrypto/build/android/coreCrypto.aar"))
+    implementation(files("$rootDir/coreCrypto/build/android/coreCrypto-sources.jar"))
     implementation("com.google.android.material:material:1.4.0")
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0")

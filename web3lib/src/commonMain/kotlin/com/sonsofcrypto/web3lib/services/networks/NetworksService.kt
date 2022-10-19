@@ -3,9 +3,12 @@ package com.sonsofcrypto.web3lib.services.networks
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.provider.Provider
 import com.sonsofcrypto.web3lib.provider.ProviderAlchemy
+import com.sonsofcrypto.web3lib.provider.ProviderLocal
 import com.sonsofcrypto.web3lib.provider.ProviderPocket
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
+import com.sonsofcrypto.web3lib.services.networks.ProviderInfo.Type.*
+import com.sonsofcrypto.web3lib.services.node.NodeService
 import com.sonsofcrypto.web3lib.signer.Wallet
 import com.sonsofcrypto.web3lib.types.Network
 import kotlinx.serialization.decodeFromString
@@ -59,6 +62,15 @@ interface NetworksService {
             Network.ethereum(), Network.ropsten(), Network.rinkeby(),
             Network.goerli(),
         )
+        /** Supported provider types for network */
+        fun supportedProviderTypes(network: Network): List<ProviderInfo.Type> =
+            when (network.chainId) {
+                Network.ethereum().chainId -> listOf(LOCAL, POCKET, ALCHEMY)
+                Network.goerli().chainId -> listOf(POCKET, ALCHEMY)
+                Network.rinkeby().chainId -> listOf(POCKET, ALCHEMY)
+                Network.ropsten().chainId -> listOf(POCKET)
+                else -> listOf()
+            }
     }
 }
 
@@ -66,6 +78,7 @@ interface NetworksService {
 class DefaultNetworksService(
     private val store: KeyValueStore,
     private val keyStoreService: KeyStoreService,
+    private val nodeService: NodeService,
 ): NetworksService {
 
     override var keyStoreItem: KeyStoreItem? = null
@@ -115,8 +128,16 @@ class DefaultNetworksService(
 
     override fun setProvider(provider: Provider?, network: Network) {
         provider?.let { store[providerKey(network)] = ProviderInfo.from(it) }
-        if (provider != null) providers[network] = provider
-        else providers.remove(network)
+        if (provider != null) {
+            (providers[network] as? ProviderLocal)?.let {
+                nodeService.stopNode(network)
+            }
+            providers[network] = provider
+            (provider as? ProviderLocal)?.let { nodeService.startNode(network) }
+        } else {
+            providers.remove(network)
+            (provider as? ProviderLocal)?.let { nodeService.stopNode(network) }
+        }
     }
 
     override fun setProvider(provider: ProviderInfo, network: Network) {

@@ -2,7 +2,6 @@ package com.sonsofcrypto.web3lib
 
 import com.sonsofcrypto.web3lib.utils.bip39.Bip39
 import org.junit.Assert.assertTrue
-import org.junit.Test
 
 class AndroidGreetingTest {
 

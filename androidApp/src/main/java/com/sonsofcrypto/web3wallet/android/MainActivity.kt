@@ -16,9 +16,6 @@ class MainActivity : AppCompatActivity() {
 
         val tv: TextView = findViewById(R.id.text_view)
         tv.text = secureRand(128).toString()
-
-
-
     }
 
     override fun onResume() {
@@ -38,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 //        WalletServiceTest().runAll()
 //        UniswapTests().runAll()
 //        EncryptTest().runAll()
-        WalletCoreTests().runAll()
+//        WalletCoreTests().runAll()
         println("=== all tests executed ===")
     }
 }

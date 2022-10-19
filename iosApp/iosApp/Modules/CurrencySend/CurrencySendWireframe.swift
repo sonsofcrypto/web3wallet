@@ -130,7 +130,7 @@ private extension DefaultCurrencySendWireframe {
         vc.hidesBottomBarWhenPushed = true
         vc.presenter = presenter
         self.vc = vc
-        guard parent?.asNavigationController == nil else { return vc }
+        guard parent?.asNavVc == nil else { return vc }
         let nc = NavigationController(rootViewController: vc)
         self.vc = nc
         return nc

@@ -11,13 +11,16 @@ protocol NetworksWireframeFactory {
 
 final class DefaultNetworksWireframeFactory {
     private let alertWireframeFactory: AlertWireframeFactory
+    private let networkSettingsWireframeFactory: NetworkSettingsWireframeFactory
     private let networksService: NetworksService
 
     init(
         alertWireframeFactory: AlertWireframeFactory,
+        networkSettingsWireframeFactory: NetworkSettingsWireframeFactory,
         networksService: NetworksService
     ) {
         self.alertWireframeFactory = alertWireframeFactory
+        self.networkSettingsWireframeFactory = networkSettingsWireframeFactory
         self.networksService = networksService
     }
 }
@@ -28,7 +31,8 @@ extension DefaultNetworksWireframeFactory: NetworksWireframeFactory {
         DefaultNetworksWireframe(
             parent: parent,
             networksService: networksService,
-            alertWireframeFactory: alertWireframeFactory
+            alertWireframeFactory: alertWireframeFactory,
+            networkSettingsWireframeFactory: networkSettingsWireframeFactory
         )
     }
 }
@@ -41,6 +45,7 @@ final class NetworksWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> NetworksWireframeFactory in
             DefaultNetworksWireframeFactory(
                 alertWireframeFactory: resolver.resolve(),
+                networkSettingsWireframeFactory: resolver.resolve(),
                 networksService: resolver.resolve()
             )
         }

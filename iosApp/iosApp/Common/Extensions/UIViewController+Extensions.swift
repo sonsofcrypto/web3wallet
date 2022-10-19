@@ -9,12 +9,12 @@ extension UIViewController {
         self as? EdgeCardsController
     }
     
-    var asNavigationController: NavigationController? {
+    var asNavVc: NavigationController? {
         self as? NavigationController
     }
     
     func popOrDismiss() {
-        if let nc = navigationController?.asNavigationController, nc.canPop {
+        if let nc = navigationController?.asNavVc, nc.canPop {
             nc.popViewController(animated: true)
         } else {
             dismiss(animated: true)

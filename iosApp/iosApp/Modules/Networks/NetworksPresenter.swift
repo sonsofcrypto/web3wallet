@@ -117,10 +117,13 @@ private extension DefaultNetworksPresenter {
     func formattedProvider(_ provider: Provider?) -> String {
         switch provider {
         case is ProviderPocket:
-            return Localized("networks.provider.pokt.network")
-        default:
-            // TODO: @Annon to check better way to know if alchyme
+            return Localized("networks.provider.pokt")
+        case is ProviderAlchemy:
             return Localized("networks.provider.alchyme")
+        case is ProviderLocal:
+            return Localized("networks.provider.local")
+        default:
+            return Localized("networks.provider.custom")
         }
     }
 
