@@ -20,6 +20,7 @@ final class DefaultConfirmationWireframeFactory {
     private let walletService: WalletService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
+    private let webViewWireframeFactory: WebViewWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
     private let nftsService: NFTsService
     private let mailService: MailService
@@ -28,6 +29,7 @@ final class DefaultConfirmationWireframeFactory {
         walletService: WalletService,
         authenticateWireframeFactory: AuthenticateWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
+        webViewWireframeFactory: WebViewWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
         nftsService: NFTsService,
         mailService: MailService
@@ -35,6 +37,7 @@ final class DefaultConfirmationWireframeFactory {
         self.walletService = walletService
         self.authenticateWireframeFactory = authenticateWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
+        self.webViewWireframeFactory = webViewWireframeFactory
         self.deepLinkHandler = deepLinkHandler
         self.nftsService = nftsService
         self.mailService = mailService
@@ -53,6 +56,7 @@ extension DefaultConfirmationWireframeFactory: ConfirmationWireframeFactory {
             walletService: walletService,
             authenticateWireframeFactory: authenticateWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
+            webViewWireframeFactory: webViewWireframeFactory,
             deepLinkHandler: deepLinkHandler,
             nftsService: nftsService,
             mailService: mailService
@@ -70,6 +74,7 @@ final class ConfirmationWireframeFactoryAssembler: AssemblerComponent {
                 walletService: resolver.resolve(),
                 authenticateWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
+                webViewWireframeFactory: resolver.resolve(),
                 deepLinkHandler: resolver.resolve(),
                 nftsService: resolver.resolve(),
                 mailService: resolver.resolve()

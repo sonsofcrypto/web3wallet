@@ -202,7 +202,8 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension AccountViewController: UICollectionViewDelegate {
-    
+
+    // TODO: Move all the events handling to presenter
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let section = Section(rawValue: indexPath.section) else {
             return
@@ -213,7 +214,9 @@ extension AccountViewController: UICollectionViewDelegate {
         }
         if section == .transactions {
             guard let txHash = viewModel.transactions[indexPath.item].data?.txHash else { return }
-            return EtherscanHelper().view(txHash: txHash, parent: self)
+            guard let url = "https://etherscan.io/tx/\(txHash)".url else { return }
+            let factory: WebViewWireframeFactory = AppAssembler.resolve()
+            factory.make(parent, context: .init(url: url)).present()
         }
         if section == .marketInfo && indexPath.item == 1 {
             // TODO: Get presenter to present bonus action view

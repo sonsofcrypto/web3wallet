@@ -31,6 +31,7 @@ private extension AssemblerBootstrapper {
             ReachabilityServiceAssembler(),
             ChatServiceAssembler(),
             CultServiceAssembler(),
+            NodeServiceAssembler(),
             NetworksServiceAssembler(),
             CurrencyStoreServiceAssembler(),
             WalletServiceAssembler(),

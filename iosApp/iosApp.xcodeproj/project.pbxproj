@@ -371,7 +371,6 @@
 		1C7FC9A528BCC5E900FC9175 /* MailServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9A428BCC5E900FC9175 /* MailServiceAssembler.swift */; };
 		1C7FC9A828BCEA3400FC9175 /* WebViewWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9A728BCEA3400FC9175 /* WebViewWireframe.swift */; };
 		1C7FC9B228BCEC4800FC9175 /* WebViewWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9B128BCEC4800FC9175 /* WebViewWireframeFactory.swift */; };
-		1C7FC9B628BCF5C700FC9175 /* EtherscanHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9B528BCF5C700FC9175 /* EtherscanHelper.swift */; };
 		1C7FC9B828BCF95E00FC9175 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9B728BCF95E00FC9175 /* WebViewController.swift */; };
 		1C7FC9BA28BD00C200FC9175 /* AccountAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC9B928BD00C200FC9175 /* AccountAddressCell.swift */; };
 		1C876AF728FD483B003D272A /* NSAttributtedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C876AF628FD483B003D272A /* NSAttributtedString+Extensions.swift */; };
@@ -921,7 +920,6 @@
 		1C7FC9A428BCC5E900FC9175 /* MailServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailServiceAssembler.swift; sourceTree = "<group>"; };
 		1C7FC9A728BCEA3400FC9175 /* WebViewWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewWireframe.swift; sourceTree = "<group>"; };
 		1C7FC9B128BCEC4800FC9175 /* WebViewWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewWireframeFactory.swift; sourceTree = "<group>"; };
-		1C7FC9B528BCF5C700FC9175 /* EtherscanHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanHelper.swift; sourceTree = "<group>"; };
 		1C7FC9B728BCF95E00FC9175 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		1C7FC9B928BD00C200FC9175 /* AccountAddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAddressCell.swift; sourceTree = "<group>"; };
 		1C876AF628FD483B003D272A /* NSAttributtedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributtedString+Extensions.swift"; sourceTree = "<group>"; };
@@ -1842,7 +1840,6 @@
 			isa = PBXGroup;
 			children = (
 				1C7FC98028AFB32600FC9175 /* PasswordValidatorHelper.swift */,
-				1C7FC9B528BCF5C700FC9175 /* EtherscanHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2898,7 +2895,6 @@
 				1C7F863F28D20E490073FD95 /* UIStackView+Extensions.swift in Sources */,
 				1CE66BCA2848EA9900AB6ACA /* ChatService.swift in Sources */,
 				1CEF3D1D28C3A2D80092BC0E /* ConfirmationViewModel+ApproveUniswap.swift in Sources */,
-				1C7FC9B628BCF5C700FC9175 /* EtherscanHelper.swift in Sources */,
 				1C7F864128D20E490073FD95 /* UIBarButtonItem+Extensions.swift in Sources */,
 				1C6487362832E6650091A12D /* NFTsServiceAssembler.swift in Sources */,
 				1C54DBF3285E83A300E378F6 /* CurrencyAddPresenter.swift in Sources */,

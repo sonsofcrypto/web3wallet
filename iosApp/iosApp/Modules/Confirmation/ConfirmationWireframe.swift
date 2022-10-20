@@ -27,6 +27,7 @@ final class DefaultConfirmationWireframe {
     private let walletService: WalletService
     private let authenticateWireframeFactory: AuthenticateWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
+    private let webViewWireframeFactory: WebViewWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
     private let nftsService: NFTsService
     private let mailService: MailService
@@ -39,6 +40,7 @@ final class DefaultConfirmationWireframe {
         walletService: WalletService,
         authenticateWireframeFactory: AuthenticateWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
+        webViewWireframeFactory: WebViewWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
         nftsService: NFTsService,
         mailService: MailService
@@ -48,6 +50,7 @@ final class DefaultConfirmationWireframe {
         self.walletService = walletService
         self.authenticateWireframeFactory = authenticateWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
+        self.webViewWireframeFactory = webViewWireframeFactory
         self.deepLinkHandler = deepLinkHandler
         self.nftsService = nftsService
         self.mailService = mailService
@@ -82,7 +85,8 @@ extension DefaultConfirmationWireframe: ConfirmationWireframe {
         case .cultProposals:
             deepLinkHandler.handle(deepLink: .cultProposals)
         case let .viewEtherscan(txHash):
-            EtherscanHelper().view(txHash: txHash, parent: vc)
+            guard let url = "https://etherscan.io/tx/\(txHash)".url else { return }
+            webViewWireframeFactory.make(vc, context: .init(url: url)).present()
         case let .report(error):
             let body = Localized(
                 "report.txFailed.error.body",

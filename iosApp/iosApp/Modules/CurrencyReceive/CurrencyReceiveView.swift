@@ -107,11 +107,12 @@ private extension CurrencyReceiveViewController {
 
     func shareAction() -> (() -> Void) {
         { [weak self] in
-            guard let data = self?.viewModel?.data else { return }
+            guard let symbol = self?.viewModel?.symbol,
+                  let address = self?.viewModel?.address else { return }
             let avc = UIActivityViewController(
                 activityItems: [
-                    Localized("currencyReceive.action.share.address", data.symbol)
-                        + " " + data.address
+                    Localized("currencyReceive.action.share.address", symbol)
+                        + " " + address
                 ],
                 applicationActivities: nil
             )
