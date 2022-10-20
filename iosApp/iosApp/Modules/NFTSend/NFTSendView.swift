@@ -174,7 +174,7 @@ private extension NFTSendViewController {
 
 private extension NFTSendViewController {
     
-    func nftSendTokenHandler() -> TokenEnterAddressView.Handler {
+    func nftSendTokenHandler() -> NetworkAddressPickerView.Handler {
         .init(
             onAddressChanged: onAddressChanged(),
             onQRCodeScanTapped: onTapped(.qrCodeScan),

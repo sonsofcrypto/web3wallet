@@ -2,16 +2,14 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-struct TokenEnterAddressViewModel {
-    
+struct NetworkAddressPickerViewModel {
+    let placeholder: String
     let value: String?
     let isValid: Bool
     let becomeFirstResponder: Bool
 }
 
-// TODO: Rename to AddressPickerView
-final class TokenEnterAddressView: UIView {
-    
+final class NetworkAddressPickerView: UIView {
     @IBOutlet weak var textFieldView: UIView!
     @IBOutlet weak var qrCodeScanButton: UIButton!
     @IBOutlet weak var textField: TextField!
@@ -20,7 +18,6 @@ final class TokenEnterAddressView: UIView {
     @IBOutlet weak var addContactIcon: UIImageView!
     
     struct Handler {
-        
         let onAddressChanged: (String) -> Void
         let onQRCodeScanTapped: () -> Void
         let onPasteTapped: () -> Void
@@ -30,26 +27,17 @@ final class TokenEnterAddressView: UIView {
     private var handler: Handler!
 
     override func awakeFromNib() {
-        
         super.awakeFromNib()
-        
         textFieldView.backgroundColor = Theme.colour.cellBackground
         textFieldView.layer.cornerRadius = Theme.constant.cornerRadiusSmall
-        qrCodeScanButton.setImage(
-            "qrcode.viewfinder".assetImage,
-            for: .normal
-        )
+        qrCodeScanButton.setImage("qrcode.viewfinder".assetImage, for: .normal)
         qrCodeScanButton.tintColor = Theme.colour.labelPrimary
         qrCodeScanButton.addTarget(self, action: #selector(qrCodeScanTapped), for: .touchUpInside)
-        
-        textField.placeholderAttrText = Localized("tokenSend.cell.address.textField.placeholder")
         textField.delegate = self
         textField.textContentType = .none
         textField.addDoneInputAccessoryView(
             with: .targetAction(.init(target: self, selector: #selector(resignFirstResponder)))
         )
-
-
         let pasteAction = UIButton(type: .custom)
         pasteAction.setTitle(Localized("paste"), for: .normal)
         pasteAction.titleLabel?.font = Theme.font.subheadlineBold
@@ -65,60 +53,38 @@ final class TokenEnterAddressView: UIView {
             stackView.addArrangedSubview(pasteAction)
         }
         self.pasteButton = pasteAction
-
         addContactView.isHidden = true
         addContactView.add(.targetAction(.init(target: self, selector: #selector(saveTapped))))
         addContactIcon.tintColor = Theme.colour.labelPrimary
     }
     
-    override func resignFirstResponder() -> Bool {
-        textField.resignFirstResponder()
-    }
+    override func resignFirstResponder() -> Bool { textField.resignFirstResponder() }
 }
 
-extension TokenEnterAddressView {
+extension NetworkAddressPickerView {
     
-    func update(
-        with address: TokenEnterAddressViewModel,
-        handler: Handler
-    ) {
-        
+    func update(with address: NetworkAddressPickerViewModel, handler: Handler) {
         self.handler = handler
-        
+        textField.placeholderAttrText = address.placeholder
         textField.text = address.value
-        
         pasteButton.isHidden = address.isValid
         addContactView.isHidden = !address.isValid
-        
-        if address.becomeFirstResponder {
-            
-            textField.becomeFirstResponder()
-        }
+        if address.becomeFirstResponder { textField.becomeFirstResponder() }
     }
 }
 
-extension TokenEnterAddressView: UITextFieldDelegate {
+extension NetworkAddressPickerView: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        
         handler.onAddressChanged(textField.text ?? "")
     }
 }
 
-private extension TokenEnterAddressView {
+private extension NetworkAddressPickerView {
     
-    @objc func pasteTapped() {
-
-        handler.onPasteTapped()
-    }
+    @objc func pasteTapped() { handler.onPasteTapped() }
     
-    @objc func qrCodeScanTapped() {
-        
-        handler.onQRCodeScanTapped()
-    }
+    @objc func qrCodeScanTapped() { handler.onQRCodeScanTapped() }
     
-    @objc func saveTapped() {
-        
-        handler.onSaveTapped()
-    }
+    @objc func saveTapped() { handler.onSaveTapped() }
 }

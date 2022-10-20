@@ -8,16 +8,16 @@ final class CurrencyAddCollectionViewCell: UICollectionViewCell {
     
     struct Handler {
         let selectNetworkHandler: () -> Void
-        let addressHandler: TokenEnterAddressView.Handler
-        let addTokenHandler: () -> Void
+        let onPaste: (CurrencyAddViewModel.TextFieldType, String) -> Void
         let onTextChanged: (CurrencyAddViewModel.TextFieldType, String) -> Void
         let onReturnTapped: (CurrencyAddViewModel.TextFieldType) -> Void
+        let addTokenHandler: () -> Void
     }
 
     @IBOutlet weak var networkDetailsView: CurrencyAddNetworkView!
     
     @IBOutlet weak var detailsView: UIView!
-    @IBOutlet weak var addressView: TokenEnterAddressView!
+    @IBOutlet weak var contractAddressView: CurrencyAddInputView!
     @IBOutlet weak var nameView: CurrencyAddInputView!
     @IBOutlet weak var symbolView: CurrencyAddInputView!
     @IBOutlet weak var decimalView: CurrencyAddInputView!
@@ -43,6 +43,7 @@ final class CurrencyAddCollectionViewCell: UICollectionViewCell {
     
     @discardableResult
     override func resignFirstResponder() -> Bool {
+        contractAddressView.resignFirstResponder()
         nameView.resignFirstResponder()
         symbolView.resignFirstResponder()
         decimalView.resignFirstResponder()
@@ -59,23 +60,40 @@ final class CurrencyAddCollectionViewCell: UICollectionViewCell {
             with: viewModel.network,
             handler: .init(onTapped: handler.selectNetworkHandler)
         )
-        addressView.update(
-            with: viewModel.address,
-            handler: handler.addressHandler
+        contractAddressView.update(
+            with: viewModel.contractAddress,
+            handler: .init(
+                onTextChanged: handler.onTextChanged,
+                onReturnTapped: handler.onReturnTapped,
+                onPaste: handler.onPaste
+            ),
+            autocapitalizationType: .none
         )
         nameView.update(
             with: viewModel.name,
-            handler: .init(onTextChanged: handler.onTextChanged, onReturnTapped: handler.onReturnTapped),
+            handler: .init(
+                onTextChanged: handler.onTextChanged,
+                onReturnTapped: handler.onReturnTapped,
+                onPaste: handler.onPaste
+            ),
             autocapitalizationType: .words
         )
         symbolView.update(
             with: viewModel.symbol,
-            handler: .init(onTextChanged: handler.onTextChanged, onReturnTapped: handler.onReturnTapped),
+            handler: .init(
+                onTextChanged: handler.onTextChanged,
+                onReturnTapped: handler.onReturnTapped,
+                onPaste: handler.onPaste
+            ),
             autocapitalizationType: .allCharacters
         )
         decimalView.update(
             with: viewModel.decimals,
-            handler: .init(onTextChanged: handler.onTextChanged, onReturnTapped: handler.onReturnTapped),
+            handler: .init(
+                onTextChanged: handler.onTextChanged,
+                onReturnTapped: handler.onReturnTapped,
+                onPaste: handler.onPaste
+            ),
             keyboardType: .numberPad
         )
         saveButton.setTitle(viewModel.saveButtonTitle, for: .normal)

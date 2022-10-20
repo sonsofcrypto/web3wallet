@@ -9,9 +9,7 @@ import web3walletcore
 
 enum CurrencyAddPresenterEvent {
     case selectNetwork
-    case addressChanged(to: String)
-    case qrCodeScan
-    case pasteAddress
+    case pasteInput(for: CurrencyAddViewModel.TextFieldType, to: String)
     case inputChanged(for: CurrencyAddViewModel.TextFieldType, to: String)
     case returnKeyTapped(for: CurrencyAddViewModel.TextFieldType)
     case addCurrency
@@ -71,12 +69,8 @@ extension DefaultCurrencyAddPresenter: CurrencyAddPresenter {
         switch event {
         case .selectNetwork:
             wireframe.navigate(to: .selectNetwork(onCompletion: onNetworkSelected()))
-        case let .addressChanged(address):
-            handleAddressChanged(to: address)
-        case .qrCodeScan:
-            handleQRCodeScan()
-        case .pasteAddress:
-            handlePasteAddress()
+        case let .pasteInput(type, value):
+            pasteInput(for: type, to: value)
         case let .inputChanged(type, value):
             inputChanged(for: type, to: value)
         case let .returnKeyTapped(type):
@@ -92,48 +86,6 @@ extension DefaultCurrencyAddPresenter: CurrencyAddPresenter {
 // MARK: - Handlers
 
 private extension DefaultCurrencyAddPresenter {
-    
-    func handleAddressChanged(to address: String) {
-        if
-            let formattedAddress = formattedAddress,
-            address.hasPrefix(formattedAddress),
-            address.count == (formattedAddress.count + 1)
-        {
-            refresh()
-        } else if formattedAddress == address {
-            refresh()
-        } else if
-            let formattedAddress = formattedAddress,
-            formattedAddress.hasPrefix(address),
-            address.count == (formattedAddress.count - 1)
-        {
-            contractAddress?.removeLast()
-            refresh()
-        } else {
-            contractAddress = address
-            refresh()
-        }
-    }
-    
-    func handleQRCodeScan() {
-        view?.dismissKeyboard()
-        wireframe.navigate(
-            to: .qrCodeScan(
-                network: network,
-                onCompletion: onQRScanned()
-            )
-        )
-    }
-    
-    func handlePasteAddress() {
-        let clipboard = UIPasteboard.general.string ?? ""
-        let isValid = network.isValid(address: clipboard)
-        guard isValid else { return }
-        contractAddress = clipboard
-        refresh(
-            firstResponder: nextFirstResponder()
-        )
-    }
     
     func handleAddToken() {
         addTokenTapped = true
@@ -177,41 +129,36 @@ private extension DefaultCurrencyAddPresenter {
         .init(
             title: Localized("currencyAdd.title"),
             network: .init(
-                item: .init(
-                    name: Localized("currencyAdd.network.title"),
-                    value: network.name
-                )
+                name: Localized("currencyAdd.network.title"),
+                value: network.name
             ),
-            address: .init(
+            contractAddress: .init(
+                name: Localized("currencyAdd.contractAddress.title"),
                 value: formattedAddress ?? contractAddress,
-                isValid: false,
-                becomeFirstResponder: firstResponder == .contractAddress
+                placeholder: Localized("currencyAdd.contractAddress.placeholder"),
+                hint: addTokenTapped ? contractAddressValidationError : nil,
+                tag: CurrencyAddViewModel.TextFieldType.contractAddress.rawValue,
+                isFirstResponder: firstResponder == .contractAddress
             ),
             name: .init(
-                item: .init(
-                    name: Localized("currencyAdd.name.title"),
-                    value: name
-                ),
+                name: Localized("currencyAdd.name.title"),
+                value: name,
                 placeholder: Localized("currencyAdd.name.placeholder"),
                 hint: addTokenTapped ? nameValidationError : nil,
                 tag: CurrencyAddViewModel.TextFieldType.name.rawValue,
                 isFirstResponder: firstResponder == .name
             ),
             symbol: .init(
-                item: .init(
-                    name: Localized("currencyAdd.symbol.title"),
-                    value: symbol
-                ),
+                name: Localized("currencyAdd.symbol.title"),
+                value: symbol,
                 placeholder: Localized("currencyAdd.symbol.placeholder"),
                 hint: addTokenTapped ? symbolValidationError : nil,
                 tag: CurrencyAddViewModel.TextFieldType.symbol.rawValue,
                 isFirstResponder: firstResponder == .symbol
             ),
             decimals: .init(
-                item: .init(
-                    name: Localized("currencyAdd.decimals.title"),
-                    value: decimals
-                ),
+                name: Localized("currencyAdd.decimals.title"),
+                value: decimals,
                 placeholder: Localized("currencyAdd.decimals.placeholder"),
                 hint: addTokenTapped ? decimalsValidationError : nil,
                 tag: CurrencyAddViewModel.TextFieldType.decimals.rawValue,
@@ -224,8 +171,8 @@ private extension DefaultCurrencyAddPresenter {
     
     var formattedAddress: String? {
         guard let address = contractAddress else { return nil }
-        guard network.isValid(address: address) else { return nil }
-        return network.formatAddressShort(address)
+        guard network.isValidAddress(input: address) else { return nil }
+        return Formatters.Companion().networkAddress.format(address: address, digits: 10.int32, network: network)
     }
     
     func saveButtonTitle() -> String {
@@ -250,16 +197,26 @@ private extension DefaultCurrencyAddPresenter {
         return true
     }
     
+    func pasteInput(for type: CurrencyAddViewModel.TextFieldType, to value: String) {
+        var value = value
+        switch type {
+        case .contractAddress: guard network.isValidAddress(input: value) else { return }
+        case .name: break
+        case .symbol: break
+        case .decimals:
+            guard let int = try? value.int() else { return }
+            if int < 1 { value = 1.stringValue }
+            else if int > 32 { value = 32.stringValue }
+        }
+        inputChanged(for: type, to: value)
+    }
+    
     func inputChanged(for type: CurrencyAddViewModel.TextFieldType, to value: String) {
         switch type {
-        case .contractAddress:
-            contractAddress = value
-        case .name:
-            name = value
-        case .symbol:
-            symbol = value
-        case .decimals:
-            decimals = value
+        case .contractAddress: contractAddress = value
+        case .name: name = value
+        case .symbol: symbol = value
+        case .decimals: decimals = value
         }
         refresh()
     }
@@ -285,7 +242,7 @@ private extension DefaultCurrencyAddPresenter {
     }
 
     func validateContractAddress() {
-        guard !network.isValid(address: contractAddress ?? "") else {
+        guard !network.isValidAddress(input: contractAddress ?? "") else {
             contractAddressValidationError = nil
             return
         }
@@ -324,17 +281,6 @@ private extension DefaultCurrencyAddPresenter {
             return
         }
         decimalsValidationError = nil
-    }
-    
-    func onQRScanned() -> (String) -> Void {
-        {
-            [weak self] address in
-            guard let self = self else { return }
-            self.contractAddress = address
-            self.refresh(
-                firstResponder: self.nextFirstResponder()
-            )
-        }
     }
     
     func nextFirstResponder() -> CurrencyAddViewModel.TextFieldType? {

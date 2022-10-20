@@ -32,8 +32,8 @@ final class CurrencyAddNetworkView: UIView {
     ) {
         self.viewModel = viewModel
         self.handler = handler
-        nameLabel.text = viewModel.item.name
-        valueLabel.text = viewModel.item.value
+        nameLabel.text = viewModel.name
+        valueLabel.text = viewModel.value
     }
 }
 

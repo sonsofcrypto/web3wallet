@@ -15,27 +15,25 @@ struct CurrencyAddViewModel {
     
     let title: String
     let network: NetworkItem
-    let address: TokenEnterAddressViewModel
+    let contractAddress: TextFieldItem
     let name: TextFieldItem
     let symbol: TextFieldItem
     let decimals: TextFieldItem
     let saveButtonTitle: String
     let saveButtonEnabled: Bool
-    
-    struct Item {
+        
+    struct NetworkItem {
         let name: String
         let value: String?
     }
     
-    struct NetworkItem {
-        let item: Item
-    }
-    
     struct TextFieldItem {
-        let item: Item
+        let name: String
+        let value: String?
         let placeholder: String
         let hint: String?
         let tag: Int
         let isFirstResponder: Bool
     }
+
 }

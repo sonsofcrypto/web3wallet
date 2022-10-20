@@ -23,7 +23,7 @@ extension DefaultQRCodeScanInteractor: QRCodeScanInteractor {
             of: "\(network.name.lowercased()):",
             with: ""
         )
-        guard network.isValid(address: address) else { return nil }
+        guard network.isValidAddress(input: address) else { return nil }
         return address
     }
 

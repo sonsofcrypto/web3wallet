@@ -9,6 +9,7 @@ final class CurrencyAddInputView: UIView {
     struct Handler {
         let onTextChanged: (CurrencyAddViewModel.TextFieldType, String) -> Void
         let onReturnTapped: (CurrencyAddViewModel.TextFieldType) -> Void
+        let onPaste: (CurrencyAddViewModel.TextFieldType, String) -> Void
     }
     
     private var nameLabel: UILabel!
@@ -34,8 +35,8 @@ final class CurrencyAddInputView: UIView {
     ) {
         self.viewModel = viewModel
         self.handler = handler
-        nameLabel.text = viewModel.item.name
-        if let value = viewModel.item.value { textField.text = value }
+        nameLabel.text = viewModel.name
+        if let value = viewModel.value { textField.text = value }
         textField.tag = viewModel.tag
         textField.placeholderAttrText = viewModel.placeholder
         textField.keyboardType = keyboardType
@@ -140,8 +141,7 @@ private extension CurrencyAddInputView {
     
     @objc func pasteActionTapped() {
         guard let textFieldType = CurrencyAddViewModel.TextFieldType(rawValue: textField.tag) else { return }
-        textField.text = UIPasteboard.general.string
-        handler.onTextChanged(textFieldType, textField.text ?? "")
+        handler.onPaste(textFieldType, UIPasteboard.general.string ?? "")
     }
 
     @objc func dismissKeyboard() {

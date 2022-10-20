@@ -4,7 +4,7 @@
 
 final class CurrencySendToCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var tokenEnterAddressView: TokenEnterAddressView!
+    @IBOutlet weak var tokenEnterAddressView: NetworkAddressPickerView!
     
     override func resignFirstResponder() -> Bool {
         tokenEnterAddressView.resignFirstResponder()
@@ -14,8 +14,8 @@ final class CurrencySendToCollectionViewCell: UICollectionViewCell {
 extension CurrencySendToCollectionViewCell {
     
     func update(
-        with viewModel: TokenEnterAddressViewModel,
-        handler: TokenEnterAddressView.Handler
+        with viewModel: NetworkAddressPickerViewModel,
+        handler: NetworkAddressPickerView.Handler
     ) {
         tokenEnterAddressView.update(with: viewModel, handler: handler)
     }

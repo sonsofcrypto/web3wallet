@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 final class NFTSendToCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var tokenEnterAddressView: TokenEnterAddressView!
+    @IBOutlet weak var tokenEnterAddressView: NetworkAddressPickerView!
     
     override func resignFirstResponder() -> Bool {
         tokenEnterAddressView.resignFirstResponder()
@@ -13,8 +13,8 @@ final class NFTSendToCollectionViewCell: UICollectionViewCell {
 extension NFTSendToCollectionViewCell {
     
     func update(
-        with viewModel: TokenEnterAddressViewModel,
-        handler: TokenEnterAddressView.Handler
+        with viewModel: NetworkAddressPickerViewModel,
+        handler: NetworkAddressPickerView.Handler
     ) {
         tokenEnterAddressView.update(with: viewModel, handler: handler)
     }

@@ -54,6 +54,7 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
                 .nft(context.nftItem),
                 .address(
                     .init(
+                        placeholder: Localized("networkAddressPicker.to.address.placeholder", context.network.name),
                         value: nil,
                         isValid: false,
                         becomeFirstResponder: true
@@ -96,7 +97,7 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
             }
         case .pasteAddress:
             let clipboard = UIPasteboard.general.string ?? ""
-            let isValid = context.network.isValid(address: clipboard)
+            let isValid = context.network.isValidAddress(input: clipboard)
             guard isValid else { return }
             updateView(address: clipboard)
         case let .feeChanged(identifier):
@@ -107,7 +108,7 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
             view?.presentFeePicker(with: _fees())
         case .review:
             sendTapped = true
-            let isValidAddress = context.network.isValid(address: address ?? "")
+            let isValidAddress = context.network.isValidAddress(input: address ?? "")
             guard let address = address, isValidAddress  else {
                 updateView(shouldAddressBecomeFirstResponder: true)
                 return
@@ -170,11 +171,12 @@ private extension DefaultNFTSendPresenter {
         if !address.contains("...") {
             self.address = address
         }
-        let isValid = context.network.isValid(address: self.address ?? "")
+        let isValid = context.network.isValidAddress(input: self.address ?? "")
         updateView(
             with: [
                 .address(
                     .init(
+                        placeholder: Localized("networkAddressPicker.to.address.placeholder", context.network.name),
                         value: formattedAddress ?? address,
                         isValid: isValid,
                         becomeFirstResponder: becomeFirstResponder
@@ -186,7 +188,7 @@ private extension DefaultNFTSendPresenter {
     
     var formattedAddress: String? {
         guard let address = address else { return nil }
-        guard context.network.isValid(address: address) else { return nil }
+        guard context.network.isValidAddress(input: address) else { return nil }
         return Formatters.Companion.shared.networkAddress.format(
             address: address,
             digits: 8,
@@ -195,7 +197,7 @@ private extension DefaultNFTSendPresenter {
     }
 
     func updateCTA() {
-        let isValidAddress = context.network.isValid(address: address ?? "")
+        let isValidAddress = context.network.isValidAddress(input: address ?? "")
         let buttonState: NFTSendViewModel.Send.State
         if !sendTapped { buttonState = .ready }
         else if !isValidAddress { buttonState = .invalidDestination }

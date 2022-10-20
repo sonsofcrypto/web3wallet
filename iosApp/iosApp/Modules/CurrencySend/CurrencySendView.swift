@@ -189,7 +189,7 @@ private extension CurrencySendViewController {
 
 private extension CurrencySendViewController {
     
-    func tokenSendTokenHandler() -> TokenEnterAddressView.Handler {
+    func tokenSendTokenHandler() -> NetworkAddressPickerView.Handler {
         .init(
             onAddressChanged: onAddressChanged(),
             onQRCodeScanTapped: onTapped(.qrCodeScan),

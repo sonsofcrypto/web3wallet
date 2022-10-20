@@ -136,32 +136,23 @@ private extension CurrencyAddViewController {
     func tokenAddCollectionViewCellHandler() -> CurrencyAddCollectionViewCell.Handler {
         .init(
             selectNetworkHandler: presenterHandle(.selectNetwork),
-            addressHandler: addressHandler(),
-            addTokenHandler: presenterHandle(.addCurrency),
+            onPaste: onPaste(),
             onTextChanged: onTextChanged(),
-            onReturnTapped: onReturnTapped()
+            onReturnTapped: onReturnTapped(),
+            addTokenHandler: presenterHandle(.addCurrency)
         )
     }
-    
-    func addressHandler() -> TokenEnterAddressView.Handler {
-        .init(
-            onAddressChanged: onAddressChanged(),
-            onQRCodeScanTapped: presenterHandle(.qrCodeScan),
-            onPasteTapped: presenterHandle(.pasteAddress),
-            onSaveTapped: {}
-        )
-    }
-    
-    func onAddressChanged() -> (String) -> Void {
-        {
-            [weak self] value in
-            self?.presenterHandle(.addressChanged(to: value))()
-        }
-    }
-    
+        
     func presenterHandle(_ event: CurrencyAddPresenterEvent) -> () -> Void {
         {
             [weak self] in self?.presenter.handle(event)
+        }
+    }
+    
+    func onPaste() -> (CurrencyAddViewModel.TextFieldType, String) -> Void {
+        {
+            [weak self] (type, value) in
+            self?.presenterHandle(.pasteInput(for: type, to: value))()
         }
     }
     

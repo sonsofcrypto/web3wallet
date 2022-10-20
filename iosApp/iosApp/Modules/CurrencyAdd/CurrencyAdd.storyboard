@@ -30,14 +30,14 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CurrencyAddCollectionViewCell" id="O3H-ZS-yap" customClass="CurrencyAddCollectionViewCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="16" width="414" height="734.5"/>
+                                        <rect key="frame" x="0.0" y="16" width="414" height="1145.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TTd-81-Tql">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="734.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="1145.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="CdQ-um-Qmu">
-                                                    <rect key="frame" x="16" y="0.0" width="382" height="734.5"/>
+                                                    <rect key="frame" x="16" y="0.0" width="382" height="1207.5"/>
                                                     <subviews>
                                                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I5B-4g-MN0" customClass="CurrencyAddNetworkView" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="-32" width="382" height="32"/>
@@ -91,117 +91,47 @@
                                                                 <outlet property="valueLabel" destination="6h2-Rm-kWl" id="9WH-fp-Va3"/>
                                                             </connections>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7G8-WG-hOg" customClass="TokenEnterAddressView" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="382" height="46"/>
-                                                            <subviews>
-                                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Z9R-Cq-Awr">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="382" height="46"/>
-                                                                    <subviews>
-                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KHq-g3-JfL">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="352" height="46"/>
-                                                                            <subviews>
-                                                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Z0b-se-wTu">
-                                                                                    <rect key="frame" x="8" y="0.0" width="336" height="46"/>
-                                                                                    <subviews>
-                                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZsX-SB-JUm">
-                                                                                            <rect key="frame" x="0.0" y="0.0" width="22" height="46"/>
-                                                                                            <constraints>
-                                                                                                <constraint firstAttribute="width" constant="22" id="U9R-tk-SEl"/>
-                                                                                            </constraints>
-                                                                                            <state key="normal" title="Button"/>
-                                                                                            <buttonConfiguration key="configuration" style="plain"/>
-                                                                                        </button>
-                                                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C5N-Xw-7FP" customClass="TextField" customModule="iosApp" customModuleProvider="target">
-                                                                                            <rect key="frame" x="30" y="0.0" width="306" height="46"/>
-                                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="name"/>
-                                                                                        </textField>
-                                                                                    </subviews>
-                                                                                </stackView>
-                                                                            </subviews>
-                                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                            <constraints>
-                                                                                <constraint firstItem="Z0b-se-wTu" firstAttribute="leading" secondItem="KHq-g3-JfL" secondAttribute="leading" constant="8" id="83v-IN-aaQ"/>
-                                                                                <constraint firstAttribute="bottom" secondItem="Z0b-se-wTu" secondAttribute="bottom" id="N4r-NQ-b2x"/>
-                                                                                <constraint firstAttribute="trailing" secondItem="Z0b-se-wTu" secondAttribute="trailing" constant="8" id="TmR-g1-Pbd"/>
-                                                                                <constraint firstItem="Z0b-se-wTu" firstAttribute="top" secondItem="KHq-g3-JfL" secondAttribute="top" id="hJd-rx-aiX"/>
-                                                                            </constraints>
-                                                                        </view>
-                                                                        <view contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="XEg-uq-7NT">
-                                                                            <rect key="frame" x="360" y="0.0" width="22" height="46"/>
-                                                                            <subviews>
-                                                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="hRf-8n-qkR">
-                                                                                    <rect key="frame" x="0.0" y="12" width="22" height="22"/>
-                                                                                    <subviews>
-                                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person.fill.badge.plus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="3dc-nQ-jPi">
-                                                                                            <rect key="frame" x="-2" y="1.5" width="24" height="22"/>
-                                                                                            <constraints>
-                                                                                                <constraint firstAttribute="height" constant="22" id="29z-vW-O2e"/>
-                                                                                                <constraint firstAttribute="width" constant="22" id="AtU-Sf-BFf"/>
-                                                                                            </constraints>
-                                                                                        </imageView>
-                                                                                    </subviews>
-                                                                                </stackView>
-                                                                            </subviews>
-                                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                            <constraints>
-                                                                                <constraint firstItem="hRf-8n-qkR" firstAttribute="leading" secondItem="XEg-uq-7NT" secondAttribute="leading" id="L84-eU-Jco"/>
-                                                                                <constraint firstAttribute="trailing" secondItem="hRf-8n-qkR" secondAttribute="trailing" id="MZj-ST-hsW"/>
-                                                                                <constraint firstItem="hRf-8n-qkR" firstAttribute="centerY" secondItem="XEg-uq-7NT" secondAttribute="centerY" id="ruE-hM-zXV"/>
-                                                                            </constraints>
-                                                                        </view>
-                                                                    </subviews>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="46" id="Ngv-fL-X6C"/>
-                                                                        <constraint firstItem="KHq-g3-JfL" firstAttribute="centerY" secondItem="Z9R-Cq-Awr" secondAttribute="centerY" id="a4O-0R-alv"/>
-                                                                    </constraints>
-                                                                </stackView>
-                                                            </subviews>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="bottom" secondItem="Z9R-Cq-Awr" secondAttribute="bottom" id="VJO-KJ-SxZ"/>
-                                                                <constraint firstItem="Z9R-Cq-Awr" firstAttribute="leading" secondItem="7G8-WG-hOg" secondAttribute="leading" id="bLC-Y7-Md3"/>
-                                                                <constraint firstItem="Z9R-Cq-Awr" firstAttribute="top" secondItem="7G8-WG-hOg" secondAttribute="top" id="hE9-cx-1rk"/>
-                                                                <constraint firstAttribute="trailing" secondItem="Z9R-Cq-Awr" secondAttribute="trailing" id="psm-wv-1da"/>
-                                                            </constraints>
-                                                            <connections>
-                                                                <outlet property="addContactIcon" destination="3dc-nQ-jPi" id="o1h-wk-vBb"/>
-                                                                <outlet property="addContactView" destination="XEg-uq-7NT" id="ip3-X1-XvY"/>
-                                                                <outlet property="qrCodeScanButton" destination="ZsX-SB-JUm" id="kuV-Vu-gAQ"/>
-                                                                <outlet property="textField" destination="C5N-Xw-7FP" id="NgN-fH-erY"/>
-                                                                <outlet property="textFieldView" destination="KHq-g3-JfL" id="CTm-YO-aks"/>
-                                                            </connections>
-                                                        </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fo3-Rt-kEn">
-                                                            <rect key="frame" x="0.0" y="62" width="382" height="622"/>
+                                                            <rect key="frame" x="0.0" y="62" width="382" height="1095"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="wSD-NM-Jdo">
-                                                                    <rect key="frame" x="8" y="16" width="366" height="590"/>
+                                                                    <rect key="frame" x="8" y="16" width="366" height="1063"/>
                                                                     <subviews>
-                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dtQ-1d-StX" customClass="CurrencyAddInputView" customModule="iosApp" customModuleProvider="target">
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Yy-ES-wpL" customClass="CurrencyAddInputView" customModule="iosApp" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="0.0" width="366" height="456"/>
                                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         </view>
-                                                                        <view tag="10" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TLd-ba-zoo">
+                                                                        <view tag="10" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kig-MM-kLP">
                                                                             <rect key="frame" x="0.0" y="464" width="366" height="1"/>
+                                                                            <color key="backgroundColor" name="tintPrimary"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="1" id="ixJ-ae-6Ve"/>
+                                                                            </constraints>
+                                                                        </view>
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dtQ-1d-StX" customClass="CurrencyAddInputView" customModule="iosApp" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="473" width="366" height="456"/>
+                                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                        </view>
+                                                                        <view tag="10" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TLd-ba-zoo">
+                                                                            <rect key="frame" x="0.0" y="937" width="366" height="1"/>
                                                                             <color key="backgroundColor" name="tintPrimary"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="1" id="Jnc-pB-BeD"/>
                                                                             </constraints>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mwJ-wc-SKv" customClass="CurrencyAddInputView" customModule="iosApp" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="473" width="366" height="50"/>
+                                                                            <rect key="frame" x="0.0" y="946" width="366" height="50"/>
                                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         </view>
                                                                         <view tag="10" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qBH-aP-J0f">
-                                                                            <rect key="frame" x="0.0" y="531" width="366" height="1"/>
+                                                                            <rect key="frame" x="0.0" y="1004" width="366" height="1"/>
                                                                             <color key="backgroundColor" name="tintPrimary"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="1" id="HUR-xi-wav"/>
                                                                             </constraints>
                                                                         </view>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ef-Lh-7fl" customClass="CurrencyAddInputView" customModule="iosApp" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="540" width="366" height="50"/>
+                                                                            <rect key="frame" x="0.0" y="1013" width="366" height="50"/>
                                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         </view>
                                                                     </subviews>
@@ -216,7 +146,7 @@
                                                             </constraints>
                                                         </view>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QHj-QN-S7Q" customClass="Button" customModule="iosApp" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="700" width="382" height="34.5"/>
+                                                            <rect key="frame" x="0.0" y="1173" width="382" height="34.5"/>
                                                             <state key="normal" title="Button"/>
                                                             <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                                         </button>
@@ -235,7 +165,7 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
-                                            <outlet property="addressView" destination="7G8-WG-hOg" id="koU-yO-Pkv"/>
+                                            <outlet property="contractAddressView" destination="3Yy-ES-wpL" id="N1j-Ky-sTz"/>
                                             <outlet property="decimalView" destination="1ef-Lh-7fl" id="dVd-Cu-I86"/>
                                             <outlet property="detailsView" destination="fo3-Rt-kEn" id="QOe-FH-YD6"/>
                                             <outlet property="nameView" destination="dtQ-1d-StX" id="Zfq-lr-7E0"/>
@@ -273,7 +203,6 @@
     </scenes>
     <resources>
         <image name="arrow_cell_forward" width="9" height="15"/>
-        <image name="person.fill.badge.plus" catalog="system" width="128" height="125"/>
         <namedColor name="tintPrimary">
             <color red="0.90600001811981201" green="0.21600000560283661" blue="0.58399999141693115" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
