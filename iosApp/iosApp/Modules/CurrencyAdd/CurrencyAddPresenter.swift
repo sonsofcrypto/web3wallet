@@ -127,7 +127,7 @@ private extension DefaultCurrencyAddPresenter {
         firstResponder: CurrencyAddViewModel.TextFieldType?
     ) -> CurrencyAddViewModel {
         .init(
-            title: Localized("currencyAdd.title"),
+            title: Localized("currencyAdd.title", context.network.name.capitalized),
             network: .init(
                 name: Localized("currencyAdd.network.title"),
                 value: network.name
@@ -179,7 +179,16 @@ private extension DefaultCurrencyAddPresenter {
         let validTitle = Localized("currencyAdd.cta.valid")
         guard addTokenTapped else { return validTitle }
         guard contractAddressValidationError == nil else {
-            return Localized("currencyAdd.cta.invalid.address")
+            return Localized("currencyAdd.cta.invalid.contractAddress")
+        }
+        guard nameValidationError == nil else {
+            return Localized("currencyAdd.cta.invalid.name")
+        }
+        guard symbolValidationError == nil else {
+            return Localized("currencyAdd.cta.invalid.symbol")
+        }
+        guard decimalsValidationError == nil else {
+            return Localized("currencyAdd.cta.invalid.decimals")
         }
         guard areAllFieldsValid() else {
             return Localized("currencyAdd.cta.invalid")
