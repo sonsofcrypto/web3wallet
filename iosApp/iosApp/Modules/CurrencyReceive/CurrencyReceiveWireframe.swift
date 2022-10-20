@@ -5,26 +5,6 @@
 import UIKit
 import web3walletcore
 
-// MARK: - CurrencyReceiveWireframeContext
-
-struct CurrencyReceiveWireframeContext {
-    let network: Network
-    let currency: Currency
-}
-
-// MARK: - CurrencyReceiveWireframeDestination
-
-enum CurrencyReceiveWireframeDestination {}
-
-// MARK: CurrencyReceiveWireframe
-
-protocol CurrencyReceiveWireframe {
-    func present()
-    func dismiss()
-}
-
-// MARK: - DefaultCurrencyReceiveWireframe
-
 final class DefaultCurrencyReceiveWireframe {
     private weak var parent: UIViewController?
     private let context: CurrencyReceiveWireframeContext
@@ -50,22 +30,22 @@ extension DefaultCurrencyReceiveWireframe: CurrencyReceiveWireframe {
         parent?.show(vc, sender: self)
     }
     
-    func dismiss() {
-        vc?.popOrDismiss()
+    func navigate(destination___ destination: CurrencyReceiveWireframeDestination) {
+        if (destination as? CurrencyReceiveWireframeDestination.Dismiss) != nil {
+            vc?.popOrDismiss()
+        }
     }
 }
 
 private extension DefaultCurrencyReceiveWireframe {
     
     func wireUp() -> UIViewController {
-        let interactor = DefaultCurrencyReceiveInteractor(
-            networksService: networksService
-        )
+        let interactor = DefaultCurrencyReceiveInteractor(networksService: networksService)
         let vc: CurrencyReceiveViewController = UIStoryboard(.currencyReceive).instantiate()
         let presenter = DefaultCurrencyReceivePresenter(
-            view: vc,
-            interactor: interactor,
+            view: WeakRef(referred: vc),
             wireframe: self,
+            interactor: interactor,
             context: context
         )
         vc.presenter = presenter

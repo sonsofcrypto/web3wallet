@@ -16,6 +16,8 @@ sealed class ImprovementProposalsWireframeDestination {
 }
 
 interface ImprovementProposalsWireframe {
+    /** Present module */
     fun present()
+    /** Navigate to a new destination module */
     fun navigate(destination: ImprovementProposalsWireframeDestination)
 }
