@@ -3,14 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-// MARK: - CurrencyReceiveView
-
-protocol CurrencyReceiveView: AnyObject {
-    func update(with viewModel: CurrencyReceiveViewModel)
-}
-
-// MARK: - CurrencyReceiveViewController
+import web3walletcore
 
 final class CurrencyReceiveViewController: BaseViewController {
 
@@ -38,18 +31,14 @@ final class CurrencyReceiveViewController: BaseViewController {
 
 extension CurrencyReceiveViewController: CurrencyReceiveView {
 
-    func update(with viewModel: CurrencyReceiveViewModel) {
+    func update(viewModel__ viewModel: CurrencyReceiveViewModel) {
         self.viewModel = viewModel
         configureNavigationBar()
-        switch viewModel.content {
-        case let .loaded(item):
-            nameLabel.text = item.name
-            qrCodePngImageView.image = makeQrCodePngImage(for: item.address)
-            addressLabel.text = item.address
-            disclaimerLabel.text = item.disclaimer
-        case .loading, .error:
-            break
-        }
+        nameLabel.text = viewModel.name
+        // TODO: Move this to be async (first time takes a bit of time)
+        qrCodePngImageView.image = qrCodePngImage(for: viewModel.address)
+        addressLabel.text = viewModel.address
+        disclaimerLabel.text = viewModel.disclaimer
     }
 }
 
@@ -76,14 +65,14 @@ private extension CurrencyReceiveViewController {
             with: .init(
                 title: Localized("currencyReceive.action.copy"),
                 imageName: "square.on.square",
-                onTap: makeCopyAction()
+                onTap: copyAction()
             )
         )
         shareButton.update(
             with: .init(
                 title: Localized("currencyReceive.action.share"),
                 imageName: "square.and.arrow.up",
-                onTap: makeShareAction()
+                onTap: shareAction()
             )
         )
         let spacingBetweenButtons = Theme.constant.padding * CGFloat(5)
@@ -96,37 +85,38 @@ private extension CurrencyReceiveViewController {
     }
     
     func configureUI() {
+        filter?.setValue("M", forKey: "inputCorrectionLevel")
         qrCodePngImageView.layer.magnificationFilter = .nearest
     }
     
     @objc func navBarLeftActionTapped() {
-        presenter.handle(.dismiss)
+        presenter.handle(event______: .Dismiss())
     }
 }
 
 private extension CurrencyReceiveViewController {
     
-    func makeCopyAction() -> (() -> Void) {
+    func copyAction() -> (() -> Void) {
         { [weak self] in self?.onCopyAction() }
     }
     
     @objc func onCopyAction() {
-        UIPasteboard.general.string = self.viewModel?.data?.address
+        UIPasteboard.general.string = self.viewModel?.address
         view.presentToastAlert(with: Localized("currencyReceive.action.copy.toast"))
     }
 
-    func makeShareAction() -> (() -> Void) {
+    func shareAction() -> (() -> Void) {
         {
             [weak self] in
             guard let self = self else { return }
             guard
                 //let image = self.qrCodePngImageView.image,
-                let data = self.viewModel?.data
+                let vm = self.viewModel
             else { return }
             ShareFactoryHelper().share(
                 items: [
                     //image,
-                    Localized("currencyReceive.action.share.address", data.symbol) + " " + data.address,
+                    Localized("currencyReceive.action.share.address", vm.symbol) + " " + vm.address,
                     
                 ],
                 presentingIn: self
@@ -134,15 +124,13 @@ private extension CurrencyReceiveViewController {
         }
     }
     
-    func makeQrCodePngImage(for address: String) -> UIImage? {
+    func qrCodePngImage(for address: String) -> UIImage? {
         guard
             let filter = filter,
-            let data = address.data(using: .isoLatin1, allowLossyConversion: false)
-        else {
-            return nil
-        }
+            let data = address.data(using: .utf8, allowLossyConversion: false)
+        else { return nil }
         filter.setValue(data, forKey: "inputMessage")
         guard let ciImage = filter.outputImage else { return nil }
-        return UIImage(ciImage: ciImage, scale: 2.0, orientation: .up)
+        return UIImage(ciImage: ciImage, scale: 1.0, orientation: .up)
     }
 }

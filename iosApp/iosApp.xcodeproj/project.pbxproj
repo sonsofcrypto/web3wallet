@@ -281,12 +281,9 @@
 		1C60C35C285724D1003BE25D /* DegenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C29F285724D0003BE25D /* DegenPresenter.swift */; };
 		1C60C35D285724D1003BE25D /* DegenWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C2A0285724D0003BE25D /* DegenWireframeFactory.swift */; };
 		1C60C36028572555003BE25D /* AppsServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C35F28572555003BE25D /* AppsServiceAssembler.swift */; };
-		1C60C3632857C5E5003BE25D /* CurrencyReceivePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3622857C5E5003BE25D /* CurrencyReceivePresenter.swift */; };
-		1C60C3652857C5EC003BE25D /* CurrencyReceiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3642857C5EC003BE25D /* CurrencyReceiveViewModel.swift */; };
 		1C60C3672857C5F0003BE25D /* CurrencyReceiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3662857C5F0003BE25D /* CurrencyReceiveView.swift */; };
 		1C60C3692857C5F8003BE25D /* CurrencyReceiveWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C3682857C5F8003BE25D /* CurrencyReceiveWireframe.swift */; };
 		1C60C36B2857C5FE003BE25D /* CurrencyReceiveWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C36A2857C5FE003BE25D /* CurrencyReceiveWireframeFactory.swift */; };
-		1C60C36F2857C613003BE25D /* CurrencyReceiveInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C36E2857C613003BE25D /* CurrencyReceiveInteractor.swift */; };
 		1C60C3712857CEB5003BE25D /* CurrencyReceive.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C60C3702857CEB5003BE25D /* CurrencyReceive.storyboard */; };
 		1C60C37E2859CC2A003BE25D /* ShareFactoryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C37D2859CC2A003BE25D /* ShareFactoryHelper.swift */; };
 		1C6487092832DC5F0091A12D /* Bootstrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487082832DC5F0091A12D /* Bootstrapper.swift */; };
@@ -836,12 +833,9 @@
 		1C60C29F285724D0003BE25D /* DegenPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenPresenter.swift; sourceTree = "<group>"; };
 		1C60C2A0285724D0003BE25D /* DegenWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DegenWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C35F28572555003BE25D /* AppsServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsServiceAssembler.swift; sourceTree = "<group>"; };
-		1C60C3622857C5E5003BE25D /* CurrencyReceivePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyReceivePresenter.swift; sourceTree = "<group>"; };
-		1C60C3642857C5EC003BE25D /* CurrencyReceiveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyReceiveViewModel.swift; sourceTree = "<group>"; };
 		1C60C3662857C5F0003BE25D /* CurrencyReceiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyReceiveView.swift; sourceTree = "<group>"; };
 		1C60C3682857C5F8003BE25D /* CurrencyReceiveWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyReceiveWireframe.swift; sourceTree = "<group>"; };
 		1C60C36A2857C5FE003BE25D /* CurrencyReceiveWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyReceiveWireframeFactory.swift; sourceTree = "<group>"; };
-		1C60C36E2857C613003BE25D /* CurrencyReceiveInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyReceiveInteractor.swift; sourceTree = "<group>"; };
 		1C60C3702857CEB5003BE25D /* CurrencyReceive.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CurrencyReceive.storyboard; sourceTree = "<group>"; };
 		1C60C37D2859CC2A003BE25D /* ShareFactoryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareFactoryHelper.swift; sourceTree = "<group>"; };
 		1C6487082832DC5F0091A12D /* Bootstrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bootstrapper.swift; sourceTree = "<group>"; };
@@ -1841,10 +1835,7 @@
 			isa = PBXGroup;
 			children = (
 				1C60C3702857CEB5003BE25D /* CurrencyReceive.storyboard */,
-				1C60C36E2857C613003BE25D /* CurrencyReceiveInteractor.swift */,
-				1C60C3622857C5E5003BE25D /* CurrencyReceivePresenter.swift */,
 				1C60C3662857C5F0003BE25D /* CurrencyReceiveView.swift */,
-				1C60C3642857C5EC003BE25D /* CurrencyReceiveViewModel.swift */,
 				1C60C3682857C5F8003BE25D /* CurrencyReceiveWireframe.swift */,
 				1C60C36A2857C5FE003BE25D /* CurrencyReceiveWireframeFactory.swift */,
 			);
@@ -2850,7 +2841,6 @@
 				1C60C2EF285724D0003BE25D /* NetworksWireframe.swift in Sources */,
 				D1EF5BC7287BEE92004CAD82 /* MnemonicUpdateCell.swift in Sources */,
 				1C60C2EC285724D0003BE25D /* NetworksView.swift in Sources */,
-				1C60C3652857C5EC003BE25D /* CurrencyReceiveViewModel.swift in Sources */,
 				1C60C303285724D1003BE25D /* NFTsDashboardView+NFTs.swift in Sources */,
 				1C60C355285724D1003BE25D /* CultProposalsPresenter.swift in Sources */,
 				1C67201D28870FD200C5F044 /* ConfirmationViewModel.swift in Sources */,
@@ -2875,7 +2865,6 @@
 				1CB8B0BA288DBEE700024E7C /* CultProposalDetailTokenomicsView.swift in Sources */,
 				1C54DBF5285F32DC00E378F6 /* CurrencyAddInputView.swift in Sources */,
 				1C54DC682869BE6500E378F6 /* DashboardButtonsCell.swift in Sources */,
-				1C60C3632857C5E5003BE25D /* CurrencyReceivePresenter.swift in Sources */,
 				1CE0064228894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift in Sources */,
 				D1ABCE57289D548C00312539 /* LineView.swift in Sources */,
 				1C5D24D128E19F62007DA557 /* ImprovementProposalsCell.swift in Sources */,
@@ -3095,7 +3084,6 @@
 				1A4C31E84A86A69FFC7C3E0F /* Setting.swift in Sources */,
 				1CB8B0C8288F30DA00024E7C /* DashboardNotificationCell.swift in Sources */,
 				1C60C301285724D1003BE25D /* NFTsDashboardView.swift in Sources */,
-				1C60C36F2857C613003BE25D /* CurrencyReceiveInteractor.swift in Sources */,
 				1C60C359285724D1003BE25D /* DegenWireframe.swift in Sources */,
 				1C60C315285724D1003BE25D /* AccountWireframeFactory.swift in Sources */,
 				1C60C328285724D1003BE25D /* MnemonicConfirmationView.swift in Sources */,
