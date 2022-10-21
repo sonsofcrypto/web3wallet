@@ -5,7 +5,7 @@ import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.*
 
 
-open class Contract(
+open class ContractLegacy(
     open var address: Address.HexString
 ) {
     open class Event()
@@ -15,7 +15,7 @@ open class Contract(
     }
 }
 
-class ERC20(address: Address.HexString) : Contract(address) {
+class ERC20(address: Address.HexString) : ContractLegacy(address) {
 
     /**
      * Returns the name of the token.
@@ -110,7 +110,7 @@ class ERC20(address: Address.HexString) : Contract(address) {
     fun decodeApprove(data: DataHexString): BigInt = abiDecodeBigInt(data)
 }
 
-class ERC721(address: Address.HexString): Contract(address) {
+class ERC721(address: Address.HexString): ContractLegacy(address) {
 
     /**
      * function transferFrom(address from, address to, uint256 tokenId)
@@ -128,7 +128,7 @@ class ERC721(address: Address.HexString): Contract(address) {
     )
 }
 
-class CultGovernor: Contract(
+class CultGovernor: ContractLegacy(
     Address.HexString("0x0831172B9b136813b0B35e7cc898B1398bB4d7e7")
 ) {
     /**
