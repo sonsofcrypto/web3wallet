@@ -35,8 +35,14 @@ data class Network(
             else -> throw Error("Unknown network id $network")
         }
     }
+
     enum class Type() {
         L1, L2, L1_TEST, L2_TEST;
+    }
+
+    fun isValidAddress(input: String): Boolean = when (name) {
+        "Ethereum" -> input.dropLast(40) == "0x" && input.length == 42
+        else -> false
     }
 
     companion object {

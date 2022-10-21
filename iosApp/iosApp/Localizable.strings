@@ -247,8 +247,6 @@
 
 "currencyPicker.title.currency" = "Select a currency";
 "currencyPicker.title.currencies" = "Select currencies";
-
-
 "currencyPicker.title.receive" = "Select a currency";
 "currencyPicker.title.send" = "Select a currency";
 "currencyPicker.title.multiSelectEdit" = "Select currencies";
@@ -270,10 +268,10 @@
 "currencyReceive.action.add" = "Add";
 "currencyReceive.action.add.toast" = "+%@ coins added to your wallet!";
 
-"currencyAdd.title" = "Add Token";
+"currencyAdd.title" = "Add %@ Token";
 "currencyAdd.network.title" = "Network";
 "currencyAdd.contractAddress.title" = "Contract Address";
-"currencyAdd.contractAddress.placeholder" = "0xa0b869...   06eb48";
+"currencyAdd.contractAddress.placeholder" = "0xa0b86991c6...ce3606eb48";
 "currencyAdd.name.title" = "Name";
 "currencyAdd.name.placeholder" = "USD Coin";
 "currencyAdd.symbol.title" = "Symbol";
@@ -283,10 +281,13 @@
 "currencyAdd.validation.field.required" = "This field is required";
 "currencyAdd.validation.field.address.ethereum.invalid" = "Invalid Ethereum address";
 "currencyAdd.validation.field.address.solana.invalid" = "Invalid Solana address";
-"currencyAdd.validation.field.decimal.int" = "This must be a valid Int";
-"currencyAdd.validation.field.decimal.range" = "Number should be between 0 and 32";
+"currencyAdd.validation.field.decimal.int" = "This must be a valid number";
+"currencyAdd.validation.field.decimal.range" = "Number should be between 1 and 32";
 "currencyAdd.cta.valid" = "Add token";
-"currencyAdd.cta.invalid.address" = "Invalid address";
+"currencyAdd.cta.invalid.contractAddress" = "Invalid Contract Address";
+"currencyAdd.cta.invalid.name" = "Invalid Name";
+"currencyAdd.cta.invalid.symbol" = "Invalid Symbol";
+"currencyAdd.cta.invalid.decimals" = "Invalid Decimals";
 "currencyAdd.cta.invalid" = "Invalid data";
 
 "networkPicker.title" = "Select network";
@@ -298,7 +299,6 @@
 "qrCodeScan.error.invalid.address" = "is not a valid %@ address.";
 
 "tokenSend.title" = "Send %@";
-"tokenSend.cell.address.textField.placeholder" = "To ETH address";
 "tokenSend.cell.token.placeholder" = "0";
 "tokenSend.cell.currency.placeholder" = "0.0";
 "tokenSend.cell.currency.label.usd" = "USD";
@@ -451,3 +451,5 @@
 "webView.title.txDetails" = "Transaction Details";
 
 "report.txFailed.error.body" = "Hi team,\n\nI've just got a transaction failure with the following error: \n\n%@\n\nThanks!\n\nPS: Thanks for reporting this failure, this really helps us improving the app! \n❤️❤️❤️";
+
+"networkAddressPicker.to.address.placeholder" = "To %@ address";

@@ -18,7 +18,7 @@ extension NFTSendViewModel {
     }
     
     enum Item {
-        case address(TokenEnterAddressViewModel)
+        case address(NetworkAddressPickerViewModel)
         case nft(NFTItem)
         case send(Send)
     }
@@ -36,8 +36,8 @@ extension NFTSendViewModel {
 
 extension Array where Element == NFTSendViewModel.Item {
     
-    var address: TokenEnterAddressViewModel? {
-        var address: TokenEnterAddressViewModel?
+    var address: NetworkAddressPickerViewModel? {
+        var address: NetworkAddressPickerViewModel?
         forEach {
             if case let NFTSendViewModel.Item.address(value) = $0 {
                 address = value

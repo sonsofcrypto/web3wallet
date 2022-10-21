@@ -3,12 +3,14 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class CurrencyAddInputView: UIView {
     
     struct Handler {
         let onTextChanged: (CurrencyAddViewModel.TextFieldType, String) -> Void
         let onReturnTapped: (CurrencyAddViewModel.TextFieldType) -> Void
+        let onPaste: (CurrencyAddViewModel.TextFieldType, String) -> Void
     }
     
     private var nameLabel: UILabel!
@@ -34,9 +36,8 @@ final class CurrencyAddInputView: UIView {
     ) {
         self.viewModel = viewModel
         self.handler = handler
-        nameLabel.text = viewModel.item.name
-        if let value = viewModel.item.value { textField.text = value }
-        textField.tag = viewModel.tag
+        nameLabel.text = viewModel.name
+        if let value = viewModel.value { textField.text = value }
         textField.placeholderAttrText = viewModel.placeholder
         textField.keyboardType = keyboardType
         textField.returnKeyType = returnType
@@ -139,9 +140,7 @@ private extension CurrencyAddInputView {
     }
     
     @objc func pasteActionTapped() {
-        guard let textFieldType = CurrencyAddViewModel.TextFieldType(rawValue: textField.tag) else { return }
-        textField.text = UIPasteboard.general.string
-        handler.onTextChanged(textFieldType, textField.text ?? "")
+        handler.onPaste(viewModel.type, UIPasteboard.general.string ?? "")
     }
 
     @objc func dismissKeyboard() {
@@ -152,13 +151,11 @@ private extension CurrencyAddInputView {
 extension CurrencyAddInputView: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        guard let textFieldType = CurrencyAddViewModel.TextFieldType(rawValue: textField.tag) else { return }
-        handler.onTextChanged(textFieldType, textField.text ?? "")
+        handler.onTextChanged(viewModel.type, textField.text ?? "")
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let textFieldType = CurrencyAddViewModel.TextFieldType(rawValue: textField.tag) else { return false }
-        handler.onReturnTapped(textFieldType)
+        handler.onReturnTapped(viewModel.type)
         return true
     }
 }

@@ -33,7 +33,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="413" height="46"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zmd-Pu-wxe" customClass="TokenEnterAddressView" customModule="iosApp" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zmd-Pu-wxe" customClass="NetworkAddressPickerView" customModule="iosApp" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="413" height="46"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Jyb-QH-x3h">
