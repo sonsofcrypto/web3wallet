@@ -3,15 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-// MARK: - CurrencyAddView
-
-protocol CurrencyAddView: AnyObject {
-    func update(with viewModel: CurrencyAddViewModel)
-    func dismissKeyboard()
-}
-
-// MARK: - CurrencyAddViewController
+import web3walletcore
 
 final class CurrencyAddViewController: BaseViewController {
 
@@ -31,7 +23,7 @@ final class CurrencyAddViewController: BaseViewController {
 
 extension CurrencyAddViewController: CurrencyAddView {
 
-    func update(with viewModel: CurrencyAddViewModel) {
+    func update(viewModel__ viewModel: CurrencyAddViewModel) {
         self.viewModel = viewModel
         
         configureNavigationBar()
@@ -81,7 +73,7 @@ extension CurrencyAddViewController {
     }
 
     @objc func navBarLeftActionTapped() {
-        presenter.handle(.dismiss)
+        presenter.handle(event______: .Dismiss())
     }
 }
 
@@ -135,38 +127,38 @@ private extension CurrencyAddViewController {
     
     func tokenAddCollectionViewCellHandler() -> CurrencyAddCollectionViewCell.Handler {
         .init(
-            selectNetworkHandler: presenterHandle(.selectNetwork),
+            selectNetworkHandler: presenterHandle(.SelectNetwork()),
             onPaste: onPaste(),
             onTextChanged: onTextChanged(),
             onReturnTapped: onReturnTapped(),
-            addTokenHandler: presenterHandle(.addCurrency)
+            addTokenHandler: presenterHandle(.AddCurrency())
         )
     }
         
     func presenterHandle(_ event: CurrencyAddPresenterEvent) -> () -> Void {
         {
-            [weak self] in self?.presenter.handle(event)
+            [weak self] in self?.presenter.handle(event______: event)
         }
     }
     
     func onPaste() -> (CurrencyAddViewModel.TextFieldType, String) -> Void {
         {
             [weak self] (type, value) in
-            self?.presenterHandle(.pasteInput(for: type, to: value))()
+            self?.presenterHandle(.PasteInput(type: type, value: value))()
         }
     }
     
     func onTextChanged() -> (CurrencyAddViewModel.TextFieldType, String) -> Void {
         {
             [weak self] (type, value) in
-            self?.presenterHandle(.inputChanged(for: type, to: value))()
+            self?.presenterHandle(.InputChanged(type: type, value: value))()
         }
     }
     
     func onReturnTapped() -> (CurrencyAddViewModel.TextFieldType) -> Void {
         {
             [weak self] type in
-            self?.presenterHandle(.returnKeyTapped(for: type))()
+            self?.presenterHandle(.ReturnKeyTapped(type: type))()
         }
     }
 }

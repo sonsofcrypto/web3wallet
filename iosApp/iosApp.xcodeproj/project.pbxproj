@@ -80,11 +80,8 @@
 		1C54DBDE285DD15400E378F6 /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBDD285DD15400E378F6 /* Account.storyboard */; };
 		1C54DBE3285E831B00E378F6 /* CurrencyAddWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE2285E831B00E378F6 /* CurrencyAddWireframe.swift */; };
 		1C54DBE5285E832600E378F6 /* CurrencyAddWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE4285E832600E378F6 /* CurrencyAddWireframeFactory.swift */; };
-		1C54DBE9285E833200E378F6 /* CurrencyAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE8285E833200E378F6 /* CurrencyAddViewModel.swift */; };
 		1C54DBEB285E833600E378F6 /* CurrencyAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBEA285E833500E378F6 /* CurrencyAddView.swift */; };
-		1C54DBED285E834200E378F6 /* CurrencyAddInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBEC285E834200E378F6 /* CurrencyAddInteractor.swift */; };
 		1C54DBEF285E835400E378F6 /* CurrencyAdd.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBEE285E835400E378F6 /* CurrencyAdd.storyboard */; };
-		1C54DBF3285E83A300E378F6 /* CurrencyAddPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF2285E83A300E378F6 /* CurrencyAddPresenter.swift */; };
 		1C54DBF5285F32DC00E378F6 /* CurrencyAddInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF4285F32DC00E378F6 /* CurrencyAddInputView.swift */; };
 		1C54DBF8285F8F3700E378F6 /* CurrencyAddCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF7285F8F3700E378F6 /* CurrencyAddCollectionViewCell.swift */; };
 		1C54DBFA285F9EBF00E378F6 /* CurrencyAddNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBF9285F9EBF00E378F6 /* CurrencyAddNetworkView.swift */; };
@@ -630,11 +627,8 @@
 		1C54DBDD285DD15400E378F6 /* Account.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
 		1C54DBE2285E831B00E378F6 /* CurrencyAddWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddWireframe.swift; sourceTree = "<group>"; };
 		1C54DBE4285E832600E378F6 /* CurrencyAddWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddWireframeFactory.swift; sourceTree = "<group>"; };
-		1C54DBE8285E833200E378F6 /* CurrencyAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddViewModel.swift; sourceTree = "<group>"; };
 		1C54DBEA285E833500E378F6 /* CurrencyAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddView.swift; sourceTree = "<group>"; };
-		1C54DBEC285E834200E378F6 /* CurrencyAddInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddInteractor.swift; sourceTree = "<group>"; };
 		1C54DBEE285E835400E378F6 /* CurrencyAdd.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CurrencyAdd.storyboard; sourceTree = "<group>"; };
-		1C54DBF2285E83A300E378F6 /* CurrencyAddPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddPresenter.swift; sourceTree = "<group>"; };
 		1C54DBF4285F32DC00E378F6 /* CurrencyAddInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddInputView.swift; sourceTree = "<group>"; };
 		1C54DBF7285F8F3700E378F6 /* CurrencyAddCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddCollectionViewCell.swift; sourceTree = "<group>"; };
 		1C54DBF9285F9EBF00E378F6 /* CurrencyAddNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddNetworkView.swift; sourceTree = "<group>"; };
@@ -1310,10 +1304,7 @@
 			isa = PBXGroup;
 			children = (
 				1C54DBEE285E835400E378F6 /* CurrencyAdd.storyboard */,
-				1C54DBEC285E834200E378F6 /* CurrencyAddInteractor.swift */,
-				1C54DBF2285E83A300E378F6 /* CurrencyAddPresenter.swift */,
 				1C54DBEA285E833500E378F6 /* CurrencyAddView.swift */,
-				1C54DBE8285E833200E378F6 /* CurrencyAddViewModel.swift */,
 				1C54DBE2285E831B00E378F6 /* CurrencyAddWireframe.swift */,
 				1C54DBE4285E832600E378F6 /* CurrencyAddWireframeFactory.swift */,
 				1C54DBF6285F8F2800E378F6 /* Cells */,
@@ -2756,7 +2747,6 @@
 				D1EF5BCE287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift in Sources */,
 				1CDED607289C4C7200DF34A7 /* NFTSendInteractor.swift in Sources */,
 				1C54DC132862351100E378F6 /* QRCodeScanView.swift in Sources */,
-				1C54DBED285E834200E378F6 /* CurrencyAddInteractor.swift in Sources */,
 				1C7FC9B828BCF95E00FC9175 /* WebViewController.swift in Sources */,
 				1C60C2BD285724D0003BE25D /* ButtonsSheetViewModel.swift in Sources */,
 				1C7F864628D20E490073FD95 /* Date+Extensions.swift in Sources */,
@@ -2897,7 +2887,6 @@
 				1CEF3D1D28C3A2D80092BC0E /* ConfirmationViewModel+ApproveUniswap.swift in Sources */,
 				1C7F864128D20E490073FD95 /* UIBarButtonItem+Extensions.swift in Sources */,
 				1C6487362832E6650091A12D /* NFTsServiceAssembler.swift in Sources */,
-				1C54DBF3285E83A300E378F6 /* CurrencyAddPresenter.swift in Sources */,
 				1C60C2F3285724D0003BE25D /* NFTDetailWireframe.swift in Sources */,
 				1C228ACF28A3C774005316A3 /* ConfirmationTxFailedView.swift in Sources */,
 				1C7FC99C28B81DFA00FC9175 /* NFTDetailView+Content+Other.swift in Sources */,
@@ -3007,7 +2996,6 @@
 				1CB8B0B8288C351A00024E7C /* CultProposalDetailViewCell.swift in Sources */,
 				1C60C2C0285724D0003BE25D /* KeyStoreCell.swift in Sources */,
 				1C7F863328D20E490073FD95 /* UIEdgeInsets+Extensions.swift in Sources */,
-				1C54DBE9285E833200E378F6 /* CurrencyAddViewModel.swift in Sources */,
 				1C54DC662869A48A00E378F6 /* DashboardHeaderBalanceView.swift in Sources */,
 				1C60C2A7285724D0003BE25D /* SettingsInteractor.swift in Sources */,
 				1A4C3AD382E8BADCBE160CBC /* DApp.swift in Sources */,

@@ -18,16 +18,13 @@ protocol CurrencyAddWireframeFactory {
 
 final class DefaultCurrencyAddWireframeFactory {
     private let networkPickerWireframeFactory: NetworkPickerWireframeFactory
-    private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let currencyStoreService: CurrencyStoreService
 
     init(
         networkPickerWireframeFactory: NetworkPickerWireframeFactory,
-        qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         currencyStoreService: CurrencyStoreService
     ) {
         self.networkPickerWireframeFactory = networkPickerWireframeFactory
-        self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.currencyStoreService = currencyStoreService
     }
 }
@@ -42,7 +39,6 @@ extension DefaultCurrencyAddWireframeFactory: CurrencyAddWireframeFactory {
             parent,
             context: context,
             networkPickerWireframeFactory: networkPickerWireframeFactory,
-            qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
             currencyStoreService: currencyStoreService
         )
     }
@@ -56,7 +52,6 @@ final class CurrencyAddWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> CurrencyAddWireframeFactory in
             DefaultCurrencyAddWireframeFactory(
                 networkPickerWireframeFactory: resolver.resolve(),
-                qrCodeScanWireframeFactory: resolver.resolve(),
                 currencyStoreService: resolver.resolve()
             )
         }

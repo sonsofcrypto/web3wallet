@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class CurrencyAddInputView: UIView {
     
@@ -37,7 +38,6 @@ final class CurrencyAddInputView: UIView {
         self.handler = handler
         nameLabel.text = viewModel.name
         if let value = viewModel.value { textField.text = value }
-        textField.tag = viewModel.tag
         textField.placeholderAttrText = viewModel.placeholder
         textField.keyboardType = keyboardType
         textField.returnKeyType = returnType
@@ -140,8 +140,7 @@ private extension CurrencyAddInputView {
     }
     
     @objc func pasteActionTapped() {
-        guard let textFieldType = CurrencyAddViewModel.TextFieldType(rawValue: textField.tag) else { return }
-        handler.onPaste(textFieldType, UIPasteboard.general.string ?? "")
+        handler.onPaste(viewModel.type, UIPasteboard.general.string ?? "")
     }
 
     @objc func dismissKeyboard() {
@@ -152,13 +151,11 @@ private extension CurrencyAddInputView {
 extension CurrencyAddInputView: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        guard let textFieldType = CurrencyAddViewModel.TextFieldType(rawValue: textField.tag) else { return }
-        handler.onTextChanged(textFieldType, textField.text ?? "")
+        handler.onTextChanged(viewModel.type, textField.text ?? "")
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let textFieldType = CurrencyAddViewModel.TextFieldType(rawValue: textField.tag) else { return false }
-        handler.onReturnTapped(textFieldType)
+        handler.onReturnTapped(viewModel.type)
         return true
     }
 }
