@@ -27,5 +27,5 @@ class ERC20: Contract {
 }
 
 suspend fun example() {
-    val decimals = ERC20().decimals().call() as? BigInt
+    val decimals = ERC20().decimals().call() as BigInt
 }

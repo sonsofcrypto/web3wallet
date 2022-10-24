@@ -1,6 +1,7 @@
 package com.sonsofcrypto.web3lib.contract
 
 import com.sonsofcrypto.web3lib.provider.Provider
+import com.sonsofcrypto.web3lib.provider.model.Transaction
 import com.sonsofcrypto.web3lib.provider.model.TransactionResponse
 import com.sonsofcrypto.web3lib.signer.Signer
 import com.sonsofcrypto.web3lib.types.Address
@@ -9,7 +10,7 @@ open class Contract{
     private var address: Address.HexString?
     private var provider: Provider?
     private var signer: Signer?
-    private var params: List<Param> = emptyList()
+    private var params: List<Input> = emptyList()
     private var events: List<Event> = emptyList()
     private var methods: List<Method> = emptyList()
 
@@ -48,7 +49,7 @@ open class Contract{
     }
 
     /** List of contract parameters */
-    fun params(): List<Param> = params
+    fun params(): List<Input> = params
 
     /** List of events */
     fun events(): List<Event> = events
@@ -61,6 +62,7 @@ open class Contract{
     }
 
     /** Find method by signature string, else throw eg `balance(address)` */
+    @Throws(Throwable::class)
     fun method(string: String): Method {
         TODO("Throw if method not found, give hits similar method names")
     }
@@ -73,8 +75,7 @@ open class Contract{
 
     data class Method(
         val name: String,
-        val params: List<Param>,
-        val attributes: List<Any>, // This needs to be concrete type
+        val inputs: List<Input>,
         val outputs: List<Any>,
         val stateMutability: StateMutability
     ) {
@@ -89,6 +90,11 @@ open class Contract{
         suspend fun call(params: List<AbiEncodable> = emptyList()): Any? {
             TODO("Encode signature and parameters")
             TODO("Figure out return type if any and decode it")
+            // enconde abi
+            // create transaction
+            // val transaction = Transaction(to: ContratAddree, data: encodeData)
+            // val resutl == provider?.call(trasaction)
+            // parse to kotlin type
         }
 
         /** Contract state transition method call, provider needs to be
@@ -96,6 +102,12 @@ open class Contract{
         @Throws(Throwable::class)
         suspend fun send(params: List<AbiEncodable> = emptyList()): TransactionResponse {
             TODO("Implement")
+            // check if signer is unlocked
+            // enconde abi
+            // create transaction
+            // val transaction = Transaction(to: ContratAddree, data: encodeData)
+            // val resutl == provider?.call(trasaction)
+            // parse to kotlin type
         }
 
         /** Decodes contract return data to type */
@@ -113,9 +125,8 @@ open class Contract{
         }
     }
 
-    data class Param(
+    data class Input(
         val name: String,
-        // val type: ParamType,
         val value: Any
     )
 
@@ -123,7 +134,7 @@ open class Contract{
         val name: String
     )
 
-    private fun abiDecodeParams(abi: String): List<Param> {
+    private fun abiDecodeParams(abi: String): List<Input> {
         TODO("Implement")
     }
 
@@ -132,6 +143,14 @@ open class Contract{
     }
 
     private fun abiDecodeEvents(abi: String): List<Event> {
+        TODO("Implement")
+    }
+
+    private fun abiDecodeErrors(abi: String): List<Event> {
+        TODO("Implement")
+    }
+
+    private fun abiDecodeStructs(abi: String): List<Event> {
         TODO("Implement")
     }
 }
