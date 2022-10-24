@@ -6,10 +6,8 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddViewModel.*
 import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddViewModel.TextFieldType.*
-import com.sonsofcrypto.web3walletcore.modules.improvementProposal.CurrencyAddWireframe
-import com.sonsofcrypto.web3walletcore.modules.improvementProposal.CurrencyAddWireframeContext
-import com.sonsofcrypto.web3walletcore.modules.improvementProposal.CurrencyAddWireframeDestination.Dismiss
-import com.sonsofcrypto.web3walletcore.modules.improvementProposal.CurrencyAddWireframeDestination.NetworkPicker
+import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddWireframeDestination.Dismiss
+import com.sonsofcrypto.web3walletcore.modules.currencyAdd.CurrencyAddWireframeDestination.NetworkPicker
 
 interface CurrencyAddPresenter {
     fun present()

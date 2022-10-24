@@ -5,36 +5,7 @@
 import UIKit
 import web3walletcore
 
-// MARK: - QRCodeScanWireframeContext
-
-struct QRCodeScanWireframeContext {
-    let type: `Type`
-    let onCompletion: (String) -> Void
-
-    enum `Type` {
-        case `default`
-        case network(Network)
-    }
-}
-
-// MARK: - QRCodeScanWireframeDestination
-
-enum QRCodeScanWireframeDestination {
-    case qrCode(String)
-}
-
-// MARK: - QRCodeScanWireframe
-
-protocol QRCodeScanWireframe {
-    func present()
-    func navigate(to destination: QRCodeScanWireframeDestination)
-    func dismiss()
-}
-
-// MARK: - DefaultQRCodeScanWireframe
-
 final class DefaultQRCodeScanWireframe {
-    
     private weak var parent: UIViewController?
     private let context: QRCodeScanWireframeContext
     
@@ -56,17 +27,16 @@ extension DefaultQRCodeScanWireframe: QRCodeScanWireframe {
         parent?.show(vc, sender: self)
     }
     
-    func navigate(to destination: QRCodeScanWireframeDestination) {
-        switch destination {
-        case let .qrCode(qrCode):
-            context.onCompletion(qrCode)
-            dismiss()
+    func navigate(destination__ destination: QRCodeScanWireframeDestination) {
+        if let qrCode = destination as? QRCodeScanWireframeDestination.QRCode {
+            _ = context.handler(qrCode.value)
+        }
+        if (destination as? QRCodeScanWireframeDestination.Dismiss) != nil {
+            vc?.popOrDismiss()
         }
     }
     
-    func dismiss() {
-        vc?.popOrDismiss()
-    }
+    func dismiss() { vc?.popOrDismiss() }
 }
 
 private extension DefaultQRCodeScanWireframe {
@@ -75,7 +45,7 @@ private extension DefaultQRCodeScanWireframe {
         let interactor = DefaultQRCodeScanInteractor()
         let vc: QRCodeScanViewController = UIStoryboard(.qrCodeScan).instantiate()
         let presenter = DefaultQRCodeScanPresenter(
-            view: vc,
+            view: WeakRef(referred: vc),
             wireframe: self,
             interactor: interactor,
             context: context

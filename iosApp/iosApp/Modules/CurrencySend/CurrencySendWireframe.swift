@@ -73,10 +73,11 @@ extension DefaultCurrencySendWireframe: CurrencySendWireframe {
                 context: .underConstructionAlert()
             ).present()
         case let .qrCodeScan(network, onCompletion):
-            qrCodeScanWireframeFactory.make(
-                vc,
-                context: .init(type: .network(network), onCompletion: onCompletion)
-            ).present()
+            let context = QRCodeScanWireframeContext(
+                type: QRCodeScanWireframeContext.Type_Network(network: network),
+                handler: onPopWrapped(onCompletion: onCompletion)
+            )
+            qrCodeScanWireframeFactory.make(vc, context: context).present()
         case let .selectCurrency(onCompletion):
             currencyPickerWireframeFactory.make(
                 vc,
@@ -150,6 +151,14 @@ private extension DefaultCurrencySendWireframe {
                 onCompletion(currency)
             }
             self.vc?.presentedViewController?.dismiss(animated: true)
+        }
+    }
+    
+    func onPopWrapped(onCompletion: @escaping (String) -> Void) -> (String) -> Void {
+        {
+            [weak self] string in
+            _ = self?.vc?.navigationController?.popViewController(animated: true)
+            onCompletion(string)
         }
     }
 }

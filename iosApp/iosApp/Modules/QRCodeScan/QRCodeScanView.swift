@@ -4,14 +4,7 @@
 
 import UIKit
 import AVFoundation
-
-// MARK: - QRCodeScanView
-
-protocol QRCodeScanView: AnyObject {
-    func update(with viewModel: QRCodeScanViewModel)
-}
-
-// MARK: - QRCodeScanViewController
+import web3walletcore
 
 final class QRCodeScanViewController: BaseViewController {
     
@@ -31,6 +24,7 @@ final class QRCodeScanViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        presenter?.viewWillAppear()
         guard captureSession?.isRunning == false else { return }
         startRunningCaptureSessionInBackground()
     }
@@ -44,7 +38,7 @@ final class QRCodeScanViewController: BaseViewController {
 
 extension QRCodeScanViewController: QRCodeScanView {
 
-    func update(with viewModel: QRCodeScanViewModel) {
+    func update(viewModel__ viewModel: QRCodeScanViewModel) {
         self.viewModel = viewModel
         title = viewModel.title.uppercased()
         if let failure = viewModel.failure {
@@ -92,7 +86,7 @@ private extension QRCodeScanViewController {
     }
     
     @objc func closeTapped() {
-        presenter.handle(.dismiss)
+        presenter.handle(event______: .Dismiss())
     }
     
     @objc func pasteTapped() {
@@ -227,7 +221,7 @@ extension QRCodeScanViewController: AVCaptureMetadataOutputObjectsDelegate {
         // NOTE: We ignore if we keep detecting the same code over whist a failure toast is presented
         guard !view.isToastFailurePresented else { return }
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-        presenter.handle(.qrCode(qrCode))
+        presenter.handle(event______: .QRCode(input: qrCode))
     }
 
 }
@@ -265,7 +259,7 @@ extension QRCodeScanViewController: UINavigationControllerDelegate, UIImagePicke
         picker.dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
             if let qrCode = (info[.originalImage] as? UIImage)?.qrCode {
-                self.presenter.handle(.qrCode(qrCode))
+                self.presenter.handle(event______: .QRCode(input: qrCode))
             } else {
                 self.activityIndicatorView.isHidden = true
             }

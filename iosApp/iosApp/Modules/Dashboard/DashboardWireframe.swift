@@ -12,7 +12,7 @@ enum DashboardWireframeDestination {
     case mnemonicConfirmation
     case receive
     case send(addressTo: String?)
-    case scanQRCode(onCompletion: (String) -> Void)
+    case scanQRCode
     case nftItem(NFTItem)
     case editCurrencies(
         network: Network,
@@ -151,12 +151,13 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 vc,
                 context: .init(network: network, address: address, currency: nil)
             ).present()
-        case let .scanQRCode(onCompletion):
+        case .scanQRCode:
             guard let network = networksService.network else { return }
-            qrCodeScanWireframeFactory.make(
-                vc,
-                context: .init(type: .network(network), onCompletion: onCompletion)
-            ).present()
+            let context = QRCodeScanWireframeContext(
+                type: QRCodeScanWireframeContext.Type_Network(network: network),
+                handler: navigateToCurrencySend()
+            )
+            qrCodeScanWireframeFactory.make(vc, context: context).present()
         case let .nftItem(nftItem):
             guard let vc = self.vc else { return }
             nftDetailWireframeFactory.make(
@@ -246,4 +247,9 @@ private extension DefaultDashboardWireframe {
             )
         ).present()
     }
+    
+    func navigateToCurrencySend() -> (String) -> Void {
+        { [weak self] addressTo in self?.navigate(to: .send(addressTo: addressTo)) }
+    }
+
 }
