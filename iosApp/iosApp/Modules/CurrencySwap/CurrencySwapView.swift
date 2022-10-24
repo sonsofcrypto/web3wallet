@@ -34,7 +34,7 @@ final class CurrencySwapViewController: BaseViewController {
             firstAppear = false
             let cell = collectionView.cellForItem(at: IndexPath.zero)
             let swapCell = cell as? CurrencySwapMarketCollectionViewCell
-            swapCell?.currencyFrom?.sendAmountTextField.becomeFirstResponder()
+            swapCell?.currencyFrom?.amountTextField.becomeFirstResponder()
         }
     }
 }

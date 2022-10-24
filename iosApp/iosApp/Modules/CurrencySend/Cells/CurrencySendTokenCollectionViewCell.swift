@@ -5,11 +5,11 @@
 import web3walletcore
 
 final class CurrencySendTokenCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var currencyView: CurrencyEnterAmountView!
+    @IBOutlet weak var currencyView: CurrencyAmountPickerView!
     
     struct Handler {
-        let onTokenTapped: (() -> Void)?
-        let onTokenChanged: ((BigInt) -> Void)?
+        let onCurrencyTapped: (() -> Void)?
+        let onAmountChanged: ((BigInt) -> Void)?
     }
         
     override func resignFirstResponder() -> Bool {
@@ -20,13 +20,13 @@ final class CurrencySendTokenCollectionViewCell: UICollectionViewCell {
 extension CurrencySendTokenCollectionViewCell {
     
     func update(
-        with viewModel: CurrencyEnterAmountViewModel,
+        with viewModel: CurrencyAmountPickerViewModel,
         handler: Handler
     ) {
         currencyView.update(
             with: viewModel,
-            onTokenTapped: handler.onTokenTapped,
-            onTokenChanged: handler.onTokenChanged
+            onCurrencyTapped: handler.onCurrencyTapped,
+            onAmountChanged: handler.onAmountChanged
         )
     }
 }

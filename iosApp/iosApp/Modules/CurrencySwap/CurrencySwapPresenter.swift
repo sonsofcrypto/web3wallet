@@ -70,27 +70,27 @@ extension DefaultCurrencySwapPresenter: CurrencySwapPresenter {
                 .swap(
                     .init(
                         currencyFrom: .init(
-                            tokenAmount: nil,
-                            tokenSymbolIconName: currencyFrom.iconName,
-                            tokenSymbol: currencyFrom.symbol.uppercased(),
-                            tokenMaxAmount: currencyFromBalance,
-                            tokenMaxDecimals: currencyFrom.decimalsUInt,
-                            currencyTokenPrice: currencyFrom.fiatPrice,
+                            amount: nil,
+                            symbolIconName: currencyFrom.iconName,
+                            symbol: currencyFrom.symbol.uppercased(),
+                            maxAmount: currencyFromBalance,
+                            maxDecimals: currencyFrom.decimalsUInt,
+                            fiatPrice: currencyFrom.fiatPrice,
                             shouldUpdateTextFields: false,
                             shouldBecomeFirstResponder: false,
                             networkName: context.network.name
                         ),
                         currencyTo: .init(
-                            tokenAmount: nil,
-                            tokenSymbolIconName: currencyTo.iconName,
-                            tokenSymbol: currencyTo.symbol.uppercased(),
-                            tokenMaxAmount: currencyToBalance,
-                            tokenMaxDecimals: currencyTo.decimalsUInt,
-                            currencyTokenPrice: currencyTo.fiatPrice,
+                            amount: nil,
+                            symbolIconName: currencyTo.iconName,
+                            symbol: currencyTo.symbol.uppercased(),
+                            maxAmount: currencyToBalance,
+                            maxDecimals: currencyTo.decimalsUInt,
+                            fiatPrice: currencyTo.fiatPrice,
                             shouldUpdateTextFields: false,
                             shouldBecomeFirstResponder: false,
                             networkName: context.network.name,
-                            tokenInputEnabled: false
+                            inputEnabled: false
                         ),
                         currencySwapProviderViewModel: currencySwapProviderViewModel(),
                         currencySwapPriceViewModel: currencyPriceViewModel(),
@@ -253,27 +253,27 @@ private extension DefaultCurrencySwapPresenter {
                 .swap(
                     .init(
                         currencyFrom: .init(
-                            tokenAmount: amountFrom,
-                            tokenSymbolIconName: currencyFrom.iconName,
-                            tokenSymbol: currencyFrom.symbol.uppercased(),
-                            tokenMaxAmount: currencyFromBalance,
-                            tokenMaxDecimals: currencyFrom.decimalsUInt,
-                            currencyTokenPrice: currencyFrom.fiatPrice,
+                            amount: amountFrom,
+                            symbolIconName: currencyFrom.iconName,
+                            symbol: currencyFrom.symbol.uppercased(),
+                            maxAmount: currencyFromBalance,
+                            maxDecimals: currencyFrom.decimalsUInt,
+                            fiatPrice: currencyFrom.fiatPrice,
                             shouldUpdateTextFields: shouldUpdateFromTextField,
                             shouldBecomeFirstResponder: shouldFromBecomeFirstResponder,
                             networkName: context.network.name
                         ),
                         currencyTo: .init(
-                            tokenAmount: amountTo,
-                            tokenSymbolIconName: currencyTo.iconName,
-                            tokenSymbol: currencyTo.symbol.uppercased(),
-                            tokenMaxAmount: currencyToBalance,
-                            tokenMaxDecimals: currencyTo.decimalsUInt,
-                            currencyTokenPrice: currencyTo.fiatPrice,
+                            amount: amountTo,
+                            symbolIconName: currencyTo.iconName,
+                            symbol: currencyTo.symbol.uppercased(),
+                            maxAmount: currencyToBalance,
+                            maxDecimals: currencyTo.decimalsUInt,
+                            fiatPrice: currencyTo.fiatPrice,
                             shouldUpdateTextFields: true,
                             shouldBecomeFirstResponder: false,
                             networkName: context.network.name,
-                            tokenInputEnabled: false
+                            inputEnabled: false
                         ),
                         currencySwapProviderViewModel: currencySwapProviderViewModel(),
                         currencySwapPriceViewModel: currencyPriceViewModel(),

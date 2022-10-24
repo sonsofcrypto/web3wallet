@@ -6,10 +6,10 @@ import web3walletcore
 
 final class CurrencySwapMarketCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var currencyFrom: CurrencyEnterAmountView!
+    @IBOutlet weak var currencyFrom: CurrencyAmountPickerView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var currencyTo: CurrencyEnterAmountView!
+    @IBOutlet weak var currencyTo: CurrencyAmountPickerView!
     @IBOutlet weak var currencySwapProviderView: CurrencySwapProviderView!
     @IBOutlet weak var currencySwapPriceView: CurrencySwapPriceView!
     @IBOutlet weak var currencySwapSlippageView: CurrencySwapSlippageView!
@@ -78,8 +78,8 @@ extension CurrencySwapMarketCollectionViewCell {
         self.handler = handler
         currencyFrom.update(
             with: viewModel.currencyFrom,
-            onTokenTapped: handler.onCurrencyFromTapped,
-            onTokenChanged: {
+            onCurrencyTapped: handler.onCurrencyFromTapped,
+            onAmountChanged: {
                 [weak self] amount in
                 guard let self = self else { return }
                 self.showLoading()
@@ -88,8 +88,8 @@ extension CurrencySwapMarketCollectionViewCell {
         )
         currencyTo.update(
             with: viewModel.currencyTo,
-            onTokenTapped: handler.onCurrencyToTapped,
-            onTokenChanged: {
+            onCurrencyTapped: handler.onCurrencyToTapped,
+            onAmountChanged: {
                 [weak self] amount in
                 guard let self = self else { return }
                 self.showLoading()

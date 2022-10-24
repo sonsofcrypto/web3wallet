@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -15,11 +13,11 @@
             <objects>
                 <viewController storyboardIdentifier="CurrencySwapViewController" id="ncT-FB-SOz" customClass="CurrencySwapViewController" customModule="iosApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="96v-2a-j6q" customClass="ThemeGradientView" customModule="iosApp" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="74Y-Ma-gMe">
-                                <rect key="frame" x="0.0" y="47" width="390" height="763"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3MY-pv-YhX">
                                     <size key="itemSize" width="413" height="85"/>
@@ -29,7 +27,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CurrencySwapMarketCollectionViewCell" id="XPz-rC-pjp" customClass="CurrencySwapMarketCollectionViewCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="10" width="413" height="422"/>
+                                        <rect key="frame" x="93.666666666666671" y="0.0" width="413" height="422"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="91N-vQ-8do">
                                             <rect key="frame" x="0.0" y="0.0" width="413" height="422"/>
@@ -38,7 +36,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="DCQ-vs-lQ3">
                                                     <rect key="frame" x="0.0" y="0.0" width="413" height="422"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="21L-BR-j7M" customClass="CurrencyEnterAmountView" customModule="iosApp" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="21L-BR-j7M" customClass="CurrencyAmountPickerView" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="413" height="96"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IjB-fi-CI9">
@@ -176,16 +174,16 @@
                                                                 <constraint firstAttribute="trailing" secondItem="IjB-fi-CI9" secondAttribute="trailing" constant="12" id="ZWI-dk-7EH"/>
                                                             </constraints>
                                                             <connections>
+                                                                <outlet property="amountLabel" destination="5Zq-4K-Tv2" id="rv9-uI-RoW"/>
+                                                                <outlet property="amountTextField" destination="3bU-Bq-OeW" id="8Or-Ht-1tR"/>
                                                                 <outlet property="balanceLabel" destination="Mfa-Th-X1t" id="CpF-tj-czv"/>
+                                                                <outlet property="currencyDropdownImageView" destination="UfH-y8-cqP" id="ind-tB-jNf"/>
+                                                                <outlet property="currencyIconImageView" destination="5Zs-Tl-wsh" id="lQz-tE-bXo"/>
+                                                                <outlet property="currencyLabel" destination="oWE-b7-zlZ" id="1Th-gv-dKE"/>
+                                                                <outlet property="currencyView" destination="pVw-oL-xtI" id="Uvq-6W-782"/>
+                                                                <outlet property="fiatSymbol" destination="6n5-v0-M5A" id="mNg-tN-Tl7"/>
                                                                 <outlet property="flipImageView" destination="gs2-nV-2dk" id="SuS-hc-ee3"/>
                                                                 <outlet property="maxButton" destination="loA-Wx-1hc" id="geV-JM-ZV5"/>
-                                                                <outlet property="sendAmountLabel" destination="5Zq-4K-Tv2" id="rv9-uI-RoW"/>
-                                                                <outlet property="sendAmountTextField" destination="3bU-Bq-OeW" id="8Or-Ht-1tR"/>
-                                                                <outlet property="sendCurrencySymbol" destination="6n5-v0-M5A" id="mNg-tN-Tl7"/>
-                                                                <outlet property="tokenDropdownImageView" destination="UfH-y8-cqP" id="ind-tB-jNf"/>
-                                                                <outlet property="tokenIconImageView" destination="5Zs-Tl-wsh" id="lQz-tE-bXo"/>
-                                                                <outlet property="tokenLabel" destination="oWE-b7-zlZ" id="1Th-gv-dKE"/>
-                                                                <outlet property="tokenView" destination="pVw-oL-xtI" id="Uvq-6W-782"/>
                                                             </connections>
                                                         </view>
                                                         <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VoC-hc-D9V">
@@ -223,7 +221,7 @@
                                                                 <constraint firstItem="dr7-UQ-HPR" firstAttribute="centerX" secondItem="VoC-hc-D9V" secondAttribute="centerX" id="wdK-Pv-rgU"/>
                                                             </constraints>
                                                         </view>
-                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RQJ-L1-jlw" customClass="CurrencyEnterAmountView" customModule="iosApp" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RQJ-L1-jlw" customClass="CurrencyAmountPickerView" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="132" width="413" height="96"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DjE-Xw-PkE">
@@ -361,16 +359,16 @@
                                                                 <constraint firstItem="DjE-Xw-PkE" firstAttribute="top" secondItem="RQJ-L1-jlw" secondAttribute="top" constant="12" id="y2G-qj-hem"/>
                                                             </constraints>
                                                             <connections>
+                                                                <outlet property="amountLabel" destination="fMy-yS-AGu" id="hRK-sO-vqC"/>
+                                                                <outlet property="amountTextField" destination="N1t-qH-Vnf" id="X5U-g1-Zop"/>
                                                                 <outlet property="balanceLabel" destination="QmD-ka-dfw" id="7XA-TV-D55"/>
+                                                                <outlet property="currencyDropdownImageView" destination="qM8-s8-sfi" id="UG8-NK-vCB"/>
+                                                                <outlet property="currencyIconImageView" destination="ZA8-t0-USh" id="pWv-DN-E6m"/>
+                                                                <outlet property="currencyLabel" destination="jvv-3q-aaj" id="anl-Hf-B8Y"/>
+                                                                <outlet property="currencyView" destination="GKV-BU-si0" id="xYj-PS-iSY"/>
+                                                                <outlet property="fiatSymbol" destination="D7v-ta-ZcB" id="nfG-rV-WfN"/>
                                                                 <outlet property="flipImageView" destination="Au0-ch-Z1h" id="dmA-C2-gQk"/>
                                                                 <outlet property="maxButton" destination="McZ-hK-C3p" id="Lax-Pi-FqA"/>
-                                                                <outlet property="sendAmountLabel" destination="fMy-yS-AGu" id="hRK-sO-vqC"/>
-                                                                <outlet property="sendAmountTextField" destination="N1t-qH-Vnf" id="X5U-g1-Zop"/>
-                                                                <outlet property="sendCurrencySymbol" destination="D7v-ta-ZcB" id="nfG-rV-WfN"/>
-                                                                <outlet property="tokenDropdownImageView" destination="qM8-s8-sfi" id="UG8-NK-vCB"/>
-                                                                <outlet property="tokenIconImageView" destination="ZA8-t0-USh" id="pWv-DN-E6m"/>
-                                                                <outlet property="tokenLabel" destination="jvv-3q-aaj" id="anl-Hf-B8Y"/>
-                                                                <outlet property="tokenView" destination="GKV-BU-si0" id="xYj-PS-iSY"/>
                                                             </connections>
                                                         </view>
                                                         <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SOB-Sd-QMS" userLabel="TokenProviderView" customClass="CurrencySwapProviderView" customModule="iosApp" customModuleProvider="target">
@@ -573,7 +571,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CurrencySwapLimitCollectionViewCell" id="Lbb-Ef-Z55" customClass="CurrencySwapLimitCollectionViewCell" customModule="iosApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="442" width="413" height="382"/>
+                                        <rect key="frame" x="93.666666666666671" y="432" width="413" height="382"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="9O1-d6-3kE">
                                             <rect key="frame" x="0.0" y="0.0" width="413" height="382"/>
@@ -584,10 +582,10 @@
                                 </cells>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e16-94-oLm" customClass="FeesPickerView" customModule="iosApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="390" height="810"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JS1-7y-4AC">
-                                        <rect key="frame" x="134" y="0.0" width="240" height="132"/>
+                                        <rect key="frame" x="344" y="0.0" width="240" height="132"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="WaI-Dj-ahc">
                                                 <rect key="frame" x="16" y="0.0" width="208" height="132"/>
@@ -602,7 +600,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sjr-3p-jDn">
-                                                                <rect key="frame" x="166.66666666666669" y="0.0" width="41.333333333333343" height="44"/>
+                                                                <rect key="frame" x="166.66666666666663" y="0.0" width="41.333333333333343" height="44"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -619,7 +617,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAP-uj-zGR">
-                                                                <rect key="frame" x="41.333333333333343" y="0.0" width="166.66666666666666" height="44"/>
+                                                                <rect key="frame" x="41.333333333333314" y="0.0" width="166.66666666666666" height="44"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -636,7 +634,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8E5-8w-tRl">
-                                                                <rect key="frame" x="41.333333333333343" y="0.0" width="166.66666666666666" height="44"/>
+                                                                <rect key="frame" x="41.333333333333314" y="0.0" width="166.66666666666666" height="44"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>

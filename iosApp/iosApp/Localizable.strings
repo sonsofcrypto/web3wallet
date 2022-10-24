@@ -446,7 +446,7 @@
 "validation.error.pass.min.lowercase" = "At least one lowercase letter needed";
 "validation.error.pass.min.digit" = "At least one digit needed";
 
-"tokenEnter.balance" = "Balance: %@";
+"currencyAmountPicker.balance" = "Balance: %@";
 
 "webView.title.txDetails" = "Transaction Details";
 
