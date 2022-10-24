@@ -298,30 +298,30 @@
 "qrCodeScan.error.notSupported.message" = "Your device does not support QR code scanning. Please use a device with a camera.";
 "qrCodeScan.error.invalid.address" = "is not a valid %@ address.";
 
-"tokenSend.title" = "Send %@";
-"tokenSend.cell.token.placeholder" = "0";
-"tokenSend.cell.currency.placeholder" = "0.0";
-"tokenSend.cell.currency.label.usd" = "USD";
-"tokenSend.missing.address" = "Invalid address";
+"currencySend.title" = "Send %@";
+"currencySend.cell.token.placeholder" = "0";
+"currencySend.cell.currency.placeholder" = "0.0";
+"currencySend.cell.currency.label.usd" = "USD";
+"currencySend.missing.address" = "Invalid address";
 
 "nftSend.title" = "Send NFT";
 "nftSend.missing.address" = "Invalid address";
 
-"tokenSwap.title" = "Token Swap";
-"tokenSwap.segment.swap" = "Swap";
-"tokenSwap.segment.limit" = "Limit";
-"tokenSwap.cell.provider" = "Provider";
-"tokenSwap.cell.price" = "Price";
-"tokenSwap.cell.slippage" = "Slippage";
-"tokenSwap.cell.estimatedFee" = "Estimated Fee";
-"tokenSwap.cell.button.state.swap" = "Swap with";
-"tokenSwap.cell.button.state.approve" = "Approve";
-"tokenSwap.cell.button.state.approving" = "Approving";
-"tokenSwap.cell.button.state.loading" = "Loading";
-"tokenSwap.cell.button.state.enterAmount" = "Enter an amount";
-"tokenSwap.cell.button.state.insufficientBalance" = "Insufficient %@ balance";
-"tokenSwap.cell.button.state.noPoolsFound" = "No pools found";
-"tokenSwap.cell.button.state.swapAnyway" = "Swap anyway (-%@%)";
+"currencySwap.title" = "Token Swap";
+"currencySwap.segment.swap" = "Swap";
+"currencySwap.segment.limit" = "Limit";
+"currencySwap.cell.provider" = "Provider";
+"currencySwap.cell.price" = "Price";
+"currencySwap.cell.slippage" = "Slippage";
+"currencySwap.cell.estimatedFee" = "Estimated Fee";
+"currencySwap.cell.button.state.swap" = "Swap with";
+"currencySwap.cell.button.state.approve" = "Approve";
+"currencySwap.cell.button.state.approving" = "Approving";
+"currencySwap.cell.button.state.loading" = "Loading";
+"currencySwap.cell.button.state.enterAmount" = "Enter an amount";
+"currencySwap.cell.button.state.insufficientBalance" = "Insufficient %@ balance";
+"currencySwap.cell.button.state.noPoolsFound" = "No pools found";
+"currencySwap.cell.button.state.swapAnyway" = "Swap anyway (-%@%)";
 
 "authenticate.title.unlock" = "Unlock";
 "authenticate.title.swap" = "Swap";

@@ -224,7 +224,7 @@ private extension DefaultCurrencySwapPresenter {
     func updateView(with items: [CurrencySwapViewModel.Item]) {
         view?.update(
             with: .init(
-                title: Localized("tokenSwap.title"),
+                title: Localized("currencySwap.title"),
                 items: items
             )
         )
@@ -322,12 +322,12 @@ private extension DefaultCurrencySwapPresenter {
     
     func buttonState() -> CurrencySwapViewModel.Swap.ButtonState {
         guard amounFromtGreaterThanZero else {
-            return .invalid(text: Localized("tokenSwap.cell.button.state.enterAmount"))
+            return .invalid(text: Localized("currencySwap.cell.button.state.enterAmount"))
         }
         guard !insufficientFunds else {
             return .invalid(
                 text: Localized(
-                    "tokenSwap.cell.button.state.insufficientBalance",
+                    "currencySwap.cell.button.state.insufficientBalance",
                     currencyFrom.symbol.uppercased()
                 )
             )
@@ -335,10 +335,10 @@ private extension DefaultCurrencySwapPresenter {
         if isCalculating { return .loading }
         switch interactor.swapState {
         case .noPools, .notAvailable:
-            return .invalid(text: Localized("tokenSwap.cell.button.state.noPoolsFound"))
+            return .invalid(text: Localized("currencySwap.cell.button.state.noPoolsFound"))
         case .swap:
             return priceImpact >= priceImpactWarningThreashold ? .swapAnyway(
-                text: Localized("tokenSwap.cell.button.state.swapAnyway", (priceImpact * 100).toString())
+                text: Localized("currencySwap.cell.button.state.swapAnyway", (priceImpact * 100).toString())
             ) : .swap
         }
     }

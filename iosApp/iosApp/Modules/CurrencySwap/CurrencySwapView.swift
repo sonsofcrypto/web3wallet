@@ -172,12 +172,12 @@ private extension CurrencySwapViewController {
     func _segmentedControl() -> SegmentedControl {
         let segmentControl = SegmentedControl()
         segmentControl.insertSegment(
-            withTitle: Localized("tokenSwap.segment.swap"),
+            withTitle: Localized("currencySwap.segment.swap"),
             at: 0,
             animated: false
         )
         segmentControl.insertSegment(
-            withTitle: Localized("tokenSwap.segment.limit"),
+            withTitle: Localized("currencySwap.segment.limit"),
             at: 1,
             animated: false
         )

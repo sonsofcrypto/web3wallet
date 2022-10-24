@@ -21,7 +21,7 @@ final class CurrencySwapProviderView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         nameLabel.apply(style: .footnote)
-        nameLabel.text = Localized("tokenSwap.cell.provider")
+        nameLabel.text = Localized("currencySwap.cell.provider")
         button.style = .secondarySmall(leftImage: nil)
         button.addTarget(
             self,

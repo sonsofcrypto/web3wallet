@@ -24,7 +24,7 @@ final class NetworkFeePickerView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         nameLabel.apply(style: .footnote)
-        nameLabel.text = Localized("tokenSwap.cell.estimatedFee")
+        nameLabel.text = Localized("currencySwap.cell.estimatedFee")
         networkTokenIcon.image = "send-ethereum-token".assetImage
         networkEstimateFeeLabel.font = Theme.font.footnote
         networkEstimateFeeLabel.textColor = Theme.colour.labelPrimary

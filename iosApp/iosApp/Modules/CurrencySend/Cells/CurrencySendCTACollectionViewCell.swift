@@ -38,7 +38,7 @@ extension CurrencySendCTACollectionViewCell {
             button.setTitle(Localized("insufficientFunds"), for: .normal)
             button.isEnabled = false
         case .invalidDestination:
-            button.setTitle(Localized("tokenSend.missing.address"), for: .normal)
+            button.setTitle(Localized("currencySend.missing.address"), for: .normal)
             button.isEnabled = false
         }
         networkFeeView.update(

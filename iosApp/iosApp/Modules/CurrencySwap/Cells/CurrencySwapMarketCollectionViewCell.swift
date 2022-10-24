@@ -123,12 +123,12 @@ extension CurrencySwapMarketCollectionViewCell {
         case .approve:
             approveButton.isHidden = false
             approveButton.hideLoading()
-            approveButton.setTitle(Localized("tokenSwap.cell.button.state.approve"), for: .normal)
+            approveButton.setTitle(Localized("currencySwap.cell.button.state.approve"), for: .normal)
             approveButton.isEnabled = true
         case .approving:
             approveButton.isHidden = false
             approveButton.showLoading()
-            approveButton.setTitle(Localized("tokenSwap.cell.button.state.approving"), for: .normal)
+            approveButton.setTitle(Localized("currencySwap.cell.button.state.approving"), for: .normal)
             approveButton.isEnabled = true
         case .approved:
             approveButton.isHidden = true
@@ -137,7 +137,7 @@ extension CurrencySwapMarketCollectionViewCell {
         case .loading:
             button.hideLoading()
             button.style = .primary
-            button.setTitle(Localized("tokenSwap.cell.button.state.swap"), for: .normal)
+            button.setTitle(Localized("currencySwap.cell.button.state.swap"), for: .normal)
             button.isEnabled = false
         case let .invalid(text):
             button.hideLoading()
@@ -151,7 +151,7 @@ extension CurrencySwapMarketCollectionViewCell {
             button.isEnabled = viewModel.approveState == .approved
         case .swap:
             button.hideLoading()
-            button.setTitle(Localized("tokenSwap.cell.button.state.swap"), for: .normal)
+            button.setTitle(Localized("currencySwap.cell.button.state.swap"), for: .normal)
             button.style = .primary
             button.isEnabled = viewModel.approveState == .approved
         }
