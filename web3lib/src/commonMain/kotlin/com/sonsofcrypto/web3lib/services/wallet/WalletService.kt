@@ -8,7 +8,7 @@ import com.sonsofcrypto.web3lib.services.networks.NetworksEvent.EnabledNetworksD
 import com.sonsofcrypto.web3lib.services.networks.NetworksListener
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.signer.Wallet
-import com.sonsofcrypto.web3lib.signer.contracts.ERC20
+import com.sonsofcrypto.web3lib.signer.contracts.ERC20Legacy
 import com.sonsofcrypto.web3lib.types.*
 import com.sonsofcrypto.web3lib.utils.*
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
@@ -247,7 +247,7 @@ class DefaultWalletService(
         if (currency.type == Currency.Type.ERC20 && currency.address != null)
             return TransactionRequest(
                 to = Address.HexString(currency.address!!),
-                data = ERC20(Address.HexString(currency.address!!))
+                data = ERC20Legacy(Address.HexString(currency.address!!))
                     .transfer(Address.HexString(to), amount)
             )
         throw Error.UnableToSendTransaction
@@ -375,7 +375,7 @@ class DefaultWalletService(
                     updateBalance(wallet, currency, balance, newTransactionCount)
                 }
                 Currency.Type.ERC20 -> {
-                    val contract = ERC20(Address.HexString(currency.address!!))
+                    val contract = ERC20Legacy(Address.HexString(currency.address!!))
                     val address = wallet.address().toHexStringAddress()
                     val encodedBalance = wallet.call(
                         TransactionRequest(

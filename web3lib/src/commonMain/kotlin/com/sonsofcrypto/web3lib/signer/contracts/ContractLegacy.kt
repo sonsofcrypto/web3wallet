@@ -15,7 +15,7 @@ open class ContractLegacy(
     }
 }
 
-class ERC20(address: Address.HexString) : ContractLegacy(address) {
+class ERC20Legacy(address: Address.HexString) : ContractLegacy(address) {
 
     /**
      * Returns the name of the token.

@@ -11,7 +11,7 @@ import com.sonsofcrypto.web3lib.services.uniswap.contracts.IV3SwapRouter
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.Quoter
 import com.sonsofcrypto.web3lib.services.uniswap.contracts.UniswapV3PoolState
 import com.sonsofcrypto.web3lib.signer.Wallet
-import com.sonsofcrypto.web3lib.signer.contracts.ERC20
+import com.sonsofcrypto.web3lib.signer.contracts.ERC20Legacy
 import com.sonsofcrypto.web3lib.types.*
 import com.sonsofcrypto.web3lib.utils.*
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
@@ -399,16 +399,16 @@ class DefaultUniswapService(): UniswapService {
         provider: Provider
     ): ApprovalState {
         val tokenAddress = wrappedAddress(currency)
-        val erc20 = ERC20(Address.HexString(tokenAddress))
+        val erc20Legacy = ERC20Legacy(Address.HexString(tokenAddress))
         if (owner == null)
             return ApprovalState.DoesNotApply(currency)
         try {
-            val data = erc20.allowance(
+            val data = erc20Legacy.allowance(
                 Address.HexString(owner),
                 Address.HexString(spender)
             )
             val result = provider.call(tokenAddress, data)
-            val allowance = erc20.decodeAllowance(result)
+            val allowance = erc20Legacy.decodeAllowance(result)
             return if (allowance.isZero()) {
                 ApprovalState.NeedsApproval(currency)
             } else if (amount.isZero() && !allowance.isZero()) {
@@ -430,7 +430,7 @@ class DefaultUniswapService(): UniswapService {
         wallet: Wallet
     ): ApprovalState {
         val tokenAddress = wrappedAddress(currency)
-        val erc20 = ERC20(Address.HexString(tokenAddress))
+        val erc20 = ERC20Legacy(Address.HexString(tokenAddress))
         try {
             val data = erc20.approve(Address.HexString(spender), UINT256_MAX)
             val request = TransactionRequest(to = erc20.address, data = data)

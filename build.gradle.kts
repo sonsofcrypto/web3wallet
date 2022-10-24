@@ -20,6 +20,7 @@ allprojects {
     ext["ktor_version"] = "2.1.3"
     ext["bignum_version"] = "0.3.6"
     ext["datetime_version"] = "0.4.0"
+    ext["kotlin_version"] = "1.7.10"
 
     repositories {
         google()

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.sonsofcrypto.web3lib.utils.BundledAssetProviderApplication
 import com.sonsofcrypto.web3lib.utils.secureRand
 
+
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,3 +40,4 @@ class MainActivity : AppCompatActivity() {
         println("=== all tests executed ===")
     }
 }
+
