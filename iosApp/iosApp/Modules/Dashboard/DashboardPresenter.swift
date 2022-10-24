@@ -87,7 +87,7 @@ extension DefaultDashboardPresenter: DashboardPresenter {
         case .sendAction:
             wireframe.navigate(to: .send(addressTo: nil))
         case .didScanQRCode:
-            wireframe.navigate(to: .scanQRCode(onCompletion: onQRCodeScanned()))
+            wireframe.navigate(to: .scanQRCode)
         case let .didTapEditTokens(networkId):
             didTapEditToken(networkId)
         case .swapAction:
@@ -294,13 +294,6 @@ private extension DefaultDashboardPresenter {
         interactor.setCurrencies(currencies, network: network)
         updateView()
         interactor.reloadData()
-    }
-}
-
-private extension DefaultDashboardPresenter {
-    
-    func onQRCodeScanned() -> (String) -> Void {
-        { [weak self] addressTo in self?.wireframe.navigate(to: .send(addressTo: addressTo)) }
     }
 }
 

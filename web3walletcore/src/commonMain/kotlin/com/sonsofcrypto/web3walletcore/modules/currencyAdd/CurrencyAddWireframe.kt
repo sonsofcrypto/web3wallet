@@ -1,8 +1,6 @@
-package com.sonsofcrypto.web3walletcore.modules.improvementProposal
+package com.sonsofcrypto.web3walletcore.modules.currencyAdd
 
-import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
-import com.sonsofcrypto.web3walletcore.modules.currencyPicker.CurrencyPickerWireframeContext
 
 data class CurrencyAddWireframeContext(
     /** Network to receive crypto */

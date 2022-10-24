@@ -93,13 +93,10 @@
 		1C54DC072860E5CB00E378F6 /* NetworkPickerWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC062860E5CB00E378F6 /* NetworkPickerWireframeFactory.swift */; };
 		1C54DC0B2860E63600E378F6 /* NetworkPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC0A2860E63600E378F6 /* NetworkPicker.storyboard */; };
 		1C54DC0E2860E91D00E378F6 /* NetworkPickerItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC0D2860E91D00E378F6 /* NetworkPickerItemCell.swift */; };
-		1C54DC112862350B00E378F6 /* QRCodeScanPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC102862350A00E378F6 /* QRCodeScanPresenter.swift */; };
 		1C54DC132862351100E378F6 /* QRCodeScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC122862351100E378F6 /* QRCodeScanView.swift */; };
-		1C54DC152862351500E378F6 /* QRCodeScanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC142862351500E378F6 /* QRCodeScanViewModel.swift */; };
 		1C54DC172862351D00E378F6 /* QRCodeScanWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC162862351D00E378F6 /* QRCodeScanWireframe.swift */; };
 		1C54DC192862352200E378F6 /* QRCodeScanWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC182862352200E378F6 /* QRCodeScanWireframeFactory.swift */; };
 		1C54DC1D2862354C00E378F6 /* QRCodeScan.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */; };
-		1C54DC1F2862373C00E378F6 /* QRCodeScanInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC1E2862373C00E378F6 /* QRCodeScanInteractor.swift */; };
 		1C54DC2A2868193300E378F6 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DC292868193300E378F6 /* Theme.swift */; };
 		1C54DC5128683DDA00E378F6 /* NaokoAA-Light-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4328683DD900E378F6 /* NaokoAA-Light-Italic.otf */; };
 		1C54DC5228683DDA00E378F6 /* NaokoAA-Extrabold-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DC4428683DD900E378F6 /* NaokoAA-Extrabold-Italic.otf */; };
@@ -640,13 +637,10 @@
 		1C54DC062860E5CB00E378F6 /* NetworkPickerWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPickerWireframeFactory.swift; sourceTree = "<group>"; };
 		1C54DC0A2860E63600E378F6 /* NetworkPicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NetworkPicker.storyboard; sourceTree = "<group>"; };
 		1C54DC0D2860E91D00E378F6 /* NetworkPickerItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPickerItemCell.swift; sourceTree = "<group>"; };
-		1C54DC102862350A00E378F6 /* QRCodeScanPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanPresenter.swift; sourceTree = "<group>"; };
 		1C54DC122862351100E378F6 /* QRCodeScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanView.swift; sourceTree = "<group>"; };
-		1C54DC142862351500E378F6 /* QRCodeScanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanViewModel.swift; sourceTree = "<group>"; };
 		1C54DC162862351D00E378F6 /* QRCodeScanWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanWireframe.swift; sourceTree = "<group>"; };
 		1C54DC182862352200E378F6 /* QRCodeScanWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanWireframeFactory.swift; sourceTree = "<group>"; };
 		1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QRCodeScan.storyboard; sourceTree = "<group>"; };
-		1C54DC1E2862373C00E378F6 /* QRCodeScanInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScanInteractor.swift; sourceTree = "<group>"; };
 		1C54DC292868193300E378F6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		1C54DC4328683DD900E378F6 /* NaokoAA-Light-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Light-Italic.otf"; sourceTree = "<group>"; };
 		1C54DC4428683DD900E378F6 /* NaokoAA-Extrabold-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NaokoAA-Extrabold-Italic.otf"; sourceTree = "<group>"; };
@@ -1349,10 +1343,7 @@
 			isa = PBXGroup;
 			children = (
 				1C54DC1C2862354C00E378F6 /* QRCodeScan.storyboard */,
-				1C54DC1E2862373C00E378F6 /* QRCodeScanInteractor.swift */,
-				1C54DC102862350A00E378F6 /* QRCodeScanPresenter.swift */,
 				1C54DC122862351100E378F6 /* QRCodeScanView.swift */,
-				1C54DC142862351500E378F6 /* QRCodeScanViewModel.swift */,
 				1C54DC162862351D00E378F6 /* QRCodeScanWireframe.swift */,
 				1C54DC182862352200E378F6 /* QRCodeScanWireframeFactory.swift */,
 			);
@@ -2792,7 +2783,6 @@
 				1C671FFA287FDFFF00C5F044 /* CurrencySwapInteractor.swift in Sources */,
 				1C60C2CA285724D0003BE25D /* ChatPresenter.swift in Sources */,
 				1C60C321285724D1003BE25D /* AppsCell.swift in Sources */,
-				1C54DC152862351500E378F6 /* QRCodeScanViewModel.swift in Sources */,
 				1C6720122885D5AF00C5F044 /* CurrencySwapSlippageView.swift in Sources */,
 				1C5D24CA28E19F62007DA557 /* ImprovementProposalView.swift in Sources */,
 				1CE0064C2889E0E6002D1EB3 /* ThemeIOS.swift in Sources */,
@@ -2991,7 +2981,6 @@
 				D1EF5BCC287BEE92004CAD82 /* MnemonicUpdatePresenter.swift in Sources */,
 				1C60C2A4285724D0003BE25D /* SettingsCell.swift in Sources */,
 				1C60C2DF285724D0003BE25D /* DashboardHeaderNameView.swift in Sources */,
-				1C54DC112862350B00E378F6 /* QRCodeScanPresenter.swift in Sources */,
 				1C60C335285724D1003BE25D /* NFTsCollectionView+Shared.swift in Sources */,
 				1CB8B0B8288C351A00024E7C /* CultProposalDetailViewCell.swift in Sources */,
 				1C60C2C0285724D0003BE25D /* KeyStoreCell.swift in Sources */,
@@ -3049,7 +3038,6 @@
 				1C671FEE287FDFB000C5F044 /* CurrencySwapPresenter.swift in Sources */,
 				1C7F864328D20E490073FD95 /* Data+Extension.swift in Sources */,
 				1C60C34D285724D1003BE25D /* CultProposalVoteView.swift in Sources */,
-				1C54DC1F2862373C00E378F6 /* QRCodeScanInteractor.swift in Sources */,
 				1C7F864928D20E490073FD95 /* Error+Extensions.swift in Sources */,
 				1A4C370634B11B400C5C4356 /* TouchPassThroughCollectionView.swift in Sources */,
 				1CB8B0AD288B184A00024E7C /* CultProposalHeaderSupplementaryView.swift in Sources */,
@@ -3330,7 +3318,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 25;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = L4HD966EQA;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3372,7 +3360,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 25;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = L4HD966EQA;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;

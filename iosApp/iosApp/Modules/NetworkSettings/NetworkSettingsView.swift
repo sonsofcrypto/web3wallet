@@ -20,7 +20,7 @@ class NetworkSettingsViewController: UIViewController {
 
 extension NetworkSettingsViewController: NetworkSettingsView {
 
-    func update(viewModel_____ viewModel: NetworkSettingsViewModel) {
+    func update(viewModel______ viewModel: NetworkSettingsViewModel) {
         self.viewModel = viewModel
         collectionView.reloadData()
         collectionView.deselectAllExcept(
@@ -62,7 +62,7 @@ extension NetworkSettingsViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        presenter.handle(event_________: .Select(idx: Int32(indexPath.item)))
+        presenter.handle(event__________: .Select(idx: Int32(indexPath.item)))
     }
 }
 

@@ -66,10 +66,11 @@ extension DefaultNFTSendWireframe: NFTSendWireframe {
                 context: .underConstructionAlert()
             ).present()
         case let .qrCodeScan(network, onCompletion):
-            qrCodeScanWireframeFactory.make(
-                vc,
-                context: .init(type: .network(network), onCompletion: onCompletion)
-            ).present()
+            let context = QRCodeScanWireframeContext(
+                type: QRCodeScanWireframeContext.Type_Network(network: network),
+                handler: onPopWrapped(onCompletion: onCompletion)
+            )
+            qrCodeScanWireframeFactory.make(vc, context: context).present()
         case let .confirmSendNFT(dataIn):
             guard dataIn.addressFrom != dataIn.addressTo else {
                 return presentSendingToSameAddressAlert()
@@ -100,10 +101,7 @@ private extension DefaultNFTSendWireframe {
         vc.hidesBottomBarWhenPushed = true
         vc.presenter = presenter
         self.vc = vc
-        guard parent?.asNavVc == nil else { return vc }
-        let nc = NavigationController(rootViewController: vc)
-        self.vc = nc
-        return nc
+        return vc
     }
     
     func presentSendingToSameAddressAlert() {
@@ -119,5 +117,13 @@ private extension DefaultNFTSendWireframe {
                 contentHeight: 230
             )
         ).present()
+    }
+    
+    func onPopWrapped(onCompletion: @escaping (String) -> Void) -> (String) -> Void {
+        {
+            [weak self] string in
+            _ = self?.vc?.navigationController?.popViewController(animated: true)
+            onCompletion(string)
+        }
     }
 }
