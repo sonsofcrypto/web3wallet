@@ -70,27 +70,27 @@ extension DefaultCurrencySwapPresenter: CurrencySwapPresenter {
                 .swap(
                     .init(
                         currencyFrom: .init(
-                            tokenAmount: nil,
-                            tokenSymbolIconName: currencyFrom.iconName,
-                            tokenSymbol: currencyFrom.symbol.uppercased(),
-                            tokenMaxAmount: currencyFromBalance,
-                            tokenMaxDecimals: currencyFrom.decimalsUInt,
-                            currencyTokenPrice: currencyFrom.fiatPrice,
+                            amount: nil,
+                            symbolIconName: currencyFrom.iconName,
+                            symbol: currencyFrom.symbol.uppercased(),
+                            maxAmount: currencyFromBalance,
+                            maxDecimals: currencyFrom.decimalsUInt,
+                            fiatPrice: currencyFrom.fiatPrice,
                             shouldUpdateTextFields: false,
                             shouldBecomeFirstResponder: false,
                             networkName: context.network.name
                         ),
                         currencyTo: .init(
-                            tokenAmount: nil,
-                            tokenSymbolIconName: currencyTo.iconName,
-                            tokenSymbol: currencyTo.symbol.uppercased(),
-                            tokenMaxAmount: currencyToBalance,
-                            tokenMaxDecimals: currencyTo.decimalsUInt,
-                            currencyTokenPrice: currencyTo.fiatPrice,
+                            amount: nil,
+                            symbolIconName: currencyTo.iconName,
+                            symbol: currencyTo.symbol.uppercased(),
+                            maxAmount: currencyToBalance,
+                            maxDecimals: currencyTo.decimalsUInt,
+                            fiatPrice: currencyTo.fiatPrice,
                             shouldUpdateTextFields: false,
                             shouldBecomeFirstResponder: false,
                             networkName: context.network.name,
-                            tokenInputEnabled: false
+                            inputEnabled: false
                         ),
                         currencySwapProviderViewModel: currencySwapProviderViewModel(),
                         currencySwapPriceViewModel: currencyPriceViewModel(),
@@ -224,7 +224,7 @@ private extension DefaultCurrencySwapPresenter {
     func updateView(with items: [CurrencySwapViewModel.Item]) {
         view?.update(
             with: .init(
-                title: Localized("tokenSwap.title"),
+                title: Localized("currencySwap.title"),
                 items: items
             )
         )
@@ -253,27 +253,27 @@ private extension DefaultCurrencySwapPresenter {
                 .swap(
                     .init(
                         currencyFrom: .init(
-                            tokenAmount: amountFrom,
-                            tokenSymbolIconName: currencyFrom.iconName,
-                            tokenSymbol: currencyFrom.symbol.uppercased(),
-                            tokenMaxAmount: currencyFromBalance,
-                            tokenMaxDecimals: currencyFrom.decimalsUInt,
-                            currencyTokenPrice: currencyFrom.fiatPrice,
+                            amount: amountFrom,
+                            symbolIconName: currencyFrom.iconName,
+                            symbol: currencyFrom.symbol.uppercased(),
+                            maxAmount: currencyFromBalance,
+                            maxDecimals: currencyFrom.decimalsUInt,
+                            fiatPrice: currencyFrom.fiatPrice,
                             shouldUpdateTextFields: shouldUpdateFromTextField,
                             shouldBecomeFirstResponder: shouldFromBecomeFirstResponder,
                             networkName: context.network.name
                         ),
                         currencyTo: .init(
-                            tokenAmount: amountTo,
-                            tokenSymbolIconName: currencyTo.iconName,
-                            tokenSymbol: currencyTo.symbol.uppercased(),
-                            tokenMaxAmount: currencyToBalance,
-                            tokenMaxDecimals: currencyTo.decimalsUInt,
-                            currencyTokenPrice: currencyTo.fiatPrice,
+                            amount: amountTo,
+                            symbolIconName: currencyTo.iconName,
+                            symbol: currencyTo.symbol.uppercased(),
+                            maxAmount: currencyToBalance,
+                            maxDecimals: currencyTo.decimalsUInt,
+                            fiatPrice: currencyTo.fiatPrice,
                             shouldUpdateTextFields: true,
                             shouldBecomeFirstResponder: false,
                             networkName: context.network.name,
-                            tokenInputEnabled: false
+                            inputEnabled: false
                         ),
                         currencySwapProviderViewModel: currencySwapProviderViewModel(),
                         currencySwapPriceViewModel: currencyPriceViewModel(),
@@ -322,12 +322,12 @@ private extension DefaultCurrencySwapPresenter {
     
     func buttonState() -> CurrencySwapViewModel.Swap.ButtonState {
         guard amounFromtGreaterThanZero else {
-            return .invalid(text: Localized("tokenSwap.cell.button.state.enterAmount"))
+            return .invalid(text: Localized("currencySwap.cell.button.state.enterAmount"))
         }
         guard !insufficientFunds else {
             return .invalid(
                 text: Localized(
-                    "tokenSwap.cell.button.state.insufficientBalance",
+                    "currencySwap.cell.button.state.insufficientBalance",
                     currencyFrom.symbol.uppercased()
                 )
             )
@@ -335,10 +335,10 @@ private extension DefaultCurrencySwapPresenter {
         if isCalculating { return .loading }
         switch interactor.swapState {
         case .noPools, .notAvailable:
-            return .invalid(text: Localized("tokenSwap.cell.button.state.noPoolsFound"))
+            return .invalid(text: Localized("currencySwap.cell.button.state.noPoolsFound"))
         case .swap:
             return priceImpact >= priceImpactWarningThreashold ? .swapAnyway(
-                text: Localized("tokenSwap.cell.button.state.swapAnyway", (priceImpact * 100).toString())
+                text: Localized("currencySwap.cell.button.state.swapAnyway", (priceImpact * 100).toString())
             ) : .swap
         }
     }

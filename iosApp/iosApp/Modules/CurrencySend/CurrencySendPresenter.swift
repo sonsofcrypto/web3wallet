@@ -11,7 +11,7 @@ enum CurrencySendPresenterEvent {
     case pasteAddress
     case saveAddress
     case selectCurrency
-    case currencyChanged(to: BigInt)
+    case amountChanged(to: BigInt)
     case feeChanged(to: String)
     case qrCodeScan
     case feeTapped
@@ -67,12 +67,12 @@ extension DefaultCurrencySendPresenter: CurrencySendPresenter {
                 ),
                 .token(
                     .init(
-                        tokenAmount: nil,
-                        tokenSymbolIconName: currency.iconName,
-                        tokenSymbol: currency.symbol.uppercased(),
-                        tokenMaxAmount: currencyBalance,
-                        tokenMaxDecimals: currency.decimalsUInt,
-                        currencyTokenPrice: currency.fiatPrice,
+                        amount: nil,
+                        symbolIconName: currency.iconName,
+                        symbol: currency.symbol.uppercased(),
+                        maxAmount: currencyBalance,
+                        maxDecimals: currency.decimalsUInt,
+                        fiatPrice: currency.fiatPrice,
                         shouldUpdateTextFields: false,
                         shouldBecomeFirstResponder: false,
                         networkName: context.network.name
@@ -123,7 +123,7 @@ extension DefaultCurrencySendPresenter: CurrencySendPresenter {
             let isValid = context.network.isValidAddress(input: clipboard)
             guard isValid else { return }
             updateView(address: clipboard, shouldTokenBecomeFirstResponder: isValid)
-        case let .currencyChanged(amount):
+        case let .amountChanged(amount):
             updateView(amount: amount, shouldTokenUpdateTextFields: false)
         case let .feeChanged(identifier):
             guard let fee = fees.first(where: { $0.rawValue == identifier }) else { return }
@@ -202,7 +202,7 @@ private extension DefaultCurrencySendPresenter {
     func updateView(with items: [CurrencySendViewModel.Item]) {
         view?.update(
             with: .init(
-                title: Localized("tokenSend.title", currency.symbol.uppercased()),
+                title: Localized("currencySend.title", currency.symbol.uppercased()),
                 items: items
             )
         )
@@ -269,12 +269,12 @@ private extension DefaultCurrencySendPresenter {
             with: [
                 .token(
                     .init(
-                        tokenAmount: amount,
-                        tokenSymbolIconName: currency.iconName,
-                        tokenSymbol: currency.symbol.uppercased(),
-                        tokenMaxAmount: currencyBalance,
-                        tokenMaxDecimals: currency.decimalsUInt,
-                        currencyTokenPrice: currency.fiatPrice,
+                        amount: amount,
+                        symbolIconName: currency.iconName,
+                        symbol: currency.symbol.uppercased(),
+                        maxAmount: currencyBalance,
+                        maxDecimals: currency.decimalsUInt,
+                        fiatPrice: currency.fiatPrice,
                         shouldUpdateTextFields: shouldUpdateTextFields,
                         shouldBecomeFirstResponder: shouldBecomeFirstResponder,
                         networkName: context.network.name

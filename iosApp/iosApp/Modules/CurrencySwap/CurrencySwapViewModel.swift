@@ -18,8 +18,8 @@ extension CurrencySwapViewModel {
     
     struct Swap {
         
-        let currencyFrom: CurrencyEnterAmountViewModel
-        let currencyTo: CurrencyEnterAmountViewModel
+        let currencyFrom: CurrencyAmountPickerViewModel
+        let currencyTo: CurrencyAmountPickerViewModel
         let currencySwapProviderViewModel: CurrencySwapProviderViewModel
         let currencySwapPriceViewModel: CurrencySwapPriceViewModel
         let currencySwapSlippageViewModel: CurrencySwapSlippageViewModel

@@ -14,7 +14,7 @@ final class CurrencySwapPriceView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         nameLabel.apply(style: .footnote)
-        nameLabel.text = Localized("tokenSwap.cell.price")
+        nameLabel.text = Localized("currencySwap.cell.price")
         valueLabel.apply(style: .footnote)
     }
 }

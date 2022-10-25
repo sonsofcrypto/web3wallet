@@ -6,10 +6,10 @@ import web3walletcore
 
 final class CurrencySwapMarketCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var currencyFrom: CurrencyEnterAmountView!
+    @IBOutlet weak var currencyFrom: CurrencyAmountPickerView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var currencyTo: CurrencyEnterAmountView!
+    @IBOutlet weak var currencyTo: CurrencyAmountPickerView!
     @IBOutlet weak var currencySwapProviderView: CurrencySwapProviderView!
     @IBOutlet weak var currencySwapPriceView: CurrencySwapPriceView!
     @IBOutlet weak var currencySwapSlippageView: CurrencySwapSlippageView!
@@ -78,8 +78,8 @@ extension CurrencySwapMarketCollectionViewCell {
         self.handler = handler
         currencyFrom.update(
             with: viewModel.currencyFrom,
-            onTokenTapped: handler.onCurrencyFromTapped,
-            onTokenChanged: {
+            onCurrencyTapped: handler.onCurrencyFromTapped,
+            onAmountChanged: {
                 [weak self] amount in
                 guard let self = self else { return }
                 self.showLoading()
@@ -88,8 +88,8 @@ extension CurrencySwapMarketCollectionViewCell {
         )
         currencyTo.update(
             with: viewModel.currencyTo,
-            onTokenTapped: handler.onCurrencyToTapped,
-            onTokenChanged: {
+            onCurrencyTapped: handler.onCurrencyToTapped,
+            onAmountChanged: {
                 [weak self] amount in
                 guard let self = self else { return }
                 self.showLoading()
@@ -123,12 +123,12 @@ extension CurrencySwapMarketCollectionViewCell {
         case .approve:
             approveButton.isHidden = false
             approveButton.hideLoading()
-            approveButton.setTitle(Localized("tokenSwap.cell.button.state.approve"), for: .normal)
+            approveButton.setTitle(Localized("currencySwap.cell.button.state.approve"), for: .normal)
             approveButton.isEnabled = true
         case .approving:
             approveButton.isHidden = false
             approveButton.showLoading()
-            approveButton.setTitle(Localized("tokenSwap.cell.button.state.approving"), for: .normal)
+            approveButton.setTitle(Localized("currencySwap.cell.button.state.approving"), for: .normal)
             approveButton.isEnabled = true
         case .approved:
             approveButton.isHidden = true
@@ -137,7 +137,7 @@ extension CurrencySwapMarketCollectionViewCell {
         case .loading:
             button.hideLoading()
             button.style = .primary
-            button.setTitle(Localized("tokenSwap.cell.button.state.swap"), for: .normal)
+            button.setTitle(Localized("currencySwap.cell.button.state.swap"), for: .normal)
             button.isEnabled = false
         case let .invalid(text):
             button.hideLoading()
@@ -151,7 +151,7 @@ extension CurrencySwapMarketCollectionViewCell {
             button.isEnabled = viewModel.approveState == .approved
         case .swap:
             button.hideLoading()
-            button.setTitle(Localized("tokenSwap.cell.button.state.swap"), for: .normal)
+            button.setTitle(Localized("currencySwap.cell.button.state.swap"), for: .normal)
             button.style = .primary
             button.isEnabled = viewModel.approveState == .approved
         }

@@ -19,7 +19,7 @@ extension CurrencySendViewModel {
     
     enum Item {
         case address(NetworkAddressPickerViewModel)
-        case token(CurrencyEnterAmountViewModel)
+        case token(CurrencyAmountPickerViewModel)
         case send(Send)
     }
 
@@ -47,8 +47,8 @@ extension Array where Element == CurrencySendViewModel.Item {
         return address
     }
     
-    var token: CurrencyEnterAmountViewModel? {
-        var token: CurrencyEnterAmountViewModel?
+    var token: CurrencyAmountPickerViewModel? {
+        var token: CurrencyAmountPickerViewModel?
         forEach {
             if case let CurrencySendViewModel.Item.token(value) = $0 {
                 token = value

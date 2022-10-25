@@ -19,7 +19,7 @@ final class CurrencySwapSlippageView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         nameLabel.apply(style: .footnote)
-        nameLabel.text = Localized("tokenSwap.cell.slippage")
+        nameLabel.text = Localized("currencySwap.cell.slippage")
         button.style = .secondarySmall(leftImage: nil)
         button.addTarget(
             self,

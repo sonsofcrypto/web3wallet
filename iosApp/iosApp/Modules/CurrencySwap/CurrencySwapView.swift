@@ -34,7 +34,7 @@ final class CurrencySwapViewController: BaseViewController {
             firstAppear = false
             let cell = collectionView.cellForItem(at: IndexPath.zero)
             let swapCell = cell as? CurrencySwapMarketCollectionViewCell
-            swapCell?.currencyFrom?.sendAmountTextField.becomeFirstResponder()
+            swapCell?.currencyFrom?.amountTextField.becomeFirstResponder()
         }
     }
 }
@@ -172,12 +172,12 @@ private extension CurrencySwapViewController {
     func _segmentedControl() -> SegmentedControl {
         let segmentControl = SegmentedControl()
         segmentControl.insertSegment(
-            withTitle: Localized("tokenSwap.segment.swap"),
+            withTitle: Localized("currencySwap.segment.swap"),
             at: 0,
             animated: false
         )
         segmentControl.insertSegment(
-            withTitle: Localized("tokenSwap.segment.limit"),
+            withTitle: Localized("currencySwap.segment.limit"),
             at: 1,
             animated: false
         )

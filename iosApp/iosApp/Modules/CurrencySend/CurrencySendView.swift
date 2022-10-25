@@ -204,13 +204,13 @@ private extension CurrencySendViewController {
     
     func tokenSendTokenHandler() -> CurrencySendTokenCollectionViewCell.Handler {
         .init(
-            onTokenTapped: onTapped(.selectCurrency),
-            onTokenChanged: onTokenChanged()
+            onCurrencyTapped: onTapped(.selectCurrency),
+            onAmountChanged: onAmountChanged()
         )
     }
     
-    func onTokenChanged() -> (BigInt) -> Void {
-        { [weak self] value in self?.onTapped(.currencyChanged(to: value))() }
+    func onAmountChanged() -> (BigInt) -> Void {
+        { [weak self] value in self?.onTapped(.amountChanged(to: value))() }
     }
     
     func tokenSendCTAHandler() -> CurrencySendCTACollectionViewCell.Handler {
