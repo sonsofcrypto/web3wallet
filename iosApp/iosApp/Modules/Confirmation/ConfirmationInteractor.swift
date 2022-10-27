@@ -102,7 +102,7 @@ extension DefaultConfirmationInteractor: ConfirmationInteractor {
         salt: String,
         handler: @escaping (Result<TransactionResponse, Error>) -> Void
     ) {
-        guard let tokenIdInt = try? nft.tokenId.int() else {
+        guard let tokenId = try? BigInt.Companion().from(string: nft.tokenId, base: 10) else {
             handler(.failure(ConfirmationInteractorError.failedToParseTokenId))
             return
         }
@@ -118,7 +118,7 @@ extension DefaultConfirmationInteractor: ConfirmationInteractor {
                 data: contract.transferFrom(
                     from: Address.HexString(hexString: addressFrom),
                     to: Address.HexString(hexString: addressTo),
-                    tokenId: BigInt.Companion().from(long: Int64(tokenIdInt))
+                    tokenId: tokenId
                 ),
                 network: network,
                 completionHandler: { response, error in

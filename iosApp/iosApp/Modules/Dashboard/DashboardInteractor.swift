@@ -120,7 +120,7 @@ extension DefaultDashboardInteractor: DashboardInteractor {
     }
 
     func nfts(for network: Network) -> [NFTItem] {
-        nftsService.yourNFTs(forNetwork: network)
+        nftsService.yourNFTs()
     }
 
     func notifications() -> [Web3Notification] {
@@ -160,7 +160,7 @@ extension DefaultDashboardInteractor: DashboardInteractor {
             }
         )
         reloadCandles()
-        nftsService.fetchNFTs { [weak self] _ in
+        nftsService.fetchNFTs { [weak self] _, _ in
             DispatchQueue.main.async { self?.emit(.didUpdateNFTs) }
         }
     }

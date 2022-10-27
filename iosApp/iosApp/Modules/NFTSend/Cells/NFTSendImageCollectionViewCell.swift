@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class NFTSendImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!

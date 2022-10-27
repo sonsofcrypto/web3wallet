@@ -14,9 +14,7 @@ protocol NFTsDashboardInteractor: AnyObject {
         isPullDownToRefreh: Bool,
         onCompletion: @escaping (Result<[NFTItem], Error>) -> Void
     )
-    func fetchYourNFTsCollections(
-        onCompletion: (Result<[NFTCollection], Error>) -> Void
-    )
+    func yourCollections() -> [NFTCollection]
     func addListener(_ listener: NFTsDashboardInteractorLister)
     func removeListener(_ listener: NFTsDashboardInteractorLister)
 }
@@ -42,20 +40,17 @@ extension DefaultNFTsDashboardInteractor: NFTsDashboardInteractor {
         isPullDownToRefreh: Bool,
         onCompletion: @escaping (Result<[NFTItem], Error>) -> Void
     ) {
-        guard !isPullDownToRefreh else {
-            service.fetchNFTs(onCompletion: onCompletion)
-            return
-        }
-        guard service.yourNFTs().isEmpty else {
+        if !isPullDownToRefreh {
             onCompletion(.success(service.yourNFTs()))
             return
         }
-        service.fetchNFTs(onCompletion: onCompletion)
+        service.fetchNFTs { items, error in
+            if let error = error { onCompletion(.failure(error)) }
+            else { onCompletion(.success(items ?? [])) }
+        }
     }
     
-    func fetchYourNFTsCollections(onCompletion: (Result<[NFTCollection], Error>) -> Void) {
-        service.yourNftCollections(onCompletion: onCompletion)
-    }
+    func yourCollections() -> [NFTCollection] { service.yourCollections() }
 }
 
 extension DefaultNFTsDashboardInteractor: NetworksListener {

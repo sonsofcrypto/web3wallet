@@ -2,6 +2,8 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
+import web3walletcore
+
 extension NFTDetailViewController {
     
     func makeDescription(with item: NFTCollection) -> UIView {

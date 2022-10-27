@@ -34,6 +34,7 @@ extension AccountViewModel {
 extension AccountViewModel {
 
     struct AddressViewModel {
+        let addressFormatted: String
         let address: String
         let copyIcon: String
     }
