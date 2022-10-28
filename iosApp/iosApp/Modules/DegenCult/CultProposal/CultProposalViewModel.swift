@@ -47,7 +47,7 @@ struct CultProposalViewModel {
                 let items: [Item]
                 
                 enum Item {
-                    case link(displayName: String, url: URL)
+                    case link(displayName: String, url: String)
                     case note(String)
                 }
             }

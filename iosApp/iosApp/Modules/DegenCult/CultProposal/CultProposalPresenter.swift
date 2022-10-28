@@ -4,6 +4,7 @@
 
 import Foundation
 import UIKit
+import web3walletcore
 
 enum CultProposalPresenterEvent {
     case dismiss
@@ -98,6 +99,7 @@ private extension DefaultCultProposalPresenter {
         switch proposal.status {
         case .pending: return Theme.colour.navBarTint
         case .closed: return Theme.colour.separator
+        default: return Theme.colour.separator
         }
     }
     
@@ -126,13 +128,14 @@ private extension DefaultCultProposalPresenter {
     }
     
     func documentItem(
-        from document: CultProposal.ProjectDocuments.Document
+        from document: CultProposal.ProjectDocumentsDocument
     ) -> CultProposalViewModel.ProposalDetails.DocumentsInfo.Document.Item {
-        switch document {
-        case let .link(displayName, url):
-            return .link(displayName: displayName, url: url)
-        case let .note(note):
-            return .note(note)
+        if let link = document as? CultProposal.ProjectDocumentsDocumentLink {
+            return .link(displayName: link.displayName, url: link.url)
         }
+        if let note = document as? CultProposal.ProjectDocumentsDocumentNote {
+            return .note(note.note)
+        }
+        fatalError("Type not handled.")
     }
 }

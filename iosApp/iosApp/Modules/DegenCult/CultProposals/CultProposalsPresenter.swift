@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3walletcore
 
 enum CultProposalsPresenterEvent {
     case filterBySection(sectionType: CultProposalsViewModel.Section.`Type`)
@@ -143,7 +144,7 @@ private extension DefaultCultProposalsPresenter {
     }
 
     func viewModel(from cultProposal: CultProposal) -> CultProposalsViewModel.Item {
-        let total = cultProposal.approved + cultProposal.rejeceted
+        let total = cultProposal.approved + cultProposal.rejected
         let approved = total == 0 ? 0 : cultProposal.approved / total
         return .init(
             id: cultProposal.id,
@@ -157,7 +158,7 @@ private extension DefaultCultProposalsPresenter {
             rejected: .init(
                 name: Localized("rejected"),
                 value: approved == 0 ? 0 : 1 - approved,
-                total: cultProposal.rejeceted,
+                total: cultProposal.rejected,
                 type: .rejected
             ),
             approveButtonTitle: Localized("approve"),

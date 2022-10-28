@@ -11,7 +11,7 @@ final class CultProposalDetailDocsView: UIView {
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var docsStackView: UIStackView!
     
-    private var directory = [Int: URL]()
+    private var directory = [Int: String]()
     private var directoryIndex = 1
     
     override func awakeFromNib() {
@@ -85,7 +85,7 @@ private extension CultProposalDetailDocsView {
         directory = [:]
     }
     
-    func addLinkToDirectory(url: URL) -> Int {
+    func addLinkToDirectory(url: String) -> Int {
         let directoryIndex = directoryIndex
         directory[directoryIndex] = url
         self.directoryIndex += 1
@@ -94,7 +94,7 @@ private extension CultProposalDetailDocsView {
     
     @objc func documentTapped(sender: UITapGestureRecognizer) {
         guard let tag = sender.view?.tag else { return }
-        guard let url = directory[tag] else { return }
+        guard let url = directory[tag]?.url else { return }
         UIApplication.shared.open(url)
     }
 }
