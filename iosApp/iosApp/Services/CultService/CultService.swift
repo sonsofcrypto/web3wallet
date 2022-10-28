@@ -183,10 +183,10 @@ private extension DefaultCultService {
         (Double(proposal.againstVotes) ?? 0) * 0.000000000000000001
     }
 
-    func endDate(from proposal: CultProposalJSON) -> Date {
+    func endDate(from proposal: CultProposalJSON) -> Double {
         let genesisEpocOffset = 1460999972
         let epocEndBlock = (Int(proposal.endBlock) ?? 0) * 13
-        return Date(timeIntervalSince1970: TimeInterval(genesisEpocOffset + epocEndBlock))
+        return Double(genesisEpocOffset + epocEndBlock)
     }
     
     func cultReward(from description: CultProposalJSON.Description) -> String {

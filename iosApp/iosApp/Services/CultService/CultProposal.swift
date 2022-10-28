@@ -10,7 +10,7 @@ struct CultProposal {
     let title: String
     let approved: Double
     let rejeceted: Double
-    let endDate: Date
+    let endDate: Double // timeIntervalSince1970
     
     let guardianInfo: GuardianInfo?
 

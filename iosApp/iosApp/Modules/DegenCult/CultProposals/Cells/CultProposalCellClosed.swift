@@ -89,7 +89,7 @@ private extension CultProposalCellClosed  {
     func updateDate() {
         let comps = Calendar.current.dateComponents(
             [.day, .hour, .minute, .second],
-            from: viewModel.endDate,
+            from: Date(timeIntervalSince1970: viewModel.endDate),
             to: Date()
         )
         let days = comps.day ?? 0
