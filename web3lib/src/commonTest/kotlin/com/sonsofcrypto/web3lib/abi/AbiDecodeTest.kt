@@ -1,4 +1,4 @@
-package com.sonsofcrypto.web3lib.utils.abi
+package com.sonsofcrypto.web3lib.abi
 
 import com.sonsofcrypto.web3lib.utils.BigInt
 import kotlin.test.Test
@@ -25,9 +25,15 @@ class AbiDecodeTest {
         assertEquals(BigInt.from(69).toString(), actual.toString())
     }
 
+
     fun testDecodeAddress() {
         val actual = AbiDecode.decodeAddress("c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2")
         assertEquals("000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", actual.toString())
+    }
+
+    @Test
+    fun decodeCallSignature() {
+        assertEquals(AbiDecode.decodeCallSignature("04e45aaf"), "exactInputSingle((address,address,uint24,address,uint256,uint256,uint160))")
     }
 
     @Test

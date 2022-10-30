@@ -3,6 +3,7 @@ package com.sonsofcrypto.web3lib.abi
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
+import io.ktor.utils.io.core.*
 
 
 val REGEX_ARGS = "\\((.*)\\)".toRegex()
@@ -34,14 +35,24 @@ class CallStack {
         return this
     }
 
+    fun addVariable(index: Int, value: ByteArray) : CallStack {
+        _args[index].value = value
+        return this
+    }
+
+    fun addVariable(index: Int, value: String) : CallStack {
+        _args[index].value = value.toByteArray()
+        return this
+    }
+
     override fun toString(): String {
+        return toAbiEncodedString()
+    }
+    fun toAbiEncodedString(_prefix: String = ""): String {
         var addedArgs = ""
         _args.map {
             addedArgs += it.value.toHexString()
         }
-        return "0x$_signature$addedArgs"
-    }
-    fun toAbiEncodedString(): String {
-        return this.toString()
+        return "$_prefix$_signature$addedArgs"
     }
 }

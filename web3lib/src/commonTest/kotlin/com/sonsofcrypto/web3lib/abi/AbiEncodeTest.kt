@@ -1,12 +1,12 @@
-package com.sonsofcrypto.web3lib.utils.abi
+package com.sonsofcrypto.web3lib.abi
 
-import com.sonsofcrypto.web3lib.abi.AbiEncode
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.setReturnValue
 import kotlin.test.Test
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -16,6 +16,7 @@ class AbiEncodeTest {
         val actual = AbiEncode.encode(true)
         assertEquals("0000000000000000000000000000000000000000000000000000000000000001", actual.toHexString())
     }
+
 
     @Test
     fun testEncodeBooleanFalse () {
@@ -49,8 +50,11 @@ class AbiEncodeTest {
 
     @Test
     fun testEncodeString() {
-        val actual = AbiEncode.encode("Hello, world!")
-        assertEquals("000000000000000000000000000000000000000000000000000000000000000d48656c6c6f2c20776f726c642100000000000000000000000000000000000000", actual.toHexString())
+        val actual = AbiEncode.encode("Hello, world!").toHexString()
+        val expected = "000000000000000000000000000000000000000000000000000000000000000d" +
+                       "48656c6c6f2c20776f726c642100000000000000000000000000000000000000"
+
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -78,6 +82,7 @@ class AbiEncodeTest {
 
         assertTrue(expected.hexStringToByteArray().contentEquals(actual))
     }
+
     @Test
     fun testEncodeDynamicArrayOfInts () {
         val actual = AbiEncode.encode(arrayOf(
@@ -258,5 +263,82 @@ class AbiEncodeTest {
                     "0000000000000000000000000000000000000000004840aa3e5e8b722426e6eb", // bigint
             actual
         )
+    }
+
+    @Test
+    fun testLeftPad() {
+        val expected1 = "0000000000000000000000000000000000000000000000000000000000123123".hexStringToByteArray()
+        val actual1 = AbiEncode.leftPadZeros("123123".hexStringToByteArray())
+        assertContentEquals(expected1, actual1)
+    }
+
+
+    @Test
+    fun testRightPad() {
+        val expected1 = "1231230000000000000000000000000000000000000000000000000000000000".hexStringToByteArray()
+        val actual1 = AbiEncode.rightPadZeros("123123".hexStringToByteArray())
+        assertContentEquals(expected1, actual1)
+    }
+
+    @Test
+    fun testEncodeWithMultiple() {
+        val actual = AbiEncode.encode(
+            arrayOf(
+                "string",
+                "address",
+                "bool",
+                "uint16",
+                "uint"
+            ),
+            arrayOf(
+                "Hello, world!",
+                "0x2d77b594b9bbaed03221f7c63af8c4307432daf1",
+                true,
+                500,
+                "123123123123123123123123123"
+            )).toHexString()
+        val expected =  "000000000000000000000000000000000000000000000000000000000000000d" +
+                        "48656c6c6f2c20776f726c642100000000000000000000000000000000000000" +
+                        "0000000000000000000000002d77b594b9bbaed03221f7c63af8c4307432daf1" +
+                        "0000000000000000000000000000000000000000000000000000000000000001" +
+                        "00000000000000000000000000000000000000000000000000000000000001f4" +
+                        "00000000000000000000000000000000000000000065d855e0f02863c04ff3b3"
+
+        assertEquals(expected, actual)
+    }
+    @Test
+    fun testEncodeWithTypeString() {
+        val actual = AbiEncode.encode("string", "Hello, world!").toHexString()
+        val expected =  "000000000000000000000000000000000000000000000000000000000000000d" +
+                        "48656c6c6f2c20776f726c642100000000000000000000000000000000000000"
+
+        assertEquals(expected, actual)
+    }
+    @Test
+    fun testEncodeWithTypeAddressW0x() {
+        val actual = AbiEncode.encode("address", "0x2d77b594b9bbaed03221f7c63af8c4307432daf1").toHexString()
+        val expected =  "0000000000000000000000002d77b594b9bbaed03221f7c63af8c4307432daf1"
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun testEncodeWithTypeAddress() {
+        val actual = AbiEncode.encode("address", "2d77b594b9bbaed03221f7c63af8c4307432daf1").toHexString()
+        val expected =  "0000000000000000000000002d77b594b9bbaed03221f7c63af8c4307432daf1"
+
+        assertEquals(expected, actual)
+    }
+    @Test
+    fun testEncodeWithTypeTuple() {
+        val actual = AbiEncode.encode(
+            "tuple(string message, address to)",
+            arrayOf("Hello, world!", "0x2d77b594b9bbaed03221f7c63af8c4307432daf1")
+        ).toHexString()
+        val expected =  "000000000000000000000000000000000000000000000000000000000000000d" +
+                        "48656c6c6f2c20776f726c642100000000000000000000000000000000000000" +
+                        "0000000000000000000000002d77b594b9bbaed03221f7c63af8c4307432daf1"
+
+        assertEquals(expected, actual)
     }
 }
