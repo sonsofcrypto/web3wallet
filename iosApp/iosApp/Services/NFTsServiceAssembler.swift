@@ -2,6 +2,8 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
+import web3walletcore
+
 final class NFTsServiceAssembler: AssemblerComponent {
     
     func register(to registry: AssemblerRegistry) {
@@ -9,9 +11,8 @@ final class NFTsServiceAssembler: AssemblerComponent {
         registry.register(scope: .singleton) { resolver -> NFTsService in
             
             OpenSeaNFTsService(
-                web3Service: resolver.resolve(),
                 networksService: resolver.resolve(),
-                defaults: .standard
+                store: KeyValueStore(name: "\(NFTsService.self)")
             )
         }
     }

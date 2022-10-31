@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3walletcore
 
 struct NFTSendViewModel {
     let title: String
@@ -24,7 +25,7 @@ extension NFTSendViewModel {
     }
     
     struct Send {
-        let tokenNetworkFeeViewModel: NetworkFeePickerViewModel
+        let tokenNetworkFeeViewModel: NetworkFeeViewModel
         let buttonState: State
         
         enum State {

@@ -313,7 +313,6 @@
 "currencySwap.cell.provider" = "Provider";
 "currencySwap.cell.price" = "Price";
 "currencySwap.cell.slippage" = "Slippage";
-"currencySwap.cell.estimatedFee" = "Estimated Fee";
 "currencySwap.cell.button.state.swap" = "Swap with";
 "currencySwap.cell.button.state.approve" = "Approve";
 "currencySwap.cell.button.state.approving" = "Approving";
@@ -453,3 +452,5 @@
 "report.txFailed.error.body" = "Hi team,\n\nI've just got a transaction failure with the following error: \n\n%@\n\nThanks!\n\nPS: Thanks for reporting this failure, this really helps us improving the app! \n❤️❤️❤️";
 
 "networkAddressPicker.to.address.placeholder" = "To %@ address";
+
+"networkFeeView.estimatedFee" = "Network Fee";

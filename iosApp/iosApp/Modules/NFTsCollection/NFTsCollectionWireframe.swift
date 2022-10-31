@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 struct NFTsCollectionWireframeContext {
     let nftCollectionIdentifier: String

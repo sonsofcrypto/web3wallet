@@ -80,11 +80,6 @@ extension IntegrationWeb3Service: Web3ServiceLegacy {
         )
         return notifications
     }
-    
-    func nftsChanged() {
-        
-        listeners.forEach { $0.nftsChanged() }
-    }
 }
 
 private extension IntegrationWeb3Service {

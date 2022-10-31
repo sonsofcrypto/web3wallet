@@ -40,10 +40,7 @@ protocol CurrencySwapInteractor: AnyObject {
     var swapService: UniswapService { get }
     func defaultCurrencyFrom(for network: Network) -> Currency
     func defaultCurrencyTo(for network: Network) -> Currency
-    func networkFees(network: Network) -> [Web3NetworkFee]
-    func networkFeeInUSD(network: Network, fee: Web3NetworkFee) -> BigInt
-    func networkFeeInSeconds(network: Network, fee: Web3NetworkFee) -> Int
-    func networkFeeInNetworkToken(network: Network, fee: Web3NetworkFee) -> String
+    func networkFees(network: Network) -> [NetworkFee]
     func getQuote(data: SwapData)
     func isCurrentQuote(data: SwapData) -> Bool
     func addListener(_ listener: CurrencyInteractorLister)
@@ -122,23 +119,8 @@ extension DefaultCurrencySwapInteractor: CurrencySwapInteractor {
         walletService.currencies(network: network)[safe: 1] ?? network.nativeCurrency
     }
     
-    func networkFees(network: Network) -> [Web3NetworkFee] {
-        [.low, .medium, .high]
-    }
-
-    func networkFeeInUSD(network: Network, fee: Web3NetworkFee) -> BigInt {
-        // TODO: Connect Fee
-        .zero
-    }
-    
-    func networkFeeInSeconds(network: Network, fee: Web3NetworkFee) -> Int {
-        // TODO: Connect Fee
-        1
-    }
-
-    func networkFeeInNetworkToken(network: Network, fee: Web3NetworkFee) -> String {
-        // TODO: Connect Fee
-        "🤷🏻‍♂️"
+    func networkFees(network: Network) -> [NetworkFee] {
+        networksService.networkFees(network: network)
     }
 
     func getQuote(data: SwapData) {

@@ -46,7 +46,7 @@ extension ConfirmationWireframeContext {
         let amount: BigInt
         let addressFrom: String
         let addressTo: String
-        let estimatedFee: Web3NetworkFee
+        let networkFee: NetworkFee
     }
     
     struct SwapContext {
@@ -56,7 +56,7 @@ extension ConfirmationWireframeContext {
         let amountTo: BigInt
         let currencyFrom: Currency
         let currencyTo: Currency
-        let estimatedFee: Web3NetworkFee
+        let networkFee: NetworkFee
         // NOTE: We inject here the service since this is not singleton and the instance in
         // CurrencySwap module will have all the correct info to execute the swap. In case
         // of an immediate error (which can happen straight away or in the future), we want
@@ -77,7 +77,7 @@ extension ConfirmationWireframeContext {
         let addressFrom: String
         let addressTo: String
         let nftItem: NFTItem
-        let estimatedFee: Web3NetworkFee
+        let networkFee: NetworkFee
     }
     
     struct CultCastVoteContext {

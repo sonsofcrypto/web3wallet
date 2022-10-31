@@ -24,7 +24,7 @@ extension CurrencySendViewModel {
     }
 
     struct Send {
-        let tokenNetworkFeeViewModel: NetworkFeePickerViewModel
+        let networkFeeViewModel: NetworkFeeViewModel
         let buttonState: State
         
         enum State {

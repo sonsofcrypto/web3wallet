@@ -12,7 +12,7 @@ enum CurrencySendPresenterEvent {
     case saveAddress
     case selectCurrency
     case amountChanged(to: BigInt)
-    case feeChanged(to: String)
+    case feeChanged(to: NetworkFee)
     case qrCodeScan
     case feeTapped
     case review
@@ -33,10 +33,10 @@ final class DefaultCurrencySendPresenter {
     private var address: String?
     private var currency: Currency!
     private var amount: BigInt?
-    private var fee: Web3NetworkFee = .low
+    private var fee: NetworkFee?
     
     private var items = [CurrencySendViewModel.Item]()
-    private var fees = [Web3NetworkFee]()
+    private var fees = [NetworkFee]()
 
     init(
         view: CurrencySendView,
@@ -80,9 +80,9 @@ extension DefaultCurrencySendPresenter: CurrencySendPresenter {
                 ),
                 .send(
                     .init(
-                        tokenNetworkFeeViewModel: .init(
+                        networkFeeViewModel: .init(
                             estimatedFee: estimatedFee(),
-                            feeType: feeType()
+                            feeName: feeName()
                         ),
                         buttonState: .ready
                     )
@@ -125,12 +125,11 @@ extension DefaultCurrencySendPresenter: CurrencySendPresenter {
             updateView(address: clipboard, shouldTokenBecomeFirstResponder: isValid)
         case let .amountChanged(amount):
             updateView(amount: amount, shouldTokenUpdateTextFields: false)
-        case let .feeChanged(identifier):
-            guard let fee = fees.first(where: { $0.rawValue == identifier }) else { return }
+        case let .feeChanged(fee):
             self.fee = fee
             updateCTA()
         case .feeTapped:
-            view?.presentFeePicker(with: _fees())
+            view?.presentFeePicker(with: fees)
         case .review:
             sendTapped = true
             let isValidAddress = context.network.isValidAddress(input: address ?? "")
@@ -139,7 +138,7 @@ extension DefaultCurrencySendPresenter: CurrencySendPresenter {
                 return
             }
             let balance = interactor.balance(currency: currency, network: context.network)
-            guard let amount = amount, balance >= amount, amount > .zero else {
+            guard let amount = amount, balance >= amount, amount > .zero, let fee = fee else {
                 updateView(shouldTokenBecomeFirstResponder: true)
                 return
             }
@@ -153,7 +152,7 @@ extension DefaultCurrencySendPresenter: CurrencySendPresenter {
                         amount: amount,
                         addressFrom: walletAddress,
                         addressTo: address,
-                        estimatedFee: confirmationSendEstimatedFee()
+                        networkFee: fee
                     )
                 )
             )
@@ -175,17 +174,16 @@ private extension DefaultCurrencySendPresenter {
         return address == addressToCompare
     }
     
-    func confirmationSendEstimatedFee() -> Web3NetworkFee {
-        switch fee {
-        case .low: return .low
-        case .medium: return .medium
-        case .high: return .high
-        }
-    }
-    
     func loadContext() {
         address = context.address
         currency = context.currency ?? interactor.defaultCurrency(network: context.network)
+        refreshFees()
+    }
+    
+    func refreshFees() {
+        fees = interactor.networkFees(network: context.network)
+        guard fee == nil, !fees.isEmpty else { return }
+        fee = fees[0]
     }
     
     func onCurrencySelected() -> (Currency) -> Void {
@@ -304,9 +302,9 @@ private extension DefaultCurrencySendPresenter {
             with: [
                 .send(
                     .init(
-                        tokenNetworkFeeViewModel: .init(
+                        networkFeeViewModel: .init(
                             estimatedFee: estimatedFee(),
-                            feeType: feeType()
+                            feeName: feeName()
                         ),
                         buttonState: buttonState
                     )
@@ -315,54 +313,26 @@ private extension DefaultCurrencySendPresenter {
         )
     }
     
-    func estimatedFee() -> String {
-        let amountInUSD = interactor.networkFeeInUSD(network: context.network, fee: fee)
-        let timeInSeconds = interactor.networkFeeInSeconds(network: context.network, fee: fee)
-        let min: Double = Double(timeInSeconds) / Double(60)
+    func estimatedFee() -> [Formatters.Output] {
+        guard let fee = fee else { return [Formatters.OutputNormal(value: "-")] }
+        var outputFormat = Formatters.Companion.shared.currency.format(
+            amount: fee.amount, currency: fee.currency, style: Formatters.StyleCustom(maxLength: 10)
+        )
+        let min: Double = Double(fee.seconds) / Double(60)
+        var value = ""
         if min > 1 {
-            return "\(amountInUSD.formatStringCurrency()) ~ \(min.toString(decimals: 0)) \(Localized("min"))"
+            value = " ~ \(min.toString(decimals: 0)) \(Localized("min"))"
         } else {
-            return "\(amountInUSD.formatStringCurrency()) ~ \(timeInSeconds) \(Localized("sec"))"
+            value = " ~ \(fee.seconds) \(Localized("sec"))"
         }
+        outputFormat.append(
+            Formatters.OutputNormal(value: value)
+        )
+        return outputFormat
     }
     
-    func _fees() -> [FeesPickerViewModel] {
-        let fees = interactor.networkFees(network: context.network)
-        self.fees = fees
-        return fees.compactMap { [weak self] in
-            guard let self = self else { return nil }
-            return .init(
-                id: $0.rawValue,
-                name: $0.name,
-                value: self.interactor.networkFeeInNetworkToken(
-                    network: context.network,
-                    fee: $0
-                )
-            )
-        }
-    }
-    
-    func feeType() -> NetworkFeePickerViewModel.FeeType {
-        switch fee {
-        case .low:
-            return .low
-        case .medium:
-            return .medium
-        case .high:
-            return .high
-        }
-    }
-}
-
-private extension Web3NetworkFee {
-    var name: String {
-        switch self {
-        case .low:
-            return Localized("low")
-        case .medium:
-            return Localized("medium")
-        case .high:
-            return Localized("high")
-        }
+    func feeName() -> String {
+        guard let fee = fee else { return "-" }
+        return fee.name
     }
 }

@@ -471,7 +471,7 @@
                                                                 <outlet property="nameLabel" destination="TPG-Ui-sfT" id="5oh-fH-SSk"/>
                                                             </connections>
                                                         </view>
-                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dvm-cW-HHx" customClass="NetworkFeePickerView" customModule="iosApp" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dvm-cW-HHx" customClass="NetworkFeeView" customModule="iosApp" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="324" width="413" height="24"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="gel-GY-4tl">
@@ -515,7 +515,7 @@
                                                                 <outlet property="nameLabel" destination="EFq-41-aYO" id="mfv-Q8-S03"/>
                                                                 <outlet property="networkEstimateFeeLabel" destination="g7U-Pk-way" id="Po0-CB-UZO"/>
                                                                 <outlet property="networkFeeButton" destination="hXk-ZM-GBw" id="jdU-jx-U4W"/>
-                                                                <outlet property="networkTokenIcon" destination="zIS-oD-Pqi" id="Phe-7x-Rsx"/>
+                                                                <outlet property="networkFeeCurrencyIcon" destination="zIS-oD-Pqi" id="Phe-7x-Rsx"/>
                                                             </connections>
                                                         </view>
                                                         <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZGe-SJ-lsn">
@@ -581,7 +581,7 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e16-94-oLm" customClass="FeesPickerView" customModule="iosApp" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e16-94-oLm" customClass="NetworkFeePickerView" customModule="iosApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JS1-7y-4AC">

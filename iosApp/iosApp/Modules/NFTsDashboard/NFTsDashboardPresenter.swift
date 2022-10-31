@@ -40,13 +40,14 @@ final class DefaultNFTsDashboardPresenter {
         self.interactor = interactor
         self.nftsService = nftsService
         
-        nftsService.addListener(self)
+        nftsService.addListener(listener: self)
         interactor.addListener(self)
     }
     
     deinit {
         print("[DEBUG][Presenter] deinit \(String(describing: self))")
         interactor.removeListener(self)
+        nftsService.removeListener(listener: self)
     }
 }
 
@@ -56,9 +57,7 @@ extension DefaultNFTsDashboardPresenter: NFTsDashboardPresenter {
         if !isPullDownToRefreh { view.update(with: .loading) }
         interactor.fetchYourNFTs(
             isPullDownToRefreh: isPullDownToRefreh
-        ) { [weak self] result in
-            self?.handleYourNFTsResponse(with: result)
-        }
+        ) { [weak self] result in self?.handleYourNFTsResponse(with: result) }
     }
 
     func handle(_ event: NFTsDashboardPresenterEvent) {
@@ -85,7 +84,7 @@ extension DefaultNFTsDashboardPresenter: NFTsDashboardPresenter {
     }
     
     func releaseResources() {
-        nftsService.removeListener(self)
+        nftsService.removeListener(listener: self)
     }
 }
 
@@ -95,45 +94,27 @@ private extension DefaultNFTsDashboardPresenter {
         switch result {
         case let .success(nfts):
             latestNFTs = nfts
-            fetchNFTsCollections()
-        case let .failure(err):
-            error = err
-            DispatchQueue.main.async { self.refreshView() }
-        }
-    }
-    
-    func fetchNFTsCollections() {
-        interactor.fetchYourNFTsCollections { [weak self] result in
-            guard let self = self else { return }
-            self.handleCollectionsResponse(with: result)
-        }
-    }
-    
-    func handleCollectionsResponse(with result: Result<[NFTCollection], Error>) {
-        switch result {
-        case let .success(collections):
-            latestCollections = collections
+            latestCollections = interactor.yourCollections()
             refreshView()
         case let .failure(err):
             error = err
             DispatchQueue.main.async { self.refreshView() }
         }
     }
-    
+        
     func refreshView() {
         guard
             let latestNFTs = latestNFTs,
             let latestCollections = latestCollections
         else {
-            if let error = error {
-                let errorViewModel = EmbeddedErrorCollectionViewCell.ViewModel(
-                    title: "Failed to load NFTs",
-                    imageName: "",
-                    message: "Unexpected error, please send error logs to developers",
-                    button: "OK"
-                )
-                view.update(with: .error(errorViewModel))
-            }
+            guard error != nil else { return }
+            let errorViewModel = EmbeddedErrorCollectionViewCell.ViewModel(
+                title: "Failed to load NFTs",
+                imageName: "",
+                message: "Unexpected error, please send error logs to developers",
+                button: "OK"
+            )
+            view.update(with: .error(errorViewModel))
             return
         }
         let nfts: [NFTsDashboardViewModel.NFT] = latestNFTs.compactMap {
@@ -165,7 +146,7 @@ extension DefaultNFTsDashboardPresenter: NFTsServiceListener {
     
     func nftsChanged() {
         // Here we call to force a refresh in the view
-        present(isPullDownToRefreh: true)
+        present(isPullDownToRefreh: false)
     }
 }
 

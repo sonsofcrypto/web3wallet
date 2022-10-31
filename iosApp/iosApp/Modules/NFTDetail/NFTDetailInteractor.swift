@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3walletcore
 
 protocol NFTDetailInteractor: AnyObject {
     func fetchNFT(
@@ -28,13 +29,13 @@ extension DefaultNFTDetailInteractor: NFTDetailInteractor {
         with identifier: String,
         onCompletion: (Result<NFTItem, Error>) -> Void
     ) {
-        service.nft(with: identifier, onCompletion: onCompletion)
+        onCompletion(.success(service.nft(identifier: identifier)))
     }
     
     func fetchNFTCollection(
         with identifier: String,
         onCompletion: (Result<NFTCollection, Error>) -> Void
     ) {
-        service.collection(with: identifier, onCompletion: onCompletion)
+        onCompletion(.success(service.collection(identifier: identifier)))
     }
 }

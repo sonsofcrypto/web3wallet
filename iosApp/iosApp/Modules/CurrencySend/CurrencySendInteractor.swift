@@ -9,10 +9,7 @@ protocol CurrencySendInteractor: AnyObject {
     var walletAddress: String? { get }
     func defaultCurrency(network: Network) -> Currency
     func balance(currency: Currency, network: Network) -> BigInt
-    func networkFees(network: Network) -> [Web3NetworkFee]
-    func networkFeeInUSD(network: Network, fee: Web3NetworkFee) -> BigInt
-    func networkFeeInSeconds(network: Network, fee: Web3NetworkFee) -> Int
-    func networkFeeInNetworkToken(network: Network, fee: Web3NetworkFee) -> String
+    func networkFees(network: Network) -> [NetworkFee]
 }
 
 final class DefaultCurrencySendInteractor {
@@ -42,22 +39,7 @@ extension DefaultCurrencySendInteractor: CurrencySendInteractor {
         walletService.balance(network: network, currency: currency)
     }
     
-    func networkFees(network: Network) -> [Web3NetworkFee] {
-        [.low, .medium, .high]
-    }
-
-    func networkFeeInUSD(network: Network, fee: Web3NetworkFee) -> BigInt {
-        // TODO: Connect Fee
-        .zero
-    }
-    
-    func networkFeeInSeconds(network: Network, fee: Web3NetworkFee) -> Int {
-        // TODO: Connect Fee
-        1
-    }
-
-    func networkFeeInNetworkToken(network: Network, fee: Web3NetworkFee) -> String {
-        // TODO: Connect Fee
-        "🤷🏻‍♂️"
+    func networkFees(network: Network) -> [NetworkFee] {
+        networksService.networkFees(network: network)
     }
 }

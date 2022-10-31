@@ -10,6 +10,7 @@ import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import io.ktor.http.ContentType.Application.Json
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.utils.io.charsets.*
 
@@ -28,7 +29,7 @@ class DefaultImprovementProposalsService(
     private val client: HttpClient by lazy {
         HttpClient() {
             Logging { level = LogLevel.NONE; logger = Logger.SIMPLE }
-            install(ContentNegotiation) { json(stdJson, contentType()) }
+            install(ContentNegotiation) { json(stdJson, Json.withCharset(Charsets.UTF_8)) }
         }
     }
 
@@ -51,16 +52,12 @@ class DefaultImprovementProposalsService(
     }
 
     private fun store(proposals: List<ImprovementProposal>) {
-        store.set(cacheKey, jsonEncode(proposals))
+        store[cacheKey] = jsonEncode(proposals)
     }
 
     private fun url(): String {
         return "https://raw.githubusercontent.com/sonsofcrypto/" +
                 "web3wallet-improvement-proposals/master/proposals-list.json"
-    }
-
-    private fun contentType(): ContentType {
-        return ContentType.Application.Json.withCharset(Charsets.UTF_8)
     }
 
     private val cacheKey = "w3w-improvement-proposals-list"

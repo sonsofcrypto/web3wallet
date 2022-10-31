@@ -84,9 +84,10 @@ private extension DefaultAccountPresenter {
                 buttons: headerButtonViewModels()
             ),
             address: .init(
-                address: Formatters.Companion.shared.networkAddress.format(
+                addressFormatted: Formatters.Companion.shared.networkAddress.format(
                     address: interactor.address(), digits: 12, network: interactor.network
                 ),
+                address: interactor.address(),
                 copyIcon: "square.on.square"
             ),
             candles: .loaded(
@@ -149,9 +150,7 @@ private extension DefaultAccountPresenter {
                 date: transaction.date == nil
                     ? transaction.blockNumber
                     : Formatter.date.string(transaction.date),
-                address: Formatters.Companion.shared.networkAddress.format(
-                    address: transaction.address, digits: 14, network: interactor.network
-                ),
+                address: transaction.address,
                 amount: transaction.amount,
                 isReceive: transaction.isReceive,
                 txHash: transaction.txHash

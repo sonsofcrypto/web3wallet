@@ -7,7 +7,7 @@ import web3walletcore
 
 protocol CurrencySwapView: AnyObject {
     func update(with viewModel: CurrencySwapViewModel)
-    func presentFeePicker(with fees: [FeesPickerViewModel])
+    func presentFeePicker(with fees: [NetworkFee])
     func loading()
     func dismissKeyboard()
 }
@@ -15,7 +15,7 @@ protocol CurrencySwapView: AnyObject {
 final class CurrencySwapViewController: BaseViewController {
     private weak var segmentControl: SegmentedControl!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var feesPickerView: FeesPickerView!
+    @IBOutlet weak var feesPickerView: NetworkFeePickerView!
 
     var presenter: CurrencySwapPresenter!
 
@@ -47,7 +47,7 @@ extension CurrencySwapViewController: CurrencySwapView {
         else { updateCells() }
     }
     
-    func presentFeePicker(with fees: [FeesPickerViewModel]) {
+    func presentFeePicker(with fees: [NetworkFee]) {
         dismissKeyboard()
         let cell = collectionView.visibleCells.first {
             $0 is CurrencySwapMarketCollectionViewCell
@@ -156,8 +156,8 @@ private extension CurrencySwapViewController {
         feesPickerView.isHidden = true
     }
     
-    func makeOnFeeSelected() -> ((FeesPickerViewModel) -> Void) {
-        { [weak self] item in self?.onTapped(.feeChanged(to: item.id))() }
+    func makeOnFeeSelected() -> ((NetworkFee) -> Void) {
+        { [weak self] item in self?.onTapped(.feeChanged(to: item))() }
     }
     
     @objc func segmentControlChanged(_ sender: SegmentedControl) {

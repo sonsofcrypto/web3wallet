@@ -87,11 +87,11 @@ private extension DefaultCultService {
     
     func cultProposal(from proposal: CultProposalJSON) -> CultProposal? {
         guard let status = status(from: proposal) else { return nil }
-        return .init(
+        return CultProposal(
             id: proposal.id,
             title: "#" + proposal.id + " " + proposal.description.projectName,
             approved: approvedVotes(from: proposal),
-            rejeceted: rejectedVotes(from: proposal),
+            rejected: rejectedVotes(from: proposal),
             endDate: endDate(from: proposal),
             guardianInfo: guardianInfo(from: proposal.description),
             projectSummary: proposal.description.shortDescription,
@@ -126,29 +126,30 @@ private extension DefaultCultService {
     
     func projectDocuments(from proposal: CultProposalJSON) -> [CultProposal.ProjectDocuments] {
         var documents = [CultProposal.ProjectDocuments]()
-        if let fileURL = proposal.description.file.url {
-            documents.append(
-                .init(
-                    name: Localized("cult.proposals.result.liteWhitepaper"),
-                    documents: [
-                        .link(
-                            displayName: proposal.description.file,
-                            url: fileURL
-                        )
-                    ]
-                )
+        documents.append(
+            .init(
+                name: Localized("cult.proposals.result.liteWhitepaper"),
+                documents: [
+                    CultProposal.ProjectDocumentsDocumentLink(
+                        displayName: proposal.description.file,
+                        url: proposal.description.file
+                    )
+                ]
             )
-        }
+        )
         let socialDocs = proposal.description.socialChannel.replacingOccurrences(
             of: "\n", with: " "
         )
-        let socialDocsUrls = socialDocs.split(separator: " ").compactMap { String($0).url }
+        let socialDocsUrls = socialDocs.split(separator: " ").compactMap { String($0) }
         if !socialDocsUrls.isEmpty {
             documents.append(
                 .init(
                     name: Localized("cult.proposals.result.socialDocs"),
                     documents: socialDocsUrls.compactMap {
-                        .link(displayName: $0.absoluteString, url: $0)
+                        CultProposal.ProjectDocumentsDocumentLink(
+                            displayName: $0,
+                            url: $0
+                        )
                     }
                 )
             )
@@ -158,7 +159,10 @@ private extension DefaultCultService {
                 .init(
                     name: Localized("cult.proposals.result.audits"),
                     documents: [
-                        .link(displayName: linkURL.absoluteString, url: linkURL)
+                        CultProposal.ProjectDocumentsDocumentLink(
+                            displayName: linkURL.absoluteString,
+                            url: linkURL.absoluteString
+                        )
                     ]
                 )
             )
@@ -167,7 +171,7 @@ private extension DefaultCultService {
                 .init(
                     name: Localized("cult.proposals.result.audits"),
                     documents: [
-                        .note(proposal.description.links)
+                        CultProposal.ProjectDocumentsDocumentNote(note: proposal.description.links)
                     ]
                 )
             )
@@ -183,10 +187,10 @@ private extension DefaultCultService {
         (Double(proposal.againstVotes) ?? 0) * 0.000000000000000001
     }
 
-    func endDate(from proposal: CultProposalJSON) -> Date {
+    func endDate(from proposal: CultProposalJSON) -> Double {
         let genesisEpocOffset = 1460999972
         let epocEndBlock = (Int(proposal.endBlock) ?? 0) * 13
-        return Date(timeIntervalSince1970: TimeInterval(genesisEpocOffset + epocEndBlock))
+        return Double(genesisEpocOffset + epocEndBlock)
     }
     
     func cultReward(from description: CultProposalJSON.Description) -> String {

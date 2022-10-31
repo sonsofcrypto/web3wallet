@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class ConfirmationSendNFTView: UIView {
     private let viewModel: ConfirmationViewModel.SendNFTViewModel

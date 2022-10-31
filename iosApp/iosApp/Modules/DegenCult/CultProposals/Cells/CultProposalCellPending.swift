@@ -88,7 +88,7 @@ final class CultProposalCellPending: CollectionViewCell {
             viewModel: viewModel.rejected
         )
         rejectedVotes.text = viewModel.rejected.total.format(maximumFractionDigits: 3)
-        date = viewModel.endDate
+        date = Date(timeIntervalSince1970: viewModel.endDate)
         approveButton.setTitle(viewModel.approveButtonTitle, for: .normal)
         rejectButton.setTitle(viewModel.rejectButtonTitle, for: .normal)
         updateDate()
