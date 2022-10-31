@@ -7,14 +7,12 @@ import web3walletcore
 
 protocol Web3ServiceWalletListener: AnyObject {
 
-    func nftsChanged()
     func notificationsChanged()
     func tokensChanged()
 }
 
 extension Web3ServiceWalletListener {
     
-    func nftsChanged() {}
     func notificationsChanged() {}
     func tokensChanged() {}
 }
@@ -24,7 +22,6 @@ protocol Web3ServiceLegacy: AnyObject {
     func removeWalletListener(_ listener: Web3ServiceWalletListener)
     func setNotificationAsDone(notificationId: String)
     var dashboardNotifications: [Web3Notification] { get }
-    func nftsChanged()
 }
 
 struct Web3Notification: Codable, Equatable {
