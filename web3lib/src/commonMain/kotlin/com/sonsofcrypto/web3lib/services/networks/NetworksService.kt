@@ -10,7 +10,10 @@ import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3lib.services.networks.ProviderInfo.Type.*
 import com.sonsofcrypto.web3lib.services.node.NodeService
 import com.sonsofcrypto.web3lib.signer.Wallet
+import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.types.Network
+import com.sonsofcrypto.web3lib.types.NetworkFee
+import com.sonsofcrypto.web3lib.utils.BigInt
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -55,6 +58,8 @@ interface NetworksService {
     fun add(listener: NetworksListener)
     /** Remove listener for `NetworksEvent`s, if null removes all listeners */
     fun remove(listener: NetworksListener?)
+    /** Network fee price options */
+    fun networkFees(network: Network): List<NetworkFee>
 
     companion object {
         /** Currently supported networks */
@@ -166,9 +171,30 @@ class DefaultNetworksService(
     }
 
     override fun remove(listener: NetworksListener?) {
-        if (listener != null) listeners = listeners.filter { it != listener }
-        else listeners = listOf()
+        listeners = if (listener != null) listeners.filter { it != listener } else listOf()
     }
+
+    override fun networkFees(network: Network): List<NetworkFee> =
+        listOf(
+            NetworkFee(
+                "Low",
+                Currency.ethereum(),
+                BigInt.from(127730000000000),
+                45,
+            ),
+            NetworkFee(
+                "Medium",
+                Currency.ethereum(),
+                BigInt.from(188570000000000),
+                30
+            ),
+            NetworkFee(
+                "High",
+                Currency.ethereum(),
+                BigInt.from(218640000000000),
+                15
+            ),
+        )
 
     private fun emit(event: NetworksEvent) = listeners.forEach {
         it.handle(event)

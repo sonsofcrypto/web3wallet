@@ -11,8 +11,7 @@ extension NSAttributedString {
         _ output: [Formatters.Output],
         font: UIFont = Theme.font.dashboardTVBalance,
         fontSmall: UIFont = Theme.font.caption2,
-        foregroundColor color: UIColor = Theme.colour.labelPrimary,
-        offset: CGFloat = 3
+        foregroundColor color: UIColor = Theme.colour.labelPrimary
     ) {
         let string = output.reduce(into: "") {
             if let output = $1 as? Formatters.OutputNormal { $0 = $0 + output.value }

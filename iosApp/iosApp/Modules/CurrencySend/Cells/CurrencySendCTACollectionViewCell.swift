@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 final class CurrencySendCTACollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var networkFeeView: NetworkFeePickerView!
+    @IBOutlet weak var networkFeeView: NetworkFeeView!
     @IBOutlet weak var button: Button!
     
     struct Handler {
@@ -42,7 +42,7 @@ extension CurrencySendCTACollectionViewCell {
             button.isEnabled = false
         }
         networkFeeView.update(
-            with: viewModel.tokenNetworkFeeViewModel,
+            with: viewModel.networkFeeViewModel,
             handler: handler.onNetworkFeesTapped
         )
     }

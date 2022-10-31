@@ -13,7 +13,7 @@ final class CurrencySwapMarketCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var currencySwapProviderView: CurrencySwapProviderView!
     @IBOutlet weak var currencySwapPriceView: CurrencySwapPriceView!
     @IBOutlet weak var currencySwapSlippageView: CurrencySwapSlippageView!
-    @IBOutlet weak var networkFeeView: NetworkFeePickerView!
+    @IBOutlet weak var networkFeeView: NetworkFeeView!
     @IBOutlet weak var approveButton: Button!
     @IBOutlet weak var button: Button!
 

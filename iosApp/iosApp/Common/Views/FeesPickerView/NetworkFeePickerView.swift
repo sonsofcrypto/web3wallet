@@ -3,23 +3,24 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 struct FeesPickerViewModel {
     
-    let id: String
     let name: String
-    let value: String
+    let value1: String
+    let value2: String
 }
 
-final class FeesPickerView: UIView {
+final class NetworkFeePickerView: UIView {
     
     @IBOutlet weak var feesView: UIView!
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     @IBOutlet weak var trailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var stackView: UIStackView!
     
-    private var fees: [FeesPickerViewModel] = []
-    private var onFeeSelected: ((FeesPickerViewModel) -> Void)?
+    private var fees: [NetworkFee] = []
+    private var onFeeSelected: ((NetworkFee) -> Void)?
     
     override func awakeFromNib() {
         
@@ -40,8 +41,8 @@ final class FeesPickerView: UIView {
     }
 
     func present(
-        with fees: [FeesPickerViewModel],
-        onFeeSelected: @escaping (FeesPickerViewModel) -> Void,
+        with fees: [NetworkFee],
+        onFeeSelected: @escaping (NetworkFee) -> Void,
         at topRightAnchor: CGPoint = .init(x: Theme.constant.padding, y: 96)
     ) {
         self.fees = fees
@@ -56,9 +57,9 @@ final class FeesPickerView: UIView {
     }
 }
 
-private extension FeesPickerView {
+private extension NetworkFeePickerView {
     
-    func update(fees: [FeesPickerViewModel]) {
+    func update(fees: [NetworkFee]) {
         
         assert(fees.count == 3, "Only 3 fees are supported")
                 
@@ -69,7 +70,7 @@ private extension FeesPickerView {
         }
     }
     
-    func updateItem(_ stackView: UIStackView?, with fee: FeesPickerViewModel) {
+    func updateItem(_ stackView: UIStackView?, with fee: NetworkFee) {
         
         let nameLabel = stackView?.arrangedSubviews.first{ $0.tag == 1 } as? UILabel
         nameLabel?.font = Theme.font.body
@@ -79,13 +80,29 @@ private extension FeesPickerView {
         let valueLabel = stackView?.arrangedSubviews.first{ $0.tag == 2 } as? UILabel
         valueLabel?.font = Theme.font.body
         valueLabel?.textColor = Theme.colour.labelPrimary
-        valueLabel?.text = fee.value
-        
+        let output = Formatters.Companion.shared.currency.format(
+            amount: fee.amount, currency: fee.currency, style: Formatters.StyleCustom(maxLength: 10)
+        )
+        valueLabel?.attributedText = NSAttributedString(
+            output,
+            font: Theme.font.body,
+            fontSmall: Theme.font.caption2,
+            foregroundColor: Theme.colour.labelPrimary
+        )
         stackView?.add(.targetAction(.init(target: self, selector: #selector(feeTapped(_:)))))
+    }
+    
+    func estimatedFee(fee: NetworkFee) -> String {
+        let min: Double = Double(fee.seconds) / Double(60)
+        if min > 1 {
+            return "~\(min.toString(decimals: 0)) \(Localized("min"))"
+        } else {
+            return "~\(fee.seconds) \(Localized("sec"))"
+        }
     }
 }
 
-private extension FeesPickerView {
+private extension NetworkFeePickerView {
     
     @objc func feeTapped(_ sender: UITapGestureRecognizer) {
         

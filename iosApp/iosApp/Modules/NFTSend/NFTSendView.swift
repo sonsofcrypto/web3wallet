@@ -3,17 +3,18 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 protocol NFTSendView: AnyObject {
     func update(with viewModel: NFTSendViewModel)
-    func presentFeePicker(with fees: [FeesPickerViewModel])
+    func presentFeePicker(with fees: [NetworkFee])
     func dismissKeyboard()
 }
 
 final class NFTSendViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var feesPickerView: FeesPickerView!
+    @IBOutlet weak var feesPickerView: NetworkFeePickerView!
 
     var presenter: NFTSendPresenter!
 
@@ -35,7 +36,7 @@ extension NFTSendViewController: NFTSendView {
         else { updateCells() }
     }
     
-    func presentFeePicker(with fees: [FeesPickerViewModel]) {
+    func presentFeePicker(with fees: [NetworkFee]) {
         dismissKeyboard()
         let cell = collectionView.visibleCells.first { $0 is NFTSendCTACollectionViewCell } as! NFTSendCTACollectionViewCell
         let fromFrame = feesPickerView.convert(
@@ -117,8 +118,8 @@ private extension NFTSendViewController {
         feesPickerView.isHidden = true
     }
     
-    func onFeeSelected() -> ((FeesPickerViewModel) -> Void) {
-        { [weak self] item in self?.onTapped(.feeChanged(to: item.id))() }
+    func onFeeSelected() -> ((NetworkFee) -> Void) {
+        { [weak self] item in self?.onTapped(.feeChanged(to: item))() }
     }
     
     @objc func navBarLeftActionTapped() {
@@ -147,7 +148,7 @@ private extension NFTSendViewController {
             section.contentInsets = .init(
                 top: index == 0 ? sectionInset : 0,
                 leading: sectionInset,
-                bottom: index == 1 ? 0 : sectionInset,
+                bottom: sectionInset,
                 trailing: sectionInset
             )
             return section

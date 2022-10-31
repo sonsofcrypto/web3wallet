@@ -377,7 +377,7 @@ private extension DefaultConfirmationPresenter {
                 network: data.network,
                 currency: data.currency,
                 amount: data.amount,
-                fee: data.estimatedFee,
+                networkFee: data.networkFee,
                 password: password,
                 salt: salt,
                 handler: { [weak self] result in

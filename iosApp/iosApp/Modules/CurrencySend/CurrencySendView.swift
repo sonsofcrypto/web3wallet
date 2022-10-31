@@ -7,13 +7,13 @@ import web3walletcore
 
 protocol CurrencySendView: AnyObject {
     func update(with viewModel: CurrencySendViewModel)
-    func presentFeePicker(with fees: [FeesPickerViewModel])
+    func presentFeePicker(with fees: [NetworkFee])
     func dismissKeyboard()
 }
 
 final class CurrencySendViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var feesPickerView: FeesPickerView!
+    @IBOutlet weak var feesPickerView: NetworkFeePickerView!
 
     var presenter: CurrencySendPresenter!
 
@@ -35,7 +35,7 @@ extension CurrencySendViewController: CurrencySendView {
         else { updateCells() }
     }
     
-    func presentFeePicker(with fees: [FeesPickerViewModel]) {
+    func presentFeePicker(with fees: [NetworkFee]) {
         dismissKeyboard()
         let cell = collectionView.visibleCells.first {
             $0 is CurrencySendCTACollectionViewCell
@@ -121,8 +121,8 @@ private extension CurrencySendViewController {
         feesPickerView.isHidden = true
     }
     
-    func makeOnFeeSelected() -> ((FeesPickerViewModel) -> Void) {
-        { [weak self] item in self?.onTapped(.feeChanged(to: item.id))() }
+    func makeOnFeeSelected() -> ((NetworkFee) -> Void) {
+        { [weak self] item in self?.onTapped(.feeChanged(to: item))() }
     }
     
     @objc func navBarLeftActionTapped() {

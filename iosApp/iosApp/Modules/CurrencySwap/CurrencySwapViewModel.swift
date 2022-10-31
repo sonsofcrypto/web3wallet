@@ -23,7 +23,7 @@ extension CurrencySwapViewModel {
         let currencySwapProviderViewModel: CurrencySwapProviderViewModel
         let currencySwapPriceViewModel: CurrencySwapPriceViewModel
         let currencySwapSlippageViewModel: CurrencySwapSlippageViewModel
-        let currencyNetworkFeeViewModel: NetworkFeePickerViewModel
+        let currencyNetworkFeeViewModel: NetworkFeeViewModel
         let isCalculating: Bool
         let providerAsset: String
         let approveState: ApproveState

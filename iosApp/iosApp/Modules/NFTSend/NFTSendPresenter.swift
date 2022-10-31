@@ -10,7 +10,7 @@ enum NFTSendPresenterEvent {
     case addressChanged(to: String)
     case pasteAddress
     case saveAddress
-    case feeChanged(to: String)
+    case feeChanged(to: NetworkFee)
     case qrCodeScan
     case feeTapped
     case review
@@ -29,9 +29,10 @@ final class DefaultNFTSendPresenter {
     
     private var sendTapped = false
     private var address: String?
-    private var fee: Web3NetworkFee = .low
+    private var fee: NetworkFee?
+
     private var items = [NFTSendViewModel.Item]()
-    private var fees = [Web3NetworkFee]()
+    private var fees = [NetworkFee]()
 
     init(
         view: NFTSendView,
@@ -43,6 +44,7 @@ final class DefaultNFTSendPresenter {
         self.wireframe = wireframe
         self.interactor = interactor
         self.context = context
+        refreshFees()
     }
 }
 
@@ -64,7 +66,7 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
                     .init(
                         tokenNetworkFeeViewModel: .init(
                             estimatedFee: estimatedFee(),
-                            feeType: feeType()
+                            feeName: feeName()
                         ),
                         buttonState: .ready
                     )
@@ -100,12 +102,11 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
             let isValid = context.network.isValidAddress(input: clipboard)
             guard isValid else { return }
             updateView(address: clipboard)
-        case let .feeChanged(identifier):
-            guard let fee = fees.first(where: { $0.rawValue == identifier }) else { return }
+        case let .feeChanged(fee):
             self.fee = fee
             updateCTA()
         case .feeTapped:
-            view?.presentFeePicker(with: _fees())
+            view?.presentFeePicker(with: fees)
         case .review:
             sendTapped = true
             let isValidAddress = context.network.isValidAddress(input: address ?? "")
@@ -113,7 +114,7 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
                 updateView(shouldAddressBecomeFirstResponder: true)
                 return
             }
-            guard let walletAddress = interactor.walletAddress else { return }
+            guard let walletAddress = interactor.walletAddress, let fee = fee else { return }
             wireframe.navigate(
                 to: .confirmSendNFT(
                     dataIn: .init(
@@ -121,7 +122,7 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
                         addressFrom: walletAddress,
                         addressTo: address,
                         nftItem: context.nftItem,
-                        estimatedFee: confirmationSendNFTEstimatedFee()
+                        networkFee: fee
                     )
                 )
             )
@@ -131,12 +132,10 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
 
 private extension DefaultNFTSendPresenter {
     
-    func confirmationSendNFTEstimatedFee() -> Web3NetworkFee {
-        switch fee {
-        case .low: return .low
-        case .medium: return .medium
-        case .high: return .high
-        }
+    func refreshFees() {
+        fees = interactor.networkFees(network: context.network)
+        guard fee == nil, !fees.isEmpty else { return }
+        fee = fees[0]
     }
     
     func updateView(with items: [NFTSendViewModel.Item]) {
@@ -208,7 +207,7 @@ private extension DefaultNFTSendPresenter {
                     .init(
                         tokenNetworkFeeViewModel: .init(
                             estimatedFee: estimatedFee(),
-                            feeType: feeType()
+                            feeName: feeName()
                         ),
                         buttonState: buttonState
                     )
@@ -217,48 +216,26 @@ private extension DefaultNFTSendPresenter {
         )
     }
     
-    func estimatedFee() -> String {
-        let amountInUSD = interactor.networkFeeInUSD(network: context.network, fee: fee)
-        let timeInSeconds = interactor.networkFeeInSeconds(network: context.network, fee: fee)
-        let min: Double = Double(timeInSeconds) / Double(60)
+    func estimatedFee() -> [Formatters.Output] {
+        guard let fee = fee else { return [Formatters.OutputNormal(value: "-")] }
+        var outputFormat = Formatters.Companion.shared.currency.format(
+            amount: fee.amount, currency: fee.currency, style: Formatters.StyleCustom(maxLength: 10)
+        )
+        let min: Double = Double(fee.seconds) / Double(60)
+        var value = ""
         if min > 1 {
-            return "\(amountInUSD.formatStringCurrency()) ~ \(min.toString(decimals: 0)) \(Localized("min"))"
+            value = " ~ \(min.toString(decimals: 0)) \(Localized("min"))"
         } else {
-            return "\(amountInUSD.formatStringCurrency()) ~ \(timeInSeconds) \(Localized("sec"))"
+            value = " ~ \(fee.seconds) \(Localized("sec"))"
         }
+        outputFormat.append(
+            Formatters.OutputNormal(value: value)
+        )
+        return outputFormat
     }
     
-    func _fees() -> [FeesPickerViewModel] {
-        let fees = interactor.networkFees(network: context.network)
-        self.fees = fees
-        return fees.compactMap { [weak self] in
-            guard let self = self else { return nil }
-            return .init(
-                id: $0.rawValue,
-                name: $0.name,
-                value: self.interactor.networkFeeInNetworkToken(
-                    network: context.network,
-                    fee: $0
-                )
-            )
-        }
-    }
-    
-    func feeType() -> NetworkFeePickerViewModel.FeeType {
-        switch fee {
-        case .low: return .low
-        case .medium: return .medium
-        case .high: return .high
-        }
-    }
-}
-
-private extension Web3NetworkFee {
-    var name: String {
-        switch self {
-        case .low: return Localized("low")
-        case .medium: return Localized("medium")
-        case .high: return Localized("high")
-        }
+    func feeName() -> String {
+        guard let fee = fee else { return "-" }
+        return fee.name
     }
 }

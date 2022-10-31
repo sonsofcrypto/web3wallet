@@ -10,7 +10,7 @@ protocol ConfirmationInteractor {
         network: Network,
         currency: Currency,
         amount: BigInt,
-        fee: Web3NetworkFee,
+        networkFee: NetworkFee,
         password: String,
         salt: String,
         handler: @escaping (Result<TransactionResponse, Error>) -> Void
@@ -60,7 +60,7 @@ extension DefaultConfirmationInteractor: ConfirmationInteractor {
         network: Network,
         currency: Currency,
         amount: BigInt,
-        fee: Web3NetworkFee,
+        networkFee: NetworkFee,
         password: String,
         salt: String,
         handler: @escaping (Result<TransactionResponse, Error>) -> Void

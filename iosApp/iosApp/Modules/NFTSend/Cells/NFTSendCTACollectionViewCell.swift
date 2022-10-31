@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 final class NFTSendCTACollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var networkFeeView: NetworkFeePickerView!
+    @IBOutlet weak var networkFeeView: NetworkFeeView!
     @IBOutlet weak var button: Button!
     
     struct Handler {

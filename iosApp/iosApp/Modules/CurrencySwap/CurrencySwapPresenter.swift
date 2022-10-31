@@ -15,7 +15,7 @@ enum CurrencySwapPresenterEvent {
     case swapFlip
     case providerTapped
     case slippageTapped
-    case feeChanged(to: String)
+    case feeChanged(to: NetworkFee)
     case feeTapped
     case approve
     case review
@@ -33,13 +33,13 @@ final class DefaultCurrencySwapPresenter {
     private let context: CurrencySwapWireframeContext
     
     private var items = [CurrencySwapViewModel.Item]()
-    private var fees = [Web3NetworkFee]()
+    private var fees = [NetworkFee]()
     private var currencyFrom: Currency!
     private var amountFrom: BigInt?
     private var currencyTo: Currency!
     private var amountTo: BigInt?
     private var invalidQuote: Bool = false
-    private var fee: Web3NetworkFee = .low
+    private var fee: NetworkFee?
     private let priceImpactWarningThreashold = 0.1
     
     init(
@@ -54,6 +54,7 @@ final class DefaultCurrencySwapPresenter {
         self.context = context
         interactor.addListener(self)
         loadCurrencies()
+        refreshFees()
     }
     
     deinit {
@@ -97,7 +98,7 @@ extension DefaultCurrencySwapPresenter: CurrencySwapPresenter {
                         currencySwapSlippageViewModel: currencySwapSlippageViewModel(),
                         currencyNetworkFeeViewModel: .init(
                             estimatedFee: estimatedFee(),
-                            feeType: feeType()
+                            feeName: feeName()
                         ),
                         isCalculating: isCalculating,
                         providerAsset: selectedProviderIconName(),
@@ -138,12 +139,11 @@ extension DefaultCurrencySwapPresenter: CurrencySwapPresenter {
             wireframe.navigate(to: .underConstructionAlert)
         case .slippageTapped:
             wireframe.navigate(to: .underConstructionAlert)
-        case let .feeChanged(identifier):
-            guard let fee = fees.first(where: { $0.rawValue == identifier }) else { return }
+        case let .feeChanged(fee):
             self.fee = fee
             refreshView()
         case .feeTapped:
-            view?.presentFeePicker(with: _fees())
+            view?.presentFeePicker(with: fees)
         case .approve:
             guard approveState() == .approve else { return }
             wireframe.navigate(
@@ -168,7 +168,7 @@ extension DefaultCurrencySwapPresenter: CurrencySwapPresenter {
                 )
                 return
             }
-            guard currencyFromBalance >= (amountFrom ?? .zero) else { return }
+            guard currencyFromBalance >= (amountFrom ?? .zero), let fee = fee else { return }
             switch interactor.swapState {
             case .swap:
                 wireframe.navigate(
@@ -180,21 +180,13 @@ extension DefaultCurrencySwapPresenter: CurrencySwapPresenter {
                             amountTo: amountTo ?? .zero,
                             currencyFrom: currencyFrom,
                             currencyTo: currencyTo,
-                            estimatedFee: confirmationSwapEstimatedFee(),
+                            networkFee: fee,
                             swapService: interactor.swapService
                         )
                     )
                 )
             default: break
             }
-        }
-    }
-    
-    func confirmationSwapEstimatedFee() -> Web3NetworkFee {
-        switch fee {
-        case .low: return .low
-        case .medium: return .medium
-        case .high: return .high
         }
     }
     
@@ -280,7 +272,7 @@ private extension DefaultCurrencySwapPresenter {
                         currencySwapSlippageViewModel: currencySwapSlippageViewModel(),
                         currencyNetworkFeeViewModel: .init(
                             estimatedFee: estimatedFee(),
-                            feeType: feeType()
+                            feeName: feeName()
                         ),
                         isCalculating: isCalculating,
                         providerAsset: selectedProviderIconName(),
@@ -351,39 +343,33 @@ private extension DefaultCurrencySwapPresenter {
         (amountFrom ?? .zero) > currencyFromBalance || currencyFromBalance == .zero
     }
     
-    func estimatedFee() -> String {
-        let amountInUSD = interactor.networkFeeInUSD(network: context.network, fee: fee)
-        let timeInSeconds = interactor.networkFeeInSeconds(network: context.network, fee: fee)
-        let min: Double = Double(timeInSeconds) / Double(60)
+    func refreshFees() {
+        fees = interactor.networkFees(network: context.network)
+        guard fee == nil, !fees.isEmpty else { return }
+        fee = fees[0]
+    }
+    
+    func estimatedFee() -> [Formatters.Output] {
+        guard let fee = fee else { return [Formatters.OutputNormal(value: "-")] }
+        var outputFormat = Formatters.Companion.shared.currency.format(
+            amount: fee.amount, currency: fee.currency, style: Formatters.StyleCustom(maxLength: 10)
+        )
+        let min: Double = Double(fee.seconds) / Double(60)
+        var value = ""
         if min > 1 {
-            return "\(amountInUSD.formatStringCurrency()) ~ \(min.toString(decimals: 0)) \(Localized("min"))"
+            value = " ~ \(min.toString(decimals: 0)) \(Localized("min"))"
         } else {
-            return "\(amountInUSD.formatStringCurrency()) ~ \(timeInSeconds) \(Localized("sec"))"
+            value = " ~ \(fee.seconds) \(Localized("sec"))"
         }
+        outputFormat.append(
+            Formatters.OutputNormal(value: value)
+        )
+        return outputFormat
     }
     
-    func _fees() -> [FeesPickerViewModel] {
-        let fees = interactor.networkFees(network: context.network)
-        self.fees = fees
-        return fees.compactMap { [weak self] in
-            guard let self = self else { return nil }
-            return .init(
-                id: $0.rawValue,
-                name: $0.name,
-                value: self.interactor.networkFeeInNetworkToken(
-                    network: context.network,
-                    fee: $0
-                )
-            )
-        }
-    }
-    
-    func feeType() -> NetworkFeePickerViewModel.FeeType {
-        switch fee {
-        case .low: return .low
-        case .medium: return .medium
-        case .high: return .high
-        }
+    func feeName() -> String {
+        guard let fee = fee else { return "-" }
+        return fee.name
     }
     
     func currencySwapProviderViewModel() -> CurrencySwapProviderViewModel {
@@ -491,16 +477,6 @@ private extension DefaultCurrencySwapPresenter {
             fromAmount: amountFrom,
             toAmount: amountTo
         )
-    }
-}
-
-private extension Web3NetworkFee {
-    var name: String {
-        switch self {
-        case .low: return Localized("low")
-        case .medium: return Localized("medium")
-        case .high: return Localized("high")
-        }
     }
 }
 
