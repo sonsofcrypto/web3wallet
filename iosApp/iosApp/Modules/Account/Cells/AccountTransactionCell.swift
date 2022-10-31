@@ -6,8 +6,9 @@ import UIKit
 
 final class AccountTransactionCell: CollectionViewCell {
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var amountLabel: UILabel!
+    @IBOutlet weak var fiatPriceLabel: UILabel!
     @IBOutlet weak var chevronView: UIImageView!
 
     override func awakeFromNib() {
@@ -28,15 +29,22 @@ extension AccountTransactionCell {
     func update(with transaction: AccountViewModel.Transaction) {
         guard let viewModel = transaction.data else { return }
         dateLabel.text = viewModel.date
-        amountLabel.attributedText = .init(
-            viewModel.amount,
-            font: Theme.font.subheadline,
-            fontSmall: Theme.font.footnote
-        )
         addressLabel.text = viewModel.address
         amountLabel.textColor = viewModel.isReceive
             ? Theme.colour.priceUp
             : Theme.colour.priceDown
-        //amountLabel.layer.shadowColor = amountLabel.textColor.cgColor
+        amountLabel.attributedText = .init(
+            viewModel.amount,
+            font: Theme.font.subheadline,
+            fontSmall: Theme.font.caption2,
+            foregroundColor: viewModel.isReceive ? Theme.colour.priceUp : Theme.colour.priceDown
+        )
+        fiatPriceLabel.attributedText = .init(
+            viewModel.fiatPrice,
+            font: Theme.font.subheadline,
+            fontSmall: Theme.font.caption2,
+            foregroundColor: Theme.colour.labelSecondary
+        )
+        
     }
 }

@@ -14,7 +14,7 @@ extension UIView {
     func presentToastAlert(
         with message: String,
         textAlignment: NSTextAlignment = .center,
-        duration: TimeInterval = 1.0,
+        duration: TimeInterval = 2.0,
         bottomOffset: CGFloat = 48
     ) {
         subviews.forEach {
