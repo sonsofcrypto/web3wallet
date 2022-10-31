@@ -315,7 +315,7 @@ private extension DefaultConfirmationPresenter {
 
 private extension DefaultConfirmationPresenter {
     
-    func authenticateContext() -> AuthenticateContext {
+    func authenticateContext() -> AuthenticateWireframeContext {
         .init(
             title: Localized("authenticate.title.\(context.type.localizedTag)"),
             keyStoreItem: nil,
@@ -323,15 +323,13 @@ private extension DefaultConfirmationPresenter {
         )
     }
     
-    func onAuthenticatedHandler() -> (Result<(String, String), Error>) -> Void {
+    func onAuthenticatedHandler() -> (AuthenticateData?, KotlinError?) -> Void {
         {
-            [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case let .success((password, salt)):
-                self.handleSuccessfulAuthentication(with: password, and: salt)
-            case let .failure(error):
-                print("error: \(error)")
+            [weak self] data, error in
+            if let data = data {
+                self?.handleSuccessfulAuthentication(with: data.password, and: data.salt)
+            } else {
+                print(error ?? "No error but no data either")
             }
         }
     }

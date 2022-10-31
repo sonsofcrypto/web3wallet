@@ -6,7 +6,7 @@ import UIKit
 import web3walletcore
 
 enum ConfirmationWireframeDestination {
-    case authenticate(AuthenticateContext)
+    case authenticate(AuthenticateWireframeContext)
     case underConstruction
     case account
     case nftsDashboard
