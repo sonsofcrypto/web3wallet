@@ -27,7 +27,7 @@ class DefaultAuthenticateInteractor(
     ) {
         keyStoreService.biometricsAuthenticate(title) { success: Boolean, error: Error? ->
             if (success) {
-                val password = keyStoreService.password(item) ?: throw Error("No password")
+                val password = keyStoreService.password(item) ?: ""
                 handler(AuthenticateData(password, ""), null)
             } else {
                 handler(null, error ?: Error("Unknown error"))
