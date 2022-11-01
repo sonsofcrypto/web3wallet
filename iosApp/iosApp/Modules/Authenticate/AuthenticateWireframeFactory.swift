@@ -10,7 +10,7 @@ import web3walletcore
 protocol AuthenticateWireframeFactory {
     func make(
         _ parent: UIViewController?,
-       context: AuthenticateContext
+       context: AuthenticateWireframeContext
     ) -> AuthenticateWireframe
 }
 
@@ -28,7 +28,7 @@ extension DefaultAuthenticateWireframeFactory: AuthenticateWireframeFactory {
 
     func make(
         _ parent: UIViewController?,
-        context: AuthenticateContext
+        context: AuthenticateWireframeContext
     ) -> AuthenticateWireframe {
         DefaultAuthenticateWireframe(
             parent,

@@ -106,12 +106,14 @@ struct ThemeFont {
     let bodyBold: UIFont
     let callout: UIFont
     let calloutBold: UIFont
+    let footnote: UIFont
+    let footnoteBold: UIFont
     let caption1: UIFont
     let caption1Bold: UIFont
     let caption2: UIFont
     let caption2Bold: UIFont
-    let footnote: UIFont
-    let footnoteBold: UIFont
+    let extraSmall: UIFont
+    let extraSmallBold: UIFont
     let navTitle: UIFont
     let tabBar: UIFont
     let networkTitle: UIFont

@@ -60,7 +60,7 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
                 context: .init(
                     title: Localized("authenticate.title.unlock"),
                     keyStoreItem: context.keyStoreItem,
-                    handler: handleAuthenticateResult
+                    handler: onAuthenticatedHandler()
                 )
             )
         )
@@ -129,26 +129,35 @@ private extension DefaultMnemonicUpdatePresenter {
             }
         )
     }
-
-    func handleAuthenticateResult(_ result: AuthenticateContext.AuthResult) {
-        switch result {
-        case let .success((password, salt)):
-            self.password = password
-            self.salt = salt
-            do {
-                try interactor.setup(
-                    for: context.keyStoreItem,
-                    password: password,
-                    salt: salt
-                )
-                updateView()
-                
-            } catch {
-                wireframe.navigate(to: .dismiss)
+    
+    func onAuthenticatedHandler() -> (AuthenticateData?, KotlinError?) -> Void {
+        {
+            [weak self] data, error in
+            if let data = data {
+                self?.onAuthenticateSuccess(data: data)
+            } else {
+                self?.onAuthenticateError()
             }
-        case .failure:
-            wireframe.navigate(to: .dismiss)
         }
+    }
+    
+    func onAuthenticateSuccess(data: AuthenticateData) {
+        self.password = data.password
+        self.salt = data.salt
+        do {
+            try interactor.setup(
+                for: context.keyStoreItem,
+                password: password,
+                salt: salt
+            )
+            updateView()
+        } catch {
+            onAuthenticateError()
+        }
+    }
+    
+    func onAuthenticateError() {
+        wireframe.navigate(to: .dismiss)
     }
 }
 

@@ -6,7 +6,7 @@ import UIKit
 import web3walletcore
 
 enum ConfirmationWireframeDestination {
-    case authenticate(AuthenticateContext)
+    case authenticate(AuthenticateWireframeContext)
     case underConstruction
     case account
     case nftsDashboard
@@ -67,15 +67,9 @@ extension DefaultConfirmationWireframe: ConfirmationWireframe {
     func navigate(to destination: ConfirmationWireframeDestination) {
         switch destination {
         case let .authenticate(context):
-            authenticateWireframeFactory.make(
-                vc,
-                context: context
-            ).present()
+            authenticateWireframeFactory.make(vc,context: context).present()
         case .underConstruction:
-            alertWireframeFactory.make(
-                vc,
-                context: .underConstructionAlert()
-            ).present()
+            alertWireframeFactory.make(vc,context: .underConstructionAlert()).present()
         case .account:
             guard let context = context.accountWireframeContext else { return }
             let deepLink = DeepLink.account(context)

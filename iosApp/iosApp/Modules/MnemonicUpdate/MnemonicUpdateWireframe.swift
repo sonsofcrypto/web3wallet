@@ -6,7 +6,7 @@ import UIKit
 import web3walletcore
 
 enum MnemonicUpdateWireframeDestination {
-    case authenticate(context: AuthenticateContext)
+    case authenticate(context: AuthenticateWireframeContext)
     case learnMoreSalt
     case confirmationAlert(onConfirm: TargetActionViewModel)
     case dismiss

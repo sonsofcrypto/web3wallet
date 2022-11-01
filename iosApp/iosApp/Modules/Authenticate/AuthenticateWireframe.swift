@@ -5,21 +5,16 @@
 import UIKit
 import web3walletcore
 
-protocol AuthenticateWireframe {
-    func present()
-    func dismiss()
-}
-
 final class DefaultAuthenticateWireframe {
     private weak var parent: UIViewController?
-    private var context: AuthenticateContext
+    private var context: AuthenticateWireframeContext
     private let keyStoreService: KeyStoreService
 
     private weak var vc: UIViewController?
 
     init(
         _ parent: UIViewController?,
-        context: AuthenticateContext,
+        context: AuthenticateWireframeContext,
         keyStoreService: KeyStoreService
     ) {
         self.parent = parent
@@ -41,15 +36,14 @@ extension DefaultAuthenticateWireframe: AuthenticateWireframe {
             keyStoreItem: keyStoreItemTarget,
             handler: context.handler
         )
-        guard !interactor.canUnlockWithBio(keyStoreItemTarget) else {
+        guard !interactor.canUnlockWithBio(keyStoreItem: keyStoreItemTarget) else {
             // NOTE: Passing this as a local variable otherwise in the closure below having a weak self
             // by the time is called back the wireframe is already deallocated and self? is nil.
             let context = context
             interactor.unlockWithBiometrics(
-                keyStoreItemTarget,
+                item: keyStoreItemTarget,
                 title: context.title,
-                handler: { result in
-                    context.handler(result)}
+                handler: { authData, error in context.handler(authData, error) }
             )
             return
         }
@@ -57,10 +51,13 @@ extension DefaultAuthenticateWireframe: AuthenticateWireframe {
         let vc = wireUp(interactor)
         parent?.present(vc, animated: true)
     }
-
-    func dismiss() {
-        vc?.dismiss(animated: true)
+    
+    func navigate(destination_______ destination: AuthenticateWireframeDestination) {
+        if destination is AuthenticateWireframeDestination.Dismiss {
+            vc?.dismiss(animated: true)
+        }
     }
+
 }
 
 private extension DefaultAuthenticateWireframe {
@@ -71,7 +68,7 @@ private extension DefaultAuthenticateWireframe {
     func wireUp(_ interactor: AuthenticateInteractor) -> UIViewController {
         let vc: AuthenticateViewController = UIStoryboard(.authenticate).instantiate()
         let presenter = DefaultAuthenticatePresenter(
-            view: vc,
+            view: WeakRef(referred: vc),
             wireframe: self,
             interactor: interactor,
             context: context

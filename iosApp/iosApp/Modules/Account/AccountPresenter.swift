@@ -150,8 +150,13 @@ private extension DefaultAccountPresenter {
                 date: transaction.date == nil
                     ? transaction.blockNumber
                     : Formatter.date.string(transaction.date),
-                address: transaction.address,
+                address: Formatters.Companion.shared.networkAddress.format(
+                    address: transaction.address,
+                    digits: 8,
+                    network: context.network
+                ),
                 amount: transaction.amount,
+                fiatPrice: transaction.fiatPrice,
                 isReceive: transaction.isReceive,
                 txHash: transaction.txHash
             )

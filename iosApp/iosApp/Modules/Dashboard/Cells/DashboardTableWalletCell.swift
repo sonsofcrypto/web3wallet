@@ -31,9 +31,10 @@ final class DashboardTableWalletCell: CollectionViewCell {
 extension DashboardTableWalletCell {
     
     func update(
-        with viewModel: DashboardViewModel.Wallet,
+        with viewModel: DashboardViewModel.Wallet?,
         showBottomSeparator: Bool = true
     ) -> Self {
+        guard let viewModel = viewModel else { return self }
         currencyImageView.image = viewModel.imageName.assetImage
         fiatPriceLabel.attributedText = .init(
             viewModel.fiatPrice.toOutput(style: Formatters.StyleCustom(maxLength: 9.uint32)),

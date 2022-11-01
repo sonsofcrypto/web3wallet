@@ -67,6 +67,7 @@ extension AccountViewModel {
             let date: String
             let address: String
             let amount: [Formatters.Output]
+            let fiatPrice: [Formatters.Output]
             let isReceive: Bool
             let txHash: String
         }

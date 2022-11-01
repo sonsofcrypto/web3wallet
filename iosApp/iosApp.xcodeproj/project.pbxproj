@@ -61,7 +61,6 @@
 		1A4C3D4F7A0F0032C75606BE /* TextInputCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3E9049D6DF4AB69A8CF5 /* TextInputCollectionViewCell.swift */; };
 		1A4C3DDC249CC1648C089877 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3231FA724A88A529EFE7 /* GradientView.swift */; };
 		1A4C3E41DA2739ED48CD12F9 /* CultServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3635DC5425C3CA3A2D25 /* CultServiceAssembler.swift */; };
-		1A4C3E81CF175B7B283C13E0 /* AuthenticateContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3B4D97107E875FCF5F38 /* AuthenticateContext.swift */; };
 		1A4C3EB4D429242923984C76 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3378B5287B6A9BDE65CD /* Button.swift */; };
 		1A4C3EFB16DB99838BABBB8C /* UIControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3630699CD8D40BB195C2 /* UIControl+Extensions.swift */; };
 		1A4C3F1716E6E050EE9DF4B3 /* TargetViewTransitionDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C3AAAE564F49C76873511 /* TargetViewTransitionDatasource.swift */; };
@@ -496,10 +495,7 @@
 		D1976B13287EFAE10063FC9C /* MnemonicImportInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1976B0A287EFAE10063FC9C /* MnemonicImportInteractor.swift */; };
 		D1976B14287EFAE10063FC9C /* MnemonicImport.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1976B0B287EFAE10063FC9C /* MnemonicImport.storyboard */; };
 		D1A12A60287D333900606FC8 /* AuthenticateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A59287D333900606FC8 /* AuthenticateView.swift */; };
-		D1A12A61287D333900606FC8 /* AuthenticateInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A5A287D333900606FC8 /* AuthenticateInteractor.swift */; };
-		D1A12A63287D333900606FC8 /* AuthenticatePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A5C287D333900606FC8 /* AuthenticatePresenter.swift */; };
 		D1A12A64287D333900606FC8 /* AuthenticateWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A5D287D333900606FC8 /* AuthenticateWireframeFactory.swift */; };
-		D1A12A65287D333900606FC8 /* AuthenticateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A5E287D333900606FC8 /* AuthenticateViewModel.swift */; };
 		D1A12A66287D333900606FC8 /* AuthenticateWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A12A5F287D333900606FC8 /* AuthenticateWireframe.swift */; };
 		D1ABCE57289D548C00312539 /* LineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1ABCE56289D548C00312539 /* LineView.swift */; };
 		D1BC5303284B5B89007E6FF4 /* CultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BC5302284B5B89007E6FF4 /* CultService.swift */; };
@@ -588,7 +584,6 @@
 		1A4C3A57271F5E51E72C6685 /* AnimatedTextBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedTextBarButton.swift; sourceTree = "<group>"; };
 		1A4C3A7F5A951E4100DFC01B /* ImprovementProposalsServiceAssembler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprovementProposalsServiceAssembler.swift; sourceTree = "<group>"; };
 		1A4C3AAAE564F49C76873511 /* TargetViewTransitionDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetViewTransitionDatasource.swift; sourceTree = "<group>"; };
-		1A4C3B4D97107E875FCF5F38 /* AuthenticateContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateContext.swift; sourceTree = "<group>"; };
 		1A4C3B7861E8944B80AFD1C6 /* SectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		1A4C3BCABDF62FE3C376A0D2 /* SelectionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionCollectionViewCell.swift; sourceTree = "<group>"; };
 		1A4C3C8A8E2CDDB9F01205E5 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
@@ -1042,10 +1037,7 @@
 		D1976B0A287EFAE10063FC9C /* MnemonicImportInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicImportInteractor.swift; sourceTree = "<group>"; };
 		D1976B0B287EFAE10063FC9C /* MnemonicImport.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MnemonicImport.storyboard; sourceTree = "<group>"; };
 		D1A12A59287D333900606FC8 /* AuthenticateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateView.swift; sourceTree = "<group>"; };
-		D1A12A5A287D333900606FC8 /* AuthenticateInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateInteractor.swift; sourceTree = "<group>"; };
-		D1A12A5C287D333900606FC8 /* AuthenticatePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticatePresenter.swift; sourceTree = "<group>"; };
 		D1A12A5D287D333900606FC8 /* AuthenticateWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateWireframeFactory.swift; sourceTree = "<group>"; };
-		D1A12A5E287D333900606FC8 /* AuthenticateViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateViewModel.swift; sourceTree = "<group>"; };
 		D1A12A5F287D333900606FC8 /* AuthenticateWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateWireframe.swift; sourceTree = "<group>"; };
 		D1ABCE56289D548C00312539 /* LineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineView.swift; sourceTree = "<group>"; };
 		D1BC5302284B5B89007E6FF4 /* CultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CultService.swift; sourceTree = "<group>"; };
@@ -2366,11 +2358,7 @@
 			isa = PBXGroup;
 			children = (
 				1A4C39D6ADB830082AC3CEA6 /* Authenticate.storyboard */,
-				1A4C3B4D97107E875FCF5F38 /* AuthenticateContext.swift */,
-				D1A12A5A287D333900606FC8 /* AuthenticateInteractor.swift */,
-				D1A12A5C287D333900606FC8 /* AuthenticatePresenter.swift */,
 				D1A12A59287D333900606FC8 /* AuthenticateView.swift */,
-				D1A12A5E287D333900606FC8 /* AuthenticateViewModel.swift */,
 				D1A12A5F287D333900606FC8 /* AuthenticateWireframe.swift */,
 				D1A12A5D287D333900606FC8 /* AuthenticateWireframeFactory.swift */,
 			);
@@ -2858,13 +2846,11 @@
 				1C5D24D928E19F62007DA557 /* ImprovementProposalsWireframeFactory.swift in Sources */,
 				1C60C30F285724D1003BE25D /* AccountChartCell.swift in Sources */,
 				1CDED605289C4C6100DF34A7 /* NFTSendViewModel.swift in Sources */,
-				D1A12A65287D333900606FC8 /* AuthenticateViewModel.swift in Sources */,
 				1C7F862828D20E490073FD95 /* Int+Extensions.swift in Sources */,
 				1C60C34B285724D1003BE25D /* CultProposalView.swift in Sources */,
 				1C60C348285724D1003BE25D /* CultProposalPresenter.swift in Sources */,
 				1C7F862C28D20E490073FD95 /* UIImageView+Extensions.swift in Sources */,
 				1C60C2D5285724D0003BE25D /* MnemonicNewViewModel.swift in Sources */,
-				D1A12A61287D333900606FC8 /* AuthenticateInteractor.swift in Sources */,
 				1C54DBF8285F8F3700E378F6 /* CurrencyAddCollectionViewCell.swift in Sources */,
 				1C60C309285724D1003BE25D /* RootWireframe.swift in Sources */,
 				1C54DBE5285E832600E378F6 /* CurrencyAddWireframeFactory.swift in Sources */,
@@ -3045,12 +3031,10 @@
 				1CB8B0C6288E7C0500024E7C /* CultProposalJSON.swift in Sources */,
 				1C7F863928D20E490073FD95 /* UIApplication+Extensions.swift in Sources */,
 				1C60C329285724D1003BE25D /* MnemonicConfirmationService.swift in Sources */,
-				D1A12A63287D333900606FC8 /* AuthenticatePresenter.swift in Sources */,
 				1CDED603289C4C5C00DF34A7 /* NFTSendView.swift in Sources */,
 				1A4C3E41DA2739ED48CD12F9 /* CultServiceAssembler.swift in Sources */,
 				1C60C30E285724D1003BE25D /* AccountMarketInfoCell.swift in Sources */,
 				1A4C3CFB23D66DF60B4BCE71 /* KeyStoreService.swift in Sources */,
-				1A4C3E81CF175B7B283C13E0 /* AuthenticateContext.swift in Sources */,
 				1A4C3B25A582595A7B1E8EA9 /* PreferredSizePresentationController.swift in Sources */,
 				1A4C31D59C7D2B84D247FDDD /* TransformView.swift in Sources */,
 				1C7FC98328B5272500FC9175 /* ConfirmationCultCastVoteView.swift in Sources */,
@@ -3274,7 +3258,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 25;
-				DEVELOPMENT_TEAM = L4HD966EQA;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3316,7 +3300,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 25;
-				DEVELOPMENT_TEAM = L4HD966EQA;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;

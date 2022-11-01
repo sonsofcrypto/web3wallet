@@ -63,7 +63,7 @@ extension DashboardViewController: DashboardView {
         }
         cv.visibleCells.forEach {
             if let idxPath = cv.indexPath(for: $0),
-               sectionsToUpdate.contains(idxPath.section) {
+                sectionsToUpdate.contains(idxPath.section) {
                 let items = viewModel.sections[idxPath.section].items
                 update(cell: $0, idx: idxPath.item, items: items)
             }
@@ -108,6 +108,7 @@ extension DashboardViewController: DashboardView {
         let _ = (cell as? DashboardButtonsCell)?.update(with: items.actions, presenter: presenter)
         let _ = (cell as? DashboardNotificationCell)?.update(with: items.notifications(at: idx))
         let _ = (cell as? DashboardWalletCell)?.update(with: items.wallet(at: idx))
+        let _ = (cell as? DashboardTableWalletCell)?.update(with: items.wallet(at: idx))
         let _ = (cell as? DashboardNFTCell)?.update(with: items.nft(at: idx))
 
     }

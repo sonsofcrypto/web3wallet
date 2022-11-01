@@ -3,11 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-protocol AuthenticateView: AnyObject {
-    func update(with viewModel: AuthenticateViewModel)
-    func animateError()
-}
+import web3walletcore
 
 final class AuthenticateViewController: UIViewController, ModalDismissProtocol {
     @IBOutlet weak var passwordTextField: TextField!
@@ -29,17 +25,17 @@ final class AuthenticateViewController: UIViewController, ModalDismissProtocol {
 extension AuthenticateViewController {
 
     @IBAction func dismissAction(_ sender: Any) {
-        presenter.handle(.didCancel)
+        presenter.handle(event__________: AuthenticatePresenterEvent.DidCancel())
     }
 
     @IBAction func ctaAction(_ sender: Any) {
-        presenter.handle(.didConfirm)
+        presenter.handle(event__________: AuthenticatePresenterEvent.DidConfirm())
     }
 }
 
 extension AuthenticateViewController: AuthenticateView {
 
-    func update(with viewModel: AuthenticateViewModel) {
+    func update(viewModel______ viewModel: AuthenticateViewModel) {
         self.viewModel = viewModel
         title = viewModel.title
         passwordTextField.text = viewModel.password
@@ -52,7 +48,7 @@ extension AuthenticateViewController: AuthenticateView {
         switch viewModel.passType {
         case .pin:
             passwordTextField.keyboardType = .numberPad
-        case .pass:
+        default:
             passwordTextField.keyboardType = .`default`
             passwordTextField.returnKeyType = .done
         }
@@ -107,16 +103,16 @@ extension AuthenticateViewController: UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        presenter.handle(.didConfirm)
+        presenter.handle(event__________: AuthenticatePresenterEvent.DidConfirm())
         return false
     }
     
     func updatePresenter(_ textField: UITextField) {
         if textField == passwordTextField {
-            presenter.handle(.didChangePassword(text: textField.text ?? ""))
+            presenter.handle(event__________: AuthenticatePresenterEvent.DidChangePassword(text: textField.text ?? ""))
         }
         if textField == saltTextField {
-            presenter.handle(.didChangeSalt(text: textField.text ?? ""))
+            presenter.handle(event__________: AuthenticatePresenterEvent.DidChangeSalt(text: textField.text ?? ""))
         }
     }
 }

@@ -203,8 +203,8 @@ struct ThemeIOS: Themable {
             },
             toastAlertBackgroundColor: .init { traits in
                 isDarkMode ?
-                pallete.system1C1C1E :
-                pallete.systemWhite
+                pallete.system545458 :
+                pallete.systemC6C6C8
             },
             destructive: pallete.systemRed
         )
@@ -229,12 +229,14 @@ struct ThemeIOS: Themable {
             bodyBold: .systemFont(ofSize: 17, weight: .semibold), // line_height = 22
             callout: .systemFont(ofSize: 16, weight: .regular),  // line_height = 21
             calloutBold: .systemFont(ofSize: 16, weight: .semibold),  // line_height = 21
+            footnote: .systemFont(ofSize: 13, weight: .regular), // line_height = 18
+            footnoteBold: .systemFont(ofSize: 13, weight: .semibold), // line_height = 18
             caption1: .systemFont(ofSize: 12, weight: .regular), // line_height = 16
             caption1Bold: .systemFont(ofSize: 12, weight: .semibold), // line_height = 16
             caption2: .systemFont(ofSize: 11, weight: .regular), // line_height = 13
             caption2Bold: .systemFont(ofSize: 11, weight: .semibold), // line_height = 13
-            footnote: .systemFont(ofSize: 13, weight: .regular), // line_height = 18
-            footnoteBold: .systemFont(ofSize: 13, weight: .semibold), // line_height = 18
+            extraSmall: .systemFont(ofSize: 8, weight: .regular), // line_height = 13
+            extraSmallBold: .systemFont(ofSize: 8, weight: .semibold), // line_height = 13
             navTitle: .systemFont(ofSize: 20, weight: .regular), // line_height = 25
             tabBar: .systemFont(ofSize: 11, weight: .semibold), // line_height = 13
             networkTitle: .systemFont(ofSize: 15, weight: .regular),

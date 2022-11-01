@@ -24,6 +24,7 @@ struct AccountInteractorTransaction {
     let blockNumber: String
     let address: String
     let amount: [Formatters.Output]
+    let fiatPrice: [Formatters.Output]
     let isReceive: Bool
     let txHash: String
 }
@@ -149,15 +150,17 @@ extension DefaultAccountInteractor: AccountInteractor {
             .filter { $0.value != "0" }
             .map {
                 let isReceive = $0.to == self.address()
+                let amount = BigInt.fromString($0.value, decimals: 0)
                 return .init(
                     date: Date(timeIntervalSince1970: (try? $0.timeStamp.double()) ?? 0),
                     blockNumber: $0.blockNumber,
                     address: isReceive ? $0.from : $0.to,
                     amount: Formatters.Companion.shared.currency.format(
-                        amount: BigInt.fromString($0.value, decimals: 0),
+                        amount: amount,
                         currency: currency(),
                         style: Formatters.StyleCustom(maxLength: 20)
                     ),
+                    fiatPrice: fiatPriceFormatted(amount: amount, currency: currency()),
                     isReceive: isReceive,
                     txHash: $0.hash
                 )
@@ -187,6 +190,7 @@ extension DefaultAccountInteractor: AccountInteractor {
                             currency: currency(),
                             style: Formatters.StyleCustom(maxLength: 20)
                         ),
+                        fiatPrice: fiatPriceFormatted(amount: amount, currency: currency()),
                         isReceive: isReceive,
                         txHash: $0.transactionHash
                     )
@@ -194,5 +198,22 @@ extension DefaultAccountInteractor: AccountInteractor {
             }
         }
         return output
+    }
+    
+    func fiatPriceFormatted(amount: BigInt, currency: Currency) -> [Formatters.Output] {
+        
+        let price = currencyStoreService.marketData(currency: currency)?
+            .currentPrice?
+            .doubleValue ?? 0
+        let double = try? web3walletcore.Formatters.Companion.shared.crypto(
+            amount: amount,
+            decimals: currency.decimals(),
+            mul: price
+        ).format(maximumFractionDigits: 2)?.clearCommas.double()
+        return Formatters.Companion.shared.fiat.format(
+            amount: double?.bigDec,
+            style: Formatters.StyleCustom(maxLength: 12),
+            currencyCode: "usd"
+        )
     }
 }

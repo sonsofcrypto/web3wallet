@@ -127,12 +127,14 @@ struct ThemeMiami: Themable {
             bodyBold: .systemFont(ofSize: 17, weight: .semibold), // line_height = 22
             callout: .systemFont(ofSize: 16, weight: .regular),  // line_height = 21
             calloutBold: .systemFont(ofSize: 16, weight: .semibold),  // line_height = 21
+            footnote: .systemFont(ofSize: 13, weight: .regular), // line_height = 18
+            footnoteBold: .systemFont(ofSize: 13, weight: .semibold), // line_height = 18
             caption1: .systemFont(ofSize: 12, weight: .regular), // line_height = 16
             caption1Bold: .systemFont(ofSize: 12, weight: .semibold), // line_height = 16
             caption2: .systemFont(ofSize: 11, weight: .regular), // line_height = 13
             caption2Bold: .systemFont(ofSize: 11, weight: .semibold), // line_height = 13
-            footnote: .systemFont(ofSize: 13, weight: .regular), // line_height = 18
-            footnoteBold: .systemFont(ofSize: 13, weight: .semibold), // line_height = 18
+            extraSmall: .systemFont(ofSize: 8, weight: .regular),
+            extraSmallBold: .systemFont(ofSize: 8, weight: .semibold),
             navTitle: .systemFont(ofSize: 18, weight: .regular), // line_height = 20
             tabBar: .systemFont(ofSize: 11, weight: .semibold), // line_height = 13
             networkTitle: .init(name: "NaokoAA-BlackItalic", size: 16)!,
