@@ -59,7 +59,7 @@ class OpenSeaNFTsService(
     private var listeners: MutableList<NFTsServiceListener> = mutableListOf()
     private val client: HttpClient by lazy {
         HttpClient {
-            Logging { level = LogLevel.INFO; logger = Logger.SIMPLE }
+            Logging { level = LogLevel.NONE; logger = Logger.SIMPLE }
             install(ContentNegotiation) { json(stdJson, Json.withCharset(Charsets.UTF_8)) }
         }
     }
