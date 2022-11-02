@@ -51,8 +51,8 @@ private extension ConfirmationTxFailedView {
     func failureView() -> UIView {
         let views: [UIView] = [
             onFailedView(),
-            label(with: .headline, and: viewModel.title),
-            label(with: .body, and: viewModel.error)
+            label(with: .title3, and: viewModel.title),
+            label(with: .body, and: viewModel.error, numberOfLines: 4)
         ]
         let stackView = VStackView(views)
         stackView.spacing = Theme.constant.padding.half
@@ -101,13 +101,14 @@ private extension ConfirmationTxFailedView {
     
     func label(
         with style: UILabel.Style,
-        and text: String
+        and text: String,
+        numberOfLines: Int = 0
     ) -> UIView {
         let label = UILabel()
         label.apply(style: style)
         label.text = text
         label.textAlignment = .center
-        label.numberOfLines = 0
+        label.numberOfLines = numberOfLines
         return label
     }
     

@@ -28,9 +28,7 @@ extension ConfirmationViewController: ConfirmationView {
         view.removeAllSubview()
         let content = contentView()
         view.addSubview(content)
-        content.addConstraints(
-            .toEdges(padding: Theme.constant.padding)
-        )
+        content.addConstraints(.toEdges(padding: Theme.constant.padding))
     }
 }
 

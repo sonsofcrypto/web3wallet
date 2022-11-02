@@ -51,7 +51,7 @@ private extension ConfirmationTxSuccessView {
     func successView() -> UIView {
         let views: [UIView] = [
             onSuccessView(),
-            label(with: .headline, and: viewModel.title),
+            label(with: .title3, and: viewModel.title),
             label(with: .body, and: viewModel.message),
         ]
         let stackView = VStackView(views)

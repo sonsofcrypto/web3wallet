@@ -41,7 +41,7 @@ class DefaultConfirmationPresenter(
     private val context: ConfirmationWireframeContext,
 ): ConfirmationPresenter {
     private var txHash: String? = null
-    private var error: Error? = null
+    private var error: Throwable? = null
     private val scope = CoroutineScope(bgDispatcher)
 
     override fun present() { updateView(contentViewModel(context)) }
@@ -100,7 +100,7 @@ class DefaultConfirmationPresenter(
         return ConfirmationViewModel.Content.TxSuccess(data)
     }
 
-    private fun failedViewModel(error: Error): ConfirmationViewModel.Content {
+    private fun failedViewModel(error: Throwable): ConfirmationViewModel.Content {
         val data = ConfirmationTxFailedViewModel(
             Localized("confirmation.tx.failed.${context.localized}.title"),
             Localized(error.message ?: Localized("confirmation.tx.failed.generic.error")),
@@ -230,8 +230,10 @@ class DefaultConfirmationPresenter(
         txHash = null
         error = null
         val errHandler = CoroutineExceptionHandler { _, err ->
-            error = Error(err)
-            updateView(failedViewModel(error!!))
+            scope.launch(uiDispatcher) {
+                error = err
+                updateView(failedViewModel(error!!))
+            }
         }
         when (context) {
             is Send -> {
