@@ -3,13 +3,14 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class ConfirmationSendView: UIView {
-    private let viewModel: ConfirmationViewModel.SendViewModel
+    private let viewModel: ConfirmationSendViewModel
     private let onConfirmHandler: () -> Void
     
     init(
-        viewModel: ConfirmationViewModel.SendViewModel,
+        viewModel: ConfirmationSendViewModel,
         onConfirmHandler: @escaping () -> Void
     ) {
         self.viewModel = viewModel
@@ -29,7 +30,7 @@ private extension ConfirmationSendView {
         let views: [UIView] = [
             currenyGroup(with: viewModel.currency),
             destinationGroup(),
-            estimatedFeesGroup(),
+            networkFeeGroup(),
             confirmButton()
         ]
         let stackView = VStackView(views)
@@ -41,7 +42,7 @@ private extension ConfirmationSendView {
         stackView.addConstraints(.toEdges)
     }
     
-    func currenyGroup(with currency: ConfirmationViewModel.SendViewModel.Currency) -> UIView {
+    func currenyGroup(with currency: ConfirmationCurrencyViewModel) -> UIView {
         let horizontalStack = HStackView(
             [
                 currencyView(with: currency.iconName),
@@ -77,15 +78,23 @@ private extension ConfirmationSendView {
     }
     
     func currencyAmountView(
-        with value: String,
-        and usdValue: String
+        with value: [Formatters.Output],
+        and usdValue: [Formatters.Output]
     ) -> UIView {
         let amountLabel = UILabel()
         amountLabel.apply(style: .title3)
-        amountLabel.text = value
+        amountLabel.attributedText = .init(
+            value,
+            font: Theme.font.title3,
+            fontSmall: Theme.font.headline
+        )
         let amountUSDLabel = UILabel()
         amountUSDLabel.apply(style: .footnote)
-        amountUSDLabel.text = usdValue
+        amountUSDLabel.attributedText = .init(
+            usdValue,
+            font: Theme.font.footnote,
+            fontSmall: Theme.font.extraSmall
+        )
         let stackView = VStackView([amountLabel, amountUSDLabel])
         stackView.spacing = Theme.constant.padding * 0.25
         return stackView
@@ -95,12 +104,12 @@ private extension ConfirmationSendView {
         let views = [
             row(
                 with: Localized("confirmation.from"),
-                value: viewModel.destination.from
+                value: .init(string: viewModel.address.from)
             ),
             dividerLine(),
             row(
                 with: Localized("confirmation.to"),
-                value: viewModel.destination.to
+                value: .init(string: viewModel.address.to)
             )
         ]
         let stack = VStackView(views)
@@ -109,9 +118,7 @@ private extension ConfirmationSendView {
         view.layer.cornerRadius = Theme.constant.cornerRadius
         view.backgroundColor = Theme.colour.cellBackground
         view.addSubview(stack)
-        stack.addConstraints(
-            .toEdges(padding: Theme.constant.padding)
-        )
+        stack.addConstraints(.toEdges(padding: Theme.constant.padding))
         return view
     }
     
@@ -134,11 +141,13 @@ private extension ConfirmationSendView {
         return view
     }
     
-    func estimatedFeesGroup() -> UIView {
+    func networkFeeGroup() -> UIView {
+        var value = viewModel.networkFee.value
+        value.append(Formatters.OutputNormal(value: " ~ \(viewModel.networkFee.time)"))
         let views = [
             row(
-                with: Localized("confirmation.estimatedFee"),
-                value: viewModel.estimatedFee.usdValue
+                with: viewModel.networkFee.title,
+                value: .init(value, font: Theme.font.body, fontSmall: Theme.font.caption2)
             )
         ]
         let stack = VStackView(views)
@@ -147,20 +156,18 @@ private extension ConfirmationSendView {
         view.layer.cornerRadius = Theme.constant.cornerRadius
         view.backgroundColor = Theme.colour.cellBackground
         view.addSubview(stack)
-        stack.addConstraints(
-            .toEdges(padding: Theme.constant.padding)
-        )
+        stack.addConstraints(.toEdges(padding: Theme.constant.padding))
         return view
     }
     
-    func row(with name: String, value: String) -> UIView {
+    func row(with name: String, value: NSAttributedString) -> UIView {
         let titleLabel = UILabel()
         titleLabel.apply(style: .body)
         titleLabel.text = name
         let valueLabel = UILabel()
         valueLabel.apply(style: .body)
         valueLabel.textAlignment = .right
-        valueLabel.text = value
+        valueLabel.attributedText = value
         let horizontalStack = HStackView(
             [
                 titleLabel, valueLabel

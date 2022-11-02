@@ -3,9 +3,10 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class ConfirmationTxFailedView: UIView {
-    private let viewModel: ConfirmationViewModel.TxFailedViewModel
+    private let viewModel: ConfirmationTxFailedViewModel
     private let handler: Handler
     
     struct Handler {
@@ -14,7 +15,7 @@ final class ConfirmationTxFailedView: UIView {
     }
     
     init(
-        viewModel: ConfirmationViewModel.TxFailedViewModel,
+        viewModel: ConfirmationTxFailedViewModel,
         handler: Handler
     ) {
         self.viewModel = viewModel
@@ -50,9 +51,8 @@ private extension ConfirmationTxFailedView {
     func failureView() -> UIView {
         let views: [UIView] = [
             onFailedView(),
-            label(with: .body, and: viewModel.title),
-            label(with: .footnote, and: viewModel.error),
-            .empty
+            label(with: .headline, and: viewModel.title),
+            label(with: .body, and: viewModel.error)
         ]
         let stackView = VStackView(views)
         stackView.spacing = Theme.constant.padding.half
@@ -64,8 +64,7 @@ private extension ConfirmationTxFailedView {
             [
                 .layout(anchor: .leadingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
                 .layout(anchor: .trailingAnchor, constant: .equalTo(constant: Theme.constant.padding)),
-                .layout(anchor: .topAnchor),
-                .layout(anchor: .bottomAnchor)
+                .layout(anchor: .centerYAnchor)
             ]
         )
         return wrapperView

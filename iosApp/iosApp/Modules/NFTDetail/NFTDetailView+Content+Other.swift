@@ -46,7 +46,7 @@ private extension NFTDetailViewController {
             ),
             (
                 name: Localized("nft.detail.section.title.other.tokenId"),
-                value: item.tokenId
+                value: item.tokenId.toDecimalString()
             ),
             (
                 name: Localized("nft.detail.section.title.other.network"),

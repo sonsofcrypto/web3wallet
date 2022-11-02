@@ -25,6 +25,7 @@ final class DefaultCultProposalsWireframe {
     private let currencySwapWireframeFactory: CurrencySwapWireframeFactory
     private let cultService: CultService
     private let walletService: WalletService
+    private let networksService: NetworksService
 
     private weak var vc: UIViewController?
 
@@ -35,7 +36,8 @@ final class DefaultCultProposalsWireframe {
         alertWireframeFactory: AlertWireframeFactory,
         currencySwapWireframeFactory: CurrencySwapWireframeFactory,
         cultService: CultService,
-        walletService: WalletService
+        walletService: WalletService,
+        networksService: NetworksService
     ) {
         self.parent = parent
         self.cultProposalWireframeFactory = cultProposalWireframeFactory
@@ -44,6 +46,7 @@ final class DefaultCultProposalsWireframe {
         self.currencySwapWireframeFactory = currencySwapWireframeFactory
         self.cultService = cultService
         self.walletService = walletService
+        self.networksService = networksService
     }
 }
 
@@ -62,14 +65,11 @@ extension DefaultCultProposalsWireframe: CultProposalsWireframe {
                 context: .init(proposal: proposal, proposals: proposals)
             ).present()
         case let .castVote(proposal, approve):
-            confirmationWireframeFactory.make(
-                vc,
-                context: .init(
-                    type: .cultCastVote(
-                        .init(cultProposal: proposal, approve: approve)
-                    )
-                )
-            ).present()
+            let networkFee = networksService.defaultNetworkFee(network: Network.ethereum())
+            let context = ConfirmationWireframeContext.CultCastVote(
+                data: .init(cultProposal: proposal, approve: approve, networkFee: networkFee)
+            )
+            confirmationWireframeFactory.make(vc, context: context).present()
         case let .alert(context):
             alertWireframeFactory.make(vc, context: context).present()
         case .getCult:

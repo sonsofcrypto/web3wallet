@@ -13,9 +13,7 @@ struct NFTSendWireframeContext {
 enum NFTSendWireframeDestination {
     case underConstructionAlert
     case qrCodeScan(network: Network, onCompletion: (String) -> Void)
-    case confirmSendNFT(
-        dataIn: ConfirmationWireframeContext.SendNFTContext
-    )
+    case confirmSendNFT(context: ConfirmationWireframeContext.SendNFT)
 }
 
 protocol NFTSendWireframe {
@@ -71,14 +69,11 @@ extension DefaultNFTSendWireframe: NFTSendWireframe {
                 handler: onPopWrapped(onCompletion: onCompletion)
             )
             qrCodeScanWireframeFactory.make(vc, context: context).present()
-        case let .confirmSendNFT(dataIn):
-            guard dataIn.addressFrom != dataIn.addressTo else {
+        case let .confirmSendNFT(context):
+            guard context.data.addressFrom != context.data.addressTo else {
                 return presentSendingToSameAddressAlert()
             }
-            confirmationWireframeFactory.make(
-                vc,
-                context: .init(type: .sendNFT(dataIn))
-            ).present()
+            confirmationWireframeFactory.make(vc, context: context).present()
         }
     }
     

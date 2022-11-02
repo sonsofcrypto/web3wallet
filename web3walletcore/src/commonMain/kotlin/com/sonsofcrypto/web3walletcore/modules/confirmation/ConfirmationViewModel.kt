@@ -60,7 +60,7 @@ data class ConfirmationSendNFTViewModel(
 data class ConfirmationCultCastVoteViewModel(
     val action: String,
     val name: String,
-    // val networkFee: ConfirmationNetworkFeeViewModel,
+    val networkFee: ConfirmationNetworkFeeViewModel,
 )
 
 data class ConfirmationApproveUniswapViewModel(
@@ -72,8 +72,8 @@ data class ConfirmationApproveUniswapViewModel(
 data class ConfirmationCurrencyViewModel(
     val iconName: String,
     val symbol: String,
-    val value: String,
-    val usdValue: String,
+    val value: List<Formatters.Output>,
+    val usdValue: List<Formatters.Output>,
 )
 
 data class ConfirmationAddressViewModel(
@@ -84,6 +84,8 @@ data class ConfirmationAddressViewModel(
 data class ConfirmationNetworkFeeViewModel(
     val title: String,
     val value: List<Formatters.Output>,
+    val time: String,
+    val fiat: List<Formatters.Output>,
 )
 
 data class ConfirmationProviderViewModel(

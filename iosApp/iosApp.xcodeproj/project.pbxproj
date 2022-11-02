@@ -304,9 +304,7 @@
 		1C67201B28870FCB00C5F044 /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67201A28870FCB00C5F044 /* ConfirmationView.swift */; };
 		1C67201F28870FDB00C5F044 /* ConfirmationWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67201E28870FDB00C5F044 /* ConfirmationWireframe.swift */; };
 		1C67202128870FE100C5F044 /* ConfirmationWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67202028870FE100C5F044 /* ConfirmationWireframeFactory.swift */; };
-		1C67202528870FF400C5F044 /* ConfirmationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67202428870FF400C5F044 /* ConfirmationPresenter.swift */; };
 		1C67202B2887EB7F00C5F044 /* Confirmation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C67202A2887EB7F00C5F044 /* Confirmation.storyboard */; };
-		1C67202D2887EECC00C5F044 /* ConfirmationWireframeContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67202C2887EECB00C5F044 /* ConfirmationWireframeContext.swift */; };
 		1C7F862728D20E490073FD95 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F85FF28D20E490073FD95 /* Array+Extensions.swift */; };
 		1C7F862828D20E490073FD95 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F860028D20E490073FD95 /* Int+Extensions.swift */; };
 		1C7F862928D20E490073FD95 /* CG+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F860128D20E490073FD95 /* CG+Extensions.swift */; };
@@ -833,9 +831,7 @@
 		1C67201A28870FCB00C5F044 /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
 		1C67201E28870FDB00C5F044 /* ConfirmationWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationWireframe.swift; sourceTree = "<group>"; };
 		1C67202028870FE100C5F044 /* ConfirmationWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationWireframeFactory.swift; sourceTree = "<group>"; };
-		1C67202428870FF400C5F044 /* ConfirmationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationPresenter.swift; sourceTree = "<group>"; };
 		1C67202A2887EB7F00C5F044 /* Confirmation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Confirmation.storyboard; sourceTree = "<group>"; };
-		1C67202C2887EECB00C5F044 /* ConfirmationWireframeContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationWireframeContext.swift; sourceTree = "<group>"; };
 		1C7F85FF28D20E490073FD95 /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		1C7F860028D20E490073FD95 /* Int+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		1C7F860128D20E490073FD95 /* CG+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CG+Extensions.swift"; sourceTree = "<group>"; };
@@ -1856,10 +1852,8 @@
 			isa = PBXGroup;
 			children = (
 				1C67202A2887EB7F00C5F044 /* Confirmation.storyboard */,
-				1C67202428870FF400C5F044 /* ConfirmationPresenter.swift */,
 				1C67201A28870FCB00C5F044 /* ConfirmationView.swift */,
 				1C67201E28870FDB00C5F044 /* ConfirmationWireframe.swift */,
-				1C67202C2887EECB00C5F044 /* ConfirmationWireframeContext.swift */,
 				1C67202028870FE100C5F044 /* ConfirmationWireframeFactory.swift */,
 				1CE00639288884C8002D1EB3 /* Views */,
 			);
@@ -2681,7 +2675,6 @@
 				1C60C2A2285724D0003BE25D /* SettingsWireframe.swift in Sources */,
 				1C60C2CC285724D0003BE25D /* AlertWireframe.swift in Sources */,
 				1C60C2A6285724D0003BE25D /* SettingsView.swift in Sources */,
-				1C67202D2887EECC00C5F044 /* ConfirmationWireframeContext.swift in Sources */,
 				D1EF5BCA287BEE92004CAD82 /* MnemonicUpdateViewModel.swift in Sources */,
 				1C60C30B285724D1003BE25D /* RootPresenter.swift in Sources */,
 				1C60C2C3285724D0003BE25D /* ChatViewController.swift in Sources */,
@@ -2700,7 +2693,6 @@
 				1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */,
 				1C7F863E28D20E490073FD95 /* UITraitCollection+Extensions.swift in Sources */,
 				1C60C2C1285724D0003BE25D /* KeyStoreView.swift in Sources */,
-				1C67202528870FF400C5F044 /* ConfirmationPresenter.swift in Sources */,
 				1C60C2DD285724D0003BE25D /* DashboardView.swift in Sources */,
 				1C60C2FF285724D1003BE25D /* NFTsDashboardView+MainScrollView.swift in Sources */,
 				1C672001287FE11700C5F044 /* CurrencySwapMarketCollectionViewCell.swift in Sources */,

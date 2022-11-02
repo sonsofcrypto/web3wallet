@@ -15,10 +15,11 @@ enum CurrencySwapWireframeDestination {
     case underConstructionAlert
     case selectCurrencyFrom(onCompletion: (Currency) -> Void)
     case selectCurrencyTo(onCompletion: (Currency) -> Void)
-    case confirmSwap(data: ConfirmationWireframeContext.SwapContext)
+    case confirmSwap(context: ConfirmationWireframeContext.Swap)
     case confirmApproval(
         currency: Currency,
-        onApproved: ((password: String, salt: String)) -> Void
+        onApproved: (_ password: String, _ salt: String) -> Void,
+        networkFee: NetworkFee
     )
 }
 
@@ -79,23 +80,13 @@ extension DefaultCurrencySwapWireframe: CurrencySwapWireframe {
             presentCurrencyPicker(network: context.network, onCompletion: onCompletion)
         case let .selectCurrencyTo(onCompletion):
             presentCurrencyPicker(network: context.network, onCompletion: onCompletion)
-        case let .confirmSwap(dataIn):
-            confirmationWireframeFactory.make(
-                vc,
-                context: .init(type: .swap(dataIn))
-            ).present()
-        case let .confirmApproval(currency, onApproved):
-            confirmationWireframeFactory.make(
-                vc,
-                context: .init(
-                    type: .approveUniswap(
-                        .init(
-                            currency: currency,
-                            onApproved: onApproved
-                        )
-                    )
-                )
-            ).present()
+        case let .confirmSwap(context):
+            confirmationWireframeFactory.make(vc, context: context).present()
+        case let .confirmApproval(currency, onApproved, networkFee):
+            let context = ConfirmationWireframeContext.ApproveUniswap(
+                data: .init(currency: currency, onApproved: onApproved, networkFee: networkFee)
+            )
+            confirmationWireframeFactory.make(vc, context: context).present()
         }
     }
     

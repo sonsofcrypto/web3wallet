@@ -3,11 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-protocol ConfirmationView: AnyObject {
-    func update(with viewModel: ConfirmationViewModel)
-    func dismiss(animated flag: Bool, completion: (() -> Void)?)
-}
+import web3walletcore
 
 final class ConfirmationViewController: BaseViewController {
 
@@ -26,7 +22,7 @@ final class ConfirmationViewController: BaseViewController {
 
 extension ConfirmationViewController: ConfirmationView {
 
-    func update(with viewModel: ConfirmationViewModel) {
+    func update(viewModel___ viewModel: ConfirmationViewModel) {
         self.viewModel = viewModel
         title = viewModel.title
         view.removeAllSubview()
@@ -47,33 +43,10 @@ extension ConfirmationViewController: UIViewControllerTransitioningDelegate, Mod
     ) -> UIPresentationController? {
         let navBarHeight: CGFloat = 44
         var contentHeight: CGFloat = 0
-        switch presenter.contextType {
-        case .swap:
-            contentHeight += navBarHeight
-            contentHeight += Theme.constant.padding
-            contentHeight += 398
-            contentHeight += Theme.constant.padding
-        case .send:
-            contentHeight += navBarHeight
-            contentHeight += Theme.constant.padding
-            contentHeight += 322
-            contentHeight += Theme.constant.padding
-        case .sendNFT:
-            contentHeight += navBarHeight
-            contentHeight += Theme.constant.padding
-            contentHeight += 342
-            contentHeight += Theme.constant.padding
-        case .cultCastVote:
-            contentHeight += navBarHeight
-            contentHeight += Theme.constant.padding
-            contentHeight += 270
-            contentHeight += Theme.constant.padding
-        case .approveUniswap:
-            contentHeight += navBarHeight
-            contentHeight += Theme.constant.padding
-            contentHeight += 300
-            contentHeight += Theme.constant.padding
-        }
+        contentHeight += navBarHeight
+        contentHeight += Theme.constant.padding
+        contentHeight += presenter.context().viewContentHeight
+        contentHeight += Theme.constant.padding
         return ConfirmationSheetPresentationController(
             presentedViewController: presented,
             presenting: presenting,
@@ -99,73 +72,87 @@ private extension ConfirmationViewController {
     }
 
     @objc func dismissAction() {
-        presenter.handle(.dismiss)
+        presenter.handle(event_______: ConfirmationPresenterEvent.Dismiss())
     }
 }
 
 private extension ConfirmationViewController {
     
     func contentView() -> UIView {
-        switch viewModel.content {
-        case let .inProgress(viewModel):
-            return ConfirmationTxInProgressView(
-                viewModel: viewModel
-            )
-        case let .success(viewModel):
+        if let vm = viewModel.content as? ConfirmationViewModel.ContentTxInProgress {
+            return ConfirmationTxInProgressView(viewModel: vm.data)
+        }
+        if let vm = viewModel.content as? ConfirmationViewModel.ContentTxSuccess {
             return ConfirmationTxSuccessView(
-                viewModel: viewModel,
+                viewModel: vm.data,
                 handler: confirmationTxSuccessViewHandler()
             )
-        case let .failed(viewModel):
+        }
+        if let vm = viewModel.content as? ConfirmationViewModel.ContentTxFailed {
             return ConfirmationTxFailedView(
-                viewModel: viewModel,
+                viewModel: vm.data,
                 handler: confirmationTxFailedViewHandler()
             )
-        case let .swap(viewModel):
-            return ConfirmationSwapView(
-                viewModel: viewModel,
-                onConfirmHandler: presenterEventTapped(.confirm)
-            )
-        case let .send(viewModel):
+        }
+        if let vm = viewModel.content as? ConfirmationViewModel.ContentSend {
             return ConfirmationSendView(
-                viewModel: viewModel,
-                onConfirmHandler: presenterEventTapped(.confirm)
-            )
-        case let .sendNFT(viewModel):
-            return ConfirmationSendNFTView(
-                viewModel: viewModel,
-                onConfirmHandler: presenterEventTapped(.confirm)
-            )
-        case let .cultCastVote(viewModel):
-            return ConfirmationCultCastVoteView(
-                viewModel: viewModel,
-                onConfirmHandler: presenterEventTapped(.confirm)
-            )
-        case let .approveUniswap(viewModel):
-            return ConfirmationApproveUniswapView(
-                viewModel: viewModel,
-                onConfirmHandler: presenterEventTapped(.confirm)
+                viewModel: vm.data,
+                onConfirmHandler: presenterEventTapped(ConfirmationPresenterEvent.Confirm())
             )
         }
+        if let vm = viewModel.content as? ConfirmationViewModel.ContentSendNFT {
+            return ConfirmationSendNFTView(
+                viewModel: vm.data,
+                onConfirmHandler: presenterEventTapped(ConfirmationPresenterEvent.Confirm())
+            )
+        }
+        if let vm = viewModel.content as? ConfirmationViewModel.ContentSwap {
+            return ConfirmationSwapView(
+                viewModel: vm.data,
+                onConfirmHandler: presenterEventTapped(ConfirmationPresenterEvent.Confirm())
+            )
+        }
+        if let vm = viewModel.content as? ConfirmationViewModel.ContentCultCastVote {
+            return ConfirmationCultCastVoteView(
+                viewModel: vm.data,
+                onConfirmHandler: presenterEventTapped(ConfirmationPresenterEvent.Confirm())
+            )
+        }
+        if let vm = viewModel.content as? ConfirmationViewModel.ContentApproveUniswap {
+            return ConfirmationApproveUniswapView(
+                viewModel: vm.data,
+                onConfirmHandler: presenterEventTapped(ConfirmationPresenterEvent.Confirm())
+            )
+        }
+        fatalError("View not handled")
     }
     
     func confirmationTxSuccessViewHandler() -> ConfirmationTxSuccessView.Handler {
         .init(
-            onCTATapped: presenterEventTapped(.txSuccessCTATapped),
-            onCTASecondaryTapped: presenterEventTapped(.txSuccessCTASecondaryTapped)
+            onCTATapped: presenterEventTapped(ConfirmationPresenterEvent.TxSuccessCTATapped()),
+            onCTASecondaryTapped: presenterEventTapped(ConfirmationPresenterEvent.TxSuccessCTASecondaryTapped())
         )
     }
     
     func confirmationTxFailedViewHandler() -> ConfirmationTxFailedView.Handler {
         .init(
-            onCTATapped: presenterEventTapped(.txFailedCTATapped),
-            onCTASecondaryTapped: presenterEventTapped(.txFailedCTASecondaryTapped)
+            onCTATapped: presenterEventTapped(ConfirmationPresenterEvent.TxFailedCTATapped()),
+            onCTASecondaryTapped: presenterEventTapped(ConfirmationPresenterEvent.TxFailedCTASecondaryTapped())
         )
     }
     
-    func presenterEventTapped(
-        _ event: ConfirmationPresenterEvent
-    ) -> () -> Void {
-        { [weak self] in self?.presenter.handle(event) }
+    func presenterEventTapped(_ event: ConfirmationPresenterEvent) -> () -> Void {
+        { [weak self] in self?.presenter.handle(event_______: event) }
+    }
+}
+
+private extension ConfirmationWireframeContext {
+    var viewContentHeight: CGFloat {
+        if (self is ConfirmationWireframeContext.Send) { return 322 }
+        else if (self is ConfirmationWireframeContext.Swap) { return 398 }
+        else if (self is ConfirmationWireframeContext.SendNFT) { return 342 }
+        else if (self is ConfirmationWireframeContext.CultCastVote) { return 312 }
+        else if (self is ConfirmationWireframeContext.ApproveUniswap) { return 300 }
+        else { return 300 }
     }
 }

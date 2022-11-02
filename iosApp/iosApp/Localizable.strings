@@ -333,7 +333,6 @@
 
 "confirmation.provider" = "Provider";
 "confirmation.slippage" = "Slippage";
-"confirmation.estimatedFee" = "Estimated Fee";
 "confirmation.from" = "From";
 "confirmation.to" = "To";
 
@@ -385,7 +384,10 @@
 "confirmation.tx.failed.sendNFT.cta" = "Retry";
 "confirmation.tx.failed.cultCastVote.title" = "Oops 😬";
 "confirmation.tx.failed.cultCastVote.cta" = "Retry";
+"confirmation.tx.failed.approveUniswap.title" = "Oops 😬";
+"confirmation.tx.failed.approveUniswap.cta" = "Retry";
 "confirmation.tx.failed.report" = "Report Error";
+"confirmation.tx.failed.generic.error" = "This transaction has failed. Please try again.";
 
 "cult.proposals.title" = "Cult.DAO Proposals";
 "cult.proposals.segmentedControl.pending" = "Pending";

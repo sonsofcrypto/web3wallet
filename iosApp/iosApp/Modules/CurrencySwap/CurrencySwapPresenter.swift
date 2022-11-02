@@ -145,7 +145,7 @@ extension DefaultCurrencySwapPresenter: CurrencySwapPresenter {
         case .feeTapped:
             view?.presentFeePicker(with: fees)
         case .approve:
-            guard approveState() == .approve else { return }
+            guard approveState() == .approve, let fee = fee else { return }
             wireframe.navigate(
                 to: .confirmApproval(
                     currency: currencyTo,
@@ -157,7 +157,8 @@ extension DefaultCurrencySwapPresenter: CurrencySwapPresenter {
                             password: password,
                             salt: salt
                         )
-                    }
+                    },
+                    networkFee: fee
                 )
             )
         case .review:
@@ -171,26 +172,25 @@ extension DefaultCurrencySwapPresenter: CurrencySwapPresenter {
             guard currencyFromBalance >= (amountFrom ?? .zero), let fee = fee else { return }
             switch interactor.swapState {
             case .swap:
-                wireframe.navigate(
-                    to: .confirmSwap(
-                        data: .init(
-                            network: context.network,
-                            provider: confirmationProvider(),
-                            amountFrom: amountFrom ?? .zero,
-                            amountTo: amountTo ?? .zero,
-                            currencyFrom: currencyFrom,
-                            currencyTo: currencyTo,
-                            networkFee: fee,
-                            swapService: interactor.swapService
-                        )
+                let context = ConfirmationWireframeContext.Swap(
+                    data: .init(
+                        network: context.network,
+                        provider: confirmationProvider(),
+                        amountFrom: amountFrom ?? .zero,
+                        amountTo: amountTo ?? .zero,
+                        currencyFrom: currencyFrom,
+                        currencyTo: currencyTo,
+                        networkFee: fee,
+                        swapService: interactor.swapService
                     )
                 )
+                wireframe.navigate(to: .confirmSwap(context: context))
             default: break
             }
         }
     }
     
-    func confirmationProvider() -> ConfirmationWireframeContext.SwapContext.Provider {
+    func confirmationProvider() -> ConfirmationWireframeContext.SwapContextProvider {
         .init(
             iconName: selectedProviderIconName(),
             name: selectedProviderName,

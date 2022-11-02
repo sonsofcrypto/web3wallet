@@ -6,8 +6,6 @@ import web3walletcore
 
 extension Currency {
     
-    var iconName: String { coinGeckoId ?? "currency_placeholder" }
-    
     func fiatValue(for amount: BigInt) -> Double {
         let bigDecBalance = amount.toBigDec(decimals: UInt(decimals()))
         let bigDecFiatPrice = BigDec.Companion().from(double: fiatPrice)

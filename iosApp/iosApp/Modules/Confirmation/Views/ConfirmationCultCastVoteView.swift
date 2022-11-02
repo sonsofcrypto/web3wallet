@@ -3,13 +3,14 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class ConfirmationCultCastVoteView: UIView {
-    private let viewModel: ConfirmationViewModel.CultCastVoteViewModel
+    private let viewModel: ConfirmationCultCastVoteViewModel
     private let onConfirmHandler: () -> Void
     
     init(
-        viewModel: ConfirmationViewModel.CultCastVoteViewModel,
+        viewModel: ConfirmationCultCastVoteViewModel,
         onConfirmHandler: @escaping () -> Void
     ) {
         self.viewModel = viewModel
@@ -26,19 +27,23 @@ final class ConfirmationCultCastVoteView: UIView {
 private extension ConfirmationCultCastVoteView {
     
     func configureUI() {
-        let emptyView = UIView()
-        emptyView.backgroundColor = .clear
         let views: [UIView] = [
             cultLogo(),
             action(),
             title(),
-            emptyView,
+            networkFeeGroup(),
             confirmButton()
         ]
         let stackView = VStackView(views)
         stackView.spacing = Theme.constant.padding
         addSubview(stackView)
-        stackView.addConstraints(.toEdges)
+        stackView.addConstraints(
+            [
+                .layout(anchor: .bottomAnchor),
+                .layout(anchor: .leadingAnchor),
+                .layout(anchor: .trailingAnchor)
+            ]
+        )
     }
     
     func action() -> UIView {
@@ -75,6 +80,46 @@ private extension ConfirmationCultCastVoteView {
             ]
         )
         return view
+    }
+    
+    func networkFeeGroup() -> UIView {
+        var value = viewModel.networkFee.value
+        value.append(Formatters.OutputNormal(value: " ~ \(viewModel.networkFee.time)"))
+        let views = [
+            row(
+                with: viewModel.networkFee.title,
+                value: .init(value, font: Theme.font.body, fontSmall: Theme.font.caption2)
+            )
+        ]
+        let stack = VStackView(views)
+        stack.spacing = Theme.constant.padding * 0.5
+        let view = UIView()
+        view.layer.cornerRadius = Theme.constant.cornerRadius
+        view.backgroundColor = Theme.colour.cellBackground
+        view.addSubview(stack)
+        stack.addConstraints(.toEdges(padding: Theme.constant.padding))
+        return view
+    }
+    
+    func row(with name: String, value: NSAttributedString) -> UIView {
+        let titleLabel = UILabel()
+        titleLabel.apply(style: .body)
+        titleLabel.text = name
+        let valueLabel = UILabel()
+        valueLabel.apply(style: .body)
+        valueLabel.textAlignment = .right
+        valueLabel.attributedText = value
+        let horizontalStack = HStackView(
+            [
+                titleLabel, valueLabel
+            ]
+        )
+        titleLabel.addConstraints(
+            [
+                .layout(anchor: .heightAnchor, constant: .equalTo(constant: 24))
+            ]
+        )
+        return horizontalStack
     }
     
     func confirmButton() -> UIButton {

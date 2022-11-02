@@ -3,9 +3,10 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class ConfirmationTxSuccessView: UIView {
-    private let viewModel: ConfirmationViewModel.TxSuccessViewModel
+    private let viewModel: ConfirmationTxSuccessViewModel
     private let handler: Handler
     
     struct Handler {
@@ -14,7 +15,7 @@ final class ConfirmationTxSuccessView: UIView {
     }
     
     init(
-        viewModel: ConfirmationViewModel.TxSuccessViewModel,
+        viewModel: ConfirmationTxSuccessViewModel,
         handler: Handler
     ) {
         self.viewModel = viewModel
@@ -50,8 +51,8 @@ private extension ConfirmationTxSuccessView {
     func successView() -> UIView {
         let views: [UIView] = [
             onSuccessView(),
-            label(with: .body, and: viewModel.title),
-            label(with: .footnote, and: viewModel.message),
+            label(with: .headline, and: viewModel.title),
+            label(with: .body, and: viewModel.message),
         ]
         let stackView = VStackView(views)
         stackView.spacing = Theme.constant.padding
@@ -63,7 +64,7 @@ private extension ConfirmationTxSuccessView {
             [
                 .layout(anchor: .leadingAnchor),
                 .layout(anchor: .trailingAnchor),
-                .layout(anchor: .topAnchor)
+                .layout(anchor: .centerYAnchor)
             ]
         )
         return wrapperView

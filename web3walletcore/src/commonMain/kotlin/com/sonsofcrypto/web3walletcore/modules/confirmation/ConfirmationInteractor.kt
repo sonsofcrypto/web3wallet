@@ -1,6 +1,7 @@
 package com.sonsofcrypto.web3walletcore.modules.confirmation
 
 import com.sonsofcrypto.web3lib.provider.model.TransactionResponse
+import com.sonsofcrypto.web3lib.services.currencyStore.CurrencyStoreService
 import com.sonsofcrypto.web3lib.services.uniswap.UniswapService
 import com.sonsofcrypto.web3lib.services.wallet.WalletService
 import com.sonsofcrypto.web3lib.signer.contracts.CultGovernor
@@ -14,85 +15,61 @@ import com.sonsofcrypto.web3walletcore.services.nfts.NFTsService
 interface ConfirmationInteractor {
     @Throws(Throwable::class)
     suspend fun send(
-        addressTo: String,
-        network: Network,
-        currency: Currency,
-        amount: BigInt,
-        networkFee: NetworkFee,
-        password: String,
-        salt: String,
+        input: ConfirmationWireframeContext.SendContext, password: String, salt: String,
     ): TransactionResponse
 
     @Throws(Throwable::class)
     suspend fun sendNFT(
-        addressFrom: String,
-        addressTo: String,
-        network: Network,
-        nft: NFTItem,
-        password: String,
-        salt: String,
+        input: ConfirmationWireframeContext.SendNFTContext, password: String, salt: String,
     ): TransactionResponse
 
     @Throws(Throwable::class)
     suspend fun castVote(
-        proposalId: String,
-        support: Boolean,
-        password: String,
-        salt: String,
+        input: ConfirmationWireframeContext.CultCastVoteContext, password: String, salt: String,
     ): TransactionResponse
 
     @Throws(Throwable::class)
-    suspend fun executeSwap(
-        network: Network,
-        password: String,
-        salt: String,
-        swapService: UniswapService,
+    suspend fun swap(
+        network: Network, password: String, salt: String, swapService: UniswapService,
     ): TransactionResponse
+
+    fun fiatPrice(currency: Currency): Double
 }
 
 class DefaultConfirmationInteractor(
     private val walletService: WalletService,
     private val nftsService: NFTsService,
+    private val currencyStoreService: CurrencyStoreService
 ): ConfirmationInteractor {
 
     @Throws(Throwable::class)
     override suspend fun send(
-        addressTo: String,
-        network: Network,
-        currency: Currency,
-        amount: BigInt,
-        networkFee: NetworkFee,
-        password: String,
-        salt: String,
+        input: ConfirmationWireframeContext.SendContext, password: String, salt: String,
     ): TransactionResponse {
-        walletService.unlock(password, salt, network)
-        return walletService.transfer(addressTo, currency, amount, network)
+        walletService.unlock(password, salt, input.network)
+        return walletService.transfer(input.addressTo, input.currency, input.amount, input.network)
     }
 
     @Throws(Throwable::class)
     override suspend fun sendNFT(
-        addressFrom: String,
-        addressTo: String,
-        network: Network,
-        nft: NFTItem,
-        password: String,
-        salt: String,
+        input: ConfirmationWireframeContext.SendNFTContext, password: String, salt: String,
     ): TransactionResponse {
-        walletService.unlock(password, salt, network)
-        val contract = ERC721(HexString(nft.address))
-        return walletService.contractSend(
+        walletService.unlock(password, salt, input.network)
+        val contract = ERC721(HexString(input.nftItem.address))
+        val tx = walletService.contractSend(
             contract.address.hexString,
-            contract.transferFrom(HexString(addressFrom), HexString(addressTo), nft.tokenId),
-            network
+            contract.transferFrom(
+                HexString(input.addressFrom), HexString(input.addressTo), input.nftItem.tokenId
+            ),
+            input.network
         )
+        nftsService.nftSent(input.nftItem.identifier)
+        return tx
     }
 
     @Throws(Throwable::class)
     override suspend fun castVote(
-        proposalId: String,
-        support: Boolean,
-        password: String,
-        salt: String,
+        input: ConfirmationWireframeContext.CultCastVoteContext, password: String, salt: String,
     ): TransactionResponse {
         // TODO: Review this when adding support to send a NFT on a different network than Ethereum.
         val network = Network.ethereum()
@@ -100,19 +77,22 @@ class DefaultConfirmationInteractor(
         val contract = CultGovernor()
         return walletService.contractSend(
             contract.address.hexString,
-            contract.castVote(proposalId.toUInt(), (if (support) 1 else 0).toUInt()),
+            contract.castVote(
+                input.cultProposal.id.toUInt(), (if (input.approve) 1 else 0).toUInt()
+            ),
             network
         )
     }
 
     @Throws(Throwable::class)
-    override suspend fun executeSwap(
-        network: Network,
-        password: String,
-        salt: String,
-        swapService: UniswapService,
+    override suspend fun swap(
+        network: Network, password: String, salt: String, swapService: UniswapService,
     ): TransactionResponse {
         walletService.unlock(password, salt, network)
         return swapService.executeSwap()
     }
+
+    override fun fiatPrice(currency: Currency): Double =
+        currencyStoreService.marketData(currency)?.currentPrice ?: 0.toDouble()
+
 }

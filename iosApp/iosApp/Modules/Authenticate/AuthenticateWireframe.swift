@@ -52,7 +52,7 @@ extension DefaultAuthenticateWireframe: AuthenticateWireframe {
         parent?.present(vc, animated: true)
     }
     
-    func navigate(destination_______ destination: AuthenticateWireframeDestination) {
+    func navigate(destination________ destination: AuthenticateWireframeDestination) {
         if destination is AuthenticateWireframeDestination.Dismiss {
             vc?.dismiss(animated: true)
         }

@@ -3,11 +3,12 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class ConfirmationTxInProgressView: UIView {
-    private let viewModel: ConfirmationViewModel.TxInProgressViewModel
+    private let viewModel: ConfirmationTxInProgressViewModel
     
-    init(viewModel: ConfirmationViewModel.TxInProgressViewModel) {
+    init(viewModel: ConfirmationTxInProgressViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
         configureUI()
