@@ -115,17 +115,16 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
                 return
             }
             guard let walletAddress = interactor.walletAddress, let fee = fee else { return }
-            wireframe.navigate(
-                to: .confirmSendNFT(
-                    dataIn: .init(
-                        network: context.network,
-                        addressFrom: walletAddress,
-                        addressTo: address,
-                        nftItem: context.nftItem,
-                        networkFee: fee
-                    )
+            let context = ConfirmationWireframeContext.SendNFT(
+                data: .init(
+                    network: context.network,
+                    addressFrom: walletAddress,
+                    addressTo: address,
+                    nftItem: context.nftItem,
+                    networkFee: fee
                 )
             )
+            wireframe.navigate(to: .confirmSendNFT(context: context))
         }
     }
 }

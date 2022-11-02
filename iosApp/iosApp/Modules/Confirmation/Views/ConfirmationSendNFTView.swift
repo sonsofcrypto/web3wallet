@@ -6,11 +6,11 @@ import UIKit
 import web3walletcore
 
 final class ConfirmationSendNFTView: UIView {
-    private let viewModel: ConfirmationViewModel.SendNFTViewModel
+    private let viewModel: ConfirmationSendNFTViewModel
     private let onConfirmHandler: () -> Void
     
     init(
-        viewModel: ConfirmationViewModel.SendNFTViewModel,
+        viewModel: ConfirmationSendNFTViewModel,
         onConfirmHandler: @escaping () -> Void
     ) {
         self.viewModel = viewModel
@@ -29,7 +29,7 @@ private extension ConfirmationSendNFTView {
         let views: [UIView] = [
             imageView(with: viewModel.nftItem),
             destinationGroup(),
-            estimatedFeesGroup(),
+            networkFeeGroup(),
             confirmButton()
         ]
         let stackView = VStackView(views)
@@ -65,12 +65,12 @@ private extension ConfirmationSendNFTView {
         let views = [
             row(
                 with: Localized("confirmation.from"),
-                value: viewModel.destination.from
+                value: .init(string: viewModel.address.from)
             ),
             dividerLine(),
             row(
                 with: Localized("confirmation.to"),
-                value: viewModel.destination.to
+                value: .init(string: viewModel.address.to)
             )
         ]
         let stack = VStackView(views)
@@ -104,11 +104,13 @@ private extension ConfirmationSendNFTView {
         return view
     }
     
-    func estimatedFeesGroup() -> UIView {
+    func networkFeeGroup() -> UIView {
+        var value = viewModel.networkFee.value
+        value.append(Formatters.OutputNormal(value: " ~ \(viewModel.networkFee.time)"))
         let views = [
             row(
-                with: Localized("confirmation.estimatedFee"),
-                value: viewModel.estimatedFee.usdValue
+                with: viewModel.networkFee.title,
+                value: .init(value, font: Theme.font.body, fontSmall: Theme.font.caption2)
             )
         ]
         let stack = VStackView(views)
@@ -123,14 +125,14 @@ private extension ConfirmationSendNFTView {
         return view
     }
     
-    func row(with name: String, value: String) -> UIView {
+    func row(with name: String, value: NSAttributedString) -> UIView {
         let titleLabel = UILabel()
         titleLabel.apply(style: .body)
         titleLabel.text = name
         let valueLabel = UILabel()
         valueLabel.apply(style: .body)
         valueLabel.textAlignment = .right
-        valueLabel.text = value
+        valueLabel.attributedText = value
         let horizontalStack = HStackView(
             [
                 titleLabel, valueLabel

@@ -58,7 +58,9 @@ interface NetworksService {
     fun add(listener: NetworksListener)
     /** Remove listener for `NetworksEvent`s, if null removes all listeners */
     fun remove(listener: NetworksListener?)
-    /** Network fee price options */
+    /** Default Network Fee */
+    fun defaultNetworkFee(network: Network): NetworkFee
+    /** Network Fee price options */
     fun networkFees(network: Network): List<NetworkFee>
 
     companion object {
@@ -174,26 +176,13 @@ class DefaultNetworksService(
         listeners = if (listener != null) listeners.filter { it != listener } else listOf()
     }
 
+    override fun defaultNetworkFee(network: Network): NetworkFee = networkFees(network)[1]
+
     override fun networkFees(network: Network): List<NetworkFee> =
         listOf(
-            NetworkFee(
-                "Low",
-                Currency.ethereum(),
-                BigInt.from(127730000000000),
-                45,
-            ),
-            NetworkFee(
-                "Medium",
-                Currency.ethereum(),
-                BigInt.from(188570000000000),
-                30
-            ),
-            NetworkFee(
-                "High",
-                Currency.ethereum(),
-                BigInt.from(218640000000000),
-                15
-            ),
+            NetworkFee("Low", Currency.ethereum(), BigInt.from(127730000000000), 45),
+            NetworkFee("Medium", Currency.ethereum(), BigInt.from(188570000000000), 30),
+            NetworkFee("High", Currency.ethereum(), BigInt.from(218640000000000), 15),
         )
 
     private fun emit(event: NetworksEvent) = listeners.forEach {

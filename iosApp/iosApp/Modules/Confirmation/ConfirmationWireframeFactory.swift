@@ -24,6 +24,7 @@ final class DefaultConfirmationWireframeFactory {
     private let deepLinkHandler: DeepLinkHandler
     private let nftsService: NFTsService
     private let mailService: MailService
+    private let currencyStoreService: CurrencyStoreService
 
     init(
         walletService: WalletService,
@@ -32,7 +33,8 @@ final class DefaultConfirmationWireframeFactory {
         webViewWireframeFactory: WebViewWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
         nftsService: NFTsService,
-        mailService: MailService
+        mailService: MailService,
+        currencyStoreService: CurrencyStoreService
     ) {
         self.walletService = walletService
         self.authenticateWireframeFactory = authenticateWireframeFactory
@@ -41,6 +43,7 @@ final class DefaultConfirmationWireframeFactory {
         self.deepLinkHandler = deepLinkHandler
         self.nftsService = nftsService
         self.mailService = mailService
+        self.currencyStoreService = currencyStoreService
     }
 }
 
@@ -59,7 +62,8 @@ extension DefaultConfirmationWireframeFactory: ConfirmationWireframeFactory {
             webViewWireframeFactory: webViewWireframeFactory,
             deepLinkHandler: deepLinkHandler,
             nftsService: nftsService,
-            mailService: mailService
+            mailService: mailService,
+            currencyStoreService: currencyStoreService
         )
     }
 }
@@ -77,7 +81,8 @@ final class ConfirmationWireframeFactoryAssembler: AssemblerComponent {
                 webViewWireframeFactory: resolver.resolve(),
                 deepLinkHandler: resolver.resolve(),
                 nftsService: resolver.resolve(),
-                mailService: resolver.resolve()
+                mailService: resolver.resolve(),
+                currencyStoreService: resolver.resolve()
             )
         }
     }

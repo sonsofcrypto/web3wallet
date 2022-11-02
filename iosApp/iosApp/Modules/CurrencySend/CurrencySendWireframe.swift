@@ -15,7 +15,7 @@ enum CurrencySendWireframeDestination {
     case underConstructionAlert
     case qrCodeScan(network: Network, onCompletion: (String) -> Void)
     case selectCurrency(onCompletion: (Currency) -> Void)
-    case confirmSend(context: ConfirmationWireframeContext.SendContext)
+    case confirmSend(context: ConfirmationWireframeContext.Send)
 }
 
 protocol CurrencySendWireframe {
@@ -89,14 +89,11 @@ extension DefaultCurrencySendWireframe: CurrencySendWireframe {
                     handler: onCompletionDismissWrapped(with: onCompletion)
                 )
             ).present()
-        case let .confirmSend(dataIn):
-            guard dataIn.addressFrom != dataIn.addressTo else {
+        case let .confirmSend(context):
+            guard context.data.addressFrom != context.data.addressTo else {
                 return presentSendingToSameAddressAlert()
             }
-            confirmationWireframeFactory.make(
-                vc,
-                context: .init(type: .send(dataIn))
-            ).present()
+            confirmationWireframeFactory.make(vc, context: context).present()
         }
     }
     

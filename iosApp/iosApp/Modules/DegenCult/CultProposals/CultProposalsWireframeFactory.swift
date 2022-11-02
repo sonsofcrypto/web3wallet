@@ -22,6 +22,7 @@ final class DefaultCultProposalsWireframeFactory {
     private let currencySwapWireframeFactory: CurrencySwapWireframeFactory
     private let cultService: CultService
     private let walletService: WalletService
+    private let networksService: NetworksService
 
     init(
         cultProposalWireframeFactory: CultProposalWireframeFactory,
@@ -29,7 +30,8 @@ final class DefaultCultProposalsWireframeFactory {
         alertWireframeFactory: AlertWireframeFactory,
         currencySwapWireframeFactory: CurrencySwapWireframeFactory,
         cultService: CultService,
-        walletService: WalletService
+        walletService: WalletService,
+        networksService: NetworksService
     ) {
         self.cultProposalWireframeFactory = cultProposalWireframeFactory
         self.confirmationWireframeFactory = confirmationWireframeFactory
@@ -37,6 +39,7 @@ final class DefaultCultProposalsWireframeFactory {
         self.currencySwapWireframeFactory = currencySwapWireframeFactory
         self.cultService = cultService
         self.walletService = walletService
+        self.networksService = networksService
     }
 }
 
@@ -50,7 +53,8 @@ extension DefaultCultProposalsWireframeFactory: CultProposalsWireframeFactory {
             alertWireframeFactory: alertWireframeFactory,
             currencySwapWireframeFactory: currencySwapWireframeFactory,
             cultService: cultService,
-            walletService: walletService
+            walletService: walletService,
+            networksService: networksService
         )
     }
 }
@@ -67,7 +71,8 @@ final class CultProposalsWireframeFactoryAssembler: AssemblerComponent {
                 alertWireframeFactory: resolver.resolve(),
                 currencySwapWireframeFactory: resolver.resolve(),
                 cultService: resolver.resolve(),
-                walletService: resolver.resolve()
+                walletService: resolver.resolve(),
+                networksService: resolver.resolve()
             )
         }
     }

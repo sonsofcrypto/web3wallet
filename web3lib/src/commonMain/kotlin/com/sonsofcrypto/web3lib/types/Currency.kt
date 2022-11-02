@@ -1,5 +1,7 @@
 package com.sonsofcrypto.web3lib.types
 
+import com.sonsofcrypto.web3lib.utils.BigDec
+import com.sonsofcrypto.web3lib.utils.BigInt
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -25,6 +27,8 @@ data class Currency(
     }
 
     fun decimals(): UInt = this.decimals ?: 18u
+
+    val iconName: String get() = coinGeckoId ?: "currency_placeholder"
 
     companion object {
         fun ethereum(): Currency = Currency(

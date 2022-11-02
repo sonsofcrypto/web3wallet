@@ -68,7 +68,6 @@
 		1A4C3FB6CFD08955BEAA32D9 /* DAppCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C39D2D7698A760E497CA7 /* DAppCategory.swift */; };
 		1A4C3FF02669DFB444B2CC8E /* ThemePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4C32EA04CA65C9DFEE9504 /* ThemePickerCell.swift */; };
 		1C228AC528A17744005316A3 /* CurrencyPickerNetworkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228AC428A17744005316A3 /* CurrencyPickerNetworkCell.swift */; };
-		1C228AC928A39FDC005316A3 /* ConfirmationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228AC828A39FDC005316A3 /* ConfirmationInteractor.swift */; };
 		1C228ACB28A3B122005316A3 /* ConfirmationTxInProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228ACA28A3B122005316A3 /* ConfirmationTxInProgressView.swift */; };
 		1C228ACD28A3C1AA005316A3 /* ConfirmationTxSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228ACC28A3C1AA005316A3 /* ConfirmationTxSuccessView.swift */; };
 		1C228ACF28A3C774005316A3 /* ConfirmationTxFailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228ACE28A3C774005316A3 /* ConfirmationTxFailedView.swift */; };
@@ -303,12 +302,9 @@
 		1C6720162885E13500C5F044 /* CurrencySwapLimitCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6720152885E13500C5F044 /* CurrencySwapLimitCollectionViewCell.swift */; };
 		1C67201828867A0800C5F044 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67201728867A0800C5F044 /* SegmentedControl.swift */; };
 		1C67201B28870FCB00C5F044 /* ConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67201A28870FCB00C5F044 /* ConfirmationView.swift */; };
-		1C67201D28870FD200C5F044 /* ConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67201C28870FD200C5F044 /* ConfirmationViewModel.swift */; };
 		1C67201F28870FDB00C5F044 /* ConfirmationWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67201E28870FDB00C5F044 /* ConfirmationWireframe.swift */; };
 		1C67202128870FE100C5F044 /* ConfirmationWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67202028870FE100C5F044 /* ConfirmationWireframeFactory.swift */; };
-		1C67202528870FF400C5F044 /* ConfirmationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67202428870FF400C5F044 /* ConfirmationPresenter.swift */; };
 		1C67202B2887EB7F00C5F044 /* Confirmation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C67202A2887EB7F00C5F044 /* Confirmation.storyboard */; };
-		1C67202D2887EECC00C5F044 /* ConfirmationWireframeContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C67202C2887EECB00C5F044 /* ConfirmationWireframeContext.swift */; };
 		1C7F862728D20E490073FD95 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F85FF28D20E490073FD95 /* Array+Extensions.swift */; };
 		1C7F862828D20E490073FD95 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F860028D20E490073FD95 /* Int+Extensions.swift */; };
 		1C7F862928D20E490073FD95 /* CG+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F860128D20E490073FD95 /* CG+Extensions.swift */; };
@@ -352,7 +348,6 @@
 		1C7FC97B28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC97A28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift */; };
 		1C7FC98128AFB32600FC9175 /* PasswordValidatorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98028AFB32600FC9175 /* PasswordValidatorHelper.swift */; };
 		1C7FC98328B5272500FC9175 /* ConfirmationCultCastVoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98228B5272500FC9175 /* ConfirmationCultCastVoteView.swift */; };
-		1C7FC98528B5274000FC9175 /* ConfirmationViewModel+CultCastVote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98428B5274000FC9175 /* ConfirmationViewModel+CultCastVote.swift */; };
 		1C7FC98828B60A1A00FC9175 /* ThemePickerWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98728B60A1A00FC9175 /* ThemePickerWireframe.swift */; };
 		1C7FC98A28B60A2600FC9175 /* ThemePickerWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC98928B60A2500FC9175 /* ThemePickerWireframeFactory.swift */; };
 		1C7FC99428B68E9800FC9175 /* AccountTransactionEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7FC99328B68E9800FC9175 /* AccountTransactionEmptyCell.swift */; };
@@ -435,15 +430,12 @@
 		1CDED60C289C4DB800DF34A7 /* NFTSendCTACollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED60B289C4DB800DF34A7 /* NFTSendCTACollectionViewCell.swift */; };
 		1CDED60E289C4DC300DF34A7 /* NFTSendToCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED60D289C4DC300DF34A7 /* NFTSendToCollectionViewCell.swift */; };
 		1CDED610289C521000DF34A7 /* NFTSendImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED60F289C521000DF34A7 /* NFTSendImageCollectionViewCell.swift */; };
-		1CDED612289C64FA00DF34A7 /* ConfirmationViewModel+SendNFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED611289C64F900DF34A7 /* ConfirmationViewModel+SendNFT.swift */; };
 		1CDED614289C65B800DF34A7 /* ConfirmationSendNFTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED613289C65B800DF34A7 /* ConfirmationSendNFTView.swift */; };
 		1CDED617289CF4BE00DF34A7 /* IosEtherscanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED616289CF4BE00DF34A7 /* IosEtherscanService.swift */; };
 		1CDED619289D0B5100DF34A7 /* IosEtherscanServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED618289D0B5000DF34A7 /* IosEtherscanServiceAssembler.swift */; };
 		1CE0063B288884D2002D1EB3 /* ConfirmationSwapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0063A288884D2002D1EB3 /* ConfirmationSwapView.swift */; };
 		1CE0063D288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0063C288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift */; };
 		1CE0064028894F41002D1EB3 /* ConfirmationSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0063F28894F41002D1EB3 /* ConfirmationSendView.swift */; };
-		1CE0064228894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0064128894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift */; };
-		1CE0064428894F72002D1EB3 /* ConfirmationViewModel+Send.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0064328894F72002D1EB3 /* ConfirmationViewModel+Send.swift */; };
 		1CE0064628899D15002D1EB3 /* AlertSheetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0064528899D15002D1EB3 /* AlertSheetPresentationController.swift */; };
 		1CE006482889A08A002D1EB3 /* Alert.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CE006472889A08A002D1EB3 /* Alert.storyboard */; };
 		1CE0064C2889E0E6002D1EB3 /* ThemeIOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE0064B2889E0E6002D1EB3 /* ThemeIOS.swift */; };
@@ -452,7 +444,6 @@
 		1CE66BCE2848EAA600AB6ACA /* ChatServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */; };
 		1CE66BD22848ED4000AB6ACA /* PresentationStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE66BD12848ED4000AB6ACA /* PresentationStyle.swift */; };
 		1CEF3D1B28C35FB20092BC0E /* UniswapServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEF3D1A28C35FB20092BC0E /* UniswapServiceAssembler.swift */; };
-		1CEF3D1D28C3A2D80092BC0E /* ConfirmationViewModel+ApproveUniswap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEF3D1C28C3A2D80092BC0E /* ConfirmationViewModel+ApproveUniswap.swift */; };
 		1CEF3D1F28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEF3D1E28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift */; };
 		D108AB4328AB9EB0005E0A63 /* cache_markets.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB3D28AB9EB0005E0A63 /* cache_markets.json */; };
 		D108AB4428AB9EB0005E0A63 /* cache_currencies_3.json in Resources */ = {isa = PBXBuildFile; fileRef = D108AB3E28AB9EB0005E0A63 /* cache_currencies_3.json */; };
@@ -605,7 +596,6 @@
 		1A4C3F5A82ECC981F09F3B6A /* OnOffSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnOffSwitch.swift; sourceTree = "<group>"; };
 		1A4C3F7AC2CFD735B708F22C /* IntegrationWeb3Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntegrationWeb3Service.swift; sourceTree = "<group>"; };
 		1C228AC428A17744005316A3 /* CurrencyPickerNetworkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPickerNetworkCell.swift; sourceTree = "<group>"; };
-		1C228AC828A39FDC005316A3 /* ConfirmationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationInteractor.swift; sourceTree = "<group>"; };
 		1C228ACA28A3B122005316A3 /* ConfirmationTxInProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationTxInProgressView.swift; sourceTree = "<group>"; };
 		1C228ACC28A3C1AA005316A3 /* ConfirmationTxSuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationTxSuccessView.swift; sourceTree = "<group>"; };
 		1C228ACE28A3C774005316A3 /* ConfirmationTxFailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationTxFailedView.swift; sourceTree = "<group>"; };
@@ -839,12 +829,9 @@
 		1C6720152885E13500C5F044 /* CurrencySwapLimitCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySwapLimitCollectionViewCell.swift; sourceTree = "<group>"; };
 		1C67201728867A0800C5F044 /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		1C67201A28870FCB00C5F044 /* ConfirmationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationView.swift; sourceTree = "<group>"; };
-		1C67201C28870FD200C5F044 /* ConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationViewModel.swift; sourceTree = "<group>"; };
 		1C67201E28870FDB00C5F044 /* ConfirmationWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationWireframe.swift; sourceTree = "<group>"; };
 		1C67202028870FE100C5F044 /* ConfirmationWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationWireframeFactory.swift; sourceTree = "<group>"; };
-		1C67202428870FF400C5F044 /* ConfirmationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationPresenter.swift; sourceTree = "<group>"; };
 		1C67202A2887EB7F00C5F044 /* Confirmation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Confirmation.storyboard; sourceTree = "<group>"; };
-		1C67202C2887EECB00C5F044 /* ConfirmationWireframeContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationWireframeContext.swift; sourceTree = "<group>"; };
 		1C7F85FF28D20E490073FD95 /* Array+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		1C7F860028D20E490073FD95 /* Int+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		1C7F860128D20E490073FD95 /* CG+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CG+Extensions.swift"; sourceTree = "<group>"; };
@@ -888,7 +875,6 @@
 		1C7FC97A28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicUpdateDeleteCell.swift; sourceTree = "<group>"; };
 		1C7FC98028AFB32600FC9175 /* PasswordValidatorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordValidatorHelper.swift; sourceTree = "<group>"; };
 		1C7FC98228B5272500FC9175 /* ConfirmationCultCastVoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationCultCastVoteView.swift; sourceTree = "<group>"; };
-		1C7FC98428B5274000FC9175 /* ConfirmationViewModel+CultCastVote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmationViewModel+CultCastVote.swift"; sourceTree = "<group>"; };
 		1C7FC98728B60A1A00FC9175 /* ThemePickerWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePickerWireframe.swift; sourceTree = "<group>"; };
 		1C7FC98928B60A2500FC9175 /* ThemePickerWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePickerWireframeFactory.swift; sourceTree = "<group>"; };
 		1C7FC99328B68E9800FC9175 /* AccountTransactionEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTransactionEmptyCell.swift; sourceTree = "<group>"; };
@@ -971,15 +957,12 @@
 		1CDED60B289C4DB800DF34A7 /* NFTSendCTACollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendCTACollectionViewCell.swift; sourceTree = "<group>"; };
 		1CDED60D289C4DC300DF34A7 /* NFTSendToCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendToCollectionViewCell.swift; sourceTree = "<group>"; };
 		1CDED60F289C521000DF34A7 /* NFTSendImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendImageCollectionViewCell.swift; sourceTree = "<group>"; };
-		1CDED611289C64F900DF34A7 /* ConfirmationViewModel+SendNFT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmationViewModel+SendNFT.swift"; sourceTree = "<group>"; };
 		1CDED613289C65B800DF34A7 /* ConfirmationSendNFTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationSendNFTView.swift; sourceTree = "<group>"; };
 		1CDED616289CF4BE00DF34A7 /* IosEtherscanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosEtherscanService.swift; sourceTree = "<group>"; };
 		1CDED618289D0B5000DF34A7 /* IosEtherscanServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosEtherscanServiceAssembler.swift; sourceTree = "<group>"; };
 		1CE0063A288884D2002D1EB3 /* ConfirmationSwapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationSwapView.swift; sourceTree = "<group>"; };
 		1CE0063C288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationSheetPresentationController.swift; sourceTree = "<group>"; };
 		1CE0063F28894F41002D1EB3 /* ConfirmationSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationSendView.swift; sourceTree = "<group>"; };
-		1CE0064128894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmationViewModel+Swap.swift"; sourceTree = "<group>"; };
-		1CE0064328894F72002D1EB3 /* ConfirmationViewModel+Send.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmationViewModel+Send.swift"; sourceTree = "<group>"; };
 		1CE0064528899D15002D1EB3 /* AlertSheetPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertSheetPresentationController.swift; sourceTree = "<group>"; };
 		1CE006472889A08A002D1EB3 /* Alert.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Alert.storyboard; sourceTree = "<group>"; };
 		1CE0064B2889E0E6002D1EB3 /* ThemeIOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeIOS.swift; sourceTree = "<group>"; };
@@ -988,7 +971,6 @@
 		1CE66BCD2848EAA600AB6ACA /* ChatServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceAssembler.swift; sourceTree = "<group>"; };
 		1CE66BD12848ED4000AB6ACA /* PresentationStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationStyle.swift; sourceTree = "<group>"; };
 		1CEF3D1A28C35FB20092BC0E /* UniswapServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniswapServiceAssembler.swift; sourceTree = "<group>"; };
-		1CEF3D1C28C3A2D80092BC0E /* ConfirmationViewModel+ApproveUniswap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmationViewModel+ApproveUniswap.swift"; sourceTree = "<group>"; };
 		1CEF3D1E28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationApproveUniswapView.swift; sourceTree = "<group>"; };
 		D108AB3D28AB9EB0005E0A63 /* cache_markets.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_markets.json; sourceTree = "<group>"; };
 		D108AB3E28AB9EB0005E0A63 /* cache_currencies_3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cache_currencies_3.json; sourceTree = "<group>"; };
@@ -1870,17 +1852,8 @@
 			isa = PBXGroup;
 			children = (
 				1C67202A2887EB7F00C5F044 /* Confirmation.storyboard */,
-				1C228AC828A39FDC005316A3 /* ConfirmationInteractor.swift */,
-				1C67202428870FF400C5F044 /* ConfirmationPresenter.swift */,
 				1C67201A28870FCB00C5F044 /* ConfirmationView.swift */,
-				1C67201C28870FD200C5F044 /* ConfirmationViewModel.swift */,
-				1CE0064328894F72002D1EB3 /* ConfirmationViewModel+Send.swift */,
-				1CDED611289C64F900DF34A7 /* ConfirmationViewModel+SendNFT.swift */,
-				1C7FC98428B5274000FC9175 /* ConfirmationViewModel+CultCastVote.swift */,
-				1CE0064128894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift */,
-				1CEF3D1C28C3A2D80092BC0E /* ConfirmationViewModel+ApproveUniswap.swift */,
 				1C67201E28870FDB00C5F044 /* ConfirmationWireframe.swift */,
-				1C67202C2887EECB00C5F044 /* ConfirmationWireframeContext.swift */,
 				1C67202028870FE100C5F044 /* ConfirmationWireframeFactory.swift */,
 				1CE00639288884C8002D1EB3 /* Views */,
 			);
@@ -2697,13 +2670,11 @@
 				1C671FF8287FDFF100C5F044 /* CurrencySwapView.swift in Sources */,
 				1C60C2BB285724D0003BE25D /* ButtonsSheetViewCell.swift in Sources */,
 				1A4C3EB4D429242923984C76 /* Button.swift in Sources */,
-				1C7FC98528B5274000FC9175 /* ConfirmationViewModel+CultCastVote.swift in Sources */,
 				1CDED5F02897EB3700DF34A7 /* SettingsCellBackgroundSupplementaryView.swift in Sources */,
 				1A4C3B49BC67AF7AA3BF0D8F /* VisualEffectView.swift in Sources */,
 				1C60C2A2285724D0003BE25D /* SettingsWireframe.swift in Sources */,
 				1C60C2CC285724D0003BE25D /* AlertWireframe.swift in Sources */,
 				1C60C2A6285724D0003BE25D /* SettingsView.swift in Sources */,
-				1C67202D2887EECC00C5F044 /* ConfirmationWireframeContext.swift in Sources */,
 				D1EF5BCA287BEE92004CAD82 /* MnemonicUpdateViewModel.swift in Sources */,
 				1C60C30B285724D1003BE25D /* RootPresenter.swift in Sources */,
 				1C60C2C3285724D0003BE25D /* ChatViewController.swift in Sources */,
@@ -2722,7 +2693,6 @@
 				1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */,
 				1C7F863E28D20E490073FD95 /* UITraitCollection+Extensions.swift in Sources */,
 				1C60C2C1285724D0003BE25D /* KeyStoreView.swift in Sources */,
-				1C67202528870FF400C5F044 /* ConfirmationPresenter.swift in Sources */,
 				1C60C2DD285724D0003BE25D /* DashboardView.swift in Sources */,
 				1C60C2FF285724D1003BE25D /* NFTsDashboardView+MainScrollView.swift in Sources */,
 				1C672001287FE11700C5F044 /* CurrencySwapMarketCollectionViewCell.swift in Sources */,
@@ -2760,7 +2730,6 @@
 				1C60C2EC285724D0003BE25D /* NetworksView.swift in Sources */,
 				1C60C303285724D1003BE25D /* NFTsDashboardView+NFTs.swift in Sources */,
 				1C60C355285724D1003BE25D /* CultProposalsPresenter.swift in Sources */,
-				1C67201D28870FD200C5F044 /* ConfirmationViewModel.swift in Sources */,
 				1C60C326285724D1003BE25D /* MnemonicConfirmationPresenter.swift in Sources */,
 				1C6487162832DEFE0091A12D /* Reachability.swift in Sources */,
 				1C60C2FE285724D0003BE25D /* NFTDetailView+Content+Properties.swift in Sources */,
@@ -2782,7 +2751,6 @@
 				1CB8B0BA288DBEE700024E7C /* CultProposalDetailTokenomicsView.swift in Sources */,
 				1C54DBF5285F32DC00E378F6 /* CurrencyAddInputView.swift in Sources */,
 				1C54DC682869BE6500E378F6 /* DashboardButtonsCell.swift in Sources */,
-				1CE0064228894F5B002D1EB3 /* ConfirmationViewModel+Swap.swift in Sources */,
 				D1ABCE57289D548C00312539 /* LineView.swift in Sources */,
 				1C5D24D128E19F62007DA557 /* ImprovementProposalsCell.swift in Sources */,
 				1C60C313285724D1003BE25D /* AccountSectionHeader.swift in Sources */,
@@ -2791,7 +2759,6 @@
 				1C60C2F4285724D0003BE25D /* NFTDetailView+Content+Description.swift in Sources */,
 				1C60C2F0285724D0003BE25D /* NetworksCell.swift in Sources */,
 				1C60C323285724D1003BE25D /* AppsWireframeFactory.swift in Sources */,
-				1C228AC928A39FDC005316A3 /* ConfirmationInteractor.swift in Sources */,
 				1C60C2B3285724D0003BE25D /* CurrencyPickerView.swift in Sources */,
 				1C60C31E285724D1003BE25D /* AppsViewModel.swift in Sources */,
 				1C60C2D7285724D0003BE25D /* MnemonicNewPresenter.swift in Sources */,
@@ -2821,7 +2788,6 @@
 				1C228ACB28A3B122005316A3 /* ConfirmationTxInProgressView.swift in Sources */,
 				1C7F863F28D20E490073FD95 /* UIStackView+Extensions.swift in Sources */,
 				1CE66BCA2848EA9900AB6ACA /* ChatService.swift in Sources */,
-				1CEF3D1D28C3A2D80092BC0E /* ConfirmationViewModel+ApproveUniswap.swift in Sources */,
 				1C7F864128D20E490073FD95 /* UIBarButtonItem+Extensions.swift in Sources */,
 				1C6487362832E6650091A12D /* NFTsServiceAssembler.swift in Sources */,
 				1C60C2F3285724D0003BE25D /* NFTDetailWireframe.swift in Sources */,
@@ -2903,7 +2869,6 @@
 				1C7F863128D20E490073FD95 /* BigInt+Extensions.swift in Sources */,
 				1C54DC032860E5C100E378F6 /* NetworkPickerViewModel.swift in Sources */,
 				D1ED7261287C1122005805CF /* CurrencySendToCollectionViewCell.swift in Sources */,
-				1CDED612289C64FA00DF34A7 /* ConfirmationViewModel+SendNFT.swift in Sources */,
 				1C60C300285724D1003BE25D /* NFTsDashboardWireframe.swift in Sources */,
 				1C64871E2832E3D60091A12D /* KeyChainService.swift in Sources */,
 				1A4C308B6FA11A032039F086 /* CandlesView.swift in Sources */,
@@ -2914,7 +2879,6 @@
 				1C7F863B28D20E490073FD95 /* UIView+Animations+Chat.swift in Sources */,
 				1CE0063B288884D2002D1EB3 /* ConfirmationSwapView.swift in Sources */,
 				1C54DC6A2869D60D00E378F6 /* ThemeMiami.swift in Sources */,
-				1CE0064428894F72002D1EB3 /* ConfirmationViewModel+Send.swift in Sources */,
 				1C60C2ED285724D0003BE25D /* NetworksInteractor.swift in Sources */,
 				1CB8B0C0288DBEFF00024E7C /* CultProposalDetailSummaryView.swift in Sources */,
 				1CB8B0E62891346B00024E7C /* CultProposalFooterSupplementaryView.swift in Sources */,

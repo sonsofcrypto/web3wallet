@@ -4,6 +4,8 @@ import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.toHexStringAddress
+import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.BigIntSerializer
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import com.sonsofcrypto.web3lib.utils.extensions.jsonEncode
 import com.sonsofcrypto.web3lib.utils.extensions.stdJson
@@ -57,7 +59,7 @@ class OpenSeaNFTsService(
     private var listeners: MutableList<NFTsServiceListener> = mutableListOf()
     private val client: HttpClient by lazy {
         HttpClient {
-            Logging { level = LogLevel.INFO; logger = Logger.SIMPLE }
+            Logging { level = LogLevel.NONE; logger = Logger.SIMPLE }
             install(ContentNegotiation) { json(stdJson, Json.withCharset(Charsets.UTF_8)) }
         }
     }
@@ -213,8 +215,8 @@ private data class Asset(
     val assetContract: AssetContract,
     val collection: Collection,
     val traits: List<Trait>,
-    @SerialName("token_id")
-    val tokenId: String,
+    @SerialName("token_id") @Serializable(with = BigIntSerializer::class)
+    val tokenId: BigInt,
 )
 
 @Serializable

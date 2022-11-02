@@ -2,6 +2,7 @@ package com.sonsofcrypto.web3walletcore.modules.improvementProposals
 
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
+import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import com.sonsofcrypto.web3lib.utils.withUICxt
 import com.sonsofcrypto.web3walletcore.common.viewModels.ErrorViewModel
 import com.sonsofcrypto.web3walletcore.common.viewModels.with
@@ -44,8 +45,10 @@ class DefaultImprovementProposalsPresenter(
     override fun present() {
         updateView()
         val errHandler = CoroutineExceptionHandler { _, err ->
-            error = err
-            updateView()
+            scope.launch(uiDispatcher) {
+                error = err
+                updateView()
+            }
         }
         scope.launch(errHandler) {
             val result = interactor.fetchProposals()

@@ -3,14 +3,14 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-import SwiftUI
+import web3walletcore
 
 final class ConfirmationApproveUniswapView: UIView {
-    private let viewModel: ConfirmationViewModel.ApproveUniswapViewModel
+    private let viewModel: ConfirmationApproveUniswapViewModel
     private let onConfirmHandler: () -> Void
     
     init(
-        viewModel: ConfirmationViewModel.ApproveUniswapViewModel,
+        viewModel: ConfirmationApproveUniswapViewModel,
         onConfirmHandler: @escaping () -> Void
     ) {
         self.viewModel = viewModel
@@ -30,7 +30,7 @@ private extension ConfirmationApproveUniswapView {
         let views: [UIView] = [
             tokenView(with: viewModel.iconName),
             infoGroup(),
-            estimatedFeesGroup(),
+            networkFeeGroup(),
             confirmButton()
         ]
         let stackView = VStackView(views)
@@ -39,7 +39,13 @@ private extension ConfirmationApproveUniswapView {
         stackView.setCustomSpacing(Theme.constant.padding, after: views[1])
         stackView.setCustomSpacing(Theme.constant.padding, after: views[2])
         addSubview(stackView)
-        stackView.addConstraints(.toEdges)
+        stackView.addConstraints(
+            [
+                .layout(anchor: .bottomAnchor),
+                .layout(anchor: .leadingAnchor),
+                .layout(anchor: .trailingAnchor)
+            ]
+        )
     }
     
     func infoGroup() -> UIView {
@@ -74,7 +80,7 @@ private extension ConfirmationApproveUniswapView {
         label.apply(style: .title3)
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.text = Localized("confirmation.approveUniswap.permission.title", viewModel.symbol)
+        label.text = Localized("confirmation.approveUniswap.permission.title", viewModel.symbol.uppercased())
         return label
     }
 
@@ -83,15 +89,17 @@ private extension ConfirmationApproveUniswapView {
         label.apply(style: .subheadline)
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.text = Localized("confirmation.approveUniswap.permission.message", viewModel.symbol)
+        label.text = Localized("confirmation.approveUniswap.permission.message", viewModel.symbol.uppercased())
         return label
     }
     
-    func estimatedFeesGroup() -> UIView {
+    func networkFeeGroup() -> UIView {
+        var value = viewModel.networkFee.value
+        value.append(Formatters.OutputNormal(value: " ~ \(viewModel.networkFee.time)"))
         let views = [
             row(
-                with: Localized("confirmation.estimatedFee"),
-                value: viewModel.fee.usdValue
+                with: viewModel.networkFee.title,
+                value: .init(value, font: Theme.font.body, fontSmall: Theme.font.caption2)
             )
         ]
         let stack = VStackView(views)
@@ -100,20 +108,18 @@ private extension ConfirmationApproveUniswapView {
         view.layer.cornerRadius = Theme.constant.cornerRadius
         view.backgroundColor = Theme.colour.cellBackground
         view.addSubview(stack)
-        stack.addConstraints(
-            .toEdges(padding: Theme.constant.padding)
-        )
+        stack.addConstraints(.toEdges(padding: Theme.constant.padding))
         return view
     }
     
-    func row(with name: String, value: String) -> UIView {
+    func row(with name: String, value: NSAttributedString) -> UIView {
         let titleLabel = UILabel()
         titleLabel.apply(style: .body)
         titleLabel.text = name
         let valueLabel = UILabel()
         valueLabel.apply(style: .body)
         valueLabel.textAlignment = .right
-        valueLabel.text = value
+        valueLabel.attributedText = value
         let horizontalStack = HStackView(
             [
                 titleLabel, valueLabel

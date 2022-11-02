@@ -3,11 +3,12 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class ConfirmationTxInProgressView: UIView {
-    private let viewModel: ConfirmationViewModel.TxInProgressViewModel
+    private let viewModel: ConfirmationTxInProgressViewModel
     
-    init(viewModel: ConfirmationViewModel.TxInProgressViewModel) {
+    init(viewModel: ConfirmationTxInProgressViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
         configureUI()
@@ -23,8 +24,8 @@ private extension ConfirmationTxInProgressView {
     func configureUI() {
         let views: [UIView] = [
             animationView(),
-            label(with: .body, and: viewModel.title),
-            label(with: .footnote, and: viewModel.message)
+            label(with: .title3, and: viewModel.title),
+            label(with: .body, and: viewModel.message)
         ]
         let stackView = VStackView(views)
         stackView.spacing = Theme.constant.padding

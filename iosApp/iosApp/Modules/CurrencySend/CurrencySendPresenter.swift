@@ -144,18 +144,17 @@ extension DefaultCurrencySendPresenter: CurrencySendPresenter {
             }
             guard let walletAddress = interactor.walletAddress else { return }
             view?.dismissKeyboard()
-            wireframe.navigate(
-                to: .confirmSend(
-                    context: .init(
-                        network: context.network,
-                        currency: currency,
-                        amount: amount,
-                        addressFrom: walletAddress,
-                        addressTo: address,
-                        networkFee: fee
-                    )
+            let context = ConfirmationWireframeContext.Send(
+                data: .init(
+                    network: context.network,
+                    currency: currency,
+                    amount: amount,
+                    addressFrom: walletAddress,
+                    addressTo: address,
+                    networkFee: fee
                 )
             )
+            wireframe.navigate(to: .confirmSend(context: context))
         }
     }
 }
