@@ -21,17 +21,20 @@ final class DefaultNFTSendWireframeFactory {
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let networksService: NetworksService
+    private let currencyStoreService: CurrencyStoreService
 
     init(
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        networksService: NetworksService
+        networksService: NetworksService,
+        currencyStoreService: CurrencyStoreService
     ) {
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.confirmationWireframeFactory = confirmationWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.networksService = networksService
+        self.currencyStoreService = currencyStoreService
     }
 }
 
@@ -47,7 +50,8 @@ extension DefaultNFTSendWireframeFactory: NFTSendWireframeFactory {
             qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
             confirmationWireframeFactory: confirmationWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
-            networksService: networksService
+            networksService: networksService,
+            currencyStoreService: currencyStoreService
         )
     }
 }
@@ -62,7 +66,8 @@ final class NFTSendWireframeFactoryAssembler: AssemblerComponent {
                 qrCodeScanWireframeFactory: resolver.resolve(),
                 confirmationWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
-                networksService: resolver.resolve()
+                networksService: resolver.resolve(),
+                currencyStoreService: resolver.resolve()
             )
         }
     }

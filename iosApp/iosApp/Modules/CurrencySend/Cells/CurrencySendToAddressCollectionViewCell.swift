@@ -2,7 +2,9 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-final class CurrencySendToCollectionViewCell: UICollectionViewCell {
+import web3walletcore
+
+final class CurrencySendToAddressCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var tokenEnterAddressView: NetworkAddressPickerView!
     
@@ -11,7 +13,7 @@ final class CurrencySendToCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension CurrencySendToCollectionViewCell {
+extension CurrencySendToAddressCollectionViewCell {
     
     func update(
         with viewModel: NetworkAddressPickerViewModel,

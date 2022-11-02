@@ -32,7 +32,8 @@ class BigInt {
 
     fun compare(other: BigInt): Int = storage.compare(other.storage)
     fun isLessThan(other: BigInt): Boolean = storage.compare(other.storage) == -1
-    fun isZero(): Boolean =  storage.isZero()
+    fun isGreaterThan(other: BigInt): Boolean = storage.compare(other.storage) == 1
+    fun isZero(): Boolean = storage.isZero()
 
     override fun toString(): String = storage.toString(10)
 
@@ -57,6 +58,7 @@ class BigInt {
         fun from(uint: UInt): BigInt = BigInt(BigInteger.fromUInt(uint))
         fun from(long: Long): BigInt = BigInt(BigInteger.fromLong(long))
         fun from(ulong: ULong): BigInt = BigInt(BigInteger.fromULong(ulong))
+        fun min(a: BigInt, b: BigInt): BigInt = BigInt(BigInteger.min(a.storage, b.storage))
     }
 }
 

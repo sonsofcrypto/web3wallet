@@ -8,6 +8,7 @@ import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.types.NetworkFee
 import com.sonsofcrypto.web3lib.utils.*
 import com.sonsofcrypto.web3walletcore.extensions.Localized
+import com.sonsofcrypto.web3walletcore.extensions.timeString
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateData
 import com.sonsofcrypto.web3walletcore.modules.authenticate.AuthenticateWireframeContext
 import com.sonsofcrypto.web3walletcore.modules.confirmation.ConfirmationPresenterEvent.*
@@ -170,7 +171,7 @@ class DefaultConfirmationPresenter(
             c.iconName,
             c.symbol,
             Formatters.currency.format(a, c, Custom(15u)),
-            fiat(a, c, Custom(10u), "usd")
+            fiatPrice(a, c, Custom(10u), "usd")
         )
 
     private fun addressViewModel(
@@ -187,18 +188,18 @@ class DefaultConfirmationPresenter(
     private fun networkFeeViewModel(fee: NetworkFee): ConfirmationNetworkFeeViewModel {
         val output = Formatters.currency.format(fee.amount, fee.currency, Custom(10u))
             .toMutableList()
-        val fiatOutput = fiat(fee.amount, fee.currency, Custom(8u))
+        val fiatOutput = fiatPrice(fee.amount, fee.currency, Custom(8u))
         output.add(Formatters.Output.Normal(" ~ "))
         output.addAll(fiatOutput)
         return ConfirmationNetworkFeeViewModel(
             Localized("networkFeeView.estimatedFee"),
             Formatters.currency.format(fee.amount, fee.currency, Custom(10u)),
             fee.timeString,
-            fiat(fee.amount, fee.currency, Custom(8u)),
+            fiatPrice(fee.amount, fee.currency, Custom(8u)),
         )
     }
 
-    private fun fiat(
+    private fun fiatPrice(
         amount: BigInt, currency: Currency, style: Formatters.Style, currencyCode: String = "usd"
     ): List<Formatters.Output> {
         val value = Formatters.crypto(amount, currency.decimals(), interactor.fiatPrice(currency))
@@ -287,10 +288,4 @@ private val ConfirmationWireframeContext.localized: String get() = when (this) {
     is SendNFT -> "sendNFT"
     is CultCastVote -> "cultCastVote"
     is ApproveUniswap -> "approveUniswap"
-}
-
-private val NetworkFee.timeString: String get() {
-    val min: Double = seconds.toDouble() / 60.toDouble()
-    return if (min > 1) { "${min.toInt()} ${Localized("min")}" }
-    else { "$seconds ${Localized("sec")}" }
 }

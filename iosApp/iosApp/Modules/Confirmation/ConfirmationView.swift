@@ -22,7 +22,7 @@ final class ConfirmationViewController: BaseViewController {
 
 extension ConfirmationViewController: ConfirmationView {
 
-    func update(viewModel___ viewModel: ConfirmationViewModel) {
+    func update(viewModel____ viewModel: ConfirmationViewModel) {
         self.viewModel = viewModel
         title = viewModel.title
         view.removeAllSubview()
@@ -70,7 +70,7 @@ private extension ConfirmationViewController {
     }
 
     @objc func dismissAction() {
-        presenter.handle(event_______: ConfirmationPresenterEvent.Dismiss())
+        presenter.handle(event________: ConfirmationPresenterEvent.Dismiss())
     }
 }
 
@@ -140,7 +140,7 @@ private extension ConfirmationViewController {
     }
     
     func presenterEventTapped(_ event: ConfirmationPresenterEvent) -> () -> Void {
-        { [weak self] in self?.presenter.handle(event_______: event) }
+        { [weak self] in self?.presenter.handle(event________: event) }
     }
 }
 

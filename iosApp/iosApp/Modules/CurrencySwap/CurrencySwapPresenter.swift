@@ -75,31 +75,34 @@ extension DefaultCurrencySwapPresenter: CurrencySwapPresenter {
                             symbolIconName: currencyFrom.iconName,
                             symbol: currencyFrom.symbol.uppercased(),
                             maxAmount: currencyFromBalance,
-                            maxDecimals: currencyFrom.decimalsUInt,
+                            maxDecimals: currencyFrom.decimalsUInt.uInt32,
                             fiatPrice: currencyFrom.fiatPrice,
-                            shouldUpdateTextFields: false,
-                            shouldBecomeFirstResponder: false,
-                            networkName: context.network.name
+                            updateTextField: false,
+                            becomeFirstResponder: false,
+                            networkName: context.network.name,
+                            inputEnabled: true
                         ),
                         currencyTo: .init(
                             amount: nil,
                             symbolIconName: currencyTo.iconName,
                             symbol: currencyTo.symbol.uppercased(),
                             maxAmount: currencyToBalance,
-                            maxDecimals: currencyTo.decimalsUInt,
+                            maxDecimals: currencyTo.decimalsUInt.uInt32,
                             fiatPrice: currencyTo.fiatPrice,
-                            shouldUpdateTextFields: false,
-                            shouldBecomeFirstResponder: false,
+                            updateTextField: false,
+                            becomeFirstResponder: false,
                             networkName: context.network.name,
                             inputEnabled: false
                         ),
                         currencySwapProviderViewModel: currencySwapProviderViewModel(),
                         currencySwapPriceViewModel: currencyPriceViewModel(),
                         currencySwapSlippageViewModel: currencySwapSlippageViewModel(),
-                        currencyNetworkFeeViewModel: .init(
-                            estimatedFee: estimatedFee(),
-                            feeName: feeName()
-                        ),
+                        currencyNetworkFeeViewModel: fee?.toNetworkFeeViewModel(
+                            currencyFiatPrice: interactor.fiatPrice(currency: context.network.nativeCurrency),
+                            amountDigits: UInt32(10),
+                            fiatPriceDigits: UInt32(8),
+                            fiatPriceCurrencyCode: "usd"
+                        ) ?? emptyNetworkFeeViewModel(),
                         isCalculating: isCalculating,
                         providerAsset: selectedProviderIconName(),
                         approveState: approveState(),
@@ -249,31 +252,34 @@ private extension DefaultCurrencySwapPresenter {
                             symbolIconName: currencyFrom.iconName,
                             symbol: currencyFrom.symbol.uppercased(),
                             maxAmount: currencyFromBalance,
-                            maxDecimals: currencyFrom.decimalsUInt,
+                            maxDecimals: currencyFrom.decimalsUInt.uInt32,
                             fiatPrice: currencyFrom.fiatPrice,
-                            shouldUpdateTextFields: shouldUpdateFromTextField,
-                            shouldBecomeFirstResponder: shouldFromBecomeFirstResponder,
-                            networkName: context.network.name
+                            updateTextField: shouldUpdateFromTextField,
+                            becomeFirstResponder: shouldFromBecomeFirstResponder,
+                            networkName: context.network.name,
+                            inputEnabled: true
                         ),
                         currencyTo: .init(
                             amount: amountTo,
                             symbolIconName: currencyTo.iconName,
                             symbol: currencyTo.symbol.uppercased(),
                             maxAmount: currencyToBalance,
-                            maxDecimals: currencyTo.decimalsUInt,
+                            maxDecimals: currencyTo.decimalsUInt.uInt32,
                             fiatPrice: currencyTo.fiatPrice,
-                            shouldUpdateTextFields: true,
-                            shouldBecomeFirstResponder: false,
+                            updateTextField: true,
+                            becomeFirstResponder: false,
                             networkName: context.network.name,
                             inputEnabled: false
                         ),
                         currencySwapProviderViewModel: currencySwapProviderViewModel(),
                         currencySwapPriceViewModel: currencyPriceViewModel(),
                         currencySwapSlippageViewModel: currencySwapSlippageViewModel(),
-                        currencyNetworkFeeViewModel: .init(
-                            estimatedFee: estimatedFee(),
-                            feeName: feeName()
-                        ),
+                        currencyNetworkFeeViewModel: fee?.toNetworkFeeViewModel(
+                            currencyFiatPrice: interactor.fiatPrice(currency: context.network.nativeCurrency),
+                            amountDigits: UInt32(10),
+                            fiatPriceDigits: UInt32(8),
+                            fiatPriceCurrencyCode: "usd"
+                        ) ?? emptyNetworkFeeViewModel(),
                         isCalculating: isCalculating,
                         providerAsset: selectedProviderIconName(),
                         approveState: approveState(),
@@ -283,6 +289,10 @@ private extension DefaultCurrencySwapPresenter {
 //                .limit
             ]
         )
+    }
+    
+    func emptyNetworkFeeViewModel() -> NetworkFeeViewModel {
+        .init(name: Localized("networkFeeView.estimatedFee"), amount: [], time: [], fiat: [])
     }
     
     var isCalculating: Bool {

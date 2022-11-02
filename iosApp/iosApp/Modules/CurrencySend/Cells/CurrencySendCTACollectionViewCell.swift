@@ -2,6 +2,8 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
+import web3walletcore
+
 final class CurrencySendCTACollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var networkFeeView: NetworkFeeView!
     @IBOutlet weak var button: Button!
@@ -23,7 +25,7 @@ final class CurrencySendCTACollectionViewCell: UICollectionViewCell {
 extension CurrencySendCTACollectionViewCell {
     
     func update(
-        with viewModel: CurrencySendViewModel.Send,
+        with viewModel: CurrencySendViewModel.SendViewModel,
         handler: Handler
     ) {
         self.handler = handler
@@ -40,9 +42,10 @@ extension CurrencySendCTACollectionViewCell {
         case .invalidDestination:
             button.setTitle(Localized("currencySend.missing.address"), for: .normal)
             button.isEnabled = false
+        default: break
         }
         networkFeeView.update(
-            with: viewModel.networkFeeViewModel,
+            with: viewModel.networkFee,
             handler: handler.onNetworkFeesTapped
         )
     }

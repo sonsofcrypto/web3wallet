@@ -64,10 +64,12 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
                 ),
                 .send(
                     .init(
-                        tokenNetworkFeeViewModel: .init(
-                            estimatedFee: estimatedFee(),
-                            feeName: feeName()
-                        ),
+                        tokenNetworkFeeViewModel: fee?.toNetworkFeeViewModel(
+                            currencyFiatPrice: interactor.fiatPrice(currency: context.network.nativeCurrency),
+                            amountDigits: UInt32(10),
+                            fiatPriceDigits: UInt32(8),
+                            fiatPriceCurrencyCode: "usd"
+                        ) ?? emptyNetworkFeeViewModel(),
                         buttonState: .ready
                     )
                 )
@@ -130,6 +132,10 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
 }
 
 private extension DefaultNFTSendPresenter {
+    
+    func emptyNetworkFeeViewModel() -> NetworkFeeViewModel {
+        .init(name: Localized("networkFeeView.estimatedFee"), amount: [], time: [], fiat: [])
+    }
     
     func refreshFees() {
         fees = interactor.networkFees(network: context.network)
@@ -204,37 +210,16 @@ private extension DefaultNFTSendPresenter {
             with: [
                 .send(
                     .init(
-                        tokenNetworkFeeViewModel: .init(
-                            estimatedFee: estimatedFee(),
-                            feeName: feeName()
-                        ),
+                        tokenNetworkFeeViewModel: fee?.toNetworkFeeViewModel(
+                            currencyFiatPrice: interactor.fiatPrice(currency: context.network.nativeCurrency),
+                            amountDigits: UInt32(10),
+                            fiatPriceDigits: UInt32(8),
+                            fiatPriceCurrencyCode: "usd"
+                        ) ?? emptyNetworkFeeViewModel(),
                         buttonState: buttonState
                     )
                 )
             ]
         )
-    }
-    
-    func estimatedFee() -> [Formatters.Output] {
-        guard let fee = fee else { return [Formatters.OutputNormal(value: "-")] }
-        var outputFormat = Formatters.Companion.shared.currency.format(
-            amount: fee.amount, currency: fee.currency, style: Formatters.StyleCustom(maxLength: 10)
-        )
-        let min: Double = Double(fee.seconds) / Double(60)
-        var value = ""
-        if min > 1 {
-            value = " ~ \(min.toString(decimals: 0)) \(Localized("min"))"
-        } else {
-            value = " ~ \(fee.seconds) \(Localized("sec"))"
-        }
-        outputFormat.append(
-            Formatters.OutputNormal(value: value)
-        )
-        return outputFormat
-    }
-    
-    func feeName() -> String {
-        guard let fee = fee else { return "-" }
-        return fee.name
     }
 }

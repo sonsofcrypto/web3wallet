@@ -38,6 +38,7 @@ final class DefaultCurrencySwapWireframe {
     private let walletService: WalletService
     private let networksService: NetworksService
     private let swapService: UniswapService
+    private let currencyStoreService: CurrencyStoreService
     
     private weak var vc: UIViewController?
     
@@ -49,7 +50,8 @@ final class DefaultCurrencySwapWireframe {
         alertWireframeFactory: AlertWireframeFactory,
         walletService: WalletService,
         networksService: NetworksService,
-        swapService: UniswapService
+        swapService: UniswapService,
+        currencyStoreService: CurrencyStoreService
     ) {
         self.parent = parent
         self.context = context
@@ -59,6 +61,7 @@ final class DefaultCurrencySwapWireframe {
         self.walletService = walletService
         self.networksService = networksService
         self.swapService = swapService
+        self.currencyStoreService = currencyStoreService
     }
 }
 
@@ -103,7 +106,8 @@ private extension DefaultCurrencySwapWireframe {
             network: context.network,
             walletService: walletService,
             networksService: networksService,
-            swapService: swapService
+            swapService: swapService,
+            currencyStoreService: currencyStoreService
         )
         let vc: CurrencySwapViewController = UIStoryboard(.currencySwap).instantiate()
         let presenter = DefaultCurrencySwapPresenter(

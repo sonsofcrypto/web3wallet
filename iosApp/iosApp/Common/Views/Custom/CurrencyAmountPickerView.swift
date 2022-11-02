@@ -6,45 +6,6 @@ import Foundation
 import UIKit
 import web3walletcore
 
-struct CurrencyAmountPickerViewModel {
-    
-    let amount: BigInt?
-    let symbolIconName: String
-    let symbol: String
-    let maxAmount: BigInt
-    let maxDecimals: UInt
-    let fiatPrice: Double
-    let shouldUpdateTextFields: Bool
-    let shouldBecomeFirstResponder: Bool
-    let networkName: String
-    let inputEnabled: Bool
-    
-    init(
-        amount: BigInt?,
-        symbolIconName: String,
-        symbol: String,
-        maxAmount: BigInt,
-        maxDecimals: UInt,
-        fiatPrice: Double,
-        shouldUpdateTextFields: Bool,
-        shouldBecomeFirstResponder: Bool,
-        networkName: String,
-        inputEnabled: Bool = true
-    ) {
-        
-        self.amount = amount
-        self.symbolIconName = symbolIconName
-        self.symbol = symbol
-        self.maxAmount = maxAmount
-        self.maxDecimals = maxDecimals
-        self.fiatPrice = fiatPrice
-        self.shouldUpdateTextFields = shouldUpdateTextFields
-        self.shouldBecomeFirstResponder = shouldBecomeFirstResponder
-        self.networkName = networkName
-        self.inputEnabled = inputEnabled
-    }
-}
-
 final class CurrencyAmountPickerView: UIView {
     
     @IBOutlet weak var fiatSymbol: UILabel!
@@ -146,9 +107,7 @@ extension CurrencyAmountPickerView {
         currencyIconImageView.image = viewModel.symbolIconName.assetImage
         currencyLabel.text = viewModel.symbol
         
-        if viewModel.shouldBecomeFirstResponder {
-            amountTextField.becomeFirstResponder()
-        }
+        if viewModel.becomeFirstResponder { amountTextField.becomeFirstResponder() }
     }
 }
 
@@ -177,7 +136,7 @@ extension CurrencyAmountPickerView: UITextFieldDelegate {
             }
             var amount = BigInt.fromString(
                 textField.text,
-                decimals: viewModel.maxDecimals
+                decimals: viewModel.maxDecimals.uInt
             )
             // NOTE: This is to not lose precision when flipping between token / fiat values,
             // we store the last tokenAmount and use it later
@@ -251,7 +210,7 @@ private extension CurrencyAmountPickerView {
         switch mode {
         case .currency:
             amountTextField.text = viewModel.maxAmount.formatString(
-                decimals: viewModel.maxDecimals
+                decimals: viewModel.maxDecimals.uInt
             )
         case .fiat:
             let maxBalanceAmountFiat = currencyFiatPrice(with: viewModel.maxAmount)
@@ -272,14 +231,14 @@ private extension CurrencyAmountPickerView {
                     amountTextField.text = nil
                 } else {
                     let amount = latestAmount ?? makeAmountFromFiatPrice(with: fiatAmount)
-                    amountTextField.text = amount.formatString(decimals: viewModel.maxDecimals)
+                    amountTextField.text = amount.formatString(decimals: viewModel.maxDecimals.uInt)
                 }
-            } else if viewModel.shouldUpdateTextFields {
+            } else if viewModel.updateTextField {
                 let amount = viewModel.amount ?? .zero
                 if amount == .zero {
                     amountTextField.text = nil
                 } else {
-                    amountTextField.text = amount.formatString(decimals: viewModel.maxDecimals)
+                    amountTextField.text = amount.formatString(decimals: viewModel.maxDecimals.uInt)
                 }
             }
             fiatSymbol.isHidden = true
@@ -288,7 +247,7 @@ private extension CurrencyAmountPickerView {
             if isFlip {
                 let amount = latestAmount ?? BigInt.fromString(
                     amountTextField.text,
-                    decimals: viewModel.maxDecimals
+                    decimals: viewModel.maxDecimals.uInt
                 )
                 
                 let fiatAmount = latestFiatAmount ?? currencyFiatPrice(with: amount)
@@ -297,7 +256,7 @@ private extension CurrencyAmountPickerView {
                 } else {
                     amountTextField.text = fiatAmount.formatString(type: .max, decimals: 2)
                 }
-            } else if viewModel.shouldUpdateTextFields {
+            } else if viewModel.updateTextField {
                 let amount = viewModel.amount ?? .zero
                 let fiatAmount = currencyFiatPrice(with: amount)
                 if fiatAmount == .zero {
@@ -321,7 +280,7 @@ private extension CurrencyAmountPickerView {
             } else {
                 let tokenAmount = BigInt.fromString(
                     amountTextField.text,
-                    decimals: viewModel.maxDecimals
+                    decimals: viewModel.maxDecimals.uInt
                 )
                 let fiatAmount = currencyFiatPrice(with: tokenAmount)
                 self.latestFiatAmount = fiatAmount
@@ -334,7 +293,7 @@ private extension CurrencyAmountPickerView {
             : makeAmountFromFiatPrice(with: fiatAmount)
             amountLabel.text = tokenAmount.formatString(
                 type: .long,
-                decimals: viewModel.maxDecimals
+                decimals: viewModel.maxDecimals.uInt
             ) + " \(viewModel.symbol)"
         }
     }
@@ -344,7 +303,7 @@ private extension CurrencyAmountPickerView {
         case .currency:
             let arg = viewModel.maxAmount.formatString(
                 type: .long,
-                decimals: viewModel.maxDecimals
+                decimals: viewModel.maxDecimals.uInt
             )
             balanceLabel.text = Localized("currencyAmountPicker.balance", arg)
         case .fiat:
@@ -374,7 +333,7 @@ private extension CurrencyAmountPickerView {
 private extension CurrencyAmountPickerView {
     
     func currencyFiatPrice(with amount: BigInt) -> BigInt {
-        let bigDecBalance = amount.toBigDec(decimals: viewModel.maxDecimals)
+        let bigDecBalance = amount.toBigDec(decimals: viewModel.maxDecimals.uInt)
         let bigDecFiatPrice = viewModel.fiatPrice.bigDec
         let bigDecDecimals = Double(100).bigDec
         let result = bigDecBalance.mul(value: bigDecFiatPrice).mul(value: bigDecDecimals)

@@ -19,6 +19,7 @@ final class DefaultCurrencySendWireframeFactory {
     private let alertWireframeFactory: AlertWireframeFactory
     private let walletService: WalletService
     private let networksService: NetworksService
+    private let currencyStoreService: CurrencyStoreService
 
     init(
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
@@ -26,7 +27,8 @@ final class DefaultCurrencySendWireframeFactory {
         confirmationWireframeFactory: ConfirmationWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         walletService: WalletService,
-        networksService: NetworksService
+        networksService: NetworksService,
+        currencyStoreService: CurrencyStoreService
     ) {
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.currencyPickerWireframeFactory = currencyPickerWireframeFactory
@@ -34,6 +36,7 @@ final class DefaultCurrencySendWireframeFactory {
         self.alertWireframeFactory = alertWireframeFactory
         self.walletService = walletService
         self.networksService = networksService
+        self.currencyStoreService = currencyStoreService
     }
 }
 
@@ -51,7 +54,8 @@ extension DefaultCurrencySendWireframeFactory: CurrencyCurrencyWireframeFactory 
             confirmationWireframeFactory: confirmationWireframeFactory,
             alertWireframeFactory: alertWireframeFactory,
             walletService: walletService,
-            networksService: networksService
+            networksService: networksService,
+            currencyStoreService: currencyStoreService
         )
     }
 }
@@ -68,7 +72,8 @@ final class CurrencySendWireframeFactoryAssembler: AssemblerComponent {
                 confirmationWireframeFactory: resolver.resolve(),
                 alertWireframeFactory: resolver.resolve(),
                 walletService: resolver.resolve(),
-                networksService: resolver.resolve()
+                networksService: resolver.resolve(),
+                currencyStoreService: resolver.resolve()
             )
         }
     }

@@ -5,25 +5,6 @@
 import UIKit
 import web3walletcore
 
-struct CurrencySendWireframeContext {
-    let network: Network
-    let address: String?
-    let currency: Currency?
-}
-
-enum CurrencySendWireframeDestination {
-    case underConstructionAlert
-    case qrCodeScan(network: Network, onCompletion: (String) -> Void)
-    case selectCurrency(onCompletion: (Currency) -> Void)
-    case confirmSend(context: ConfirmationWireframeContext.Send)
-}
-
-protocol CurrencySendWireframe {
-    func present()
-    func navigate(to destination: CurrencySendWireframeDestination)
-    func dismiss()
-}
-
 final class DefaultCurrencySendWireframe {
     private weak var parent: UIViewController?
     private let context: CurrencySendWireframeContext
@@ -33,6 +14,7 @@ final class DefaultCurrencySendWireframe {
     private let alertWireframeFactory: AlertWireframeFactory
     private let walletService: WalletService
     private let networksService: NetworksService
+    private let currencyStoreService: CurrencyStoreService
     
     private weak var vc: UIViewController?
     
@@ -44,7 +26,8 @@ final class DefaultCurrencySendWireframe {
         confirmationWireframeFactory: ConfirmationWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
         walletService: WalletService,
-        networksService: NetworksService        
+        networksService: NetworksService,
+        currencyStoreService: CurrencyStoreService
     ) {
         self.parent = parent
         self.context = context
@@ -54,6 +37,7 @@ final class DefaultCurrencySendWireframe {
         self.alertWireframeFactory = alertWireframeFactory
         self.walletService = walletService
         self.networksService = networksService
+        self.currencyStoreService = currencyStoreService
     }
 }
 
@@ -64,40 +48,38 @@ extension DefaultCurrencySendWireframe: CurrencySendWireframe {
         parent?.show(vc, sender: self)
     }
     
-    func navigate(to destination: CurrencySendWireframeDestination) {
-        switch destination {
-        case .underConstructionAlert:
+    func navigate(destination__ destination: CurrencySendWireframeDestination) {
+        if destination is CurrencySendWireframeDestination.UnderConstructionAlert {
             let factory: AlertWireframeFactory = AppAssembler.resolve()
-            factory.make(
-                vc,
-                context: .underConstructionAlert()
-            ).present()
-        case let .qrCodeScan(network, onCompletion):
+            factory.make(vc, context: .underConstructionAlert()).present()
+        }
+        if let input = destination as? CurrencySendWireframeDestination.QrCodeScan {
             let context = QRCodeScanWireframeContext(
-                type: QRCodeScanWireframeContext.Type_Network(network: network),
-                handler: onPopWrapped(onCompletion: onCompletion)
+                type: QRCodeScanWireframeContext.Type_Network(network: input.network),
+                handler: onPopWrapped(onCompletion: input.onCompletion)
             )
             qrCodeScanWireframeFactory.make(vc, context: context).present()
-        case let .selectCurrency(onCompletion):
-            currencyPickerWireframeFactory.make(
-                vc,
-                context: .init(
-                    isMultiSelect: false,
-                    showAddCustomCurrency: false,
-                    networksData: [.init(network: context.network, favouriteCurrencies: nil, currencies: nil)],
-                    selectedNetwork: nil,
-                    handler: onCompletionDismissWrapped(with: onCompletion)
-                )
-            ).present()
-        case let .confirmSend(context):
-            guard context.data.addressFrom != context.data.addressTo else {
+        }
+        if let input = destination as? CurrencySendWireframeDestination.SelectCurrency {
+            let context = CurrencyPickerWireframeContext(
+                isMultiSelect: false,
+                showAddCustomCurrency: false,
+                networksData: [.init(network: context.network, favouriteCurrencies: nil, currencies: nil)],
+                selectedNetwork: nil,
+                handler: onCompletionDismissWrapped(with: input.onCompletion)
+            )
+            currencyPickerWireframeFactory.make(vc, context: context).present()
+        }
+        if let input = destination as? CurrencySendWireframeDestination.ConfirmSend {
+            guard input.context.data.addressFrom != input.context.data.addressTo else {
                 return presentSendingToSameAddressAlert()
             }
-            confirmationWireframeFactory.make(vc, context: context).present()
+            confirmationWireframeFactory.make(vc, context: input.context).present()
+        }
+        if destination is CurrencySendWireframeDestination.Dismiss {
+            vc?.popOrDismiss()
         }
     }
-    
-    func dismiss() { vc?.popOrDismiss() }
 }
 
 private extension DefaultCurrencySendWireframe {
@@ -105,11 +87,12 @@ private extension DefaultCurrencySendWireframe {
     func wireUp() -> UIViewController {
         let interactor = DefaultCurrencySendInteractor(
             walletService: walletService,
-            networksService: networksService
+            networksService: networksService,
+            currencyStoreService: currencyStoreService
         )
         let vc: CurrencySendViewController = UIStoryboard(.currencySend).instantiate()
         let presenter = DefaultCurrencySendPresenter(
-            view: vc,
+            view: WeakRef(referred: vc),
             wireframe: self,
             interactor: interactor,
             context: context

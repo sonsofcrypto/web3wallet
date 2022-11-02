@@ -29,6 +29,7 @@ final class DefaultNFTSendWireframe {
     private let confirmationWireframeFactory: ConfirmationWireframeFactory
     private let alertWireframeFactory: AlertWireframeFactory
     private let networksService: NetworksService
+    private let currencyStoreService: CurrencyStoreService
     
     private weak var vc: UIViewController?
     
@@ -38,7 +39,8 @@ final class DefaultNFTSendWireframe {
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         confirmationWireframeFactory: ConfirmationWireframeFactory,
         alertWireframeFactory: AlertWireframeFactory,
-        networksService: NetworksService
+        networksService: NetworksService,
+        currencyStoreService: CurrencyStoreService
     ) {
         self.parent = parent
         self.context = context
@@ -46,6 +48,7 @@ final class DefaultNFTSendWireframe {
         self.confirmationWireframeFactory = confirmationWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
         self.networksService = networksService
+        self.currencyStoreService = currencyStoreService
     }
 }
 
@@ -84,7 +87,8 @@ private extension DefaultNFTSendWireframe {
     
     func wireUp() -> UIViewController {
         let interactor = DefaultNFTSendInteractor(
-            networksService: networksService
+            networksService: networksService,
+            currencyStoreService: currencyStoreService
         )
         let vc: NFTSendViewController = UIStoryboard(.nftSend).instantiate()
         let presenter = DefaultNFTSendPresenter(

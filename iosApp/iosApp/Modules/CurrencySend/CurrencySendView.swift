@@ -5,12 +5,6 @@
 import UIKit
 import web3walletcore
 
-protocol CurrencySendView: AnyObject {
-    func update(with viewModel: CurrencySendViewModel)
-    func presentFeePicker(with fees: [NetworkFee])
-    func dismissKeyboard()
-}
-
 final class CurrencySendViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var feesPickerView: NetworkFeePickerView!
@@ -28,14 +22,14 @@ final class CurrencySendViewController: BaseViewController {
 
 extension CurrencySendViewController: CurrencySendView {
 
-    func update(with viewModel: CurrencySendViewModel) {
+    func update(viewModel__ viewModel: CurrencySendViewModel) {
         self.viewModel = viewModel
         title = viewModel.title
         if collectionView.visibleCells.isEmpty { collectionView.reloadData() }
         else { updateCells() }
     }
     
-    func presentFeePicker(with fees: [NetworkFee]) {
+    func presentNetworkFeePicker(networkFees: [NetworkFee]) {
         dismissKeyboard()
         let cell = collectionView.visibleCells.first {
             $0 is CurrencySendCTACollectionViewCell
@@ -45,7 +39,7 @@ extension CurrencySendViewController: CurrencySendView {
             from: cell.networkFeeView.networkFeeButton
         )
         feesPickerView.present(
-            with: fees,
+            with: networkFees,
             onFeeSelected: makeOnFeeSelected(),
             at: .init(x: Theme.constant.padding, y: fromFrame.midY)
         )
@@ -71,20 +65,22 @@ extension CurrencySendViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard let item = viewModel?.items[indexPath.section] else { fatalError() }
-        switch item {
-        case let .address(value):
-            let cell = collectionView.dequeue(CurrencySendToCollectionViewCell.self, for: indexPath)
-            cell.update(with: value, handler: tokenSendTokenHandler())
-            return cell
-        case let .token(token):
-            let cell = collectionView.dequeue(CurrencySendTokenCollectionViewCell.self, for: indexPath)
-            cell.update(with: token, handler: tokenSendTokenHandler())
-            return cell
-        case let .send(cta):
-            let cell = collectionView.dequeue(CurrencySendCTACollectionViewCell.self, for: indexPath)
-            cell.update(with: cta, handler: tokenSendCTAHandler())
+        if let input = item as? CurrencySendViewModel.ItemAddress {
+            let cell = collectionView.dequeue(CurrencySendToAddressCollectionViewCell.self, for: indexPath)
+            cell.update(with: input.data, handler: addressHandler())
             return cell
         }
+        if let input = item as? CurrencySendViewModel.ItemCurrency {
+            let cell = collectionView.dequeue(CurrencySendCurrencyCollectionViewCell.self, for: indexPath)
+            cell.update(with: input.data, handler: currencyHandler())
+            return cell
+        }
+        if let input = item as? CurrencySendViewModel.ItemSend {
+            let cell = collectionView.dequeue(CurrencySendCTACollectionViewCell.self, for: indexPath)
+            cell.update(with: input.data, handler: ctaHandler())
+            return cell
+        }
+        fatalError("Item not implemented")
     }
 }
 
@@ -122,11 +118,11 @@ private extension CurrencySendViewController {
     }
     
     func makeOnFeeSelected() -> ((NetworkFee) -> Void) {
-        { [weak self] item in self?.onTapped(.feeChanged(to: item))() }
+        { [weak self] item in self?.onTapped(CurrencySendPresenterEvent.NetworkFeeChanged(value: item))() }
     }
     
     @objc func navBarLeftActionTapped() {
-        presenter.handle(.dismiss)
+        presenter.handle(event______: CurrencySendPresenterEvent.Dismiss())
     }
 }
 
@@ -170,18 +166,17 @@ private extension CurrencySendViewController {
     
     func updateCells() {
         collectionView.visibleCells.forEach {
-            switch $0 {
-            case let addressCell as CurrencySendToCollectionViewCell:
+            if let cell = $0 as? CurrencySendToAddressCollectionViewCell {
                 guard let address = viewModel?.items.address else { return }
-                addressCell.update(with: address, handler: tokenSendTokenHandler())
-            case let tokenCell as CurrencySendTokenCollectionViewCell:
-                guard let token = viewModel?.items.token else { return }
-                tokenCell.update(with: token, handler: tokenSendTokenHandler())
-            case let ctaCell as CurrencySendCTACollectionViewCell:
-                guard let cta = viewModel?.items.send else { return }
-                ctaCell.update(with: cta, handler: tokenSendCTAHandler())
-            default:
-                fatalError()
+                cell.update(with: address, handler: addressHandler())
+            }
+            if let cell = $0 as? CurrencySendCurrencyCollectionViewCell {
+                guard let currency = viewModel?.items.currency else { return }
+                cell.update(with: currency, handler: currencyHandler())
+            }
+            if let cell = $0 as? CurrencySendCTACollectionViewCell {
+                guard let send = viewModel?.items.send else { return }
+                cell.update(with: send, handler: ctaHandler())
             }
         }
     }
@@ -189,38 +184,63 @@ private extension CurrencySendViewController {
 
 private extension CurrencySendViewController {
     
-    func tokenSendTokenHandler() -> NetworkAddressPickerView.Handler {
+    func addressHandler() -> NetworkAddressPickerView.Handler {
         .init(
             onAddressChanged: onAddressChanged(),
-            onQRCodeScanTapped: onTapped(.qrCodeScan),
-            onPasteTapped: onTapped(.pasteAddress),
-            onSaveTapped: onTapped(.saveAddress)
+            onQRCodeScanTapped: onTapped(CurrencySendPresenterEvent.QrCodeScan()),
+            onPasteTapped: onPasteFromKeyboard(),
+            onSaveTapped: onTapped(CurrencySendPresenterEvent.SaveAddress())
         )
+    }
+    
+    func onPasteFromKeyboard() -> () -> Void {
+        { [weak self] in
+            self?.onTapped(
+                CurrencySendPresenterEvent.PasteAddress(value: UIPasteboard.general.string ?? "")
+            )()
+        }
     }
 
     func onAddressChanged() -> (String) -> Void {
-        { [weak self] value in self?.onTapped(.addressChanged(to: value))()}
+        { [weak self] value in self?.onTapped(CurrencySendPresenterEvent.AddressChanged(value: value))()}
     }
     
-    func tokenSendTokenHandler() -> CurrencySendTokenCollectionViewCell.Handler {
+    func currencyHandler() -> CurrencySendCurrencyCollectionViewCell.Handler {
         .init(
-            onCurrencyTapped: onTapped(.selectCurrency),
+            onCurrencyTapped: onTapped(CurrencySendPresenterEvent.SelectCurrency()),
             onAmountChanged: onAmountChanged()
         )
     }
     
     func onAmountChanged() -> (BigInt) -> Void {
-        { [weak self] value in self?.onTapped(.amountChanged(to: value))() }
+        { [weak self] value in self?.onTapped(CurrencySendPresenterEvent.AmountChanged(value: value))() }
     }
     
-    func tokenSendCTAHandler() -> CurrencySendCTACollectionViewCell.Handler {
+    func ctaHandler() -> CurrencySendCTACollectionViewCell.Handler {
         .init(
-            onNetworkFeesTapped: onTapped(.feeTapped),
-            onCTATapped: onTapped(.review)
+            onNetworkFeesTapped: onTapped(CurrencySendPresenterEvent.NetworkFeeTapped()),
+            onCTATapped: onTapped(CurrencySendPresenterEvent.Review())
         )
     }
     
     func onTapped(_ event: CurrencySendPresenterEvent) -> () -> Void {
-        { [weak self] in self?.presenter.handle(event) }
+        { [weak self] in self?.presenter.handle(event______: event) }
+    }
+}
+
+extension Array where Element == CurrencySendViewModel.Item {
+    var address: NetworkAddressPickerViewModel? {
+        let item = first { $0 is CurrencySendViewModel.ItemAddress }
+        return (item as? CurrencySendViewModel.ItemAddress)?.data
+    }
+
+    var currency: CurrencyAmountPickerViewModel? {
+        let item = first { $0 is CurrencySendViewModel.ItemCurrency }
+        return (item as? CurrencySendViewModel.ItemCurrency)?.data
+    }
+
+    var send: CurrencySendViewModel.SendViewModel? {
+        let item = first { $0 is CurrencySendViewModel.ItemSend }
+        return (item as? CurrencySendViewModel.ItemSend)?.data
     }
 }

@@ -94,5 +94,4 @@ class DefaultConfirmationInteractor(
 
     override fun fiatPrice(currency: Currency): Double =
         currencyStoreService.marketData(currency)?.currentPrice ?: 0.toDouble()
-
 }

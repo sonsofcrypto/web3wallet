@@ -4,7 +4,7 @@
 
 import web3walletcore
 
-final class CurrencySendTokenCollectionViewCell: UICollectionViewCell {
+final class CurrencySendCurrencyCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var currencyView: CurrencyAmountPickerView!
     
     struct Handler {
@@ -17,7 +17,7 @@ final class CurrencySendTokenCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension CurrencySendTokenCollectionViewCell {
+extension CurrencySendCurrencyCollectionViewCell {
     
     func update(
         with viewModel: CurrencyAmountPickerViewModel,
