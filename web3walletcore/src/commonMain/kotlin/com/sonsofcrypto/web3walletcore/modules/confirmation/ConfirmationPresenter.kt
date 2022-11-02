@@ -15,7 +15,6 @@ import com.sonsofcrypto.web3walletcore.modules.confirmation.ConfirmationWirefram
 import com.sonsofcrypto.web3walletcore.modules.confirmation.ConfirmationWireframeContext.SwapContext.Provider
 import com.sonsofcrypto.web3walletcore.modules.confirmation.ConfirmationWireframeDestination.*
 import com.sonsofcrypto.web3walletcore.modules.confirmation.ConfirmationWireframeDestination.Dismiss
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -229,37 +228,47 @@ class DefaultConfirmationPresenter(
     private fun broadcastTransaction(data: AuthenticateData) {
         txHash = null
         error = null
-        val errHandler = CoroutineExceptionHandler { _, err ->
-            scope.launch(uiDispatcher) {
-                error = err
-                updateView(failedViewModel(error!!))
-            }
-        }
         when (context) {
             is Send -> {
-                scope.launch(errHandler) {
-                    val result = interactor.send(context.data, data.password, data.salt)
-                    withUICxt { showSuccess(result) }
+                scope.launch {
+                    try {
+                        val result = interactor.send(context.data, data.password, data.salt)
+                        withUICxt { showSuccess(result) }
+                    } catch (e: Throwable) {
+                        withUICxt { error = e; updateView(failedViewModel(error!!)) }
+                    }
                 }
             }
             is Swap -> {
-                scope.launch(errHandler) {
-                    val result = interactor.swap(
-                        context.data.network, data.password, data.salt, context.data.swapService
-                    )
-                    withUICxt { showSuccess(result) }
+                scope.launch {
+                    try {
+                        val result = interactor.swap(
+                            context.data.network, data.password, data.salt, context.data.swapService
+                        )
+                        withUICxt { showSuccess(result) }
+                    } catch (e: Throwable) {
+                        withUICxt { error = e; updateView(failedViewModel(error!!)) }
+                    }
                 }
             }
             is SendNFT -> {
-                scope.launch(errHandler) {
-                    val result = interactor.sendNFT(context.data, data.password, data.salt)
-                    withUICxt { showSuccess(result) }
+                scope.launch {
+                    try {
+                        val result = interactor.sendNFT(context.data, data.password, data.salt)
+                        withUICxt { showSuccess(result) }
+                    } catch (e: Throwable) {
+                        withUICxt { error = e; updateView(failedViewModel(error!!)) }
+                    }
                 }
             }
             is CultCastVote -> {
-                scope.launch(errHandler) {
-                    val result = interactor.castVote(context.data, data.password, data.salt)
-                    withUICxt { showSuccess(result) }
+                scope.launch {
+                    try {
+                        val result = interactor.castVote(context.data, data.password, data.salt)
+                        withUICxt { showSuccess(result) }
+                    } catch (e: Throwable) {
+                        withUICxt { error = e; updateView(failedViewModel(error!!)) }
+                    }
                 }
             }
             is ApproveUniswap -> {

@@ -24,8 +24,8 @@ private extension ConfirmationTxInProgressView {
     func configureUI() {
         let views: [UIView] = [
             animationView(),
-            label(with: .body, and: viewModel.title),
-            label(with: .footnote, and: viewModel.message)
+            label(with: .title3, and: viewModel.title),
+            label(with: .body, and: viewModel.message)
         ]
         let stackView = VStackView(views)
         stackView.spacing = Theme.constant.padding
