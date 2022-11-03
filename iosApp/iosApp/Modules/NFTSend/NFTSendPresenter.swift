@@ -134,7 +134,7 @@ extension DefaultNFTSendPresenter: NFTSendPresenter {
 private extension DefaultNFTSendPresenter {
     
     func emptyNetworkFeeViewModel() -> NetworkFeeViewModel {
-        .init(name: Localized("networkFeeView.estimatedFee"), amount: [], time: [], fiat: [])
+        .init(name: "-", amount: [], time: [], fiat: [])
     }
     
     func refreshFees() {

@@ -21,7 +21,7 @@ fun NetworkFee.toNetworkFeeViewModel(
     fiatPriceCurrencyCode: String = "usd"
 ): NetworkFeeViewModel =
     NetworkFeeViewModel(
-        Localized("networkFeeView.estimatedFee"),
+        name,
         networkFeeAmount(amountDigits),
         networkFeeTime(),
         networkFeeFiat(currencyFiatPrice, fiatPriceDigits, fiatPriceCurrencyCode),

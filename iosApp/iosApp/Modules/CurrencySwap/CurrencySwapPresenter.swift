@@ -292,7 +292,7 @@ private extension DefaultCurrencySwapPresenter {
     }
     
     func emptyNetworkFeeViewModel() -> NetworkFeeViewModel {
-        .init(name: Localized("networkFeeView.estimatedFee"), amount: [], time: [], fiat: [])
+        .init(name: "-", amount: [], time: [], fiat: [])
     }
     
     var isCalculating: Bool {

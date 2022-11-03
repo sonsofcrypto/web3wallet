@@ -184,7 +184,7 @@ class DefaultCurrencySendPresenter(
     private fun formattedAddress(address: String?): String {
         val address = address ?: return ""
         if (!context.network.isValidAddress(address)) { return address }
-        return Formatters.networkAddress.format(address, 10, context.network)
+        return Formatters.networkAddress.format(address, 8, context.network)
     }
 
     private fun currencyViewModel(
@@ -197,9 +197,7 @@ class DefaultCurrencySendPresenter(
             currency.symbol.uppercase(),
             currencyBalance,
             currency.decimals(),
-            Formatters.crypto(
-                amount ?: BigInt.zero(), currency.decimals(), interactor.fiatPrice(currency)
-            ),
+            interactor.fiatPrice(currency),
             updateTextField,
             becomeFirstResponder,
             context.network.name
@@ -207,7 +205,7 @@ class DefaultCurrencySendPresenter(
         return CurrencySendViewModel.Item.Currency(data)
     }
 
-    private val currencyBalance: BigInt = interactor.balance(currency, context.network)
+    private val currencyBalance: BigInt get() = interactor.balance(currency, context.network)
 
     private fun sendViewModel(): CurrencySendViewModel.Item.Send {
         val mul = interactor.fiatPrice(currency)
@@ -219,17 +217,20 @@ class DefaultCurrencySendPresenter(
     }
 
     private fun emptyNetworkFeeViewModel(): NetworkFeeViewModel =
-        NetworkFeeViewModel(Localized("networkFeeView.estimatedFee"), listOf(), listOf(), listOf())
+        NetworkFeeViewModel("-", listOf(), listOf(), listOf())
 
     private fun buttonStateViewModel(): CurrencySendViewModel.ButtonState =
         if (!sendTapped) { READY }
-        else if (!context.network.isValidAddress(address ?: "")) {  INVALID_DESTINATION }
-        else if (zeroBalance) {  INSUFFICIENT_FUNDS }
-        else if (zeroAmount && positiveBalance) {  ENTER_FUNDS }
+        else if (!context.network.isValidAddress(address ?: "")) { INVALID_DESTINATION }
+        else if (zeroBalance) { INSUFFICIENT_FUNDS }
+        else if (zeroAmount && positiveBalance) { ENTER_FUNDS }
         else if (currencyBalance.isLessThan((amount ?: BigInt.zero()))) { INSUFFICIENT_FUNDS }
-        else {  READY }
+        else { READY }
 
-    private val zeroAmount: Boolean = (amount ?: BigInt.zero()) == BigInt.zero()
-    private val zeroBalance: Boolean = currencyBalance == BigInt.zero()
+    private val zeroAmount: Boolean get() {
+        val amount = amount ?: return true
+        return amount == BigInt.zero()
+    }
+    private val zeroBalance: Boolean = (currencyBalance == BigInt.zero())
     private val positiveBalance: Boolean = currencyBalance.isGreaterThan(BigInt.zero())
 }
