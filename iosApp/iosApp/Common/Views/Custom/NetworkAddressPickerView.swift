@@ -2,12 +2,7 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-struct NetworkAddressPickerViewModel {
-    let placeholder: String
-    let value: String?
-    let isValid: Bool
-    let becomeFirstResponder: Bool
-}
+import web3walletcore
 
 final class NetworkAddressPickerView: UIView {
     @IBOutlet weak var textFieldView: UIView!

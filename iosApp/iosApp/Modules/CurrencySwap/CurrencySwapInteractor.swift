@@ -52,13 +52,15 @@ protocol CurrencySwapInteractor: AnyObject {
         salt: String
     )
     func balance(currency: Currency, network: Network) -> BigInt
+    func fiatPrice(currency: Currency) -> Double
 }
 
 final class DefaultCurrencySwapInteractor {
     private let network: Network
     private let walletService: WalletService
     private let networksService: NetworksService
-    internal let swapService: UniswapService
+    let swapService: UniswapService
+    private let currencyStoreService: CurrencyStoreService
     
     private var listener: WeakContainer?
     
@@ -66,12 +68,14 @@ final class DefaultCurrencySwapInteractor {
         network: Network,
         walletService: WalletService,
         networksService: NetworksService,
-        swapService: UniswapService
+        swapService: UniswapService,
+        currencyStoreService: CurrencyStoreService
     ) {
         self.network = network
         self.walletService = walletService
         self.networksService = networksService
         self.swapService = swapService
+        self.currencyStoreService = currencyStoreService
         configureUniswapService()
     }
     
@@ -163,6 +167,10 @@ extension DefaultCurrencySwapInteractor: CurrencySwapInteractor {
     
     func balance(currency: Currency, network: Network) -> BigInt {
         walletService.balance(network: network, currency: currency)
+    }
+    
+    func fiatPrice(currency: Currency) -> Double {
+        currencyStoreService.marketData(currency: currency)?.currentPrice?.doubleValue ?? 0
     }
 }
 

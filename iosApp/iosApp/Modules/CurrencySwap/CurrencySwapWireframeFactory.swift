@@ -19,6 +19,7 @@ final class DefaultCurrencySwapWireframeFactory {
     private let walletService: WalletService
     private let networksService: NetworksService
     private let swapService: UniswapService
+    private let currencyStoreService: CurrencyStoreService
 
     init(
         currencyPickerWireframeFactory: CurrencyPickerWireframeFactory,
@@ -26,7 +27,8 @@ final class DefaultCurrencySwapWireframeFactory {
         alertWireframeFactory: AlertWireframeFactory,
         walletService: WalletService,
         networksService: NetworksService,
-        swapService: UniswapService
+        swapService: UniswapService,
+        currencyStoreService: CurrencyStoreService
     ) {
         self.currencyPickerWireframeFactory = currencyPickerWireframeFactory
         self.confirmationWireframeFactory = confirmationWireframeFactory
@@ -34,6 +36,7 @@ final class DefaultCurrencySwapWireframeFactory {
         self.walletService = walletService
         self.networksService = networksService
         self.swapService = swapService
+        self.currencyStoreService = currencyStoreService
     }
 }
 
@@ -52,7 +55,8 @@ extension DefaultCurrencySwapWireframeFactory: CurrencySwapWireframeFactory {
             alertWireframeFactory: alertWireframeFactory,
             walletService: walletService,
             networksService: networksService,
-            swapService: swapService
+            swapService: swapService,
+            currencyStoreService: currencyStoreService
         )
     }
 }
@@ -69,7 +73,8 @@ final class CurrencySwapWireframeFactoryAssembler: AssemblerComponent {
                 alertWireframeFactory: resolver.resolve(),
                 walletService: resolver.resolve(),
                 networksService: resolver.resolve(),
-                swapService: resolver.resolve()
+                swapService: resolver.resolve(),
+                currencyStoreService: resolver.resolve()
             )
         }
     }

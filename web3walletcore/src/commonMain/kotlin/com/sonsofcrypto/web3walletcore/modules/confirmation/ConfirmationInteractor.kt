@@ -34,6 +34,8 @@ interface ConfirmationInteractor {
     ): TransactionResponse
 
     fun fiatPrice(currency: Currency): Double
+
+    fun trackNFTAsSent(nftItem: NFTItem)
 }
 
 class DefaultConfirmationInteractor(
@@ -63,7 +65,6 @@ class DefaultConfirmationInteractor(
             ),
             input.network
         )
-        nftsService.nftSent(input.nftItem.identifier)
         return tx
     }
 
@@ -95,4 +96,5 @@ class DefaultConfirmationInteractor(
     override fun fiatPrice(currency: Currency): Double =
         currencyStoreService.marketData(currency)?.currentPrice ?: 0.toDouble()
 
+    override fun trackNFTAsSent(nftItem: NFTItem) = nftsService.nftSent(nftItem.identifier)
 }

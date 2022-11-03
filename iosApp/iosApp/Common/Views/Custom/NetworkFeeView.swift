@@ -4,11 +4,6 @@
 
 import web3walletcore
 
-struct NetworkFeeViewModel {
-    let estimatedFee: [Formatters.Output]
-    let feeName: String
-}
-
 final class NetworkFeeView: UIView {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var networkFeeCurrencyIcon: UIImageView!
@@ -37,11 +32,14 @@ extension NetworkFeeView {
     ) {
         self.handler = handler
         networkFeeCurrencyIcon.isHidden = true
+        var output = viewModel.amount
+        output.append(Formatters.OutputNormal(value: " - "))
+        output.append(contentsOf: viewModel.time)
         networkEstimateFeeLabel.attributedText = NSAttributedString(
-            viewModel.estimatedFee,
+            output,
             font: Theme.font.footnote
         )
-        networkFeeButton.setTitle(viewModel.feeName, for: .normal)
+        networkFeeButton.setTitle(viewModel.name, for: .normal)
     }
 }
 
