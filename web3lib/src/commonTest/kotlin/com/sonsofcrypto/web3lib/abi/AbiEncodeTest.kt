@@ -10,7 +10,7 @@ import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class AbiEncodeTest {/*
+class AbiEncodeTest {
     @Test
     fun testEncodeBooleanTrue () {
         val actual = AbiEncode.encode(true)
@@ -209,25 +209,6 @@ class AbiEncodeTest {/*
                         "74776f0000000000000000000000000000000000000000000000000000000000" +
                         "0000000000000000000000000000000000000000000000000000000000000005" +
                         "7468726565000000000000000000000000000000000000000000000000000000"
-                         '0000000000000000000000000000000000000000000000000000000000000040',
-  '0000000000000000000000000000000000000000000000000000000000000120',
-  '0000000000000000000000000000000000000000000000000000000000000040',
-  '00000000000000000000000000000000000000000000000000000000000000a0',
-  '0000000000000000000000000000000000000000000000000000000000000002',
-  '0000000000000000000000000000000000000000000000000000000000000001',
-  '0000000000000000000000000000000000000000000000000000000000000002',
-  '0000000000000000000000000000000000000000000000000000000000000001',
-  '0000000000000000000000000000000000000000000000000000000000000003',
-  '0000000000000000000000000000000000000000000000000000000000000003',
-  '0000000000000000000000000000000000000000000000000000000000000060',
-  '00000000000000000000000000000000000000000000000000000000000000a0',
-  '00000000000000000000000000000000000000000000000000000000000000e0',
-  '0000000000000000000000000000000000000000000000000000000000000003',
-  '6f6e650000000000000000000000000000000000000000000000000000000000',
-  '0000000000000000000000000000000000000000000000000000000000000003',
-  '74776f0000000000000000000000000000000000000000000000000000000000',
-  '0000000000000000000000000000000000000000000000000000000000000005',
-  '7468726565000000000000000000000000000000000000000000000000000000'
 
         assertTrue(expected.hexStringToByteArray().contentEquals(actual))
     }
@@ -299,7 +280,7 @@ class AbiEncodeTest {/*
         assertContentEquals(expected1, actual1)
     }
 
-    @Test
+    /*@Test
     fun testEncodeWithMultiple() {
         val actual = AbiEncode.encode(
             arrayOf(
@@ -322,9 +303,9 @@ class AbiEncodeTest {/*
                         "0000000000000000000000000000000000000000000000000000000000000001" +
                         "00000000000000000000000000000000000000000000000000000000000001f4" +
                         "00000000000000000000000000000000000000000065d855e0f02863c04ff3b3"
-
+        //actual.chunked(64).forEach { println("A: "+it) }
         assertEquals(expected, actual)
-    }
+    }*/
     @Test
     fun testEncodeWithTypeString() {
         val actual = AbiEncode.encode("string", "Hello, world!").toHexString()
@@ -348,6 +329,8 @@ class AbiEncodeTest {/*
 
         assertEquals(expected, actual)
     }
+    /*
+    TODO: NOT YET WORKING
     @Test
     fun testEncodeWithTypeTuple() {
         val actual = AbiEncode.encode(
@@ -358,10 +341,14 @@ class AbiEncodeTest {/*
                         "48656c6c6f2c20776f726c642100000000000000000000000000000000000000" +
                         "0000000000000000000000002d77b594b9bbaed03221f7c63af8c4307432daf1"
 
-        assertEquals(expected, actual)
-    }
 
-    @Test
+        actual.chunked(64).forEach { println("A: "+it) }
+        expected.chunked(64).forEach { println("E: "+it) }
+
+        assertEquals(expected, actual)
+    }*/
+
+    /*@Test
     fun testAdvancedQuery() {
         //[[1,2],[3]],["one", "two", "three"]
 
@@ -375,8 +362,6 @@ class AbiEncodeTest {/*
                 arrayOf("one", "two", "three")
             )
         )
-        actual.toHexString().chunked(64).forEach { println("A: "+it) }
-        println("")
 
         val expected =  "0000000000000000000000000000000000000000000000000000000000000040" +
                         "0000000000000000000000000000000000000000000000000000000000000140" +
@@ -398,13 +383,11 @@ class AbiEncodeTest {/*
                         "74776f0000000000000000000000000000000000000000000000000000000000" +
                         "0000000000000000000000000000000000000000000000000000000000000005" +
                         "7468726565000000000000000000000000000000000000000000000000000000"
-        expected.chunked(64).forEach { println("E: "+it) }
 
         assertEquals(expected, actual.toHexString())
-    }
-    */
+    }*/
     @Test
-    fun testStuff() {
+    fun testStringArray() {
         val actual = AbiEncode.encode(arrayOf("string[]"), arrayOf(arrayOf(
             "one",
             "two",
@@ -422,8 +405,8 @@ class AbiEncodeTest {/*
                         "0000000000000000000000000000000000000000000000000000000000000005" +
                         "7468726565000000000000000000000000000000000000000000000000000000"
 
-        actual.toHexString().chunked(64).forEach { println(it) }
-
-        assertTrue(expected.hexStringToByteArray().contentEquals(actual))
+        //actual.toHexString().chunked(64).forEach { println("A: "+it) }
+        //expected.chunked(64).forEach { println("E: "+it) }
+        assertEquals(expected, actual.toHexString())
     }
 }

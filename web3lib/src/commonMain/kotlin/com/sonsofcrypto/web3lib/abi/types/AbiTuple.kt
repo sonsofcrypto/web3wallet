@@ -8,12 +8,13 @@ class AbiTuple(override val type: String, override val value: Any) : AbiType {
     }
 
     override fun isDynamic(): Boolean {
-        return AbiEncode.deconstructTuple(type).filter { it ->
+        return true
+        /*return AbiEncode.deconstructTuple(type).filter { it ->
             if (AbiString.isType(it) || AbiTuple.isType(it)) {
                 return true
             }
             return false
-        }.isNotEmpty()
+        }.isNotEmpty()*/
     }
 
     companion object : AbiValidatable {
