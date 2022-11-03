@@ -256,7 +256,10 @@ class DefaultConfirmationPresenter(
                 scope.launch {
                     try {
                         val result = interactor.sendNFT(context.data, data.password, data.salt)
-                        withUICxt { showSuccess(result) }
+                        withUICxt {
+                            interactor.trackNFTAsSent(context.data.nftItem)
+                            showSuccess(result)
+                        }
                     } catch (e: Throwable) {
                         withUICxt { error = e; updateView(failedViewModel(error!!)) }
                     }
