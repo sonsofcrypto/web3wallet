@@ -2,9 +2,7 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-struct CurrencySwapPriceViewModel {
-    let value: String
-}
+import web3walletcore
 
 final class CurrencySwapPriceView: UIView {
     
@@ -15,13 +13,17 @@ final class CurrencySwapPriceView: UIView {
         super.awakeFromNib()
         nameLabel.apply(style: .footnote)
         nameLabel.text = Localized("currencySwap.cell.price")
-        valueLabel.apply(style: .footnote)
     }
 }
 
 extension CurrencySwapPriceView {
     
     func update(with viewModel: CurrencySwapPriceViewModel) {
-        valueLabel.text = viewModel.value
+        valueLabel.attributedText = .init(
+            viewModel.value,
+            font: Theme.font.footnote,
+            fontSmall: Theme.font.extraSmall,
+            foregroundColor: Theme.colour.labelPrimary
+        )
     }
 }

@@ -2,9 +2,7 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
-struct CurrencySwapSlippageViewModel {
-    let value: String
-}
+import web3walletcore
 
 final class CurrencySwapSlippageView: UIView {
     @IBOutlet weak var nameLabel: UILabel!

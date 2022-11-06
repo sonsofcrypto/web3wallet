@@ -74,7 +74,7 @@ final class CurrencySwapMarketCollectionViewCell: UICollectionViewCell {
 
 extension CurrencySwapMarketCollectionViewCell {
     
-    func update(with viewModel: CurrencySwapViewModel.Swap, handler: Handler) {
+    func update(with viewModel: CurrencySwapViewModel.SwapData, handler: Handler) {
         self.handler = handler
         currencyFrom.update(
             with: viewModel.currencyFrom,
@@ -132,24 +132,28 @@ extension CurrencySwapMarketCollectionViewCell {
             approveButton.isEnabled = true
         case .approved:
             approveButton.isHidden = true
+        default:
+            break
         }
-        switch viewModel.buttonState {
-        case .loading:
+        if viewModel.buttonState is CurrencySwapViewModel.ButtonStateLoading {
             button.hideLoading()
             button.style = .primary
             button.setTitle(Localized("currencySwap.cell.button.state.swap"), for: .normal)
             button.isEnabled = false
-        case let .invalid(text):
+        }
+        if let input = viewModel.buttonState as? CurrencySwapViewModel.ButtonStateInvalid {
             button.hideLoading()
             button.style = .primary
-            button.setTitle(text, for: .normal)
+            button.setTitle(input.text, for: .normal)
             button.isEnabled = false
-        case let .swapAnyway(text: text):
+        }
+        if let input = viewModel.buttonState as? CurrencySwapViewModel.ButtonStateSwapAnyway {
             button.hideLoading()
-            button.setTitle(text, for: .normal)
+            button.setTitle(input.text, for: .normal)
             button.style = .primary(action: .destructive)
             button.isEnabled = viewModel.approveState == .approved
-        case .swap:
+        }
+        if viewModel.buttonState is CurrencySwapViewModel.ButtonStateSwap {
             button.hideLoading()
             button.setTitle(Localized("currencySwap.cell.button.state.swap"), for: .normal)
             button.style = .primary

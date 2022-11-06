@@ -11,25 +11,25 @@ class FormattersOutput {
     private val trillion = Magnitude(12, "Trillion", "T")
     private val max = Magnitude(14, "", "")
 
-    fun convert(input: String, maxLength: UInt): List<Output> {
+    fun convert(input: String, maxLength: UInt, applyMagnitude: Boolean = true): List<Output> {
         val wholeNumberPart = input.wholeNumberPart
-        return if (wholeNumberPart.count() > max.digits) {
+        return if (wholeNumberPart.count() > max.digits && applyMagnitude) {
             input.divide(input.maxDigits).convertDecimalNumberPartToDexTools.compact()
                 .toFit(maxLength(maxLength, input.powerOfMaxDigitsLength))
                 .clearZeros().addPowerOff(input.powerOfMaxDigits).compact()
-        } else if (wholeNumberPart.count() > trillion.digits) {
+        } else if (wholeNumberPart.count() > trillion.digits && applyMagnitude) {
             input.divide(trillion.digits).convertDecimalNumberPartToDexTools.compact()
                 .toFit(maxLength(maxLength, trillion.short.length.toUInt()))
                 .clearZeros().add(trillion).compact()
-        } else if (wholeNumberPart.count() > billion.digits) {
+        } else if (wholeNumberPart.count() > billion.digits && applyMagnitude) {
             input.divide(billion.digits).convertDecimalNumberPartToDexTools.compact()
                 .toFit(maxLength(maxLength, billion.short.length.toUInt()))
                 .clearZeros().add(billion).compact()
-        } else if (wholeNumberPart.count() > million.digits) {
+        } else if (wholeNumberPart.count() > million.digits && applyMagnitude) {
             input.divide(million.digits).convertDecimalNumberPartToDexTools.compact()
                 .toFit(maxLength(maxLength, million.short.length.toUInt()))
                 .clearZeros().add(million).compact()
-        } else if (wholeNumberPart.count() > thousand.digits) {
+        } else if (wholeNumberPart.count() > thousand.digits && applyMagnitude) {
             input.divide(thousand.digits).convertDecimalNumberPartToDexTools.compact()
                 .toFit(maxLength(maxLength, thousand.short.length.toUInt()))
                 .clearZeros().add(thousand).compact()

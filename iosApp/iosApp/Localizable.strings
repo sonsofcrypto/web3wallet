@@ -317,10 +317,10 @@
 "currencySwap.cell.button.state.approve" = "Approve";
 "currencySwap.cell.button.state.approving" = "Approving";
 "currencySwap.cell.button.state.loading" = "Loading";
-"currencySwap.cell.button.state.enterAmount" = "Enter an amount";
-"currencySwap.cell.button.state.insufficientBalance" = "Insufficient %@ balance";
-"currencySwap.cell.button.state.noPoolsFound" = "No pools found";
-"currencySwap.cell.button.state.swapAnyway" = "Swap anyway (-%@%)";
+"currencySwap.enterAmount" = "Enter an amount";
+"currencySwap.insufficientBalance" = "Insufficient %@ balance";
+"currencySwap.noPoolsFound" = "No pools found";
+"currencySwap.swapAnyway" = "Swap anyway (-%@%)";
 
 "authenticate.title.unlock" = "Unlock";
 "authenticate.title.swap" = "Swap";
