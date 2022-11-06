@@ -5,30 +5,6 @@
 import UIKit
 import web3walletcore
 
-struct CurrencySwapWireframeContext {
-    let network: Network
-    let currencyFrom: Currency?
-    let currencyTo: Currency?
-}
-
-enum CurrencySwapWireframeDestination {
-    case underConstructionAlert
-    case selectCurrencyFrom(onCompletion: (Currency) -> Void)
-    case selectCurrencyTo(onCompletion: (Currency) -> Void)
-    case confirmSwap(context: ConfirmationWireframeContext.Swap)
-    case confirmApproval(
-        currency: Currency,
-        onApproved: (_ password: String, _ salt: String) -> Void,
-        networkFee: NetworkFee
-    )
-}
-
-protocol CurrencySwapWireframe {
-    func present()
-    func navigate(to destination: CurrencySwapWireframeDestination)
-    func dismiss()
-}
-
 final class DefaultCurrencySwapWireframe {
     private weak var parent: UIViewController?
     private let context: CurrencySwapWireframeContext
@@ -72,38 +48,43 @@ extension DefaultCurrencySwapWireframe: CurrencySwapWireframe {
         parent?.show(vc, sender: self)
     }
     
-    func navigate(to destination: CurrencySwapWireframeDestination) {
-        switch destination {
-        case .underConstructionAlert:
+    func navigate(destination________ destination: CurrencySwapWireframeDestination) {
+        if destination is CurrencySwapWireframeDestination.UnderConstructionAlert {
             alertWireframeFactory.make(
                 vc,
                 context: .underConstructionAlert()
             ).present()
-        case let .selectCurrencyFrom(onCompletion):
-            presentCurrencyPicker(network: context.network, onCompletion: onCompletion)
-        case let .selectCurrencyTo(onCompletion):
-            presentCurrencyPicker(network: context.network, onCompletion: onCompletion)
-        case let .confirmSwap(context):
-            confirmationWireframeFactory.make(vc, context: context).present()
-        case let .confirmApproval(currency, onApproved, networkFee):
+        }
+        if let input = destination as? CurrencySwapWireframeDestination.SelectCurrencyFrom {
+            presentCurrencyPicker(network: context.network, onCompletion: input.onCompletion)
+        }
+        if let input = destination as? CurrencySwapWireframeDestination.SelectCurrencyTo {
+            presentCurrencyPicker(network: context.network, onCompletion: input.onCompletion)
+        }
+        if let input = destination as? CurrencySwapWireframeDestination.ConfirmSwap {
+            confirmationWireframeFactory.make(vc, context: input.context).present()
+        }
+        if let input = destination as? CurrencySwapWireframeDestination.ConfirmApproval {
             let context = ConfirmationWireframeContext.ApproveUniswap(
-                data: .init(currency: currency, onApproved: onApproved, networkFee: networkFee)
+                data: .init(
+                    currency: input.currency,
+                    onApproved: input.onApproved,
+                    networkFee: input.networkFee
+                )
             )
             confirmationWireframeFactory.make(vc, context: context).present()
         }
+        if destination is CurrencySwapWireframeDestination.Dismiss {
+            vc?.popOrDismiss()
+        }
     }
-    
-    func dismiss() { vc?.popOrDismiss() }
 }
 
 private extension DefaultCurrencySwapWireframe {
     
     func wireUp() -> UIViewController {
+        configureUniswapService()
         let interactor = DefaultCurrencySwapInteractor(
-            // NOTE: Passing network here is an edge case because is needed to configure swapService.
-            // we can't do it here (wireframe) because this will live in a platform specific module and
-            // DefaultCurrencySwapInteractor will be shared
-            network: context.network,
             walletService: walletService,
             networksService: networksService,
             swapService: swapService,
@@ -111,9 +92,9 @@ private extension DefaultCurrencySwapWireframe {
         )
         let vc: CurrencySwapViewController = UIStoryboard(.currencySwap).instantiate()
         let presenter = DefaultCurrencySwapPresenter(
-            view: vc,
-            interactor: interactor,
+            view: WeakRef(referred: vc),
             wireframe: self,
+            interactor: interactor,
             context: context
         )
         vc.hidesBottomBarWhenPushed = true
@@ -123,6 +104,15 @@ private extension DefaultCurrencySwapWireframe {
         let nc = NavigationController(rootViewController: vc)
         self.vc = nc
         return nc
+    }
+    
+    func configureUniswapService() {
+        guard let wallet = networksService.wallet(network: context.network) else {
+            fatalError("Unable to configure Uniswap service, no wallet found.")
+        }
+        let provider = networksService.provider(network: context.network)
+        swapService.wallet = wallet
+        swapService.provider = provider
     }
     
     func presentCurrencyPicker(

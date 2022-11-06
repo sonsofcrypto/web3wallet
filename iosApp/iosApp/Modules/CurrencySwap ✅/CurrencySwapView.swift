@@ -5,13 +5,6 @@
 import UIKit
 import web3walletcore
 
-protocol CurrencySwapView: AnyObject {
-    func update(with viewModel: CurrencySwapViewModel)
-    func presentFeePicker(with fees: [NetworkFee])
-    func loading()
-    func dismissKeyboard()
-}
-
 final class CurrencySwapViewController: BaseViewController {
     private weak var segmentControl: SegmentedControl!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -41,13 +34,13 @@ final class CurrencySwapViewController: BaseViewController {
 
 extension CurrencySwapViewController: CurrencySwapView {
 
-    func update(with viewModel: CurrencySwapViewModel) {
+    func update(viewModel_______ viewModel: CurrencySwapViewModel) {
         self.viewModel = viewModel
         if collectionView.visibleCells.isEmpty { collectionView.reloadData() }
         else { updateCells() }
     }
     
-    func presentFeePicker(with fees: [NetworkFee]) {
+    func presentNetworkFeePicker(networkFees: [NetworkFee]) {
         dismissKeyboard()
         let cell = collectionView.visibleCells.first {
             $0 is CurrencySwapMarketCollectionViewCell
@@ -57,12 +50,9 @@ extension CurrencySwapViewController: CurrencySwapView {
             from: cell.networkFeeView.networkFeeButton
         )
         feesPickerView.present(
-            with: fees,
+            with: networkFees,
             onFeeSelected: makeOnFeeSelected(),
-            at: .init(
-                x: Theme.constant.padding,
-                y: fromFrame.midY
-            )
+            at: .init(x: Theme.constant.padding, y: fromFrame.midY)
         )
     }
     
@@ -91,14 +81,15 @@ extension CurrencySwapViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard let item = viewModel?.items[indexPath.row] else { fatalError() }
-        switch item {
-        case let .swap(swap):
+        if let input = item as? CurrencySwapViewModel.ItemSwap {
             let cell = collectionView.dequeue(CurrencySwapMarketCollectionViewCell.self, for: indexPath)
-            cell.update(with: swap, handler: currencySwapHandler())
+            cell.update(with: input.swap, handler: currencySwapHandler())
             return cell
-        case .limit:
-            return collectionView.dequeue(CurrencySwapLimitCollectionViewCell.self, for: indexPath)
         }
+        fatalError("Item not handled")
+//        if let input = item as? CurrencySwapViewModel.ItemLimit {
+//            return collectionView.dequeue(CurrencySwapLimitCollectionViewCell.self, for: indexPath)
+//        }
     }
 }
 
@@ -157,17 +148,17 @@ private extension CurrencySwapViewController {
     }
     
     func makeOnFeeSelected() -> ((NetworkFee) -> Void) {
-        { [weak self] item in self?.onTapped(.feeChanged(to: item))() }
+        { [weak self] item in self?.onTapped(CurrencySwapPresenterEvent.NetworkFeeChanged(value: item))() }
     }
     
     @objc func segmentControlChanged(_ sender: SegmentedControl) {
         if sender.selectedSegmentIndex == 1 {
             sender.selectedSegmentIndex = 0
-            onTapped(.providerTapped)()
+            onTapped(CurrencySwapPresenterEvent.ProviderTapped())()
         }
     }
     
-    @objc func navBarLeftActionTapped() { onTapped(.dismiss)() }
+    @objc func navBarLeftActionTapped() { onTapped(CurrencySwapPresenterEvent.Dismiss())() }
     
     func _segmentedControl() -> SegmentedControl {
         let segmentControl = SegmentedControl()
@@ -260,28 +251,31 @@ private extension CurrencySwapViewController {
     
     func currencySwapHandler() -> CurrencySwapMarketCollectionViewCell.Handler {
         .init(
-            onCurrencyFromTapped: onTapped(.currencyFromTapped),
+            onCurrencyFromTapped: onTapped(CurrencySwapPresenterEvent.CurrencyFromTapped()),
             onCurrencyFromAmountChanged: onCurrencyFromAmountChanged(),
-            onCurrencyToTapped: onTapped(.currencyToTapped),
-            onCurrencyToAmountChanged: onCurrencyToAmountChanged(),
-            onSwapFlip: onTapped(.swapFlip),
-            onProviderTapped: onTapped(.providerTapped),
-            onSlippageTapped: onTapped(.slippageTapped),
-            onNetworkFeesTapped: onTapped(.feeTapped),
-            onApproveCTATapped: onTapped(.approve),
-            onCTATapped: onTapped(.review)
+            onCurrencyToTapped: onTapped(CurrencySwapPresenterEvent.CurrencyToTapped()),
+            onCurrencyToAmountChanged: nil,
+            onSwapFlip: onTapped(CurrencySwapPresenterEvent.SwapFlip()),
+            onProviderTapped: onTapped(CurrencySwapPresenterEvent.ProviderTapped()),
+            onSlippageTapped: onTapped(CurrencySwapPresenterEvent.SlippageTapped()),
+            onNetworkFeesTapped: onTapped(CurrencySwapPresenterEvent.NetworkFeeTapped()),
+            onApproveCTATapped: onTapped(CurrencySwapPresenterEvent.Approve()),
+            onCTATapped: onTapped(CurrencySwapPresenterEvent.Review())
         )
     }
     
     func onCurrencyFromAmountChanged() -> (BigInt) -> Void {
-        { [weak self] amount in self?.onTapped(.currencyFromChanged(to: amount))() }
-    }
-    
-    func onCurrencyToAmountChanged() -> (BigInt) -> Void {
-        { [weak self] amount in self?.onTapped(.currencyToChanged(to: amount))() }
+        { [weak self] amount in self?.onTapped(CurrencySwapPresenterEvent.CurrencyFromChanged(value: amount))() }
     }
     
     func onTapped(_ event: CurrencySwapPresenterEvent) -> () -> Void {
-        { [weak self] in self?.presenter.handle(event) }
+        { [weak self] in self?.presenter.handle(event___________: event) }
+    }
+}
+
+extension Array where Element == CurrencySwapViewModel.Item {
+    var swap: CurrencySwapViewModel.SwapData? {
+        let item = first { $0 is CurrencySwapViewModel.ItemSwap }
+        return (item as? CurrencySwapViewModel.ItemSwap)?.swap
     }
 }

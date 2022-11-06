@@ -286,12 +286,9 @@
 		1C6487362832E6650091A12D /* NFTsServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487352832E6650091A12D /* NFTsServiceAssembler.swift */; };
 		1C6487412832E7D10091A12D /* DefaultSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487402832E7D10091A12D /* DefaultSettingsService.swift */; };
 		1C6487432832E7EA0091A12D /* SettingsServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6487422832E7EA0091A12D /* SettingsServiceAssembler.swift */; };
-		1C671FEE287FDFB000C5F044 /* CurrencySwapPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C671FED287FDFB000C5F044 /* CurrencySwapPresenter.swift */; };
-		1C671FF0287FDFB900C5F044 /* CurrencySwapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C671FEF287FDFB900C5F044 /* CurrencySwapViewModel.swift */; };
 		1C671FF2287FDFD500C5F044 /* CurrencySwapWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C671FF1287FDFD500C5F044 /* CurrencySwapWireframe.swift */; };
 		1C671FF4287FDFDC00C5F044 /* CurrencySwapWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C671FF3287FDFDC00C5F044 /* CurrencySwapWireframeFactory.swift */; };
 		1C671FF8287FDFF100C5F044 /* CurrencySwapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C671FF7287FDFF100C5F044 /* CurrencySwapView.swift */; };
-		1C671FFA287FDFFF00C5F044 /* CurrencySwapInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C671FF9287FDFFF00C5F044 /* CurrencySwapInteractor.swift */; };
 		1C671FFC287FE02200C5F044 /* CurrencySwap.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C671FFB287FE02200C5F044 /* CurrencySwap.storyboard */; };
 		1C672001287FE11700C5F044 /* CurrencySwapMarketCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C672000287FE11700C5F044 /* CurrencySwapMarketCollectionViewCell.swift */; };
 		1C67200A2880193000C5F044 /* CurrencyAmountPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C6720092880193000C5F044 /* CurrencyAmountPickerView.swift */; };
@@ -812,12 +809,9 @@
 		1C6487352832E6650091A12D /* NFTsServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTsServiceAssembler.swift; sourceTree = "<group>"; };
 		1C6487402832E7D10091A12D /* DefaultSettingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSettingsService.swift; sourceTree = "<group>"; };
 		1C6487422832E7EA0091A12D /* SettingsServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsServiceAssembler.swift; sourceTree = "<group>"; };
-		1C671FED287FDFB000C5F044 /* CurrencySwapPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySwapPresenter.swift; sourceTree = "<group>"; };
-		1C671FEF287FDFB900C5F044 /* CurrencySwapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySwapViewModel.swift; sourceTree = "<group>"; };
 		1C671FF1287FDFD500C5F044 /* CurrencySwapWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySwapWireframe.swift; sourceTree = "<group>"; };
 		1C671FF3287FDFDC00C5F044 /* CurrencySwapWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySwapWireframeFactory.swift; sourceTree = "<group>"; };
 		1C671FF7287FDFF100C5F044 /* CurrencySwapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySwapView.swift; sourceTree = "<group>"; };
-		1C671FF9287FDFFF00C5F044 /* CurrencySwapInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySwapInteractor.swift; sourceTree = "<group>"; };
 		1C671FFB287FE02200C5F044 /* CurrencySwap.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CurrencySwap.storyboard; sourceTree = "<group>"; };
 		1C672000287FE11700C5F044 /* CurrencySwapMarketCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySwapMarketCollectionViewCell.swift; sourceTree = "<group>"; };
 		1C6720092880193000C5F044 /* CurrencyAmountPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAmountPickerView.swift; sourceTree = "<group>"; };
@@ -1355,7 +1349,7 @@
 				1C60C1D5285724D0003BE25D /* CurrencyPicker ✅ */,
 				1C60C3612857C5D9003BE25D /* CurrencyReceive ✅ */,
 				1C9E3193287580A700DD2031 /* CurrencySend ✅ */,
-				1C671FEC287FDF6000C5F044 /* CurrencySwap */,
+				1C671FEC287FDF6000C5F044 /* CurrencySwap ✅ */,
 				1C60C20D285724D0003BE25D /* Dashboard */,
 				1C60C272285724D0003BE25D /* Degen */,
 				1C60C285285724D0003BE25D /* DegenCult */,
@@ -1811,19 +1805,16 @@
 			path = Internal;
 			sourceTree = "<group>";
 		};
-		1C671FEC287FDF6000C5F044 /* CurrencySwap */ = {
+		1C671FEC287FDF6000C5F044 /* CurrencySwap ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1C671FFB287FE02200C5F044 /* CurrencySwap.storyboard */,
-				1C671FF9287FDFFF00C5F044 /* CurrencySwapInteractor.swift */,
-				1C671FED287FDFB000C5F044 /* CurrencySwapPresenter.swift */,
 				1C671FF7287FDFF100C5F044 /* CurrencySwapView.swift */,
-				1C671FEF287FDFB900C5F044 /* CurrencySwapViewModel.swift */,
 				1C671FF1287FDFD500C5F044 /* CurrencySwapWireframe.swift */,
 				1C671FF3287FDFDC00C5F044 /* CurrencySwapWireframeFactory.swift */,
 				1C671FFD287FE0EB00C5F044 /* Cells */,
 			);
-			path = CurrencySwap;
+			path = "CurrencySwap ✅";
 			sourceTree = "<group>";
 		};
 		1C671FFD287FE0EB00C5F044 /* Cells */ = {
@@ -2694,7 +2685,6 @@
 				1C60C2FF285724D1003BE25D /* NFTsDashboardView+MainScrollView.swift in Sources */,
 				1C672001287FE11700C5F044 /* CurrencySwapMarketCollectionViewCell.swift in Sources */,
 				1C7F863028D20E490073FD95 /* UIView+Extensions.swift in Sources */,
-				1C671FFA287FDFFF00C5F044 /* CurrencySwapInteractor.swift in Sources */,
 				1C60C2CA285724D0003BE25D /* ChatPresenter.swift in Sources */,
 				1C60C321285724D1003BE25D /* AppsCell.swift in Sources */,
 				1C6720122885D5AF00C5F044 /* CurrencySwapSlippageView.swift in Sources */,
@@ -2841,7 +2831,6 @@
 				1C7FC9B228BCEC4800FC9175 /* WebViewWireframeFactory.swift in Sources */,
 				1C60C35C285724D1003BE25D /* DegenPresenter.swift in Sources */,
 				1A4C3B6D2DFADBE2EF71F3A5 /* SettingsService.swift in Sources */,
-				1C671FF0287FDFB900C5F044 /* CurrencySwapViewModel.swift in Sources */,
 				1CB8B0E42891040500024E7C /* NetworkAddressPickerView.swift in Sources */,
 				1A4C34ABFF1DD20804DED956 /* AppsService.swift in Sources */,
 				1C60C314285724D1003BE25D /* AccountWireframe.swift in Sources */,
@@ -2940,7 +2929,6 @@
 				1C5D24DB28E1A3A1007DA557 /* SettingsWireframeContext.swift in Sources */,
 				1C7F863428D20E490073FD95 /* UITextView+Extensions.swift in Sources */,
 				1A4C33DED2FDE355668B49E7 /* OnOffSwitch.swift in Sources */,
-				1C671FEE287FDFB000C5F044 /* CurrencySwapPresenter.swift in Sources */,
 				1C7F864328D20E490073FD95 /* Data+Extension.swift in Sources */,
 				1C60C34D285724D1003BE25D /* CultProposalVoteView.swift in Sources */,
 				1C7F864928D20E490073FD95 /* Error+Extensions.swift in Sources */,

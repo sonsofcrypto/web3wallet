@@ -33,7 +33,7 @@ class FiatFormatter {
         }
         if (output.count() == 1) {
             when (val elem = output.first()) {
-                is Formatters.Output.Normal -> {
+                is Normal -> {
                     val parts = elem.value.split(".")
                     if (parts.count() == 2 && parts[1].length == 1) {
                         output = listOf(Normal(parts[0] + "." + parts[1] + "0"))
