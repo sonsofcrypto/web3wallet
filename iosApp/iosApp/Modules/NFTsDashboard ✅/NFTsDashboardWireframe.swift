@@ -44,7 +44,7 @@ extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
         }
     }
 
-    func navigate(destination__________ destination: NFTsDashboardWireframeDestination) {
+    func navigate(destination___________ destination: NFTsDashboardWireframeDestination) {
         if let input = destination as? NFTsDashboardWireframeDestination.ViewNFT {
             let context = NFTDetailWireframeContext(
                 nftIdentifier: input.nftItem.identifier,
@@ -53,10 +53,7 @@ extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
             nftDetailWireframeFactory.make(vc, context: context).present()
         }
         if let input = destination as? NFTsDashboardWireframeDestination.ViewCollectionNFTs {
-            let context = NFTsCollectionWireframeContext(
-                nftCollectionIdentifier: input.collectionId,
-                presentationStyle: .push
-            )
+            let context = NFTsCollectionWireframeContext(collectionId: input.collectionId)
             nftsCollectionWireframeFactory.make(vc, context: context).present()
         }
         if let input = destination as? NFTsDashboardWireframeDestination.SendError {

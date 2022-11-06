@@ -34,7 +34,7 @@ extension NFTsDashboardViewController: iCarouselDataSource {
 extension NFTsDashboardViewController: iCarouselDelegate {
     
     func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
-        presenter.handle(event______________: NFTsDashboardPresenterEvent.ViewNFT(idx: Int32(index)))
+        presenter.handle(event_______________: NFTsDashboardPresenterEvent.ViewNFT(idx: Int32(index)))
     }
 }
 

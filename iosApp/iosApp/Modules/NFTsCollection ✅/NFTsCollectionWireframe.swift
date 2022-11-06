@@ -5,21 +5,6 @@
 import UIKit
 import web3walletcore
 
-struct NFTsCollectionWireframeContext {
-    let nftCollectionIdentifier: String
-    let presentationStyle: PresentationStyle
-}
-
-enum NFTsCollectionWireframeDestination {
-    case nftDetail(identifier: String)
-    case dismiss
-}
-
-protocol NFTsCollectionWireframe {
-    func present()
-    func navigate(to destination: NFTsCollectionWireframeDestination)
-}
-
 final class DefaultNFTsCollectionWireframe {
     private weak var parent: UIViewController?
     private let context: NFTsCollectionWireframeContext
@@ -48,17 +33,15 @@ extension DefaultNFTsCollectionWireframe: NFTsCollectionWireframe {
         parent?.show(vc, sender: self)
     }
 
-    func navigate(to destination: NFTsCollectionWireframeDestination) {
-        switch destination {
-        case let .nftDetail(identifier):
-            nftDetailWireframeFactory.make(
-                vc,
-                context: .init(
-                    nftIdentifier: identifier,
-                    nftCollectionIdentifier: context.nftCollectionIdentifier
-                )
-            ).present()
-        case .dismiss:
+    func navigate(destination: NFTsCollectionWireframeDestination) {
+        if let input = destination as? NFTsCollectionWireframeDestination.NFTDetail {
+            let context = NFTDetailWireframeContext(
+                nftIdentifier: input.identifier,
+                nftCollectionIdentifier: context.collectionId
+            )
+            nftDetailWireframeFactory.make(vc, context: context).present()
+        }
+        if destination is NFTsCollectionWireframeDestination.Dismiss {
             vc?.popOrDismiss()
         }
     }
@@ -67,14 +50,10 @@ extension DefaultNFTsCollectionWireframe: NFTsCollectionWireframe {
 private extension DefaultNFTsCollectionWireframe {
 
     func wireUp() -> UIViewController {
-        let vc: NFTsCollectionViewController = UIStoryboard(
-            .nftsCollection
-        ).instantiate()
-        let interactor = DefaultNFTsCollectionInteractor(
-            service: nftsService
-        )
+        let vc: NFTsCollectionViewController = UIStoryboard(.nftsCollection).instantiate()
+        let interactor = DefaultNFTsCollectionInteractor(nftsService: nftsService)
         let presenter = DefaultNFTsCollectionPresenter(
-            view: vc,
+            view: WeakRef(referred: vc),
             wireframe: self,
             interactor: interactor,
             context: context

@@ -3,10 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-protocol NFTsCollectionView: AnyObject {
-    func update(with viewModel: NFTsCollectionViewModel)
-}
+import web3walletcore
 
 final class NFTsCollectionViewController: BaseViewController {
     private (set) weak var mainScrollView: UIScrollView!
@@ -27,16 +24,11 @@ extension NFTsCollectionViewController: NFTsCollectionView {
     
     @objc func refresh() { presenter.present() }
 
-    func update(with viewModel: NFTsCollectionViewModel) {
+    func update(viewModel: NFTsCollectionViewModel) {
         self.viewModel = viewModel
         self.mainScrollView.refreshControl?.endRefreshing()
-        switch viewModel {
-        case .loading: break
-        case let .loaded(collection, _):
-            title = collection.title
-            refreshNFTs()
-        case .error: break
-        }
+        title = viewModel.collection.title
+        refreshNFTs()
     }
 }
 
@@ -60,6 +52,6 @@ private extension NFTsCollectionViewController {
     }
     
     @objc func dismissTapped() {
-        presenter.handle(.dismiss)
+        presenter.handle(event____: NFTsCollectionPresenterEvent.Dismiss())
     }
 }

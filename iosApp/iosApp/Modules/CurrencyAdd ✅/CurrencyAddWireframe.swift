@@ -33,7 +33,7 @@ extension DefaultCurrencyAddWireframe: CurrencyAddWireframe {
         parent?.show(vc, sender: self)
     }
     
-    func navigate(destination_______ destination: CurrencyAddWireframeDestination) {
+    func navigate(destination________ destination: CurrencyAddWireframeDestination) {
         if let target = destination as? CurrencyAddWireframeDestination.NetworkPicker {
             networkPickerWireframeFactory.make(
                 vc?.navigationController,
