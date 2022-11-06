@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 extension NFTsDashboardViewController {
     
@@ -12,7 +13,7 @@ extension NFTsDashboardViewController {
     )
     
     func makeNFTCollectionsContent() -> UIStackView {
-        let collections = viewModel?.collections ?? []
+        let collections = viewModel?.collectionItems ?? []
         guard !collections.isEmpty else {
             // NOTE: No content will be handled in the future, for now the data is mocked
             // and will always return a few collections
@@ -121,9 +122,8 @@ private extension NFTsDashboardViewController {
     @objc func collectionItemSelected(_ tapGesture: UITapGestureRecognizer) {
         guard let tag = tapGesture.view?.tag else { return }
         guard let viewModel = viewModel else { return }
-        guard viewModel.collections.count > tag else { return }
-        let collection = viewModel.collections[tag]
-        presenter.handle(.viewCollectionNFTs(collectionId: collection.identifier))
+        guard viewModel.collectionItems.count > tag else { return }
+        presenter.handle(event______________: NFTsDashboardPresenterEvent.ViewCollectionNFTs(idx: Int32(tag)))
     }
     
     func makeVerticalStack(
@@ -168,5 +168,12 @@ private extension NFTsDashboardViewController {
         view.addArrangedSubview(authorLabel)
         view.spacing = Theme.constant.padding * 0.5
         return view
+    }
+}
+
+private extension NFTsDashboardViewModel {
+    var collectionItems: [NFTsDashboardViewModel.Collection] {
+        guard let input = self as? NFTsDashboardViewModel.Loaded else { return [] }
+        return input.collections
     }
 }

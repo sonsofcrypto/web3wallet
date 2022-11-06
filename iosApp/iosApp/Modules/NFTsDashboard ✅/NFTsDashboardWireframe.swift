@@ -5,17 +5,6 @@
 import UIKit
 import web3walletcore
 
-enum NFTsDashboardWireframeDestination {
-    case viewCollectionNFTs(collectionId: String)
-    case viewNFT(nftItem: NFTItem)
-    case sendError(msg: String)
-}
-
-protocol NFTsDashboardWireframe {
-    func present()
-    func navigate(to destination: NFTsDashboardWireframeDestination)
-}
-
 final class DefaultNFTsDashboardWireframe {
     private weak var parent: UIViewController?
     private let nftsCollectionWireframeFactory: NFTsCollectionWireframeFactory
@@ -55,31 +44,23 @@ extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
         }
     }
 
-    func navigate(to destination: NFTsDashboardWireframeDestination) {
-        switch destination {
-        case let .viewNFT(nftItem):
-            nftDetailWireframeFactory.make(
-                vc,
-                context: .init(
-                    nftIdentifier: nftItem.identifier,
-                    nftCollectionIdentifier: nftItem.collectionIdentifier
-                )
-            ).present()
-        case let .viewCollectionNFTs(collectionId):
-            nftsCollectionWireframeFactory.make(
-                vc,
-                context: .init(
-                    nftCollectionIdentifier: collectionId,
-                    presentationStyle: .push
-                )
-            ).present()
-        case let .sendError(msg):
-            mailService.sendMail(
-                context: .init(
-                    subject: .app,
-                    body: msg
-                )
+    func navigate(destination__________ destination: NFTsDashboardWireframeDestination) {
+        if let input = destination as? NFTsDashboardWireframeDestination.ViewNFT {
+            let context = NFTDetailWireframeContext(
+                nftIdentifier: input.nftItem.identifier,
+                nftCollectionIdentifier: input.nftItem.collectionIdentifier
             )
+            nftDetailWireframeFactory.make(vc, context: context).present()
+        }
+        if let input = destination as? NFTsDashboardWireframeDestination.ViewCollectionNFTs {
+            let context = NFTsCollectionWireframeContext(
+                nftCollectionIdentifier: input.collectionId,
+                presentationStyle: .push
+            )
+            nftsCollectionWireframeFactory.make(vc, context: context).present()
+        }
+        if let input = destination as? NFTsDashboardWireframeDestination.SendError {
+            mailService.sendMail(context: .init(subject: .app, body: input.msg))
         }
     }
 }
@@ -92,13 +73,12 @@ private extension DefaultNFTsDashboardWireframe {
         ).instantiate()
         let interactor = DefaultNFTsDashboardInteractor(
             networksService: networksService,
-            service: nftsService
+            nftsService: nftsService
         )
         let presenter = DefaultNFTsDashboardPresenter(
-            view: vc,
+            view: WeakRef(referred: vc),
             wireframe: self,
-            interactor: interactor,
-            nftsService: nftsService
+            interactor: interactor
         )
         vc.presenter = presenter
         let nc = NavigationController(rootViewController: vc)

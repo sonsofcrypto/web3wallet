@@ -3,11 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-protocol NFTsDashboardView: AnyObject {
-    func update(with viewModel: NFTsDashboardViewModel)
-    func popToRootAndRefresh()
-}
+import web3walletcore
 
 final class NFTsDashboardViewController: BaseViewController {
     var presenter: NFTsDashboardPresenter!
@@ -21,7 +17,7 @@ final class NFTsDashboardViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        presenter.present(isPullDownToRefreh: false)
+        presenter.present(isPullDownToRefresh: false)
     }
     
     deinit {
@@ -31,46 +27,26 @@ final class NFTsDashboardViewController: BaseViewController {
 
 extension NFTsDashboardViewController: NFTsDashboardView {
 
-    func update(with viewModel: NFTsDashboardViewModel) {
-        switch viewModel {
-        case .loading:
-            guard self.viewModel?.nfts.isEmpty ?? true else { return }
+    func update(viewModel__________ viewModel: NFTsDashboardViewModel) {
+        if viewModel is NFTsDashboardViewModel.Loading {
+            guard self.viewModel?.nftItems.isEmpty ?? true else { return }
             showLoading()
-        case let .error(viewModel):
-            let alert = UIAlertController(
-                title: viewModel.title,
-                message: viewModel.message,
-                preferredStyle: .alert)
-            alert.addAction(
-                .init(
-                    title: "Cancel",
-                    style: .cancel,
-                    handler: { [weak self] _ in self?.presenter.handle(.cancelError) }
-                )
-            )
-            alert.addAction(
-                .init(
-                    title: "Send error logs",
-                    style: .default,
-                    handler: { [weak self] _ in self?.presenter.handle(.sendError) }
-                )
-            )
-            present(alert, animated: true)
-        case .loaded:
+        }
+        if let input = viewModel as? NFTsDashboardViewModel.Error {
+            presentError(with: input.error)
+        }
+        if viewModel is NFTsDashboardViewModel.Loaded {
             noContentView?.refreshControl?.endRefreshing()
             mainScrollView?.refreshControl?.endRefreshing()
             self.viewModel = viewModel
-            if viewModel.nfts.isEmpty {
-                showNoNFTs()
-            } else {
-                showNFTs()
-            }
+            if viewModel.nftItems.isEmpty { showNoNFTs() }
+            else { showNFTs() }
         }
     }
     
     func popToRootAndRefresh() {
         navigationController?.popToRootViewController(animated: false)
-        presenter.present(isPullDownToRefreh: true)
+        presenter.present(isPullDownToRefresh: true)
     }
 }
 
@@ -90,12 +66,12 @@ extension NFTsDashboardViewController {
     }
     
     @objc func pullDownToRefresh() {
-        presenter.present(isPullDownToRefreh: true)
+        presenter.present(isPullDownToRefresh: true)
     }
     
     @objc func refreshNoContent() {
         showLoading()
-        presenter.present(isPullDownToRefreh: false)
+        presenter.present(isPullDownToRefresh: true)
     }
 }
 
@@ -158,5 +134,39 @@ private extension NFTsDashboardViewController {
         self.mainScrollView = mainScrollView
         mainScrollView.addConstraints(.toEdges)
         mainScrollView.overScrollView.image = "overscroll_ape".assetImage
+    }
+    
+    func presentError(with viewModel: ErrorViewModel) {
+        guard viewModel.actions.count == 2 else { return }
+        let alert = UIAlertController(
+            title: viewModel.title,
+            message: viewModel.body,
+            preferredStyle: .alert)
+        alert.addAction(
+            .init(
+                title: viewModel.actions[0],
+                style: .cancel,
+                handler: { [weak self] _ in self?.presenter.handle(
+                    event______________: NFTsDashboardPresenterEvent.CancelError())
+                }
+            )
+        )
+        alert.addAction(
+            .init(
+                title: viewModel.actions[1],
+                style: .default,
+                handler: { [weak self] _ in self?.presenter.handle(
+                    event______________: NFTsDashboardPresenterEvent.SendError())
+                }
+            )
+        )
+        present(alert, animated: true)
+    }
+}
+
+extension NFTsDashboardViewModel {
+    var nftItems: [NFTsDashboardViewModel.NFT] {
+        guard let input = self as? NFTsDashboardViewModel.Loaded else { return [] }
+        return input.nfts
     }
 }

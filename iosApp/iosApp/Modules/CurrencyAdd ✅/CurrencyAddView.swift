@@ -23,7 +23,7 @@ final class CurrencyAddViewController: BaseViewController {
 
 extension CurrencyAddViewController: CurrencyAddView {
 
-    func update(viewModel_____ viewModel: CurrencyAddViewModel) {
+    func update(viewModel_______ viewModel: CurrencyAddViewModel) {
         self.viewModel = viewModel
         
         configureNavigationBar()
@@ -73,7 +73,7 @@ extension CurrencyAddViewController {
     }
 
     @objc func navBarLeftActionTapped() {
-        presenter.handle(event_________: .Dismiss())
+        presenter.handle(event___________: .Dismiss())
     }
 }
 
@@ -137,7 +137,7 @@ private extension CurrencyAddViewController {
         
     func presenterHandle(_ event: CurrencyAddPresenterEvent) -> () -> Void {
         {
-            [weak self] in self?.presenter.handle(event_________: event)
+            [weak self] in self?.presenter.handle(event___________: event)
         }
     }
     
