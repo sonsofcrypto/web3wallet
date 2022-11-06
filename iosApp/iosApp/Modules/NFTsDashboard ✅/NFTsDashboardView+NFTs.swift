@@ -2,6 +2,8 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
+import web3walletcore
+
 extension NFTsDashboardViewController {
     
     func refreshNFTs() { carousel?.reloadData() }
@@ -10,7 +12,7 @@ extension NFTsDashboardViewController {
 extension NFTsDashboardViewController: iCarouselDataSource {
     
     func numberOfItems(in carousel: iCarousel) -> Int {
-        viewModel?.nfts.count ?? 0
+        viewModel?.nftItems.count ?? 0
     }
 
     func carousel(
@@ -18,7 +20,7 @@ extension NFTsDashboardViewController: iCarouselDataSource {
         viewForItemAt index: Int,
         reusing view: UIView?
     ) -> UIView {
-        guard let item = viewModel?.nfts[index] else { fatalError() }
+        guard let item = viewModel?.nftItems[index] else { fatalError() }
         let imageView = view as? NFTLoadingView ?? NFTLoadingView()
         imageView.configure(with: item)
         let length = min(
@@ -32,8 +34,7 @@ extension NFTsDashboardViewController: iCarouselDataSource {
 extension NFTsDashboardViewController: iCarouselDelegate {
     
     func carousel(_ carousel: iCarousel, didSelectItemAt index: Int) {
-        guard let item = viewModel?.nfts[index] else { return }
-        presenter.handle(.viewNFT(identifier: item.identifier))
+        presenter.handle(event______________: NFTsDashboardPresenterEvent.ViewNFT(idx: Int32(index)))
     }
 }
 

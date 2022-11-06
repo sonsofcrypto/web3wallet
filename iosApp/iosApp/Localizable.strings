@@ -54,6 +54,7 @@
 "closed" = "Closed";
 "error" = "Error";
 "cancel" = "Cancel";
+"sendLogs" = "Send Logs";
 
 "error.alert.title" = "Oops! 😬";
 
@@ -217,6 +218,8 @@
 "nfts.dashboard.noContent.title" = "No NFTs detected";
 "nfts.dashboard.noContent.body" = "There seems to be no NFTs associated to this wallet address";
 "nfts.dashboard.noContent.cta" = "Refresh";
+"nfts.dashboard.error.message" = "We were unable to fetch fetch your NFTs, please try again. If the error persists please send us the error logs by email so we can look into it.";
+"nfts.dashboard.error.email.body" = "Failed to load NFTs\n\nDebug data:\n\n%@";
 
 "nft.detail.section.id" = "NFT ID: %@";
 "nft.detail.section.title.description" = "Description";

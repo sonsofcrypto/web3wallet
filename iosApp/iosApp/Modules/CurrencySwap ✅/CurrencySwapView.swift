@@ -34,7 +34,7 @@ final class CurrencySwapViewController: BaseViewController {
 
 extension CurrencySwapViewController: CurrencySwapView {
 
-    func update(viewModel_______ viewModel: CurrencySwapViewModel) {
+    func update(viewModel________ viewModel: CurrencySwapViewModel) {
         self.viewModel = viewModel
         if collectionView.visibleCells.isEmpty { collectionView.reloadData() }
         else { updateCells() }
@@ -269,7 +269,7 @@ private extension CurrencySwapViewController {
     }
     
     func onTapped(_ event: CurrencySwapPresenterEvent) -> () -> Void {
-        { [weak self] in self?.presenter.handle(event___________: event) }
+        { [weak self] in self?.presenter.handle(event____________: event) }
     }
 }
 
