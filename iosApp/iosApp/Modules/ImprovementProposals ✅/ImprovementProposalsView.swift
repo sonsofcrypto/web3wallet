@@ -21,9 +21,9 @@ final class ImprovementProposalsViewController: BaseViewController {
 
 extension ImprovementProposalsViewController: ImprovementProposalsView {
 
-    func update(viewModel_____ viewModel: ImprovementProposalsViewModel) {
+    func update(viewModel______ viewModel: ImprovementProposalsViewModel) {
         self.viewModel = viewModel
-        if let loading = viewModel as? ImprovementProposalsViewModel.Loading {
+        if viewModel is ImprovementProposalsViewModel.Loading {
             collectionView.refreshControl?.beginRefreshing()
         }
         if let error = viewModel as? ImprovementProposalsViewModel.Error {
@@ -34,7 +34,7 @@ extension ImprovementProposalsViewController: ImprovementProposalsView {
             )
             present(alert, animated: true)
         }
-        if let loaded = viewModel as? ImprovementProposalsViewModel.Loaded {
+        if viewModel is ImprovementProposalsViewModel.Loaded {
             collectionView.refreshControl?.endRefreshing()
             collectionView.reloadData()
         }
@@ -89,16 +89,16 @@ extension ImprovementProposalsViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        presenter.handle(event_________: .Proposal(idx: Int32(indexPath.item)))
+        presenter.handle(event__________: .Proposal(idx: Int32(indexPath.item)))
     }
 
     func voteAction(idx: Int) {
-        presenter.handle(event_________: .Vote(idx: Int32(idx)))
+        presenter.handle(event__________: .Vote(idx: Int32(idx)))
     }
 
     @IBAction func segmentCtlAction(_ sender: SegmentedControl) {
         presenter.handle(
-            event_________: .Category(idx: Int32(sender.selectedSegmentIndex))
+            event__________: .Category(idx: Int32(sender.selectedSegmentIndex))
         )
     }
 
@@ -107,11 +107,11 @@ extension ImprovementProposalsViewController: UICollectionViewDelegate {
     }
 
     @IBAction func dismissAction() {
-        presenter.handle(event_________: .Dismiss())
+        presenter.handle(event__________: .Dismiss())
     }
 
     func handle(_ alertAction: UIAlertAction) {
-        presenter.handle(event_________: .AlertAction(idx: 0))
+        presenter.handle(event__________: .AlertAction(idx: 0))
     }
 }
 

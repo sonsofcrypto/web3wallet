@@ -30,13 +30,13 @@ final class CurrencyPickerViewController: BaseViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        presenter.handle(event_____________: .WillDismiss())
+        presenter.handle(event______________: .WillDismiss())
     }
 }
 
 extension CurrencyPickerViewController: CurrencyPickerView {
 
-    func update(viewModel_________ viewModel: CurrencyPickerViewModel) {
+    func update(viewModel__________ viewModel: CurrencyPickerViewModel) {
         self.viewModel = viewModel
         title = viewModel.title
         collectionView.reloadData()
@@ -146,12 +146,12 @@ private extension CurrencyPickerViewController {
         collectionView.allowsMultipleSelection = viewModel.allowMultipleSelection
     }
 
-    @objc func addCustomCurrency() { presenter.handle(event_____________: .AddCustomCurrency()) }
+    @objc func addCustomCurrency() { presenter.handle(event______________: .AddCustomCurrency()) }
 
-    @objc func doneTapped() { presenter.handle(event_____________: .Dismiss()) }
+    @objc func doneTapped() { presenter.handle(event______________: .Dismiss()) }
 
     @objc func navBarLeftActionTapped() {
-        presenter.handle(event_____________: .Dismiss())
+        presenter.handle(event______________: .Dismiss())
     }
 }
 
@@ -209,11 +209,11 @@ extension CurrencyPickerViewController: UICollectionViewDelegate {
             fatalError()
         }
         if section.networks != nil {
-            presenter.handle(event_____________: .SelectNetwork(idx: indexPath.item.int32))
+            presenter.handle(event______________: .SelectNetwork(idx: indexPath.item.int32))
         } else if section.favouriteCurrencies != nil {
-            presenter.handle(event_____________: .SelectFavouriteCurrency(idx: indexPath.item.int32))
+            presenter.handle(event______________: .SelectFavouriteCurrency(idx: indexPath.item.int32))
         } else if section.currencies != nil {
-            presenter.handle(event_____________: .SelectCurrency(idx: indexPath.item.int32))
+            presenter.handle(event______________: .SelectCurrency(idx: indexPath.item.int32))
         }
     }
 }
@@ -221,7 +221,7 @@ extension CurrencyPickerViewController: UICollectionViewDelegate {
 extension CurrencyPickerViewController: UITextFieldDelegate {
         
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        presenter.handle(event_____________: .Search(searchTerm: textField.text ?? ""))
+        presenter.handle(event______________: .Search(searchTerm: textField.text ?? ""))
     }
 }
 
