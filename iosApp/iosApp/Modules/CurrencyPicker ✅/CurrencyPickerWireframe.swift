@@ -40,7 +40,7 @@ extension DefaultCurrencyPickerWireframe: CurrencyPickerWireframe {
         parent?.present(vc, animated: true)
     }
     
-    func navigate(destination____________ destination: CurrencyPickerWireframeDestination) {
+    func navigate(destination_____________ destination: CurrencyPickerWireframeDestination) {
         if let target = destination as? CurrencyPickerWireframeDestination.AddCustomCurrency {
             currencyAddWireframeFactory.make(
                 vc,
