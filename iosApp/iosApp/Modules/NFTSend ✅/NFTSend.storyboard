@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -34,20 +34,6 @@
                                         <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="zc3-Zq-rNg">
                                             <rect key="frame" x="0.0" y="0.0" width="413" height="124"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="N35-ql-NQa">
-                                                    <rect key="frame" x="131.66666666666666" y="0.0" width="149.99999999999997" height="124"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="150" id="Fd9-jz-jQa"/>
-                                                        <constraint firstAttribute="height" constant="150" id="IRI-hH-RmU"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="N35-ql-NQa" firstAttribute="top" secondItem="zc3-Zq-rNg" secondAttribute="top" id="fvt-MQ-Yos"/>
-                                                <constraint firstAttribute="bottom" secondItem="N35-ql-NQa" secondAttribute="bottom" id="mb4-h3-VRd"/>
-                                                <constraint firstItem="N35-ql-NQa" firstAttribute="centerX" secondItem="zc3-Zq-rNg" secondAttribute="centerX" id="zYz-Ta-t1p"/>
-                                            </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="413" height="124"/>
                                     </collectionViewCell>

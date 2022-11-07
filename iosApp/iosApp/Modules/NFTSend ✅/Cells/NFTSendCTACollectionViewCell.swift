@@ -2,6 +2,8 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 
+import web3walletcore
+
 final class NFTSendCTACollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var networkFeeView: NetworkFeeView!
     @IBOutlet weak var button: Button!
@@ -22,10 +24,7 @@ final class NFTSendCTACollectionViewCell: UICollectionViewCell {
 
 extension NFTSendCTACollectionViewCell {
     
-    func update(
-        with viewModel: NFTSendViewModel.Send,
-        handler: Handler
-    ) {
+    func update(with viewModel: NFTSendViewModel.ItemSend, handler: Handler) {
         self.handler = handler
         switch viewModel.buttonState {
         case .ready:
@@ -34,9 +33,11 @@ extension NFTSendCTACollectionViewCell {
         case .invalidDestination:
             button.setTitle(Localized("nftSend.missing.address"), for: .normal)
             button.isEnabled = false
+        default:
+            break
         }
         networkFeeView.update(
-            with: viewModel.tokenNetworkFeeViewModel,
+            with: viewModel.networkFee,
             handler: handler.onNetworkFeesTapped
         )
     }

@@ -32,7 +32,7 @@ interface CurrencySendPresenter {
 }
 
 class DefaultCurrencySendPresenter(
-    private val view: WeakRef<CurrencySendView>?,
+    private val view: WeakRef<CurrencySendView>,
     private val wireframe: CurrencySendWireframe,
     private val interactor: CurrencySendInteractor,
     private val context: CurrencySendWireframeContext,
@@ -49,9 +49,8 @@ class DefaultCurrencySendPresenter(
     override fun handle(event: CurrencySendPresenterEvent) {
         when (event) {
             is CurrencySendPresenterEvent.QrCodeScan -> {
-                view?.get()?.dismissKeyboard()
-                val context = QrCodeScan(context.network) { str -> address = str; updateView() }
-                wireframe.navigate(context)
+                view.get()?.dismissKeyboard()
+                wireframe.navigate(QrCodeScan { address = it; updateView() })
             }
             is CurrencySendPresenterEvent.AddressChanged -> {
                 if (isAddress(event.value, context.address)) return
@@ -80,7 +79,7 @@ class DefaultCurrencySendPresenter(
                 updateView()
             }
             is CurrencySendPresenterEvent.NetworkFeeTapped -> {
-                view?.get()?.presentNetworkFeePicker(networkFees)
+                view.get()?.presentNetworkFeePicker(networkFees)
             }
             is CurrencySendPresenterEvent.NetworkFeeChanged -> {
                 networkFee = event.value
@@ -106,7 +105,7 @@ class DefaultCurrencySendPresenter(
             return null
         }
         val walletAddress = interactor.walletAddress ?: return null
-        view?.get()?.dismissKeyboard()
+        view.get()?.dismissKeyboard()
         val networkFee = networkFee ?: return null
         return ConfirmationWireframeContext.Send(
             ConfirmationWireframeContext.SendContext(
@@ -146,7 +145,7 @@ class DefaultCurrencySendPresenter(
         currencyUpdateTextField: Boolean = false,
         currencyBecomeFirstResponder: Boolean = false,
     ) {
-        view?.get()?.update(
+        view.get()?.update(
             viewModel(
                 addressBecomeFirstResponder, currencyUpdateTextField, currencyBecomeFirstResponder,
             )
@@ -208,12 +207,17 @@ class DefaultCurrencySendPresenter(
     private val currencyBalance: BigInt get() = interactor.balance(currency, context.network)
 
     private fun sendViewModel(): CurrencySendViewModel.Item.Send {
-        val mul = interactor.fiatPrice(currency)
         val data = CurrencySendViewModel.SendViewModel(
-            networkFee?.toNetworkFeeViewModel(mul) ?: emptyNetworkFeeViewModel(),
+            networkFeeViewModel(),
             buttonStateViewModel()
         )
         return CurrencySendViewModel.Item.Send(data)
+    }
+
+    private fun networkFeeViewModel(): NetworkFeeViewModel {
+        val networkFee = networkFee ?: return emptyNetworkFeeViewModel()
+        val mul = interactor.fiatPrice(networkFee.currency)
+        return networkFee.toNetworkFeeViewModel(mul)
     }
 
     private fun emptyNetworkFeeViewModel(): NetworkFeeViewModel =

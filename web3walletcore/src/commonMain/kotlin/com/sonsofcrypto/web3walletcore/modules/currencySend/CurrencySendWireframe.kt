@@ -12,9 +12,7 @@ data class CurrencySendWireframeContext(
 
 sealed class CurrencySendWireframeDestination {
     object UnderConstructionAlert: CurrencySendWireframeDestination()
-    data class QrCodeScan(
-        val network: Network, val onCompletion: (String) -> Unit
-    ): CurrencySendWireframeDestination()
+    data class QrCodeScan(val onCompletion: (String) -> Unit): CurrencySendWireframeDestination()
     data class SelectCurrency(
         val onCompletion: (Currency) -> Unit
     ): CurrencySendWireframeDestination()

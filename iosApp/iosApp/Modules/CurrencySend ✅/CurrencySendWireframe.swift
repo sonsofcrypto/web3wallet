@@ -55,7 +55,7 @@ extension DefaultCurrencySendWireframe: CurrencySendWireframe {
         }
         if let input = destination as? CurrencySendWireframeDestination.QrCodeScan {
             let context = QRCodeScanWireframeContext(
-                type: QRCodeScanWireframeContext.Type_Network(network: input.network),
+                type: QRCodeScanWireframeContext.Type_Network(network: context.network),
                 handler: onPopWrapped(onCompletion: input.onCompletion)
             )
             qrCodeScanWireframeFactory.make(vc, context: context).present()

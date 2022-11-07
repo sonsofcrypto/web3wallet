@@ -5,23 +5,6 @@
 import UIKit
 import web3walletcore
 
-struct NFTSendWireframeContext {
-    let network: Network
-    let nftItem: NFTItem
-}
-
-enum NFTSendWireframeDestination {
-    case underConstructionAlert
-    case qrCodeScan(network: Network, onCompletion: (String) -> Void)
-    case confirmSendNFT(context: ConfirmationWireframeContext.SendNFT)
-}
-
-protocol NFTSendWireframe {
-    func present()
-    func navigate(to destination: NFTSendWireframeDestination)
-    func dismiss()
-}
-
 final class DefaultNFTSendWireframe {
     private weak var parent: UIViewController?
     private let context: NFTSendWireframeContext
@@ -59,28 +42,27 @@ extension DefaultNFTSendWireframe: NFTSendWireframe {
         parent?.show(vc, sender: self)
     }
     
-    func navigate(to destination: NFTSendWireframeDestination) {
-        switch destination {
-        case .underConstructionAlert:
-            alertWireframeFactory.make(
-                vc,
-                context: .underConstructionAlert()
-            ).present()
-        case let .qrCodeScan(network, onCompletion):
+    func navigate(destination_______ destination: NFTSendWireframeDestination) {
+        if destination is NFTSendWireframeDestination.UnderConstructionAlert {
+            alertWireframeFactory.make(vc, context: .underConstructionAlert()).present()
+        }
+        if let input = destination as? NFTSendWireframeDestination.QRCodeScan {
             let context = QRCodeScanWireframeContext(
-                type: QRCodeScanWireframeContext.Type_Network(network: network),
-                handler: onPopWrapped(onCompletion: onCompletion)
+                type: QRCodeScanWireframeContext.Type_Network(network: context.network),
+                handler: onPopWrapped(onCompletion: input.onCompletion)
             )
             qrCodeScanWireframeFactory.make(vc, context: context).present()
-        case let .confirmSendNFT(context):
-            guard context.data.addressFrom != context.data.addressTo else {
+        }
+        if let input = destination as? NFTSendWireframeDestination.ConfirmSendNFT {
+            guard input.context.data.addressFrom != input.context.data.addressTo else {
                 return presentSendingToSameAddressAlert()
             }
-            confirmationWireframeFactory.make(vc, context: context).present()
+            confirmationWireframeFactory.make(vc, context: input.context).present()
+        }
+        if destination is NFTSendWireframeDestination.Dismiss {
+            vc?.popOrDismiss()
         }
     }
-    
-    func dismiss() { vc?.popOrDismiss() }
 }
 
 private extension DefaultNFTSendWireframe {
@@ -92,7 +74,7 @@ private extension DefaultNFTSendWireframe {
         )
         let vc: NFTSendViewController = UIStoryboard(.nftSend).instantiate()
         let presenter = DefaultNFTSendPresenter(
-            view: vc,
+            view: WeakRef(referred: vc),
             wireframe: self,
             interactor: interactor,
             context: context

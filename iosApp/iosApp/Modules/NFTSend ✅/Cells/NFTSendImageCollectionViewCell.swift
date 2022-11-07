@@ -24,9 +24,7 @@ final class NFTSendImageCollectionViewCell: UICollectionViewCell {
 
 extension NFTSendImageCollectionViewCell {
     
-    func update(
-        with nftItem: NFTItem
-    ) {
+    func update(with nftItem: NFTItem) {
         imageView.load(url: nftItem.image)
     }
 }
@@ -44,11 +42,12 @@ private extension NFTSendImageCollectionViewCell {
             [
                 .layout(
                     anchor: .heightAnchor,
-                    constant: .equalTo(constant: 180)
+                    constant: .equalTo(constant: nftImageSize.height),
+                    priority: .defaultHigh
                 ),
                 .layout(
                     anchor: .widthAnchor,
-                    constant: .equalTo(constant: 180)
+                    constant: .equalTo(constant: nftImageSize.width)
                 )
             ]
         )
@@ -72,5 +71,13 @@ private extension NFTSendImageCollectionViewCell {
         vStackView.layer.borderWidth = 1
         vStackView.layer.borderColor = Theme.colour.fillTertiary.cgColor
         return containerView
+    }
+    
+    var nftImageSize: CGSize {
+        let width = frame.size.width - Theme.constant.padding * 2
+        return .init(
+            width: width * 0.5,
+            height: width * 0.5
+        )
     }
 }
