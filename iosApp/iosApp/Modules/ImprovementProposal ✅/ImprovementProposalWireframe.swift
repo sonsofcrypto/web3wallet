@@ -27,7 +27,7 @@ extension DefaultImprovementProposalWireframe: ImprovementProposalWireframe {
         parent?.show(vc, sender: self)
     }
 
-    func navigate(destination_: ImprovementProposalWireframeDestination) {
+    func navigate(destination__ destination_: ImprovementProposalWireframeDestination) {
         if let vote = destination_ as? ImprovementProposalWireframeDestination.Vote {
             guard let url = voteUrl(vote.proposal) else { return }
             UIApplication.shared.open(url)

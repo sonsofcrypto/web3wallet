@@ -3,11 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-protocol DegenView: AnyObject {
-    func update(with viewModel: DegenViewModel)
-    func popToRootAndRefresh()
-}
+import web3walletcore
 
 final class DegenViewController: BaseViewController {
 
@@ -47,12 +43,15 @@ final class DegenViewController: BaseViewController {
         updateBackgroundGradientTopConstraint()
         backgroundGradientHeightConstraint?.constant = backgroundGradientHeight
     }
-
+    
+    deinit {
+        presenter.releaseResources()
+    }
 }
 
 extension DegenViewController: DegenView {
 
-    func update(with viewModel: DegenViewModel) {
+    func update(viewModel_ viewModel: DegenViewModel) {
         self.viewModel = viewModel
         collectionView?.reloadData()
         updateBackgroundGradient(after: 0.05)
@@ -75,12 +74,11 @@ extension DegenViewController: UICollectionViewDataSource {
         numberOfItemsInSection section: Int
     ) -> Int {
         guard let section = viewModel?.sections[section] else { return 0 }
-        switch section {
-        case .header:
-            return 1
-        case let .group(items):
-            return items.count
+        if section is DegenViewModel.SectionHeader { return 1 }
+        if let input = section as? DegenViewModel.SectionGroup {
+            return input.items.count
         }
+        fatalError("Section type not handled")
     }
 
     func collectionView(
@@ -88,17 +86,18 @@ extension DegenViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard let section = viewModel?.sections[indexPath.section] else { fatalError() }
-        switch section {
-        case let .header(header):
+        if let input = section as? DegenViewModel.SectionHeader {
             let cell = collectionView.dequeue(DegenSectionViewCell.self, for: indexPath)
-            cell.update(with: header)
-            return cell
-        case let .group(items):
-            let item = items[indexPath.item]
-            let cell = collectionView.dequeue(DegenViewCell.self, for: indexPath)
-            cell.update(with: item, showSeparator: items.last != item)
+            cell.update(with: input)
             return cell
         }
+        if let input = section as? DegenViewModel.SectionGroup {
+            let item = input.items[indexPath.item]
+            let cell = collectionView.dequeue(DegenViewCell.self, for: indexPath)
+            cell.update(with: item, showSeparator: input.items.last != item)
+            return cell
+        }
+        fatalError("Section type not handled")
     }
 }
 
@@ -109,11 +108,14 @@ extension DegenViewController: UICollectionViewDelegate {
         didSelectItemAt indexPath: IndexPath
     ) {
         guard let section = viewModel?.sections[indexPath.section] else { return }
-        guard case let DegenViewModel.Section.group(items) = section else { return }
-        if items[indexPath.row].isEnabled {
-            presenter.handle(.didSelectCategory(idx: indexPath.item))
-        } else {
-            presenter.handle(.comingSoon)
+        if let input = section as? DegenViewModel.SectionGroup {
+            if input.items[indexPath.row].isEnabled {
+                presenter.handle(
+                    event_____: DegenPresenterEvent.DidSelectCategory(idx: indexPath.item.int32)
+                )
+            } else {
+                presenter.handle(event_____: DegenPresenterEvent.ComingSoon())
+            }
         }
     }
     
@@ -141,18 +143,19 @@ extension DegenViewController {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, environment in
             guard let self = self else { return nil }
             guard let viewModel = self.viewModel else { return nil }
-            switch viewModel.sections[sectionIndex] {
-            case .header:
+            if viewModel.sections[sectionIndex] is DegenViewModel.SectionHeader {
                 return self.makeCollectionLayoutSection(
                     withBackgroundDecoratorView: false,
                     sectionIndex: sectionIndex
                 )
-            case .group:
+            }
+            if viewModel.sections[sectionIndex] is DegenViewModel.SectionGroup {
                 return self.makeCollectionLayoutSection(
                     withBackgroundDecoratorView: true,
                     sectionIndex: sectionIndex
                 )
             }
+            fatalError("Section type not handled")
         }
         layout.register(
             DgenCellBackgroundSupplementaryView.self,

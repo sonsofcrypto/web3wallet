@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class DegenSectionViewCell: UICollectionViewCell {
     
@@ -16,7 +17,7 @@ final class DegenSectionViewCell: UICollectionViewCell {
 
 extension DegenSectionViewCell {
 
-    func update(with viewModel: DegenViewModel.Header) {
+    func update(with viewModel: DegenViewModel.SectionHeader) {
         label.text = viewModel.title
         label.textColor = viewModel.isEnabled ?
         Theme.colour.labelPrimary :

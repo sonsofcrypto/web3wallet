@@ -23,7 +23,7 @@ final class NFTSendViewController: BaseViewController {
 
 extension NFTSendViewController: NFTSendView {
 
-    func update(viewModel______ viewModel: NFTSendViewModel) {
+    func update(viewModel_______ viewModel: NFTSendViewModel) {
         self.viewModel = viewModel
         title = viewModel.title
         if collectionView.visibleCells.isEmpty { collectionView.reloadData() }
@@ -201,7 +201,7 @@ private extension NFTSendViewController {
     }
     
     func onTapped(_ event: NFTSendPresenterEvent) -> () -> Void {
-        { [weak self] in self?.presenter.handle(event__________: event) }
+        { [weak self] in self?.presenter.handle(event___________: event) }
     }
 }
 
