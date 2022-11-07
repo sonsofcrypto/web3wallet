@@ -5,22 +5,6 @@
 import UIKit
 import web3walletcore
 
-struct NFTDetailWireframeContext {
-    let nftIdentifier: String
-    let nftCollectionIdentifier: String
-}
-
-enum NFTDetailWireframeDestination {
-    case underConstruction
-    case send(NFTItem)
-    case dismiss
-}
-
-protocol NFTDetailWireframe {
-    func present()
-    func navigate(to destination: NFTDetailWireframeDestination)
-}
-
 final class DefaultNFTDetailWireframe {
     private weak var parent: UIViewController?
     private let context: NFTDetailWireframeContext
@@ -55,20 +39,13 @@ extension DefaultNFTDetailWireframe: NFTDetailWireframe {
         parent?.show(vc, sender: self)
     }
     
-    func navigate(to destination: NFTDetailWireframeDestination) {
-        switch destination {
-        case .underConstruction:
-            alertWireframeFactory.make(
-                vc,
-                context: .underConstructionAlert()
-            ).present()
-        case let .send(nftItem):
+    func navigate(destination_____ destination: NFTDetailWireframeDestination) {
+        if let input = destination as? NFTDetailWireframeDestination.Send {
             guard let network = networksService.network else { return }
-            nftSendWireframeFactory.make(
-                vc,
-                context: .init(network: network, nftItem: nftItem)
-            ).present()
-        case .dismiss:
+            let context = NFTSendWireframeContext(network: network, nftItem: input.nft)
+            nftSendWireframeFactory.make( vc, context: context).present()
+        }
+        if destination is NFTDetailWireframeDestination.Dismiss {
             vc?.popOrDismiss()
         }
     }
@@ -77,14 +54,10 @@ extension DefaultNFTDetailWireframe: NFTDetailWireframe {
 private extension DefaultNFTDetailWireframe {
     
     func wireUp() -> UIViewController {
-        let vc: NFTDetailViewController = UIStoryboard(
-            .nftDetail
-        ).instantiate()
-        let interactor = DefaultNFTDetailInteractor(
-            service: nftsService
-        )
+        let vc: NFTDetailViewController = UIStoryboard(.nftDetail).instantiate()
+        let interactor = DefaultNFTDetailInteractor(nftService: nftsService)
         let presenter = DefaultNFTDetailPresenter(
-            view: vc,
+            view: WeakRef(referred: vc),
             wireframe: self,
             interactor: interactor,
             context: context

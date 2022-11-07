@@ -44,11 +44,11 @@ extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
         }
     }
 
-    func navigate(destination___________ destination: NFTsDashboardWireframeDestination) {
+    func navigate(destination____________ destination: NFTsDashboardWireframeDestination) {
         if let input = destination as? NFTsDashboardWireframeDestination.ViewNFT {
             let context = NFTDetailWireframeContext(
-                nftIdentifier: input.nftItem.identifier,
-                nftCollectionIdentifier: input.nftItem.collectionIdentifier
+                nftId: input.nftItem.identifier,
+                collectionId: input.nftItem.collectionIdentifier
             )
             nftDetailWireframeFactory.make(vc, context: context).present()
         }

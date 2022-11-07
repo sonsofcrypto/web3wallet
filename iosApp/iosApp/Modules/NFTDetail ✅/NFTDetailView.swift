@@ -3,10 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-protocol NFTDetailView: AnyObject {
-    func update(with viewModel: NFTDetailViewModel)
-}
+import web3walletcore
 
 final class NFTDetailViewController: BaseViewController {
 
@@ -30,16 +27,11 @@ extension NFTDetailViewController: NFTDetailView {
         presenter.present()
     }
 
-    func update(with viewModel: NFTDetailViewModel) {
+    func update(viewModel____ viewModel: NFTDetailViewModel) {
         self.viewModel = viewModel
         self.mainScrollView.refreshControl?.endRefreshing()
-        switch viewModel {
-        case .loading: break
-        case let .loaded(nftItem, nftCollection):
-            title = nftItem.name
-            refreshNFT(with: nftItem, and: nftCollection)
-        case .error: break
-        }
+        title = viewModel.nft.name
+        refreshNFT(with: viewModel.nft, and: viewModel.collection)
     }
 }
 
@@ -63,6 +55,6 @@ private extension NFTDetailViewController {
     }
     
     @objc func dismissTapped() {
-        presenter.handle(.dismiss)
+        presenter.handle(event________: NFTDetailPresenterEvent.Dismiss())
     }
 }
