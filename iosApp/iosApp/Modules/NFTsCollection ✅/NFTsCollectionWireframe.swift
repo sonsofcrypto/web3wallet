@@ -36,8 +36,8 @@ extension DefaultNFTsCollectionWireframe: NFTsCollectionWireframe {
     func navigate(destination: NFTsCollectionWireframeDestination) {
         if let input = destination as? NFTsCollectionWireframeDestination.NFTDetail {
             let context = NFTDetailWireframeContext(
-                nftIdentifier: input.identifier,
-                nftCollectionIdentifier: context.collectionId
+                nftId: input.identifier,
+                collectionId: context.collectionId
             )
             nftDetailWireframeFactory.make(vc, context: context).present()
         }

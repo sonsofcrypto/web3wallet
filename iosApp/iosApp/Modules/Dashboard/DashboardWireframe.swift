@@ -160,13 +160,11 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             qrCodeScanWireframeFactory.make(vc, context: context).present()
         case let .nftItem(nftItem):
             guard let vc = self.vc else { return }
-            nftDetailWireframeFactory.make(
-                vc,
-                context: .init(
-                    nftIdentifier: nftItem.identifier,
-                    nftCollectionIdentifier: nftItem.collectionIdentifier
-                )
-            ).present()
+            let context = NFTDetailWireframeContext(
+                nftId: nftItem.identifier,
+                collectionId: nftItem.collectionIdentifier
+            )
+            nftDetailWireframeFactory.make(vc, context: context).present()
         case let .editCurrencies(network, selectedCurrencies, onCompletion):
             let onCompletion: (([CurrencyPickerWireframeContext.Result]) -> Void) = { result in
                 guard let currencies = result.first?.selectedCurrencies else { return }

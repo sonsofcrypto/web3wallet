@@ -57,6 +57,6 @@ private extension NFTDetailViewController {
     }
     
     @objc func sendNFT() {
-        presenter.handle(.send)
+        presenter.handle(event________: NFTDetailPresenterEvent.Send())
     }
 }
