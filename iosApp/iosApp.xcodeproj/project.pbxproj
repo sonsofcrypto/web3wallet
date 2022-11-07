@@ -407,12 +407,9 @@
 		1CDED5F22897ED7800DF34A7 /* SettingsSectionHeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5F12897ED7800DF34A7 /* SettingsSectionHeaderViewCell.swift */; };
 		1CDED5F4289818E300DF34A7 /* SettingsSectionFooterViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5F3289818E300DF34A7 /* SettingsSectionFooterViewCell.swift */; };
 		1CDED5F8289C324C00DF34A7 /* NFTsDashboardView+NoContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5F7289C324C00DF34A7 /* NFTsDashboardView+NoContentView.swift */; };
-		1CDED5FB289C4C4100DF34A7 /* NFTSendPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5FA289C4C4100DF34A7 /* NFTSendPresenter.swift */; };
 		1CDED5FD289C4C4800DF34A7 /* NFTSendWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5FC289C4C4800DF34A7 /* NFTSendWireframe.swift */; };
 		1CDED5FF289C4C4E00DF34A7 /* NFTSendWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED5FE289C4C4E00DF34A7 /* NFTSendWireframeFactory.swift */; };
 		1CDED603289C4C5C00DF34A7 /* NFTSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED602289C4C5C00DF34A7 /* NFTSendView.swift */; };
-		1CDED605289C4C6100DF34A7 /* NFTSendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED604289C4C6100DF34A7 /* NFTSendViewModel.swift */; };
-		1CDED607289C4C7200DF34A7 /* NFTSendInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED606289C4C7200DF34A7 /* NFTSendInteractor.swift */; };
 		1CDED609289C4C8200DF34A7 /* NFTSend.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CDED608289C4C8200DF34A7 /* NFTSend.storyboard */; };
 		1CDED60C289C4DB800DF34A7 /* NFTSendCTACollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED60B289C4DB800DF34A7 /* NFTSendCTACollectionViewCell.swift */; };
 		1CDED60E289C4DC300DF34A7 /* NFTSendToCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDED60D289C4DC300DF34A7 /* NFTSendToCollectionViewCell.swift */; };
@@ -921,12 +918,9 @@
 		1CDED5F12897ED7800DF34A7 /* SettingsSectionHeaderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSectionHeaderViewCell.swift; sourceTree = "<group>"; };
 		1CDED5F3289818E300DF34A7 /* SettingsSectionFooterViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSectionFooterViewCell.swift; sourceTree = "<group>"; };
 		1CDED5F7289C324C00DF34A7 /* NFTsDashboardView+NoContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NFTsDashboardView+NoContentView.swift"; sourceTree = "<group>"; };
-		1CDED5FA289C4C4100DF34A7 /* NFTSendPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendPresenter.swift; sourceTree = "<group>"; };
 		1CDED5FC289C4C4800DF34A7 /* NFTSendWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendWireframe.swift; sourceTree = "<group>"; };
 		1CDED5FE289C4C4E00DF34A7 /* NFTSendWireframeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendWireframeFactory.swift; sourceTree = "<group>"; };
 		1CDED602289C4C5C00DF34A7 /* NFTSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendView.swift; sourceTree = "<group>"; };
-		1CDED604289C4C6100DF34A7 /* NFTSendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendViewModel.swift; sourceTree = "<group>"; };
-		1CDED606289C4C7200DF34A7 /* NFTSendInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendInteractor.swift; sourceTree = "<group>"; };
 		1CDED608289C4C8200DF34A7 /* NFTSend.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NFTSend.storyboard; sourceTree = "<group>"; };
 		1CDED60B289C4DB800DF34A7 /* NFTSendCTACollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendCTACollectionViewCell.swift; sourceTree = "<group>"; };
 		1CDED60D289C4DC300DF34A7 /* NFTSendToCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTSendToCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1346,7 +1340,7 @@
 				1C60C225285724D0003BE25D /* NFTDetail ✅ */,
 				1C60C268285724D0003BE25D /* NFTsCollection ✅ */,
 				1C60C233285724D0003BE25D /* NFTsDashboard ✅ */,
-				1CDED5F9289C4C2F00DF34A7 /* NFTSend */,
+				1CDED5F9289C4C2F00DF34A7 /* NFTSend ✅ */,
 				1C5D24AC28E19F62007DA557 /* ImprovementProposal ✅ */,
 				1C5D24B928E19F62007DA557 /* ImprovementProposals ✅ */,
 				1C54DC0F2862320200E378F6 /* QRCodeScan ✅ */,
@@ -2046,19 +2040,16 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1CDED5F9289C4C2F00DF34A7 /* NFTSend */ = {
+		1CDED5F9289C4C2F00DF34A7 /* NFTSend ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1CDED608289C4C8200DF34A7 /* NFTSend.storyboard */,
-				1CDED606289C4C7200DF34A7 /* NFTSendInteractor.swift */,
-				1CDED5FA289C4C4100DF34A7 /* NFTSendPresenter.swift */,
 				1CDED602289C4C5C00DF34A7 /* NFTSendView.swift */,
-				1CDED604289C4C6100DF34A7 /* NFTSendViewModel.swift */,
 				1CDED5FC289C4C4800DF34A7 /* NFTSendWireframe.swift */,
 				1CDED5FE289C4C4E00DF34A7 /* NFTSendWireframeFactory.swift */,
 				1CDED60A289C4DA500DF34A7 /* Cells */,
 			);
-			path = NFTSend;
+			path = "NFTSend ✅";
 			sourceTree = "<group>";
 		};
 		1CDED60A289C4DA500DF34A7 /* Cells */ = {
@@ -2603,7 +2594,6 @@
 				D1976B13287EFAE10063FC9C /* MnemonicImportInteractor.swift in Sources */,
 				1C54DBFA285F9EBF00E378F6 /* CurrencyAddNetworkView.swift in Sources */,
 				1C54DC192862352200E378F6 /* QRCodeScanWireframeFactory.swift in Sources */,
-				1CDED5FB289C4C4100DF34A7 /* NFTSendPresenter.swift in Sources */,
 				1CDED5F4289818E300DF34A7 /* SettingsSectionFooterViewCell.swift in Sources */,
 				D15B06C327B6D23C008C3C62 /* ThemeGradientView.swift in Sources */,
 				D157F7CB27B69B6300578FF8 /* AppDelegate.swift in Sources */,
@@ -2617,7 +2607,6 @@
 				1C7FC98128AFB32600FC9175 /* PasswordValidatorHelper.swift in Sources */,
 				1C6487432832E7EA0091A12D /* SettingsServiceAssembler.swift in Sources */,
 				D1EF5BCE287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift in Sources */,
-				1CDED607289C4C7200DF34A7 /* NFTSendInteractor.swift in Sources */,
 				1C54DC132862351100E378F6 /* QRCodeScanView.swift in Sources */,
 				1C7FC9B828BCF95E00FC9175 /* WebViewController.swift in Sources */,
 				1C60C2BD285724D0003BE25D /* ButtonsSheetViewModel.swift in Sources */,
@@ -2769,7 +2758,6 @@
 				1C60C349285724D1003BE25D /* CultProposalViewModel.swift in Sources */,
 				1C5D24D928E19F62007DA557 /* ImprovementProposalsWireframeFactory.swift in Sources */,
 				1C60C30F285724D1003BE25D /* AccountChartCell.swift in Sources */,
-				1CDED605289C4C6100DF34A7 /* NFTSendViewModel.swift in Sources */,
 				1C7F862828D20E490073FD95 /* Int+Extensions.swift in Sources */,
 				1C60C34B285724D1003BE25D /* CultProposalView.swift in Sources */,
 				1C60C348285724D1003BE25D /* CultProposalPresenter.swift in Sources */,

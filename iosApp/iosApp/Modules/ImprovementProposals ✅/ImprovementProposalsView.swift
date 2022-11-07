@@ -21,7 +21,7 @@ final class ImprovementProposalsViewController: BaseViewController {
 
 extension ImprovementProposalsViewController: ImprovementProposalsView {
 
-    func update(viewModel_______ viewModel: ImprovementProposalsViewModel) {
+    func update(viewModel________ viewModel: ImprovementProposalsViewModel) {
         self.viewModel = viewModel
         if viewModel is ImprovementProposalsViewModel.Loading {
             collectionView.refreshControl?.beginRefreshing()
@@ -89,16 +89,16 @@ extension ImprovementProposalsViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        presenter.handle(event___________: .Proposal(idx: Int32(indexPath.item)))
+        presenter.handle(event____________: .Proposal(idx: Int32(indexPath.item)))
     }
 
     func voteAction(idx: Int) {
-        presenter.handle(event___________: .Vote(idx: Int32(idx)))
+        presenter.handle(event____________: .Vote(idx: Int32(idx)))
     }
 
     @IBAction func segmentCtlAction(_ sender: SegmentedControl) {
         presenter.handle(
-            event___________: .Category(idx: Int32(sender.selectedSegmentIndex))
+            event____________: .Category(idx: Int32(sender.selectedSegmentIndex))
         )
     }
 
@@ -107,11 +107,11 @@ extension ImprovementProposalsViewController: UICollectionViewDelegate {
     }
 
     @IBAction func dismissAction() {
-        presenter.handle(event___________: .Dismiss())
+        presenter.handle(event____________: .Dismiss())
     }
 
     func handle(_ alertAction: UIAlertAction) {
-        presenter.handle(event___________: .AlertAction(idx: 0))
+        presenter.handle(event____________: .AlertAction(idx: 0))
     }
 }
 

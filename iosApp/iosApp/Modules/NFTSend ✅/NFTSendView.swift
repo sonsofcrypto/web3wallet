@@ -5,12 +5,6 @@
 import UIKit
 import web3walletcore
 
-protocol NFTSendView: AnyObject {
-    func update(with viewModel: NFTSendViewModel)
-    func presentFeePicker(with fees: [NetworkFee])
-    func dismissKeyboard()
-}
-
 final class NFTSendViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
@@ -29,14 +23,14 @@ final class NFTSendViewController: BaseViewController {
 
 extension NFTSendViewController: NFTSendView {
 
-    func update(with viewModel: NFTSendViewModel) {
+    func update(viewModel______ viewModel: NFTSendViewModel) {
         self.viewModel = viewModel
         title = viewModel.title
         if collectionView.visibleCells.isEmpty { collectionView.reloadData() }
         else { updateCells() }
     }
     
-    func presentFeePicker(with fees: [NetworkFee]) {
+    func presentNetworkFeePicker(networkFees: [NetworkFee]) {
         dismissKeyboard()
         let cell = collectionView.visibleCells.first { $0 is NFTSendCTACollectionViewCell } as! NFTSendCTACollectionViewCell
         let fromFrame = feesPickerView.convert(
@@ -44,7 +38,7 @@ extension NFTSendViewController: NFTSendView {
             from: cell.networkFeeView.networkFeeButton
         )
         feesPickerView.present(
-            with: fees,
+            with: networkFees,
             onFeeSelected: onFeeSelected(),
             at: .init(x: Theme.constant.padding, y: fromFrame.midY)
         )
@@ -70,20 +64,23 @@ extension NFTSendViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard let item = viewModel?.items[indexPath.section] else { fatalError() }
-        switch item {
-        case let .address(value):
-            let cell = collectionView.dequeue(NFTSendToCollectionViewCell.self, for: indexPath)
-            cell.update(with: value, handler: nftSendTokenHandler())
-            return cell
-        case let .nft(item):
+        if let input = item as? NFTSendViewModel.ItemNft {
             let cell = collectionView.dequeue(NFTSendImageCollectionViewCell.self, for: indexPath)
-            cell.update(with: item)
-            return cell
-        case let .send(cta):
-            let cell = collectionView.dequeue(NFTSendCTACollectionViewCell.self, for: indexPath)
-            cell.update(with: cta, handler: nftSendCTAHandler())
+            cell.update(with: input.data)
             return cell
         }
+        if let input = item as? NFTSendViewModel.ItemAddress {
+            let cell = collectionView.dequeue(NFTSendToCollectionViewCell.self, for: indexPath)
+            cell.update(with: input.data, handler: nftSendTokenHandler())
+            return cell
+        }
+        if let input = item as? NFTSendViewModel.ItemSend {
+            let cell = collectionView.dequeue(NFTSendCTACollectionViewCell.self, for: indexPath)
+            cell.update(with: input, handler: nftSendCTAHandler())
+            return cell
+        }
+        fatalError("Item not handled")
+        
     }
 }
 
@@ -119,11 +116,11 @@ private extension NFTSendViewController {
     }
     
     func onFeeSelected() -> ((NetworkFee) -> Void) {
-        { [weak self] item in self?.onTapped(.feeChanged(to: item))() }
+        { [weak self] item in self?.onTapped(NFTSendPresenterEvent.NetworkFeeChanged(value: item))() }
     }
     
     @objc func navBarLeftActionTapped() {
-        onTapped(.dismiss)()
+        onTapped(NFTSendPresenterEvent.Dismiss())()
     }
 }
 
@@ -133,12 +130,12 @@ private extension NFTSendViewController {
         UICollectionViewCompositionalLayout { index, environment in
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .estimated(100)
+                heightDimension: .estimated(1)
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .estimated(100)
+                heightDimension: .estimated(1)
             )
             let outerGroup = NSCollectionLayoutGroup.horizontal(
                 layoutSize: groupSize, subitems: [item]
@@ -178,24 +175,49 @@ private extension NFTSendViewController {
     func nftSendTokenHandler() -> NetworkAddressPickerView.Handler {
         .init(
             onAddressChanged: onAddressChanged(),
-            onQRCodeScanTapped: onTapped(.qrCodeScan),
-            onPasteTapped: onTapped(.pasteAddress),
-            onSaveTapped: onTapped(.saveAddress)
+            onQRCodeScanTapped: onTapped(NFTSendPresenterEvent.QrCodeScan()),
+            onPasteTapped: onPasteFromKeyboard(),
+            onSaveTapped: onTapped(NFTSendPresenterEvent.SaveAddress())
         )
+    }
+    
+    func onPasteFromKeyboard() -> () -> Void {
+        { [weak self] in
+            self?.onTapped(
+                NFTSendPresenterEvent.PasteAddress(value: UIPasteboard.general.string ?? "")
+            )()
+        }
     }
 
     func onAddressChanged() -> (String) -> Void {
-        { [weak self] value in self?.onTapped(.addressChanged(to: value))() }
+        { [weak self] value in self?.onTapped(NFTSendPresenterEvent.AddressChanged(value: value))() }
     }
     
     func nftSendCTAHandler() -> NFTSendCTACollectionViewCell.Handler {
         .init(
-            onNetworkFeesTapped: onTapped(.feeTapped),
-            onCTATapped: onTapped(.review)
+            onNetworkFeesTapped: onTapped(NFTSendPresenterEvent.NetworkFeeTapped()),
+            onCTATapped: onTapped(NFTSendPresenterEvent.Review())
         )
     }
     
     func onTapped(_ event: NFTSendPresenterEvent) -> () -> Void {
-        { [weak self] in self?.presenter.handle(event) }
+        { [weak self] in self?.presenter.handle(event__________: event) }
+    }
+}
+
+extension Array where Element == NFTSendViewModel.Item {
+    var nft: NFTItem? {
+        let item = first { $0 is NFTSendViewModel.ItemNft }
+        return (item as? NFTSendViewModel.ItemNft)?.data
+    }
+
+    var address: NetworkAddressPickerViewModel? {
+        let item = first { $0 is NFTSendViewModel.ItemAddress }
+        return (item as? NFTSendViewModel.ItemAddress)?.data
+    }
+
+    var send: NFTSendViewModel.ItemSend? {
+        let item = first { $0 is NFTSendViewModel.ItemSend }
+        return item as? NFTSendViewModel.ItemSend
     }
 }
