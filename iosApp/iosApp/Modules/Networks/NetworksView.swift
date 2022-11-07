@@ -3,11 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-protocol NetworksView: AnyObject {
-    
-    func update(with viewModel: NetworksViewModel)
-}
+import web3walletcore
 
 final class NetworksViewController: BaseViewController {
 
@@ -26,7 +22,7 @@ final class NetworksViewController: BaseViewController {
 
 extension NetworksViewController: NetworksView {
     
-    func update(with viewModel: NetworksViewModel) {
+    func update(viewModel___________ viewModel: NetworksViewModel) {
         if self.viewModel?.count() != viewModel.count() {
             self.viewModel = viewModel
             collectionView.reloadData()
@@ -84,7 +80,9 @@ extension NetworksViewController: UICollectionViewDelegate {
         didSelectItemAt indexPath: IndexPath
     ) {
         if let viewModel = networkViewModel(indexPath) {
-            presenter.handle(.didSelectNetwork(chainId: viewModel.chainId))
+            presenter.handle(
+                event_______________: NetworksPresenterEvent.DidSelectNetwork(chainId: viewModel.chainId)
+            )
         }
     }
     
@@ -183,10 +181,32 @@ private extension NetworksViewController {
     }
 
     func handleNetworkToggle(_ chainId: UInt32, _ isOn: Bool) {
-        presenter.handle(.didSwitchNetwork(chainId: chainId, isOn: isOn))
+        presenter.handle(
+            event_______________: NetworksPresenterEvent.DidSwitchNetwork(chainId: chainId, isOn: isOn)
+        )
     }
 
     func handleSettingsAction(_ chainId: UInt32) {
-        presenter.handle(.didTapSettings(chainId: chainId))
+        presenter.handle(
+            event_______________: NetworksPresenterEvent.DidTapSettings(chainId: chainId)
+        )
+    }
+}
+
+private extension NetworksViewModel {
+    func count() -> Int {
+        sections.reduce(0, { $0 + $1.networks.count })
+    }
+
+    func selectedIndexPaths() -> [IndexPath] {
+        var idxPaths = [IndexPath]()
+        for (sIdx, section) in sections.enumerated() {
+            for (nIdx, network) in section.networks.enumerated() {
+                if network.isSelected {
+                    idxPaths.append(IndexPath(item: nIdx, section: sIdx))
+                }
+            }
+        }
+        return idxPaths
     }
 }

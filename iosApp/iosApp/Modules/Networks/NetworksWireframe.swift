@@ -5,16 +5,6 @@
 import UIKit
 import web3walletcore
 
-enum NetworksWireframeDestination {
-    case dashboard
-    case editNetwork(Network)
-}
-
-protocol NetworksWireframe {
-    func present()
-    func navigate(to destination: NetworksWireframeDestination)
-}
-
 final class DefaultNetworksWireframe {
     private weak var parent: UIViewController?
     private let alertWireframeFactory: AlertWireframeFactory
@@ -49,19 +39,19 @@ extension DefaultNetworksWireframe: NetworksWireframe {
         }
     }
 
-    func navigate(to destination: NetworksWireframeDestination) {
-        switch destination {
-        case .dashboard:
+    func navigate(destination___________ destination: NetworksWireframeDestination) {
+        if destination is NetworksWireframeDestination.Dashboard {
             parent?.asEdgeCardsController?.setDisplayMode(.master, animated: true)
-        case let .editNetwork(network):
-           alertWireframeFactory.make(
-               parent,
-               context: .underConstructionAlert()
-            )
-//             networkSettingsWireframeFactory.make(
-//                 vc?.asNavVc?.topVc ?? vc,
-//                 network: network
-//             ).present()
+        }
+        if let input = destination as? NetworksWireframeDestination.EditNetwork {
+            alertWireframeFactory.make(
+                parent,
+                context: .underConstructionAlert()
+             )
+ //             networkSettingsWireframeFactory.make(
+ //                 vc?.asNavVc?.topVc ?? vc,
+ //                 network: input.network
+ //             ).present()
         }
     }
 }
@@ -69,10 +59,10 @@ extension DefaultNetworksWireframe: NetworksWireframe {
 private extension DefaultNetworksWireframe {
 
     func wireUp() -> UIViewController {
-        let interactor = DefaultNetworksInteractor(networksService)
+        let interactor = DefaultNetworksInteractor(networksService: networksService)
         let vc: NetworksViewController = UIStoryboard(.networks).instantiate()
         let presenter = DefaultNetworksPresenter(
-            view: vc,
+            view: WeakRef(referred: vc),
             wireframe: self,
             interactor: interactor
         )
