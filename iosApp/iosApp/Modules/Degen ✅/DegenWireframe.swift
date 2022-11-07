@@ -5,17 +5,6 @@
 import UIKit
 import web3walletcore
 
-enum DegenWireframeDestination {
-    case swap
-    case cult
-    case comingSoon
-}
-
-protocol DegenWireframe {
-    func present()
-    func navigate(to destination: DegenWireframeDestination)
-}
-
 final class DefaultDegenWireframe {
     private weak var parent: UIViewController?
     private let currencySwapWireframeFactory: CurrencySwapWireframeFactory
@@ -56,21 +45,19 @@ extension DefaultDegenWireframe: DegenWireframe {
         }
     }
 
-    func navigate(to destination: DegenWireframeDestination) {
-        switch destination {
-        case .swap:
+    func navigate(destination_ destination: DegenWireframeDestination) {
+        if destination is DegenWireframeDestination.Swap {
             guard let network = networksService.network else { return }
-            currencySwapWireframeFactory.make(
-                vc,
-                context: .init(network: network, currencyFrom: nil, currencyTo: nil)
-            ).present()
-        case .cult:
+            let context = CurrencySwapWireframeContext(
+                network: network, currencyFrom: nil, currencyTo: nil
+            )
+            currencySwapWireframeFactory.make(vc, context: context).present()
+        }
+        if destination is DegenWireframeDestination.Cult {
             cultProposalsWireframeFactory.make(vc).present()
-        case .comingSoon:
-            alertWireframeFactory.make(
-                vc,
-                context: .underConstructionAlert()
-            ).present()
+        }
+        if destination is DegenWireframeDestination.ComingSoon {
+            alertWireframeFactory.make(vc, context: .underConstructionAlert()).present()
         }
     }
 }
@@ -79,14 +66,14 @@ private extension DefaultDegenWireframe {
 
     func wireUp() -> UIViewController {
         let interactor = DefaultDegenInteractor(
-            degenService,
+            degenService: degenService,
             networksService: networksService
         )
         let vc: DegenViewController = UIStoryboard(.degen).instantiate()
         let presenter = DefaultDegenPresenter(
-            view: vc,
-            interactor: interactor,
-            wireframe: self
+            view: WeakRef(referred: vc),
+            wireframe: self,
+            interactor: interactor
         )
         vc.presenter = presenter
         let nc = NavigationController(rootViewController: vc)
