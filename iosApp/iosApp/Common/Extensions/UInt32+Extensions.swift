@@ -6,4 +6,5 @@ import Foundation
 
 extension UInt32 {
     var uInt: UInt { UInt(self) }
+    var cgFloat: CGFloat { CGFloat(self) }
 }

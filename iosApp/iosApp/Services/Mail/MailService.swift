@@ -4,6 +4,7 @@
 
 import Foundation
 import MessageUI
+import web3walletcore
 
 struct MailContext {
     
@@ -79,20 +80,21 @@ private extension DefaultMailService {
         let wireframe: AlertWireframeFactory = AppAssembler.resolve()
         wireframe.make(
             presentingIn,
-            context: .init(
+            context: AlertWireframeContext(
                 title: Localized("alert.email.notDetected.title"),
-                media: .image(
+                media: AlertWireframeContext.MediaImage(
                     named: "envelope.open.fill",
-                    size: .init(length: 100)
+                    width: 100.uint32,
+                    height: 100.uint32
                 ),
                 message: Localized("alert.email.notDetected.message"),
                 actions: [
-                    .init(
+                    AlertWireframeContext.Action(
                         title: Localized("Ok"),
-                        type: .primary,
-                        action: nil
+                        type: .primary
                     )
                 ],
+                onActionTapped: nil,
                 contentHeight: 294
             )
         ).present()

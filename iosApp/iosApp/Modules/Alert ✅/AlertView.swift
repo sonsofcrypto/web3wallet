@@ -4,10 +4,7 @@
 
 import UIKit
 import WebKit
-
-protocol AlertView: AnyObject {
-    func update(with viewModel: AlertViewModel)
-}
+import web3walletcore
 
 final class AlertViewController: BaseViewController {
     var presenter: AlertPresenter!
@@ -43,7 +40,7 @@ extension AlertViewController: UIViewControllerTransitioningDelegate, ModalDismi
 
 extension AlertViewController: AlertView {
     
-    func update(with viewModel: AlertViewModel) {
+    func update(viewModel_______________ viewModel: AlertViewModel) {
         self.viewModel = viewModel
         title = viewModel.context.title
         presentAlert(with: viewModel)
@@ -51,9 +48,9 @@ extension AlertViewController: AlertView {
 }
 
 private extension AlertViewController {
-    
+        
     @objc func dismissAction() {
-        presenter.handle(.dismiss)
+        presenter.handle(event___________________: AlertPresenterEvent.Dismiss())
     }
         
     func presentAlert(with viewModel: AlertViewModel) {
@@ -68,7 +65,7 @@ private extension AlertViewController {
         )
     }
     
-    func alertContent(with alertContext: AlertContext) -> UIView {
+    func alertContent(with alertContext: AlertWireframeContext) -> UIView {
         var content = [UIView]()
         content.append(contentsOf: alertMedia(with: alertContext.media))
         content.append(contentsOf: alertMessage(with: alertContext.message))
@@ -78,14 +75,21 @@ private extension AlertViewController {
         return stackView
     }
     
-    func alertMedia(with media: AlertContext.Media?) -> [UIView] {
+    func alertMedia(with media: AlertWireframeContext.Media?) -> [UIView] {
         guard let media = media else { return [] }
-        switch media {
-        case let .image(named, size):
-            return alertImage(with: named, size: size)
-        case let .gift(named, size):
-            return alertMediaGif(with: named, size: size)
+        if let input = media as? AlertWireframeContext.MediaImage {
+            return alertImage(
+                with: input.named,
+                size: .init(width: input.width.cgFloat, height: input.height.cgFloat)
+            )
         }
+        if let input = media as? AlertWireframeContext.MediaGift {
+            return alertMediaGif(
+                with: input.named,
+                size: .init(width: input.width.cgFloat, height: input.height.cgFloat)
+            )
+        }
+        fatalError("Media Type not handled")
     }
     
     func alertMessage(with message: String?) -> [UIView] {
@@ -160,10 +164,10 @@ private extension AlertViewController {
         return [wrappingView]
     }
     
-    func alertActions(with actions: [AlertContext.Action]) -> [UIView] {
+    func alertActions(with actions: [AlertWireframeContext.Action]) -> [UIView] {
         guard !actions.isEmpty else { return [] }
         var actionViews = [UIView]()
-        actions.forEach { item in
+        for (idx, item) in actions.enumerated() {
             let button = Button()
             switch item.type {
             case .primary:
@@ -173,17 +177,19 @@ private extension AlertViewController {
             case .destructive:
                 button.style = .primary
                 button.backgroundColor = Theme.colour.destructive
+            default:
+                fatalError("Type not handled")
             }
             button.setTitle(item.title, for: .normal)
-            if let action = item.action {
-                button.add(action)
-            } else if actions.count == 1 {
-                button.add(.targetAction(.init(target: self, selector: #selector(dismissAction))))
-            } else {
-                button.add(.targetAction(.init(target: self, selector: #selector(dismissAction))))
-            }
+            button.tag = idx
+            button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
             actionViews.append(button)
         }
         return actionViews
-    }    
+    }
+    
+    @objc func buttonTapped(sender: UIButton) {
+        presenter.handle(event___________________: AlertPresenterEvent.SelectAction(idx: sender.tag.int32))
+    }
+
 }

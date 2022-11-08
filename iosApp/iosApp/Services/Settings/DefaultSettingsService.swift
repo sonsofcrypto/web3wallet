@@ -292,23 +292,24 @@ private extension DefaultSettingsService {
         }
     }
     
-    func resetKeystoreAlertContext() -> AlertContext {
-        .init(
+    func resetKeystoreAlertContext() -> AlertWireframeContext {
+        AlertWireframeContext(
             title: Localized("alert.resetKeystore.title"),
             media: nil,
             message: Localized("alert.resetKeystore.message"),
             actions: [
-                .init(
+                AlertWireframeContext.Action(
                     title: Localized("alert.resetKeystore.action.confirm"),
-                    type: .destructive,
-                    action: .targetAction(.init(target: self, selector: #selector(resetKeystore)))
+                    type: .destructive
                 ),
-                .init(
+                AlertWireframeContext.Action(
                     title: Localized("cancel"),
-                    type: .secondary,
-                    action: nil
+                    type: .secondary
                 )
             ],
+            onActionTapped: { [weak self] idx in
+                if idx == 0 { self?.resetKeystore() }
+            },
             contentHeight: 350
         )
     }

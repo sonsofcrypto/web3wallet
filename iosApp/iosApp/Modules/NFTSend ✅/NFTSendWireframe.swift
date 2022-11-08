@@ -86,18 +86,21 @@ private extension DefaultNFTSendWireframe {
     }
     
     func presentSendingToSameAddressAlert() {
-        alertWireframeFactory.make(
-            vc,
-            context: .init(
-                title: Localized("alert.send.transaction.toYourself.title"),
-                media: .image(named: "hand.raised", size: .init(length: 40)),
-                message: Localized("alert.send.transaction.toYourself.message"),
-                actions: [
-                    .init(title: Localized("Ok"), type: .primary, action: nil)
-                ],
-                contentHeight: 230
-            )
-        ).present()
+        let context = AlertWireframeContext(
+            title: Localized("alert.send.transaction.toYourself.title"),
+            media: AlertWireframeContext.MediaImage(
+                named: "hand.raised",
+                width: 40.uint32,
+                height: 40.uint32
+            ),
+            message: Localized("alert.send.transaction.toYourself.message"),
+            actions: [
+                AlertWireframeContext.Action(title: Localized("Ok"), type: .primary)
+            ],
+            onActionTapped: nil,
+            contentHeight: 230
+        )
+        alertWireframeFactory.make(vc, context: context).present()
     }
     
     func onPopWrapped(onCompletion: @escaping (String) -> Void) -> (String) -> Void {

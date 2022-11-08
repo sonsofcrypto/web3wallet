@@ -8,7 +8,7 @@ import web3walletcore
 enum CultProposalsWireframeDestination {
     case proposal(proposal: CultProposal, proposals: [CultProposal])
     case castVote(proposal: CultProposal, approve: Bool)
-    case alert(context: AlertContext)
+    case alert(context: AlertWireframeContext)
     case getCult
 }
 

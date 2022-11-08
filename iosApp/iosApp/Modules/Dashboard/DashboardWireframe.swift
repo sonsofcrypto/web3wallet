@@ -113,8 +113,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
         case .keyStoreNetworkSettings:
             vc.edgeCardsController?.setDisplayMode(.overview, animated: true)
         case .presentUnderConstructionAlert:
-            let context = AlertContext.underConstructionAlert()
-            alertWireframeFactory.make(parent, context: context).present()
+            alertWireframeFactory.make(parent, context: .underConstructionAlert()).present()
         case .mnemonicConfirmation:
             mnemonicConfirmationWireframeFactory.make(parent).present()
         case .receive:

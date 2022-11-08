@@ -69,6 +69,7 @@
 		1C228ACD28A3C1AA005316A3 /* ConfirmationTxSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228ACC28A3C1AA005316A3 /* ConfirmationTxSuccessView.swift */; };
 		1C228ACF28A3C774005316A3 /* ConfirmationTxFailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C228ACE28A3C774005316A3 /* ConfirmationTxFailedView.swift */; };
 		1C47C0E5287BFC06008E0146 /* SeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C47C0E4287BFC06008E0146 /* SeparatorView.swift */; };
+		1C54BB3A291A8A540009F158 /* AlertWireframe+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54BB39291A8A540009F158 /* AlertWireframe+Extensions.swift */; };
 		1C54DBDC285DD10000E378F6 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */; };
 		1C54DBDE285DD15400E378F6 /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C54DBDD285DD15400E378F6 /* Account.storyboard */; };
 		1C54DBE3285E831B00E378F6 /* CurrencyAddWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C54DBE2285E831B00E378F6 /* CurrencyAddWireframe.swift */; };
@@ -156,10 +157,7 @@
 		1C60C2CB285724D0003BE25D /* ChatWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1F9285724D0003BE25D /* ChatWireframeFactory.swift */; };
 		1C60C2CC285724D0003BE25D /* AlertWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1FB285724D0003BE25D /* AlertWireframe.swift */; };
 		1C60C2CD285724D0003BE25D /* AlertWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1FC285724D0003BE25D /* AlertWireframeFactory.swift */; };
-		1C60C2CE285724D0003BE25D /* AlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1FD285724D0003BE25D /* AlertViewModel.swift */; };
 		1C60C2CF285724D0003BE25D /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1FE285724D0003BE25D /* AlertView.swift */; };
-		1C60C2D0285724D0003BE25D /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1FF285724D0003BE25D /* AlertPresenter.swift */; };
-		1C60C2D1285724D0003BE25D /* AlertContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C200285724D0003BE25D /* AlertContext.swift */; };
 		1C60C2D4285724D0003BE25D /* MnemonicNewWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C204285724D0003BE25D /* MnemonicNewWireframe.swift */; };
 		1C60C2D5285724D0003BE25D /* MnemonicNewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C205285724D0003BE25D /* MnemonicNewViewModel.swift */; };
 		1C60C2D6285724D0003BE25D /* MnemonicNewWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C206285724D0003BE25D /* MnemonicNewWireframeFactory.swift */; };
@@ -569,6 +567,7 @@
 		1C228ACC28A3C1AA005316A3 /* ConfirmationTxSuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationTxSuccessView.swift; sourceTree = "<group>"; };
 		1C228ACE28A3C774005316A3 /* ConfirmationTxFailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationTxFailedView.swift; sourceTree = "<group>"; };
 		1C47C0E4287BFC06008E0146 /* SeparatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorView.swift; sourceTree = "<group>"; };
+		1C54BB39291A8A540009F158 /* AlertWireframe+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlertWireframe+Extensions.swift"; sourceTree = "<group>"; };
 		1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
 		1C54DBDD285DD15400E378F6 /* Account.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
 		1C54DBE2285E831B00E378F6 /* CurrencyAddWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAddWireframe.swift; sourceTree = "<group>"; };
@@ -655,10 +654,7 @@
 		1C60C1F9285724D0003BE25D /* ChatWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C1FB285724D0003BE25D /* AlertWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertWireframe.swift; sourceTree = "<group>"; };
 		1C60C1FC285724D0003BE25D /* AlertWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertWireframeFactory.swift; sourceTree = "<group>"; };
-		1C60C1FD285724D0003BE25D /* AlertViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertViewModel.swift; sourceTree = "<group>"; };
 		1C60C1FE285724D0003BE25D /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
-		1C60C1FF285724D0003BE25D /* AlertPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
-		1C60C200285724D0003BE25D /* AlertContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertContext.swift; sourceTree = "<group>"; };
 		1C60C204285724D0003BE25D /* MnemonicNewWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicNewWireframe.swift; sourceTree = "<group>"; };
 		1C60C205285724D0003BE25D /* MnemonicNewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicNewViewModel.swift; sourceTree = "<group>"; };
 		1C60C206285724D0003BE25D /* MnemonicNewWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicNewWireframeFactory.swift; sourceTree = "<group>"; };
@@ -1273,7 +1269,7 @@
 			isa = PBXGroup;
 			children = (
 				1C60C244285724D0003BE25D /* Account */,
-				1C60C1FA285724D0003BE25D /* Alert */,
+				1C60C1FA285724D0003BE25D /* Alert ✅ */,
 				1C60C253285724D0003BE25D /* Apps 🔶 */,
 				D1A12A58287D333900606FC8 /* Authenticate ✅ */,
 				1C60C1EE285724D0003BE25D /* Chat 🔶 */,
@@ -1408,18 +1404,15 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C60C1FA285724D0003BE25D /* Alert */ = {
+		1C60C1FA285724D0003BE25D /* Alert ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1CE006472889A08A002D1EB3 /* Alert.storyboard */,
-				1C60C200285724D0003BE25D /* AlertContext.swift */,
-				1C60C1FF285724D0003BE25D /* AlertPresenter.swift */,
 				1C60C1FE285724D0003BE25D /* AlertView.swift */,
-				1C60C1FD285724D0003BE25D /* AlertViewModel.swift */,
 				1C60C1FB285724D0003BE25D /* AlertWireframe.swift */,
 				1C60C1FC285724D0003BE25D /* AlertWireframeFactory.swift */,
 			);
-			path = Alert;
+			path = "Alert ✅";
 			sourceTree = "<group>";
 		};
 		1C60C202285724D0003BE25D /* MnemonicNew */ = {
@@ -1759,6 +1752,7 @@
 		1C7F85FE28D20E490073FD95 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				1C54BB39291A8A540009F158 /* AlertWireframe+Extensions.swift */,
 				1C7F85FF28D20E490073FD95 /* Array+Extensions.swift */,
 				1C7F860928D20E490073FD95 /* BigInt+Extensions.swift */,
 				1A4C391FFCFF40F06CD89323 /* Bundle+Extensions.swift */,
@@ -1774,8 +1768,6 @@
 				1C7F861228D20E490073FD95 /* Formatter+Extensions.swift */,
 				1A4C3EF22DC2A63B2B9365C5 /* IndexPath+Extensions.swift */,
 				1C7F860028D20E490073FD95 /* Int+Extensions.swift */,
-				1C8834DD29131E70007D3493 /* UInt32+Extensions.swift */,
-				1C8834DF2913275F007D3493 /* UInt+Extensions.swift */,
 				1C7F860628D20E490073FD95 /* Kotlin+Extensions.swift */,
 				1C7F862628D20E490073FD95 /* Locale+Extensions.swift */,
 				1C5D24DC28E1A3C7007DA557 /* Network+Extensions.swift */,
@@ -1797,6 +1789,8 @@
 				1C7F860E28D20E490073FD95 /* UIImage+Extension.swift */,
 				1C7F860428D20E490073FD95 /* UIImageView+Extensions.swift */,
 				1C7F861D28D20E490073FD95 /* UILabel+Extensions.swift */,
+				1C8834DF2913275F007D3493 /* UInt+Extensions.swift */,
+				1C8834DD29131E70007D3493 /* UInt32+Extensions.swift */,
 				1C7F861728D20E490073FD95 /* UIStackView+Extensions.swift */,
 				1C7F861828D20E490073FD95 /* UIStoryboard+Extensions.swift */,
 				1C7F860D28D20E490073FD95 /* UITabBarController+Extensions.swift */,
@@ -2579,6 +2573,7 @@
 				1C60C2FA285724D0003BE25D /* NFTDetailView+Content+Price.swift in Sources */,
 				1A4C37074D8859F0DC14C905 /* NavigationController.swift in Sources */,
 				1C60C2DB285724D0003BE25D /* MnemonicNewContext.swift in Sources */,
+				1C54BB3A291A8A540009F158 /* AlertWireframe+Extensions.swift in Sources */,
 				1A4C30AA7A243171AE977F1D /* CollectionViewCell.swift in Sources */,
 				1C7F863E28D20E490073FD95 /* UITraitCollection+Extensions.swift in Sources */,
 				1C60C2C1285724D0003BE25D /* KeyStoreView.swift in Sources */,
@@ -2668,7 +2663,6 @@
 				1C7F864028D20E490073FD95 /* UIStoryboard+Extensions.swift in Sources */,
 				1C60C310285724D1003BE25D /* AccountTransactionCell.swift in Sources */,
 				1C60C2C5285724D0003BE25D /* ChatLeftCollectionViewCell.swift in Sources */,
-				1C60C2CE285724D0003BE25D /* AlertViewModel.swift in Sources */,
 				1C228ACB28A3B122005316A3 /* ConfirmationTxInProgressView.swift in Sources */,
 				1C7F863F28D20E490073FD95 /* UIStackView+Extensions.swift in Sources */,
 				1CE66BCA2848EA9900AB6ACA /* ChatService.swift in Sources */,
@@ -2834,7 +2828,6 @@
 				1CDED617289CF4BE00DF34A7 /* IosEtherscanService.swift in Sources */,
 				D1BC5303284B5B89007E6FF4 /* CultService.swift in Sources */,
 				1C60C2CB285724D0003BE25D /* ChatWireframeFactory.swift in Sources */,
-				1C60C2D1285724D0003BE25D /* AlertContext.swift in Sources */,
 				1C7F864E28D20E490073FD95 /* Locale+Extensions.swift in Sources */,
 				1CDED60E289C4DC300DF34A7 /* NFTSendToCollectionViewCell.swift in Sources */,
 				1C54DC012860E5BC00E378F6 /* NetworkPickerView.swift in Sources */,
@@ -2850,7 +2843,6 @@
 				1C60C32B285724D1003BE25D /* MnemonicConfirmationWireframe.swift in Sources */,
 				1C67201B28870FCB00C5F044 /* ConfirmationView.swift in Sources */,
 				1C7F862F28D20E490073FD95 /* UIButton+Extensions.swift in Sources */,
-				1C60C2D0285724D0003BE25D /* AlertPresenter.swift in Sources */,
 				1C7F863628D20E490073FD95 /* UIImage+Extension.swift in Sources */,
 				1C60C2BA285724D0003BE25D /* KeyStoreViewModel.swift in Sources */,
 				1C60C2B8285724D0003BE25D /* KeyStoreWireframeFactory.swift in Sources */,
