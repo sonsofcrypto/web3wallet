@@ -3,8 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-// MARK: - CultProposalWireframeFactory
+import web3walletcore
 
 protocol CultProposalWireframeFactory {
     func make(
@@ -12,8 +11,6 @@ protocol CultProposalWireframeFactory {
         context: CultProposalWireframeContext
     ) -> CultProposalWireframe
 }
-
-// MARK: - DefaultCultProposalWireframeFactory
 
 final class DefaultCultProposalWireframeFactory: CultProposalWireframeFactory {
 
@@ -27,8 +24,6 @@ final class DefaultCultProposalWireframeFactory: CultProposalWireframeFactory {
         )
     }
 }
-
-// MARK: - Assembler
 
 final class CultProposalWireframeFactoryAssembler: AssemblerComponent {
 

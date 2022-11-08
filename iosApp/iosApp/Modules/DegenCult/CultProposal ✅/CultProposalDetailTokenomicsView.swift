@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class CultProposalDetailTokenomicsView: UIView {
     @IBOutlet weak var stackView: UIStackView!
@@ -34,7 +35,7 @@ final class CultProposalDetailTokenomicsView: UIView {
         walletValueLabel.apply(style: .subheadline, weight: .bold)
     }
     
-    func update(with tokenomics: CultProposalViewModel.ProposalDetails.Tokenomics) {
+    func update(with tokenomics: CultProposalViewModel.ProposalDetailsTokenomics) {
         titleLabel.text = tokenomics.title
         allocationLabel.text = tokenomics.rewardAllocation
         allocationValueLabel.text = tokenomics.rewardAllocationValue

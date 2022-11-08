@@ -45,7 +45,7 @@ extension DefaultDegenWireframe: DegenWireframe {
         }
     }
 
-    func navigate(destination_ destination: DegenWireframeDestination) {
+    func navigate(destination__ destination: DegenWireframeDestination) {
         if destination is DegenWireframeDestination.Swap {
             guard let network = networksService.network else { return }
             let context = CurrencySwapWireframeContext(

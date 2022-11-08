@@ -39,7 +39,7 @@ extension DefaultNFTDetailWireframe: NFTDetailWireframe {
         parent?.show(vc, sender: self)
     }
     
-    func navigate(destination______ destination: NFTDetailWireframeDestination) {
+    func navigate(destination_______ destination: NFTDetailWireframeDestination) {
         if let input = destination as? NFTDetailWireframeDestination.Send {
             guard let network = networksService.network else { return }
             let context = NFTSendWireframeContext(network: network, nftItem: input.nft)

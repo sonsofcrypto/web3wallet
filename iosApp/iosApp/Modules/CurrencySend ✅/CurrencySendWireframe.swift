@@ -48,7 +48,7 @@ extension DefaultCurrencySendWireframe: CurrencySendWireframe {
         parent?.show(vc, sender: self)
     }
     
-    func navigate(destination___ destination: CurrencySendWireframeDestination) {
+    func navigate(destination____ destination: CurrencySendWireframeDestination) {
         if destination is CurrencySendWireframeDestination.UnderConstructionAlert {
             let factory: AlertWireframeFactory = AppAssembler.resolve()
             factory.make(vc, context: .underConstructionAlert()).present()

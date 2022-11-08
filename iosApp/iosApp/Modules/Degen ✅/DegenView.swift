@@ -51,7 +51,7 @@ final class DegenViewController: BaseViewController {
 
 extension DegenViewController: DegenView {
 
-    func update(viewModel_ viewModel: DegenViewModel) {
+    func update(viewModel__ viewModel: DegenViewModel) {
         self.viewModel = viewModel
         collectionView?.reloadData()
         updateBackgroundGradient(after: 0.05)
@@ -111,10 +111,10 @@ extension DegenViewController: UICollectionViewDelegate {
         if let input = section as? DegenViewModel.SectionGroup {
             if input.items[indexPath.row].isEnabled {
                 presenter.handle(
-                    event_____: DegenPresenterEvent.DidSelectCategory(idx: indexPath.item.int32)
+                    event______: DegenPresenterEvent.DidSelectCategory(idx: indexPath.item.int32)
                 )
             } else {
-                presenter.handle(event_____: DegenPresenterEvent.ComingSoon())
+                presenter.handle(event______: DegenPresenterEvent.ComingSoon())
             }
         }
     }

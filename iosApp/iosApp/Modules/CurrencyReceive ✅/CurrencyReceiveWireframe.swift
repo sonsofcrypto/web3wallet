@@ -30,7 +30,7 @@ extension DefaultCurrencyReceiveWireframe: CurrencyReceiveWireframe {
         parent?.show(vc, sender: self)
     }
     
-    func navigate(destination_______ destination: CurrencyReceiveWireframeDestination) {
+    func navigate(destination________ destination: CurrencyReceiveWireframeDestination) {
         if (destination as? CurrencyReceiveWireframeDestination.Dismiss) != nil {
             vc?.popOrDismiss()
         }

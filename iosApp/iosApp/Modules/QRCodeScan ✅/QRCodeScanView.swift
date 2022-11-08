@@ -38,7 +38,7 @@ final class QRCodeScanViewController: BaseViewController {
 
 extension QRCodeScanViewController: QRCodeScanView {
 
-    func update(viewModel____ viewModel: QRCodeScanViewModel) {
+    func update(viewModel_____ viewModel: QRCodeScanViewModel) {
         self.viewModel = viewModel
         title = viewModel.title.uppercased()
         if let failure = viewModel.failure {
@@ -86,7 +86,7 @@ private extension QRCodeScanViewController {
     }
     
     @objc func closeTapped() {
-        presenter.handle(event________: .Dismiss())
+        presenter.handle(event_________: .Dismiss())
     }
     
     @objc func pasteTapped() {
@@ -221,7 +221,7 @@ extension QRCodeScanViewController: AVCaptureMetadataOutputObjectsDelegate {
         // NOTE: We ignore if we keep detecting the same code over whist a failure toast is presented
         guard !view.isToastFailurePresented else { return }
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-        presenter.handle(event________: .QRCode(input: qrCode))
+        presenter.handle(event_________: .QRCode(input: qrCode))
     }
 
 }
@@ -259,7 +259,7 @@ extension QRCodeScanViewController: UINavigationControllerDelegate, UIImagePicke
         picker.dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
             if let qrCode = (info[.originalImage] as? UIImage)?.qrCode {
-                self.presenter.handle(event________: .QRCode(input: qrCode))
+                self.presenter.handle(event_________: .QRCode(input: qrCode))
             } else {
                 self.activityIndicatorView.isHidden = true
             }

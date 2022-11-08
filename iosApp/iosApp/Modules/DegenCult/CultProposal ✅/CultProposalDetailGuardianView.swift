@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class CultProposalDetailGuardianView: UIView {
     @IBOutlet weak var stackView: UIStackView!
@@ -15,7 +16,7 @@ final class CultProposalDetailGuardianView: UIView {
     @IBOutlet weak var walletLabel: UILabel!
     @IBOutlet weak var walletValueLabel: UILabel!
     
-    private var viewModel: CultProposalViewModel.ProposalDetails.GuardianInfo!
+    private var viewModel: CultProposalViewModel.ProposalDetailsGuardianInfo!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,7 +39,7 @@ final class CultProposalDetailGuardianView: UIView {
     }
     
     func update(
-        with guardianInfo: CultProposalViewModel.ProposalDetails.GuardianInfo
+        with guardianInfo: CultProposalViewModel.ProposalDetailsGuardianInfo
     ) {
         self.viewModel = guardianInfo
         titleLabel.text = guardianInfo.title

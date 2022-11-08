@@ -25,17 +25,17 @@ final class AuthenticateViewController: UIViewController, ModalDismissProtocol {
 extension AuthenticateViewController {
 
     @IBAction func dismissAction(_ sender: Any) {
-        presenter.handle(event____________________: AuthenticatePresenterEvent.DidCancel())
+        presenter.handle(event_____________________: AuthenticatePresenterEvent.DidCancel())
     }
 
     @IBAction func ctaAction(_ sender: Any) {
-        presenter.handle(event____________________: AuthenticatePresenterEvent.DidConfirm())
+        presenter.handle(event_____________________: AuthenticatePresenterEvent.DidConfirm())
     }
 }
 
 extension AuthenticateViewController: AuthenticateView {
 
-    func update(viewModel________________ viewModel: AuthenticateViewModel) {
+    func update(viewModel_________________ viewModel: AuthenticateViewModel) {
         self.viewModel = viewModel
         title = viewModel.title
         passwordTextField.text = viewModel.password
@@ -103,16 +103,16 @@ extension AuthenticateViewController: UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        presenter.handle(event____________________: AuthenticatePresenterEvent.DidConfirm())
+        presenter.handle(event_____________________: AuthenticatePresenterEvent.DidConfirm())
         return false
     }
     
     func updatePresenter(_ textField: UITextField) {
         if textField == passwordTextField {
-            presenter.handle(event____________________: AuthenticatePresenterEvent.DidChangePassword(text: textField.text ?? ""))
+            presenter.handle(event_____________________: AuthenticatePresenterEvent.DidChangePassword(text: textField.text ?? ""))
         }
         if textField == saltTextField {
-            presenter.handle(event____________________: AuthenticatePresenterEvent.DidChangeSalt(text: textField.text ?? ""))
+            presenter.handle(event_____________________: AuthenticatePresenterEvent.DidChangeSalt(text: textField.text ?? ""))
         }
     }
 }

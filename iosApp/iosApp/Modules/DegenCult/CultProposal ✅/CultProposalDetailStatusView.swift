@@ -4,6 +4,7 @@
 
 import Foundation
 import UIKit
+import web3walletcore
 
 final class CultProposalDetailStatusView: UIView {
     private weak var statusView: CultProposalStatus!
@@ -25,8 +26,17 @@ final class CultProposalDetailStatusView: UIView {
         )
     }
     
-    func update(with status: CultProposalViewModel.ProposalDetails.Status) {
-        statusView.text = status.title
-        statusView.backgroundColor = status.color
+    func update(with status: CultProposalViewModel.ProposalDetailsStatus) {
+        switch status {
+        case CultProposalViewModel.ProposalDetailsStatus.pending:
+            statusView.text = Localized("pending")
+            statusView.backgroundColor = Theme.colour.navBarTint
+        case CultProposalViewModel.ProposalDetailsStatus.closed:
+            statusView.text = Localized("closed")
+            statusView.backgroundColor = Theme.colour.separator
+        default:
+            statusView.text = Localized("unknown")
+            statusView.backgroundColor = Theme.colour.separator
+        }
     }
 }

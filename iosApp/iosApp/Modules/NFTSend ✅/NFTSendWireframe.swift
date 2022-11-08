@@ -42,7 +42,7 @@ extension DefaultNFTSendWireframe: NFTSendWireframe {
         parent?.show(vc, sender: self)
     }
     
-    func navigate(destination________ destination: NFTSendWireframeDestination) {
+    func navigate(destination_________ destination: NFTSendWireframeDestination) {
         if destination is NFTSendWireframeDestination.UnderConstructionAlert {
             alertWireframeFactory.make(vc, context: .underConstructionAlert()).present()
         }

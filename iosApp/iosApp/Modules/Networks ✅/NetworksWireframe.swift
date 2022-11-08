@@ -39,7 +39,7 @@ extension DefaultNetworksWireframe: NetworksWireframe {
         }
     }
 
-    func navigate(destination____________ destination: NetworksWireframeDestination) {
+    func navigate(destination_____________ destination: NetworksWireframeDestination) {
         if destination is NetworksWireframeDestination.Dashboard {
             parent?.asEdgeCardsController?.setDisplayMode(.master, animated: true)
         }
