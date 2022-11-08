@@ -187,28 +187,29 @@ private extension DefaultCultProposalsPresenter {
         wireframe.navigate(to: .castVote(proposal: proposal, approve: approve))
     }
     
-    func noCultAlertContext() -> AlertContext {
-        .init(
+    func noCultAlertContext() -> AlertWireframeContext {
+        AlertWireframeContext(
             title: Localized("cult.proposals.alert.noCult.title"),
-            media: .image(named: "cult-dao-big-icon", size: .init(length: 100)),
+            media: AlertWireframeContext.MediaImage(named: "cult-dao-big-icon", width: 100, height: 100),
             message: Localized("cult.proposals.alert.noCult.message"),
             actions: [
-                .init(
+                AlertWireframeContext.Action(
                     title: Localized("cult.proposals.alert.noCult.action.getCult"),
-                    type: .primary,
-                    action: .targetAction(.init(target: self, selector: #selector(getCultTapped)))
+                    type: .primary
                 ),
-                .init(
+                AlertWireframeContext.Action(
                     title: Localized("cancel"),
-                    type: .secondary,
-                    action: nil
+                    type: .secondary
                 )
             ],
+            onActionTapped: { [weak self] idx in
+                if (idx == 0) { self?.getCultTapped() }
+            },
             contentHeight: 385
         )
     }
     
-    @objc func getCultTapped() {
+    func getCultTapped() {
         view?.dismiss(
             animated: true,
             completion: { [weak self] in

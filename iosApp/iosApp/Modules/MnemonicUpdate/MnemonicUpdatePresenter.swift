@@ -105,9 +105,7 @@ extension DefaultMnemonicUpdatePresenter: MnemonicUpdatePresenter {
             view?.dismiss(animated: true, completion: {})
         case .deleteWallet:
             wireframe.navigate(
-                to: .confirmationAlert(
-                    onConfirm: .targetAction(.init(target: self, selector: #selector(onDeleteConfirmed)))
-                )
+                to: .confirmationAlert(onConfirm: { [weak self] in self?.onDeleteConfirmed() })
             )
         }
     }

@@ -3,25 +3,17 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-protocol AlertWireframe {
-    func present()
-    func navigate(to destination: AlertWireframeDestination)
-}
-
-enum AlertWireframeDestination {
-    case dismiss
-}
+import web3walletcore
 
 final class DefaultAlertWireframe {
     private weak var parent: UIViewController?
-    private let context: AlertContext
+    private let context: AlertWireframeContext
     
     private weak var vc: UIViewController?
 
     init(
         parent: UIViewController?,
-        context: AlertContext
+        context: AlertWireframeContext
     ) {
         self.parent = parent
         self.context = context
@@ -35,9 +27,8 @@ extension DefaultAlertWireframe: AlertWireframe {
         parent?.present(vc, animated: true)
     }
     
-    func navigate(to destination: AlertWireframeDestination) {
-        switch destination {
-        case .dismiss:
+    func navigate(destination_______________ destination: AlertWireframeDestination) {
+        if destination is AlertWireframeDestination.Dismiss {
             vc?.navigationController?.dismiss(animated: true) ?? vc?.dismiss(animated: true)
         }
     }
@@ -48,9 +39,9 @@ private extension DefaultAlertWireframe {
     func makeViewController() -> UIViewController {
         let vc: AlertViewController = UIStoryboard(.alert).instantiate()
         let presenter = DefaultAlertPresenter(
-            context: context,
-            view: vc,
-            wireframe: self
+            view: WeakRef(referred: vc),
+            wireframe: self,
+            context: context
         )
         vc.presenter = presenter
         vc.contentHeight = context.contentHeight

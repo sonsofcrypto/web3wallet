@@ -5,7 +5,7 @@
 import web3walletcore
 
 extension Double {
-    
+        
     var bigDec: BigDec {
         BigDec.Companion().from(double: self)
     }

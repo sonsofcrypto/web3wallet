@@ -3,24 +3,18 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
-
-// MARK: - AlertWireframeFactory
+import web3walletcore
 
 protocol AlertWireframeFactory {
 
-    func make(
-        _ parent: UIViewController?,
-        context: AlertContext
-    ) -> AlertWireframe
+    func make(_ parent: UIViewController?, context: AlertWireframeContext) -> AlertWireframe
 }
-
-// MARK: - DefaultAlertWireframeFactory
 
 final class DefaultAlertWireframeFactory {}
 
 extension DefaultAlertWireframeFactory: AlertWireframeFactory {
     
-    func make(_ parent: UIViewController?, context: AlertContext) -> AlertWireframe {
+    func make(_ parent: UIViewController?, context: AlertWireframeContext) -> AlertWireframe {
         DefaultAlertWireframe(parent: parent, context: context)
     }
 }

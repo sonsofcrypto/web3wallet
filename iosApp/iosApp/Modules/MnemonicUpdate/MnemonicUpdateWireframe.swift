@@ -8,7 +8,7 @@ import web3walletcore
 enum MnemonicUpdateWireframeDestination {
     case authenticate(context: AuthenticateWireframeContext)
     case learnMoreSalt
-    case confirmationAlert(onConfirm: TargetActionViewModel)
+    case confirmationAlert(onConfirm: () -> Void)
     case dismiss
 }
 
@@ -100,23 +100,22 @@ private extension DefaultMnemonicUpdateWireframe {
         return nc
     }
     
-    func deleteConfirmationAlertContext(with onConfirm: TargetActionViewModel) -> AlertContext {
-        .init(
+    func deleteConfirmationAlertContext(with onConfirm: @escaping () -> Void) -> AlertWireframeContext {
+        AlertWireframeContext(
             title: Localized("alert.deleteWallet.title"),
             media: nil,
             message: Localized("alert.deleteWallet.message"),
             actions: [
-                .init(
+                AlertWireframeContext.Action(
                     title: Localized("alert.deleteWallet.action.confirm"),
-                    type: .destructive,
-                    action: onConfirm
+                    type: .destructive
                 ),
-                .init(
+                AlertWireframeContext.Action(
                     title: Localized("cancel"),
-                    type: .secondary,
-                    action: nil
+                    type: .secondary
                 )
             ],
+            onActionTapped: { idx in if idx == 0 { onConfirm() } },
             contentHeight: 350
         )
     }
