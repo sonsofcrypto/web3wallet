@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class CultProposalDetailViewCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!

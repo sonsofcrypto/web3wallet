@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class CultProposalDetailSummaryView: UIView {
     @IBOutlet weak var stackView: UIStackView!
@@ -21,7 +22,7 @@ final class CultProposalDetailSummaryView: UIView {
         infoLabel.apply(style: .body)
     }
 
-    func update(with summary: CultProposalViewModel.ProposalDetails.Summary) {
+    func update(with summary: CultProposalViewModel.ProposalDetailsSummary) {
         titleLabel.text = summary.title
         infoLabel.text = summary.summary
     }

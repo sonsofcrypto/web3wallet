@@ -27,7 +27,7 @@ extension NFTDetailViewController: NFTDetailView {
         presenter.present()
     }
 
-    func update(viewModel_____ viewModel: NFTDetailViewModel) {
+    func update(viewModel______ viewModel: NFTDetailViewModel) {
         self.viewModel = viewModel
         self.mainScrollView.refreshControl?.endRefreshing()
         title = viewModel.nft.name
@@ -55,6 +55,6 @@ private extension NFTDetailViewController {
     }
     
     @objc func dismissTapped() {
-        presenter.handle(event_________: NFTDetailPresenterEvent.Dismiss())
+        presenter.handle(event__________: NFTDetailPresenterEvent.Dismiss())
     }
 }

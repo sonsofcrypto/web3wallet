@@ -60,10 +60,8 @@ extension DefaultCultProposalsWireframe: CultProposalsWireframe {
     func navigate(to destination: CultProposalsWireframeDestination) {
         switch destination {
         case let .proposal(proposal, proposals):
-            cultProposalWireframeFactory.make(
-                vc,
-                context: .init(proposal: proposal, proposals: proposals)
-            ).present()
+            let context = CultProposalWireframeContext(proposal: proposal, proposals: proposals)
+            cultProposalWireframeFactory.make(vc, context: context).present()
         case let .castVote(proposal, approve):
             let networkFee = networksService.defaultNetworkFee(network: Network.ethereum())
             let context = ConfirmationWireframeContext.CultCastVote(

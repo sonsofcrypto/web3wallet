@@ -4,6 +4,7 @@
 
 import Foundation
 import UIKit
+import web3walletcore
 
 final class CultProposalDetailDocsView: UIView {
     @IBOutlet weak var stackView: UIStackView!
@@ -25,7 +26,7 @@ final class CultProposalDetailDocsView: UIView {
     }
     
     func update(
-        with documentsInfo: CultProposalViewModel.ProposalDetails.DocumentsInfo
+        with documentsInfo: CultProposalViewModel.ProposalDetailsDocumentsInfo
     ) {
         titleLabel.text = documentsInfo.title
         docsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -41,7 +42,7 @@ final class CultProposalDetailDocsView: UIView {
 private extension CultProposalDetailDocsView {
     
     func makeDocumentInfoView(
-        from documentInfo: CultProposalViewModel.ProposalDetails.DocumentsInfo.Document
+        from documentInfo: CultProposalViewModel.ProposalDetailsDocumentsInfoDocument
     ) -> UIView {
         var views = [UIView]()
         let titleLabel = UILabel()
@@ -58,26 +59,28 @@ private extension CultProposalDetailDocsView {
     }
     
     func makeDocumentView(
-        from item: CultProposalViewModel.ProposalDetails.DocumentsInfo.Document.Item
+        from item: CultProposalViewModel.ProposalDetailsDocumentsInfoDocumentItem
     ) -> UIView {
-        switch item {
-        case let .link(displayName, url):
+        if let input = item as? CultProposalViewModel.ProposalDetailsDocumentsInfoDocumentItemLink {
             let name = UILabel()
             name.apply(style: .subheadline)
             name.textColor = Theme.colour.navBarTint
-            name.text = displayName
+            name.text = input.displayName
             name.numberOfLines = 0
-            let tag = addLinkToDirectory(url: url)
+            let tag = addLinkToDirectory(url: input.url)
             name.tag = tag
             name.add(.targetAction(.init(target: self, selector: #selector(documentTapped(sender:)))))
             return name
-        case let .note(note):
+        }
+        if let input = item as? CultProposalViewModel.ProposalDetailsDocumentsInfoDocumentItemNote {
             let name = UILabel()
             name.apply(style: .subheadline)
-            name.text = note
+            name.text = input.text
             name.numberOfLines = 0
             return name
+
         }
+        fatalError("Case not handled")
     }
 
     func resetDirectory() {

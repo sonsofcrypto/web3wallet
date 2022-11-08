@@ -3,10 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-protocol CultProposalView: AnyObject {
-    func update(with viewModel: CultProposalViewModel)
-}
+import web3walletcore
 
 final class CultProposalViewController: BaseViewController {
 
@@ -26,9 +23,9 @@ final class CultProposalViewController: BaseViewController {
 
 extension CultProposalViewController: CultProposalView {
 
-    func update(with viewModel: CultProposalViewModel) {
+    func update(viewModel: CultProposalViewModel) {
         self.viewModel = viewModel
-        setTitleAsync(with: viewModel.selectedIndex + 1)
+        setTitleAsync(with: viewModel.selectedIndex.int + 1)
         collectionView.reloadData()
         scrollToSelectedItem()
     }
@@ -101,7 +98,7 @@ private extension CultProposalViewController {
             [weak self] in
             guard let self = self else { return }
             self.collectionView.scrollToItem(
-                at: .init(item: self.viewModel.selectedIndex, section: 0),
+                at: .init(item: Int(self.viewModel.selectedIndex), section: 0),
                 at: .centeredHorizontally,
                 animated: false
             )
@@ -116,7 +113,7 @@ private extension CultProposalViewController {
     }
         
     func setTitle(with index: Int) {
-        let cultIcon = viewModel.titleIconName.assetImage?.resize(to: .init(width: 32, height: 32))
+        let cultIcon = "degen-cult-icon".assetImage?.resize(to: .init(width: 32, height: 32))
         let imageView = UIImageView(image: cultIcon)
         let titleLabel = UILabel()
         titleLabel.text = viewModel.title + " \(index) " + Localized("cult.proposal.title.of") + " \(viewModel.proposals.count)"
@@ -145,7 +142,7 @@ private extension CultProposalViewController {
     
     @objc func dismissTapped() {
         
-        presenter.handle(.dismiss)
+        presenter.handle(event____: CultProposalPresenterEvent.Dismiss())
     }
     
     func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {
