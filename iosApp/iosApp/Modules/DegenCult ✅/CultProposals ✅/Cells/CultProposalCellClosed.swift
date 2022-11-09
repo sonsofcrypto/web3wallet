@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class CultProposalCellClosed: CollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
@@ -56,11 +57,13 @@ final class CultProposalCellClosed: CollectionViewCell {
         self.viewModel = viewModel
         titleLabel.text = viewModel.title
         approvedVoteView.update(
-            viewModel: viewModel.approved
+            viewModel: viewModel.approved,
+            progressColor: Theme.colour.candleGreen
         )
         approvedVotes.text = viewModel.approved.total.format(maximumFractionDigits: 3)
         rejectedVoteView.update(
-            viewModel: viewModel.rejected
+            viewModel: viewModel.rejected,
+            progressColor: Theme.colour.candleRed
         )
         rejectedVotes.text = viewModel.rejected.total.format(maximumFractionDigits: 3)
         if viewModel.approved.total > viewModel.rejected.total {

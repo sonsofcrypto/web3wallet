@@ -38,9 +38,9 @@ extension AlertViewController: UIViewControllerTransitioningDelegate, ModalDismi
     }
 }
 
-extension AlertViewController: AlertView {
+extension AlertViewController {
     
-    func update(viewModel_______________ viewModel: AlertViewModel) {
+    func update(with viewModel: AlertViewModel) {
         self.viewModel = viewModel
         title = viewModel.context.title
         presentAlert(with: viewModel)
@@ -50,7 +50,7 @@ extension AlertViewController: AlertView {
 private extension AlertViewController {
         
     @objc func dismissAction() {
-        presenter.handle(event___________________: AlertPresenterEvent.Dismiss())
+        presenter.handle(event: AlertPresenterEvent.Dismiss())
     }
         
     func presentAlert(with viewModel: AlertViewModel) {
@@ -189,7 +189,7 @@ private extension AlertViewController {
     }
     
     @objc func buttonTapped(sender: UIButton) {
-        presenter.handle(event___________________: AlertPresenterEvent.SelectAction(idx: sender.tag.int32))
+        presenter.handle(event: AlertPresenterEvent.SelectAction(idx: sender.tag.int32))
     }
 
 }

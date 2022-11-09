@@ -29,9 +29,9 @@ final class CurrencyReceiveViewController: BaseViewController {
     }
 }
 
-extension CurrencyReceiveViewController: CurrencyReceiveView {
+extension CurrencyReceiveViewController {
 
-    func update(viewModel_______ viewModel: CurrencyReceiveViewModel) {
+    func update(with viewModel: CurrencyReceiveViewModel) {
         self.viewModel = viewModel
         configureNavigationBar()
         nameLabel.text = viewModel.name
@@ -90,7 +90,7 @@ private extension CurrencyReceiveViewController {
     }
     
     @objc func navBarLeftActionTapped() {
-        presenter.handle(event___________: .Dismiss())
+        presenter.handle(event: .Dismiss())
     }
 }
 

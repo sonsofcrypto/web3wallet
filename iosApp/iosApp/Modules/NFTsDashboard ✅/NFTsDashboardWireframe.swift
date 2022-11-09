@@ -44,7 +44,7 @@ extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
         }
     }
 
-    func navigate(destination_________________ destination: NFTsDashboardWireframeDestination) {
+    func navigate(destination__________________ destination: NFTsDashboardWireframeDestination) {
         if let input = destination as? NFTsDashboardWireframeDestination.ViewNFT {
             let context = NFTDetailWireframeContext(
                 nftId: input.nftItem.identifier,

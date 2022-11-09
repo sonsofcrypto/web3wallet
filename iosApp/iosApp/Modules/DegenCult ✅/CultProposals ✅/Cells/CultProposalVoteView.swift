@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class CultProposalVoteView: UIView {
 
@@ -31,16 +32,11 @@ final class CultProposalVoteView: UIView {
         layer.cornerRadius = Theme.constant.cornerRadiusSmall
     }
 
-    func update(viewModel: CultProposalsViewModel.Item.Vote) {
+    func update(viewModel: CultProposalsViewModel.Vote, progressColor: UIColor) {
         textLabel.text = viewModel.name
         pctLabel.text = NumberFormatter.pct.string(from: Float(viewModel.value))
         progress = Float(viewModel.value)
-        switch viewModel.type {
-        case .approved:
-            progressView.backgroundColor = Theme.colour.candleGreen
-        case .rejected:
-            progressView.backgroundColor = Theme.colour.candleRed
-        }
+        progressView.backgroundColor = progressColor
     }
 
     override func layoutSubviews() {

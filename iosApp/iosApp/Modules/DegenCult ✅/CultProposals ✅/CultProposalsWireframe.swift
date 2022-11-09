@@ -5,18 +5,6 @@
 import UIKit
 import web3walletcore
 
-enum CultProposalsWireframeDestination {
-    case proposal(proposal: CultProposal, proposals: [CultProposal])
-    case castVote(proposal: CultProposal, approve: Bool)
-    case alert(context: AlertWireframeContext)
-    case getCult
-}
-
-protocol CultProposalsWireframe {
-    func present()
-    func navigate(to destination: CultProposalsWireframeDestination)
-}
-
 final class DefaultCultProposalsWireframe {
     private weak var parent: UIViewController?
     private let cultProposalWireframeFactory: CultProposalWireframeFactory
@@ -57,29 +45,26 @@ extension DefaultCultProposalsWireframe: CultProposalsWireframe {
         parent?.show(vc, sender: self)
     }
 
-    func navigate(to destination: CultProposalsWireframeDestination) {
-        switch destination {
-        case let .proposal(proposal, proposals):
-            let context = CultProposalWireframeContext(proposal: proposal, proposals: proposals)
+    func navigate(destination__________ destination: CultProposalsWireframeDestination) {
+        if let input = destination as? CultProposalsWireframeDestination.Proposal {
+            let context = CultProposalWireframeContext(proposal: input.proposal, proposals: input.proposals)
             cultProposalWireframeFactory.make(vc, context: context).present()
-        case let .castVote(proposal, approve):
+        }
+        if let input = destination as? CultProposalsWireframeDestination.CastVote {
             let networkFee = networksService.defaultNetworkFee(network: Network.ethereum())
             let context = ConfirmationWireframeContext.CultCastVote(
-                data: .init(cultProposal: proposal, approve: approve, networkFee: networkFee)
+                data: .init(cultProposal: input.proposal, approve: input.approve, networkFee: networkFee)
             )
             confirmationWireframeFactory.make(vc, context: context).present()
-        case let .alert(context):
-            alertWireframeFactory.make(vc, context: context).present()
-        case .getCult:
-            // TODO: Review this - we only allow CULT on ETH Mainnet atm...
-            currencySwapWireframeFactory.make(
-                vc,
-                context: .init(
-                    network: .ethereum(),
-                    currencyFrom: nil,
-                    currencyTo: Currency.Companion().cult()
-                )
-            ).present()
+        }
+        if let input = destination as? CultProposalsWireframeDestination.Alert {
+            alertWireframeFactory.make(vc, context: input.context).present()
+        }
+        if destination is CultProposalsWireframeDestination.GetCult {
+            let context = CurrencySwapWireframeContext(
+                network: .ethereum(), currencyFrom: nil, currencyTo: Currency.Companion().cult()
+            )
+            currencySwapWireframeFactory.make(vc, context: context).present()
         }
     }
 }
@@ -87,15 +72,13 @@ extension DefaultCultProposalsWireframe: CultProposalsWireframe {
 private extension DefaultCultProposalsWireframe {
 
     func wireUp() -> UIViewController {
-        let vc: CultProposalsViewController = UIStoryboard(
-            .cultProposals
-        ).instantiate()
+        let vc: CultProposalsViewController = UIStoryboard(.cultProposals).instantiate()
         let interactor = DefaultCultProposalsInteractor(
-            cultService,
+            cultService: cultService,
             walletService: walletService
         )
         let presenter = DefaultCultProposalsPresenter(
-            view: vc,
+            view: WeakRef(referred: vc),
             wireframe: self,
             interactor: interactor
         )

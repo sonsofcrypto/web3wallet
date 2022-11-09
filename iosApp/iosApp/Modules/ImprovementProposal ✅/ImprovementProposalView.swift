@@ -25,9 +25,9 @@ final class ImprovementProposalViewController: BaseViewController {
     }
 }
 
-extension ImprovementProposalViewController: ImprovementProposalView {
+extension ImprovementProposalViewController {
     
-    func update(viewModel___ viewModel: ImprovementProposalViewModel) {
+    func update(with viewModel: ImprovementProposalViewModel) {
         self.viewModel = viewModel
         imageView.load(url: viewModel.imageUrl)
         title = viewModel.name
@@ -41,11 +41,11 @@ extension ImprovementProposalViewController: ImprovementProposalView {
     }
     
     @IBAction func voteAction(_ sender: UIButton?) {
-        presenter.handle(event_______: .Vote())
+        presenter.handle(event: .Vote())
     }
     
     @objc func dismissAction() {
-        presenter.handle(event_______: .Dismiss())
+        presenter.handle(event: .Dismiss())
     }
 }
 

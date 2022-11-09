@@ -167,8 +167,8 @@ class OpenSeaNFTsService(
      *  pending to be accepted by the mempool */
     private fun updateMemPoolStatus(nfts: List<NFTItem>): List<NFTItem> {
         val currentNftIdsInMemPool = nftIdsInMemPool()
-        var updatedNFTs = mutableListOf<NFTItem>()
-        var updatedNftIdsInMemPool = mutableListOf<String>()
+        val updatedNFTs = mutableListOf<NFTItem>()
+        val updatedNftIdsInMemPool = mutableListOf<String>()
         nfts.forEach {
             if (currentNftIdsInMemPool.contains(it.identifier)) {
                 it.inMemPool = true

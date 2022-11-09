@@ -3,13 +3,16 @@
 // SPDX-License-Identifier: MIT
 
 import Foundation
+import web3walletcore
 
 final class CultServiceAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
 
         registry.register(scope: .singleton) { resolver -> CultService in
-            DefaultCultService(walletService: resolver.resolve())
+            DefaultCultService(
+                store: KeyValueStore(name: "\(CultService.self)")
+            )
         }
     }
 }

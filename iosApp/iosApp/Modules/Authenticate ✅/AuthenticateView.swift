@@ -25,17 +25,17 @@ final class AuthenticateViewController: UIViewController, ModalDismissProtocol {
 extension AuthenticateViewController {
 
     @IBAction func dismissAction(_ sender: Any) {
-        presenter.handle(event______________________: AuthenticatePresenterEvent.DidCancel())
+        presenter.handle(event: AuthenticatePresenterEvent.DidCancel())
     }
 
     @IBAction func ctaAction(_ sender: Any) {
-        presenter.handle(event______________________: AuthenticatePresenterEvent.DidConfirm())
+        presenter.handle(event: AuthenticatePresenterEvent.DidConfirm())
     }
 }
 
-extension AuthenticateViewController: AuthenticateView {
+extension AuthenticateViewController {
 
-    func update(viewModel__________________ viewModel: AuthenticateViewModel) {
+    func update(with viewModel: AuthenticateViewModel) {
         self.viewModel = viewModel
         title = viewModel.title
         passwordTextField.text = viewModel.password
@@ -103,16 +103,16 @@ extension AuthenticateViewController: UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        presenter.handle(event______________________: AuthenticatePresenterEvent.DidConfirm())
+        presenter.handle(event: AuthenticatePresenterEvent.DidConfirm())
         return false
     }
     
     func updatePresenter(_ textField: UITextField) {
         if textField == passwordTextField {
-            presenter.handle(event______________________: AuthenticatePresenterEvent.DidChangePassword(text: textField.text ?? ""))
+            presenter.handle(event: AuthenticatePresenterEvent.DidChangePassword(text: textField.text ?? ""))
         }
         if textField == saltTextField {
-            presenter.handle(event______________________: AuthenticatePresenterEvent.DidChangeSalt(text: textField.text ?? ""))
+            presenter.handle(event: AuthenticatePresenterEvent.DidChangeSalt(text: textField.text ?? ""))
         }
     }
 }

@@ -25,9 +25,9 @@ final class NFTsDashboardViewController: BaseViewController {
     }
 }
 
-extension NFTsDashboardViewController: NFTsDashboardView {
+extension NFTsDashboardViewController {
 
-    func update(viewModel_________________ viewModel: NFTsDashboardViewModel) {
+    func update(with viewModel: NFTsDashboardViewModel) {
         if viewModel is NFTsDashboardViewModel.Loading {
             guard self.viewModel?.nftItems.isEmpty ?? true else { return }
             showLoading()
@@ -147,7 +147,7 @@ private extension NFTsDashboardViewController {
                 title: viewModel.actions[0],
                 style: .cancel,
                 handler: { [weak self] _ in self?.presenter.handle(
-                    event_____________________: NFTsDashboardPresenterEvent.CancelError())
+                    event: NFTsDashboardPresenterEvent.CancelError())
                 }
             )
         )
@@ -156,7 +156,7 @@ private extension NFTsDashboardViewController {
                 title: viewModel.actions[1],
                 style: .default,
                 handler: { [weak self] _ in self?.presenter.handle(
-                    event_____________________: NFTsDashboardPresenterEvent.SendError())
+                    event: NFTsDashboardPresenterEvent.SendError())
                 }
             )
         )

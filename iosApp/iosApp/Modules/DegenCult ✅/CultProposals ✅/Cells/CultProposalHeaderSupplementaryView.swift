@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class CultProposalHeaderSupplementaryView: UICollectionReusableView {
     
@@ -45,6 +46,11 @@ final class CultProposalHeaderSupplementaryView: UICollectionReusableView {
 extension CultProposalHeaderSupplementaryView {
 
     func update(with viewModel: CultProposalsViewModel.Section) {
-        label.text = viewModel.title
+        if let input = viewModel as? CultProposalsViewModel.SectionPending {
+            label.text = input.title
+        }
+        if let input = viewModel as? CultProposalsViewModel.SectionClosed {
+            label.text = input.title
+        }
     }
 }
