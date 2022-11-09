@@ -20,9 +20,9 @@ final class CurrencySendViewController: BaseViewController {
     }    
 }
 
-extension CurrencySendViewController: CurrencySendView {
+extension CurrencySendViewController {
 
-    func update(viewModel____ viewModel: CurrencySendViewModel) {
+    func update(with viewModel: CurrencySendViewModel) {
         self.viewModel = viewModel
         title = viewModel.title
         if collectionView.visibleCells.isEmpty { collectionView.reloadData() }
@@ -122,7 +122,7 @@ private extension CurrencySendViewController {
     }
     
     @objc func navBarLeftActionTapped() {
-        presenter.handle(event________: CurrencySendPresenterEvent.Dismiss())
+        presenter.handle(event: CurrencySendPresenterEvent.Dismiss())
     }
 }
 
@@ -224,7 +224,7 @@ private extension CurrencySendViewController {
     }
     
     func onTapped(_ event: CurrencySendPresenterEvent) -> () -> Void {
-        { [weak self] in self?.presenter.handle(event________: event) }
+        { [weak self] in self?.presenter.handle(event: event) }
     }
 }
 

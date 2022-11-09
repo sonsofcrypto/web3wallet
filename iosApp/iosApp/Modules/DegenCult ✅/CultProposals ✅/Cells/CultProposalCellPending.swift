@@ -3,12 +3,13 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class CultProposalCellPending: CollectionViewCell {
     
     struct Handler {
-        let approveProposal: (String) -> Void
-        let rejectProposal: (String) -> Void
+        let approveProposal: () -> Void
+        let rejectProposal: () -> Void
     }
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -49,9 +50,7 @@ final class CultProposalCellPending: CollectionViewCell {
                 ),
                 .layout(
                     anchor: .trailingAnchor,
-                    constant: .equalTo(
-                        constant: Theme.constant.padding
-                    )
+                    constant: .equalTo(constant: Theme.constant.padding)
                 )
             ]
         )
@@ -80,13 +79,9 @@ final class CultProposalCellPending: CollectionViewCell {
         self.viewModel = viewModel
         self.handler = handler
         titleLabel.text = viewModel.title
-        approvedVoteView.update(
-            viewModel: viewModel.approved
-        )
+        approvedVoteView.update(viewModel: viewModel.approved, progressColor: Theme.colour.candleGreen)
         approvedVotes.text = viewModel.approved.total.format(maximumFractionDigits: 3)
-        rejectedVoteView.update(
-            viewModel: viewModel.rejected
-        )
+        rejectedVoteView.update(viewModel: viewModel.rejected, progressColor: Theme.colour.candleRed)
         rejectedVotes.text = viewModel.rejected.total.format(maximumFractionDigits: 3)
         date = Date(timeIntervalSince1970: viewModel.endDate)
         approveButton.setTitle(viewModel.approveButtonTitle, for: .normal)
@@ -139,11 +134,7 @@ private extension CultProposalCellPending  {
         statusView.text = dateString
     }
     
-    @objc func approveProposal() {
-        handler.approveProposal(viewModel.id)
-    }
+    @objc func approveProposal() { handler.approveProposal() }
 
-    @objc func rejectProposal() {
-        handler.rejectProposal(viewModel.id)
-    }
+    @objc func rejectProposal() { handler.rejectProposal() }
 }

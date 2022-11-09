@@ -21,9 +21,9 @@ final class CultProposalViewController: BaseViewController {
     }
 }
 
-extension CultProposalViewController: CultProposalView {
+extension CultProposalViewController {
 
-    func update(viewModel: CultProposalViewModel) {
+    func update(with viewModel: CultProposalViewModel) {
         self.viewModel = viewModel
         setTitleAsync(with: viewModel.selectedIndex.int + 1)
         collectionView.reloadData()
@@ -141,8 +141,7 @@ private extension CultProposalViewController {
     }
     
     @objc func dismissTapped() {
-        
-        presenter.handle(event____: CultProposalPresenterEvent.Dismiss())
+        presenter.handle(event: CultProposalPresenterEvent.Dismiss())
     }
     
     func makeCompositionalLayout() -> UICollectionViewCompositionalLayout {

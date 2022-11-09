@@ -24,9 +24,9 @@ final class NetworksViewController: BaseViewController {
     }
 }
 
-extension NetworksViewController: NetworksView {
+extension NetworksViewController {
     
-    func update(viewModel_____________ viewModel: NetworksViewModel) {
+    func update(with viewModel: NetworksViewModel) {
         if self.viewModel?.count() != viewModel.count() {
             self.viewModel = viewModel
             collectionView.reloadData()
@@ -84,9 +84,7 @@ extension NetworksViewController: UICollectionViewDelegate {
         didSelectItemAt indexPath: IndexPath
     ) {
         if let viewModel = networkViewModel(indexPath) {
-            presenter.handle(
-                event_________________: NetworksPresenterEvent.DidSelectNetwork(chainId: viewModel.chainId)
-            )
+            presenterHandle(.DidSelectNetwork(chainId: viewModel.chainId))
         }
     }
     
@@ -185,15 +183,15 @@ private extension NetworksViewController {
     }
 
     func handleNetworkToggle(_ chainId: UInt32, _ isOn: Bool) {
-        presenter.handle(
-            event_________________: NetworksPresenterEvent.DidSwitchNetwork(chainId: chainId, isOn: isOn)
-        )
+        presenterHandle(.DidSwitchNetwork(chainId: chainId, isOn: isOn))
     }
 
     func handleSettingsAction(_ chainId: UInt32) {
-        presenter.handle(
-            event_________________: NetworksPresenterEvent.DidTapSettings(chainId: chainId)
-        )
+        presenterHandle(.DidTapSettings(chainId: chainId))
+    }
+    
+    func presenterHandle(_ event: NetworksPresenterEvent) {
+        presenter.handle(event: event)
     }
 }
 

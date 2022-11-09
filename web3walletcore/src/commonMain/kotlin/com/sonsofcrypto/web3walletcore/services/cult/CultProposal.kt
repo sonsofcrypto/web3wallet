@@ -1,5 +1,8 @@
 package com.sonsofcrypto.web3walletcore.services.cult
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class CultProposal(
     val id: String,
     val title: String,
@@ -15,21 +18,27 @@ data class CultProposal(
     val status: Status,
     val stateName: String,
 ) {
+    @Serializable
     data class GuardianInfo(
         val proposal: String, // aka: name
         val discord: String,
         val address: String,
     )
 
+    @Serializable
     data class ProjectDocuments(
         val name : String,
         val documents: List<Document>,
     ) {
+        @Serializable
         sealed class Document {
+            @Serializable
             data class Link(val displayName: String, val url: String): Document()
+            @Serializable
             data class Note(val note: String): Document()
         }
     }
 
+    @Serializable
     enum class Status { PENDING, CLOSED }
 }

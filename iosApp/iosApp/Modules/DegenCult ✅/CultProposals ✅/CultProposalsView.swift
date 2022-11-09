@@ -2,11 +2,7 @@
 // Copyright (c) 2022 Sons Of Crypto.
 // SPDX-License-Identifier: MIT
 import UIKit
-
-protocol CultProposalsView: AnyObject {
-    func update(with viewModel: CultProposalsViewModel)
-    func dismiss(animated flag: Bool, completion: (() -> Void)?)
-}
+import web3walletcore
 
 final class CultProposalsViewController: BaseViewController {
     //let searchController = UISearchController()
@@ -25,21 +21,21 @@ final class CultProposalsViewController: BaseViewController {
     }
 }
 
-extension CultProposalsViewController: CultProposalsView {
+extension CultProposalsViewController {
 
     func update(with viewModel: CultProposalsViewModel) {
         self.viewModel = viewModel
         setTitleAsync()
-        switch viewModel {
-        case .loading:
+        if viewModel is CultProposalsViewModel.Loading {
             showLoading()
-        case .loaded:
+        }
+        if viewModel is CultProposalsViewModel.Error {
+            hideLoading()
+        }
+        if viewModel is CultProposalsViewModel.Loaded {
             hideLoading()
             collectionView.reloadData()
             refreshControl.endRefreshing()
-        case .error:
-            hideLoading()
-            //showError()
         }
     }
 }
@@ -47,30 +43,31 @@ extension CultProposalsViewController: CultProposalsView {
 extension CultProposalsViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        viewModel.sections.count
+        viewModel.sectionList.count
     }
     
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        viewModel.sections[section].items.count
+        viewModel.sectionList[section].itemList.count
     }
     
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let section = viewModel.sections[indexPath.section]
-        let viewModel = section.items[indexPath.item]
-        switch section.type {
-        case .pending:
+        let section = viewModel.sectionList[indexPath.section]
+        let item = section.itemList[indexPath.item]
+        if section is CultProposalsViewModel.SectionPending {
             let cell = collectionView.dequeue(CultProposalCellPending.self, for: indexPath)
-            return cell.update(with: viewModel, handler: cultProposalCellPendingHandler())
-        case .closed:
-            let cell = collectionView.dequeue(CultProposalCellClosed.self, for: indexPath)
-            return cell.update(with: viewModel)
+            return cell.update(with: item, handler: cultProposalCellPendingHandler(indexPath.item))
         }
+        if section is CultProposalsViewModel.SectionClosed {
+            let cell = collectionView.dequeue(CultProposalCellClosed.self, for: indexPath)
+            return cell.update(with: item)
+        }
+        fatalError("Type not handled")
     }
     
     func collectionView(
@@ -87,7 +84,7 @@ extension CultProposalsViewController: UICollectionViewDataSource {
             ) as? CultProposalHeaderSupplementaryView else {
                 return CultProposalHeaderSupplementaryView()
             }
-            let section = viewModel.sections[indexPath.section]
+            let section = viewModel.sectionList[indexPath.section]
             headerView.update(with: section)
             return headerView
         case "footer":
@@ -98,8 +95,8 @@ extension CultProposalsViewController: UICollectionViewDataSource {
             ) as? CultProposalFooterSupplementaryView else {
                 return CultProposalFooterSupplementaryView()
             }
-            let section = viewModel.sections[indexPath.section]
-            footerView.update(with: section.footer)
+            let section = viewModel.sectionList[indexPath.section]
+            footerView.update(with: section.footerItem)
             return footerView
         default:
             assertionFailure("Unexpected element kind: \(kind).")
@@ -114,9 +111,7 @@ extension CultProposalsViewController: UICollectionViewDelegate {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        let section = viewModel.sections[indexPath.section]
-        let item = section.items[indexPath.row]
-        presenter.handle(.selectProposal(id: item.id))
+        presenter.handle(event: CultProposalsPresenterEvent.SelectProposal(idx: indexPath.row.int32))
     }
     
 //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -145,17 +140,15 @@ private extension CultProposalsViewController {
     }
     
     func setTitle() {
-        switch viewModel {
-        case .loading, .error, .none: setDefaultTitle()
-        case .loaded: setSegmentedTitle()
-        }
+        if viewModel is CultProposalsViewModel.Loaded { setSegmentedTitle() }
+        else { setDefaultTitle() }
     }
     
     func setDefaultTitle() {
-        let cultIcon = viewModel.titleIconName.assetImage?.resize(to: .init(width: 32, height: 32))
+        let cultIcon = "degen-cult-icon".assetImage?.resize(to: .init(width: 32, height: 32))
         let imageView = UIImageView(image: cultIcon)
         let titleLabel = UILabel()
-        titleLabel.text = viewModel.title
+        titleLabel.text = Localized("cult.proposals.title")
         titleLabel.apply(style: .navTitle)
         let stackView = HStackView([imageView, titleLabel])
         stackView.spacing = 4
@@ -174,9 +167,13 @@ private extension CultProposalsViewController {
             at: 1,
             animated: false
         )
-        switch viewModel.selectedSectionType {
-        case .pending: segmentControl.selectedSegmentIndex = 0
-        case .closed: segmentControl.selectedSegmentIndex = 1
+        if
+            let section = viewModel.sectionList.first,
+            section is CultProposalsViewModel.SectionPending
+        {
+            segmentControl.selectedSegmentIndex = 0
+        } else {
+            segmentControl.selectedSegmentIndex = 1
         }
         segmentControl.addTarget(
             self,
@@ -187,11 +184,11 @@ private extension CultProposalsViewController {
     }
     
     @objc func segmentControlChanged(_ sender: SegmentedControl) {
-        presenter.handle(
-            .filterBySection(
-                sectionType: sender.selectedSegmentIndex == 0 ? .pending : .closed
-            )
-        )
+        if sender.selectedSegmentIndex == 0 {
+            presenter.handle(event: CultProposalsPresenterEvent.SelectPendingProposals())
+        } else {
+            presenter.handle(event: CultProposalsPresenterEvent.SelectClosedProposals())
+        }
     }
     
     func configureUI() {
@@ -275,19 +272,19 @@ private extension CultProposalsViewController {
 
 private extension CultProposalsViewController {
 
-    func cultProposalCellPendingHandler() -> CultProposalCellPending.Handler {
+    func cultProposalCellPendingHandler(_ idx: Int) -> CultProposalCellPending.Handler {
         .init(
-            approveProposal: approveProposal(),
-            rejectProposal: rejectProposal()
+            approveProposal: approveProposal(idx: idx),
+            rejectProposal: rejectProposal(idx: idx)
         )
     }
     
-    func approveProposal() -> (String) -> Void {
-        { [weak self] id in self?.presenter.handle(.approveProposal(id: id)) }
+    func approveProposal(idx: Int) -> () -> Void {
+        { [weak self] in self?.presenter.handle(event: CultProposalsPresenterEvent.ApproveProposal(idx: idx.int32)) }
     }
     
-    func rejectProposal() -> (String) -> Void {
-        { [weak self] id in self?.presenter.handle(.rejectProposal(id: id)) }
+    func rejectProposal(idx: Int) -> () -> Void {
+        { [weak self] in self?.presenter.handle(event: CultProposalsPresenterEvent.RejectProposal(idx: idx.int32)) }
     }
 
 }
@@ -301,3 +298,34 @@ private extension CultProposalsViewController {
 //        presenter.handle(.filterBy(text: text))
 //    }
 //}
+
+private extension CultProposalsViewModel {
+    var sectionList: [CultProposalsViewModel.Section] {
+        guard let input = self as? CultProposalsViewModel.Loaded else {
+            return []
+        }
+        return input.sections
+    }
+}
+
+private extension CultProposalsViewModel.Section {
+    var itemList: [CultProposalsViewModel.Item] {
+        if let input = self as? CultProposalsViewModel.SectionPending {
+            return input.items
+        }
+        if let input = self as? CultProposalsViewModel.SectionClosed {
+            return input.items
+        }
+        return []
+    }
+    
+    var footerItem: CultProposalsViewModel.Footer {
+        if let input = self as? CultProposalsViewModel.SectionPending {
+            return input.footer
+        }
+        if let input = self as? CultProposalsViewModel.SectionClosed {
+            return input.footer
+        }
+        fatalError("Type not handled")
+    }
+}

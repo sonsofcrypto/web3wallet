@@ -17,7 +17,7 @@ allprojects {
     ext["settings_version"] = "1.0.0-alpha01"
     ext["serialization_version"] = "1.3.3"
     ext["coroutines_version"] = "1.6.3-native-mt"
-    ext["ktor_version"] = "2.0.3"
+    ext["ktor_version"] = "2.1.3"
     ext["bignum_version"] = "0.3.6"
     ext["datetime_version"] = "0.4.0"
 

@@ -21,13 +21,13 @@ final class NFTDetailViewController: BaseViewController {
     }
 }
 
-extension NFTDetailViewController: NFTDetailView {
+extension NFTDetailViewController {
     
     @objc func refresh() {
         presenter.present()
     }
 
-    func update(viewModel______ viewModel: NFTDetailViewModel) {
+    func update(with viewModel: NFTDetailViewModel) {
         self.viewModel = viewModel
         self.mainScrollView.refreshControl?.endRefreshing()
         title = viewModel.nft.name

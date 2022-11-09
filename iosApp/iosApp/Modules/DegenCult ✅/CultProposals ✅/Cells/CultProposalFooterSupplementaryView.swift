@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class CultProposalFooterSupplementaryView: UICollectionReusableView {
     
@@ -59,7 +60,7 @@ final class CultProposalFooterSupplementaryView: UICollectionReusableView {
 
 extension CultProposalFooterSupplementaryView {
 
-    func update(with viewModel: CultProposalsViewModel.Section.Footer) {
+    func update(with viewModel: CultProposalsViewModel.Footer) {
         imageView.image = viewModel.imageName.assetImage
         label.text = viewModel.text
     }

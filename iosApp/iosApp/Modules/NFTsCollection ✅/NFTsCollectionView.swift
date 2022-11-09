@@ -20,11 +20,11 @@ final class NFTsCollectionViewController: BaseViewController {
     }
 }
 
-extension NFTsCollectionViewController: NFTsCollectionView {
+extension NFTsCollectionViewController {
     
     @objc func refresh() { presenter.present() }
 
-    func update(viewModel_ viewModel: NFTsCollectionViewModel) {
+    func update(with viewModel: NFTsCollectionViewModel) {
         self.viewModel = viewModel
         self.mainScrollView.refreshControl?.endRefreshing()
         title = viewModel.collection.title
@@ -52,6 +52,6 @@ private extension NFTsCollectionViewController {
     }
     
     @objc func dismissTapped() {
-        presenter.handle(event_____: NFTsCollectionPresenterEvent.Dismiss())
+        presenter.handle(event: NFTsCollectionPresenterEvent.Dismiss())
     }
 }

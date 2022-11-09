@@ -21,9 +21,9 @@ final class CurrencyAddViewController: BaseViewController {
     }    
 }
 
-extension CurrencyAddViewController: CurrencyAddView {
+extension CurrencyAddViewController {
 
-    func update(viewModel____________ viewModel: CurrencyAddViewModel) {
+    func update(with viewModel: CurrencyAddViewModel) {
         self.viewModel = viewModel
         
         configureNavigationBar()
@@ -73,7 +73,7 @@ extension CurrencyAddViewController {
     }
 
     @objc func navBarLeftActionTapped() {
-        presenter.handle(event________________: .Dismiss())
+        presenterHandle(.Dismiss())()
     }
 }
 
@@ -134,13 +134,7 @@ private extension CurrencyAddViewController {
             addTokenHandler: presenterHandle(.AddCurrency())
         )
     }
-        
-    func presenterHandle(_ event: CurrencyAddPresenterEvent) -> () -> Void {
-        {
-            [weak self] in self?.presenter.handle(event________________: event)
-        }
-    }
-    
+            
     func onPaste() -> (CurrencyAddViewModel.TextFieldType, String) -> Void {
         {
             [weak self] (type, value) in
@@ -159,6 +153,12 @@ private extension CurrencyAddViewController {
         {
             [weak self] type in
             self?.presenterHandle(.ReturnKeyTapped(type: type))()
+        }
+    }
+    
+    func presenterHandle(_ event: CurrencyAddPresenterEvent) -> () -> Void {
+        {
+            [weak self] in self?.presenter.handle(event: event)
         }
     }
 }
