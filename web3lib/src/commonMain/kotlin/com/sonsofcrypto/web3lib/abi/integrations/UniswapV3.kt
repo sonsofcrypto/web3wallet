@@ -4,6 +4,7 @@ import com.sonsofcrypto.web3lib.abi.AbiEncode
 import com.sonsofcrypto.web3lib.abi.CallStack
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import io.ktor.utils.io.core.*
 
@@ -17,24 +18,23 @@ class UniswapV3 {
             amountIn: BigInt,
             amountOutMinimum: BigInt,
             sqrtPriceLimitX96: BigInt
-        ): String {
+        ): Array<ByteArray> {
             val signature = "exactInputSingle((address,address,uint24,address,uint256,uint256,uint160))"
-            val tuple = AbiEncode.encode(
-                arrayOf(
-                    AbiEncode.encode(tokenIn),
-                    AbiEncode.encode(tokenOut),
-                    AbiEncode.encode(fee),
-                    AbiEncode.encode(recipient),
-                    AbiEncode.encode(amountIn),
-                    AbiEncode.encode(amountOutMinimum),
-                    AbiEncode.encode(sqrtPriceLimitX96)
-                )
+            return AbiEncode.encodeSubCall(
+                AbiEncode.encodeCallSignature(signature).toHexString()
+                    + AbiEncode.encode(
+                        arrayOf("address","address","uint24","address","uint256","uint256","uint160"),
+                        arrayOf(
+                            tokenIn,
+                            tokenOut,
+                            fee,
+                            recipient,
+                            amountIn,
+                            amountOutMinimum,
+                            sqrtPriceLimitX96
+                        )
+                    ).toHexString()
             )
-            println("TUPLE: " + tuple.toHexString())
-
-            return CallStack(signature)
-                .addVariable(0, tuple)
-                .toAbiEncodedString()
         }
         fun multicall(
             deadline: BigInt,
@@ -46,13 +46,8 @@ class UniswapV3 {
             amountOutMinimum: BigInt,
             sqrtPriceLimitX96: BigInt
         ) : ByteArray {
-            val eis = exactInputSingle(tokenIn, tokenOut, fee, recipient, amountIn, amountOutMinimum, sqrtPriceLimitX96)
-            //println("EIS: " + eis)
-            val call = CallStack("multicall(uint256,bytes[])")
-                .addVariable(0, deadline)
-                .addVariable(1, eis)
-            println(call.toAbiEncodedString())
-            return call.toAbiEncodedString().toByteArray()
+            val multicall = exactInputSingle(tokenIn, tokenOut, fee, recipient, amountIn, amountOutMinimum, sqrtPriceLimitX96)
+            return AbiEncode.encode(arrayOf("uint", "bytes[]"), arrayOf(deadline, multicall))
         }
     }
 }

@@ -7,7 +7,6 @@ import com.sonsofcrypto.web3lib.utils.extensions.hexStringToByteArray
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.keccak256
 import io.ktor.utils.io.core.*
-import kotlin.reflect.typeOf
 
 
 // uint->uint256, int->int256, address->uint160, bool->uint8, bytes->hex32, function->bytes24 (function&address)
@@ -15,22 +14,50 @@ import kotlin.reflect.typeOf
 class AbiEncode {
 
     companion object {
-        fun encode(types: Array<String>, inputs: Array<Any>): ByteArray {
+        fun encode(types: Array<String>, inputs: Array<*>): ByteArray {
             if (types.count() != inputs.count()) {
-                throw InputAndTypeNotEqualSizeException("`types` and `inputs` needs to be equal size")
+                throw InputAndTypeNotEqualSizeException("`types` (${types.count()}) and `inputs` (${inputs.count()}) needs to be equal size")
             }
-            var output = ByteArray(0)
+            val output = arrayListOf<ByteArray>()
             types.forEachIndexed { index, type ->
                 val input = inputs[index]
-
-                output += encode(type, input)
+                /*if (type.startsWith("tuple") || type.startsWith("(")) {
+                    output.add(encode(32))
+                    output.add(encode(types = deconstructTuple(type), inputs = input as Array<*>))
+                } else {*/
+                output.add(encode(type, input!!))
+                //}
+            }
+            if (types.any { it.contains("string") || it.contains("tuple") }) {
+                return encode(output.toTypedArray(), false)
             }
 
-            return output
+            return output.map{it -> it.toHexString()}.joinToString(separator = "").hexStringToByteArray()
         }
         fun encode (type: String, input: Any) : ByteArray {
             if (type == "string" && input is String) {
                 return encode(input)
+            }
+            if (type == "string[]" && input is Array<*>) {
+                val output = arrayListOf<ByteArray>()
+                (input as Array<String>).forEach {
+                    output.add(encode(it))
+                }
+                return encode(output.toTypedArray(), isDynamic = true)
+            }
+            if (type == "bytes[]" && input is Array<*>) {
+                val output = arrayListOf<ByteArray>()
+                (input as Array<ByteArray>).forEach {
+                    output.add(encode(it.size)+it+ByteArray(32-it.count() % 32))
+                }
+                return encode(output.toTypedArray(), isDynamic = true)
+            }
+            if (type == "address[]" && input is Array<*>) {
+                val output = arrayListOf<Address.HexString>()
+                (input as Array<String>).forEach {
+                    output.add(Address.HexString(it))
+                }
+                return encode(output.toTypedArray())
             }
             if (type == "address") {
                 if (input is Address.HexString) {
@@ -45,30 +72,52 @@ class AbiEncode {
                 return encode(input)
             }
 
-            if (type.startsWith("tuple")) {
-                // TODO: Clean up this and use better regex to capture the different formats
-                // tuple(string,int)
-                // tuple(string data, int deadline)
-                // tuple(uint deadline, bytes multicall)
-                // A lot of possible variation here as it's strings
-                val regex = Regex("tuple\\((.*)\\)")
-                val regexComma = Regex("\\s*(.*)\\s*.*")
-                val matches = regex.find(type)
-                val tupleTypes = matches!!.groupValues[1].split(",").map {
-                    regexComma.find(it)!!.groupValues[1].split(" ")[0]
-                }
+            /*if (type.startsWith("tuple") || type.startsWith("(")) {
+                println("IS_TUPLE")
+                return encode(deconstructTuple(type), input as Array<*>)
+            }*/
 
-                return encode(tupleTypes.toTypedArray(), input as Array<Any>)
-            }
-
-            if (type in arrayOf("uint", "uint16", "uint160", "uint256", "int", "int16", "int160", "int256")) {
+            if (type in arrayOf("uint", "uint16", "uint24", "uint160", "uint256", "int", "int16", "int24", "int160", "int256")) {
                 if (input is BigInt)
                     return encode(input)
                 return encode(BigInt.from(input.toString()))
             }
 
+            if (type in arrayOf("uint[]", "uint16[]", "uint24[]", "uint160[]", "uint256[]", "int[]", "int16[]", "uint24[]", "int160[]", "int256[]") && input is Array<*>) {
+                var output = ""
+                for (it in input) {
+                    when (it) {
+                        is Int -> {
+                            output += encode(BigInt.from(it)).toHexString()
+                        }
+
+                        is BigInt -> {
+                            output += encode(it).toHexString()
+                        }
+                    }
+                }
+                return output.hexStringToByteArray()
+            }
+
             throw UnsupportedABITypeException("Does not support type `${type}` as input type for encoding value `${input.toString()}`")
         }
+/*
+        fun deconstructTuple(type: String): Array<String> {
+            // TODO: Clean up this and use better regex to capture the different formats
+            // tuple(string,int)
+            // tuple(string data, int deadline)
+            // tuple(uint deadline, bytes multicall)
+            // A lot of possible variation here as it's strings
+            val regex = Regex(".*\\((.*)\\)")
+            val regexComma = Regex("\\s*(.*)\\s*.*")
+            val matches = regex.find(type)
+            val tupleTypes = matches!!.groupValues[1].split(",").map {
+                regexComma.find(it)!!.groupValues[1].split(" ")[0]
+            }
+            return tupleTypes.toTypedArray()
+
+        }
+*/
         fun encode(input: Boolean): ByteArray {
             if (input)
                 return leftPadZeros(byteArrayOf(1))
@@ -105,7 +154,7 @@ class AbiEncode {
             return ByteArray((64-_input.toByteArray().size)/2) + _input.hexStringToByteArray()
         }
 
-        fun encode (input: Array<ByteArray>, includeCount: Boolean = false): ByteArray {
+        fun encode (input: Array<ByteArray>, isDynamic: Boolean = false): ByteArray {
             val start = ArrayList<Int>()
             var output = ""
             for ((i, entry) in input.withIndex()) {
@@ -118,8 +167,15 @@ class AbiEncode {
             }
             output = arrayReference + output // Connect the references to array entries
 
-            if (includeCount) {
+            if (isDynamic) {
                 output = encode(input.size).toHexString() + output
+            }
+            return output.hexStringToByteArray()
+        }
+        fun encode (input: Array<Address.HexString>): ByteArray {
+            var output = encode(input.size).toHexString()
+            for (entry in input) {
+                output += encode(entry).toHexString()
             }
             return output.hexStringToByteArray()
         }
@@ -131,9 +187,20 @@ class AbiEncode {
             }
             return output.hexStringToByteArray()
         }
+        fun encode (input: Array<Int>): ByteArray {
+            val bigIntArray = arrayListOf<BigInt>()
+            input.forEach {
+                bigIntArray.add(BigInt.from(it))
+            }
+            return encode(bigIntArray.toTypedArray())
+        }
 
         fun encodeCallSignature(input: String) : ByteArray {
             return keccak256(input.toByteArray()).toHexString().substring(0,8).hexStringToByteArray();
+        }
+
+        fun encodeSubCall(input: String): Array<ByteArray> {
+            return input.chunked(640).map{it.hexStringToByteArray()}.toTypedArray()
         }
 
         fun leftPadZeros(input: ByteArray) : ByteArray {
@@ -149,8 +216,6 @@ class AbiEncode {
                 hex += "0"
             }
             return hex.hexStringToByteArray()
-
-            //return input + ByteArray(32-input.toHexString().length/2)
         }
     }
 }

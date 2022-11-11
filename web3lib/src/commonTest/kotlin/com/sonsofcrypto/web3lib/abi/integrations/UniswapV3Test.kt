@@ -2,31 +2,29 @@ package com.sonsofcrypto.web3lib.abi.integrations
 
 import com.sonsofcrypto.web3lib.types.Address
 import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.setReturnValue
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class UniswapV3Test {
-    //@Test
+    @Test
     fun testUniswapMultiCall() {
-        //println("EXPECTED: "+ expectedUniswap1)
         setReturnValue("04e45aaf2114920f5543345d26d17731f15bfb089b8360c4e1c69c195f2adcc6")
-        val actual = UniswapV3.exactInputSingle(
+        val actual = UniswapV3.multicall(
+            deadline = BigInt.from(1664202313),
             tokenIn = Address.HexString("0x6b175474e89094c44da98b954eedeac495271d0f"),
             tokenOut = Address.HexString("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"),
             fee = BigInt.from(500),
             recipient = Address.HexString("0x58aebec033a2d55e35e44e6d7b43725b069f6abc"),
             amountIn = BigInt.from(1336224203099700158),
             amountOutMinimum = BigInt.from(784971974592424),
-            sqrtPriceLimitX96 = BigInt.from(100)
+            sqrtPriceLimitX96 = BigInt.from(0)
         )
 
-        expectedEIS.chunked(64).mapIndexed{ index, it ->
-            println("EXP: $it")
-            println("ACT: "+actual.chunked(64)[index])
-        }
+        //actual.toHexString().chunked(64).forEach { println(it) }
 
-        assertEquals(expectedEIS, actual)
+        assertEquals(expectedEIS, actual.toHexString())
     }
 }
 
@@ -45,19 +43,19 @@ class UniswapV3Test {
 */
 
 var expectedEIS =
-    "04e45aaf" +
-            "0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f" +
-            "000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2" +
-            "00000000000000000000000000000000000000000000000000000000000001f4" +
-            "0000000000000000000000000000000000000000000000000000000000000002" +
-            "000000000000000000000000000000000000000000000000128b38d546097bbe" +
-            "0000000000000000000000000000000000000000000000000002c9ed87b447a8" +
-            "0000000000000000000000000000000000000000000000000000000000000000" +
-            "0000000000000000000000000000000000000000000000000000000000000000" +
-            "0000000000000000000000000000000000000000000000000000004449404b7c" +
-            "0000000000000000000000000000000000000000000000000002c9ed87b447a8" +
-            "00000000000000000000000058aebec033a2d55e35e44e6d7b43725b069f6abc" +
-            "00000000000000000000000000000000000000000000000000000000"
+    //"0x5ae401dc" +
+            "000000000000000000000000000000000000000000000000000000006331b649" +
+            "0000000000000000000000000000000000000000000000000000000000000001" +
+            "0000000000000000000000000000000000000000000000000000000000000020" +
+            "00000000000000000000000000000000000000000000000000000000000000e4" +
+            "04e45aaf0000000000000000000000006b175474e89094c44da98b954eedeac4" +
+            "95271d0f000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead908" +
+            "3c756cc200000000000000000000000000000000000000000000000000000000" +
+            "000001f400000000000000000000000058aebec033a2d55e35e44e6d7b43725b" +
+            "069f6abc000000000000000000000000000000000000000000000000128b38d5" +
+            "46097bbe0000000000000000000000000000000000000000000000000002c9ed" +
+            "87b447a800000000000000000000000000000000000000000000000000000000" +
+            "0000000000000000000000000000000000000000000000000000000000000000"
 
 
 
