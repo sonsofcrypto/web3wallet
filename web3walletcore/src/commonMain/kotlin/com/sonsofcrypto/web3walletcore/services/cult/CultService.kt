@@ -1,9 +1,11 @@
 package com.sonsofcrypto.web3walletcore.services.cult
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
+import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
 import com.sonsofcrypto.web3lib.utils.extensions.jsonEncode
 import com.sonsofcrypto.web3lib.utils.extensions.stdJson
+import com.sonsofcrypto.web3lib.utils.timestamp.BlockNumberToTimestampHelper
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.services.cult.CultProposal.GuardianInfo
 import com.sonsofcrypto.web3walletcore.services.cult.CultProposal.ProjectDocuments
@@ -129,11 +131,8 @@ private fun CultProposalJSON.approvedVotes(): Double =
 private fun CultProposalJSON.rejectedVotes(): Double =
     againstVotes.toDouble() * 0.000000000000000001
 
-private fun CultProposalJSON.endDate(): Double {
-    val genesisEpocOffset = 1460999972
-    val epocEndBlock = endBlock.toInt() * 13
-    return (genesisEpocOffset + epocEndBlock).toDouble()
-}
+private fun CultProposalJSON.endDate(): Double =
+    BlockNumberToTimestampHelper.timestamp(endBlock, Network.ethereum())?.toDouble() ?: 0.toDouble()
 
 private fun Description.guardianInfo(): GuardianInfo? {
     val proposal = guardianProposal ?: return null

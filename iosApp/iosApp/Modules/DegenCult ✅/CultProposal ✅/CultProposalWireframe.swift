@@ -20,14 +20,14 @@ final class DefaultCultProposalWireframe {
     }
 }
 
-extension DefaultCultProposalWireframe: CultProposalWireframe {
+extension DefaultCultProposalWireframe {
 
     func present() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
 
-    func navigate(destination: CultProposalWireframeDestination) {
+    func navigate(with destination: CultProposalWireframeDestination) {
         if destination is CultProposalWireframeDestination.Dismiss {
             vc?.popOrDismiss()
         }

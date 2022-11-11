@@ -20,14 +20,14 @@ final class DefaultAlertWireframe {
     }
 }
 
-extension DefaultAlertWireframe: AlertWireframe {
+extension DefaultAlertWireframe {
 
     func present() {
         let vc = makeViewController()
         parent?.present(vc, animated: true)
     }
     
-    func navigate(destination________________ destination: AlertWireframeDestination) {
+    func navigate(with destination: AlertWireframeDestination) {
         if destination is AlertWireframeDestination.Dismiss {
             vc?.navigationController?.dismiss(animated: true) ?? vc?.dismiss(animated: true)
         }

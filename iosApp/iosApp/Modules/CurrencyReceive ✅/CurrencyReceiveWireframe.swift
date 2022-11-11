@@ -23,14 +23,14 @@ final class DefaultCurrencyReceiveWireframe {
     }
 }
 
-extension DefaultCurrencyReceiveWireframe: CurrencyReceiveWireframe {
+extension DefaultCurrencyReceiveWireframe {
     
     func present() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
     
-    func navigate(destination________ destination: CurrencyReceiveWireframeDestination) {
+    func navigate(with destination: CurrencyReceiveWireframeDestination) {
         if (destination as? CurrencyReceiveWireframeDestination.Dismiss) != nil {
             vc?.popOrDismiss()
         }

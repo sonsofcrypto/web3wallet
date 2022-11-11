@@ -4,10 +4,7 @@
 
 import UIKit
 import WebKit
-
-protocol AccountView: AnyObject {
-    func update(with viewModel: AccountViewModel)
-}
+import web3walletcore
 
 final class AccountViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
@@ -38,7 +35,7 @@ final class AccountViewController: BaseViewController {
     }
 }
 
-extension AccountViewController: AccountView {
+extension AccountViewController {
     
     func update(with viewModel: AccountViewModel) {
         self.viewModel = viewModel
@@ -93,21 +90,21 @@ extension AccountViewController: UICollectionViewDataSource {
             cell.update(with: viewModel.marketInfo)
             return cell
         case .transactions:
-            let transaction = viewModel.transactions[indexPath.item]
             let cell: CollectionViewCell
-            switch transaction {
-            case .empty:
+            if let input = viewModel.transactions[indexPath.item] as? AccountViewModel.TransactionEmpty {
                 let _cell = collectionView.dequeue(AccountTransactionEmptyCell.self, for: indexPath)
-                _cell.update(with: transaction)
+                _cell.update(with: input)
                 cell = _cell
-            case .loading:
+            } else if let input = viewModel.transactions[indexPath.item] as? AccountViewModel.TransactionLoading {
                 let _cell = collectionView.dequeue(AccountTransactionLoadingCell.self, for: indexPath)
-                _cell.update(with: transaction)
+                _cell.update(with: input)
                 cell = _cell
-            case .data:
+            } else if let input = viewModel.transactions[indexPath.item] as? AccountViewModel.TransactionLoaded {
                 let _cell = collectionView.dequeue(AccountTransactionCell.self, for: indexPath)
-                _cell.update(with: transaction)
+                _cell.update(with: input.data)
                 cell = _cell
+            } else {
+                fatalError("Type not handled")
             }
             cell.separatorViewLeadingPadding = Theme.constant.padding
             cell.separatorViewTrailingPadding = Theme.constant.padding
@@ -164,14 +161,16 @@ extension AccountViewController: UICollectionViewDelegateFlowLayout {
         case .marketInfo:
             return CGSize(width: width, height: Constant.marketInfoHeight)
         case .transactions:
-            switch viewModel.transactions[indexPath.item] {
-            case .empty:
+            if viewModel.transactions[indexPath.item] is AccountViewModel.TransactionEmpty {
                 return CGSize(width: width, height: Constant.transactionsHeight * 0.75)
-            case .loading:
-                return CGSize(width: width, height: Constant.transactionsHeight * 1.5)
-            case .data:
+            }
+            if viewModel.transactions[indexPath.item] is AccountViewModel.TransactionLoading {
+                return CGSize(width: width, height: Constant.transactionsHeight * 1.1)
+            }
+            if viewModel.transactions[indexPath.item] is AccountViewModel.TransactionLoaded {
                 return CGSize(width: width, height: Constant.transactionsHeight)
             }
+            return .zero
         }
     }
     
@@ -213,8 +212,10 @@ extension AccountViewController: UICollectionViewDelegate {
             return view.presentToastAlert(with: Localized("account.action.copy.toast"))
         }
         if section == .transactions {
-            guard let txHash = viewModel.transactions[indexPath.item].data?.txHash else { return }
-            guard let url = "https://etherscan.io/tx/\(txHash)".url else { return }
+            guard let input = viewModel.transactions[indexPath.item] as? AccountViewModel.TransactionLoaded else {
+                return
+            }
+            guard let url = "https://etherscan.io/tx/\(input.data.txHash)".url else { return }
             let factory: WebViewWireframeFactory = AppAssembler.resolve()
             factory.make(parent, context: .init(url: url)).present()
         }
@@ -363,7 +364,7 @@ private extension AccountViewController {
     }
     
     @objc func didPullToRefresh(_ sender: Any) {
-        presenter.handle(.pullDownToRefresh)
+        presenter.handle(event: .PullDownToRefresh())
     }
 }
 
@@ -371,15 +372,15 @@ private extension AccountViewController {
     
     func makeHeaderHandler() -> AccountHeaderCell.Handler {
         .init(
-            onReceiveTapped: onPresenterActionEventTapped(.receive),
-            onSendTapped: onPresenterActionEventTapped(.send),
-            onSwapTapped: onPresenterActionEventTapped(.swap),
-            onMoreTapped: onPresenterActionEventTapped(.more)
+            onReceiveTapped: onPresenterActionEventTapped(.Receive()),
+            onSendTapped: onPresenterActionEventTapped(.Send()),
+            onSwapTapped: onPresenterActionEventTapped(.Swap()),
+            onMoreTapped: onPresenterActionEventTapped(.More())
         )
     }
     
     func onPresenterActionEventTapped(_ event: AccountPresenterEvent) -> () -> Void {
-        { [weak self] in self?.presenter.handle(event) }
+        { [weak self] in self?.presenter.handle(event: event) }
     }
 }
 

@@ -38,14 +38,14 @@ final class DefaultCultProposalsWireframe {
     }
 }
 
-extension DefaultCultProposalsWireframe: CultProposalsWireframe {
+extension DefaultCultProposalsWireframe {
 
     func present() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
 
-    func navigate(destination__________ destination: CultProposalsWireframeDestination) {
+    func navigate(with destination: CultProposalsWireframeDestination) {
         if let input = destination as? CultProposalsWireframeDestination.Proposal {
             let context = CultProposalWireframeContext(proposal: input.proposal, proposals: input.proposals)
             cultProposalWireframeFactory.make(vc, context: context).present()

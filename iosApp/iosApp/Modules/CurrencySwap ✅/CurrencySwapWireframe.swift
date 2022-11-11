@@ -41,14 +41,14 @@ final class DefaultCurrencySwapWireframe {
     }
 }
 
-extension DefaultCurrencySwapWireframe: CurrencySwapWireframe {
+extension DefaultCurrencySwapWireframe {
     
     func present() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
     
-    func navigate(destination_______________ destination: CurrencySwapWireframeDestination) {
+    func navigate(with destination: CurrencySwapWireframeDestination) {
         if destination is CurrencySwapWireframeDestination.UnderConstructionAlert {
             alertWireframeFactory.make(
                 vc,

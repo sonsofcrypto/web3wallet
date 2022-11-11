@@ -109,8 +109,9 @@
 "account.marketInfo.volume" = "24h volume";
 "account.marketInfo.transactions" = "Transactions";
 "account.marketInfo.transactions.empty" = "No transactions";
-"account.marketInfo.transactions.loading" = "Fetching latest transactions\nThis may take a few minutes...";
+"account.marketInfo.transactions.loading" = "Updating transactions...";
 "account.action.copy.toast" = "Address copied to your clipboard";
+"account.action.bonus.cult" = "Read the manifesto";
 
 "keyStore.newMnemonic" = "Create new wallet";
 "keyStore.importMnemonic" = "Import wallet";

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class AccountTransactionCell: CollectionViewCell {
     @IBOutlet weak var dateLabel: UILabel!
@@ -26,18 +27,18 @@ final class AccountTransactionCell: CollectionViewCell {
 
 extension AccountTransactionCell {
 
-    func update(with transaction: AccountViewModel.Transaction) {
-        guard let viewModel = transaction.data else { return }
+    func update(with viewModel: AccountViewModel.TransactionData) {
         dateLabel.text = viewModel.date
         addressLabel.text = viewModel.address
         amountLabel.textColor = viewModel.isReceive
             ? Theme.colour.priceUp
             : Theme.colour.priceDown
         amountLabel.attributedText = .init(
-            viewModel.amount,
+            //viewModel.amount,
+            viewModel.amount.addPrefix(viewModel.isReceive ? "+" : "-"),
             font: Theme.font.subheadline,
-            fontSmall: Theme.font.caption2,
-            foregroundColor: viewModel.isReceive ? Theme.colour.priceUp : Theme.colour.priceDown
+            fontSmall: Theme.font.caption2
+            //foregroundColor: viewModel.isReceive ? Theme.colour.priceUp : Theme.colour.priceDown
         )
         fiatPriceLabel.attributedText = .init(
             viewModel.fiatPrice,
@@ -45,6 +46,13 @@ extension AccountTransactionCell {
             fontSmall: Theme.font.caption2,
             foregroundColor: Theme.colour.labelSecondary
         )
-        
+    }
+}
+
+private extension Array where Element == Formatters.Output {
+    func addPrefix(_ value: String) -> [Formatters.Output] {
+        var output = self
+        output.insert(Formatters.OutputNormal(value: value), at: 0)
+        return output
     }
 }

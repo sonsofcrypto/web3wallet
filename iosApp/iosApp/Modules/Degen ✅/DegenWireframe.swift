@@ -33,7 +33,7 @@ final class DefaultDegenWireframe {
     }
 }
 
-extension DefaultDegenWireframe: DegenWireframe {
+extension DefaultDegenWireframe {
 
     func present() {
         let vc = wireUp()
@@ -45,7 +45,7 @@ extension DefaultDegenWireframe: DegenWireframe {
         }
     }
 
-    func navigate(destination__ destination: DegenWireframeDestination) {
+    func navigate(with destination: DegenWireframeDestination) {
         if destination is DegenWireframeDestination.Swap {
             guard let network = networksService.network else { return }
             let context = CurrencySwapWireframeContext(

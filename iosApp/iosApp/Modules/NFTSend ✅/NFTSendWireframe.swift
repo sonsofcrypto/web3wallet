@@ -35,14 +35,14 @@ final class DefaultNFTSendWireframe {
     }
 }
 
-extension DefaultNFTSendWireframe: NFTSendWireframe {
+extension DefaultNFTSendWireframe {
     
     func present() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
     
-    func navigate(destination_________ destination: NFTSendWireframeDestination) {
+    func navigate(with destination: NFTSendWireframeDestination) {
         if destination is NFTSendWireframeDestination.UnderConstructionAlert {
             alertWireframeFactory.make(vc, context: .underConstructionAlert()).present()
         }

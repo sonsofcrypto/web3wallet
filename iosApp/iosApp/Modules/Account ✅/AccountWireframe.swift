@@ -5,23 +5,6 @@
 import UIKit
 import web3walletcore
 
-struct AccountWireframeContext {
-    let network: Network
-    let currency: Currency
-}
-
-enum AccountWireframeDestination {
-    case receive
-    case send
-    case swap
-    case more
-}
-
-protocol AccountWireframe {
-    func present()
-    func navigate(to destination: AccountWireframeDestination)
-}
-
 final class DefaultAccountWireframe {
     private weak var parent: UIViewController?
     private let context: AccountWireframeContext
@@ -32,7 +15,7 @@ final class DefaultAccountWireframe {
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
     private let walletService: WalletService
-    private let transactionService: IosEtherscanService
+    private let etherScanService: EtherScanService
     private let settingsService: SettingsService
 
     private weak var vc: UIViewController?
@@ -47,7 +30,7 @@ final class DefaultAccountWireframe {
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
-        transactionService: IosEtherscanService,
+        etherScanService: EtherScanService,
         settingsService: SettingsService
     ) {
         self.parent = parent
@@ -59,18 +42,17 @@ final class DefaultAccountWireframe {
         self.networksService = networksService
         self.currencyStoreService = currencyStoreService
         self.walletService = walletService
-        self.transactionService = transactionService
+        self.etherScanService = etherScanService
         self.settingsService = settingsService
     }
 }
 
-extension DefaultAccountWireframe: AccountWireframe {
+extension DefaultAccountWireframe {
     
     func present() {
         let vc = wireUp()
         self.vc = vc
         if settingsService.isSelected(item: .debugTransitions, action: .debugTransitionsCardFlip) {
-            let presentingTopVc = (parent as? UINavigationController)?.topVc
             let presentedTopVc = (vc as? UINavigationController)?.topVc
             let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
             vc.modalPresentationStyle = .custom
@@ -82,32 +64,28 @@ extension DefaultAccountWireframe: AccountWireframe {
         }
     }
 
-    func navigate(to destination: AccountWireframeDestination) {
-        switch destination {
-        case .receive:
-            currencyReceiveWireframeFactory.make(
-                vc,
-                context: .init(network: context.network, currency: context.currency)
-            ).present()
-        case .send:
-            currencySendWireframeFactory.make(
-                vc,
-                context: .init(
-                    network: context.network,
-                    address: nil,
-                    currency: context.currency
-                )
-            ).present()
-        case .swap:
-            currencySwapWireframeFactory.make(
-                vc,
-                context: .init(
-                    network: context.network,
-                    currencyFrom: context.currency,
-                    currencyTo: nil
-                )
-            ).present()
-        case .more:
+    func navigate(with destination: AccountWireframeDestination) {
+        if destination is AccountWireframeDestination.Receive {
+            let context = CurrencyReceiveWireframeContext(network: context.network, currency: context.currency)
+            currencyReceiveWireframeFactory.make(vc, context: context).present()
+        }
+        if destination is AccountWireframeDestination.Send {
+            let context = CurrencySendWireframeContext(
+                network: context.network,
+                address: nil,
+                currency: context.currency
+            )
+            currencySendWireframeFactory.make(vc, context: context).present()
+        }
+        if destination is AccountWireframeDestination.Swap {
+            let context = CurrencySwapWireframeContext(
+                network: context.network,
+                currencyFrom: context.currency,
+                currencyTo: nil
+            )
+            currencySwapWireframeFactory.make(vc, context: context).present()
+        }
+        if destination is AccountWireframeDestination.More {
             deepLinkHandler.handle(deepLink: .degen)
         }
     }
@@ -117,16 +95,13 @@ private extension DefaultAccountWireframe {
 
     func wireUp() -> UIViewController {
         let interactor = DefaultAccountInteractor(
-            network: context.network,
-            currency: context.currency,
-            networksService: networksService,
             currencyStoreService: currencyStoreService,
             walletService: walletService,
-            transactionService: transactionService
+            etherScanService: etherScanService
         )
         let vc: AccountViewController = UIStoryboard(.account).instantiate()
         let presenter = DefaultAccountPresenter(
-            view: vc,
+            view: WeakRef(referred: vc),
             wireframe: self,
             interactor: interactor,
             context: context

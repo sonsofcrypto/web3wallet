@@ -37,7 +37,7 @@ private extension AssemblerBootstrapper {
             WalletServiceAssembler(),
             Web3ServiceLegacyAssembler(),
             ImprovementProposalsServiceAssembler(),
-            IosEtherscanServiceAssembler(),
+            EtherscanServiceAssembler(),
             // DeepLink
             DeepLinkHandlerAssembler(),
             // Modules

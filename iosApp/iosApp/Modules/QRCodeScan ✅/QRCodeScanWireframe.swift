@@ -20,14 +20,14 @@ final class DefaultQRCodeScanWireframe {
     }
 }
 
-extension DefaultQRCodeScanWireframe: QRCodeScanWireframe {
+extension DefaultQRCodeScanWireframe {
     
     func present() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
     
-    func navigate(destination_____ destination: QRCodeScanWireframeDestination) {
+    func navigate(with destination: QRCodeScanWireframeDestination) {
         if let qrCode = destination as? QRCodeScanWireframeDestination.QRCode {
             _ = context.handler(qrCode.value)
         }

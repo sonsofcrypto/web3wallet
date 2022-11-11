@@ -44,14 +44,14 @@ final class DefaultConfirmationWireframe {
     }
 }
 
-extension DefaultConfirmationWireframe: ConfirmationWireframe {
+extension DefaultConfirmationWireframe {
     
     func present() {
         let vc = wireUp()
         parent?.present(vc, animated: true)
     }
     
-    func navigate(destination____________ destination: ConfirmationWireframeDestination) {
+    func navigate(with destination: ConfirmationWireframeDestination) {
         if let d = destination as? ConfirmationWireframeDestination.Authenticate {
             authenticateWireframeFactory.make(vc,context: d.context).present()
         }
