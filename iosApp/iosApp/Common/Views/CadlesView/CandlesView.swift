@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 class CandlesView: UIView {
 
@@ -17,21 +18,22 @@ class CandlesView: UIView {
     
     private var candles: [CAShapeLayer] = []
     private var candleWidth: CGFloat = 4
-    private var previousViewModel: CandlesViewModel = .loading(30)
+    private var previousViewModel: CandlesViewModel = CandlesViewModel.Loading(cnt: 30.int32)
     private var previousUpdate: Date = Date()
     private var previousBounds: CGRect = .zero
 
     func update(_ viewModel: CandlesViewModel) {
-        switch viewModel {
-        case let .unavailable(cnt):
-            updateForUnavailable(cnt)
-        case let .loading(cnt):
-            updateForLoading(cnt)
-        case let .loaded(candles):
+        if let input = viewModel as? CandlesViewModel.Unavailable {
+            updateForUnavailable(input.cnt.int)
+        }
+        if let input = viewModel as? CandlesViewModel.Loading {
+            updateForLoading(input.cnt.int)
+        }
+        if let input = viewModel as? CandlesViewModel.Loaded {
             let tDelta = previousUpdate.distance(to: Date())
             let animated = tDelta > 0.1 && previousViewModel.isLoading()
             DispatchQueue.main.async {
-                self.updateCandles(candles, animated: animated)
+                self.updateCandles(input.candles, animated: animated)
             }
         }
         previousViewModel = viewModel

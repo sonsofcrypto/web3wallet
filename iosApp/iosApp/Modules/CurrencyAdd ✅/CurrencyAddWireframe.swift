@@ -26,14 +26,14 @@ final class DefaultCurrencyAddWireframe {
     }
 }
 
-extension DefaultCurrencyAddWireframe: CurrencyAddWireframe {
+extension DefaultCurrencyAddWireframe {
     
     func present() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
     
-    func navigate(destination_____________ destination: CurrencyAddWireframeDestination) {
+    func navigate(with destination: CurrencyAddWireframeDestination) {
         if let target = destination as? CurrencyAddWireframeDestination.NetworkPicker {
             networkPickerWireframeFactory.make(
                 vc?.navigationController,

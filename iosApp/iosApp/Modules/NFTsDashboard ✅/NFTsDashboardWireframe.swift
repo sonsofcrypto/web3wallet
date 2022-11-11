@@ -32,7 +32,7 @@ final class DefaultNFTsDashboardWireframe {
     }
 }
 
-extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
+extension DefaultNFTsDashboardWireframe {
 
     func present() {
         let vc = wireUp()
@@ -44,7 +44,7 @@ extension DefaultNFTsDashboardWireframe: NFTsDashboardWireframe {
         }
     }
 
-    func navigate(destination__________________ destination: NFTsDashboardWireframeDestination) {
+    func navigate(with destination: NFTsDashboardWireframeDestination) {
         if let input = destination as? NFTsDashboardWireframeDestination.ViewNFT {
             let context = NFTDetailWireframeContext(
                 nftId: input.nftItem.identifier,

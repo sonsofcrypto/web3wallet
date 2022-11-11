@@ -125,7 +125,6 @@ kotlin {
     }
 }
 
-
 buildkonfig {
     packageName = "com.sonsofcrypto.web3lib"
     defaultConfigs {

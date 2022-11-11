@@ -41,14 +41,14 @@ final class DefaultCurrencySendWireframe {
     }
 }
 
-extension DefaultCurrencySendWireframe: CurrencySendWireframe {
+extension DefaultCurrencySendWireframe {
     
     func present() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
     
-    func navigate(destination____ destination: CurrencySendWireframeDestination) {
+    func navigate(with destination: CurrencySendWireframeDestination) {
         if destination is CurrencySendWireframeDestination.UnderConstructionAlert {
             let factory: AlertWireframeFactory = AppAssembler.resolve()
             factory.make(vc, context: .underConstructionAlert()).present()

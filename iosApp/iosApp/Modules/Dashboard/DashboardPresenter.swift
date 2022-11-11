@@ -278,8 +278,10 @@ private extension DefaultDashboardPresenter {
     }
 
     func candlesViewModel(candles: [Candle]?) -> CandlesViewModel {
-        guard let candles = candles else { return .loading(40) }
-        return .loaded(candles.last(n: 40).map { CandlesViewModel.Candle.from($0) })
+        guard let candles = candles else { return CandlesViewModel.Loading(cnt: 40.int32) }
+        return CandlesViewModel.Loaded(candles: candles.last(n: 40).map {
+            CandlesViewModel.from($0)
+        })
     }
     
     func nftsViewModel(from nfts: [NFTItem]) -> [DashboardViewModel.NFT] {
@@ -300,4 +302,17 @@ private extension DefaultDashboardPresenter {
 extension DefaultDashboardPresenter: Web3ServiceWalletListener {
     
     func notificationsChanged() { updateView() }
+}
+
+private extension CandlesViewModel {
+    static func from(_ candle: web3walletcore.Candle) -> CandlesViewModel.Candle {
+           CandlesViewModel.Candle(
+               open: candle.open,
+               high: candle.high,
+               low: candle.low,
+               close: candle.close,
+               volume: 0,
+               period: Double(Int(candle.timestamp.epochSeconds))
+           )
+       }
 }

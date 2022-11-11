@@ -10,7 +10,9 @@ class NetworkAddressFormatter {
             "ethereum" -> {
                 address.dropLast(l - (2 + digits)) + "..." + address.drop(l - digits)
             }
-            else  -> { address.drop(2 + digits) + "..." + address.dropLast(digits) }
+            else  -> {
+                address.dropLast(l - (2 + digits)) + "..." + address.drop(l - digits)
+            }
         }
     }
 }

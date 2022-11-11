@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class AccountTransactionLoadingCell: CollectionViewCell {
 
@@ -12,17 +13,16 @@ final class AccountTransactionLoadingCell: CollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         label.apply(style: .callout)
-        label.textColor = Theme.colour.labelSecondary
+        label.textColor = Theme.colour.labelPrimary
         label.numberOfLines = 0
         layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
-        activityIndicator.tintColor = Theme.colour.activityIndicator
+        activityIndicator.color = Theme.colour.activityIndicator
     }
     
     override func setSelected(_ selected: Bool) {}
     
-    func update(with transaction: AccountViewModel.Transaction) {
-        guard let text = transaction.loading else { return }
-        label.text = text
+    func update(with viewModel: AccountViewModel.TransactionLoading) {
+        label.text = viewModel.text
         activityIndicator.startAnimating()
     }
 }

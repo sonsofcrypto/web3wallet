@@ -26,14 +26,14 @@ final class DefaultNFTsCollectionWireframe {
     }
 }
 
-extension DefaultNFTsCollectionWireframe: NFTsCollectionWireframe {
+extension DefaultNFTsCollectionWireframe {
 
     func present() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
 
-    func navigate(destination_ destination: NFTsCollectionWireframeDestination) {
+    func navigate(with destination: NFTsCollectionWireframeDestination) {
         if let input = destination as? NFTsCollectionWireframeDestination.NFTDetail {
             let context = NFTDetailWireframeContext(
                 nftId: input.identifier,

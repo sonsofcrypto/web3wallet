@@ -26,7 +26,7 @@ final class DefaultNetworksWireframe {
     }
 }
 
-extension DefaultNetworksWireframe: NetworksWireframe {
+extension DefaultNetworksWireframe {
 
     func present() {
         let vc = wireUp()
@@ -39,7 +39,7 @@ extension DefaultNetworksWireframe: NetworksWireframe {
         }
     }
 
-    func navigate(destination______________ destination: NetworksWireframeDestination) {
+    func navigate(with destination: NetworksWireframeDestination) {
         if destination is NetworksWireframeDestination.Dashboard {
             parent?.asEdgeCardsController?.setDisplayMode(.master, animated: true)
         }

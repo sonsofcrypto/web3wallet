@@ -33,14 +33,14 @@ final class DefaultCurrencyPickerWireframe {
     }
 }
 
-extension DefaultCurrencyPickerWireframe: CurrencyPickerWireframe {
+extension DefaultCurrencyPickerWireframe {
     
     func present() {
         let vc = wireUp()
         parent?.present(vc, animated: true)
     }
     
-    func navigate(destination_________________ destination: CurrencyPickerWireframeDestination) {
+    func navigate(with destination: CurrencyPickerWireframeDestination) {
         if let target = destination as? CurrencyPickerWireframeDestination.AddCustomCurrency {
             currencyAddWireframeFactory.make(
                 vc,

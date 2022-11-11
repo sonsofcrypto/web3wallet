@@ -32,14 +32,14 @@ final class DefaultNFTDetailWireframe {
     }
 }
 
-extension DefaultNFTDetailWireframe: NFTDetailWireframe {
+extension DefaultNFTDetailWireframe {
     
     func present() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
     
-    func navigate(destination_______ destination: NFTDetailWireframeDestination) {
+    func navigate(with destination: NFTDetailWireframeDestination) {
         if let input = destination as? NFTDetailWireframeDestination.Send {
             guard let network = networksService.network else { return }
             let context = NFTSendWireframeContext(network: network, nftItem: input.nft)

@@ -9,7 +9,7 @@ class Formatters {
         val currency = CurrencyFormatter()
         val fiat = FiatFormatter()
         val pct = PctFormatter()
-    //        val date: DateTimeFormatter()
+        val date = DateFormatter()
         val networkAddress = NetworkAddressFormatter()
 
         fun crypto(amount: BigInt, decimals: UInt, mul: Double): Double {

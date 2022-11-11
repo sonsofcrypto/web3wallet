@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class AccountTransactionEmptyCell: CollectionViewCell {
 
@@ -15,9 +16,8 @@ final class AccountTransactionEmptyCell: CollectionViewCell {
         layer.cornerRadius = Theme.constant.cornerRadiusSmall * 2
     }
     
-    func update(with transaction: AccountViewModel.Transaction) {
-        guard let text = transaction.empty else { return }
-        label.text = text
+    func update(with viewModel: AccountViewModel.TransactionEmpty) {
+        label.text = viewModel.text
     }
     
     override func setSelected(_ selected: Bool) {}

@@ -18,7 +18,7 @@ final class AccountAddressCell: CollectionViewCell {
     
     override func setSelected(_ selected: Bool) {}
 
-    func update(with viewModel: AccountViewModel.AddressViewModel) {
+    func update(with viewModel: AccountViewModel.Address) {
         titleLabel.text = viewModel.addressFormatted
         copyImage.image = viewModel.copyIcon.assetImage
     }

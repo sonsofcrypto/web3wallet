@@ -23,7 +23,7 @@ final class DefaultAuthenticateWireframe {
     }
 }
 
-extension DefaultAuthenticateWireframe: AuthenticateWireframe {
+extension DefaultAuthenticateWireframe {
 
     func present() {
         let interactor = DefaultAuthenticateInteractor(
@@ -52,7 +52,7 @@ extension DefaultAuthenticateWireframe: AuthenticateWireframe {
         parent?.present(vc, animated: true)
     }
     
-    func navigate(destination___________________ destination: AuthenticateWireframeDestination) {
+    func navigate(with destination: AuthenticateWireframeDestination) {
         if destination is AuthenticateWireframeDestination.Dismiss {
             vc?.dismiss(animated: true)
         }

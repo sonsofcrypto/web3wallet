@@ -22,7 +22,7 @@ final class DefaultNetworkSettingsWireframe {
     }
 }
 
-extension DefaultNetworkSettingsWireframe: NetworkSettingsWireframe {
+extension DefaultNetworkSettingsWireframe {
 
     func present() {
         let vc = wireUp()

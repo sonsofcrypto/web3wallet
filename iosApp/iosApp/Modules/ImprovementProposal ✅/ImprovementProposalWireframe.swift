@@ -20,14 +20,14 @@ final class DefaultImprovementProposalWireframe {
     }
 }
 
-extension DefaultImprovementProposalWireframe: ImprovementProposalWireframe {
+extension DefaultImprovementProposalWireframe {
 
     func present() {
         let vc = wireUp()
         parent?.show(vc, sender: self)
     }
 
-    func navigate(destination___ destination_: ImprovementProposalWireframeDestination) {
+    func navigate(with destination_: ImprovementProposalWireframeDestination) {
         if let vote = destination_ as? ImprovementProposalWireframeDestination.Vote {
             guard let url = voteUrl(vote.proposal) else { return }
             UIApplication.shared.open(url)
