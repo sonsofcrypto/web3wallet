@@ -3,12 +3,13 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class ButtonsSheetViewCell: UICollectionViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     
-    private var viewModel: ButtonSheetViewModel.Button?
+    private var viewModel: KeyStoreViewModel.ButtonSheetViewModelButton?
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -18,7 +19,7 @@ final class ButtonsSheetViewCell: UICollectionViewCell {
 
 extension ButtonsSheetViewCell {
     
-    func update(with viewModel: ButtonSheetViewModel.Button?) -> ButtonsSheetViewCell {
+    func update(with viewModel: KeyStoreViewModel.ButtonSheetViewModelButton?) -> ButtonsSheetViewCell {
         self.viewModel = viewModel
         titleLabel.text = viewModel?.title ?? ""
         updateButtonStyle()
@@ -29,10 +30,9 @@ extension ButtonsSheetViewCell {
 private extension ButtonsSheetViewCell {
     
     func updateButtonStyle() {
-        switch viewModel?.type {
-        case .newMnemonic:
+        if viewModel?.type == .theNewMnemonic {
             applyPrimary()
-        default:
+        } else {
             applySecondary()
         }
     }

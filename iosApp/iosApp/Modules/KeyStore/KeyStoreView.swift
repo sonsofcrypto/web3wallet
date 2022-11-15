@@ -3,11 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-protocol KeyStoreView: AnyObject {
-    func update(with viewModel: KeyStoreViewModel)
-    func updateTargetView(_ targetView: KeyStoreViewModel.TransitionTargetView)
-}
+import web3walletcore
 
 final class KeyStoreViewController: BaseViewController {
 
@@ -21,7 +17,7 @@ final class KeyStoreViewController: BaseViewController {
     var presenter: KeyStorePresenter!
 
     private var viewModel: KeyStoreViewModel?
-    private var transitionTargetView: KeyStoreViewModel.TransitionTargetView = .none
+    private var transitionTargetView: KeyStoreViewModel.TransitionTargetView = KeyStoreViewModel.TransitionTargetViewNone()
     private var animatedTransitioning: UIViewControllerAnimatedTransitioning?
     private var prevViewSize: CGSize = .zero
     private var needsLayoutUI: Bool = false
@@ -54,7 +50,7 @@ final class KeyStoreViewController: BaseViewController {
         super.viewDidLayoutSubviews()
         if needsLayoutUI {
             configureInsets()
-            setButtonsSheetMode(viewModel?.buttons.sheetMode, animated: false)
+            setButtonsSheetMode(viewModel?.buttons.mode, animated: false)
             layoutButtonsBackground()
             needsLayoutUI = false
         }
@@ -77,16 +73,16 @@ final class KeyStoreViewController: BaseViewController {
 }
 
 // MARK: - KeyStoreView
-extension KeyStoreViewController: KeyStoreView {
+extension KeyStoreViewController {
 
     func update(with viewModel: KeyStoreViewModel) {
-        self.viewModel?.buttons.sheetMode != viewModel.buttons.sheetMode
-            ? setButtonsSheetMode(viewModel.buttons.sheetMode)
+        self.viewModel?.buttons.mode != viewModel.buttons.mode
+            ? setButtonsSheetMode(viewModel.buttons.mode)
             : ()
         self.viewModel = viewModel
         collectionView.reloadData()
         updateLogo(viewModel)
-        updateTargetView(viewModel.targetView)
+        updateTargetView(targetView: viewModel.targetView)
         buttonsCollectionView.deselectAllExcept()
         collectionView.deselectAllExcept(
             selectedIdxPaths(),
@@ -94,8 +90,8 @@ extension KeyStoreViewController: KeyStoreView {
             scrollPosition: .centeredVertically
         )
     }
-
-    func updateTargetView(_ targetView: KeyStoreViewModel.TransitionTargetView) {
+    
+    func updateTargetView(targetView: KeyStoreViewModel.TransitionTargetView) {
         transitionTargetView = targetView
     }
 }
@@ -129,7 +125,7 @@ extension KeyStoreViewController: UICollectionViewDataSource {
             return collectionView.dequeue(KeyStoreCell.self, for: indexPath).update(
                 with: viewModel?.items[indexPath.item],
                 handler: .init(accessoryHandler: { [weak self] in
-                    self?.presenter.handle(.didSelectAccessory(idx: indexPath.item))
+                    self?.presenter.handle(event: KeyStorePresenterEvent.DidSelectAccessory(idx: indexPath.item.int32))
                 }),
                 index: indexPath.item
             )
@@ -141,10 +137,10 @@ extension KeyStoreViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == buttonsCollectionView {
-            presenter.handle(.didSelectButtonAt(idx: indexPath.item))
+            presenter.handle(event: KeyStorePresenterEvent.DidSelectButtonAt(idx: indexPath.item.int32))
             return
         }
-        presenter.handle(.didSelectKeyStoreItemtAt(idx: indexPath.item))
+        presenter.handle(event: KeyStorePresenterEvent.DidSelectKeyStoreItemtAt(idx: indexPath.item.int32))
     }
 
     func collectionView(
@@ -215,7 +211,7 @@ extension KeyStoreViewController {
 
     func selectedIdxPaths() -> [IndexPath] {
         guard let viewModel = viewModel, !viewModel.items.isEmpty else { return [] }
-        return viewModel.selectedIdxs.map { IndexPath(item: $0, section: 0) }
+        return viewModel.selectedIdxs.map { IndexPath(item: $0.intValue, section: 0) }
     }
 }
 
@@ -223,7 +219,7 @@ extension KeyStoreViewController {
 extension KeyStoreViewController {
 
     func setButtonsSheetMode(
-        _ mode: ButtonSheetViewModel.SheetMode? = .compact,
+        _ mode: KeyStoreViewModel.ButtonSheetViewModelSheetMode? = .compact,
         animated: Bool = true
     ) {
         buttonsCollectionView.reloadData()
@@ -245,6 +241,8 @@ extension KeyStoreViewController {
                 CGPoint(x: 0, y: -y),
                 animated: animated
             )
+        default:
+            fatalError("Option not handled")
         }
     }
 
@@ -288,8 +286,8 @@ extension KeyStoreViewController {
         guard scrollView.isDragging else { return }
         let cellCount = buttonsCollectionView.visibleCells.count
         presenter.handle(
-            .didChangeButtonsSheetMode(
-                sheetMode: cellCount > 4 ? .expanded : .compact
+            event: KeyStorePresenterEvent.DidChangeButtonsSheetMode(
+                mode: cellCount > 4 ? .expanded : .compact
             )
         )
     }
@@ -328,15 +326,14 @@ extension KeyStoreViewController {
 extension KeyStoreViewController: TargetViewTransitionDatasource {
 
     func targetView() -> UIView {
-        switch transitionTargetView {
-        case let .keyStoreItemAt(idx):
-            let idxPath = IndexPath(item: idx, section: 0)
+        if let input = transitionTargetView as? KeyStoreViewModel.TransitionTargetViewKeyStoreItemAt {
+            let idxPath = IndexPath(item: input.idx.int, section: 0)
             return collectionView.cellForItem(at: idxPath) ?? view
-        case let .buttonAt(idx):
-            let idxPath = IndexPath(item: idx, section: 0)
-            return buttonsCollectionView.cellForItem(at: idxPath) ?? view
-        case .none:
-            return view
         }
+        if let input = transitionTargetView as? KeyStoreViewModel.TransitionTargetViewButtonAt {
+            let idxPath = IndexPath(item: input.idx.int, section: 0)
+            return buttonsCollectionView.cellForItem(at: idxPath) ?? view
+        }
+        return view
     }
 }

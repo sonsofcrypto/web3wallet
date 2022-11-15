@@ -16,7 +16,6 @@ protocol KeyStoreWireframeFactory {
 final class DefaultKeyStoreWireframeFactory {
 
     private let keyStoreService: KeyStoreService
-    private let settingsService: SettingsService
     private let networksService: NetworksService
     private let newMnemonic: MnemonicNewWireframeFactory
     private let updateMnemonic: MnemonicUpdateWireframeFactory
@@ -25,7 +24,6 @@ final class DefaultKeyStoreWireframeFactory {
 
     init(
         keyStoreService: KeyStoreService,
-        settingsService: SettingsService,
         networksService: NetworksService,
         newMnemonic: MnemonicNewWireframeFactory,
         updateMnemonic: MnemonicUpdateWireframeFactory,
@@ -33,7 +31,6 @@ final class DefaultKeyStoreWireframeFactory {
         alertWireframeFactory: AlertWireframeFactory
     ) {
         self.keyStoreService = keyStoreService
-        self.settingsService = settingsService
         self.networksService = networksService
         self.newMnemonic = newMnemonic
         self.updateMnemonic = updateMnemonic
@@ -56,7 +53,6 @@ extension DefaultKeyStoreWireframeFactory: KeyStoreWireframeFactory {
             newMnemonic: newMnemonic,
             updateMnemonic: updateMnemonic,
             importMnemonic: importMnemonic,
-            settingsService: settingsService,
             alertWireframeFactory: alertWireframeFactory
         )
     }
@@ -70,7 +66,6 @@ final class KeyStoreWireframeFactoryAssembler: AssemblerComponent {
         registry.register(scope: .instance) { resolver -> KeyStoreWireframeFactory in
             DefaultKeyStoreWireframeFactory(
                 keyStoreService: resolver.resolve(),
-                settingsService: resolver.resolve(),
                 networksService: resolver.resolve(),
                 newMnemonic: resolver.resolve(),
                 updateMnemonic: resolver.resolve(),

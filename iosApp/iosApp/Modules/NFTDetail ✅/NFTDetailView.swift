@@ -55,6 +55,6 @@ private extension NFTDetailViewController {
     }
     
     @objc func dismissTapped() {
-        presenter.handle(event__________: NFTDetailPresenterEvent.Dismiss())
+        presenter.handle(event: NFTDetailPresenterEvent.Dismiss())
     }
 }
