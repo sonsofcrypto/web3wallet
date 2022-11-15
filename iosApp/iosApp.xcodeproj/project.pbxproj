@@ -1255,7 +1255,7 @@
 				1C60C20D285724D0003BE25D /* Dashboard */,
 				1C60C272285724D0003BE25D /* Degen ✅ */,
 				1C60C285285724D0003BE25D /* DegenCult ✅ */,
-				1C60C1E1285724D0003BE25D /* KeyStore */,
+				1C60C1E1285724D0003BE25D /* KeyStore ✅ */,
 				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
 				D1976B01287EFAE10063FC9C /* MnemonicImport */,
 				1C60C202285724D0003BE25D /* MnemonicNew */,
@@ -1328,7 +1328,7 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C60C1E1285724D0003BE25D /* KeyStore */ = {
+		1C60C1E1285724D0003BE25D /* KeyStore ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1CAC55A7286E119500CCB2B6 /* KeyStore.storyboard */,
@@ -1338,7 +1338,7 @@
 				1C60C1E6285724D0003BE25D /* ButtonSheetView */,
 				1C0643CD2892EA1800643C15 /* Cells */,
 			);
-			path = KeyStore;
+			path = "KeyStore ✅";
 			sourceTree = "<group>";
 		};
 		1C60C1E6285724D0003BE25D /* ButtonSheetView */ = {
