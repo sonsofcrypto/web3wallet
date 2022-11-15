@@ -11,7 +11,9 @@ extension NSAttributedString {
         _ output: [Formatters.Output],
         font: UIFont = Theme.font.dashboardTVBalance,
         fontSmall: UIFont = Theme.font.caption2,
-        foregroundColor color: UIColor = Theme.colour.labelPrimary
+        foregroundColor color: UIColor = Theme.colour.labelPrimary,
+        adjustedOffsetTop: CGFloat = 0,
+        adjustedOffsetBottom: CGFloat = 0
     ) {
         let string = output.reduce(into: "") {
             if let output = $1 as? Formatters.OutputNormal { $0 = $0 + output.value }
@@ -26,14 +28,14 @@ extension NSAttributedString {
             if let output = $0 as? Formatters.OutputNormal { location += output.value.count }
             if let output = $0 as? Formatters.OutputUp {
                 atrStr.addAttributes(
-                    [.font: fontSmall, .baselineOffset: offset],
+                    [.font: fontSmall, .baselineOffset: offset - adjustedOffsetTop],
                     range: NSRange(location: location, length: output.value.count)
                 )
                 location += output.value.count
             }
             if let output = $0 as? Formatters.OutputDown {
                 atrStr.addAttributes(
-                    [.font: fontSmall, .baselineOffset: -offset],
+                    [.font: fontSmall, .baselineOffset: -offset + adjustedOffsetBottom],
                     range: NSRange(location: location, length: output.value.count)
                 )
                 location += output.value.count

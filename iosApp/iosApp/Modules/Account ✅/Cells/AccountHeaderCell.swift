@@ -60,7 +60,8 @@ extension AccountHeaderCell {
         balanceLabel.attributedText = .init(
             viewModel.balance,
             font: Theme.font.largeTitle,
-            fontSmall: Theme.font.footnote
+            fontSmall: Theme.font.headline,
+            adjustedOffsetBottom: 6
         )
         balanceFiatLabel.attributedText = .init(
             viewModel.fiatBalance,

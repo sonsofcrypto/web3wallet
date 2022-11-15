@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class KeyStoreCell: CollectionViewCell {
     
@@ -42,7 +43,7 @@ final class KeyStoreCell: CollectionViewCell {
 extension KeyStoreCell {
     
     func update(
-        with viewModel: KeyStoreViewModel.KeyStoreItem?,
+        with viewModel: KeyStoreViewModel.Item?,
         handler: Handler,
         index: Int
     ) -> Self {

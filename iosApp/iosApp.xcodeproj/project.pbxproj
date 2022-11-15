@@ -137,12 +137,8 @@
 		1C60C2B3285724D0003BE25D /* CurrencyPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DD285724D0003BE25D /* CurrencyPickerView.swift */; };
 		1C60C2B5285724D0003BE25D /* CurrencyPickerWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1DF285724D0003BE25D /* CurrencyPickerWireframeFactory.swift */; };
 		1C60C2B6285724D0003BE25D /* CurrencyPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C60C1E0285724D0003BE25D /* CurrencyPicker.storyboard */; };
-		1C60C2B7285724D0003BE25D /* KeyStoreInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1E2285724D0003BE25D /* KeyStoreInteractor.swift */; };
 		1C60C2B8285724D0003BE25D /* KeyStoreWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1E3285724D0003BE25D /* KeyStoreWireframeFactory.swift */; };
-		1C60C2B9285724D0003BE25D /* KeyStorePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1E4285724D0003BE25D /* KeyStorePresenter.swift */; };
-		1C60C2BA285724D0003BE25D /* KeyStoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1E5285724D0003BE25D /* KeyStoreViewModel.swift */; };
 		1C60C2BB285724D0003BE25D /* ButtonsSheetViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1E7285724D0003BE25D /* ButtonsSheetViewCell.swift */; };
-		1C60C2BD285724D0003BE25D /* ButtonsSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1E9285724D0003BE25D /* ButtonsSheetViewModel.swift */; };
 		1C60C2BF285724D0003BE25D /* KeyStoreWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1EB285724D0003BE25D /* KeyStoreWireframe.swift */; };
 		1C60C2C0285724D0003BE25D /* KeyStoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1EC285724D0003BE25D /* KeyStoreCell.swift */; };
 		1C60C2C1285724D0003BE25D /* KeyStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1ED285724D0003BE25D /* KeyStoreView.swift */; };
@@ -625,12 +621,8 @@
 		1C60C1DD285724D0003BE25D /* CurrencyPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerView.swift; sourceTree = "<group>"; };
 		1C60C1DF285724D0003BE25D /* CurrencyPickerWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyPickerWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C1E0285724D0003BE25D /* CurrencyPicker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CurrencyPicker.storyboard; sourceTree = "<group>"; };
-		1C60C1E2285724D0003BE25D /* KeyStoreInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreInteractor.swift; sourceTree = "<group>"; };
 		1C60C1E3285724D0003BE25D /* KeyStoreWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreWireframeFactory.swift; sourceTree = "<group>"; };
-		1C60C1E4285724D0003BE25D /* KeyStorePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStorePresenter.swift; sourceTree = "<group>"; };
-		1C60C1E5285724D0003BE25D /* KeyStoreViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreViewModel.swift; sourceTree = "<group>"; };
 		1C60C1E7285724D0003BE25D /* ButtonsSheetViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsSheetViewCell.swift; sourceTree = "<group>"; };
-		1C60C1E9285724D0003BE25D /* ButtonsSheetViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonsSheetViewModel.swift; sourceTree = "<group>"; };
 		1C60C1EB285724D0003BE25D /* KeyStoreWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreWireframe.swift; sourceTree = "<group>"; };
 		1C60C1EC285724D0003BE25D /* KeyStoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreCell.swift; sourceTree = "<group>"; };
 		1C60C1ED285724D0003BE25D /* KeyStoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreView.swift; sourceTree = "<group>"; };
@@ -1263,7 +1255,7 @@
 				1C60C20D285724D0003BE25D /* Dashboard */,
 				1C60C272285724D0003BE25D /* Degen ✅ */,
 				1C60C285285724D0003BE25D /* DegenCult ✅ */,
-				1C60C1E1285724D0003BE25D /* KeyStore */,
+				1C60C1E1285724D0003BE25D /* KeyStore ✅ */,
 				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
 				D1976B01287EFAE10063FC9C /* MnemonicImport */,
 				1C60C202285724D0003BE25D /* MnemonicNew */,
@@ -1336,27 +1328,23 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		1C60C1E1285724D0003BE25D /* KeyStore */ = {
+		1C60C1E1285724D0003BE25D /* KeyStore ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1CAC55A7286E119500CCB2B6 /* KeyStore.storyboard */,
-				1C60C1E2285724D0003BE25D /* KeyStoreInteractor.swift */,
-				1C60C1E4285724D0003BE25D /* KeyStorePresenter.swift */,
 				1C60C1ED285724D0003BE25D /* KeyStoreView.swift */,
-				1C60C1E5285724D0003BE25D /* KeyStoreViewModel.swift */,
 				1C60C1EB285724D0003BE25D /* KeyStoreWireframe.swift */,
 				1C60C1E3285724D0003BE25D /* KeyStoreWireframeFactory.swift */,
 				1C60C1E6285724D0003BE25D /* ButtonSheetView */,
 				1C0643CD2892EA1800643C15 /* Cells */,
 			);
-			path = KeyStore;
+			path = "KeyStore ✅";
 			sourceTree = "<group>";
 		};
 		1C60C1E6285724D0003BE25D /* ButtonSheetView */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C1E7285724D0003BE25D /* ButtonsSheetViewCell.swift */,
-				1C60C1E9285724D0003BE25D /* ButtonsSheetViewModel.swift */,
 			);
 			path = ButtonSheetView;
 			sourceTree = "<group>";
@@ -2508,7 +2496,6 @@
 				D1EF5BCE287BEE92004CAD82 /* MnemonicUpdateWireframeFactory.swift in Sources */,
 				1C54DC132862351100E378F6 /* QRCodeScanView.swift in Sources */,
 				1C7FC9B828BCF95E00FC9175 /* WebViewController.swift in Sources */,
-				1C60C2BD285724D0003BE25D /* ButtonsSheetViewModel.swift in Sources */,
 				1C7F864628D20E490073FD95 /* Date+Extensions.swift in Sources */,
 				1C60C2C7285724D0003BE25D /* ChatInteractor.swift in Sources */,
 				1C60C31F285724D1003BE25D /* AppsPresenter.swift in Sources */,
@@ -2527,7 +2514,6 @@
 				1C60C30B285724D1003BE25D /* RootPresenter.swift in Sources */,
 				1C60C2C3285724D0003BE25D /* ChatViewController.swift in Sources */,
 				1C60C320285724D1003BE25D /* AppsInteractor.swift in Sources */,
-				1C60C2B7285724D0003BE25D /* KeyStoreInteractor.swift in Sources */,
 				1C60C2C6285724D0003BE25D /* ChatViewModel.swift in Sources */,
 				1CE0064628899D15002D1EB3 /* AlertSheetPresentationController.swift in Sources */,
 				D1976B0F287EFAE10063FC9C /* MnemonicImportViewModel.swift in Sources */,
@@ -2590,7 +2576,6 @@
 				1C9E3197287580BF00DD2031 /* CurrencyCurrencyWireframeFactory.swift in Sources */,
 				D1EF5BCD287BEE92004CAD82 /* MnemonicUpdateView.swift in Sources */,
 				1C671FF4287FDFDC00C5F044 /* CurrencySwapWireframeFactory.swift in Sources */,
-				1C60C2B9285724D0003BE25D /* KeyStorePresenter.swift in Sources */,
 				1CB8B0BA288DBEE700024E7C /* CultProposalDetailTokenomicsView.swift in Sources */,
 				1C54DBF5285F32DC00E378F6 /* CurrencyAddInputView.swift in Sources */,
 				1C54DC682869BE6500E378F6 /* DashboardButtonsCell.swift in Sources */,
@@ -2801,7 +2786,6 @@
 				1C67201B28870FCB00C5F044 /* ConfirmationView.swift in Sources */,
 				1C7F862F28D20E490073FD95 /* UIButton+Extensions.swift in Sources */,
 				1C7F863628D20E490073FD95 /* UIImage+Extension.swift in Sources */,
-				1C60C2BA285724D0003BE25D /* KeyStoreViewModel.swift in Sources */,
 				1C60C2B8285724D0003BE25D /* KeyStoreWireframeFactory.swift in Sources */,
 				1CEF3D1F28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift in Sources */,
 				1CE0063D288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift in Sources */,
