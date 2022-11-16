@@ -3,46 +3,33 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-protocol MnemonicConfirmationWireframe {
-    func present()
-    func navigate(to destination: MnemonicConfirmationWireframeDestination)
-}
-
-enum MnemonicConfirmationWireframeContext {
-    case `import`
-    case recover
-}
-
-enum MnemonicConfirmationWireframeDestination {
-    case dismiss
-}
+import web3walletcore
 
 final class DefaultMnemonicConfirmationWireframe {
     private weak var parent: UIViewController?
-    private let service: MnemonicConfirmationService
+    private let keyStoreService: KeyStoreService
     
     private weak var vc: UIViewController?
 
     init(
         _ parent: UIViewController?,
-        service: MnemonicConfirmationService
+        keyStoreService: KeyStoreService
     ) {
         self.parent = parent
-        self.service = service
+        self.keyStoreService = keyStoreService
     }
 }
 
-extension DefaultMnemonicConfirmationWireframe: MnemonicConfirmationWireframe {
+extension DefaultMnemonicConfirmationWireframe {
 
     func present() {
         let vc = wireUp()
         parent?.present(vc, animated: true)
     }
     
-    func navigate(to destination: MnemonicConfirmationWireframeDestination) {
-        switch destination {
-        case .dismiss: vc?.popOrDismiss()
+    func navigate(with destination: MnemonicConfirmationWireframeDestination) {
+        if destination is MnemonicConfirmationWireframeDestination.Dismiss {
+            vc?.popOrDismiss()
         }
     }
 }
@@ -50,11 +37,12 @@ extension DefaultMnemonicConfirmationWireframe: MnemonicConfirmationWireframe {
 private extension DefaultMnemonicConfirmationWireframe {
 
     func wireUp() -> UIViewController {
+        let interactor = DefaultMnemonicConfirmationInteractor(keyStoreService: keyStoreService)
         let vc: MnemonicConfirmationViewController = UIStoryboard(.mnemonicConfirmation).instantiate()
         let presenter = DefaultMnemonicConfirmationPresenter(
-            view: vc,
+            view: WeakRef(referred: vc),
             wireframe: self,
-            service: service
+            interactor: interactor
         )
         vc.presenter = presenter
         let nc = NavigationController(rootViewController: vc)

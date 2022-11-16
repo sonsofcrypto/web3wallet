@@ -212,13 +212,10 @@
 		1C60C323285724D1003BE25D /* AppsWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C25C285724D0003BE25D /* AppsWireframeFactory.swift */; };
 		1C60C324285724D1003BE25D /* AppsHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C25D285724D0003BE25D /* AppsHeaderCollectionViewCell.swift */; };
 		1C60C325285724D1003BE25D /* AppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C25E285724D0003BE25D /* AppsView.swift */; };
-		1C60C326285724D1003BE25D /* MnemonicConfirmationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C260285724D0003BE25D /* MnemonicConfirmationPresenter.swift */; };
 		1C60C327285724D1003BE25D /* MnemonicConfirmation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C60C261285724D0003BE25D /* MnemonicConfirmation.storyboard */; };
 		1C60C328285724D1003BE25D /* MnemonicConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C262285724D0003BE25D /* MnemonicConfirmationView.swift */; };
-		1C60C329285724D1003BE25D /* MnemonicConfirmationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C263285724D0003BE25D /* MnemonicConfirmationService.swift */; };
 		1C60C32A285724D1003BE25D /* MnemonicConfirmationWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C264285724D0003BE25D /* MnemonicConfirmationWireframeFactory.swift */; };
 		1C60C32B285724D1003BE25D /* MnemonicConfirmationWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C265285724D0003BE25D /* MnemonicConfirmationWireframe.swift */; };
-		1C60C32D285724D1003BE25D /* MnemonicConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C267285724D0003BE25D /* MnemonicConfirmationViewModel.swift */; };
 		1C60C32E285724D1003BE25D /* NFTsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C269285724D0003BE25D /* NFTsCollectionView.swift */; };
 		1C60C32F285724D1003BE25D /* NFTsCollectionView+NFTs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C26A285724D0003BE25D /* NFTsCollectionView+NFTs.swift */; };
 		1C60C331285724D1003BE25D /* NFTsCollectionWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C26C285724D0003BE25D /* NFTsCollectionWireframe.swift */; };
@@ -696,13 +693,10 @@
 		1C60C25C285724D0003BE25D /* AppsWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C25D285724D0003BE25D /* AppsHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		1C60C25E285724D0003BE25D /* AppsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsView.swift; sourceTree = "<group>"; };
-		1C60C260285724D0003BE25D /* MnemonicConfirmationPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationPresenter.swift; sourceTree = "<group>"; };
 		1C60C261285724D0003BE25D /* MnemonicConfirmation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MnemonicConfirmation.storyboard; sourceTree = "<group>"; };
 		1C60C262285724D0003BE25D /* MnemonicConfirmationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationView.swift; sourceTree = "<group>"; };
-		1C60C263285724D0003BE25D /* MnemonicConfirmationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationService.swift; sourceTree = "<group>"; };
 		1C60C264285724D0003BE25D /* MnemonicConfirmationWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C265285724D0003BE25D /* MnemonicConfirmationWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationWireframe.swift; sourceTree = "<group>"; };
-		1C60C267285724D0003BE25D /* MnemonicConfirmationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationViewModel.swift; sourceTree = "<group>"; };
 		1C60C269285724D0003BE25D /* NFTsCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsCollectionView.swift; sourceTree = "<group>"; };
 		1C60C26A285724D0003BE25D /* NFTsCollectionView+NFTs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NFTsCollectionView+NFTs.swift"; sourceTree = "<group>"; };
 		1C60C26C285724D0003BE25D /* NFTsCollectionWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFTsCollectionWireframe.swift; sourceTree = "<group>"; };
@@ -1256,7 +1250,7 @@
 				1C60C272285724D0003BE25D /* Degen ✅ */,
 				1C60C285285724D0003BE25D /* DegenCult ✅ */,
 				1C60C1E1285724D0003BE25D /* KeyStore ✅ */,
-				1C60C25F285724D0003BE25D /* MnemonicConfirmation */,
+				1C60C25F285724D0003BE25D /* MnemonicConfirmation ✅ */,
 				D1976B01287EFAE10063FC9C /* MnemonicImport */,
 				1C60C202285724D0003BE25D /* MnemonicNew */,
 				D1EF5BBC287BEE92004CAD82 /* MnemonicUpdate */,
@@ -1529,18 +1523,15 @@
 			path = "Apps 🔶";
 			sourceTree = "<group>";
 		};
-		1C60C25F285724D0003BE25D /* MnemonicConfirmation */ = {
+		1C60C25F285724D0003BE25D /* MnemonicConfirmation ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1C60C261285724D0003BE25D /* MnemonicConfirmation.storyboard */,
-				1C60C260285724D0003BE25D /* MnemonicConfirmationPresenter.swift */,
-				1C60C263285724D0003BE25D /* MnemonicConfirmationService.swift */,
 				1C60C262285724D0003BE25D /* MnemonicConfirmationView.swift */,
-				1C60C267285724D0003BE25D /* MnemonicConfirmationViewModel.swift */,
 				1C60C265285724D0003BE25D /* MnemonicConfirmationWireframe.swift */,
 				1C60C264285724D0003BE25D /* MnemonicConfirmationWireframeFactory.swift */,
 			);
-			path = MnemonicConfirmation;
+			path = "MnemonicConfirmation ✅";
 			sourceTree = "<group>";
 		};
 		1C60C268285724D0003BE25D /* NFTsCollection ✅ */ = {
@@ -2561,7 +2552,6 @@
 				D1EF5BC7287BEE92004CAD82 /* MnemonicUpdateCell.swift in Sources */,
 				1C60C2EC285724D0003BE25D /* NetworksView.swift in Sources */,
 				1C60C303285724D1003BE25D /* NFTsDashboardView+NFTs.swift in Sources */,
-				1C60C326285724D1003BE25D /* MnemonicConfirmationPresenter.swift in Sources */,
 				1C6487162832DEFE0091A12D /* Reachability.swift in Sources */,
 				1C60C2FE285724D0003BE25D /* NFTDetailView+Content+Properties.swift in Sources */,
 				1C7F864728D20E490073FD95 /* Float+Extensions.swift in Sources */,
@@ -2570,7 +2560,6 @@
 				1C7F862A28D20E490073FD95 /* CAAnimation+Extension.swift in Sources */,
 				1C54DBFD2860E5AB00E378F6 /* NetworkPickerInteractor.swift in Sources */,
 				1C60C31C285724D1003BE25D /* AppsWireframe.swift in Sources */,
-				1C60C32D285724D1003BE25D /* MnemonicConfirmationViewModel.swift in Sources */,
 				1C6720142885D78A00C5F044 /* CurrencySwapPriceView.swift in Sources */,
 				1C60C35D285724D1003BE25D /* DegenWireframeFactory.swift in Sources */,
 				1C9E3197287580BF00DD2031 /* CurrencyCurrencyWireframeFactory.swift in Sources */,
@@ -2790,7 +2779,6 @@
 				1CEF3D1F28C3A5BC0092BC0E /* ConfirmationApproveUniswapView.swift in Sources */,
 				1CE0063D288891F0002D1EB3 /* ConfirmationSheetPresentationController.swift in Sources */,
 				1C7F863928D20E490073FD95 /* UIApplication+Extensions.swift in Sources */,
-				1C60C329285724D1003BE25D /* MnemonicConfirmationService.swift in Sources */,
 				1CDED603289C4C5C00DF34A7 /* NFTSendView.swift in Sources */,
 				1A4C3E41DA2739ED48CD12F9 /* CultServiceAssembler.swift in Sources */,
 				1C60C30E285724D1003BE25D /* AccountMarketInfoCell.swift in Sources */,

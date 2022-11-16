@@ -3,11 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-import WebKit
-
-protocol MnemonicConfirmationView: AnyObject {
-    func update(with viewModel: MnemonicConfirmationViewModel)
-}
+import web3walletcore
 
 final class MnemonicConfirmationViewController: UIViewController {
     @IBOutlet weak var statusLabel: UILabel!
@@ -35,11 +31,11 @@ final class MnemonicConfirmationViewController: UIViewController {
 extension MnemonicConfirmationViewController {
     
     @IBAction func ctaAction(_ sender: Any) {
-        presenter.handle(.confirm)
+        presenter.handle(event: MnemonicConfirmationPresenterEvent.Confirm())
     }
 }
 
-extension MnemonicConfirmationViewController: MnemonicConfirmationView {
+extension MnemonicConfirmationViewController {
     
     func update(with viewModel: MnemonicConfirmationViewModel) {
         self.viewModel = viewModel
@@ -65,9 +61,9 @@ extension MnemonicConfirmationViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         presenter.handle(
-            .mnemonicChanged(
+            event: MnemonicConfirmationPresenterEvent.MnemonicChanged(
                 to: textView.text,
-                selectedLocation: textView.selectedRange.location
+                selectedLocation: textView.selectedRange.location.int32
             )
         )
     }
@@ -110,7 +106,7 @@ private extension MnemonicConfirmationViewController {
     
     @objc func dismissKeyboard() { textView.resignFirstResponder() }
 
-    @objc func dismissTapped() { presenter.handle(.dismiss) }
+    @objc func dismissTapped() { presenter.handle(event: MnemonicConfirmationPresenterEvent.Dismiss()) }
 }
 
 private extension MnemonicConfirmationViewController {
@@ -122,7 +118,9 @@ private extension MnemonicConfirmationViewController {
     }
     
     func refreshTextView() {
-        if let text = viewModel.mnemonicToUpdate { textView.text = text }
+        if let text = viewModel.mnemonicToUpdate {
+            textView.text = text
+        }
         let selectedRange = textView.selectedRange
         let attributedText = NSMutableAttributedString(
             string: textView.text,
@@ -160,7 +158,7 @@ private extension MnemonicConfirmationViewController {
     }
     
     func refreshCTA() {
-        guard let isValid = viewModel.isValid else {
+        guard let isValid = viewModel.isValid?.boolValue else {
             button.setTitle(Localized("mnemonicConfirmation.cta"), for: .normal)
             return
         }
@@ -233,9 +231,9 @@ private extension MnemonicConfirmationViewController {
         let newMnemonic = self.newMnemonic(appendingWord: word)
         textView.text = newMnemonic
         presenter.handle(
-            .mnemonicChanged(
+            event: MnemonicConfirmationPresenterEvent.MnemonicChanged(
                 to: newMnemonic,
-                selectedLocation: textView.selectedRange.location
+                selectedLocation: textView.selectedRange.location.int32
             )
         )
     }
@@ -248,7 +246,7 @@ private extension MnemonicConfirmationViewController {
             } else {
                 var words = text.split(separator: " ")
                 _ = words.removeLast()
-                return words.joined(separator: " ") + " " + word + " "
+                return words.joined(separator: " ") + (words.isEmpty ? "" : " ") + word + " "
             }
         }
         var newString = ""
@@ -278,6 +276,6 @@ private extension MnemonicConfirmationViewController {
 extension MnemonicConfirmationViewController: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        presenter.handle(.saltChanged(to: textField.text ?? ""))
+        presenter.handle(event: MnemonicConfirmationPresenterEvent.SaltChanged(to: textField.text ?? ""))
     }
 }
