@@ -39,9 +39,9 @@ class DefaultMnemonicConfirmationInteractor(
         }
 
     override fun findInvalidWords(mnemonic: String?): List<WordInfo> {
-        val mnemonic = mnemonic ?: return emptyList()
+        val mnemonic = mnemonic?.trim() ?: return emptyList()
         val wordsInfo = mutableListOf<WordInfo>()
-        var words = mnemonic.split(" ")
+        var words = mnemonic.split(" ").filter { it.isNotEmpty() }
         var lastWord: String? = null
         words.lastOrNull().let { last ->
             mnemonic.lastOrNull().let {  char ->
@@ -53,13 +53,13 @@ class DefaultMnemonicConfirmationInteractor(
         }
         // Validates that all words other than the last one (if we are still typing) are valid
         words.forEach { word ->
-            val isValidPrefix = isValidPrefix(word)
-            wordsInfo.add(WordInfo(word, !isValidPrefix))
+            val isValidWord = validator.search(word) && wordsInfo.count() < 12
+            wordsInfo.add(WordInfo(word, !isValidWord))
         }
         // In case we have not yet typed the entire last word, we check that the start of it
         // matches with a valid word
         lastWord?.let { word ->
-            val isValidPrefix = isValidPrefix(word)
+            val isValidPrefix = isValidPrefix(word) && wordsInfo.count() < 12
             wordsInfo.add(WordInfo(word, !isValidPrefix))
         }
         return wordsInfo

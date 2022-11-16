@@ -118,7 +118,9 @@ private extension MnemonicConfirmationViewController {
     }
     
     func refreshTextView() {
-        if let text = viewModel.mnemonicToUpdate { textView.text = text }
+        if let text = viewModel.mnemonicToUpdate {
+            textView.text = text
+        }
         let selectedRange = textView.selectedRange
         let attributedText = NSMutableAttributedString(
             string: textView.text,
@@ -244,7 +246,7 @@ private extension MnemonicConfirmationViewController {
             } else {
                 var words = text.split(separator: " ")
                 _ = words.removeLast()
-                return words.joined(separator: " ") + " " + word + " "
+                return words.joined(separator: " ") + (words.isEmpty ? "" : " ") + word + " "
             }
         }
         var newString = ""
