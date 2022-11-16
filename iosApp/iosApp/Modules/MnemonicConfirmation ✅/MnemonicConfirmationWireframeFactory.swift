@@ -24,11 +24,7 @@ final class DefaultMnemonicConfirmationWireframeFactory {
 extension DefaultMnemonicConfirmationWireframeFactory: MnemonicConfirmationWireframeFactory {
     
     func make(_ parent: UIViewController?) -> MnemonicConfirmationWireframe {
-        let service = DefaultMnemonicConfirmationService(
-            keyStoreService: keyStoreService,
-            web3Service: web3Service
-        )
-        return DefaultMnemonicConfirmationWireframe(parent, service: service)
+        DefaultMnemonicConfirmationWireframe(parent, keyStoreService: keyStoreService)
     }
 }
 
