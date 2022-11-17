@@ -18,7 +18,7 @@ enum DashboardPresenterEvent {
     case didTapNetwork
     case didScanQRCode
     case didTapEditTokens(network: String)
-    case didTapNotification(id: String)
+    case didTapAction(idx: Int)
     case didTapDismissNotification(id: String)
     case pullDownToRefresh
 }
@@ -33,29 +33,20 @@ final class DefaultDashboardPresenter {
     private weak var view: DashboardView?
     private let wireframe: DashboardWireframe
     private let interactor: DashboardInteractor
-    // TODO: @Annon move to web3lib listening for mnemonic updates notifications
-    private let web3ServiceLegacy: Web3ServiceLegacy
 
     var updateTimer: Timer?
     var expandedNetworks = [String]()
-    var notifications = [Web3Notification]()
+    var actions = [Action]()
 
     init(
         view: DashboardView,
         wireframe: DashboardWireframe,
-        interactor: DashboardInteractor,
-        web3ServiceLegacy: Web3ServiceLegacy = AppAssembler.resolve()
+        interactor: DashboardInteractor
     ) {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
-        self.web3ServiceLegacy = web3ServiceLegacy
         interactor.addListener(self)
-        web3ServiceLegacy.addWalletListener(self)
-    }
-
-    deinit {
-        interactor.removeListener(self)
     }
 }
 
@@ -92,8 +83,8 @@ extension DefaultDashboardPresenter: DashboardPresenter {
             didTapEditToken(networkId)
         case .swapAction:
             wireframe.navigate(to: .tokenSwap)
-        case let .didTapNotification(id):
-            didTapNotification(id)
+        case let .didTapAction(idx):
+            didTapAction(idx)
         case .didTapDismissNotification:
             break
         case .pullDownToRefresh:
@@ -104,7 +95,7 @@ extension DefaultDashboardPresenter: DashboardPresenter {
     }
     
     func releaseResources() {
-        web3ServiceLegacy.removeWalletListener(self)
+        interactor.removeListener(self)
     }
 }
 
@@ -114,7 +105,7 @@ extension DefaultDashboardPresenter: DashboardInteractorLister {
         switch event {
         case .didUpdateBalance, .didUpdateMarketdata, .didUpdateNFTs,
              .didUpdateCandles, .didSelectKeyStoreItem, .didSelectNetwork,
-             .didChangeNetworks:
+             .didChangeNetworks, .didUpdateActions:
             setNeedsUpdateView()
         default:
             ()
@@ -125,7 +116,7 @@ extension DefaultDashboardPresenter: DashboardInteractorLister {
 private extension DefaultDashboardPresenter {
     
     func updateView() {
-        notifications = interactor.notifications()
+        actions = interactor.actions()
         view?.update(with: viewModel())
     }
 
@@ -155,9 +146,8 @@ private extension DefaultDashboardPresenter {
         )
     }
     
-    func didTapNotification(_ id: String) {
-        guard let notification = notifications.first(where: { $0.id == id }) else { return }
-        guard let deepLink = DeepLink(identifier: notification.deepLink) else { return }
+    func didTapAction(_ idx: Int) {
+        guard let deepLink = DeepLink(identifier: actions[idx].deepLink) else { return }
         if deepLink.identifier == DeepLink.themesList.identifier {
             wireframe.navigate(to: .themePicker)
         } else {
@@ -179,7 +169,7 @@ private extension DefaultDashboardPresenter {
                         currencyCode: "usd"
                     )
                 ),
-                items: .actions(
+                items: .buttons(
                     [
                         .init(
                             title: Localized("dashboard.button.receive"),
@@ -242,11 +232,10 @@ private extension DefaultDashboardPresenter {
     }
     
     func notificationViewModel() -> DashboardViewModel.Section.Items {
-        .notifications(
-            notifications.compactMap {
+        .actions(
+            actions.compactMap {
                 .init(
-                    id: $0.id,
-                    image: $0.image,
+                    image: $0.imageName,
                     title: $0.title,
                     body: $0.body,
                     canDismiss: $0.canDismiss
@@ -297,11 +286,6 @@ private extension DefaultDashboardPresenter {
         updateView()
         interactor.reloadData()
     }
-}
-
-extension DefaultDashboardPresenter: Web3ServiceWalletListener {
-    
-    func notificationsChanged() { updateView() }
 }
 
 private extension CandlesViewModel {

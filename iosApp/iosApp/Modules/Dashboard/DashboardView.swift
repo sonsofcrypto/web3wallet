@@ -105,8 +105,8 @@ extension DashboardViewController: DashboardView {
         idx: Int,
         items: DashboardViewModel.Section.Items
     ) {
-        let _ = (cell as? DashboardButtonsCell)?.update(with: items.actions, presenter: presenter)
-        let _ = (cell as? DashboardNotificationCell)?.update(with: items.notifications(at: idx))
+        let _ = (cell as? DashboardButtonsCell)?.update(with: items.buttons, presenter: presenter)
+        let _ = (cell as? DashboardActionCell)?.update(with: items.actions(at: idx))
         let _ = (cell as? DashboardWalletCell)?.update(with: items.wallet(at: idx))
         let _ = (cell as? DashboardTableWalletCell)?.update(with: items.wallet(at: idx))
         let _ = (cell as? DashboardNFTCell)?.update(with: items.nft(at: idx))
@@ -139,12 +139,12 @@ extension DashboardViewController: UICollectionViewDataSource {
             fatalError("No viewModel for \(indexPath) \(collectionView)")
         }
         let (cv, idxPath) = (collectionView, indexPath)
-        if !section.items.actions.isEmpty {
+        if !section.items.buttons.isEmpty {
             return cv.dequeue(DashboardButtonsCell.self, for: idxPath)
-                .update(with: section.items.actions, presenter: presenter)
-        } else if let notification = section.items.notifications(at: idxPath.item) {
-            return cv.dequeue(DashboardNotificationCell.self, for: indexPath)
-                .update(with: notification)
+                .update(with: section.items.buttons, presenter: presenter)
+        } else if let action = section.items.actions(at: idxPath.item) {
+            return cv.dequeue(DashboardActionCell.self, for: indexPath)
+                .update(with: action)
         } else if let wallet = section.items.wallet(at: indexPath.row) {
             if Theme.type.isThemeIOS {
                 let isLast = (section.items.count - 1) == indexPath.item
@@ -215,11 +215,10 @@ extension DashboardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let section = viewModel?.sections[indexPath.section] else { return }
         switch section.items {
-        case .actions:
+        case .buttons:
             break
-        case let .notifications(notifications):
-            let notification = notifications[indexPath.item]
-            presenter.handle(.didTapNotification(id: notification.id))
+        case .actions:
+            presenter.handle(.didTapAction(idx: indexPath.item))
         case .wallets:
             presenter.handle(
                 .didSelectWallet(
@@ -310,9 +309,9 @@ private extension DashboardViewController {
         let layout = UICollectionViewCompositionalLayout { [weak self] idx, env in
             guard let section = self?.viewModel?.sections[idx] else { return nil }
             switch section.items {
-            case .actions:
+            case .buttons:
                 return self?.buttonsCollectionLayoutSection()
-            case .notifications:
+            case .actions:
                 return self?.notificationsCollectionLayoutSection()
             case .nfts:
                 return self?.nftsCollectionLayoutSection()

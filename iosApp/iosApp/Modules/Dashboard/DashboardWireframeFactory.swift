@@ -29,6 +29,7 @@ final class DefaultDashboardWireframeFactory {
     private let currencyStoreService: CurrencyStoreService
     private let walletService: WalletService
     private let nftsService: NFTsService
+    private let actionsService: ActionsService
 
     init(
         accountWireframeFactory: AccountWireframeFactory,
@@ -45,7 +46,8 @@ final class DefaultDashboardWireframeFactory {
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
-        nftsService: NFTsService
+        nftsService: NFTsService,
+        actionsService: ActionsService
     ) {
         self.accountWireframeFactory = accountWireframeFactory
         self.alertWireframeFactory = alertWireframeFactory
@@ -62,6 +64,7 @@ final class DefaultDashboardWireframeFactory {
         self.currencyStoreService = currencyStoreService
         self.walletService = walletService
         self.nftsService = nftsService
+        self.actionsService = actionsService
     }
 }
 
@@ -84,7 +87,8 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             networksService: networksService,
             currencyStoreService: currencyStoreService,
             walletService: walletService,
-            nftsService: nftsService
+            nftsService: nftsService,
+            actionsService: actionsService
         )
     }
 }
@@ -110,7 +114,8 @@ final class DashboardWireframeFactoryAssembler: AssemblerComponent {
                 networksService: resolver.resolve(),
                 currencyStoreService: resolver.resolve(),
                 walletService: resolver.resolve(),
-                nftsService: resolver.resolve()
+                nftsService: resolver.resolve(),
+                actionsService: resolver.resolve()
             )
         }
     }

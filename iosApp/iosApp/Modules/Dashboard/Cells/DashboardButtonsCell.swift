@@ -11,7 +11,7 @@ final class DashboardButtonsCell: UICollectionViewCell {
     @IBOutlet weak var stack: UIStackView!
     
     private weak var presenter: DashboardPresenter!
-    private var viewModel: [DashboardViewModel.Action] = []
+    private var viewModel: [DashboardViewModel.Button] = []
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -76,7 +76,7 @@ extension DashboardButtonsCell {
 extension DashboardButtonsCell {
 
     func update(
-        with viewModel: [DashboardViewModel.Action],
+        with viewModel: [DashboardViewModel.Button],
         presenter: DashboardPresenter
     ) -> Self {
         self.viewModel = viewModel

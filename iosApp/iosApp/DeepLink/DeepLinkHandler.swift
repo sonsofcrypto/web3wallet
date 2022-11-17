@@ -9,7 +9,7 @@ import web3walletcore
 enum DeepLink {
     case mnemonicConfirmation
     case themesList
-    case featuresList
+    case improvementProposalsList
     case degen
     case cultProposals
     case nftsDashboard
@@ -19,7 +19,7 @@ enum DeepLink {
         switch identifier {
         case DeepLink.mnemonicConfirmation.identifier: self = .mnemonicConfirmation
         case DeepLink.themesList.identifier: self = .themesList
-        case DeepLink.featuresList.identifier: self = .featuresList
+        case DeepLink.improvementProposalsList.identifier: self = .improvementProposalsList
         case DeepLink.degen.identifier: self = .degen
         case DeepLink.cultProposals.identifier: self = .cultProposals
         case DeepLink.nftsDashboard.identifier: self = .nftsDashboard
@@ -31,7 +31,7 @@ enum DeepLink {
         switch self {
         case .mnemonicConfirmation: return "modal.mnemonic.confirmation"
         case .themesList: return "settings.themes"
-        case .featuresList: return "modal.features"
+        case .improvementProposalsList: return "modal.improvementProposals"
         case .degen: return "degen"
         case .cultProposals: return "cult.proposals"
         case .nftsDashboard: return "nfts.dashboard"
@@ -65,8 +65,8 @@ extension DefaultDeepLinkHandler: DeepLinkHandler {
             case .themesList:
                 self.navigate(to: .settings)
                 self.openThemeMenu()
-            case .featuresList:
-                self.openFeaturesList()
+            case .improvementProposalsList:
+                self.openImprovementProposalsList()
             case .degen:
                 self.navigate(to: .degen)
             case .cultProposals:
@@ -76,17 +76,17 @@ extension DefaultDeepLinkHandler: DeepLinkHandler {
                     let vc = degenNavController.viewControllers.first(
                     where: { $0 is CultProposalsViewController }
                 ) {
-                    degenNavController.popToViewController(vc, animated: true)
+                    _ = degenNavController.popToViewController(vc, animated: true)
                 } else {
                     self.openCultProposals()
                 }
             case .nftsDashboard:
                 self.navigate(to: .nfts)
-                self.nftsDashboardNavController?.popToRootViewController(animated: true)
+                _ = self.nftsDashboardNavController?.popToRootViewController(animated: true)
             case let .account(context):
                 if self.isAccountPresented { return }
                 self.navigate(to: .dashboard)
-                self.dashboardNavController?.popToRootViewController(animated: true)
+                _ = self.dashboardNavController?.popToRootViewController(animated: true)
                 self.openAccount(with: context, after: 0.3)
             }
         }
@@ -228,7 +228,7 @@ private extension DefaultDeepLinkHandler {
         ).present()
     }
     
-    func openFeaturesList() {
+    func openImprovementProposalsList() {
         guard let rootVC = rootVC else { return }
         let wireframe: ImprovementProposalsWireframeFactory = AppAssembler.resolve()
         wireframe.make(rootVC).present()

@@ -47,6 +47,7 @@ final class DefaultDashboardWireframe {
     private let currencyStoreService: CurrencyStoreService
     private let walletService: WalletService
     private let nftsService: NFTsService
+    private let actionsService: ActionsService
 
     private weak var vc: UIViewController?
 
@@ -66,7 +67,8 @@ final class DefaultDashboardWireframe {
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
-        nftsService: NFTsService
+        nftsService: NFTsService,
+        actionsService: ActionsService
     ) {
         self.parent = parent
         self.accountWireframeFactory = accountWireframeFactory
@@ -84,6 +86,7 @@ final class DefaultDashboardWireframe {
         self.currencyStoreService = currencyStoreService
         self.walletService = walletService
         self.nftsService = nftsService
+        self.actionsService = actionsService
     }
 }
 
@@ -204,7 +207,8 @@ private extension DefaultDashboardWireframe {
             networksService: networksService,
             currencyStoreService: currencyStoreService,
             walletService: walletService,
-            nftsService: nftsService
+            nftsService: nftsService,
+            actionsService: actionsService
         )
         let vc: DashboardViewController = UIStoryboard(.dashboard).instantiate()
         let presenter = DefaultDashboardPresenter(
