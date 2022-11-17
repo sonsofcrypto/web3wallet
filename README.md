@@ -32,6 +32,8 @@ Aims to be alternative / equivalent of [ethers](https://docs.ethers.io/v5/) /
 [web3js](https://web3js.readthedocs.io) written using [Kotlin multiplatform]
 (https://kotlinlang.org/docs/multiplatform.html). Library in under heavy 
 active development. 
+- build config file `./gradlew generateBuildKonfig` 
+- see all available tasks `./gradlew tasks` 
 
 # web3Wallet
 Multichain, cross-platform, open source, web3 wallet. Uses clean 

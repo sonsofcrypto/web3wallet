@@ -127,6 +127,7 @@ kotlin {
 
 buildkonfig {
     packageName = "com.sonsofcrypto.web3lib"
+    exposeObjectWithName = "BuildKonfig"
     defaultConfigs {
         val properties = Properties().apply {
             load(rootProject.file("local.properties").reader())

@@ -1,6 +1,6 @@
 package com.sonsofcrypto.web3walletcore.services.etherScan
 
-import com.sonsofcrypto.web3lib.ApiKeysProvider.ApiKeysProvider
+import com.sonsofcrypto.web3lib.BuildKonfig
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.types.Network
 import com.sonsofcrypto.web3lib.utils.extensions.jsonDecode
@@ -110,9 +110,10 @@ class DefaultEtherScanService(
                 parameters.append("action", "txlist")
                 parameters.append("address", address)
                 parameters.append("sort", "desc")
-                parameters.append("apikey", ApiKeysProvider.EtherScanKey)
+                parameters.append("apikey", BuildKonfig.etherscanKey)
             }
         }.bodyAsText()
+
         val transactions = jsonDecode<EtherScanResponse>(body)?.result ?: emptyList()
         storeTransactions(address, network, transactions)
     }
