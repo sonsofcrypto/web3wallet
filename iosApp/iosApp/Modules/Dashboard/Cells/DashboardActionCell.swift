@@ -4,7 +4,7 @@
 
 import UIKit
 
-final class DashboardNotificationCell: CollectionViewCell {
+final class DashboardActionCell: CollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -12,8 +12,8 @@ final class DashboardNotificationCell: CollectionViewCell {
     @IBOutlet weak var closeView: UIView!
     @IBOutlet weak var closeButton: UIButton!
     
-    private var viewModel: DashboardViewModel.Notification!
-    private var handler: ((String) -> Void)?
+    private var viewModel: DashboardViewModel.Action!
+    private var handler: (() -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -42,23 +42,37 @@ final class DashboardNotificationCell: CollectionViewCell {
     }
     
     @objc func dismissTapped() {
-        handler?(viewModel.id)
+        handler?()
     }
 }
 
-extension DashboardNotificationCell {
+extension DashboardActionCell {
 
     func update(
-        with viewModel: DashboardViewModel.Notification?,
-        handler: ((String) -> Void)? = nil
+        with viewModel: DashboardViewModel.Action?,
+        handler: (() -> Void)? = nil
     ) -> Self {
         guard let viewModel = viewModel else { return self }
         self.viewModel = viewModel
         self.handler = handler
-        imageView.image = viewModel.image.pngImage
+        // TODO: Review this image asset
+        imageView.image = makeSecurityImageData(letter: viewModel.image)
         titleLabel.text = viewModel.title
         bodyLabel.text = viewModel.body
         closeView.isHidden = !viewModel.canDismiss
         return self
+    }
+}
+
+private extension DashboardActionCell {
+    
+    func makeSecurityImageData(letter: String) -> UIImage? {
+        let config = UIImage.SymbolConfiguration(
+            paletteColors: [
+                Theme.colour.labelPrimary,
+                .clear
+            ]
+        )
+        return UIImage(systemName: "\(letter).circle.fill")?.applyingSymbolConfiguration(config)
     }
 }

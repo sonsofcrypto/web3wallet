@@ -264,7 +264,7 @@ private extension DefaultSettingsService {
         case .debugTransitionsCardFlip, .debugTransitionsSheet: break
         case .themeIOSLight, .themeIOSDark, .themeMiamiLight, .themeMiamiDark: Theme = appTheme
         case .improvementProposals:
-            guard let deepLink = DeepLink(identifier: DeepLink.featuresList.identifier) else { return }
+            guard let deepLink = DeepLink(identifier: DeepLink.improvementProposalsList.identifier) else { return }
             let deepLinkHandler: DeepLinkHandler = AppAssembler.resolve()
             deepLinkHandler.handle(deepLink: deepLink)
         case .resetKeystore:

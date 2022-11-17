@@ -6,6 +6,7 @@ import Foundation
 import web3walletcore
 
 enum DashboardInteractorEvent {
+    case didUpdateActions
     case didSelectKeyStoreItem
     case didSelectNetwork(network: Network?)
     case didChangeNetworks(networks: [Network])
@@ -32,7 +33,7 @@ protocol DashboardInteractor: AnyObject {
     func cryptoBalance(for network: Network, currency: Currency) -> BigInt
     func fiatBalance(for network: Network, currency: Currency) -> Double
     func nfts(for network: Network) -> [NFTItem]
-    func notifications() -> [Web3Notification]
+    func actions() -> [Action]
     func totalFiatBalance() -> Double
     func reloadBalances()
     func reloadData()
@@ -45,18 +46,22 @@ final class DefaultDashboardInteractor {
     private let currencyStoreService: CurrencyStoreService
     private let walletService: WalletService
     private let nftsService: NFTsService
+    private let actionsService: ActionsService
     private var listeners: [WeakContainer] = []
 
     init(
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
-        nftsService: NFTsService
+        nftsService: NFTsService,
+        actionsService: ActionsService
     ) {
         self.networksService = networksService
         self.currencyStoreService = currencyStoreService
         self.walletService = walletService
         self.nftsService = nftsService
+        self.actionsService = actionsService
+        
         NotificationCenter.default.addObserver(
             self, selector: #selector(didEnterBackground),
             name: UIApplication.didEnterBackgroundNotification,
@@ -123,10 +128,8 @@ extension DefaultDashboardInteractor: DashboardInteractor {
         nftsService.yourNFTs()
     }
 
-    func notifications() -> [Web3Notification] {
-        // TODO: Review this
-        let web3ServiceLegacy: Web3ServiceLegacy = AppAssembler.resolve()
-        return web3ServiceLegacy.dashboardNotifications
+    func actions() -> [Action] {
+        actionsService.outstandingActions()
     }
 
     func totalFiatBalance() -> Double {
@@ -189,18 +192,20 @@ extension DefaultDashboardInteractor: DashboardInteractor {
         listeners = [WeakContainer(listener)]
         networksService.add(listener__: self)
         walletService.add(listener_: self)
+        actionsService.addListener(listener_: self)
     }
 
     func removeListener(_ listener: DashboardInteractorLister) {
         listeners = []
         networksService.remove(listener__: self)
         walletService.remove(listener_: self)
+        actionsService.removeListener(listener_: self)
     }
 }
 
 // MARK: - Listeners
 
-extension DefaultDashboardInteractor: NetworksListener, WalletListener {
+extension DefaultDashboardInteractor: NetworksListener, WalletListener, ActionsServiceListener {
 
     private func emit(_ event: DashboardInteractorEvent) {
         listeners.forEach { $0.value?.handle(event) }
@@ -219,6 +224,10 @@ extension DefaultDashboardInteractor: NetworksListener, WalletListener {
         if let event = event__.toInteractorEvent() {
             emit(event)
         }
+    }
+    
+    func actionsUpdated() {
+        emit(.didUpdateActions)
     }
 
     private class WeakContainer {

@@ -32,8 +32,8 @@ extension DashboardViewModel {
         }
         
         enum Items {
+            case buttons([DashboardViewModel.Button])
             case actions([DashboardViewModel.Action])
-            case notifications([DashboardViewModel.Notification])
             case wallets([DashboardViewModel.Wallet])
             case nfts([DashboardViewModel.NFT])
         }
@@ -49,8 +49,8 @@ extension DashboardViewModel.Section.Items {
     func isSameKind(_ other: DashboardViewModel.Section.Items?) -> Bool {
         guard let other = other else { return false }
         switch (self, other) {
+        case (.buttons, .buttons): return true
         case (.actions, .actions): return true
-        case (.notifications, .notifications): return true
         case (.wallets, .wallets): return true
         case (.nfts, .nfts): return true
         default: return false
@@ -60,7 +60,7 @@ extension DashboardViewModel.Section.Items {
 
 extension DashboardViewModel {
 
-    struct Action {
+    struct Button {
         let title: String
         let imageName: String
         let type: `Type`
@@ -75,9 +75,8 @@ extension DashboardViewModel {
 
 extension DashboardViewModel {
 
-    struct Notification {
-        let id: String
-        let image: Data
+    struct Action {
+        let image: String
         let title: String
         let body: String
         let canDismiss: Bool
@@ -131,21 +130,21 @@ extension DashboardViewModel.Section {
 extension DashboardViewModel.Section.Items {
     var count: Int {
         switch self {
-        case .actions: return 1
-        case let .notifications(notifications): return notifications.count
+        case .buttons: return 1
+        case let .actions(actions): return actions.count
         case let .wallets(wallets): return wallets.count
         case let .nfts(nfts): return nfts.count
         }
     }
 
-    var actions: [DashboardViewModel.Action] {
-        guard case let .actions(actions) = self else { return [] }
-        return actions
+    var buttons: [DashboardViewModel.Button] {
+        guard case let .buttons(buttons) = self else { return [] }
+        return buttons
     }
     
-    func notifications(at index: Int) -> DashboardViewModel.Notification? {
-        guard case let .notifications(notifications) = self else { return nil }
-        return notifications[safe: index]
+    func actions(at index: Int) -> DashboardViewModel.Action? {
+        guard case let .actions(actions) = self else { return nil }
+        return actions[safe: index]
     }
     
     func wallet(at index: Int) -> DashboardViewModel.Wallet? {
