@@ -24,8 +24,8 @@ private extension SectionHeaderView {
 
 extension SectionHeaderView {
 
-    func update(with viewModel: ImprovementProposalsViewModel.Category?) -> Self {
-        label.text = viewModel?.description_
+    func update(with viewModel: SectionHeaderViewModel?) -> Self {
+        label.text = viewModel?.title
         return self
     }
 }

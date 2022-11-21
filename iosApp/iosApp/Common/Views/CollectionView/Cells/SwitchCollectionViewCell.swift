@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class SwitchCollectionViewCell: CollectionViewCell {
 
@@ -35,13 +36,12 @@ final class SwitchCollectionViewCell: CollectionViewCell {
 extension SwitchCollectionViewCell {
 
     func update(
-        with title: String,
-        onOff: Bool,
+        with viewModel: SwitchCollectionViewModel,
         handler: ((Bool)->Void)? = nil
     ) -> Self {
         switchChangeHandler = handler
-        titleLabel.text = title
-        onOffSwitch.setOn(onOff, animated: false)
+        titleLabel.text = viewModel.title
+        onOffSwitch.setOn(viewModel.onOff, animated: false)
         return self
     }
 }
