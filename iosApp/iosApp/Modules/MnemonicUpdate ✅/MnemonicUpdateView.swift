@@ -309,7 +309,7 @@ extension MnemonicUpdateViewController: UIViewControllerTransitioningDelegate {
 private extension MnemonicUpdateViewController {
     
     func configureUI() {
-        title = Localized("mnemonicNew.title.update")
+        title = Localized("mnemonic.title.update")
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: "chevron.left".assetImage,
             style: .plain,

@@ -20,6 +20,7 @@ final class MnemonicConfirmationViewController: UIViewController {
     private var viewModel: MnemonicConfirmationViewModel!
     private let inputAccessoryViewHeight: CGFloat = 40
     private var firstTime = true
+    private var mnemonicImportHelper: MnemonicImportHelper!
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +73,17 @@ extension MnemonicConfirmationViewController: UITextViewDelegate {
 private extension MnemonicConfirmationViewController {
     
     func configureUI() {
+        mnemonicImportHelper = MnemonicImportHelper(
+            textView: textView,
+            onMnemonicChangedHandler: { [weak self] newMnemonic, selectedLocation in
+                self?.presenter.handle(
+                    event: MnemonicConfirmationPresenterEvent.MnemonicChanged(
+                        to: newMnemonic,
+                        selectedLocation: selectedLocation.int32
+                    )
+                )
+            }
+        )
         view.add(.targetAction(.init(target: self, selector: #selector(dismissKeyboard))))
         title = Localized("mnemonicConfirmation.title")
         navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -88,7 +100,9 @@ private extension MnemonicConfirmationViewController {
         textViewContainer.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         textView.delegate = self
         textView.applyStyle(.body)
-        textView.inputAccessoryView = inputAccessoryView()
+        textView.inputAccessoryView = mnemonicImportHelper.inputAccessoryView(
+            size: .init(width: view.frame.width, height: inputAccessoryViewHeight)
+        )
         saltLabel.text = Localized("mnemonicConfirmation.salt")
         saltLabel.apply(style: .headline)
         saltTextFieldView.backgroundColor = Theme.colour.cellBackground
@@ -153,7 +167,7 @@ private extension MnemonicConfirmationViewController {
         textViewContainer.layer.borderWidth = hasInvalidWords ? 2 : 0
         textViewContainer.layer.borderColor = hasInvalidWords ? Theme.colour.navBarTint.cgColor : nil
         textView.inputAccessoryView?.removeAllSubview()
-        addWords(viewModel.potentialWords, to: textView.inputAccessoryView)
+        mnemonicImportHelper.addWords(viewModel.potentialWords, to: textView.inputAccessoryView)
         textView.selectedRange = selectedRange
     }
     
@@ -168,108 +182,6 @@ private extension MnemonicConfirmationViewController {
         } else {
             button.setTitle(Localized("mnemonicConfirmation.cta.invalid"), for: .normal)
         }
-    }
-}
-
-private extension MnemonicConfirmationViewController {
-    
-    func inputAccessoryView() -> UIView {
-        let scrollView = UIScrollView(
-            frame: .init(
-                origin: .zero,
-                size: .init(
-                    width: view.frame.width,
-                    height: inputAccessoryViewHeight
-                )
-            )
-        )
-        scrollView.backgroundColor = Theme.colour.navBarBackground
-        addWords([], to: scrollView)
-        return scrollView
-    }
-    
-    func addWords(_ words: [String], to view: UIView?) {
-        guard let view = view else { return }
-        var labels = [UILabel]()
-        for (index, word) in words.enumerated() {
-            let label = UILabel(with: .body)
-            label.text = word
-            label.addConstraints(
-                [
-                    .hugging(axis: .horizontal)
-                ]
-            )
-            label.add(
-                .targetAction(.init(target: self, selector: #selector(wordSelectedFromInputView(sender:))))
-            )
-            label.tag = index
-            label.sizeToFit()
-            labels.append(label)
-        }
-        labels.append(.init())
-        let stackView = HStackView(labels)
-        stackView.spacing = 16
-        view.addSubview(stackView)
-        stackView.addConstraints(
-            [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 16)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 16)),
-                .layout(anchor: .topAnchor),
-                .layout(anchor: .bottomAnchor),
-                .layout(
-                    anchor: .heightAnchor,
-                    constant: .equalTo(constant: inputAccessoryViewHeight)
-                )
-            ]
-        )
-    }
-    
-    @objc func wordSelectedFromInputView(sender: UITapGestureRecognizer) {
-        guard let index = sender.view?.tag else { return }
-        guard viewModel.potentialWords.count > index else { return }
-        let word = viewModel.potentialWords[index]
-        let newMnemonic = self.newMnemonic(appendingWord: word)
-        textView.text = newMnemonic
-        presenter.handle(
-            event: MnemonicConfirmationPresenterEvent.MnemonicChanged(
-                to: newMnemonic,
-                selectedLocation: textView.selectedRange.location.int32
-            )
-        )
-    }
-    
-    func newMnemonic(appendingWord word: String) -> String {
-        guard let text = textView.text, !text.isEmpty else { return word + " " }
-        if textView.selectedRange.location == text.count {
-            if let lastCharacter = text.last, lastCharacter == " " {
-                return textView.text + word + " "
-            } else {
-                var words = text.split(separator: " ")
-                _ = words.removeLast()
-                return words.joined(separator: " ") + (words.isEmpty ? "" : " ") + word + " "
-            }
-        }
-        var newString = ""
-        var lastWordCount = 0
-        for var i in 0..<text.count {
-            let character = text[text.index(text.startIndex, offsetBy: i)]
-            if i == textView.selectedRange.location {
-                newString.removeLast(lastWordCount)
-                newString += word + " "
-            } else if
-                textView.selectedRange.location < i,
-                (textView.selectedRange.location + textView.selectedRange.length) >= i {
-                // ignore character
-            } else {
-                newString.append(character)
-            }
-            i += 1
-            lastWordCount += 1
-            if character == " " {
-                lastWordCount = 0
-            }
-        }
-        return newString
     }
 }
 

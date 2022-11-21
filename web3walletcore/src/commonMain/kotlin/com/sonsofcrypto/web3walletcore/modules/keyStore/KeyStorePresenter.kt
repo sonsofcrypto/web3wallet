@@ -88,10 +88,10 @@ class DefaultKeyStorePresenter(
         view.get()?.updateTargetView(targetView)
         when (buttonsSheet.buttons[idx].type) {
             NEW_MNEMONIC -> wireframe.navigate(
-                NewMnemonic { handleDidCreateNewKeyStoreItem(it) }
+                NewMnemonic { handleNewKeyStoreItem(it) }
             )
             IMPORT_MNEMONIC -> wireframe.navigate(
-                NewMnemonic { handleDidCreateNewKeyStoreItem(it) }
+                ImportMnemonic { handleNewKeyStoreItem(it) }
             )
             MORE_OPTION -> handleDidChangeButtonsState(EXPANDED)
             CONNECT_HARDWARE_WALLET -> wireframe.navigate(ConnectHardwareWallet)
@@ -100,7 +100,7 @@ class DefaultKeyStorePresenter(
         }
     }
 
-    private fun handleDidCreateNewKeyStoreItem(keyStoreItem: KeyStoreItem) {
+    private fun handleNewKeyStoreItem(keyStoreItem: KeyStoreItem) {
         interactor.selected = keyStoreItem
         val idx = interactor.items.indexOf(keyStoreItem)
         if (idx != -1) { targetView = KeyStoreItemAt(idx) }

@@ -16,7 +16,7 @@ import com.sonsofcrypto.web3walletcore.services.clipboard.ClipboardService
 import com.sonsofcrypto.web3walletcore.services.password.PasswordService
 import com.sonsofcrypto.web3walletcore.services.uuid.UUIDService
 
-data class Data(
+data class MnemonicNewInteractorData(
     val mnemonic: List<String>,
     val name: String,
     val passUnlockWithBio: Boolean,
@@ -27,7 +27,9 @@ data class Data(
 
 interface MnemonicNewInteractor {
     @Throws(Exception::class)
-    fun createKeyStoreItem(data: Data, password: String, salt: String): KeyStoreItem
+    fun createKeyStoreItem(
+        data: MnemonicNewInteractorData, password: String, salt: String
+    ): KeyStoreItem
     fun generateMnemonic(): String
     fun generatePassword(): String
     fun pasteToClipboard(text: String)
@@ -39,7 +41,9 @@ class DefaultMnemonicNewInteractor(
     private val passwordService: PasswordService,
 ): MnemonicNewInteractor {
 
-    override fun createKeyStoreItem(data: Data, password: String, salt: String): KeyStoreItem {
+    override fun createKeyStoreItem(
+        data: MnemonicNewInteractorData, password: String, salt: String
+    ): KeyStoreItem {
         val worldList = WordList.fromLocaleString("en")
         val bip39 = Bip39(data.mnemonic, salt, worldList)
         val bip44 = Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)

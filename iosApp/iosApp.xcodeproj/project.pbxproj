@@ -318,6 +318,7 @@
 		1C96842629263F2E00629A92 /* ActionsServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C96842529263F2E00629A92 /* ActionsServiceAssembler.swift */; };
 		1C968428292789EF00629A92 /* PasswordServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C968427292789EF00629A92 /* PasswordServiceAssembler.swift */; };
 		1C96842A292BD1F600629A92 /* MnemonicServiceAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C968429292BD1F600629A92 /* MnemonicServiceAssembler.swift */; };
+		1C96842C292BF80400629A92 /* MnemonicImportHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C96842B292BF80400629A92 /* MnemonicImportHelper.swift */; };
 		1C9B46DA2813DE4800F6C40B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9B46D92813DE4800F6C40B /* BaseViewController.swift */; };
 		1C9B46FB281427B800F6C40B /* under-construction.gif in Resources */ = {isa = PBXBuildFile; fileRef = 1C9B46FA281427B800F6C40B /* under-construction.gif */; };
 		1C9E3195287580B600DD2031 /* CurrencySendWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C9E3194287580B600DD2031 /* CurrencySendWireframe.swift */; };
@@ -785,6 +786,7 @@
 		1C96842529263F2E00629A92 /* ActionsServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionsServiceAssembler.swift; sourceTree = "<group>"; };
 		1C968427292789EF00629A92 /* PasswordServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordServiceAssembler.swift; sourceTree = "<group>"; };
 		1C968429292BD1F600629A92 /* MnemonicServiceAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicServiceAssembler.swift; sourceTree = "<group>"; };
+		1C96842B292BF80400629A92 /* MnemonicImportHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicImportHelper.swift; sourceTree = "<group>"; };
 		1C9B46D92813DE4800F6C40B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		1C9B46FA281427B800F6C40B /* under-construction.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "under-construction.gif"; sourceTree = "<group>"; };
 		1C9E3194287580B600DD2031 /* CurrencySendWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySendWireframe.swift; sourceTree = "<group>"; };
@@ -1588,6 +1590,7 @@
 			isa = PBXGroup;
 			children = (
 				1C7FC98028AFB32600FC9175 /* PasswordValidatorHelper.swift */,
+				1C96842B292BF80400629A92 /* MnemonicImportHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -2734,6 +2737,7 @@
 				1A4C3B9C62DFDDC589C8E7DB /* WalletServiceAssembler.swift in Sources */,
 				1A4C3905A345E618C2AC2D37 /* Assembler.swift in Sources */,
 				1C5D24CD28E19F62007DA557 /* ImprovementProposalWireframe.swift in Sources */,
+				1C96842C292BF80400629A92 /* MnemonicImportHelper.swift in Sources */,
 				1C7FC99628B691CA00FC9175 /* AccountTransactionLoadingCell.swift in Sources */,
 				1A4C3D1FEE4DD4904DEBCFAB /* DashboardTableWalletCell.swift in Sources */,
 				1A4C3B16402D45829327EFE6 /* AnimatedTextBarButton.swift in Sources */,

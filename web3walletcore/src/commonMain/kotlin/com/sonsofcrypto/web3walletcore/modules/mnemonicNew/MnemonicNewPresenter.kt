@@ -93,8 +93,8 @@ class DefaultMnemonicNewPresenter(
         }
     }
 
-    private val keyStoreItemData: Data
-        get() = Data(
+    private val keyStoreItemData: MnemonicNewInteractorData
+        get() = MnemonicNewInteractorData(
         mnemonic.trim().split(" "),
         name,
         passUnlockWithBio,

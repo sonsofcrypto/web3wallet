@@ -1,19 +1,18 @@
 package com.sonsofcrypto.web3walletcore.services.clipboard
 
-import platform.CoreServices.kUTTypeUTF8PlainText
 import platform.Foundation.NSDate
-import platform.Foundation.addTimeInterval
+import platform.Foundation.dateByAddingTimeInterval
 import platform.UIKit.UIPasteboard
+import platform.UIKit.UIPasteboardOptionExpirationDate
+import platform.UniformTypeIdentifiers.UTTypeUTF8PlainText
 
 actual class ClipboardService {
 
     actual fun paste(text: String, expireInSeconds: Int) {
-        val expirationDate = NSDate()
-        expirationDate.addTimeInterval(expireInSeconds.toDouble())
-        UIPasteboard.generalPasteboard().setItemProviders(
-            listOf(mapOf(kUTTypeUTF8PlainText.toString() to text)),
-            true,
-            expirationDate
+        val expirationDate = NSDate().dateByAddingTimeInterval(expireInSeconds.toDouble())
+        UIPasteboard.generalPasteboard().setItems(
+            listOf(mapOf(UTTypeUTF8PlainText.identifier to text)),
+            mapOf(UIPasteboardOptionExpirationDate to expirationDate)
         )
     }
 }

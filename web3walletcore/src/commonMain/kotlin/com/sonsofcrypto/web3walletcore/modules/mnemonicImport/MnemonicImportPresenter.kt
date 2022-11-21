@@ -11,6 +11,7 @@ import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportViewModel.Section
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportViewModel.Section.Mnemonic.WordInfo
 import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicImportWireframeDestination.Dismiss
+import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicServiceError
 
 sealed class MnemonicImportPresenterEvent {
     data class MnemonicChanged(
@@ -98,7 +99,7 @@ class DefaultMnemonicImportPresenter(
                 }
                 try {
                     val item = interactor.createKeyStoreItem(keyStoreItemData, password, salt)
-                    context.handler?.let { it(item) }
+                    context.handler(item)
                     wireframe.navigate(Dismiss)
                 } catch (e: Throwable) {
                     // TODO: Handle error
@@ -134,10 +135,12 @@ class DefaultMnemonicImportPresenter(
         )
     }
 
-    private fun mnemonicSection(updateMnemonic: Boolean, error: MnemonicError?): Section = Section(
-        listOf(mnemonicItem(updateMnemonic)),
-        mnemonicFooter(error)
-    )
+    private fun mnemonicSection(updateMnemonic: Boolean, error: MnemonicServiceError?): Section =
+        Section(
+            listOf(mnemonicItem(updateMnemonic)),
+            mnemonicFooterDefault(),
+            // mnemonicFooter(error)
+        )
 
     private fun mnemonicItem(updateMnemonic: Boolean): Section.Item {
         val common = MnemonicPresenterCommon()
@@ -158,7 +161,7 @@ class DefaultMnemonicImportPresenter(
         )
     }
 
-    private fun mnemonicFooter(error: MnemonicError?): SectionFooterViewModel = error?.let {
+    private fun mnemonicFooter(error: MnemonicServiceError?): SectionFooterViewModel = error?.let {
         return mnemonicFooterError(it)
     }.run {
         mnemonicFooterDefault()
@@ -172,24 +175,25 @@ class DefaultMnemonicImportPresenter(
         )
     )
 
-    private fun mnemonicFooterError(error: MnemonicError): SectionFooterViewModel = when (error) {
-        MnemonicError.INVALID_WORD_COUNT -> {
-            SectionFooterViewModel(
-                Localized("mnemonic.error.invalid.wordCount"),
-                listOf(
-                    Localized("mnemonic.error.invalid.wordCount.highlight0")
+    private fun mnemonicFooterError(error: MnemonicServiceError): SectionFooterViewModel =
+        when (error) {
+            MnemonicServiceError.INVALID_WORD_COUNT -> {
+                SectionFooterViewModel(
+                    Localized("mnemonic.error.invalid.wordCount"),
+                    listOf(
+                        Localized("mnemonic.error.invalid.wordCount.highlight0")
+                    )
                 )
-            )
-        }
-        MnemonicError.OTHER -> {
-            SectionFooterViewModel(
-                Localized("mnemonic.error.invalid"),
-                listOf(
-                    Localized("mnemonic.error.invalid")
+            }
+            MnemonicServiceError.OTHER -> {
+                SectionFooterViewModel(
+                    Localized("mnemonic.error.invalid"),
+                    listOf(
+                        Localized("mnemonic.error.invalid")
+                    )
                 )
-            )
+            }
         }
-    }
 
     private fun optionsSection(): Section = Section(
         optionSectionsItems(),

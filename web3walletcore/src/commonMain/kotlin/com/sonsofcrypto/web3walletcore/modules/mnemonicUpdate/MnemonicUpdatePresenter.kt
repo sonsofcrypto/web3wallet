@@ -57,7 +57,8 @@ class DefaultMnemonicUpdatePresenter(
                 val updatedItem = interactor.update(
                     context.keyStoreItem, name, iCloudSecretStorage
                 ) ?: return wireframe.navigate(Alert(errorAlertContext()))
-                return context.onUpdateHandler(updatedItem)
+                context.onUpdateHandler(updatedItem)
+                wireframe.navigate(Dismiss)
             }
             is MnemonicUpdatePresenterEvent.Dismiss -> {
                 wireframe.navigate(Dismiss)
@@ -74,7 +75,9 @@ class DefaultMnemonicUpdatePresenter(
     ) { authData, error ->
         if (authData != null && error == null) {
             interactor.setup(context.keyStoreItem, authData.password, authData.salt)
-            updateView()
+            mnemonic = interactor.mnemonic()
+            if (mnemonic.isEmpty()) { wireframe.navigate(Dismiss) }
+            else updateView()
         } else {
             wireframe.navigate(Dismiss)
         }
@@ -170,7 +173,7 @@ class DefaultMnemonicUpdatePresenter(
 
     private val passwordErrorMessage: String? get() {
         if (!ctaTapped) return null
-        if (name.isEmpty()) { Localized("mnemonic.error.invalid.name") }
+        if (name.isEmpty()) { return Localized("mnemonic.error.invalid.name") }
         return null
     }
 }

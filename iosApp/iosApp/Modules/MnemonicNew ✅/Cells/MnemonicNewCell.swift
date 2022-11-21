@@ -29,7 +29,7 @@ final class MnemonicNewCell: UICollectionViewCell {
         textView.backgroundColor = .clear
         overlay.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         overlay.clipsToBounds = true
-        overlayLabel.text = Localized("mnemonicNew.tapToReveal")
+        overlayLabel.text = Localized("mnemonic.tapToReveal")
         overlayLabel.font = Theme.font.body
         overlayLabel.textColor = Theme.colour.labelPrimary
     }
@@ -59,7 +59,7 @@ extension MnemonicNewCell {
         let prevAlpha = overlay.alpha
         overlay.alpha = 0
         overlay.isHidden = false
-        overlayLabel.text = Localized("mnemonicNew.pasteboard")
+        overlayLabel.text = Localized("mnemonic.pasteboard")
         UIView.animate(
             withDuration: 0.2,
             animations: { self.overlay.alpha = 1},

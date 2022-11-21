@@ -12,10 +12,9 @@ import com.sonsofcrypto.web3lib.utils.bip39.WordList
 import com.sonsofcrypto.web3lib.utils.bip39.localeString
 import com.sonsofcrypto.web3lib.utils.extensions.toHexString
 import com.sonsofcrypto.web3lib.utils.secureRand
-import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicError.INVALID_WORD_COUNT
-import com.sonsofcrypto.web3walletcore.modules.mnemonicImport.MnemonicError.OTHER
 import com.sonsofcrypto.web3walletcore.services.clipboard.ClipboardService
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicService
+import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicServiceError
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicWord
 import com.sonsofcrypto.web3walletcore.services.password.PasswordService
 import com.sonsofcrypto.web3walletcore.services.uuid.UUIDService
@@ -29,8 +28,6 @@ data class MnemonicImportInteractorData(
     val passwordType: KeyStoreItem.PasswordType,
 )
 
-enum class MnemonicError { INVALID_WORD_COUNT, OTHER }
-
 interface MnemonicImportInteractor {
     fun potentialMnemonicWords(prefix: String?): List<String>
     fun findInvalidWords(mnemonic: String?): List<MnemonicWord>
@@ -38,7 +35,7 @@ interface MnemonicImportInteractor {
     fun isMnemonicValid(mnemonic: String, salt: String?): Boolean
     @Throws(Exception::class)
     fun createKeyStoreItem(data: MnemonicImportInteractorData, password: String, salt: String): KeyStoreItem
-    fun mnemonicError(mnemonic: List<String>, salt: String): MnemonicError?
+    fun mnemonicError(mnemonic: List<String>, salt: String): MnemonicServiceError?
     fun generatePassword(): String
     fun pasteToClipboard(text: String)
     fun validationError(password: String, type: KeyStoreItem.PasswordType): String?
@@ -60,7 +57,7 @@ class DefaultMnemonicImportInteractor(
         mnemonicService.isValidPrefix(prefix)
 
     override fun isMnemonicValid(mnemonic: String, salt: String?): Boolean =
-        mnemonicService.isMnemonicValid(mnemonic, salt)
+        mnemonicService.mnemonicError(mnemonic, salt) == null
 
     override fun createKeyStoreItem(data: MnemonicImportInteractorData, password: String, salt: String): KeyStoreItem {
         val worldList = WordList.fromLocaleString("en")
@@ -104,16 +101,8 @@ class DefaultMnemonicImportInteractor(
         return addresses
     }
 
-    override fun mnemonicError(mnemonic: List<String>, salt: String): MnemonicError? {
-        if (!Bip39.isValidWordsCount(mnemonic.count())) return INVALID_WORD_COUNT
-        return try {
-            val bip39 = Bip39(mnemonic, salt, WordList.ENGLISH)
-            Bip44(bip39.seed(), MAINNETPRV)
-            null
-        } catch (e: Throwable) {
-            OTHER
-        }
-    }
+    override fun mnemonicError(mnemonic: List<String>, salt: String): MnemonicServiceError? =
+        mnemonicService.mnemonicError(mnemonic.joinToString(" "), salt)
 
     override fun generatePassword(): String = secureRand(32).toHexString()
 

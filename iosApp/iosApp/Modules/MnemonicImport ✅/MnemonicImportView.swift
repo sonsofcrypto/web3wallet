@@ -170,6 +170,7 @@ extension MnemonicImportViewController: UICollectionViewDataSource {
                 }
             )
         }
+        fatalError("Not Implemented")
     }
 
     func collectionView(
@@ -388,7 +389,7 @@ extension MnemonicImportViewController: UIViewControllerTransitioningDelegate {
 private extension MnemonicImportViewController {
     
     func configureUI() {
-        title = Localized("mnemonicNew.title.import")
+        title = Localized("mnemonic.title.import")
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: "chevron.left".assetImage,
             style: .plain,

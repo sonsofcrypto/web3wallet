@@ -18,6 +18,7 @@ final class MnemonicImportCell: CollectionViewCell {
     private var handler: Handler!
     
     private let inputAccessoryViewHeight: CGFloat = 40
+    private var mnemonicImportHelper: MnemonicImportHelper!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -42,123 +43,25 @@ final class MnemonicImportCell: CollectionViewCell {
 extension MnemonicImportCell: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
-        handler.onMnemonicChanged(
-            (
-                mnemonic: textView.text,
-                selectedLocation: textView.selectedRange.location
-            )
-        )
+        handler.onMnemonicChanged((textView.text, textView.selectedRange.location))
     }
 }
 
 private extension MnemonicImportCell {
     
     func configure() {
+        mnemonicImportHelper = MnemonicImportHelper(
+            textView: textView,
+            onMnemonicChangedHandler: { [weak self] newMnemonic, selectedLocation in
+                self?.handler.onMnemonicChanged((newMnemonic, selectedLocation))
+            }
+        )
         textView.delegate = self
         textView.applyStyle(.body)
         textView.backgroundColor = .clear
-        textView.inputAccessoryView = inputAccessoryView()
-    }
-    
-    func inputAccessoryView() -> UIView {
-        let scrollView = UIScrollView(
-            frame: .init(
-                origin: .zero,
-                size: .init(
-                    width: contentView.frame.width,
-                    height: inputAccessoryViewHeight
-                )
-            )
+        textView.inputAccessoryView = mnemonicImportHelper.inputAccessoryView(
+            size: .init(width: contentView.frame.width, height: inputAccessoryViewHeight)
         )
-        scrollView.backgroundColor = Theme.colour.navBarBackground
-        addWords([], to: scrollView)
-        return scrollView
-    }
-    
-    func addWords(_ words: [String], to view: UIView?) {
-        guard let view = view else { return }
-        var labels = [UILabel]()
-        for (index, word) in words.enumerated() {
-            let label = UILabel(with: .body)
-            label.text = word
-            label.addConstraints(
-                [
-                    .hugging(axis: .horizontal)
-                ]
-            )
-            label.add(
-                .targetAction(.init(target: self, selector: #selector(wordSelectedFromInputView(sender:))))
-            )
-            label.tag = index
-            label.sizeToFit()
-            labels.append(label)
-        }
-        labels.append(.init())
-        let stackView = HStackView(labels)
-        stackView.spacing = 16
-        view.addSubview(stackView)
-        stackView.addConstraints(
-            [
-                .layout(anchor: .leadingAnchor, constant: .equalTo(constant: 16)),
-                .layout(anchor: .trailingAnchor, constant: .equalTo(constant: 16)),
-                .layout(anchor: .topAnchor),
-                .layout(anchor: .bottomAnchor),
-                .layout(
-                    anchor: .heightAnchor,
-                    constant: .equalTo(constant: inputAccessoryViewHeight)
-                )
-            ]
-        )
-    }
-    
-    @objc func wordSelectedFromInputView(sender: UITapGestureRecognizer) {
-        guard let index = sender.view?.tag else { return }
-        guard viewModel.potentialWords.count > index else { return }
-        let word = viewModel.potentialWords[index]
-        let newMnemonic = makeNewMnemonic(appendingWord: word)
-        textView.text = newMnemonic
-        handler.onMnemonicChanged(
-            (
-                mnemonic: newMnemonic,
-                selectedLocation: textView.selectedRange.location
-            )
-        )
-    }
-    
-    func makeNewMnemonic(appendingWord word: String) -> String {
-        guard let text = textView.text, !text.isEmpty else {
-            return word + " "
-        }
-        if textView.selectedRange.location == text.count {
-            if let lastCharacter = text.last, lastCharacter == " " {
-                return textView.text + word + " "
-            } else {
-                var words = text.split(separator: " ")
-                _ = words.removeLast()
-                return words.joined(separator: " ") + " " + word + " "
-            }
-        }
-        var newString = ""
-        var lastWordCount = 0
-        for var i in 0..<text.count {
-            let character = text[text.index(text.startIndex, offsetBy: i)]
-            if i == textView.selectedRange.location {
-                newString.removeLast(lastWordCount)
-                newString += word + " "
-            } else if
-                textView.selectedRange.location < i,
-                (textView.selectedRange.location + textView.selectedRange.length) >= i {
-                // ignore character
-            } else {
-                newString.append(character)
-            }
-            i += 1
-            lastWordCount += 1
-            if character == " " {
-                lastWordCount = 0
-            }
-        }
-        return newString
     }
 }
 
@@ -198,7 +101,7 @@ private extension MnemonicImportCell {
         layer.borderWidth = hasInvalidWords ? 2 : 0
         layer.borderColor = hasInvalidWords ? Theme.colour.navBarTint.cgColor : nil
         textView.inputAccessoryView?.removeAllSubview()
-        addWords(viewModel.potentialWords, to: textView.inputAccessoryView)
+        mnemonicImportHelper.addWords(viewModel.potentialWords, to: textView.inputAccessoryView)
         textView.selectedRange = selectedRange
     }
 }

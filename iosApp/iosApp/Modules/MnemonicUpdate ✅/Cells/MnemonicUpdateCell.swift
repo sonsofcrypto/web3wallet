@@ -42,7 +42,7 @@ final class MnemonicUpdateCell: UICollectionViewCell {
         overlay.isHidden = false
         overlay.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         overlay.clipsToBounds = true
-        overlayLabel.text = Localized("mnemonicNew.tapToReveal")
+        overlayLabel.text = Localized("mnemonic.tapToReveal")
         overlayLabel.font = Theme.font.body
         overlayLabel.textColor = Theme.colour.labelPrimary
         countdownView.layer.cornerRadius = 10
@@ -77,7 +77,7 @@ extension MnemonicUpdateCell {
             return
         }
         overlay.alpha = 0
-        overlayLabel.text = Localized("mnemonicNew.pasteboard")
+        overlayLabel.text = Localized("mnemonic.pasteboard")
         UIView.animate(
             withDuration: 0.2,
             animations: { [weak self] in self?.overlay.alpha = 1 },
@@ -138,7 +138,7 @@ private extension MnemonicUpdateCell {
         UIView.animate(
             withDuration: 0.2,
             animations: { [weak self] in
-                self?.overlayLabel.text = Localized("mnemonicNew.tapToReveal")
+                self?.overlayLabel.text = Localized("mnemonic.tapToReveal")
                 self?.overlay.alpha = 1
             },
             completion: nil

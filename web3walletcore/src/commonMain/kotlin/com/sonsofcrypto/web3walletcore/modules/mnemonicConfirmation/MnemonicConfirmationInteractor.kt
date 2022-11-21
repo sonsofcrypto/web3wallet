@@ -40,7 +40,7 @@ class DefaultMnemonicConfirmationInteractor(
         mnemonicService.isValidPrefix(prefix)
 
     override fun isMnemonicValid(mnemonic: String, salt: String?): Boolean =
-        mnemonicService.isMnemonicValid(mnemonic, salt)
+        mnemonicService.mnemonicError(mnemonic, salt) == null
 
     override fun showSalt(): Boolean {
         val keyStoreItem = keyStoreService.selected ?: return false
