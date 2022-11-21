@@ -4,7 +4,6 @@ import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 import com.sonsofcrypto.web3lib.services.keyStore.SecretStorage
 import com.sonsofcrypto.web3walletcore.services.clipboard.ClipboardService
-import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicService
 
 interface MnemonicUpdateInteractor {
     @Throws(SecretStorage.Error::class)

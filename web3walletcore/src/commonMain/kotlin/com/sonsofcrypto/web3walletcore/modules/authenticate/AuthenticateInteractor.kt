@@ -36,11 +36,11 @@ class DefaultAuthenticateInteractor(
     }
 
     override fun isValid(item: KeyStoreItem, password: String, salt: String): Boolean {
-        val secretStorage = keyStoreService.secretStorage(item, password) ?: return false
         return try {
+            val secretStorage = keyStoreService.secretStorage(item, password) ?: return false
             secretStorage.decrypt(password)
             true
-        } catch (error: Error) {
+        } catch (error: Throwable) {
             false
         }
     }

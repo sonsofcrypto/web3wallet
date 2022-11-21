@@ -42,7 +42,10 @@ class DefaultAuthenticatePresenter(
 
     override fun handle(event: AuthenticatePresenterEvent) {
         when (event) {
-            is DidCancel -> { wireframe.navigate(Dismiss) }
+            is DidCancel -> {
+                wireframe.navigate(Dismiss)
+                context.handler(null, null)
+            }
             is DidConfirm -> {
                 if (interactor.isValid(context.keyStoreItem!!, password, salt)) {
                     wireframe.navigate(Dismiss)
