@@ -110,7 +110,7 @@ class DefaultMnemonicImportPresenter(
         }
     }
 
-    private val keyStoreItemData: Data get() = Data(
+    private val keyStoreItemData: MnemonicImportInteractorData get() = MnemonicImportInteractorData(
         mnemonic.trim().split(" "),
         name,
         passUnlockWithBio,

@@ -20,7 +20,7 @@ import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicWord
 import com.sonsofcrypto.web3walletcore.services.password.PasswordService
 import com.sonsofcrypto.web3walletcore.services.uuid.UUIDService
 
-data class Data(
+data class MnemonicImportInteractorData(
     val mnemonic: List<String>,
     val name: String,
     val passUnlockWithBio: Boolean,
@@ -37,7 +37,7 @@ interface MnemonicImportInteractor {
     fun isValidPrefix(prefix: String): Boolean
     fun isMnemonicValid(mnemonic: String, salt: String?): Boolean
     @Throws(Exception::class)
-    fun createKeyStoreItem(data: Data, password: String, salt: String): KeyStoreItem
+    fun createKeyStoreItem(data: MnemonicImportInteractorData, password: String, salt: String): KeyStoreItem
     fun mnemonicError(mnemonic: List<String>, salt: String): MnemonicError?
     fun generatePassword(): String
     fun pasteToClipboard(text: String)
@@ -62,7 +62,7 @@ class DefaultMnemonicImportInteractor(
     override fun isMnemonicValid(mnemonic: String, salt: String?): Boolean =
         mnemonicService.isMnemonicValid(mnemonic, salt)
 
-    override fun createKeyStoreItem(data: Data, password: String, salt: String): KeyStoreItem {
+    override fun createKeyStoreItem(data: MnemonicImportInteractorData, password: String, salt: String): KeyStoreItem {
         val worldList = WordList.fromLocaleString("en")
         val bip39 = Bip39(data.mnemonic, salt, worldList)
         val bip44 = Bip44(bip39.seed(), MAINNETPRV)
