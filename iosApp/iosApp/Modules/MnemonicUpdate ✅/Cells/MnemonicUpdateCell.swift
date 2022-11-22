@@ -42,6 +42,7 @@ final class MnemonicUpdateCell: UICollectionViewCell {
         overlay.isHidden = false
         overlay.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         overlay.clipsToBounds = true
+        overlayLabel.numberOfLines = 2
         overlayLabel.text = Localized("mnemonic.tapToReveal")
         overlayLabel.font = Theme.font.body
         overlayLabel.textColor = Theme.colour.labelPrimary

@@ -36,6 +36,8 @@ extension AuthenticateViewController {
 extension AuthenticateViewController {
 
     func update(with viewModel: AuthenticateViewModel) {
+        navigationController?.view.isHidden = false
+        view.isHidden = false
         self.viewModel = viewModel
         title = viewModel.title
         passwordTextField.text = viewModel.password
@@ -75,6 +77,8 @@ private extension AuthenticateViewController {
         saltTextField.textAlignment = .center
         saltTextField.superview?.layer.cornerRadius = Theme.constant.cornerRadiusSmall
         saltTextField.superview?.backgroundColor = Theme.colour.cellBackground
+        navigationController?.view.isHidden = true
+        view.isHidden = true
     }
 }
 

@@ -33,8 +33,8 @@ class DefaultAuthenticatePresenter(
         val keyStoreItem = keyStoreItem() ?: return
         if (interactor.canUnlockWithBio(keyStoreItem)) {
             interactor.unlockWithBiometrics(keyStoreItem, context.title) { authData, error ->
-                context.handler(authData, error)
                 wireframe.navigate(Dismiss)
+                context.handler(authData, error)
             }
             return
         }
