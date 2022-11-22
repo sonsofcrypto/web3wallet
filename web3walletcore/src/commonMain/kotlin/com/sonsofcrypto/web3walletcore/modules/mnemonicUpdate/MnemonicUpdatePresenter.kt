@@ -115,6 +115,7 @@ class DefaultMnemonicUpdatePresenter(
             if (idx == 0) {
                 interactor.delete(context.keyStoreItem)
                 context.onDeleteHandler()
+                wireframe.navigate(Dismiss)
             }
         },
         350.toDouble()
@@ -128,6 +129,7 @@ class DefaultMnemonicUpdatePresenter(
         val sections = mutableListOf<MnemonicUpdateViewModel.Section>()
         sections.add(mnemonicSection())
         sections.add(optionsSection())
+        sections.add(deleteSection())
         return MnemonicUpdateViewModel(
             sections,
             Localized("mnemonic.cta.update"),
@@ -150,6 +152,15 @@ class DefaultMnemonicUpdatePresenter(
 
     private fun optionsSection(): MnemonicUpdateViewModel.Section = MnemonicUpdateViewModel.Section(
         optionSectionsItems(),
+        null
+    )
+
+    private fun deleteSection(): MnemonicUpdateViewModel.Section = MnemonicUpdateViewModel.Section(
+        listOf(
+            MnemonicUpdateViewModel.Section.Item.Delete(
+                Localized("mnemonic.cta.delete")
+            )
+        ),
         null
     )
 

@@ -66,6 +66,7 @@ class DefaultMnemonicNewPresenter(
             }
             is MnemonicNewPresenterEvent.PasswordDidChange -> {
                 password = event.text
+                updateView()
             }
             is MnemonicNewPresenterEvent.AllowFaceIdDidChange -> {
                 passUnlockWithBio = event.onOff
@@ -150,18 +151,18 @@ class DefaultMnemonicNewPresenter(
                 iCloudSecretStorage,
             )
         ),
-        MnemonicNewViewModel.Section.Item.SwitchWithTextInput(
-            SwitchTextInputCollectionViewModel(
-                Localized("mnemonic.salt.title"),
-                saltMnemonicOn,
-                salt,
-                Localized("mnemonic.salt.placeholder"),
-                Localized("mnemonic.salt.description"),
-                listOf(
-                    Localized("mnemonic.salt.descriptionHighlight")
-                ),
-            )
-        ),
+//        MnemonicNewViewModel.Section.Item.SwitchWithTextInput(
+//            SwitchTextInputCollectionViewModel(
+//                Localized("mnemonic.salt.title"),
+//                saltMnemonicOn,
+//                salt,
+//                Localized("mnemonic.salt.placeholder"),
+//                Localized("mnemonic.salt.description"),
+//                listOf(
+//                    Localized("mnemonic.salt.descriptionHighlight")
+//                ),
+//            )
+//        ),
         MnemonicNewViewModel.Section.Item.SegmentWithTextAndSwitchInput(
             SegmentWithTextAndSwitchCellViewModel(
                 Localized("mnemonic.passType.title"),

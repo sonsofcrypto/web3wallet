@@ -214,18 +214,18 @@ class DefaultMnemonicImportPresenter(
                 iCloudSecretStorage,
             )
         ),
-        Section.Item.SwitchWithTextInput(
-            SwitchTextInputCollectionViewModel(
-                Localized("mnemonic.salt.title"),
-                saltMnemonicOn,
-                salt,
-                Localized("mnemonic.salt.placeholder"),
-                Localized("mnemonic.salt.description"),
-                listOf(
-                    Localized("mnemonic.salt.descriptionHighlight")
-                ),
-            )
-        ),
+//        Section.Item.SwitchWithTextInput(
+//            SwitchTextInputCollectionViewModel(
+//                Localized("mnemonic.salt.title"),
+//                saltMnemonicOn,
+//                salt,
+//                Localized("mnemonic.salt.placeholder"),
+//                Localized("mnemonic.salt.description"),
+//                listOf(
+//                    Localized("mnemonic.salt.descriptionHighlight")
+//                ),
+//            )
+//        ),
         Section.Item.SegmentWithTextAndSwitchInput(
             SegmentWithTextAndSwitchCellViewModel(
                 Localized("mnemonic.passType.title"),

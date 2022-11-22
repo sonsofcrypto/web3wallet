@@ -142,7 +142,7 @@
 "mnemonic.pinType.placeholder" = "Enter pin";
 "mnemonic.passType.placeholder" = "Enter password";
 "mnemonic.passType.allowFaceId" = "Allow unlock with FaceID";
-"mnemonic.pasteboard" = "Mnemonic copied to pasteboard";
+"mnemonic.pasteboard" = "Mnemonic copied to pasteboard\n(for 30 seconds)";
 "mnemonic.cta.new" = "Create new wallet";
 "mnemonic.cta.update" = "Update";
 "mnemonic.cta.delete" = "Delete";
@@ -449,7 +449,7 @@
 "validation.error.pin.min.length" = "Minimum 6 characters";
 "validation.error.pin.weak" = "First 2 digits should be different";
 
-"validation.error.pass.min.lenght" = "Minimum 8 characters";
+"validation.error.pass.min.length" = "Minimum 8 characters";
 "validation.error.pass.min.capital" = "At least one capital letter needed";
 "validation.error.pass.min.lowercase" = "At least one lowercase letter needed";
 "validation.error.pass.min.digit" = "At least one digit needed";

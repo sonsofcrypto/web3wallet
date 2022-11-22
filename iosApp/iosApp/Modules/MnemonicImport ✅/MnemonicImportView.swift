@@ -116,7 +116,7 @@ extension MnemonicImportViewController: UICollectionViewDataSource {
             return collectionView.dequeue(
                 MnemonicImportCell.self,
                 for: idxPath
-            ).update(with: input.mnemofnic, handler: mnemonicMnemonicHandler())
+            ).update(with: input.mnemonic, handler: mnemonicMnemonicHandler())
         }
         if let input = viewModel as? MnemonicImportViewModel.SectionItemTextInput {
             return collectionView.dequeue(

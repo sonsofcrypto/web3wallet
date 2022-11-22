@@ -125,6 +125,15 @@ extension MnemonicUpdateViewController: UICollectionViewDataSource {
                 handler: { [weak self] value in self?.iCloudBackupDidChange(value) }
             )
         }
+        if let input = viewModel as? MnemonicUpdateViewModel.SectionItemDelete {
+            return collectionView.dequeue(
+                MnemonicUpdateDeleteCell.self,
+                for: idxPath
+            ).update(
+                with: input.title,
+                handler: makeMnemonicUpdateDeleteCellHandler()
+            )
+        }
         fatalError("Not implemented")
     }
 

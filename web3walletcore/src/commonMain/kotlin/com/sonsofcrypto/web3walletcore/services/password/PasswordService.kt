@@ -18,25 +18,21 @@ class DefaultPasswordService: PasswordService {
 
 
     private fun pinValidationError(text: String): String? {
-        if (!text.matches(Regex("(?=.{8,})")))
-            return Localized("validation.error.pass.min.lenght")
-        if (!text.matches(Regex("(?=.*[A-Z])")))
-            return Localized("validation.error.pass.min.capital")
-        if (!text.matches(Regex("(?=.*[a-z])")))
-            return Localized("validation.error.pass.min.lowercase")
-        if (!text.matches(Regex("(?=.*\\d)")))
-            return Localized("validation.error.pass.min.digit")
+        if (!Regex("(?=.{6,})").containsMatchIn(text))
+            return Localized("validation.error.pin.min.length")
+        if (text[0] == text[1])
+            return Localized("validation.error.pin.weak")
         return null
     }
 
     fun passValidationError(text: String): String? {
-        if (!text.matches(Regex("(?=.{8,})")))
-            return Localized("validation.error.pass.min.lenght")
-        if (!text.matches(Regex("(?=.*[A-Z])")))
+        if (!Regex("(?=.{8,})").containsMatchIn(text))
+            return Localized("validation.error.pass.min.length")
+        if (!Regex("(?=.*[A-Z])").containsMatchIn(text))
             return Localized("validation.error.pass.min.capital")
-        if (!text.matches(Regex("(?=.*[a-z])")))
+        if (!Regex("(?=.*[a-z])").containsMatchIn(text))
             return Localized("validation.error.pass.min.lowercase")
-        if (!text.matches(Regex("(?=.*\\d)")))
+        if (!Regex("(?=.*\\d)").containsMatchIn(text))
             return Localized("validation.error.pass.min.digit")
         return null
     }
