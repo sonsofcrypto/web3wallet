@@ -253,8 +253,8 @@ extension MnemonicNewViewController: UICollectionViewDelegateFlowLayout {
         if let input = viewModel as? MnemonicNewViewModel.SectionItemSegmentWithTextAndSwitchInput {
             return CGSize(
                 width: width,
-                height: input.viewModel.onOff
-                    ? Constant.cellSaltOpenHeight
+                height: input.viewModel.selectedSegment != 2
+                    ? Constant.cellPassOpenHeight
                     : Constant.cellHeight
             )
         }

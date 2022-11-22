@@ -116,7 +116,7 @@ extension MnemonicImportViewController: UICollectionViewDataSource {
             return collectionView.dequeue(
                 MnemonicImportCell.self,
                 for: idxPath
-            ).update(with: input.mnemonic, handler: mnemonicMnemonicHandler())
+            ).update(with: input.mnemofnic, handler: mnemonicMnemonicHandler())
         }
         if let input = viewModel as? MnemonicImportViewModel.SectionItemTextInput {
             return collectionView.dequeue(
@@ -284,8 +284,8 @@ extension MnemonicImportViewController: UICollectionViewDelegateFlowLayout {
         if let input = viewModel as? MnemonicImportViewModel.SectionItemSegmentWithTextAndSwitchInput {
             return CGSize(
                 width: width,
-                height: input.viewModel.onOff
-                    ? Constant.cellSaltOpenHeight
+                height: input.viewModel.selectedSegment != 2
+                    ? Constant.cellPassOpenHeight
                     : Constant.cellHeight
             )
         }
