@@ -71,7 +71,7 @@ class DefaultMnemonicUpdatePresenter(
 
     private fun authenticateContext(): AuthenticateWireframeContext = AuthenticateWireframeContext(
         Localized("authenticate.title.unlock"),
-        context.keyStoreItem
+        context.keyStoreItem,
     ) { authData, error ->
         if (authData != null && error == null) {
             interactor.setup(context.keyStoreItem, authData.password, authData.salt)

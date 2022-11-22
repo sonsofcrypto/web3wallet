@@ -4,6 +4,7 @@ import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
 
 interface AuthenticateInteractor {
+    fun keyStoreItem(): KeyStoreItem?
     fun canUnlockWithBio(keyStoreItem: KeyStoreItem): Boolean
     fun unlockWithBiometrics(
         item: KeyStoreItem,
@@ -16,6 +17,8 @@ interface AuthenticateInteractor {
 class DefaultAuthenticateInteractor(
     private val keyStoreService: KeyStoreService
 ): AuthenticateInteractor {
+
+    override fun keyStoreItem(): KeyStoreItem? = keyStoreService.selected
 
     override fun canUnlockWithBio(keyStoreItem: KeyStoreItem): Boolean =
         keyStoreItem.canUnlockWithBio() && keyStoreService.biometricsSupported()
