@@ -236,15 +236,15 @@
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 </view>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="nNd-qF-gb0">
-                                                                    <rect key="frame" x="0.0" y="2.5" width="327" height="41.5"/>
+                                                                    <rect key="frame" x="0.0" y="2.5" width="311" height="41.5"/>
                                                                     <subviews>
-                                                                        <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Pin" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="D3X-q4-RA3" customClass="TextField" customModule="iosApp" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="327" height="17"/>
+                                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Pin" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="D3X-q4-RA3" customClass="TextField" customModule="iosApp" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="311" height="17"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                                         </textField>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sEO-Mw-Bsl">
-                                                                            <rect key="frame" x="0.0" y="21" width="327" height="20.5"/>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sEO-Mw-Bsl">
+                                                                            <rect key="frame" x="0.0" y="21" width="311" height="20.5"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -257,7 +257,7 @@
                                                                 <constraint firstAttribute="height" constant="46" id="1VZ-uJ-gA5"/>
                                                                 <constraint firstItem="ALJ-qL-8rl" firstAttribute="top" secondItem="nId-fj-OZp" secondAttribute="top" id="AWM-Sf-JqH"/>
                                                                 <constraint firstItem="nNd-qF-gb0" firstAttribute="centerY" secondItem="nId-fj-OZp" secondAttribute="centerY" id="BK4-7f-hbP"/>
-                                                                <constraint firstAttribute="trailing" secondItem="nNd-qF-gb0" secondAttribute="trailing" id="Fcc-yu-2f9"/>
+                                                                <constraint firstAttribute="trailing" secondItem="nNd-qF-gb0" secondAttribute="trailing" constant="16" id="Fcc-yu-2f9"/>
                                                                 <constraint firstItem="ALJ-qL-8rl" firstAttribute="leading" secondItem="nId-fj-OZp" secondAttribute="leading" id="LCa-BV-ES1"/>
                                                                 <constraint firstAttribute="trailing" secondItem="ALJ-qL-8rl" secondAttribute="trailing" id="SqV-aO-eVA"/>
                                                                 <constraint firstItem="nNd-qF-gb0" firstAttribute="leading" secondItem="nId-fj-OZp" secondAttribute="leading" id="rEs-fg-sKb"/>

@@ -84,6 +84,7 @@ class DefaultMnemonicImportPresenter(
             }
             is MnemonicImportPresenterEvent.PasswordDidChange -> {
                 password = event.text
+                updateView()
             }
             is MnemonicImportPresenterEvent.AllowFaceIdDidChange -> {
                 passUnlockWithBio = event.onOff
@@ -233,7 +234,7 @@ class DefaultMnemonicImportPresenter(
                 selectedPasswordTypeIdx(),
                 password,
                 if (passwordType == PIN) NUMBER_PAD else DEFAULT,
-                Localized("mnemoniw.$placeholderType.placeholder"),
+                Localized("mnemonic.$placeholderType.placeholder"),
                 passwordErrorMessage,
                 Localized("mnemonic.passType.allowFaceId"),
                 passUnlockWithBio,
