@@ -45,3 +45,22 @@ func abiEncodeBigInt(_ bigInt: BigInt) -> KotlinByteArray {
 func abiEncodeUInt(_ uint: UInt32) -> KotlinByteArray {
     AbiEncodeKt.abiEncode(uint: uint)
 }
+
+extension Formatters {
+
+    static var currency: CurrencyFormatter {
+        Formatters.Companion().currency
+    }
+
+    static var fiat: FiatFormatter {
+        Formatters.Companion().fiat
+    }
+
+    static var pct: PctFormatter {
+        Formatters.Companion().pct
+    }
+
+    static var date: DateFormatter {
+        Formatters.Companion().date
+    }
+}
