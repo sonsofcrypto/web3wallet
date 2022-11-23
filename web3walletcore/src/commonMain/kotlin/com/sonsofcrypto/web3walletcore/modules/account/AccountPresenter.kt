@@ -9,7 +9,6 @@ import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import com.sonsofcrypto.web3walletcore.common.viewModels.CandlesViewModel
-import com.sonsofcrypto.web3walletcore.common.viewModels.foo
 import com.sonsofcrypto.web3walletcore.common.viewModels.loaded
 import com.sonsofcrypto.web3walletcore.extensions.Localized
 import com.sonsofcrypto.web3walletcore.modules.account.AccountViewModel.Header.Button
