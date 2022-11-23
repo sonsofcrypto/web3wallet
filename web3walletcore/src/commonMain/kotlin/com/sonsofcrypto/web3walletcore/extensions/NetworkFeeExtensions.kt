@@ -8,6 +8,8 @@ import com.sonsofcrypto.web3lib.utils.BigDec
 import com.sonsofcrypto.web3lib.utils.BigInt
 import com.sonsofcrypto.web3walletcore.common.viewModels.NetworkFeeViewModel
 
+// TODO(Anon): Refactor this to fee service
+
 val NetworkFee.timeString: String get() {
     val min: Double = seconds.toDouble() / 60.toDouble()
     return if (min > 1) { "${min.toInt()} ${Localized("min")}" }

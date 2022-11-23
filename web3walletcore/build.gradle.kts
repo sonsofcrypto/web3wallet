@@ -62,6 +62,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.ext["coroutines_version"]}") {
                     version { strictly("${rootProject.ext["coroutines_version"]}") }
                 }
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:${rootProject.ext["datetime_version"]}")
                 implementation("io.ktor:ktor-client-core:${rootProject.ext["ktor_version"]}")
                 implementation("io.ktor:ktor-client-logging:${rootProject.ext["ktor_version"]}")
                 implementation("io.ktor:ktor-client-content-negotiation:${rootProject.ext["ktor_version"]}")
