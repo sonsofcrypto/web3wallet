@@ -53,7 +53,7 @@ class DefaultMnemonicConfirmationPresenter(
                     updateView()
                     return
                 }
-                interactor.markDashboardNotificationAsComplete()
+                interactor.markConfirmActionComplete()
                 wireframe.navigate(Dismiss)
             }
         }

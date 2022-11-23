@@ -147,11 +147,14 @@ private extension DefaultDashboardPresenter {
     }
     
     func didTapAction(_ idx: Int) {
-        guard let deepLink = DeepLink(identifier: actions[idx].deepLink) else { return }
-        if deepLink.identifier == DeepLink.themesList.identifier {
+        if (actions[idx] is Action.ConfirmMnemonic) {
+            wireframe.navigate(to: .mnemonicConfirmation)
+        }
+        if (actions[idx] is Action.Themes) {
             wireframe.navigate(to: .themePicker)
-        } else {
-            wireframe.navigate(to: .deepLink(deepLink))
+        }
+        if (actions[idx] is Action.ImprovementProposals) {
+            wireframe.navigate(to: .improvmentProposals)
         }
     }
 }
@@ -234,12 +237,7 @@ private extension DefaultDashboardPresenter {
     func notificationViewModel() -> DashboardViewModel.Section.Items {
         .actions(
             actions.compactMap {
-                .init(
-                    image: $0.imageName,
-                    title: $0.title,
-                    body: $0.body,
-                    canDismiss: $0.canDismiss
-                )
+                .init(image: $0.imageName, title: $0.title, body: $0.body)
             }
         )
     }

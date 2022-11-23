@@ -79,7 +79,6 @@ extension DashboardViewModel {
         let image: String
         let title: String
         let body: String
-        let canDismiss: Bool
     }
 }
 

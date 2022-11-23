@@ -2,86 +2,64 @@ package com.sonsofcrypto.web3walletcore.services.actions
 
 import com.sonsofcrypto.web3lib.keyValueStore.KeyValueStore
 import com.sonsofcrypto.web3lib.services.networks.NetworksService
-import com.sonsofcrypto.web3walletcore.services.actions.Action.Type.*
+import com.sonsofcrypto.web3lib.utils.WeakRef
 
-interface ActionsServiceListener {
+interface ActionsListener {
     /** This will be called each time the list of Actions changes. */
     fun actionsUpdated()
 }
 
 interface ActionsService {
-    /** Add a listener to the service */
-    fun addListener(listener: ActionsServiceListener)
-    /** Remove a listener from the service */
-    fun removeListener(listener: ActionsServiceListener)
-    /** Complete an action */
-    fun completeActionType(type: Action.Type)
     /** List of actions yet to be completed */
-    fun outstandingActions(): List<Action>
+    fun actions(): List<Action>
+    /** Mark action as completed */
+    fun markComplete(action: Action)
+    /** Add a listener to the service */
+    fun addListener(listener: ActionsListener)
+    /** Remove a listener from the service */
+    fun removeListener(listener: ActionsListener)
 }
 
 class DefaultActionsService(
     private val store: KeyValueStore,
     private val networksService: NetworksService,
 ): ActionsService {
-    private var listeners = mutableListOf<ActionsServiceListener>()
 
-    override fun addListener(listener: ActionsServiceListener) {
-        listeners.add(listener)
-    }
+    private var listeners: MutableList<WeakRef<ActionsListener>> = mutableListOf()
 
-    override fun removeListener(listener: ActionsServiceListener) {
-        listeners.remove(listener)
-    }
-
-    override fun completeActionType(type: Action.Type) {
-        if (isActionCompleted(type)) return
-        store[type.identifier] = true
-        listeners.forEach { it.actionsUpdated() }
-    }
-
-    override fun outstandingActions(): List<Action> {
+    override fun actions(): List<Action> {
         val actions = mutableListOf<Action>()
-        confirmMnemonicAction?.let { if (!isActionCompleted(it.type)) { actions.add(it) } }
-        actions.add(themesAction)
-        actions.add(improvementProposalsAction)
+        if (!isCompleted(Action.ConfirmMnemonic)) {
+            actions.add(Action.ConfirmMnemonic)
+        }
+        actions.add(Action.Themes)
+        actions.add(Action.ImprovementProposals)
         return actions
     }
 
-    private fun isActionCompleted(type: Action.Type): Boolean = store[type.identifier] ?: false
-
-    private val confirmMnemonicAction: Action? get() {
-        val address = selectedWalletAddress() ?: return null
-        return Action(
-            ConfirmMnemonic(address),
-            "s",
-            "Mnemonic",
-            "Confirm your mnemonic",
-            "modal.mnemonic.confirmation",
-            false,
-            1
-        )
+    override fun markComplete(action: Action) {
+        store[actionKey(action)] = true
+        listeners.forEach { it.value?.actionsUpdated() }
     }
 
-    private fun selectedWalletAddress(): String? = networksService.wallet()?.id()
+    private fun isCompleted(action: Action): Boolean =
+        store.get<Boolean>(actionKey(action)) == true
 
-    private val themesAction: Action get() = Action(
-        ImprovementProposals,
-        "t",
-        "App Themes",
-        "Fancy a new look?",
-        "settings.themes",
-        false,
-        2,
-    )
+    private fun actionKey(action: Action): String = when (action) {
+        is Action.ConfirmMnemonic -> {
+            (action::class.simpleName ?: "") +
+                (networksService.wallet()?.id() ?: "")
+        }
+        else -> action::class.simpleName ?: "$action"
+    }
 
-    private val improvementProposalsAction: Action get() = Action(
-        ImprovementProposals,
-        "f",
-        "App Features",
-        "Your opinion matters to us",
-        "modal.improvementProposals",
-        false,
-        3,
-    )
+    override fun addListener(listener: ActionsListener) {
+        listeners.add(WeakRef(listener))
+    }
+
+    override fun removeListener(listener: ActionsListener) {
+        listeners
+            .first { it.get() == listener }
+            .let { listeners.remove(it) }
+    }
 }

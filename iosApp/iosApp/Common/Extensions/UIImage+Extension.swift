@@ -12,6 +12,13 @@ extension UIImage {
         UIImage(systemName: named) ??
         nil
     }
+
+    static func letterImage(_ letter: String, colors: [UIColor]) -> UIImage? {
+        let config = UIImage.SymbolConfiguration(paletteColors: colors)
+        let image = UIImage(systemName:"\(letter).circle.fill")?
+                .applyingSymbolConfiguration(config)
+        return image
+    }
         
     func resize(to size: CGSize) -> UIImage {
         UIGraphicsImageRenderer(size: size).image { _ in
