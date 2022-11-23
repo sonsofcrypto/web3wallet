@@ -154,7 +154,7 @@ private extension DefaultDashboardPresenter {
             wireframe.navigate(to: .themePicker)
         }
         if (actions[idx] is Action.ImprovementProposals) {
-            wireframe.navigate(to: .improvmentProposals)
+            wireframe.navigate(to: .improvementProposals)
         }
     }
 }
