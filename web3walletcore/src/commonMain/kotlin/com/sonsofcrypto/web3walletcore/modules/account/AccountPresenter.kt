@@ -2,14 +2,15 @@ package com.sonsofcrypto.web3walletcore.modules.account
 
 import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.formatters.Formatters.Style.Custom
+import com.sonsofcrypto.web3walletcore.common.viewModels.CandlesViewModel.*
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.utils.BigDec
 import com.sonsofcrypto.web3lib.utils.WeakRef
 import com.sonsofcrypto.web3lib.utils.bgDispatcher
 import com.sonsofcrypto.web3lib.utils.uiDispatcher
 import com.sonsofcrypto.web3walletcore.common.viewModels.CandlesViewModel
+import com.sonsofcrypto.web3walletcore.common.viewModels.loaded
 import com.sonsofcrypto.web3walletcore.extensions.Localized
-import com.sonsofcrypto.web3walletcore.extensions.toViewModelCandle
 import com.sonsofcrypto.web3walletcore.modules.account.AccountViewModel.Header.Button
 import com.sonsofcrypto.web3walletcore.modules.account.AccountViewModel.Transaction.Empty
 import com.sonsofcrypto.web3walletcore.modules.account.AccountViewModel.Transaction.Loading
@@ -111,9 +112,9 @@ class DefaultAccountPresenter(
         "square.on.square"
     )
 
-    private fun candlesViewModel(): CandlesViewModel = CandlesViewModel.Loaded(
-        interactor.candles(context.currency)?.map { it.toViewModelCandle() } ?: emptyList()
-    )
+    private fun candlesViewModel(): CandlesViewModel = CandlesViewModel.loaded(
+            interactor.candles(context.currency) ?: emptyList()
+        )
 
     private fun marketInfoViewModel(): AccountViewModel.MarketInfo = AccountViewModel.MarketInfo(
         Formatters.fiat.format(

@@ -4,6 +4,7 @@ import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.utils.BigInt
 
+// TODO(Sancho): Kill it
 data class CurrencyFormatterViewModel(
     val amount: BigInt?,
     val currency: Currency,

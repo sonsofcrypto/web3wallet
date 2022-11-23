@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.currencySwap
 
+import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3walletcore.common.viewModels.*
 
 data class CurrencySwapViewModel(
@@ -32,3 +33,17 @@ data class CurrencySwapViewModel(
         data class SwapAnyway(val text: String): ButtonState()
     }
 }
+
+
+data class CurrencySwapPriceViewModel(
+    val value: List<Formatters.Output>
+)
+
+data class CurrencySwapProviderViewModel(
+    val iconName: String,
+    val name: String,
+)
+
+data class CurrencySwapSlippageViewModel(
+    val value: String
+)

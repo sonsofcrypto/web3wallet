@@ -21,7 +21,7 @@ enum DashboardWireframeDestination {
     case tokenSwap
     case mnemonicConfirmation
     case themePicker
-    case improvmentProposals
+    case improvementProposals
     case deepLink(DeepLink)
 
 }
@@ -199,7 +199,7 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             mnemonicConfirmationWireframeFactory.make(parent).present()
         case .themePicker:
             themePickerWireframeFactory.make(vc).present()
-        case .improvmentProposals:
+        case .improvementProposals:
             improvementProposalsWireframeFactory.make(vc).present()
         case let .deepLink(deepLink):
             deepLinkHandler.handle(deepLink: deepLink)
