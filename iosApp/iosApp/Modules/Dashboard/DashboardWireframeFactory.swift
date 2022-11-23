@@ -24,6 +24,7 @@ final class DefaultDashboardWireframeFactory {
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let themePickerWireframeFactory: ThemePickerWireframeFactory
+    private let improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
@@ -42,6 +43,7 @@ final class DefaultDashboardWireframeFactory {
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         themePickerWireframeFactory: ThemePickerWireframeFactory,
+        improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
@@ -59,6 +61,7 @@ final class DefaultDashboardWireframeFactory {
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.themePickerWireframeFactory = themePickerWireframeFactory
+        self.improvementProposalsWireframeFactory = improvementProposalsWireframeFactory
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
         self.currencyStoreService = currencyStoreService
@@ -83,6 +86,7 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             nftDetailWireframeFactory: nftDetailWireframeFactory,
             qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
             themePickerWireframeFactory: themePickerWireframeFactory,
+            improvementProposalsWireframeFactory: improvementProposalsWireframeFactory,
             deepLinkHandler: deepLinkHandler,
             networksService: networksService,
             currencyStoreService: currencyStoreService,
@@ -110,6 +114,7 @@ final class DashboardWireframeFactoryAssembler: AssemblerComponent {
                 nftDetailWireframeFactory: resolver.resolve(),
                 qrCodeScanWireframeFactory: resolver.resolve(),
                 themePickerWireframeFactory: resolver.resolve(),
+                improvementProposalsWireframeFactory: resolver.resolve(),
                 deepLinkHandler: resolver.resolve(),
                 networksService: resolver.resolve(),
                 currencyStoreService: resolver.resolve(),

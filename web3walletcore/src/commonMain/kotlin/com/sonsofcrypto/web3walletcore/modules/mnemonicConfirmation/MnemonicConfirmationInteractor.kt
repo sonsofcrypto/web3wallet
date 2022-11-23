@@ -20,7 +20,7 @@ interface MnemonicConfirmationInteractor {
     fun isValidPrefix(prefix: String): Boolean
     fun isMnemonicValid(mnemonic: String, salt: String?): Boolean
     fun showSalt(): Boolean
-    fun markDashboardNotificationAsComplete()
+    fun markConfirmActionComplete()
 }
 
 class DefaultMnemonicConfirmationInteractor(
@@ -47,8 +47,7 @@ class DefaultMnemonicConfirmationInteractor(
         return keyStoreItem.saltMnemonic
     }
 
-    override fun markDashboardNotificationAsComplete() {
-        val address = networksService.wallet()?.id() ?: return
-        actionsService.completeActionType(Action.Type.ConfirmMnemonic(address))
+    override fun markConfirmActionComplete() {
+        actionsService.markComplete(Action.ConfirmMnemonic)
     }
 }

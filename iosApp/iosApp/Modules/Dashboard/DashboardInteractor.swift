@@ -129,7 +129,7 @@ extension DefaultDashboardInteractor: DashboardInteractor {
     }
 
     func actions() -> [Action] {
-        actionsService.outstandingActions()
+        actionsService.actions()
     }
 
     func totalFiatBalance() -> Double {
@@ -205,7 +205,7 @@ extension DefaultDashboardInteractor: DashboardInteractor {
 
 // MARK: - Listeners
 
-extension DefaultDashboardInteractor: NetworksListener, WalletListener, ActionsServiceListener {
+extension DefaultDashboardInteractor: NetworksListener, WalletListener, ActionsListener {
 
     private func emit(_ event: DashboardInteractorEvent) {
         listeners.forEach { $0.value?.handle(event) }

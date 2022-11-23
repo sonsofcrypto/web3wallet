@@ -463,3 +463,10 @@
 "networkAddressPicker.to.address.placeholder" = "To %@ address";
 
 "networkFeeView.estimatedFee" = "Network Fee";
+
+"actions.mnemonic.title" = "Secure";
+"actions.mnemonic.body" = "Confirm mnemonic";
+"actions.themes.title" = "App Themes";
+"actions.themes.body" = "Fancy a new look ?";
+"actions.improvementProposals.title" = "WIPs roadmap";
+"actions.improvementProposals.body" = "Improvement proposals";

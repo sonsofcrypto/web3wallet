@@ -9,7 +9,6 @@ enum DashboardWireframeDestination {
     case wallet(network: Network, currency: Currency)
     case keyStoreNetworkSettings
     case presentUnderConstructionAlert
-    case mnemonicConfirmation
     case receive
     case send(addressTo: String?)
     case scanQRCode
@@ -20,8 +19,11 @@ enum DashboardWireframeDestination {
         onCompletion: ([Currency]) -> Void
     )
     case tokenSwap
-    case deepLink(DeepLink)
+    case mnemonicConfirmation
     case themePicker
+    case improvmentProposals
+    case deepLink(DeepLink)
+
 }
 
 protocol DashboardWireframe {
@@ -42,6 +44,7 @@ final class DefaultDashboardWireframe {
     private let nftDetailWireframeFactory: NFTDetailWireframeFactory
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let themePickerWireframeFactory: ThemePickerWireframeFactory
+    private let improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory
     private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
@@ -63,6 +66,7 @@ final class DefaultDashboardWireframe {
         nftDetailWireframeFactory: NFTDetailWireframeFactory,
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         themePickerWireframeFactory: ThemePickerWireframeFactory,
+        improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory,
         deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
@@ -81,6 +85,7 @@ final class DefaultDashboardWireframe {
         self.nftDetailWireframeFactory = nftDetailWireframeFactory
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.themePickerWireframeFactory = themePickerWireframeFactory
+        self.improvementProposalsWireframeFactory = improvementProposalsWireframeFactory
         self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
         self.currencyStoreService = currencyStoreService
@@ -117,8 +122,6 @@ extension DefaultDashboardWireframe: DashboardWireframe {
             vc.edgeCardsController?.setDisplayMode(.overview, animated: true)
         case .presentUnderConstructionAlert:
             alertWireframeFactory.make(parent, context: .underConstructionAlert()).present()
-        case .mnemonicConfirmation:
-            mnemonicConfirmationWireframeFactory.make(parent).present()
         case .receive:
             let onCompletion: (([CurrencyPickerWireframeContext.Result]) -> Void) = {
                 [weak self] result in
@@ -192,10 +195,14 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                     currencyTo: nil
                 )
             ).present()
-        case let .deepLink(deepLink):
-            deepLinkHandler.handle(deepLink: deepLink)
+        case .mnemonicConfirmation:
+            mnemonicConfirmationWireframeFactory.make(parent).present()
         case .themePicker:
             themePickerWireframeFactory.make(vc).present()
+        case .improvmentProposals:
+            improvementProposalsWireframeFactory.make(vc).present()
+        case let .deepLink(deepLink):
+            deepLinkHandler.handle(deepLink: deepLink)
         }
     }
 }
