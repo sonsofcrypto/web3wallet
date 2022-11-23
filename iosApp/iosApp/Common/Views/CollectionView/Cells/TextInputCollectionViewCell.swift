@@ -3,12 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-struct TextInputCollectionViewModel {
-    let title: String
-    let value: String
-    let placeholder: String
-}
+import web3walletcore
 
 final class TextInputCollectionViewCell: CollectionViewCell {
 
@@ -50,59 +45,15 @@ extension TextInputCollectionViewCell: UITextFieldDelegate {
 }
 
 extension TextInputCollectionViewCell {
-
+    
     func update(
-        with viewModel: MnemonicNewViewModel.Name,
+        with viewModel: TextInputCollectionViewModel,
         textChangeHandler: ((String)->Void)? = nil
     ) -> Self {
         
-        update(
-            title: viewModel.title,
-            value: viewModel.value,
-            placeholder: viewModel.placeholder,
-            textChangeHandler: textChangeHandler
-        )
-    }
-
-    func update(
-        with viewModel: MnemonicUpdateViewModel.Name,
-        textChangeHandler: ((String)->Void)? = nil
-    ) -> Self {
-        
-        update(
-            title: viewModel.title,
-            value: viewModel.value,
-            placeholder: viewModel.placeholder,
-            textChangeHandler: textChangeHandler
-        )
-    }
-
-    func update(
-        with viewModel: MnemonicImportViewModel.Name,
-        textChangeHandler: ((String)->Void)? = nil
-    ) -> Self {
-        
-        update(
-            title: viewModel.title,
-            value: viewModel.value,
-            placeholder: viewModel.placeholder,
-            textChangeHandler: textChangeHandler
-        )
-    }
-}
-
-private extension TextInputCollectionViewCell {
-
-    func update(
-        title: String,
-        value: String,
-        placeholder: String,
-        textChangeHandler: ((String)->Void)? = nil
-    ) -> Self {
-        
-        titleLabel.text = title
-        textField.text = value
-        textField.placeholderAttrText = placeholder
+        titleLabel.text = viewModel.title
+        textField.text = viewModel.value
+        textField.placeholderAttrText = viewModel.placeholder
         self.textChangeHandler = textChangeHandler
         return self
     }

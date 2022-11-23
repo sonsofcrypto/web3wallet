@@ -38,6 +38,8 @@ private extension AssemblerBootstrapper {
             ActionsServiceAssembler(),
             ImprovementProposalsServiceAssembler(),
             EtherscanServiceAssembler(),
+            PasswordServiceAssembler(),
+            MnemonicServiceAssembler(),
             // DeepLink
             DeepLinkHandlerAssembler(),
             // Modules

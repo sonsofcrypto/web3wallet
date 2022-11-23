@@ -3,22 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-
-struct SegmentWithTextAndSwitchCellViewModel {
-    
-    let title: String
-    let segmentOptions: [String]
-    let selectedSegment: Int
-    let password: String
-    let passwordKeyboardType: UIKeyboardType // move to not UIKit...
-    let placeholder: String
-    let errorMessage: String?
-    let onOffTitle: String
-    let onOff: Bool
-    
-    var hasHint: Bool { errorMessage != nil }
-}
+import web3walletcore
 
 final class SegmentWithTextAndSwitchCell: CollectionViewCell {
 
@@ -169,7 +154,7 @@ extension SegmentWithTextAndSwitchCell {
             }
         }
 
-        segmentControl.selectedSegmentIndex = viewModel.selectedSegment
+        segmentControl.selectedSegmentIndex = viewModel.selectedSegment.int
         group1.alpha = segmentControl.selectedSegmentIndex == 2 ? 0 : 1
         group2.alpha = segmentControl.selectedSegmentIndex == 2 ? 0 : 1
         updateHintLabel(with: viewModel.errorMessage)

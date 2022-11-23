@@ -247,7 +247,8 @@ class Bip44 {
     }
 
     /** Derive key parsing path in format m/44'/60'/0'/0/0 */
-    @Throws(Error::class) fun deriveChildKey(path: String): ExtKey {
+    @Throws(Error::class)
+    fun deriveChildKey(path: String): ExtKey {
         val components = path.split("/")
         var parent = masterExtKey
         var retryCnt = 0

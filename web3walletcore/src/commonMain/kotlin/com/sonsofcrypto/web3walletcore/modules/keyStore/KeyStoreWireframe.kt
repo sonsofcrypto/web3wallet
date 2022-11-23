@@ -12,9 +12,7 @@ sealed class KeyStoreWireframeDestination {
         val item: KeyStoreItem, val handler: (KeyStoreItem) -> Unit, val onDeleted: () -> Unit
     ): KeyStoreWireframeDestination()
     data class NewMnemonic(val handler: (KeyStoreItem) -> Unit): KeyStoreWireframeDestination()
-    data class ImportMnemonic(
-        val handler: (KeyStoreItem) -> Unit
-    ): KeyStoreWireframeDestination()
+    data class ImportMnemonic(val handler: (KeyStoreItem) -> Unit): KeyStoreWireframeDestination()
     object ConnectHardwareWallet: KeyStoreWireframeDestination()
     object ImportPrivateKey: KeyStoreWireframeDestination()
     object CreateMultisig: KeyStoreWireframeDestination()

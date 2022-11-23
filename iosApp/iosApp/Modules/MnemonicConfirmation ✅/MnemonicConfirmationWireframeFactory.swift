@@ -13,14 +13,18 @@ final class DefaultMnemonicConfirmationWireframeFactory {
     private let keyStoreService: KeyStoreService
     private let actionsService: ActionsService
     private let networksService: NetworksService
+    private let mnemonicService: MnemonicService
+    
     init(
         keyStoreService: KeyStoreService,
         actionsService: ActionsService,
-        networksService: NetworksService
+        networksService: NetworksService,
+        mnemonicService: MnemonicService
     ) {
         self.keyStoreService = keyStoreService
         self.actionsService = actionsService
         self.networksService = networksService
+        self.mnemonicService = mnemonicService
     }
 }
 
@@ -31,7 +35,8 @@ extension DefaultMnemonicConfirmationWireframeFactory: MnemonicConfirmationWiref
             parent,
             keyStoreService: keyStoreService,
             actionsService: actionsService,
-            networksService: networksService
+            networksService: networksService,
+            mnemonicService: mnemonicService
         )
     }
 }
@@ -43,7 +48,8 @@ final class MnemonicConfirmationWireframeFactoryAssembler: AssemblerComponent {
             DefaultMnemonicConfirmationWireframeFactory(
                 keyStoreService: resolver.resolve(),
                 actionsService: resolver.resolve(),
-                networksService: resolver.resolve()
+                networksService: resolver.resolve(),
+                mnemonicService: resolver.resolve()
             )
         }
     }

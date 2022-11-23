@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class SwitchTextInputCollectionViewCell: CollectionViewCell {
 
@@ -52,49 +53,9 @@ extension SwitchTextInputCollectionViewCell: UITextFieldDelegate {
 }
 
 extension SwitchTextInputCollectionViewCell {
-
+    
     func update(
-        with viewModel: MnemonicNewViewModel.SwitchWithTextInput,
-        switchAction: ((Bool)->Void)?,
-        textChangeHandler: ((String)->Void)?,
-        descriptionAction: (()->Void)?
-    ) -> Self {
-        update(
-            title: viewModel.title,
-            onOff: viewModel.onOff,
-            text: viewModel.text,
-            placeholder: viewModel.placeholder,
-            description: viewModel.description,
-            descriptionHighlightedWords: viewModel.descriptionHighlightedWords,
-            switchAction: switchAction,
-            textChangeHandler: textChangeHandler,
-            descriptionAction: descriptionAction
-        )
-        return self
-    }
-
-    func update(
-        with viewModel: MnemonicUpdateViewModel.SwitchWithTextInput,
-        switchAction: ((Bool)->Void)?,
-        textChangeHandler: ((String)->Void)?,
-        descriptionAction: (()->Void)?
-    ) -> Self {
-        update(
-            title: viewModel.title,
-            onOff: viewModel.onOff,
-            text: viewModel.text,
-            placeholder: viewModel.placeholder,
-            description: viewModel.description,
-            descriptionHighlightedWords: viewModel.descriptionHighlightedWords,
-            switchAction: switchAction,
-            textChangeHandler: textChangeHandler,
-            descriptionAction: descriptionAction
-        )
-        return self
-    }
-
-    func update(
-        with viewModel: MnemonicImportViewModel.SwitchWithTextInput,
+        with viewModel: SwitchTextInputCollectionViewModel,
         switchAction: ((Bool)->Void)?,
         textChangeHandler: ((String)->Void)?,
         descriptionAction: (()->Void)?

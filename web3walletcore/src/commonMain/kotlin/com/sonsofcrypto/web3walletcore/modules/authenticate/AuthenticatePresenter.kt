@@ -1,5 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.authenticate
 
+import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem.PasswordType.BIO
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreItem.PasswordType.PIN
 import com.sonsofcrypto.web3lib.utils.WeakRef
@@ -29,22 +30,27 @@ class DefaultAuthenticatePresenter(
     private var salt: String = ""
 
     override fun present() {
-        updateView()
-        if (context.keyStoreItem?.passUnlockWithBio == true) return
-        interactor.unlockWithBiometrics(
-            context.keyStoreItem!!,
-            Localized("authenticate.title.unlock")
-        ) { authData, _ ->
-            if (authData != null) { password = authData.password; updateView() }
-            else { handle(DidCancel) }
+        val keyStoreItem = keyStoreItem() ?: return
+        if (interactor.canUnlockWithBio(keyStoreItem)) {
+            interactor.unlockWithBiometrics(keyStoreItem, context.title) { authData, error ->
+                wireframe.navigate(Dismiss)
+                context.handler(authData, error)
+            }
+            return
         }
+        updateView()
     }
+
+    private fun keyStoreItem(): KeyStoreItem? = context.keyStoreItem ?: interactor.keyStoreItem()
 
     override fun handle(event: AuthenticatePresenterEvent) {
         when (event) {
-            is DidCancel -> { wireframe.navigate(Dismiss) }
+            is DidCancel -> {
+                wireframe.navigate(Dismiss)
+                context.handler(null, null)
+            }
             is DidConfirm -> {
-                if (interactor.isValid(context.keyStoreItem!!, password, salt)) {
+                if (interactor.isValid(keyStoreItem()!!, password, salt)) {
                     wireframe.navigate(Dismiss)
                     context.handler(AuthenticateData(password, salt), null)
                 } else {
@@ -66,12 +72,12 @@ class DefaultAuthenticatePresenter(
             Localized("authenticate.placeholder.password"),
             salt,
             Localized("authenticate.placeholder.salt"),
-            context.keyStoreItem?.passwordType != BIO,
-            context.keyStoreItem?.saltMnemonic ?: false
+            keyStoreItem()?.passwordType != BIO,
+            keyStoreItem()?.saltMnemonic ?: false
         )
 
     private fun makePassType(): AuthenticateViewModel.PassType =
-        when (context.keyStoreItem!!.passwordType) {
+        when (keyStoreItem()!!.passwordType) {
             PIN -> AuthenticateViewModel.PassType.PIN
             else -> AuthenticateViewModel.PassType.PASS
         }

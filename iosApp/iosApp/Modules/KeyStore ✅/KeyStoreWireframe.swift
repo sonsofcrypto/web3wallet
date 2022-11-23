@@ -63,18 +63,18 @@ extension DefaultKeyStoreWireframe {
             edgeVc?.setDisplayMode(.masterOnboardAnim, animated: true)
         }
         if let input = destination as? KeyStoreWireframeDestination.NewMnemonic {
-            let context = MnemonicNewContext(createHandler: input.handler)
+            let context = MnemonicNewWireframeContext(handler: input.handler)
             newMnemonic.make(vc, context: context).present()
         }
         if let input = destination as? KeyStoreWireframeDestination.ImportMnemonic {
-            let context = MnemonicImportContext(createHandler: input.handler)
+            let context = MnemonicImportWireframeContext(handler: input.handler)
             importMnemonic.make(vc, context: context).present()
         }
         if let input = destination as? KeyStoreWireframeDestination.EditKeyStoreItem {
-            let context = MnemonicUpdateContext(
+            let context = MnemonicUpdateWireframeContext(
                 keyStoreItem: input.item,
-                updateHandler: input.handler,
-                onKeyStoreItemDeleted: input.onDeleted
+                onUpdateHandler: input.handler,
+                onDeleteHandler: input.onDeleted
             )
             updateMnemonic.make(vc, context: context).present()
         }

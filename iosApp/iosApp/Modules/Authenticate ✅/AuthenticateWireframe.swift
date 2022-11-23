@@ -26,29 +26,7 @@ final class DefaultAuthenticateWireframe {
 extension DefaultAuthenticateWireframe {
 
     func present() {
-        let interactor = DefaultAuthenticateInteractor(
-            keyStoreService: keyStoreService
-        )
-        guard let keyStoreItemTarget = keyStoreItemTarget else { return }
-        // NOTE: Update keyStoreItem in context to set selected one in case it needs to
-        context = .init(
-            title: context.title,
-            keyStoreItem: keyStoreItemTarget,
-            handler: context.handler
-        )
-        guard !interactor.canUnlockWithBio(keyStoreItem: keyStoreItemTarget) else {
-            // NOTE: Passing this as a local variable otherwise in the closure below having a weak self
-            // by the time is called back the wireframe is already deallocated and self? is nil.
-            let context = context
-            interactor.unlockWithBiometrics(
-                item: keyStoreItemTarget,
-                title: context.title,
-                handler: { authData, error in context.handler(authData, error) }
-            )
-            return
-        }
-
-        let vc = wireUp(interactor)
+        let vc = wireUp()
         parent?.present(vc, animated: true)
     }
     
@@ -61,11 +39,11 @@ extension DefaultAuthenticateWireframe {
 }
 
 private extension DefaultAuthenticateWireframe {
-    var keyStoreItemTarget: KeyStoreItem? {
-        context.keyStoreItem ?? keyStoreService.selected
-    }
 
-    func wireUp(_ interactor: AuthenticateInteractor) -> UIViewController {
+    func wireUp() -> UIViewController {
+        let interactor = DefaultAuthenticateInteractor(
+            keyStoreService: keyStoreService
+        )
         let vc: AuthenticateViewController = UIStoryboard(.authenticate).instantiate()
         let presenter = DefaultAuthenticatePresenter(
             view: WeakRef(referred: vc),

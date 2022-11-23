@@ -76,7 +76,7 @@ extension ImprovementProposalsViewController: UICollectionViewDataSource {
                 SectionHeaderView.self,
                 for: indexPath,
                 kind: .header
-            ).update(with: viewModel?.selectedCategory())
+            ).update(with: SectionHeaderViewModel(title: viewModel?.selectedCategory()?.description_ ?? ""))
         default:
             fatalError("Unexpected element kind: \(kind).")
         }
