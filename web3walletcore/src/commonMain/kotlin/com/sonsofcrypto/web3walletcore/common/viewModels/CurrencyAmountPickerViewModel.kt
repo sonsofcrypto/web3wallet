@@ -2,6 +2,7 @@ package com.sonsofcrypto.web3walletcore.common.viewModels
 
 import com.sonsofcrypto.web3lib.utils.BigInt
 
+// TODO(Sancho): Why should this not be just part of CurrencyPicker modules ?
 data class CurrencyAmountPickerViewModel(
     val amount: BigInt?,
     val symbolIconName: String,

@@ -4,6 +4,9 @@ import com.sonsofcrypto.web3lib.formatters.Formatters
 import com.sonsofcrypto.web3lib.types.Currency
 import com.sonsofcrypto.web3lib.utils.BigInt
 
+// TODO(Sancho): This is needless container. What ever viewModel this is using it
+// should someProperty: List<Formatters.Output> instead of
+// someProperty: CurrencyFormatterViewModel
 data class CurrencyFormatterViewModel(
     val amount: BigInt?,
     val currency: Currency,
