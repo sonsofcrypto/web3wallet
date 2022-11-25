@@ -114,14 +114,34 @@ kotlin {
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
         }
+
+//        tasks.register<Copy>("copyiOSTestResources") {
+//            from("../src/res")
+//            into("build/bin/iosX64/debugTest/resources")
+//            into("build/bin/iosArm64/debugTest/resources")
+//            into("build/bin/iosSimulatorArm64/debugTest/resources")
+//            into("build/bin/iosX64/releaseTest/res")
+//            into("build/bin/iosArm64/releaseTest/res")
+//            into("build/bin/iosSimulatorArm64/releaseTest/res")
+//        }
+//
+//        tasks.findByName("iosX64Test")!!.dependsOn("copyiOSTestResources")
+//        tasks.findByName("iosArm64Test")!!.dependsOn("copyiOSTestResources")
+//        tasks.findByName("iosSimulatorArm64Test")!!.dependsOn("copyiOSTestResources")
+
     }
+
+//    tasks.withType<Test> {
+//        // set system property using a property specified in gradle
+//        systemProperty("java.library.path", "/Users/blockexplorer/Development/soc/web3wallet/coreCrypto/build/android/coreCrypto/jni/x86/")
+//    }
 
 
     val testBinary = kotlin.targets.getByName<KotlinNativeTarget>("iosSimulatorArm64").binaries.getTest("DEBUG")
     val runIosTests by project.tasks.creating(IosSimulatorTestsTask::class) {
         dependsOn(testBinary.linkTask)
         testExecutable.set(testBinary.outputFile)
-        simulatorId.set("F91029AC-CC93-4819-81E8-CC2E2478726E")
+        simulatorId.set("3CA89ADB-EE75-471F-B6D1-5EF9D83FEFDD")
     }
 }
 
