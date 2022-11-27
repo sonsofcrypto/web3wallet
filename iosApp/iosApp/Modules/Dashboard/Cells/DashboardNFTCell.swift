@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class DashboardNFTCell: CollectionViewCell {
     
@@ -24,7 +25,8 @@ final class DashboardNFTCell: CollectionViewCell {
 
 extension DashboardNFTCell {
 
-    func update(with viewModel: DashboardViewModel.NFT?) -> Self {
+    @discardableResult
+    func update(with viewModel: DashboardViewModel.SectionItemsNFT?) -> Self {
         guard let viewModel = viewModel else { return self }
         imageView.load(url: viewModel.image)
         return self

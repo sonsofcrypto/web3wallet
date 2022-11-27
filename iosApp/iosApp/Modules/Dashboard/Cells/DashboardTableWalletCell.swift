@@ -30,14 +30,19 @@ final class DashboardTableWalletCell: CollectionViewCell {
 
 extension DashboardTableWalletCell {
     
+    @discardableResult
     func update(
-        with viewModel: DashboardViewModel.Wallet?,
+        with viewModel: DashboardViewModel.SectionItemsWallet?,
         showBottomSeparator: Bool = true
     ) -> Self {
         guard let viewModel = viewModel else { return self }
         currencyImageView.image = viewModel.imageName.assetImage
         fiatPriceLabel.attributedText = .init(
-            viewModel.fiatPrice.toOutput(style: Formatters.StyleCustom(maxLength: 9.uint32)),
+            Formatters.Companion.shared.fiat.format(
+                amount: viewModel.fiatPrice.bigDec,
+                style: Formatters.StyleCustom(maxLength: 9.uint32),
+                currencyCode: viewModel.fiatCurrencyCode
+            ),
             font: Theme.font.callout,
             fontSmall: Theme.font.caption2,
             foregroundColor: Theme.colour.labelSecondary
@@ -50,12 +55,20 @@ extension DashboardTableWalletCell {
             pctChangeLabel.apply(style: .callout, colour: Theme.colour.candleRed)
         }
         cryptoBalanceLabel.attributedText = .init(
-            viewModel.cryptoBalance.toOutput(style: Formatters.StyleCustom(maxLength: 10.uint32)),
+            Formatters.Companion.shared.currency.format(
+                amount: viewModel.cryptoBalance,
+                currency: viewModel.currency,
+                style: Formatters.StyleCustom(maxLength: 10.uint32)
+            ),
             font: Theme.font.body,
             fontSmall: Theme.font.footnote
         )
         fiatBalanceLabel.attributedText = .init(
-            viewModel.fiatBalance.toOutput(style: Formatters.StyleCustom(maxLength: 10.uint32)),
+            Formatters.Companion.shared.fiat.format(
+                amount: viewModel.fiatBalance.bigDec,
+                style: Formatters.StyleCustom(maxLength: 10.uint32),
+                currencyCode: viewModel.fiatCurrencyCode
+            ),
             font: Theme.font.callout,
             fontSmall: Theme.font.caption2,
             foregroundColor: Theme.colour.labelSecondary

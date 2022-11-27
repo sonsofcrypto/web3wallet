@@ -5,32 +5,6 @@
 import UIKit
 import web3walletcore
 
-enum DashboardWireframeDestination {
-    case wallet(network: Network, currency: Currency)
-    case keyStoreNetworkSettings
-    case presentUnderConstructionAlert
-    case receive
-    case send(addressTo: String?)
-    case scanQRCode
-    case nftItem(NFTItem)
-    case editCurrencies(
-        network: Network,
-        selectedCurrencies: [Currency],
-        onCompletion: ([Currency]) -> Void
-    )
-    case tokenSwap
-    case mnemonicConfirmation
-    case themePicker
-    case improvementProposals
-    case deepLink(DeepLink)
-
-}
-
-protocol DashboardWireframe {
-    func present()
-    func navigate(to destination: DashboardWireframeDestination)
-}
-
 final class DefaultDashboardWireframe {
 
     private weak var parent: UIViewController?
@@ -45,7 +19,6 @@ final class DefaultDashboardWireframe {
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let themePickerWireframeFactory: ThemePickerWireframeFactory
     private let improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory
-    private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
     private let walletService: WalletService
@@ -67,7 +40,6 @@ final class DefaultDashboardWireframe {
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         themePickerWireframeFactory: ThemePickerWireframeFactory,
         improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory,
-        deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
@@ -86,7 +58,6 @@ final class DefaultDashboardWireframe {
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.themePickerWireframeFactory = themePickerWireframeFactory
         self.improvementProposalsWireframeFactory = improvementProposalsWireframeFactory
-        self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
         self.currencyStoreService = currencyStoreService
         self.walletService = walletService
@@ -95,7 +66,7 @@ final class DefaultDashboardWireframe {
     }
 }
 
-extension DefaultDashboardWireframe: DashboardWireframe {
+extension DefaultDashboardWireframe {
 
     func present() {
         let vc = wireUp()
@@ -107,48 +78,30 @@ extension DefaultDashboardWireframe: DashboardWireframe {
         }
     }
 
-    func navigate(to destination: DashboardWireframeDestination) {
+    func navigate(with destination: DashboardWireframeDestination) {
         guard let vc = self.vc ?? parent else {
             print("DefaultDashboardWireframe has no view")
             return
         }
-        switch destination {
-        case let .wallet(network, currency):
-            accountWireframeFactory.make(
-                vc,
-                context: .init(network: network, currency: currency)
-            ).present()
-        case .keyStoreNetworkSettings:
+        if destination is DashboardWireframeDestination.KeyStoreNetworkSettings {
             vc.edgeCardsController?.setDisplayMode(.overview, animated: true)
-        case .presentUnderConstructionAlert:
+        }
+        if destination is DashboardWireframeDestination.PresentUnderConstructionAlert {
             alertWireframeFactory.make(parent, context: .underConstructionAlert()).present()
-        case .receive:
-            let onCompletion: (([CurrencyPickerWireframeContext.Result]) -> Void) = {
-                [weak self] result in
-                guard let self = self else { return }
-                guard
-                    let network = result.first?.network,
-                    let currency = result.first?.selectedCurrencies.first
-                else { return }
-                self.currencyReceiveWireframeFactory.make(
-                    self.vc?.presentedViewController ?? self.vc,
-                    context: .init(network: network, currency: currency)
-                ).present()
-            }
-            currencyPickerWireframeFactory.make(
-                vc,
-                context: .init(
-                    isMultiSelect: false,
-                    showAddCustomCurrency: false,
-                    networksData: networksService.enabledNetworks().compactMap{
-                        .init(network: $0, favouriteCurrencies: nil, currencies: nil)
-                    },
-                    selectedNetwork: nil,
-                    handler: onCompletion
-                )
-            ).present()
-        case let .send(address):
-            guard let network = networksService.network, let address = address else {
+        }
+        if destination is DashboardWireframeDestination.ScanQRCode {
+            guard let network = networksService.network else { return }
+            let context = QRCodeScanWireframeContext(
+                type: QRCodeScanWireframeContext.Type_Network(network: network),
+                handler: navigateToCurrencySend()
+            )
+            qrCodeScanWireframeFactory.make(vc, context: context).present()
+        }
+        if destination is DashboardWireframeDestination.Receive {
+            navigateToReceive()
+        }
+        if let input = destination as? DashboardWireframeDestination.Send {
+            guard let network = networksService.network, let address = input.addressTo else {
                 navigateToCurrencyPickerAndSend()
                 return
             }
@@ -156,53 +109,54 @@ extension DefaultDashboardWireframe: DashboardWireframe {
                 vc,
                 context: .init(network: network, address: address, currency: nil)
             ).present()
-        case .scanQRCode:
+        }
+        if destination is DashboardWireframeDestination.Swap {
             guard let network = networksService.network else { return }
-            let context = QRCodeScanWireframeContext(
-                type: QRCodeScanWireframeContext.Type_Network(network: network),
-                handler: navigateToCurrencySend()
-            )
-            qrCodeScanWireframeFactory.make(vc, context: context).present()
-        case let .nftItem(nftItem):
-            guard let vc = self.vc else { return }
-            let context = NFTDetailWireframeContext(
-                nftId: nftItem.identifier,
-                collectionId: nftItem.collectionIdentifier
-            )
-            nftDetailWireframeFactory.make(vc, context: context).present()
-        case let .editCurrencies(network, selectedCurrencies, onCompletion):
+            currencySwapWireframeFactory.make(
+                vc,
+                context: .init(network: network, currencyFrom: nil, currencyTo: nil)
+            ).present()
+        }
+        if destination is DashboardWireframeDestination.MnemonicConfirmation {
+            mnemonicConfirmationWireframeFactory.make(parent).present()
+        }
+        if destination is DashboardWireframeDestination.ThemePicker {
+            themePickerWireframeFactory.make(vc).present()
+        }
+        if destination is DashboardWireframeDestination.ImprovementProposals {
+            improvementProposalsWireframeFactory.make(vc).present()
+        }
+        if let input = destination as? DashboardWireframeDestination.EditCurrencies {
             let onCompletion: (([CurrencyPickerWireframeContext.Result]) -> Void) = { result in
                 guard let currencies = result.first?.selectedCurrencies else { return }
-                onCompletion(currencies)
+                input.onCompletion(currencies)
             }
             currencyPickerWireframeFactory.make(
                 vc,
                 context: .init(
                     isMultiSelect: true,
                     showAddCustomCurrency: true,
-                    networksData: [.init(network: network, favouriteCurrencies: selectedCurrencies, currencies: nil)],
+                    networksData: [
+                        .init(network: input.network, favouriteCurrencies: input.selectedCurrencies, currencies: nil)
+                    ],
                     selectedNetwork: nil,
                     handler: onCompletion
                 )
             ).present()
-        case .tokenSwap:
-            guard let network = networksService.network else { return }
-            currencySwapWireframeFactory.make(
+        }
+        if let input = destination as? DashboardWireframeDestination.Wallet {
+            accountWireframeFactory.make(
                 vc,
-                context: .init(
-                    network: network,
-                    currencyFrom: nil,
-                    currencyTo: nil
-                )
+                context: .init(network: input.network, currency: input.currency)
             ).present()
-        case .mnemonicConfirmation:
-            mnemonicConfirmationWireframeFactory.make(parent).present()
-        case .themePicker:
-            themePickerWireframeFactory.make(vc).present()
-        case .improvementProposals:
-            improvementProposalsWireframeFactory.make(vc).present()
-        case let .deepLink(deepLink):
-            deepLinkHandler.handle(deepLink: deepLink)
+        }
+        if let input = destination as? DashboardWireframeDestination.NftItem {
+            guard let vc = self.vc else { return }
+            let context = NFTDetailWireframeContext(
+                nftId: input.nft.identifier,
+                collectionId: input.nft.collectionIdentifier
+            )
+            nftDetailWireframeFactory.make(vc, context: context).present()
         }
     }
 }
@@ -219,7 +173,7 @@ private extension DefaultDashboardWireframe {
         )
         let vc: DashboardViewController = UIStoryboard(.dashboard).instantiate()
         let presenter = DefaultDashboardPresenter(
-            view: vc,
+            view: WeakRef(referred: vc),
             wireframe: self,
             interactor: interactor
         )
@@ -257,7 +211,33 @@ private extension DefaultDashboardWireframe {
     }
     
     func navigateToCurrencySend() -> (String) -> Void {
-        { [weak self] addressTo in self?.navigate(to: .send(addressTo: addressTo)) }
+        { [weak self] addressTo in self?.navigate(with: DashboardWireframeDestination.Send(addressTo: addressTo)) }
     }
 
+    func navigateToReceive() {
+        let onCompletion: (([CurrencyPickerWireframeContext.Result]) -> Void) = {
+            [weak self] result in
+            guard let self = self else { return }
+            guard
+                let network = result.first?.network,
+                let currency = result.first?.selectedCurrencies.first
+            else { return }
+            self.currencyReceiveWireframeFactory.make(
+                self.vc?.presentedViewController ?? self.vc,
+                context: .init(network: network, currency: currency)
+            ).present()
+        }
+        currencyPickerWireframeFactory.make(
+            vc,
+            context: .init(
+                isMultiSelect: false,
+                showAddCustomCurrency: false,
+                networksData: networksService.enabledNetworks().compactMap{
+                    .init(network: $0, favouriteCurrencies: nil, currencies: nil)
+                },
+                selectedNetwork: nil,
+                handler: onCompletion
+            )
+        ).present()
+    }
 }

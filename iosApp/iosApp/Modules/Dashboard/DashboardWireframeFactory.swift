@@ -25,7 +25,6 @@ final class DefaultDashboardWireframeFactory {
     private let qrCodeScanWireframeFactory: QRCodeScanWireframeFactory
     private let themePickerWireframeFactory: ThemePickerWireframeFactory
     private let improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory
-    private let deepLinkHandler: DeepLinkHandler
     private let networksService: NetworksService
     private let currencyStoreService: CurrencyStoreService
     private let walletService: WalletService
@@ -44,7 +43,6 @@ final class DefaultDashboardWireframeFactory {
         qrCodeScanWireframeFactory: QRCodeScanWireframeFactory,
         themePickerWireframeFactory: ThemePickerWireframeFactory,
         improvementProposalsWireframeFactory: ImprovementProposalsWireframeFactory,
-        deepLinkHandler: DeepLinkHandler,
         networksService: NetworksService,
         currencyStoreService: CurrencyStoreService,
         walletService: WalletService,
@@ -62,7 +60,6 @@ final class DefaultDashboardWireframeFactory {
         self.qrCodeScanWireframeFactory = qrCodeScanWireframeFactory
         self.themePickerWireframeFactory = themePickerWireframeFactory
         self.improvementProposalsWireframeFactory = improvementProposalsWireframeFactory
-        self.deepLinkHandler = deepLinkHandler
         self.networksService = networksService
         self.currencyStoreService = currencyStoreService
         self.walletService = walletService
@@ -87,7 +84,6 @@ extension DefaultDashboardWireframeFactory: DashboardWireframeFactory {
             qrCodeScanWireframeFactory: qrCodeScanWireframeFactory,
             themePickerWireframeFactory: themePickerWireframeFactory,
             improvementProposalsWireframeFactory: improvementProposalsWireframeFactory,
-            deepLinkHandler: deepLinkHandler,
             networksService: networksService,
             currencyStoreService: currencyStoreService,
             walletService: walletService,
@@ -115,7 +111,6 @@ final class DashboardWireframeFactoryAssembler: AssemblerComponent {
                 qrCodeScanWireframeFactory: resolver.resolve(),
                 themePickerWireframeFactory: resolver.resolve(),
                 improvementProposalsWireframeFactory: resolver.resolve(),
-                deepLinkHandler: resolver.resolve(),
                 networksService: resolver.resolve(),
                 currencyStoreService: resolver.resolve(),
                 walletService: resolver.resolve(),

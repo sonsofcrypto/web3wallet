@@ -22,9 +22,10 @@ final class DashboardHeaderBalanceView: UICollectionReusableView {
 extension DashboardHeaderBalanceView {
 
     @discardableResult
-    func update(with balance: [Formatters.Output]) -> Self {
+    func update(with viewModel: DashboardViewModel.SectionHeaderBalance?) -> Self {
+        guard let viewModel = viewModel else { return self }
         label.attributedText = .init(
-            balance,
+            viewModel.title,
             font: Theme.font.largeTitleBold,
             fontSmall: Theme.font.title3Bold
         )

@@ -3,11 +3,10 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
-final class DashboardHeaderNameView: UICollectionReusableView {
+final class DashboardHeaderTitleView: UICollectionReusableView {
     private lazy var label = UILabel()
-    private lazy var fuelCostImageView = UIImageView(named: "charging_station")
-    private lazy var fuelCostLabel = UILabel()
     private lazy var rightAction = UILabel()
     private lazy var lineView = LineView()
     private lazy var stack = HStackView(
@@ -15,7 +14,7 @@ final class DashboardHeaderNameView: UICollectionReusableView {
         spacing: Theme.constant.padding
     )
     
-    var btnHandler: (()->Void)?
+    private var handler: (()->Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,14 +35,11 @@ final class DashboardHeaderNameView: UICollectionReusableView {
     }
 }
 
-private extension DashboardHeaderNameView {
+private extension DashboardHeaderTitleView {
     
     func configureUI() {
         label.font = Theme.font.networkTitle
         label.textColor = Theme.colour.labelPrimary
-        fuelCostLabel.font = Theme.font.dashboardSectionFuel
-        fuelCostLabel.textColor = Theme.colour.labelPrimary
-        fuelCostImageView.contentMode = .bottom
         // TODO: This should be button of certain type
         rightAction.font = Theme.font.body
         rightAction.textColor = Theme.colour.labelPrimary
@@ -54,31 +50,26 @@ private extension DashboardHeaderNameView {
         addSubview(stack)
         stack.contraintToSuperView(bottom: offset)
         addSubview(lineView)
-//        lineView.isHidden = Theme.type.isThemeIOS
     }
     
     @objc func moreTapped() {
-        btnHandler?()
+        handler?()
     }
 }
 
 // MARK: - ViewModel
 
-extension DashboardHeaderNameView {
+extension DashboardHeaderTitleView {
 
     @discardableResult
     func update(
-        with title: String,
-        and network: DashboardViewModel.Section.Header.Network?,
-        handler: (()->Void)?
+        with viewModel: DashboardViewModel.SectionHeaderTitle?,
+        handler: @escaping () -> Void
     ) -> Self {
-        btnHandler = handler
-        label.text = title.uppercased()
-        rightAction.text = network?.rightActionTitle ?? ""
-        fuelCostLabel.text = network?.fuelCost ?? ""
-        [rightAction, fuelCostImageView, fuelCostLabel].forEach {
-            $0.isHidden = network == nil
-        }
+        self.handler = handler
+        label.text = viewModel?.title.uppercased()
+        rightAction.text = viewModel?.action
+        rightAction.isHidden = viewModel?.action == nil
         return self
     }
 }
