@@ -226,7 +226,7 @@ class DefaultDashboardPresenter(
     private fun walletCandles(candles: List<Candle>?): CandlesViewModel {
         candles ?: return CandlesViewModel.Loading(40)
         return CandlesViewModel.Loaded(
-            candles.drop(candles.count() - 40).map {
+            candles.takeLast(40).map {
                 CandlesViewModel.Candle(
                     it.open,
                     it.high,

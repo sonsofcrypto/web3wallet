@@ -120,8 +120,8 @@ extension DashboardViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        guard let section = viewModel?.sections[section] else { return 0 }
-        return section.items.count.int
+        if section == 0 { return 1 }
+        return viewModel?.sections[section].items.count.int ?? 0
     }
     
     func collectionView(
