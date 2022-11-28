@@ -1,14 +1,6 @@
 package com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation
 
 import com.sonsofcrypto.web3lib.services.keyStore.KeyStoreService
-import com.sonsofcrypto.web3lib.services.networks.NetworksService
-import com.sonsofcrypto.web3lib.types.Bip44
-import com.sonsofcrypto.web3lib.types.ExtKey
-import com.sonsofcrypto.web3lib.utils.Trie
-import com.sonsofcrypto.web3lib.utils.bip39.Bip39
-import com.sonsofcrypto.web3lib.utils.bip39.WORDLIST_ENGLISH
-import com.sonsofcrypto.web3lib.utils.bip39.WordList
-import com.sonsofcrypto.web3walletcore.modules.mnemonicConfirmation.MnemonicConfirmationViewModel.WordInfo
 import com.sonsofcrypto.web3walletcore.services.actions.Action
 import com.sonsofcrypto.web3walletcore.services.actions.ActionsService
 import com.sonsofcrypto.web3walletcore.services.mnemonic.MnemonicService
@@ -26,7 +18,6 @@ interface MnemonicConfirmationInteractor {
 class DefaultMnemonicConfirmationInteractor(
     private val keyStoreService: KeyStoreService,
     private val actionsService: ActionsService,
-    private val networksService: NetworksService,
     private val mnemonicService: MnemonicService,
 ): MnemonicConfirmationInteractor {
 
