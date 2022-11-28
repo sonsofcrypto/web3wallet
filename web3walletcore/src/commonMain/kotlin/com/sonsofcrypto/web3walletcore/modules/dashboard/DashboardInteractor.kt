@@ -136,8 +136,13 @@ class DefaultDashboardInteractor(
         walletService.networks().forEach { network ->
             walletService.currencies(network).forEach { currency ->
                 bgScope.launch {
-                    currencyStoreService.fetchCandles(currency)
-                    uiScope.launch { emit(DidUpdateCandles(network, currency)) }
+                    try {
+                        currencyStoreService.fetchCandles(currency)
+                        uiScope.launch { emit(DidUpdateCandles(network, currency)) }
+                    } catch (e: Throwable) {
+                        println("[ERROR] Error fetching candles: $e")
+                        uiScope.launch { emit(DidUpdateCandles(network, currency)) }
+                    }
                 }
             }
         }
