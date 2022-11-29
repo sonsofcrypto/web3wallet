@@ -138,15 +138,6 @@
 		1C60C2BF285724D0003BE25D /* KeyStoreWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1EB285724D0003BE25D /* KeyStoreWireframe.swift */; };
 		1C60C2C0285724D0003BE25D /* KeyStoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1EC285724D0003BE25D /* KeyStoreCell.swift */; };
 		1C60C2C1285724D0003BE25D /* KeyStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1ED285724D0003BE25D /* KeyStoreView.swift */; };
-		1C60C2C2285724D0003BE25D /* ChatWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1EF285724D0003BE25D /* ChatWireframe.swift */; };
-		1C60C2C3285724D0003BE25D /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1F0285724D0003BE25D /* ChatViewController.swift */; };
-		1C60C2C4285724D0003BE25D /* ChatRightCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1F2285724D0003BE25D /* ChatRightCollectionViewCell.swift */; };
-		1C60C2C5285724D0003BE25D /* ChatLeftCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1F3285724D0003BE25D /* ChatLeftCollectionViewCell.swift */; };
-		1C60C2C6285724D0003BE25D /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1F4285724D0003BE25D /* ChatViewModel.swift */; };
-		1C60C2C7285724D0003BE25D /* ChatInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1F5285724D0003BE25D /* ChatInteractor.swift */; };
-		1C60C2C8285724D0003BE25D /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C60C1F6285724D0003BE25D /* Chat.storyboard */; };
-		1C60C2CA285724D0003BE25D /* ChatPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1F8285724D0003BE25D /* ChatPresenter.swift */; };
-		1C60C2CB285724D0003BE25D /* ChatWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1F9285724D0003BE25D /* ChatWireframeFactory.swift */; };
 		1C60C2CC285724D0003BE25D /* AlertWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1FB285724D0003BE25D /* AlertWireframe.swift */; };
 		1C60C2CD285724D0003BE25D /* AlertWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1FC285724D0003BE25D /* AlertWireframeFactory.swift */; };
 		1C60C2CF285724D0003BE25D /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C1FE285724D0003BE25D /* AlertView.swift */; };
@@ -191,16 +182,6 @@
 		1C60C314285724D1003BE25D /* AccountWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C24C285724D0003BE25D /* AccountWireframe.swift */; };
 		1C60C315285724D1003BE25D /* AccountWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C24D285724D0003BE25D /* AccountWireframeFactory.swift */; };
 		1C60C31A285724D1003BE25D /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C252285724D0003BE25D /* AccountView.swift */; };
-		1C60C31C285724D1003BE25D /* AppsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C255285724D0003BE25D /* AppsWireframe.swift */; };
-		1C60C31D285724D1003BE25D /* AppsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C256285724D0003BE25D /* AppsCollectionViewCell.swift */; };
-		1C60C31E285724D1003BE25D /* AppsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C257285724D0003BE25D /* AppsViewModel.swift */; };
-		1C60C31F285724D1003BE25D /* AppsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C258285724D0003BE25D /* AppsPresenter.swift */; };
-		1C60C320285724D1003BE25D /* AppsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C259285724D0003BE25D /* AppsInteractor.swift */; };
-		1C60C321285724D1003BE25D /* AppsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C25A285724D0003BE25D /* AppsCell.swift */; };
-		1C60C322285724D1003BE25D /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C60C25B285724D0003BE25D /* Apps.storyboard */; };
-		1C60C323285724D1003BE25D /* AppsWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C25C285724D0003BE25D /* AppsWireframeFactory.swift */; };
-		1C60C324285724D1003BE25D /* AppsHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C25D285724D0003BE25D /* AppsHeaderCollectionViewCell.swift */; };
-		1C60C325285724D1003BE25D /* AppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C25E285724D0003BE25D /* AppsView.swift */; };
 		1C60C327285724D1003BE25D /* MnemonicConfirmation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C60C261285724D0003BE25D /* MnemonicConfirmation.storyboard */; };
 		1C60C328285724D1003BE25D /* MnemonicConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C262285724D0003BE25D /* MnemonicConfirmationView.swift */; };
 		1C60C32A285724D1003BE25D /* MnemonicConfirmationWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C264285724D0003BE25D /* MnemonicConfirmationWireframeFactory.swift */; };
@@ -603,15 +584,6 @@
 		1C60C1EB285724D0003BE25D /* KeyStoreWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreWireframe.swift; sourceTree = "<group>"; };
 		1C60C1EC285724D0003BE25D /* KeyStoreCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreCell.swift; sourceTree = "<group>"; };
 		1C60C1ED285724D0003BE25D /* KeyStoreView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyStoreView.swift; sourceTree = "<group>"; };
-		1C60C1EF285724D0003BE25D /* ChatWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatWireframe.swift; sourceTree = "<group>"; };
-		1C60C1F0285724D0003BE25D /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
-		1C60C1F2285724D0003BE25D /* ChatRightCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRightCollectionViewCell.swift; sourceTree = "<group>"; };
-		1C60C1F3285724D0003BE25D /* ChatLeftCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLeftCollectionViewCell.swift; sourceTree = "<group>"; };
-		1C60C1F4285724D0003BE25D /* ChatViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
-		1C60C1F5285724D0003BE25D /* ChatInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatInteractor.swift; sourceTree = "<group>"; };
-		1C60C1F6285724D0003BE25D /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
-		1C60C1F8285724D0003BE25D /* ChatPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatPresenter.swift; sourceTree = "<group>"; };
-		1C60C1F9285724D0003BE25D /* ChatWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C1FB285724D0003BE25D /* AlertWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertWireframe.swift; sourceTree = "<group>"; };
 		1C60C1FC285724D0003BE25D /* AlertWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C1FE285724D0003BE25D /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
@@ -656,16 +628,6 @@
 		1C60C24C285724D0003BE25D /* AccountWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountWireframe.swift; sourceTree = "<group>"; };
 		1C60C24D285724D0003BE25D /* AccountWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountWireframeFactory.swift; sourceTree = "<group>"; };
 		1C60C252285724D0003BE25D /* AccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
-		1C60C255285724D0003BE25D /* AppsWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsWireframe.swift; sourceTree = "<group>"; };
-		1C60C256285724D0003BE25D /* AppsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsCollectionViewCell.swift; sourceTree = "<group>"; };
-		1C60C257285724D0003BE25D /* AppsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsViewModel.swift; sourceTree = "<group>"; };
-		1C60C258285724D0003BE25D /* AppsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsPresenter.swift; sourceTree = "<group>"; };
-		1C60C259285724D0003BE25D /* AppsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsInteractor.swift; sourceTree = "<group>"; };
-		1C60C25A285724D0003BE25D /* AppsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsCell.swift; sourceTree = "<group>"; };
-		1C60C25B285724D0003BE25D /* Apps.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Apps.storyboard; sourceTree = "<group>"; };
-		1C60C25C285724D0003BE25D /* AppsWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsWireframeFactory.swift; sourceTree = "<group>"; };
-		1C60C25D285724D0003BE25D /* AppsHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
-		1C60C25E285724D0003BE25D /* AppsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppsView.swift; sourceTree = "<group>"; };
 		1C60C261285724D0003BE25D /* MnemonicConfirmation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MnemonicConfirmation.storyboard; sourceTree = "<group>"; };
 		1C60C262285724D0003BE25D /* MnemonicConfirmationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationView.swift; sourceTree = "<group>"; };
 		1C60C264285724D0003BE25D /* MnemonicConfirmationWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicConfirmationWireframeFactory.swift; sourceTree = "<group>"; };
@@ -1206,16 +1168,14 @@
 			children = (
 				1C60C244285724D0003BE25D /* Account ✅ */,
 				1C60C1FA285724D0003BE25D /* Alert ✅ */,
-				1C60C253285724D0003BE25D /* Apps 🔶 */,
 				D1A12A58287D333900606FC8 /* Authenticate ✅ */,
-				1C60C1EE285724D0003BE25D /* Chat 🔶 */,
 				1C67201928870FA900C5F044 /* Confirmation ✅ */,
 				1C54DBE1285E82FC00E378F6 /* CurrencyAdd ✅ */,
 				1C60C1D5285724D0003BE25D /* CurrencyPicker ✅ */,
 				1C60C3612857C5D9003BE25D /* CurrencyReceive ✅ */,
 				1C9E3193287580A700DD2031 /* CurrencySend ✅ */,
 				1C671FEC287FDF6000C5F044 /* CurrencySwap ✅ */,
-				1C60C20D285724D0003BE25D /* Dashboard */,
+				1C60C20D285724D0003BE25D /* Dashboard ✅ */,
 				1C60C272285724D0003BE25D /* Degen ✅ */,
 				1C60C285285724D0003BE25D /* DegenCult ✅ */,
 				1C60C1E1285724D0003BE25D /* KeyStore ✅ */,
@@ -1312,30 +1272,6 @@
 			path = ButtonSheetView;
 			sourceTree = "<group>";
 		};
-		1C60C1EE285724D0003BE25D /* Chat 🔶 */ = {
-			isa = PBXGroup;
-			children = (
-				1C60C1F6285724D0003BE25D /* Chat.storyboard */,
-				1C60C1F5285724D0003BE25D /* ChatInteractor.swift */,
-				1C60C1F8285724D0003BE25D /* ChatPresenter.swift */,
-				1C60C1F0285724D0003BE25D /* ChatViewController.swift */,
-				1C60C1F4285724D0003BE25D /* ChatViewModel.swift */,
-				1C60C1EF285724D0003BE25D /* ChatWireframe.swift */,
-				1C60C1F9285724D0003BE25D /* ChatWireframeFactory.swift */,
-				1C60C1F1285724D0003BE25D /* Cells */,
-			);
-			path = "Chat 🔶";
-			sourceTree = "<group>";
-		};
-		1C60C1F1285724D0003BE25D /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				1C60C1F3285724D0003BE25D /* ChatLeftCollectionViewCell.swift */,
-				1C60C1F2285724D0003BE25D /* ChatRightCollectionViewCell.swift */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
 		1C60C1FA285724D0003BE25D /* Alert ✅ */ = {
 			isa = PBXGroup;
 			children = (
@@ -1359,7 +1295,7 @@
 			path = "MnemonicNew ✅";
 			sourceTree = "<group>";
 		};
-		1C60C20D285724D0003BE25D /* Dashboard */ = {
+		1C60C20D285724D0003BE25D /* Dashboard ✅ */ = {
 			isa = PBXGroup;
 			children = (
 				1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */,
@@ -1369,7 +1305,7 @@
 				1C60C20F285724D0003BE25D /* Cells */,
 				1A4C3BE75AF0C650D5E6D82E /* Views */,
 			);
-			path = Dashboard;
+			path = "Dashboard ✅";
 			sourceTree = "<group>";
 		};
 		1C60C20F285724D0003BE25D /* Cells */ = {
@@ -1468,21 +1404,6 @@
 				1C7FC9B928BD00C200FC9175 /* AccountAddressCell.swift */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		1C60C253285724D0003BE25D /* Apps 🔶 */ = {
-			isa = PBXGroup;
-			children = (
-				1C60C25B285724D0003BE25D /* Apps.storyboard */,
-				1C60C259285724D0003BE25D /* AppsInteractor.swift */,
-				1C60C258285724D0003BE25D /* AppsPresenter.swift */,
-				1C60C25E285724D0003BE25D /* AppsView.swift */,
-				1C60C257285724D0003BE25D /* AppsViewModel.swift */,
-				1C60C255285724D0003BE25D /* AppsWireframe.swift */,
-				1C60C25C285724D0003BE25D /* AppsWireframeFactory.swift */,
-				1C7F865528D5A66E0073FD95 /* Cells */,
-			);
-			path = "Apps 🔶";
 			sourceTree = "<group>";
 		};
 		1C60C25F285724D0003BE25D /* MnemonicConfirmation ✅ */ = {
@@ -1722,16 +1643,6 @@
 				1C54BB3B291B9F400009F158 /* Web3walletcore+Extensions.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		1C7F865528D5A66E0073FD95 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				1C60C25A285724D0003BE25D /* AppsCell.swift */,
-				1C60C256285724D0003BE25D /* AppsCollectionViewCell.swift */,
-				1C60C25D285724D0003BE25D /* AppsHeaderCollectionViewCell.swift */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		1C7FC98628B60A0B00FC9175 /* ThemePicker */ = {
@@ -2289,7 +2200,6 @@
 				1CB8B0A6288A824C00024E7C /* Degen.storyboard in Resources */,
 				1C54DC5C28683DDA00E378F6 /* NaokoAA-Semilight-Italic.otf in Resources */,
 				1CAC5604286EFFC300CCB2B6 /* SFProText-RegularItalic.otf in Resources */,
-				1C60C2C8285724D0003BE25D /* Chat.storyboard in Resources */,
 				1C54DC5B28683DDA00E378F6 /* NaokoAA-Semilight.otf in Resources */,
 				1C54DC5128683DDA00E378F6 /* NaokoAA-Light-Italic.otf in Resources */,
 				1CB8B0D4288FBC1500024E7C /* Settings.storyboard in Resources */,
@@ -2354,7 +2264,6 @@
 				D157F7D227B69B6300578FF8 /* Main.storyboard in Resources */,
 				1CAC5608286EFFC300CCB2B6 /* SFProDisplay-RegularItalic.otf in Resources */,
 				1C60C3712857CEB5003BE25D /* CurrencyReceive.storyboard in Resources */,
-				1C60C322285724D1003BE25D /* Apps.storyboard in Resources */,
 				D11A990127B8615B00EDFDD0 /* GothicA1-Regular.ttf in Resources */,
 				1CAC5606286EFFC300CCB2B6 /* SFProText-SemiboldItalic.otf in Resources */,
 				1C54DC5628683DDA00E378F6 /* NaokoAA-Regular.otf in Resources */,
@@ -2412,7 +2321,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C60C2C4285724D0003BE25D /* ChatRightCollectionViewCell.swift in Sources */,
 				1C54DBFA285F9EBF00E378F6 /* CurrencyAddNetworkView.swift in Sources */,
 				1C54DC192862352200E378F6 /* QRCodeScanWireframeFactory.swift in Sources */,
 				1CDED5F4289818E300DF34A7 /* SettingsSectionFooterViewCell.swift in Sources */,
@@ -2431,8 +2339,6 @@
 				1C54DC132862351100E378F6 /* QRCodeScanView.swift in Sources */,
 				1C7FC9B828BCF95E00FC9175 /* WebViewController.swift in Sources */,
 				1C7F864628D20E490073FD95 /* Date+Extensions.swift in Sources */,
-				1C60C2C7285724D0003BE25D /* ChatInteractor.swift in Sources */,
-				1C60C31F285724D1003BE25D /* AppsPresenter.swift in Sources */,
 				1C60C32A285724D1003BE25D /* MnemonicConfirmationWireframeFactory.swift in Sources */,
 				1CE66BCE2848EAA600AB6ACA /* ChatServiceAssembler.swift in Sources */,
 				1C60C2F5285724D0003BE25D /* NFTDetailView.swift in Sources */,
@@ -2445,9 +2351,6 @@
 				1C60C2CC285724D0003BE25D /* AlertWireframe.swift in Sources */,
 				1C60C2A6285724D0003BE25D /* SettingsView.swift in Sources */,
 				1C60C30B285724D1003BE25D /* RootPresenter.swift in Sources */,
-				1C60C2C3285724D0003BE25D /* ChatViewController.swift in Sources */,
-				1C60C320285724D1003BE25D /* AppsInteractor.swift in Sources */,
-				1C60C2C6285724D0003BE25D /* ChatViewModel.swift in Sources */,
 				1CE0064628899D15002D1EB3 /* AlertSheetPresentationController.swift in Sources */,
 				1CB8B0BE288DBEFA00024E7C /* CultProposalDetailDocsView.swift in Sources */,
 				1C5D24D428E19F62007DA557 /* ImprovementProposalsWireframe.swift in Sources */,
@@ -2463,8 +2366,6 @@
 				1C60C2FF285724D1003BE25D /* NFTsDashboardView+MainScrollView.swift in Sources */,
 				1C672001287FE11700C5F044 /* CurrencySwapMarketCollectionViewCell.swift in Sources */,
 				1C7F863028D20E490073FD95 /* UIView+Extensions.swift in Sources */,
-				1C60C2CA285724D0003BE25D /* ChatPresenter.swift in Sources */,
-				1C60C321285724D1003BE25D /* AppsCell.swift in Sources */,
 				1C6720122885D5AF00C5F044 /* CurrencySwapSlippageView.swift in Sources */,
 				1C5D24CA28E19F62007DA557 /* ImprovementProposalView.swift in Sources */,
 				1CE0064C2889E0E6002D1EB3 /* ThemeIOS.swift in Sources */,
@@ -2475,7 +2376,6 @@
 				1C60C32E285724D1003BE25D /* NFTsCollectionView.swift in Sources */,
 				D1EF5BC9287BEE92004CAD82 /* MnemonicUpdateWireframe.swift in Sources */,
 				1C60C308285724D1003BE25D /* NFTsDashboardWireframeFactory.swift in Sources */,
-				1C60C325285724D1003BE25D /* AppsView.swift in Sources */,
 				1C60C34E285724D1003BE25D /* CultProposalCellPending.swift in Sources */,
 				1CDED5F22897ED7800DF34A7 /* SettingsSectionHeaderViewCell.swift in Sources */,
 				1C60C2D9285724D0003BE25D /* MnemonicNewView.swift in Sources */,
@@ -2499,7 +2399,6 @@
 				1C60C2BF285724D0003BE25D /* KeyStoreWireframe.swift in Sources */,
 				1C7F862A28D20E490073FD95 /* CAAnimation+Extension.swift in Sources */,
 				1C54DBFD2860E5AB00E378F6 /* NetworkPickerInteractor.swift in Sources */,
-				1C60C31C285724D1003BE25D /* AppsWireframe.swift in Sources */,
 				1C6720142885D78A00C5F044 /* CurrencySwapPriceView.swift in Sources */,
 				1C60C35D285724D1003BE25D /* DegenWireframeFactory.swift in Sources */,
 				1C9E3197287580BF00DD2031 /* CurrencyCurrencyWireframeFactory.swift in Sources */,
@@ -2515,9 +2414,7 @@
 				1C60C31A285724D1003BE25D /* AccountView.swift in Sources */,
 				1C60C2F4285724D0003BE25D /* NFTDetailView+Content+Description.swift in Sources */,
 				1C60C2F0285724D0003BE25D /* NetworksCell.swift in Sources */,
-				1C60C323285724D1003BE25D /* AppsWireframeFactory.swift in Sources */,
 				1C60C2B3285724D0003BE25D /* CurrencyPickerView.swift in Sources */,
-				1C60C31E285724D1003BE25D /* AppsViewModel.swift in Sources */,
 				1C60C36B2857C5FE003BE25D /* CurrencyReceiveWireframeFactory.swift in Sources */,
 				1C60C30D285724D1003BE25D /* RootWireframeFactory.swift in Sources */,
 				1C67200C28849A2500C5F044 /* NetworkFeeView.swift in Sources */,
@@ -2535,7 +2432,6 @@
 				1C6487252832E4D40091A12D /* DegenServiceAssembler.swift in Sources */,
 				1C7F864028D20E490073FD95 /* UIStoryboard+Extensions.swift in Sources */,
 				1C60C310285724D1003BE25D /* AccountTransactionCell.swift in Sources */,
-				1C60C2C5285724D0003BE25D /* ChatLeftCollectionViewCell.swift in Sources */,
 				1C228ACB28A3B122005316A3 /* ConfirmationTxInProgressView.swift in Sources */,
 				1C7F863F28D20E490073FD95 /* UIStackView+Extensions.swift in Sources */,
 				1CE66BCA2848EA9900AB6ACA /* ChatService.swift in Sources */,
@@ -2627,7 +2523,6 @@
 				1C54DC662869A48A00E378F6 /* DashboardHeaderBalanceView.swift in Sources */,
 				1C60C2A7285724D0003BE25D /* SettingsInteractor.swift in Sources */,
 				1CEF3D1B28C35FB20092BC0E /* UniswapServiceAssembler.swift in Sources */,
-				1C60C2C2285724D0003BE25D /* ChatWireframe.swift in Sources */,
 				1C968428292789EF00629A92 /* PasswordServiceAssembler.swift in Sources */,
 				1C60C356285724D1003BE25D /* DegenSectionViewCell.swift in Sources */,
 				1C60C34F285724D1003BE25D /* CultProposalsWireframe.swift in Sources */,
@@ -2658,7 +2553,6 @@
 				1A4C3B697503D478741295DB /* TextField.swift in Sources */,
 				1C7FC97B28AE7A3A00FC9175 /* MnemonicUpdateDeleteCell.swift in Sources */,
 				1C9E3195287580B600DD2031 /* CurrencySendWireframe.swift in Sources */,
-				1C60C31D285724D1003BE25D /* AppsCollectionViewCell.swift in Sources */,
 				1CDED5FD289C4C4800DF34A7 /* NFTSendWireframe.swift in Sources */,
 				1CB8B0C2288DD94B00024E7C /* CultProposalDetailStatusView.swift in Sources */,
 				D1A12A60287D333900606FC8 /* AuthenticateView.swift in Sources */,
@@ -2688,7 +2582,6 @@
 				1C5D24DF28E1A3DD007DA557 /* UIViewController+Extensions.swift in Sources */,
 				1C9E319D287580D400DD2031 /* CurrencySendView.swift in Sources */,
 				1CDED614289C65B800DF34A7 /* ConfirmationSendNFTView.swift in Sources */,
-				1C60C2CB285724D0003BE25D /* ChatWireframeFactory.swift in Sources */,
 				1C7F864E28D20E490073FD95 /* Locale+Extensions.swift in Sources */,
 				1CDED60E289C4DC300DF34A7 /* NFTSendToCollectionViewCell.swift in Sources */,
 				1C54DC012860E5BC00E378F6 /* NetworkPickerView.swift in Sources */,
@@ -2699,7 +2592,6 @@
 				1C7F863828D20E490073FD95 /* UIView+LayoutConstraints+Extensions.swift in Sources */,
 				1C60C3692857C5F8003BE25D /* CurrencyReceiveWireframe.swift in Sources */,
 				1C54DBE3285E831B00E378F6 /* CurrencyAddWireframe.swift in Sources */,
-				1C60C324285724D1003BE25D /* AppsHeaderCollectionViewCell.swift in Sources */,
 				1C60C32B285724D1003BE25D /* MnemonicConfirmationWireframe.swift in Sources */,
 				1C67201B28870FCB00C5F044 /* ConfirmationView.swift in Sources */,
 				1C7F862F28D20E490073FD95 /* UIButton+Extensions.swift in Sources */,

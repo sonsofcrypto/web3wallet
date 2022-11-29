@@ -35,7 +35,6 @@ final class DefaultRootWireframe {
     private let dashboardWireframeFactory: DashboardWireframeFactory
     private let degenWireframeFactory: DegenWireframeFactory
     private let nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory
-    private let appsWireframeFactory: AppsWireframeFactory
     private let settingsWireframeFactory: SettingsWireframeFactory
     private let keyStoreService: KeyStoreService
 
@@ -46,7 +45,6 @@ final class DefaultRootWireframe {
         dashboardWireframeFactory: DashboardWireframeFactory,
         degenWireframeFactory: DegenWireframeFactory,
         nftsDashboardWireframeFactory: NFTsDashboardWireframeFactory,
-        appsWireframeFactory: AppsWireframeFactory,
         settingsWireframeFactory: SettingsWireframeFactory,
         keyStoreService: KeyStoreService
     ) {
@@ -56,7 +54,6 @@ final class DefaultRootWireframe {
         self.dashboardWireframeFactory = dashboardWireframeFactory
         self.degenWireframeFactory = degenWireframeFactory
         self.nftsDashboardWireframeFactory = nftsDashboardWireframeFactory
-        self.appsWireframeFactory = appsWireframeFactory
         self.settingsWireframeFactory = settingsWireframeFactory
         self.keyStoreService = keyStoreService
     }
@@ -72,7 +69,6 @@ extension DefaultRootWireframe: RootWireframe {
         dashboardWireframeFactory.make(tabVc).present()
         degenWireframeFactory.make(tabVc).present()
         nftsDashboardWireframeFactory.make(tabVc).present()
-        presentAppsTabIfNeeded()
         settingsWireframeFactory.make(tabVc, context: .default).present()
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
@@ -89,18 +85,6 @@ extension DefaultRootWireframe: RootWireframe {
 
 private extension DefaultRootWireframe {
     
-    func presentAppsTabIfNeeded() {
-        guard FeatureFlag.showAppsTab.isEnabled else { return }
-        if FeatureFlag.embedChatInTab.isEnabled {
-            let chatWireframeFactory: ChatWireframeFactory = AppAssembler.resolve()
-            chatWireframeFactory.make(
-                tabVc
-            ).present()
-        } else {
-            appsWireframeFactory.make(tabVc).present()
-        }
-    }
-
     func wireUp() -> UIViewController {
         let vc: RootViewController = UIStoryboard(.main).instantiate()
         let tabVc = TabBarController()
