@@ -9,7 +9,6 @@ final class DefaultMnemonicConfirmationWireframe {
     private weak var parent: UIViewController?
     private let keyStoreService: KeyStoreService
     private let actionsService: ActionsService
-    private let networksService: NetworksService
     private let mnemonicService: MnemonicService
     
     private weak var vc: UIViewController?
@@ -18,13 +17,11 @@ final class DefaultMnemonicConfirmationWireframe {
         _ parent: UIViewController?,
         keyStoreService: KeyStoreService,
         actionsService: ActionsService,
-        networksService: NetworksService,
         mnemonicService: MnemonicService
     ) {
         self.parent = parent
         self.keyStoreService = keyStoreService
         self.actionsService = actionsService
-        self.networksService = networksService
         self.mnemonicService = mnemonicService
     }
 }
@@ -49,7 +46,6 @@ private extension DefaultMnemonicConfirmationWireframe {
         let interactor = DefaultMnemonicConfirmationInteractor(
             keyStoreService: keyStoreService,
             actionsService: actionsService,
-            networksService: networksService,
             mnemonicService: mnemonicService
         )
         let vc: MnemonicConfirmationViewController = UIStoryboard(.mnemonicConfirmation).instantiate()

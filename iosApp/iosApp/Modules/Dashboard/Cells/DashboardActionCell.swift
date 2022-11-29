@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class DashboardActionCell: CollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
@@ -23,7 +24,7 @@ final class DashboardActionCell: CollectionViewCell {
 
 extension DashboardActionCell {
 
-    func update(with viewModel: DashboardViewModel.Action?) -> Self {
+    func update(with viewModel: DashboardViewModel.SectionItemsAction?) -> Self {
         titleLabel.text = viewModel?.title
         bodyLabel.text = viewModel?.body
         imageView.image = .letterImage(

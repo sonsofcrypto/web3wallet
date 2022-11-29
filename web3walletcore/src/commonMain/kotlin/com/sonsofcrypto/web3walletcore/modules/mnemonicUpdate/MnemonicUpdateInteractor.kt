@@ -39,7 +39,7 @@ class DefaultMnemonicUpdateInteractor(
         keyStoreItem: KeyStoreItem, name: String, iCloudSecretStorage: Boolean,
     ): KeyStoreItem? {
         val secretStorage = keyStoreService.secretStorage(keyStoreItem, password) ?: return null
-        val keyStoreItem = KeyStoreItem(
+        val item = KeyStoreItem(
             keyStoreItem.uuid,
             name,
             keyStoreItem.sortOrder,
@@ -51,8 +51,8 @@ class DefaultMnemonicUpdateInteractor(
             keyStoreItem.derivationPath,
             keyStoreItem.addresses,
         )
-        keyStoreService.add(keyStoreItem, password, secretStorage)
-        return keyStoreItem
+        keyStoreService.add(item, password, secretStorage)
+        return item
     }
 
     override fun delete(keyStoreItem: KeyStoreItem) {

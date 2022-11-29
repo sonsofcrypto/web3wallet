@@ -14,6 +14,8 @@ interface ActionsService {
     fun actions(): List<Action>
     /** Mark action as completed */
     fun markComplete(action: Action)
+    /** Dismiss action */
+    fun dismiss(action: Action)
     /** Add a listener to the service */
     fun addListener(listener: ActionsListener)
     /** Remove a listener from the service */
@@ -40,6 +42,10 @@ class DefaultActionsService(
     override fun markComplete(action: Action) {
         store[actionKey(action)] = true
         listeners.forEach { it.value?.actionsUpdated() }
+    }
+
+    override fun dismiss(action: Action) {
+        TODO("Not yet implemented")
     }
 
     private fun isCompleted(action: Action): Boolean =

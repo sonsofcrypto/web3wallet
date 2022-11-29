@@ -105,7 +105,7 @@ class DefaultNFTSendPresenter(
     private val formattedAddress: String get() = formattedAddress(address)
 
     private fun formattedAddress(address: String?): String {
-        val address = address ?: return ""
+        address ?: return ""
         if (!context.network.isValidAddress(address)) { return address }
         return Formatters.networkAddress.format(address, 8, context.network)
     }

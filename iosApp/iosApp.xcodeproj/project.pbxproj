@@ -155,12 +155,9 @@
 		1C60C2D9285724D0003BE25D /* MnemonicNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C209285724D0003BE25D /* MnemonicNewView.swift */; };
 		1C60C2DD285724D0003BE25D /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C20E285724D0003BE25D /* DashboardView.swift */; };
 		1C60C2DE285724D0003BE25D /* DashboardNFTCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C210285724D0003BE25D /* DashboardNFTCell.swift */; };
-		1C60C2DF285724D0003BE25D /* DashboardHeaderNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C211285724D0003BE25D /* DashboardHeaderNameView.swift */; };
+		1C60C2DF285724D0003BE25D /* DashboardHeaderTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C211285724D0003BE25D /* DashboardHeaderTitleView.swift */; };
 		1C60C2E0285724D0003BE25D /* DashboardWalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C212285724D0003BE25D /* DashboardWalletCell.swift */; };
-		1C60C2E2285724D0003BE25D /* DashboardInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C214285724D0003BE25D /* DashboardInteractor.swift */; };
-		1C60C2E4285724D0003BE25D /* DashboardPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C216285724D0003BE25D /* DashboardPresenter.swift */; };
 		1C60C2E6285724D0003BE25D /* DashboardWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C218285724D0003BE25D /* DashboardWireframeFactory.swift */; };
-		1C60C2E7285724D0003BE25D /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C219285724D0003BE25D /* DashboardViewModel.swift */; };
 		1C60C2E9285724D0003BE25D /* DashboardWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C21B285724D0003BE25D /* DashboardWireframe.swift */; };
 		1C60C2EC285724D0003BE25D /* NetworksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C21F285724D0003BE25D /* NetworksView.swift */; };
 		1C60C2EE285724D0003BE25D /* NetworksWireframeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C60C221285724D0003BE25D /* NetworksWireframeFactory.swift */; };
@@ -623,12 +620,9 @@
 		1C60C209285724D0003BE25D /* MnemonicNewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicNewView.swift; sourceTree = "<group>"; };
 		1C60C20E285724D0003BE25D /* DashboardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		1C60C210285724D0003BE25D /* DashboardNFTCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardNFTCell.swift; sourceTree = "<group>"; };
-		1C60C211285724D0003BE25D /* DashboardHeaderNameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardHeaderNameView.swift; sourceTree = "<group>"; };
+		1C60C211285724D0003BE25D /* DashboardHeaderTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardHeaderTitleView.swift; sourceTree = "<group>"; };
 		1C60C212285724D0003BE25D /* DashboardWalletCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardWalletCell.swift; sourceTree = "<group>"; };
-		1C60C214285724D0003BE25D /* DashboardInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardInteractor.swift; sourceTree = "<group>"; };
-		1C60C216285724D0003BE25D /* DashboardPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardPresenter.swift; sourceTree = "<group>"; };
 		1C60C218285724D0003BE25D /* DashboardWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardWireframeFactory.swift; sourceTree = "<group>"; };
-		1C60C219285724D0003BE25D /* DashboardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		1C60C21B285724D0003BE25D /* DashboardWireframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardWireframe.swift; sourceTree = "<group>"; };
 		1C60C21F285724D0003BE25D /* NetworksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksView.swift; sourceTree = "<group>"; };
 		1C60C221285724D0003BE25D /* NetworksWireframeFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworksWireframeFactory.swift; sourceTree = "<group>"; };
@@ -1369,10 +1363,7 @@
 			isa = PBXGroup;
 			children = (
 				1C54DBDB285DD10000E378F6 /* Dashboard.storyboard */,
-				1C60C214285724D0003BE25D /* DashboardInteractor.swift */,
-				1C60C216285724D0003BE25D /* DashboardPresenter.swift */,
 				1C60C20E285724D0003BE25D /* DashboardView.swift */,
-				1C60C219285724D0003BE25D /* DashboardViewModel.swift */,
 				1C60C21B285724D0003BE25D /* DashboardWireframe.swift */,
 				1C60C218285724D0003BE25D /* DashboardWireframeFactory.swift */,
 				1C60C20F285724D0003BE25D /* Cells */,
@@ -1384,13 +1375,13 @@
 		1C60C20F285724D0003BE25D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				1CB8B0C7288F30DA00024E7C /* DashboardActionCell.swift */,
 				1C54DC672869BE6500E378F6 /* DashboardButtonsCell.swift */,
 				1C54DC652869A48A00E378F6 /* DashboardHeaderBalanceView.swift */,
-				1C60C211285724D0003BE25D /* DashboardHeaderNameView.swift */,
+				1C60C211285724D0003BE25D /* DashboardHeaderTitleView.swift */,
 				1C60C210285724D0003BE25D /* DashboardNFTCell.swift */,
-				1C60C212285724D0003BE25D /* DashboardWalletCell.swift */,
-				1CB8B0C7288F30DA00024E7C /* DashboardActionCell.swift */,
 				1A4C3ECB03083B9516E13031 /* DashboardTableWalletCell.swift */,
+				1C60C212285724D0003BE25D /* DashboardWalletCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2531,11 +2522,9 @@
 				1C60C30D285724D1003BE25D /* RootWireframeFactory.swift in Sources */,
 				1C67200C28849A2500C5F044 /* NetworkFeeView.swift in Sources */,
 				1C7F862928D20E490073FD95 /* CG+Extensions.swift in Sources */,
-				1C60C2E4285724D0003BE25D /* DashboardPresenter.swift in Sources */,
 				1C64870D2832DD970091A12D /* AssemblerBootstrapper.swift in Sources */,
 				1C60C34C285724D1003BE25D /* CultProposalWireframe.swift in Sources */,
 				1CD3FE20284D5840008312DE /* FeatureFlags.swift in Sources */,
-				1C60C2E2285724D0003BE25D /* DashboardInteractor.swift in Sources */,
 				1C54DC2A2868193300E378F6 /* Theme.swift in Sources */,
 				D1ED725F287C1122005805CF /* CurrencySendCurrencyCollectionViewCell.swift in Sources */,
 				1C60C36028572555003BE25D /* AppsServiceAssembler.swift in Sources */,
@@ -2587,7 +2576,6 @@
 				D1ED7260287C1122005805CF /* CurrencySendCTACollectionViewCell.swift in Sources */,
 				D1A12A66287D333900606FC8 /* AuthenticateWireframe.swift in Sources */,
 				1C5D24D628E19F62007DA557 /* ImprovementProposalsView.swift in Sources */,
-				1C60C2E7285724D0003BE25D /* DashboardViewModel.swift in Sources */,
 				1C7F863728D20E490073FD95 /* UIColor+Extensions.swift in Sources */,
 				1C7F864528D20E490073FD95 /* UILabel+Extensions.swift in Sources */,
 				1C60C2B0285724D0003BE25D /* CurrencyPickerSectionCell.swift in Sources */,
@@ -2631,7 +2619,7 @@
 				1C60C2CD285724D0003BE25D /* AlertWireframeFactory.swift in Sources */,
 				1C7F864828D20E490073FD95 /* Double+Extensions.swift in Sources */,
 				1C60C2A4285724D0003BE25D /* SettingsCell.swift in Sources */,
-				1C60C2DF285724D0003BE25D /* DashboardHeaderNameView.swift in Sources */,
+				1C60C2DF285724D0003BE25D /* DashboardHeaderTitleView.swift in Sources */,
 				1C60C335285724D1003BE25D /* NFTsCollectionView+Shared.swift in Sources */,
 				1CB8B0B8288C351A00024E7C /* CultProposalDetailViewCell.swift in Sources */,
 				1C60C2C0285724D0003BE25D /* KeyStoreCell.swift in Sources */,

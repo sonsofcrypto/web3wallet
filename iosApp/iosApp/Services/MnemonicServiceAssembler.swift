@@ -9,7 +9,7 @@ final class MnemonicServiceAssembler: AssemblerComponent {
 
     func register(to registry: AssemblerRegistry) {
 
-        registry.register(scope: .singleton) { resolver -> MnemonicService in
+        registry.register(scope: .instance) { resolver -> MnemonicService in
             DefaultMnemonicService()
         }
     }

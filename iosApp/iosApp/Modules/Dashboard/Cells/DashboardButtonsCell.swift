@@ -3,16 +3,24 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class DashboardButtonsCell: UICollectionViewCell {
+
+    struct Handler {
+        let onReceive: () -> Void
+        let onSend: () -> Void
+        let onSwap: () -> Void
+    }
+
     @IBOutlet weak var receiveButton: Button!
     @IBOutlet weak var sendButton: Button!
     @IBOutlet weak var tradeButton: Button!
     @IBOutlet weak var stack: UIStackView!
     
-    private weak var presenter: DashboardPresenter!
-    private var viewModel: [DashboardViewModel.Button] = []
-
+    private var viewModel: [DashboardViewModel.SectionItemsButton] = []
+    private var handler: Handler!
+        
     override func awakeFromNib() {
         super.awakeFromNib()
         stack.spacing = Theme.constant.padding
@@ -51,6 +59,8 @@ private extension DashboardButtonsCell {
                     leftImage: $0.imageName.assetImage?.withTintColor(Theme.colour.labelPrimary)
                 )
                 tradeButton.setTitle($0.title, for: .normal)
+            default:
+                break
             }
         }
     }
@@ -58,29 +68,24 @@ private extension DashboardButtonsCell {
 
 extension DashboardButtonsCell {
     
-    @IBAction func receiveTapped() {
-        presenter.handle(.receiveAction)
-    }
+    @IBAction func receiveTapped() { handler.onReceive() }
 
-    @IBAction func sendTapped() {
-        presenter.handle(.sendAction)
-    }
+    @IBAction func sendTapped() { handler.onSend() }
 
-    @IBAction func tradeTapped() {
-        presenter.handle(.swapAction)
-    }
+    @IBAction func tradeTapped() { handler.onSwap() }
 }
 
 // MARK: - ViewModel
 
 extension DashboardButtonsCell {
 
+    @discardableResult
     func update(
-        with viewModel: [DashboardViewModel.Button],
-        presenter: DashboardPresenter
+        with viewModel: [DashboardViewModel.SectionItemsButton],
+        handler: Handler
     ) -> Self {
         self.viewModel = viewModel
-        self.presenter = presenter
+        self.handler = handler
         updateViews()
         return self
     }

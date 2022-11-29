@@ -3,10 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-protocol DashboardView: AnyObject {
-    func update(with viewModel: DashboardViewModel)
-}
+import web3walletcore
 
 final class DashboardViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
@@ -29,11 +26,12 @@ final class DashboardViewController: BaseViewController {
     }
 
     deinit {
+        NotificationCenter.default.removeObserver(self)
         presenter.releaseResources()
     }
 }
 
-extension DashboardViewController: DashboardView {
+extension DashboardViewController {
     
     func update(with viewModel: DashboardViewModel) {
         if collectionView.refreshControl?.isRefreshing ?? false {
@@ -50,8 +48,7 @@ extension DashboardViewController: DashboardView {
         let header = UICollectionView.elementKindSectionHeader
         for (idx, section) in viewModel.sections.enumerated() {
             let prevSection = self.viewModel?.sections[idx]
-            if section.items.count != prevSection?.items.count
-               || !section.items.isSameKind(prevSection?.items) {
+            if section.items.count != prevSection?.items.count || section.items != prevSection?.items {
                 sectionsToReload.append(idx)
             } else {
                 sectionsToUpdate.append(idx)
@@ -69,29 +66,22 @@ extension DashboardViewController: DashboardView {
             }
         }
 
-        // TODO: Refactor once viewModel clean up is done
-        cv.indexPathsForVisibleSupplementaryElements(ofKind: header).forEach {
-            let view = cv.supplementaryView(forElementKind: header, at: $0)
-            switch viewModel.header(at: $0.section) {
-            case let .balance(balance):
-                (view as? DashboardHeaderBalanceView)?.update(with: balance)
-            case let .title(title):
-                (view as? DashboardHeaderNameView)?.update(with: title, and: nil, handler: nil)
-            case let .network(network):
-                (view as? DashboardHeaderNameView)?.update(
-                    with: network.name,
-                    and: network,
-                handler: { [weak self] in
-                        self?.presenter.handle(.didTapEditTokens(network: network.id))
-                    }
-                )
-            default: ()
+        cv.indexPathsForVisibleSupplementaryElements(ofKind: header).forEach { indexPath in
+            let view = cv.supplementaryView(forElementKind: header, at: indexPath)
+            let header = viewModel.sections[indexPath.section].header
+            if let input = header as? DashboardViewModel.SectionHeaderBalance {
+                (view as? DashboardHeaderBalanceView)?.update(with: input)
+            }
+            if let input = header as? DashboardViewModel.SectionHeaderTitle {
+                (view as? DashboardHeaderTitleView)?.update(with: input) { [weak self] in
+                    self?.presenter.handle(event: .DidTapEditNetwork(idx: indexPath.item.int32))
+                }
             }
         }
     }
 
     func updateWallet(
-        _ viewModel: DashboardViewModel.Wallet?,
+        _ viewModel: DashboardViewModel.SectionItemsWallet?,
         at idxPath: IndexPath
     ) {
         let cell = collectionView.visibleCells.first(where: {
@@ -103,14 +93,18 @@ extension DashboardViewController: DashboardView {
     func update(
         cell: UICollectionViewCell,
         idx: Int,
-        items: DashboardViewModel.Section.Items
+        items: DashboardViewModel.SectionItems
     ) {
-        let _ = (cell as? DashboardButtonsCell)?.update(with: items.buttons, presenter: presenter)
-        let _ = (cell as? DashboardActionCell)?.update(with: items.actions(at: idx))
-        let _ = (cell as? DashboardWalletCell)?.update(with: items.wallet(at: idx))
-        let _ = (cell as? DashboardTableWalletCell)?.update(with: items.wallet(at: idx))
-        let _ = (cell as? DashboardNFTCell)?.update(with: items.nft(at: idx))
-
+        if let input = items as? DashboardViewModel.SectionItemsButtons {
+            (cell as? DashboardButtonsCell)?.update(with: input.data, handler: dashboardButtonsCellHandler())
+        }
+        if let input = items as? DashboardViewModel.SectionItemsWallets {
+            (cell as? DashboardWalletCell)?.update(with: input.data[idx])
+            (cell as? DashboardTableWalletCell)?.update(with: input.data[idx])
+        }
+        if let input = items as? DashboardViewModel.SectionItemsNfts {
+            (cell as? DashboardNFTCell)?.update(with: input.data[idx])
+        }
     }
 }
 
@@ -126,9 +120,8 @@ extension DashboardViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        guard let section = viewModel?.sections[section] else { return 0 }
-        guard section.items.count > 4 else { return section.items.count }
-        return section.isCollapsed ? 4 : section.items.count
+        if section == 0 { return 1 }
+        return viewModel?.sections[section].items.count.int ?? 0
     }
     
     func collectionView(
@@ -139,26 +132,28 @@ extension DashboardViewController: UICollectionViewDataSource {
             fatalError("No viewModel for \(indexPath) \(collectionView)")
         }
         let (cv, idxPath) = (collectionView, indexPath)
-        if !section.items.buttons.isEmpty {
+        if let input = section.items as? DashboardViewModel.SectionItemsButtons {
             return cv.dequeue(DashboardButtonsCell.self, for: idxPath)
-                .update(with: section.items.buttons, presenter: presenter)
-        } else if let action = section.items.actions(at: idxPath.item) {
-            return cv.dequeue(DashboardActionCell.self, for: indexPath)
-                .update(with: action)
-        } else if let wallet = section.items.wallet(at: indexPath.row) {
+                .update(with: input.data, handler: dashboardButtonsCellHandler())
+        }
+        if let input = section.items as? DashboardViewModel.SectionItemsActions {
+            return cv.dequeue(DashboardActionCell.self, for: idxPath)
+                .update(with: input.data[idxPath.item])
+        }
+        if let input = section.items as? DashboardViewModel.SectionItemsWallets {
             if Theme.type.isThemeIOS {
                 let isLast = (section.items.count - 1) == indexPath.item
                 return cv.dequeue(DashboardTableWalletCell.self, for: indexPath)
-                    .update(with: wallet, showBottomSeparator: !isLast)
+                    .update(with: input.data[idxPath.item], showBottomSeparator: !isLast)
             }
             return cv.dequeue(DashboardWalletCell.self, for: indexPath)
-                    .update(with: wallet)
-        } else if let nft = section.items.nft(at: indexPath.row) {
-            return cv.dequeue(DashboardNFTCell.self, for: indexPath)
-                .update(with: nft)
-        } else {
-            fatalError("No viewModel for \(indexPath) \(collectionView)")
+                .update(with: input.data[idxPath.item])
         }
+        if let input = section.items as? DashboardViewModel.SectionItemsNfts {
+            return cv.dequeue(DashboardNFTCell.self, for: indexPath)
+                .update(with: input.data[idxPath.item])
+        }
+        fatalError("No viewModel for \(indexPath) \(collectionView)")
     }
 
     func collectionView(
@@ -182,29 +177,22 @@ extension DashboardViewController: UICollectionViewDataSource {
         at idxPath: IndexPath,
         section: DashboardViewModel.Section
     ) -> UICollectionReusableView {
-        switch section.header {
-        case let .balance(balance):
+        if let input = section.header as? DashboardViewModel.SectionHeaderBalance {
             return collectionView.dequeue(DashboardHeaderBalanceView.self,
                 for: idxPath,
                 kind: kind
-            ).update(with: balance)
-        case let .title(title):
-            return collectionView.dequeue(
-                DashboardHeaderNameView.self,
-                for: idxPath,
-                kind: kind
-            ).update(with: title, and: nil, handler: nil)
-        case let .network(network):
-            return collectionView.dequeue(
-                DashboardHeaderNameView.self,
-                for: idxPath,
-                kind: kind
-            ).update(with: network.name, and: network) { [weak self] in
-                self?.presenter.handle(.didTapEditTokens(network: section.networkId))
-            }
-        case .none:
-            fatalError("Should not configure a section header when type none.")
+            ).update(with: input)
         }
+        if let input = section.header as? DashboardViewModel.SectionHeaderTitle {
+            return collectionView.dequeue(
+                DashboardHeaderTitleView.self,
+                for: idxPath,
+                kind: kind
+            ).update(with: input) { [weak self] in
+                self?.presenter.handle(event: .DidTapEditNetwork(idx: idxPath.item.int32))
+            }
+        }
+        fatalError("Should not configure a section header when type none.")
     }
 }
 
@@ -214,21 +202,19 @@ extension DashboardViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let section = viewModel?.sections[indexPath.section] else { return }
-        switch section.items {
-        case .buttons:
-            break
-        case .actions:
-            presenter.handle(.didTapAction(idx: indexPath.item))
-        case .wallets:
+        if section.items is DashboardViewModel.SectionItemsActions {
+            presenter.handle(event: .DidTapAction(idx: indexPath.item.int32))
+        }
+        if section.items is DashboardViewModel.SectionItemsWallets {
             presenter.handle(
-                .didSelectWallet(
-                    networkIdx: indexPath.section - 2,
-                    currencyIdx: indexPath.item
+                event: .DidSelectWallet(
+                    networkIdx: (indexPath.section - 2).int32,
+                    currencyIdx: indexPath.item.int32
                 )
             )
-        case let .nfts(nfts):
-            let nft = nfts[indexPath.item]
-            nft.onSelected()
+        }
+        if section.items is DashboardViewModel.SectionItemsNfts {
+            presenter.handle(event: .DidSelectNFT(idx: indexPath.item.int32))
         }
     }
 
@@ -284,42 +270,65 @@ private extension DashboardViewController {
         )
         edgeCardsController?.delegate = self
         collectionView.contentInset = UIEdgeInsets.with(bottom: 180)
-        collectionView.register(DashboardHeaderNameView.self, kind: .header)
+        collectionView.register(DashboardHeaderTitleView.self, kind: .header)
         collectionView.setCollectionViewLayout(compositionalLayout(), animated: false)
         collectionView.refreshControl = UIRefreshControl()
         collectionView.backgroundView = nil
         collectionView.layer.sublayerTransform = CATransform3D.m34(-1.0 / 500.0)
         collectionView.refreshControl?.tintColor = Theme.colour.activityIndicator
         collectionView.refreshControl?.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
+        
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(didEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(willEnterForeground),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
     }
     
+    @objc func didEnterBackground() {
+        presenter.didEnterBackground()
+    }
+
+    @objc func willEnterForeground() {
+        presenter.willEnterForeground()
+    }
+    
+    
     @objc func didPullToRefresh(_ sender: Any) {
-        presenter.handle(.pullDownToRefresh)
+        presenter.handle(event: .PullDownToRefresh())
     }
 
     @objc func navBarLeftActionTapped() {
-        presenter.handle(.walletConnectionSettingsAction)
+        presenter.handle(event: .WalletConnectionSettingsAction())
     }
 
     @objc func navBarRightActionTapped() {
-        presenter.handle(.didScanQRCode)
+        presenter.handle(event: .DidScanQRCode())
     }
 
     func compositionalLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] idx, env in
             guard let section = self?.viewModel?.sections[idx] else { return nil }
-            switch section.items {
-            case .buttons:
+            if section.items is DashboardViewModel.SectionItemsButtons {
                 return self?.buttonsCollectionLayoutSection()
-            case .actions:
-                return self?.notificationsCollectionLayoutSection()
-            case .nfts:
-                return self?.nftsCollectionLayoutSection()
-            case .wallets:
+            }
+            if section.items is DashboardViewModel.SectionItemsActions {
+                return self?.actionsCollectionLayoutSection()
+            }
+            if section.items is DashboardViewModel.SectionItemsWallets {
                 return Theme.type.isThemeIOS
                     ? self?.walletsTableCollectionLayoutSection()
                     : self?.walletsCollectionLayoutSection()
             }
+            if section.items is DashboardViewModel.SectionItemsNfts {
+                return self?.nftsCollectionLayoutSection()
+            }
+            fatalError("Section not handled")
         }
         // TODO: Decouple this
         if Theme.type.isThemeIOS {
@@ -348,7 +357,7 @@ private extension DashboardViewController {
         return section
     }
 
-    func notificationsCollectionLayoutSection() -> NSCollectionLayoutSection {
+    func actionsCollectionLayoutSection() -> NSCollectionLayoutSection {
         let width = floor((view.bounds.width - Theme.constant.padding * 3)  / 2)
         let group = NSCollectionLayoutGroup.horizontal(
             .estimated(view.bounds.width * 3, height: 64),
@@ -417,6 +426,14 @@ private extension DashboardViewController {
         section.orthogonalScrollingBehavior = .continuous
         return section
     }
+    
+    func dashboardButtonsCellHandler() -> DashboardButtonsCell.Handler {
+        .init(
+            onReceive: { [weak self] in self?.presenter.handle(event: .ReceiveAction()) },
+            onSend: { [weak self] in self?.presenter.handle(event: .SendAction()) },
+            onSwap: { [weak self] in self?.presenter.handle(event: .SwapAction()) }
+        )
+    }
 }
 
 // MARK: - EdgeCardsControllerDelegate
@@ -426,7 +443,7 @@ extension DashboardViewController: EdgeCardsControllerDelegate {
         vc: EdgeCardsController,
         didChangeTo mode: EdgeCardsController.DisplayMode
     ) {
-        presenter.handle(.didInteractWithCardSwitcher)
+        presenter.handle(event: .DidInteractWithCardSwitcher())
     }
 }
 

@@ -59,13 +59,13 @@ class DefaultKeyStoreService(
             ServiceType.SECRET_STORAGE,
             item.iCloudSecretStorage
         )
-        store.set(item.uuid, item)
+        store[item.uuid] = item
     }
 
     override fun remove(item: KeyStoreItem) {
         keyChainService.remove(item.uuid, ServiceType.PASSWORD)
         keyChainService.remove(item.uuid, ServiceType.SECRET_STORAGE)
-        store.set(item.uuid, null)
+        store[item.uuid] = null
     }
 
     override fun items(): List<KeyStoreItem> {
@@ -76,13 +76,11 @@ class DefaultKeyStoreService(
     }
 
     override fun secretStorage(item: KeyStoreItem, password: String): SecretStorage? {
-        try {
-            return ProtoBuf.decodeFromByteArray<SecretStorage>(
+        return try {
+            ProtoBuf.decodeFromByteArray<SecretStorage>(
                 keyChainService.get(item.uuid, ServiceType.SECRET_STORAGE)
             )
-        } catch (exception: Exception) {
-            return null
-        }
+        } catch (exception: Exception) { null }
     }
 
     override fun biometricsSupported(): Boolean = keyChainService.biometricsSupported()
@@ -92,12 +90,10 @@ class DefaultKeyStoreService(
     }
 
     override fun password(item: KeyStoreItem): String? {
-        try {
-            return ProtoBuf.decodeFromByteArray<String>(
+        return try {
+            ProtoBuf.decodeFromByteArray<String>(
                 keyChainService.get(item.uuid, ServiceType.PASSWORD)
             )
-        } catch (error: Throwable) {
-            return null
-        }
+        } catch (error: Throwable) { null }
     }
 }

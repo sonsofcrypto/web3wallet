@@ -22,6 +22,16 @@ class DefaultMnemonicService(): MnemonicService {
 
     private var wordCount = 24
 
+    private var potentialMnemonicWordsPrefix: String? = null
+    private var potentialMnemonicWordsResult: List<String> = emptyList()
+
+    private var findInvalidWordsMnemonic: String? = null
+    private var findInvalidWordsResult: List<MnemonicWord> = emptyList()
+
+    private var mnemonicErrorMnemonic: String = ""
+    private var mnemonicErrorSalt: String? = null
+    private var mnemonicErrorResult: MnemonicServiceError? = null
+
     private val validator: Trie
         get() {
             val trie = Trie()
@@ -29,15 +39,21 @@ class DefaultMnemonicService(): MnemonicService {
             return trie
         }
 
-    override fun potentialMnemonicWords(prefix: String?): List<String> =
+    override fun potentialMnemonicWords(prefix: String?): List<String> {
+        if (prefix == potentialMnemonicWordsPrefix) return potentialMnemonicWordsResult
+        potentialMnemonicWordsPrefix = prefix
         prefix?.let {
             if (it.isEmpty()) return emptyList()
-            validator.wordsStartingWith(prefix)
+            potentialMnemonicWordsResult = validator.wordsStartingWith(prefix)
         } ?: run {
-            emptyList()
+            potentialMnemonicWordsResult = emptyList()
         }
+        return potentialMnemonicWordsResult
+    }
 
     override fun findInvalidWords(mnemonic: String?): List<MnemonicWord> {
+        if (mnemonic == findInvalidWordsMnemonic) return findInvalidWordsResult
+        findInvalidWordsMnemonic = mnemonic
         val mnemonic = mnemonic?.trim() ?: return emptyList()
         val wordsInfo = mutableListOf<MnemonicWord>()
         var words = mnemonic.split(" ").filter { it.isNotEmpty() }
@@ -61,6 +77,7 @@ class DefaultMnemonicService(): MnemonicService {
             val isValidPrefix = isValidPrefix(word) && wordsInfo.count() < wordCount
             wordsInfo.add(MnemonicWord(word, !isValidPrefix))
         }
+        findInvalidWordsResult = wordsInfo
         return wordsInfo
     }
 
@@ -68,14 +85,20 @@ class DefaultMnemonicService(): MnemonicService {
         validator.wordsStartingWith(prefix).isNotEmpty()
 
     override fun mnemonicError(mnemonic: String, salt: String?): MnemonicServiceError? {
+        if (mnemonic == mnemonicErrorMnemonic && salt == mnemonicErrorSalt)
+            return mnemonicErrorResult
+        mnemonicErrorMnemonic = mnemonic
+        mnemonicErrorSalt = salt
         val words = mnemonic.trim().split(" ")
         if (!Bip39.isValidWordsCount(words.count())) return INVALID_WORD_COUNT
         return try {
             val bip39 = Bip39(words, salt ?: "", WordList.ENGLISH)
             Bip44(bip39.seed(), ExtKey.Version.MAINNETPRV)
-            null
+            mnemonicErrorResult = null
+            return mnemonicErrorResult
         } catch (e: Throwable){
-            OTHER
+            mnemonicErrorResult = OTHER
+            return mnemonicErrorResult
         }
     }
 }

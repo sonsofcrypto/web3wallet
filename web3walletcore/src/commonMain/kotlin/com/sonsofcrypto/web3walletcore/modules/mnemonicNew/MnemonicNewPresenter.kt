@@ -82,7 +82,7 @@ class DefaultMnemonicNewPresenter(
                 }
                 try {
                     val item = interactor.createKeyStoreItem(keyStoreItemData, password, salt)
-                    context.handler?.let { it(item) }
+                    context.handler(item)
                     wireframe.navigate(MnemonicNewWireframeDestination.Dismiss)
                 } catch (e: Throwable) {
                     // TODO: Handle error

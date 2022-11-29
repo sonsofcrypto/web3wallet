@@ -79,7 +79,7 @@ class DefaultCurrencyStoreService(
     override fun marketData(currency: Currency): CurrencyMarketData? {
         markets[currency.id()]?.let { return it }
         marketStore.get<String>(currency.id())?.let { return jsonDecode(it) }
-        return bundledMarkets.get(currency.id())
+        return bundledMarkets[currency.id()]
     }
 
     override fun candles(currency: Currency): List<Candle>? {

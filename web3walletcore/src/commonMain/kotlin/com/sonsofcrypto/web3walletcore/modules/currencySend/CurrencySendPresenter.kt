@@ -135,7 +135,7 @@ class DefaultCurrencySendPresenter(
         }
 
     fun isAddress(address: String, addressTo: String?): Boolean {
-        val addressTo = addressTo ?: return false
+        addressTo ?: return false
         val addressToCompare = Formatters.networkAddress.format(addressTo, 8, context.network)
         return address == addressToCompare
     }
@@ -181,7 +181,7 @@ class DefaultCurrencySendPresenter(
     private val formattedAddress: String get() = formattedAddress(address)
 
     private fun formattedAddress(address: String?): String {
-        val address = address ?: return ""
+        address ?: return ""
         if (!context.network.isValidAddress(address)) { return address }
         return Formatters.networkAddress.format(address, 8, context.network)
     }

@@ -1,0 +1,66 @@
+package com.sonsofcrypto.web3walletcore.modules.dashboard
+
+import com.sonsofcrypto.web3lib.formatters.Formatters
+import com.sonsofcrypto.web3lib.types.Currency
+import com.sonsofcrypto.web3lib.utils.BigInt
+import com.sonsofcrypto.web3walletcore.common.viewModels.CandlesViewModel
+import com.sonsofcrypto.web3walletcore.modules.dashboard.DashboardViewModel.Section.Items.*
+
+data class DashboardViewModel(
+    val sections: List<Section>,
+) {
+    data class Section(
+        val header: Header?,
+        val items: Items,
+    ) {
+        sealed class Header {
+            data class Balance(val title: List<Formatters.Output>): Header()
+            data class Title(val title: String, val action: String?): Header()
+        }
+
+        sealed class Items {
+            data class Buttons(val data: List<Button>): Items()
+            data class Actions(val data: List<Action>): Items()
+            data class Wallets(val data: List<Wallet>): Items()
+            data class Nfts(val data: List<NFT>): Items()
+
+            data class Button(
+                val title: String,
+                val imageName: String,
+                val type: Type,
+            ) {
+                enum class Type { SEND, RECEIVE, SWAP }
+            }
+
+            data class Action(
+                val image: String,
+                val title: String,
+                val body: String,
+            )
+
+            data class Wallet(
+                val name: String,
+                val ticker: String,
+                val colors: List<String>,
+                val imageName: String,
+                val fiatPrice: Double,
+                val fiatBalance: Double,
+                val cryptoBalance: BigInt,
+                val currency: Currency,
+                val pctChange: String,
+                val priceUp: Boolean,
+                val candles: CandlesViewModel,
+                val fiatCurrencyCode: String,
+            )
+
+            data class NFT(val image: String)
+        }
+    }
+}
+
+val DashboardViewModel.Section.Items.count: Int get() = when (this) {
+    is Buttons -> this.data.count()
+    is Actions -> this.data.count()
+    is Wallets -> this.data.count()
+    is Nfts -> this.data.count()
+}
