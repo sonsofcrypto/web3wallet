@@ -81,7 +81,7 @@ private extension DefaultSettingsWireframe {
         navigationController.tabBarItem = UITabBarItem(
             title: Localized("settings"),
             image: "tab_icon_settings".assetImage,
-            tag: FeatureFlag.showAppsTab.isEnabled ? 4 : 3
+            tag: 3
         )
         self.vc = navigationController
         return navigationController

@@ -129,8 +129,7 @@ private extension DefaultDeepLinkHandler {
         case .dashboard: tabBarVC.selectedIndex = 0
         case .degen: tabBarVC.selectedIndex = 1
         case .nfts: tabBarVC.selectedIndex = 2
-        case .settings:
-            tabBarVC.selectedIndex = FeatureFlag.showAppsTab.isEnabled ? 4 : 3
+        case .settings: tabBarVC.selectedIndex = 3
         }
     }
 }
