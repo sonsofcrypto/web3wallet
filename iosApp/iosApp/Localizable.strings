@@ -158,39 +158,38 @@
 "networks.header.l1sTest" = "Layer #1s Testnets";
 "networks.header.l2sTest" = "Layer #2s Testnets";
 
-"settings.root.themes" = "Themes";
-"settings.theme" = "Theme";
-"settings.theme.miami.light" = "Theme Miami Light";
-"settings.theme.miami.dark" = "Theme Miami Dark";
-"settings.theme.ios.light" = "Theme iOS Light";
-"settings.theme.ios.dark" = "Theme iOS Dark";
+"settings.themes" = "Themes";
+"settings.themes.miami.light" = "Theme Miami Light";
+"settings.themes.miami.dark" = "Theme Miami Dark";
+"settings.themes.ios.light" = "Theme iOS Light";
+"settings.themes.ios.dark" = "Theme iOS Dark";
 
-"settings.root.improvementProposals" = "Improvement proposals";
+"settings.improvement" = "Improvement proposals";
 
-"settings.root.developerMenu" = "Developer menu";
-"settings.debug.apis" = "APIs";
-"settings.debug.apis.nfts" = "NFTs";
-"settings.debug.apis.nfts.openSea" = "OpenSea";
-"settings.debug.transitions" = "Transitions";
-"settings.debug.transitions.cardFlip" = "Card Flip";
-"settings.debug.transitions.sheet" = "Sheet";
-"settings.debug.resetKeyStore" = "Reset keystore";
+"settings.developer" = "Developer menu";
+"settings.developer.apis" = "APIs";
+"settings.developer.apis.nfts" = "NFTs";
+"settings.developer.apis.nfts.openSea" = "OpenSea";
+"settings.developer.transitions" = "Transitions";
+"settings.developer.transitions.cardFlip" = "Card Flip";
+"settings.developer.transitions.sheet" = "Sheet";
+"settings.developer.resetKeyStore" = "Reset keystore";
 
-"settings.root.about" = "About";
+"settings.about" = "About";
 "settings.about.socials" = "Socials";
-"settings.about.website" = "Website";
-"settings.about.github" = "GitHub";
-"settings.about.medium" = "Medium";
-"settings.about.discord" = "Discord";
-"settings.about.twitter" = "Twitter";
-"settings.about.telegram" = "Telegram";
-"settings.about.fotter" = "sons Of crypto";
+"settings.about.socials.website" = "Website";
+"settings.about.socials.github" = "GitHub";
+"settings.about.socials.twitter" = "Twitter";
+"settings.about.socials.telegram" = "Telegram";
+"settings.about.socials.discord" = "Discord";
+"settings.about.socials.medium" = "Medium";
 "settings.about.contactUs" = "Contact us";
-"settings.about.mail" = "Mail";
+"settings.about.contactUs.mail" = "Mail";
+"settings.about.contactUs.footer" = "sons Of crypto";
 
-"settings.root.feedback" = "Beta feedback / Report issue 🪲";
-"settings.root.feedback.subject" = "App feedback %@";
-"settings.root.feedback.subject.beta" = "Beta %@ feedback / Report 🪲";
+"settings.feedback" = "Beta feedback / Report issue 🪲";
+"settings.feedback.subject" = "App feedback %@";
+"settings.feedback.subject.beta" = "Beta %@ feedback / Report 🪲";
 
 "alert.underConstruction.title" = "Under construction";
 "alert.underConstruction.message" = "App is under very active development and this corner is not quite ready yet. Check back soon.";

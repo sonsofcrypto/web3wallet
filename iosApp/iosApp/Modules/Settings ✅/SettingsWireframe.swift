@@ -3,45 +3,34 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
-
-// MARK: - SettingsWireframeDestination
-
-enum SettingsWireframeDestination {
-    case dismiss
-    case settings(context: SettingsWireframeContext)
-}
-
-// MARK: - SettingsWireframe
-
-protocol SettingsWireframe {
-    func present()
-    func navigate(to destination: SettingsWireframeDestination)
-}
-
-// MARK: - DefaultSettingsWireframe
+import web3walletcore
 
 final class DefaultSettingsWireframe {
     private weak var parent: UIViewController?
     private let context: SettingsWireframeContext
     private let settingsService: SettingsService
+    private let settingsServiceActionTrigger: SettingsServiceActionTrigger
     
     private weak var vc: UIViewController?
 
     init(
         _ parent: UIViewController?,
         context: SettingsWireframeContext,
-        settingsService: SettingsService
+        settingsService: SettingsService,
+        settingsServiceActionTrigger: SettingsServiceActionTrigger
     ) {
         self.parent = parent
         self.context = context
         self.settingsService = settingsService
+        self.settingsServiceActionTrigger = settingsServiceActionTrigger
     }
 }
 
-extension DefaultSettingsWireframe: SettingsWireframe {
+extension DefaultSettingsWireframe {
 
     func present() {
         let vc = wireUp(with: context)
+        self.vc = vc
         let nc = settingsNavigationController(with: vc)
         if let tabVc = parent as? UITabBarController {
             let vcs = tabVc.add(viewController: nc)
@@ -51,16 +40,12 @@ extension DefaultSettingsWireframe: SettingsWireframe {
         }
     }
 
-    func navigate(to destination: SettingsWireframeDestination) {
-        switch destination {
-        case .dismiss:
-            if let nc = vc as? NavigationController {
-                nc.popViewController(animated: true)
-            } else {
-                vc?.dismiss(animated: true)
-            }
-        case let .settings(context):
-            pushSettingsVC(with: context)
+    func navigate(with destination: SettingsWireframeDestination) {
+        if let input = destination as? SettingsWireframeDestination.Settings {
+            pushSettingsVC(with: input.context)
+        }
+        if destination is SettingsWireframeDestination.Dismiss {
+            vc?.popOrDismiss()
         }
     }
 }
@@ -83,17 +68,17 @@ private extension DefaultSettingsWireframe {
             image: "tab_icon_settings".assetImage,
             tag: 3
         )
-        self.vc = navigationController
         return navigationController
     }
 
     func wireUp(with context: SettingsWireframeContext) -> UIViewController {
         let interactor = DefaultSettingsInteractor(
-            settingsService
+            settingsService: settingsService,
+            settingsServiceActionTrigger: settingsServiceActionTrigger
         )
         let vc: SettingsViewController = UIStoryboard(.settings).instantiate()
         let presenter = DefaultSettingsPresenter(
-            view: vc,
+            view: WeakRef(referred: vc),
             wireframe: self,
             interactor: interactor,
             context: context

@@ -69,7 +69,10 @@ extension DefaultRootWireframe: RootWireframe {
         dashboardWireframeFactory.make(tabVc).present()
         degenWireframeFactory.make(tabVc).present()
         nftsDashboardWireframeFactory.make(tabVc).present()
-        settingsWireframeFactory.make(tabVc, context: .default).present()
+        settingsWireframeFactory.make(
+            tabVc,
+            context: SettingsWireframeContext.companion.create(setting: nil)
+        ).present()
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
     }

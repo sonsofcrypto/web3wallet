@@ -37,13 +37,13 @@ extension DefaultMnemonicImportWireframe {
     func present() {
         let vc = wireUp()
         let presentingTopVc = (parent as? UINavigationController)?.topVc
-        if settingsService.isSelected(item: .debugTransitions, action: .debugTransitionsCardFlip) {
+        if settingsService.isSelected(setting: .init(group: .developer, action: .developerTransitionsCardFlip)) {
             let presentedTopVc = (vc as? UINavigationController)?.topVc
             let delegate = presentedTopVc as? UIViewControllerTransitioningDelegate
             self.vc = vc
             vc.modalPresentationStyle = .overFullScreen
             vc.transitioningDelegate = delegate
-        } else if settingsService.isSelected(item: .debugTransitions, action: .debugTransitionsSheet) {
+        } else if settingsService.isSelected(setting: .init(group: .developer, action: .developerTransitionsSheet)) {
             vc.modalPresentationStyle = .automatic
         }
         self.vc = vc

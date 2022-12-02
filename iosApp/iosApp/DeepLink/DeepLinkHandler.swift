@@ -8,7 +8,6 @@ import web3walletcore
 
 enum DeepLink {
     case mnemonicConfirmation
-    case themesList
     case improvementProposalsList
     case degen
     case cultProposals
@@ -18,7 +17,6 @@ enum DeepLink {
     init?(identifier: String) {
         switch identifier {
         case DeepLink.mnemonicConfirmation.identifier: self = .mnemonicConfirmation
-        case DeepLink.themesList.identifier: self = .themesList
         case DeepLink.improvementProposalsList.identifier: self = .improvementProposalsList
         case DeepLink.degen.identifier: self = .degen
         case DeepLink.cultProposals.identifier: self = .cultProposals
@@ -30,7 +28,6 @@ enum DeepLink {
     var identifier: String {
         switch self {
         case .mnemonicConfirmation: return "modal.mnemonic.confirmation"
-        case .themesList: return "settings.themes"
         case .improvementProposalsList: return "modal.improvementProposals"
         case .degen: return "degen"
         case .cultProposals: return "cult.proposals"
@@ -62,9 +59,6 @@ extension DefaultDeepLinkHandler: DeepLinkHandler {
             switch deepLink {
             case .mnemonicConfirmation:
                 self.openMnemonicConfirmation()
-            case .themesList:
-                self.navigate(to: .settings)
-                self.openThemeMenu()
             case .improvementProposalsList:
                 self.openImprovementProposalsList()
             case .degen:
@@ -212,20 +206,6 @@ private extension DefaultDeepLinkHandler {
 }
 
 private extension DefaultDeepLinkHandler {
-    
-    func openThemeMenu() {
-        guard let settingsVC = settingsVC else { return }
-        guard settingsVC.title != Localized("settings.theme") else { return }
-        let settingsService: SettingsService = AppAssembler.resolve()
-        let wireframe: SettingsWireframeFactory = AppAssembler.resolve()
-        wireframe.make(
-            settingsVC,
-            context: .init(
-                title: Localized("settings.theme"),
-                groups: settingsService.settings(for: .theme)
-            )
-        ).present()
-    }
     
     func openImprovementProposalsList() {
         guard let rootVC = rootVC else { return }
