@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 // MARK: - SettingsWireframeFactory
 
@@ -17,9 +18,14 @@ protocol SettingsWireframeFactory {
 
 final class DefaultSettingsWireframeFactory {
     private let settingsService: SettingsService
+    private let settingsServiceActionTrigger: SettingsServiceActionTrigger
 
-    init(settingsService: SettingsService) {
+    init(
+        settingsService: SettingsService,
+        settingsServiceActionTrigger: SettingsServiceActionTrigger
+    ) {
         self.settingsService = settingsService
+        self.settingsServiceActionTrigger = settingsServiceActionTrigger
     }
 }
 
@@ -32,7 +38,8 @@ extension DefaultSettingsWireframeFactory: SettingsWireframeFactory {
         DefaultSettingsWireframe(
             parent,
             context: context,
-            settingsService: settingsService
+            settingsService: settingsService,
+            settingsServiceActionTrigger: settingsServiceActionTrigger
         )
     }
 }
@@ -44,7 +51,8 @@ final class SettingsWireframeFactoryAssembler: AssemblerComponent {
     func register(to registry: AssemblerRegistry) {
         registry.register(scope: .instance) { resolver -> SettingsWireframeFactory in
             DefaultSettingsWireframeFactory(
-                settingsService: resolver.resolve()
+                settingsService: resolver.resolve(),
+                settingsServiceActionTrigger: resolver.resolve()
             )
         }
     }

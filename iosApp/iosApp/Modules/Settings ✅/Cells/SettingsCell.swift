@@ -3,13 +3,14 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 final class SettingsCell: CollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var rightImageView: UIImageView!
     
-    private var viewModel: SettingsViewModel.Item!
+    private var viewModel: SettingsViewModel.SectionItem!
 
     override func awakeFromNib() {
         
@@ -32,8 +33,7 @@ final class SettingsCell: CollectionViewCell {
             
             guard
                 let viewModel = viewModel,
-                case let Setting.`Type`.action(_, _, canSelect) = viewModel.setting.type,
-                canSelect
+                viewModel.isSelected != nil
             else { return }
             
             UIView.animate(withDuration: 0.1) { [weak self] in
@@ -48,7 +48,7 @@ final class SettingsCell: CollectionViewCell {
 extension SettingsCell {
     
     func update(
-        with viewModel: SettingsViewModel.Item,
+        with viewModel: SettingsViewModel.SectionItem,
         showSeparator: Bool = true
     ) -> SettingsCell {
         
@@ -56,22 +56,18 @@ extension SettingsCell {
         
         titleLabel.text = viewModel.title
         
-        switch viewModel.setting.type {
-            
-        case .item:
-            rightImageView.alpha = 1
-            rightImageView.image = "chevron.right".assetImage
-
-        case let .action(_, _, showTickOnSelected):
-            
-            if showTickOnSelected {
+        if viewModel.isAction {
+            if let selected = viewModel.isSelected?.boolValue {
                 rightImageView.image = "checkmark".assetImage
-                rightImageView.alpha = (viewModel.isSelected ?? false) ? 1 : 0
+                rightImageView.alpha = selected ? 1 : 0
             } else {
                 rightImageView.alpha = 0
             }
+        } else {
+            rightImageView.alpha = 1
+            rightImageView.image = "chevron.right".assetImage
         }
-        
+
         bottomSeparatorView.isHidden = !showSeparator
 
         return self

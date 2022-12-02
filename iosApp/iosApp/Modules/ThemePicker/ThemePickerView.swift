@@ -4,6 +4,7 @@
 
 import Foundation
 import UIKit
+import web3walletcore
 
 protocol ThemePickerView: AnyObject {}
 
@@ -34,16 +35,16 @@ final class ThemePickerViewController: UIViewController, ThemePickerView {
 
     private func selectedThemeIndex() -> Int {
         let settingsService: SettingsService = AppAssembler.resolve()
-        if settingsService.isSelected(item: .theme, action: .themeMiamiLight) {
+        if settingsService.isSelected(setting: .init(group: .theme, action: .themeMiamiLight)) {
             return 0
         }
-        if settingsService.isSelected(item: .theme, action: .themeMiamiDark) {
+        if settingsService.isSelected(setting: .init(group: .theme, action: .themeMiamiDark)) {
             return 1
         }
-        if settingsService.isSelected(item: .theme, action: .themeIOSLight) {
+        if settingsService.isSelected(setting: .init(group: .theme, action: .themeIosLight)) {
             return 2
         }
-        if settingsService.isSelected(item: .theme, action: .themeIOSDark) {
+        if settingsService.isSelected(setting: .init(group: .theme, action: .themeIosDark)) {
             return 3
         }
         return 0
@@ -97,13 +98,13 @@ extension ThemePickerViewController: UICollectionViewDelegate {
                         let settingsService: SettingsService = AppAssembler.resolve()
                         switch indexPath.item {
                         case 0:
-                            settingsService.didSelect(item: .theme, action: .themeMiamiLight)
+                            settingsService.isSelected(setting: .init(group: .theme, action: .themeMiamiLight))
                         case 1:
-                            settingsService.didSelect(item: .theme, action: .themeMiamiDark)
+                            settingsService.isSelected(setting: .init(group: .theme, action: .themeMiamiDark))
                         case 2:
-                            settingsService.didSelect(item: .theme, action: .themeIOSLight)
+                            settingsService.isSelected(setting: .init(group: .theme, action: .themeIosLight))
                         case 3:
-                            settingsService.didSelect(item: .theme, action: .themeIOSDark)
+                            settingsService.isSelected(setting: .init(group: .theme, action: .themeIosDark))
                         default:
                             break
                         }

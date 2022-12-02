@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import UIKit
+import web3walletcore
 
 var Theme: Themable = appTheme {
     didSet { AppDelegate.rebootApp() }
@@ -15,11 +16,11 @@ enum ThemeStyle: String {
 
 var appTheme: Themable {
     let service: SettingsService = AppAssembler.resolve()
-    if service.isSelected(item: .theme, action: .themeMiamiLight) {
+    if service.isSelected(setting: .init(group: .theme, action: .themeMiamiLight)) {
         return ThemeMiami(style: .light)
-    } else if service.isSelected(item: .theme, action: .themeMiamiDark) {
+    } else if service.isSelected(setting: .init(group: .theme, action: .themeMiamiDark)) {
         return ThemeMiami(style: .dark)
-    } else if service.isSelected(item: .theme, action: .themeIOSLight) {
+    } else if service.isSelected(setting: .init(group: .theme, action: .themeIosLight)) {
         return ThemeIOS(style: .light)
     } else {
         return ThemeIOS(style: .dark)
@@ -40,7 +41,7 @@ extension Themable {
     var isThemeIOSDarkSelected: Bool {
         
         let service: SettingsService = AppAssembler.resolve()
-        return service.isSelected(item: .theme, action: .themeIOSDark)
+        return service.isSelected(setting: .init(group: .theme, action: .themeIosDark))
     }
 }
 
