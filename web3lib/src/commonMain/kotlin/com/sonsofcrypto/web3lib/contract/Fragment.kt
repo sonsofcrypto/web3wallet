@@ -41,16 +41,19 @@ data class JsonFragment(
     val output: List<JsonFragmentType>?
 )
 
-open class Fragment(
+abstract class Fragment(
     val type: String,
     val name: String,
     val inputs: List<Param>
 ) {
-    override fun toString(): String = "Fragment(" +
-            "type=$type, " +
-            "name=$name, " +
-            "inputs=$inputs" +
-            ")"
+
+    enum class Format {
+        SIGNATURE, STRING
+    }
+
+    abstract fun format(format: Format = Format.SIGNATURE): String
+
+    override fun toString(): String = this.format(Format.STRING)
 }
 
 class EventFragment : Fragment {
@@ -65,14 +68,19 @@ class EventFragment : Fragment {
         this.anonymous = anonymous
     }
 
-    override fun toString(): String = "EventFragment(" +
+    override fun format(format: Format): String = when (format) {
+        Format.STRING -> "EventFragment(" +
             "type=$type," +
             "name=$name," +
             "inputs=$inputs," +
             "anonymous=$anonymous" +
             ")"
+        Format.SIGNATURE -> name + inputs.map { it.format(format) }
+            .joinToString("(", postfix = ")")
+    }
 
     companion object {
+        @Throws(Throwable::class)
         fun from(jsonFrag: JsonFragment): EventFragment {
             if (jsonFrag.type == null) throw Error.TypeMismatch(jsonFrag.type)
             return EventFragment(
@@ -100,13 +108,16 @@ open class ConstructorFragment : Fragment {
         this.payable = payable
     }
 
-    override fun toString(): String = "ConstructorFragment(" +
+    override fun format(format: Format): String = when (format) {
+        Format.STRING -> "ConstructorFragment(" +
             "type=$type, " +
             "name=$name, " +
             "inputs=$inputs, " +
             "stateMutability=$stateMutability, " +
             "payable=$payable" +
             ")"
+        else -> TODO("Implement")
+    }
 
     companion object {
         @Throws(Throwable::class)
@@ -141,7 +152,8 @@ class FunctionFragment : ConstructorFragment {
         this.output = output
     }
 
-    override fun toString(): String = "FunctionFragment(" +
+    override fun format(format: Format): String = when (format) {
+        Format.STRING -> "FunctionFragment(" +
             "type=$type, " +
             "name=$name, " +
             "inputs=$inputs, " +
@@ -150,6 +162,8 @@ class FunctionFragment : ConstructorFragment {
             "constant=$constant, " +
             "output=$output" +
             ")"
+        else -> TODO("Implement")
+    }
 
     companion object {
         @Throws(Throwable::class)
@@ -174,11 +188,15 @@ class ErrorFragment(
     name: String,
     inputs: List<Param>,
 ) : Fragment(type, name, inputs) {
-    override fun toString(): String = "ErrorFragment(" +
+
+    override fun format(format: Format): String = when (format) {
+        Format.STRING -> "ErrorFragment(" +
             "type=$type, " +
             "name=$name, " +
             "inputs=$inputs" +
             ")"
+        else -> TODO("Implement")
+    }
 
     companion object {
         @Throws(Throwable::class)
@@ -211,7 +229,31 @@ data class Param(
     val arrayLength: Int?,
     var arrayChildren: Param?,
 ) {
+
+    fun format(format: Fragment.Format): String = when(format) {
+        Fragment.Format.STRING -> "Param(" +
+            "name=$name, " +
+            "type=$type, " +
+            "baseType=$baseType, " +
+            "indexed=$indexed, " +
+            "components=$components, " +
+            "arrayLength=$arrayLength, " +
+            "arrayChildren=$arrayChildren)" +
+            ")"
+        Fragment.Format.SIGNATURE -> when(baseType) {
+            "array" -> {
+                val length = if ((arrayLength ?: -1) < 0) "" else "$arrayLength"
+                (this.arrayChildren?.format(format) ?: "") + "[$length]"
+            }
+            "tuple" -> components?.map { it.format(format) }
+                ?.joinToString("(", postfix = ")")
+                ?: "()"
+            else -> type
+        }
+    }
+
     companion object {
+
         fun from(jsonFrag: JsonFragmentType): Param? {
             val match = Regex(ARRAY_PATTERN).matchEntire(jsonFrag.type ?: "")
             var arrayLength: Int? = null
@@ -268,6 +310,9 @@ sealed class Error(
     /** Creating fragment subclass with invalid type  */
     data class TypeMismatch(val type: String?) :
         Error("Fragment type mismatch $type")
+    /** Failed to parse fragment from string  */
+    data class FromString(val string: String?) :
+        Error("Failed to parse fragment from string $string")
 }
 
 private const val ARRAY_PATTERN = "^(.*)\\[([0-9]*)\\]\$"
