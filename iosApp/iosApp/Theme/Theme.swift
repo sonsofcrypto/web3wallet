@@ -5,7 +5,7 @@
 import UIKit
 import web3walletcore
 
-var Theme: Themable = appTheme {
+var Theme: ThemeProtocol = appTheme {
     didSet { AppDelegate.rebootApp() }
 }
 
@@ -14,7 +14,7 @@ enum ThemeStyle: String {
     case dark
 }
 
-var appTheme: Themable {
+var appTheme: ThemeProtocol {
     let service: SettingsService = AppAssembler.resolve()
     if service.isSelected(setting: .init(group: .theme, action: .themeMiamiLight)) {
         return ThemeMiami(style: .light)
@@ -27,12 +27,12 @@ var appTheme: Themable {
     }
 }
 
-protocol Themable {
+protocol ThemeProtocol {
     var name: String { get }
     var type: ThemeType { get }
     var font: ThemeFont { get }
     var color: ThemeColor { get }
-    var statusBarStyle: ThemeStatusBarStyle { get }
+    var statusBarStyle: UIStatusBarStyle { get }
     var padding: CGFloat { get }
     var cornerRadius: CGFloat { get }
     var cornerRadiusSmall: CGFloat { get }
@@ -44,7 +44,7 @@ protocol Themable {
     var buttonHeightExtraSmall: CGFloat { get }
 }
 
-extension Themable {
+extension ThemeProtocol {
     
     var isThemeIOSDarkSelected: Bool {
         let service: SettingsService = AppAssembler.resolve()
@@ -59,26 +59,6 @@ struct ThemeStatusBarStyle {
     enum Style {
         case light
         case dark
-    }
-}
-
-extension ThemeStatusBarStyle {
-    
-    func statusBarStyle(for interfaceStyle: UIUserInterfaceStyle) -> UIStatusBarStyle {
-        switch interfaceStyle {
-        case .unspecified: return .default
-        case .light:
-            switch lightMode {
-            case .light: return .lightContent
-            case .dark: return .darkContent
-            }
-        case .dark:
-            switch darkMode {
-            case .light: return .lightContent
-            case .dark: return .darkContent
-            }
-        @unknown default: return .default
-        }
     }
 }
 

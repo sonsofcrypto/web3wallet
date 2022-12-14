@@ -15,7 +15,7 @@ final class NavigationController: UINavigationController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        Theme.statusBarStyle.statusBarStyle(for: traitCollection.userInterfaceStyle)
+        Theme.statusBarStyle
     }
 
     override func viewDidLoad() {

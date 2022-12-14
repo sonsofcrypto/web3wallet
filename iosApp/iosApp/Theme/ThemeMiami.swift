@@ -4,27 +4,23 @@
 
 import UIKit
 
-struct ThemeMiami: Themable {
+struct ThemeMiami: ThemeProtocol {
     let style: ThemeStyle
-    let name: String  = "themeMiami"
-    let type: ThemeType  = .themeMiami
-
+    let name: String = "themeMiami"
+    let type: ThemeType = .themeMiami
+    let statusBarStyle: UIStatusBarStyle = .lightContent
+    let padding: CGFloat = 16
     let cornerRadius: CGFloat = 16
     let cornerRadiusSmall: CGFloat = 8
     let shadowRadius: CGFloat = 4
     let cellHeight: CGFloat = 64
     let cellHeightSmall: CGFloat = 46
-    let padding: CGFloat = 16
     let buttonHeight: CGFloat = 46
     let buttonSmallHeight: CGFloat = 32
     let buttonHeightExtraSmall: CGFloat = 24
     
     init(style: ThemeStyle) {
         self.style = style
-    }
-
-    var statusBarStyle: ThemeStatusBarStyle {
-        .init(lightMode: .light, darkMode: .light)
     }
 
     var color: ThemeColor {

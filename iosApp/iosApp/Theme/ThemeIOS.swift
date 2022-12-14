@@ -4,11 +4,11 @@
 
 import UIKit
 
-struct ThemeIOS: Themable {
+struct ThemeIOS: ThemeProtocol {
     let style: ThemeStyle
     let name: String = "themeIOS"
     let type: ThemeType = .themeVanilla
-
+    let statusBarStyle: UIStatusBarStyle = .default
     let padding: CGFloat = 16
     let cornerRadius: CGFloat = 14
     let cornerRadiusSmall: CGFloat = 8
@@ -21,12 +21,6 @@ struct ThemeIOS: Themable {
 
     init(style: ThemeStyle) {
         self.style = style
-    }
-
-    var statusBarStyle: ThemeStatusBarStyle {
-        isDarkMode
-        ? .init(lightMode: .light, darkMode: .light)
-        : .init(lightMode: .dark, darkMode: .dark)
     }
 
     var color: ThemeColor {

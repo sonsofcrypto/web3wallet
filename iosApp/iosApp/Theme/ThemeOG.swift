@@ -4,7 +4,7 @@
 
 import UIKit
 
-struct ThemeOG: Themable {
+struct ThemeOG: ThemeProtocol {
     
     var type: ThemeType { .themeOG }
 
